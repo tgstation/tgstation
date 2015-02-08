@@ -22,6 +22,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "match_unlit"
 	var/lit = 0
 	var/smoketime = 5
+	heat_production = 1000
 	w_class = 1.0
 	origin_tech = "materials=1"
 	attack_verb = list("burnt", "singed")
@@ -50,7 +51,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/match/is_hot()
 	if(lit)
-		return 1000
+		return heat_production
 	return 0
 
 /obj/item/weapon/match/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -95,6 +96,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = 1
 	body_parts_covered = null
 	attack_verb = list("burnt", "singed")
+	heat_production = 1000
 	var/lit = 0
 	var/icon_on = "cigon"
 	var/overlay_on = "ciglit"
@@ -126,7 +128,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/is_hot()
 	if(lit)
-		return 1000
+		return heat_production
 	return 0
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -511,6 +513,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throwforce = 4
 	flags = 0
 	siemens_coefficient = 1
+	heat_production = 1500
 	slot_flags = SLOT_BELT
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
@@ -565,7 +568,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/lighter/is_hot()
 	if(lit)
-		return 1500
+		return heat_production
 	return 0
 
 

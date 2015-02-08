@@ -187,6 +187,7 @@
 	throw_range = 5
 	w_class = 2.0
 	sharpness = 0.8
+	heat_production = 3800
 
 	//Cost to make in the autolathe
 	m_amt = 70
@@ -349,7 +350,7 @@
 
 /obj/item/weapon/weldingtool/is_hot()
 	if(isOn())
-		return 3800
+		return heat_production
 	return 0
 
 

@@ -42,9 +42,6 @@
 
 	RefreshParts()
 
-/obj/machinery/r_n_d/fabricator/mechanic_fab/setup_part_sets()
-	return 1
-
 /obj/machinery/r_n_d/fabricator/mechanic_fab/attackby(var/obj/O, var/mob/user)
 	if(..())
 		return 1

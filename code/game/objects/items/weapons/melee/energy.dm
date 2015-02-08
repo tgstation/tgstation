@@ -1,6 +1,7 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
 	sharpness = 1.5 //very very sharp
+	heat_production = 3500
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
@@ -9,7 +10,7 @@
 
 /obj/item/weapon/melee/energy/is_hot()
 	if(active)
-		return 3500
+		return heat_production
 	return 0
 
 /obj/item/weapon/melee/energy/is_sharp()
