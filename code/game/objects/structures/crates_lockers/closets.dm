@@ -127,6 +127,7 @@
 	return src.open()
 
 /obj/structure/closet/ex_act(severity, target)
+	contents_explosion(severity, target)
 	dump_contents()
 	open()
 	qdel(src)
