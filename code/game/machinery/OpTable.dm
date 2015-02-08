@@ -116,7 +116,7 @@
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.resting)
+		if(M.lying)
 			src.victim = M
 			icon_state = "table2-active"
 			return 1

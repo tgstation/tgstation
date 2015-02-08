@@ -1088,9 +1088,8 @@ datum
 			required_container = /obj/item/slime_extract/metal
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
-				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(holder.my_atom))
 				M.amount = 15
-				M.loc = get_turf(holder.my_atom)
 				var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
 				P.amount = 5
 				P.loc = get_turf(holder.my_atom)

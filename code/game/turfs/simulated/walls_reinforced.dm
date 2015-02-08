@@ -270,7 +270,7 @@
 			if (MS.amount > 1)
 				MS.amount--
 			else
-				del(MS)
+				returnToPool(MS)
 
 	else if(istype(W, /obj/item/mounted))
 		return

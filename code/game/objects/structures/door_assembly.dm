@@ -173,7 +173,8 @@
 				if(do_after(user, 40))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You dissasembled the airlock assembly!</span>"
-					new /obj/item/stack/sheet/metal(src.loc, 4)
+					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+					M.amount = 4
 					qdel (src)
 			busy = 0
 		else

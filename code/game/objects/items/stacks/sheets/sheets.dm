@@ -13,6 +13,11 @@
 
 	mech_flags = MECH_SCAN_FAIL
 
+/obj/item/stack/sheet/New(var/newloc, var/amount = null)
+	pixel_x = rand(0,4)-4
+	pixel_y = rand(0,4)-4
+	..()
+
 
 // Since the sheetsnatcher was consolidated into weapon/storage/bag we now use
 // item/attackby() properly, making this unnecessary

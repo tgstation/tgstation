@@ -139,29 +139,25 @@
 	part_sets.len = 0
 	var/list/cat_set
 	for(var/datum/design/D in files.known_designs)
-		if(D.category)
+		if(D.category && (D.build_type & src.build_number))
+			cat_set = part_sets[D.category]
 			if(!part_sets[D.category])
-				cat_set = part_sets[D.category]
 				cat_set = list()
-			else
-				cat_set = part_sets[D.category]
 			cat_set.Add(D)
-			part_sets[D.category] = cat_set
+			part_sets[D.category] = cat_set.Copy()
 			i++
-		if(!D.category)
+		if(!D.category && (D.build_type & src.build_number))
+			cat_set = part_sets["Misc"]
 			if(!part_sets["Misc"])
-				cat_set = part_sets[D.category]
 				cat_set = list()
-			else
-				cat_set = part_sets["Misc"]
 			cat_set.Add(D)
-			part_sets[D.category] = cat_set
+			part_sets[D.category] = cat_set.Copy()
 			i++
 		if(!istype(D))
 			warning("[D] was passed into add_part_set and not found to be datum/design")
 	cat_set.len = 0
 	return i
-			
+
 /obj/machinery/r_n_d/fabricator/process()
 	if(busy || stopped)
 		return
@@ -184,16 +180,17 @@
 /obj/machinery/r_n_d/fabricator/proc/add_part_to_set(set_name as text, var/datum/design/part)
 	if(!part || !istype(part))
 		return 0
-
-	//src.add_part_set(set_name)//if no "set_name" set exists, create
-
-	var/list/part_set = part_sets[set_name]
-
+		
+	var/list/part_set_list = part_sets[set_name]
+	if(!part_set_list)
+		part_set_list = list()
 	for(var/datum/design/D in part_set)
 		if(D.build_path == part.build_path)
 			// del part
 			return 0
-	part_set[++part_set.len] = part
+	part_set_list.Add(part)
+	part_sets[set_name] = part_set_list.Copy()
+	part_set_list.len = 0
 	return 1
 
 //deletes an entire part set from part_sets
@@ -281,14 +278,14 @@
 	src.visible_message("\icon[src] <b>[src]</b> beeps: \"[set_name] parts were added to the queue\".")
 	return
 
-	
+
 /obj/machinery/r_n_d/fabricator/FindDesignByID()
 	for(var/datum/design/D in files.known_designs)
 		if(D.id == id)
 			return D
 		if(!istype(D))
 			warning("[D] was found in known_designs in FindDesignByID, the ID passed into it it was: [id]")
-	
+
 /obj/machinery/r_n_d/fabricator/proc/add_to_queue(var/datum/design/part)
 	if(!istype(queue))
 		queue = list()
@@ -341,7 +338,7 @@
 	if(!files) return
 	var/i = 0
 	for(var/datum/design/D in files.known_designs)
-		if(D.build_type &src.build_number)
+		if(D.build_type & src.build_number)
 			if(D.category in part_sets)//Checks if it's a valid category
 				if(add_part_to_set(D.category, D))//Adds it to said category
 					i++
@@ -639,7 +636,10 @@
 		var/to_spawn = total_amount
 
 		while(to_spawn > 0)
-			var/obj/item/stack/sheet/mats = new material.sheettype(src)
+			var/obj/item/stack/sheet/mats
+			if(material.sheettype == /obj/item/stack/sheet/metal)
+				mats = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			else mats = new material.sheettype(src)
 			if(to_spawn > mats.max_amount)
 				mats.amount = mats.max_amount
 				to_spawn -= mats.max_amount

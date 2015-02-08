@@ -26,7 +26,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 		if(!path)	continue
 		var/atom/movable/AM = new path()
 		manifest += "<li>[AM.name]</li>"
-		AM.loc = null	//just to make sure they're deleted by the garbage collector
+		qdel(AM)	//just to make sure they're deleted by the garbage collector
 	manifest += "</ul>"
 
 /datum/supply_packs/specialops
@@ -369,6 +369,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 					/obj/item/weapon/storage/box/syringes,
+					/obj/item/weapon/storage/bag/chem,
 					/obj/item/weapon/storage/box/autoinjectors)
 	cost = 10
 	containertype = /obj/structure/closet/crate/medical

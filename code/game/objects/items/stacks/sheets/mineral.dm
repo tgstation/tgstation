@@ -40,8 +40,6 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
 	recipes = sandstone_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
 	..()
 
 /obj/item/stack/sheet/mineral/sandstone/recycle(var/datum/materials/rec)
@@ -68,8 +66,6 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/diamond/New(var/loc, var/amount=null)
 	recipes = diamond_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
 	..()
 
 /obj/item/stack/sheet/mineral/diamond/recycle(var/datum/materials/rec)
@@ -98,8 +94,6 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/uranium/New(var/loc, var/amount=null)
 	recipes = uranium_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
 	..()
 
 /obj/item/stack/sheet/mineral/uranium/recycle(var/datum/materials/rec)
@@ -128,8 +122,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/plasma/New(var/loc, var/amount=null)
 	recipes = plasma_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+
 	..()
 
 /obj/item/stack/sheet/mineral/plasma/recycle(var/datum/materials/rec)
@@ -161,8 +154,6 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/plastic/New(var/loc, var/amount=null)
 	recipes = plastic_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
 	..()
 
 /obj/item/stack/sheet/mineral/plastic/recycle(var/datum/materials/rec)
@@ -191,8 +182,6 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/gold/New(var/loc, var/amount=null)
 	recipes = gold_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
 	..()
 
 /obj/item/stack/sheet/mineral/gold/recycle(var/datum/materials/rec)
@@ -247,8 +236,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/silver/New(var/loc, var/amount=null)
 	recipes = silver_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
 	..()
 
 /obj/item/stack/sheet/mineral/silver/recycle(var/datum/materials/rec)
@@ -271,8 +258,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "clown"
 
 /obj/item/stack/sheet/mineral/clown/New(var/loc, var/amount=null)
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
 	..()
 
 /obj/item/stack/sheet/mineral/clown/recycle(var/datum/materials/rec)

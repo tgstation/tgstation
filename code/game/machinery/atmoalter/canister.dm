@@ -191,7 +191,7 @@
 	if(iswelder(W) && src.destroyed)
 		if(weld(W, user))
 			user << "\blue You salvage whats left of \the [src]"
-			var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src.loc)
+			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))//new /obj/item/stack/sheet/metal(src.loc)
 			M.amount = 3
 			del src
 		return

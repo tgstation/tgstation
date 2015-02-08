@@ -9,7 +9,9 @@
 /obj/item/mounted/frame/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if (istype(W, /obj/item/weapon/wrench) && sheets_refunded)
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+		//new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = sheets_refunded
 		qdel(src)
 
 /obj/item/mounted/frame/try_build(turf/on_wall, mob/user)

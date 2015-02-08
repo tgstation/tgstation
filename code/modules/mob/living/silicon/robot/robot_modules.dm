@@ -17,9 +17,6 @@
 	return
 
 /obj/item/weapon/robot_module/proc/on_emag()
-	return
-
-/obj/item/weapon/robot_module/on_emag()
 	modules += emag
 	rebuild()
 	..()

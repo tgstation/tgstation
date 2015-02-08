@@ -12,6 +12,7 @@
 	opened = 1
 	var/hitstaken = 0
 	var/smashed = 0
+	locked = 1
 
 /obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 

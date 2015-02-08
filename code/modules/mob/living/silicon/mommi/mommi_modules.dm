@@ -3,6 +3,7 @@
 
 
 /obj/item/weapon/robot_module/mommi/New()
+	..()
 	//src.modules += new /obj/item/borg/sight/meson(src)
 	src.emag = new /obj/item/borg/stun(src)
 	//src.modules += new /obj/item/weapon/rcd/borg(src)     // Too OP
@@ -26,7 +27,6 @@
 	W.amount = 50
 	W.max_amount = 50 // Override MAXCOIL
 	src.modules += W
-	..()
 	return
 
 /obj/item/weapon/robot_module/mommi/respawn_consumable(var/mob/living/silicon/robot/R)

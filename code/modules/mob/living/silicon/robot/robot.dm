@@ -709,8 +709,8 @@
 				user << "The wires get in your way."
 				return
 			else
-				sleep(6)
 				if(prob(50))
+					sleep(6)
 					SetEmagged(1)
 					SetLockdown(1)
 					lawupdate = 0
@@ -744,15 +744,12 @@
 					SetLockdown(0)
 					update_icons()
 				else
-					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
+					user << "You fail to unlock [src]'s interface."
 					if(prob(25))
 						src << "Hack attempt detected."
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
-		return
-
 	if(opened) // Are they trying to insert something?
 		for(var/V in components)
 			var/datum/robot_component/C = components[V]
@@ -1212,11 +1209,6 @@
 			dat += text("[obj]: <B>Activated</B><BR>")
 		else
 			dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Activate</A><BR>")
-	if (emagged)
-		if(activated(module.emag))
-			dat += text("[module.emag]: <B>Activated</B><BR>")
-		else
-			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
 /*
 		if(activated(obj))
 			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")

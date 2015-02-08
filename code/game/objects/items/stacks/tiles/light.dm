@@ -29,7 +29,8 @@
 /obj/item/stack/tile/light/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
 	if(istype(O,/obj/item/weapon/crowbar))
-		new/obj/item/stack/sheet/metal(user.loc)
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = 1
 		amount--
 		new/obj/item/stack/light_w(user.loc)
 		if(amount <= 0)
