@@ -173,8 +173,9 @@
 			if(!ringerdatum || !(ringerdatum.status))
 				continue
 			if(frequency == ringerdatum.frequency)
-				playsound(ring_pda, 'sound/machines/notify.ogg', 50, 1)
-				ring_pda.visible_message("\icon[ring_pda] *[src.name]*")
+				var/turf/T = get_turf(ring_pda)
+				playsound(T, 'sound/machines/notify.ogg', 50, 1)
+				T.visible_message("\icon[ring_pda] *[src.name]*")
 
 
 		if(!radio_connection) return	//the desk bell also works like a simple send-only signaler.
