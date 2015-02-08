@@ -31,6 +31,9 @@
 			wielding.afterattack(target, user, proximity_flag, click_parameters)
 		return 1
 
+/obj/item/offhand/attack_self(mob/user)
+	return wielding.unwield(user)
+
 /obj/item/offhand/proc/attach_to(var/obj/item/I)
 	I.wielded = src
 	wielding = I
