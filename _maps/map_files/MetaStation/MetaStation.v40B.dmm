@@ -5059,7 +5059,7 @@
 "bTo" = (/obj/item/device/radio/beacon,/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/teleporter{name = "\improper Teleporter Room"})
 "bTp" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1; scrub_N2O = 1; scrub_Toxins = 1},/obj/machinery/door_control{id = "teleshutter"; name = "Teleporter Shutter Control"; pixel_x = 26; pixel_y = -26; req_access_txt = "19"},/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/teleporter{name = "\improper Teleporter Room"})
 "bTq" = (/obj/structure/cable/yellow,/obj/machinery/shieldwallgen,/turf/simulated/floor/plasteel{tag = "icon-vault (EAST)"; icon_state = "vault"; dir = 4},/area/teleporter{name = "\improper Teleporter Room"})
-"bTr" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla,/obj/structure/table/wood,/turf/simulated/floor/wood,/area/maintenance/aft{name = "Aft Maintenance"})
+"bTr" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila,/obj/structure/table/wood,/turf/simulated/floor/wood,/area/maintenance/aft{name = "Aft Maintenance"})
 "bTs" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/wood,/area/assembly/showroom{name = "\improper Corporate Showroom"})
 "bTt" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 2; on = 1},/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/wood,/area/assembly/showroom{name = "\improper Corporate Showroom"})
 "bTu" = (/turf/simulated/floor/wood{tag = "icon-wood-broken3"; icon_state = "wood-broken3"},/area/assembly/showroom{name = "\improper Corporate Showroom"})
