@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: fixed Desk Bell notices not appearing in the chat.
