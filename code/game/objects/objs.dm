@@ -6,8 +6,9 @@
 	animate_movement = 2
 	var/throwforce = 1
 	var/siemens_coefficient = 0 // for electrical admittance/conductance (electrocution checks and shit) - 0 is not conductive, 1 is conductive - this is a range, not binary
+	var/sharpness = 0 //not a binary - rough guide is 0.8 cutting, 1 cutting well, 1.2 specifically sharp (knives, etc) 1.5 really sharp (scalpels, e-weapons)
+	var/heat_production = 0
 
-	var/sharp = 0 // whether this object cuts
 	var/edge = 0
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
@@ -58,6 +59,12 @@
 	if(src.siemens_coefficient >= siemens_min)
 		return 1
 	return
+
+/obj/proc/is_sharp()
+	return sharpness
+
+/obj/proc/is_hot()
+	return heat_production
 
 /obj/proc/process()
 	processing_objects.Remove(src)

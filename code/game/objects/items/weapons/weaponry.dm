@@ -143,7 +143,7 @@
 
 /obj/item/weapon/harpoon
 	name = "harpoon"
-	sharp = 1
+	sharpness = 1.2
 	desc = "Tharr she blows!"
 	icon_state = "harpoon"
 	item_state = "harpoon"

@@ -139,7 +139,7 @@
 /datum/surgery_step/generic/cut_open
 	allowed_tools = list(
 		/obj/item/weapon/scalpel = 100,
-		/obj/item/weapon/kitchenknife = 75,
+		/obj/item/weapon/kitchen/utensil/knife/large = 75,
 		/obj/item/weapon/shard = 50,
 		)
 

@@ -197,7 +197,7 @@
 				new /obj/item/pizzabox/mushroom(T)
 				new /obj/item/pizzabox/meat(T)
 				new /obj/item/pizzabox/vegetable(T)
-				new /obj/item/weapon/kitchenknife(T)
+				new /obj/item/weapon/kitchen/utensil/knife/large(T)
 
 			//Don't panic
 			for(var/turf/T in meteor_panickit)

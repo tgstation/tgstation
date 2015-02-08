@@ -12,6 +12,7 @@
 	item_state = "syringe_0"
 	icon_state = "0"
 	amount_per_transfer_from_this = 5
+	sharpness = 1
 	possible_transfer_amounts = null //list(5,10,15)
 	volume = 15
 	g_amt = 1000

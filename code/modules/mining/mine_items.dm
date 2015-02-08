@@ -230,6 +230,7 @@ proc/move_mining_shuttle()
 	item_state = "gun"
 	w_class = 3.0 //it is smaller than the pickaxe
 	damtype = "fire"
+	heat_production = 3800
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;plasmatech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
@@ -283,6 +284,7 @@ proc/move_mining_shuttle()
 	throwforce = 4.0
 	item_state = "shovel"
 	w_class = 3.0
+	sharpness = 0.5
 	w_type = RECYK_MISC
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
@@ -296,6 +298,7 @@ proc/move_mining_shuttle()
 	icon_state = "spade"
 	item_state = "spade"
 	force = 5.0
+	sharpness = 0.8
 	throwforce = 7.0
 	w_class = 2.0
 
