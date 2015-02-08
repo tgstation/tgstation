@@ -1137,6 +1137,29 @@ Pressure: [env.return_pressure()]"}
 		FF << "[typepath],[ns]"
 
 	usr << "\blue Dumped to object_profiling.csv."
+
+
+/client/proc/cmd_admin_dump_machine_type_list()
+	set category = "Debug"
+	set name = "Dump Machine type list"
+
+	if(!machines.len)
+		usr << "Machines has no length!"
+		return
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F =file("data/logs/profiling/machine_instances_[date_string].csv")
+	fdel(F)
+	F << "type,count"
+	var/list/machineinstances = list()
+	for(var/atom/typepath in machines)
+		if(!typepath.type in machineinstances)
+			machineinstances["[typepath.type]"] = 0
+		machineinstances["[typepath.type]"] += 1
+	for(var/T in machineinstances)
+		var/count = machineinstances[T]
+		F << "[T],[count]"
+
+	usr << "\blue Dumped to [F].csv."
 #endif
 
 /client/proc/cmd_admin_dump_delprofile()
