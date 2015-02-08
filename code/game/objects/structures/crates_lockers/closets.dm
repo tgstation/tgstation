@@ -126,10 +126,10 @@
 		return src.close()
 	return src.open()
 
-// this should probably use dump_contents()
 /obj/structure/closet/ex_act(severity, target)
-	contents_explosion(severity, target)
+	dump_contents()
 	open()
+	qdel(src)
 	..()
 
 /obj/structure/closet/bullet_act(var/obj/item/projectile/Proj)
