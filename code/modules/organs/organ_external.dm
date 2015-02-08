@@ -585,7 +585,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 				var/obj/item/weapon/organ/head/H = organ
 				H.organ_data = B
 				B.organ_holder = organ
-				owner.internal_organs_by_name["brain"] -= B
 				owner.internal_organs_by_name["brain"] = null
 				owner.internal_organs_by_name -= "brain"
 				owner.internal_organs -= B
