@@ -390,7 +390,12 @@ REAGENT ANALYZER
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
 
-/obj/item/device/reagentanalyzer/attack(var/mob/living/user, atom/A as mob|obj|turf|area)
+/obj/item/device/healthanalyzer/attack(atom/A as mob|obj|turf|area, mob/living/carbon/human/user as mob)
+	return
+
+/obj/item/device/reagentanalyzer/afterattack(atom/A as mob|obj|turf|area, mob/living/carbon/human/user, proximity)
+	if(!proximity) return
+
 	/*// Clumsiness/brain damage check
 	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
 		user << "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>"
@@ -400,7 +405,7 @@ REAGENT ANALYZER
 		user.show_message("<span class='notice'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>", 1)
 		user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
 		return*/
-	user.visible_message("<span class='alert'>[user] has analyzed [A]'s chemical compons!</span>")
+	user.visible_message("<span class='alert'>[user] has analyzed [A]'s chemical compounds!</span>")
 	reagentscan(A, user)
 	src.add_fingerprint(user)
 	return
@@ -410,20 +415,16 @@ REAGENT ANALYZER
 	if(!isnull(A.reagents))
 		if(A.reagents.reagent_list.len > 0)
 			var/reagents_length = A.reagents.reagent_list.len
-			user.show_message("<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
+			user.show_message("<span class='notice'>[reagents_length] chemical agent[(reagents_length > 1) ? "s" : ""] found.</span>")
 			for (var/datum/reagent/R in A.reagents.reagent_list)
-				var/resultline = ""
-				if(istype(R, /datum/reagent/toxin))
-					resultline += "<font color='red'>"
-				else if(istype(R, /datum/reagent/medicine))
-					if(R.volume >= initial(R.overdose_threshold))
-						resultline += "<font color='#FF8000'>"
-					else
-						resultline += "<font color='green'>"
-				else
-					resultline += "<font color='blue'>"
-				resultline += "\t [R.name], [R.volume] unit[R.volume > 1 ? "s" : ""]</font>"
-				user.show_message(resultline)
+				var/resultline = "- [R.name], [round(R.volume, 0.01)] unit[(R.volume > 1) ? "s" : ""]"
+				if(istype(A, /mob/living/))
+					var/const/P  = 3 //The number of seconds between life ticks
+					var/T  = (R.volume / (R.metabolization_rate / P))
+					resultline += " - [round(T/60, 0.01)] minutes"
+				if(initial(R.overdose_threshold) && R.volume >= initial(R.overdose_threshold))
+					resultline += " - <font color='red'>Overdosage</font>"
+				user.show_message("<span class='notice'>[resultline]</span>")
 		else
 			user << "<span class='notice'>No active chemical agents found in [A].</span>"
 	else
