@@ -187,6 +187,7 @@ var/global/datum/controller/gameticker/ticker
 			play_vox_sound(sound,STATION_Z,null)
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
+		mode.Clean_Antags()
 
 	//start_events() //handles random events and space dust.
 	//new random event system is handled from the MC.

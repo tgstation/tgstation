@@ -369,6 +369,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 					/obj/item/weapon/storage/box/syringes,
+					/obj/item/weapon/storage/bag/chem,
 					/obj/item/weapon/storage/box/autoinjectors)
 	cost = 10
 	containertype = /obj/structure/closet/crate/medical
