@@ -1083,6 +1083,7 @@
 		else if(longtermpower > -10)
 			longtermpower -= 2
 
+
 		if(cell.charge <= 0)					// zero charge, turn all off
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
@@ -1102,7 +1103,6 @@
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			areaMaster.poweralert(1, src)
 			if(cell.percent() > 75)
 				areaMaster.poweralert(1, src)
 
