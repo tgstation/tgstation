@@ -158,7 +158,33 @@
 	hair_alpha = 150
 	ignored_by = list(/mob/living/carbon/slime)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
+	exotic_blood = /datum/reagent/toxin/slimejelly
+	var/recently_changed = 1
 
+/datum/species/slime/spec_life(mob/living/carbon/human/H)
+	if(!H.reagents.get_reagent_amount("slimejelly"))
+		if(recently_changed)
+			H.reagents.add_reagent("slimejelly", 80)
+			recently_changed = 0
+		else
+			H.reagents.add_reagent("slimejelly", 5)
+			H.adjustBruteLoss(5)
+			H << "<span class='danger'>You feel empty!</span>"
+
+	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
+		if(S.volume < 100)
+			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
+				H.reagents.add_reagent("slimejelly", 0.5)
+				H.nutrition -= 5
+		if(S.volume < 50)
+			if(prob(5))
+				H << "<span class='danger'>You feel drained!</span>"
+		if(S.volume < 10)
+			H.losebreath++
+
+/datum/species/slime/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "slimejelly")
+		return 1
 /*
  JELLYPEOPLE
 */
@@ -172,7 +198,32 @@
 	eyes = "jelleyes"
 	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
+	exotic_blood = /datum/reagent/toxin/slimejelly
+	var/recently_changed = 1
 
+/datum/species/jelly/spec_life(mob/living/carbon/human/H)
+	if(!H.reagents.get_reagent_amount("slimejelly"))
+		if(recently_changed)
+			H.reagents.add_reagent("slimejelly", 80)
+			recently_changed = 0
+		else
+			H.reagents.add_reagent("slimejelly", 5)
+			H.adjustBruteLoss(5)
+			H << "<span class='danger'>You feel empty!</span>"
+
+	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
+		if(S.volume < 100)
+			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
+				H.reagents.add_reagent("slimejelly", 0.5)
+				H.nutrition -= 5
+			else if(prob(5))
+				H << "<span class='danger'>You feel drained!</span>"
+		if(S.volume < 10)
+			H.losebreath++
+
+/datum/species/jelly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "slimejelly")
+		return 1
 /*
  GOLEMS
 */
