@@ -54,7 +54,7 @@
 /mob/living/carbon/human/GetVoice()
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
 		var/obj/item/clothing/mask/gas/voice/V = wear_mask
-		if(V.vchange && wear_id)
+		if(V.vchange && wear_id && V.is_flipped == 1) //the mask works, we have an id, and we are wearing it on the face instead of on the head
 			var/obj/item/weapon/card/id/idcard = wear_id.GetID()
 			if(istype(idcard))
 				return idcard.registered_name

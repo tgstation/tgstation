@@ -139,6 +139,7 @@ BLIND     // can't see anything
 	var/can_flip = null
 	var/is_flipped = 1
 	var/ignore_flip = 0
+	action_button_name = "Toggle Mask"
 
 /obj/item/clothing/mask/verb/togglemask()
 	set name = "Toggle Mask"
