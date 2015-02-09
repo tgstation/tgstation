@@ -35,12 +35,6 @@ datum/objective_item/steal/jetpack
 	difficulty = 3
 	excludefromjob = list("Chief Engineer")
 
-datum/objective_item/steal/defib
-	name = "a defibrillator"
-	targetitem = /obj/item/weapon/defibrillator
-	difficulty = 4
-	excludefromjob = list("Chief Medical Officer", "Medical Doctor")
-
 datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
 	targetitem =  /obj/item/clothing/shoes/magboots/advance
