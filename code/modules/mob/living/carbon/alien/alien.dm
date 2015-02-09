@@ -11,6 +11,10 @@
 	dna = null
 	languages = ALIEN
 
+	mob_bump_flag = ALIEN
+	mob_swap_flags = ALLMOBS
+	mob_push_flags = ALLMOBS ^ ROBOT
+
 	var/storedPlasma = 250
 	var/max_plasma = 500
 

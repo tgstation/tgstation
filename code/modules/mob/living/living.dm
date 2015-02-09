@@ -857,14 +857,37 @@
 	usr.visible_message("<b>[src]</b> points to [A]")
 	return 1
 
+/*one proc, four uses
+swapping: if it's 1, the mobs are trying to switch, if 0, non-passive is pushing passive
+default behaviour is:
+ - non-passive mob passes the passive version
+ - passive mob checks to see if its mob_bump_flag is in the non-passive's mob_bump_flags
+ - if si, the proc returns
+*/
+/mob/living/proc/can_move_mob(var/mob/living/swapped, swapping = 0, passive = 0)
+	if(!swapped)
+		return 1
+	if(!passive)
+		return swapped.can_move_mob(src, swapping, 1)
+	else
+		var/context_flags = 0
+		if(swapping)
+			context_flags = swapped.mob_swap_flags
+		else
+			context_flags = swapped.mob_push_flags
+		if(!mob_bump_flag) //nothing defined, go wild
+			return 1
+		if(mob_bump_flag & context_flags)
+			return 1
+		return 0
 
 /mob/living/Bump(atom/movable/AM as mob|obj, yes)
 	spawn(0)
 		if ((!( yes ) || now_pushing))
 			return
 		now_pushing = 1
-		if (ismob(AM))
-			var/mob/tmob = AM
+		if (istype(AM, /mob/living))
+			var/mob/living/tmob = AM
 
 			for(var/mob/living/M in range(tmob, 1))
 				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
@@ -891,7 +914,7 @@
 					else
 						dense = 1
 				if(dense) break
-			if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove && !dense) // mutual brohugs all around!
+			if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove && !dense && can_move_mob(tmob, 1, 0)) // mutual brohugs all around!
 				var/turf/oldloc = loc
 				loc = tmob.loc
 				tmob.loc = oldloc
@@ -901,6 +924,9 @@
 						slime.UpdateFeed()
 				return
 
+			if(!can_move_mob(tmob, 0, 0))
+				now_pushing = 0
+				return
 			if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
 				if(prob(40) && !(M_FAT in src.mutations))
 					src << "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>"
