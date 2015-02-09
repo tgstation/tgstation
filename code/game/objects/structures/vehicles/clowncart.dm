@@ -125,6 +125,8 @@
 		qdel(W)
 	else if(istype(W, /obj/item/seeds/bananaseed))
 		visible_message("<span class='notice'>[user] applies [W] to \the [src].</span>")
+		health += 50
+		if(health > max_health) health = max_health
 		if(empstun!=0)
 			empstun=0
 			visible_message("<span class='danger'>\The [src] comes back to life!</span>")
