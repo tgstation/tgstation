@@ -279,7 +279,7 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 5))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					src.anchored = 1
 					src.state = 1
@@ -290,7 +290,7 @@
 					user << "The welding tool must be on to complete this task."
 					return 1
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 10))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					//new /obj/item/stack/sheet/metal( src.loc, 5 )
