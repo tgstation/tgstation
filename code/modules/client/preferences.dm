@@ -1088,13 +1088,17 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 							nanotrasen_relation = new_relation
 
 					if("flavor_text")
-						var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
+						if(appearance_isbanned(user))
+							src << "<span class = 'notice'>You are appearance banned!</span>"
+							return
+						else
+							var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
 
-						if(msg != null)
-							msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-							msg = html_encode(msg)
+							if(msg != null)
+								msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+								msg = html_encode(msg)
 
-							flavor_text = msg
+								flavor_text = msg
 
 					if("limbs")
 						var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
