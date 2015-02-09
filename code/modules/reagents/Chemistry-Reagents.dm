@@ -94,7 +94,7 @@
 
 /datum/reagent/proc/on_update(var/atom/A)
 	return
-	
+
 /datum/reagent/muhhardcores
 	name = "Hardcores"
 	id = "bustanut"
@@ -102,7 +102,7 @@
 	reagent_state = LIQUID
 	color = "#FFF000"
 	custom_metabolism = 0.01
-	
+
 /datum/reagent/muhhardcores/on_mob_life(var/mob/living/M)
 	if(prob(1))
 		if(prob(90))
@@ -323,7 +323,7 @@
 		T.assume_air(lowertemp)
 		qdel(hotspot)
 	return
-			
+
 /datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
 	var/turf/T = get_turf(O)
@@ -654,7 +654,7 @@
 			color = "#60A584" // rgb: 96, 165, 132
 			overdose = REAGENTS_OVERDOSE
 
-/datum/reagent/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/space_drugs/on_mob_life(var/mob/living/M as mob)
 
 	if(!holder) return
 	if(!M) M = holder.my_atom
@@ -992,7 +992,7 @@
 	M.take_organ_damage(0, 1*REM)
 	..()
 	return
-			
+
 /datum/reagent/sacid/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!istype(M, /mob/living))
 		return
@@ -1269,7 +1269,7 @@
 	if(ishuman(M))
 		M:shock_stage--
 		M:traumatic_shock--
-		
+
 /datum/reagent/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"
@@ -1333,7 +1333,7 @@
 	description = "Sterilizes wounds in preparation for surgery."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	/*		
+	/*
 /datum/reagent/sterilizine/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	src = null
 	if (method==TOUCH)
@@ -1435,11 +1435,11 @@
 	if(!the_turf)
 		return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
 	new /obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)
-	
+
 /datum/reagent/fuel/reaction_turf(var/turf/T, var/volume)
 	new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
 	return
-	
+
 /datum/reagent/fuel/on_mob_life(var/mob/living/M as mob)
 
 	if(!holder) return
@@ -1462,7 +1462,7 @@
 	else
 		if(O)
 			O.clean_blood()
-			
+
 /datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 	if(volume >= 1)
 		T.overlays.len = 0
@@ -1595,7 +1595,7 @@
 	M.adjustToxLoss(3*REM)
 	..()
 	return
-			
+
 /datum/reagent/plasma/reaction_obj(var/obj/O, var/volume)
 	src = null
 	/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
@@ -1610,7 +1610,7 @@
 	fuel.moles = 5
 	napalm.trace_gases += fuel
 	the_turf.assume_air(napalm)
-	
+
 /datum/reagent/plasma/reaction_turf(var/turf/T, var/volume)
 	src = null
 	var/datum/gas_mixture/napalm = new
@@ -2360,7 +2360,7 @@
 
 	return
 
-		
+
 /datum/reagent/beer2							//copypasta of chloral hydrate, disguised as normal beer for use by emagged brobots
 	name = "Beer"
 	id = "beer2"
@@ -2535,7 +2535,7 @@
 				victim.eye_blind = max(M.eye_blind, 10)
 				victim.Paralyse(1)
 				victim.drop_item()
-				
+
 /datum/reagent/condensedcapsaicin/on_mob_life(var/mob/living/M as mob)
 
 	if(!holder) return
@@ -2864,7 +2864,7 @@
 	M.nutrition += nutriment_factor
 	..()
 	return
-			
+
 /datum/reagent/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
 	src = null
@@ -3028,77 +3028,77 @@
 	description = "You can almost taste the lead sheet behind it!"
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/toxicwaste
 	name = "Toxic Waste"
 	id = "toxicwaste"
 	description = "Yum!"
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/refriedbeans
 	name = "Re-Fried Beans"
 	id = "refriedbeans"
 	description = "Mmm.."
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/mutatedbeans
 	name = "Mutated Beans"
 	id = "mutatedbeans"
 	description = "Mutated flavor."
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/beff
 	name = "Beff"
 	id = "beff"
 	description = "What's beff? Find out!"
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/horsemeat
 	name = "Horse Meat"
 	id = "horsemeat"
 	description = "Tastes excellent in lasagna."
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/moonrocks
 	name = "Moon Rocks"
 	id = "moonrocks"
 	description = "We don't know much about it, but we damn well know that it hates the human skeleton."
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/offcolorcheese
 	name = "Off-Color Cheese"
 	id = "offcolorcheese"
 	description = "American Cheese."
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/bonemarrow
 	name = "Bone Marrow"
 	id = "bonemarrow"
 	description = "Looks like a skeleton got stuck in the production line."
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/greenramen
 	name = "Greenish Ramen Noodles"
 	id = "greenramen"
 	description = "That green isn't organic."
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/glowingramen
 	name = "Glowing Ramen Noodles"
 	id = "glowingramen"
 	description = "That glow 'aint healthy."
 	reagent_state = LIQUID
 	color = "#6F884F" // rgb: 255,255,255 //to-do
-	
+
 /datum/reagent/deepfriedramen
 	name = "Deep Fried Ramen Noodles"
 	id = "deepfriedramen"
@@ -3325,7 +3325,7 @@
 			holder.remove_reagent("frostoil", 10*REAGENTS_METABOLISM)
 
 		holder.remove_reagent(src.id, 0.1)
-		
+
 /datum/reagent/drink/coffee/icecoffee
 	name = "Iced Coffee"
 	id = "icecoffee"
@@ -3664,7 +3664,7 @@
 		holder.remove_reagent(src.id, 0.4)
 	..()
 	return
-	
+
 
 /datum/reagent/ethanol/reaction_obj(var/obj/O, var/volume)
 	if(istype(O,/obj/item/weapon/paper))
@@ -4111,7 +4111,7 @@
 	if(M.confused !=0) M.confused = max(0,M.confused - 5)
 	..()
 	return
-	
+
 /datum/reagent/ethanol/deadrum/changelingsting
 	name = "Changeling Sting"
 	id = "changelingsting"
