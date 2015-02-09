@@ -399,7 +399,7 @@ BLIND     // can't see anything
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
 			usr << "<span class='warning'>You need an empty hand to draw the gun!</span>"
 		else
-			if(usr.a_intent == "hurt")
+			if(usr.a_intent == I_HURT)
 				usr.visible_message("<span class='warning'>\The [usr] draws \the [H.holstered], ready to shoot!</span>", \
 				"<span class='warning'>You draw \the [H.holstered], ready to shoot!</span>")
 			else

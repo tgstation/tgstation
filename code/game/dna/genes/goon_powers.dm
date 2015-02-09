@@ -532,13 +532,13 @@
 			thoughts = "haunted by their own mortality"
 
 	switch(M.a_intent)
-		if ("help")
+		if (I_HELP)
 			usr << "<span class='notice'> <b>Mood</b>: You sense benevolent thoughts from [M.name].</span>"
-		if ("disarm")
+		if (I_DISARM)
 			usr << "<span class='notice'> <b>Mood</b>: You sense cautious thoughts from [M.name].</span>"
-		if ("grab")
+		if (I_GRAB)
 			usr << "<span class='notice'> <b>Mood</b>: You sense hostile thoughts from [M.name].</span>"
-		if ("hurt")
+		if (I_HURT)
 			usr << "<span class='notice'> <b>Mood</b>: You sense cruel thoughts from [M.name].</span>"
 			for(var/mob/living/L in view(7,M))
 				if (L == M)

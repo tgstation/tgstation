@@ -534,7 +534,7 @@
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	mouse_opacity = 1
 	faction = "neutral"
-	a_intent = "hurt"
+	a_intent = I_HURT
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -595,7 +595,7 @@
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
+	if(M.a_intent == I_HELP)
 		switch(search_objects)
 			if(0)
 				SetCollectBehavior()

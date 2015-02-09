@@ -434,7 +434,7 @@ var/list/ai_list = list()
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (I_HELP)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)

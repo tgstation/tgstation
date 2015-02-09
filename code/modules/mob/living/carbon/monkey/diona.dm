@@ -55,7 +55,7 @@
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M as mob)
 
 	//Let people pick the little buggers up.
-	if(M.a_intent == "help")
+	if(M.a_intent == I_HELP)
 		var/obj/item/weapon/holder/diona/D = new(loc)
 		src.loc = D
 		D.name = loc.name
