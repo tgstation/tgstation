@@ -360,9 +360,11 @@
 					dat += "<BR>"
 					dat += "<B>Color:</B> <span style='color:[initial(R.color)];background-color:[initial(R.color)];font:Lucida Console'>[initial(R.color)]</span><BR><BR>"
 					dat += "<B>Description:</B> [initial(R.description)]<BR><BR>"
-					dat += "<B>Metabolization rate:</B> [initial(R.metabolization_rate) ? "[initial(R.metabolization_rate)]u" : "none"]<BR>"
-					dat += "<B>Overdosage:</B> [initial(R.overdose_threshold) ? "[initial(R.overdose_threshold)]u" : "none"]<BR>"
-					dat += "<B>Addiction:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
+					var/const/P = 3 //The number of seconds between life ticks
+					var/T = initial(R.metabolization_rate) * (60 / P)
+					dat += "<B>Metabolization Rate:</B> [T]u/minute<BR>"
+					dat += "<B>Overdose Threshold:</B> [initial(R.overdose_threshold) ? "[initial(R.overdose_threshold)]u" : "none"]<BR>"
+					dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
 					dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
 					var/datum/browser/popup = new(usr, "chem_master", name)
 					popup.set_content(dat)
