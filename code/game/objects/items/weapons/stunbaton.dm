@@ -48,8 +48,6 @@
 /obj/item/weapon/melee/baton/proc/update_process()
 	if(status)
 		SSobj.processing.Add(src)
-	else if(!bcell)
-		SSobj.processing.Remove(src)
 	else
 		SSobj.processing.Remove(src)
 
