@@ -104,6 +104,13 @@
 	max_ammo = 5
 	multiload = 1
 
+/obj/item/ammo_box/magazine/internal/gatling
+	name = "gatling gun magazine"
+	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
+	ammo_type = /obj/item/ammo_casing/caseless/gatling
+	caliber = "gatling"
+	max_ammo = 400
+
 ///////////EXTERNAL MAGAZINES////////////////
 
 /obj/item/ammo_box/magazine/m10mm

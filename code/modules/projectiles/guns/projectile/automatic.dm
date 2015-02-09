@@ -241,3 +241,15 @@
 	can_suppress = 0
 	burst_size = 4
 	fire_delay = 1
+
+/obj/item/weapon/gun/projectile/automatic/gatling
+	name = "gatling gun"
+	desc = "More dakka is always the answer."
+	icon_state = "tommygun"
+	item_state = "shotgun"
+	w_class = 6
+	can_suppress = 0
+	mag_type = /obj/item/ammo_box/magazine/internal/gatling
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	burst_size = 25
+	fire_delay=1

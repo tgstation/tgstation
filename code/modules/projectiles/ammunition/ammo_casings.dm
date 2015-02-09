@@ -174,3 +174,9 @@
 	icon_state = "magspear"
 	throwforce = 15 //still deadly when thrown
 	throw_speed = 3
+
+/obj/item/ammo_casing/caseless/gatling
+	name = "gatling casing"
+	projectile_type = /obj/item/projectile/bullet/pellet/weak
+	caliber = "gatling"
+
