@@ -28,7 +28,7 @@ RSF
 		"dice",
 		"deck of cards",
 		"candle",
-		"cardboard sheet.
+		"cardboard sheet",
 		)
 	return
 
