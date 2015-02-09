@@ -34,10 +34,10 @@ var/global/list/power_machinery_profiling = list()
 				#ifdef PROFILE_MACHINES
 				var/time_end = world.timeofday
 
-				if(!(M.type in power_machine_profiling))
-					power_machine_profiling[M.type] = 0
+				if(!(M.type in power_machinery_profiling))
+					power_machinery_profiling[M.type] = 0
 
-				power_machine_profiling[M.type] += (time_end - time_start)
+				power_machinery_profiling[M.type] += (time_end - time_start)
 				#endif
 			else
 				if(!power_machines.Remove(M))
