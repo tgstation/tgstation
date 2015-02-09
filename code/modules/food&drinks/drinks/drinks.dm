@@ -200,6 +200,14 @@
 	else
 		icon_state = "water_cup_e"
 
+/obj/item/weapon/reagent_containers/food/drinks/shotglass
+	name = "shot glass"
+	desc = "A shot glass - the universal symbol for bad decisions."
+	icon_state = "shotglass"
+	amount_per_transfer_from_this = 10
+	volume = 10
+
+
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
 //	itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
