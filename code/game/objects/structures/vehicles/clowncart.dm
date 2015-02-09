@@ -105,13 +105,13 @@
 	else if(istype(W, /obj/item/weapon/reagent_containers))
 		if(feed(W,user))
 			visible_message("<span class='notice'>[user] puts [W] into [src].</span>")
-			del(W)
+			qdel(W)
 	else if(istype(W, /obj/item/weapon/storage/bag/plants))
 		var/ate_anything = 0
 		for(var/obj/item/I in W.contents)
 			if(feed(I,user))
 				ate_anything+=1
-				del(I)
+				qdel(I)
 		if(ate_anything)
 			visible_message("<span class='notice'>[user] empties \the [W] into [src].</span>")
 			user << "Added [ate_anything] items to \the [src]."
@@ -120,8 +120,15 @@
 		health += 10 //Banana peels repair some damage
 		empstun -= 1 //And help remove EMP stun
 		if(health > max_health) health = max_health
+		if(empstun ==0) visible_message("<span class='danger'>\The [src] comes back to life!</span>")
 		if(empstun < 0) empstun = 0
-		del(W)
+		qdel(W)
+	else if(istype(W, /obj/item/seeds/bananaseed))
+		visible_message("<span class='notice'>[user] applies [W] to \the [src].</span>")
+		if(empstun!=0)
+			empstun=0
+			visible_message("<span class='danger'>\The [src] comes back to life!</span>")
+		qdel(W)
 	else if(istype(W, /obj/item/stack/sheet/mineral/clown)) //Bananium sheets
 		if(max_health >= max_health_top) //There's a point where the magic doesn't work anymore, sadly
 			user << "<span class='notice'>You fail to reinforce [src] any further.</span>"
@@ -188,7 +195,7 @@
 				var/tmp/bananas = reagents.get_reagent_amount("banana")
 				reagents.remove_reagent("banana", bananas) //removing banan so it doesn't get transferred into the water flower
 				if(reagents.total_volume >= 10)
-					visible_message("<span class='notice'>The HONKTech pump starts recharging [W].</span>")
+					visible_message("<span class='notice'>The HONKTech pump has recharged [W].</span>")
 					reagents.trans_to(W, 10)
 				else
 					user << "<span class='warning'>There doesn't seem to be anything other than banana juice in [src]!</span>"
