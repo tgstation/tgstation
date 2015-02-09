@@ -14,6 +14,10 @@
 	emote_see = list("jiggles", "bounces in place")
 	var/colour = "grey"
 
+	mob_bump_flag = SLIME
+	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL
+	mob_push_flags = MONKEY|SLIME|SIMPLE_ANIMAL
+
 
 /mob/living/simple_animal/adultslime
 	name = "pet slime"

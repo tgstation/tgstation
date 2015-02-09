@@ -42,6 +42,10 @@
 
 	var/datum/wires/robot/wires = null
 
+	mob_bump_flag = ROBOT
+	mob_swap_flags = ROBOT|MONKEY|SLIME|SIMPLE_ANIMAL
+	mob_push_flags = ALLMOBS //trundle trundle
+
 	var/opened = 0
 	var/emagged = 0
 	var/wiresexposed = 0
