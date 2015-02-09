@@ -64,7 +64,8 @@
 		apply_damage(0.5*damage, BRUTE, "l_arm")
 		apply_damage(0.5*damage, BRUTE, "r_arm")
 
-		new /obj/effect/decal/cleanable/blood/xeno(src.loc)
+		var/obj/effect/decal/cleanable/blood/xeno/X = getFromPool(/obj/effect/decal/cleanable/blood/xeno, src.loc) //new /obj/effect/decal/cleanable/blood/xeno(src.loc)
+		X.New(src.loc)
 
 /mob/living/carbon/alien/updatehealth()
 	if(status_flags & GODMODE)

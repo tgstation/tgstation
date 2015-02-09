@@ -354,7 +354,7 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/acid/proc/tick()
 	if(!target)
-		del(src)
+		qdel(src)
 
 	ticks += 1
 
@@ -367,8 +367,8 @@ Alien plants should do something if theres a lot of poison
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
 		else
-			del(target)
-		del(src)
+			qdel(target)
+		qdel(src)
 		return
 
 	switch(target_strength - ticks)
@@ -410,14 +410,14 @@ Alien plants should do something if theres a lot of poison
 			spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
 				Grow()
 		else
-			del(src)
+			qdel(src)
 
 	attack_paw(user as mob)
 		if(isalien(user))
 			switch(status)
 				if(BURST)
 					user << "\red You clear the hatched egg."
-					del(src)
+					qdel(src)
 					return
 				if(GROWING)
 					user << "\red The child is not developed yet."
@@ -454,6 +454,8 @@ Alien plants should do something if theres a lot of poison
 					src.visible_message("\red The egg bursts apart revealing nothing")
 					status = "GROWN"
 					new /obj/effect/decal/cleanable/blood/xeno(src)
+					var/obj/effect/decal/cleanable/blood/xeno/O = getFromPool(/obj/effect/decal/cleanable/blood/xeno, src)
+					O.New(src)
 				loc.contents += child//need to write the code for giving it to the alien later
 				if(kill && istype(child))
 					child.Die()

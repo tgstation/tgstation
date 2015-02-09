@@ -38,10 +38,12 @@
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			new /obj/effect/decal/cleanable/blood(src)
+			var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood,src) //new /obj/effect/decal/cleanable/blood(src)
+			B.New(src)
 			new /obj/structure/cultgirder(src)
 		else
-			new /obj/effect/decal/cleanable/blood(src)
+			var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood,src) //new /obj/effect/decal/cleanable/blood(src)
+			B.New(src)
 			new /obj/effect/decal/remains/human(src)
 
 	else
@@ -335,7 +337,7 @@
 		message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) thermited a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
 
 	spawn(100)
-		if(O)	del(O)
+		if(O)	qdel(O)
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 

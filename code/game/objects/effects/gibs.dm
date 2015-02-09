@@ -36,6 +36,7 @@
 	var/obj/effect/decal/cleanable/blood/gibs/gib = null
 	for(var/datum/disease/D in viruses)
 		if(D.spread_type == SPECIAL)
+			D.cure(1)
 			del(D)
 
 	if(sparks)
@@ -47,7 +48,8 @@
 		if(gibamounts[i])
 			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
-				gib = new gibType(location)
+				gib = getFromPool(gibType,location)//new gibType(location)
+				gib.New(location)
 
 				// Apply human species colouration to masks.
 				if(fleshcolor)

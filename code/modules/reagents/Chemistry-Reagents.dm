@@ -188,7 +188,8 @@
 	if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 		if(!blood_prop) //first blood!
-			blood_prop = new(T)
+			blood_prop = getFromPool(/obj/effect/decal/cleanable/blood,T)
+			blood_prop.New(T)
 			blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 
 		for(var/datum/disease/D in self.data["viruses"])

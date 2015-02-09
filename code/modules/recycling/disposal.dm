@@ -114,7 +114,7 @@
 						C.anchored = 1
 						C.density = 1
 						C.update()
-						del(src)
+						qdel(src)
 					return
 				else
 					user << "You need more welding fuel to complete this task."
@@ -861,7 +861,7 @@
 				expel(H, T, 0)
 
 		spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
-			del(src)
+			qdel(src)
 
 
 	// pipe affected by explosion
@@ -944,7 +944,7 @@
 		C.anchored = 1
 		C.update()
 
-		del(src)
+		qdel(src)
 
 // *** TEST verb
 //client/verb/dispstop()
@@ -1306,7 +1306,7 @@
 	welded()
 //		var/obj/item/scrap/S = new(src.loc)
 //		S.set_components(200,0,0)
-		del(src)
+		qdel(src)
 
 // the disposal outlet machine
 

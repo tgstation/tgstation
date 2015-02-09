@@ -243,7 +243,7 @@
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 0)
 			user.drop_item()
-			del(O)
+			qdel(O)
 			toner = 40
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			updateUsrDialog()
@@ -292,7 +292,7 @@
 					if(I.reliability != 100 && crit_fail)
 						I.crit_fail = 1
 					I.loc = src.loc
-				del(src)
+				qdel(src)
 				return 1
 	return
 
@@ -305,21 +305,24 @@
 				qdel(src)
 			else
 				if(toner > 0)
-					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, get_turf(src))
+					O.New(O.loc)
 					toner = 0
 		else
 			if(prob(50))
 				if(toner > 0)
-					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, get_turf(src))
+					O.New(O.loc)
 					toner = 0
 	return
 
 /obj/machinery/photocopier/blob_act()
 	if(prob(50))
-		del(src)
+		qdel(src)
 	else
 		if(toner > 0)
-			new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+			var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, get_turf(src))
+			O.New(O.loc)
 			toner = 0
 	return
 
