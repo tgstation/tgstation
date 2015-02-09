@@ -26,8 +26,9 @@ RSF
 		"paper",
 		"flask",
 		"dice",
-		"a deck of cards",
-		"a candle",
+		"deck of cards",
+		"candle",
+		"cardboard sheet.
 		)
 	return
 
@@ -100,7 +101,7 @@ RSF
 				user << "Dispensing Paper..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
 				new /obj/item/weapon/paper(get_turf(A))
-		if("a candle")
+		if("candle")
 			if(pay(user,1))
 				user << "Dispensing a Candle..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
@@ -110,11 +111,17 @@ RSF
 				user << "Dispensing Dice Pack..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
 				new /obj/item/weapon/storage/pill_bottle/dice(get_turf(A))
-		if("a deck of cards")
+		if("deck of cards")
 			if(pay(user,1))
 				user << "Dispensing a Deck of Cards..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
 				new /obj/item/toy/cards(get_turf(A))
+
+		if("cardboard sheet")
+			if(pay(user,1))
+				user << "Dispensing a Cardboard Sheet..."
+				playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
+				new /obj/item/stack/sheet/cardboard(get_turf(A))
 	update_desc()
 
 /obj/item/weapon/rsf/cyborg/New()
