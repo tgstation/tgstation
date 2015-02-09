@@ -231,7 +231,7 @@ var/MAX_EXPLOSION_RANGE = 14
 	These defines are used specifically with the atom/movable/languages bitmask.
 	They are used in atom/movable/Hear() and atom/movable/say() to determine whether hearers can understand a message.
 
-	They also have a secondary use in Bump() code for living mobs, in the mob_bump_flag and mob_bump_flags vars
+	They also have a secondary use in Bump() code for living mobs, in the mob_bump_flag and mob_swap_flags/mob_push_flags vars
 */
 
 #define HUMAN 1
