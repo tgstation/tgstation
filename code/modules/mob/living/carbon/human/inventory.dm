@@ -37,6 +37,21 @@
 		r_store,
 		s_store)
 
+//everything on the mob that is not in its pockets, hands and belt.
+/mob/living/carbon/human/get_clothing_items()
+	var/list/equipped = ..()
+	equipped -= list(back,
+					handcuffed,
+					legcuffed,
+					belt,
+					wear_id,
+					gloves,
+					head,
+					shoes,
+					wear_suit,
+					w_uniform)
+	return equipped
+
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
 	for (var/slot in slots)
 		if (equip_to_slot_if_possible(W, slots[slot], 0))
