@@ -204,9 +204,37 @@
 	name = "shot glass"
 	desc = "A shot glass - the universal symbol for bad decisions."
 	icon_state = "shotglass"
-	amount_per_transfer_from_this = 10
-	volume = 10
+	amount_per_transfer_from_this = 5
+	volume = 5
 
+/obj/item/weapon/reagent_containers/food/drinks/shotglass/on_reagent_change()
+	if (reagents.reagent_list.len > 0)
+		switch(reagents.get_master_reagent_id())
+			if("vodka")
+				icon_state = "shotglassclear"
+				name = "shot of vodka"
+				desc = "A shot of vodka. Good for cold weather."
+			if("water")
+				icon_state = "shotglassclear"
+				name = "shot of water"
+				desc = "A shot of water. You're not sure why someone would drink this from a shot glass."
+			if("whiskey")
+				icon_state = "shotglassbrown"
+				name = "shot of whiskey"
+				desc = "A shot of whiskey. Just like the old west."
+			if("rum")
+				icon_state = "shotglassbrown"
+				name = "shot of rum"
+				desc = "A shot of rum, you dirty pirate."
+			else
+				icon_state = "shotglassbrown"
+				name = "shot of booze"
+				desc = "A shot of booze. Now it's a party."
+	else
+		icon_state = "shotglass"
+		name = "shot glass"
+		desc = "A shot glass - the universal symbol for bad decisions."
+		return
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
