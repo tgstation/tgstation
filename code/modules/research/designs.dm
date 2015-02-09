@@ -2854,7 +2854,7 @@ k
 	desc = "Allows for the construction of a spacepod core system, made up of the engine and life support systems."
 	id = "podcore"
 	build_type = MECHFAB | PODFAB
-	req_tech = list("materials" = 4, "engineering" = 3, "plasma" = 3, "bluespace" = 2)
+	req_tech = list("materials" = 4, "engineering" = 3, "plasmatech" = 3, "bluespace" = 2)
 	build_path = /obj/item/pod_parts/core
 	category = "Pod_Parts"
 	materials = list("$iron"=5000,"$uranium"=1000,"$plasma"=5000)
@@ -2868,7 +2868,7 @@ k
 	desc = "Allows for the construction of spacepod armor. This is the civilian version."
 	id = "podarmor_civ"
 	build_type = PODFAB
-	req_tech = list("materials" = 3, "plasma" = 3)
+	req_tech = list("materials" = 3, "plasmatech" = 3)
 	build_path = /obj/item/pod_parts/armor
 	category = "Pod_Armor"
 	materials = list("$iron"=15000,"$glass"=5000,"$plasma"=10000)
@@ -2901,7 +2901,7 @@ k
 	desc = "Allows for the construction of a spacepod mounted laser."
 	id = "podgun_laser"
 	build_type = PODFAB
-	req_tech = list("materials" = 3, "combat" = 3, "plasma" = 2)
+	req_tech = list("materials" = 3, "combat" = 3, "plasmatech" = 2)
 	build_path = /obj/item/device/spacepod_equipment/weaponry/laser
 	category = "Pod_Weaponry"
 	materials = list("$iron" = 15000)
