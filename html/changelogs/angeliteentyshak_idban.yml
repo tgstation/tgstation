@@ -1,6 +1,0 @@
-author: Angelite Entyshak
-
-delete-after: True
-
-changes:
-  - bugfix: Identity banned player can no longer have flavortext.

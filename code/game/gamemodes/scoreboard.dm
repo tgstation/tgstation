@@ -132,7 +132,7 @@
 					if (player.stat == 2) score["deadcommand"]++
 
 	// Check station's power levels
-	for (var/obj/machinery/power/apc/A in machines)
+	for (var/obj/machinery/power/apc/A in power_machines)
 		if (A.z != 1) continue
 		for (var/obj/item/weapon/cell/C in A.contents)
 			if (C.charge < 2300) score["powerloss"] += 1 // 200 charge leeway

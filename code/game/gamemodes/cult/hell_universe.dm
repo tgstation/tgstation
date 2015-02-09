@@ -93,7 +93,7 @@ In short:
 		if (!(alm.stat & BROKEN))
 			alm.ex_act(2)
 
-	for (var/obj/machinery/power/apc/APC in machines)
+	for (var/obj/machinery/power/apc/APC in power_machines)
 		if (!(APC.stat & BROKEN) && !istype(APC.areaMaster,/area/turret_protected/ai))
 			if(APC.cell)
 				APC.cell.charge = 0
