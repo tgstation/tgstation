@@ -351,3 +351,18 @@
 	else
 		user << "<span class='notice'>\The [W] doesn't contain any banana essence!</span>"
 		return 0
+
+#undef HEALTH_FOR_70X_MODIFIER
+#undef HEALTH_FOR_80X_MODIFIER
+#undef HEALTH_FOR_FLOWER_RECHARGE
+
+#undef HEALTH_FOR_FREE_MOVEMENT
+
+#undef BANANA_FOR_NORMAL_PEEL
+#undef BANANA_FOR_TRAITOR_PEEL
+#undef BANANA_FOR_DRAWING
+#undef BANANA_FOR_MOVEMENT
+
+#undef MODE_NORMAL
+#undef MODE_DRAWING
+#undef MODE_PEELS
