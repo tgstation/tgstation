@@ -104,7 +104,6 @@
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()
-		return
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
@@ -257,6 +256,13 @@
 	bcell = new /obj/item/weapon/stock_parts/cell/infinite(src)
 	update_icon()
 	return
+
+/obj/item/weapon/defibrillator/compact/combat/attackby(obj/item/weapon/W, mob/user)
+	if(W == paddles)
+		paddles.unwield()
+		toggle_paddles()
+		update_icon()
+		return
 
 //paddles
 
