@@ -18,24 +18,28 @@
 
 /mob/living/carbon/human/get_all_slots()
 	return list(
-		back,
-		wear_mask,
-		handcuffed,
-		legcuffed,
+//ordered body items by which would appear on top
 		l_hand,
 		r_hand,
+		back,
+		s_store,
+		handcuffed,
+		legcuffed,
+		wear_suit,
+		gloves,
+		shoes,
 		belt,
 		wear_id,
-		ears,
-		glasses,
-		gloves,
-		head,
-		shoes,
-		wear_suit,
-		w_uniform,
 		l_store,
 		r_store,
-		s_store)
+		w_uniform,
+
+//also head ordered
+		head,
+		wear_mask,
+		glasses,
+		ears
+		)
 
 //everything on the mob that is not in its pockets, hands and belt.
 /mob/living/carbon/human/get_clothing_items()
@@ -45,11 +49,9 @@
 					legcuffed,
 					belt,
 					wear_id,
-					gloves,
-					head,
-					shoes,
-					wear_suit,
-					w_uniform)
+					l_store,
+					r_store,
+					s_store)
 	return equipped
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
