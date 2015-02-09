@@ -1333,7 +1333,7 @@
 	description = "Sterilizes wounds in preparation for surgery."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	/*
+/*
 /datum/reagent/sterilizine/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	src = null
 	if (method==TOUCH)
@@ -1346,10 +1346,10 @@
 	return
 
 /datum/reagent/sterilizine/on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-					M.radiation += 3
-					..()
-					return
+	if(!M) M = holder.my_atom
+		M.radiation += 3
+		..()
+		return
 */
 
 /datum/reagent/iron
@@ -1359,7 +1359,7 @@
 	reagent_state = SOLID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 /*
-/datum/reagent/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/iron/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if((M.virus) && (prob(8) && (M.virus.name=="Magnitis")))
 		if(M.virus.spread == "Airborne")
