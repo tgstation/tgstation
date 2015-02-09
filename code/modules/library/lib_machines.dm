@@ -56,7 +56,7 @@ var/libcomp_menu
 		newbook.title = query.item[3]
 		newbook.category = query.item[4]
 
-		cachedbooks += newbook
+		cachedbooks["[newbook.id]"] = newbook
 
 	if(force)
 		for(var/obj/machinery/librarycomp/L in library_computers)
@@ -115,10 +115,10 @@ var/libcomp_menu
 				query.Execute()
 
 				while(query.NextRow())
-					var/author = query.item[1]
-					var/title = query.item[2]
-					var/category = query.item[3]
-					var/id = query.item[4]
+					var/author = query.item[2]
+					var/title = query.item[3]
+					var/category = query.item[4]
+					var/id = query.item[1]
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
 				dat += "</table><BR>"
 			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
@@ -153,7 +153,7 @@ var/libcomp_menu
 			author = null
 		author = sanitizeSQL(author)
 	if(href_list["search"])
-		SQLquery = "SELECT author, title, category, id FROM library WHERE "
+		SQLquery = "SELECT id, author, title, category FROM library WHERE "
 		if(category == "Any")
 			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
 		else
@@ -218,8 +218,9 @@ var/libcomp_menu
 /obj/machinery/librarycomp/proc/build_library_menu()
 	var/menu
 
-	for(var/datum/cachedbook/C in cachedbooks)
-		menu += "<tr><td>[C.author]</td><td>[C.title]</td><td>[C.category]</td><td><A href='?src=\ref[src];cacheid=[cachedbooks.Find(C)]'>\[Order\]</A></td></tr>"
+	for(var/ID in cachedbooks)
+		var/datum/cachedbook/C = cachedbooks[ID]
+		menu += "<tr><td>[C.author]</td><td>[C.title]</td><td>[C.category]</td><td><A href='?src=\ref[src];cacheid=[ID]'>\[Order\]</A></td></tr>"
 
 	booklist = menu
 
@@ -487,31 +488,22 @@ var/libcomp_menu
 							usr << query.ErrorMsg()
 						else
 							world.log << response
-							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
-							alert("Upload Complete.")
+							log_admin("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
+							message_admins("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
+							query = dbcon_old.NewQuery("SELECT id, author, title, content FROM library WHERE title = '[sqltitle]' AND author = '[sqlauthor]' AND category = '[sqlcategory]' ")
 							var/datum/cachedbook/newbook = new()
-							newbook.id = cachedbooks.len + 1
-							newbook.author = sqlauthor
-							newbook.title = sqltitle
-							newbook.category = sqlcategory
-							newbook.content = sqlcontent
-							cachedbooks += newbook
-							add_book_to_cache(sqlauthor,sqltitle,sqlcategory,newbook.id)
+							while(query.NextRow())
+								if(query.item[1] in cachedbooks)
+									continue //already have this book
+								newbook.id = query.item[1]
+								newbook.author = query.item[2]
+								newbook.title = query.item[3]
+								newbook.content = query.item[4]
 
-	if(href_list["targetid"])
-		var/id = text2num(href_list["targetid"])
-		if(!id || !isnum(id) || id < 1)
-			usr << "<span class='warning'>Invalid SS<sup>13</sup>BN</span>"
-			return
-		var/datum/cachedbook/found
-		for(var/datum/cachedbook/newbook in cachedbooks)
-			if(newbook.id == id)
-				found = newbook
-				break
-		if(!found)
-			usr << "<span class='warning'>Unable to locate a book with an SS<sup>13</sup>BN of [id]</span>"
-			return
-		make_external_book(found)
+							cachedbooks["[newbook.id]"] = newbook
+							alert("Upload Complete.")
+							if(newbook && newbook.id)
+								add_book_to_cache(sqlauthor,sqltitle,sqlcategory,newbook.id)
 
 	if(href_list["cacheid"])
 		//var/sqlid = sanitizeSQL(href_list["targetid"])
@@ -529,7 +521,7 @@ var/libcomp_menu
 				bibledelay = 0
 			//var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id=[sqlid]")
 			//query.Execute()
-			var/datum/cachedbook/newbook = cachedbooks[text2num(href_list["cacheid"])]
+			var/datum/cachedbook/newbook = cachedbooks["[href_list["cacheid"]]"]
 			if(!newbook)
 				return
 			make_external_book(newbook)
@@ -538,8 +530,9 @@ var/libcomp_menu
 		var/orderid = input("Enter your order:") as num|null
 		if(orderid)
 			if(isnum(orderid))
-				var/nhref = "src=\ref[src];targetid=[orderid]"
-				spawn() src.Topic(nhref, params2list(nhref), src)
+				spawn()
+					orderByID(orderid)
+				return
 
 	if(href_list["manual"])
 		if(!bibledelay)
@@ -673,3 +666,21 @@ var/libcomp_menu
 		del(O)
 	else
 		return ..()
+
+/obj/machinery/librarycomp/proc/orderByID(var/id)
+	if(!id || !isnum(id) || id < 1)
+		usr << "<span class='warning'>Invalid SS<sup>13</sup>BN</span>"
+		return
+	var/datum/cachedbook/found = cachedbooks["[id]"]
+	/*
+	for(var/datum/cachedbook/newbook in cachedbooks)
+		testing("Checking book [newbook]. ([newbook.title], [newbook.id])")
+		if(newbook.id == id)
+			testing("Found book matching our [id] ([newbook.title], [newbook.id])")
+			found = newbook
+			break
+	*/
+	if(!found)
+		usr << "<span class='warning'>Unable to locate a book with an SS<sup>13</sup>BN of [id]</span>"
+		return
+	make_external_book(found)
