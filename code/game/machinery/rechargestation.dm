@@ -316,41 +316,38 @@
 /obj/machinery/recharge_station/verb/move_inside()
 	set category = "Object"
 	set src in oview(1)
-	// Broken or unanchored?  Fuck off.
+
+	mob_enter(usr)
+	return
+
+/obj/machinery/recharge_station/proc/mob_enter(mob/living/silicon/robot/R)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
-	if (usr.stat == 2)
+	if (R.stat == 2)
 		//Whoever had it so that a borg with a dead cell can't enter this thing should be shot. --NEO
 		return
-	if (!(istype(usr, /mob/living/silicon/)))
-		usr << "\blue <B>Only non-organics may enter the recharger!</B>"
+	if (!(istype(R, /mob/living/silicon/)))
+		R << "<span class='notice'><B>Only non-organics may enter the recharger!</B></span>"
 		return
 	if (src.occupant)
-		usr << "\blue <B>The cell is already occupied!</B>"
+		R << "<span class='notice'><B>The cell is already occupied!</B></span>"
 		return
-	/*if (!usr:cell)
-		usr<<"\blue Without a powercell, you can't be recharged."
-		//Make sure they actually HAVE a cell, now that they can get in while powerless. --NEO
-		return*/
-	usr.stop_pulling()
-	if(usr && usr.client)
-		usr.client.perspective = EYE_PERSPECTIVE
-		usr.client.eye = src
-	usr.loc = src
-	src.occupant = usr
-	/*for(var/obj/O in src)
-		O.loc = src.loc*/
-	src.add_fingerprint(usr)
+	R.stop_pulling()
+	if(R && R.client)
+		R.client.perspective = EYE_PERSPECTIVE
+		R.client.eye = src
+	R.loc = src
+	src.occupant = R
+	src.add_fingerprint(R)
 	build_icon()
 	src.use_power = 2
 	for(var/obj/O in upgrade_holder)
 		if(istype(O, /obj/item/weapon/cell))
-			if(!usr:cell)
+			if(!R.cell)
 				usr << "<big><span class='notice'>Power Cell replacement available.</span></big>"
 			else
-				if(O:maxcharge > usr:cell:maxcharge)
+				if(O:maxcharge > R.cell.maxcharge)
 					usr << "<span class='notice'>Power Cell upgrade available.</span></big>"
-	return
 
 /obj/machinery/recharge_station/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(occupant)
@@ -366,3 +363,9 @@
 
 
 
+/obj/machinery/recharge_station/Bumped(atom/AM as mob|obj)
+	if(!issilicon(AM) || isAI(AM))
+		return
+	var/mob/living/silicon/robot/R = AM
+	mob_enter(R)
+	return
