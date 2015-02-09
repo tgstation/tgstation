@@ -7,6 +7,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2;engineering=2"
 	vision_flags = SEE_TURFS
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/meson/prescription
@@ -51,6 +52,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 	vision_flags = SEE_OBJS
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/regular
@@ -143,6 +145,7 @@
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
+	see_invisible = SEE_INVISIBLE_LIVING
 	vision_flags = BLIND
 	species_fit = list("Vox")
 
@@ -176,6 +179,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	invisa_view = 2
 
 	emp_act(severity)
