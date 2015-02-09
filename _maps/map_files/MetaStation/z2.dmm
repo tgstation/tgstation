@@ -521,7 +521,7 @@
 "ka" = (/obj/machinery/computer/telecrystals/uplinker,/turf/unsimulated/floor{tag = "icon-podhatch (NORTHWEST)"; icon_state = "podhatch"; dir = 9},/area/syndicate_mothership)
 "kb" = (/obj/structure/dresser,/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
 "kc" = (/obj/structure/table/wood,/obj/item/weapon/clipboard,/obj/item/weapon/pen,/turf/unsimulated/floor{icon_state = "grimy"},/area/syndicate_mothership)
-"kd" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{pixel_x = -5},/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{pixel_x = 5},/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/ferry)
+"kd" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{pixel_x = -5},/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{pixel_x = 5},/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/ferry)
 "ke" = (/obj/structure/closet/secure_closet/ertMed,/turf/unsimulated/floor{tag = "icon-darkblue"; icon_state = "darkblue"; dir = 2},/area/centcom/ferry)
 "kf" = (/obj/structure/closet/secure_closet/ertEngi,/obj/structure/extinguisher_cabinet{pixel_y = -28},/turf/unsimulated/floor{tag = "icon-darkbrown"; icon_state = "darkbrown"; dir = 2},/area/centcom/ferry)
 "kg" = (/obj/structure/closet/secure_closet/ertSec,/turf/unsimulated/floor{tag = "icon-darkred"; icon_state = "darkred"; dir = 2},/area/centcom/ferry)
