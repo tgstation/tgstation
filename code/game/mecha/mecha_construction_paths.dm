@@ -455,7 +455,7 @@
 					holder.icon_state = "gygax16"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
+					var/obj/item/stack/sheet/metal/MS = getFromPool(/obj/item/stack/sheet/metal,get_turf(holder)) //new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "gygax14"
 			if(4)
@@ -1038,7 +1038,7 @@
 					holder.icon_state = "durand16"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
+					var/obj/item/stack/sheet/metal/MS = getFromPool(/obj/item/stack/sheet/metal,get_turf(holder)) //new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "durand14"
 			if(4)
@@ -1249,7 +1249,7 @@
 					holder.icon_state = "odysseus10"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
+					var/obj/item/stack/sheet/metal/MS = getFromPool(/obj/item/stack/sheet/metal,get_turf(holder))//new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "odysseus8"
 			if(4)
@@ -1461,7 +1461,7 @@
 					user.visible_message("[user] secures the internal armor layer.", "You secure the internal armor layer.")
 				else
 					user.visible_message("[user] pries the internal armor layer from [holder].", "You pry the internal armor layer from [holder].")
-					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
+					var/obj/item/stack/sheet/metal/MS = getFromPool(/obj/item/stack/sheet/metal,get_turf(holder))//new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
 			if(4)
 				if(diff==FORWARD)

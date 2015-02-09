@@ -2,6 +2,8 @@
 	name = "submachine gun"
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
 	icon_state = "saber"	//ugly
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	w_class = 3.0
 	max_shells = 18
 	caliber = list("9mm" = 1)
@@ -49,6 +51,8 @@
 	name = "Uzi"
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses .45 rounds."
 	icon_state = "mini-uzi"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	w_class = 3.0
 	max_shells = 10
 	burst_count = 3
@@ -89,8 +93,9 @@
 	name = "\improper Assault Rifle"
 	desc = "A lightweight, fast firing gun, issued to shadow organization members."
 	icon_state = "xcomassaultrifle"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	origin_tech = "combat=5;materials=2"
-	item_state = "c20r"
 	w_class = 3.0
 	max_shells = 20
 	burst_count = 4

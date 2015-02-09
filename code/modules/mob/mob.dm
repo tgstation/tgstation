@@ -5,6 +5,13 @@
 
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
 	unset_machine()
+	if(client)
+		for(var/atom/movable/AM in client.screen)
+			qdel(AM)
+		client.screen = list()
+	qdel(hud_used)
+	if(mind && mind.current == src)
+		spellremove(src)
 	mob_list.Remove(src)
 	dead_mob_list.Remove(src)
 	living_mob_list.Remove(src)

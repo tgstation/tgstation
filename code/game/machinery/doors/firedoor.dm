@@ -202,7 +202,7 @@
 	ASSERT(istype(A)) // This worries me.
 	var/alarmed = A.doors_down || A.fire
 
-	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
+	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/fireaxe) && C.wielded == 1 ) )
 		if(operating)
 			return
 		if( blocked )

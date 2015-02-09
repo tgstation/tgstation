@@ -75,7 +75,7 @@
 		listening |= L
 	var/list/listening_dead = list()
 	for(var/mob/M in player_list)
-		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && client) // client is so that ghosts don't have to listen to mice
+		if(M.client && M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && client) // client is so that ghosts don't have to listen to mice
 			listening_dead |= M
 
 	listening -= listening_dead //so ghosts dont hear stuff twice
@@ -118,7 +118,9 @@ var/const/VOX_DELAY = 600
 
 
 /mob/living/silicon/ai/verb/announcement()
-
+	set name = "Announcement"
+	set desc = "Send an announcement to the crew"
+	set category = "AI Commands"
 	// If we're in an APC, and APC is ded, ABORT
 	if(parent && istype(parent) && parent.stat)
 		return

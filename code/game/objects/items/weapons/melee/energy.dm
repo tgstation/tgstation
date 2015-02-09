@@ -1,10 +1,22 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
+	sharpness = 1.5 //very very sharp
+	heat_production = 3500
 
-	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
-							"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS|FIRELOSS)
+/obj/item/weapon/melee/energy/suicide_act(mob/user)
+	viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
+						"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	return (BRUTELOSS|FIRELOSS)
+
+/obj/item/weapon/melee/energy/is_hot()
+	if(active)
+		return heat_production
+	return 0
+
+/obj/item/weapon/melee/energy/is_sharp()
+	if(active)
+		return sharpness
+	return 0
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
@@ -97,7 +109,7 @@
 				user.adjustBrainLoss(10)
 		else
 			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			new /obj/item/weapon/twohanded/dualsaber(user.loc)
+			new /obj/item/weapon/dualsaber(user.loc)
 			del(W)
 			del(src)
 

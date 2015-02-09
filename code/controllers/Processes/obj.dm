@@ -7,34 +7,15 @@ var/global/list/object_profiling = list()
 	schedule_interval = 20 // every 2 seconds
 	updateQueueInstance = new
 
-/datum/controller/process/obj/doWork()
-	for(var/i = 1 to processing_objects.len)
-		if(i > processing_objects.len)
-			break
-		#ifdef PROFILE_MACHINES
-		var/time_start = world.timeofday
-		#endif
-		var/obj/O = processing_objects[i]
-		if(O)
-			O.process()
-			#ifdef PROFILE_MACHINES
-			var/time_end = world.timeofday
-			if(O)
-				if(!("[O.type]" in object_profiling))
-					object_profiling["[O.type]"] = 0
-				object_profiling["[O.type]"] += (time_end - time_start)
-			else
-				if(i+1 >processing_objects.len)
-					processing_objects.len--
-				else
-					processing_objects.Cut(i,i+1)
-			#endif
-		else
-			if(i+1 >processing_objects.len)
-				processing_objects.len--
-			else
-				processing_objects.Cut(i,i+1)
+/datum/controller/process/obj/started()
+	..()
+	if(!updateQueueInstance)
+		if(!processing_objects)
+			processing_objects = list()
+		else if(processing_objects.len)
+			updateQueueInstance = new
 
-		scheck()
-	//updateQueueInstance.init(processing_objects, "process")
-	//updateQueueInstance.Run()
+/datum/controller/process/obj/doWork()
+	if(updateQueueInstance)
+		updateQueueInstance.init(processing_objects, "process")
+		updateQueueInstance.Run()

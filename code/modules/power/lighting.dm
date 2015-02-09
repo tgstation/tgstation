@@ -46,7 +46,8 @@
 			usr << "You begin deconstructing [src]."
 			if (!do_after(usr, 30))
 				return
-			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			M.amount = sheets_refunded
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 75, 1)

@@ -156,7 +156,7 @@
 				playsound(get_turf(src), 'sound/effects/lingstabs.ogg', 50, 1)
 				var/datum/organ/external/affecting = T.get_organ(src.zone_sel.selecting)
 				if(affecting.take_damage(39,0,1,"large organic needle"))
-					T:QueueUpdateDamageIcon(1)
+					T:UpdateDamageIcon(1)
 					continue
 
 		feedback_add_details("changeling_powers","A[stage]")

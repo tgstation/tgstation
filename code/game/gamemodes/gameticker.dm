@@ -64,11 +64,11 @@ var/global/datum/controller/gameticker/ticker
 			for(var/i=0, i<10, i++)
 				sleep(1)
 				vote.process()
-				watchdog.check_for_update()
-				if(watchdog.waiting)
-					world << "<span class='notice'>Server update detected, restarting momentarily.</span>"
-					watchdog.signal_ready()
-					return
+				//watchdog.check_for_update()
+				//if(watchdog.waiting)
+					//world << "<span class='notice'>Server update detected, restarting momentarily.</span>"
+					//watchdog.signal_ready()
+					//return
 			if(!going && !remaining_time)
 				remaining_time = pregame_timeleft - world.timeofday
 			if(going == LOBBY_TICKING_RESTARTED)
@@ -187,6 +187,7 @@ var/global/datum/controller/gameticker/ticker
 			play_vox_sound(sound,STATION_Z,null)
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
+		mode.Clean_Antags()
 
 	//start_events() //handles random events and space dust.
 	//new random event system is handled from the MC.

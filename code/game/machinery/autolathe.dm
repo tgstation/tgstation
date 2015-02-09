@@ -15,12 +15,12 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/wrench(), \
 		new /obj/item/clothing/head/welding(), \
 		new /obj/item/weapon/stock_parts/console_screen(), \
-		new /obj/item/stack/sheet/metal(), \
+		getFromPool(/obj/item/stack/sheet/metal,null), \
 		new /obj/item/stack/sheet/glass/glass(), \
 		new /obj/item/stack/sheet/glass/rglass(), \
 		new /obj/item/stack/rods(), \
 		new /obj/item/weapon/rcd_ammo(), \
-		new /obj/item/weapon/kitchenknife(), \
+		new /obj/item/weapon/kitchen/utensil/knife/large(), \
 		new /obj/item/weapon/scalpel(), \
 		new /obj/item/weapon/circular_saw(), \
 		new /obj/item/weapon/surgicaldrill(),\
@@ -232,7 +232,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 /obj/machinery/autolathe/crowbarDestroy(mob/user)
 	if(..() == 1)
 		if(m_amount >= 3750)
-			var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
+			var/obj/item/stack/sheet/metal/G = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 			G.amount = round(m_amount / 3750)
 		if(g_amount >= 3750)
 			var/obj/item/stack/sheet/glass/glass/G = new /obj/item/stack/sheet/glass/glass(src.loc)
@@ -309,7 +309,10 @@ var/global/list/autolathe_recipes_hidden = list( \
 								src.m_amount = 0
 							if(src.g_amount < 0)
 								src.g_amount = 0
-							var/obj/new_item = new template.type(T)
+							var/obj/new_item
+							if(istype(template, /obj/item/stack/sheet/metal))
+								new_item = getFromPool(/obj/item/stack/sheet/metal, T)
+							else new_item = new template.type(T)
 							if (multiplier>1)
 								var/obj/item/stack/S = new_item
 								S.amount = multiplier

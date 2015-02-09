@@ -10,6 +10,7 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	flags = OPENCONTAINER | NOREACT
+	pass_flags = PASSTABLE
 	var/operating = 0 // Is it on?
 	var/opened = 0.0
 	var/dirty = 0 // = {0..100} Does it need cleaning?

@@ -24,38 +24,6 @@
 	regenerate_icons()
 	..()
 
-//This is fine, works the same as a human
-/mob/living/carbon/alien/larva/Bump(atom/movable/AM as mob|obj, yes)
-
-	spawn(0)
-		if((!(yes) || now_pushing))
-			return
-		now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
-				if(prob(70))
-					src << "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>"
-					now_pushing = 0
-					return
-				if(!(tmob.status_flags & CANPUSH))
-					now_pushing = 0
-					return
-			tmob.LAssailant = src
-
-		now_pushing = 0
-		..()
-		if (!(istype(AM, /atom/movable)))
-			return
-		if (!(now_pushing))
-			now_pushing = 1
-			if (!(AM.anchored))
-				var/t = get_dir(src, AM)
-				step(AM, t)
-			now_pushing = null
-		return
-	return
-
 //This needs to be fixed
 /mob/living/carbon/alien/larva/Stat()
 	..()

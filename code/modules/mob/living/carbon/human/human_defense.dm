@@ -85,6 +85,15 @@ emp_act
 				protection += C.armor[type]
 	return protection
 
+/mob/living/carbon/human/proc/check_head_coverage(var/body_part_flags=0)
+	if(!body_part_flags)
+		return 0
+	for(var/obj/item/clothing/C in get_clothing_items())
+		if(!C) continue
+		if(C.body_parts_covered & body_part_flags)
+			return 1
+	return 0
+
 /mob/living/carbon/human/proc/check_body_part_coverage(var/body_part_flags=0)
 	if(!body_part_flags)
 		return 0
@@ -163,7 +172,7 @@ emp_act
 	if(!target_zone && !src.stat)
 		visible_message("\red <B>[user] misses [src] with \the [I]!")
 		return
-	if(istype(I, /obj/item/weapon/butch/meatcleaver) && src.stat == DEAD && user.a_intent == "hurt")
+	if(istype(I, /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver) && src.stat == DEAD && user.a_intent == "hurt")
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new /obj/item/weapon/reagent_containers/food/snacks/meat/human(get_turf(src.loc))
 		newmeat.name = src.real_name + newmeat.name
 		newmeat.subjectname = src.real_name
@@ -213,7 +222,7 @@ emp_act
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
 
-	apply_damage(I.force, I.damtype, affecting, armor , is_sharp(I), I)
+	apply_damage(I.force, I.damtype, affecting, armor , I.is_sharp(), I)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
@@ -370,7 +379,7 @@ emp_act
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_arm")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-	if(update)	QueueUpdateDamageIcon(1)
+	if(update)	UpdateDamageIcon()
 
 
 /mob/living/carbon/human/blob_act()
@@ -394,9 +403,9 @@ emp_act
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
 			if(affecting.take_damage(101, 0))
-				QueueUpdateDamageIcon(1)
+				UpdateDamageIcon(1)
 		else
 			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
-				QueueUpdateDamageIcon(1)
+				UpdateDamageIcon(1)
 		updatehealth()
 	return

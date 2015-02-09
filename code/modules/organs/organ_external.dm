@@ -54,6 +54,7 @@
 		parent.children.Add(src)
 	return ..()
 
+
 /****************************************************
 			   DAMAGE PROCS
 ****************************************************/
@@ -77,7 +78,7 @@
 
 	if(status & ORGAN_DESTROYED)
 		return 0
-	if(status & (ORGAN_ROBOT|ORGAN_PEG))
+	if((status & ORGAN_ROBOT|ORGAN_PEG))
 		brute *= 0.66 //~2/3 damage for ROBOLIMBS
 		burn *= 0.66 //~2/3 damage for ROBOLIMBS
 
@@ -100,7 +101,7 @@
 	if(used_weapon)
 		add_autopsy_data("[used_weapon]", brute + burn)
 
-	var/can_cut = (prob(brute*2) || sharp) && !(status & (ORGAN_ROBOT|ORGAN_PEG))
+	var/can_cut = (prob(brute*2) || sharp) && !((status & ORGAN_ROBOT|ORGAN_PEG))
 	// If the limbs can break, make sure we don't exceed the maximum damage a limb can take before breaking
 	if((brute_dam + burn_dam + brute + burn) < max_damage || !config.limbs_can_break)
 		if(brute)
@@ -246,7 +247,7 @@ This function completely restores a damaged organ to perfect condition.
 
 	//Possibly trigger an internal wound, too.
 	var/local_damage = brute_dam + burn_dam + damage
-	if(damage > 10 && type != BURN && local_damage > 20 && prob(damage) && !(status & (ORGAN_ROBOT|ORGAN_PEG))&& !(owner.species && owner.species.flags & NO_BLOOD))
+	if(damage > 10 && type != BURN && local_damage > 20 && prob(damage) && !(status & (ORGAN_ROBOT|ORGAN_PEG)) && !(owner.species && owner.species.flags & NO_BLOOD))
 		var/datum/wound/internal_bleeding/I = new (15)
 		wounds += I
 		owner.custom_pain("You feel something rip in your [display_name]!", 1)
@@ -269,7 +270,7 @@ This function completely restores a damaged organ to perfect condition.
 //Determines if we even need to process this organ.
 
 /datum/organ/external/proc/need_process()
-	if(status && status & (ORGAN_ROBOT|ORGAN_PEG)) // If it's robotic OR PEG, that's fine it will have a status.
+	if(status && ((status & ORGAN_ROBOT|ORGAN_PEG))) // If it's robotic OR PEG, that's fine it will have a status.
 		return 1
 	if(brute_dam || burn_dam)
 		return 1
@@ -476,7 +477,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	// sync the organ's damage with its wounds
 	src.update_damages()
 	if (update_icon())
-		owner.QueueUpdateDamageIcon(1)
+		owner.UpdateDamageIcon()
 
 //Updates brute_damn and burn_damn from wound damages. Updates BLEEDING status.
 /datum/organ/external/proc/update_damages()
@@ -580,6 +581,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 					organ= new /obj/item/weapon/organ/head/posi(owner.loc, owner)
 				else
 					organ= new /obj/item/weapon/organ/head(owner.loc, owner)
+				var/datum/organ/internal/brain/B = owner.internal_organs_by_name["brain"]
+				var/obj/item/weapon/organ/head/H = organ
+				H.organ_data = B
+				B.organ_holder = organ
+				owner.internal_organs_by_name["brain"] = null
+				owner.internal_organs_by_name -= "brain"
+				owner.internal_organs -= B
+				internal_organs -= B
 				owner.u_equip(owner.glasses)
 				owner.u_equip(owner.head)
 				owner.u_equip(owner.l_ear)
@@ -768,17 +777,27 @@ Note that amputating the affected organ does in fact remove the infection from t
 /datum/organ/external/proc/peggify()
 	src.status &= ~ORGAN_BROKEN
 	src.status &= ~ORGAN_BLEEDING
+	src.status &= ~ORGAN_CUT_AWAY
 	src.status &= ~ORGAN_SPLINTED
 	src.status &= ~ORGAN_ATTACHABLE
 	src.status &= ~ORGAN_DESTROYED
 	src.status &= ~ORGAN_ROBOT
 	src.status |= ORGAN_PEG
+	src.wounds.len = 0
 	for (var/datum/organ/external/T in children)
 		if(T)
 			if(body_part == ARM_LEFT || body_part == ARM_RIGHT)
 				T.peggify()
 			else
 				T.droplimb(1,1)
+				T.status &= ~ORGAN_BROKEN
+				T.status &= ~ORGAN_BLEEDING
+				T.status &= ~ORGAN_CUT_AWAY
+				T.status &= ~ORGAN_SPLINTED
+				T.status &= ~ORGAN_ATTACHABLE
+				T.status &= ~ORGAN_DESTROYED
+				T.status &= ~ORGAN_ROBOT
+				T.wounds.len = 0
 
 /datum/organ/external/proc/mutate()
 	src.status |= ORGAN_MUTATED
@@ -1018,6 +1037,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
+	var/datum/organ/internal/organ_data
 
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)

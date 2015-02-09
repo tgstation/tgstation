@@ -130,7 +130,7 @@
 	if(speaker != src && prob(20)) //Don't imitate outselves
 		if(speech_buffer.len >= 20)
 			speech_buffer -= pick(speech_buffer)
-		speech_buffer |= html_decode(raw_message)
+		speech_buffer |= strip_html_properly(html_decode(raw_message))
 	..()
 
 /mob/living/simple_animal/parrot/radio(message, message_mode) //literally copied from human/radio(), but there's no other way to do this, at least it's better than it used to be.
@@ -201,7 +201,7 @@
 						ears = null
 						for(var/possible_phrase in speak)
 							if(copytext(possible_phrase,1,3) in department_radio_keys)
-								possible_phrase = copytext(possible_phrase,3,length(possible_phrase))
+								possible_phrase = copytext(possible_phrase,3)
 					else
 						usr << "\red There is nothing to remove from its [remove_from]."
 						return
@@ -407,12 +407,10 @@
 							useradio = 1
 
 						if(copytext(possible_phrase,1,3) in department_radio_keys)
-							possible_phrase = "[useradio?pick(available_channels):""] [copytext(possible_phrase,3)]" //crop out the channel prefix
+							possible_phrase = "[useradio ? pick(available_channels) : ""][copytext(possible_phrase,3)]" //crop out the channel prefix
 						else
-							possible_phrase = "[useradio?pick(available_channels):""] [possible_phrase]"
-
+							possible_phrase = "[useradio ? pick(available_channels) : ""][possible_phrase]"
 						newspeak.Add(possible_phrase)
-
 				else //If we have no headset or channels to use, dont try to use any!
 					for(var/possible_phrase in speak)
 						if(copytext(possible_phrase,1,3) in department_radio_keys)

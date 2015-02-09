@@ -25,7 +25,7 @@
 /obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(recording)
 		timestamp += timerecorded
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [strip_html_properly(message)]"
+		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [strip_html_properly(html_decode(raw_message))]"
 
 /obj/item/device/taperecorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

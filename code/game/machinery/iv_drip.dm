@@ -60,12 +60,13 @@
 		return
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/metal(src.loc,2)
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal,get_turf(src))
+		M.amount = 2
 		if(src.beaker)
 			src.beaker.loc = get_turf(src)
 			src.beaker = null
 		user << "<span class='notice'>You dismantle \the [name].</span>"
-		del(src)
+		qdel(src)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(src.beaker))
 			user << "There is already a reagent container loaded!"

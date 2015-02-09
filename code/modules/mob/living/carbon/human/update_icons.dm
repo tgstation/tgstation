@@ -140,15 +140,28 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/proc/get_damage_icon_part(damage_state, body_part,species_blood = "")
 	if(damage_icon_parts["[damage_state]/[body_part]/[species_blood]"] == null)
-		var/icon/DI = icon('icons/mob/dam_human.dmi', damage_state)			// the damage icon for whole human
-		DI.Blend(icon('icons/mob/dam_mask.dmi', body_part), ICON_MULTIPLY)	// mask with this organ's pixels
-		if(species_blood)
-			DI.Blend(species_blood, ICON_MULTIPLY)							// mask with this species's blood color
-		damage_icon_parts["[damage_state]/[body_part]/[species_blood]"] = DI
-		return DI
+		var/image/I	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank")
+		I.blend_mode = BLEND_MULTIPLY
+		//var/icon/DI = icon('icons/mob/dam_human.dmi', damage_state)			// the damage icon for whole human
+		//DI.Blend(icon('icons/mob/dam_mask.dmi', body_part), ICON_MULTIPLY)	// mask with this organ's pixels
+		var/tbrute = copytext(damage_state,1,2)
+		var/tburn = copytext(damage_state,2)
+		if(text2num(tbrute))
+			var/image/II = image("icon"='icons/mob/dam_human.dmi', "icon_state"="[body_part]_[text2num(tbrute)]0")
+			II.blend_mode = BLEND_MULTIPLY
+			I.overlays	+= II	//we're adding icon_states of the base image as overlays
+		if(text2num(tburn))
+			var/image/II = image("icon"='icons/mob/dam_human.dmi', "icon_state"="[body_part]_0[text2num(tburn)]")
+			II.blend_mode = BLEND_MULTIPLY
+			I.overlays += II
+		//if(species_blood)
+			//DI.Blend(species_blood, ICON_MULTIPLY)							// mask with this species's blood color
+		damage_icon_parts["[damage_state]/[body_part]/[species_blood]"] = I
+		return I
 	else
 		return damage_icon_parts["[damage_state]/[body_part]/[species_blood]"]
 
+var/list/overlay_exclusions = list("groin", "l_hand", "r_hand", "l_foot", "r_foot")
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
 /mob/living/carbon/human/UpdateDamageIcon(var/update_icons=1)
@@ -166,26 +179,19 @@ var/global/list/damage_icon_parts = list()
 
 	previous_damage_appearance = damage_appearance
 
-	var/icon/standing = icon('icons/mob/dam_human.dmi', "00")
-
-	var/image/standing_image = image("icon" = standing)
-
-	// blend the individual damage states with our icons
-	for(var/datum/organ/external/O in organs)
-		if(!(O.status & ORGAN_DESTROYED))
-			O.update_icon()
-			if(O.damage_state == "00") continue
-
-			var/icon/DI
-
-			DI = get_damage_icon_part(O.damage_state, O.icon_name, (species.blood_color == "#A10808" ? "" : species.blood_color))
-
-			standing_image.overlays += DI
-
 	overlays -= obj_overlays[DAMAGE_LAYER]
 	var/obj/Overlays/O = obj_overlays[DAMAGE_LAYER]
-	O.icon = standing_image
-	O.icon_state = standing_image.icon_state
+	O.overlays.len = 0
+	O.blend_mode = BLEND_MULTIPLY
+	// blend the individual damage states with our icons
+	for(var/datum/organ/external/OR in organs)
+		if(!(OR.status & ORGAN_DESTROYED))
+			OR.update_icon()
+			if(OR.damage_state == "00" || (OR.icon_name in overlay_exclusions)) continue
+			var/image/I = get_damage_icon_part(OR.damage_state, OR.icon_name, (species.blood_color == "#A10808" ? "" : species.blood_color))
+
+			O.overlays += I
+
 	overlays += O
 	obj_overlays[DAMAGE_LAYER] = O
 	//overlays_standing[DAMAGE_LAYER]	= standing_image

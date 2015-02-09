@@ -16,6 +16,16 @@
 	proc/receive_chem(chemical as obj)
 		return 0
 
+	proc/Copy()
+		var/datum/organ/I = new type
+		I.vital = vital
+		I.name = name
+		I.owner = owner
+		I.status = status
+		I.autopsy_data = autopsy_data
+		I.trace_chemicals = trace_chemicals
+		I.germ_level = germ_level
+		return I
 /datum/organ/proc/get_icon(var/icon/race_icon, var/icon/deform_icon)
 	return icon('icons/mob/human.dmi',"blank")
 

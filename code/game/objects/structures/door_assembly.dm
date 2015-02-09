@@ -13,6 +13,7 @@
 	var/glass_type = "/glass"
 	var/glass = 0 // 0 = glass can be installed. -1 = glass can't be installed. 1 = glass is already installed. Text = mineral plating is installed instead.
 	var/created_name = null
+	var/busy = 0
 
 /obj/structure/door_assembly/New()
 	..()
@@ -138,6 +139,8 @@
 
 
 /obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
+	if(busy) return
+
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter the name for the door.", src.name, src.created_name),1,MAX_NAME_LEN)
 		if(!t)	return
@@ -148,6 +151,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool) && ( (istext(glass)) || (glass == 1) || (!anchored) ))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0, user))
+			busy = 1
 			playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 			if(istext(glass))
 				user.visible_message("[user] welds the [glass] plating off the airlock assembly.", "You start to weld the [glass] plating off the airlock assembly.")
@@ -169,13 +173,16 @@
 				if(do_after(user, 40))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You dissasembled the airlock assembly!</span>"
-					new /obj/item/stack/sheet/metal(src.loc, 4)
-					del (src)
+					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+					M.amount = 4
+					qdel (src)
+			busy = 0
 		else
 			user << "<span class='notice'>You need more welding fuel.</span>"
 			return
 
 	else if(istype(W, /obj/item/weapon/wrench) && state == 0)
+		busy = 1
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 		if(anchored)
 			user.visible_message("[user] unsecures the airlock assembly from the floor.", "You start to unsecure the airlock assembly from the floor.")
@@ -186,8 +193,10 @@
 			if(!src) return
 			user << "<span class='notice'>You [anchored? "un" : ""]secured the airlock assembly!</span>"
 			anchored = !anchored
+		busy = 0
 
 	else if(istype(W, /obj/item/weapon/cable_coil) && state == 0 && anchored )
+		busy = 1
 		var/obj/item/weapon/cable_coil/coil = W
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
 		if(do_after(user, 40))
@@ -195,8 +204,10 @@
 			coil.use(1)
 			src.state = 1
 			user << "<span class='notice'>You wire the Airlock!</span>"
+		busy = 0
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
+		busy = 1
 		playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
@@ -205,8 +216,10 @@
 			user << "<span class='notice'>You cut the airlock wires.!</span>"
 			new/obj/item/weapon/cable_coil(src.loc, 1)
 			src.state = 0
+		busy = 0
 
 	else if(istype(W, /obj/item/weapon/circuitboard/airlock) && state == 1 && W:icon_state != "door_electronics_smoked")
+		busy = 1
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 		user.drop_item()
@@ -220,8 +233,10 @@
 			src.electronics = W
 		else
 			W.loc = src.loc
+		busy = 0
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
+		busy = 1
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
@@ -237,11 +252,13 @@
 				ae = electronics
 				electronics = null
 				ae.loc = src.loc
+		busy = 0
 
 	else if(istype(W, /obj/item/stack/sheet) && !glass)
 		var/obj/item/stack/sheet/S = W
 		if (S)
 			if (S.amount>=1)
+				busy = 1
 				if(istype(S, /obj/item/stack/sheet/glass/rglass))
 					playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
@@ -258,8 +275,10 @@
 							user << "<span class='notice'>You installed [M] plating into the airlock assembly!</span>"
 							S.use(2)
 							glass = "[M]"
+				busy = 0
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
+		busy = 1
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 		user << "<span class='notice'>Now finishing the airlock.</span>"
 
@@ -289,7 +308,8 @@
 			else
 				door.name = "[istext(glass) ? "[glass] airlock" : base_name]"
 			src.electronics.loc = door
-			del(src)
+			qdel(src)
+		busy = 0
 	else
 		..()
 	update_state()

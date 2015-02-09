@@ -22,11 +22,11 @@ LINEN BINS
 	var/cut_time=0
 	if(istype(I, /obj/item/weapon/scalpel))
 		cut_time=20
-	else if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/butch))
+	else if(istype(I, /obj/item/weapon/kitchen/utensil/knife/large) || istype(I, /obj/item/weapon/kitchen/utensil/knife/large/butch))
 		cut_time=40
 	else if(istype(I, /obj/item/weapon/shard))
 		cut_time=80
-	else if(istype(I, /obj/item/weapon/kitchen/utensil/pknife))
+	else if(istype(I, /obj/item/weapon/kitchen/utensil/knife/plastic))
 		cut_time=160
 	if(cut_time)
 		user << "<span  class='notice'>You begin cutting the [src].</span>"

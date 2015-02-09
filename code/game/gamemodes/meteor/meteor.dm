@@ -78,7 +78,9 @@
 				spark_system.start()
 				new /obj/structure/rack(T)
 				new /obj/item/stack/sheet/wood(T, 50) //10 cade kits, or miscellaneous things
-				new /obj/item/stack/sheet/metal(T, 50)
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal,T)
+				M.amount = 50
+				//new /obj/item/stack/sheet/metal(T, 50)
 				new /obj/item/stack/sheet/glass/glass(T, 50)
 				new /obj/item/stack/sheet/glass/plasmarglass(T, 50) //Bomb-proof, so very useful
 
@@ -195,7 +197,7 @@
 				new /obj/item/pizzabox/mushroom(T)
 				new /obj/item/pizzabox/meat(T)
 				new /obj/item/pizzabox/vegetable(T)
-				new /obj/item/weapon/kitchenknife(T)
+				new /obj/item/weapon/kitchen/utensil/knife/large(T)
 
 			//Don't panic
 			for(var/turf/T in meteor_panickit)

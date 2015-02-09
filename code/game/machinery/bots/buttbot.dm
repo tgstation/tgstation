@@ -44,7 +44,7 @@ Here it is: Buttbot.
 
 /obj/machinery/bot/buttbot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(prob(buttchance))
-		message = html_decode(message)
+		message = strip_html_properly(html_decode(raw_message))
 
 		var/list/split_phrase = text2list(message," ") //Split it up into words.
 

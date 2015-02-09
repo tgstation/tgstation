@@ -17,39 +17,39 @@
 	real_name = "Manifested Ghost"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/manifested/New(var/new_loc)
+/mob/living/carbon/human/manifested/New(var/new_loc, delay_ready_dna = 0)
 	underwear = 0
 	..(new_loc, "Manifested")
 
-/mob/living/carbon/human/skrell/New(var/new_loc)
+/mob/living/carbon/human/skrell/New(var/new_loc, delay_ready_dna = 0)
 	h_style = "Skrell Male Tentacles"
 	..(new_loc, "Skrell")
 
-/mob/living/carbon/human/tajaran/New(var/new_loc)
+/mob/living/carbon/human/tajaran/New(var/new_loc, delay_ready_dna = 0)
 	h_style = "Tajaran Ears"
 	..(new_loc, "Tajaran")
 
-/mob/living/carbon/human/unathi/New(var/new_loc)
+/mob/living/carbon/human/unathi/New(var/new_loc, delay_ready_dna = 0)
 	h_style = "Unathi Horns"
 	..(new_loc, "Unathi")
 
-/mob/living/carbon/human/vox/New(var/new_loc)
+/mob/living/carbon/human/vox/New(var/new_loc, delay_ready_dna = 0)
 	h_style = "Short Vox Quills"
 	..(new_loc, "Vox")
 
-/mob/living/carbon/human/diona/New(var/new_loc)
+/mob/living/carbon/human/diona/New(var/new_loc, delay_ready_dna = 0)
 	h_style = "Bald"
 	..(new_loc, "Diona")
 
-/mob/living/carbon/human/skellington/New(var/new_loc)
+/mob/living/carbon/human/skellington/New(var/new_loc, delay_ready_dna = 0)
 	h_style = "Bald"
-	..(new_loc, "Skellington")
+	..(new_loc, "Skellington", delay_ready_dna)
 
-/mob/living/carbon/human/plasma/New(var/new_loc)
+/mob/living/carbon/human/plasma/New(var/new_loc, delay_ready_dna = 0)
 	h_style = "Bald"
 	..(new_loc, "Plasmaman")
 
-/mob/living/carbon/human/muton/New(var/new_loc)
+/mob/living/carbon/human/muton/New(var/new_loc, delay_ready_dna = 0)
 	h_style = "Bald"
 	..(new_loc, "Muton")
 
@@ -112,80 +112,6 @@
 	// Set up DNA.
 	if(!delay_ready_dna)
 		dna.ready_dna(src)
-
-/mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 1
-	if (ismob(AM))
-		var/mob/tmob = AM
-
-		if( istype(tmob, /mob/living/carbon) && prob(10) )
-			src.spread_disease_to(AM, "Contact")
-//BubbleWrap - Should stop you pushing a restrained person out of the way
-
-		if(istype(tmob, /mob/living/carbon/human))
-
-			for(var/mob/M in range(tmob, 1))
-				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
-					if ( !(world.time % 5) )
-						src << "<span class='warning'>[tmob] is restrained, you cannot push past</span>"
-					now_pushing = 0
-					return
-				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
-					if ( !(world.time % 5) )
-						src << "<span class='warning'>[tmob] is restraining [M], you cannot push past</span>"
-					now_pushing = 0
-					return
-
-		//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-		if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove) // mutual brohugs all around!
-			var/turf/oldloc = loc
-			loc = tmob.loc
-			tmob.loc = oldloc
-			now_pushing = 0
-			for(var/mob/living/carbon/slime/slime in view(1,tmob))
-				if(slime.Victim == tmob)
-					slime.UpdateFeed()
-			return
-
-		if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
-			if(prob(40) && !(M_FAT in src.mutations))
-				src << "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>"
-				now_pushing = 0
-				return
-		if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
-			if(prob(99))
-				now_pushing = 0
-				return
-		if(tmob.l_hand && istype(tmob.l_hand, /obj/item/weapon/shield/riot))
-			if(prob(99))
-				now_pushing = 0
-				return
-		if(!(tmob.status_flags & CANPUSH))
-			now_pushing = 0
-			return
-
-		tmob.LAssailant = src
-
-	now_pushing = 0
-	spawn(0)
-		..()
-		if (!istype(AM, /atom/movable))
-			return
-		if (!now_pushing)
-			now_pushing = 1
-
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window/full))
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-				step(AM, t)
-			now_pushing = 0
-		return
-	return
 
 /mob/living/carbon/human/player_panel_controls()
 	var/html=""
@@ -324,7 +250,7 @@
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_arm")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-	if(update)	QueueUpdateDamageIcon(1)
+	if(update)	UpdateDamageIcon()
 
 
 /mob/living/carbon/human/blob_act()
@@ -350,10 +276,10 @@
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
 			if(affecting.take_damage(101, 0))
-				QueueUpdateDamageIcon(1)
+				UpdateDamageIcon()
 		else
 			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
-				QueueUpdateDamageIcon(1)
+				UpdateDamageIcon()
 		updatehealth()
 	return
 
@@ -613,7 +539,8 @@
 		apply_damage(0.5*damage, BRUTE, "l_arm")
 		apply_damage(0.5*damage, BRUTE, "r_arm")
 
-		var/obj/effect/decal/cleanable/blood/B = new(src.loc)
+		var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood, get_turf(src))
+		B.New(B.loc)
 		B.blood_DNA = list()
 		B.blood_DNA[src.dna.unique_enzymes] = src.dna.b_type
 
@@ -1297,6 +1224,8 @@
 /mob/living/carbon/human/proc/can_mind_interact(mob/M)
 	if(!ishuman(M)) return 0 //Can't see non humans with your fancy human mind.
 	var/turf/temp_turf = get_turf(M)
+	if(!temp_turf)
+		return 0
 	if((temp_turf.z != 1 && temp_turf.z != 5) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead
 		return 0
 	if(M_PSY_RESIST in M.mutations)
@@ -1317,6 +1246,7 @@
 		return
 	var/list/creatures = list()
 	for(var/mob/living/carbon/h in world)
+		if(!get_turf(h) || h.gcDestroyed) continue
 		if(!can_mind_interact(h)) continue
 		creatures += h
 	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
@@ -1712,7 +1642,8 @@
 			message += "-"
 			src << "<span class='warning'>You ran out of blood to write with!</span>"
 
-		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
+		var/obj/effect/decal/cleanable/blood/writing/W = getFromPool(/obj/effect/decal/cleanable/blood/writing, T)
+		W.New(T)
 		W.basecolor = (hand_blood_color) ? hand_blood_color : "#A10808"
 		W.update_icon()
 		W.message = message

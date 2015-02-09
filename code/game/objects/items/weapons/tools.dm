@@ -51,6 +51,7 @@
 	hitsound = 'sound/weapons/toolhit.ogg'
 	flags = FPRINT
 	siemens_coefficient = 1
+	sharpness = 1
 	slot_flags = SLOT_BELT
 	force = 5.0
 	w_class = 1.0
@@ -63,10 +64,10 @@
 	melt_temperature = MELTPOINT_STEEL
 	attack_verb = list("stabbed")
 
-	suicide_act(mob/user)
-		viewers(user) << pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>")
-		return(BRUTELOSS)
+/obj/item/weapon/screwdriver/suicide_act(mob/user)
+	viewers(user) << pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
 	. = ..()
@@ -137,6 +138,7 @@
 	hitsound = 'sound/weapons/toolhit.ogg'
 	flags = FPRINT
 	siemens_coefficient = 1
+	sharpness = 1
 	slot_flags = SLOT_BELT
 	force = 6.0
 	throw_speed = 2
@@ -166,7 +168,6 @@
 		return
 	else
 		..()
-
 /*
  * Welding Tool
  */
@@ -185,6 +186,8 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
+	sharpness = 0.8
+	heat_production = 3800
 
 	//Cost to make in the autolathe
 	m_amt = 70
@@ -200,9 +203,9 @@
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is burning \his face off with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
-		return (FIRELOSS|OXYLOSS)
+/obj/item/weapon/weldingtool/suicide_act(mob/user)
+	user.visible_message("<span class='danger'>[user] is burning \his face off with the [src.name]! It looks like \he's  trying to commit suicide!</span>")
+	return (FIRELOSS|OXYLOSS)
 
 /obj/item/weapon/weldingtool/New()
 	. = ..()
@@ -343,6 +346,18 @@
 //Returns whether or not the welding tool is currently on.
 /obj/item/weapon/weldingtool/proc/isOn()
 	return src.welding
+
+
+/obj/item/weapon/weldingtool/is_hot()
+	if(isOn())
+		return heat_production
+	return 0
+
+
+/obj/item/weapon/weldingtool/is_sharp()
+	if(isOn())
+		return sharpness
+	return 0
 
 //Sets the welding state of the welding tool. If you see W.welding = 1 anywhere, please change it to W.setWelding(1)
 //so that the welding tool updates accordingly

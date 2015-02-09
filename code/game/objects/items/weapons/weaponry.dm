@@ -143,7 +143,7 @@
 
 /obj/item/weapon/harpoon
 	name = "harpoon"
-	sharp = 1
+	sharpness = 1.2
 	desc = "Tharr she blows!"
 	icon_state = "harpoon"
 	item_state = "harpoon"
@@ -171,7 +171,7 @@ obj/item/weapon/wirerod
 obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	..()
 	if(istype(I, /obj/item/weapon/shard))
-		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
+		var/obj/item/weapon/spear/S = new /obj/item/weapon/spear
 
 		user.before_take_item(I)
 		user.before_take_item(src)

@@ -78,6 +78,12 @@
 		returnToPool(in_chamber)
 		return output //Send it back to the gun!
 
+	resetVariables()
+		if(!permutated)
+			permutated = list()
+		else
+			permutated.len = 0
+		return("permutated")
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)
 			loc = A.loc

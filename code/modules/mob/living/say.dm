@@ -124,9 +124,6 @@ var/list/department_radio_keys = list(
 
 	if(handle_inherent_channels(message, message_mode))
 		return
-	if(isMoMMI(src))
-		src:mommi_talk(message)
-		return
 	if(!can_speak_vocal(message))
 		return
 
@@ -141,7 +138,7 @@ var/list/department_radio_keys = list(
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 
-	
+
 	send_speech(message, message_range, src, bubble_type)
 
 	log_say("[name]/[key] : [message]")
@@ -170,7 +167,7 @@ var/list/department_radio_keys = list(
 	var/list/listening = get_hearers_in_view(message_range, source)
 	var/list/listening_dead = list()
 	for(var/mob/M in player_list)
-		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && client) // client is so that ghosts don't have to listen to mice
+		if(client && M.client && M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS)) // client is so that ghosts don't have to listen to mice
 			listening_dead |= M
 
 	listening -= listening_dead //so ghosts dont hear stuff twice
@@ -242,13 +239,13 @@ var/list/department_radio_keys = list(
 		if(lingcheck())
 			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 			for(var/mob/M in mob_list)
-				if(M.lingcheck() || (M in dead_mob_list && !istype(M, /mob/new_player)))
+				if(M.lingcheck() || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
 					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 			return 1
 	if(message_mode == MODE_CULTCHAT && construct_chat_check(1) /*sending check for humins*/)
 		log_say("Cult channel: [src.name]/[src.key] : [message]")
 		for(var/mob/M in mob_list)
-			if(M.construct_chat_check(2) /*receiving check*/ || (M in dead_mob_list && !istype(M, /mob/new_player)))
+			if(M.construct_chat_check(2) /*receiving check*/ || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
 				M << "<span class='sinister'><b>[src.name]:</b> [message]</span>"
 		return 1
 	return 0

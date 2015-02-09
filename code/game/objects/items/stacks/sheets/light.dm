@@ -25,10 +25,7 @@
 
 	if(istype(O,/obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
-		M.amount--
-		if(M.amount <= 0)
-			user.drop_from_inventory(M)
-			del(M)
+		M.use(1)
 		amount--
 		new/obj/item/stack/tile/light(user.loc)
 		if(amount <= 0)

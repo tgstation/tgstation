@@ -1,6 +1,6 @@
 #define GC_COLLECTIONS_PER_TICK 300 // Was 100.
-#define GC_COLLECTION_TIMEOUT (15 SECONDS)
-#define GC_FORCE_DEL_PER_TICK 20
+#define GC_COLLECTION_TIMEOUT (30 SECONDS)
+#define GC_FORCE_DEL_PER_TICK 60
 //#define GC_DEBUG
 
 var/list/gc_hard_del_types = new
@@ -65,6 +65,7 @@ var/datum/garbage_collector/garbageCollector
 				gc_hard_del_types["[AM.type]"] = 0
 			gc_hard_del_types["[AM.type]"]++
 
+			AM.hard_deleted = 1
 			del(AM)
 
 			hard_dels++
@@ -130,3 +131,51 @@ var/datum/garbage_collector/garbageCollector
 	world << "<b>GC: qdel turned [garbageCollector.del_everything ? "off" : "on"].</b>"
 	log_admin("[key_name(usr)] turned qdel [garbageCollector.del_everything ? "off" : "on"].")
 	message_admins("\blue [key_name(usr)] turned qdel [garbageCollector.del_everything ? "off" : "on"].", 1)
+
+/*/client/var/running_find_references
+
+/atom/verb/find_references()
+	set category = "Debug"
+	set name = "Find References"
+	set background = 1
+	set src in world
+
+	if(!usr || !usr.client)
+		return
+
+	if(usr.client.running_find_references)
+		testing("CANCELLED search for references to a [usr.client.running_find_references].")
+		usr.client.running_find_references = null
+		return
+
+	if(alert("Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+		return
+	qdel(src)
+	// Remove this object from the list of things to be auto-deleted.
+	if(garbageCollector)
+		garbageCollector.queue -= "\ref[src]"
+
+	usr.client.running_find_references = type
+	testing("Beginning search for references to a [type].")
+	var/list/things = list()
+	for(var/client/thing)
+		things += thing
+	for(var/datum/thing)
+		things += thing
+	for(var/atom/thing)
+		things += thing
+	for(var/event/thing)
+		things += thing
+	testing("Collected list of things in search for references to a [type]. ([things.len] Thing\s)")
+	for(var/datum/thing in things)
+		if(!usr.client.running_find_references) return
+		for(var/varname in thing.vars)
+			var/variable = thing.vars[varname]
+			if(variable == src)
+				testing("Found [src.type] \ref[src] in [thing.type]'s [varname] var.")
+			else if(islist(variable))
+				if(src in variable)
+					testing("Found [src.type] \ref[src] in [thing.type]'s [varname] list var.")
+	testing("Completed search for references to a [type].")
+	usr.client.running_find_references = null
+*/

@@ -41,7 +41,7 @@
 		if(/obj/item/weapon/circular_saw) qdel(src)
 		if(/obj/item/weapon/kitchen/utensil/knife) qdel(src)
 		if(/obj/item/weapon/scalpel) qdel(src)
-		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
+		if(/obj/item/weapon/fireaxe) qdel(src)
 		if(/obj/item/weapon/hatchet) qdel(src)
 		if(/obj/item/weapon/melee/energy) qdel(src)
 		if(/obj/item/weapon/pickaxe/plasmacutter) qdel(src)
@@ -170,7 +170,7 @@
 				else
 					H.adjustBruteLoss(damage)
 
-				H.QueueUpdateDamageIcon()
+				H.UpdateDamageIcon()
 				H.updatehealth()
 
 			// Inject some chems.

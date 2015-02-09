@@ -77,10 +77,10 @@
 				return 1
 //			if(M.health < -75)	return 0
 
-			if(M.check_body_part_coverage(MOUTH))
+			if(M.check_head_coverage(MOUTH))
 				M << "<span class='notice'><B>Remove your mask!</B></span>"
 				return 0
-			if(src.check_body_part_coverage(MOUTH))
+			if(src.check_head_coverage(MOUTH))
 				M << "<span class='notice'><B>Remove his mask!</B></span>"
 				return 0
 

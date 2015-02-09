@@ -149,7 +149,7 @@
 			affecting = usr.organs[A]
 			if(!istype(affecting, /datum/organ/external))    continue
 			affecting.heal_damage(4, 0)
-		usr:UpdateDamageIcon(1)
+		usr:UpdateDamageIcon()
 		usr:updatehealth()
 
 	return

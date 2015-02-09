@@ -5,6 +5,12 @@
 /mob/living/silicon/robot/mommi/get_active_hand()
 	return module_active
 
+/mob/living/silicon/robot/mommi/get_all_slots()
+	return list(tool_state, sight_state, head_state)
+
+/mob/living/silicon/robot/mommi/get_equipped_items()
+	return list(sight_state, head_state)
+
 /mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W, var/permit_sheets=0)
 	if(istype(W, src.module.emag.type))
 		return src.module.emag

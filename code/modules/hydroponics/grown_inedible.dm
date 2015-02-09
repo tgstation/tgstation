@@ -52,7 +52,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
 		for(var/i=0,i<2,i++)
 			var/obj/item/stack/sheet/wood/NG = new (user.loc)
@@ -104,15 +104,16 @@
 			force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
-	if(!user.gloves)
-		user << "\red The nettle burns your bare hand!"
-		if(istype(user, /mob/living/carbon/human))
+	if(istype(user))
+		if(!user.gloves)
+			user << "<span class='warning'>The nettle burns your bare hand!</span>"
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/organ/external/affecting = user.get_organ(organ)
 			if(affecting.take_damage(0,force))
-				user.QueueUpdateDamageIcon()
-		else
-			user.take_organ_damage(0,force)
+				user.UpdateDamageIcon()
+	else
+		user.take_organ_damage(0,force)
+		user << "<span class='warning'>The nettle burns your bare hand!</span>"
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
 	if(!proximity) return
@@ -159,7 +160,7 @@
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/organ/external/affecting = user.get_organ(organ)
 			if(affecting.take_damage(0,force))
-				user.QueueUpdateDamageIcon()
+				user.UpdateDamageIcon()
 		else
 			user.take_organ_damage(0,force)
 		if(prob(50))
@@ -211,7 +212,7 @@
 
 /obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/kitchenknife/ritual))
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large/ritual))
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		user.drop_item(src)

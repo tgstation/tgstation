@@ -19,31 +19,6 @@
 	real_name = name
 	..()
 
-//This is fine, works the same as a human
-/mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!(yes) || now_pushing)) //IF YES !
-		return
-	now_pushing = 0
-	..()
-	if(!istype(AM, /atom/movable))
-		return
-
-	if(ismob(AM))
-		var/mob/tmob = AM
-		tmob.LAssailant = src
-
-	if(!now_pushing)
-		now_pushing = 1
-		if(!AM.anchored)
-			var/t = get_dir(src, AM)
-			if(istype(AM, /obj/structure/window/full))
-				for(var/obj/structure/window/win in get_step(AM,t))
-					now_pushing = 0
-					return
-			step(AM, t)
-		now_pushing = null
-	return
-
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(flags & INVULNERABLE)
 		return

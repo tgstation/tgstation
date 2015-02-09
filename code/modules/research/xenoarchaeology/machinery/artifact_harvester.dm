@@ -98,17 +98,18 @@
 			inserted_battery.battery_effect.process()
 
 			//if the effect works by touch, activate it on anyone viewing the console
-			if(inserted_battery.battery_effect.effect == 0)
+			/*if(inserted_battery.battery_effect.effect == 0)
 				var/list/nearby = viewers(1, src)
 				for(var/mob/M in nearby)
 					if(M.machine == src)
-						inserted_battery.battery_effect.DoEffectTouch(M)
+						inserted_battery.battery_effect.DoEffectTouch(M) THIS IS RETARDED! - Angelite */
 
 		//if there's no charge left, finish
 		if(inserted_battery.stored_charge <= 0)
 			use_power = 1
 			inserted_battery.stored_charge = 0
 			harvesting = 0
+			cur_artifact.anchored = 0
 			if(inserted_battery.battery_effect && inserted_battery.battery_effect.activated)
 				inserted_battery.battery_effect.ToggleActivate()
 			src.visible_message("<b>[name]</b> states, \"Battery dump completed.\"")
@@ -116,6 +117,7 @@
 
 /obj/machinery/artifact_harvester/Topic(href, href_list)
 
+	if(..()) return
 	if (href_list["harvest"])
 		//locate artifact on analysis pad
 		cur_artifact = null
@@ -208,6 +210,7 @@
 	if (href_list["ejectbattery"])
 		src.inserted_battery.loc = src.loc
 		src.inserted_battery = null
+		cur_artifact.anchored = 0
 
 	if (href_list["drainbattery"])
 		if(inserted_battery)
@@ -217,6 +220,7 @@
 						inserted_battery.battery_effect.ToggleActivate(0)
 					harvesting = -1
 					use_power = 2
+					cur_artifact.anchored = 0
 					icon_state = "incubator_on"
 					var/message = "<b>[src]</b> states, \"Warning, battery charge dump commencing.\""
 					src.visible_message(message)

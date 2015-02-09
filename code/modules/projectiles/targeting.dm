@@ -74,7 +74,7 @@
 	var/mob/living/M = loc
 	if(M == T) return
 	if(!istype(M)) return
-	if(src != M.equipped())
+	if(src != M.get_active_hand())
 		stop_aim()
 		return
 	M.last_move_intent = world.time
@@ -226,18 +226,6 @@ mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
 		del target_locked //Remove the overlay
 		del targeted_by
 	spawn(1) update_targeted()
-
-mob/living/Move()
-	. = ..()
-	for(var/obj/item/weapon/gun/G in targeted_by) //Handle moving out of the gunner's view.
-		var/mob/living/M = G.loc
-		if(!(M in view(src)))
-			NotTargeted(G)
-	for(var/obj/item/weapon/gun/G in src) //Handle the gunner loosing sight of their target/s
-		if(G.target)
-			for(var/mob/living/M in G.target)
-				if(M && !(M in view(src)))
-					M.NotTargeted(G)
 
 //If you move out of range, it isn't going to still stay locked on you any more.
 client/var

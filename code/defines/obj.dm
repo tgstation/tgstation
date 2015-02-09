@@ -72,17 +72,22 @@
 	"}
 	var/even = 0
 	// sort mobs
-	for(var/datum/data/record/t in data_core.general)
+	for(var/datum/data/record/t in sortRecord(data_core.general))
 		var/name = t.fields["name"]
 		var/rank = t.fields["rank"]
 		var/real_rank = t.fields["real_rank"]
 		if(OOC)
 			var/active = 0
+			var/SSD = 0
 			for(var/mob/M in player_list)
-				if(M.real_name == name && M.client && M.client.inactivity <= 10 * 60 * 10)
-					active = 1
-					break
-			isactive[name] = active ? "Active" : "Inactive"
+				if(M.real_name == name)
+					if(!M.client)
+						SSD = 1
+						break
+					if(M.client && M.client.inactivity <= 10 * 60 * 10)
+						active = 1
+						break
+			isactive[name] = (SSD ? "SSD" : (active ? "Active" : "Inactive"))
 		else
 			isactive[name] = t.fields["p_stat"]
 			//world << "[name]: [rank]"

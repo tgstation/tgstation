@@ -16,7 +16,7 @@
 		else
 			H << "\red You are unable to equip that."
 
-/mob/living/carbon/human/proc/get_all_slots()
+/mob/living/carbon/human/get_all_slots()
 	return list(
 		back,
 		wear_mask,
@@ -36,6 +36,21 @@
 		l_store,
 		r_store,
 		s_store)
+
+//everything on the mob that is not in its pockets, hands and belt.
+/mob/living/carbon/human/get_clothing_items()
+	var/list/equipped = ..()
+	equipped -= list(back,
+					handcuffed,
+					legcuffed,
+					belt,
+					wear_id,
+					gloves,
+					head,
+					shoes,
+					wear_suit,
+					w_uniform)
+	return equipped
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
 	for (var/slot in slots)

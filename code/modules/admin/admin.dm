@@ -208,7 +208,7 @@ var/global/floorIsLava = 0
 		</body></html>
 	"}
 
-	usr << browse(body, "window=adminplayeropts;size=550x515")
+	usr << browse(body, "window=adminplayeropts-\ref[M];size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -952,7 +952,7 @@ var/global/floorIsLava = 0
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
-		
+
 		return //alert("Round end delayed", null, null, null, null, null)
 	if (!( going ))
 		going = LOBBY_TICKING_RESTARTED
@@ -1298,23 +1298,29 @@ proc/move_alien_ship()
 		alien_ship_location = 1
 	return
 
-proc/formatJumpTo(var/location,var/where="")
+proc/formatJumpTo(location, where = "")
 	var/turf/loc
-	if(istype(location,/turf/))
+
+	if (isturf(location))
 		loc = location
 	else
 		loc = get_turf(location)
-	if(where=="")
-		where=formatLocation(loc)
+
+	if (where == "")
+		where = formatLocation(loc)
+
 	return "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>[where]</a>"
 
-proc/formatLocation(var/location)
+proc/formatLocation(location)
 	var/turf/loc
-	if(istype(location,/turf/))
+
+	if (isturf(location))
 		loc = location
 	else
 		loc = get_turf(location)
+
 	var/area/A = get_area(location)
+
 	return "[A.name] - [loc.x],[loc.y],[loc.z]"
 
 proc/formatPlayerPanel(var/mob/U,var/text="PP")

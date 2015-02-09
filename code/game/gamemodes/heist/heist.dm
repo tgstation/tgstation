@@ -94,7 +94,7 @@
 		vox.h_style = "Short Vox Quills"
 		vox.f_style = "Shaved"
 		for(var/datum/organ/external/limb in vox.organs)
-			limb.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
+			limb.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT | ORGAN_PEG)
 		vox.equip_vox_raider()
 		vox.regenerate_icons()
 

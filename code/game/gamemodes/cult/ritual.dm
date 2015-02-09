@@ -70,10 +70,6 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 // self other technology - Communication rune  //was other hear blood
 // join hide technology - stun rune. Rune color: bright pink.
 /obj/effect/rune/New()
-	for(var/obj/effect/rune/R in rune_list)
-		if(R.loc == src.loc)
-			qdel(src)
-			break
 	..()
 	blood_image = image(loc = src)
 	blood_image.override = 1

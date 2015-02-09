@@ -96,6 +96,9 @@ var/global/mulebot_count = 0
 		)
 
 /obj/machinery/bot/mulebot/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, control_freq)
+		radio_controller.remove_object(src, beacon_freq)
 	if(wires)
 		wires.Destroy()
 		wires = null
@@ -777,7 +780,7 @@ var/global/mulebot_count = 0
 
 /obj/machinery/bot/mulebot/receive_signal(datum/signal/signal)
 
-	if(!on)
+	if(!on || !wires)
 		return
 
 	/*
@@ -919,6 +922,7 @@ var/global/mulebot_count = 0
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effect/decal/cleanable/blood/oil(src.loc)
+	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, src.loc)
+	O.New(O.loc)
 	unload(0)
 	qdel(src)

@@ -48,26 +48,27 @@
 			while(locate(/obj/item/weapon/ore, input.loc))
 				O = locate(/obj/item/weapon/ore, input.loc)
 				if (istype(O,/obj/item/weapon/ore/iron))
-					new /obj/item/stack/sheet/metal(output.loc)
-					del(O)
+					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(output))
+					M.amount = 1
+					qdel(O)
 				if (istype(O,/obj/item/weapon/ore/diamond))
 					new /obj/item/stack/sheet/mineral/diamond(output.loc)
-					del(O)
+					qdel(O)
 				if (istype(O,/obj/item/weapon/ore/plasma))
 					new /obj/item/stack/sheet/mineral/plasma(output.loc)
-					del(O)
+					qdel(O)
 				if (istype(O,/obj/item/weapon/ore/gold))
 					new /obj/item/stack/sheet/mineral/gold(output.loc)
-					del(O)
+					qdel(O)
 				if (istype(O,/obj/item/weapon/ore/silver))
 					new /obj/item/stack/sheet/mineral/silver(output.loc)
-					del(O)
+					qdel(O)
 				if (istype(O,/obj/item/weapon/ore/uranium))
 					new /obj/item/weapon/ore/mineral/uranium(output.loc)
-					del(O)
+					qdel(O)
 				/*if (istype(O,/obj/item/weapon/ore/adamantine))
 					new /obj/item/weapon/ore/adamantine(output.loc)
-					del(O)*/ //Dunno what this area does so I'll keep it commented out for now -Durandan
+					qdel(O)*/ //Dunno what this area does so I'll keep it commented out for now -Durandan
 				processed++
 				sleep(5);
 			processing = 0;

@@ -593,7 +593,7 @@
 	icon_state = "space_weapons"
 	chance = 20
 	toSpawn = list(
-		/obj/item/weapon/butch/meatcleaver,
+		/obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver,
 		/obj/item/weapon/crossbow,
 		/obj/item/weapon/grenade/spawnergrenade/manhacks,
 		/obj/item/weapon/grenade/spawnergrenade/spesscarp,

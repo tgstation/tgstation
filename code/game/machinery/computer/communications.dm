@@ -3,6 +3,7 @@
 #define COMM_SCREEN_STAT		2
 #define COMM_SCREEN_MESSAGES	3
 #define COMM_SCREEN_SECLEVEL	4
+#define COMM_SCREEN_ERT			5
 
 var/shuttle_call/shuttle_calls[0]
 
@@ -138,6 +139,57 @@ var/shuttle_call/shuttle_calls[0]
 				message_cooldown = 1
 				spawn(600)//One minute cooldown
 					message_cooldown = 0
+
+		if("emergency_screen")
+			var/mob/M = usr
+			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			if (istype(I, /obj/item/device/pda))
+				var/obj/item/device/pda/pda = I
+				I = pda.id
+			if (I && istype(I))
+				if(access_captain in I.access)
+					authenticated = 2
+			if(authenticated != 2)
+				usr << "<span class='warning'>You do not have clearance to use this function.</span>"
+				return
+			setMenuState(usr,COMM_SCREEN_ERT)
+			return
+		if("request_emergency_team")
+			if(menu_state != COMM_SCREEN_ERT) return //Not on the right screen.
+			if ((!(ticker) || emergency_shuttle.location))
+				usr << "<span class='warning'>Warning: The evac shuttle has already arrived.</span>"
+				return
+
+			if(!universe.OnShuttleCall(usr))
+				usr << "<span class='notice'>\The [src.name] cannot establish a bluespace connection.</span>"
+				return
+
+			if(sent_strike_team)
+				usr << "<span class='warning'>PKI AUTH ERROR: SERVER REPORTS BLACKLISTED COMMUNICATION KEY PLEASE CONTACT SERVICE TECHNICIAN</span>"
+				return
+
+			if(world.time < 6000)
+				usr << "<span class='notice'>The emergency response team is away on another mission, Please wait another [round((6000-world.time)/600)] minute\s before trying again.</span>"
+				return
+			if(emergency_shuttle.online)
+				usr << "The emergency shuttle is already on its way."
+				return
+			if(!(get_security_level() in list("red", "delta")))
+				usr << "<span class='notice'>The station must be in an emergency to request a Response Team.</span>"
+				return
+			if(authenticated != 2 || issilicon(usr))
+				usr << "<span class='warning'>\The [src.name]'s screen flashes, \"Access Denied\".</span>"
+				return
+			if(send_emergency_team)
+				usr << "<span class='notice'>Central Command has already dispatched a Response Team to [station_name()]</span>"
+				return
+
+			var/response = alert(usr,"Are you sure you want to request a response team?", "ERT Request", "Yes", "No")
+			if(response != "Yes")
+				return
+			trigger_armed_response_team(1)
+			setMenuState(usr,COMM_SCREEN_MAIN)
+			return
 
 		if("callshuttle")
 			if(src.authenticated)
@@ -299,6 +351,7 @@ var/shuttle_call/shuttle_calls[0]
 		list("id"=SEC_LEVEL_BLUE,  "name"="Blue"),
 		//SEC_LEVEL_RED = list("name"="Red"),
 	)
+	data["ert_sent"] = send_emergency_team
 
 	var/msg_data[0]
 	for(var/i=1;i<=src.messagetext.len;i++)
@@ -373,7 +426,7 @@ var/shuttle_call/shuttle_calls[0]
 		return
 
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
-		user << "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minutes before trying again."
+		user << "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minute\s before trying again."
 		return
 
 	if(emergency_shuttle.direction == -1)

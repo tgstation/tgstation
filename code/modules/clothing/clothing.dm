@@ -139,6 +139,7 @@ BLIND     // can't see anything
 	var/can_flip = null
 	var/is_flipped = 1
 	var/ignore_flip = 0
+	action_button_name = "Toggle Mask"
 
 /obj/item/clothing/mask/verb/togglemask()
 	set name = "Toggle Mask"
@@ -158,6 +159,7 @@ BLIND     // can't see anything
 			permeability_coefficient = initial(permeability_coefficient)
 			flags = initial(flags)
 			flags_inv = initial(flags_inv)
+			body_parts_covered = initial(body_parts_covered)
 			usr << "You push \the [src] back into place."
 			src.is_flipped = 1
 		else
@@ -168,6 +170,7 @@ BLIND     // can't see anything
 			flags = 0
 			flags_inv = null
 			src.is_flipped = 2
+			body_parts_covered &= ~(MOUTH|HEAD)
 		usr.update_inv_wear_mask()
 
 /obj/item/clothing/mask/attack_self()

@@ -193,6 +193,9 @@ var/MAX_EXPLOSION_RANGE = 14
 #define MASKINTERNALS	8	// mask allows internals
 //#define SUITSPACE		8	// suit protects against space
 
+#define TWOHANDABLE		32
+#define MUSTTWOHAND		64
+
 #define FPRINT		256		// takes a fingerprint
 #define ON_BORDER	512		// item has priority to check when entering or leaving
 #define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
@@ -227,6 +230,8 @@ var/MAX_EXPLOSION_RANGE = 14
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
 	They are used in atom/movable/Hear() and atom/movable/say() to determine whether hearers can understand a message.
+
+	They also have a secondary use in Bump() code for living mobs, in the mob_bump_flag and mob_swap_flags/mob_push_flags vars
 */
 
 #define HUMAN 1
@@ -235,6 +240,8 @@ var/MAX_EXPLOSION_RANGE = 14
 #define ROBOT 8
 #define SLIME 16
 #define SIMPLE_ANIMAL 32
+
+#define ALLMOBS 63 //update this
 
 //turf-only flags
 #define NOJAUNT		1
@@ -1020,3 +1027,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define TARGETED_LAYER			24		//BS12: Layer for the target overlay from weapon targeting system
 #define TOTAL_LAYERS			25
 //////////////////////////////////
+
+
+//COMMENT IF YOUR DREAMDAEMON VERSION IS BELOW 507.1248
+#define BORDER_USE_TURF_EXIT 1

@@ -66,3 +66,23 @@
 #define isovermind(A) istype(A, /mob/camera/blob)
 
 #define isorgan(A) istype(A, /datum/organ/external)
+
+#define isitem(A) istype(A, /obj/item)
+
+#define istool(A) is_type_in_list(A, common_tools)
+
+#define iswrench(A) istype(A, /obj/item/weapon/wrench)
+
+#define iswelder(A) istype(A, /obj/item/weapon/weldingtool)
+
+#define iscoil(A) istype(A, /obj/item/weapon/cable_coil)
+
+#define iswirecutter(A) istype(A, /obj/item/weapon/wirecutters)
+
+#define isscrewdriver(A) istype(A, /obj/item/weapon/screwdriver)
+
+#define ismultitool(A) istype(A, /obj/item/device/multitool)
+
+#define iscrowbar(A) istype(A, /obj/item/weapon/crowbar)
+
+#define iswire(O) istype(O, /obj/item/weapon/cable_coil)

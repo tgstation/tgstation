@@ -243,7 +243,7 @@
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 0)
 			user.drop_item()
-			del(O)
+			qdel(O)
 			toner = 40
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			updateUsrDialog()
@@ -258,7 +258,7 @@
 		if(ismob(G.affecting) && G.affecting != ass)
 			var/mob/GM = G.affecting
 			visible_message("<span class='warning'>[usr] drags [GM.name] onto the photocopier!</span>")
-			GM.loc = get_turf(src)
+			GM.forceMove(get_turf(src))
 			ass = GM
 			if(photocopy)
 				photocopy.loc = src.loc
@@ -292,7 +292,7 @@
 					if(I.reliability != 100 && crit_fail)
 						I.crit_fail = 1
 					I.loc = src.loc
-				del(src)
+				qdel(src)
 				return 1
 	return
 
@@ -305,27 +305,30 @@
 				qdel(src)
 			else
 				if(toner > 0)
-					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, get_turf(src))
+					O.New(O.loc)
 					toner = 0
 		else
 			if(prob(50))
 				if(toner > 0)
-					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, get_turf(src))
+					O.New(O.loc)
 					toner = 0
 	return
 
 /obj/machinery/photocopier/blob_act()
 	if(prob(50))
-		del(src)
+		qdel(src)
 	else
 		if(toner > 0)
-			new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+			var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, get_turf(src))
+			O.New(O.loc)
 			toner = 0
 	return
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
-	if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai) || target == ass)
+	if (!istype(target) || target.buckled || !Adjacent(user) || !user.Adjacent(target) || user.stat || istype(user, /mob/living/silicon/ai) || target == ass || copier_blocked(user))
 		return
 	src.add_fingerprint(user)
 	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
@@ -334,7 +337,7 @@
 		if(target.anchored) return
 		if(!ishuman(user) && !ismonkey(user)) return
 		visible_message("<span class='warning'>[usr] drags [target.name] onto the photocopier!</span>")
-	target.loc = get_turf(src)
+	target.forceMove(get_turf(src))
 	ass = target
 	if(photocopy)
 		photocopy.loc = src.loc
@@ -375,3 +378,19 @@
 	icon_state = "tonercartridge"
 	var/charges = 5
 	var/max_charges = 5
+
+/obj/machinery/photocopier/proc/copier_blocked(var/mob/user)
+	if(gcDestroyed)
+		return
+	if(loc.density)
+		return 1
+	for(var/atom/movable/AM in loc)
+		if(AM == src)
+			continue
+		if(AM.density)
+			if(AM.flags&ON_BORDER)
+				if(!AM.CanPass(user, src.loc))
+					return 1
+			else
+				return 1
+	return 0

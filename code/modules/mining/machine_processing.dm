@@ -211,7 +211,8 @@ a.notsmelting {
 						for(var/ore_id in recipe.ingredients)
 							ore.removeAmount(ore_id,1)
 						// Spawn yield
-						new recipe.yieldtype(output.loc)
+						//new recipe.yieldtype(output.loc)
+						getFromPool(recipe.yieldtype,output.loc)
 
 						located=1
 						break
@@ -283,7 +284,7 @@ a.notsmelting {
 							ore.removeAmount(ore_id,1)
 
 						// Spawn yield
-						new recipe.yieldtype(output.loc)
+						getFromPool(recipe.yieldtype,output.loc)
 
 						located=1
 						break

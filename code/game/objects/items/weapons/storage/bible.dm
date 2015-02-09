@@ -41,7 +41,7 @@
 		var/heal_amt = 40
 		for(var/datum/organ/external/affecting in H.organs)
 			if(affecting.heal_damage(heal_amt, heal_amt))
-				H.QueueUpdateDamageIcon()
+				H.UpdateDamageIcon()
 	return
 
 /obj/item/weapon/storage/bible/attack(mob/living/M as mob, mob/living/user as mob)

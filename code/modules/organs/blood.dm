@@ -318,14 +318,15 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 		if(drips.len >= 5)
 			//TODO: copy all virus data from drips to new splatter?
 			for(var/obj/effect/decal/cleanable/blood/drip/drop in drips)
-				del drop
+				returnToPool(drop)
 		else
 			decal_type = /obj/effect/decal/cleanable/blood/drip
 
 	// Find a blood decal or create a new one.
 	B = locate(decal_type) in T
 	if(!B || (decal_type == /obj/effect/decal/cleanable/blood/drip))
-		B = new decal_type(T)
+		B = getFromPool(decal_type,T)
+		B.New(T)
 		if(decal_type == /obj/effect/decal/cleanable/blood/drip)
 			B.icon_state = pick(drip_icons)
 

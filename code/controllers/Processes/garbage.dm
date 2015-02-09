@@ -7,3 +7,4 @@
 
 /datum/controller/process/garbage/doWork()
 	garbageCollector.process()
+	scheck()

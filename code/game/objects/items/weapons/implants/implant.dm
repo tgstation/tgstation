@@ -438,25 +438,23 @@ the implant may become unstable and either pre-maturely inject the subject or si
 /obj/item/weapon/implant/death_alarm/activate(var/cause)
 	var/mob/M = imp_in
 	var/area/t = get_area(M)
+	src.name = "\improper [mobname]'s Death Alarm"
 	switch (cause)
 		if("death")
-			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
+			if(!announcement_intercom || !istype(announcement_intercom))
+				announcement_intercom = new(null)
+			
 			if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
 				//give the syndies a bit of stealth
-				say("[mobname] has died in Space!", "[mobname]'s Death Alarm")
+				Broadcast_Message(announcement_intercom, null, announcement_intercom, "[mobname] has died in Space!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
 			else
-				say("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
-			del(a)
+				Broadcast_Message(announcement_intercom, null, announcement_intercom, "[mobname] has died in [t.name]!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
 			processing_objects.Remove(src)
 		if ("emp")
-			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			var/name = prob(50) ? t.name : pick(teleportlocs)
-			say("[mobname] has died in [name]!", "[mobname]'s Death Alarm")
-			del(a)
+			Broadcast_Message(announcement_intercom, null, announcement_intercom, "[mobname] has died in [name]!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
 		else
-			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			say("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
-			del(a)
+			Broadcast_Message(announcement_intercom, null, announcement_intercom, "[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
 			processing_objects.Remove(src)
 
 /obj/item/weapon/implant/death_alarm/emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this
