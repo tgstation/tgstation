@@ -1,0 +1,6 @@
+author: Xhuis
+delete-after: true
+
+changes: 
+  - tweak: "The convert rune has been changed. Instead of a hardcoded 3-person convert, it can use different cultist amounts. One cultist can convert someone in 60 seconds, two in 30 seconds, and three cultists is unchanged."
+  - tweak: "Upon round start, there will be fewer cultists to balance out the ability to convert people alone."
