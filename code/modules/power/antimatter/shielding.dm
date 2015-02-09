@@ -31,6 +31,8 @@ proc/cardinalrange(var/center)
 
 /obj/machinery/am_shielding/New(loc)
 	..(loc)
+	machines -= src
+	power_machines += src
 	spawn(10)
 		controllerscan()
 	return
@@ -72,6 +74,7 @@ proc/cardinalrange(var/center)
 	if(control_unit)	control_unit.remove_shielding(src)
 	if(processing)	shutdown_core()
 	visible_message("\red The [src.name] melts!")
+	power_machines -= src
 	//Might want to have it leave a mess on the floor but no sprites for now
 	..()
 	return
@@ -193,7 +196,7 @@ proc/cardinalrange(var/center)
 
 /obj/machinery/am_shielding/proc/setup_core()
 	processing = 1
-	machines.Add(src)
+	power_machines.Add(src)
 	if(!control_unit)	return
 	control_unit.linked_cores.Add(src)
 	control_unit.reported_core_efficiency += efficiency
