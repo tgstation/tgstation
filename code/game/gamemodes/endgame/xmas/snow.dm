@@ -515,7 +515,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 /obj/structure/snow_flora/tree/attackby(obj/item/W,mob/user)
 	var/list/cutting = list(
 		/obj/item/weapon/hatchet,
-		/obj/item/weapon/twohanded/fireaxe,
+		/obj/item/weapon/fireaxe,
 		)
 	if(is_type_in_list(W,cutting))
 		axe_hits++
@@ -552,7 +552,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 /obj/structure/snow_flora/tree/pine/attackby(obj/item/W,mob/user)
 	var/list/cutting = list(
 		/obj/item/weapon/hatchet,
-		/obj/item/weapon/twohanded/fireaxe,
+		/obj/item/weapon/fireaxe,
 		)
 	if(is_type_in_list(W,cutting))
 		axe_hits++
