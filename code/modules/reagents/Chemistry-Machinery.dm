@@ -340,25 +340,48 @@
 			reagents.trans_to(P, 50)
 
 	if(beaker)
-		var/datum/reagents/R = beaker.reagents
-		if (href_list["analyze"])
-			var/dat = ""
-			dat += "<B>[condi ? "Condiment" : "Chemical"] information:</B><BR><BR>"
-			dat += "<B>Name:</B><BR>[href_list["name"]]<BR><BR>"
-			dat += "<B>Description:</B><BR>[href_list["desc"]]<BR><BR><BR>"
-			dat += "<A href='?src=\ref[src];main=1'>Back</A>"
-			var/datum/browser/popup = new(usr, "chem_master", name)
-			popup.set_content(dat)
-			popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
-			popup.open(1)
+
+		if(href_list["analyze"])
+			if(locate(href_list["reagent"]))
+				var/datum/reagent/R = locate(href_list["reagent"])
+				if(R)
+					var/dat = ""
+					dat += "<H1>[condi ? "Condiment" : "Chemical"] information:</H1>"
+					dat += "<B>Name:</B> [initial(R.name)]<BR><BR>"
+					dat += "<B>State:</B> "
+					if(initial(R.reagent_state) == 1)
+						dat += "Solid"
+					else if(initial(R.reagent_state) == 2)
+						dat += "Liquid"
+					else if(initial(R.reagent_state) == 3)
+						dat += "Gas"
+					else
+						dat += "Unknown"
+					dat += "<BR>"
+					dat += "<B>Color:</B> <span style='color:[initial(R.color)];background-color:[initial(R.color)];font:Lucida Console'>[initial(R.color)]</span><BR><BR>"
+					dat += "<B>Description:</B> [initial(R.description)]<BR><BR>"
+					var/const/P = 3 //The number of seconds between life ticks
+					var/T = initial(R.metabolization_rate) * (60 / P)
+					dat += "<B>Metabolization Rate:</B> [T]u/minute<BR>"
+					dat += "<B>Overdose Threshold:</B> [initial(R.overdose_threshold) ? "[initial(R.overdose_threshold)]u" : "none"]<BR>"
+					dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
+					dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
+					var/datum/browser/popup = new(usr, "chem_master", name)
+					popup.set_content(dat)
+					popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+					popup.open(1)
+					return
+
+		else if(href_list["main"]) // Used to exit the analyze screen.
+			attack_hand(usr)
 			return
 
 		else if(href_list["add"])
 			if(href_list["amount"])
 				var/id = href_list["add"]
 				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
-				R.trans_id_to(src, id, amount)
+				if (amount > 0)
+					beaker.reagents.trans_id_to(src, id, amount)
 
 		else if(href_list["addcustom"])
 			var/id = href_list["addcustom"]
@@ -372,11 +395,11 @@
 			if(href_list["amount"])
 				var/id = href_list["remove"]
 				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
-				if(mode)
-					reagents.trans_id_to(beaker, id, amount)
-				else
-					reagents.remove_reagent(id, amount)
+				if (amount > 0)
+					if(mode)
+						reagents.trans_id_to(beaker, id, amount)
+					else
+						reagents.remove_reagent(id, amount)
 
 		else if(href_list["removecustom"])
 			var/id = href_list["removecustom"]
@@ -385,10 +408,6 @@
 				return
 			useramount = amt_temp
 			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
-
-		else if(href_list["main"])
-			attack_hand(usr)
-			return
 
 		else if(href_list["eject"])
 			if(beaker)
@@ -478,7 +497,7 @@
 		if(beaker.reagents.total_volume)
 			for(var/datum/reagent/G in beaker.reagents.reagent_list)
 				dat += "<LI>[G.name], [G.volume] Units - "
-				dat += "<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>Analyze</A> "
+				dat += "<A href='?src=\ref[src];analyze=1;reagent=\ref[G]'>Analyze</A> "
 				dat += "<A href='?src=\ref[src];add=[G.id];amount=1'>1</A> "
 				dat += "<A href='?src=\ref[src];add=[G.id];amount=5'>5</A> "
 				dat += "<A href='?src=\ref[src];add=[G.id];amount=10'>10</A> "
@@ -493,7 +512,7 @@
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
 			dat += "<LI>[N.name], [N.volume] Units - "
-			dat += "<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>Analyze</A> "
+			dat += "<A href='?src=\ref[src];analyze=1;reagent=\ref[N]'>Analyze</A> "
 			dat += "<A href='?src=\ref[src];remove=[N.id];amount=1'>1</A> "
 			dat += "<A href='?src=\ref[src];remove=[N.id];amount=5'>5</A> "
 			dat += "<A href='?src=\ref[src];remove=[N.id];amount=10'>10</A> "
