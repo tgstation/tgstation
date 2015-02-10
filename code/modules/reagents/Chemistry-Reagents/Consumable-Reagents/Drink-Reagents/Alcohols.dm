@@ -30,10 +30,10 @@ datum/reagent/consumable/ethanol/on_mob_life(var/mob/living/M as mob)
 		if (!M.stuttering) M.stuttering = 1
 		M.stuttering += 4
 		M.Dizzy(5)
-	if(data >= boozepwr*2.5 && prob(20))
+	if(data >= boozepwr*2.5 && prob(33))
 		if (!M.confused) M.confused = 1
 		M.confused += 3
-	if(data >= boozepwr*10 && prob(40))
+	if(data >= boozepwr*10 && prob(33))
 		M.adjustToxLoss(2)
 	..()
 	return
@@ -166,7 +166,7 @@ datum/reagent/consumable/ethanol/rum
 datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
 	id = "tequila"
-	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
+	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty, hombre?"
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 35
 

@@ -455,28 +455,32 @@
 	name = "shot glass"
 	desc = "A shot glass - the universal symbol for bad decisions."
 	icon_state = "shotglass"
-	amount_per_transfer_from_this = 10
+	gulp_size = 15
+	amount_per_transfer_from_this = 15
 	volume = 15
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change()
+	if (gulp_size < 15) gulp_size = 15
+	else gulp_size = max(round(reagents.total_volume / 15), 15)
+
 	if (reagents.reagent_list.len > 0)
 		switch(reagents.get_master_reagent_id())
 			if("vodka")
 				icon_state = "shotglassclear"
 				name = "shot of vodka"
-				desc = "A shot of vodka. Good for cold weather."
+				desc = "Good for cold weather."
 			if("water")
 				icon_state = "shotglassclear"
 				name = "shot of water"
-				desc = "A shot of water. You're not sure why someone would drink this from a shot glass."
+				desc = "You're not sure why someone would drink this from a shot glass."
 			if("whiskey")
 				icon_state = "shotglassbrown"
 				name = "shot of whiskey"
-				desc = "A shot of whiskey. Just like the old west."
+				desc = "Just like the old west."
 			if("rum")
 				icon_state = "shotglassbrown"
 				name = "shot of rum"
-				desc = "A shot of rum, you dirty pirate."
+				desc = "You dirty pirate."
 			if("b52")
 				icon_state = "b52glass"
 				name = "B-52"
@@ -492,11 +496,11 @@
 			if ("tequila")
 				icon_state = "shotglassgold"
 				name = "shot of tequila"
-				desc = "A shot of cheap tequila. Bad decisions ahead!"
+				desc = "Bad decisions ahead!"
 			if ("patron")
 				icon_state = "shotglassclear"
 				name = "shot of patron"
-				desc = "A shot of Patron. Goes great with a lime wedge."
+				desc = "The good stuff. Goes great with a lime wedge."
 			if ("kahlua")
 				icon_state = "shotglasscream"
 				name = "shot of coffee liqueur"
@@ -512,7 +516,7 @@
 			if ("cognac")
 				icon_state = "shotglassbrown"
 				name = "shot of cognac"
-				desc = "A shot of cognac. You get the feeling this would piss off a rich person somewhere."
+				desc = "You get the feeling this would piss off a rich person somewhere."
 			else
 				icon_state = "shotglassbrown"
 				name = "shot of... what?"
