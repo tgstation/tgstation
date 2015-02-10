@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /*
 Research and Development (R&D) Console
 
@@ -50,6 +48,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 
 	var/selected_category
+	var/list/datum/design/matching_designs = list() //for the search function
 
 
 /obj/machinery/computer/rdconsole/proc/CallTechName(var/ID) //A simple helper proc to find the name of a tech with a given ID.
@@ -130,6 +129,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/New()
 	..()
 	files = new /datum/research(src) //Setup the research data holder.
+	matching_designs = list()
 	if(!id)
 		for(var/obj/machinery/r_n_d/server/centcom/S in world)
 			S.initialize()
@@ -566,6 +566,25 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			spawn(20)
 				screen = 1.6
 				updateUsrDialog()
+
+	else if(href_list["search"]) //Search for designs with name matching pattern
+		var/compare
+
+		matching_designs.Cut()
+
+		if(href_list["type"] == "proto")
+			compare = PROTOLATHE
+			screen = 3.17
+		else
+			compare = IMPRINTER
+			screen = 4.17
+
+		for(var/datum/design/D in files.known_designs)
+			if(!(D.build_type & compare))
+				continue
+			if(findtext(D.name,href_list["to_search"]))
+				matching_designs.Add(D)
+
 	updateUsrDialog()
 	return
 
@@ -776,7 +795,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=3.3'>Chemical Storage</A><div class='statusDisplay'>"
 			dat += "<h3>Protolathe Menu:</h3><BR>"
 			dat += "<B>Material Amount:</B> [linked_lathe.TotalMaterials()] / [linked_lathe.max_material_storage]<BR>"
-			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
+			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<BR>"
+
+			dat += "<form name='search' action='?src=\ref[src]'> \
+			<input type='hidden' name='src' value='\ref[src]'> \
+			<input type='hidden' name='search' value='to_search'> \
+			<input type='hidden' name='type' value='proto'> \
+			<input type='text' name='to_search'> \
+			<input type='submit' value='Search'> \
+			</form><HR>"
 
 			dat += list_categories(linked_lathe.categories, 3.15)
 
@@ -792,6 +819,39 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/design/D in files.known_designs)
 				if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
 					continue
+				var/temp_material
+				var/c = 50
+				var/t
+				for(var/M in D.materials)
+					t = linked_lathe.check_mat(D, M)
+					temp_material += " | "
+					if (!t)
+						temp_material += "<span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
+					else
+						temp_material += " [D.materials[M]/coeff] [CallMaterialName(M)]"
+					c = min(c,t)
+
+				if (c)
+					dat += "<A href='?src=\ref[src];build=[D.id];amount=1'>[D.name]</A>"
+					if(c >= 5.0)
+						dat += "<A href='?src=\ref[src];build=[D.id];amount=5'>x5</A>"
+					if(c >= 10.0)
+						dat += "<A href='?src=\ref[src];build=[D.id];amount=10'>x10</A>"
+					dat += "[temp_material]"
+				else
+					dat += "<span class='linkOff'>[D.name]</span>[temp_material]"
+				dat += "<BR>"
+			dat += "</div>"
+
+		if(3.17) //Display search result
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A>"
+			dat += "<div class='statusDisplay'><h3>Search results:</h3><BR>"
+			dat += "<B>Material Amount:</B> [linked_lathe.TotalMaterials()] / [linked_lathe.max_material_storage]<BR>"
+			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
+
+			var/coeff = linked_lathe.efficiency_coeff
+			for(var/datum/design/D in matching_designs)
 				var/temp_material
 				var/c = 50
 				var/t
@@ -891,6 +951,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
+			dat += "<form name='search' action='?src=\ref[src]'> \
+			<input type='hidden' name='src' value='\ref[src]'> \
+			<input type='hidden' name='search' value='to_search'> \
+			<input type='hidden' name='type' value='imprint'> \
+			<input type='text' name='to_search'> \
+			<input type='submit' value='Search'> \
+			</form><HR>"
+
 			dat += list_categories(linked_imprinter.categories, 4.15)
 
 		if(4.15)
@@ -904,6 +972,30 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/design/D in files.known_designs)
 				if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 					continue
+				var/temp_materials
+				var/check_materials = 1
+				for(var/M in D.materials)
+					temp_materials += " | "
+					if (!linked_imprinter.check_mat(D, M))
+						check_materials = 0
+						temp_materials += " <span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
+					else
+						temp_materials += " [D.materials[M]/coeff] [CallMaterialName(M)]"
+				if (check_materials)
+					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]<BR>"
+				else
+					dat += "<span class='linkOff'>[D.name]</span>[temp_materials]<BR>"
+			dat += "</div>"
+
+		if(4.17)
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A>"
+			dat += "<div class='statusDisplay'><h3>Search results:</h3><BR>"
+			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
+			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
+
+			var/coeff = linked_imprinter.efficiency_coeff
+			for(var/datum/design/D in matching_designs)
 				var/temp_materials
 				var/check_materials = 1
 				for(var/M in D.materials)

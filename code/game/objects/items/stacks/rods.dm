@@ -21,13 +21,15 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
 
 /obj/item/stack/rods/New(var/loc, var/amount=null)
+	..()
+
 	recipes = rod_recipes
 	update_icon()
-	return ..()
 
 /obj/item/stack/rods/update_icon()
-	if(get_amount() <= 5)
-		icon_state = "rods-[get_amount()]"
+	var/amount = get_amount()
+	if((amount <= 5) && (amount > 0))
+		icon_state = "rods-[amount]"
 	else
 		icon_state = "rods"
 
@@ -59,3 +61,6 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	m_amt = 0
 	is_cyborg = 1
 	cost = 250
+
+/obj/item/stack/rods/cyborg/update_icon()
+	return
