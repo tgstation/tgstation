@@ -15,11 +15,14 @@ em						{font-style: normal;	font-weight: bold;}
 .adminsay				{color: #9611D4;	font-weight: bold;}
 .name					{					font-weight: bold;}
 .say					{}
+.siliconsay				{font-family: 'Courier New', Courier, monospace;}
 .deadsay				{color: #5c00e6;}
 .radio					{color: #008000;}
 .deptradio				{color: #993399;}
 .comradio				{color: #193A7A;}
-.syndradio				{color: #6D3F40;}
+.syndradio				{color: #6d3f40;}
+.dsquadradio			{color: #686868;}
+.aiprivradio			{color: #ff00ff;}
 .centradio				{color: #5C5C8A;}
 .secradio				{color: #A30000;}
 .engradio				{color: #A66300;}

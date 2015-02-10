@@ -22,7 +22,7 @@
 		var/organ = ((user.hand ? "l_":"r_") + "arm")
 		var/datum/organ/external/affecting = user.get_organ(organ)
 		if(affecting.take_damage(rand(force/2, force))) //random amount of damage between half of the blade's force and the full force of the blade.
-			user.QueueUpdateDamageIcon()
+			user.UpdateDamageIcon()
 	return
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user as mob)
@@ -74,8 +74,8 @@
 	icon_state = "magus"
 	item_state = "magus"
 	desc = "A helm worn by the followers of Nar-Sie."
-	flags_inv = HIDEFACE
-	flags = FPRINT|BLOCKHAIR
+	flags_inv = HIDEFACE|HIDEHAIR
+	flags = FPRINT
 	body_parts_covered = FULL_HEAD
 	armor = list(melee = 30, bullet = 30, laser = 30,energy = 20, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0

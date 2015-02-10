@@ -35,6 +35,11 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	var/word1
 	var/word2
 	var/word3
+	var/image/blood_image
+
+	var/atom/movable/overlay/c_animation = null
+	var/nullblock = 0
+	var/mob/living/ajourn
 // Places these combos are mentioned: this file - twice in the rune code, once in imbued tome, once in tome's HTML runes.dm - in the imbue rune code. If you change a combination - dont forget to change it everywhere.
 
 // travel self [word] - Teleport to random [rune with word destination matching]
@@ -65,21 +70,21 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 // self other technology - Communication rune  //was other hear blood
 // join hide technology - stun rune. Rune color: bright pink.
 /obj/effect/rune/New()
-	for(var/obj/effect/rune/R in rune_list)
-		if(R.loc == src.loc)
-			qdel(src)
-			break
 	..()
-	var/image/blood = image(loc = src)
-	blood.override = 1
+	blood_image = image(loc = src)
+	blood_image.override = 1
 	for(var/mob/living/silicon/ai/AI in player_list)
-		AI.client.images += blood
+		AI.client.images += blood_image
 	rune_list.Add(src)
 
 /obj/effect/rune/Destroy()
 	if(istype(ajourn))
 		ajourn.ajourn = null
 	ajourn = null
+	for(var/mob/living/silicon/ai/AI in player_list)
+		AI.client.images -= blood_image
+	qdel(blood_image)
+	blood_image = null
 	rune_list.Remove(src)
 	..()
 

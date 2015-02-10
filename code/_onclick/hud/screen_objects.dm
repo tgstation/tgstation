@@ -14,6 +14,9 @@
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 
+/obj/screen/Destroy()
+	master = null
+	..()
 
 /obj/screen/text
 	icon = null
@@ -83,7 +86,6 @@
 /obj/screen/grab/Destroy()
 	if(master)
 		master = null
-
 	..()
 
 /obj/screen/storage
@@ -364,16 +366,16 @@
 		if("act_intent")
 			usr.a_intent_change("right")
 		if("help")
-			usr.a_intent = "help"
+			usr.a_intent = I_HELP
 			usr.hud_used.action_intent.icon_state = "intent_help"
 		if("harm")
-			usr.a_intent = "hurt"
+			usr.a_intent = I_HURT
 			usr.hud_used.action_intent.icon_state = "intent_hurt"
 		if("grab")
-			usr.a_intent = "grab"
+			usr.a_intent = I_GRAB
 			usr.hud_used.action_intent.icon_state = "intent_grab"
 		if("disarm")
-			usr.a_intent = "disarm"
+			usr.a_intent = I_DISARM
 			usr.hud_used.action_intent.icon_state = "intent_disarm"
 
 		if("pull")
@@ -494,7 +496,7 @@
 		if("Allow Walking")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
 			usr.client.AllowTargetMove()
@@ -503,7 +505,7 @@
 		if("Disallow Walking")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
 			usr.client.AllowTargetMove()
@@ -512,7 +514,7 @@
 		if("Allow Running")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
 			usr.client.AllowTargetRun()
@@ -521,7 +523,7 @@
 		if("Disallow Running")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
 			usr.client.AllowTargetRun()
@@ -530,7 +532,7 @@
 		if("Allow Item Use")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
 			usr.client.AllowTargetClick()
@@ -540,7 +542,7 @@
 		if("Disallow Item Use")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
 			usr.client.AllowTargetClick()

@@ -252,7 +252,7 @@ var/global/list/organ_damage_overlays = list(
 			src << "We have been dead for too long, we stop here."
 			last_processed = "DEAD"
 		cycle = "DEAD"
-		return PROCESS_KILL											//We go ahead and process them 5 times for HUD images and other stuff though.
+		return											//We go ahead and process them 5 times for HUD images and other stuff though.
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
@@ -414,7 +414,7 @@ var/global/list/organ_damage_overlays = list(
 				src << "\red It becomes hard to see for some reason."
 				eye_blurry = 10
 		if(getBrainLoss() >= 35)
-			if(7 <= rn && rn <= 9) if(hand && equipped())
+			if(7 <= rn && rn <= 9) if(hand && get_active_hand())
 				src << "\red Your hand won't respond properly, you drop what you're holding."
 				drop_item()
 		if(getBrainLoss() >= 50)

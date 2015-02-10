@@ -26,7 +26,8 @@
 				if(!src || !WT.isOn()) return
 				playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 				user.visible_message("<span class='warning'>[user] cuts the [src] apart.</span>", "<span class='warning'>You cut the [src] apart.</span>", "You hear welding.")
-				new /obj/item/stack/sheet/metal(src.loc,5)
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+				M.amount = 5
 				qdel(src)
 				return
 			else

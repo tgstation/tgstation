@@ -16,6 +16,16 @@
 	proc/receive_chem(chemical as obj)
 		return 0
 
+	proc/Copy()
+		var/datum/organ/I = new type
+		I.vital = vital
+		I.name = name
+		I.owner = owner
+		I.status = status
+		I.autopsy_data = autopsy_data
+		I.trace_chemicals = trace_chemicals
+		I.germ_level = germ_level
+		return I
 /datum/organ/proc/get_icon(var/icon/race_icon, var/icon/deform_icon)
 	return icon('icons/mob/human.dmi',"blank")
 
@@ -55,6 +65,15 @@
 /mob/living/carbon/human/var/list/organs = list()
 /mob/living/carbon/human/var/list/organs_by_name = list() // map organ names to organs
 /mob/living/carbon/human/var/list/internal_organs_by_name = list() // so internal organs have less ickiness too
+
+/mob/living/carbon/human/proc/can_use_active_hand()
+	if (hasorgans(src))
+		var/datum/organ/external/temp = src.organs_by_name[(hand ? "l_hand" : "r_hand")]
+		if(temp && !temp.is_usable())
+			return
+		else if (!temp)
+			return
+	return 1
 
 // Takes care of organ related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_organs()

@@ -6,7 +6,8 @@
 	desc = "A spring loaded rifle designed to fit syringes, designed to incapacitate unruly patients from a distance."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
-	item_state = "syringegun"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	w_class = 3.0
 	throw_speed = 2
 	throw_range = 10

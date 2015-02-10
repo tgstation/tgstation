@@ -38,7 +38,7 @@
 					H.Stun(3)
 		if(affecting)
 			if(affecting.take_damage(1, 0))
-				H.QueueUpdateDamageIcon()
+				H.UpdateDamageIcon()
 			H.updatehealth()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target

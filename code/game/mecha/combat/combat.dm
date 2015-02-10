@@ -25,7 +25,7 @@
 	if(!melee_can_hit || !istype(target, /atom)) return
 	if(istype(target, /mob/living))
 		var/mob/living/M = target
-		if(src.occupant.a_intent == "hurt")
+		if(src.occupant.a_intent == I_HURT)
 			playsound(src, 'sound/mecha/mechsmash.ogg', 50, 1)
 			if(damtype == "brute")
 				step_away(M,src,15)
@@ -58,7 +58,7 @@
 									H.reagents.add_reagent("cryptobiolin", force)
 						else
 							return
-					if(update)	H.QueueUpdateDamageIcon(1)
+					if(update)	H.UpdateDamageIcon(1)
 				H.updatehealth()
 
 			else

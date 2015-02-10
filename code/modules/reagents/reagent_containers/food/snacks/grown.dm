@@ -88,12 +88,12 @@
 	if(istype(W, /obj/item/weapon/cable_coil))
 		if(W:amount >= 5)
 			W:amount -= 5
-			if(!W:amount) del(W)
+			if(!W:amount) qdel(W)
 			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
 			var/obj/item/weapon/cell/potato/pocell = new /obj/item/weapon/cell/potato(user.loc)
 			pocell.maxcharge = src.potency * 10
 			pocell.charge = pocell.maxcharge
-			del(src)
+			qdel(src)
 			return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
@@ -161,7 +161,7 @@
 	var/obj/item/stack/medical/ointment/tajaran/poultice = new /obj/item/stack/medical/ointment/tajaran(user.loc)
 
 	poultice.heal_burn = potency
-	del(src)
+	qdel(src)
 
 	user << "<span class='notice'>You mash the petals into a poultice.</span>"
 
@@ -171,7 +171,7 @@
 	var/obj/item/stack/medical/bruise_pack/tajaran/poultice = new /obj/item/stack/medical/bruise_pack/tajaran(user.loc)
 
 	poultice.heal_brute = potency
-	del(src)
+	qdel(src)
 
 	user << "<span class='notice'>You mash the leaves into a poultice.</span>"
 
@@ -241,14 +241,14 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper))
-		del(O)
+		qdel(O)
 		user << "<span class='notice'>You roll a blunt out of \the [src].</span>"
 		var/obj/item/clothing/mask/cigarette/blunt/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/rolled(src.loc)
 		B.name = "[src] blunt"
 		reagents.trans_to(B, (reagents.total_volume))
 		user.put_in_hands(B)
 		user.drop_from_inventory(src)
-		del(src)
+		qdel(src)
 	else
 		return ..()
 
@@ -262,14 +262,14 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/deus/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper))
-		del(O)
+		qdel(O)
 		user << "<span class='notice'>You roll a godly blunt.</span>"
 		var/obj/item/clothing/mask/cigarette/blunt/deus/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/deus/rolled(src.loc)
 		reagents.trans_to(B, (reagents.total_volume))
 		B.l_color = filling_color
 		user.put_in_hands(B)
 		user.drop_from_inventory(src)
-		del(src)
+		qdel(src)
 	else
 		return ..()
 
@@ -317,10 +317,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
 		new /obj/item/clothing/head/pumpkinhead (user.loc)
-		del(src)
+		qdel(src)
 		return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/lime
@@ -399,7 +399,7 @@
 	..()
 	new/obj/effect/decal/cleanable/tomato_smudge(src.loc)
 	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-	del(src)
+	qdel(src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
@@ -415,7 +415,7 @@
 	if(istype(user.loc,/turf/space))
 		return
 	new /mob/living/simple_animal/tomato(user.loc)
-	del(src)
+	qdel(src)
 
 	user << "<span class='notice'>You plant the killer-tomato.</span>"
 
@@ -429,12 +429,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/blood/splatter(src.loc)
+	var/obj/effect/decal/cleanable/blood/splatter/S = getFromPool(/obj/effect/decal/cleanable/blood/splatter,src.loc)
+	S.New(S.loc)
 	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
 	src.reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		src.reagents.reaction(A)
-	del(src)
+	qdel(src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
@@ -447,12 +448,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/blood/oil(src.loc)
+	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil,src.loc)
+	O.New(O.loc)
 	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
 	src.reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		src.reagents.reaction(A)
-	del(src)
+	qdel(src)
 	return
 
 
@@ -546,7 +548,7 @@
 	if(istype(user.loc,/turf/space))
 		return
 	new /mob/living/simple_animal/hostile/mushroom(user.loc)
-	del(src)
+	qdel(src)
 
 	user << "<span class='notice'>You plant the walking mushroom.</span>"
 
@@ -573,7 +575,7 @@
 	planted.delay = 50
 	planted.endurance = 100
 	planted.potency = potency
-	del(src)
+	qdel(src)
 
 	user << "<span class='notice'>You plant the glowshroom.</span>"
 
@@ -615,7 +617,7 @@
 	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/blood/oil(src.loc)
 		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-		del(src)
+		qdel(src)
 		return
 	for(var/turf/T in orange(M,outer_teleport_radius))
 		if(T in orange(M,inner_teleport_radius)) continue
@@ -650,9 +652,10 @@
 				sleep(1)
 				s.set_up(3, 1, A)
 				s.start()
-	new/obj/effect/decal/cleanable/blood/oil(src.loc)
+	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil,src.loc)
+	O.New(O.loc)
 	src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
-	del(src)
+	qdel(src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus

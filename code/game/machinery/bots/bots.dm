@@ -68,7 +68,9 @@
 	src.visible_message("<span class='danger'>[user] has slashed [src]!</span>")
 	playsound(get_turf(src), 'sound/weapons/slice.ogg', 25, 1, -1)
 	if(prob(10))
-		new /obj/effect/decal/cleanable/blood/oil(src.loc)
+		//new /obj/effect/decal/cleanable/blood/oil(src.loc)
+		var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, src.loc)
+		O.New(O.loc)
 	healthcheck()
 
 
@@ -80,7 +82,9 @@
 	src.visible_message("<span class='danger'>[M] has [M.attacktext] [src]!</span>")
 	add_logs(M, src, "attacked", admin=0)
 	if(prob(10))
-		new /obj/effect/decal/cleanable/blood/oil(src.loc)
+		//new /obj/effect/decal/cleanable/blood/oil(src.loc)
+		var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, src.loc)
+		O.New(O.loc)
 	healthcheck()
 
 /obj/machinery/bot/proc/declare() //Signals a medical or security HUD user to a relevant bot's activity.

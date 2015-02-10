@@ -77,7 +77,7 @@ Pipelines + Other Objects -> Pipe network
 // I asked /tg/ and bay and they have no idea why this is here, so into the trash it goes. - N3X
 // Re-enabled for debugging.
 /obj/machinery/atmospherics/process()
-	//build_network()
+	build_network()
 	//testing("[src] called parent process to build_network()")
 
 /obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)

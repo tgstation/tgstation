@@ -1105,6 +1105,8 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/add(datum/gas_mixture/right_side)
+	if(!right_side)
+		return 0
 	oxygen += right_side.oxygen
 	carbon_dioxide += right_side.carbon_dioxide
 	nitrogen += right_side.nitrogen

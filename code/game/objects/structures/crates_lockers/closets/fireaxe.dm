@@ -2,7 +2,7 @@
 /obj/structure/closet/fireaxecabinet
 	name = "fireaxe cabinet"
 	desc = "A small label reads 'For Emergency use only', accompanied with pictograms detailing safe usages for the included fireaxe. As if."
-	var/obj/item/weapon/twohanded/fireaxe/fireaxe = new/obj/item/weapon/twohanded/fireaxe
+	var/obj/item/weapon/fireaxe/fireaxe = new/obj/item/weapon/fireaxe
 	icon_state = "fireaxe1000"
 	icon_closed = "fireaxe1000"
 	icon_opened = "fireaxe1100"
@@ -12,6 +12,7 @@
 	opened = 1
 	var/hitstaken = 0
 	var/smashed = 0
+	locked = 1
 
 /obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 
@@ -52,9 +53,9 @@
 					localopened = 1
 			update_icon()
 		return
-	if(istype(O, /obj/item/weapon/twohanded/fireaxe) && src.localopened)
+	if(istype(O, /obj/item/weapon/fireaxe) && src.localopened)
 		if(!fireaxe)
-			var/obj/item/weapon/twohanded/fireaxe/F = O
+			var/obj/item/weapon/fireaxe/F = O
 			if(F.wielded)
 				user << "<span class='warning'>Unwield [F] first!</span>"
 				return

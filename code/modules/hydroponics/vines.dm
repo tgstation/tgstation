@@ -41,7 +41,7 @@
 		if(/obj/item/weapon/circular_saw) qdel(src)
 		if(/obj/item/weapon/kitchen/utensil/knife) qdel(src)
 		if(/obj/item/weapon/scalpel) qdel(src)
-		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
+		if(/obj/item/weapon/fireaxe) qdel(src)
 		if(/obj/item/weapon/hatchet) qdel(src)
 		if(/obj/item/weapon/melee/energy) qdel(src)
 		if(/obj/item/weapon/pickaxe/plasmacutter) qdel(src)
@@ -67,7 +67,7 @@
 
 /obj/effect/plantsegment/attack_hand(mob/user as mob)
 
-	if(user.a_intent == "help" && seed && harvest)
+	if(user.a_intent == I_HELP && seed && harvest)
 		seed.harvest(user,1)
 		harvest = 0
 		lastproduce = age
@@ -170,7 +170,7 @@
 				else
 					H.adjustBruteLoss(damage)
 
-				H.QueueUpdateDamageIcon()
+				H.UpdateDamageIcon()
 				H.updatehealth()
 
 			// Inject some chems.

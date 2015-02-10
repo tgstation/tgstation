@@ -55,7 +55,7 @@
 			health = 10
 			nutrilevel += 10
 			user.drop_item()
-			del(O)
+			qdel(O)
 			user << "\blue You carefully insert the queen into [src], she gets busy making a hive."
 			bees_in_hive = 0
 	else if(istype(O, /obj/item/beezeez))
@@ -66,7 +66,7 @@
 			user << "\blue You insert [O] into [src]. A relaxed humming appears to pick up."
 		else
 			user << "\blue You insert [O] into [src]. Now it just needs some bees."
-		del(O)
+		qdel(O)
 	else if(istype(O, /obj/item/weapon/minihoe))
 		if(health > 0)
 			user << "\red <b>You begin to dislodge the apiary from the tray, the bees don't like that.</b>"
@@ -85,7 +85,7 @@
 				contents -= I
 			new /obj/item/apiary(src.loc)
 			user << "\red You dislodge the apiary from the tray."
-			del(src)
+			qdel(src)
 	else if(istype(O, /obj/item/weapon/bee_net))
 		var/obj/item/weapon/bee_net/N = O
 		if(N.caught_bees > 0)

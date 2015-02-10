@@ -36,6 +36,7 @@
 	var/obj/effect/decal/cleanable/blood/gibs/gib = null
 	for(var/datum/disease/D in viruses)
 		if(D.spread_type == SPECIAL)
+			D.cure(1)
 			del(D)
 
 	if(sparks)
@@ -47,7 +48,8 @@
 		if(gibamounts[i])
 			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
-				gib = new gibType(location)
+				gib = getFromPool(gibType,location)//new gibType(location)
+				gib.New(location)
 
 				// Apply human species colouration to masks.
 				if(fleshcolor)
@@ -69,10 +71,8 @@
 					gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.b_type
 				else if(istype(src, /obj/effect/gibspawner/xeno))
 					gib.blood_DNA["UNKNOWN DNA"] = "X*"
-					playsound(src, get_sfx("gib"),50,1)
 				else if(istype(src, /obj/effect/gibspawner/human)) // Probably a monkey
 					gib.blood_DNA["Non-human DNA"] = "A+"
-					playsound(src, get_sfx("gib"),50,1)
 				var/list/directions = gibdirections[i]
 				if(directions.len)
 					gib.streak(directions)

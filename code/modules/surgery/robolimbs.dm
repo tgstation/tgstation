@@ -23,7 +23,7 @@
 /datum/surgery_step/limb/cut
 	allowed_tools = list(
 		/obj/item/weapon/scalpel = 100,
-		/obj/item/weapon/kitchenknife = 75,
+		/obj/item/weapon/kitchen/utensil/knife/large = 75,
 		/obj/item/weapon/shard = 50,
 		)
 
@@ -142,12 +142,15 @@
 	max_duration = 100
 
 /datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+
 	var/obj/item/robot_parts/p = tool
+	var/datum/organ/external/affected = target.get_organ(target_zone)
+	if(!(affected.status & ORGAN_ATTACHABLE) || !istype(p))
+		return 0 //not even ready for this and we're assuming they're using a fucking robot part!
 	if (p.part)
 		if (!(target_zone in p.part))
 			return 0
-	var/datum/organ/external/affected = target.get_organ(target_zone)
-	return ..() && affected.status & ORGAN_ATTACHABLE
+	return ..()
 
 /datum/surgery_step/limb/attach/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)

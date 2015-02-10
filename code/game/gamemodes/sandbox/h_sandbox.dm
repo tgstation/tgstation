@@ -156,7 +156,7 @@ datum/hSB
 					P.back.layer = 20
 					P.internal = P.back
 				if("hsbmetal")
-					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/metal
+					var/obj/item/stack/sheet/hsb = getFromPool(/obj/item/stack/sheet/metal,get_turf(usr))
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbglass")
@@ -184,7 +184,7 @@ datum/hSB
 				if("hsbtoolbox")
 					var/obj/item/weapon/storage/hsb = new/obj/item/weapon/storage/toolbox/mechanical
 					for(var/obj/item/device/radio/T in hsb)
-						del(T)
+						qdel(T)
 					new/obj/item/weapon/crowbar (hsb)
 					hsb.loc = usr.loc
 				if("hsbmedkit")

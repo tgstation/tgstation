@@ -195,6 +195,11 @@ var/global/loopModeNames=list(
 			t += "<i>You cannot change the playlist.</i>"
 		t += "<br />"
 		if(current_song)
+			if(!playlist.len)
+				playlist=null
+				process()
+				if(!playlist || !playlist.len) return
+			else if(current_song > playlist.len) current_song = playlist.len
 			var/datum/song_info/song=playlist[current_song]
 			t += "<b>Current song:</b> [song.artist] - [song.title]<br />"
 		if(next_song)
@@ -498,6 +503,12 @@ var/global/loopModeNames=list(
 			update_music()
 
 /obj/machinery/media/jukebox/update_music()
+	if(!playlist)
+		process()
+		if(!playlist || !playlist.len)
+			return
+	if(current_song > playlist.len)
+		current_song = 0
 	if(current_song && playing)
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url

@@ -364,6 +364,7 @@ var/global/list/facial_hair_styles_female_list	= list()
 /proc/EncodeDNABlock(var/value)
 	if(!isnum(value))
 		WARNING("Expected a number, got [value]")
+		return 0
 	return add_zero2(num2hex(value,1), 3)
 
 /datum/dna/proc/UpdateUI()

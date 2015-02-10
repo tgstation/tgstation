@@ -13,3 +13,19 @@
 		if(slot_r_hand)
 			return r_hand
 	return null
+
+/mob/living/carbon/get_all_slots()
+	return list(l_hand,
+				r_hand,
+				handcuffed,
+				legcuffed,
+				back,
+				wear_mask)
+
+//everything on the mob that is not in its pockets, hands belt, etc.
+/mob/living/carbon/get_clothing_items()
+	var/list/equipped = ..()
+	equipped -= list(handcuffed,
+					legcuffed,
+					back)
+	return equipped

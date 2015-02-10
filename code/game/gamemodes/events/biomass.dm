@@ -34,7 +34,7 @@
 			qdel(src)
 		if(/obj/item/weapon/scalpel)
 			qdel(src)
-		if(/obj/item/weapon/twohanded/fireaxe)
+		if(/obj/item/weapon/fireaxe)
 			qdel(src)
 		if(/obj/item/weapon/hatchet)
 			qdel(src)

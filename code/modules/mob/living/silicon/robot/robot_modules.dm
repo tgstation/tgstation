@@ -17,9 +17,6 @@
 	return
 
 /obj/item/weapon/robot_module/proc/on_emag()
-	return
-
-/obj/item/weapon/robot_module/on_emag()
 	modules += emag
 	rebuild()
 	..()
@@ -128,6 +125,7 @@
 	src.modules += new /obj/item/weapon/FixOVein(src)
 	src.modules += new /obj/item/weapon/surgicaldrill(src)
 	src.modules += new /obj/item/weapon/revivalprod(src)
+	src.modules += new /obj/item/weapon/crowbar(src)
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	src.emag.reagents.add_reagent("pacid", 250)
@@ -246,6 +244,7 @@
 	src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
 	src.modules += new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	src.modules += new /obj/item/taperoll/police(src)
+	src.modules += new /obj/item/weapon/crowbar(src)
 	src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 	return
 
@@ -268,6 +267,7 @@
 	src.modules += new /obj/item/weapon/mop(src)
 	src.modules += new /obj/item/device/lightreplacer(src)
 	src.modules += new /obj/item/weapon/reagent_containers/glass/bucket(src)
+	src.modules += new /obj/item/weapon/crowbar(src)
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	src.emag.reagents.add_reagent("lube", 250)
@@ -315,6 +315,8 @@
 
 	src.modules += new /obj/item/weapon/dice/d20(src)
 
+	src.modules += new /obj/item/weapon/crowbar(src)
+
 
 
 	src.emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
@@ -341,6 +343,7 @@
 	src.modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	src.modules += new /obj/item/device/mining_scanner(src)
 	src.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg(src)
+	src.modules += new /obj/item/weapon/crowbar(src)
 //		src.modules += new /obj/item/weapon/pickaxe/shovel(src) Uneeded due to buffed drill
 	return
 
@@ -353,6 +356,7 @@
 	src.modules += new /obj/item/weapon/melee/energy/sword(src)
 	src.modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
 	src.modules += new /obj/item/weapon/card/emag(src)
+	src.modules += new /obj/item/weapon/crowbar(src)
 	return
 
 /obj/item/weapon/robot_module/combat
@@ -365,5 +369,6 @@
 	src.modules += new /obj/item/borg/combat/shield(src)
 	src.modules += new /obj/item/borg/combat/mobility(src)
 	src.modules += new /obj/item/weapon/wrench(src) //Is a combat android really going to be stopped by a chair?
+	src.modules += new /obj/item/weapon/crowbar(src)
 	src.emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
 	return

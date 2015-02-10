@@ -128,6 +128,7 @@ var/const/MAX_SAVE_SLOTS = 8
 
 	// jukebox volume
 	var/volume = 100
+	var/usewmp = 0 //whether to use WMP or VLC
 
 	var/list/roles=list() // "role" => ROLEPREF_*
 
@@ -194,6 +195,8 @@ var/const/MAX_SAVE_SLOTS = 8
 			-Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a><br>
 			<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>
 			<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>
+			<b>Hear Jukeboxes:</b> <a href='?_src_=prefs;preference=jukebox'><b>[(toggles & SOUND_STREAMING) ? "Yes" : "No"]</b></a><br>
+			<b>Use WMP for streaming:</b> <a href='?_src_=prefs;preference=wmp'><b>[(usewmp) ? "Yes" : "No"]</b></a><br>
 			<b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a><br>
 			<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</b></a><br>
 			<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</b></a><br>
@@ -1088,13 +1091,17 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 							nanotrasen_relation = new_relation
 
 					if("flavor_text")
-						var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
+						if(appearance_isbanned(user))
+							src << "<span class = 'notice'>You are appearance banned!</span>"
+							return
+						else
+							var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
 
-						if(msg != null)
-							msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-							msg = html_encode(msg)
+							if(msg != null)
+								msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+								msg = html_encode(msg)
 
-							flavor_text = msg
+								flavor_text = msg
 
 					if("limbs")
 						var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
@@ -1242,6 +1249,12 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 							user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
 						else
 							user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+
+					if("jukebox")
+						toggles ^= SOUND_STREAMING
+
+					if("wmp")
+						usewmp = !usewmp
 
 					if("ghost_ears")
 						toggles ^= CHAT_GHOSTEARS

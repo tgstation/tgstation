@@ -16,7 +16,7 @@
 		else
 			H << "\red You are unable to equip that."
 
-/mob/living/carbon/human/proc/get_all_slots()
+/mob/living/carbon/human/get_all_slots()
 	return list(
 		back,
 		wear_mask,
@@ -36,6 +36,21 @@
 		l_store,
 		r_store,
 		s_store)
+
+//everything on the mob that is not in its pockets, hands and belt.
+/mob/living/carbon/human/get_clothing_items()
+	var/list/equipped = ..()
+	equipped -= list(back,
+					handcuffed,
+					legcuffed,
+					belt,
+					wear_id,
+					gloves,
+					head,
+					shoes,
+					wear_suit,
+					w_uniform)
+	return equipped
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
 	for (var/slot in slots)
@@ -180,7 +195,7 @@
 		update_inv_glasses()
 	else if (W == head)
 		head = null
-		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+		if(W.flags_inv & HIDEHAIR)
 			update_hair(0)	//rebuild hair
 		success = 1
 		update_inv_head()
@@ -199,7 +214,7 @@
 	else if (W == wear_mask)
 		wear_mask = null
 		success = 1
-		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+		if(W.flags_inv & HIDEHAIR)
 			update_hair(0)	//rebuild hair
 		if(internal)
 			if(internals)
@@ -277,7 +292,7 @@
 			update_inv_back(redraw_mob)
 		if(slot_wear_mask)
 			src.wear_mask = W
-			if((wear_mask.flags & BLOCKHAIR) || (wear_mask.flags & BLOCKHEADHAIR))
+			if(wear_mask.flags_inv & HIDEHAIR)
 				update_hair(redraw_mob)	//rebuild hair
 			update_inv_wear_mask(redraw_mob)
 		if(slot_handcuffed)

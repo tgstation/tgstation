@@ -68,9 +68,37 @@
 	..()
 	return 0
 
+/*
+ * IF YOU HAVE BYOND VERSION BELOW 507.1248 OR ARE ABLE TO WALK THROUGH WINDOORS/BORDER WINDOWS COMMENT OUT
+ * #define BORDER_USE_TURF_EXIT
+ * FOR MORE INFORMATION SEE: http://www.byond.com/forum/?post=1666940
+ */
+#ifdef BORDER_USE_TURF_EXIT
+/turf/Exit(atom/movable/mover, atom/target)
+	if(!mover)
+		return 1
+	// First, make sure it can leave its square
+	if(mover.loc == src)
+		// Nothing but border objects stop you from leaving a tile, only one loop is needed
+		for(var/obj/obstacle in src)
+			/*if(ismob(mover) && mover:client)
+				world << "<span class='danger'>EXIT</span>origin: checking exit of mob [obstacle]"*/
+			if(!obstacle.CheckExit(mover, target) && obstacle != mover && obstacle != target)
+				/*if(ismob(mover) && mover:client)
+					world << "<span class='danger'>EXIT</span>Origin: We are bumping into [obstacle]"*/
+				mover.Bump(obstacle, 1)
+				return 0
+	return 1
+#if DM_VERSION < 507
+	#warn This compiler is too far out of date! You will experience issues with windows and windoors unles you update to atleast 507.1248 or comment out BORDER_USE_TURF_EXIT in global.dm!
+
+#endif
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
 		return 1
+
+#ifndef BORDER_USE_TURF_EXIT
+#warn BORDER_USE_TURF_EXIT is not defined, using possibly buggy turf/Enter code.
 	// First, make sure it can leave its square
 	if(isturf(mover.loc))
 		// Nothing but border objects stop you from leaving a tile, only one loop is needed
@@ -78,12 +106,16 @@
 			if(!obstacle.CheckExit(mover, src) && obstacle != mover && obstacle != forget)
 				mover.Bump(obstacle, 1)
 				return 0
-
+#endif
 	var/list/large_dense = list()
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
 		if(border_obstacle.flags&ON_BORDER)
-			if(!border_obstacle.CanPass(mover, mover.loc) && (forget != border_obstacle))
+			/*if(ismob(mover) && mover:client)
+				world << "<span class='danger'>ENTER</span>Target(border): checking CanPass of [border_obstacle]"*/
+			if(!border_obstacle.CanPass(mover, mover.loc) && (forget != border_obstacle) && mover != border_obstacle)
+				/*if(ismob(mover) && mover:client)
+					world << "<span class='danger'>ENTER</span>Target(border): We are bumping into [border_obstacle]"*/
 				mover.Bump(border_obstacle, 1)
 				return 0
 		else
@@ -96,7 +128,11 @@
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle in large_dense)
-		if(!obstacle.CanPass(mover, mover.loc) && (forget != obstacle))
+		/*if(ismob(mover) && mover:client)
+			world << "<span class='danger'>ENTER</span>target(large_dense): [mover] checking CanPass of [obstacle]"*/
+		if(!obstacle.CanPass(mover, mover.loc) && (forget != obstacle) && mover != obstacle)
+			/*if(ismob(mover) && mover:client)
+				world << "<span class='danger'>ENTER</span>target(large_dense): checking: We are bumping into [obstacle]"*/
 			mover.Bump(obstacle, 1)
 			return 0
 	return 1 //Nothing found to block so return success!
@@ -104,8 +140,7 @@
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
 	if(ismob(Obj))
-		if(!Obj:lastarea)
-			Obj:lastarea = get_area(Obj.loc)
+		Obj:lastarea = get_area(Obj.loc)
 		if(Obj:lastarea.has_gravity == 0)
 			inertial_drift(Obj)
 
@@ -156,7 +191,7 @@
 		spawn(5)
 			if((SP && (SP.loc == src)))
 				if(SP.inertia_dir)
-					SP.Move(get_step(SP, SP.inertia_dir))
+					SP.Move(get_step(SP, SP.inertia_dir), SP.inertia_dir)
 					return
 	if(istype(A, /obj/structure/stool/bed/chair/vehicle/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
 		var/obj/structure/stool/bed/chair/vehicle/JC = A //A bomb!
@@ -204,12 +239,11 @@
 		del L
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1)
+/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_lighting_update = 0)
 	if (!N)
 		return
 
 	var/initialOpacity = opacity
-
 #ifdef ENABLE_TRI_LEVEL
 // Fuck this, for now - N3X
 ///// Z-Level Stuff ///// This makes sure that turfs are not changed to space when one side is part of a zone
@@ -245,7 +279,12 @@
 		var/turf/simulated/S = src
 		env = S.air //Get the air before the change
 		if(S.zone) S.zone.rebuild()
-
+	if(istype(src,/turf/simulated/floor))
+		var/turf/simulated/floor/F = src
+		if(F.floor_tile)
+			qdel(F.floor_tile)
+			F.floor_tile = null
+		F = null
 	if(ispath(N, /turf/simulated/floor))
 		//if the old turf had a zone, connect the new turf to it as well - Cael
 		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.
@@ -259,7 +298,7 @@
 			W.air = env //Copy the old environment data over if both turfs were simulated
 
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
+		if((old_lumcount != W.lighting_lumcount) || (loc.name != "Space" && force_lighting_update))
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
@@ -274,7 +313,7 @@
 
 		W.levelupdate()
 
-		if(opacity != initialOpacity)
+		if((opacity != initialOpacity) && W.lighting_lumcount)
 			UpdateAffectingLights()
 
 		return W
@@ -287,7 +326,7 @@
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
+		if((old_lumcount != W.lighting_lumcount) || (loc.name != "Space" && force_lighting_update))
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
@@ -299,7 +338,7 @@
 
 		W.levelupdate()
 
-		if(opacity != initialOpacity)
+		if((opacity != initialOpacity) && W.lighting_lumcount)
 			UpdateAffectingLights()
 
 		return W

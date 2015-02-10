@@ -406,3 +406,11 @@
 	icon_state = "lordadmiral"
 	item_state = "lordadmiral"
 	allowed = list (/obj/item/weapon/gun)
+
+/obj/item/clothing/suit/raincoat
+	name = "Raincoat"
+	desc = "Do you like Huey Lewis and the News?"
+	icon_state = "raincoat"
+	item_state = "raincoat"
+	allowed = list (/obj/item/weapon/fireaxe)
+

@@ -74,7 +74,7 @@ move an amendment</a> to the drawing.</p>
 
 
 /obj/item/blueprints/proc/get_area()
-	var/turf/T = get_turf_loc(usr)
+	var/turf/T = get_turf(usr)
 	var/area/A = get_area_master(T)
 	return A
 
@@ -100,7 +100,7 @@ move an amendment</a> to the drawing.</p>
 
 /obj/item/blueprints/proc/create_area()
 	//world << "DEBUG: create_area"
-	var/res = detect_room(get_turf_loc(usr))
+	var/res = detect_room(get_turf(usr))
 	if(!istype(res,/list))
 		switch(res)
 			if(ROOM_ERR_SPACE)
@@ -122,6 +122,8 @@ move an amendment</a> to the drawing.</p>
 	var/area/A = new
 	A.name = str
 	A.tagbase = "[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
+	A.tag = "[A.type]/[md5(str)]"
+	A.master = A
 	//var/ma
 	//ma = A.master ? "[A.master]" : "(null)"
 	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
@@ -130,7 +132,8 @@ move an amendment</a> to the drawing.</p>
 	A.power_environ = 0
 	A.always_unpowered = 0
 	A.SetDynamicLighting()
-	move_turfs_to_area(turfs, A)
+	A.addSorted()
+	spawn() move_turfs_to_area(turfs, A)
 
 	A.always_unpowered = 0
 	for(var/turf/T in A.contents)
@@ -146,6 +149,9 @@ move an amendment</a> to the drawing.</p>
 
 /obj/item/blueprints/proc/move_turfs_to_area(var/list/turf/turfs, var/area/A)
 	A.contents.Add(turfs)
+	for(var/turf/T in turfs)
+		for(var/atom/movable/AM in T)
+			AM.areaMaster = get_area_master(T)
 		//oldarea.contents.Remove(usr.loc) // not needed
 		//T.loc = A //error: cannot change constant value
 

@@ -633,7 +633,7 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/thunderdome(M), slot_head)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_l_hand)
+			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_l_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/smokebomb(M), slot_r_store)
 
 
@@ -657,9 +657,9 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(M), slot_head)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/rollingpin(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_l_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_r_store)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_s_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_l_hand)
+			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_s_store)
 
 		if ("tournament janitor")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(M), slot_w_uniform)
@@ -724,7 +724,7 @@ Pressure: [env.return_pressure()]"}
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
-			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
+			var/obj/item/weapon/fire_axe = new(M)
 			M.equip_to_slot_or_del(fire_axe, slot_r_hand)
 
 		if("masked killer")
@@ -736,10 +736,10 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/monocle(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/apron(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/scalpel(M), slot_r_store)
 
-			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
+			var/obj/item/weapon/fire_axe = new(M)
 			M.equip_to_slot_or_del(fire_axe, slot_r_hand)
 
 			for(var/obj/item/carried_item in M.contents)
@@ -1106,50 +1106,105 @@ Pressure: [env.return_pressure()]"}
 	set category = "Debug"
 	set name = "Dump Instance Counts"
 	set desc = "MEMORY PROFILING IS TOO HIGH TECH"
-
-	var/F=file("instances.csv")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F=file("data/logs/profiling/[date_string]_instances.csv")
 	fdel(F)
 	F << "Types,Number of Instances"
 	for(var/key in type_instances)
 		F << "[key],[type_instances[key]]"
 
-	usr << "\blue Dumped to instances.csv."
+	usr << "\blue Dumped to [F]"
 
 #ifdef PROFILE_MACHINES
 /client/proc/cmd_admin_dump_macprofile()
 	set category = "Debug"
 	set name = "Dump Machine and Object Profiling"
 
-	var/F = file("machine_profiling.csv")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F =file("data/logs/profiling/[date_string]_machine_profiling.csv")
 	fdel(F)
 	F << "type,nanoseconds"
 	for(var/typepath in machine_profiling)
 		var/ns = machine_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to machine_profiling.csv."
-	F = file("object_profiling.csv")
-	fdel(F)
-	F << "type,nanoseconds"
+	usr << "\blue Dumped to [F]"
+	var/FF = file("data/logs/profiling/[date_string]_object_profiling.csv")
+	fdel(FF)
+	FF << "type,nanoseconds"
 	for(var/typepath in object_profiling)
 		var/ns = object_profiling[typepath]
-		F << "[typepath],[ns]"
+		FF << "[typepath],[ns]"
 
-	usr << "\blue Dumped to object_profiling.csv."
+	usr << "\blue Dumped to [FF]."
+
+
+/client/proc/cmd_admin_dump_machine_type_list()
+	set category = "Debug"
+	set name = "Dump Machine type list"
+
+	if(!machines.len && !power_machines.len)
+		usr << "Machines has no length!"
+		return
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F =file("data/logs/profiling/[date_string]_machine_instances.csv")
+	fdel(F)
+	F << "type,count"
+	var/list/machineinstances = list()
+	for(var/atom/typepath in machines)
+		if(!typepath.type in machineinstances)
+			machineinstances["[typepath.type]"] = 0
+		machineinstances["[typepath.type]"] += 1
+	for(var/T in machineinstances)
+		var/count = machineinstances[T]
+		F << "[T],[count]"
+
+	usr << "\blue Dumped to [F]."
+	F =file("data/logs/profiling/[date_string]_power_machine_instances.csv")
+	fdel(F)
+	F << "type,count"
+	machineinstances.len = 0
+	for(var/atom/typepath in power_machines)
+		if(!typepath.type in machineinstances)
+			machineinstances["[typepath.type]"] = 0
+		machineinstances["[typepath.type]"] += 1
+	for(var/T in machineinstances)
+		var/count = machineinstances[T]
+		F << "[T],[count]"
+
+	usr << "\blue Dumped to [F]."
 #endif
 
 /client/proc/cmd_admin_dump_delprofile()
 	set category = "Debug"
 	set name = "Dump Del Profiling"
 
-	var/F = file("del_profiling.csv")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F =file("data/logs/profiling/[date_string]_del_profiling.csv")
 	fdel(F)
 	F << "type,deletes"
 	for(var/typepath in del_profiling)
 		var/ns = del_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to del_profiling.csv."
+	usr << "\blue Dumped to [F]."
+	F =file("data/logs/profiling/[date_string]_gdel_profiling.csv")
+	fdel(F)
+	F << "type,soft deletes"
+	for(var/typepath in gdel_profiling)
+		var/ns = gdel_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to [F]."
+
+	F =file("data/logs/profiling/[date_string]_ghdel_profiling.csv")
+	fdel(F)
+	F << "type,hard deletes"
+	for(var/typepath in ghdel_profiling)
+		var/ns = ghdel_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to [F]."
 
 /client/proc/gib_money()
 	set category = "Fun"
@@ -1239,3 +1294,20 @@ client/proc/delete_all_adminbus()
 
 	for(var/obj/structure/stool/bed/chair/vehicle/adminbus/AB in world)
 		AB.Adminbus_Deletion()
+
+client/proc/mob_list()
+	set name = "show mob list"
+	set category = "Debug"
+	if(!holder) return
+	usr << "mob list length is [mob_list.len]"
+	var/foundnull = 0
+	for(var/mob/V in mob_list)
+		var/msg = "mob ([V]) is in slot [mob_list.Find(V)]"
+		if(!ismob(V))
+			if(isnull(V))
+				foundnull++
+			msg = "<span class='danger'><font size=3>Non mob found in mob list [isnull(V) ? "null entry found at mob_list.Find(V)" : "[V]'s type is [V.type]"]</span></font>"
+		usr << msg
+	if(foundnull)
+		usr << "Found [foundnull] null entries in the mob list, running null clearer."
+		listclearnulls(mob_list)

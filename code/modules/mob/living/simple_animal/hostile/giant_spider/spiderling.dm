@@ -29,7 +29,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "barrels into"
-	a_intent = "help"
+	a_intent = I_HELP
 	//throw_message = "sinks in slowly, before being pushed out of "
 	//status_flags = CANPUSH
 	search_objects = 0

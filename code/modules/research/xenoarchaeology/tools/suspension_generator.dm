@@ -329,7 +329,7 @@
 /obj/machinery/suspension_gen/verb/toggle()
 	set src in view(1)
 	set name = "Rotate suspension gen (clockwise)"
-	set category = "IC"
+	set category = "Object"
 
 	if(anchored)
 		usr << "\red You cannot rotate [src], it has been firmly fixed to the floor."

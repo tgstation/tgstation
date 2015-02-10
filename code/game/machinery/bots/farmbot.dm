@@ -348,6 +348,8 @@
 		mode = 0
 		frustration = 0
 		src.path = new()
+	if(!src.path)
+		src.path = new()
 	if(src.target && (src.path.len) && (get_dist(src.target,src.path[src.path.len]) > 2))
 		src.path = new()
 	if(src.target && src.path.len == 0 && (get_dist(src,src.target) > 1))
@@ -403,7 +405,7 @@
 	else // feed them plants~
 		var/obj/machinery/portable_atmospherics/hydroponics/tray = target
 		tray.nutrilevel = 10
-		fert.reagents.trans_to(tray.reagents, fert.reagents.total_volume)
+		fert.reagents.trans_to(tray, fert.reagents.total_volume)
 		del fert
 		//tray.updateicon()
 		icon_state = "farmbot_fertile"

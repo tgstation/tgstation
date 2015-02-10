@@ -5,6 +5,16 @@
 /mob/living/silicon/robot/get_active_hand()
 	return module_active
 
+/mob/living/silicon/robot/get_inactive_hand()
+	return
+
+/mob/living/silicon/robot/get_all_slots()
+	return list(module_state_1, module_state_2, module_state_3)
+
+//overridden from parent since they technically have no 'hands'
+/mob/living/silicon/robot/get_equipped_items()
+	return get_all_slots()
+
 /mob/living/silicon/robot/proc/uneq_module(const/obj/item/module)
 	if(!istype(module))
 		return 0

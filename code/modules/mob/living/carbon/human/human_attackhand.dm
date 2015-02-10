@@ -21,7 +21,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == I_HURT)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
@@ -71,16 +71,16 @@
 
 
 	switch(M.a_intent)
-		if("help")
+		if(I_HELP)
 			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
 				return 1
 //			if(M.health < -75)	return 0
 
-			if(M.check_body_part_coverage(MOUTH))
+			if(M.check_head_coverage(MOUTH))
 				M << "<span class='notice'><B>Remove your mask!</B></span>"
 				return 0
-			if(src.check_body_part_coverage(MOUTH))
+			if(src.check_head_coverage(MOUTH))
 				M << "<span class='notice'><B>Remove his mask!</B></span>"
 				return 0
 
@@ -95,7 +95,7 @@
 				O.process()
 			return 1
 
-		if("grab")
+		if(I_GRAB)
 			if(M == src || anchored)
 				return 0
 			if(w_uniform)
@@ -115,7 +115,7 @@
 			visible_message("\red [M] has grabbed [src] passively!")
 			return 1
 
-		if("hurt")
+		if(I_HURT)
 			//Vampire code
 			if(M.zone_sel && M.zone_sel.selecting == "head" && src != M)
 				if(M.mind && M.mind.vampire && (M.mind in ticker.mode.vampires) && !M.mind.vampire.draining)
@@ -213,7 +213,7 @@
 				src.throw_at(target,100,M.species.punch_throw_speed)
 
 
-		if("disarm")
+		if(I_DISARM)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 

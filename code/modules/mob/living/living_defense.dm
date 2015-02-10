@@ -46,8 +46,8 @@
 
 	flash_weak_pain()
 
-	if(istype(equipped(),/obj/item/device/assembly/signaler))
-		var/obj/item/device/assembly/signaler/signaler = equipped()
+	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
+		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
 			src.visible_message("\red [src] triggers their deadman's switch!")
 			signaler.signal()
@@ -77,7 +77,7 @@
 		src.visible_message("\red [src] has been hit by [O].")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [zone].", "Your armor has softened hit to your [zone].")
 		if(armor < 2)
-			apply_damage(O.throwforce*(speed/5), dtype, zone, armor, O.sharp, O)
+			apply_damage(O.throwforce*(speed/5), dtype, zone, armor, O.is_sharp(), O)
 
 		if(!O.fingerprintslast)
 			return
@@ -104,7 +104,7 @@
 				visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
 				src.throw_at(get_edge_target_turf(src,dir),1,momentum)
 
-				if(istype(W.loc,/mob/living) && W.sharp) //Projectile is embedded and suitable for pinning.
+				if(istype(W.loc,/mob/living) && W.is_sharp()) //Projectile is embedded and suitable for pinning.
 
 					if(!istype(src,/mob/living/carbon/human)) //Handles embedding for non-humans and simple_animals.
 						O.loc = src

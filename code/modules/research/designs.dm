@@ -100,6 +100,8 @@ k
 			return D
 	return
 
+/datum/proc/FindDesignByID(var/id)
+	//
 //sum of the required tech of a design
 /datum/design/proc/TechTotal()
 	var/total = 0
@@ -127,6 +129,7 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/security
+
 
 /datum/design/aicore
 	name = "Circuit Design (AI Core)"
@@ -2008,29 +2011,29 @@ k
 	name = "Plasma Pistol"
 	desc = "A plasma pistol."
 	id = "xcomplasmapistol"
-	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	req_tech = list("combat" = 5, "materials" = 3, "powerstorage" = 3, "plasmatech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 1000)
+	materials = list("$iron" = 10000, "$glass" = 1000, "$plasma" = 12000, "$uranium" = 4000)
 	build_path = /obj/item/weapon/gun/energy/plasma/pistol
 	locked = 1
 
 /datum/design/xcomplasmarifle
-	name = "Plasma Rifle"
-	desc = "A plasma rifle."
+	name = "Plasma Cannon"
+	desc = "A plasma cannon."
 	id = "xcomplasmarifle"
-	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	req_tech = list("combat" = 5, "materials" = 3, "powerstorage" = 3, "plasmatech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 3000)
+	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 3000, "$plasma" = 28000, "$uranium" = 12000)
 	build_path = /obj/item/weapon/gun/energy/plasma/rifle
 	locked = 1
 
 /datum/design/xcomlightplasmarifle
-	name = "Light Plasma Rifle"
+	name = "Plasma Rifle"
 	desc = "A plasma rifle."
 	id = "xcomlightplasmarifle"
-	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	req_tech = list("combat" = 5, "materials" = 3, "powerstorage" = 3, "plasmatech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 2000)
+	materials = list("$iron" = 10000, "$glass" = 1000, "$plasma" = 20000, "$uranium" = 8000)
 	build_path = /obj/item/weapon/gun/energy/plasma/light
 	locked = 1
 
@@ -2236,6 +2239,15 @@ k
 	build_type = PROTOLATHE
 	materials = list("$iron" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/meson
+
+/datum/design/excavationdrill
+	name = "Excavation Drill"
+	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 30 cms."
+	id = "excavationdrill"
+	req_tech = list("materials" = 6, "powerstorage" = 3, "engineering" = 3, "bluespace" = 4)
+	build_type = PROTOLATHE
+	materials = list("$iron" = 4000, "$glass" = 1000, "$silver" = 1000, "$diamond" = 500)
+	build_path = /obj/item/weapon/pickaxe/excavationdrill
 
 /////////////////////////////////////////
 //////////////Blue Space/////////////////
@@ -2481,7 +2493,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "syndicate" = 3)
 	build_path = /obj/item/borg/upgrade/syndicate
-	category = "Cyborg Upgrade Modules"
+	category = "Robotic_Upgrade_Modules"
 	materials = list("$iron"=10000,"$glass"=15000,"$diamond" = 10000)
 
 /datum/design/borg_engineer_upgrade
@@ -2491,7 +2503,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("engineering" = 1)
 	build_path = /obj/item/borg/upgrade/engineering
-	category = "Cyborg Upgrade Modules"
+	category = "Robotic_Upgrade_Modules"
 	materials = list("$iron"=10000,"$glass"=10000,"$plasma"=5000)
 
 /datum/design/medical_module_surgery
@@ -2762,7 +2774,7 @@ k
 	build_path = /obj/item/weapon/circuitboard/ecb/airlock_controller
 
 /datum/design/advanced_airlock_control
-	name = "Circuit Design (Advanced)"
+	name = "Circuit Design (Advanced Airlock Control)"
 	desc = "Allows for the construction of ECB used to build an advanced control panel."
 	id = "advanced_airlock_control"
 	req_tech = list("programming" = 3)
@@ -2842,7 +2854,7 @@ k
 	desc = "Allows for the construction of a spacepod core system, made up of the engine and life support systems."
 	id = "podcore"
 	build_type = MECHFAB | PODFAB
-	req_tech = list("materials" = 4, "engineering" = 3, "plasma" = 3, "bluespace" = 2)
+	req_tech = list("materials" = 4, "engineering" = 3, "plasmatech" = 3, "bluespace" = 2)
 	build_path = /obj/item/pod_parts/core
 	category = "Pod_Parts"
 	materials = list("$iron"=5000,"$uranium"=1000,"$plasma"=5000)
@@ -2856,7 +2868,7 @@ k
 	desc = "Allows for the construction of spacepod armor. This is the civilian version."
 	id = "podarmor_civ"
 	build_type = PODFAB
-	req_tech = list("materials" = 3, "plasma" = 3)
+	req_tech = list("materials" = 3, "plasmatech" = 3)
 	build_path = /obj/item/pod_parts/armor
 	category = "Pod_Armor"
 	materials = list("$iron"=15000,"$glass"=5000,"$plasma"=10000)
@@ -2889,7 +2901,7 @@ k
 	desc = "Allows for the construction of a spacepod mounted laser."
 	id = "podgun_laser"
 	build_type = PODFAB
-	req_tech = list("materials" = 3, "combat" = 3, "plasma" = 2)
+	req_tech = list("materials" = 3, "combat" = 3, "plasmatech" = 2)
 	build_path = /obj/item/device/spacepod_equipment/weaponry/laser
 	category = "Pod_Weaponry"
 	materials = list("$iron" = 15000)
@@ -2931,7 +2943,7 @@ k
 /datum/design/splicer
 	name = "Circuit Design (Disease Splicer)"
 	desc = "Allows for the construction of circuit boards used to build a disease splicer."
-	id = "incubator"
+	id = "splicer"
 	req_tech = list("programming" = 3, "biotech" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
@@ -2940,16 +2952,16 @@ k
 /datum/design/centrifuge
 	name = "Circuit Design (Isolation Centrifuge)"
 	desc = "Allows for the construction of circuit boards used to build an isolation centrifuge."
-	id = "diseaseanalyser"
+	id = "centrifuge"
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/centrifuge
 
 /datum/design/prism
-	name = "Circuit Design (Atmospherics Automation Console)"
-	desc = "Allows for the construction of circuit boards used to build an Atmospherics Automation Console"
-	id = "atmos_automation"
+	name = "Circuit Design (Optical Prism)"
+	desc = "Allows for the construction of circuit boards used to build an optical Prism"
+	id = "prism"
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)

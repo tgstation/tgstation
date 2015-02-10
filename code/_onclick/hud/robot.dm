@@ -55,7 +55,7 @@
 	using.name = "act_intent"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
+	using.icon_state = (mymob.a_intent == I_HURT ? "harm" : mymob.a_intent)
 	using.screen_loc = ui_acti
 	using.layer = 20
 	src.adding += using
@@ -184,7 +184,6 @@
 
 	if(r.shown_robot_modules)
 		//Modules display is shown
-		r.client.screen += r.throw_icon	//"store" icon
 
 		if(!r.module)
 			usr << "<span class='danger'>No module selected</span>"
@@ -221,11 +220,10 @@
 
 	else
 		//Modules display is hidden
-		r.client.screen -= r.throw_icon	//"store" icon
-
-		for(var/atom/A in r.module.modules)
-			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
-				//Module is not currently active
-				r.client.screen -= A
-		r.shown_robot_modules = 0
-		r.client.screen -= r.robot_modules_background
+		if(r.module)
+			for(var/atom/A in r.module.modules)
+				if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+					//Module is not currently active
+					r.client.screen -= A
+			r.shown_robot_modules = 0
+			r.client.screen -= r.robot_modules_background

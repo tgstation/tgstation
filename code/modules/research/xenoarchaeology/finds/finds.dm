@@ -157,7 +157,7 @@
 				"You wonder what kind of music was made with it")]."
 		if(6)
 			item_type = "[pick("bladed knife","serrated blade","sharp cutting implement")]"
-			new_item = new /obj/item/weapon/kitchenknife(src.loc)
+			new_item = new /obj/item/weapon/kitchen/utensil/knife/large(src.loc)
 			additional_desc = "[pick("It doesn't look safe.",\
 			"It looks wickedly jagged",\
 			"There appear to be [pick("dark red","dark purple","dark green","dark blue")] stains along the edges")]."
@@ -235,7 +235,9 @@
 			possible_spawns += /obj/item/stack/sheet/mineral/silver
 
 			var/new_type = pick(possible_spawns)
-			new_item = new new_type(get_turf(src))
+			if(new_type == /obj/item/stack/sheet/metal)
+				new_item = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			else new_item = new new_type(get_turf(src))
 			new_item:amount = rand(5,45)
 		if(15)
 			if(prob(75))
@@ -538,9 +540,10 @@
 
 		if(talkative && istype(new_item,/obj/item/weapon))
 			new_item.listening_to_players = 1
+			new_item.heard_words = list()
 			if(prob(25))
 				new_item.speaking_to_players = 1
-				processing_objects.Add(src)
+				processing_objects.Add(new_item)
 		var/turf/T = get_turf(src)
 		if(istype(T, /turf/unsimulated/mineral))
 			T:last_find = new_item
@@ -549,5 +552,6 @@
 	else if(talkative)
 		listening_to_players = 1
 		if(prob(25))
+			if(!heard_words) heard_words = list()
 			speaking_to_players = 1
 			processing_objects.Add(src)

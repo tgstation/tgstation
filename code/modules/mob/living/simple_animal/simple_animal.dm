@@ -37,6 +37,8 @@
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
 
+	var/show_stat_health = 1	//does the percentage health show in the stat panel for the mob
+
 	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	var/min_oxy = 5
 	var/max_oxy = 0					//Leaving something at 0 means it's off - has no maximum
@@ -48,6 +50,10 @@
 	var/max_n2 = 0
 	var/unsuitable_atoms_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
 
+
+	mob_bump_flag = SIMPLE_ANIMAL
+	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL
+	mob_push_flags = MONKEY|SLIME|SIMPLE_ANIMAL
 
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
@@ -87,6 +93,12 @@
 	..()
 
 /mob/living/simple_animal/updatehealth()
+	return
+
+/mob/living/simple_animal/airflow_stun()
+	return
+
+/mob/living/simple_animal/airflow_hit(atom/A)
 	return
 
 /mob/living/simple_animal/Life()
@@ -231,20 +243,6 @@
 		adjustBruteLoss(unsuitable_atoms_damage)
 	return 1
 
-/mob/living/simple_animal/Bump(AM as mob|obj)
-	if(!AM) return
-
-	if(resting || buckled)
-		return
-
-	if(isturf(src.loc))
-		if(ismob(AM))
-			var/newamloc = src.loc
-			src.loc = AM:loc
-			AM:loc = newamloc
-		else
-			..()
-
 /mob/living/simple_animal/gib(var/animation = 0)
 	if(icon_gib)
 		flick(icon_gib, src)
@@ -304,13 +302,13 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(I_HELP)
 			if (health > 0)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message("\blue [M] [response_help] [src].")
 
-		if("grab")
+		if(I_GRAB)
 			if (M == src || anchored)
 				return
 			if (!(status_flags & CANPUSH))
@@ -329,7 +327,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if("hurt", "disarm")
+		if(I_HURT, I_DISARM)
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
@@ -341,12 +339,12 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (I_HELP)
 
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
-		if ("grab")
+		if (I_GRAB)
 			if(M == src || anchored)
 				return
 			if(!(status_flags & CANPUSH))
@@ -366,7 +364,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if("hurt", "disarm")
+		if(I_HURT, I_DISARM)
 			var/damage = rand(15, 30)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 			adjustBruteLoss(damage)
@@ -376,7 +374,7 @@
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L as mob)
 
 	switch(L.a_intent)
-		if("help")
+		if(I_HELP)
 			visible_message("\blue [L] rubs it's head against [src]")
 
 
@@ -429,7 +427,7 @@
 		else
 			user << "\blue this [src] is dead, medical items won't bring it back to life."
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
+		if(istype(O, /obj/item/weapon/kitchen/utensil/knife/large) || istype(O, /obj/item/weapon/kitchen/utensil/knife/large/butch))
 			harvest()
 	else
 		user.delayNextAttack(8)
@@ -465,7 +463,7 @@
 /mob/living/simple_animal/Stat()
 	..()
 
-	if(statpanel("Status"))
+	if(statpanel("Status") && show_stat_health)
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()

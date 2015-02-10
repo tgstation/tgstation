@@ -1,16 +1,20 @@
 
 // Vent crawling whitelisted items, whoo
-/atom
-	var/list/canEnterVentWith=list(
-		/obj/item/weapon/implant,
-		/obj/item/clothing/mask/facehugger,
-		/obj/item/device/radio/borg,
-		/obj/machinery/camera)
+/mob/living
+	var/canEnterVentWith = "/obj/item/weapon/implant=0&/obj/item/clothing/mask/facehugger=0&/obj/item/device/radio/borg=0&/obj/machinery/camera=0"
 
 /mob/living/carbon/Login()
 	..()
 	update_hud()
 	return
+
+/mob/living/carbon/Bump(var/atom/movable/AM, yes)
+	if(now_pushing || !yes)
+		return
+	..()
+	if(istype(AM, /mob/living/carbon) && prob(10))
+		src.spread_disease_to(AM, "Contact")
+
 
 /mob/living/carbon/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
@@ -40,7 +44,7 @@
 					if (istype(organ, /datum/organ/external))
 						var/datum/organ/external/temp = organ
 						if(temp.take_damage(d, 0))
-							H.QueueUpdateDamageIcon()
+							H.UpdateDamageIcon()
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)
@@ -125,12 +129,6 @@
 	return damage
 
 /mob/living/carbon/proc/swap_hand()
-	var/obj/item/item_in_hand = src.get_active_hand()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand,/obj/item/weapon/twohanded))
-			if(item_in_hand:wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
-				return
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
@@ -297,8 +295,8 @@
 					if(loc==startloc)
 						if(contents.len && !isrobot(src))
 							for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
-								if(!(is_type_in_list(carried_item, canEnterVentWith)))
-									src << "\red You can't be carrying items or have items equipped when vent crawling!"
+								if(!(isInTypes(carried_item, canEnterVentWith)))
+									src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
 									return
 						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
 						if(target_vent)

@@ -33,3 +33,6 @@
  * or the object is placed in an object pool (effectively out-of-play so to speak)
  */
 /datum/var/disposed
+// Garbage collection (controller).
+/datum/var/gcDestroyed
+/datum/var/timeDestroyed

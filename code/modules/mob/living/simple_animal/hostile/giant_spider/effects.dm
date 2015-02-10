@@ -47,7 +47,7 @@
 
 /obj/effect/spider/proc/healthcheck()
 	if(health <= 0)
-		del(src)
+		qdel(src)
 
 /obj/effect/spider/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -85,6 +85,9 @@
 		pixel_x = rand(3,-3)
 		pixel_y = rand(3,-3)
 		processing_objects.Add(src)
+	Destroy()
+		processing_objects.Remove(src)
+		..()
 
 /obj/effect/spider/eggcluster/process()
 	amount_grown += rand(0,2)
@@ -93,7 +96,7 @@
 		for(var/i=0, i<num, i++)
 			//new /obj/effect/spider/spiderling(src.loc)
 			new /mob/living/simple_animal/hostile/giant_spider/spiderling(src.loc)
-		del(src)
+		qdel(src)
 /*s
 /obj/effect/spider/spiderling
 	name = "spiderling"

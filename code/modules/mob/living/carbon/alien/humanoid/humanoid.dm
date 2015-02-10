@@ -19,31 +19,6 @@
 	real_name = name
 	..()
 
-//This is fine, works the same as a human
-/mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!(yes) || now_pushing)) //IF YES !
-		return
-	now_pushing = 0
-	..()
-	if(!istype(AM, /atom/movable))
-		return
-
-	if(ismob(AM))
-		var/mob/tmob = AM
-		tmob.LAssailant = src
-
-	if(!now_pushing)
-		now_pushing = 1
-		if(!AM.anchored)
-			var/t = get_dir(src, AM)
-			if(istype(AM, /obj/structure/window/full))
-				for(var/obj/structure/window/win in get_step(AM,t))
-					now_pushing = 0
-					return
-			step(AM, t)
-		now_pushing = null
-	return
-
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(flags & INVULNERABLE)
 		return
@@ -138,7 +113,7 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(I_HELP)
 			help_shake_act(M)
 		else
 			if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
@@ -232,7 +207,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == I_HURT)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.charge -= 2500
 
@@ -248,7 +223,7 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(I_HELP)
 			if(health > 0)
 				help_shake_act(M)
 			else
@@ -267,7 +242,7 @@
 						O.process()
 						return
 
-		if("grab")
+		if(I_GRAB)
 			if(M == src)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
@@ -282,7 +257,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			visible_message("<span class='warning'>[M] has grabbed \the [src] passively!</span>")
 
-		if("hurt")
+		if(I_HURT)
 			var/damage = rand(1, 9)
 			if(prob(90))
 				if(M_HULK in M.mutations) //M_HULK SMASH
@@ -303,7 +278,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to punch \the [src] !</span>")
 
-		if("disarm")
+		if(I_DISARM)
 			if(!lying)
 				if(prob(5)) //Very small chance to push an alien down.
 					Weaken(2)
@@ -338,7 +313,7 @@ In all, this is a lot like the monkey code. /N
 
 	switch(M.a_intent)
 
-		if("help")
+		if(I_HELP)
 			sleeping = max(0,sleeping-5)
 			resting = 0
 			AdjustParalysis(-3)

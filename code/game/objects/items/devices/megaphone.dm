@@ -63,7 +63,9 @@
 	SOUND SYNTH BELOW THIS LINE
 ----------------------------------------------
 */
-
+//To do list: make this whole thing use list associations
+//Until then, change this number if you add/remove sounds
+#define SOUND_NUM 13
 
 
 /obj/item/device/soundsynth
@@ -92,10 +94,10 @@ This is to cycle sounds forward
 	set category = "Object"
 	set name = "Cycle Sound Forward"
 	switch(sound_flag)
-		if(12)
+		if(SOUND_NUM)
 			usr << "There is no sound higher then Double Beep!"
 			return
-		if(0 to 11)
+		if(0 to SOUND_NUM-1)
 			sound_flag++
 			usr << "Sound switched to [sound_names[1+sound_flag]]!"
 			return
@@ -114,7 +116,7 @@ And backwards
 		if(0)
 			usr << "There is no sound lower then Honk!"
 			return
-		if(1 to 12)
+		if(1 to SOUND_NUM)
 			sound_flag--
 			usr << "Sound switched to [sound_names[1+sound_flag]]!"
 			return
@@ -126,7 +128,7 @@ And backwards
 	if(spam_flag + 20 < world.timeofday)
 		var/tmp/playing_sound
 		switch(sound_flag)
-			if(0 to 12)
+			if(0 to SOUND_NUM)
 				playing_sound = sound_list[sound_flag+1]
 			else return
 		spam_flag = world.timeofday
@@ -135,14 +137,16 @@ And backwards
 /obj/item/device/soundsynth/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	if(M == user) //If you target yourself
 		sound_flag++
-		if(sound_flag > 12) sound_flag = 0
+		if(sound_flag > SOUND_NUM) sound_flag = 0
 		usr << "Sound switched to [sound_names[1+sound_flag]]!"
 	else
 		if(spam_flag + 20 < world.timeofday)
 			var/tmp/playing_sound
 			switch(sound_flag)
-				if(0 to 12)
+				if(0 to SOUND_NUM)
 					playing_sound = sound_list[sound_flag+1]
 				else return
 			spam_flag = world.timeofday
 			M << playing_sound
+
+#undef SOUND_NUM

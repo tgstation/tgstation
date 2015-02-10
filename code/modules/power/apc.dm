@@ -95,11 +95,6 @@
 
 	var/is_critical = 0 // Endgame scenarios will not destroy this APC.
 
-/obj/machinery/power/apc/updateDialog()
-	if (stat & (BROKEN|MAINT))
-		return
-	..()
-
 /obj/machinery/power/apc/New(loc, var/ndir, var/building=0)
 	..(loc)
 	wires = new(src)
@@ -474,7 +469,7 @@
 		user << "You start adding cables to the APC frame..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20) && C.amount >= 10)
-			var/turf/T = get_turf_loc(src)
+			var/turf/T = get_turf(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -524,7 +519,8 @@
 		if(do_after(user, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
-				new /obj/item/stack/sheet/metal(loc)
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+				M.amount = 1
 				user.visible_message(\
 					"\red [src] has been cut apart by [user.name] with the weldingtool.",\
 					"You disassembled the broken APC frame.",\
@@ -535,7 +531,7 @@
 					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
 					"You cut the APC frame from the wall.",\
 					"\red You hear welding.")
-			del(src)
+			qdel(src)
 			return
 	else if (istype(W, /obj/item/mounted/frame/apc_frame) && opened && emagged)
 		emagged = 0
@@ -621,7 +617,6 @@
 				call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
 				return
 	// do APC interaction
-	user.set_machine(src)
 	src.interact(user)
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
@@ -648,14 +643,16 @@
 
 
 /obj/machinery/power/apc/interact(mob/user)
-	if(!user)
+	if (!user)
 		return
 
-	if(wiresexposed)
+	if (wiresexposed)
 		wires.Interact(user)
 
-	return ui_interact(user)
+	if (stat & (BROKEN | MAINT | EMPED))
+		return
 
+	ui_interact(user)
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
@@ -1086,6 +1083,7 @@
 		else if(longtermpower > -10)
 			longtermpower -= 2
 
+
 		if(cell.charge <= 0)					// zero charge, turn all off
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
@@ -1105,7 +1103,6 @@
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			areaMaster.poweralert(1, src)
 			if(cell.percent() > 75)
 				areaMaster.poweralert(1, src)
 

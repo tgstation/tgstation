@@ -14,7 +14,7 @@
 	//  = - Strict type matching.  Will NOT check for subtypes.
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
-
+	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
 	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	var/storage_slots = 7 //The number of storage slots in this container.
@@ -83,6 +83,7 @@
 	user.client.screen += src.closer
 	user.client.screen += src.contents
 	user.s_active = src
+	is_seeing |= user
 	return
 
 /obj/item/weapon/storage/proc/hide_from(mob/user as mob)
@@ -94,6 +95,7 @@
 	user.client.screen -= src.contents
 	if(user.s_active == src)
 		user.s_active = null
+	is_seeing -= user
 	return
 
 /obj/item/weapon/storage/proc/close(mob/user as mob)
@@ -195,6 +197,13 @@
 		if(!stop_messages)
 			usr << "<span class='notice'>[src] is full, make some space.</span>"
 		return 0 //Storage item is full
+
+	if(W.wielded)
+		var/obj/item/ref_name = W
+		if(istype(W, /obj/item/offhand))
+			ref_name = W:wielding
+		usr << "<span class='notice'>Unwield \the [ref_name] first.</span>"
+		return
 
 	if(can_hold.len)
 		var/ok = 0
@@ -298,13 +307,16 @@
 				M.client.screen -= W
 
 	if(new_location)
+		var/mob/M
 		if(ismob(loc))
-			W.dropped(usr)
+			M = loc
+			W.dropped(M)
 		if(ismob(new_location))
-			W.layer = 20
+			M = new_location
+			W.pickup(M)
+			M.put_in_active_hand(W)
 		else
-			W.layer = initial(W.layer)
-		W.loc = new_location
+			W.loc = new_location
 	else
 		W.loc = get_turf(src)
 
@@ -488,7 +500,22 @@
 	new src.foldable(get_turf(src),foldable_amount)
 	del(src)
 //BubbleWrap END
+/obj/item/weapon/storage/proc/can_see_contents()
+	var/list/cansee = list()
+	for(var/mob/M in is_seeing)
+		if(M.s_active == src && M.client)
+			cansee |= M
+		else
+			is_seeing -= M
+	return cansee
 
+/obj/item/weapon/storage/proc/close_all()
+	for(var/mob/M in can_see_contents())
+		close(M)
+		. = 1 //returns 1 if any mobs actually got a close(M) call
 
-
-
+/obj/item/weapon/storage/Destroy()
+	close_all()
+	qdel(boxes)
+	qdel(closer)
+	..()

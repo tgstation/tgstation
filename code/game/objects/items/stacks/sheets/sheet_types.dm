@@ -93,6 +93,44 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	origin_tech = "materials=1"
 	melt_temperature = MELTPOINT_STEEL
 
+/obj/item/stack/sheet/metal/resetVariables()
+	return ..("recipes", "pixel_x", "pixel_y")
+
+/obj/item/stack/sheet/metal/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			returnToPool(src)
+			return
+		if(2.0)
+			if (prob(50))
+				returnToPool(src)
+				return
+		if(3.0)
+			if (prob(5))
+				returnToPool(src)
+				return
+		else
+	return
+
+/obj/item/stack/sheet/metal/blob_act()
+	returnToPool(src)
+
+/obj/item/stack/sheet/metal/singularity_act()
+	returnToPool(src)
+	return 2
+
+/obj/item/stack/sheet/metal/use(var/amount)
+	ASSERT(isnum(src.amount))
+	if(src.amount>=amount)
+		src.amount-=amount
+	else
+		return 0
+	. = 1
+	if (src.amount<=0)
+		if(usr)
+			usr.before_take_item(src)
+		spawn returnToPool(src)
+
 /obj/item/stack/sheet/metal/recycle(var/datum/materials/rec)
 	rec.addAmount("iron",1*amount)
 	return 1

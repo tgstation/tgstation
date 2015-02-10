@@ -535,7 +535,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(hasorgans(M))
 		var/datum/organ/external/S = M:get_organ(user.zone_sel.selecting)
 
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+		if(!(S.status & ORGAN_ROBOT) || user.a_intent != I_HELP)
 			return ..()
 
 		if(S.burn_dam > 0 && use(1))

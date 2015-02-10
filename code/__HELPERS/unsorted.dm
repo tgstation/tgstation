@@ -424,7 +424,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
-	var/list/sortmob = sortAtom(mob_list)
+	var/list/sortmob = sortNames(mob_list)
 	for(var/mob/living/silicon/ai/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/camera/M in sortmob)
@@ -573,14 +573,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		src.mob.unset_machine()
 	return
 
-//Will return the location of the turf an atom is ultimatly sitting on
-/proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the atom is on, or what the atom is in is on, etc
-	//in case they're in a closet or sleeper or something
-	var/atom/loc = M.loc
-	while(!istype(loc, /turf/))
-		loc = loc.loc
-	return loc
-
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
 /proc/get_edge_target_turf(var/atom/A, var/direction)
@@ -629,10 +621,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/x = min(world.maxx, max(1, A.x + dx))
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
-
-proc/arctan(x)
-	var/y=arcsin(x/sqrt(1+x*x))
-	return y
 
 //returns random gauss number
 proc/GaussRand(var/sigma)
@@ -767,16 +755,21 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
-//Returns: all the areas in the world
-/proc/return_areas()
-	var/list/area/areas = list()
+//Returns sortedAreas list if populated
+//else populates the list first before returning it
+/proc/SortAreas()
 	for(var/area/A in world)
-		areas += A
-	return areas
+		if(A.lighting_subarea)
+			continue
+		sortedAreas.Add(A)
 
-//Returns: all the areas in the world, sorted.
-/proc/return_sorted_areas()
-	return sortNames(return_areas())
+	sortTim(sortedAreas, /proc/cmp_name_asc)
+
+
+
+/area/proc/addSorted()
+	sortedAreas.Add(src)
+	sortTim(sortedAreas, /proc/cmp_name_asc)
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -1226,113 +1219,6 @@ var/global/list/common_tools = list(
 /obj/item/device/multitool,
 /obj/item/weapon/crowbar)
 
-/proc/istool(O)
-	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
-
-/proc/iswrench(O)
-	if(istype(O, /obj/item/weapon/wrench))
-		return 1
-	return 0
-
-/proc/iswelder(O)
-	if(istype(O, /obj/item/weapon/weldingtool))
-		return 1
-	return 0
-
-/proc/iscoil(O)
-	if(istype(O, /obj/item/weapon/cable_coil))
-		return 1
-	return 0
-
-/proc/iswirecutter(O)
-	if(istype(O, /obj/item/weapon/wirecutters))
-		return 1
-	return 0
-
-/proc/isscrewdriver(O)
-	if(istype(O, /obj/item/weapon/screwdriver))
-		return 1
-	return 0
-
-/proc/ismultitool(O)
-	if(istype(O, /obj/item/device/multitool))
-		return 1
-	return 0
-
-/proc/iscrowbar(O)
-	if(istype(O, /obj/item/weapon/crowbar))
-		return 1
-	return 0
-
-/proc/iswire(O)
-	if(istype(O, /obj/item/weapon/cable_coil))
-		return 1
-	return 0
-
-proc/is_hot(obj/item/W as obj)
-	switch(W.type)
-		if(/obj/item/weapon/weldingtool)
-			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.isOn())
-				return 3800
-			else
-				return 0
-		if(/obj/item/weapon/lighter)
-			if(W:lit)
-				return 1500
-			else
-				return 0
-		if(/obj/item/weapon/match)
-			if(W:lit)
-				return 1000
-			else
-				return 0
-		if(/obj/item/clothing/mask/cigarette)
-			if(W:lit)
-				return 1000
-			else
-				return 0
-		if(/obj/item/weapon/pickaxe/plasmacutter)
-			return 3800
-		if(/obj/item/weapon/melee/energy)
-			return 3500
-		else
-			return 0
-
-	return 0
-
-//Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
-/proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	if(!W)
-		return 0
-
-	if(W.sharp) return 1
-	return ( \
-		W.sharp													  || \
-		istype(W, /obj/item/weapon/screwdriver)                   || \
-		istype(W, /obj/item/weapon/pen)                           || \
-		istype(W, /obj/item/weapon/weldingtool)					  || \
-		istype(W, /obj/item/weapon/lighter/zippo)				  || \
-		istype(W, /obj/item/weapon/match)            		      || \
-		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
-		istype(W, /obj/item/weapon/wirecutters)                   || \
-		istype(W, /obj/item/weapon/circular_saw)                  || \
-		istype(W, /obj/item/weapon/melee/energy/sword)            || \
-		istype(W, /obj/item/weapon/melee/energy/blade)            || \
-		istype(W, /obj/item/weapon/pickaxe/shovel)				  || \
-		istype(W, /obj/item/weapon/kitchenknife)                  || \
-		istype(W, /obj/item/weapon/butch)						  || \
-		istype(W, /obj/item/weapon/scalpel)                       || \
-		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
-		istype(W, /obj/item/weapon/shard)                         || \
-		istype(W, /obj/item/weapon/broken_bottle)				  || \
-		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
-		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
-		istype(W, /obj/item/weapon/twohanded/fireaxe) \
-	)
-
 /proc/is_surgery_tool(obj/item/W as obj)
 	return (	\
 	istype(W, /obj/item/weapon/scalpel)			||	\
@@ -1345,11 +1231,10 @@ proc/is_hot(obj/item/W as obj)
 
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M)
-	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
-	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || 	\
-	(locate(/obj/structure/table/, M.loc) && 	\
-	(M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))
+	return (ishuman(M) && M.lying && \
+	locate(/obj/machinery/optable, M.loc) || \
+	(locate(/obj/structure/stool/bed/roller, M.loc) && prob(75)) || \
+	(locate(/obj/structure/table/, M.loc) && prob(66)))
 
 /proc/reverse_direction(var/dir)
 	switch(dir)

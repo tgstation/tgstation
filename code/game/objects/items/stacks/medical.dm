@@ -43,7 +43,7 @@
 			user << "<span class='warning'>This isn't useful at all on a peg limb.</span>"
 			return 1
 
-		H.QueueUpdateDamageIcon()
+		H.UpdateDamageIcon()
 
 	else
 

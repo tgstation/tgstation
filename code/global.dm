@@ -14,6 +14,7 @@ var/global/list/type_instances[0]
 // be using tickers instead (eg narsie, singulo). Major target
 // for cutting down on lag and boosting overall performance.
 var/global/list/machines = list()
+var/global/list/power_machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
 var/global/list/events = list()
@@ -365,3 +366,9 @@ var/global/list/plugins = list()
 
 // Space get this to return for things i guess?
 var/global/datum/gas_mixture/space_gas = new
+
+//Announcement intercom
+var/global/obj/item/device/radio/intercom/universe/announcement_intercom = new
+
+//used by jump-to-area etc. Updated by area/updateName()
+var/list/sortedAreas = list()

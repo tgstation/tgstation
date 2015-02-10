@@ -15,6 +15,19 @@
 	var/rejecting            // Is this organ already being rejected?
 	var/obj/item/organ/organ_holder
 
+
+/datum/organ/internal/Copy()
+	var/datum/organ/internal/I = ..()
+	I.damage = damage
+	I.min_bruised_damage = min_bruised_damage
+	I.min_broken_damage = min_broken_damage
+	I.parent_organ = parent_organ
+	I.robotic = robotic
+	I.removed_type = removed_type
+	I.transplant_data = transplant_data
+	I.rejecting = rejecting
+	I.organ_holder = null
+	return I
 /datum/organ/internal/proc/rejuvenate()
 	damage=0
 
@@ -89,6 +102,7 @@
 							owner.reagents.add_reagent("toxin", rand(3,5))
 
 /datum/organ/internal/proc/take_damage(amount, var/silent=0)
+	if(!owner) return
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else
@@ -167,6 +181,11 @@
 	parent_organ = "chest"
 	var/process_accuracy = 10
 	removed_type = /obj/item/organ/liver
+
+	Copy()
+		var/datum/organ/internal/liver/I = ..()
+		I.process_accuracy = process_accuracy
+		return I
 
 	process()
 		..()

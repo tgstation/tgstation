@@ -214,8 +214,7 @@
 			usr << "<span class='warning'>Please ensure your pen is in your active hand and that you're holding the paper.</span>"
 			return
 
-		// if paper is not in usr, then it must be in a clipboard or folder, which must be in or near usr
-		if(src.loc != usr && !((istype(src.loc, /obj/item/weapon/clipboard) || istype(src.loc, /obj/item/weapon/folder)) && (src.loc.loc == usr || src.loc.Adjacent(usr)) ) )
+		if(!Adjacent(usr, 1)) //the 1 means that the paper can be in one other item and be written on
 			return
 
 		log += "<br />\[[time_stamp()]] [key_name(usr)] added: [t]"

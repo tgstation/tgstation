@@ -12,6 +12,10 @@
 	var/mob/living/silicon/ai/ai = list()
 	var/last_tick //used to delay the powercheck
 
+/obj/item/device/radio/intercom/universe/New()
+	tag = "UNIVERSE"
+	return ..()
+
 /obj/item/device/radio/intercom/New(turf/loc, var/ndir, var/building=0)
 	..()
 	processing_objects += src

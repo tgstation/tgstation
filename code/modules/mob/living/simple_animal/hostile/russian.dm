@@ -18,9 +18,9 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "punches"
-	a_intent = "hurt"
+	a_intent = I_HURT
 	var/corpse = /obj/effect/landmark/mobcorpse/russian
-	var/weapon1 = /obj/item/weapon/kitchenknife
+	var/weapon1 = /obj/item/weapon/kitchen/utensil/knife/large
 	min_oxy = 5
 	max_oxy = 0
 	min_tox = 0

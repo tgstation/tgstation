@@ -94,12 +94,18 @@ datum
 
 				return the_id
 
-			trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+			trans_to(var/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 				if (!target)
 					return
-				if (!target.reagents || src.total_volume<=0)
-					return
-				var/datum/reagents/R = target.reagents
+				var/datum/reagents/R
+				if (istype(target, /datum/reagents))
+					R = target
+				else
+					var/atom/movable/AM = target
+					if (!AM.reagents || src.total_volume<=0)
+						return
+					else
+						R = AM.reagents
 				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 				var/part = amount / src.total_volume
 				var/trans_data = null

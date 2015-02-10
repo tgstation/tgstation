@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed diona not transferring their mind when they evolve, which resulted in things like diona losing their antag status for example.

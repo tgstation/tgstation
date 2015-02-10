@@ -85,6 +85,7 @@ var/list/ai_list = list()
 	else src.laws = getLawset(src)
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
+	verbs -= /mob/living/silicon/verb/sensor_mode
 
 	aiPDA = new/obj/item/device/pda/ai(src)
 	aiPDA.owner = name
@@ -97,8 +98,7 @@ var/list/ai_list = list()
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, \
-		/mob/living/silicon/ai/proc/ai_hologram_change, \
-		/mob/living/silicon/ai/proc/toggle_camera_light)
+		/mob/living/silicon/ai/proc/ai_hologram_change)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -122,10 +122,6 @@ var/list/ai_list = list()
 	ai_list += src
 	..()
 	return
-
-/mob/living/silicon/ai/Destroy()
-	ai_list -= src
-	..()
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -154,7 +150,7 @@ var/list/ai_list = list()
 	var/icontype = ""
 	/* Nuked your hidden shit.*/
 	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
-	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Broken Output", "Triumvirate", "Triumvirate Static", "Searif", "Ravensdale", "Serithi", "Static", "Wasp", "Robert House", "Red October", "Fabulous", "Girl", "Girl Malf", "Boy", "Boy Malf", "Four-Leaf")
+	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Broken Output", "Triumvirate", "Triumvirate Static", "Searif", "Ravensdale", "Serithi", "Static", "Wasp", "Robert House", "Red October", "Fabulous", "Girl", "Girl Malf", "Boy", "Boy Malf", "Four-Leaf", "Yes Man")
 	switch(icontype)
 		if("Custom") icon_state = "[src.ckey]-ai"
 		if("Clown") icon_state = "ai-clown2"
@@ -185,6 +181,7 @@ var/list/ai_list = list()
 		if("Boy Malf") icon_state = "ai-boy-malf"
 		if("Fabulous") icon_state = "ai-fabulous"
 		if("Four-Leaf") icon_state = "ai-4chan"
+		if("Yes Man") icon_state = "yes-man"
 		else icon_state = "ai"
 	//else
 			//usr <<"You can only change your display once!"
@@ -437,7 +434,7 @@ var/list/ai_list = list()
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (I_HELP)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
@@ -718,7 +715,10 @@ var/list/ai_list = list()
 	apc.malfvacate()
 
 //Toggles the luminosity and applies it by re-entereing the camera.
-/mob/living/silicon/ai/proc/toggle_camera_light()
+/mob/living/silicon/ai/verb/toggle_camera_light()
+	set name = "Toggle Camera Light"
+	set desc = "Toggle internal infrared camera light"
+	set category = "AI Commands"
 	if(stat != CONSCIOUS)
 		return
 

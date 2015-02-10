@@ -277,7 +277,8 @@
 			if(!WT.remove_fuel(0,user))
 				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
-			new /obj/item/stack/sheet/metal(src.loc, 2)
+			var/obj/item/stack/sheet/metal/Met = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			Met.amount = 2
 			for(var/mob/M in viewers(src))
 				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
 			del(src)

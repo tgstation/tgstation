@@ -120,30 +120,32 @@ On the map:
 
 var/list/radiochannels = list(
 	"Common" = 1459,
-	"Science" = 1351,
+	"AI Private" = 1447,
+	"Deathsquad" = 1441,
+	"Security" = 1359,
+	"Engineering" = 1357,
 	"Command" = 1353,
 	"Medical" = 1355,
-	"Engineering" = 1357,
-	"Security" = 1359,
-	"Deathsquad" = 1441,
-	"Syndicate" = 1213,
-	"Supply" = 1347,
+	"Science" = 1351,
 	"Service" = 1349,
-	"AI Private" = 1447
+	"Supply" = 1347,
+	"Response Team" = 1345,
+	"Syndicate" = 1213
 )
 
 var/list/radiochannelsreverse = list(
-	"1459" = "Common",
+	"1213" = "Syndicate",
+	"1345" = "Response Team",
+	"1347" = "Supply",
+	"1349" = "Service",
 	"1351" = "Science",
-	"1353" = "Command",
 	"1355" = "Medical",
+	"1353" = "Command",
 	"1357" = "Engineering",
 	"1359" = "Security",
 	"1441" = "Deathsquad",
-	"1213" = "Syndicate",
-	"1347" = "Supply",
-	"1349" = "Service",
-	"1447" = "AI Private"
+	"1447" = "AI Private",
+	"1459" = "Common"
 )
 
 
@@ -151,6 +153,7 @@ var/list/radiochannelsreverse = list(
 var/const/SUPP_FREQ = 1347 //supply, coloured light brown in chat window
 var/const/SERV_FREQ = 1349 //service, coloured green in chat window
 var/const/DSQUAD_FREQ = 1441 //death squad frequency, coloured grey in chat window
+var/const/RESTEAM_FREQ = 1345 //response team frequency, uses the deathsquad color at the moment.
 var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 
 

@@ -15,11 +15,9 @@
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/engraving, engraving_quality //engraving on the wall
 	var/del_suppress_resmoothing = 0 // Do not resmooth neighbors on Destroy. (smoothwall.dm)
-	canSmoothWith = list(
-		/turf/simulated/wall,
-		/obj/structure/falsewall,
-		/obj/structure/falserwall // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
-	)
+
+	// WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	canSmoothWith = "/turf/simulated/wall=0&/obj/structure/falsewall=0&/obj/structure/falserwall=0"
 
 	soot_type = null
 
@@ -34,16 +32,18 @@
 			new /obj/structure/girder/reinforced(src)
 			new /obj/item/stack/sheet/plasteel( src )
 		else
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
+			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			M.amount = 2
 			new /obj/item/stack/sheet/plasteel( src )
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			new /obj/effect/decal/cleanable/blood(src)
+			var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood,src) //new /obj/effect/decal/cleanable/blood(src)
+			B.New(src)
 			new /obj/structure/cultgirder(src)
 		else
-			new /obj/effect/decal/cleanable/blood(src)
+			var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood,src) //new /obj/effect/decal/cleanable/blood(src)
+			B.New(src)
 			new /obj/effect/decal/remains/human(src)
 
 	else
@@ -51,22 +51,22 @@
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder(src)
 			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+				M.amount = 2
 			else
 				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 				new M( src )
 				new M( src )
 		else
 			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+				M.amount = 3
 			else
 				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 				new M( src )
 				new M( src )
-				new /obj/item/stack/sheet/metal( src )
+				var/obj/item/stack/sheet/metal/MM = getFromPool(/obj/item/stack/sheet/metal, src)
+				MM.amount = 1
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
@@ -178,7 +178,7 @@
 				qdel(E)
 			rotting = 0
 			return
-		else if(!is_sharp(W) && W.force >= 10 || W.force >= 20)
+		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			user << "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>"
 			src.dismantle_wall(1)
 
@@ -337,7 +337,7 @@
 		message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) thermited a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
 
 	spawn(100)
-		if(O)	del(O)
+		if(O)	qdel(O)
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 

@@ -5,6 +5,13 @@
 
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
 	unset_machine()
+	if(client)
+		for(var/atom/movable/AM in client.screen)
+			qdel(AM)
+		client.screen = list()
+	qdel(hud_used)
+	if(mind && mind.current == src)
+		spellremove(src)
 	mob_list.Remove(src)
 	dead_mob_list.Remove(src)
 	living_mob_list.Remove(src)
@@ -805,9 +812,9 @@ var/list/slot_equipment_priority = list( \
 		// If we're pulling something then drop what we're currently pulling and pull this instead.
 		if(pulling)
 			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-
+			var/p = pulling
 			stop_pulling()
-			if(AM == pulling)
+			if(AM == p)
 				return
 
 		src.pulling = AM
@@ -909,6 +916,13 @@ var/list/slot_equipment_priority = list( \
 	face_atom(A)
 	A.examine(src)
 
+
+/mob/living/verb/verb_pickup(obj/I in view())
+	set name = "Pick up"
+	set category = "Object"
+
+	face_atom(I)
+	I.verb_pickup(src)
 
 /mob/proc/update_flavor_text()
 	set src in usr

@@ -51,7 +51,8 @@
 			qdel(src)
 
 	..()
-
+	machines -= src
+	power_machines += src
 	for (var/obj/machinery/singularity_beacon/singubeacon in machines)
 		if (singubeacon.active)
 			target = singubeacon
@@ -542,7 +543,7 @@
 /obj/machinery/singularity/cultify()
 	var/dist = max((current_size - 2), 1)
 	explosion(get_turf(src), dist, dist * 2, dist * 4)
-	del(src)
+	qdel(src)
 
 /obj/machinery/singularity/singularity_act()
 	var/gain = (energy/2)
@@ -550,3 +551,7 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
+
+/obj/machinery/singularity/Destroy()
+	..()
+	power_machines -= src

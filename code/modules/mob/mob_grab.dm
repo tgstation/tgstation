@@ -152,7 +152,7 @@
 				if(do_after(assailant, UPGRADE_KILL_TIMER))
 					if(state == GRAB_KILL)
 						return
-					if(!affecting)
+					if(!assailant || !affecting)
 						qdel(src)
 						return
 					if(!assailant.canmove || assailant.lying)
@@ -169,6 +169,9 @@
 
 					affecting.losebreath += 1
 				else
+					if(!assailant || !affecting)
+						qdel(src)
+						return
 					assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
 					hud.icon_state = "disarm/kill"
 					state = GRAB_NECK

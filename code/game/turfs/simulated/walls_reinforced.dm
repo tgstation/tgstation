@@ -10,6 +10,7 @@
 	var/d_state = 0
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
+	user.delayNextAttack(8)
 	if (M_HULK in user.mutations)
 		if (prob(10) || rotting)
 			usr << text("\blue You smash through the wall.")
@@ -27,7 +28,6 @@
 	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
-	..()
 	return
 
 
@@ -50,7 +50,7 @@
 					del E
 				rotting = 0
 				return
-		else if(!is_sharp(W) && W.force >= 10 || W.force >= 20)
+		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			user << "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>"
 			src.dismantle_wall()
 			return
@@ -270,7 +270,7 @@
 			if (MS.amount > 1)
 				MS.amount--
 			else
-				del(MS)
+				returnToPool(MS)
 
 	else if(istype(W, /obj/item/mounted))
 		return

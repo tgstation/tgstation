@@ -8,7 +8,7 @@
 	flags = FPRINT
 	throwforce = 8
 	w_class = 3.0
-	sharp = 1
+	sharpness = 1
 
 /obj/item/weapon/arrow/proc/removed() //Helper for metal rods falling apart.
 	return

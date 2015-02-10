@@ -75,8 +75,11 @@
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
 		var/mob/living/carbon/human/M = location
-		if(M.l_hand == src || M.r_hand == src || M.head == src)
-			location = M.loc
+		if(istype(M))
+			if(M.l_hand == src || M.r_hand == src || M.head == src)
+				location = M.loc
+		else
+			return
 
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 1)
@@ -125,8 +128,8 @@
 	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
 	item_state = "hardhat0_pumpkin"
 	_color = "pumpkin"
-	flags = FPRINT  | BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags = FPRINT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	body_parts_covered = FULL_HEAD
 	var/brightness_on = 2 //luminosity when on
 	var/on = 0

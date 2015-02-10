@@ -84,8 +84,8 @@
 	mineral = "plasma"
 
 /turf/simulated/wall/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
-		ignite(is_hot(W))
+	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
+		ignite(W.is_hot())
 		return
 	..()
 

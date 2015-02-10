@@ -2,12 +2,11 @@
 	anchored = 0
 	density = 1
 	icon = 'icons/obj/atmos.dmi'
-	icon_state = "sheater0"
+	icon_state = "sheater"
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed not to set the station on fire."
 	var/obj/item/weapon/cell/cell
 	var/on = 0
-	var/open = 0
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
 	var/heating_power = 40000
 
@@ -28,15 +27,15 @@
 
 /obj/machinery/space_heater/update_icon()
 	overlays.len = 0
-	icon_state = "sheater[on]"
-	if(open)
-		overlays  += "sheater-open"
+	icon_state = "[initial(icon_state)][on]"
+	if(panel_open)
+		overlays  += "[initial(icon_state)]-open"
 	return
 
 /obj/machinery/space_heater/examine(mob/user)
 	..()
-	user << "<span class='info'>The heater is [on ? "on" : "off"] and the hatch is [open ? "open" : "closed"].</span>"
-	if(open)
+	user << "<span class='info'>\icon[src]\The [src.name] is [on ? "on" : "off"] and the hatch is [panel_open ? "open" : "closed"].</span>"
+	if(panel_open)
 		user << "<span class='info'>The power cell is [cell ? "installed" : "missing"].</span>"
 	else
 		user << "<span class='info'>The charge meter reads [cell ? round(cell.percent(),1) : 0]%</span>"
@@ -52,7 +51,7 @@
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/weapon/cell))
-		if(open)
+		if(panel_open)
 			if(cell)
 				user << "There is already a power cell inside."
 				return
@@ -74,7 +73,7 @@
 /obj/machinery/space_heater/togglePanelOpen(var/obj/toggleitem, mob/user)
 	..()
 	update_icon()
-	if(!open && user.machine == src)
+	if(!panel_open && user.machine == src)
 		user << browse(null, "window=spaceheater")
 		user.unset_machine()
 
@@ -86,7 +85,7 @@
 
 /obj/machinery/space_heater/interact(mob/user as mob)
 
-	if(open)
+	if(panel_open)
 
 		var/dat
 		dat = "Power cell: "
@@ -130,10 +129,10 @@
 				var/value = text2num(href_list["val"])
 
 				// limit to 20-90 degC
-				set_temperature = dd_range(0, 90, set_temperature + value)
+				set_temperature = dd_range(20, 90, set_temperature + value)
 
 			if("cellremove")
-				if(open && cell && !usr.get_active_hand())
+				if(panel_open && cell && !usr.get_active_hand())
 					cell.updateicon()
 					usr.put_in_hands(cell)
 					cell.add_fingerprint(usr)
@@ -141,7 +140,7 @@
 					usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 
 			if("cellinstall")
-				if(open && !cell)
+				if(panel_open && !cell)
 					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
 						usr.drop_item()

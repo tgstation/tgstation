@@ -139,6 +139,7 @@ BLIND     // can't see anything
 	var/can_flip = null
 	var/is_flipped = 1
 	var/ignore_flip = 0
+	action_button_name = "Toggle Mask"
 
 /obj/item/clothing/mask/verb/togglemask()
 	set name = "Toggle Mask"
@@ -158,6 +159,7 @@ BLIND     // can't see anything
 			permeability_coefficient = initial(permeability_coefficient)
 			flags = initial(flags)
 			flags_inv = initial(flags_inv)
+			body_parts_covered = initial(body_parts_covered)
 			usr << "You push \the [src] back into place."
 			src.is_flipped = 1
 		else
@@ -168,6 +170,7 @@ BLIND     // can't see anything
 			flags = 0
 			flags_inv = null
 			src.is_flipped = 2
+			body_parts_covered &= ~(MOUTH|HEAD)
 		usr.update_inv_wear_mask()
 
 /obj/item/clothing/mask/attack_self()
@@ -212,12 +215,12 @@ BLIND     // can't see anything
 	name = "Space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMG
+	flags = FPRINT  | STOPSPRESSUREDMG
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	body_parts_covered = FULL_HEAD
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
@@ -396,7 +399,7 @@ BLIND     // can't see anything
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
 			usr << "<span class='warning'>You need an empty hand to draw the gun!</span>"
 		else
-			if(usr.a_intent == "hurt")
+			if(usr.a_intent == I_HURT)
 				usr.visible_message("<span class='warning'>\The [usr] draws \the [H.holstered], ready to shoot!</span>", \
 				"<span class='warning'>You draw \the [H.holstered], ready to shoot!</span>")
 			else

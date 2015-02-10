@@ -327,6 +327,11 @@
 		if(P.client && P.ready)
 			. ++
 
+/datum/game_mode/proc/Clean_Antags() //Cleans out the genetic defects of all antagonists
+	for(var/mob/living/A in player_list)
+		if((istype(A)) && A.mind && A.mind.special_role)
+			if(A.dna)
+				A.dna.ResetSE()
 
 ///////////////////////////////////
 //Keeps track of all living heads//
@@ -451,7 +456,8 @@ proc/get_nt_opposed()
 					for(var/image/I in t_mind.current.client.images)
 						if((I.icon_state == "minion" || I.icon_state == "necromancer") && I.loc == owner.current)
 							//world << "deleting [t_mind.current] overlay"
-							del(I)
+							//del(I)
+							t_mind.current.client.images -= I
 		if(head)
 			//world.log << "found [head.name]"
 			if(head.current)
@@ -459,13 +465,15 @@ proc/get_nt_opposed()
 					for(var/image/I in head.current.client.images)
 						if((I.icon_state == "minion" || I.icon_state == "necromancer") && I.loc == owner.current)
 							//world << "deleting [head.current] overlay"
-							del(I)
+							//del(I)
+							head.current.client.images -= I
 	if(owner.current)
 		if(owner.current.client)
 			for(var/image/I in owner.current.client.images)
 				if(I.icon_state == "minion" || I.icon_state == "necromancer")
 					//world << "deleting [owner.current] overlay"
-					del(I)
+					//del(I)
+					owner.current.client.images -= I
 
 /datum/game_mode/proc/update_all_necro_icons()
 	spawn(0)
@@ -476,13 +484,15 @@ proc/get_nt_opposed()
 					for(var/image/I in head.current.client.images)
 						if(I.icon_state == "minion" || I.icon_state == "necromancer")
 							//world << "deleting [head.current] overlay"
-							del(I)
+							//del(I)
+							head.current.client.images -= I
 			for(var/datum/mind/t_mind in necromancer[headref])
 				if(t_mind.current && t_mind.current.client)
 					for(var/image/I in t_mind.current.client.images)
 						if(I.icon_state == "minion" || I.icon_state == "necromancer")
 							//world << "deleting [t_mind.current] overlay"
-							del(I)
+							//del(I)
+							t_mind.current.client.images -= I
 
 		for(var/headref in necromancer)
 			var/datum/mind/head = locate(headref)

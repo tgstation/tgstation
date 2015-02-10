@@ -51,6 +51,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	)
 
 	RefreshParts()
+	dispensable_reagents = sortList(dispensable_reagents)
 
 /obj/machinery/chem_dispenser/RefreshParts()
 	var/T = 0
@@ -197,6 +198,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
 			var/obj/item/weapon/reagent_containers/glass/B = src.beaker
 			var/datum/reagents/R = B.reagents
+			if(!R)
+				if(!B.gcDestroyed)
+					B.reagents = new/datum/reagents(B.volume)
+					R = B.reagents
+				else
+					del(B)
+					return
 			var/space = R.maximum_volume - R.total_volume
 
 			R.add_reagent(href_list["dispense"], min(amount, energy * 10, space))
@@ -948,6 +956,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
+	pass_flags = PASSTABLE
 	var/inuse = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/limit = 10

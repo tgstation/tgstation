@@ -12,6 +12,7 @@
 	item_state = "syringe_0"
 	icon_state = "0"
 	amount_per_transfer_from_this = 5
+	sharpness = 1
 	possible_transfer_amounts = null //list(5,10,15)
 	volume = 15
 	g_amt = 1000
@@ -63,7 +64,7 @@
 		user << "\red This syringe is broken!"
 		return
 
-	if (user.a_intent == "hurt" && ismob(target))
+	if (user.a_intent == I_HURT && ismob(target))
 		if((M_CLUMSY in user.mutations) && prob(50))
 			target = user
 		syringestab(target, user)
@@ -274,7 +275,7 @@
 			O.show_message(text("\red <B>[user] stabs [target] in \the [hit_area] with [src.name]!</B>"), 1)
 
 		if(affecting.take_damage(3))
-			target:QueueUpdateDamageIcon()
+			target:UpdateDamageIcon()
 
 	else
 		for(var/mob/O in viewers(world.view, user))

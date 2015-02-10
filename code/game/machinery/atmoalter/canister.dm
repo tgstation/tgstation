@@ -191,7 +191,7 @@
 	if(iswelder(W) && src.destroyed)
 		if(weld(W, user))
 			user << "\blue You salvage whats left of \the [src]"
-			var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src.loc)
+			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))//new /obj/item/stack/sheet/metal(src.loc)
 			M.amount = 3
 			del src
 		return
@@ -233,7 +233,10 @@
 	return src.ui_interact(user)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
-	if (src.destroyed)
+	if (src.destroyed || gcDestroyed || !get_turf(src))
+		if(!ui)
+			ui = nanomanager.get_open_ui(user, src, ui_key)
+		if(ui) ui.close()
 		return
 
 	// this is the data which will be sent to the ui

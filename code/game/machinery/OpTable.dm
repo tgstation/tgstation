@@ -10,6 +10,7 @@
 	active_power_usage = 5
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
+	throwpass = 1 //so Adjacent passes.
 
 	var/obj/machinery/computer/operating/computer = null
 
@@ -115,7 +116,7 @@
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.resting)
+		if(M.lying)
 			src.victim = M
 			icon_state = "table2-active"
 			return 1

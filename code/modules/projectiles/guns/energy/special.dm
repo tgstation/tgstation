@@ -2,6 +2,8 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
 	icon_state = "ionrifle"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	fire_sound = 'sound/weapons/ion.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
@@ -22,6 +24,8 @@
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	fire_sound = 'sound/weapons/pulse3.ogg'
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	charge_cost = 100
@@ -108,7 +112,8 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
 	icon_state = "floramut100"
-	item_state = "obj/item/gun.dmi"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	fire_sound = 'sound/effects/stealthoff.ogg'
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/floramut"
@@ -301,6 +306,8 @@ obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user as mob)
 	name = "radgun"
 	desc = "An experimental energy gun that fires radioactive projectiles that deal toxin damage, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
 	icon_state = "radgun"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	fire_sound = 'sound/weapons/radgun.ogg'
 	charge_cost = 100
 	var/charge_tick = 0

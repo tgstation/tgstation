@@ -159,7 +159,7 @@
 		else
 			for(var/obj/item/W in M)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-					del(W)
+					qdel(W)
 					continue
 				W.layer = initial(W.layer)
 				W.loc = M.loc
@@ -174,7 +174,7 @@
 		new_mob.setBrainLoss(100)
 
 
-		new_mob.a_intent = "hurt"
+		new_mob.a_intent = I_HURT
 		if(M.mind)
 			M.mind.transfer_to(new_mob)
 		else

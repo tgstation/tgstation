@@ -4,7 +4,7 @@
 ///////////////////////////////////////////////////////////
 
 /datum/surgery_step/butt
-	priority = 0
+	priority = 1 //this is more important than anything else!
 	can_infect = 0
 	blood_level = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -52,7 +52,7 @@
 /datum/surgery_step/butt/seperate_anus
 	allowed_tools = list(
 		/obj/item/weapon/scalpel = 100,
-		/obj/item/weapon/kitchenknife = 75,
+		/obj/item/weapon/kitchen/utensil/knife/large = 75,
 		/obj/item/weapon/shard = 50,
 		)
 
