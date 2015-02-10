@@ -60,6 +60,48 @@
 					s_store)
 	return filter
 
+/mob/living/carbon/human/proc/check_obscured_slots()
+	var/list/obscured = list()
+
+	if(wear_suit)
+		if(wear_suit.flags_inv & HIDEGLOVES)
+			obscured |= slot_gloves
+		if(wear_suit.flags_inv & HIDEJUMPSUIT)
+			obscured |= slot_w_uniform
+		if(wear_suit.flags_inv & HIDESHOES)
+			obscured |= slot_shoes
+
+	if(head)
+		if(head.flags_inv & HIDEMASK)
+			obscured |= slot_wear_mask
+		if(head.flags_inv & HIDEEYES)
+			obscured |= slot_glasses
+		if(head.flags_inv & HIDEEARS)
+			obscured |= slot_ears
+
+	if(obscured.len > 0)
+		return obscured
+	else
+		return null
+
+//The args for check_hidden_flags are the list of equipment, and then the flags
+//The arg for get_clothing items is the list of equipment - this filters stuff like hands, pockets, suit_storage, etc
+//get_head_slots and get_body_slots do exactly what you think they do
+/mob/living/carbon/human/proc/check_hidden_head_flags(var/hidden_flags = 0)
+	return check_hidden_flags(get_clothing_items(get_head_slots()), hidden_flags)
+
+/mob/living/carbon/human/proc/check_hidden_body_flags(var/hidden_flags = 0)
+	return check_hidden_flags(get_clothing_items(get_body_slots()), hidden_flags)
+
+/mob/living/carbon/human/proc/check_hidden_flags(var/list/items, var/hidden_flags = 0)
+	if(!items || !istype(items))
+		items = get_clothing_items() //no argument returns all clothing
+	for(var/obj/item/equipped in items)
+		if(!equipped)
+			continue
+		if(equipped.flags_inv & hidden_flags)
+			return 1
+
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
 	for (var/slot in slots)
 		if (equip_to_slot_if_possible(W, slots[slot], 0))

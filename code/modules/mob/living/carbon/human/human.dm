@@ -1032,55 +1032,6 @@
 
 	return
 
-/mob/living/carbon/human/proc/check_obscured_slots()
-	var/list/obscured = list()
-
-	if(wear_suit)
-		if(wear_suit.flags_inv & HIDEGLOVES)
-			obscured |= slot_gloves
-		if(wear_suit.flags_inv & HIDEJUMPSUIT)
-			obscured |= slot_w_uniform
-		if(wear_suit.flags_inv & HIDESHOES)
-			obscured |= slot_shoes
-
-	if(head)
-		if(head.flags_inv & HIDEMASK)
-			obscured |= slot_wear_mask
-		if(head.flags_inv & HIDEEYES)
-			obscured |= slot_glasses
-		if(head.flags_inv & HIDEEARS)
-			obscured |= slot_ears
-
-	if(obscured.len > 0)
-		return obscured
-	else
-		return null
-
-/mob/living/carbon/human/proc/check_hidden_head_flags(var/hidden_flags = 0)
-	if(!hidden_flags)
-		return 0
-
-	var/list/head_slots = list(head, wear_mask, glasses, ears)
-	for(var/obj/item/equipped in head_slots)
-		if(!equipped)
-			continue
-		if(equipped.flags_inv & hidden_flags)
-			return 1
-	return 0
-
-/mob/living/carbon/human/proc/check_hidden_body_flags(var/hidden_flags = 0)
-	if(!hidden_flags)
-		return
-
-	var/list/body_slots = list(wear_suit, shoes, back, w_uniform, gloves)
-	for(var/obj/item/equipped in body_slots)
-		if(!equipped)
-			continue
-		if(equipped.flags_inv & hidden_flags)
-			return 1
-	return
-
-
 ///eyecheck()
 ///Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
