@@ -1,3 +1,9 @@
+//drunkness defines
+#define TIPSY 50
+#define DRUNK 100
+#define VERYDRUNK 175
+#define WASTED 250
+
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
 		if (!contents.Find(internal))
@@ -25,7 +31,7 @@
 					visible_message("<font color='green'>[src] retches!</font>", \
 							"<font color='green'><b>you retch!</b></font>")
 			if(nausea >= 25) //vomiting
-				Stun(5)
+				Stun(max(2, 6 - (nutrition / 100)))
 
 				visible_message("<span class='danger'>[src] throws up!</span>", \
 						"<span class='userdanger'>you throw up!</span>")
@@ -42,13 +48,13 @@
 				//feelin fine after
 				nausea = 0
 
-/mob/living/carbon/proc/handle_drunkness() //probably could use a switch for ifs
+/mob/living/carbon/proc/handle_drunkness()
 	if(drunkness > 0)
 		if(prob(25))
 			drunkness--
-			boozeticks++ //metabolize that hooch
+			boozeticks++ //metabolization
 
-		if(drunkness >= (30 * boozetolerance)) //mild inebriation, do define TIPSY instead?
+		if(drunkness >= (TIPSY * boozetolerance))
 			jitteriness = max(jitteriness - 5, 0)
 			stuttering = 4
 			//slurring to replace ^
@@ -56,20 +62,20 @@
 			if(prob(7))
 				emote("burp")
 
-		if(drunkness >= (60 * boozetolerance)) //decently drunk, define DRUNK ?
+		if(drunkness >= (DRUNK * boozetolerance))
 			if(prob(33))
 				confused += 2
 
-		if(drunkness >= (120 * boozetolerance)) //dangerously wrecked, define VERYDRUNK ?
+		if(drunkness >= (VERYDRUNK * boozetolerance))
 			nausea++
 			if(prob(7) && !stat && !lying)
 				Weaken(2)
 				visible_message("<span class='danger'>[src] trips over their own feet!</span>")
 
-		if(drunkness >= (200 * boozetolerance)) //lethally drunk, define WASTED ?
+		if(drunkness >= (WASTED * boozetolerance))
 			adjustToxLoss(1)
-			sleeping = min(sleeping + 2, 10) //comatose
+			sleeping = min(sleeping + 2, 10)
 
 	if(boozeticks >= (50 * boozetolerance)) //building tolerance
 		boozeticks = 0
-		boozetolerance++
+		boozetolerance = min(boozetolerance + 1, 5)
