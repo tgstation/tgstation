@@ -90,7 +90,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 	if(!istype(M,/mob/living/carbon/human))
 		return 0
-	if (user.a_intent == "hurt")	//check for Hippocratic Oath
+	if (user.a_intent == I_HURT)	//check for Hippocratic Oath
 		return 0
 	var/sleep_fail = 0
 	var/clumsy = 0
@@ -120,7 +120,7 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 				else
 					S.doing_surgery.Remove(null) //get rid of that now null reference
 				return	1	  												//don't want to do weapony things after surgery
-	if (user.a_intent == "help")
+	if (user.a_intent == I_HELP)
 		user << "<span class='warning'>You can't see any useful way to use [tool] on [M].</span>"
 		return 1
 	return 0

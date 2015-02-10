@@ -51,7 +51,7 @@
 	response_disarm = "gently moves aside"
 	response_harm   = "swats"
 	stop_automated_movement = 1
-	a_intent = "hurt" //parrots now start "aggressive" since only player parrots will nuzzle.
+	a_intent = I_HURT //parrots now start "aggressive" since only player parrots will nuzzle.
 	attacktext = "chomps"
 	friendly = "grooms"
 
@@ -264,7 +264,7 @@
 /mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M as mob)
 	..()
 	if(client) return
-	if(!stat && M.a_intent == "hurt")
+	if(!stat && M.a_intent == I_HURT)
 
 		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
 
@@ -541,7 +541,7 @@
 		var/mob/living/L = parrot_interest
 		if(melee_damage_upper == 0)
 			melee_damage_upper = parrot_damage_upper
-			a_intent = "hurt"
+			a_intent = I_HURT
 
 		//If the mob is close enough to interact with
 		if(in_range(src, parrot_interest))
@@ -789,10 +789,10 @@
 
 	if(melee_damage_upper)
 		melee_damage_upper = 0
-		a_intent = "help"
+		a_intent = I_HELP
 	else
 		melee_damage_upper = parrot_damage_upper
-		a_intent = "hurt"
+		a_intent = I_HURT
 	return
 
 /*

@@ -133,7 +133,7 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(I_HELP)
 			help_shake_act(M)
 		else
 			if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
@@ -185,7 +185,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == I_HURT)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 
@@ -202,7 +202,7 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(I_HELP)
 			if(health > 0)
 				help_shake_act(M)
 			else
@@ -221,7 +221,7 @@
 						O.process()
 						return
 
-		if("grab")
+		if(I_GRAB)
 			if(M == src)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
@@ -271,7 +271,7 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(I_HELP)
 			sleeping = max(0,sleeping-5)
 			resting = 0
 			AdjustParalysis(-3)

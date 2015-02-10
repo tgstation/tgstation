@@ -502,6 +502,13 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
 
+
+//intent flags yay
+#define I_HELP		"help"
+#define I_DISARM	"disarm"
+#define I_GRAB		"grab"
+#define I_HURT		"hurt"
+
 //I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
 #define BRUTELOSS 1
 #define FIRELOSS 2

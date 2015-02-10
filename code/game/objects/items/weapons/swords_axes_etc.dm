@@ -45,7 +45,7 @@
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 */
-	if (user.a_intent == "hurt")
+	if (user.a_intent == I_HURT)
 		if(!..()) return
 		playsound(get_turf(src), "swing_hit", 50, 1, -1)
 		if (M.stuttering < 8 && (!(M_HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
@@ -131,7 +131,7 @@
 			else
 				user.take_organ_damage(2*force)
 			return
-		if (user.a_intent == "hurt")
+		if (user.a_intent == I_HURT)
 			if(!..()) return
 			if(!isrobot(target))
 				playsound(get_turf(src), "swing_hit", 50, 1, -1)

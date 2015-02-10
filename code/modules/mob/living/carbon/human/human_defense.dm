@@ -172,7 +172,7 @@ emp_act
 	if(!target_zone && !src.stat)
 		visible_message("\red <B>[user] misses [src] with \the [I]!")
 		return
-	if(istype(I, /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver) && src.stat == DEAD && user.a_intent == "hurt")
+	if(istype(I, /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver) && src.stat == DEAD && user.a_intent == I_HURT)
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new /obj/item/weapon/reagent_containers/food/snacks/meat/human(get_turf(src.loc))
 		newmeat.name = src.real_name + newmeat.name
 		newmeat.subjectname = src.real_name
