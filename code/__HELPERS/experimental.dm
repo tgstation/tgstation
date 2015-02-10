@@ -62,7 +62,9 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 		#ifdef DEBUG_OBJECT_POOL
 		world << text("DEBUG_OBJECT_POOL: new proc has been called ([]).", A)
 		#endif
-
+		//so the GC knows we're pooling this type.
+		if(isnull(masterPool["[A]"]))
+			masterPool["[A]"] = new
 		return new A(B)
 
 	var/atom/movable/O = masterPool["[A]"][1]
@@ -94,7 +96,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 		world << text("DEBUG_OBJECT_POOL: returnToPool([]) exceeds [] discarding...", AM.type, MAINTAINING_OBJECT_POOL_COUNT)
 		#endif
 
-		qdel(AM)
+		qdel(AM, 1)
 		return
 
 	if(isnull(masterPool["[AM.type]"]))

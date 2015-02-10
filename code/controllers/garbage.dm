@@ -87,7 +87,7 @@ var/datum/garbage_collector/garbageCollector
  * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
  * OTHER TYPES CANNOT BE QDEL'D BECAUSE THEIR LOC IS LOCKED OR THEY DON'T HAVE ONE.
  */
-/proc/qdel(const/atom/movable/AM)
+/proc/qdel(const/atom/movable/AM, ignore_pooling = 0)
 	if(isnull(AM))
 		return
 
@@ -100,6 +100,11 @@ var/datum/garbage_collector/garbageCollector
 		del(AM)
 		garbageCollector.hard_dels++
 		garbageCollector.dels_count++
+		return
+
+	//We are object pooling this.
+	if(("[AM.type]" in masterPool) && !ignore_pooling)
+		returnToPool(AM)
 		return
 
 	if(isnull(AM.gcDestroyed))
