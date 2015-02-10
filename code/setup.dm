@@ -214,7 +214,6 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define INVULNERABLE 128
 
-
 #define ALL ~0
 #define NONE 0
 
@@ -928,6 +927,23 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MELTPOINT_STEEL   1510+T0C
 #define MELTPOINT_SILICON 1687 // KELVIN
 #define MELTPOINT_PLASTIC 180+T0C
+#define MELTPOINT_SNOW	304.15	//about 30°C
+
+// snow business
+#define SNOWBALL_MINIMALTEMP 265	//about -10°C, the minimal temperature at which a thrown snowball can cool you down.
+#define SNOWBALL_TIMELIMIT 400	//in deciseconds, how long after being spawn does the snowball disappears if it hasn't been picked up
+
+#define SNOWSPREAD_MAXTEMP 296.15	//23°C, the maximal temperature (in Kelvin) at which cosmic snow will spread to adjacent tiles
+#define COSMICSNOW_MINIMALTEMP 233	//-40°C, the lowest temperature at which Cosmic snow will cool down its surroundings
+
+//the following defines refer to the number of cosmic snow tiles in the world.
+#define COSMICFREEZE_LEVEL_1 300	//Cosmic snow now has a chance to spawn a sappling upon spreading.
+#define COSMICFREEZE_LEVEL_2 600	//Cosmic snow now has a chance to spawn a snowman upon spreading.
+#define COSMICFREEZE_LEVEL_3 1400	//Pine Trees now has a chance to spawn a spiderling upon growing.
+#define COSMICFREEZE_LEVEL_4 1500	//(triggered once per round) Space bears spawn around the station.
+#define COSMICFREEZE_LEVEL_5 2200	//Pine Trees now have a chance to spawn a Space Bear upon growing.
+#define COSMICFREEZE_END 2500	//All the snow procs come to a stop, snow no longer spread.
+
 
 //used to define machine behaviour in attackbys and other code situations
 #define EMAGGABLE		1 //can we emag it? If this is flagged, the machine calls emag()
@@ -1005,7 +1021,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define STAGE_FOUR	7
 #define STAGE_FIVE	9
 #define STAGE_SUPER	11
-
 
 //Human Overlays Indexes/////////
 #define FIRE_LAYER				1		//If you're on fire (/tg/ shit)

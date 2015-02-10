@@ -107,7 +107,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/editappear,
 	/client/proc/commandname,
 	/client/proc/delete_all_adminbus,
-	/client/proc/gib_money // /vg/
+	/client/proc/gib_money, // /vg/
+	/client/proc/smissmas,
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
