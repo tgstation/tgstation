@@ -77,11 +77,11 @@
 				return 1
 //			if(M.health < -75)	return 0
 
-			if(M.check_head_coverage(MOUTH))
-				M << "<span class='notice'><B>Remove your mask!</B></span>"
+			if(M.check_body_part_coverage(MOUTH))
+				M << "<span class='notice'><B>Remove your [M.get_body_part_coverage(MOUTH)]!</B></span>"
 				return 0
-			if(src.check_head_coverage(MOUTH))
-				M << "<span class='notice'><B>Remove his mask!</B></span>"
+			if(src.check_body_part_coverage(MOUTH))
+				M << "<span class='notice'><B>Remove his [src.get_body_part_coverage(MOUTH)]!</B></span>"
 				return 0
 
 			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
