@@ -1,19 +1,13 @@
 var/global/list/power_machinery_profiling = list()
+
 /datum/controller/process/power_machinery
 	var/tmp/datum/updateQueue/updateQueueInstance
 
-/datum/controller/process/obj/setup()
+/datum/controller/process/power_machinery/setup()
 	name = "pow_machine"
 	schedule_interval = 20 // every 2 seconds
 
-/datum/controller/process/power_machinery/started()
-	..()
-
 /datum/controller/process/power_machinery/doWork()
-	if(!power_machines)
-		power_machines = list()
-		return
-	if(!power_machines.len) return
 	for(var/i = 1 to power_machines.len)
 		if(i > power_machines.len)
 			break
