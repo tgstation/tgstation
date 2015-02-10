@@ -269,8 +269,8 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
 
 /datum/recipe/dindumuffin
-	reagents = list("coco" = 2, "milk" = 5, "flour" = 5)
-	items = list(/obj/item/weapon/reagent_containers/food/snacks/egg)
+	reagents = list("nothing" = 5, "milk" = 5, "flour" = 5)
+	items = list(/obj/item/weapon/handcuffs)
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/dindumuffin
 
 // Donk Pockets ////////////////////////////////////////////////
