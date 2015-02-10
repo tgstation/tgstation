@@ -200,12 +200,18 @@
 	else
 		icon_state = "water_cup_e"
 
+//Shot glasses!//
+//  This lets us add shots in here instead of lumping them in with drinks because >logic  //
+//  The format for shots is the exact same as iconstates for the drinking glass, except you use a shot glass instead.  //
+//  If it's a new drink, remember to add it to Chemistry-Reagents.dm  and Chemistry-Recipes.dm as well.  //
+//  You can still mix the ported drinks in a regular glass, but the sprites make more sense as shots. Might fully port them over later. //
+
 /obj/item/weapon/reagent_containers/food/drinks/shotglass
 	name = "shot glass"
 	desc = "A shot glass - the universal symbol for bad decisions."
 	icon_state = "shotglass"
-	amount_per_transfer_from_this = 5
-	volume = 5
+	amount_per_transfer_from_this = 10
+	volume = 15
 
 /obj/item/weapon/reagent_containers/food/drinks/shotglass/on_reagent_change()
 	if (reagents.reagent_list.len > 0)
@@ -226,6 +232,14 @@
 				icon_state = "shotglassbrown"
 				name = "shot of rum"
 				desc = "A shot of rum, you dirty pirate."
+			if("b52")
+				icon_state = "b52glass"
+				name = "B-52"
+				desc = "Kahlua, Irish Cream, and cognac. You will get bombed."
+			if("toxinsspecial")
+				icon_state = "toxinsspecialglass"
+				name = "Toxins Special"
+				desc = "Whoah, this thing is on FIRE"
 			else
 				icon_state = "shotglassbrown"
 				name = "shot of booze"
