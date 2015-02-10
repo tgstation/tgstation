@@ -22,6 +22,8 @@
 		</ul>"}
 
 /obj/machinery/embedded_controller/radio/advanced_airlock_controller/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(!program)//we need to initialize the controller to get a program
+		initialize()
 	var/data[0]
 
 	data = list(
@@ -45,6 +47,8 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/embedded_controller/radio/advanced_airlock_controller/Topic(href, href_list)
+	if(..())
+		return 1
 	var/clean = 0
 	switch(href_list["command"])	//anti-HTML-hacking checks
 		if("cycle_ext")
@@ -91,6 +95,8 @@
 		</ul>"}
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(!program)//we need to initialize the controller to get a program
+		initialize()
 	var/data[0]
 
 	data = list(
@@ -112,6 +118,8 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/embedded_controller/radio/airlock_controller/Topic(href, href_list)
+	if(..())
+		return 1
 	var/clean = 0
 	switch(href_list["command"])	//anti-HTML-hacking checks
 		if("cycle_ext")
@@ -162,6 +170,8 @@
 		icon_state = "access_control_off"
 
 /obj/machinery/embedded_controller/radio/access_controller/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(!program)//we need to initialize the controller to get a program
+		initialize()
 	var/data[0]
 
 	data = list(
@@ -182,6 +192,8 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/embedded_controller/radio/access_controller/Topic(href, href_list)
+	if(..())
+		return 1
 	var/clean = 0
 	switch(href_list["command"])	//anti-HTML-hacking checks
 		if("cycle_ext_door")
