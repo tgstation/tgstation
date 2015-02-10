@@ -262,8 +262,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
-			if(G == "f" && U.fitted == 1)
-				standing	= wear_female_version(t_color, 'icons/mob/uniform.dmi', UNIFORM_LAYER)
+			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
+				standing	= wear_female_version(t_color, 'icons/mob/uniform.dmi', UNIFORM_LAYER, U.fitted)
 				overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(w_uniform.blood_DNA)
@@ -562,11 +562,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	apply_overlay(L_HAND_LAYER)
 
-/mob/living/carbon/human/proc/wear_female_version(t_color, icon, layer)
+/mob/living/carbon/human/proc/wear_female_version(t_color, icon, layer, type)
 	var/index = "[t_color]_s"
 	var/icon/female_clothing_icon = female_clothing_icons[index]
 	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
-		generate_female_clothing(index,t_color,icon)
+		generate_female_clothing(index,t_color,icon,type)
 	var/standing	= image("icon"=female_clothing_icons["[t_color]_s"], "layer"=-layer)
 	return(standing)
 
