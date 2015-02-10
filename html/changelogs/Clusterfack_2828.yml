@@ -1,0 +1,4 @@
+author: Clusterfack
+delete-after: true
+changes:
+- rscadd: Adds the E20, a traitor only librarian item. Explodes with size of explosion based on the number you roll, roll = explosion light radius. Rolling a 1 will gib the user and a 20 ignores the bombcap.
