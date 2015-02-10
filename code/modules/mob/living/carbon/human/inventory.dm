@@ -17,6 +17,9 @@
 			H << "\red You are unable to equip that."
 
 /mob/living/carbon/human/get_all_slots()
+	return (get_head_slots() || get_body_slots()) //the || is list unification
+
+/mob/living/carbon/human/proc/get_body_slots()
 	return list(
 //ordered body items by which would appear on top
 		l_hand,
@@ -32,8 +35,10 @@
 		wear_id,
 		l_store,
 		r_store,
-		w_uniform,
+		w_uniform)
 
+/mob/living/carbon/human/proc/get_head_slots()
+	return list(
 //also head ordered
 		head,
 		wear_mask,
@@ -42,9 +47,10 @@
 		)
 
 //everything on the mob that is not in its pockets, hands and belt.
-/mob/living/carbon/human/get_clothing_items()
-	var/list/equipped = ..()
-	equipped -= list(back,
+/mob/living/carbon/human/get_clothing_items(var/list/filter)
+	if(!filter || !istype(filter))
+		filter = get_all_slots()
+	filter -= list(back,
 					handcuffed,
 					legcuffed,
 					belt,
@@ -52,7 +58,7 @@
 					l_store,
 					r_store,
 					s_store)
-	return equipped
+	return filter
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
 	for (var/slot in slots)
