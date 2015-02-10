@@ -122,7 +122,7 @@ var/const/MAX_SAVE_SLOTS = 8
 
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
-	
+
 		// OOC Metadata:
 	var/metadata = ""
 	var/slot_name = ""
@@ -150,7 +150,7 @@ var/const/MAX_SAVE_SLOTS = 8
 		randomize_appearance_for()
 		real_name = random_name(gender)
 		save_character_sqlite(src, C.ckey, default_slot)
-		
+
 /datum/preferences/proc/setup_character_options(var/dat, var/user)
 
 	dat += {"<center><h2>Occupation Choices</h2>
@@ -194,23 +194,25 @@ var/const/MAX_SAVE_SLOTS = 8
 	<span style='border: 1px solid #161616; background-color: #[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>
 	</tr></td></table>
 	"}
-	
+
 	return dat
 
 /datum/preferences/proc/setup_UI(var/dat, var/user)
-	
+
 	dat += {"<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>
 	<b>Custom UI</b>(recommended for White UI): <span style='border:1px solid #161616; background-color: #[UI_style_color];'>&nbsp;&nbsp;&nbsp;</span><br>Color: <a href='?_src_=prefs;preference=UIcolor'><b>[UI_style_color]</b></a><br>
 	Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a><br>
 	"}
-	
+
 	return dat
-	
+
 /datum/preferences/proc/setup_special(var/dat, var/user)
 	dat += {"<table><tr><td width='340px' height='300px' valign='top'>
 	<h2>General Settings</h2>
 	<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>
 	<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>
+	<b>Hear streamed media:</b> <a href='?_src_=prefs;preference=jukebox'><b>[(toggles & SOUND_STREAMING) ? "Yes" : "No"]</b></a><br>
+	<b>Use WMP:</b> <a href='?_src_=prefs;preference=wmp'><b>[(usewmp) ? "Yes" : "No"]</b></a><br>
 	<b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a><br>
 	<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</b></a><br>
 	<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</b></a><br>
@@ -220,12 +222,12 @@ var/const/MAX_SAVE_SLOTS = 8
 	<b>Character Records:<b> [jobban_isbanned(user, "Records") ? "Banned" : "<a href=\"byond://?src=\ref[user];preference=records;record=1\">Set</a></b><br>"]
 	<b>Flavor Text:</b><a href='byond://?src=\ref[user];preference=flavor_text;task=input'>Set</a><br>
 	"}
-	
+
 	if(config.allow_Metadata)
 		dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
-	
+
 	dat += "</td><td width='300px' height='300px' valign='top'><h2>Antagonist Settings</h2>"
-	
+
 	if(jobban_isbanned(user, "Syndicate"))
 		dat += "<b>You are banned from antagonist roles.</b>"
 	else
@@ -264,7 +266,7 @@ var/const/MAX_SAVE_SLOTS = 8
 		<a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>
 		<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>
 		<table width='100%' cellpadding='1' cellspacing='0'>"}
-		
+
 
 	// END AUTOFIX
 	var/index = -1
@@ -312,14 +314,14 @@ var/const/MAX_SAVE_SLOTS = 8
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:426: HTML += "</td><td width='40%'>"
 		HTML += "</td><td width='40%'>"
-		
-		
-		
+
+
+
 		var/prefLevelLabel = "ERROR"
 		var/prefLevelColor = "pink"
 		var/prefUpperLevel = -1
 		var/prefLowerLevel = -1
-		
+
 		if(GetJobDepartment(job, 1) & job.flag)
 			prefLevelLabel = "High"
 			prefLevelColor = "slateblue"
@@ -358,7 +360,7 @@ var/const/MAX_SAVE_SLOTS = 8
 
 
 	for(var/i = 1, i < (limit - index), i += 1)
-		HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"		
+		HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\client\preferences.dm:450: HTML += "</td'></tr></table>"
 	HTML += {"</td'></tr></table>
@@ -384,7 +386,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	popup.set_content(HTML)
 	popup.open(0)
 	return
-	
+
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
@@ -395,7 +397,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	var/dat = "<html><link href='./common.css' rel='stylesheet' type='text/css'><body>"
 
 	if(!IsGuestKey(user.key))
-	
+
 		dat += {"<center>
 			Slot <b>[slot_name]</b> -
 			<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> -
@@ -408,10 +410,10 @@ var/const/MAX_SAVE_SLOTS = 8
 	dat += "<center><a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a> | "
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>UI Settings</a> | "
 	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>General Settings</a></center><br>"
-			
+
 	if(appearance_isbanned(user))
-		dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"				
-	
+		dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
+
 	switch(current_tab)
 		if(0)
 			dat = setup_character_options(dat, user)
@@ -425,15 +427,15 @@ var/const/MAX_SAVE_SLOTS = 8
 	if(!IsGuestKey(user.key))
 		dat += {"<center><a href='?_src_=prefs;preference=load'>Undo</a> |
 			<a href='?_src_=prefs;preference=save'>Save Setup</a> | "}
-			
+
 	dat += {"<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>
 		</center></body></html>"}
-		
+
 	//user << browse(dat, "window=preferences;size=560x580")
 	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 640)
 	popup.set_content(dat)
 	popup.open(0)
-	
+
 /datum/preferences/proc/ShowDisabilityState(mob/user,flag,label)
 	if(flag==DISABILITY_FLAG_FAT && species!="Human")
 		return "<li><i>[species] cannot be fat.</i></li>"
@@ -465,7 +467,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	user << browse(null, "window=preferences")
 	user << browse(HTML, "window=disabil;size=350x300")
 	return
-		
+
 /datum/preferences/proc/SetRecords(mob/user)
 	var/HTML = "<body>"
 
@@ -504,13 +506,13 @@ var/const/MAX_SAVE_SLOTS = 8
 	user << browse(null, "window=preferences")
 	user << browse(HTML, "window=records;size=350x300")
 	return
-	
-	
+
+
 /datum/preferences/proc/GetPlayerAltTitle(datum/job/job)
 	return player_alt_titles.Find(job.title) > 0 \
 		? player_alt_titles[job.title] \
 		: job.title
-		
+
 /datum/preferences/proc/SetPlayerAltTitle(datum/job/job, new_title)
 	// remove existing entry
 	if(player_alt_titles.Find(job.title))
@@ -518,7 +520,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	// add one if it's not default
 	if(job.title != new_title)
 		player_alt_titles[job.title] = new_title
-		
+
 /datum/preferences/proc/SetJob(mob/user, role)
 	var/datum/job/job = job_master.GetJob(role)
 	if(!job)
@@ -557,7 +559,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	job_engsec_high = 0
 	job_engsec_med = 0
 	job_engsec_low = 0
-	
+
 /datum/preferences/proc/GetJobDepartment(var/datum/job/job, var/level)
 	if(!job || !level)	return 0
 	switch(job.department_flag)
@@ -586,7 +588,7 @@ var/const/MAX_SAVE_SLOTS = 8
 				if(3)
 					return job_engsec_low
 	return 0
-	
+
 /datum/preferences/proc/SetJobDepartment(var/datum/job/job, var/level)
 	if(!job || !level)	return 0
 	switch(level)
@@ -635,9 +637,9 @@ var/const/MAX_SAVE_SLOTS = 8
 				else
 					job_engsec_low |= job.flag
 	return 1
-	
-		
-		
+
+
+
 /datum/preferences/proc/SetRoles(var/mob/user, var/list/href_list)
 	// We just grab the role from the POST(?) data.
 	for(var/role_id in special_roles)
@@ -667,7 +669,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	// Toggle role enable
 	roles[role_id] ^= ROLEPREF_ENABLE
 	return 1
-	
+
 /datum/preferences/proc/SetRole(var/mob/user, var/list/href_list)
 	var/role_id = href_list["role_id"]
 	//user << "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>"
@@ -1201,6 +1203,12 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 					else
 						user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
+					if("jukebox")
+						toggles ^= SOUND_STREAMING
+
+					if("wmp")
+						usewmp = !usewmp
+
 				if("ghost_ears")
 					toggles ^= CHAT_GHOSTEARS
 
@@ -1382,7 +1390,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 
 /datum/preferences/proc/close_load_dialog(mob/user)
 	user << browse(null, "window=saves")
-	
+
 /datum/preferences/proc/configure_special_roles(var/mob/user)
 	var/html={"<form method="get">
 	<input type="hidden" name="src" value="\ref[src]" />
@@ -1431,7 +1439,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 	B.set_content(html)
 	B.add_stylesheet("specialroles", 'html/browser/config_roles.css')
 	B.open()
-	
+
 /datum/preferences/Topic(href, href_list)
 	if(!usr || !client)
 		return
