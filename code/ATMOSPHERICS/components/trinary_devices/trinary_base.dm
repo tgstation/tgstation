@@ -132,6 +132,12 @@ Housekeeping and pipe network stuff below
 
 	update_icon()
 
+/obj/machinery/atmospherics/trinary/construction()
+	..()
+	parent1.update = 1
+	parent2.update = 1
+	parent3.update = 1
+
 /obj/machinery/atmospherics/trinary/build_network()
 	if(!parent1)
 		parent1 = new /datum/pipeline()

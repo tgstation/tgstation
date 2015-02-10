@@ -6,6 +6,7 @@
 	text_gain_indication = "<span class='notice'>You begin to fade into the shadows.</span>"
 	text_lose_indication = "<span class='notice'>You become fully visible.</span>"
 
+
 /datum/mutation/human/stealth/on_life(mob/living/carbon/human/owner)
 	var/turf/simulated/T = get_turf(owner)
 	if(!istype(T))
@@ -26,8 +27,11 @@
 	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
-
+	var/last_location
 /datum/mutation/human/chameleon/on_life(mob/living/carbon/human/owner)
+	if(owner.loc != last_location)
+		owner.alpha = round(255 * 0.80)
+	last_location = owner.loc
 	if((world.time - owner.last_movement) >= 30 && !owner.stat && owner.canmove && !owner.restrained())
 		owner.alpha -= 25
 	else

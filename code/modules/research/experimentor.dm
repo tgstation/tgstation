@@ -26,7 +26,6 @@
 	var/mob/trackedIan
 	var/mob/trackedRuntime
 	var/obj/item/loaded_item = null
-	///
 	var/badThingCoeff = 0
 	var/resetTime = 15
 	var/cloneMode = FALSE
@@ -168,6 +167,9 @@
 
 	return
 
+/obj/machinery/r_n_d/experimentor/default_deconstruction_crowbar(var/obj/item/O)
+	ejectItem()
+	..(O)
 
 /obj/machinery/r_n_d/experimentor/attack_hand(mob/user as mob)
 	user.set_machine(src)
@@ -225,7 +227,10 @@
 			--cloneCount
 			if(cloneCount == 0)
 				cloneMode = FALSE
-		loaded_item.loc = get_turf(pick(oview(1,src)))
+		var/turf/dropturf = get_turf(pick(oview(1,src)))
+		if(!dropturf) //Failsafe to prevent the object being lost in the void forever.
+			dropturf = get_turf(src)
+		loaded_item.loc = dropturf
 		if(delete)
 			qdel(loaded_item)
 		loaded_item = null
@@ -272,7 +277,8 @@
 			if(target)
 				var/obj/item/throwing = loaded_item
 				ejectItem()
-				throwing.throw_at(target, 10, 1)
+				if(throwing)
+					throwing.throw_at(target, 10, 1)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_IRRADIATE)
 		visible_message("<span class='notice'>[src] reflects radioactive rays at [exp_on]!</span>")
@@ -521,6 +527,7 @@
 		if(D)
 			linked_console = D
 	else if(scantype == "eject")
+		busy = 0
 		ejectItem()
 	else if(scantype == "refresh")
 		src.updateUsrDialog()
@@ -528,7 +535,11 @@
 		if(recentlyExperimented)
 			usr << "<span class='notice'>[src] has been used too recently!</span>"
 			return
-		var/dotype = matchReaction(process,scantype)
+		var/dotype
+		if(text2num(scantype) == SCANTYPE_DISCOVER)
+			dotype = SCANTYPE_DISCOVER
+		else
+			dotype = matchReaction(process,scantype)
 		experiment(dotype,process)
 		use_power(750)
 		if(dotype != FAIL)

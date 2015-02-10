@@ -33,5 +33,4 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in single (') or double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: "Deep space sensors recently detected the derelict remains of the NTSS Omen, a outdated Medical Frigate thought lost, within close proximity to Space Station 13."
-  - rscadd: "If any SS13 EVA Personal are able to locate this ship, they will be able to pilot it back to the station for recovery. The ship may also have cordinates for other locations."  
+  - rscadd: "Security Cyborgs Advance Taser have been replaced with a Disabler.

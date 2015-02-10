@@ -1,4 +1,4 @@
-// robot_upgrades.dm
+	// robot_upgrades.dm
 // Contains various borg upgrades.
 
 /obj/item/borg/upgrade
@@ -98,14 +98,14 @@
 	return 1
 
 
-/obj/item/borg/upgrade/tasercooler
-	name = "cyborg rapid taser cooling module"
-	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate."
+/obj/item/borg/upgrade/disablercooler
+	name = "cyborg rapid disabler cooling module"
+	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
 
-/obj/item/borg/upgrade/tasercooler/action(var/mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/disablercooler/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
 	if(!istype(R.module, /obj/item/weapon/robot_module/security))
@@ -113,13 +113,13 @@
 		usr << "There's no mounting point for the module!"
 		return 0
 
-	var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = locate() in R.module
+	var/obj/item/weapon/gun/energy/disabler/cyborg/T = locate() in R.module
 	if(!T)
 		T = locate() in R.module.contents
 	if(!T)
 		T = locate() in R.module.modules
 	if(!T)
-		usr << "This cyborg has had its taser removed!"
+		usr << "This cyborg has had its disabler removed!"
 		return 0
 
 	if(T.recharge_time <= 2)

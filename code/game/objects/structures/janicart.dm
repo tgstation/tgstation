@@ -251,13 +251,9 @@
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>"
 
 
-/obj/structure/stool/bed/chair/janicart/user_buckle_mob(mob/M, mob/user)
-	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon))
-		return
-
-	..()
-
+/obj/structure/stool/bed/chair/janicart/user_buckle_mob(mob/living/M, mob/user)
 	M.loc = loc
+	..()
 	update_mob()
 
 /obj/structure/stool/bed/chair/janicart/unbuckle_mob()

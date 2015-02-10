@@ -12,7 +12,7 @@
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolatebarunwrapped"
 	wrapped = 0
-	list_reagents = list("nutriment" = 4, "sugar" = 2, "coco" = 2, "vitamin" = 1)
+	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/attack_self(mob/user)
 	if(wrapped)
@@ -142,10 +142,10 @@
 	name = "chocolate coin"
 	desc = "A completely edible but nonflippable festive coin."
 	icon_state = "chococoin"
-	list_reagents = list("nutriment" = 2, "sugar" = 2, "coco" = 2)
+	list_reagents = list("nutriment" = 2, "sugar" = 2, "cocoa" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocoorange
 	name = "chocolate orange"
 	desc = "A festive chocolate orange"
 	icon_state = "chocoorange"
-	list_reagents = list("nutriment" = 4, "sugar" = 2, "coco" = 2)
+	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)

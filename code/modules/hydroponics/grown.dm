@@ -138,7 +138,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
 	name = "harebell"
-	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweetenâ€™d not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = SLOT_HEAD
 
@@ -285,7 +285,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
-		reagents.add_reagent("coco", 4 + round((potency / 5), 1))
+		reagents.add_reagent("cocoa", 4 + round((potency / 5), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
@@ -478,6 +478,13 @@
 		reagents.add_reagent("vitamin", 1 + round((potency / 20), 1))
 		bitesize = 5
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is aiming the [src.name] at themself! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
+	sleep(15)
+	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
+	return (OXYLOSS)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = /obj/item/seeds/chiliseed
 	name = "chili"
@@ -516,32 +523,32 @@
 		user << "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
-	seed = /obj/item/seeds/chillighost
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
+	seed = /obj/item/seeds/chilighost
 	name = "ghost chili"
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
 	var/mob/held_mob
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/add_juice()
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/add_juice()
 	..()
 	reagents.add_reagent("nutriment", 1 + round((potency / 25), 1))
 	reagents.add_reagent("capsaicin", 8+round(potency / 2, 1))
 	reagents.add_reagent("condensedcapsaicin", 4+round(potency / 4, 1))
 	bitesize = 1 + round(reagents.total_volume / 4, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/attack_hand(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user as mob)
 	..()
 	if( istype(src.loc, /mob) )
 		held_mob = src.loc
 		SSobj.processing.Add(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli/process()
+/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
 	if(held_mob && src.loc == held_mob)
 		if( (held_mob.l_hand == src) || (held_mob.r_hand == src))
 			if(hasvar(held_mob,"gloves") && held_mob:gloves)

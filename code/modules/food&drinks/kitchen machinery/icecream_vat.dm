@@ -22,7 +22,7 @@
 /obj/machinery/icecream_vat/proc/get_ingredient_list(var/type)
 	switch(type)
 		if(ICECREAM_CHOCOLATE)
-			return list("milk", "ice", "coco")
+			return list("milk", "ice", "cocoa")
 		if(ICECREAM_STRAWBERRY)
 			return list("milk", "ice", "berryjuice")
 		if(ICECREAM_BLUE)
@@ -30,7 +30,7 @@
 		if(CONE_WAFFLE)
 			return list("flour", "sugar")
 		if(CONE_CHOC)
-			return list("flour", "sugar", "coco")
+			return list("flour", "sugar", "cocoa")
 		else
 			return list("milk", "ice")
 

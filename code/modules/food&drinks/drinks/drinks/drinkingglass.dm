@@ -110,9 +110,9 @@
 				icon_state = "vermouthglass"
 				name = "glass of vermouth"
 				desc = "You wonder why you're even drinking this straight."
-			if("tequilla")
-				icon_state = "tequillaglass"
-				name = "glass of tequilla"
+			if("tequila")
+				icon_state = "tequilaglass"
+				name = "glass of tequila"
 				desc = "Now all that's missing is the weird colored shades!"
 			if("patron")
 				icon_state = "patronglass"
@@ -157,10 +157,10 @@
 			if("bravebull")
 				icon_state = "bravebullglass"
 				name = "Brave Bull"
-				desc = "Tequilla and Coffee liquor, brought together in a mouthwatering mixture. Drink up."
-			if("tequillasunrise")
-				icon_state = "tequillasunriseglass"
-				name = "Tequilla Sunrise"
+				desc = "tequila and Coffee liquor, brought together in a mouthwatering mixture. Drink up."
+			if("tequilasunrise")
+				icon_state = "tequilasunriseglass"
+				name = "tequila Sunrise"
 				desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
 			if("toxinsspecial")
 				icon_state = "toxinsspecialglass"
@@ -462,3 +462,10 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
 	list_reagents = list("cola" = 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass
+	name = "shot glass"
+	desc = "A shot glass - the universal symbol for bad decisions."
+	icon_state = "shotglass"
+	amount_per_transfer_from_this = 10
+	volume = 10
