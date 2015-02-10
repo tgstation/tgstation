@@ -237,6 +237,11 @@
 	if(!move_self)
 		return 0
 
+	// Don't move every tick because lag
+	if(prob(50))
+		return 0
+
+
 	var/movement_dir = pick(alldirs - last_failed_movement)
 
 	if(force_move)
