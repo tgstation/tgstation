@@ -15,9 +15,6 @@
 	icon = 'icons/obj/machines/drone_fab.dmi'
 	icon_state = "drone_fab_idle"
 
-/obj/machinery/drone_fabricator/New()
-	..()
-
 /obj/machinery/drone_fabricator/power_change()
 	..()
 	if (stat & NOPOWER)
@@ -80,12 +77,12 @@
 /mob/dead/verb/join_as_drone()
 
 	set category = "Ghost"
-	set name = "Join As Drone"
+	set name = "Spawn As Drone"
 	set desc = "If there is a powered, enabled fabricator in the game world with a prepared chassis, join as a maintenance drone."
 
 
 	if(ticker.current_state < GAME_STATE_PLAYING)
-		src << "\red The game hasn't started yet!"
+		src << "<span class='warning'>The game hasn't started yet!</span>"
 		return
 
 	if (!src.stat)
@@ -95,7 +92,7 @@
 		return 0 //something is terribly wrong
 
 	if(jobban_isbanned(src,"Cyborg"))
-		usr << "\red You are banned from playing synthetics and cannot spawn as a drone."
+		usr << "<span class='warning'>You are banned from playing synthetics and cannot spawn as a drone.</span>"
 		return
 
 	var/deathtime = world.time - src.timeofdeath
@@ -120,11 +117,11 @@
 			continue
 
 		if(DF.count_drones() >= config.max_maint_drones)
-			src << "\red There are too many active drones in the world for you to spawn."
+			src << "<span class='warning'>There are too many active drones in the world for you to spawn.</span>"
 			return
 
 		if(DF.drone_progress >= 100)
 			DF.create_drone(src.client)
 			return
 
-	src << "\red There are no available drone spawn points, sorry."
+	src << "<span class='warning'>There are no available drone fabricators!</span>"
