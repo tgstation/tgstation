@@ -1,0 +1,7 @@
+author: PJB3005
+
+delete-after: True
+
+changes:
+  - bugfix: Hopefully fixed autolinking on general air control computers and tank control computers with gas sensors and air injectors/vents respectively.
+  - rscadd: Hopefully add the ability to link meters to general air control computers.
