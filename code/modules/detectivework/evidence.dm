@@ -81,7 +81,7 @@
 
 obj/item/weapon/evidencebag/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	if(istype(W, /obj/item/weapon/pen))
-		var/new_label = input("What should the new label be?","")
+		var/new_label = sanitize(trim(input("What should the new label be", "") as null|text))
 		if(new_label)
 			name = "bag ([new_label])"
 			user << "\blue You write on the label of the bag."
