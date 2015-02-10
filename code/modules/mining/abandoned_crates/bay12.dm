@@ -51,7 +51,7 @@
 		..()
 		new/obj/item/clothing/under/chameleon(src)
 		for(var/i = 0, i < 7, i++)
-			new/obj/item/clothing/tie/horrible(src)
+			new/obj/item/clothing/accessory/tie/horrible(src)
 
 /obj/structure/closet/crate/secure/loot/bay_10
 	New()

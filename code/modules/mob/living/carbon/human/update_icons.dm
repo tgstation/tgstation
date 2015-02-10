@@ -543,8 +543,8 @@ var/list/overlay_exclusions = list("groin", "l_hand", "r_hand", "l_foot", "r_foo
 		else
 			standing.icon	= 'icons/mob/uniform.dmi'
 
-		var/obj/item/I = w_uniform
-		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
+		var/obj/item/clothing/under/under_uniform = w_uniform
+		if(species.name in under_uniform.species_fit) //Allows clothes to display differently for multiple species
 			if(species.uniform_icons)
 				standing.icon = species.uniform_icons
 
@@ -557,10 +557,12 @@ var/list/overlay_exclusions = list("groin", "l_hand", "r_hand", "l_foot", "r_foo
 			//standing.overlays	+= bloodsies
 			O.overlays += bloodsies
 
-		if(w_uniform:hastie)	//WE CHECKED THE TYPE ABOVE. THIS REALLY SHOULD BE FINE.
-			var/tie_color = w_uniform:hastie._color
-			if(!tie_color) tie_color = w_uniform:hastie.icon_state
-			O.overlays	+= image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[tie_color]")
+		if(under_uniform.accessories.len)	//Runtime operator is not permitted, typecast
+			for(var/obj/item/clothing/accessory/accessory in under_uniform.accessories)
+				var/tie_color = accessory._color
+				if(!tie_color)
+					tie_color = accessory.icon_state
+				O.overlays	+= image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[tie_color]")
 
 
 		O.icon = standing
@@ -845,7 +847,7 @@ var/list/overlay_exclusions = list("groin", "l_hand", "r_hand", "l_foot", "r_foo
 
 /mob/living/carbon/human/update_inv_wear_mask(var/update_icons=1)
 	overlays -= obj_overlays[FACEMASK_LAYER]
-	if( wear_mask && ( istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/tie) ) )
+	if( wear_mask && ( istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/accessory) ) )
 		var/obj/Overlays/O = obj_overlays[FACEMASK_LAYER]
 		O.overlays.len = 0
 		wear_mask.screen_loc = ui_mask	//TODO
