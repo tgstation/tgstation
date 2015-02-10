@@ -919,6 +919,11 @@
 	icon_state = "booberrymuffin"
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 
+/obj/item/weapon/reagent_containers/food/snacks/muffin/dindumuffin
+	name = "Dindu Muffin"
+	desc = "This muffin didn't do anything."
+	icon_state = "dindumuffins"
+
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	name = "banana cream pie"
 	desc = "Just like back home, on clown planet! HONK!"
@@ -3072,6 +3077,8 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
+//////////////////CHICKEN//////////////////
+
 /obj/item/weapon/reagent_containers/food/snacks/rawchicken
 	name = "raw chicken"
 	desc = "This better be delicious."
@@ -3102,4 +3109,16 @@
 /obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick/New()
 	..()
 	reagents.add_reagent("nutriment", 3)
+	bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chicken_tendies
+	name = "Chicken Tendies"
+	desc = "Liar Liar pants on fire, Chicken Tendies is what I desire!"
+	icon_state = "chicken_tendies"
+
+/obj/item/weapon/reagent_containers/food/snacks/chicken_tendies/New()
+	..()
+	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("spiritbreaker", 10) // Screaming
+	reagents.add_reagent("mercury",       10) // Idiot
 	bitesize = 1

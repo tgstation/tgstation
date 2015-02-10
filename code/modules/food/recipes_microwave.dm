@@ -268,6 +268,11 @@
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
 
+/datum/recipe/dindumuffin
+	reagents = list("coco" = 2, "milk" = 5, "flour" = 5)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/egg)
+	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/dindumuffin
+
 // Donk Pockets ////////////////////////////////////////////////
 
 /datum/recipe/donkpocket
@@ -1217,6 +1222,13 @@
 		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
 		)
 	result = /obj/item/weapon/storage/fancy/chicken_bucket
+
+/datum/recipe/chicken_tendies
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		/obj/item/clothing/head/fedora
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chicken_tendies
 
 // Currently Disabled //////////////////////////////////////////
 
