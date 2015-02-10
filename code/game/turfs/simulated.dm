@@ -62,7 +62,7 @@
 			bloodDNA = null
 
 			// Floorlength braids?  Enjoy your tripping.
-			if((H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR))))
+			if(H.h_style && !H.check_hidden_head_flags(HIDEHEADHAIR))
 				var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
 				if(hair_style && (hair_style.flags & HAIRSTYLE_CANTRIP))
 					if(H.m_intent == "run" && prob(5))

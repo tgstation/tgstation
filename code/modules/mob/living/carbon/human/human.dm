@@ -1056,8 +1056,29 @@
 	else
 		return null
 
+/mob/living/carbon/human/proc/check_hidden_head_flags(var/hidden_flags = 0)
+	if(!hidden_flags)
+		return 0
 
+	var/list/head_slots = list(head, wear_mask, glasses, ears)
+	for(var/obj/item/equipped in head_slots)
+		if(!equipped)
+			continue
+		if(equipped.flags_inv & hidden_flags)
+			return 1
+	return 0
 
+/mob/living/carbon/human/proc/check_hidden_body_flags(var/hidden_flags = 0)
+	if(!hidden_flags)
+		return
+
+	var/list/body_slots = list(wear_suit, shoes, back, w_uniform, gloves)
+	for(var/obj/item/equipped in body_slots)
+		if(!equipped)
+			continue
+		if(equipped.flags_inv & hidden_flags)
+			return 1
+	return
 
 
 ///eyecheck()
