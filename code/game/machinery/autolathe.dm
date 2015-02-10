@@ -61,6 +61,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/ammo_storage/box/flare(), \
 		new /obj/item/weapon/rcd(), \
 		new /obj/item/weapon/pipe_dispenser(),\
+		new /obj/item/weapon/rsf(), \
 		new /obj/item/device/radio/electropack(), \
 		new /obj/item/weapon/weldingtool/largetank(), \
 		new /obj/item/weapon/handcuffs(), \
