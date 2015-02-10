@@ -2,7 +2,7 @@ var/global/list/power_machinery_profiling = list()
 /datum/controller/process/power_machinery
 	var/tmp/datum/updateQueue/updateQueueInstance
 
-/datum/controller/process/obj/setup()
+/datum/controller/process/power_machinery/setup()
 	name = "pow_machine"
 	schedule_interval = 20 // every 2 seconds
 
