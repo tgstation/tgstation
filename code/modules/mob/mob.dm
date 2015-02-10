@@ -1258,7 +1258,7 @@ var/list/slot_equipment_priority = list( \
 				stat(null, "MAC([machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
 				process = processScheduler.getProcess("pow_machine")
-				stat(null, "POM([machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+				stat(null, "POM([power_machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
 				process = processScheduler.getProcess("obj")
 				stat(null, "OBJ([processing_objects.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
