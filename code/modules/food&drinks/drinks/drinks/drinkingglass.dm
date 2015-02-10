@@ -162,11 +162,6 @@
 				icon_state = "tequilasunriseglass"
 				name = "tequila Sunrise"
 				desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
-			// Toxins Special is also in drinks.dm because shot glasses, mirror any changes there. //
-			if("toxinsspecial")
-				icon_state = "toxinsspecialglass"
-				name = "Toxins Special"
-				desc = "Whoah, this thing is on FIRE"
 			if("beepskysmash")
 				icon_state = "beepskysmashglass"
 				name = "Beepsky Smash"
@@ -187,11 +182,6 @@
 				icon_state = "cubalibreglass"
 				name = "Cuba Libre"
 				desc = "A classic mix of rum and cola."
-			// B-52 is also in drinks.dm because shot glasses, mirror any changes there. //
-			if("b52")
-				icon_state = "b52glass"
-				name = "B-52"
-				desc = "Kahlua, Irish Cream, and cognac. You will get bombed."
 			if("atomicbomb")
 				icon_state = "atomicbombglass"
 				name = "Atomic Bomb"
