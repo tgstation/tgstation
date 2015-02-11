@@ -24,12 +24,12 @@
 	_color = "holster_low"
 
 /obj/item/clothing/accessory/holster/proc/holster(obj/item/I, mob/user as mob)
-	if(holstered)
-		user << "<span class='warning'>There is already a [holstered] holstered here!</span>"
-		return
-
 	if (!istype(I, /obj/item/weapon/gun))
 		user << "<span class='warning'>Only guns can be holstered!</span>"
+		return
+
+	if(holstered)
+		user << "<span class='warning'>There is already a [holstered] holstered here!</span>"
 		return
 
 	var/obj/item/weapon/gun/W = I
@@ -42,6 +42,7 @@
 	holstered.loc = src
 	holstered.add_fingerprint(user)
 	user.visible_message("<span class='notice'>[user] holsters the [holstered].</span>", "<span class='notice'>You holster the [holstered].</span>")
+	return 1
 
 /obj/item/clothing/accessory/holster/proc/unholster(mob/user as mob)
 	if(!holstered)
@@ -88,15 +89,18 @@
 		H.unholster(usr)
 
 /obj/item/clothing/accessory/holster/attack_hand(mob/user as mob)
-	if (has_suit)	//if we are part of a suit
-		if (holstered)
-			unholster(user)
-		return
-
+	if(holstered && src.loc == user)
+		return unholster(user)
 	..(user)
 
+/obj/item/clothing/accessory/holster/on_accessory_interact(mob/user, delayed)
+	if (holstered && !delayed)
+		unholster(user)
+		return 1
+	return ..()
+
 /obj/item/clothing/accessory/holster/attackby(obj/item/W as obj, mob/user as mob)
-	holster(W, user)
+	return holster(W, user)
 
 /obj/item/clothing/accessory/holster/emp_act(severity)
 	if (holstered)

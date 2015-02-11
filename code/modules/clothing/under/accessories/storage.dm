@@ -13,10 +13,14 @@
 	hold.storage_slots = slots
 
 /obj/item/clothing/accessory/storage/attack_hand(mob/user)
-	if(has_suit)
+	if(src.loc == user)
 		hold.attack_hand(user)
 		return
 	return ..()
+
+/obj/item/clothing/accessory/storage/on_accessory_interact(mob/user, delayed)
+	hold.attack_hand(user)
+	return 1
 
 /obj/item/clothing/accessory/storage/attack_self(mob/user as mob)
 	user << "<span class='notice'>You empty [src].</span>"
@@ -28,6 +32,7 @@
 
 /obj/item/clothing/accessory/storage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	hold.attackby(W,user)
+	return 1
 
 /obj/item/clothing/accessory/storage/emp_act(severity)
 	hold.emp_act(severity)
@@ -35,6 +40,7 @@
 /obj/item/weapon/storage/internal
 	name = "storage"
 	var/master_item		//item it belongs to
+	internal_store = 3
 
 /obj/item/weapon/storage/internal/close(mob/user as mob)
 	..()

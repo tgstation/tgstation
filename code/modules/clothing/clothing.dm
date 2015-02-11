@@ -280,6 +280,8 @@ BLIND     // can't see anything
 	if(istype(I, /obj/item/clothing/accessory))
 		var/obj/item/clothing/accessory/A = I
 		if(can_attach_accessory(A))
+			user.drop_item()
+			A.loc = src
 			accessories.Add(A)
 			A.on_attached(src, user)
 			if(istype(loc, /mob/living/carbon/human))
@@ -290,30 +292,42 @@ BLIND     // can't see anything
 			user << "<span class='notice'>You cannot attach more accessories of this type to [src]</span>"
 			return
 
-	for(var/obj/item/clothing/accessory/accessory in accessories)
+	for(var/obj/item/clothing/accessory/accessory in priority_accessories())
 		if(accessory.attackby(I, user))
 			return
 
 	..()
 
 /obj/item/clothing/under/attack_hand(mob/user)
-	if(accessories.len && src in user)
+	if(accessories.len && src.loc == user)
 		var/list/delayed = list()
-		for(var/obj/item/clothing/accessory/A in accessories)
-			if(!A.accessory_exclusion)
-				delayed += A
-				continue
-			A.attack_hand(user)
-			if(A.loc != src)
-				remove_accessory(user, A)
-			return
+		for(var/obj/item/clothing/accessory/A in priority_accessories())
+			switch(A.on_accessory_interact(user, 0))
+				if(1)
+					return 1
+				if(-1)
+					delayed.Add(A)
+				else
+					continue
 		for(var/obj/item/clothing/accessory/A in delayed)
-			A.attack_hand(user)
-			if(A.loc != src)
-				remove_accessory(user, A)
-			return
+			if(A.on_accessory_interact(user, 1))
+				return 1
+		return
 	return ..()
 
+/obj/item/clothing/under/proc/priority_accessories()
+	if(!accessories.len)
+		return list()
+	var/list/unorg = accessories
+	var/list/prioritized = list()
+	for(var/obj/item/clothing/accessory/holster/H in accessories)
+		prioritized.Add(H)
+	for(var/obj/item/clothing/accessory/storage/S in accessories)
+		prioritized.Add(S)
+	for(var/obj/item/clothing/accessory/armband/A in accessories)
+		prioritized.Add(A)
+	prioritized |= unorg
+	return prioritized
 
 /obj/item/clothing/under/proc/can_attach_accessory(var/obj/item/clothing/accessory/accessory)
 	if(!accessory) return
