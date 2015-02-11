@@ -773,7 +773,6 @@ var/list/overlay_exclusions = list("groin", "l_hand", "r_hand", "l_foot", "r_foo
 		O.icon_state = standing.icon_state
 		overlays += O
 		obj_overlays[HEAD_LAYER] = O
-		update_icons = head.flags_inv
 		//overlays_standing[HEAD_LAYER]	= standing
 	//else
 		//overlays_standing[HEAD_LAYER]	= null
