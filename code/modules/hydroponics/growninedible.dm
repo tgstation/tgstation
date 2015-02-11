@@ -139,7 +139,7 @@
 	if(!..()) return
 	if(istype(M, /mob/living))
 		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
-		M.adjust_fire_stacks(potency / 10)
+		M.adjust_fire_stacks(potency / 20)
 		M.IgniteMob()
 
 /obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user as mob,proximity)
