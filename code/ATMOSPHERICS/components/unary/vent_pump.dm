@@ -354,7 +354,8 @@
 			"[user] unfastens \the [src].", \
 			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear ratchet.")
-		new /obj/item/pipe(loc, make_from=src)
+		var/obj/item/pipe/P = getFromPool(/obj/item/pipe,loc)
+		P.New(loc,make_from=src) //new /obj/item/pipe(loc, make_from=src)
 		del(src)
 
 /obj/machinery/atmospherics/unary/vent_pump/Destroy()

@@ -98,7 +98,8 @@
 		if(!wait)
 			var/p_type = text2num(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
-			var/obj/item/pipe/P = new (/*usr.loc*/ src.loc, pipe_type=p_type, dir=p_dir)
+			var/obj/item/pipe/P = getFromPool(/obj/item/pipe, get_turf(src)) //new (/*usr.loc*/ src.loc, pipe_type=p_type, dir=p_dir)
+			P.New(P.loc, pipe_type=p_type, dir=p_dir)
 			P.update()
 			P.add_fingerprint(usr)
 			wait = 1
@@ -123,7 +124,10 @@
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter) || istype(W, /obj/item/pipe_gsensor))
 		usr << "\blue You put [W] back to [src]."
 		user.drop_item()
-		del(W)
+		if(istype(W, /obj/item/pipe))
+			returnToPool(W)
+		else
+			qdel(W)
 		return
 	else
 		return ..()

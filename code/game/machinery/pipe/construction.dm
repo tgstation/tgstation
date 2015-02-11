@@ -58,9 +58,10 @@ Buildable meters
 
 /obj/item/pipe_spawner/New()
 	..()
-	var/obj/item/pipe/P = new (src.loc, pipe_type=src.pipe_type, dir=src.dir)
+	var/obj/item/pipe/P = getFromPool(/obj/item/pipe,loc)
+	P.New(src.loc, pipe_type=src.pipe_type, dir=src.dir)
 	P.update()
-	del(src)
+	qdel(src)
 
 /obj/item/pipe_spawner/mvalve
 	icon_state="mvalve"
@@ -83,6 +84,24 @@ Buildable meters
 	flags = FPRINT
 	w_class = 3
 	level = 2
+
+/obj/item/pipe/ex_act(severity)
+	switch(severity)
+		if(1)
+			returnToPool(src)
+		if(2)
+			if(prob(40))
+				returnToPool(src)
+		if(3)
+			if(prob(10))
+				returnToPool(src)
+
+/obj/item/pipe/blob_act()
+	returnToPool(src)
+
+/obj/item/pipe/singularity_act()
+	returnToPool(src)
+	return 2
 
 /obj/item/pipe/New(var/loc, var/pipe_type as num, var/dir as num, var/obj/machinery/atmospherics/make_from = null)
 	..()
@@ -196,38 +215,39 @@ var/global/list/pipeID2State = list(
 	"insulated_manifold",
 	"insulated_manifold4w"
 )
+var/global/list/nlist = list( \
+	"pipe", \
+	"bent pipe", \
+	"h/e pipe", \
+	"bent h/e pipe", \
+	"connector", \
+	"manifold", \
+	"junction", \
+	"uvent", \
+	"manual valve", \
+	"pump", \
+	"scrubber", \
+	"insulated pipe", \
+	"bent insulated pipe", \
+	"gas filter", \
+	"gas mixer", \
+	"passive gate", \
+	"volume pump", \
+	"heat exchanger", \
+	"digital valve", \
+	"t-valve", \
+	"4-way manifold", \
+	"pipe cap", \
+	"thermal plate", \
+	"injector", \
+	"dual-port vent", \
+	"passive vent", \
+	"digital t-valve", \
+	"insulated manifold", \
+	"insulated 4-way manifold"
+)
 /obj/item/pipe/proc/update()
-	var/list/nlist = list( \
-		"pipe", \
-		"bent pipe", \
-		"h/e pipe", \
-		"bent h/e pipe", \
-		"connector", \
-		"manifold", \
-		"junction", \
-		"uvent", \
-		"manual valve", \
-		"pump", \
-		"scrubber", \
-		"insulated pipe", \
-		"bent insulated pipe", \
-		"gas filter", \
-		"gas mixer", \
-		"passive gate", \
-		"volume pump", \
-		"heat exchanger", \
-		"digital valve", \
-		"t-valve", \
-		"4-way manifold", \
-		"pipe cap", \
-		"thermal plate", \
-		"injector", \
-		"dual-port vent", \
-		"passive vent", \
-		"digital t-valve", \
-		"insulated manifold", \
-		"insulated 4-way manifold"
-	)
+
 	name = nlist[pipe_type+1] + " fitting"
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = pipeID2State[pipe_type + 1]
@@ -438,7 +458,7 @@ var/global/list/pipeID2State = list(
 			"[user] fastens \the [src].", \
 			"\blue You have fastened \the [src].", \
 			"You hear a ratchet.")
-		del(src)	// remove the pipe item
+		returnToPool(src)	// remove the pipe item
 		return 0
 	else
 		// If the pipe's still around, nuke it.

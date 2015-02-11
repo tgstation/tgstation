@@ -300,7 +300,8 @@
 				"[user] unfastens \the [src].", \
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
+			var/obj/item/pipe/P = getFromPool(/obj/item/pipe,loc)
+			P.New(loc,make_from=src) //new /obj/item/pipe(loc, make_from=src)
 			del(src)
 
 	multitool_menu(var/mob/user,var/obj/item/device/multitool/P)

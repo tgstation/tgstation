@@ -372,5 +372,6 @@ process()
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
 		investigation_log(I_ATMOS,"was <span class='warning'>REMOVED</span> by [key_name(usr)]")
-		new /obj/item/pipe(loc, make_from=src)
+		var/obj/item/pipe/P = getFromPool(/obj/item/pipe,loc)
+		P.New(loc,make_from=src) //new /obj/item/pipe(loc, make_from=src)
 		del(src)
