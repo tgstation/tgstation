@@ -109,7 +109,7 @@
 
 	if(href_list["ready"] >= 0)
 		ready = href_list["ready"]
-		ready = clamp(ready, 0, 1)
+		ready = Clamp(ready, 0, 1)
 		usr << "<span class='recruit'>You [ready ? "have declared ready" : "have unreadied"].</span>"
 		new_player_panel_proc()
 		//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
