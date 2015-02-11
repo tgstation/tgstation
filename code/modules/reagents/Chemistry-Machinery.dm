@@ -340,25 +340,48 @@
 			reagents.trans_to(P, 50)
 
 	if(beaker)
-		var/datum/reagents/R = beaker.reagents
-		if (href_list["analyze"])
-			var/dat = ""
-			dat += "<B>[condi ? "Condiment" : "Chemical"] information:</B><BR><BR>"
-			dat += "<B>Name:</B><BR>[href_list["name"]]<BR><BR>"
-			dat += "<B>Description:</B><BR>[href_list["desc"]]<BR><BR><BR>"
-			dat += "<A href='?src=\ref[src];main=1'>Back</A>"
-			var/datum/browser/popup = new(usr, "chem_master", name)
-			popup.set_content(dat)
-			popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
-			popup.open(1)
+
+		if(href_list["analyze"])
+			if(locate(href_list["reagent"]))
+				var/datum/reagent/R = locate(href_list["reagent"])
+				if(R)
+					var/dat = ""
+					dat += "<H1>[condi ? "Condiment" : "Chemical"] information:</H1>"
+					dat += "<B>Name:</B> [initial(R.name)]<BR><BR>"
+					dat += "<B>State:</B> "
+					if(initial(R.reagent_state) == 1)
+						dat += "Solid"
+					else if(initial(R.reagent_state) == 2)
+						dat += "Liquid"
+					else if(initial(R.reagent_state) == 3)
+						dat += "Gas"
+					else
+						dat += "Unknown"
+					dat += "<BR>"
+					dat += "<B>Color:</B> <span style='color:[initial(R.color)];background-color:[initial(R.color)];font:Lucida Console'>[initial(R.color)]</span><BR><BR>"
+					dat += "<B>Description:</B> [initial(R.description)]<BR><BR>"
+					var/const/P = 3 //The number of seconds between life ticks
+					var/T = initial(R.metabolization_rate) * (60 / P)
+					dat += "<B>Metabolization Rate:</B> [T]u/minute<BR>"
+					dat += "<B>Overdose Threshold:</B> [initial(R.overdose_threshold) ? "[initial(R.overdose_threshold)]u" : "none"]<BR>"
+					dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
+					dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
+					var/datum/browser/popup = new(usr, "chem_master", name)
+					popup.set_content(dat)
+					popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+					popup.open(1)
+					return
+
+		else if(href_list["main"]) // Used to exit the analyze screen.
+			attack_hand(usr)
 			return
 
 		else if(href_list["add"])
 			if(href_list["amount"])
 				var/id = href_list["add"]
 				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
-				R.trans_id_to(src, id, amount)
+				if (amount > 0)
+					beaker.reagents.trans_id_to(src, id, amount)
 
 		else if(href_list["addcustom"])
 			var/id = href_list["addcustom"]
@@ -372,11 +395,11 @@
 			if(href_list["amount"])
 				var/id = href_list["remove"]
 				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
-				if(mode)
-					reagents.trans_id_to(beaker, id, amount)
-				else
-					reagents.remove_reagent(id, amount)
+				if (amount > 0)
+					if(mode)
+						reagents.trans_id_to(beaker, id, amount)
+					else
+						reagents.remove_reagent(id, amount)
 
 		else if(href_list["removecustom"])
 			var/id = href_list["removecustom"]
@@ -385,10 +408,6 @@
 				return
 			useramount = amt_temp
 			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
-
-		else if(href_list["main"])
-			attack_hand(usr)
-			return
 
 		else if(href_list["eject"])
 			if(beaker)
@@ -478,7 +497,7 @@
 		if(beaker.reagents.total_volume)
 			for(var/datum/reagent/G in beaker.reagents.reagent_list)
 				dat += "<LI>[G.name], [G.volume] Units - "
-				dat += "<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>Analyze</A> "
+				dat += "<A href='?src=\ref[src];analyze=1;reagent=\ref[G]'>Analyze</A> "
 				dat += "<A href='?src=\ref[src];add=[G.id];amount=1'>1</A> "
 				dat += "<A href='?src=\ref[src];add=[G.id];amount=5'>5</A> "
 				dat += "<A href='?src=\ref[src];add=[G.id];amount=10'>10</A> "
@@ -493,7 +512,7 @@
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
 			dat += "<LI>[N.name], [N.volume] Units - "
-			dat += "<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>Analyze</A> "
+			dat += "<A href='?src=\ref[src];analyze=1;reagent=\ref[N]'>Analyze</A> "
 			dat += "<A href='?src=\ref[src];remove=[N.id];amount=1'>1</A> "
 			dat += "<A href='?src=\ref[src];remove=[N.id];amount=5'>5</A> "
 			dat += "<A href='?src=\ref[src];remove=[N.id];amount=10'>10</A> "
@@ -1284,7 +1303,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				O.reagents.trans_to(beaker, amount)
 				if(!O.reagents.total_volume)
 						remove_object(O)
-
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 /obj/machinery/chem_heater
 	name = "chemical heater"
 	density = 1
@@ -1294,22 +1314,22 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	use_power = 1
 	idle_power_usage = 40
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/temperature = 300
-	var/rate = 10 //heating/cooling rate, default is 10 kelvin per tick
+	var/desired_temp = 300
+	var/heater_coefficient = 0.15
 	var/on = FALSE
 
 /obj/machinery/chem_heater/New()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/chem_heater(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
 
 /obj/machinery/chem_heater/RefreshParts()
-	rate = 10
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		rate *= M.rating
+	heater_coefficient = 0.15
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		heater_coefficient *= M.rating
 
 /obj/machinery/chem_heater/process()
 	..()
@@ -1318,14 +1338,15 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	var/state_change = 0
 	if(on)
 		if(beaker)
-			if(beaker.reagents.chem_temp > temperature)
-				beaker.reagents.chem_temp = max(beaker.reagents.chem_temp-rate, temperature)
+			if(beaker.reagents.chem_temp != desired_temp)
+				beaker.reagents.chem_temp += ((desired_temp - beaker.reagents.chem_temp) * heater_coefficient)
+
+				beaker.reagents.chem_temp = round(beaker.reagents.chem_temp) //stops stuff like 456.12312312302
+				if(beaker.reagents.chem_temp == ((desired_temp-3) || (desired_temp+3)))//need better way to stop superdecimals and rounding drops
+					beaker.reagents.chem_temp = desired_temp
 				beaker.reagents.handle_reactions()
 				state_change = 1
-			else if(beaker.reagents.chem_temp < temperature)
-				beaker.reagents.chem_temp = min(beaker.reagents.chem_temp+rate, temperature)
-				beaker.reagents.handle_reactions()
-				state_change = 1
+
 	if(state_change)
 		SSnano.update_uis(src)
 
@@ -1387,9 +1408,9 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	if(href_list["adjust_temperature"])
 		var/val = href_list["adjust_temperature"]
 		if(isnum(val))
-			temperature = Clamp(temperature+val, 0, 1000)
+			desired_temp = Clamp(desired_temp+val, 0, 1000)
 		else if(val == "input")
-			temperature = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
+			desired_temp = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
 		else
 			return 0
 		. = 1
@@ -1402,7 +1423,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	if(user.stat || user.restrained()) return
 
 	var/data[0]
-	data["targetTemp"] = temperature
+	data["targetTemp"] = desired_temp
 	data["isActive"] = on
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 

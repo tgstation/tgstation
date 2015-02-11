@@ -15,7 +15,7 @@
 /datum/table_recipe/omelette
 	name = "omelette"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/egg = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/omelette
@@ -23,7 +23,7 @@
 /datum/table_recipe/chocolateegg
 	name = "Chocolate egg"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/egg = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chocolateegg

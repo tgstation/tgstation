@@ -162,10 +162,6 @@
 				icon_state = "tequilasunriseglass"
 				name = "tequila Sunrise"
 				desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
-			if("toxinsspecial")
-				icon_state = "toxinsspecialglass"
-				name = "Toxins Special"
-				desc = "Whoah, this thing is on FIRE"
 			if("beepskysmash")
 				icon_state = "beepskysmashglass"
 				name = "Beepsky Smash"
@@ -186,10 +182,6 @@
 				icon_state = "cubalibreglass"
 				name = "Cuba Libre"
 				desc = "A classic mix of rum and cola."
-			if("b52")
-				icon_state = "b52glass"
-				name = "B-52"
-				desc = "Kahlua, Irish Cream, and cognac. You will get bombed."
 			if("atomicbomb")
 				icon_state = "atomicbombglass"
 				name = "Atomic Bomb"
@@ -452,6 +444,89 @@
 		desc = "Your standard drinking glass"
 		return
 
+//Shot glasses!//
+//  This lets us add shots in here instead of lumping them in with drinks because >logic  //
+//  The format for shots is the exact same as iconstates for the drinking glass, except you use a shot glass instead.  //
+//  If it's a new drink, remember to add it to Chemistry-Reagents.dm  and Chemistry-Recipes.dm as well.  //
+//  You can only mix the ported-over drinks in shot glasses for now (they'll mix in a shaker, but the sprite won't change for glasses). //
+//  This is on a case-by-case basis, and you can even make a seperate sprite for shot glasses if you want. //
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass
+	name = "shot glass"
+	desc = "A shot glass - the universal symbol for bad decisions."
+	icon_state = "shotglass"
+	gulp_size = 15
+	amount_per_transfer_from_this = 15
+	volume = 15
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change()
+	if (gulp_size < 15) gulp_size = 15
+	else gulp_size = max(round(reagents.total_volume / 15), 15)
+
+	if (reagents.reagent_list.len > 0)
+		switch(reagents.get_master_reagent_id())
+			if("vodka")
+				icon_state = "shotglassclear"
+				name = "shot of vodka"
+				desc = "Good for cold weather."
+			if("water")
+				icon_state = "shotglassclear"
+				name = "shot of water"
+				desc = "You're not sure why someone would drink this from a shot glass."
+			if("whiskey")
+				icon_state = "shotglassbrown"
+				name = "shot of whiskey"
+				desc = "Just like the old west."
+			if("rum")
+				icon_state = "shotglassbrown"
+				name = "shot of rum"
+				desc = "You dirty pirate."
+			if("b52")
+				icon_state = "b52glass"
+				name = "B-52"
+				desc = "Kahlua, Irish Cream, and cognac. You will get bombed."
+			if("toxinsspecial")
+				icon_state = "toxinsspecialglass"
+				name = "Toxins Special"
+				desc = "Whoah, this thing is on FIRE"
+			if ("vermouth")
+				icon_state = "shotglassclear"
+				name = "shot of vermouth"
+				desc = "This better be going in a martini."
+			if ("tequila")
+				icon_state = "shotglassgold"
+				name = "shot of tequila"
+				desc = "Bad decisions ahead!"
+			if ("patron")
+				icon_state = "shotglassclear"
+				name = "shot of patron"
+				desc = "The good stuff. Goes great with a lime wedge."
+			if ("kahlua")
+				icon_state = "shotglasscream"
+				name = "shot of coffee liqueur"
+				desc = "Doesn't look too appetizing..."
+			if ("nothing")
+				icon_state = "shotglass"
+				name = "shot of nothing"
+				desc = "The mime insists there's booze in the glass. You're not so sure."
+			if ("goldschlager")
+				icon_state = "shotglassschlag"
+				name = "shot of goldschlager"
+				desc = "Yup. You're officially a college girl."
+			if ("cognac")
+				icon_state = "shotglassbrown"
+				name = "shot of cognac"
+				desc = "You get the feeling this would piss off a rich person somewhere."
+			else
+				icon_state = "shotglassbrown"
+				name = "shot of... what?"
+				desc = "You can't really tell what's in the glass."
+	else
+		icon_state = "shotglass"
+		name = "shot glass"
+		desc = "A shot glass - the universal symbol for bad decisions."
+		return
+
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/New()
 	..()
@@ -463,9 +538,3 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
 	list_reagents = list("cola" = 50)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass
-	name = "shot glass"
-	desc = "A shot glass - the universal symbol for bad decisions."
-	icon_state = "shotglass"
-	amount_per_transfer_from_this = 10
-	volume = 10

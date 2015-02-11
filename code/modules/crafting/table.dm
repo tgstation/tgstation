@@ -1,4 +1,4 @@
-#define TABLECRAFT_MAX_ITEMS 20
+#define TABLECRAFT_MAX_ITEMS 30
 
 /obj/structure/table
 	var/list/table_contents = list()

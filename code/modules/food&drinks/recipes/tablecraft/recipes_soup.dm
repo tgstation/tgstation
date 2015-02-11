@@ -33,7 +33,7 @@
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/grown/nettle = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/egg = 1
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/nettle
 
@@ -119,7 +119,7 @@
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/badrecipe = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/egg = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mystery

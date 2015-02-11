@@ -170,7 +170,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 4,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 3,
-		/obj/item/weapon/reagent_containers/food/snacks/egg = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 
 	)

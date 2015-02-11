@@ -98,7 +98,6 @@
 /datum/table_recipe/enchiladas
 	name = "Enchiladas"
 	reqs = list(
-		/datum/reagent/consumable/capsaicin = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = 1

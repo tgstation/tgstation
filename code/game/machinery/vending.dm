@@ -768,8 +768,11 @@
 	products = list(/obj/item/weapon/reagent_containers/syringe = 12,/obj/item/stack/medical/gauze = 8,/obj/item/weapon/reagent_containers/pill/patch/styptic = 10,
 				/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 10,/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 4,
 				/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 4,/obj/item/weapon/reagent_containers/glass/bottle/morphine = 4,
-				/obj/item/weapon/reagent_containers/glass/bottle/diphenhydramine = 4,/obj/item/weapon/reagent_containers/glass/bottle/potass_iodide = 3, /obj/item/weapon/reagent_containers/glass/bottle/salglu_solution = 5,/obj/item/weapon/reagent_containers/glass/bottle/atropine = 3,/obj/item/weapon/reagent_containers/syringe/antiviral = 6,/obj/item/weapon/reagent_containers/syringe/calomel = 10,/obj/item/weapon/reagent_containers/pill/salbutamol = 10,/obj/item/weapon/reagent_containers/pill/mannitol = 10,/obj/item/weapon/reagent_containers/pill/mutadone = 5,/obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2)
-	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/toxin = 3,/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/morphine = 4,/obj/item/weapon/reagent_containers/pill/charcoal = 6)
+				/obj/item/weapon/reagent_containers/glass/bottle/diphenhydramine = 4,/obj/item/weapon/reagent_containers/glass/bottle/potass_iodide = 3,
+				/obj/item/weapon/reagent_containers/glass/bottle/salglu_solution = 5,/obj/item/weapon/reagent_containers/glass/bottle/atropine = 3,/obj/item/weapon/reagent_containers/syringe/antiviral = 6,
+				/obj/item/weapon/reagent_containers/syringe/calomel = 10,/obj/item/weapon/reagent_containers/pill/salbutamol = 10,/obj/item/weapon/reagent_containers/pill/mannitol = 10,
+				/obj/item/weapon/reagent_containers/pill/mutadone = 5,/obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2,/obj/item/weapon/reagent_containers/glass/bottle/toxin = 3)
+	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/morphine = 4,/obj/item/weapon/reagent_containers/pill/charcoal = 6)
 
 
 //This one's from bay12
@@ -790,8 +793,11 @@
 	products = list(/obj/item/weapon/reagent_containers/syringe = 6,/obj/item/weapon/reagent_containers/pill/patch/styptic = 5,
 					/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 5,/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 2,
 					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 2,/obj/item/weapon/reagent_containers/glass/bottle/morphine = 2,
-					/obj/item/weapon/reagent_containers/glass/bottle/diphenhydramine = 2,/obj/item/weapon/reagent_containers/glass/bottle/potass_iodide = 2, /obj/item/weapon/reagent_containers/glass/bottle/salglu_solution = 3,/obj/item/weapon/reagent_containers/glass/bottle/atropine = 2,/obj/item/weapon/reagent_containers/syringe/antiviral = 3,/obj/item/weapon/reagent_containers/syringe/calomel = 5,/obj/item/weapon/reagent_containers/pill/salbutamol = 5,/obj/item/weapon/reagent_containers/pill/mannitol = 5,/obj/item/weapon/reagent_containers/pill/mutadone = 3,/obj/item/device/healthanalyzer = 2, /obj/item/device/sensor_device = 1)
-	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/toxin = 2,/obj/item/weapon/reagent_containers/pill/tox = 2,/obj/item/weapon/reagent_containers/pill/morphine = 2,/obj/item/weapon/reagent_containers/pill/charcoal = 3)
+					/obj/item/weapon/reagent_containers/glass/bottle/diphenhydramine = 2,/obj/item/weapon/reagent_containers/glass/bottle/potass_iodide = 2,
+					/obj/item/weapon/reagent_containers/glass/bottle/salglu_solution = 3,/obj/item/weapon/reagent_containers/glass/bottle/atropine = 2,/obj/item/weapon/reagent_containers/syringe/antiviral = 3,
+					/obj/item/weapon/reagent_containers/syringe/calomel = 5,/obj/item/weapon/reagent_containers/pill/salbutamol = 5,/obj/item/weapon/reagent_containers/pill/mannitol = 5,
+					/obj/item/weapon/reagent_containers/pill/mutadone = 3,/obj/item/device/healthanalyzer = 2, /obj/item/device/sensor_device = 1,/obj/item/weapon/reagent_containers/glass/bottle/toxin = 2)
+	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 2,/obj/item/weapon/reagent_containers/pill/morphine = 2,/obj/item/weapon/reagent_containers/pill/charcoal = 3)
 
 /obj/machinery/vending/security
 	name = "\improper SecTech"

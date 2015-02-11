@@ -10,6 +10,9 @@
 /obj/effect/proc_holder/changeling/fleshmend/sting_action(var/mob/living/user)
 	user << "<span class='notice'>We begin to heal rapidly.</span>"
 	spawn(0)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.restore_blood()
 		for(var/i = 0, i<10,i++)
 			user.adjustBruteLoss(-10)
 			user.adjustOxyLoss(-10)

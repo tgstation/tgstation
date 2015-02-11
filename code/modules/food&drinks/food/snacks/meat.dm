@@ -165,6 +165,7 @@
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
 	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	trash = /obj/item/trash/plate
 	filling_color = "#B22222"
 
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain
