@@ -1,0 +1,4 @@
+author: Paprika
+delete-after: True
+changes:
+  - tweak: "Drones now spawn from a drone fabricator. Use the 'join as drone' button under the ghost tab as an observer to spawn as a drone, provided that the fabricator is powered and there aren't too many drones already."
