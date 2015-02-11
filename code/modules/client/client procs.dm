@@ -102,8 +102,17 @@
 		src << "<span class='warning'>The stylesheet wasn't properly setup call an administrator to reload the stylesheet or relog.</span>"
 	TopicData = null							//Prevent calls to client.Topic from connect
 
+	//Admin Authorisation
+	holder = admin_datums[ckey]
+	if(holder)
+		admins += src
+		holder.owner = src
+	
 	if(connection != "seeker")					//Invalid connection type.
-		return null
+		if(holder)
+			src << "<span class='warning'> You connected to the server with a web client please notify a coder about any issues.</span>"
+		else
+			return null
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
@@ -122,11 +131,6 @@
 	clients += src
 	directory[ckey] = src
 
-	//Admin Authorisation
-	holder = admin_datums[ckey]
-	if(holder)
-		admins += src
-		holder.owner = src
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
