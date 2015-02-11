@@ -76,6 +76,6 @@
 			adjustToxLoss(1)
 			sleeping = min(sleeping + 2, 10)
 
-	if(boozeticks >= (50 * boozetolerance)) //building tolerance
+	if(boozeticks >= (300 * boozetolerance)) //building tolerance
 		boozeticks = 0
 		boozetolerance = min(boozetolerance + 1, 5)
