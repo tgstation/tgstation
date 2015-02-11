@@ -74,7 +74,8 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	blood_image = image(loc = src)
 	blood_image.override = 1
 	for(var/mob/living/silicon/ai/AI in player_list)
-		AI.client.images += blood_image
+		if(AI.client)
+			AI.client.images += blood_image
 	rune_list.Add(src)
 
 /obj/effect/rune/Destroy()
@@ -82,7 +83,8 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		ajourn.ajourn = null
 	ajourn = null
 	for(var/mob/living/silicon/ai/AI in player_list)
-		AI.client.images -= blood_image
+		if(AI.client)
+			AI.client.images -= blood_image
 	qdel(blood_image)
 	blood_image = null
 	rune_list.Remove(src)

@@ -165,7 +165,7 @@ You must kill it all while minimizing the damage to the station."}
 					aiPlayer.set_zeroth_law(law)
 					aiPlayer << "Laws Updated: [law]"
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!istype(M,/mob/new_player) && M.client)
 					M << sound('sound/AI/blob_confirmed.ogg')
 				var/T = M.loc
 				if((istype(T, /turf/space)) || ((istype(T, /turf)) && (M.z!=1)))
