@@ -158,5 +158,4 @@ TICKCOMP 0
 #SEE_OWN_NOTES
 
 ## Chances are you only want this enabled if you are a developer
-#Execute call to shell on round end
-#HOOK_ROUND_END cd hooks/onRoundEnd/ && python onRoundEnd.py
+#HOOK_ROUND_END

@@ -115,8 +115,8 @@ var/datum/subsystem/ticker/ticker
 						sleep(restart_timeout)
 						kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
 
-						if(config.hook_round_end != null)
-							shell(config.hook_round_end)
+						if(config.hook_round_end == 1)
+							shell("cd hooks/onRoundEnd/ && python onRoundEnd.py")
 
 						world.Reboot()
 

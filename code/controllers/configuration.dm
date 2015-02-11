@@ -137,7 +137,7 @@
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
 
-	var/hook_round_end = null
+	var/hook_round_end = 0
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -295,7 +295,7 @@
 				if("see_own_notes")
 					config.see_own_notes = 1
 				if("hook_round_end")
-					config.hook_round_end = value
+					config.hook_round_end = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
