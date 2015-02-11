@@ -3,6 +3,7 @@
 
 import datetime
 import os
+import time
 
 #3 PM
 RESTART_THRESHOLD = 15
@@ -23,7 +24,7 @@ if curHour > RESTART_THRESHOLD and lastrestart != curDay:
 	
 	#killall sends TERM by default
 	os.system("killall DreamDaemon")
-
+	time.sleep(5)
 	#>b-b-but anon, killall won't work on windows
 	#stop using a terrible OS
 	
