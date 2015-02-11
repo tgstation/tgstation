@@ -117,7 +117,7 @@
 			M.current << "<span class='warning'>Your piercing gaze knocks out [C.name].</span>"
 			C << "<span class='warning'>You find yourself unable to move and barely able to speak.</span>"
 			C.stuttering = 50
-			C.Paralyze(20)
+			C.Paralyse(20)
 	else
 		M.current << "<span class='warning'>You broke your gaze.</span>"
 		return
