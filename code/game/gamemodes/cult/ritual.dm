@@ -555,7 +555,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				usr.whisper("[input]")
 				for(var/datum/mind/H in ticker.mode.cult)
 					if (H.current)
-						H.current << "<span class='userdanger'><i>[user]</i>: [input]</span>" //Tome communications give the current name (including Unknowns)
+						H.current << "<span class='userdanger'><i>[user]</i>: [input]</span>" //Tome communications give the current name rather than the real one, so unknowns will display as Unknown
 				return
 			if("Notes")
 				if(usr.get_active_hand() != src)
