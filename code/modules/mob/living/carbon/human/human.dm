@@ -622,7 +622,7 @@
 			gain = 100
 		if(mind.assigned_role == "Clown")
 			gain = rand(-300, 300)
-	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	investigate_log("([key_name(src)]) has been consumed by the singularity.","singulo") //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 
