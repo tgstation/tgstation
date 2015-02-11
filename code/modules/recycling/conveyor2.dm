@@ -26,8 +26,6 @@
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
-
-
 /obj/machinery/conveyor/centcom_auto
 	id_tag = "round_end_belt"
 
