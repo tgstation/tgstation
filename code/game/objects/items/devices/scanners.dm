@@ -412,7 +412,7 @@ REAGENT ANALYZER
 
 // Used by the PDA reagent scanner too
 /proc/reagentscan(atom/A as mob|obj|turf|area, mob/user as mob)
-	if(!isnull(A.reagents))
+	if(A.reagents)
 		if(A.reagents.reagent_list.len > 0)
 			var/reagents_length = A.reagents.reagent_list.len
 			user.show_message("<span class='notice'>[reagents_length] chemical agent[(reagents_length > 1) ? "s" : ""] found.</span>")
@@ -421,9 +421,13 @@ REAGENT ANALYZER
 				if(istype(A, /mob/living/))
 					var/const/P  = 3 //The number of seconds between life ticks
 					var/T  = (R.volume / (R.metabolization_rate / P))
-					resultline += " - [round(T/60, 0.01)] minutes"
-				if(initial(R.overdose_threshold) && R.volume >= initial(R.overdose_threshold))
-					resultline += " - <font color='red'>Overdosage</font>"
+					resultline += " - Dissipate: [round(T/60, 0.01)] minutes"
+				if(R.overdosed)
+					resultline += " - <font color='red'>Overdosed</font>"
+				else if(initial(R.overdose_threshold) && R.volume >= initial(R.overdose_threshold))
+					resultline += " - <font color='#FF8000'>Overdosage</font>"
+				if(initial(R.addiction_threshold) && R.volume >= initial(R.addiction_threshold))
+					resultline += " - <font color='#FF8000'>Addictive</font>"
 				user.show_message("<span class='notice'>[resultline]</span>")
 		else
 			user << "<span class='notice'>No active chemical agents found in [A].</span>"
