@@ -159,8 +159,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		B.data["resistances"] = src.resistances.Copy()
 	var/list/temp_chem = list()
 	for(var/datum/reagent/R in src.reagents.reagent_list)
-		temp_chem += R.name
-		temp_chem[R.name] = R.volume
+		temp_chem[R.id] = R.volume
 	B.data["trace_chem"] = list2params(temp_chem)
 	if(mind)
 		B.data["mind"] = src.mind
@@ -206,7 +205,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	container.reagents.remove_reagent("blood", amount)
 
-//Transfers blood from container to vessels, respecting blood types compatability.
+//Transfers blood from container to vessels, respecting blood types compatibility.
 /mob/living/carbon/human/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)

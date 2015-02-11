@@ -27,17 +27,13 @@ datum/objective_item/steal/rcd
 	name = "a rapid-construction-device"
 	targetitem = /obj/item/weapon/rcd
 	difficulty = 3
+	excludefromjob = list("Chief Engineer", "Quartermaster", "Cargo Technician")
 
 datum/objective_item/steal/jetpack
 	name = "a jetpack"
 	targetitem = /obj/item/weapon/tank/jetpack
 	difficulty = 3
-
-datum/objective_item/steal/defib
-	name = "a defibrillator"
-	targetitem = /obj/item/weapon/defibrillator
-	difficulty = 4
-	excludefromjob = list("Chief Medical Officer", "Medical Doctor")
+	excludefromjob = list("Chief Engineer")
 
 datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
@@ -49,7 +45,7 @@ datum/objective_item/steal/corgimeat
 	name = "a piece of corgi meat"
 	targetitem = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	difficulty = 5
-	excludefromjob = list("Head of Personnel") //>hurting your little buddy ever
+	excludefromjob = list("Head of Personnel", "Quartermaster", "Cargo Technician") //>hurting your little buddy ever
 
 datum/objective_item/steal/capmedal
 	name = "the medal of captaincy"
