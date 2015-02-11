@@ -1223,13 +1223,6 @@
 		)
 	result = /obj/item/weapon/storage/fancy/chicken_bucket
 
-/datum/recipe/chicken_tendies
-	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
-		/obj/item/clothing/head/fedora
-		)
-	result = /obj/item/weapon/reagent_containers/food/snacks/chicken_tendies
-
 // Currently Disabled //////////////////////////////////////////
 
 /*

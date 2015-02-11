@@ -3110,15 +3110,3 @@
 	..()
 	reagents.add_reagent("nutriment", 3)
 	bitesize = 1
-
-/obj/item/weapon/reagent_containers/food/snacks/chicken_tendies
-	name = "Chicken Tendies"
-	desc = "Liar Liar pants on fire, Chicken Tendies is what I desire!"
-	icon_state = "chicken_tendies"
-
-/obj/item/weapon/reagent_containers/food/snacks/chicken_tendies/New()
-	..()
-	reagents.add_reagent("nutriment", 3)
-	reagents.add_reagent("spiritbreaker", 10) // Screaming
-	reagents.add_reagent("mercury",       10) // Idiot
-	bitesize = 1
