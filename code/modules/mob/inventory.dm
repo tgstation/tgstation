@@ -222,15 +222,13 @@
 //everything on the mob that it isn't holding
 /mob/proc/get_equipped_items()
 	var/list/equipped = get_all_slots()
-	equipped.Remove(get_active_hand())
-	equipped.Remove(get_inactive_hand())
+	equipped -= list(get_active_hand(), get_inactive_hand())
 	return equipped
 
 //everything on the mob that is not in its pockets, hands and belt.
 /mob/proc/get_clothing_items()
 	var/list/equipped = get_all_slots()
-	equipped.Remove(get_active_hand())
-	equipped.Remove(get_inactive_hand())
+	equipped -= list(get_active_hand(), get_inactive_hand())
 	return equipped
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, act_on_fail = EQUIP_FAILACTION_DELETE) // since byond doesn't seem to have pointers, this seems like the best way to do this :/

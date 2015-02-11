@@ -31,7 +31,7 @@
 */
 
 	if(wear_mask)
-		skipface |= wear_mask.flags_inv & HIDEFACE
+		skipface |= check_hidden_head_flags(HIDEFACE)
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
 	var/t_He = "It" //capitalised for use at the start of each line.
