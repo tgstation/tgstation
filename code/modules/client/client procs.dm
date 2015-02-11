@@ -284,7 +284,7 @@
 			hi.sendResources(src)
 
 	// Send NanoUI resources to this client
-	nanomanager.send_resources(src)
+	spawn nanomanager.send_resources(src)
 
 	getFiles(
 		'html/search.js',

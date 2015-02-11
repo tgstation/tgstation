@@ -31,7 +31,7 @@
 	// END AUTOFIX
 	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 		if(!ready)	output += "<p><a href='byond://?src=\ref[src];ready=1'>Declare Ready</A></p>"
-		else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
+		else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=0'>Cancel</A>)</p>"
 
 	else
 
@@ -107,8 +107,10 @@
 		client.prefs.ShowChoices(src)
 		return 1
 
-	if(href_list["ready"])
-		ready = !ready
+	if(href_list["ready"] >= 0)
+		ready = href_list["ready"]
+		ready = clamp(ready, 0, 1)
+		usr << "<span class='recruit'>You [ready ? "have declared ready" : "have unreadied"].</span>"
 		new_player_panel_proc()
 		//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
 		return 1
