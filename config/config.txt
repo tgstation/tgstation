@@ -156,3 +156,7 @@ TICKCOMP 0
 
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
 #SEE_OWN_NOTES
+
+## Chances are you only want this enabled if you are a developer
+#Execute call to shell on round end
+#HOOK_ROUND_END cd hooks/onRoundEnd/ && python onRoundEnd.py
