@@ -204,6 +204,7 @@
 	media.stop_music()
 	media.playerstyle = (prefs.usewmp ? PLAYER_OLD_HTML : PLAYER_HTML)
 	if(prefs.toggles & SOUND_STREAMING)
+		media.open()
 		media.update_music()
 
 /client/verb/setup_special_roles()

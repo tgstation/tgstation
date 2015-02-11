@@ -1203,11 +1203,11 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 					else
 						user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
-					if("jukebox")
-						toggles ^= SOUND_STREAMING
+				if("jukebox")
+					toggles ^= SOUND_STREAMING
 
-					if("wmp")
-						usewmp = !usewmp
+				if("wmp")
+					usewmp = !usewmp
 
 				if("ghost_ears")
 					toggles ^= CHAT_GHOSTEARS
