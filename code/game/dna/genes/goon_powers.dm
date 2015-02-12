@@ -256,7 +256,7 @@
 		return
 
 	var/atom/movable/the_item = targets[1]
-	if(!the_item.Adjacent(usr))
+	if(!the_item || !the_item.Adjacent(usr))
 		revert_cast(usr)
 		return
 	if(ishuman(the_item))
