@@ -106,7 +106,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/list/modules = list("MoMMI")
 	if(modules.len)
 		modtype = input("Please, select a module!", "Robot", null, null) in modules
-	else:
+	else
 		modtype=modules[0]
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.

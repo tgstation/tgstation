@@ -1064,7 +1064,7 @@
 			user << "You remove \the [broken_device]."
 			user.put_in_active_hand(broken_device)
 
-	if (user:a_intent == I_HELP)
+	if (user.a_intent == I_HELP)
 		help_shake_act(user)
 		return
 
