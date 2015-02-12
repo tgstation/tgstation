@@ -279,7 +279,7 @@
 			if(wizard.current && wizard.current.spell_list)
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1
-				for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
+				for(var/spell/S in wizard.current.spell_list)
 					text += "[S.name]"
 					if(wizard.current.spell_list.len > i)
 						text += ", "
@@ -293,7 +293,7 @@
 
 //To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(var/mob/M as mob)
-	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
+	for(var/spell/spell_to_remove in src.spell_list)
 		del(spell_to_remove)
 
 // Does this clothing slot count as wizard garb? (Combines a few checks)

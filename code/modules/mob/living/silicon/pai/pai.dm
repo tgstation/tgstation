@@ -88,7 +88,7 @@
 		show_silenced()
 
 		if (proc_holder_list.len)//Generic list for proc_holder objects.
-			for(var/obj/effect/proc_holder/P in proc_holder_list)
+			for(var/spell/P in proc_holder_list)
 				statpanel("[P.panel]","",P)
 
 /mob/living/silicon/pai/check_eye(var/mob/user as mob)

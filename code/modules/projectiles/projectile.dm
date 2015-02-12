@@ -50,6 +50,8 @@
 	var/drowsy = 0
 	var/agony = 0
 
+	var/step_delay = 0 //how long it goes between moving. You should probably leave this as 0 for a lot of things
+
 	proc/on_hit(var/atom/target, var/blocked = 0)
 		if(blocked >= 2)		return 0//Full block
 		if(!isliving(target))	return 0
@@ -196,49 +198,56 @@
 		return 1
 
 	process()
+
+/obj/item/projectile/proc/process_step()
+	if(src.loc)
+		if(step_delay)
+			sleep(step_delay)
 		if(kill_count < 1)
 			//del(src)
 			OnDeath()
 			returnToPool(src)
 			return
 		kill_count--
-		spawn while(loc)
-			if((!( current ) || loc == current))
-				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				//del(src)
-				OnDeath()
-				returnToPool(src)
-				return
-			step_towards(src, current)
-			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original)
-						sleep(1)
-			sleep(1)
-		return
+		if((!( current ) || loc == current))
+			current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
+		if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
+			//del(src)
+			OnDeath()
+			returnToPool(src)
+			return
+		step_towards(src, current)
+		if(!bumped && !isturf(original))
+			if(loc == get_turf(original))
+				if(!(original in permutated))
+					Bump(original)
+		sleep(1)
 
-	proc/dumbfire(var/dir) // for spacepods, go snowflake go
-		if(!dir)
-			//del(src)
-			OnDeath()
-			returnToPool(src)
-		if(kill_count < 1)
-			//del(src)
-			OnDeath()
-			returnToPool(src)
-		kill_count--
-		spawn while(loc)
-			var/turf/T = get_step(src, dir)
-			step_towards(src, T)
-			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original)
-						sleep(1)
-			sleep(1)
-		return
+/obj/item/projectile/process()
+	spawn while(loc)
+		src.process_step()
+	return
+
+/obj/item/projectile/proc/dumbfire(var/dir) // for spacepods, go snowflake go
+	if(!dir)
+		//del(src)
+		OnDeath()
+		returnToPool(src)
+	if(kill_count < 1)
+		//del(src)
+		OnDeath()
+		returnToPool(src)
+	kill_count--
+	spawn while(loc)
+		var/turf/T = get_step(src, dir)
+		step_towards(src, T)
+		if(!bumped && !isturf(original))
+			if(loc == get_turf(original))
+				if(!(original in permutated))
+					Bump(original)
+					sleep(1)
+		sleep(1)
+	return
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!
