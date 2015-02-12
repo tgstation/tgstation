@@ -1037,7 +1037,7 @@ proc/populate_seed_list()
 	mutants = list("libertycap","glowshroom")
 	packet_icon = "mycelium-reishi"
 	plant_icon = "reishi"
-	chems = list("nutriment" = list(1,50), "psilocybin" = list(3,5))
+	chems = list("nutriment" = list(1), "stoxin" = list(3,3), "space_drugs" = list(1,25))
 
 	maturation = 10
 	production = 5
@@ -1053,7 +1053,7 @@ proc/populate_seed_list()
 	mutants = null
 	packet_icon = "mycelium-liberty"
 	plant_icon = "liberty"
-	chems = list("nutriment" = list(1), "stoxin" = list(3,3), "space_drugs" = list(1,25))
+	chems = list("nutriment" = list(1,50), "psilocybin" = list(3,5))
 
 	lifespan = 25
 	production = 1
