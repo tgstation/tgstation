@@ -229,6 +229,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		qdel(O)
 	busy = 0
 	src.updateUsrDialog()
+	return 1 // SO WE DONT GET AFTERATTACK CALLED
 
 /obj/machinery/autolathe/crowbarDestroy(mob/user)
 	if(..() == 1)
