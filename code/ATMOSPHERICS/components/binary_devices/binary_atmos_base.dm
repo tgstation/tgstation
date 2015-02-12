@@ -94,6 +94,11 @@
 
 	update_icon()
 
+/obj/machinery/atmospherics/binary/construction()
+	..()
+	parent1.update = 1
+	parent2.update = 1
+
 /obj/machinery/atmospherics/binary/build_network()
 	if(!parent1)
 		parent1 = new /datum/pipeline()
