@@ -230,7 +230,7 @@ var/list/ai_list = list()
 				borg_area = get_area(R)
 				//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
 				stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
- Module: [R.designation] | Loc: [borg_area.name] | Status: [R.stat ? "Offline" : "Normal"]"))
+ Module: [R.designation] | Loc: [borg_area.name] | Status: [R.stat || !R.client ? "OFFLINE" : "Normal"]"))
 		else
 			stat(null, text("Systems nonfunctional"))
 

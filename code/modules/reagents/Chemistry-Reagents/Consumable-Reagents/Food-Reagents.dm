@@ -41,7 +41,7 @@ datum/reagent/consumable/vitamin/on_mob_life(var/mob/living/M as mob)
 	if(prob(50))
 		M.heal_organ_damage(1,1)
 	if(M.satiety < 600)
-		M.satiety += 20
+		M.satiety += 30
 	..()
 	return
 
@@ -51,14 +51,7 @@ datum/reagent/consumable/sugar
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
-	nutriment_factor = 15 * REAGENTS_METABOLISM
-	metabolization_rate = 2 * REAGENTS_METABOLISM
-
-datum/reagent/consumable/sugar/on_mob_life(var/mob/living/M as mob)
-	if(M.satiety > -200)
-		M.satiety -= 20 //eating sugar makes you more hungry over time by making your hunger drop faster.
-	M.nutrition += max(((NUTRITION_LEVEL_FED + 50) - M.nutrition )/100, 0) * nutriment_factor // sugar doesn't help your hunger if your stomach is nearly full
-	holder.remove_reagent(src.id, metabolization_rate)
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 
 datum/reagent/consumable/virus_food
 	name = "Virus Food"
@@ -268,22 +261,22 @@ datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 		data = 1
 	switch(data)
 		if(1 to 5)
-			if (!M.stuttering)
-				M.stuttering = 1
+			if (!M.slurring)
+				M.slurring = 1
 			M.Dizzy(5)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if (!M.stuttering)
-				M.stuttering = 1
+			if (!M.slurring)
+				M.slurring = 1
 			M.Jitter(10)
 			M.Dizzy(10)
 			M.druggy = max(M.druggy, 35)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
-			if (!M.stuttering)
-				M.stuttering = 1
+			if (!M.slurring)
+				M.slurring = 1
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.druggy = max(M.druggy, 40)

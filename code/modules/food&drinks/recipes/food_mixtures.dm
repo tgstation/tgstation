@@ -81,7 +81,7 @@
 
 /datum/chemical_reaction/cheesewheel/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel(location)
+	new /obj/item/weapon/reagent_containers/food/snacks/cheesewheel(location)
 	return
 
 /datum/chemical_reaction/synthmeat
@@ -110,3 +110,76 @@
 	result = "hell_ramen"
 	required_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
 	result_amount = 6
+
+/datum/chemical_reaction/cakebatter
+	name = "Cake Batter"
+	id = "cakebatter"
+	result = null
+	required_reagents = list("milk" = 5)
+	result_amount = 1
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/dough
+	mix_message = "The dough forms a cake batter."
+
+/datum/chemical_reaction/cakebatter/on_reaction(var/datum/reagents/holder)
+	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/cakebatter
+	S.loc = get_turf(holder.my_atom)
+	if(holder && holder.my_atom)
+		qdel(holder.my_atom)
+
+/datum/chemical_reaction/piedough
+	name = "Pie Dough"
+	id = "piedough"
+	result = null
+	required_reagents = list("milk" = 5)
+	result_amount = 1
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/flatdough
+	mix_message = "The dough forms a pie dough."
+
+/datum/chemical_reaction/piedough/on_reaction(var/datum/reagents/holder)
+	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/piedough
+	S.loc = get_turf(holder.my_atom)
+	if(holder && holder.my_atom)
+		qdel(holder.my_atom)
+
+/datum/chemical_reaction/cakebatter/alt
+	id = "cakebatteralt"
+	required_reagents = list("soymilk" = 5)
+
+/datum/chemical_reaction/piedough/alt
+	id = "piedoughalt"
+	required_reagents = list("soymilk" = 5)
+
+/datum/chemical_reaction/imitationcarpmeat
+	name = "Imitation Carpmeat"
+	id = "imitationcarpmeat"
+	result = null
+	required_reagents = list("carpotoxin" = 5)
+	result_amount = 1
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/tofu
+	mix_message = "The mixture becomes similar to carp meat."
+
+/datum/chemical_reaction/imitationcarpmeat/on_reaction(var/datum/reagents/holder)
+	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/carpmeat/imitation
+	S.loc = get_turf(holder.my_atom)
+	if(holder && holder.my_atom)
+		qdel(holder.my_atom)
+
+/datum/chemical_reaction/rawpastrybase
+	name = "Raw Pastry Base"
+	id = "rawpastrybase"
+	result = null
+	required_reagents = list("milk" = 5)
+	result_amount = 1
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/doughslice
+	mix_message = "The doughslice forms a raw pastry base"
+
+/datum/chemical_reaction/rawpastrybase/on_reaction(var/datum/reagents/holder)
+	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
+	S.loc = get_turf(holder.my_atom)
+	if(holder && holder.my_atom)
+		qdel(holder.my_atom)
+
+/datum/chemical_reaction/rawpastrybase/alt
+	id = "rawpastrybasealt"
+	required_reagents = list("soymilk" = 5)
+

@@ -21,18 +21,19 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
 
 /obj/item/stack/rods/New(var/loc, var/amount=null)
+	..()
+
 	recipes = rod_recipes
 	update_icon()
-	return ..()
 
 /obj/item/stack/rods/update_icon()
-	if(get_amount() <= 5)
-		icon_state = "rods-[get_amount()]"
+	var/amount = get_amount()
+	if((amount <= 5) && (amount > 0))
+		icon_state = "rods-[amount]"
 	else
 		icon_state = "rods"
 
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
-	..()
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -53,9 +54,23 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 			if (!R && replace)
 				user.put_in_hands(new_item)
 		return
+
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+		var/obj/item/weapon/reagent_containers/food/snacks/S = W
+		if(amount != 1)
+			user << "<span class='warning'>You must use a single rod.</span>"
+		else if(S.w_class > 2)
+			user << "<span class='warning'>The ingredient is too big for [src].</span>"
+		else
+			var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/kebab(get_turf(src))
+			A.initialize_custom_food(src, S, user)
+		return
 	..()
 
 /obj/item/stack/rods/cyborg/
 	m_amt = 0
 	is_cyborg = 1
 	cost = 250
+
+/obj/item/stack/rods/cyborg/update_icon()
+	return

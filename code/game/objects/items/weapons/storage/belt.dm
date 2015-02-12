@@ -189,14 +189,15 @@
 
 /obj/item/weapon/storage/belt/holster
 	name = "shoulder holster"
-	desc = "A holster to conceal a carried handgun. WARNING: Badasses only."
+	desc = "A holster to conceal a carried handgun and ammo. WARNING: Badasses only."
 	icon_state = "holster"
 	item_state = "holster"
-	storage_slots = 1
-	max_w_class = 4
+	storage_slots = 3
+	max_w_class = 3
 	can_hold = list(
 		/obj/item/weapon/gun/projectile/automatic/pistol,
-		/obj/item/weapon/gun/projectile/revolver/detective
+		/obj/item/weapon/gun/projectile/revolver,
+		/obj/item/ammo_box,
 		)
 
 /obj/item/weapon/storage/belt/fannypack

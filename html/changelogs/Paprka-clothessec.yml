@@ -1,0 +1,6 @@
+author: Paprka
+
+delete-after: True
+
+changes: 
+  - rscadd: "Changed some clothing around. Added a turtleneck for the HoS. Removed 'civillian' armor and gave normal armor to the bartender and HoP. Added flash protection to the HoS' eyepatch, it functions like sunglasses now. Additionally, added the ability to store ammo on your shoulder holster as detective."
