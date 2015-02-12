@@ -17,6 +17,15 @@ var/bomb_set
 	use_power = 0
 	var/previous_level = ""
 	var/lastentered = ""
+	var/immobile = 0 //Not all nukes should be moved
+
+/obj/machinery/nuclearbomb/selfdestruct
+	name = "station self-destruct terminal"
+	desc = "For when it all gets too much to bear. Do not taunt."
+	icon = 'icons/obj/machines/bignuke.dmi'
+	anchored = 1 //stops it being moved
+	immobile = 1 //prevents it from ever being moved
+	layer = 4
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
@@ -140,8 +149,10 @@ var/bomb_set
 					src.timing = 0
 					bomb_set = 0
 			if (href_list["anchor"])
-				if(!isinspace())
+				if(!isinspace()&&(!immobile))
 					src.anchored = !( src.anchored )
+				else if(immobile)
+					usr << "<span class='warning'>This device is immovable!</span>"
 				else
 					usr << "<span class='warning'>There is nothing to anchor to!</span>"
 	src.add_fingerprint(usr)
