@@ -919,6 +919,11 @@
 	icon_state = "booberrymuffin"
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 
+/obj/item/weapon/reagent_containers/food/snacks/muffin/dindumuffin
+	name = "Dindu Muffin"
+	desc = "This muffin didn't do anything."
+	icon_state = "dindumuffins"
+
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	name = "banana cream pie"
 	desc = "Just like back home, on clown planet! HONK!"
@@ -3071,6 +3076,8 @@
 	icon_state = "turkey_drumstick"
 	trash = /obj/item/trash/plate
 	bitesize = 2
+
+//////////////////CHICKEN//////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/rawchicken
 	name = "raw chicken"
