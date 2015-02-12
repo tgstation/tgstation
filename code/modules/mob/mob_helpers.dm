@@ -221,8 +221,6 @@ proc/slur(n)
 			if(newletter==" ")	newletter="...huuuhhh..."
 			if(newletter==".")	newletter=" *BURP*."
 		switch(rand(1,17))
-			if(1,3,5,8)	newletter="[lowertext(newletter)]"
-			if(2,4,6,15)	newletter="[uppertext(newletter)]"
 			if(7)	newletter+="'"
 			if(16)	newletter+="[newletter]"
 			if(17)	newletter+="[newletter][newletter]"
