@@ -189,7 +189,8 @@ var/global/ingredientLimit = 10
 		return
 
 	if(istype(target_food,/obj/item/weapon/reagent_containers))
-		src.reagents.trans_to(target_food, max(5, target_food.w_class * 5))
+		for(var/datum/reagent/reagent in reagents.reagent_list)
+			src.reagents.trans_id_to(target_food, reagent.id, max(5, target_food.w_class * 5) / reagents.reagent_list.len)
 	return
 
 /obj/machinery/cooking/proc/cook(var/foodType)
@@ -308,7 +309,9 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/deepfryer/proc/empty_icon() //sees if the value is empty, and changes the icon if it is
 	reagents.update_total() //make the values refresh
-	if(reagents.total_volume < DEEPFRY_MINOIL)
+	if(ingredient)
+		icon_state = "fryer_on"
+	else if(reagents.total_volume < DEEPFRY_MINOIL)
 		icon_state = "fryer_empty"
 	else
 		icon_state = initial(icon_state)
@@ -339,13 +342,13 @@ var/global/ingredientLimit = 10
 	var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/D = new(src.loc)
 	if(cooks_in_reagents)
 		src.transfer_reagents_to_food(D)
-	empty_icon() //see if the icon needs updating from the loss of oil
 	D.name = "deep fried [src.ingredient.name]"
 	D.icon = src.ingredient.icon
 	D.icon_state = src.ingredient.icon_state
 	D.overlays = src.ingredient.overlays
 	D.color = "#FFAD33"
 	src.ingredient = null
+	empty_icon() //see if the icon needs updating from the loss of oil
 	qdel(src.ingredient)
 	return
 
