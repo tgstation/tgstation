@@ -267,7 +267,7 @@
 //Meaty Ore Xeno edition
 /obj/effect/meteor/meaty/xeno
 	color = "#5EFF00"
-	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/xenomeat
+	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat/xeno
 	meteorgibs = /obj/effect/gibspawner/xeno
 
 /obj/effect/meteor/meaty/xeno/ram_turf(var/turf/T)
