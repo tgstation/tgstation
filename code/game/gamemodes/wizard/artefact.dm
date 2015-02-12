@@ -75,6 +75,7 @@
 	spawn_amt = 10
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of endless laughter."
+	icon_state = "clownrender"
 
 /////////////////////////////////////////Scrying///////////////////
 
