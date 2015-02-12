@@ -71,7 +71,8 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 		//wires = shuffle(wires)
 
 /datum/wires/proc/Interact(var/mob/living/user)
-
+	if(!istype(user))
+		return 0
 	var/html = null
 	if(holder && CanUse(user))
 		html = GetInteractWindow()
