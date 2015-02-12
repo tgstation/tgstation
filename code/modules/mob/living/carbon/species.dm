@@ -536,7 +536,7 @@ var/global/list/whitelisted_species = list("Human")
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
 
-	flags = WHITELISTED | NO_SCAN | NO_BLOOD
+	flags = WHITELISTED | NO_SCAN
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
