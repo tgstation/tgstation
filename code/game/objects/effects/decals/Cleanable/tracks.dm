@@ -68,7 +68,7 @@ var/global/list/image/fluidtrack_cache=list()
 	*/
 /obj/effect/decal/cleanable/blood/tracks/resetVariables()
 	if(!stack) stack = list()
-	stack.len = 0
+	else stack.len = 0
 	..("stack")
 /obj/effect/decal/cleanable/blood/tracks/proc/AddTracks(var/list/DNA, var/comingdir, var/goingdir, var/bloodcolor="#A10808")
 	var/updated=0
