@@ -43,7 +43,7 @@
 // Uncomment to show debug messages.
 //#define DEBUG_OBJECT_POOL
 
-#define MAINTAINING_OBJECT_POOL_COUNT 20
+#define MAINTAINING_OBJECT_POOL_COUNT 500
 
 var/global/list/masterPool = new
 

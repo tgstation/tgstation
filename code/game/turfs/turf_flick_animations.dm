@@ -19,7 +19,7 @@
 			if(c_animation)
 				c_animation.master = null
 				c_animation.loc = null
-				c_animation = null	//Letting the Garbage Collector take care of it.
+				qdel(c_animation)
 
 
 /*
@@ -41,7 +41,9 @@
 		c_animation.pixel_y = 0
 		flick("cultification",c_animation)
 		spawn(10)
-			del(c_animation)
+			c_animation.master = null
+			c_animation.loc = null
+			qdel(c_animation)
 
 //called by various cult runes
 /turf/proc/invocanimation(var/animation_type)
@@ -58,7 +60,7 @@
 		c_animation.pixel_y = 0
 		flick("invocanimation",c_animation)
 		spawn(10)
-			del(c_animation)
+			qdel(c_animation)
 
 //called whenever a null rod is blocking a spell or rune
 /turf/proc/nullding()

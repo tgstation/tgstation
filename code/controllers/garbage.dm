@@ -41,7 +41,7 @@ var/datum/garbage_collector/garbageCollector
 	var/remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
 	var/remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
 	var/collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
-
+	if(narsie_cometh) return //don't even fucking bother, its over.
 	while(queue.len && --remainingCollectionPerTick >= 0)
 		var/refID = queue[1]
 		var/destroyedAtTime = queue[refID]

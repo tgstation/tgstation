@@ -1,5 +1,5 @@
 var/global/narsie_behaviour = "CultStation13"
-
+var/global/narsie_cometh = 0
 /obj/machinery/singularity/narsie //Moving narsie to its own file for the sake of being clearer
 	name = "Nar-Sie"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
@@ -40,6 +40,7 @@ var/global/narsie_behaviour = "CultStation13"
 		emergency_shuttle.incall(0.3) // Cannot recall.
 
 	SetUniversalState(/datum/universal_state/hell)
+	narsie_cometh = 1
 /*
 	updateicon()
 */
@@ -79,7 +80,7 @@ var/global/narsie_behaviour = "CultStation13"
 	if(isturf(A))
 		narsiewall(A)
 	else if(istype(A, /obj/structure/cult))
-		del(A)
+		qdel(A)
 	else
 		consume(A)
 
@@ -87,7 +88,7 @@ var/global/narsie_behaviour = "CultStation13"
 	if(isturf(A))
 		narsiewall(A)
 	else if(istype(A, /obj/structure/cult))
-		del(A)
+		qdel(A)
 	else
 		consume(A)
 
@@ -207,7 +208,7 @@ var/global/narsie_behaviour = "CultStation13"
 				var/obj/machinery/bot/B = A
 				if(B.flags & INVULNERABLE)
 					return
-			A.ex_act(1)
+			qdel(A)
 
 			if (A)
 				qdel(A)
@@ -254,7 +255,7 @@ var/global/narsie_behaviour = "CultStation13"
 			var/obj/machinery/bot/B = A
 			if(B.flags & INVULNERABLE)
 				return
-		A.ex_act(1)
+		qdel(A)
 
 		if (A)
 			qdel(A)
