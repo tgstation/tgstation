@@ -73,7 +73,8 @@ var/global/list/image/splatter_cache=list()
 		perp.shoes.overlays -= perp.shoes.blood_overlay
 		perp.shoes.blood_overlay.color = basecolor
 		perp.shoes.overlays += perp.shoes.blood_overlay
-		perp.shoes.blood_DNA |= blood_DNA.Copy()blood_DNA
+		if(blood_DNA)
+			perp.shoes.blood_DNA |= blood_DNA.Copy()
 		perp.shoes.blood_color=basecolor
 		perp.update_inv_shoes(1)
 	else

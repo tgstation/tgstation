@@ -310,7 +310,7 @@ var/global/list/all_money_accounts = list()
 		if(held_card)
 			var/obj/item/weapon/card/id/C = held_card
 			if(access_cent_captain in C.access)
-					access_level = 2
+				access_level = 2
 			else if(access_hop in C.access || access_captain in C.access)
 				access_level = 1
 		attack_hand(user)
@@ -362,7 +362,7 @@ var/global/list/all_money_accounts = list()
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if(isEmag(I))
-						emag(user)
+						emag(usr)
 						return
 					if (istype(I, /obj/item/weapon/card/id))
 						var/obj/item/weapon/card/id/C = I

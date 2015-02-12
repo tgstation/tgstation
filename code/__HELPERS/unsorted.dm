@@ -1345,4 +1345,4 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 
 /proc/isEmag(obj/O)
 	if(!O) return 0
-	return istype(O, /obj/item/weapon/card/id/emag)
+	return istype(O, /obj/item/weapon/card/emag)
