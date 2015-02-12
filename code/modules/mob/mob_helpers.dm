@@ -220,10 +220,10 @@ proc/slur(n)
 		if(rand(1,20)==20)
 			if(newletter==" ")	newletter="...huuuhhh..."
 			if(newletter==".")	newletter=" *BURP*."
-		switch(rand(1,17))
-			if(7)	newletter+="'"
-			if(16)	newletter+="[newletter]"
-			if(17)	newletter+="[newletter][newletter]"
+		switch(rand(1,20))
+			if(1)	newletter+="'"
+			if(10)	newletter+="[newletter]"
+			if(20)	newletter+="[newletter][newletter]"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
 
