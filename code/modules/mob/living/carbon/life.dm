@@ -56,8 +56,7 @@
 
 		if(drunkness >= (TIPSY * boozetolerance))
 			jitteriness = max(jitteriness - 5, 0)
-			stuttering = 4
-			//slurring to replace ^
+			slurring = 4
 			Dizzy(5)
 			if(prob(7))
 				emote("burp")
