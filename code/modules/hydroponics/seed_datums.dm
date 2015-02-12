@@ -420,6 +420,7 @@ proc/populate_seed_list()
 					if(isnull(gene_chem[i]))
 						chems[rid][i] = 0
 						gene_chem[i] = 0
+					if(!chems[rid][i]) continue
 
 					if(chems[rid][i])
 						chems[rid][i] = max(1,round((gene_chem[i] + chems[rid][i])/2))
