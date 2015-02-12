@@ -42,6 +42,10 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	output = /obj/item/weapon/reagent_containers/food/snacks/soydope
 
+/datum/food_processor_process/spaghetti
+	input = /obj/item/weapon/reagent_containers/food/snacks/doughslice
+	output = /obj/item/weapon/reagent_containers/food/snacks/spaghetti
+
 
 /* mobs */
 /datum/food_processor_process/mob/process(loc, what)

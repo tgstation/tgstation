@@ -14,8 +14,6 @@
 	update_icon()
 
 /obj/machinery/iv_drip/update_icon()
-	overlays.Cut()
-
 	if(src.attached)
 		if(mode)
 			icon_state = "injecting"
@@ -27,16 +25,17 @@
 		else
 			icon_state = "donateidle"
 
+	overlays = null
+
 	if(beaker)
 		if(attached)
 			overlays += "beakeractive"
 		else
 			overlays += "beakeridle"
-		var/datum/reagents/reagents = beaker.reagents
-		if(reagents.total_volume)
+		if(beaker.reagents.total_volume)
 			var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
 
-			var/percent = round((reagents.total_volume / beaker.volume) * 100)
+			var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
 			switch(percent)
 				if(0 to 9)		filling.icon_state = "reagent0"
 				if(10 to 24) 	filling.icon_state = "reagent10"
@@ -46,11 +45,14 @@
 				if(80 to 90)	filling.icon_state = "reagent80"
 				if(91 to INFINITY)	filling.icon_state = "reagent100"
 
-			filling.icon += mix_color_from_reagents(reagents.reagent_list)
+			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
 			overlays += filling
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
+
+	if(!ishuman(over_object))
+		usr << "<span class='warning'>The drip beeps: Warning, human patients only!</span>"
 
 	if(attached)
 		visible_message("[src.attached] is detached from \the [src]")
@@ -84,8 +86,6 @@
 
 
 /obj/machinery/iv_drip/process()
-	set background = 1
-
 	if(src.attached)
 
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
@@ -103,6 +103,7 @@
 				if(istype(src.beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 4
+				src.beaker.reagents.reaction(src.attached, INGEST, 0,0) //make reagents reacts, but don't spam messages
 				src.beaker.reagents.trans_to(src.attached, transfer_amount)
 				update_icon()
 
@@ -143,7 +144,7 @@
 	if(src.attached)
 		visible_message("[src.attached] is detached from \the [src]")
 		src.attached = null
-		src.update_icon()
+		update_icon()
 		return
 	else if(src.beaker)
 		eject_beaker(user)

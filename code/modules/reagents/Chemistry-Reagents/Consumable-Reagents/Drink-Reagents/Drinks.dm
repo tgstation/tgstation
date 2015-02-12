@@ -412,7 +412,6 @@ datum/reagent/consumable/atomicbomb/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 50)
 	M.confused = max(M.confused+2,0)
 	M.Dizzy(10)
-	M.stuttering += 3
 	M.drunkness += 2
 	if(M.drunkness >= 80)
 		M.sleeping += 1
@@ -439,7 +438,6 @@ datum/reagent/consumable/neurotoxin
 
 datum/reagent/consumable/neurotoxin/on_mob_life(var/mob/living/carbon/M as mob)
 	M.weakened = max(M.weakened, 3)
-
 	M.dizziness += 6
 	M.drunkness += 2
 	..()

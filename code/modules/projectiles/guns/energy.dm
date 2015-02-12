@@ -83,9 +83,9 @@
 	overlays.Cut()
 	if(F)
 		if(F.on)
-			overlays += "flight-on"
+			overlays += "flight-[initial(icon_state)]-on"
 		else
-			overlays += "flight"
+			overlays += "flight-[initial(icon_state)]"
 	return
 
 /obj/item/weapon/gun/energy/ui_action_click()
