@@ -1,0 +1,7 @@
+author: Riukanojutsu
+
+delete-after: True
+
+changes :
+  - tweak: Removed pen and cigarette from RSF. Added flask, deck of cards, cardboard sheet and candles. Added RSF to hacked autolathe menu. Changed capacity from 60 to 40 and cartridge from 30 to 20.
+  - bugfix: FIXED RSF having unlimited range. FIXED Not being able to add a matter cartridge in RSF unless it was half empty.
