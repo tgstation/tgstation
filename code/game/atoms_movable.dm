@@ -53,20 +53,21 @@
 		if(1)
 			if(!("[type]" in gdel_profiling))
 				gdel_profiling["[type]"] = 0
-			gdel_profiling["[type]"] += 1
+			ghdel_profiling["[type]"] += 1
 		if(2)
 			if(!("[type]" in ghdel_profiling))
 				ghdel_profiling["[type]"] = 0
-			ghdel_profiling["[type]"] += 1
+			gdel_profiling["[type]"] += 1
 
 /atom/movable/Del()
-	if(hard_deleted)
-		delete_profile("[type]",2)
-	else
+	if (isnull(gcDestroyed)) // del calls
+		delete_profile("[type]", 0)
+	else if (hard_deleted)
 		delete_profile("[type]",1)
+	else
+		delete_profile("[type]",2)
 
 	..()
-
 
 // Used in shuttle movement and AI eye stuff.
 // Primarily used to notify objects being moved by a shuttle/bluespace fuckup.
