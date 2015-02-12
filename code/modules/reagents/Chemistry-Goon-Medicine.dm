@@ -767,7 +767,7 @@ datum/reagent/antihol
 datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.stuttering = 0
+	M.slurring = 0
 	M.confused = 0
 	M.reagents.remove_reagent("ethanol", 8)
 	M.adjustToxLoss(-0.2*REM)
