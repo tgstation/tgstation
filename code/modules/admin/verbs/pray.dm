@@ -36,3 +36,9 @@
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=crimson>SYNDICATE:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[Sender]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
 	admins << msg
+
+/proc/Nuke_request(var/text , var/mob/Sender)
+	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
+	msg = "<span class='adminnotice'> <b><font color=orange>NUKE CODE REQUEST:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[Sender]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
+	admins << msg
+	admins << "<span class='adminnotice'><b>At this current time, the nuke must have the code manually set via varedit.</b></span>"
