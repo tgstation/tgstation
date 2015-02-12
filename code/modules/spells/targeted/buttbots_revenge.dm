@@ -1,4 +1,4 @@
-/atom/movable/spell/targeted/buttbots_revenge
+/spell/targeted/buttbots_revenge
 	name = "Butt-Bot's Revenge"
 	desc = "This spell removes the target's ass in a firey explosion."
 
@@ -16,7 +16,7 @@
 	amt_weakened = 8
 	amt_stunned = 8
 
-/atom/movable/spell/targeted/buttbots_revenge/cast(var/list/targets)
+/spell/targeted/buttbots_revenge/cast(var/list/targets)
 	..()
 	for(var/mob/living/target in targets)
 		if(ishuman(target) || ismonkey(target))

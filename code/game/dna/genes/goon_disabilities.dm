@@ -353,13 +353,13 @@
 	activation_messages = list("You suddenly feel rather hot.")
 	deactivation_messages = list("You no longer feel uncomfortably hot.")
 
-	spelltype = /atom/movable/spell/targeted/immolate
+	spelltype = /spell/targeted/immolate
 
 	New()
 		..()
 		block = IMMOLATEBLOCK
 
-/atom/movable/spell/targeted/immolate
+/spell/targeted/immolate
 	name = "Incendiary Mitochondria"
 	desc = "The subject becomes able to convert excess cellular energy into thermal energy."
 	panel = "Mutant Powers"
@@ -374,7 +374,7 @@
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	cast_sound = 'sound/effects/bamf.ogg'
 
-/atom/movable/spell/targeted/immolate/cast(list/targets)
+/spell/targeted/immolate/cast(list/targets)
 	..()
 	for(var/mob/living/target in targets)
 		target.adjust_fire_stacks(0.5) // Same as walking into fire. Was 100 (goon fire)

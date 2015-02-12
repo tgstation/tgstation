@@ -1,4 +1,4 @@
-/atom/movable/spell/aoe_turf/conjure/forcewall
+/spell/aoe_turf/conjure/forcewall
 	name = "Forcewall"
 	desc = "Create a wall of pure energy at your location."
 	summon_type = list(/obj/effect/forcefield)
@@ -8,7 +8,7 @@
 	range = 0
 	cast_sound = null
 
-/atom/movable/spell/aoe_turf/conjure/forcewall/mime
+/spell/aoe_turf/conjure/forcewall/mime
 	name = "Invisible wall"
 	desc = "Create an invisible wall on your location."
 	school = "mime"

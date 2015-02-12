@@ -1,8 +1,9 @@
-var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for now
+var/list/spells = typesof(/spell) //needed for the badmin verb for now
 
-/atom/movable/spell
+/spell
 	name = "Spell"
 	desc = "A spell"
+	parent_type = /atom/movable
 	var/panel = "Spells"//What panel the proc holder needs to go on.
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
@@ -51,19 +52,19 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 ///SETUP AND PROCESS///
 ///////////////////////
 
-/atom/movable/spell/New()
+/spell/New()
 	..()
 
 	//still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
 	charge_counter = charge_max
 
-/atom/movable/spell/proc/process()
+/spell/proc/process()
 	spawn while(charge_counter < charge_max)
 		charge_counter++
 		sleep(1)
 	return
 
-/atom/movable/spell/Click()
+/spell/Click()
 	..()
 
 	perform(usr)
@@ -72,10 +73,10 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 /////CASTING/////
 /////////////////
 
-/atom/movable/spell/proc/choose_targets(mob/user = usr) //depends on subtype - see targeted.dm, aoe_turf.dm, dumbfire.dm, or code in general folder
+/spell/proc/choose_targets(mob/user = usr) //depends on subtype - see targeted.dm, aoe_turf.dm, dumbfire.dm, or code in general folder
 	return
 
-/atom/movable/spell/proc/perform(mob/user = usr, skipcharge = 0) //if recharge is started is important for the trigger spells
+/spell/proc/perform(mob/user = usr, skipcharge = 0) //if recharge is started is important for the trigger spells
 	if(!cast_check())
 		return
 	if(cast_delay && !do_after(user, cast_delay))
@@ -96,13 +97,13 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 		after_cast(targets) //generates the sparks, smoke, target messages etc.
 
 
-/atom/movable/spell/proc/cast(list/targets, mob/user) //the actual meat of the spell
+/spell/proc/cast(list/targets, mob/user) //the actual meat of the spell
 	return
 
-/atom/movable/spell/proc/critfail(list/targets, mob/user) //the wizman has fucked up somehow
+/spell/proc/critfail(list/targets, mob/user) //the wizman has fucked up somehow
 	return
 
-/atom/movable/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
+/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	switch(type)
 		if("bruteloss")
 			target.adjustBruteLoss(amount)
@@ -126,7 +127,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 /////CASTING WRAPPERS//////
 ///////////////////////////
 
-/atom/movable/spell/proc/before_cast(list/targets)
+/spell/proc/before_cast(list/targets)
 	var/valid_targets[0]
 	for(var/atom/target in targets)
 		// Check range again (fixes long-range EI NATH)
@@ -150,7 +151,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 				del(spell)
 	return valid_targets
 
-/atom/movable/spell/proc/after_cast(list/targets)
+/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
 		var/location = get_turf(target)
 		if(istype(target,/mob/living) && message)
@@ -174,7 +175,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 /////////////////////
 /*Checkers, cost takers, message makers, etc*/
 
-/atom/movable/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(!(src in user.spell_list))
 		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
@@ -202,14 +203,14 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 				usr << "Mmmf mrrfff!"
 				return 0
 
-	var/atom/movable/spell/noclothes/spell = locate() in user.spell_list
+	var/spell/noclothes/spell = locate() in user.spell_list
 	if((spell_flags & NEEDSCLOTHES) && !(spell && istype(spell)))//clothes check
 		if(!user.wearing_wiz_garb())
 			return 0
 
 	return 1
 
-/atom/movable/spell/proc/check_charge(var/skipcharge, mob/user)
+/spell/proc/check_charge(var/skipcharge, mob/user)
 	if(!skipcharge)
 		switch(charge_type)
 			if("recharge")
@@ -222,7 +223,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 					return 0
 	return 1
 
-/atom/movable/spell/proc/take_charge(mob/user = user, var/skipcharge)
+/spell/proc/take_charge(mob/user = user, var/skipcharge)
 	if(!skipcharge)
 		switch(charge_type)
 			if("recharge")
@@ -238,7 +239,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 		return 0
 	return 1
 
-/atom/movable/spell/proc/invocation(mob/user = usr, var/list/targets) //spelling the spell out and setting it on recharge/reducing charges amount
+/spell/proc/invocation(mob/user = usr, var/list/targets) //spelling the spell out and setting it on recharge/reducing charges amount
 
 	switch(invocation_type)
 		if("shout")
@@ -258,7 +259,7 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 ///UPGRADING PROCS///
 /////////////////////
 
-/atom/movable/spell/proc/can_improve(var/upgrade_type)
+/spell/proc/can_improve(var/upgrade_type)
 	if(level_max["total"] <= ( spell_levels["speed"] + spell_levels["power"] )) //too many levels, can't do it
 		return 0
 
@@ -268,10 +269,10 @@ var/list/spells = typesof(/atom/movable/spell) //needed for the badmin verb for 
 
 	return 1
 
-/atom/movable/spell/proc/empower_spell()
+/spell/proc/empower_spell()
 	return
 
-/atom/movable/spell/proc/quicken_spell()
+/spell/proc/quicken_spell()
 	if(!can_improve("speed"))
 		return 0
 

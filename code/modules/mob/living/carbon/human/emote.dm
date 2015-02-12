@@ -21,7 +21,7 @@
 
 	if(act == "oath" && src.miming)
 		src.miming = 0
-		for(var/atom/movable/spell/aoe_turf/conjure/forcewall/mime/spell in src.spell_list)
+		for(var/spell/aoe_turf/conjure/forcewall/mime/spell in src.spell_list)
 			del(spell)
 		message_admins("[src.name] ([src.ckey]) has broken their oath of silence. (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</a>)")
 		src << "<span class = 'notice'>An unsettling feeling surrounds you...</span>"

@@ -1,4 +1,4 @@
-/atom/movable/spell/aoe_turf/blink
+/spell/aoe_turf/blink
 	name = "Blink"
 	desc = "This spell randomly teleports you a short distance."
 
@@ -14,7 +14,7 @@
 	smoke_spread = 0
 	smoke_amt = 1
 
-/atom/movable/spell/aoe_turf/blink/cast(var/list/targets, mob/user)
+/spell/aoe_turf/blink/cast(var/list/targets, mob/user)
 	if(!targets.len)
 		return
 

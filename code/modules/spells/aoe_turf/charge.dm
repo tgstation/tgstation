@@ -1,4 +1,4 @@
-/atom/movable/spell/aoe_turf/charge
+/spell/aoe_turf/charge
 	name = "Charge"
 	desc = "This spell can be used to charge up spent magical artifacts, among other things."
 
@@ -10,27 +10,27 @@
 	range = 0
 	cooldown_min = 400 //50 deciseconds reduction per rank
 
-/atom/movable/spell/aoe_turf/charge/cast(var/list/targets, mob/user)
+/spell/aoe_turf/charge/cast(var/list/targets, mob/user)
 	for(var/turf/T in targets)
 		depth_cast(T)
 
-/atom/movable/spell/aoe_turf/charge/proc/depth_cast(var/list/targets)
+/spell/aoe_turf/charge/proc/depth_cast(var/list/targets)
 	for(var/atom/A in targets)
 		if(A.contents.len)
 			depth_cast(A.contents)
 		cast_charge(A)
 
-/atom/movable/spell/aoe_turf/charge/proc/mob_charge(var/mob/living/M)
+/spell/aoe_turf/charge/proc/mob_charge(var/mob/living/M)
 	if(M.spell_list.len != 0)
-		for(var/atom/movable/spell/S in M.spell_list)
-			if(!istype(S, /atom/movable/spell/aoe_turf/charge))
+		for(var/spell/S in M.spell_list)
+			if(!istype(S, /spell/aoe_turf/charge))
 				S.charge_counter = S.charge_max
 		M <<"<span class='notice'>You feel raw magic flowing through you, it feels good!</span>"
 	else
 		M <<"<span class='notice'>You feel very strange for a moment, but then it passes.</span>"
 	return M
 
-/atom/movable/spell/aoe_turf/charge/proc/cast_charge(var/atom/target)
+/spell/aoe_turf/charge/proc/cast_charge(var/atom/target)
 	var/atom/charged_item
 
 	if(istype(target, /mob/living))

@@ -1,4 +1,4 @@
-/atom/movable/spell/targeted/projectile/magic_missile
+/spell/targeted/projectile/magic_missile
 	name = "Magic Missile"
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 
@@ -16,7 +16,7 @@
 	duration = 10
 	proj_step_delay = 5
 
-/atom/movable/spell/targeted/projectile/magic_missile/prox_cast(var/list/targets)
+/spell/targeted/projectile/magic_missile/prox_cast(var/list/targets)
 	targets = ..()
 	for(var/mob/living/M in targets)
 		M.Stun(5)

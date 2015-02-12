@@ -1,6 +1,6 @@
 //////////////////////////////Construct Spells/////////////////////////
 
-/atom/movable/spell/aoe_turf/conjure/construct
+/spell/aoe_turf/conjure/construct
 	name = "Artificer"
 	desc = "This spell conjures a construct which may be controlled by Shades"
 
@@ -13,11 +13,11 @@
 
 	summon_type = list(/obj/structure/constructshell)
 
-/atom/movable/spell/aoe_turf/conjure/construct/lesser
+/spell/aoe_turf/conjure/construct/lesser
 	charge_max = 1800
 	summon_type = list(/obj/structure/constructshell/cult)
 
-/atom/movable/spell/aoe_turf/conjure/floor
+/spell/aoe_turf/conjure/floor
 	name = "Floor Construction"
 	desc = "This spell constructs a cult floor"
 
@@ -28,13 +28,13 @@
 	range = 0
 	summon_type = list(/turf/simulated/floor/engine/cult)
 
-/atom/movable/spell/aoe_turf/conjure/floor/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
+/spell/aoe_turf/conjure/floor/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
 	animation.icon_state = "cultfloor"
 	flick("cultfloor",animation)
 	spawn(10)
 		del(animation)
 
-/atom/movable/spell/aoe_turf/conjure/wall
+/spell/aoe_turf/conjure/wall
 	name = "Lesser Construction"
 	desc = "This spell constructs a cult wall"
 
@@ -45,13 +45,13 @@
 	range = 0
 	summon_type = list(/turf/simulated/wall/cult)
 
-/atom/movable/spell/aoe_turf/conjure/wall/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
+/spell/aoe_turf/conjure/wall/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
 	animation.icon_state = "cultwall"
 	flick("cultwall",animation)
 	spawn(10)
 		del(animation)
 
-/atom/movable/spell/aoe_turf/conjure/wall/reinforced
+/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
 	desc = "This spell constructs a reinforced metal wall"
 
@@ -64,7 +64,7 @@
 
 	summon_type = list(/turf/simulated/wall/r_wall)
 
-/atom/movable/spell/aoe_turf/conjure/soulstone
+/spell/aoe_turf/conjure/soulstone
 	name = "Summon Soulstone"
 	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space"
 
@@ -76,7 +76,7 @@
 
 	summon_type = list(/obj/item/device/soulstone)
 
-/atom/movable/spell/aoe_turf/conjure/pylon
+/spell/aoe_turf/conjure/pylon
 	name = "Red Pylon"
 	desc = "This spell conjures a fragile crystal from Nar-Sie's realm. Makes for a convenient light source."
 
@@ -88,7 +88,7 @@
 
 	summon_type = list(/obj/structure/cult/pylon)
 
-/atom/movable/spell/aoe_turf/conjure/pylon/cast(list/targets)
+/spell/aoe_turf/conjure/pylon/cast(list/targets)
 	..()
 	var/turf/spawn_place = pick(targets)
 	for(var/obj/structure/cult/pylon/P in spawn_place.contents)
@@ -97,7 +97,7 @@
 		return
 	return
 
-/atom/movable/spell/aoe_turf/conjure/forcewall/lesser
+/spell/aoe_turf/conjure/forcewall/lesser
 	name = "Shield"
 	desc = "Allows you to pull up a shield to protect yourself and allies from incoming threats"
 

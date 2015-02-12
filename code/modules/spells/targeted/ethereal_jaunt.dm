@@ -1,4 +1,4 @@
-/atom/movable/spell/targeted/ethereal_jaunt
+/spell/targeted/ethereal_jaunt
 	name = "Ethereal Jaunt"
 	desc = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
 
@@ -12,7 +12,7 @@
 	cooldown_min = 100 //50 deciseconds reduction per rank
 	duration = 50 //in deciseconds
 
-/atom/movable/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
+/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	for(var/mob/living/target in targets)
 		target.monkeyizing = 1 //protects the mob from being transformed (replaced) midjaunt and getting stuck in bluespace
 		if(target.buckled) target.buckled.unbuckle()
@@ -53,14 +53,14 @@
 			del(animation)
 			del(holder)
 
-/atom/movable/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(var/atom/movable/overlay/animation, var/mob/living/target)
+/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(var/atom/movable/overlay/animation, var/mob/living/target)
 	animation.icon_state = "liquify"
 	flick("liquify",animation)
 
-/atom/movable/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(var/atom/movable/overlay/animation, var/mob/living/target)
+/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(var/atom/movable/overlay/animation, var/mob/living/target)
 	flick("reappear",animation)
 
-/atom/movable/spell/targeted/ethereal_jaunt/proc/jaunt_steam(var/mobloc)
+/spell/targeted/ethereal_jaunt/proc/jaunt_steam(var/mobloc)
 	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 	steam.set_up(10, 0, mobloc)
 	steam.start()

@@ -1,4 +1,4 @@
-/atom/movable/spell/targeted/horsemask
+/spell/targeted/horsemask
 	name = "Curse of the Horseman"
 	desc = "This spell triggers a curse on a target, causing them to wield an unremovable horse head mask. They will speak like a horse! Any masks they are wearing will be disintegrated. This spell does not require robes."
 	school = "transmutation"
@@ -15,7 +15,7 @@
 
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
-/atom/movable/spell/targeted/horsemask/cast(list/targets, mob/user = usr)
+/spell/targeted/horsemask/cast(list/targets, mob/user = usr)
 	..()
 	for(var/mob/living/target in targets)
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead

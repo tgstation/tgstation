@@ -1,4 +1,4 @@
-/atom/movable/spell/targeted/projectile/dumbfire/fireball
+/spell/targeted/projectile/dumbfire/fireball
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 
@@ -25,7 +25,7 @@
 	var/ex_light = 2
 	var/ex_flash = 5
 
-/atom/movable/spell/targeted/projectile/dumbfire/fireball/prox_cast(var/list/targets)
+/spell/targeted/projectile/dumbfire/fireball/prox_cast(var/list/targets)
 	targets = ..()
 	explosion(get_turf(holder), ex_severe, ex_heavy, ex_light, ex_flash)
 

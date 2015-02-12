@@ -1,6 +1,6 @@
 // Also called the firebird. Included here for people who want to find this spell
 
-/atom/movable/spell/aoe_turf/conjure/pontiac
+/spell/aoe_turf/conjure/pontiac
 	name = "Chariot"
 	desc = "This spell summons a glorious, flaming chariot that can move in space."
 

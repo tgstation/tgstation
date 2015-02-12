@@ -1,4 +1,4 @@
-/atom/movable/spell/targeted/mind_transfer
+/spell/targeted/mind_transfer
 	name = "Mind Transfer"
 	desc = "This spell allows the user to switch bodies with a target."
 
@@ -16,7 +16,7 @@
 	var/msg_wait = 500 //how long in deciseconds it waits before telling that body doesn't feel right or mind swap robbed of a spell
 	amt_paralysis = 20 //how much the victim is paralysed for after the spell
 
-/atom/movable/spell/targeted/mind_transfer/cast(list/targets, mob/user)
+/spell/targeted/mind_transfer/cast(list/targets, mob/user)
 	..()
 
 	for(var/mob/living/target in targets)

@@ -3,7 +3,7 @@ Conjure spells spawn things (mobs, objs, turfs) in their summon_type
 How they spawn stuff is decided by behaviour vars, which are explained below
 */
 
-/atom/movable/spell/aoe_turf/conjure
+/spell/aoe_turf/conjure
 	name = "Conjure"
 	desc = "This spell conjures objs of the specified types in range."
 
@@ -24,7 +24,7 @@ How they spawn stuff is decided by behaviour vars, which are explained below
 
 	cast_sound = 'sound/items/welder.ogg'
 
-/atom/movable/spell/aoe_turf/conjure/cast(list/targets, mob/user)
+/spell/aoe_turf/conjure/cast(list/targets, mob/user)
 	playsound(get_turf(user), cast_sound, 50, 1)
 
 	for(var/i=1,i <= summon_amt,i++)
@@ -70,5 +70,5 @@ How they spawn stuff is decided by behaviour vars, which are explained below
 		conjure_animation(animation, spawn_place)
 	return
 
-/atom/movable/spell/aoe_turf/conjure/proc/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
+/spell/aoe_turf/conjure/proc/conjure_animation(var/atom/movable/overlay/animation, var/turf/target)
 	del(animation)

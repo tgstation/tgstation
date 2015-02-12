@@ -1,7 +1,7 @@
-/atom/movable/spell/targeted/projectile/dumbfire
+/spell/targeted/projectile/dumbfire
 	name = "dumbfire spell"
 
-/atom/movable/spell/targeted/projectile/dumbfire/choose_targets(mob/user = usr)
+/spell/targeted/projectile/dumbfire/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
 	var/starting_dir = user.dir //where are we facing at the time of casting?

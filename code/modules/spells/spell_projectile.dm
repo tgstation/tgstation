@@ -4,7 +4,7 @@
 
 	nodamage = 1 //Most of the time, anyways
 
-	var/atom/movable/spell/targeted/projectile/carried
+	var/spell/targeted/projectile/carried
 
 	kill_count = 10 //set by the duration of the spell
 

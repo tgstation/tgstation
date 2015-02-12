@@ -77,7 +77,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/dna/gene/basic/grant_spell
-	var/atom/movable/spell/spelltype
+	var/spell/spelltype
 
 	activate(var/mob/M, var/connected, var/flags)
 		..(M,connected,flags)
@@ -86,7 +86,7 @@
 
 	deactivate(var/mob/M, var/connected, var/flags)
 		..(M,connected,flags)
-		for(var/atom/movable/spell/S in M.spell_list)
+		for(var/spell/S in M.spell_list)
 			if(istype(S, spelltype))
 				M.spell_list.Remove(S)
 		return 1
@@ -110,13 +110,13 @@
 	activation_messages = list("You notice a strange cold tingle in your fingertips.")
 	deactivation_messages = list("Your fingers feel warmer.")
 
-	spelltype = /atom/movable/spell/targeted/cryokinesis
+	spelltype = /spell/targeted/cryokinesis
 
 	New()
 		..()
 		block = CRYOBLOCK
 
-/atom/movable/spell/targeted/cryokinesis
+/spell/targeted/cryokinesis
 	name = "Cryokinesis"
 	desc = "Drops the bodytemperature of another person."
 	panel = "Mutant Powers"
@@ -132,7 +132,7 @@
 
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
-/atom/movable/spell/targeted/cryokinesis/cast(list/targets)
+/spell/targeted/cryokinesis/cast(list/targets)
 	..()
 	for(var/mob/living/carbon/target in targets)
 		if (M_RESIST_COLD in target.mutations)
@@ -186,13 +186,13 @@
 	activation_messages = list("You feel hungry.")
 	deactivation_messages = list("You don't feel quite so hungry anymore.")
 
-	spelltype=	/atom/movable/spell/targeted/eat
+	spelltype=	/spell/targeted/eat
 
 	New()
 		..()
 		block = EATBLOCK
 
-/atom/movable/spell/targeted/eat
+/spell/targeted/eat
 	name = "Eat"
 	desc = "Eat just about anything!"
 	panel = "Mutant Powers"
@@ -205,11 +205,12 @@
 	range = 1
 	max_targets = 1
 	selection_type = "view"
+	spell_flags = SELECTABLE
 
 	cast_sound = 'sound/items/eatfood.ogg'
 	compatible_mobs = list(/obj/item,/mob/living/simple_animal/hostile,/mob/living/simple_animal/parrot,/mob/living/simple_animal/cat,/mob/living/simple_animal/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/mouse, /mob/living/carbon/monkey, /mob/living/carbon/human)
 
-/atom/movable/spell/targeted/eat/proc/doHeal(var/mob/user)
+/spell/targeted/eat/proc/doHeal(var/mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H=user
 		for(var/name in H.organs_by_name)
@@ -224,13 +225,14 @@
 		H.updatehealth()
 
 
-/atom/movable/spell/targeted/eat/cast(list/targets)
+/spell/targeted/eat/cast(list/targets, mob/user)
 	var/atom/movable/the_item = targets[1]
 	if(!the_item || !the_item.Adjacent(usr))
+		return
 	if(ishuman(the_item))
 		//My gender
 		var/m_his="his"
-		if(usr.gender==FEMALE)
+		if(user.gender==FEMALE)
 			m_his="her"
 		// Their gender
 		var/t_his="his"
@@ -239,26 +241,22 @@
 		var/mob/living/carbon/human/H = the_item
 		var/datum/organ/external/limb = H.get_organ(usr.zone_sel.selecting)
 		if(!istype(limb))
-			usr << "<span class='warning'> You can't eat this part of them!</span>"
-			revert_cast()
+			user << "<span class='warning'> You can't eat this part of them!</span>"
 			return 0
 		if(istype(limb,/datum/organ/external/head))
 			// Bullshit, but prevents being unable to clone someone.
-			usr << "<span class='warning'> You try to put \the [limb] in your mouth, but [t_his] ears tickle your throat!</span>"
-			revert_cast()
+			user << "<span class='warning'> You try to put \the [limb] in your mouth, but [t_his] ears tickle your throat!</span>"
 			return 0
 		if(istype(limb,/datum/organ/external/chest))
 			// Bullshit, but prevents being able to instagib someone.
-			usr << "<span class='warning'> You try to put their [limb] in your mouth, but it's too big to fit!</span>"
-			revert_cast()
+			user << "<span class='warning'> You try to put their [limb] in your mouth, but it's too big to fit!</span>"
 			return 0
 		usr.visible_message("<span class='warning'> <b>[usr] begins stuffing [the_item]'s [limb.display_name] into [m_his] gaping maw!</b></span>")
-		var/oldloc = H.loc
-		if(!do_mob(usr,H,EAT_MOB_DELAY))
-			usr << "<span class='warning'> You were interrupted before you could eat [the_item]!</span>"
+		if(!do_mob(user,the_item,EAT_MOB_DELAY))
+			user << "<span class='warning'> You were interrupted before you could eat [the_item]!</span>"
 		else
-			user.visible_message("\red [user] eats \the [target].")
-			qdel(target)
+			user.visible_message("\red [user] eats \the [the_item].")
+			qdel(the_item)
 			doHeal(user)
 	return
 
@@ -272,13 +270,13 @@
 	activation_messages = list("Your leg muscles feel taut and strong.")
 	deactivation_messages = list("Your leg muscles shrink back to normal.")
 
-	spelltype =/atom/movable/spell/targeted/leap
+	spelltype =/spell/targeted/leap
 
 	New()
 		..()
 		block = JUMPBLOCK
 
-/atom/movable/spell/targeted/leap
+/spell/targeted/leap
 	name = "Jump"
 	desc = "Leap great distances!"
 	panel = "Mutant Powers"
@@ -294,7 +292,7 @@
 
 	cast_sound = 'sound/weapons/thudswoosh.ogg'
 
-/atom/movable/spell/targeted/leap/cast(list/targets, mob/user)
+/spell/targeted/leap/cast(list/targets, mob/user)
 	for(var/mob/living/target in targets)
 		if (istype(target.loc,/mob/) || target.lying || target.stunned || target.buckled)
 			target << "<span class='warning'>You can't jump right now!</span>"
@@ -368,7 +366,7 @@
 	name = "Polymorphism"
 	desc = "Enables the subject to reconfigure their appearance to mimic that of others."
 
-	spelltype = /atom/movable/spell/targeted/polymorph
+	spelltype = /spell/targeted/polymorph
 	//cooldown = 1800
 	activation_messages = list("You don't feel entirely like yourself somehow.")
 	deactivation_messages = list("You feel secure in your identity.")
@@ -377,7 +375,7 @@
 		..()
 		block = POLYMORPHBLOCK
 
-/atom/movable/spell/targeted/polymorph
+/spell/targeted/polymorph
 	name = "Polymorph"
 	desc = "Mimic the appearance of others!"
 	panel = "Mutant Powers"
@@ -390,7 +388,7 @@
 	selection_type = "range"
 	compatible_mobs = (/mob/living/carbon/human)
 
-/atom/movable/spell/targeted/polymorph/cast(list/targets, mob/living/carbon/human/user)
+/spell/targeted/polymorph/cast(list/targets, mob/living/carbon/human/user)
 	..()
 	if(!istype(user))
 		return

@@ -29,7 +29,7 @@ var/global/list/boo_phrases_silicon=list(
 	"Unauthorized access attempted by: unknown."
 )
 
-/atom/movable/spell/aoe_turf/boo
+/spell/aoe_turf/boo
 	name = "Boo!"
 	desc = "Fuck with the living."
 
@@ -41,7 +41,7 @@ var/global/list/boo_phrases_silicon=list(
 	invocation_type = "none"
 	range = 1 // Or maybe 3?
 
-/atom/movable/spell/aoe_turf/boo/cast(list/targets)
+/spell/aoe_turf/boo/cast(list/targets)
 	for(var/turf/T in targets)
 		for(var/atom/A in T.contents)
 

@@ -1,4 +1,4 @@
-/atom/movable/spell/targeted/disintegrate
+/spell/targeted/disintegrate
 	name = "Disintegrate"
 	desc = "This spell instantly kills somebody adjacent to you with the vilest of magick."
 
@@ -13,7 +13,7 @@
 	sparks_spread = 1
 	sparks_amt = 4
 
-/atom/movable/spell/targeted/disintegrate/cast(var/list/targets)
+/spell/targeted/disintegrate/cast(var/list/targets)
 	..()
 	for(var/mob/living/target in targets)
 		if(ishuman(target) || ismonkey(target))

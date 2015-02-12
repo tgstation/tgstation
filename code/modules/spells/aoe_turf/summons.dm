@@ -1,4 +1,4 @@
-/atom/movable/spell/aoe_turf/conjure/summonEdSwarm //test purposes
+/spell/aoe_turf/conjure/summonEdSwarm //test purposes
 	name = "Dispense Wizard Justice"
 	desc = "This spell dispenses wizard justice."
 
@@ -7,7 +7,7 @@
 	range = 3
 	newVars = list("emagged" = 1,"name" = "Wizard's Justicebot")
 
-/atom/movable/spell/aoe_turf/conjure/carp
+/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
 	desc = "This spell conjures a simple carp."
 
@@ -20,7 +20,7 @@
 
 	summon_type = list(/mob/living/simple_animal/hostile/carp)
 
-/atom/movable/spell/aoe_turf/conjure/creature
+/spell/aoe_turf/conjure/creature
 	name = "Summon Creature Swarm"
 	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth"
 

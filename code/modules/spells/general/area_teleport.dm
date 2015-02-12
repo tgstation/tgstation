@@ -1,4 +1,4 @@
-/atom/movable/spell/area_teleport
+/spell/area_teleport
 	name = "Teleport"
 	desc = "This spell teleports you to a type of area of your selection."
 
@@ -17,10 +17,10 @@
 
 	cast_sound = 'sound/effects/teleport.ogg'
 
-/atom/movable/spell/area_teleport/before_cast()
+/spell/area_teleport/before_cast()
 	return
 
-/atom/movable/spell/area_teleport/choose_targets()
+/spell/area_teleport/choose_targets()
 	var/A = null
 
 	if(!randomise_selection)
@@ -32,7 +32,7 @@
 
 	return list(thearea)
 
-/atom/movable/spell/area_teleport/cast(area/thearea, mob/user)
+/spell/area_teleport/cast(area/thearea, mob/user)
 	if(!istype(thearea))
 		if(istype(thearea, /list))
 			thearea = thearea[1]
@@ -69,10 +69,10 @@
 
 	return
 
-/atom/movable/spell/area_teleport/after_cast()
+/spell/area_teleport/after_cast()
 	return
 
-/atom/movable/spell/area_teleport/invocation(mob/user, area/chosenarea)
+/spell/area_teleport/invocation(mob/user, area/chosenarea)
 	if(!istype(chosenarea))
 		return //can't have that, can we
 	if(!invocation_area || !chosenarea)

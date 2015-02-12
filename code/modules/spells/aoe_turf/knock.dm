@@ -1,4 +1,4 @@
-/atom/movable/spell/aoe_turf/knock
+/spell/aoe_turf/knock
 	name = "Knock"
 	desc = "This spell opens nearby doors and does not require wizard garb."
 
@@ -10,7 +10,7 @@
 	range = 3
 	cooldown_min = 20 //20 deciseconds reduction per rank
 
-/atom/movable/spell/aoe_turf/knock/cast(list/targets)
+/spell/aoe_turf/knock/cast(list/targets)
 	for(var/turf/T in targets)
 		for(var/obj/machinery/door/door in T.contents)
 			spawn(1)
