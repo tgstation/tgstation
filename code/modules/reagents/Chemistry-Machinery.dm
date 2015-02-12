@@ -945,6 +945,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = list("lemonjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = list("orangejuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime = list("limejuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = list("watermelonjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = list("poisonberryjuice" = 0),
 		)
@@ -1000,12 +1001,12 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				usr << "The machine cannot hold anymore items."
 				return 1
 
-		//Fill machine with the plantbag!
-		if(istype(O, /obj/item/weapon/storage/bag/plants))
+		//Fill machine with a bag!
+		if(istype(O, /obj/item/weapon/storage/bag))
+				var/obj/item/weapon/storage/bag/B = O
 
-				for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-						O.contents -= G
-						G.loc = src
+				for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in B.contents)
+						B.remove_from_storage(G, src)
 						holdingitems += G
 						if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
 								user << "You fill the All-In-One grinder to the brim."

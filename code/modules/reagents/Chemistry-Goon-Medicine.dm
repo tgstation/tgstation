@@ -12,14 +12,16 @@ datum/reagent/silver_sulfadiazine
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 2
 
-datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
 		M.adjustFireLoss(-volume)
-		M << "<span class='notice'>You feel your burns healing!</span>"
+		if(show_message)
+			M << "<span class='notice'>You feel your burns healing!</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+		if(show_message)
+			M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
 
@@ -37,14 +39,16 @@ datum/reagent/styptic_powder
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 2
 
-datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
 		M.adjustBruteLoss(-volume)
-		M << "<span class='notice'>You feel your wounds knitting back together!</span>"
+		if(show_message)
+			M << "<span class='notice'>You feel your wounds knitting back together!</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+		if(show_message)
+			M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
 
@@ -77,12 +81,13 @@ datum/reagent/synthflesh
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume,var/show_message = 1)
 	if(!M) M = holder.my_atom
 	if(method == TOUCH)
 		M.adjustBruteLoss(-1.5*volume)
 		M.adjustFireLoss(-1.5*volume)
-		M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
+		if(show_message)
+			M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
 	return
 
@@ -762,7 +767,7 @@ datum/reagent/antihol
 datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.stuttering = 0
+	M.slurring = 0
 	M.confused = 0
 	M.reagents.remove_reagent("ethanol", 8)
 	M.adjustToxLoss(-0.2*REM)

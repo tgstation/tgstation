@@ -1,0 +1,6 @@
+author: Paprka
+
+delete-after: True
+
+changes: 
+  - rscadd: "Removed the defib steal objective. Added a compact defibrillator for the CMO that equips to the belt. Removed defibrillators from RND. Removed the requirement for people to not wear armor to revive them with defibs. Doubled defib timers (10 minutes before permadeath)."
