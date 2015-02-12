@@ -85,11 +85,12 @@ var/global/list/ghdel_profiling = list()
 		type_instances[type] = 0
 		WARNING("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type calls AddToProfiler().")
 
+/atom/Del()
+	DeleteFromProfiler()
+	..()
+
 /atom/Destroy()
 	SetOpacity(0)
-
-	// Only call when we're actually deleted.
-	DeleteFromProfiler()
 
 	if(reagents)
 		reagents.Destroy()
