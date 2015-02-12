@@ -58,18 +58,13 @@
 			if(!("[type]" in ghdel_profiling))
 				ghdel_profiling["[type]"] = 0
 			ghdel_profiling["[type]"] += 1
+
 /atom/movable/Del()
-	if(!ticker || ticker.current_state != 3)
-		return ..()
-	// Pass to Destroy().
-	if(!gcDestroyed)
-		delete_profile("[type]",0)
-		Destroy()
+	if(hard_deleted)
+		delete_profile("[type]",2)
 	else
-		if(hard_deleted)
-			delete_profile("[type]",2)
-		else
-			delete_profile("[type]",1)
+		delete_profile("[type]",1)
+
 	..()
 
 
