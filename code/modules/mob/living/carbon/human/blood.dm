@@ -142,16 +142,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	//set reagent data
 	B.data["donor"] = src
-
+	B.data["viruses"] = list()
 	/*
 	if(T.virus && T.virus.spread_type != SPECIAL)
 		B.data["virus"] = new T.virus.type(0)
 	*/
 
 	for(var/datum/disease/D in src.viruses)
-		if(!B.data["viruses"])
-			B.data["viruses"] = list()
-
 		B.data["viruses"] += new D.type(0, D, 1)
 
 	B.data["blood_DNA"] = copytext(src.dna.unique_enzymes,1,0)
@@ -159,8 +156,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		B.data["resistances"] = src.resistances.Copy()
 	var/list/temp_chem = list()
 	for(var/datum/reagent/R in src.reagents.reagent_list)
-		temp_chem += R.name
-		temp_chem[R.name] = R.volume
+		temp_chem[R.id] = R.volume
 	B.data["trace_chem"] = list2params(temp_chem)
 	if(mind)
 		B.data["mind"] = src.mind
@@ -186,15 +182,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	. = ..()
 	vessel.remove_reagent("blood",amount) // Removes blood if human
 
-//Transfers blood from container ot vessels
+//Transfers blood from container to vessels
 /mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
-
-	if(NOBLOOD in dna.species.specflags)
-		reagents.add_reagent("blood", amount, injected.data)
-		reagents.update_total()
-		return
 
 	if(!injected)
 		return
@@ -207,17 +198,24 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	container.reagents.remove_reagent("blood", amount)
 
-//Transfers blood from container ot vessels, respecting blood types compatability.
+//Transfers blood from container to vessels, respecting blood types compatibility.
 /mob/living/carbon/human/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
+
+	if(NOBLOOD in dna.species.specflags)
+		reagents.add_reagent("blood", amount, injected.data)
+		reagents.update_total()
+		return
 
 	var/datum/reagent/blood/our = get_blood(vessel)
 
 	if (!injected || !our)
 		return
+
 	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"],injected.data["species"],our.data["species"]) )
 		reagents.add_reagent("toxin",amount * 0.5)
+		our.on_merge(injected.data) //still transfer viruses and such, even if incompatibles bloods
 		reagents.update_total()
 	else
 		vessel.add_reagent("blood", amount, injected.data)
@@ -303,11 +301,5 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 			B.blood_DNA[source.data["blood_DNA"]] = source.data["blood_type"]
 		else
 			B.blood_DNA[source.data["blood_DNA"]] = "O+"
-
-	// Update virus information.
-	for(var/datum/disease/D in source.data["viruses"])
-		var/datum/disease/new_virus = D.Copy(1)
-		source.data["viruses"] += new_virus
-		new_virus.holder = B
 
 	return B

@@ -1,6 +1,0 @@
-author: Danno
-
-delete-after: True
-
-changes: 
-  - bugfix: "Fixes dufflebag's storage capacity."

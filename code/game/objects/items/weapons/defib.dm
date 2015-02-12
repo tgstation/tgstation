@@ -18,6 +18,7 @@
 	var/powered = 0 //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/weapon/twohanded/shockpaddles/paddles
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
+	var/combat = 0 //can we revive through space suits?
 
 /obj/item/weapon/defibrillator/New() //starts without a cell for rnd
 	..()
@@ -103,7 +104,6 @@
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()
-		return
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
@@ -221,19 +221,48 @@
 		paddles.update_icon()
 		update_icon()
 
-/obj/item/weapon/defibrillator/combatdefibrillator
-	name = "combat defibrillator"
-	desc = "A expensive combat oriented defibrillator. It is more compact that civilian models."
-	icon_state = "combatdefibunit"
-	item_state = "combatdefibunit"
+/obj/item/weapon/defibrillator/compact
+	name = "compact defibrillator"
+	desc = "A belt-equipped defibrillator that can be rapidly deployed."
+	icon_state = "defibcompact"
+	item_state = "defibcompact"
 	w_class = 3
+	slot_flags = SLOT_BELT
+	origin_tech = "biotech=4"
 
-/obj/item/weapon/defibrillator/combatdefibrillator/loaded/New()
+/obj/item/weapon/defibrillator/compact/ui_action_click()
+	if(usr.get_item_by_slot(slot_belt) == src)
+		toggle_paddles()
+	else
+		usr << "<span class='warning'>Strap the defibrillator's belt on first!</span>"
+	return
+
+/obj/item/weapon/defibrillator/compact/loaded/New()
 	..()
 	paddles = make_paddles()
 	bcell = new(src)
 	update_icon()
 	return
+
+/obj/item/weapon/defibrillator/compact/combat
+	name = "combat defibrillator"
+	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through space suits."
+	combat = 1
+	safety = 0
+
+/obj/item/weapon/defibrillator/compact/combat/loaded/New()
+	..()
+	paddles = make_paddles()
+	bcell = new /obj/item/weapon/stock_parts/cell/infinite(src)
+	update_icon()
+	return
+
+/obj/item/weapon/defibrillator/compact/combat/attackby(obj/item/weapon/W, mob/user)
+	if(W == paddles)
+		paddles.unwield()
+		toggle_paddles()
+		update_icon()
+		return
 
 //paddles
 
@@ -293,7 +322,7 @@
 	else
 		return 1
 
-/obj/item/weapon/twohanded/shockpaddles/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/user)
 	var/tobehealed
 	var/threshold = -config.health_threshold_dead
 	var/mob/living/carbon/human/H = M
@@ -339,18 +368,19 @@
 				playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 				var/mob/dead/observer/ghost = H.get_ghost()
 				var/tplus = world.time - H.timeofdeath
-				var/tlimit = 3000 //past this much time the patient is unrecoverable (in deciseconds)
-				var/tloss = 900 //brain damage starts setting in on the patient after some time left rotting
+				var/tlimit = 6000 //past this much time the patient is unrecoverable (in deciseconds)
+				var/tloss = 3000 //brain damage starts setting in on the patient after some time left rotting
 				var/total_burn	= 0
 				var/total_brute	= 0
 				if(do_after(user, 20)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 					for(var/obj/item/carried_item in H.contents)
-						if((istype(carried_item, /obj/item/clothing/suit/armor)) || (istype(carried_item, /obj/item/clothing/suit/space)))
-							user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
-							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
-							busy = 0
-							update_icon()
-							return
+						if(istype(carried_item, /obj/item/clothing/suit/space))
+							if(!defib.combat)
+								user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
+								playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
+								busy = 0
+								update_icon()
+								return
 					if(H.stat == 2)
 						var/health = H.health
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")

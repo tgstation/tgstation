@@ -59,7 +59,6 @@
 	nodamage = 0
 	weaken = 5
 	stutter = 5
-	range = 7
 
 /obj/item/projectile/energy/bolt/large
 	damage = 20

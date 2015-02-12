@@ -306,22 +306,27 @@ MASS SPECTROMETER
 			else
 				blood_traces = params2list(R.data["trace_chem"])
 				break
-		var/dat = "Trace Chemicals Found: "
-		for(var/R in blood_traces)
-			if(prob(reliability))
-				if(details)
-					dat += "[R] ([blood_traces[R]] units) "
+		var/dat = "<i><b>Trace Chemicals Found:</b>"
+		if(!blood_traces.len)
+			dat += "<br>None"
+		else
+			for(var/R in blood_traces)
+				if(prob(reliability))
+					dat += "<br>[chemical_reagents_list[R]]"
+
+					if(details)
+						dat += " ([blood_traces[R]] units)"
+
+					recent_fail = 0
 				else
-					dat += "[R] "
-				recent_fail = 0
-			else
-				if(recent_fail)
-					crit_fail = 1
-					reagents.clear_reagents()
-					return
-				else
-					recent_fail = 1
-		user << "[dat]"
+					if(recent_fail)
+						crit_fail = 1
+						reagents.clear_reagents()
+						return
+					else
+						recent_fail = 1
+		dat += "</i>"
+		user << dat
 		reagents.clear_reagents()
 	return
 

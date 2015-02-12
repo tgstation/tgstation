@@ -141,7 +141,7 @@ var/list/uplink_items = list()
 	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism. \
 	The bow generates bolts using an internal power source but must be manually charged between shots."
 	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
-	cost = 10
+	cost = 12
 	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 50
 
@@ -410,7 +410,7 @@ var/list/uplink_items = list()
 	cost = 1
 
 /datum/uplink_item/device_tools/medkit
-	name = "Syndicate Medical Supply Kit"
+	name = "Syndicate Combat Medic Kit"
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
 	and other medical supplies helpful for a medical field operative."
 	item = /obj/item/weapon/storage/firstaid/tactical

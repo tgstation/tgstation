@@ -51,6 +51,9 @@
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
 
+	if(!ishuman(over_object))
+		usr << "<span class='warning'>The drip beeps: Warning, human patients only!</span>"
+
 	if(attached)
 		visible_message("[src.attached] is detached from \the [src]")
 		src.attached = null
@@ -83,8 +86,6 @@
 
 
 /obj/machinery/iv_drip/process()
-	set background = 1
-
 	if(src.attached)
 
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
@@ -102,6 +103,7 @@
 				if(istype(src.beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 4
+				src.beaker.reagents.reaction(src.attached, INGEST, 0,0) //make reagents reacts, but don't spam messages
 				src.beaker.reagents.trans_to(src.attached, transfer_amount)
 				update_icon()
 

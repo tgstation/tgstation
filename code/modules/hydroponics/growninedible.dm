@@ -56,7 +56,7 @@
 	origin_tech = "materials=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
-	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
@@ -126,7 +126,7 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 0
-	attack_verb = list("seared", "heated", "whacked", "steamed")
+	attack_verb = list("roasted", "scorched", "burned")
 
 /obj/item/weapon/grown/novaflower/add_juice()
 	if(..())
@@ -138,8 +138,9 @@
 /obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return
 	if(istype(M, /mob/living))
-		M << "<span class='danger'>You are heated by the warmth of the of the [name]!</span>"
-		M.bodytemperature += potency / 2 * TEMPERATURE_DAMAGE_COEFFICIENT
+		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
+		M.adjust_fire_stacks(potency / 20)
+		M.IgniteMob()
 
 /obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user as mob,proximity)
 	if(!proximity) return
