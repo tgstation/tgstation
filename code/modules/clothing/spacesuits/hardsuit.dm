@@ -268,11 +268,11 @@
 	desc = "a special bulky helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "hardsuit0-hos"
 	item_color = "hos"
-	armor = list(melee = 35, bullet = 20, laser = 30,energy = 10, bomb = 15, bio = 100, rad = 50)
+	armor = list(melee = 45, bullet = 25, laser = 30,energy = 10, bomb = 25, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/hardsuit/security/hos
 	icon_state = "hardsuit-hos"
 	name = "head of security's hardsuit"
 	desc = "A special bulky suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
-	armor = list(melee = 35, bullet = 15, laser = 30, energy = 10, bomb = 15, bio = 100, rad = 50)
+	armor = list(melee = 45, bullet = 25, laser = 30, energy = 10, bomb = 25, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
