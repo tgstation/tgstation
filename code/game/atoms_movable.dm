@@ -60,12 +60,15 @@
 			gdel_profiling["[type]"] += 1
 
 /atom/movable/Del()
-	if (isnull(gcDestroyed)) // del calls
+	if (gcDestroyed)
+		garbageCollector.dequeue("\ref[src]")
+
+	if (isnull(gcDestroyed)) // direct del calls or nulled explicitly.
 		delete_profile("[type]", 0)
 	else if (hard_deleted)
-		delete_profile("[type]",1)
+		delete_profile("[type]", 1)
 	else
-		delete_profile("[type]",2)
+		delete_profile("[type]", 2)
 
 	..()
 
