@@ -1091,22 +1091,25 @@
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
-			areaMaster.poweralert(0, src)
+			if(areaMaster.poweralm)
+				areaMaster.poweralert(0, src)
 		else if(cell.percent() < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
-			areaMaster.poweralert(0, src)
+			if(areaMaster.poweralm)
+				areaMaster.poweralert(0, src)
 		else if(cell.percent() < 30 && longtermpower < 0)			// <30%, turn off equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			areaMaster.poweralert(0, src)
+			if(areaMaster.poweralm)
+				areaMaster.poweralert(0, src)
 		else									// otherwise all can be on
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			if(cell.percent() > 75)
+			if(cell.percent() > 75 && !areaMaster.poweralm)
 				areaMaster.poweralert(1, src)
 
 		// now trickle-charge the cell
