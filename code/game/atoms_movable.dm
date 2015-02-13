@@ -32,7 +32,7 @@
 	areaMaster = get_area_master(src)
 
 /atom/movable/Destroy()
-	gcDestroyed = "bye world!"
+	gcDestroyed = "Bye, world!"
 	tag = null
 	loc = null
 	if(istype(beams) && beams.len)
@@ -44,28 +44,34 @@
 		beams.len = 0
 	..()
 
-/proc/delete_profile(var/type, soft = 0)
-	switch(soft)
+/proc/delete_profile(var/type, code = 0)
+	switch(code)
 		if(0)
-			if(!("[type]" in del_profiling))
+			if (!("[type]" in del_profiling))
 				del_profiling["[type]"] = 0
+
 			del_profiling["[type]"] += 1
 		if(1)
-			if(!("[type]" in gdel_profiling))
+			if (!("[type]" in gdel_profiling))
 				gdel_profiling["[type]"] = 0
+
 			ghdel_profiling["[type]"] += 1
 		if(2)
-			if(!("[type]" in ghdel_profiling))
+			if (!("[type]" in ghdel_profiling))
 				ghdel_profiling["[type]"] = 0
+
 			gdel_profiling["[type]"] += 1
 
 /atom/movable/Del()
-	if (isnull(gcDestroyed)) // del calls
+	if (gcDestroyed)
+		garbageCollector.dequeue("\ref[src]")
+
+		if (hard_deleted)
+			delete_profile("[type]", 1)
+		else
+			delete_profile("[type]", 2)
+	else // direct del calls or nulled explicitly.
 		delete_profile("[type]", 0)
-	else if (hard_deleted)
-		delete_profile("[type]",1)
-	else
-		delete_profile("[type]",2)
 
 	..()
 

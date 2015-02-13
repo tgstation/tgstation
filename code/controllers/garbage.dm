@@ -32,10 +32,7 @@ var/datum/garbage_collector/garbageCollector
 		dels_count++
 		return
 
-	var/timeofday = world.timeofday
-	AM.timeDestroyed = timeofday
-	queue -= "\ref[AM]"
-	queue["\ref[AM]"] = timeofday
+	queue["\ref[AM]"] = world.timeofday
 
 /datum/garbage_collector/proc/process()
 	var/remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
@@ -51,8 +48,7 @@ var/datum/garbage_collector/garbageCollector
 
 		var/atom/movable/AM = locate(refID)
 
-		// Something's still referring to the qdel'd object. Kill it.
-		if(AM && AM.timeDestroyed == destroyedAtTime)
+		if(AM) // Something's still referring to the qdel'd object. del it.
 			if(remainingForceDelPerTick <= 0)
 				break
 
@@ -60,20 +56,11 @@ var/datum/garbage_collector/garbageCollector
 			WARNING("gc process force delete [AM.type]")
 			#endif
 
-			//gc_hard_del_types |= "[AM.type]"
-			if(!("[AM.type]" in gc_hard_del_types))
-				gc_hard_del_types["[AM.type]"] = 0
-			gc_hard_del_types["[AM.type]"]++
-
 			AM.hard_deleted = 1
-			del(AM)
+			del AM
 
 			hard_dels++
 			remainingForceDelPerTick--
-
-		if(!queue.Remove(refID))
-			queue.Cut(1,2)
-		dels_count++
 
 #ifdef GC_DEBUG
 #undef GC_DEBUG
@@ -82,6 +69,12 @@ var/datum/garbage_collector/garbageCollector
 #undef GC_FORCE_DEL_PER_TICK
 #undef GC_COLLECTION_TIMEOUT
 #undef GC_COLLECTIONS_PER_TICK
+
+/datum/garbage_collector/proc/dequeue(id)
+	if (queue)
+		queue -= id
+
+	dels_count++
 
 /*
  * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
