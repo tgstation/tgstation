@@ -20,16 +20,17 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
-	var/suppressed = 0
+	var/suppressed = 0					//whether or not a message is displayed when fired
 	var/can_suppress = 0
-	var/recoil = 0
+	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
-	var/trigger_guard = 1
-	var/sawn_desc = null
+	var/trigger_guard = 1				//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
+	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_state = SAWN_INTACT
-	var/burst_size = 1
-	var/fire_delay = 0
+	var/burst_size = 1					//how large a burst is
+	var/fire_delay = 0					//rate of fire for burst firing and semi auto
+	var/semicd = 0						//cooldown handler
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -152,6 +153,9 @@
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	add_fingerprint(user)
 
+	if(semicd)
+		return
+
 	for(var/i = 1 to burst_size)
 		if(!issilicon(user))
 			if( i>1 && !(src in get_both_hands(user))) //for burst firing
@@ -171,6 +175,11 @@
 		process_chamber()
 		update_icon()
 		sleep(fire_delay)
+
+	if(burst_size == 1 && fire_delay)
+		semicd = 1
+		spawn(fire_delay)
+			semicd = 0
 
 	if(user.hand)
 		user.update_inv_l_hand(0)

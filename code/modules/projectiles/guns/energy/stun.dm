@@ -8,12 +8,11 @@
 
 /obj/item/weapon/gun/energy/stunrevolver
 	name = "stun revolver"
-	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder. Holds twice as many electrodes as a standard taser."
+	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder. The pride of the Head of Security."
 	icon_state = "stunrevolver"
-	origin_tech = "combat=3;materials=3;powerstorage=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
 	can_flashlight = 0
-	pin = null
+	pin = /obj/item/device/firing_pin/implant/loyalty
 
 /obj/item/weapon/gun/energy/gun/advtaser
 	name = "hybrid taser"
@@ -21,6 +20,7 @@
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
 	origin_tech = null
+	fire_delay = 5
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg
 	name = "cyborg taser"

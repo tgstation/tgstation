@@ -33,16 +33,6 @@
 	build_path = /obj/item/weapon/gun/energy/gun/nuclear
 	category = list("Weapons")
 
-/datum/design/stunrevolver
-	name = "Stun Revolver"
-	desc = "A high-tech revolver that fires internal, reusable stun cartridges in a revolving cylinder. The stun cartridges can be recharged using a conventional energy weapon recharger."
-	id = "stunrevolver"
-	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 2)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 4000)
-	build_path = /obj/item/weapon/gun/energy/stunrevolver
-	category = list("Weapons")
-
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
