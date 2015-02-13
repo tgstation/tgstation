@@ -1,4 +1,3 @@
-
 //**************************************************************
 // Defibrillator
 //**************************************************************
@@ -47,8 +46,8 @@
 	return
 
 /obj/item/weapon/melee/defibrillator/attack_self(mob/user)
-	if(charges)
-		if((M_CLUMSY in user.mutations) && prob(50))
+	if(charges || ready)
+		if((M_CLUMSY in user.mutations) && prob(50) && charges)
 			user << "<span class='warning'>You touch the paddles together, shorting the device.</span>"
 			sparks.start()
 			playsound(get_turf(src),'sound/items/defib.ogg',50,1)
@@ -66,6 +65,14 @@
 		user << "<span class='warning'>[src] is out of charges.</span>"
 	add_fingerprint(user)
 	return
+
+/obj/item/weapon/melee/defibrillator/update_wield(mob/user)
+	..()
+	item_state = "fireaxe[wielded ? 1 : 0]"
+	force = wielded ? 40 : 10
+	if(user)
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
 
 /obj/item/weapon/melee/defibrillator/attackby(obj/item/weapon/W,mob/user)
 	if(istype(W,/obj/item/weapon/card/emag))
