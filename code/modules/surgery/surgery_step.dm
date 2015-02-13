@@ -7,6 +7,10 @@
 	var/new_organ = null 			//Used for multilocation operations
 	var/list/allowed_organs = list()//Allowed organs, see Handle_Multi_Loc below - RR
 
+//the omnistat reigns supreme
+/datum/surgery_step/New()
+	implements += list(/obj/item/weapon/omnistat = 100, /obj/item/weapon/omnistat/robot = 500)
+	..()
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/success = 0
@@ -31,6 +35,9 @@
 			else
 				user << "<span class='notice'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>"
 				return 1	//returns 1 so we don't stab the guy in the dick or wherever.
+	if(isrobot(user) && user.a_intent != "harm") //to save asimov borgs a LOT of heartache
+		return 1
+
 	return 0
 
 

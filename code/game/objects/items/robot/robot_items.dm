@@ -29,6 +29,38 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
+/obj/item/borg/autostripper
+	name = "autostripper"
+	desc = "Properly used to quicky disrobe humans to aid in surgery and treatment, occasionally used as a rude party trick."
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "elecarm" //TODO: Needs unique icon
+	var/busy = 0
+	var/stripping_time = 50 //5 seconds
+
+/obj/item/borg/autostripper/attack(mob/M, mob/user)
+	if(busy)
+		return
+	if(!ishuman(M))
+		user << "<span class='notice'>[M.name] doesn't seem like they can get any more naked.</span>"
+		return
+	busy = 1
+	user.visible_message("<span class='warning'>[user] begins to prep the autostripper for [M.name]</span>", "<span class='notice'>You begin to prep the autostripper for [M.name].</span>")
+
+	if(do_after(user, stripping_time)) //5 seconds to strip normally, only 1 if emagged
+		var/removed_something = 0
+		for(var/obj/item/W in M)
+			M.unEquip(W)
+			removed_something = 1
+		if(removed_something)
+			user.visible_message("<span class='warning'>[user] strips the clothing off [M.name]!</span>", "<span class='notice'>You strip the clothing off [M.name]!</span>")
+			add_logs(user, M, "stripped", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
+
+	busy = 0
+
+/obj/item/borg/autostripper/emag_act()
+	stripping_time = 10 //1 second
+	..()
+
 /**********************************************************************
 						HUD/SIGHT things
 ***********************************************************************/
