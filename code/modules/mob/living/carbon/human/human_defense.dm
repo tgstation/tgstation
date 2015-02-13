@@ -136,12 +136,6 @@ emp_act
 	for(var/obj/O in src)
 		if(!O)	continue
 		O.emp_act(severity)
-	if(istype(src.w_uniform, /obj/item/clothing/under))
-		var/obj/item/clothing/under/u = src.w_uniform
-		var/obj/item/clothing/tie/holster/h = u.hastie
-		if(h && istype(h))
-			if(h.holstered)
-				h.holstered.emp_act(severity)
 	for(var/datum/organ/external/O  in organs)
 		if(O.status & ORGAN_DESTROYED)	continue
 		O.emp_act(severity)

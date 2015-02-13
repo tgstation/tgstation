@@ -137,7 +137,7 @@
 		/obj/item/device/paicard,
 		/obj/item/device/violin,
 		/obj/item/weapon/storage/belt/utility/complete,
-		/obj/item/clothing/tie/horrible,
+		/obj/item/clothing/accessory/tie/horrible,
 		/obj/item/device/maracas,
 		/obj/item/weapon/gun/energy/temperature,
 		/obj/item/weapon/pickaxe/shovel,

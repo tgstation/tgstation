@@ -263,6 +263,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	species_restricted = list("exclude","Muton")
+	var/list/obj/item/clothing/accessory/accessories = list()
 	var/has_sensor = 1 //For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*
@@ -270,8 +271,12 @@ BLIND     // can't see anything
 		2 = Report detailed damages
 		3 = Report location
 		*/
-	var/obj/item/clothing/tie/hastie = null
 	var/displays_id = 1
+
+/obj/item/clothing/under/emp_act(severity)
+	for(var/obj/item/clothing/accessory/accessory in accessories)
+		accessory.emp_act(severity)
+	..()
 
 /obj/item/clothing/under/Destroy()
 	for(var/obj/machinery/computer/crew/C in machines)
@@ -280,25 +285,76 @@ BLIND     // can't see anything
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	if(!hastie && istype(I, /obj/item/clothing/tie))
-		user.drop_item()
-		hastie = I
-		I.loc = src
-		user << "<span class='notice'>You attach [I] to [src].</span>"
+	if(istype(I, /obj/item/clothing/accessory))
+		var/obj/item/clothing/accessory/A = I
+		if(can_attach_accessory(A))
+			user.drop_item()
+			A.loc = src
+			accessories.Add(A)
+			A.on_attached(src, user)
+			if(istype(loc, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = loc
+				H.update_inv_w_uniform()
+			return
+		else
+			user << "<span class='notice'>You cannot attach more accessories of this type to [src]</span>"
+			return
 
-		if(istype(hastie,/obj/item/clothing/tie/holster))
-			verbs += /obj/item/clothing/under/proc/holster
-
-		if(istype(hastie,/obj/item/clothing/tie/storage))
-			verbs += /obj/item/clothing/under/proc/storage
-
-		if(istype(loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
-
-		return
+	for(var/obj/item/clothing/accessory/accessory in priority_accessories())
+		if(accessory.attackby(I, user))
+			return
 
 	..()
+
+/obj/item/clothing/under/attack_hand(mob/user)
+	if(accessories.len && src.loc == user)
+		var/list/delayed = list()
+		for(var/obj/item/clothing/accessory/A in priority_accessories())
+			switch(A.on_accessory_interact(user, 0))
+				if(1)
+					return 1
+				if(-1)
+					delayed.Add(A)
+				else
+					continue
+		for(var/obj/item/clothing/accessory/A in delayed)
+			if(A.on_accessory_interact(user, 1))
+				return 1
+		return
+	return ..()
+
+/obj/item/clothing/under/proc/priority_accessories()
+	if(!accessories.len)
+		return list()
+	var/list/unorg = accessories
+	var/list/prioritized = list()
+	for(var/obj/item/clothing/accessory/holster/H in accessories)
+		prioritized.Add(H)
+	for(var/obj/item/clothing/accessory/storage/S in accessories)
+		prioritized.Add(S)
+	for(var/obj/item/clothing/accessory/armband/A in accessories)
+		prioritized.Add(A)
+	prioritized |= unorg
+	return prioritized
+
+/obj/item/clothing/under/proc/can_attach_accessory(var/obj/item/clothing/accessory/accessory)
+	if(!accessory) return
+
+	if(!accessories.len) return 1 //nothing can stop us!
+
+	for(var/obj/item/clothing/accessory/A in accessories)
+		if(A.accessory_exclusion & accessory.accessory_exclusion)
+			return
+	return 1
+
+/obj/item/clothing/under/proc/remove_accessory(mob/user, var/obj/item/clothing/accessory/accessory)
+	if(!accessory || !(accessory in accessories)) return
+
+	accessory.on_removed(user)
+	accessories.Remove(accessory)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_w_uniform()
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
@@ -313,8 +369,8 @@ BLIND     // can't see anything
 		if(3)
 			mode = "Its vital tracker and tracking beacon appear to be enabled."
 	user << "<span class='info'>" + mode + "</span>"
-	if(hastie)
-		user << "<span class='info'>\A [hastie] is clipped to it.</span>"
+	for(var/obj/item/clothing/accessory/A in accessories)
+		user << "<span class='info'>\A [A] is clipped to it.</span>"
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
 	var/mob/M = usr
@@ -358,80 +414,16 @@ BLIND     // can't see anything
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat) return
 
-	if(hastie)
-		if (istype(hastie,/obj/item/clothing/tie/holster))
-			verbs -= /obj/item/clothing/under/proc/holster
-
-		if (istype(hastie,/obj/item/clothing/tie/storage))
-			verbs -= /obj/item/clothing/under/proc/storage
-			var/obj/item/clothing/tie/storage/W = hastie
-			if (W.hold)
-				W.hold.close(usr)
-
-		usr.put_in_hands(hastie)
-		hastie = null
-
-		if(istype(loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
+	if(!accessories.len) return
+	var/obj/item/clothing/accessory/A
+	if(accessories.len > 1)
+		A = input("Select an accessory to remove from [src]") as anything in accessories
+	else
+		A = accessories[1]
+	src.remove_accessory(usr,A)
 
 /obj/item/clothing/under/rank/New()
 	. = ..()
 	sensor_mode = pick(0, 1, 2, 3)
-
-/obj/item/clothing/under/proc/holster()
-	set name = "Holster"
-	set category = "Object"
-	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
-
-	if (!hastie || !istype(hastie,/obj/item/clothing/tie/holster))
-		usr << "<span class='warning'>You need a holster for that!</span>"
-		return
-	var/obj/item/clothing/tie/holster/H = hastie
-
-	if(!H.holstered)
-		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-			usr << "<span class='notice'>You need your gun equiped to holster it.</span>"
-			return
-		var/obj/item/weapon/gun/W = usr.get_active_hand()
-		if (!W.isHandgun())
-			usr << "<span class='warning'>This gun won't fit in \the [H]!</span>"
-			return
-		H.holstered = usr.get_active_hand()
-		usr.drop_item()
-		H.holstered.loc = src
-		usr.visible_message("<span class='notice'>\The [usr] holsters \the [H.holstered].", "You holster \the [H.holstered].</span>")
-	else
-		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-			usr << "<span class='warning'>You need an empty hand to draw the gun!</span>"
-		else
-			if(usr.a_intent == I_HURT)
-				usr.visible_message("<span class='warning'>\The [usr] draws \the [H.holstered], ready to shoot!</span>", \
-				"<span class='warning'>You draw \the [H.holstered], ready to shoot!</span>")
-			else
-				usr.visible_message("<span class='notice'>\The [usr] draws \the [H.holstered], pointing it at the ground.</span>", \
-				"<span class='notice'>You draw \the [H.holstered], pointing it at the ground.</span>")
-			usr.put_in_hands(H.holstered)
-			H.holstered = null
-
-/obj/item/clothing/under/proc/storage()
-	set name = "Look in storage"
-	set category = "Object"
-	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
-
-	if (!hastie || !istype(hastie,/obj/item/clothing/tie/storage))
-		usr << "<span class='warning'>You need something to store items in for that!</span>"
-		return
-	var/obj/item/clothing/tie/storage/W = hastie
-
-	if (!istype(W.hold))
-		return
-
-	W.hold.loc = usr
-	W.hold.attack_hand(usr)
 
 
