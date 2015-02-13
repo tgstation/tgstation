@@ -61,6 +61,7 @@
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	e_cost = 100
+	delay = 0
 
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/item/projectile/ion
