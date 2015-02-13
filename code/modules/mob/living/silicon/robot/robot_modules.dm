@@ -85,7 +85,7 @@
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo(src)
 	modules += new /obj/item/weapon/twohanded/shockpaddles/cyborg(src)
-	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large/robot(src)
+	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
