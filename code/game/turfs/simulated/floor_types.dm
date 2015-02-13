@@ -36,20 +36,31 @@
 /turf/simulated/floor/vox/wood
 	name = "floor"
 	icon_state = "wood"
-	floor_tile = new/obj/item/stack/tile/wood
+	floor_tile
 
 	autoignition_temperature = AUTOIGNITION_WOOD
 	fire_fuel = 10
 	soot_type = null
 	melt_temperature = 0 // Doesn't melt.
 
+	New()
+		if(floor_tile)
+			returnToPool(floor_tile)
+			floor_tile = null
+		floor_tile = getFromPool(/obj/item/stack/tile/wood, null)
+		..()
+
 /turf/simulated/floor/light
 	name = "Light floor"
 	luminosity = 5
 	icon_state = "light_on"
-	floor_tile = new/obj/item/stack/tile/light
+	floor_tile
 
 	New()
+		if(floor_tile)
+			returnToPool(floor_tile)
+			floor_tile = null
+		floor_tile = getFromPool(/obj/item/stack/tile/light, null)
 		floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
 		var/n = name //just in case commands rename it in the ..() call
 		..()
@@ -61,12 +72,16 @@
 /turf/simulated/floor/wood
 	name = "floor"
 	icon_state = "wood"
-	floor_tile = new/obj/item/stack/tile/wood
+	floor_tile
 
 	autoignition_temperature = AUTOIGNITION_WOOD
 	fire_fuel = 10
 	soot_type = null
 	melt_temperature = 0 // Doesn't melt.
+
+	New()
+		floor_tile = getFromPool(/obj/item/stack/tile/wood,null)
+		..()
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
@@ -235,9 +250,13 @@
 /turf/simulated/floor/grass
 	name = "Grass patch"
 	icon_state = "grass1"
-	floor_tile = new/obj/item/stack/tile/grass
+	floor_tile
 
 	New()
+		if(floor_tile)
+			returnToPool(floor_tile)
+			floor_tile = null
+		floor_tile = getFromPool(/obj/item/stack/tile/grass, null)
 		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
 		icon_state = "grass[pick("1","2","3","4")]"
 		..()
@@ -252,9 +271,13 @@
 /turf/simulated/floor/carpet
 	name = "Carpet"
 	icon_state = "carpet"
-	floor_tile = new/obj/item/stack/tile/carpet
+	floor_tile
 	var/has_siding=1
 	New()
+		if(floor_tile)
+			returnToPool(floor_tile)
+			floor_tile = null
+		floor_tile = getFromPool(/obj/item/stack/tile/carpet, null)
 		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
 		if(!icon_state)
 			icon_state = initial(icon_state)
