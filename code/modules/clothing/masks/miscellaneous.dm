@@ -49,17 +49,6 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
-	action_button_name = "Toggle Voice Box"
-	var/voicechange = 0
-
-/obj/item/clothing/mask/pig/attack_self(mob/user)
-	voicechange = !voicechange
-	user << "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>"
-
-/obj/item/clothing/mask/pig/speechModification(message)
-	if(voicechange)
-		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
-	return message
 
 /obj/item/clothing/mask/horsehead
 	name = "horse head mask"
