@@ -73,7 +73,8 @@ var/datum/garbage_collector/garbageCollector
 /datum/garbage_collector/proc/dequeue(id)
 	if (queue)
 		queue -= id
-		dels_count++
+
+	dels_count++
 
 /*
  * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
