@@ -280,6 +280,7 @@
 	var/revivecost = 1000
 	var/cooldown = 0
 	var/busy = 0
+	var/is_robot = 0
 	var/obj/item/weapon/defibrillator/defib
 
 /obj/item/weapon/twohanded/shockpaddles/New(mainunit)
@@ -329,13 +330,14 @@
 
 	if(busy)
 		return
-	if(!defib.powered)
-		user.visible_message("<span class='notice'>[defib] beeps: Unit is unpowered.</span>")
-		playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
-		return
-	if(!wielded)
-		user << "<span class='notice'>You need to wield the paddles in both hands before you can use them on someone!</span>"
-		return
+	if(!is_robot)
+		if(!defib.powered)
+			user.visible_message("<span class='notice'>[defib] beeps: Unit is unpowered.</span>")
+			playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
+			return
+		if(!wielded)
+			user << "<span class='notice'>You need to wield the paddles in both hands before you can use them on someone!</span>"
+			return
 	if(cooldown)
 		user << "<span class='notice'>[defib] is recharging.</span>"
 		return
@@ -343,7 +345,7 @@
 		user << "<span class='notice'>The instructions on [defib] don't mention how to revive that...</span>"
 		return
 	else
-		if(user.a_intent == "harm" && !defib.safety)
+		if(user.a_intent == "harm" && (is_robot || !defib.safety))
 			busy = 1
 			H.visible_message("<span class='danger'>[user] has touched [H.name] with [src]!</span>", \
 					"<span class='userdanger'>[user] has touched [H.name] with [src]!</span>")
@@ -353,11 +355,20 @@
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 			H.emote("gasp")
 			add_logs(user, M, "stunned", object="defibrillator")
-			defib.deductcharge(revivecost)
+			if(!is_robot)
+				defib.deductcharge(revivecost)
+			else if(isrobot(user))
+				var/mob/living/silicon/robot/R = user
+				R.cell.use(revivecost)
 			cooldown = 1
 			busy = 0
 			update_icon()
-			defib.cooldowncheck(user)
+			if(!is_robot)
+				defib.cooldowncheck(user)
+			else
+				spawn(50)
+					cooldown = 0
+					update_icon()
 			return
 		if(user.zone_sel && user.zone_sel.selecting == "chest")
 			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest.</span>")
@@ -404,7 +415,11 @@
 							H.emote("gasp")
 							if(tplus > tloss)
 								H.setBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))))
-							defib.deductcharge(revivecost)
+							if(!is_robot)
+								defib.deductcharge(revivecost)
+							else if(isrobot(user))
+								var/mob/living/silicon/robot/R = user
+								R.cell.use(revivecost)
 							add_logs(user, M, "revived", object="defibrillator")
 						else
 							if(tplus > tlimit)
@@ -417,10 +432,20 @@
 									ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
 									ghost << sound('sound/effects/genetics.ogg')
 							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
-							defib.deductcharge(revivecost)
+							if(!is_robot)
+								defib.deductcharge(revivecost)
+							else if(isrobot(user))
+								var/mob/living/silicon/robot/R = user
+								R.cell.use(revivecost)
 						update_icon()
 						cooldown = 1
-						defib.cooldowncheck(user)
+						if(!is_robot)
+							defib.cooldowncheck(user)
+						else
+							spawn(50)
+								cooldown = 0
+								update_icon()
+
 					else
 						user.visible_message("<span class='notice'>[defib] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
@@ -429,3 +454,15 @@
 		else
 			user << "<span class='notice'>You need to target your patient's chest with [src].</span>"
 			return
+
+/obj/item/weapon/twohanded/shockpaddles/cyborg //This is not actually a two handed item, but to avoid duplication it's defined as such
+	is_robot = 1
+
+/obj/item/weapon/twohanded/shockpaddles/cyborg/check_defib_exists(mainunit, var/mob/living/silicon/robot/R, var/obj/O)
+	defib = R
+	busy = 0
+	update_icon()
+	return 0
+
+/obj/item/weapon/twohanded/shockpaddles/cyborg/dropped(mob/user as mob)
+	return
