@@ -1064,14 +1064,9 @@
 			user << "You remove \the [broken_device]."
 			user.put_in_active_hand(broken_device)
 
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
-			return
-		else
-			if (user:a_intent == I_HELP)
-				help_shake_act(user)
-			return
+	if (user.a_intent == I_HELP)
+		help_shake_act(user)
+		return
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
