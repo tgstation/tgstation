@@ -72,6 +72,7 @@
 			delete_profile("[type]", 2)
 	else // direct del calls or nulled explicitly.
 		delete_profile("[type]", 0)
+		Destroy()
 
 	..()
 
