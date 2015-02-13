@@ -42,11 +42,11 @@
 			sleep(20)
 			jaunt_reappear(animation, target)
 			sleep(5)
-			if(!target.Move(mobloc))
+			if(!target.forceMove(mobloc))
 				for(var/direction in list(1,2,4,8,5,6,9,10))
 					var/turf/T = get_step(mobloc, direction)
 					if(T)
-						if(target.Move(T))
+						if(target.forceMove(T))
 							break
 			target.canmove = 1
 			target.client.eye = target
