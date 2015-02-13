@@ -47,8 +47,10 @@ var/datum/garbage_collector/garbageCollector
 			break
 
 		var/atom/movable/AM = locate(refID)
-
 		if(AM) // Something's still referring to the qdel'd object. del it.
+			if(isnull(AM.gcDestroyed))
+				queue -= refID
+				continue
 			if(remainingForceDelPerTick <= 0)
 				break
 
