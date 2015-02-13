@@ -92,11 +92,28 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			if(dist < flame_range)
 				flame_dist = 1
 
+			//--- THROW ITEMS AROUND ---
+
+			/*
+			spawn(0)//Simultaneously not one at a time
+				var/throw_dir = get_dir(epicenter,T)
+				for(var/obj/item/I in T)
+					var/throw_range = rand(dist, max_range)
+					var/turf/throw_at = get_ranged_target_turf(I,throw_dir,throw_range)
+					I.throw_at(throw_at,throw_range,1)
+			*/
+			var/throw_dir = get_dir(epicenter,T)
+			for(var/obj/item/I in T)
+				spawn(0)
+					var/throw_range = rand(dist, max_range)
+					var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
+					I.throw_at(throw_at, throw_range,1)
+
+
 			if(dist < devastation_range)		dist = 1
 			else if(dist < heavy_impact_range)	dist = 2
 			else if(dist < light_impact_range)	dist = 3
 			else 								dist = 0
-
 
 			//------- TURF FIRES -------
 

@@ -90,6 +90,9 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		//Stuff jammed in your limbs hurts
+		handle_embedded_objects()
+
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
@@ -679,5 +682,19 @@
 /mob/living/carbon/human/proc/handle_changeling()
 	if(mind && mind.changeling)
 		mind.changeling.regenerate()
+
+
+/mob/living/carbon/human/proc/handle_embedded_objects()
+	for(var/obj/item/organ/limb/L in organs)
+		for(var/obj/item/I in L.embedded_objects)
+			if(prob(I.embedded_pain_chance))
+				L.take_damage(I.w_class*2)
+				src << "<span class='userdanger'>\the [I] embedded in your [L.getDisplayName()] hurts!</span>"
+
+			if(prob(I.embedded_fall_chance))
+				L.take_damage(I.w_class*5)
+				L.embedded_objects -= I
+				I.loc = get_turf(src)
+				visible_message("<span class='danger'>\the [I] falls out of [name]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I] falls out of your [L.getDisplayName()]!</span>")
 
 #undef HUMAN_MAX_OXYLOSS
