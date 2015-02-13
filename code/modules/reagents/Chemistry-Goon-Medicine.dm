@@ -58,6 +58,34 @@ datum/reagent/styptic_powder/on_mob_life(var/mob/living/M as mob)
 		M.adjustBruteLoss(-8*REM)
 	..()
 	return
+datum/reagent/salglucharsalbut_solution
+	name = "Saline-Glucose-Charcoal-Salbutamol Solution"
+	id = "salglucharsalbut_solution"
+	description = "An impressive mix of common healing chemicals designed to skirt the dangers of addiction and overdose."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
+datum/reagent/salglucharsalbut_solution/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	if(prob(50))
+		M.adjustBruteLoss(-3*REM)
+		M.adjustFireLoss(-3*REM)
+	M.adjustToxLoss(-3*REM)
+	M.adjustOxyLoss(-6*REM)
+	if(M.losebreath >= 4)
+		M.losebreath -= 4
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R != src)
+			M.reagents.remove_reagent(R.id,1)
+	..()
+	return
+
+/datum/chemical_reaction/salglucharsalbut_solution
+	name = "Saline-Glucose-Charcoal-Salbutamol Solution"
+	id = "salglucharsalbut_solution"
+	result = "salglucharsalbut_solution"
+	required_reagents = list("salglu_solution" = 1, "charcoal" = 1, "salbutamol" = 1)
+	result_amount = 3
 
 datum/reagent/salglu_solution
 	name = "Saline-Glucose Solution"
