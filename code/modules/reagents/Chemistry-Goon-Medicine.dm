@@ -80,13 +80,6 @@ datum/reagent/salglucharsalbut_solution/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-/datum/chemical_reaction/salglucharsalbut_solution
-	name = "Saline-Glucose-Charcoal-Salbutamol Solution"
-	id = "salglucharsalbut_solution"
-	result = "salglucharsalbut_solution"
-	required_reagents = list("salglu_solution" = 1, "charcoal" = 1, "salbutamol" = 1)
-	result_amount = 3
-
 datum/reagent/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
