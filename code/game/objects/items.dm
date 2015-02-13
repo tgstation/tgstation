@@ -48,7 +48,7 @@
 	var/hooded = 0
 
 	//So items can have custom embedd values
-	var/embedd_chance = EMBEDD_CHANCE
+	var/embed_chance = EMBED_CHANCE
 	var/embedded_fall_chance = EMBEDDED_ITEM_FALLOUT
 	var/embedded_pain_chance = EMBEDDED_PAIN_CHANCE
 
@@ -420,7 +420,7 @@
 	if(istype(A, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = A
 		if(is_sharp(src))
-			if(prob(embedd_chance))
+			if(prob(embed_chance))
 				var/obj/item/organ/limb/L = pick(H.organs)
 				L.embedded_objects |= src
 				add_blood(H)//it embedded itself in you, of course it's bloody!

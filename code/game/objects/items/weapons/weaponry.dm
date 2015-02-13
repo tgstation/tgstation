@@ -140,7 +140,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	force = 2
 	throwforce = 20
 	w_class = 2
-	embedd_chance = 100
+	embed_chance = 100
 	embedded_fall_chance = 0 //Hahaha!
 
 /obj/item/weapon/storage/box/throwing_stars/New()
