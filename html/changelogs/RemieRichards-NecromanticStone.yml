@@ -1,0 +1,9 @@
+
+author: RemieRichards
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added Necromantic Stones as a buyable item for wizards"
+  - rscadd: "Necromantic Stones can cause up to 3 people to rise up as Skeleton Thralls bound to the wielder of the stone"
+  - rscadd: "Skeleton Thralls have a 33% Chance to drop all their gear on the floor and autoequip a more fitting thematic uniform"
