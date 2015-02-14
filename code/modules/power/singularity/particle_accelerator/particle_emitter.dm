@@ -47,6 +47,6 @@
 				A = getFromPool(/obj/effect/accelerated_particle/powerful,T)
 		if(A)
 			A.dir = src.dir
-			A.New(T,dir,1)
+			A.startMove(1)
 			return 1
 	return 0
