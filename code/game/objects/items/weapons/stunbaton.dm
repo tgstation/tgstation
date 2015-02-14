@@ -63,16 +63,15 @@
 					R.cell.use(losspertick)
 			else
 				bcell.use(losspertick)
-			update_icon()
 
 /obj/item/weapon/melee/baton/update_icon()
-	update_process()
 	if(status)
 		icon_state = "[initial(name)]_active"
 	else if(!bcell)
 		icon_state = "[initial(name)]_nocell"
 	else
 		icon_state = "[initial(name)]"
+	update_process()
 
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()
