@@ -3,9 +3,8 @@
 	icobase = 'icons/mob/human_races/r_horror.dmi'
 	deform = 'icons/mob/human_races/r_horror.dmi'  // TODO: Need deform.
 	language = "Clatter"
-	attack_verb = "punch"
-
-	flags = NO_BREATHE /*| NON_GENDERED*/ | NO_PAIN
+	attack_verb = "slams"
+	flags = NO_BREATHE /*| NON_GENDERED*/ | NO_PAIN | BLOCKHAIR /*stops hair from showing when humans go horror*/ | STOPSPRESSUREDMAGE /*No longer will our ascended be foiled by depressurization!*/
 
 	// Yep.
 	default_mutations=list(M_HULK)
@@ -22,7 +21,7 @@
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
 
-	max_hurt_damage = 20
+	max_hurt_damage = 30 /*It costs 30 points, it should crit in 3 hits.*/
 
 	// Same as disposal
 	punch_throw_speed = 1
@@ -30,6 +29,7 @@
 
 	throw_mult = 1.5 // +0.5 for hulk
 	fireloss_mult = 2 // double the damage, half the fun
+
 
 	abilities = list(
 		/client/proc/changeling_force_airlock
