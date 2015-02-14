@@ -17,7 +17,7 @@
 
 /obj/machinery/drone_fabricator/power_change()
 	..()
-	if (stat & NOPOWER)
+	if(stat & NOPOWER)
 		icon_state = "drone_fab_nopower"
 
 /obj/machinery/drone_fabricator/process()
@@ -43,7 +43,7 @@
 /obj/machinery/drone_fabricator/examine(mob/user)
 	..(user)
 	if(produce_drones && drone_progress >= 100 && istype(user,/mob/dead) && count_drones() < config.max_maint_drones)
-		user << "<BR><B>A drone is prepared. Select 'Join As Drone' from the Ghost tab to spawn as a maintenance drone.</B>"
+		user << "<BR><B>A drone is prepared! Click on the machine to create a drone for yourself..</B>"
 
 /obj/machinery/drone_fabricator/proc/count_drones()
 	var/drones = 0
@@ -74,28 +74,19 @@
 
 
 
-/mob/dead/verb/join_as_drone()
-
-	set category = "Ghost"
-	set name = "Join As Drone"
-	set desc = "If there is a powered, enabled fabricator in the game world with a prepared chassis, join as a maintenance drone."
-
-
+/obj/machinery/drone_fabricator/attack_ghost(mob/user)
 	if(ticker.current_state < GAME_STATE_PLAYING)
-		src << "<span class='warning'>The game hasn't started yet!</span>"
+		user << "<span class='warning'>The game hasn't started yet!</span>"
 		return
 
-	if (!src.stat)
+	if(!user.stat)
 		return
 
-	if (usr != src)
-		return 0 //something is terribly wrong
-
-	if(jobban_isbanned(src,"Cyborg"))
+	if(jobban_isbanned(user,"pAI"))
 		usr << "<span class='warning'>You are banned from playing synthetics and cannot spawn as a drone.</span>"
 		return
 
-	var/deathtime = world.time - src.timeofdeath
+	var/deathtime = world.time - user.timeofdeath
 
 	var/deathtimeminutes = round(deathtime / 600)
 	var/pluralcheck = "minute"
@@ -107,9 +98,9 @@
 		pluralcheck = " [deathtimeminutes] minutes and"
 	var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
 
-	if (deathtime < 6000)
-		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
-		usr << "You must wait 10 minutes to respawn as a drone!"
+	if(deathtime < 6000)
+		user << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
+		user << "You must wait 10 minutes to respawn as a drone!"
 		return
 
 	for(var/obj/machinery/drone_fabricator/DF in world)
@@ -117,11 +108,11 @@
 			continue
 
 		if(DF.count_drones() >= config.max_maint_drones)
-			src << "<span class='warning'>There are too many active drones in the world for you to spawn.</span>"
+			user << "<span class='warning'>There are too many active drones in the world for you to spawn.</span>"
 			return
 
 		if(DF.drone_progress >= 100)
-			DF.create_drone(src.client)
+			DF.create_drone(user.client)
 			return
 
-	src << "<span class='warning'>There are no available drone fabricators!</span>"
+	user << "<span class='warning'>There are no available drone fabricators!</span>"

@@ -8,7 +8,7 @@
 
 
 /mob/living/simple_animal/drone
-	name = "Drone"
+	name = "drone"
 	desc = "A maintenance drone, an expendable robot built to perform station repairs."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_grey"
@@ -398,7 +398,7 @@
 			src << "--- [class] alarm in [A.name] has been cleared."
 
 /mob/living/simple_animal/drone/proc/pick_colour()
-	var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
+	var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange", "repairbot")
 	icon_state = "drone_[colour]"
 	icon_living = "drone_[colour]"
 	picked = TRUE
