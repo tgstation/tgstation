@@ -716,6 +716,7 @@
 #include "code\game\objects\storage\coat.dm"
 #include "code\game\objects\structures\barsign.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
+#include "code\game\objects\structures\coatrack.dm"
 #include "code\game\objects\structures\displaycase.dm"
 #include "code\game\objects\structures\door_assembly.dm"
 #include "code\game\objects\structures\electricchair.dm"
