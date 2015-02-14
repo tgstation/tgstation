@@ -216,11 +216,13 @@
 	A.CtrlClick(src)
 	return
 /atom/proc/CtrlClick(var/mob/user)
+	user.stop_pulling()
 	return
 
 /atom/movable/CtrlClick(var/mob/user)
 	if(Adjacent(user))
 		user.start_pulling(src)
+
 
 /*
 	Alt click
