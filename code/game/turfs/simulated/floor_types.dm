@@ -152,8 +152,14 @@
 /turf/simulated/floor/plating
 	name = "plating"
 	icon_state = "plating"
-	floor_tile = null
 	intact = 0
+
+/turf/simulated/floor/plating/New()
+	..()
+	if(floor_tile)
+		returnToPool(floor_tile)
+		floor_tile = null
+
 
 /turf/simulated/floor/plating/airless
 	icon_state = "plating"
