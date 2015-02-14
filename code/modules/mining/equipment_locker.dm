@@ -161,8 +161,8 @@
 				I.loc = src
 				inserted_id = I
 			else usr << "<span class='warning'>No valid ID.</span>"
-	if(href_list["release"] && istype(inserted_id))
-		if(check_access(inserted_id))
+	if(href_list["release"])
+		if(check_access(inserted_id) || usr.has_unlimited_silicon_privilege)
 			if(!(text2path(href_list["release"]) in stack_list)) return
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/out = new inp.type()
@@ -173,8 +173,8 @@
 				unload_mineral(out)
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
-	if(href_list["plasteel"] && istype(inserted_id))
-		if(check_access(inserted_id))
+	if(href_list["plasteel"])
+		if(check_access(inserted_id) || usr.has_unlimited_silicon_privilege)
 			if(!(/obj/item/stack/sheet/metal in stack_list)) return
 			if(!(/obj/item/stack/sheet/mineral/plasma in stack_list)) return
 			var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]

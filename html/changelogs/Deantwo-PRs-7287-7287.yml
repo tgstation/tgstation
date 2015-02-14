@@ -1,9 +1,0 @@
-author: Deantwo
-
-delete-after: True
-
-changes: 
-  - bugfix: 'Fixed some bugs in PDA's NTRC Chatroom feature.'
-  - rscadd: 'You can now use PaperBBCode/PenCode when writing news articles on the newscaster.'
-  - rscadd: 'PDA's Notekeeper now uses PaperBBCode/PenCode rather than HTML.'
-  - tweak: 'Scanning paper with your PDA is now more informative.'

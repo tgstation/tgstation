@@ -46,9 +46,9 @@
 
 /obj/structure/closet/secure_closet/medical2/New()
 	..()
-	new /obj/item/weapon/tank/anesthetic(src)
-	new /obj/item/weapon/tank/anesthetic(src)
-	new /obj/item/weapon/tank/anesthetic(src)
+	new /obj/item/weapon/tank/internals/anesthetic(src)
+	new /obj/item/weapon/tank/internals/anesthetic(src)
+	new /obj/item/weapon/tank/internals/anesthetic(src)
 	new /obj/item/clothing/mask/breath/medical(src)
 	new /obj/item/clothing/mask/breath/medical(src)
 	new /obj/item/clothing/mask/breath/medical(src)
@@ -97,7 +97,7 @@
 
 /obj/structure/closet/secure_closet/CMO/New()
 	..()
-	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
@@ -110,7 +110,7 @@
 	new /obj/item/clothing/shoes/sneakers/brown	(src)
 	new /obj/item/weapon/cartridge/cmo(src)
 	new /obj/item/device/radio/headset/heads/cmo(src)
-	new /obj/item/weapon/defibrillator/loaded(src)
+	new /obj/item/weapon/defibrillator/compact/loaded(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/device/flash/handheld(src)

@@ -58,7 +58,7 @@
 			world.log << "Database connection established."
 
 
-	data_core = new /obj/effect/datacore()
+	data_core = new /datum/datacore()
 
 
 	spawn(-1)
@@ -66,6 +66,7 @@
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
+	SortAreas()						//Build the list of all existing areas and sort it alphabetically
 
 	#ifdef MAP_NAME
 	map_name = "[MAP_NAME]"

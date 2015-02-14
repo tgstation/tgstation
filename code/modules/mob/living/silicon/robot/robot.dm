@@ -56,10 +56,9 @@
 
 	var/obj/item/weapon/tank/internal = null	//Hatred. Used if a borg has a jetpack.
 	var/obj/item/robot_parts/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
-	var/obj/item/device/camera/siliconcam/aicamera = null //photography
 	var/toner = 0
 	var/tonermax = 40
-
+	var/jetpackoverlay = 0
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -732,7 +731,7 @@
 				overlays += "eyes-engiborg"
 			if("janiborg")
 				overlays += "eyes-janiborg"
-			if("minerborg" || "Miner+j")
+			if("minerborg")
 				overlays += "eyes-minerborg"
 			if("syndie_bloodhound")
 				overlays += "eyes-syndie_bloodhound"
@@ -747,6 +746,8 @@
 		else
 			overlays += "ov-opencover -c"
 
+	if(jetpackoverlay)
+		overlays += "minerjetpack"
 	update_fire()
 
 

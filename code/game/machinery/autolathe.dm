@@ -1,3 +1,7 @@
+#define AUTOLATHE_MAIN_MENU       1
+#define AUTOLATHE_CATEGORY_MENU   2
+#define AUTOLATHE_SEARCH_MENU     3
+
 /obj/machinery/autolathe
 	name = "autolathe"
 	desc = "It produces items using metal and glass."
@@ -29,6 +33,7 @@
 
 	var/datum/design/being_built
 	var/datum/research/files
+	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
 
@@ -55,6 +60,7 @@
 
 	wires = new(src)
 	files = new /datum/research/autolathe(src)
+	matching_designs = list()
 
 /obj/machinery/autolathe/interact(mob/user)
 	if(!is_operational())
@@ -69,10 +75,13 @@
 		dat = wires.GetInteractWindow()
 
 	else
-		if(screen == 1)
-			dat = main_win(user)
-		else
-			dat += category_win(user,selected_category)
+		switch(screen)
+			if(AUTOLATHE_MAIN_MENU)
+				dat = main_win(user)
+			if(AUTOLATHE_CATEGORY_MENU)
+				dat = category_win(user,selected_category)
+			if(AUTOLATHE_SEARCH_MENU)
+				dat = search_win(user)
 
 	var/datum/browser/popup = new(user, "autolathe", name, 400, 500)
 	popup.set_content(dat)
@@ -216,6 +225,13 @@
 						g_amount = 0
 					busy = 0
 					src.updateUsrDialog()
+
+		if(href_list["search"])
+			matching_designs.Cut()
+
+			for(var/datum/design/D in files.known_designs)
+				if(findtext(D.name,href_list["to_search"]))
+					matching_designs.Add(D)
 	else
 		usr << "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>"
 
@@ -237,7 +253,15 @@
 /obj/machinery/autolathe/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"
 	dat += "<b>Metal amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
-	dat += "<b>Glass amount:</b> [src.g_amount] / [max_g_amount] cm<sup>3</sup><hr>"
+	dat += "<b>Glass amount:</b> [src.g_amount] / [max_g_amount] cm<sup>3</sup>"
+
+	dat += "<form name='search' action='?src=\ref[src]'> \
+	<input type='hidden' name='src' value='\ref[src]'> \
+	<input type='hidden' name='search' value='to_search'> \
+	<input type='hidden' name='menu' value='[AUTOLATHE_SEARCH_MENU]'> \
+	<input type='text' name='to_search'> \
+	<input type='submit' value='Search'> \
+	</form><hr>"
 
 	var/line_length = 1
 	dat += "<table style='width:100%' align='center'><tr>"
@@ -247,14 +271,14 @@
 			dat += "</tr><tr>"
 			line_length = 1
 
-		dat += "<td><A href='?src=\ref[src];category=[C];menu=2'>[C]</A></td>"
+		dat += "<td><A href='?src=\ref[src];category=[C];menu=[AUTOLATHE_CATEGORY_MENU]'>[C]</A></td>"
 		line_length++
 
 	dat += "</tr></table></div>"
 	return dat
 
 /obj/machinery/autolathe/proc/category_win(mob/user,var/selected_category)
-	var/dat = "<A href='?src=\ref[src];menu=1'>Return to category screen</A>"
+	var/dat = "<A href='?src=\ref[src];menu=[AUTOLATHE_MAIN_MENU]'>Return to main menu</A>"
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += "<b>Metal amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
 	dat += "<b>Glass amount:</b> [src.g_amount] / [max_g_amount] cm<sup>3</sup><hr>"
@@ -263,6 +287,32 @@
 		if(!(selected_category in D.category))
 			continue
 
+		if(disabled || !can_build(D))
+			dat += "<span class='linkOff'>[D.name]</span>"
+		else
+			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
+
+		if(ispath(D.build_path, /obj/item/stack))
+			var/max_multiplier = min(50, D.materials["$metal"] ?round(m_amount/D.materials["$metal"]):INFINITY,D.materials["$glass"]?round(g_amount/D.materials["$glass"]):INFINITY)
+			if (max_multiplier>10 && !disabled)
+				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=10'>x10</a>"
+			if (max_multiplier>25 && !disabled)
+				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=25'>x25</a>"
+			if(max_multiplier > 0 && !disabled)
+				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=[max_multiplier]'>x[max_multiplier]</a>"
+
+		dat += "[get_design_cost(D)]<br>"
+
+	dat += "</div>"
+	return dat
+
+/obj/machinery/autolathe/proc/search_win(mob/user)
+	var/dat = "<A href='?src=\ref[src];menu=[AUTOLATHE_MAIN_MENU]'>Return to main menu</A>"
+	dat += "<div class='statusDisplay'><h3>Search results:</h3><br>"
+	dat += "<b>Metal amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
+	dat += "<b>Glass amount:</b> [src.g_amount] / [max_g_amount] cm<sup>3</sup><hr>"
+
+	for(var/datum/design/D in matching_designs)
 		if(disabled || !can_build(D))
 			dat += "<span class='linkOff'>[D.name]</span>"
 		else

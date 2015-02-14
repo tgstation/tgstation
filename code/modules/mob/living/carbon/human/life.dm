@@ -84,6 +84,9 @@
 		//Disabilities
 		handle_disabilities()
 
+		//Blud
+		handle_blood()
+
 		//Random events (vomiting etc)
 		handle_random_events()
 
@@ -525,6 +528,9 @@
 
 		if(stuttering)
 			stuttering = max(stuttering-1, 0)
+
+		if(slurring)
+			slurring = max(slurring-1,0)
 
 		if(silent)
 			silent = max(silent-1, 0)

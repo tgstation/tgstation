@@ -4,6 +4,8 @@
 	var/ending = copytext(text, length(text))
 	if (src.stuttering)
 		return "stammers, \"[text]\"";
+	if(src.slurring)
+		return "slurs, \"[text]\"";
 	if(isliving(src))
 		var/mob/living/L = src
 		if (L.getBrainLoss() >= 60)

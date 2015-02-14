@@ -37,6 +37,7 @@
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
+	var/exotic_blood = null	// If your race wants to bleed something other than bog standard blood, change this.
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
@@ -697,8 +698,8 @@
 
 	if((H.disabilities & FAT) && grav)
 		mspeed += 1.5
-	if(H.bodytemperature < 283.222 && grav)
-		mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
+	if(H.bodytemperature < 283.222)
+		mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
 
 	mspeed += speedmod
 
@@ -731,7 +732,7 @@
 				return 0
 
 			if(H.cpr_time < world.time + 30)
-				add_logs(H, M, "CPRed")
+				add_logs(M, H, "CPRed")
 				M.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>", \
 								"<span class='notice'>You try to perform CPR on [H]. Hold still!</span>")
 				if(!do_mob(M, H))

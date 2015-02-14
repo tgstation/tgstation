@@ -40,7 +40,7 @@
 	icon_state = "securityhud"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 
-/obj/item/clothing/glasses/hud/security/eyepatch
+/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	name = "Eyepatch HUD"
 	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
 	icon_state = "hudpatch"

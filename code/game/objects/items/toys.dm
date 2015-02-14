@@ -13,6 +13,8 @@
  *		Toy nuke
  *		Fake meteor
  *		Carp plushie
+ *		Foam armblade
+ *		Toy big red button
  */
 
 
@@ -370,6 +372,19 @@
 					user.update_inv_l_hand(0)
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
+
+/*
+ * Foam armblade
+ */
+/obj/item/toy/foamblade
+	name = "foam armblade"
+	desc = "it says \"Sternside Changs #1 fan\" on it. "
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamblade"
+	item_state = "arm_blade"
+	attack_verb = list("pricked", "absorbed", "gored")
+	w_class = 2
+
 
 /*
  * Subtype of Double-Bladed Energy Swords
@@ -1078,3 +1093,27 @@ obj/item/toy/cards/deck/syndicate
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
 	w_class = 2.0
+
+/*
+ * Toy big red button
+ */
+/obj/item/toy/redbutton
+	name = "big red button"
+	desc = "A big, plastic red button. Reads 'From HonkCo Pranks©' on the back."
+	icon = 'icons/obj/assemblies.dmi'
+	icon_state = "bigred"
+	w_class = 2.0
+	var/cooldown = 0
+
+/obj/item/toy/redbutton/attack_self(mob/user)
+	if (cooldown < world.time)
+		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
+		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='notice'>The button clicks loudly.</span>")
+		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0, surround = 0)
+		for(var/mob/M in range(10, src)) // Checks range
+			if(!M.stat && !istype(M, /mob/living/silicon/ai)) // Checks to make sure whoever's getting shaken is alive/not the AI
+				sleep(8) // Short delay to match up with the explosion sound
+				shake_camera(M, 2, 1) // Shakes player camera 2 squares for 1 second.
+
+	else
+		user << "<span class='alert'>Nothing happens.</span>"
