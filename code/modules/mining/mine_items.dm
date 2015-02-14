@@ -80,7 +80,7 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	item_state = "jackhammer"
-	digspeed = 25 //available from roundstart, faster than a pickaxe but needs recharging or cell replacements
+	digspeed = 30 //available from roundstart, faster than a pickaxe but needs recharging or cell replacements
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
