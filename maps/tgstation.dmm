@@ -2175,7 +2175,7 @@
 "aPQ" = (/obj/machinery/light/small{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/toilet)
 "aPR" = (/obj/structure/mirror{pixel_x = -28},/obj/machinery/vending/coffee,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "aPS" = (/obj/structure/disposalpipe/segment,/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 1},/turf/simulated/floor/wood,/area/crew_quarters/bar)
-"aPT" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 4},/obj/machinery/light,/turf/simulated/floor/wood,/area/crew_quarters/bar)
+"aPT" = (/obj/machinery/light,/obj/machinery/atmospherics/unary/vent_scrubber{dir = 4; on = 1},/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "aPU" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating,/area/maintenance/fsmaint2)
 "aPV" = (/obj/machinery/door/airlock/maintenance{name = "Bar Storage"; req_access_txt = "0"; req_one_access_txt = "25;28"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plating,/area/crew_quarters/bar)
 "aPW" = (/obj/structure/sign/poster,/turf/simulated/wall,/area/crew_quarters/bar)
