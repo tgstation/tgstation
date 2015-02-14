@@ -237,7 +237,6 @@
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 250),
 		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   300),
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   300),
-		new /datum/data/mining_equipment("Air Horn",            /obj/item/weapon/bikehorn/airhorn,								   350),
 		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     400),
 		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                    500),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   500),

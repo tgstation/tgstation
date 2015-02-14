@@ -84,22 +84,24 @@
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
 	var/honksound = 'sound/items/bikehorn.ogg'
+	var/cooldowntime = 20
 
 /obj/item/weapon/bikehorn/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, honksound, 50, 1, -1) //plays instead of tap.ogg!
+	if(!spam_flag)
+		playsound(loc, honksound, 50, 1, -1) //plays instead of tap.ogg!
 	return ..()
 
 /obj/item/weapon/bikehorn/attack_self(mob/user as mob)
-	if(spam_flag == 0)
+	if(!spam_flag)
 		spam_flag = 1
 		playsound(src.loc, honksound, 50, 1)
 		src.add_fingerprint(user)
-		spawn(20)
+		spawn(cooldowntime)
 			spam_flag = 0
 	return
 
 /obj/item/weapon/bikehorn/airhorn
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
-	icon_state = "air_horn"
 	honksound = 'sound/items/AirHorn.ogg'
+	cooldowntime = 50
