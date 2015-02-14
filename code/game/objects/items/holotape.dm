@@ -159,12 +159,10 @@
 		C.loc = T
 
 /obj/item/holotape/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return 1
 	if(!density) return 1
 	if(air_group || (height==0)) return 1
 
-	if((mover.flags & 2 || istype(mover, /obj/effect/meteor) || mover.throwing == 1) )
+	if((mover.flags & PASSGLASS || istype(mover, /obj/effect/meteor) || mover.throwing == 1) )
 		return 1
 	else
 		return 0
