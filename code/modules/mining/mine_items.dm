@@ -85,7 +85,7 @@
 	hitsound = 'sound/weapons/drill.ogg'
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	desc = "An electric mining drill for the especially scrawny."
-	var/drillcost = 125
+	var/drillcost = 125 //80 mineral walls by default
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	powered = 0
 
@@ -144,10 +144,10 @@
 /obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
-	digspeed = 10
+	digspeed = 10 //it's a fast drill with a relatively low power cost. what more could you ask for?
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
-	drillcost = 150
+	drillcost = 150 //66 mineral walls by default, but very quickly
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -167,7 +167,7 @@
 	w_class = 3 //it is smaller than the pickaxe
 	damtype = "fire"
 	throwforce = 8
-	digspeed = 30 //Mines slightly faster than a normal pickaxe, but doubles as an unlimited-ammo welding tool.
+	digspeed = 30 //Mines slightly faster than a normal pickaxe, but doubles as an unlimited-ammo welding tool in some cases such as wall deconstruction
 	digsound = list('sound/weapons/plasma_cutter.ogg')
 	hitsound = 'sound/weapons/plasma_cutter.ogg'
 	origin_tech = "materials=4;plasmatech=3;engineering=3"
