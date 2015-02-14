@@ -419,7 +419,7 @@
 /obj/item/throw_impact(A)
 	if(istype(A, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = A
-		if(is_sharp(src))
+		if(can_embed(src))
 			if(prob(embed_chance))
 				var/obj/item/organ/limb/L = pick(H.organs)
 				L.embedded_objects |= src

@@ -1350,7 +1350,8 @@ var/global/list/common_tools = list(
 	/obj/item/weapon/broken_bottle,\
 	/obj/item/weapon/twohanded/fireaxe,\
 	/obj/item/weapon/hatchet,\
-	/obj/item/weapon/throwing_star)
+	/obj/item/weapon/throwing_star,\
+	/obj/item/weapon/twohanded/spear)
 
 	//Because is_sharp is used for food or something.
 	var/list/sharp_things_2 = list(\
@@ -1371,8 +1372,6 @@ var/global/list/common_tools = list(
 		else
 			return 0
 
-
-
 /proc/is_pointed(obj/item/W as obj)
 	if(istype(W, /obj/item/weapon/pen))
 		return 1
@@ -1384,6 +1383,21 @@ var/global/list/common_tools = list(
 		return 1
 	else
 		return 0
+
+//For objects that should embed, but make no sense being is_sharp or is_pointed()
+//e.g: rods
+/proc/can_embed(obj/item/W)
+	if(is_sharp(W))
+		return 1
+	if(is_pointed(W))
+		return 1
+
+	var/list/embed_items = list(\
+	/obj/item/stack/rods,\
+	)
+
+	if(is_type_in_list(W, embed_items))
+		return 1
 
 
 /*
