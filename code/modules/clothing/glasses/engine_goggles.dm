@@ -1,7 +1,7 @@
 //Engineering Mesons
 
 /obj/item/clothing/glasses/meson/engine
-	name = "Emgineering Meson Scanner"
+	name = "Engineering Meson Scanner"
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	icon_state = "meson"
 	item_state = "glasses"
@@ -19,11 +19,12 @@
 /obj/item/clothing/glasses/meson/engine/ui_action_click(mob/user)
 	state = !state
 	if(state)
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
 	else
+		SSobj.processing.Remove(src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
 		invis_view = SEE_INVISIBLE_MINIMUM
@@ -32,14 +33,18 @@
 
 /obj/item/clothing/glasses/meson/engine/process()
 	if(!state)
-		SSobj.processing.Remove(src)
 		return null
-	else
-		var/mob/living/carbon/human/user = loc
-		if(user.glasses != src)
-			invis_update()
-			return null
-		scan()
+
+	if(!istype(loc,/mob/living/carbon/human))
+		invis_update()
+		return null
+
+	var/mob/living/carbon/human/user = loc
+	if(user.glasses != src)
+		invis_update()
+		return null
+
+	scan()
 
 /obj/item/clothing/glasses/meson/engine/proc/scan()
 	var/mob/living/carbon/human/user = loc
@@ -69,6 +74,9 @@
 			invis_objects -= O
 
 /obj/item/clothing/glasses/meson/engine/proc/t_ray_on()
+	if(!istype(loc,/mob/living/carbon/human))
+		return 0
+
 	var/mob/living/carbon/human/user = loc
 	return state & (user.glasses == src)
 
