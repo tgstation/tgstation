@@ -57,7 +57,12 @@
 			status = 0
 			update_icon()
 		if(status)
-			bcell.use(losspertick)
+			if(isrobot(loc))
+				var/mob/living/silicon/robot/R = loc
+				if(R && R.cell)
+					R.cell.use(losspertick)
+			else
+				bcell.use(losspertick)
 			update_icon()
 
 /obj/item/weapon/melee/baton/update_icon()
