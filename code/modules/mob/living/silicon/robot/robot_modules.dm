@@ -87,6 +87,13 @@
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
+	modules += new /obj/item/weapon/surgical_drapes(src)
+	modules += new /obj/item/weapon/retractor(src)
+	modules += new /obj/item/weapon/hemostat(src)
+	modules += new /obj/item/weapon/cautery(src)
+	modules += new /obj/item/weapon/surgicaldrill(src)
+	modules += new /obj/item/weapon/scalpel(src)
+	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
