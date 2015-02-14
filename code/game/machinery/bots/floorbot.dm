@@ -462,7 +462,7 @@ var/global/list/floorbot_targets=list()
 			T.amount -= i
 		else
 			src.amount += T.amount
-			del(T)
+			returnToPool(T)
 		src.updateicon()
 		floorbot_targets -= src.target
 		src.target = null
