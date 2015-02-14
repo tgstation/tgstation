@@ -355,9 +355,15 @@
 		if(M.stat == CONSCIOUS)
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
-					H << "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>"
-					return
+				if(istype(H.glasses,/obj/item/clothing/glasses/meson/engine))
+					var/obj/item/clothing/glasses/meson/engine/G = H.glasses
+					if(!G.mode)
+						H << "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>"
+						return
+				else
+					if(istype(H.glasses,/obj/item/clothing/glasses/meson))
+						H << "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>"
+						return
 		M.apply_effect(3, STUN)
 		M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \
 						"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>")
