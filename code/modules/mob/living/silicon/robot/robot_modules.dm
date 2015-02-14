@@ -88,6 +88,7 @@
 	modules += new /obj/item/weapon/reagent_containers/dropper(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
+	modules += new /obj/item/roller/robo(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("facid", 250)
