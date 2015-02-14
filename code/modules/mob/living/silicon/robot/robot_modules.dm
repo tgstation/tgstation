@@ -297,3 +297,8 @@
 	max_energy = 50
 	recharge_rate = 2
 	name = "Wire Synthesizer"
+
+/datum/robot_energy_storage/gauze
+	max_energy = 2500
+	recharge_rate = 250
+	name = "Gauze Synthesizer"
