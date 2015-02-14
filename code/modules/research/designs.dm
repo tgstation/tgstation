@@ -287,6 +287,16 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_path = /obj/item/clothing/mask/gas/welding
 	category = list("Equipement")
 
+/datum/design/air_horn
+	name = "Air Horn"
+	desc = "Damn son, where'd you find this?"
+	id = "air_horn"
+	req_tech = list("materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000, "$bananium" = 1000)
+	build_path = /obj/item/weapon/bikehorn/airhorn
+	category = list("Equipement")
+
 /datum/design/mesons
 	name = "Optical Meson Scanners"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
