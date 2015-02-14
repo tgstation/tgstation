@@ -49,7 +49,7 @@
 	..()
 
 /proc/delete_profile(var/type, code = 0)
-	if(!ticker.current_state < 3) return
+	if(!ticker || !ticker.current_state < 3) return
 	switch(code)
 		if(0)
 			if (!("[type]" in del_profiling))
