@@ -96,6 +96,14 @@
 	var/obj/item/weapon/reagent_containers/spray/S = emag
 	S.banned_reagents = list()
 
+	var/datum/robot_energy_storage/gauze/gauzestore = new /datum/robot_energy_storage/gauze(src)
+
+	var/obj/item/stack/medical/gauze/cyborg/G = new /obj/item/stack/medical/gauze/cyborg(src)
+	G.source = gauzestore
+	modules += G
+
+	storages += gauzestore
+
 	fix_modules()
 
 
