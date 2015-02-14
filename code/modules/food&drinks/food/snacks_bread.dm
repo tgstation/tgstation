@@ -7,6 +7,8 @@
 	bitesize = 2
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"
+	slot_flags = SLOT_MASK
+	var/alloweat = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
