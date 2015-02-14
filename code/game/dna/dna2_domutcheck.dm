@@ -11,6 +11,11 @@
 		if(!gene.block)
 			continue
 
+		if(istype(M,/mob/living/simple_animal/chicken) && M.dna)
+			var/datum/dna/chicken_dna = M.dna
+			if(chicken_dna.SE[54] < 800)
+				chicken_dna.chicken2vox(M,chicken_dna)//havinagiggle.tiff
+
 		domutation(gene, M, connected, flags)
 		// To prevent needless copy pasting of code i put this commented out section
 		// into domutation so domutcheck and genemutcheck can both use it.
@@ -92,3 +97,17 @@
 			if(M)
 				M.active_genes -= gene.type
 				M.update_icon = 1
+
+/datum/dna/proc/chicken2vox(var/mob/living/simple_animal/chicken/C, var/datum/dna/D)//sadly doesn't let you turn normal chicken into voxes since they don't have any DNA
+
+	var/mob/living/carbon/human/vox/V = new(C.loc)
+
+	if (D.GetUIState(DNA_UI_GENDER))
+		V.gender = FEMALE
+	else
+		V.gender = MALE
+
+	if(C.mind)
+		C.mind.transfer_to(V)
+
+	del(C)

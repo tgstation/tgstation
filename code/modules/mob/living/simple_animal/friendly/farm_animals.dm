@@ -240,6 +240,9 @@ var/global/chicken_count = 0
 			//world << eggsleft
 		else
 			user << "\blue [name] doesn't seem hungry!"
+	else if(istype(O, /obj/item/weapon/dnainjector))
+		var/obj/item/weapon/dnainjector/I = O
+		I.inject(src, user)
 	else
 		..()
 
