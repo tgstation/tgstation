@@ -398,7 +398,7 @@
 			src << "--- [class] alarm in [A.name] has been cleared."
 
 /mob/living/simple_animal/drone/proc/pick_colour()
-	var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange", "repairbot")
+	var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
 	icon_state = "drone_[colour]"
 	icon_living = "drone_[colour]"
 	picked = TRUE
