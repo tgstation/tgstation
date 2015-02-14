@@ -31,7 +31,7 @@
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/Destroy()

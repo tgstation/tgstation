@@ -283,7 +283,7 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/New()
 		..()
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 
 /obj/item/device/flashlight/emp/Destroy()
 		SSobj.processing.Remove(src)
