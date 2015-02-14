@@ -21,7 +21,7 @@
 
 /obj/item/tapeproj/security
 	name = "security holotape projector"
-	desc = "A security hard-light holotape projector used to block crime scenes from non-security staff. It can be placed in segments along hallways or on airlocks to restrict access."
+	desc = "A security hard-light holotape projector used to create holotape. It can be placed in segments along hallways or on airlocks to signify crime scenes."
 	icon_state = "security_start"
 	tape_type = /obj/item/holotape/security
 	icon_base = "security"
@@ -29,20 +29,18 @@
 /obj/item/holotape/security
 	name = "security holotape"
 	desc = "A length of security hard-light holotape. It reads: SECURITY LINE | DO NOT CROSS."
-	req_access = list(access_security)
 	icon_base = "security"
 
 /obj/item/tapeproj/engineering
 	name = "engineering holotape projector"
-	desc = "An engineering hard-light holotape projector used to block hazardous areas from non-engineering staff. It can be placed in segments along hallways or on airlocks to restrict access."
+	desc = "An engineering hard-light holotape projector used to create holotape. It can be placed in segments along hallways or on airlocks to show hazardous areas."
 	icon_state = "engineering_start"
 	tape_type = /obj/item/holotape/engineering
 	icon_base = "engineering"
 
 /obj/item/holotape/engineering
 	name = "engineering holotape"
-	desc = "A length of engineering hard-light holotape. It reads: HAZARD AHEAD | DO NOT CROSS."
-	req_one_access = list(access_engine,access_atmospherics,access_security)
+	desc = "A length of engineering hard-light holotape. It reads: HAZARD AHEAD // DO NOT CROSS."
 	icon_base = "engineering"
 
 /obj/item/tapeproj/dropped()
@@ -129,11 +127,16 @@
 	if(proximity_flag == 0) // not adjacent
 		return
 
-	if(istype(target, /obj/machinery/door/airlock) || istype(target, /obj/machinery/door/firedoor))
+	if(istype(target, /obj/machinery/door/airlock) || istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/structure/window))
 		var/turf = get_turf(target)
 
 		if(locate(tape_type) in turf) //Don't you dare stack tape
 			return
+
+		if(istype(target, /obj/structure/window))
+			var/obj/structure/window/W = target
+			if(!(W.dir == 5) || !(W.fulltile == 1))
+				return
 
 		user << "<span class='notice'>You start projecting the [icon_base] holotape onto [target].</span>"
 
@@ -150,10 +153,10 @@
 		spawn(40)
 			charging = 0
 
-/obj/item/holotape/Bumped(var/mob/M)
-	if(src.allowed(M))
+/obj/item/holotape/Bumped(var/mob/living/carbon/C)
+	if(C.m_intent == "walk")
 		var/turf/T = get_turf(src)
-		M.loc = T
+		C.loc = T
 
 /obj/item/holotape/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(!density) return 1
@@ -165,20 +168,14 @@
 		return 0
 
 /obj/item/holotape/attack_hand(mob/living/user)
-	if(user.a_intent == "help" && src.allowed(user) && src.density)
-		user.show_viewers("<span class='notice'>[user] lifts [src], allowing passage.</span>")
-		src.density = 0
-		spawn(200)
-			src.density = 1
-	else
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
-		user.visible_message("<span class='warning'>[user] hits [src].</span>", \
-							 "<span class='warning'>You hit [src].</span>" )
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+	user.visible_message("<span class='warning'>[user] hits [src].</span>", \
+						 "<span class='warning'>You hit [src].</span>" )
 
-		health -= rand(1,2)
-		healthcheck()
+	health -= rand(1,2)
+	healthcheck()
 
 /obj/item/holotape/proc/healthcheck()
 	if(health <= 0)
@@ -194,24 +191,17 @@
 	attack_hand(user)
 
 /obj/item/holotape/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj)
-		return
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		health -= Proj.damage
+		update_nearby_icons()
 	..()
-	if((Proj.damage_type != STAMINA))
-		src.health -= Proj.damage*0.3
-		healthcheck()
+	if(health <= 0)
+		breaktape()
 	return
 
 /obj/item/holotape/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
-	switch(W.damtype)
-		if(STAMINA)
-			return
-		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, 1)
-		else
-			playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 	health -= W.force * 0.3
 
 	healthcheck()

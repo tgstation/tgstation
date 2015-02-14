@@ -1,0 +1,6 @@
+author: Paprka
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added hard-light holotape. This holographic police or engineering hazard tape will block entry if you're running, so you need to walk to pass it. This is to help people not sprint into breaches or crime scenes."
