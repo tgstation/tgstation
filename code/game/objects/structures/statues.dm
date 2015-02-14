@@ -54,15 +54,18 @@
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			Dismantle(1)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
-		user.visible_message("<span class='notice'>[user] begins to drill apart the [name]!</span>", \
-							 "<span class='notice'>You begin to drill apart the [name]!</span>")
-		if(do_after(user,5))
-			if(!src.loc)
-				return
-			user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \
-								 "<span class='notice'>You destroy the [name]!</span>")
-			qdel(src)
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
+		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
+		if(!D.bcell.use(D.drillcost))
+			D.update_charge()
+			return
+		D.update_charge()
+		if(!src.loc)
+			return
+		user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \
+							 "<span class='notice'>You destroy the [name]!</span>")
+		D.playDigSound()
+		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored)
 		playsound(loc, 'sound/items/Welder.ogg', 40, 1)

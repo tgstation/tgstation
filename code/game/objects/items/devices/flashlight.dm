@@ -259,6 +259,12 @@ obj/item/device/flashlight/lamp/bananalamp
 	item_state = "torch"
 	on_damage = 10
 
+/obj/item/device/flashlight/lantern
+	name = "lantern"
+	icon_state = "lantern"
+	desc = "A mining lantern."
+	brightness_on = 6			// luminosity when on
+
 
 /obj/item/device/flashlight/slime
 	gender = PLURAL

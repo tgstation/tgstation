@@ -212,16 +212,20 @@
 
 
 /turf/simulated/wall/proc/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
-	if (istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
-		user << "<span class='notice'>You begin to drill though the wall.</span>"
-		if(do_after(user, slicing_duration*0.6))  // diamond drill is faster than welding tool slicing
-			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
-				return 1
-			if( user.loc == T && user.get_active_hand() == W )
-				user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
-				dismantle_wall()
-				visible_message("<span class='warning'>The wall was drilled through by [user]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
-				return 1
+	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
+		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
+		if(!D.bcell.use(400))
+			D.update_charge()
+			user << "<span class='notice'>Your jackhammer doesn't have enough power to break through that wall.</span>"
+			return
+		D.update_charge()
+		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
+			return 1
+		if( user.loc == T && user.get_active_hand() == W )
+			D.playDigSound()
+			dismantle_wall()
+			visible_message("<span class='warning'>[user] smashes through the wall with [W]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
+			return 1
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/obj/item/weapon/melee/energy/blade/EB = W
 		EB.spark_system.start()

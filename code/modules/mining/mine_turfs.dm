@@ -22,10 +22,10 @@
 	..()
 	switch(severity)
 		if(3.0)
-			if (prob(75))
+			if(prob(75))
 				src.gets_drilled(null, 1)
 		if(2.0)
-			if (prob(90))
+			if(prob(90))
 				src.gets_drilled(null, 1)
 		if(1.0)
 			src.gets_drilled(null, 1)
@@ -37,22 +37,22 @@
 		var/turf/T
 		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
 			T = get_step(src, NORTH)
-			if (T)
+			if(T)
 				T.overlays += image('icons/turf/walls.dmi', "rock_side_s")
 		if((istype(get_step(src, SOUTH), /turf/simulated/floor)) || (istype(get_step(src, SOUTH), /turf/space)) || (istype(get_step(src, SOUTH), /turf/simulated/shuttle/floor)))
 			T = get_step(src, SOUTH)
-			if (T)
+			if(T)
 				T.overlays += image('icons/turf/walls.dmi', "rock_side_n", layer=6)
 		if((istype(get_step(src, EAST), /turf/simulated/floor)) || (istype(get_step(src, EAST), /turf/space)) || (istype(get_step(src, EAST), /turf/simulated/shuttle/floor)))
 			T = get_step(src, EAST)
-			if (T)
+			if(T)
 				T.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
 		if((istype(get_step(src, WEST), /turf/simulated/floor)) || (istype(get_step(src, WEST), /turf/space)) || (istype(get_step(src, WEST), /turf/simulated/shuttle/floor)))
 			T = get_step(src, WEST)
-			if (T)
+			if(T)
 				T.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
 
-	if (mineralName && mineralAmt && spread && spreadChance)
+	if(mineralName && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
 			if(prob(spreadChance))
 				var/turf/T = get_step(src, dir)
@@ -78,10 +78,10 @@
 
 /turf/simulated/mineral/random/New()
 	..()
-	if (prob(mineralChance))
+	if(prob(mineralChance))
 		var/mName = pickweight(mineralSpawnChanceList) //temp mineral name
 
-		if (mName)
+		if(mName)
 			var/turf/simulated/mineral/M
 			switch(mName)
 				if("Uranium")
@@ -383,18 +383,22 @@
 
 /turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob)
 
-	if (!user.IsAdvancedToolUser())
+	if(!user.IsAdvancedToolUser())
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 
-	if (istype(P, /obj/item/weapon/pickaxe))
+	if(istype(P, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!( istype(T, /turf) ))
 			return
+
+	if(!P.powered)
+		return
+
 /*
-	if (istype(W, /obj/item/weapon/pickaxe/radius))
+	if(istype(W, /obj/item/weapon/pickaxe/radius))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!( istype(T, /turf) ))
 			return
 */
 //Watch your tabbing, microwave. --NEO
@@ -406,6 +410,20 @@
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed))
+			if(istype(P, /obj/item/weapon/pickaxe/drill))
+				var/obj/item/weapon/pickaxe/drill/D = P
+				if(isrobot(user))
+					var/mob/living/silicon/robot/R = user
+					if(R && R.cell)
+						if(!R.cell.use(D.drillcost))
+							D.update_charge()
+							return
+				else
+					if(!D.bcell.use(D.drillcost))
+						user << "<span class='warning'>Your drill ran out of power.</span>"
+						D.update_charge()
+						return
+				D.update_charge()
 			user << "<span class='notice'>You finish cutting into the rock.</span>"
 			gets_drilled(user)
 	else
@@ -413,22 +431,22 @@
 	return
 
 /turf/simulated/mineral/proc/gets_drilled()
-	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
+	if((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
 		var/i
 		for (i=0;i<mineralAmt;i++)
-			if (src.mineralName == "Uranium")
+			if(src.mineralName == "Uranium")
 				new /obj/item/weapon/ore/uranium(src)
-			if (src.mineralName == "Iron")
+			if(src.mineralName == "Iron")
 				new /obj/item/weapon/ore/iron(src)
-			if (src.mineralName == "Gold")
+			if(src.mineralName == "Gold")
 				new /obj/item/weapon/ore/gold(src)
-			if (src.mineralName == "Silver")
+			if(src.mineralName == "Silver")
 				new /obj/item/weapon/ore/silver(src)
-			if (src.mineralName == "Plasma")
+			if(src.mineralName == "Plasma")
 				new /obj/item/weapon/ore/plasma(src)
-			if (src.mineralName == "Diamond")
+			if(src.mineralName == "Diamond")
 				new /obj/item/weapon/ore/diamond(src)
-			if (src.mineralName == "Bananium")
+			if(src.mineralName == "Bananium")
 				new /obj/item/weapon/ore/bananium(src)
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
@@ -443,14 +461,14 @@
 /*
 /turf/simulated/mineral/proc/setRandomMinerals()
 	var/s = pickweight(list("uranium" = 5, "iron" = 50, "gold" = 5, "silver" = 5, "plasma" = 50, "diamond" = 1))
-	if (s)
+	if(s)
 		mineralName = s
 
 	var/N = text2path("/turf/simulated/mineral/[s]")
-	if (N)
+	if(N)
 		var/turf/simulated/mineral/M = new N
 		src = M
-		if (src.mineralName)
+		if(src.mineralName)
 			mineralAmt = 5
 	return*/
 
@@ -496,7 +514,7 @@
 	var/proper_name = name
 	..()
 	name = proper_name
-	//if (prob(50))
+	//if(prob(50))
 	//	seedName = pick(list("1","2","3","4"))
 	//	seedAmt = rand(1,4)
 	if(prob(20))
@@ -513,7 +531,7 @@
 		if(3.0)
 			return
 		if(2.0)
-			if (prob(20))
+			if(prob(20))
 				src.gets_dug()
 		if(1.0)
 			src.gets_dug()
@@ -524,57 +542,23 @@
 	if(!W || !user)
 		return 0
 
-	if ((istype(W, /obj/item/weapon/shovel)))
+	if((istype(W, /obj/item/weapon/shovel)))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!( istype(T, /turf) ))
 			return
 
-		if (dug)
+		if(dug)
 			user << "<span class='danger'>This area has already been dug.</span>"
 			return
 
 		user << "<span class='danger'>You start digging.</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
-		sleep(40)
-		if ((user.loc == T && user.get_active_hand() == W))
+		sleep(15)
+		if((user.loc == T && user.get_active_hand() == W))
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 			return
-
-	if ((istype(W,/obj/item/weapon/pickaxe/drill)))
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
-			return
-
-		if (dug)
-			user << "<span class='warning'>This area has already been dug.</span>"
-			return
-
-		user << "<span class='danger'>You start digging.</span>"
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
-
-		sleep(30)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dug a hole.</span>"
-			gets_dug()
-
-	if ((istype(W,/obj/item/weapon/pickaxe/drill/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/jackhammer/borgdrill)))
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
-			return
-
-		if (dug)
-			user << "<span class='warning'>This area has already been dug.</span>"
-			return
-
-		user << "<span class='danger'>You start digging.</span>"
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
-
-		sleep(0)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dug a hole.</span>"
-			gets_dug()
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W

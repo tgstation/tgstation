@@ -2,6 +2,7 @@
  * Contains:
  *		Soap
  *		Bike Horns
+ *		Air Horns
  */
 
 /*
@@ -82,16 +83,23 @@
 	throw_range = 7
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
+	var/honksound = 'sound/items/bikehorn.ogg'
 
 /obj/item/weapon/bikehorn/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1) //plays instead of tap.ogg!
+	playsound(loc, honksound, 50, 1, -1) //plays instead of tap.ogg!
 	return ..()
 
 /obj/item/weapon/bikehorn/attack_self(mob/user as mob)
 	if(spam_flag == 0)
 		spam_flag = 1
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(src.loc, honksound, 50, 1)
 		src.add_fingerprint(user)
 		spawn(20)
 			spam_flag = 0
 	return
+
+/obj/item/weapon/bikehorn/airhorn
+	name = "air horn"
+	desc = "Damn son, where'd you find this?"
+	icon_state = "air_horn"
+	honksound = 'sound/items/AirHorn.ogg'

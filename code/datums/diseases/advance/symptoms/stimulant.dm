@@ -30,7 +30,7 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(5)
-				if (M.reagents.get_reagent_amount("ephedrine") < 30)
+				if (M.reagents.get_reagent_amount("ephedrine") < 10)
 					M.reagents.add_reagent("ephedrine", 10)
 			else
 				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
