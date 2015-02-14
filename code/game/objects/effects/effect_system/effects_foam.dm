@@ -80,11 +80,11 @@
 		if(!T.Enter(src))
 			continue
 
-		var/obj/effect/effect/foam/F = locate() in T
-		if(F)
+		var/obj/effect/effect/foam/foundfoam = locate() in T //Don't spread foam where there's already foam!
+		if(foundfoam)
 			continue
 
-		F = new(T)
+		var/obj/effect/effect/foam/F = new type(T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
 		F.color = color
@@ -134,20 +134,17 @@
 	..()
 	metal = metaltype
 
-
 /datum/effect/effect/system/foam_spread/start()
-	var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
-
-	var/obj/effect/effect/foam/F = locate() in location
-	if(F)
-		F.amount += amount
-		return
-
-	F = new(src.location)
-	chemholder.reagents.copy_to(F, chemholder.reagents.total_volume)
-	F.color = foamcolor
-	F.amount = amount
-	F.metal = metal
+	var/obj/effect/effect/foam/foundfoam = locate()
+	if(foundfoam)//If there was already foam where we start, we add our foaminess to it.
+		foundfoam.amount += amount
+	else
+		var/obj/effect/effect/foam/F = new foamtype(src.location)
+		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
+		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume)
+		F.color = foamcolor
+		F.amount = amount
+		F.metal = metal
 
 
 //////////////////////////////////////////////////////////
