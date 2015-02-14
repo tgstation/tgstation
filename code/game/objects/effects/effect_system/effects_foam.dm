@@ -62,7 +62,7 @@
 
 
 /obj/effect/effect/foam/Crossed(var/atom/movable/AM)
-	if (istype(AM, /mob/living/carbon))
+	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
 		M.slip(5, 2, src)
 

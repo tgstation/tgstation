@@ -74,13 +74,26 @@
 
 
 
+
+
 /obj/effect/effect/sparks/electricity
 	name = "lightning"
 	icon_state = "electricity"
 
+/datum/effect/effect/system/lightning_spread
+	var/total_sparks = 0 // To stop it being spammed and lagging!
+
+/datum/effect/effect/system/lightning_spread/set_up(n = 3, c = 0, loca)
+	if(n > 10)
+		n = 10
+	number = n
+	cardinals = c
+	if(istype(loca, /turf/))
+		location = loca
+	else
+		location = get_turf(loca)
+
 /datum/effect/effect/system/lightning_spread/start()
-	..()
-/*
 	var/i = 0
 	for(i=0, i<src.number, i++)
 		if(src.total_sparks > 20)
@@ -102,4 +115,3 @@
 				if(sparks) // Might be deleted already
 					sparks.delete()
 				src.total_sparks--
-				*/
