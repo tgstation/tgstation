@@ -35,7 +35,7 @@
 
 /obj/item/weapon/gun/energy/floragun/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/floragun/Destroy()
@@ -71,7 +71,7 @@
 
 /obj/item/weapon/gun/energy/meteorgun/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/meteorgun/Destroy()
@@ -174,7 +174,7 @@
 
 /obj/item/weapon/gun/energy/disabler/cyborg/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
@@ -259,7 +259,7 @@
 
 /obj/item/weapon/gun/energy/printer/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/printer/Destroy()
