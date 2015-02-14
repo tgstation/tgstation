@@ -92,6 +92,23 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 
+/obj/item/weapon/omnistat
+	name = "omnistat"
+	desc = "The be-all and end-all of surgical impliments; containing all you could ever want in the operating room."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "saw" //TODO: Needs unique icon
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	throwhitsound =  'sound/weapons/pierce.ogg'
+	flags = CONDUCT
+	force = 15.0
+	w_class = 4.0
+	throwforce = 9.0
+	throw_speed = 2
+	throw_range = 5
+	origin_tech = "materials=4;biotech=6"
+	attack_verb = list("attacked", "sliced", "sawed", "cut")
+
+/obj/item/weapon/omnistat/robot //A more accurate version of the omnistat for mediborgs, what makes it unique is defined in surgery_step.dm
 
 /obj/item/weapon/surgical_drapes
 	name = "surgical drapes"

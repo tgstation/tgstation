@@ -1,4 +1,3 @@
-
 //make incision
 /datum/surgery_step/incise
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/kitchenknife = 65, /obj/item/weapon/shard = 45)
@@ -38,6 +37,9 @@
 
 
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
+	if(istype(tool, /obj/item/weapon/omnistat))
+		return 1
+
 	if(istype(tool, /obj/item/weapon/cautery))
 		return 1
 

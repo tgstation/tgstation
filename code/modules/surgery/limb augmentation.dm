@@ -66,8 +66,9 @@
 					H.organs += new /obj/item/organ/limb/robot/chest(src)
 					for(var/datum/disease/appendicitis/A in H.viruses) //If they already have Appendicitis, Remove it
 						A.cure(1)
-			user.drop_item()
-			qdel(tool)
+			if(istype(tool,/obj/item/robot_parts))
+				user.drop_item()
+				qdel(tool)
 			H.update_damage_overlays(0)
 			H.update_augments() //Gives them the Cyber limb overlay
 			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
