@@ -153,18 +153,11 @@
 	var/startflags = mover.pass_flags
 	var/startincorporeal = 0
 	var/startdestinationdensity = newloc.density
-	if(istype(mover, /mob/living))
-		var/mob/living/L = mover
-		startincorporeal = L.incorporeal_move
-		L.incorporeal_move = 1
 	mover.density = 0
 	mover.pass_flags = ALL
 	newloc.density = 0
 	. = mover.Move(newloc)
 	mover.density = startdensity
 	mover.pass_flags = startflags
-	if(istype(mover, /mob/living))
-		var/mob/living/L = mover
-		L.incorporeal_move = startincorporeal
 	newloc.density = startdestinationdensity
 
