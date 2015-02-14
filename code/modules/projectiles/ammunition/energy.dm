@@ -18,7 +18,7 @@
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = 50
+	e_cost = 100
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
@@ -71,7 +71,7 @@
 	e_cost = 100
 
 /obj/item/ammo_casing/energy/electrode/hos
-	e_cost = 100
+	e_cost = 200
 
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/item/projectile/ion
