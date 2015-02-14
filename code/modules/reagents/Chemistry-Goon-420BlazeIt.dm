@@ -243,21 +243,21 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/muriatic_acid
 	name = "Muriatic Acid"
 	id = "muriatic_acid"
-	description = "Fuck me, we needed those cooks."
+	description = "A chemical compound."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
 /datum/reagent/caustic_soda
 	name = "Caustic Soda"
 	id = "caustic_soda"
-	description = "Fuck me, we needed those cooks."
+	description = "A chemical compound."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
 /datum/reagent/hydrogen_chloride
 	name = "Hydrogen Chloride"
 	id = "hydrogen_chloride"
-	description = "Fuck me, we needed those cooks."
+	description = "A chemical compound."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
@@ -427,35 +427,35 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 
 /obj/item/weapon/reagent_containers/food/drinks/muriatic_acid
 	name = "jug of muriatic acid"
-	desc = "Fuck me, we needed those cooks."
+	desc = "We needed those cooks."
 	icon_state = "chem_jug"
 	item_state = "carton"
 	list_reagents = list("muriatic_acid" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/caustic_soda
 	name = "jug of caustic soda"
-	desc = "Fuck me, we needed those cooks."
+	desc = "We needed those cooks."
 	icon_state = "chem_jug"
 	item_state = "carton"
 	list_reagents = list("caustic_soda" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/hydrogen_chloride
 	name = "jug of hydrogen chloride"
-	desc = "Fuck me, we needed those cooks."
+	desc = "We needed those cooks."
 	icon_state = "chem_jug"
 	item_state = "carton"
 	list_reagents = list("hydrogen_chloride" = 50)
 
-datum/reagent/cocaine
-	name = "Cocaine"
-	id = "cocaine"
+datum/reagent/hotline
+	name = "Hotline"
+	id = "hotline"
 	description = "It isn't just wrong. It's dead wrong."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 15
 	addiction_threshold = 10
 
-datum/reagent/cocaine/on_mob_life(var/mob/living/M as mob)
+datum/reagent/hotline/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel alert.", "You feel like you can see everything more clearly.", "You feel like you need to relax and examine your surroundings.")
 	if(prob(5))
@@ -465,38 +465,40 @@ datum/reagent/cocaine/on_mob_life(var/mob/living/M as mob)
 	M.adjustBrainLoss(0.2)
 	M.adjustBruteLoss(-0.2)
 	M.adjustFireLoss(-0.2)
+	M.status_flags |= GOTTAGOFAST
+	M.adjustStaminaLoss(-3)
 	..()
 	return
-datum/reagent/cocaine/overdose_process(var/mob/living/M as mob)
+datum/reagent/hotline/overdose_process(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,20)*REM)
 	M.adjustToxLoss(rand(1,20)*REM)
 	M.adjustBruteLoss(rand(1,20)*REM)
 	M.druggy = max(M.druggy, 30)
 	M.hallucination += 30
 	if(prob(5))
-		M << pick("<span class = 'userdanger'>Your head feels like it's ripping apart!</span>","<span class = 'userdanger'>You wonder why the fuck did you decide to take cocaine.</span>","<span class = 'userdanger'>It hurts so bad!</span>","<span class = 'userdanger'>Please, end it now!</span>","<span class = 'userdanger'>Dear [ticker.Bible_deity_name] please no it hurts!</span>")
+		M << pick("<span class = 'userdanger'>Your head feels like it's ripping apart!</span>","<span class = 'userdanger'>You wonder why the fuck did you decide to take [src.name].</span>","<span class = 'userdanger'>It hurts so bad!</span>","<span class = 'userdanger'>Please, end it now!</span>","<span class = 'userdanger'>Dear [ticker.Bible_deity_name] please no it hurts!</span>")
 	..()
 	return
 
-datum/reagent/cocaine/addiction_act_stage1(var/mob/living/M as mob)
+datum/reagent/hotline/addiction_act_stage1(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,10))
 	M.hallucination += 30
 	M.druggy = max(M.druggy, 30)
 	..()
 	return
-datum/reagent/cocaine/addiction_act_stage2(var/mob/living/M as mob)
+datum/reagent/hotline/addiction_act_stage2(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,20))
 	M.hallucination += 30
 	M.druggy = max(M.druggy, 30)
 	..()
 	return
-datum/reagent/cocaine/addiction_act_stage3(var/mob/living/M as mob)
+datum/reagent/hotline/addiction_act_stage3(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,30))
 	M.hallucination += 30
 	M.druggy = max(M.druggy, 30)
 	..()
 	return
-datum/reagent/cocaine/addiction_act_stage4(var/mob/living/M as mob)
+datum/reagent/hotline/addiction_act_stage4(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,30))
 	M.hallucination += 30
 	M.druggy = max(M.druggy, 30)
