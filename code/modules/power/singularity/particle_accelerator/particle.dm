@@ -25,7 +25,7 @@
 	ionizing = 0
 	particle_type = null
 	source = null
-	movetotarget = 10
+	movetotarget = 1
 
 /obj/effect/accelerated_particle/weak
 	movement_range = 8
@@ -113,7 +113,7 @@
 
 
 /obj/effect/accelerated_particle/proc/move(var/lag)
-	if(!target && !source) return 0
+	if(!loc) return 0
 	if(target)
 		if(movetotarget)
 			if(!step_towards(src,target))
@@ -129,6 +129,7 @@
 	movement_range--
 	if(movement_range <= 0)
 		returnToPool(src)
+		loc = null
 		return 0
 	else
 		sleep(lag)
