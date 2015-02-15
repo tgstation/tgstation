@@ -72,6 +72,9 @@
 	if(..())
 		return
 	if(href_list["copy"])
+		if(coyping)
+			usr << "<span class='warning'>\The [src] is busy with another print job.</span>"
+			return
 		if(copy)
 			copies = Clamp(copies, 0, 10)
 			spawn()
