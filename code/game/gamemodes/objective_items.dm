@@ -18,8 +18,8 @@ datum/objective_item/steal/caplaser
 	excludefromjob = list("Captain")
 
 datum/objective_item/steal/hospistol
-	name = "the head of security's stun revolver"
-	targetitem = /obj/item/weapon/gun/energy/stunrevolver
+	name = "the head of security's stun pistol"
+	targetitem = /obj/item/weapon/gun/energy/hospistol
 	difficulty = 6
 	excludefromjob = list("Head of Security")
 

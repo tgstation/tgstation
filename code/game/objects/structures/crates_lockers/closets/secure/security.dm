@@ -83,7 +83,7 @@
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/gun/energy/stunrevolver(src)
+	new /obj/item/weapon/gun/energy/hospistol(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	return
 
