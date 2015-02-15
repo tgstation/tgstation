@@ -40,11 +40,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return	//dead men tell no tales
 
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
-	if(!input)					// TO-DO: Add some kind of filter to corrupt the inputted text
+	if(!input)
 		return
 
 	if(ishuman(usr) || ismonkey(usr))	//Damage only applies to humans and monkeys, to allow constructs to communicate
-		usr.visible_message("<span class='warning'>[usr.name] starts clawing at his arms like a mad man!")
+		usr.visible_message("<span class='warning'>[usr.name] starts clawing wildly at their arms!")
 		apply_damage(25,BRUTE, "l_arm")
 		apply_damage(25,BRUTE, "r_arm")
 		sleep(50)
@@ -57,7 +57,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		apply_damage(15,BRUTE, "r_arm")
 		if(CHECK_STATUS)
 			return	//dead men tell no tales
-		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood")
+		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood!")
 		sleep(20)
 
 	usr.say("O bidai nabora se[pick("'","`")]sma!")
@@ -65,7 +65,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	usr.say("[input]")
 	for(var/mob/M in mob_list)
 		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
-			M << "<span class='userdanger'>[input]</span>"
+			if(ishuman(usr) || ismonkey(usr))
+				M << "<span class='deadsay'><b><i>???:</i> [input]</span></b>" //Clear that it's innate comms
+			else
+				M << "<span class='userdanger'><i>[usr]:</i> [input]</span>" //Same as a normal tome for constructs
 	return
 	#undef CHECK_STATUS
 
@@ -552,7 +555,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				usr.whisper("[input]")
 				for(var/datum/mind/H in ticker.mode.cult)
 					if (H.current)
-						H.current << "<span class='userdanger'>[input]</span>"
+						H.current << "<span class='userdanger'><i>[user]</i>: [input]</span>" //Tome communications give the current name rather than the real one, so unknowns will display as Unknown
 				return
 			if("Notes")
 				if(usr.get_active_hand() != src)

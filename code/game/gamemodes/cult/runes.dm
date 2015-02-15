@@ -576,7 +576,11 @@ var/list/sacrificed = list()
 		usr.whisper("[input]")
 	for(var/mob/M in mob_list)
 		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
-			M << "<span class='userdanger'>[input]</span>"
+			var/area/rune_loc = get_area(src)
+			if(usr.job)
+				M << "<span class='userdanger'><i>[usr.real_name], the [usr.job] at [rune_loc.name]:</i> [input]</span>" //Communicate runes have all info about the user, giving a reason to use them
+			else
+				M << "<span class='userdanger'><i>[usr.real_name] at [rune_loc.name]:</i> [input]</span>" //Checks for job so as not to have silly messages
 	return 1
 
 /////////////////////////////////////////FIFTEENTH RUNE

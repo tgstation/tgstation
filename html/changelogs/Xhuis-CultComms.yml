@@ -1,0 +1,7 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - tweak: "When communing with tomes, the name of the speaker will be included. However, this does not account for identity concealment."
+  - tweak: "Communication runes have been buffed and show the real name, job, and location of the user."
+  - buxfix: "Fixed roundstart cultists not having the innate communications ability."
