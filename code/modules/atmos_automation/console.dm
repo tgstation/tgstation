@@ -40,13 +40,13 @@
 	proc/request_device_refresh(var/device)
 		send_signal(list("tag"=device, "status"))
 
-	proc/send_signal(var/list/data)
+	proc/send_signal(var/list/data, filter = RADIO_ATMOSIA)
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 //radio signal
 		signal.source = src
 		signal.data=data
 		signal.data["sigtype"]="command"
-		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+		radio_connection.post_signal(src, signal, filter = filter)
 
 	proc/selectValidChildFor(var/datum/automation/parent, var/mob/user, var/list/valid_returntypes)
 		var/list/choices=list()

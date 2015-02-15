@@ -21,7 +21,7 @@
 
 	process()
 		if(scrubber)
-			parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "scrubbing"=mode))
+			parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "scrubbing"=mode), RADIO_FROM_AIRALARM)
 		return 0
 
 	GetText()
@@ -64,7 +64,7 @@
 
 	process()
 		if(scrubber)
-			parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "power"=state))
+			parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "power"=state), RADIO_FROM_AIRALARM)
 
 	GetText()
 		return  "Set Scrubber <a href=\"?src=\ref[src];set_scrubber=1\">[fmtString(scrubber)]</a> power to <a href=\"?src=\ref[src];set_power=1\">[state ? "on" : "off"]</a>."
@@ -126,7 +126,7 @@ var/global/list/gas_labels=list(
 			var/list/data = list ("tag" = scrubber, "sigtype"="command")
 			for(var/gas in gasses)
 				data[gas+"_scrub"]=gasses[gas]
-			parent.send_signal(data)
+			parent.send_signal(data, RADIO_FROM_AIRALARM)
 
 	GetText()
 		var/txt = "Set Scrubber <a href=\"?src=\ref[src];set_scrubber=1\">[fmtString(scrubber)]</a> to scrub "
