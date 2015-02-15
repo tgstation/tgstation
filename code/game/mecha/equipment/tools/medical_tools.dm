@@ -297,7 +297,7 @@
 				m = min(m, cable.amount)
 				if(m)
 					use_cable(m)
-					var/obj/item/weapon/cable_coil/CC = new (get_turf(chassis))
+					var/obj/item/weapon/cable_coil/CC = getFromPool(/obj/item/weapon/cable_coil, get_turf(chassis))
 					CC.amount = m
 			else
 				occupant_message("There's no more cable on the reel.")
@@ -316,7 +316,7 @@
 			if(to_load)
 				to_load = min(CC.amount, to_load)
 				if(!cable)
-					cable = new(src)
+					cable = getFromPool(/obj/item/weapon/cable_coil, src)
 					cable.amount = 0
 				cable.amount += to_load
 				CC.use(to_load)
@@ -359,17 +359,17 @@
 				return reset()
 		if(!use_cable(1))
 			return reset()
-		var/obj/structure/cable/NC = new(new_turf)
+		var/obj/structure/cable/NC = getFromPool(/obj/structure/cable, new_turf)
 		NC.cableColor("red")
 		NC.d1 = 0
 		NC.d2 = fdirn
-		NC.updateicon()
+		NC.update_icon()
 
 		var/datum/powernet/PN
 		if(last_piece && last_piece.d2 != chassis.dir)
 			last_piece.d1 = min(last_piece.d2, chassis.dir)
 			last_piece.d2 = max(last_piece.d2, chassis.dir)
-			last_piece.updateicon()
+			last_piece.update_icon()
 			PN = last_piece.powernet
 
 		if(!PN)

@@ -22,51 +22,50 @@ If d1 = dir1 and d2 = dir2, it's a full X-X cable, getting from dir1 to dir2
 By design, d1 is the smallest direction and d2 is the highest
 */
 
+#define CABLE_PINK "#CA00B6"
+#define CABLE_ORANGE "#CA6900"
+
+
 /obj/structure/cable
 	level = 1								// is underfloor
 	anchored =1
 	var/datum/powernet/powernet
 	name = "power cable"
 	desc = "A flexible superconducting cable for heavy-duty power transfer"
-	icon = 'icons/obj/power_cond_red.dmi'
+	icon = 'icons/obj/power_cond_white.dmi'
 	icon_state = "0-1"
 	var/d1 = 0								// cable direction 1 (see above)
 	var/d2 = 1								// cable direction 2 (see above)
 	layer = 2.44							// just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	var/obj/item/device/powersink/attached	// holding this here for qdel
-	l_color = "red"
+	var/_color = "red"
 
 /obj/structure/cable/yellow
-	l_color = "yellow"
-	icon = 'icons/obj/power_cond_yellow.dmi'
+	_color = "yellow"
 
 /obj/structure/cable/green
-	l_color = "green"
-	icon = 'icons/obj/power_cond_green.dmi'
+	_color = "green"
 
 /obj/structure/cable/blue
-	l_color = "blue"
-	icon = 'icons/obj/power_cond_blue.dmi'
+	_color = "blue"
 
 /obj/structure/cable/pink
-	l_color = "pink"
-	icon = 'icons/obj/power_cond_pink.dmi'
+	_color = "pink"
 
 /obj/structure/cable/orange
-	l_color = "orange"
-	icon = 'icons/obj/power_cond_orange.dmi'
+	_color = "orange"
 
 /obj/structure/cable/cyan
-	l_color = "cyan"
-	icon = 'icons/obj/power_cond_cyan.dmi'
+	_color = "cyan"
 
 /obj/structure/cable/white
-	l_color = "white"
-	icon = 'icons/obj/power_cond_white.dmi'
+	_color = "white"
 
 // the power cable object
 /obj/structure/cable/New(loc)
 	..(loc)
+
+	cableColor(_color)
 
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	var/dash = findtext(icon_state, "-")
@@ -108,9 +107,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(level == 1 && isturf(loc))
 		invisibility = i ? 101 : 0
 
-	updateicon()
+	update_icon()
 
-/obj/structure/cable/proc/updateicon()
+/obj/structure/cable/update_icon()
 	if(invisibility)
 		icon_state = "[d1]-[d2]-f"
 	else
@@ -139,9 +138,9 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			new/obj/item/weapon/cable_coil(T, 2, l_color)
+			getFromPool(/obj/item/weapon/cable_coil, T, 2, l_color)
 		else
-			new/obj/item/weapon/cable_coil(T, 1, l_color)
+			getFromPool(/obj/item/weapon/cable_coil, T, 1, l_color)
 
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
@@ -168,7 +167,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		message_admins(message, 0, 1)
 
-		qdel(src)
+		returnToPool(src)
 		return
 	else if(istype(W, /obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/coil = W
@@ -204,38 +203,27 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			qdel(src)
+			returnToPool(src)
 		if(2.0)
 			if(prob(50))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, l_color)
-				qdel(src)
+				getFromPool(/obj/item/weapon/cable_coil,  src.loc, src.d1 ? 2 : 1, l_color)
+				returnToPool(src)
 
 		if(3.0)
 			if(prob(25))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, l_color)
-				qdel(src)
+				getFromPool(/obj/item/weapon/cable_coil, src.loc, src.d1 ? 2 : 1, l_color)
+				returnToPool(src)
 	return
 
 /obj/structure/cable/proc/cableColor(var/colorC = "red")
 	l_color = colorC
-
 	switch(colorC)
-		if("red")
-			icon = 'icons/obj/power_cond_red.dmi'
-		if("yellow")
-			icon = 'icons/obj/power_cond_yellow.dmi'
-		if("green")
-			icon = 'icons/obj/power_cond_green.dmi'
-		if("blue")
-			icon = 'icons/obj/power_cond_blue.dmi'
 		if("pink")
-			icon = 'icons/obj/power_cond_pink.dmi'
+			color = CABLE_PINK
 		if("orange")
-			icon = 'icons/obj/power_cond_orange.dmi'
-		if("cyan")
-			icon = 'icons/obj/power_cond_cyan.dmi'
-		if("white")
-			icon = 'icons/obj/power_cond_white.dmi'
+			color = CABLE_ORANGE
+		else
+			color = colorC
 
 ////////////////////////////////////////////
 // Power related
@@ -442,7 +430,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		propagate_network(powerlist[1], PN) // propagates the new powernet beginning at the source cable
 
 		if(PN.is_empty()) // can happen with machines made nodeless when smoothing cables
-			qdel(PN)
+			del(PN) //powernets do not get qdelled
 
 // cut the cable's powernet at this cable and updates the powergrid
 /obj/structure/cable/proc/cut_cable_from_powernet()
@@ -609,7 +597,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	if((istype(W, /obj/item/weapon/wirecutters)) && (amount > 1))
 		amount--
-		new/obj/item/weapon/cable_coil(user.loc, 1, _color)
+		getFromPool(/obj/item/weapon/cable_coil, user.loc, 1, _color)
 		user << "You cut a piece off the cable coil."
 		update_icon()
 		return
@@ -641,7 +629,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			//var/mob/M = loc
 			//M.unEquip(src)
 
-		qdel(src)
+		returnToPool(src)
 	else
 		amount -= used
 		update_icon()
@@ -685,14 +673,14 @@ By design, d1 is the smallest direction and d2 is the highest
 				user << "There's already a cable at that position."
 				return
 
-		var/obj/structure/cable/C = new(F)
+		var/obj/structure/cable/C = getFromPool(/obj/structure/cable, F)
 		C.cableColor(_color)
 
 		// set up the new cable
 		C.d1 = 0 // it's a O-X node cable
 		C.d2 = dirn
 		C.add_fingerprint(user)
-		C.updateicon()
+		C.update_icon()
 
 		//create a new powernet with the cable, if needed it will be merged later
 		var/datum/powernet/PN = new()
@@ -708,8 +696,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(C.shock(user, 50))
 			if(prob(50)) // fail
-				new/obj/item/weapon/cable_coil(C.loc, 1, C.l_color)
-				qdel(C)
+				getFromPool(/obj/item/weapon/cable_coil, C.loc)
+				returnToPool(C)
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
@@ -750,13 +738,13 @@ By design, d1 is the smallest direction and d2 is the highest
 					user << "There's already a cable at that position."
 					return
 
-			var/obj/structure/cable/NC = new(U)
+			var/obj/structure/cable/NC = getFromPool(/obj/structure/cable, U)
 			NC.cableColor(_color)
 
 			NC.d1 = 0
 			NC.d2 = fdirn
 			NC.add_fingerprint()
-			NC.updateicon()
+			NC.update_icon()
 
 			//create a new powernet with the cable, if needed it will be merged later
 			var/datum/powernet/newPN = new()
@@ -773,7 +761,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
 					new/obj/item/weapon/cable_coil(NC.loc, 1, NC.l_color)
-					qdel(NC)
+					returnToPool(NC)
 
 			return
 
@@ -801,7 +789,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		C.d2 = nd2
 
 		C.add_fingerprint()
-		C.updateicon()
+		C.update_icon()
 
 		C.mergeConnectedNetworks(C.d1) // merge the powernets...
 		C.mergeConnectedNetworks(C.d2) // ...in the two new cable directions
@@ -817,8 +805,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(C.shock(user, 50))
 			if(prob(50)) //fail
-				new/obj/item/weapon/cable_coil(C.loc, 2, C.l_color)
-				qdel(C)
+				getFromPool(/obj/item/weapon/cable_coil, C.loc, 1, C.l_color)
+				returnToPool(C)
 				return
 
 		C.denode() // this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.
