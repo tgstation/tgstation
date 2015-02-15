@@ -103,5 +103,6 @@
 /obj/item/weapon/bikehorn/airhorn
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
-	honksound = 'sound/items/AirHorn.ogg'
+	icon_state = "air_horn"
+	honksound = 'sound/items/AirHorn2.ogg'
 	cooldowntime = 50
