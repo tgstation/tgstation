@@ -110,7 +110,7 @@
 	new /obj/item/clothing/shoes/sneakers/brown	(src)
 	new /obj/item/weapon/cartridge/cmo(src)
 	new /obj/item/device/radio/headset/heads/cmo(src)
-	new /obj/item/weapon/defibrillator/loaded(src)
+	new /obj/item/weapon/defibrillator/compact/loaded(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/device/flash/handheld(src)

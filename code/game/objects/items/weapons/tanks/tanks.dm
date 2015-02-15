@@ -24,7 +24,7 @@
 	src.air_contents.volume = volume //liters
 	src.air_contents.temperature = T20C
 
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 	return
 

@@ -9,7 +9,7 @@
 
 /obj/effect/blob/node/New(loc, var/h = 100)
 	blob_nodes += src
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	..(loc, h)
 
 /obj/effect/blob/node/adjustcolors(var/a_color)
