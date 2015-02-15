@@ -310,6 +310,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=4"
 	perunit = 2000
 
+/*
 /obj/item/stack/sheet/mineral/pharosium
 	name = "pharosium"
 	icon_state = "sheet-pharosium"
@@ -463,4 +464,4 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=5"
 	perunit = 3750
-
+*/
