@@ -230,13 +230,6 @@
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	fix_modules()
 
-/obj/item/weapon/robot_module/miner/on_emag()
-	..()
-	for(var/obj/item/weapon/pickaxe/drill/cyborg/D in modules)
-		qdel(D)
-	modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
-	rebuild()
-
 
 /obj/item/weapon/robot_module/syndicate
 	name = "syndicate robot module"

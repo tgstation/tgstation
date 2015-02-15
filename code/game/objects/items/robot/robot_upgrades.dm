@@ -169,6 +169,8 @@
 	else
 		for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module.modules)
 			qdel(D)
+		for(var/obj/item/weapon/shovel/S in R.module.modules)
+			qdel(S)
 		R.module.modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
 		R.module.rebuild()
 		return 1

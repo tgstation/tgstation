@@ -661,7 +661,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ddrill
 	req_tech = list("engineering" = 5, "materials" = 5)
-	materials = list("$metal"=10000, "$diamond"=8000)
+	materials = list("$metal"=10000, "$diamond"=3750)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
