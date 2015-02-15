@@ -347,7 +347,7 @@
 	create_dna(new_character)
 
 	if(config.force_random_names)
-		client.prefs.real_name = random_name(gender)
+		client.prefs.real_name = random_name(client.prefs.gender)
 
 	if(appearance_isbanned(src))
 		client.prefs.random_character()
