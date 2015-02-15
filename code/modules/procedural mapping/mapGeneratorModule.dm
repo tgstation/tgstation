@@ -41,7 +41,6 @@
 		if(clusterCheckFlags & CLUSTER_CHECK_TURFS)
 			if(clusterMax && clusterMin)
 				clustering = rand(clusterMin,clusterMax)
-				//if(locate(turfPath) in range(clustering,T))
 				if(locate(/atom/movable) in range(clustering, T))
 					continue
 		if(prob(spawnableTurfs[turfPath]))
@@ -53,7 +52,6 @@
 			if(clusterCheckFlags & CLUSTER_CHECK_ATOMS)
 				if(clusterMax && clusterMin)
 					clustering = rand(clusterMin,clusterMax)
-					//if(locate(atomPath) in range(clustering,T))
 					if(locate(/atom/movable) in range(clustering, T))
 						continue
 			if(prob(spawnableAtoms[atomPath]))
