@@ -72,7 +72,7 @@
 	if(..())
 		return
 	if(href_list["copy"])
-		if(coyping)
+		if(copying)
 			usr << "<span class='warning'>\The [src] is busy with another print job.</span>"
 			return
 		if(copy)
