@@ -62,6 +62,10 @@ datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/sho
 					M.reagents.add_reagent(self.id,self.volume/2)
 	return 1
 
+datum/reagent/proc/on_touch_apply(var/obj/item/organ/limb/L)
+	var/mob/living/carbon/human/H = L.owner
+	holder.remove_reagent(src.id, metabolization_rate * H.metabolism_efficiency)
+
 datum/reagent/proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
 	src = null						//if it can hold reagents. nope!
 	//if(O.reagents)

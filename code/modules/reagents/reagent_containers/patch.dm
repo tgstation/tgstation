@@ -13,13 +13,42 @@
 	..()
 	icon_state = "bandaid" // thanks inheritance
 
-/obj/item/weapon/reagent_containers/pill/patch/afterattack(obj/target, mob/user , proximity)
-	return // thanks inheritance again
+/obj/item/weapon/reagent_containers/pill/patch/attack(mob/living/carbon/human/M, mob/user)
+	if(istype(M))
+		var/obj/item/organ/limb/affected = canconsume(M, user)
+		if(affected && affected.status == ORGAN_ORGANIC)
+			user.visible_message("<span class='notice'>[user] manages to [apply_method] [src] on [M].</span>", \
+							"<span class='notice'>You [apply_method] [src].</span>")
+			user.unEquip(src)
+			loc = affected
+			SSobj.processing.Add(src)
 
-/obj/item/weapon/reagent_containers/pill/patch/canconsume(mob/eater, mob/user)
-	if(!eater.SpeciesCanConsume())
-		return 0
-	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
+/obj/item/weapon/reagent_containers/pill/patch/process()
+	if(reagents.total_volume)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			R.on_touch_apply(loc)
+	else
+		SSobj.processing.Remove(src)
+		qdel(src)
+
+/obj/item/weapon/reagent_containers/pill/patch/afterattack(obj/target, mob/user, proximity)
+	return
+
+/obj/item/weapon/reagent_containers/pill/patch/canconsume(mob/living/carbon/human/target, mob/user)
+	if(istype(target))
+		var/obj/item/organ/limb/affected = target.get_organ(check_zone(user.zone_sel.selecting))
+		var/cover = target.check_covered(affected)
+		if(!cover)
+			var/patches_counter
+			for(var/obj/item/weapon/reagent_containers/pill/patch/P in affected)
+				patches_counter++
+			if(affected.max_patches <= patches_counter)
+				user << "<span class='alert'>Theres no free space left on this body part for more patches.</span>"
+			else
+				return affected
+		else
+			user << "<span class='alert'>You cant apply [src], remove the [cover] first.</span>"
+
 
 /obj/item/weapon/reagent_containers/pill/patch/styptic
 	name = "brute patch"
