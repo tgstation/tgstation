@@ -79,7 +79,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 /spell/proc/perform(mob/user = usr, skipcharge = 0) //if recharge is started is important for the trigger spells
 	if(!cast_check())
 		return
-	if(cast_delay && !do_after(user, cast_delay))
+	if(cast_delay && !spell_do_after(user, cast_delay))
 		return
 	if(!holder)
 		holder = user //just in case
@@ -308,3 +308,21 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 			name = "Instant [name]"
 
 	return temp
+
+/spell/proc/spell_do_after(var/mob/user as mob, delay as num, var/numticks = 5)
+	if(!user || isnull(user))
+		return 0
+	if(numticks == 0)
+		return 1
+
+	var/delayfraction = round(delay/numticks)
+	var/Location = user.loc
+	var/originalstat = user.stat
+
+	for(var/i = 0, i<numticks, i++)
+		sleep(delayfraction)
+
+
+		if(!user || (!(spell_flags & (STATALLOWED|GHOSTCAST)) && user.stat != originalstat)  || !(user.loc == Location))
+			return 0
+	return 1
