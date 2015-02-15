@@ -472,7 +472,7 @@
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
 	w_class = 3
-	force = 15
+	force = 8
 	throwforce = 10
 	var/cooldown = 0
 	var/fieldsactive = 0
