@@ -29,7 +29,7 @@ OOC_DURING_ROUND
 
 ### EMOJI ###
 #Comment this out if you want to disable emojis
-EMOJIS
+#EMOJIS
 
 ### MOB MOVEMENT ###
 
@@ -41,7 +41,7 @@ EMOJIS
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
-RUN_DELAY 1
+RUN_DELAY 0
 WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types.
