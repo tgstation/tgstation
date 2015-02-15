@@ -225,7 +225,7 @@ var/bomb_set
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
