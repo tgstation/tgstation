@@ -94,8 +94,10 @@
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
+	SetLuminosity(brightness_on)
 	if(stat & BROKEN)
 		icon_state += "b"
+		SetLuminosity(0)
 	return
 
 /obj/machinery/computer/security/telescreen/entertainment
