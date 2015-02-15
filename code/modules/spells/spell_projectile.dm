@@ -13,6 +13,9 @@
 	var/proj_trail_icon = 'icons/obj/wizard.dmi'
 	var/proj_trail_icon_state = "trail"
 
+/obj/item/projectile/spell_projectile/ex_act()
+	return
+
 /obj/item/projectile/spell_projectile/process_step()
 	..()
 	if(!isnull(src.loc))
@@ -32,10 +35,17 @@
 /obj/item/projectile/spell_projectile/proc/prox_cast(var/list/targets)
 	if(loc)
 		carried.prox_cast(targets, src)
-		returnToPool(src)
+		qdel(src)
+	return
+
+/obj/item/projectile/spell_projectile/Bump(var/atom/A)
+	if(loc)
+		prox_cast(carried.choose_prox_targets())
 	return
 
 /obj/item/projectile/spell_projectile/OnDeath()
+	if(loc)
+		prox_cast(carried.choose_prox_targets())
 	return
 
 /obj/item/projectile/spell_projectile/seeking

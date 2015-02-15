@@ -26,7 +26,6 @@
 	var/ex_flash = 5
 
 /spell/targeted/projectile/dumbfire/fireball/prox_cast(var/list/targets, spell_holder)
-	targets = ..()
 	explosion(get_turf(spell_holder), ex_severe, ex_heavy, ex_light, ex_flash)
 
 //PROJECTILE
@@ -34,8 +33,3 @@
 /obj/item/projectile/spell_projectile/fireball
 	name = "fireball"
 	icon_state = "fireball"
-
-/obj/item/projectile/spell_projectile/fireball/OnDeath()
-	if(carried && loc)
-		carried.prox_cast(carried.choose_prox_targets(), src)
-	return
