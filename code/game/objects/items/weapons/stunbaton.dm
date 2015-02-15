@@ -47,7 +47,7 @@
 
 /obj/item/weapon/melee/baton/proc/update_process()
 	if(status)
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 	else
 		SSobj.processing.Remove(src)
 
