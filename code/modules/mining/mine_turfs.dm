@@ -572,7 +572,7 @@
 		user << "<span class='danger'>You start digging.</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
-		sleep(W.digspeed)
+		sleep(P.digspeed)
 		if ((user.loc == T && user.get_active_hand() == W))
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
