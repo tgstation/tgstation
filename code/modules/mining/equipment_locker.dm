@@ -239,11 +239,11 @@
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   300),
 		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     400),
 		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                    500),
-		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   500),
-		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   500),
+		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   750),
+		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
-		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  1500),
-		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               1800),
+		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  1200),
+		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               1500),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/weapon/spacecash/c1000,                    			  2000),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   500),
 		)
@@ -341,17 +341,19 @@
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Mining Drill", "Resonator", "Kinetic Accelerator", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Mining Drill", "Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
 	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Mining Drill")
 			new /obj/item/weapon/pickaxe/drill(src.loc)
 			new /obj/item/weapon/stock_parts/cell/high(src.loc)
-		if("Resonator")
-			new /obj/item/weapon/resonator(src.loc)
 		if("Kinetic Accelerator")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
+			new /obj/item/weapon/screwdriver(src.loc)
+		if("Resonator")
+			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/screwdriver(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
@@ -473,18 +475,41 @@
 	force = 15
 	throwforce = 10
 	var/cooldown = 0
+	var/fieldsactive = 0
+	var/burst_time = 50
+	var/fieldlimit = 3
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
-	if(cooldown <= 0)
+	if(fieldsactive < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		new /obj/effect/resonance(get_turf(target), creator)
-		cooldown = 1
-		spawn(20)
-			cooldown = 0
+		new /obj/effect/resonance(get_turf(target), creator, burst_time)
+		fieldsactive++
+		spawn(50)
+			fieldsactive--
 
 /obj/item/weapon/resonator/attack_self(mob/user as mob)
 	CreateResonance(src, user)
 	..()
+
+/obj/item/weapon/resonator/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(burst_time == 50)
+			burst_time = 30
+			user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
+		else
+			burst_time = 50
+			user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
+
+	else if(istype(W, /obj/item/stack))
+		var/obj/item/stack/S = W
+
+		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
+			if(fieldlimit < 8)
+				fieldlimit++
+				user << "<span class='info'>You upgrade [src]'s field generator with diamonds.</span>"
+				S.use(1)
+			else
+				user << "<span class='info'>The [src.name]'s field generator is at the limit.</span>"
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -500,13 +525,13 @@
 	mouse_opacity = 0
 	var/resonance_damage = 20
 
-/obj/effect/resonance/New(loc, var/creator = null)
+/obj/effect/resonance/New(loc, var/creator = null, var/timetoburst)
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
-		spawn(50)
+		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			M.gets_drilled(creator)
 			qdel(src)
@@ -516,7 +541,7 @@
 		if(pressure < 50)
 			name = "strong resonance field"
 			resonance_damage = 50
-		spawn(50)
+		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
 				for(var/mob/living/L in src.loc)

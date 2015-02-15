@@ -66,7 +66,7 @@
 	var/powered = 1 //used to check for drill charge when mining
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
-	playsound(src, pick(digsound),20,1)
+	playsound(src, pick(digsound),50,1)
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond-tipped pickaxe"

@@ -559,6 +559,25 @@
 			gets_dug()
 			return
 
+	if ((istype(W, /obj/item/weapon/pickaxe)))
+		var/obj/item/weapon/pickaxe/P = W
+		var/turf/T = user.loc
+		if (!( istype(T, /turf) ))
+			return
+
+		if (dug)
+			user << "<span class='danger'>This area has already been dug.</span>"
+			return
+
+		user << "<span class='danger'>You start digging.</span>"
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
+
+		sleep(W.digspeed)
+		if ((user.loc == T && user.get_active_hand() == W))
+			user << "<span class='notice'>You dug a hole.</span>"
+			gets_dug()
+			return
+
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
