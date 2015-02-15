@@ -46,7 +46,7 @@
 		qdel(src)
 		return
 
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	..()
 
 /obj/structure/closet/statue/process()
