@@ -19,7 +19,10 @@
 		say("Activation message is '[recorded]'.")
 	else
 		if(findtext(message, recorded))
-			pulse(0)
+			if(istype(speaker, /obj/item/device/assembly))
+				playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, 1)
+			else
+				pulse(0)
 
 /obj/item/device/assembly/voice/activate()
 	if(secured)

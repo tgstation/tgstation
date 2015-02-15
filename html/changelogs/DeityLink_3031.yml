@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixes a server crash caused by an infinite loop, related to voice analysers and speaker assemblies.
