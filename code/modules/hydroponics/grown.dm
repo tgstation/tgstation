@@ -508,7 +508,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming the [src.name] at themself! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
-	sleep(15)
+	sleep(25)
+	user.say("BANG!")
+	sleep(25)
 	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
 	return (OXYLOSS)
 

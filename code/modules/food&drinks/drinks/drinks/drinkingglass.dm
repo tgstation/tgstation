@@ -434,6 +434,14 @@
 				icon_state = "dr_gibb_glass"
 				name = "Glass of welder fuel"
 				desc = "Unless you are an industrial tool, this is probably not safe for consumption."
+			if("b52")
+				icon_state = "b52glass"
+				name = "B-52"
+				desc = "Kahlua, Irish Cream, and cognac. You will get bombed."
+			if("toxinsspecial")
+				icon_state = "toxinsspecialglass"
+				name = "Toxins Special"
+				desc = "Whoah, this thing is on FIRE"
 			else
 				icon_state ="glass_brown"
 				name = "Glass of ..what?"
