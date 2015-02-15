@@ -65,7 +65,7 @@ var/global/datum/controller/gameticker/ticker
 			for(var/i=0, i<10, i++)
 				sleep(1)
 				vote.process()
-				//watchdog.check_for_update()
+				watchdog.check_for_update()
 				//if(watchdog.waiting)
 					//world << "<span class='notice'>Server update detected, restarting momentarily.</span>"
 					//watchdog.signal_ready()

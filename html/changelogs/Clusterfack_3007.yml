@@ -1,5 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- tweak: Goon ores commented out of material's lists until they serve some purpose
-- rscadd: You can wrench and drag around All in One grinders

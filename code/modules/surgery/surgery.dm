@@ -106,8 +106,9 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 			if(canuse && S.is_valid_mutantrace(M) && !(M in S.doing_surgery))
 				S.doing_surgery += M
 				S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
+				var/selection = user.zone_sel.selecting
 				//We had proper tools! (or RNG smiled.) and user did not move or change hands.
-				if(do_mob(user, M, rand(S.min_duration, S.max_duration)) && prob(S.tool_quality(tool) / (sleep_fail + clumsy + 1)))
+				if(do_mob(user, M, rand(S.min_duration, S.max_duration)) && (prob(S.tool_quality(tool) / (sleep_fail + clumsy + 1))) && selection == user.zone_sel.selecting)
 					S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
 				else
 					if ((tool in user.contents) && (user.Adjacent(M)))											//or
