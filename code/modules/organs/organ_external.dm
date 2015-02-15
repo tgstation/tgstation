@@ -985,7 +985,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		process_grasp(owner.l_hand, "left hand")
 
 /datum/organ/external/head
-	dir = 1
+	icon_position = HEAD //these are datums not objects.
 	name = "head"
 	icon_name = "head"
 	display_name = "head"

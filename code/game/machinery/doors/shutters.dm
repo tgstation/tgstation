@@ -30,7 +30,8 @@
 	return
 
 /obj/machinery/door/poddoor/shutters/open()
-	if(operating == 1 || welded) //doors can still open when emag-disabled
+	if(operating == 1) //doors can still open when emag-disabled
+	//if(welded) //These are not airlocks
 		return
 	if(!ticker)
 		return 0
@@ -51,7 +52,8 @@
 	return 1
 
 /obj/machinery/door/poddoor/shutters/close()
-	if(operating || welded)
+	if(operating)
+	//if(welded) //these are not airlocks.
 		return
 	operating = 1
 	flick("shutterc1", src)
