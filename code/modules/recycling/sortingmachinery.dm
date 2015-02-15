@@ -295,7 +295,7 @@
 /*		for(var/obj/structure/bigDelivery/O in src)
 		deliveryCheck = 1
 		if(O.sortTag == 0)						//This auto-sorts package wrapped objects to disposals
-			O.sortTag = 1						//Cargo techs can do this themselves with their taggers
+			O.sortTag = 1						//Quartermasters can do this themselves with their taggers
 	for(var/obj/item/smallDelivery/O in src)	//With this disabled packages will loop back round and come out the mail chute
 		deliveryCheck = 1
 		if(O.sortTag == 0)

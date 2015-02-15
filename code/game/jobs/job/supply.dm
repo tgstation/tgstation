@@ -7,8 +7,8 @@ Quartermaster
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 4
+	spawn_positions = 3
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
@@ -25,30 +25,6 @@ Quartermaster
 	H.equip_to_slot_or_del(new /obj/item/weapon/clipboard(H), slot_l_hand)
 
 /*
-Cargo Technician
-*/
-/datum/job/cargo_tech
-	title = "Cargo Technician"
-	flag = CARGOTECH
-	department_head = list("Head of Personnel")
-	department_flag = CIVILIAN
-	faction = "Station"
-	total_positions = 3
-	spawn_positions = 2
-	supervisors = "the quartermaster and the head of personnel"
-	selection_color = "#dddddd"
-
-	default_pda = /obj/item/device/pda/cargo
-	default_headset = /obj/item/device/radio/headset/headset_cargo
-
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
-
-/datum/job/cargo_tech/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargotech(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-
-/*
 Shaft Miner
 */
 /datum/job/mining
@@ -59,7 +35,7 @@ Shaft Miner
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 3
-	supervisors = "the quartermaster and the head of personnel"
+	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
 	default_pda = /obj/item/device/pda/shaftminer

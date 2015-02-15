@@ -24,7 +24,7 @@ Many jobs have been combined or just plainly cut out. These are the remaining jo
 
  * Captain - Make sure your station is running.
  * HoP - You're second in command, protect the Captain and be his right hand man.
- * Cargo Tech x3 - Running cargo bay and mining minerals for the station.
+ * Quartermaster x3 - Running cargo bay and mining minerals for the station.
  * Bartender - Keeping the bar, serving drinks and food. Hire the unemployeed to grow food for you, or do it yourself.
  * Janitor - Cleans the station, removes litter and empty trash bins to be recycled by the crusher.
  * Station Engineer x4 - Keeping the power running and fixing station damage.

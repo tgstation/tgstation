@@ -149,7 +149,7 @@
 
 /obj/item/weapon/cartridge/quartermaster
 	name = "space parts & space vendors cartridge"
-	desc = "Perfect for the Quartermaster on the go!"
+	desc = "Perfect for Quartermasters on the go!"
 	icon_state = "cart-q"
 	access_quartermaster = 1
 

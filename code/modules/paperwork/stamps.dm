@@ -18,7 +18,7 @@
 	return (OXYLOSS)
 
 /obj/item/weapon/stamp/qm
-	name = "quartermaster's rubber stamp"
+	name = "cargo's rubber stamp"
 	icon_state = "stamp-qm"
 	item_color = "qm"
 

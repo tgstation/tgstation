@@ -100,7 +100,7 @@ Radio:
 1441 - death squad
 1443 - Confession Intercom
 1349 - Miners
-1347 - Cargo techs
+1347 - Quartermasters
 1447 - AI Private
 
 Devices:
