@@ -1106,6 +1106,7 @@ obj/item/weapon/organ/r_leg
 	icon_state = "r_leg"
 
 obj/item/weapon/organ/head
+	dir = NORTH
 	name = "head"
 	icon_state = "head_m"
 	var/mob/living/carbon/brain/brainmob
