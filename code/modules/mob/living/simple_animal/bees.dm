@@ -42,7 +42,29 @@
 
 /mob/living/simple_animal/bee/Life()
 	..()
+	if(stat != DEAD) //If we're alive, see if we can be calmed down.
+		//smoke, water and steam calms us down
+		var/calming = 0
+		var/list/calmers = list(/obj/effect/effect/smoke/chem, \
+		/obj/effect/effect/water, \
+		/obj/effect/effect/foam, \
+		/obj/effect/effect/steam, \
+		/obj/effect/mist)
 
+		for(var/this_type in calmers)
+			var/check_effect = locate(this_type) in src.loc
+			if(check_effect && check_effect == this_type)
+				calming = 1
+				break
+
+		if(calming)
+			var/oldferal = feral
+			feral = -10
+			if(oldferal > 0 && feral <= 0)
+				src.visible_message("\blue The bees calm down!")
+				target = null
+				target_turf = null
+				wander = 1
 	if(stat == CONSCIOUS)
 		//if we're strong enough, sting some people
 		var/mob/living/carbon/human/M = target
@@ -93,28 +115,6 @@
 		//make some noise
 		if(prob(0.5))
 			src.visible_message("\blue [pick("Buzzzz.","Hmmmmm.","Bzzz.")]")
-
-		//smoke, water and steam calms us down
-		var/calming = 0
-		var/list/calmers = list(/obj/effect/effect/smoke/chem, \
-		/obj/effect/effect/water, \
-		/obj/effect/effect/foam, \
-		/obj/effect/effect/steam, \
-		/obj/effect/mist)
-
-		for(var/this_type in calmers)
-			var/check_effect = locate(this_type) in src.loc
-			if(check_effect && check_effect == this_type)
-				calming = 1
-				break
-
-		if(calming)
-			if(feral > 0)
-				src.visible_message("\blue The bees calm down!")
-			feral = -10
-			target = null
-			target_turf = null
-			wander = 1
 
 		for(var/mob/living/simple_animal/bee/B in src.loc)
 			if(B == src)
