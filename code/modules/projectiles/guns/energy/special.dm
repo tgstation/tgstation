@@ -35,7 +35,7 @@
 
 /obj/item/weapon/gun/energy/floragun/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/floragun/Destroy()
@@ -71,7 +71,7 @@
 
 /obj/item/weapon/gun/energy/meteorgun/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/meteorgun/Destroy()
@@ -115,10 +115,45 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/emproof"
 	var/overheat = 0
 	var/recent_reload = 1
+	var/range_add = 0
+	var/overheat_time = 20
+	upgrades = list("diamond" = 0, "screwdriver" = 0, "plasma" = 0)
+
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/newshot()
+	..()
+	if(chambered && chambered.BB)
+		var/obj/item/projectile/kinetic/charge = chambered.BB
+		charge.range += range_add
+
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/screwdriver) && upgrades["screwdriver"] < 3)
+		upgrades["screwdriver"]++
+		overheat_time -= 1
+		user << "<span class='info'>You tweak [src]'s thermal exchanger.</span>"
+
+
+	else if(istype(W, /obj/item/stack))
+		var/obj/item/stack/S = W
+
+		if(istype(S, /obj/item/stack/sheet/mineral/diamond) && upgrades["diamond"] < 3)
+			upgrades["diamond"]++
+			overheat_time -= 3
+			user << "<span class='info'>You upgrade [src]'s thermal exchanger with diamonds.</span>"
+			S.use(1)
+
+		if(istype(S, /obj/item/stack/sheet/mineral/plasma) && upgrades["plasma"] < 2)
+			upgrades["plasma"]++
+			range_add++
+			user << "<span class='info'>You upgrade [src]'s accelerating chamber with plasma.</span>"
+			if(prob(5 * (range_add + 1) * (range_add + 1)) && power_supply)
+				power_supply.rigged = 1 // This is dangerous!
+			S.use(1)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1
-	spawn(20)
+	spawn(overheat_time)
 		overheat = 0
 		recent_reload = 0
 	..()
@@ -132,7 +167,7 @@
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		playsound(user, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+		user << "<span class='warning'>You silently charge [src].<span>"
 	recent_reload = 1
 	update_icon()
 	return
@@ -157,6 +192,7 @@
 	origin_tech = "combat=2;magnets=2;syndicate=3" //can be further researched for more syndie tech
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+	pin = null
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
@@ -173,7 +209,7 @@
 
 /obj/item/weapon/gun/energy/disabler/cyborg/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
@@ -258,7 +294,7 @@
 
 /obj/item/weapon/gun/energy/printer/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/printer/Destroy()

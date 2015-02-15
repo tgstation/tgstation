@@ -774,7 +774,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/singularity_act()
 	var/gain = 20
-	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	investigate_log("([key_name(src)]) has been consumed by the singularity.","singulo") //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 
@@ -821,3 +821,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/do_attack_animation(atom/A)
 	..()
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+
+/mob/living/proc/do_jitter_animation(jitteriness)
+	var/amplitude = min(4, (jitteriness/100) + 1)
+	var/pixel_x_diff = rand(-amplitude, amplitude)
+	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
+	animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y) , time = 2)
+	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+

@@ -12,14 +12,16 @@ datum/reagent/silver_sulfadiazine
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 2
 
-datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
 		M.adjustFireLoss(-volume)
-		M << "<span class='notice'>You feel your burns healing!</span>"
+		if(show_message)
+			M << "<span class='notice'>You feel your burns healing!</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+		if(show_message)
+			M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
 
@@ -37,14 +39,16 @@ datum/reagent/styptic_powder
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 2
 
-datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
 		M.adjustBruteLoss(-volume)
-		M << "<span class='notice'>You feel your wounds knitting back together!</span>"
+		if(show_message)
+			M << "<span class='notice'>You feel your wounds knitting back together!</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+		if(show_message)
+			M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
 
@@ -77,12 +81,13 @@ datum/reagent/synthflesh
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume,var/show_message = 1)
 	if(!M) M = holder.my_atom
 	if(method == TOUCH)
 		M.adjustBruteLoss(-1.5*volume)
 		M.adjustFireLoss(-1.5*volume)
-		M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
+		if(show_message)
+			M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
 	return
 
@@ -552,7 +557,7 @@ datum/reagent/atropine/overdose_process(var/mob/living/M as mob)
 datum/reagent/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
-	description = "Reduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to cap OXY damage at 35 and LOSEBREATH at 3. If health is between -10 to -65, heals 1 TOX, 1 BRUTE, 1 BURN."
+	description = "Reduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to cap OXY damage at 35 and LOSEBREATH at 10. If health is between -10 to -65, heals 1 TOX, 1 BRUTE, 1 BURN."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.2
@@ -566,8 +571,8 @@ datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 		M.adjustFireLoss(-1*REM)
 	if(M.oxyloss > 35)
 		M.setOxyLoss(35)
-	if(M.losebreath > 3)
-		M.losebreath = 3
+	if(M.losebreath >= 10)
+		M.losebreath = max(10, M.losebreath-5)
 	M.adjustStaminaLoss(-1*REM)
 	if(prob(30))
 		M.AdjustParalysis(-1)
@@ -682,7 +687,8 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 			/mob/living/simple_animal/hostile/asteroid/hivelord,
 			/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
 			/mob/living/simple_animal/hostile/carp/holocarp,
-			/mob/living/simple_animal/hostile/mining_drone
+			/mob/living/simple_animal/hostile/mining_drone,
+			/mob/living/simple_animal/hostile/poison
 			)//exclusion list for things you don't want the reaction to create.
 		var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 		var/atom/A = holder.my_atom
@@ -762,7 +768,7 @@ datum/reagent/antihol
 datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.stuttering = 0
+	M.slurring = 0
 	M.confused = 0
 	M.reagents.remove_reagent("ethanol", 8)
 	M.adjustToxLoss(-0.2*REM)

@@ -343,13 +343,14 @@
 			throwSmoke(src.loc)
 		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='notice'>[src] melts [exp_on], ionizing the air around it!.</span>")
-			empulse(src.loc, 8, 10)
+			empulse(src.loc, 4, 6)
 			ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_HEAT)
 		visible_message("<span class='notice'>[src] raises [exp_on]'s temperature.</span>")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
-			visible_message("<span class='danger'>[src]'s emergency coolant system gives off a small beep!</span>")
+			visible_message("<span class='danger'>[src]'s emergency coolant system gives off a small ding!</span>")
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
 			var/list/chems = list("plasma","capsaicin","ethanol")
 			C.reagents.remove_any(25)
@@ -357,8 +358,16 @@
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
-			visible_message("<span class='danger'>[src] activates it's heat-seeking system!</span>")
-			new/datum/round_event/meteor_wave()
+			var/turf/start = get_turf(src)
+			var/turf/MT = get_turf(locate(/mob/living) in oview(src, 3))
+			if(MT)
+				visible_message("<span class='danger'>[src] dangerously overheats, launching a flaming fuel orb!</span>")
+				var/obj/item/projectile/magic/fireball/FB = new /obj/item/projectile/magic/fireball(start)
+				FB.original = MT
+				FB.current = start
+				FB.yo = MT.y - start.y
+				FB.xo = MT.x - start.x
+				FB.fire()
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, melting [exp_on] and releasing a burst of flame!.</span>")
 			explosion(src.loc, -1, 0, 0, 0, 0, flame_range = 2)
@@ -386,8 +395,9 @@
 	if(exp == SCANTYPE_COLD)
 		visible_message("<span class='notice'>[src] lowers [exp_on]'s temperature.</span>")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
-			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small ping!</span>")
+			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small ding!</span>")
 			var/obj/machinery/vending/coffee/C = new /obj/machinery/vending/coffee(get_turf(pick(oview(1,src))))
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //Ding! Your death coffee is ready!
 			var/list/chems = list("uranium","frostoil","ephedrine")
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(pick(chems) , 50)
@@ -642,7 +652,7 @@
 	visible_message("<span class='notice'>[src] emits a loud pop!</span>")
 	var/list/dupes = list()
 	var/counter
-	var/max = rand(5,45)
+	var/max = rand(5,10)
 	for(counter = 1; counter < max; counter++)
 		var/obj/item/weapon/relic/R = new src.type(get_turf(src))
 		R.name = name
