@@ -386,7 +386,7 @@
 
 	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
 	if (!ui)
-		ui = new(user, src, ui_key, "solar_control.tmpl", name, 490, 410)
+		ui = new(user, src, ui_key, "solar_control.tmpl", name, 490, 420)
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
