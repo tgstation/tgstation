@@ -8,6 +8,7 @@
 
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
+	var/refurnished_state = null
 
 /obj/item/weapon/gun/projectile/New()
 	..()
