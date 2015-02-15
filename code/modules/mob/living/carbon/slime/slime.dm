@@ -815,7 +815,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	New()
 		..()
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
