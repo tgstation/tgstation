@@ -22,11 +22,13 @@ If the spell_projectile is seeking, it will update its target every process and 
 		proj_type = text2path(proj_type) // sanity filters
 
 	for(var/atom/target in targets)
-		var/obj/item/projectile/projectile = new proj_type(user.loc)
+		var/obj/item/projectile/projectile = getFromPool(proj_type, user.loc)
 
 		if(!projectile)
 			return
 
+		projectile.icon = initial(projectile.icon)
+		projectile.icon_state = initial(projectile.icon_state)
 
 		projectile.original = target
 		projectile.loc = get_turf(user)
@@ -40,21 +42,20 @@ If the spell_projectile is seeking, it will update its target every process and 
 		if(istype(projectile, /obj/item/projectile/spell_projectile))
 			var/obj/item/projectile/spell_projectile/SP = projectile
 			SP.carried = src //casting is magical
-			holder = SP
 		projectile.process()
 	return
 
-/spell/targeted/projectile/proc/choose_prox_targets(mob/user = usr)
+/spell/targeted/projectile/proc/choose_prox_targets(mob/user = usr, var/atom/movable/spell_holder)
 	var/list/targets = list()
-	for(var/mob/living/M in range(holder, cast_prox_range))
+	for(var/mob/living/M in range(spell_holder, cast_prox_range))
 		if(M == user && !(spell_flags & INCLUDEUSER))
 			continue
 		targets += M
 	return targets
 
-/spell/targeted/projectile/proc/prox_cast(var/list/targets)
+/spell/targeted/projectile/proc/prox_cast(var/list/targets, var/atom/movable/spell_holder)
 	if(special_prox)
 		for(var/atom/target in targets)
-			if(get_dist(target, src) > cast_prox_range)
+			if(get_dist(target, spell_holder) > cast_prox_range)
 				targets -= target
 	return targets

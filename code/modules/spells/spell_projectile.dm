@@ -15,22 +15,24 @@
 
 /obj/item/projectile/spell_projectile/process_step()
 	..()
-	if(loc)
+	if(!isnull(src.loc))
 		if(carried)
-			var/list/targets = carried.choose_prox_targets()
+			var/list/targets = carried.choose_prox_targets(spell_holder = src)
 			if(targets.len)
 				src.prox_cast(targets)
-		if(proj_trail && src) //pretty trails
-			var/obj/effect/overlay/trail = new /obj/effect/overlay(src.loc)
+		if(proj_trail && src && src.loc) //pretty trails
+			var/obj/effect/overlay/trail = getFromPool(/obj/effect/overlay, src.loc)
 			trail.icon = proj_trail_icon
 			trail.icon_state = proj_trail_icon_state
 			trail.density = 0
 			spawn(proj_trail_lifespan)
-				trail.loc = null
+				returnToPool(trail)
 	return
 
 /obj/item/projectile/spell_projectile/proc/prox_cast(var/list/targets)
-	carried.prox_cast(targets)
+	if(loc)
+		carried.prox_cast(targets, src)
+		returnToPool(src)
 	return
 
 /obj/item/projectile/spell_projectile/OnDeath()
@@ -40,6 +42,6 @@
 	name = "seeking spell"
 
 /obj/item/projectile/spell_projectile/seeking/process_step()
-	if(original)
-		current = original //update the target
 	..()
+	if(original && !isnull(src.loc))
+		current = original //update the target
