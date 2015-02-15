@@ -1,9 +1,0 @@
-author: Angelite Entyshak
- 
- delete-after: True
- 
- changes:
-  - tweak: You can now label evidence and sample bags with a pen.
-  - bugfix: Dialogue for library shelves now have a cancel button.
-  - bugfix: Kinda fixed Ctrl + Clicking for releasing a pulled object, it behaves slightly differently now. Ctrl + click something unmovable (the floor) or something out of range to stop pulling the object.
-
