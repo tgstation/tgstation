@@ -28,6 +28,9 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	var/attached = 0
 
+/obj/item/clothing/mask/facehugger/can_contaminate()
+	return 0
+
 /obj/item/clothing/mask/facehugger/attack_paw(user as mob) //can be picked up by aliens
 	if(isalien(user))
 		attack_hand(user)
