@@ -122,6 +122,7 @@ datum/controller/game_controller/proc/cachedamageicons()
 						DI.Blend(S.blood_color, ICON_MULTIPLY)
 					testing("Completed [damage_state]/[O.icon_name]/[species_blood]")
 					damage_icon_parts["[damage_state]/[O.icon_name]/[species_blood]"] = DI
+	del(H)
 
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
