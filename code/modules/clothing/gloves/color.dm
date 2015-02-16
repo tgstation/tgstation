@@ -8,7 +8,7 @@
 	item_color="yellow"
 
 /obj/item/clothing/gloves/color/yellow/fake
-	desc = "These don't feel like rubber..."
+	desc = "These gloves will protect the wearer from electric shock. They don't feel like rubber..."
 	siemens_coefficient = 1
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
