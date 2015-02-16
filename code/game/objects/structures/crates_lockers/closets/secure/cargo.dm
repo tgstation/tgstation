@@ -15,7 +15,5 @@
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/clothing/gloves/fingerless(src)
-//	new /obj/item/weapon/cartridge/quartermaster(src)
-	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/clothing/head/soft(src)
 	return

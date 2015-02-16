@@ -54,7 +54,6 @@ proc/crewmonitor(mob/user,var/atom/source)
 	jobs["Atmospheric Technician"] = 42
 	jobs["Quartermaster"] = 51
 	jobs["Shaft Miner"] = 52
-	jobs["Cargo Technician"] = 53
 	jobs["Bartender"] = 61
 	jobs["Cook"] = 62
 	jobs["Botanist"] = 63
