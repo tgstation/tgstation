@@ -88,7 +88,7 @@
 
 	if(href_list["ready"])
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
-			ready = !ready
+			ready = text2num(href_list["ready"])
 		else
 			ready = 0
 

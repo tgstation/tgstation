@@ -47,7 +47,7 @@
 		if(OPERATING)
 			if(!attached)
 				return
-			SSobj.processing.Add(src)
+			SSobj.processing |= src
 			anchored = 1
 
 	mode = value

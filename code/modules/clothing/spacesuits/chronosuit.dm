@@ -145,7 +145,7 @@
 					user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver"
 					user << "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view"
 					new_camera(user)
-					SSobj.processing.Add(src)
+					SSobj.processing |= src
 					activated = 1
 				else
 					user << "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helmet"
