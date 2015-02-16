@@ -59,15 +59,19 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
  */
 /proc/getFromPool()
 	var/A = args[1]
-	var/list/B = args - A
+	var/list/B = list()
+	B += (args - A)
 	if(length(masterPool["[A]"]) <= 0)
 		#ifdef DEBUG_OBJECT_POOL
 		world << text("DEBUG_OBJECT_POOL: new proc has been called ([]).", A)
 		#endif
 		//so the GC knows we're pooling this type.
 		if(isnull(masterPool["[A]"]))
-			masterPool["[A]"] = new
-		return new A(arglist(B))
+			masterPool["[A]"] = new A
+		if(B && B.len)
+			return new A(arglist(B))
+		else
+			return new A()
 
 	var/atom/movable/O = masterPool["[A]"][1]
 	masterPool["[A]"] -= O
