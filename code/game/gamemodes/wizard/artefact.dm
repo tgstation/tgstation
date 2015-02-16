@@ -42,7 +42,7 @@
 	src.spawn_path = spawn_type
 	src.spawn_amt_left = spawn_amt
 	src.desc = desc
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	return
 
 /obj/effect/rend/process()
