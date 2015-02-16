@@ -19,6 +19,7 @@ var/global/list/ghdel_profiling = list()
 	var/pass_flags = 0
 	var/throwpass = 0
 	var/germ_level = 0 // The higher the germ level, the more germ on the atom.
+	var/pressure_resistance = ONE_ATMOSPHERE
 
 	///Chemistry.
 	var/datum/reagents/reagents = null

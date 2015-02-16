@@ -4,7 +4,8 @@
 	deform = 'icons/mob/human_races/r_horror.dmi'  // TODO: Need deform.
 	language = "Clatter"
 	attack_verb = "slams"
-	flags = NO_BREATHE /*| NON_GENDERED*/ | NO_PAIN | STOPSPRESSUREDMG /*No longer will our ascended be foiled by depressurization!*/
+	flags = NO_BREATHE /*| NON_GENDERED*/ | NO_PAIN
+	pressure_resistance = 30 * ONE_ATMOSPHERE /*No longer will our ascent be foiled by depressurization!*/
 	//h_style = null
 
 	// Yep.

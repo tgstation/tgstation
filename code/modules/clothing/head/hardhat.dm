@@ -46,16 +46,18 @@
 	item_state = "hardhat0_red"
 	_color = "red"
 	name = "firefighter helmet"
-	flags = FPRINT  | STOPSPRESSUREDMG
+	flags = FPRINT
 	heat_protection = HEAD
+	pressure_resistance = 3 * ONE_ATMOSPHERE
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/head/hardhat/white
 	icon_state = "hardhat0_white"
 	item_state = "hardhat0_white"
 	_color = "white"
-	flags = FPRINT  | STOPSPRESSUREDMG
+	flags = FPRINT
 	heat_protection = HEAD
+	pressure_resistance = 3 * ONE_ATMOSPHERE
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/head/hardhat/dblue
