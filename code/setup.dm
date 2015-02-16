@@ -1074,3 +1074,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define IGNOREDENSE		64	//are dense turfs ignored in selection?
 #define IGNORESPACE		128	//are space turfs ignored in selection?
 
+//Some alien checks for reagents for alien races.
+#define IS_DIONA 1
+#define IS_VOX 2
+#define IS_PLASMA 3
