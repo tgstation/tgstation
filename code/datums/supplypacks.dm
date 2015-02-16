@@ -928,7 +928,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "200 Metal Sheets"
 	contains = list(/obj/item/stack/sheet/metal)
 	amount = 200
-	cost = 40
+	cost = 35
 	containername = "metal sheets crate"
 
 /datum/supply_packs/materials/plasteel20
@@ -956,7 +956,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "200 Glass Sheets"
 	contains = list(/obj/item/stack/sheet/glass)
 	amount = 200
-	cost = 40
+	cost = 35
 	containername = "glass sheets crate"
 
 /datum/supply_packs/materials/cardboard50
