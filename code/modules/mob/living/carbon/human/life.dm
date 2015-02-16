@@ -1010,9 +1010,9 @@ var/global/list/organ_damage_overlays = list(
 		var/alien = 0 //Not the best way to handle it, but neater than checking this for every single reagent proc.
 		if(src.species)
 			switch(src.species.type)
-				if(/datum/species/diona)	alien = 1
-				if(/datum/species/vox)	alien = 2
-				if(/datum/species/plasmaman)	alien = 3
+				if(/datum/species/diona)	alien = IS_DIONA
+				if(/datum/species/vox)	alien = IS_VOX
+				if(/datum/species/plasmaman)	alien = IS_PLASMA
 		reagents.metabolize(src,alien)
 
 	var/total_plasmaloss = 0
