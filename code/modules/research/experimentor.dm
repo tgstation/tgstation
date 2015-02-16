@@ -50,7 +50,7 @@
 /obj/machinery/r_n_d/experimentor/verb/forceReaction()
 	set name = "Force Experimentor Reaction"
 	set category = "Debug"
-	set src in oview(1)
+	set src in oview(1, src)
 	var/reaction = input(usr,"What reaction?") in list(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 	var/oldReaction = item_reactions["[loaded_item.type]"]
 	item_reactions["[loaded_item.type]"] = reaction
@@ -265,7 +265,7 @@
 			badThingCoeff++
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions and destroys [exp_on], lashing it's arms out at nearby people!.</span>")
-			for(var/mob/living/m in oview(1))
+			for(var/mob/living/m in oview(1, src))
 				m.apply_damage(15,"brute",pick("head","chest","groin"))
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
@@ -289,12 +289,12 @@
 			ejectItem()
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, melting [exp_on] and leaking radiation!.</span>")
-			for(var/mob/living/m in oview(1))
+			for(var/mob/living/m in oview(1, src))
 				m.apply_effect(25,IRRADIATE)
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, spewing toxic waste!.</span>")
-			for(var/turf/T in oview(1))
+			for(var/turf/T in oview(1, src))
 				if(!T.density)
 					if(prob(EFFECT_PROB_VERYHIGH))
 						new /obj/effect/decal/cleanable/greenglow(T)
@@ -388,7 +388,7 @@
 		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, activating it's emergency coolant systems!.</span>")
 			throwSmoke(src.loc)
-			for(var/mob/living/m in oview(1))
+			for(var/mob/living/m in oview(1, src))
 				m.apply_damage(5,"burn",pick("head","chest","groin"))
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -638,6 +638,7 @@
 	playsound(src.loc, "sparks", rand(25,50), 1)
 	var/obj/item/weapon/grenade/flashbang/CB = new/obj/item/weapon/grenade/flashbang(get_turf(user))
 	CB.prime()
+	warn_admins(user, "Flash")
 
 /obj/item/weapon/relic/proc/petSpray(var/mob/user)
 	visible_message("<span class='notice'>[src] begans to shake, and in the distance the sound of rampaging animals arises!</span>")
@@ -647,6 +648,7 @@
 	for(counter = 1; counter < animals; counter++)
 		var/mobType = pick(valid_animals)
 		new mobType(get_turf(src))
+	warn_admins(user, "Mass Mob Spawn")
 
 /obj/item/weapon/relic/proc/rapidDupe(var/mob/user)
 	visible_message("<span class='notice'>[src] emits a loud pop!</span>")
@@ -674,6 +676,7 @@
 		if(src.loc == user)
 			visible_message("<span class='notice'>The [src]'s top opens, releasing a powerful blast!</span>")
 			explosion(user.loc, -1, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
+			warn_admins(user, "Explosion")
 
 /obj/item/weapon/relic/proc/teleport(var/mob/user)
 	visible_message("<span class='notice'>The [src] begins to vibrate!</span>")
@@ -683,3 +686,9 @@
 			throwSmoke(get_turf(user))
 			do_teleport(user, get_turf(user), 8, asoundin = 'sound/effects/phasein.ogg')
 			throwSmoke(get_turf(user))
+
+//Admin Warning proc for relics
+/obj/item/weapon/relic/proc/warn_admins(var/mob/user, var/RelicType)
+	var/turf/T = get_turf(src)
+	message_admins("[RelicType] relic activated by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+	log_game("[RelicType] relic used by [user.ckey]([user]) in ([T.x],[T.y],[T.z])")
