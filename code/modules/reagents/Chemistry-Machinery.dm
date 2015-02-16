@@ -472,8 +472,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			if (!count) return
 			var/amount_per_pill = reagents.total_volume/count
 			if (amount_per_pill > 50) amount_per_pill = 50
-			var/name = reject_bad_text(input(usr,"Name:","Name your pill! ('Cancel' exits)","[reagents.get_master_reagent_name()] ([amount_per_pill] units)"))
-			if(name == "Cancel") return
+			var/name = input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([amount_per_pill] units)") as null|text
+			if(!name) return
 			while (count--)
 				var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 				if(!name) name = "[reagents.get_master_reagent_name()] ([amount_per_pill] units)"
