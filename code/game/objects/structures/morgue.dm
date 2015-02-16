@@ -310,7 +310,8 @@
 			return
 
 	else
-		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
+		var/inside = src.search_contents_for(/atom)
+		if(is_type_in_list(/obj/item/weapon/disk/nuclear, inside))
 			usr << "You get the feeling that you shouldn't cremate one of the items in the cremator."
 			return
 
@@ -320,7 +321,7 @@
 		cremating = 1
 		locked = 1
 
-		for(var/mob/living/M in contents)
+		for(var/mob/living/M in inside)
 			if (M.stat!=2)
 				M.emote("scream",,, 1)
 			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
@@ -331,7 +332,7 @@
 			M.ghostize()
 			del(M)
 
-		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
+		for(var/obj/O in inside) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
 			del(O)
 
 		new /obj/effect/decal/cleanable/ash(src)
