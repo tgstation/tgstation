@@ -737,7 +737,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/float(on)
 	if(on && !floating)
-		animate(src, pixel_y = 2, time = 10, loop = -1)
+		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
 	else if(!on && floating)
 		animate(src, pixel_y = initial(pixel_y), time = 10)
@@ -820,7 +820,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/do_attack_animation(atom/A)
 	..()
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
@@ -828,5 +828,5 @@ Sorry Giacom. Please don't be mad :(
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y) , time = 2)
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 

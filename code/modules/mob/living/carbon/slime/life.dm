@@ -6,38 +6,12 @@
 	var/SStun = 0 // stun variable
 
 /mob/living/carbon/slime/Life()
-	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-
-	if (src.notransform)
-		return
-
-	..()
-
-	if(stat != DEAD)
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
+	if(..())
 		handle_nutrition()
-
 		handle_targets()
-
 		if (!ckey)
 			handle_speech_and_mood()
 
-	var/datum/gas_mixture/environment
-	if(src.loc)
-		environment = loc.return_air()
-
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
-
-	if(environment)
-		handle_environment(environment) // Handle temperature/pressure differences between body and environment
-
-	handle_regular_status_updates() // Status updates, death etc.
 
 /mob/living/carbon/slime/proc/AIprocess()  // the master AI process
 
@@ -118,7 +92,7 @@
 
 	AIproc = 0
 
-/mob/living/carbon/slime/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/slime/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		adjustToxLoss(rand(10,20))
 		return
@@ -167,7 +141,7 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/carbon/slime/proc/handle_chemicals_in_body()
+/mob/living/carbon/slime/handle_chemicals_in_body()
 
 	if(reagents) reagents.metabolize(src)
 
@@ -181,7 +155,7 @@
 
 	return //TODO: DEFERRED
 
-/mob/living/carbon/slime/proc/handle_regular_status_updates()
+/mob/living/carbon/slime/handle_regular_status_updates()
 
 	if(is_adult)
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
