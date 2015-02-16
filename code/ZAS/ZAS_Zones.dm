@@ -30,7 +30,7 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 		if(T.zone && T.zone != src)
 			T.zone.RemoveTurf(T)
 		T.zone = src
-		if(!istype(T,/turf/simulated) || istype(T, /turf/simulated/floor/plating/airless/catwalk))
+		if(!istype(T,/turf/simulated) || iscatwalk(T))
 			AddTurf(T)
 
 	//Generate the gas_mixture for use in txhis zone by using the average of the gases
@@ -91,7 +91,7 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 //ZONE MANAGEMENT FUNCTIONS
 /zone/proc/AddTurf(turf/T)
 	//Adds the turf to contents, increases the size of the zone, and sets the zone var.
-	if(istype(T, /turf/simulated) && !istype(T, /turf/simulated/floor/plating/airless/catwalk))
+	if(istype(T, /turf/simulated) && !iscatwalk(T))
 		if(T in contents)
 			return
 		if(T.zone)
@@ -118,7 +118,7 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 			air.group_multiplier--
 		if(T.zone == src)
 			T.zone = null
-	else if(unsimulated_tiles)
+	if(unsimulated_tiles)
 		unsimulated_tiles -= T
 		if(!unsimulated_tiles.len)
 			unsimulated_tiles = null
@@ -165,7 +165,7 @@ var/list/CounterDoorDirections = list(SOUTH,EAST) //Which directions doors turfs
 	if(unsimulated_tiles)
 		if(locate(/turf/simulated) in unsimulated_tiles)
 			for(var/turf/simulated/T in unsimulated_tiles)
-				if(istype(T, /turf/simulated/floor/plating/airless/catwalk))
+				if(iscatwalk(T))
 					continue
 				unsimulated_tiles -= T
 
@@ -488,7 +488,7 @@ zone/proc/Rebuild()
 	var/list/new_unsimulated = ( unsimulated_tiles ? unsimulated_tiles : list() )
 
 	for(var/turf/S in new_contents)
-		if(!istype(S, /turf/simulated))
+		if(!istype(S, /turf/simulated) || iscatwalk(S))
 			new_unsimulated |= S
 			new_contents.Remove(S)
 
@@ -507,13 +507,13 @@ zone/proc/Rebuild()
 		var/list/turf/simulated/reconsider_turfs = list()
 		contents = new_contents
 		for(var/turf/simulated/T in rebuild_turfs)
-			if(!T.zone && T.CanPass(null, T, 1.5, 1))
+			if(!iscatwalk(T) && !T.zone && T.CanPass(null, T, 1.5, 1))
 				var/zone/Z = new /zone(T)
 				Z.air.copy_from(air)
 			else
 				reconsider_turfs |= T
 		for(var/turf/simulated/T in reconsider_turfs)
-			if(!T.zone && T.CanPass(null, T, 1.5, 1))
+			if(!iscatwalk(T) && !T.zone && T.CanPass(null, T, 1.5, 1))
 				var/zone/Z = new /zone(T)
 				Z.air.copy_from(air)
 			else if(!T in air_master.tiles_to_update)
@@ -530,7 +530,7 @@ zone/proc/Rebuild()
 
 	if(new_unsimulated.len)
 		for(var/turf/S in new_unsimulated)
-			if(istype(S, /turf/simulated))
+			if(istype(S, /turf/simulated) && !iscatwalk(S))
 				continue
 			for(var/direction in cardinal)
 				var/turf/simulated/T = get_step(S,direction)
