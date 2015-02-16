@@ -326,13 +326,22 @@ var/global/list/organ_damage_overlays = list(
 	..()
 	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
 
-	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
-	if(wear_suit && (wear_suit.flags & STOPSPRESSUREDMG))
-		pressure_adjustment_coefficient -= PRESSURE_SUIT_REDUCTION_COEFFICIENT
-	if(head && (head.flags & STOPSPRESSUREDMG))
-		pressure_adjustment_coefficient -= PRESSURE_HEAD_REDUCTION_COEFFICIENT
-	pressure_adjustment_coefficient = max(pressure_adjustment_coefficient,0) //So it isn't less than 0
-	pressure_difference = pressure_difference * pressure_adjustment_coefficient
+	//mainly used in horror form, but other things work as well
+	var/species_difference = 0
+	if(species)
+		species_difference = species.pressure_resistance
+
+	//look for what's protecting the head and body, and adjust tolerable pressure by those resistance
+	var/equip_difference = 0
+	var/obj/item/press_protect = get_body_part_coverage(FULL_HEAD)
+	if(press_protect)
+		equip_difference += press_protect.pressure_resistance * PRESSURE_HEAD_REDUCTION_COEFFICIENT
+	press_protect = get_body_part_coverage(FULL_BODY)
+	if(press_protect)
+		equip_difference += press_protect.pressure_resistance * PRESSURE_SUIT_REDUCTION_COEFFICIENT
+
+	pressure_difference = max(pressure_difference - equip_difference - species_difference, 0) //brings us as close to one atmosphere as possible
+
 	if(pressure > ONE_ATMOSPHERE)
 		return ONE_ATMOSPHERE + pressure_difference
 	else

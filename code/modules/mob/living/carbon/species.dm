@@ -60,6 +60,8 @@ var/global/list/whitelisted_species = list("Human")
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
 
+	var/pressure_resistance = 0 //how much we can take a change in pressure, in kPa
+
 	// This shit is apparently not even wired up.
 	var/brute_resist    // Physical damage reduction.
 	var/burn_resist     // Burn damage reduction.
