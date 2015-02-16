@@ -25,28 +25,11 @@
 	var/ex_light = 2
 	var/ex_flash = 5
 
-/spell/targeted/projectile/dumbfire/fireball/prox_cast(var/list/targets)
-	targets = ..()
-	explosion(get_turf(holder), ex_severe, ex_heavy, ex_light, ex_flash)
+/spell/targeted/projectile/dumbfire/fireball/prox_cast(var/list/targets, spell_holder)
+	explosion(get_turf(spell_holder), ex_severe, ex_heavy, ex_light, ex_flash)
 
 //PROJECTILE
 
 /obj/item/projectile/spell_projectile/fireball
 	name = "fireball"
 	icon_state = "fireball"
-
-/obj/item/projectile/spell_projectile/fireball/prox_cast(var/list/targets)
-	if(targets.len)
-		carried.prox_cast(targets)
-		spawn(10)
-			del(src) //remove it
-
-/obj/item/projectile/spell_projectile/fireball/Bump()
-	if(carried)
-		carried.prox_cast(carried.choose_prox_targets())
-	return
-
-/obj/item/projectile/spell_projectile/fireball/OnDeath()
-	if(carried)
-		carried.prox_cast(carried.choose_prox_targets())
-	return

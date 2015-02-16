@@ -9,8 +9,5 @@
 	var/current_turf = starting_turf
 	for(var/i = 1; i <= src.range; i++)
 		current_turf = get_step(current_turf, starting_dir)
-
-	var/atom/movable/AM = new(current_turf)
-	targets += get_turf(AM)
-	qdel(AM)
+	targets += current_turf
 	return targets

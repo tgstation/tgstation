@@ -14,7 +14,6 @@ If the spell_projectile is seeking, it will update its target every process and 
 
 	var/proj_step_delay = 1 //lower = faster
 	var/cast_prox_range = 1
-	var/special_prox = 0
 
 /spell/targeted/projectile/cast(list/targets, mob/user = usr)
 
@@ -22,11 +21,10 @@ If the spell_projectile is seeking, it will update its target every process and 
 		proj_type = text2path(proj_type) // sanity filters
 
 	for(var/atom/target in targets)
-		var/obj/item/projectile/projectile = new proj_type(user.loc)
+		var/obj/item/projectile/projectile = new proj_type(user.loc, user.dir)
 
 		if(!projectile)
 			return
-
 
 		projectile.original = target
 		projectile.loc = get_turf(user)
@@ -40,21 +38,16 @@ If the spell_projectile is seeking, it will update its target every process and 
 		if(istype(projectile, /obj/item/projectile/spell_projectile))
 			var/obj/item/projectile/spell_projectile/SP = projectile
 			SP.carried = src //casting is magical
-			holder = SP
 		projectile.process()
 	return
 
-/spell/targeted/projectile/proc/choose_prox_targets(mob/user = usr)
+/spell/targeted/projectile/proc/choose_prox_targets(mob/user = usr, var/atom/movable/spell_holder)
 	var/list/targets = list()
-	for(var/mob/living/M in range(holder, cast_prox_range))
+	for(var/mob/living/M in range(spell_holder, cast_prox_range))
 		if(M == user && !(spell_flags & INCLUDEUSER))
 			continue
 		targets += M
 	return targets
 
-/spell/targeted/projectile/proc/prox_cast(var/list/targets)
-	if(special_prox)
-		for(var/atom/target in targets)
-			if(get_dist(target, src) > cast_prox_range)
-				targets -= target
+/spell/targeted/projectile/proc/prox_cast(var/list/targets, var/atom/movable/spell_holder)
 	return targets
