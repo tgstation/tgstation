@@ -786,6 +786,3 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
 	return
 
-/mob/living/silicon/ai/grabbedby(mob/living/user)
-	return
-

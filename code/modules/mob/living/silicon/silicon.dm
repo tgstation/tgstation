@@ -401,6 +401,8 @@
 		if ("help")
 			M.visible_message("<span class='notice'>[M] pets [src]!</span>", \
 							"<span class='notice'>You pet [src]!</span>")
+		if("grab")
+			grabbedby(M)
 		else
 			M.do_attack_animation(src)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
@@ -417,3 +419,6 @@
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)
 		return aicamera.selectpicture(aicamera)
+
+/mob/living/silicon/grabbedby(mob/living/user)
+	return
