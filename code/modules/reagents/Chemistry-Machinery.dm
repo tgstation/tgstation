@@ -961,6 +961,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/inuse = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/limit = 10
+	var/speed_multiplier = 1
 	var/list/blend_items = list (
 
 		//Sheets
@@ -1030,6 +1031,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	RefreshParts()
 
 	return
+
+/obj/machinery/reagentgrinder/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		T += M.rating-1
+	limit = initial(limit)+(T * 5)
+
+	T = 0
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		T += M.rating-1
+	speed_multiplier = initial(speed_multiplier)+(T * 0.50)
 
 /obj/machinery/reagentgrinder/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))
@@ -1245,9 +1257,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(get_turf(src), 'sound/machines/juicer.ogg', 20, 1)
+	playsound(get_turf(src), speed_multiplier < 2 ? 'sound/machines/juicer.ogg' : 'sound/machines/juicerfast.ogg', 30, 1)
 	inuse = 1
-	spawn(50)
+	spawn(50/speed_multiplier)
 		inuse = 0
 		interact(usr)
 	//Snacks
@@ -1278,9 +1290,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(get_turf(src), 'sound/machines/blender.ogg', 50, 1)
+	playsound(get_turf(src), speed_multiplier < 2 ? 'sound/machines/blender.ogg' : 'sound/machines/blenderfast.ogg', 50, 1)
 	inuse = 1
-	spawn(60)
+	spawn(60/speed_multiplier)
 		inuse = 0
 		interact(usr)
 	//Snacks and Plants

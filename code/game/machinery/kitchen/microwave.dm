@@ -22,6 +22,8 @@
 	var/global/max_n_of_items = 0
 	var/list/holdingitems = list()
 	var/limit = 100
+	var/speed_multiplier = 1
+	var/scanning_power = 0
 
 // see code/modules/food/recipes_microwave.dm for recipes
 //Cannot use tools - screwdriver and crowbar for recipes. Or at least fix things before you do
@@ -67,6 +69,20 @@
 				acceptable_reagents |= reagent
 			if (recipe.items)
 				max_n_of_items = max(max_n_of_items,recipe.items.len)
+
+/*******************
+*   Part Upgrades
+********************/
+/obj/machinery/microwave/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		T += M.rating-1
+	speed_multiplier = initial(speed_multiplier)+(T * 0.25)
+
+	T = 0
+	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
+		T += M.rating-1
+	scanning_power = initial(scanning_power)+(T)
 
 /*******************
 *   Item Adding
@@ -257,8 +273,16 @@
 		if (items_counts.len==0 && reagents.reagent_list.len==0)
 			dat = {"<B>The microwave is empty</B><BR>"}
 		else
-			dat = {"<b>Ingredients:</b><br>[dat]"}
-		dat += {"<HR><BR>\
+			dat = {"<b>Ingredients:</b><br>[dat]<HR><BR>"}
+			if (scanning_power >= 2 )
+				var/datum/recipe/recipe = select_recipe(available_recipes,src)
+				if (!recipe)
+					dat += {"<font color = 'red'>ERROR: No matching recipe found!</font><br>"}
+				/*else
+					var/obj/O = recipe.result
+					var/display_name = O.name
+					dat += {"<b>Expected result: </b><br>[display_name]"}*/ //Couldn't get this to work like the scrub I am
+		dat += {"\
 <A href='?src=\ref[src];action=cook'>Turn on!<BR>\
 <A href='?src=\ref[src];action=dispose'>Eject ingredients!<BR>\
 "}
@@ -335,7 +359,7 @@
 		if (stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
-		sleep(10)
+		sleep(10/speed_multiplier)
 	return 1
 
 /obj/machinery/microwave/proc/has_extra_item()
