@@ -151,7 +151,6 @@
 /proc/admin_forcemove(var/mob/mover, var/atom/newloc)
 	var/startdensity = mover.density
 	var/startflags = mover.pass_flags
-	var/startincorporeal = 0
 	var/startdestinationdensity = newloc.density
 	mover.density = 0
 	mover.pass_flags = ALL
