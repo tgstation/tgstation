@@ -84,7 +84,7 @@ proc/process_teleport_locs()
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
-	sortTim(teleportlocs, /proc/cmp_text_dsc)
+	sortTim(teleportlocs, /proc/cmp_text_asc)
 
 var/list/ghostteleportlocs = list()
 
@@ -99,7 +99,7 @@ proc/process_ghost_teleport_locs()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 
-	sortTim(ghostteleportlocs, /proc/cmp_text_dsc)
+	sortTim(ghostteleportlocs, /proc/cmp_text_asc)
 
 var/global/list/adminbusteleportlocs = list()
 
