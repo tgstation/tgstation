@@ -87,12 +87,6 @@
 
 		update_icon()
 
-	if(istype(target, /obj/item/weapon/reagent_containers))
-		var/obj/item/weapon/reagent_containers/RC = target
-		for(var/bad_reg in RC.banned_reagents)
-			if(reagents.has_reagent(bad_reg, 1))
-				user << "<span class='warning'>A chemical in [src] is far to dangerous to transfer to [RC]!</span>"
-				return
 
 /obj/item/weapon/reagent_containers/dropper/update_icon()
 	if(reagents.total_volume<=0)
