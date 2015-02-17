@@ -917,7 +917,7 @@ var/list/slot_equipment_priority = list( \
 	A.examine(src)
 
 
-/mob/living/verb/verb_pickup(obj/I in view())
+/mob/living/verb/verb_pickup(obj/I in view(1))
 	set name = "Pick up"
 	set category = "Object"
 
