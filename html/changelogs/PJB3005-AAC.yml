@@ -1,7 +1,0 @@
-author: PJB3005
-
-delete-after: true
-
-changes:
-  - rscadd: Added vent pressure control to the AAC.
-  - bugfix: Fixes AAC interaction with scrubbers and unary vents.
