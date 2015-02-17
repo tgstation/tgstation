@@ -7,6 +7,7 @@
 	bitesize = 2
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"
+	slot_flags = SLOT_HEAD // i'm going to kill myself. i'm going to murder my own self.
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
