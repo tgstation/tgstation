@@ -30,7 +30,7 @@
 		if("explosive")
 			explosion(loc, 0, 1, 2, 3)
 		if("triggerkick")
-			if(victim.client)
+			if(isliving(victim) && victim.client)
 				victim << "<font color='red'><b>You have been kicked FOR NO REISIN!<b></font>"
 				del(victim.client)
 		if("triggerplasma")
