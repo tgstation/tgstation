@@ -207,7 +207,7 @@
 			OO.loc = src.loc
 		src.add_fingerprint(user)
 		if(user.pulling == L)
-			user.pulling = null
+			user.stop_pulling()
 		return
 	return
 

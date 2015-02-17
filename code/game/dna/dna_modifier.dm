@@ -172,6 +172,8 @@
 	if(L == user)
 		return
 	visible_message("[user] puts [L.name] into the DNA Scanner.", 3)
+	if(user.pulling == L)
+		user.stop_pulling()
 	put_in(L)
 	if(user.pulling == L)
 		user.pulling = null

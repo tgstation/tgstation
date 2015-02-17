@@ -510,7 +510,7 @@
 		for(var/mob/living/M in range(src, 1))
 			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
 				t7 = null
-	if (t7 && pulling && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
+	if (t7 && pulling && (Adjacent(pulling) || pulling.loc == loc))
 		var/turf/T = loc
 		. = ..()
 

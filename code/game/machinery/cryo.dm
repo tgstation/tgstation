@@ -370,6 +370,8 @@
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
+	if(usr.pulling == M)
+		usr.stop_pulling()
 	M.stop_pulling()
 	M.loc = src
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
