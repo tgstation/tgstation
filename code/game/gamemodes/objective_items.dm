@@ -27,7 +27,7 @@ datum/objective_item/steal/rcd
 	name = "a rapid-construction-device"
 	targetitem = /obj/item/weapon/rcd
 	difficulty = 3
-	excludefromjob = list("Chief Engineer", "Quartermaster", "Cargo Technician")
+	excludefromjob = list("Chief Engineer", "Quartermaster")
 
 datum/objective_item/steal/jetpack
 	name = "a jetpack"
@@ -45,7 +45,7 @@ datum/objective_item/steal/corgimeat
 	name = "a piece of corgi meat"
 	targetitem = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	difficulty = 5
-	excludefromjob = list("Head of Personnel", "Quartermaster", "Cargo Technician") //>hurting your little buddy ever
+	excludefromjob = list("Head of Personnel", "Quartermaster") //>hurting your little buddy ever
 
 datum/objective_item/steal/capmedal
 	name = "the medal of captaincy"

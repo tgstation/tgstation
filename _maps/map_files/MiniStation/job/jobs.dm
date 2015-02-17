@@ -25,7 +25,7 @@
 
 // Cargo
 
-/datum/job/cargo_tech/New()
+/datum/job/quartermaster/New()
 	..()
 	total_positions = 3
 	spawn_positions = 3

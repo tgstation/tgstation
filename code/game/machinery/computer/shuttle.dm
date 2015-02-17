@@ -126,7 +126,7 @@
 	..()
 
 /obj/machinery/computer/supplycomp
-	name = "supply shuttle console"
+	name = "quartermaster's console"
 	desc = "Used to order supplies."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
@@ -145,7 +145,7 @@
 	can_order_contraband = board.contraband_enabled
 
 /obj/machinery/computer/ordercomp
-	name = "supply ordering console"
+	name = "supply request console"
 	desc = "Used to order supplies from cargo staff."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"

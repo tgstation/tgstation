@@ -26,7 +26,7 @@ by the circuit imprinter and the protolathe to produce objects. It also tracks t
 
 //EXISTING TECH
 Each tech path should have at LEAST one item at every level (levels 1 - 20). This is to allow for a more fluid progression of the
-researching. Existing tech (ie, anything you can find on the station or get from the quartermaster) shouldn't go higher then
+researching. Existing tech (ie, anything you can find on the station or get from a quartermaster) shouldn't go higher then
 level 5 or 7. Everything past that should be stuff you research.
 
 Below is a checklist to make sure every tree is filled. As new items get added to R&D, add them here if there is an empty slot.

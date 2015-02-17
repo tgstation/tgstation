@@ -123,12 +123,6 @@ LINEN BINS
 	icon_state = "sheetce"
 	item_color = "chief"
 
-/obj/item/weapon/bedsheet/qm
-	name = "quartermaster's bedsheet"
-	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
-	icon_state = "sheetqm"
-	item_color = "qm"
-
 /obj/item/weapon/bedsheet/brown
 	icon_state = "sheetbrown"
 	item_color = "cargo"

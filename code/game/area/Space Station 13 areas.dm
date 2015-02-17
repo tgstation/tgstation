@@ -918,10 +918,6 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Cargo Bay"
 	icon_state = "quartstorage"
 
-/area/quartermaster/qm
-	name = "\improper Quartermaster's Office"
-	icon_state = "quart"
-
 /area/quartermaster/miningdock
 	name = "\improper Mining Dock"
 	icon_state = "mining"
