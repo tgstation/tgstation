@@ -21,6 +21,7 @@
 	var/name = ""
 	var/severity = 1
 	var/hue
+	var/quality
 
 /datum/spacevine_mutation/proc/process_mutation(obj/effect/spacevine/holder)
 	return
@@ -59,6 +60,7 @@
 /datum/spacevine_mutation/space_covering
 	name = "space protective"
 	hue = "#aa77aa"
+	quality = POSITIVE
 
 /turf/simulated/floor/vines
 	color = "#aa77aa"
@@ -82,6 +84,7 @@
 /datum/spacevine_mutation/bluespace
 	name = "bluespace"
 	hue = "#3333ff"
+	quality = MINOR_NEGATIVE
 
 /datum/spacevine_mutation/bluespace/on_spread(obj/effect/spacevine/holder, turf/target)
 	if(holder.energy > 1 && !locate(/obj/effect/spacevine) in target)
@@ -90,6 +93,7 @@
 /datum/spacevine_mutation/light
 	name = "light"
 	hue = "#ffff00"
+	quality = POSITIVE
 
 /datum/spacevine_mutation/light/on_grow(obj/effect/spacevine/holder)
 	if(prob(10*severity))
@@ -99,6 +103,7 @@
 	name = "toxic"
 	hue = "#ff00ff"
 	severity = 10
+	quality = NEGATIVE
 
 /datum/spacevine_mutation/toxicity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
 	if(issilicon(crosser))
@@ -113,6 +118,7 @@
 /datum/spacevine_mutation/explosive  //OH SHIT IT CAN CHAINREACT RUN!!!
 	name = "explosive"
 	hue = "#ff0000"
+	quality = NEGATIVE
 
 /datum/spacevine_mutation/explosive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
 	sleep(10)
@@ -121,6 +127,7 @@
 /datum/spacevine_mutation/fire_proof
 	name = "fire proof"
 	hue = "#ff8888"
+	quality = MINOR_NEGATIVE
 
 /datum/spacevine_mutation/fire_proof/process_temperature(obj/effect/spacevine/holder, temp, volume)
 	return 1
@@ -128,6 +135,7 @@
 /datum/spacevine_mutation/vine_eating
 	name = "vine eating"
 	hue = "#ff7700"
+	quality = MINOR_NEGATIVE
 
 /datum/spacevine_mutation/vine_eating/on_spread(obj/effect/spacevine/holder, turf/target)
 	var/obj/effect/spacevine/prey = locate() in target
@@ -138,6 +146,7 @@
 	name = "aggressive spreading"
 	hue = "#333333"
 	severity = 3
+	quality = NEGATIVE
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
 	for(var/atom/A in target)
@@ -150,6 +159,7 @@
 /datum/spacevine_mutation/transparency
 	name = "transparent"
 	hue = ""
+	quality = POSITIVE
 
 /datum/spacevine_mutation/transparency/on_grow(obj/effect/spacevine/holder)
 	holder.SetOpacity(0)
@@ -159,6 +169,7 @@
 	name = "oxygen consuming"
 	hue = "#ffff88"
 	severity = 3
+	quality = NEGATIVE
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
@@ -170,6 +181,7 @@
 	name = "nitrogen consuming"
 	hue = "#8888ff"
 	severity = 3
+	quality = NEGATIVE
 
 /datum/spacevine_mutation/nitro_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
@@ -181,6 +193,7 @@
 	name = "CO2 consuming"
 	hue = "#00ffff"
 	severity = 3
+	quality = POSITIVE
 
 /datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
@@ -192,6 +205,7 @@
 	name = "toxins consuming"
 	hue = "#ffbbff"
 	severity = 3
+	quality = POSITIVE
 
 /datum/spacevine_mutation/plasma_eater/process_mutation(obj/effect/spacevine/holder)
 	var/turf/simulated/floor/T = holder.loc
@@ -203,6 +217,7 @@
 	name = "thorny"
 	hue = "#666666"
 	severity = 10
+	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
 	if(prob(severity) && istype(crosser))
@@ -219,6 +234,7 @@
 /datum/spacevine_mutation/woodening
 	name = "hardened"
 	hue = "#997700"
+	quality = NEGATIVE
 
 /datum/spacevine_mutation/woodening/on_grow(obj/effect/spacevine/holder)
 	if(holder.energy)
