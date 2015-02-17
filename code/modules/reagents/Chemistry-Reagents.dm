@@ -5,10 +5,6 @@
 #define REAGENTS_OVERDOSE 30
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
-//Some on_mob_life() procs check for alien races.
-#define IS_DIONA 1
-#define IS_VOX 2
-
 //The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
 //so that it can continue working when the reagent is deleted while the proc is still active.
 
@@ -76,7 +72,6 @@
 		return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
 	if( (overdose > 0) && (volume >= overdose))//Overdosing, wooo
 		M.adjustToxLoss(overdose_dam)
-
 	if(!holder) return
 	holder.remove_reagent(src.id, custom_metabolism) //By default it slowly disappears.
 	return

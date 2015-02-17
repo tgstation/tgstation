@@ -469,9 +469,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/mobs = getmobs()
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
-	if(istype(target,/mob/living/silicon/ai))
-		var/mob/living/silicon/ai/M = target
-		target = M.eyeobj
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
@@ -787,10 +784,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 
 	if (href_list["follow"])
-		var/mob/target = locate(href_list["follow"]) in mob_list
+		var/target = locate(href_list["follow"])
+		if(following == target) return
 		var/mob/A = usr;
 		A << "You are now following [target]"
-		//var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
+		if(istype(target,/mob/living/silicon/ai))
+			var/mob/living/silicon/ai/M = target
+			target = M.eyeobj
 		if(target && target != usr)
 			following = target
 			spawn(0)
