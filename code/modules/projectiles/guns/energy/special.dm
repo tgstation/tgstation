@@ -4,15 +4,25 @@
 	icon_state = "ionrifle"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	origin_tech = "combat=2;magnets=4"
+	can_flashlight = 1
 	w_class = 5
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-	pin = null
 
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	return
+
+/obj/item/weapon/gun/energy/ionrifle/carbine
+	name = "ion carbine"
+	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
+	icon_state = "ioncarbine"
+	item_state = "ioncarbine"
+	origin_tech = "combat=4;magnets=4;materials=4"
+	w_class = 3
+	slot_flags = SLOT_BELT
+	pin = null
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
