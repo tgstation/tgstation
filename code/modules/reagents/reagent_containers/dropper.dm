@@ -10,7 +10,12 @@
 /obj/item/weapon/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(!target.reagents) return
-
+	if(istype(target, /obj/item/weapon/reagent_containers))
+		var/obj/item/weapon/reagent_containers/RC = target
+		for(var/bad_reg in RC.banned_reagents)
+			if(reagents.has_reagent(bad_reg, 1))
+				user << "<span class='warning'> A chemical in [src] is far to dangerous to transfer to [RC]!</span>"
+				return
 	if(reagents.total_volume > 0)
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			user << "<span class='notice'>[target] is full.</span>"
@@ -81,6 +86,7 @@
 		user << "<span class='notice'>You fill [src] with [trans] unit\s of the solution.</span>"
 
 		update_icon()
+
 
 /obj/item/weapon/reagent_containers/dropper/update_icon()
 	if(reagents.total_volume<=0)
