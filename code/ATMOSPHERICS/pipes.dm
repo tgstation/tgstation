@@ -33,6 +33,8 @@
 		"purple"=PIPE_COLOR_PURPLE
 	)
 
+/obj/machinery/atmospherics/pipe/singularity_pull(/obj/machinery/singularity/S, size)
+	return
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
 	return null
 
