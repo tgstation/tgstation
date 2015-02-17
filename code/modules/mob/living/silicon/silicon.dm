@@ -401,8 +401,6 @@
 		if ("help")
 			M.visible_message("<span class='notice'>[M] pets [src]!</span>", \
 							"<span class='notice'>You pet [src]!</span>")
-		if("grab")
-			grabbedby(M)
 		else
 			M.do_attack_animation(src)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
