@@ -1,3 +1,4 @@
+var/global/list/disease2_list = list()
 /datum/disease2/disease
 	var/infectionchance = 70
 	var/speed = 1
@@ -17,6 +18,7 @@
 /datum/disease2/disease/New(var/notes="No notes.")
 	uniqueID = rand(0,10000)
 	log += "<br />[timestamp()] CREATED - [notes]<br>"
+	disease2_list["[uniqueID]"] = src
 	..()
 
 /datum/disease2/disease/proc/makerandom(var/greater=0)
@@ -29,6 +31,7 @@
 			holder.getrandomeffect()
 		effects += holder
 	uniqueID = rand(0,10000)
+	disease2_list["[uniqueID]"] = src
 	infectionchance = rand(60,90)
 	antigen |= text2num(pick(ANTIGENS))
 	antigen |= text2num(pick(ANTIGENS))
@@ -55,7 +58,9 @@
 		D.log += "[f.name] [holder.chance]%<br>"
 		D.effects += holder // add the holder to the disease
 
+	disease2_list -= D.uniqueID
 	D.uniqueID = rand(0, 10000)
+	disease2_list["[D.uniqueID]"] = D
 	D.infectionchance = input(C, "Choose an infection rate percent", "Infection Rate") as num
 	if(D.infectionchance > 100 || D.infectionchance < 0)
 		return 0

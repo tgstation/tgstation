@@ -167,6 +167,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/make_invulnerable,
 	/client/proc/cmd_admin_dump_delprofile,
 	/client/proc/mob_list,
+	/client/proc/cure_disease,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
 #endif

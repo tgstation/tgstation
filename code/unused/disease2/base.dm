@@ -39,6 +39,7 @@
 
 			M.virus2 = disease.getcopy()
 			M.virus2.minormutate()
+			M.virus2.uniqueID = disease.uniqueID
 
 			for(var/datum/disease2/resistance/res in M.resistances)
 				if(res.resistsdisease(M.virus2))

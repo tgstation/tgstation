@@ -1311,3 +1311,41 @@ client/proc/mob_list()
 	if(foundnull)
 		usr << "Found [foundnull] null entries in the mob list, running null clearer."
 		listclearnulls(mob_list)
+
+client/proc/cure_disease()
+	set name = "Cure Disease"
+	set category = "Debug"
+	if(!holder) return
+
+	var/list/disease_by_name = list("-Cure All-" = null) + disease2_list + active_diseases
+
+	var/disease_name = input(src, "Disease to cure?") as null|anything in sortTim(disease_by_name, /proc/cmp_text_asc)
+	if(!disease_name) return
+	var/count = 0
+	if(disease_name == "-Cure All-")
+		for(var/mob/living/carbon/C in mob_list)
+			for(var/ID in C.virus2)
+				if(ID && C.virus2[ID])
+					var/datum/disease2/disease/DD = C.virus2[ID]
+					DD.cure(C)
+					count++
+			for(var/datum/disease/D in C.viruses)
+				if(D)
+					D.cure(1)
+					count++
+					active_diseases -= D
+	else
+		for(var/mob/living/carbon/C in mob_list)
+			for(var/ID in C.virus2)
+				if(ID == disease_name)
+					var/datum/disease2/disease/DD = C.virus2[ID]
+					DD.cure(C)
+					count++
+			for(var/datum/disease/D in C.viruses)
+				if(D && D.name == disease_name)
+					D.cure(1)
+					count++
+					active_diseases -= D
+	src << "<span class='notice'>Cured [count] mob\s of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]</span>"
+	log_admin("[src]/([ckey(src.key)] Cured all mobs of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]")
+	message_admins("[src]/([ckey(src.key)] Cured all mobs of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]")
