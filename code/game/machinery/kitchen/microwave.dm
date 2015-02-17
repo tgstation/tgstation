@@ -9,7 +9,7 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | EJECTNOTDEL
 	flags = OPENCONTAINER | NOREACT
 	pass_flags = PASSTABLE
 	var/operating = 0 // Is it on?
@@ -278,10 +278,10 @@
 				var/datum/recipe/recipe = select_recipe(available_recipes,src)
 				if (!recipe)
 					dat += {"<font color = 'red'>ERROR: No matching recipe found!</font><br>"}
-				/*else
+				else
 					var/obj/O = recipe.result
-					var/display_name = O.name
-					dat += {"<b>Expected result: </b><br>[display_name]"}*/ //Couldn't get this to work like the scrub I am
+					var/display_name = initial(O.name)
+					dat += {"<b>Expected result: </b>[display_name]<br>"}
 		dat += {"\
 <A href='?src=\ref[src];action=cook'>Turn on!<BR>\
 <A href='?src=\ref[src];action=dispose'>Eject ingredients!<BR>\

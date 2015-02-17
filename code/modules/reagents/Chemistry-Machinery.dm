@@ -956,7 +956,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK | EJECTNOTDEL
 	pass_flags = PASSTABLE
 	var/inuse = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
