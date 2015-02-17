@@ -593,6 +593,9 @@
 	if(istype(src.loc,/obj/item/weapon/holder))
 		var/obj/item/weapon/holder/H = src.loc
 		src.loc = get_turf(src.loc)
+		if(istype(H.loc, /mob/living))
+			var/mob/living/Location = H.loc
+			Location.drop_from_inventory(H)
 		del(H)
 		return
 
