@@ -6,7 +6,7 @@
 	layer = 3
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
-	var/minepayload = "explode"
+	var/minepayload = "explosive"
 	var/triggered = 0
 
 /obj/effect/mine/New()
@@ -27,8 +27,12 @@
 	s.start()
 
 	switch(triggertype)
-		if("explode")
+		if("explosive")
 			explosion(loc, 0, 1, 2, 3)
+		if("triggerkick")
+			if(victim.client)
+				victim << "<font color='red'><b>You have been kicked FOR NO REISIN!<b></font>"
+				del(victim.client)
 		if("triggerplasma")
 			atmos_spawn_air(SPAWN_TOXINS, 360)
 		if("triggern2o")
@@ -55,3 +59,8 @@
 	name = "stun mine"
 	icon_state = "uglymine"
 	minepayload = "triggerstun"
+
+/obj/effect/mine/kickmine
+	name = "kick mine"
+	icon_state = "uglymine"
+	minepayload = "triggerkick"
