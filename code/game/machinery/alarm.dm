@@ -858,8 +858,8 @@
 			return
 
 		if(1)
-			if(istype(W, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/coil = W
+			if(istype(W, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = W
 				if(coil.amount < 5)
 					user << "You need more cable for this!"
 					return
@@ -1002,11 +1002,11 @@ FIRE ALARM
 						buildstage=1
 						user.visible_message("<span class='attack'>[user] has cut the wiring from \the [src]!</span>", "You have cut the last of the wiring from \the [src].")
 						update_icon()
-						new /obj/item/weapon/cable_coil(user.loc,5)
+						new /obj/item/stack/cable_coil(user.loc,5)
 						playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 			if(1)
-				if(istype(W, /obj/item/weapon/cable_coil))
-					var/obj/item/weapon/cable_coil/coil = W
+				if(istype(W, /obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/coil = W
 					if(coil.amount < 5)
 						user << "You need more cable for this!"
 						return

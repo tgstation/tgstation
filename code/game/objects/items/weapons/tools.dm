@@ -107,8 +107,8 @@
 	return eyestab(M,user)
 
 /obj/item/weapon/screwdriver/attackby(var/obj/O)
-	if(istype(O, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = O
+	if(istype(O, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = O
 		var/mob/M = usr
 		if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
 			if(!istype(M.loc,/turf)) return

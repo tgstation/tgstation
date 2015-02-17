@@ -378,8 +378,8 @@
 	icon_state = "coin_mythril"
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/cable_coil) )
-		var/obj/item/weapon/cable_coil/CC = W
+	if(istype(W,/obj/item/stack/cable_coil) )
+		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
 			user << "\blue There already is a string attached to this coin."
 			return
@@ -398,7 +398,7 @@
 			..()
 			return
 
-		var/obj/item/weapon/cable_coil/CC = new(user.loc)
+		var/obj/item/stack/cable_coil/CC = new(user.loc)
 		CC.amount = 1
 		CC.update_icon()
 		overlays = list()

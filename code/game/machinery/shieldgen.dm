@@ -279,8 +279,8 @@
 	if(..())
 		return 1
 
-	if(istype(W, /obj/item/weapon/cable_coil) && malfunction && panel_open)
-		var/obj/item/weapon/cable_coil/coil = W
+	if(istype(W, /obj/item/stack/cable_coil) && malfunction && panel_open)
+		var/obj/item/stack/cable_coil/coil = W
 		user << "\blue You begin to replace the wires."
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, 30))

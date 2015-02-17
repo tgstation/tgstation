@@ -213,7 +213,7 @@
 				// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
 				for(var/obj/O in um)
 					// Engineering
-					if(istype(O,/obj/item/weapon/cable_coil))
+					if(istype(O,/obj/item/stack/cable_coil))
 						if(O:amount < 50)
 							O:amount += 2
 						if(O:amount > 50)

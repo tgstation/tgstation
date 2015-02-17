@@ -109,7 +109,7 @@
 		list_recipes(usr, text2num(href_list["sublist"]))
 
 	if (href_list["make"])
-		if (src.amount < 1) del(src) //Never should happen
+		if (src.amount < 1) returnToPool(src) //Never should happen
 
 		var/list/recipes_list = recipes
 		if (href_list["sublist"])
@@ -147,14 +147,14 @@
 			var/oldsrc = src
 			src = null //dont kill proc after del()
 			usr.before_take_item(oldsrc)
-			del(oldsrc)
+			returnToPool(oldsrc)
 			if (istype(O,/obj/item))
 				usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
-				del(I)
+				qdel(I)
 		//BubbleWrap END
 	if (src && usr.machine==src) //do not reopen closed window
 		spawn( 0 )
@@ -172,7 +172,7 @@
 	if (src.amount<=0)
 		if(usr)
 			usr.before_take_item(src)
-		spawn qdel(src)
+		spawn returnToPool(src)
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
 	var/obj/item/stack/oldsrc = src

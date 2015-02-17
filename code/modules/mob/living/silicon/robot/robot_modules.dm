@@ -189,7 +189,7 @@
 	src.modules += new /obj/item/weapon/tile_painter(src)
 	src.modules += new /obj/item/device/material_synth/robot/cyborg(src)
 
-	var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
+	var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
 	W.amount = 50
 	W.max_amount = 50
 	src.modules += W
@@ -199,13 +199,13 @@
 
 /obj/item/weapon/robot_module/engineering/respawn_consumable(var/mob/living/silicon/robot/R)
 	var/list/what = list (
-		/obj/item/weapon/cable_coil
+		/obj/item/stack/cable_coil
 	)
 	for (var/T in what)
 		if (!(locate(T) in src.modules))
 			src.modules -= null
 			var/O = new T(src)
-			if(istype(O,/obj/item/weapon/cable_coil))
+			if(istype(O,/obj/item/stack/cable_coil))
 				O:max_amount = 50
 			src.modules += O
 			O:amount = 1
@@ -225,7 +225,7 @@
 		// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
 		for(var/obj/O in um)
 			// Engineering
-			if(istype(O,/obj/item/weapon/cable_coil))
+			if(istype(O,/obj/item/stack/cable_coil))
 				if(O:amount < 50)
 					O:amount += 1
 					R.cell.use(50) 		//Take power from the borg...

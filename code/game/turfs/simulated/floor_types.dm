@@ -393,8 +393,8 @@
 						T:update_icon(0)
 			return
 
-		if(istype(C, /obj/item/weapon/cable_coil))
-			var/obj/item/weapon/cable_coil/coil = C
+		if(istype(C, /obj/item/stack/cable_coil))
+			var/obj/item/stack/cable_coil/coil = C
 			coil.turf_place(src, user)
 
 	is_catwalk()

@@ -14,7 +14,7 @@
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/subspace/amplifier" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/cable_coil" = 5)
+							"/obj/item/stack/cable_coil" = 5)
 
 datum/design/shield_gen_ex
 	name = "Circuit Design (Experimental hull shield generator)"
@@ -40,7 +40,7 @@ datum/design/shield_gen_ex
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/subspace/amplifier" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/cable_coil" = 5)
+							"/obj/item/stack/cable_coil" = 5)
 
 datum/design/shield_gen
 	name = "Circuit Design (Experimental shield generator)"
@@ -66,7 +66,7 @@ datum/design/shield_gen
 							"/obj/item/weapon/stock_parts/subspace/treatment" = 1,
 							"/obj/item/weapon/stock_parts/subspace/analyzer" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/cable_coil" = 5)
+							"/obj/item/stack/cable_coil" = 5)
 
 datum/design/shield_cap
 	name = "Circuit Design (Experimental shield capacitor)"

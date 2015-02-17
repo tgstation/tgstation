@@ -23,7 +23,7 @@
 	src.modules += new /obj/item/blueprints/mommiprints(src)
 	src.modules += new /obj/item/device/material_synth/robot(src)
 
-	var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
+	var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
 	W.amount = 50
 	W.max_amount = 50 // Override MAXCOIL
 	src.modules += W
@@ -33,14 +33,14 @@
 	var/list/what = list (
 		// /obj/item/stack/sheet/metal/cyborg,
 		// /obj/item/stack/sheet/glass/glass,
-		/obj/item/weapon/cable_coil,
+		/obj/item/stack/cable_coil,
 		// /obj/item/stack/sheet/glass/rglass/cyborg,
 	)
 	for (var/T in what)
 		if (!(locate(T) in src.modules))
 			src.modules -= null
 			var/O = new T(src)
-			if(istype(O,/obj/item/weapon/cable_coil))
+			if(istype(O,/obj/item/stack/cable_coil))
 				O:max_amount = 50
 			src.modules += O
 			O:amount = 1

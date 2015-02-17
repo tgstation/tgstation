@@ -75,7 +75,7 @@
 
 #define iswelder(A) istype(A, /obj/item/weapon/weldingtool)
 
-#define iscoil(A) istype(A, /obj/item/weapon/cable_coil)
+#define iscoil(A) istype(A, /obj/item/stack/cable_coil)
 
 #define iswirecutter(A) istype(A, /obj/item/weapon/wirecutters)
 
@@ -85,4 +85,4 @@
 
 #define iscrowbar(A) istype(A, /obj/item/weapon/crowbar)
 
-#define iswire(O) istype(O, /obj/item/weapon/cable_coil)
+#define iswire(O) istype(O, /obj/item/stack/cable_coil)

@@ -9,7 +9,7 @@
 	priority = 2
 	allowed_tools = list(
 		/obj/item/weapon/FixOVein = 100,
-		/obj/item/weapon/cable_coil = 75,
+		/obj/item/stack/cable_coil = 75,
 		)
 
 	can_infect = 1
