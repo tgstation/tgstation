@@ -277,3 +277,79 @@
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
 	item_color = "stripedbluescarf"
+
+//////////////////
+//Magic Pendants//
+//////////////////
+
+/obj/item/clothing/tie/pendant
+	name = "jewel pendent"
+	desc = "A bejeweled necklace, there's a slightly mystic air to it."
+	icon_state = "stripedredscarf" //Does not exist, needs sprite
+	item_color = "stripedredscarf" //Does not exist, needs sprites
+
+/obj/item/clothing/tie/pendant/phylactery
+	var/datum/mind/lichmind = null
+	var/lichckey = null
+	var/regeneration_timer = 0
+	var/dencheck = 1
+
+/obj/item/clothing/tie/pendant/phylactery/New()
+	SSobj.processing |= src
+	..()
+
+/obj/item/clothing/tie/pendant/phylactery/process()
+
+	if(!lichmind)	return
+
+	if(regeneration_timer)
+		regeneration_timer--
+
+		for(var/obj/effect/proc_holder/spell/S in lichmind.spell_list)
+			S.charge_counter = 0 //Lots of weird interactions with spellcasting in objects
+
+		if(regeneration_timer <= 0)
+			for(var/mob/M in src)
+				M.loc = get_turf(src)
+				M << "<span class='warning'>You feel yourself pass through the eye of the gem, reborn as a being of undeath.</span>"
+				for(var/obj/effect/proc_holder/spell/S in lichmind.spell_list)
+					S.charge_counter = S.charge_max
+
+		return
+
+	if(lichmind.current && lichmind.current.stat != DEAD)
+		return
+
+	if(dencheck) //Wizards are told this doesn't work if you leave the phylactery in the den (because there'd be no way to destroy it there)
+		var/area/A = get_area(src)
+		if(istype(A, /area/wizard_station))
+			return //ya blew it
+		dencheck = 0
+
+
+	spawn(0) //to avoid some interactions with ghostmaking, we let it work itself out before we pull them back in
+		var/mob/living/carbon/human/lich = new /mob/living/carbon/human(src)
+
+		lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(lich), slot_shoes)
+		lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), slot_w_uniform)
+		lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), slot_wear_suit)
+		lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), slot_head)
+
+		lich.real_name = lichmind.name
+		lichmind.transfer_to(lich)
+		lich.ckey = lichckey
+		hardset_dna(lich,null,null,lich.real_name,null,/datum/species/skeleton)
+		lich << "<span class='warning'>As your physical form dies, you feel your consciousness gathering in the gem.</span>"
+		regeneration_timer = 120 //2 minutes
+
+/obj/item/clothing/tie/pendant/phylactery/attack_self(mob/user)
+	if(!lichmind && user.stat != DEAD && user.mind)
+		user << "<span class='warning'>You stare into the gleaming gem and feel a part of yourself slip away into its void...</span>"
+		lichmind = user.mind
+		lichckey = user.ckey
+	..()
+
+/obj/item/clothing/tie/pendant/phylactery/attack_hand(mob/user)
+	if(user.loc == src) //Prevents recursively picking up the pendant while inside it
+		return 0
+	..()

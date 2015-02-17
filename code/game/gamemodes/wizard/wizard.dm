@@ -176,7 +176,7 @@
 	var/wizards_alive = 0
 	var/traitors_alive = 0
 	for(var/datum/mind/wizard in wizards)
-		if(!istype(wizard.current,/mob/living/carbon))
+		if(!istype(wizard.current,/mob/living/))
 			continue
 		if(wizard.current.stat==2)
 			continue
@@ -184,19 +184,21 @@
 
 	if(!wizards_alive)
 		for(var/datum/mind/traitor in traitors)
-			if(!istype(traitor.current,/mob/living/carbon))
+			if(!istype(traitor.current,/mob/living/))
 				continue
 			if(traitor.current.stat==2)
 				continue
 			traitors_alive++
 
 	if (wizards_alive || traitors_alive)
+		finished = 0
 		return ..()
 	else
-		finished = 1
+		finished += 0.5
+	if(finished >= 1)
 		return 1
 
-
+	return..()
 
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
