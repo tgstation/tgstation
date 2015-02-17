@@ -199,10 +199,11 @@
 			usr << "<span class='notice'>[src] is full, make some space.</span>"
 		return 0 //Storage item is full
 
-	if(W.wielded)
+	if(W.wielded || istype(W, /obj/item/offhand))
+		var/obj/item/offhand/offhand = W
 		var/obj/item/ref_name = W
-		if(istype(W, /obj/item/offhand))
-			ref_name = W:wielding
+		if(istype(offhand))
+			ref_name = offhand.wielding
 		usr << "<span class='notice'>Unwield \the [ref_name] first.</span>"
 		return
 
