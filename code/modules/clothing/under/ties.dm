@@ -292,7 +292,7 @@
 	var/datum/mind/lichmind = null
 	var/lichckey = null
 	var/regeneration_timer = 0
-	var/dencheck = 1
+	var/regeneration_number = 0
 
 /obj/item/clothing/tie/pendant/phylactery/New()
 	SSobj.processing |= src
@@ -317,15 +317,24 @@
 
 		return
 
+
 	if(lichmind.current && lichmind.current.stat != DEAD)
+		var/turf/L = get_turf(lichmind.current)
+		var/turf/P = get_turf(src)
+		if(L.z != P.z) //To avoid hiding it in the den or  the relatively safety of deep space, you're tied to the same z level it occupies.
+			var/mob/M = lichmind.current
+			if(P.z == 2) //if it was in the den, we give it back to the wizard to avoid stranding him there
+				src.loc = M.loc
+				M << "<span class='notice'>You see your phylactery appears at your feet. To think you almost left it behind!</span>"
+			else
+				M << "<span class='warning'>You've strayed too far from your phylactery! You feel your physical form fall apart!</span>"
+				M.death()
 		return
 
-	if(dencheck) //Wizards are told this doesn't work if you leave the phylactery in the den (because there'd be no way to destroy it there)
-		var/area/A = get_area(src)
-		if(istype(A, /area/wizard_station))
-			return //ya blew it
-		dencheck = 0
-
+	if(lichmind.current) //Give a hint to the wearabouts of the phylactery to anyone who happens to see the wizard bite it
+		var/where_wizdo = dir2text(get_dir(lichmind.current, src))
+		if(where_wizdo)
+			lichmind.current.visible_message("<span class='warning'>As [lichmind.current] dies, you see a strange energy rise from the corpse, and speed off towards the [where_wizdo]!</span>")
 
 	spawn(0) //to avoid some interactions with ghostmaking, we let it work itself out before we pull them back in
 		var/mob/living/carbon/human/lich = new /mob/living/carbon/human(src)
@@ -340,9 +349,10 @@
 		lich.ckey = lichckey
 		hardset_dna(lich,null,null,lich.real_name,null,/datum/species/skeleton)
 		lich << "<span class='warning'>As your physical form dies, you feel your consciousness gathering in the gem.</span>"
-		regeneration_timer = 120 //2 minutes
+		regeneration_timer = regeneration_number * 60 + 120 //2 minutes + 1 more minute per resurection
+		regeneration_number++
 
-/obj/item/clothing/tie/pendant/phylactery/attack_self(mob/user)
+/obj/item/clothing/tie/pendant/phylactery/pickup(mob/user)
 	if(!lichmind && user.stat != DEAD && user.mind)
 		user << "<span class='warning'>You stare into the gleaming gem and feel a part of yourself slip away into its void...</span>"
 		lichmind = user.mind
