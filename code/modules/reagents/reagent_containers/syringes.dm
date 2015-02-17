@@ -137,7 +137,12 @@
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				user << "<span class='notice'>[target] is full.</span>"
 				return
-
+			if(istype(target, /obj/item/weapon/reagent_containers))
+				var/obj/item/weapon/reagent_containers/RC = target
+				for(var/bad_reg in RC.banned_reagents)
+					if(reagents.has_reagent(bad_reg, 1))
+						user << "<span class='warning'>A chemical in [src] is far to dangerous to transfer to [RC]!</span>"
+						return
 			if(ismob(target) && target != user)
 				target.visible_message("<span class='danger'>[user] is trying to inject [target]!</span>", \
 										"<span class='userdanger'>[user] is trying to inject [target]!</span>")
