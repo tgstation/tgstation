@@ -2597,7 +2597,16 @@
 	var/hulked_at = 0 // World.time
 
 	custom_metabolism=0.1
-
+/datum/reagent/creatine/reagent_deleted()
+	..()
+	if(!holder) return
+	var/mob/M =  holder.my_atom
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!has_been_hulk || has_ripped_and_torn || (!(M_HULK in H.mutations))) return
+		var/timedmg = ((30 SECONDS) - (H.hulk_time - world.time)) / 10
+		dehulk(H, timedmg * 3, 1, 0)
+	return
 /datum/reagent/creatine/on_mob_life(var/mob/living/M as mob)
 
 	if(!holder) return
@@ -2633,26 +2642,28 @@
 	..()
 	return
 
-/datum/reagent/creatine/proc/dehulk(var/mob/living/carbon/human/H)
+/datum/reagent/creatine/proc/dehulk(var/mob/living/carbon/human/H, damage = 200, override_remove = 0, gib = 1, )
 	if(has_been_hulk && !has_ripped_and_torn)
 		H << "<span class='warning'>You feel like your muscles are ripping apart!</span>"
 		has_ripped_and_torn=1
-		holder.remove_reagent(src.id) // Clean them out
-		H.adjustBruteLoss(200)        // Crit
+		if(!override_remove)
+			holder.remove_reagent(src.id) // Clean them out
+		H.adjustBruteLoss(damage)        // Crit
 
-		for(var/datum/organ/external/E in H.organs)
-			if(istype(E, /datum/organ/external/chest))
-				continue
-			if(istype(E, /datum/organ/external/head))
-				continue // Permit basket cases.
-			if(prob(50))
-				// Override the current limb status and don't cause an explosion
-				E.droplimb(1,1)
+		if(gib)
+			for(var/datum/organ/external/E in H.organs)
+				if(istype(E, /datum/organ/external/chest))
+					continue
+				if(istype(E, /datum/organ/external/head))
+					continue // Permit basket cases.
+				if(prob(50))
+					// Override the current limb status and don't cause an explosion
+					E.droplimb(1,1)
 
-		if(H.species)
-			hgibs(H.loc, H.viruses, H.dna, H.species.flesh_color, H.species.blood_color)
-		else
-			hgibs(H.loc, H.viruses, H.dna)
+			if(H.species)
+				hgibs(H.loc, H.viruses, H.dna, H.species.flesh_color, H.species.blood_color)
+			else
+				hgibs(H.loc, H.viruses, H.dna)
 
 		H.hulk_time=0 // Just to be sure.
 		H.mutations.Remove(M_HULK)

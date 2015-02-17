@@ -405,6 +405,7 @@ datum
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
 					if (R.id == reagent)
+						R.reagent_deleted()
 						reagent_list -= A
 						R.holder = null
 						total_dirty=1
