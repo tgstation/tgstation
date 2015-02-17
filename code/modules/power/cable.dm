@@ -477,7 +477,7 @@ By design, d1 is the smallest direction and d2 is the highest
 ////////////////////////////////
 
 var/global/list/datum/stack_recipe/cable_recipes = list ( \
-	new/datum/stack_recipe("cable cuffs", /obj/item/weapon/handcuffs/cable, one_per_turf = 0, on_floor = 0))
+	new/datum/stack_recipe("cable cuffs", /obj/item/weapon/handcuffs/cable, 15, time = 3, one_per_turf = 0, on_floor = 0))
 
 #define MAXCOIL 30
 
@@ -487,7 +487,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	icon_state = "coil_red"
 	gender = NEUTER
 	amount = MAXCOIL
-	singular_name = "cable"
+	singular_name = "cable pieces"
 	max_amount = MAXCOIL
 	_color = "red"
 	desc = "A coil of power cable."
@@ -576,7 +576,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 //   - Cable coil : merge cables
 /obj/item/stack/cable_coil/attackby(obj/item/weapon/W, mob/user)
 	if((istype(W, /obj/item/weapon/wirecutters)) && (amount > 1))
-		amount--
+		use(1)
 		getFromPool(/obj/item/stack/cable_coil, user.loc, 1, _color)
 		user << "You cut a piece off the cable coil."
 		update_icon()

@@ -156,6 +156,10 @@
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
+		if(istype(O, /obj/item/weapon/handcuffs/cable))
+			var/obj/item/weapon/handcuffs/cable/C = O
+			C._color = _color
+			C.update_icon()
 	if (src && usr.machine==src) //do not reopen closed window
 		spawn( 0 )
 			src.interact(usr)
@@ -206,7 +210,8 @@
 	..()
 	if (istype(W, src.type) && src.type==W.type)
 		var/obj/item/stack/S = W
-		if (S.amount >= max_amount)
+		if (S.amount >= S.max_amount)
+			user << "\The [S] cannot hold anymore [S.singular_name]."
 			return 1
 		var/to_transfer as num
 		if (user.get_inactive_hand()==src)
@@ -214,11 +219,15 @@
 		else
 			to_transfer = min(src.amount, S.max_amount-S.amount)
 		S.amount+=to_transfer
-		if (S && usr.machine==S)
-			spawn(0) S.interact(usr)
+		user << "You add [to_transfer] [S.singular_name] to \the [S]. It now contains [S.amount] [S.singular_name]."
+		if (S && user.machine==S)
+			spawn(0) S.interact(user)
 		src.use(to_transfer)
-		if (src && usr.machine==src)
-			spawn(0) src.interact(usr)
+		if (src && user.machine==src)
+			spawn(0) src.interact(user)
+		update_icon()
+		S.update_icon()
+		return 1
 	else return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
