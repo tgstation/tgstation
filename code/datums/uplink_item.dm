@@ -100,17 +100,18 @@ var/list/uplink_items = list()
 	category = "Conspicuous and Dangerous Weapons"
 
 /datum/uplink_item/dangerous/pistol
-	name = "Syndicate Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 9
+	name = ".22 Pistol Box"
+	desc = "A small, easily concealable handgun that uses .22 auto rounds in 10-round magazines. Comes with four magazines of extra ammunition."
+	item = /obj/item/weapon/storage/box/pistol
+	cost = 8
+	surplus = 50
 
 /datum/uplink_item/dangerous/revolver
-	name = "Syndicate Revolver"
-	desc = "A brutally simple syndicate revolver that fires .357 Magnum cartridges and has 7 chambers."
-	item = /obj/item/weapon/gun/projectile/revolver
-	cost = 13
-	surplus = 50
+	name = ".357 Revolver Box"
+	desc = "A brutally simple syndicate revolver that fires .357 Magnum cartridges and has 7 chambers. Comes with four rounds of extra ammunition."
+	item = /obj/item/weapon/storage/box/revolver
+	cost = 10
+	surplus = 40
 
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
@@ -224,18 +225,6 @@ var/list/uplink_items = list()
 /datum/uplink_item/ammo
 	category = "Ammunition"
 	surplus = 40
-
-/datum/uplink_item/ammo/pistol
-	name = "Handgun Magazine - 10mm"
-	desc = "An additional 8-round 10mm magazine for use in the syndicate pistol. These subsonic rounds are dirt cheap but are half as effective as .357 rounds."
-	item = /obj/item/ammo_box/magazine/m10mm
-	cost = 1
-
-/datum/uplink_item/ammo/revolver
-	name = "Speed Loader - .357"
-	desc = "A speed loader that contains seven additional .357 Magnum rounds for the syndicate revolver. For when you really need a lot of things dead."
-	item = /obj/item/ammo_box/a357
-	cost = 4
 
 /datum/uplink_item/ammo/smg
 	name = "SMG Magazine - .45"

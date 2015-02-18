@@ -617,3 +617,29 @@
 	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
 	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
 	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+
+/obj/item/weapon/storage/box/pistol
+	name = ".22 pistol box"
+	desc = "A loaded pistol with spare ammunition."
+	icon_state = "gun"
+
+/obj/item/weapon/storage/box/pistol/New()
+	..()
+	new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+	new /obj/item/ammo_box/magazine/m22(src)
+	new /obj/item/ammo_box/magazine/m22(src)
+	new /obj/item/ammo_box/magazine/m22(src)
+	new /obj/item/ammo_box/magazine/m22(src)
+
+/obj/item/weapon/storage/box/revolver
+	name = "revolver box"
+	desc = "A loaded revolver with spare ammunition."
+	icon_state = "gun"
+
+/obj/item/weapon/storage/box/revolver/New()
+	..()
+	new /obj/item/weapon/gun/projectile/revolver(src)
+	new /obj/item/ammo_box/a357(src)
+	new /obj/item/ammo_box/a357(src)
+	new /obj/item/ammo_box/a357(src)
+	new /obj/item/ammo_box/a357(src)

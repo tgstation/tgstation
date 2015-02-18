@@ -126,6 +126,17 @@
 	..()
 	icon_state = "[initial(icon_state)]-[ammo_count() ? "8" : "0"]"
 
+/obj/item/ammo_box/magazine/m22
+	name = "handgun magazine (.22)"
+	icon_state = "22"
+	ammo_type = /obj/item/ammo_casing/c22
+	caliber = ".22"
+	max_ammo = 10
+
+/obj/item/ammo_box/magazine/m22/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[ammo_count() ? "10" : "0"]"
+
 /obj/item/ammo_box/magazine/smgm9mm
 	name = "SMG magazine (9mm)"
 	icon_state = "smg9mm"
