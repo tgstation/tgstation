@@ -93,7 +93,7 @@
 
 #define iscult(H) (H.mind in ticker.mode.cult)
 
-#define isculthead(H) iscult(H)&&(H.mind in ticker.mode.modePlayer)
+#define isculthead(H) (iscult(H)&&(H.mind in ticker.mode.modePlayer))
 
 #define ischangeling(H) (H.mind in ticker.mode.changelings)
 
@@ -111,6 +111,6 @@
 
 #define isborer(H) (H.mind in ticker.mode.borers)
 
-#define isbadmonkey(H) ((/datum/disease/jungle_fever in H.viruses) || M.mind in ticker.mode.infected_monkeys)
+#define isbadmonkey(H) ((/datum/disease/jungle_fever in H.viruses) || H.mind in ticker.mode.infected_monkeys)
 
-#define isdeathsquad(H) (M.mind in ticker.mode.deathsquads)
+#define isdeathsquad(H) (H.mind in ticker.mode.deathsquads)
