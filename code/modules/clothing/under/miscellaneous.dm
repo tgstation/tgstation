@@ -67,7 +67,7 @@
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	item_color = "sexyclown"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/vice
@@ -131,7 +131,6 @@
 	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
 	icon_state = "owl"
 	item_color = "owl"
-	fitted = 0
 	can_adjust = 0
 
 /obj/item/clothing/under/rainbow
@@ -242,7 +241,7 @@
 	icon_state = "blackskirt"
 	item_color = "blackskirt"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/schoolgirl
@@ -252,7 +251,7 @@
 	item_state = "schoolgirl"
 	item_color = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/schoolgirl/red
@@ -312,7 +311,7 @@
 	item_state = "kilt"
 	item_color = "kilt"
 	body_parts_covered = CHEST|GROIN|FEET
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/sexymime
@@ -322,7 +321,7 @@
 	item_state = "sexymime"
 	item_color = "sexymime"
 	body_parts_covered = CHEST|GROIN|LEGS
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/gladiator
@@ -332,7 +331,7 @@
 	item_state = "gladiator"
 	item_color = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = 0
+	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
 
 /obj/item/clothing/under/sundress
@@ -342,7 +341,7 @@
 	item_state = "sundress"
 	item_color = "sundress"
 	body_parts_covered = CHEST|GROIN
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/captainparade
@@ -367,7 +366,7 @@
 	icon_state = "hos_parade_fem"
 	item_state = "r_suit"
 	item_color = "hos_parade_fem"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/assistantformal
@@ -384,7 +383,7 @@
 	icon_state = "black_tango"
 	item_state = "wcoat"
 	item_color = "black_tango"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/stripeddress
@@ -393,7 +392,7 @@
 	icon_state = "striped_dress"
 	item_state = "stripeddress"
 	item_color = "striped_dress"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_FULL
 	can_adjust = 0
 
 /obj/item/clothing/under/sailordress
@@ -402,7 +401,7 @@
 	icon_state = "sailor_dress"
 	item_state = "sailordress"
 	item_color = "sailor_dress"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/redeveninggown
@@ -411,7 +410,7 @@
 	icon_state = "red_evening_gown"
 	item_state = "redeveninggown"
 	item_color = "red_evening_gown"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/maid
@@ -421,7 +420,7 @@
 	item_state = "maid"
 	item_color = "maid"
 	body_parts_covered = CHEST|GROIN
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/janimaid
@@ -431,7 +430,7 @@
 	item_state = "janimaid"
 	item_color = "janimaid"
 	body_parts_covered = CHEST|GROIN
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/plaid_skirt
@@ -440,7 +439,7 @@
 	icon_state = "plaid_red"
 	item_state = "plaid_red"
 	item_color = "plaid_red"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/plaid_skirt/blue
