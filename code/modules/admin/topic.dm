@@ -1761,7 +1761,7 @@
 
 		var/customname = input(src.owner, "Pick a title for the report", "Title") as text|null
 
-		for(var/obj/machinery/faxmachine/F in machines)
+		for(var/obj/machinery/faxmachine/F in allfaxes)
 			if(! (F.stat & (BROKEN|NOPOWER) ) )
 
 				// animate! it's alive!

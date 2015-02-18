@@ -20,6 +20,7 @@ var/list/alldepartments = list("Central Command")
 
 	var/obj/item/weapon/paper/tofax = null // what we're sending
 	var/sendcooldown = 0 // to avoid spamming fax messages
+	var/faxtime = 0 //so people can know when we can fax again!
 
 	var/department = "Unknown" // our department
 
@@ -69,7 +70,7 @@ var/list/alldepartments = list("Central Command")
 			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><br><br>"
 
 			if(sendcooldown)
-				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
+				dat += "<b>Transmitter arrays realigning. Please stand by for [(faxtime - world.timeofday) / 10] second\s.</b><br>"
 
 			else
 				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
@@ -82,7 +83,7 @@ var/list/alldepartments = list("Central Command")
 		else
 			if(sendcooldown)
 				dat += "Please insert paper to send via secure connection.<br><br>"
-				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
+				dat += "<b>Transmitter arrays realigning. Please stand by for [(faxtime - world.timeofday) / 10] second\s.</b><br>"
 			else
 				dat += "Please insert paper to send via secure connection.<br><br>"
 
@@ -116,7 +117,7 @@ var/list/alldepartments = list("Central Command")
 				sendcooldown = 600
 
 			usr << "Message transmitted successfully."
-
+			faxtime = world.timeofday + sendcooldown
 			spawn(sendcooldown) // cooldown time
 				sendcooldown = 0
 
