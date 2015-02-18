@@ -66,7 +66,10 @@
 	var/datum/wires/vending/wires = null
 	var/list/overlays_vending[2]//1 is the panel layer, 2 is the dangermode layer
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY
+	var/list/vouchers
+	var/obj/item/weapon/storage/lockbox/coinbox/coinbox
+
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL
 	languages = HUMAN
 
 	var/obj/machinery/account_database/linked_db
@@ -108,7 +111,8 @@
 		reconnect_database()
 		linked_account = vendor_account
 
-		return
+	coinbox = new(src)
+	coinbox.req_access |= src.req_access
 
 	return
 
@@ -122,6 +126,8 @@
 	cvc.contraband = contraband
 	cvc.premium = premium
 */
+	if(coinbox)
+		coinbox.loc = get_turf(src)
 	..()
 
 /obj/machinery/vending/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -238,6 +244,16 @@
 		else
 			R.product_name = temp.name
 
+/obj/machinery/vending/proc/get_item_by_type(var/this_type)
+	var/list/datum_products = list()
+	datum_products |= hidden_records
+	datum_products |= coin_records
+	datum_products |= product_records
+	for(var/datum/data/vending_product/product in datum_products)
+		if(product.product_path == this_type)
+			return product
+	return null
+
 //		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 
 /obj/machinery/vending/emag(mob/user)
@@ -247,18 +263,60 @@
 		return 1
 	return -1
 
+/obj/machinery/vending/proc/can_accept_voucher(var/obj/item/voucher/voucher, mob/user)
+	if(istype(voucher, /obj/item/voucher/free_item))
+		var/obj/item/voucher/free_item/free_vouch = voucher
+		for(var/vend_item in free_vouch.freebies)
+			var/datum/data/vending_product/product = get_item_by_type(vend_item)
+			if(product && product.amount)
+				return 1
+	return 0
+
+//this should ideally be called last as a parent method, since it can delete the voucher
+/obj/machinery/vending/proc/voucher_act(var/obj/item/voucher/voucher, mob/user)
+	if(istype(voucher, /obj/item/voucher/free_item))
+		var/obj/item/voucher/free_item/free_vouch = voucher
+		for(var/i = 1; i <= free_vouch.vend_amount; i++)
+			if(!free_vouch.freebies || !free_vouch.freebies.len)
+				break
+			var/to_vend = pick(free_vouch.freebies)
+			if(free_vouch.single_items)
+				free_vouch.freebies.Remove(to_vend)
+			var/datum/data/vending_product/product = get_item_by_type(to_vend)
+			if(product && product.amount)
+				src.vend(product, user, by_voucher = 1)
+
+	if(voucher.shred_on_use)
+		qdel(voucher)
+	else
+		if(!vouchers)
+			vouchers = list()
+		vouchers.Add(voucher)
+		if(coinbox)
+			voucher.loc = coinbox
+	return 1
+
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
-	..()
+	. = ..()
+	if(.)
+		return .
 	if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_item()
-		W.loc = src
+		user.drop_item(src)
 		coin = W
 		user << "<span class='notice'>You insert [W] into [src].</span>"
 		return
+	else if(istype(W, /obj/item/voucher))
+		if(can_accept_voucher(W, user))
+			user.drop_item(src)
+			user << "<span class='notice'>You insert [W] into [src].</span>"
+			return voucher_act(W, user)
+		else
+			user << "<span class='notice'>\The [src] refuses to take [W].</span>"
+			return 1
 	/*else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
 		if(!linked_db)
@@ -534,14 +592,14 @@
 		return
 	return
 
-/obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
+/obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user, by_voucher = 0)
 	if (!allowed(user) && !emagged && wires.IsIndexCut(VENDING_WIRE_IDSCAN)) //For SECURE VENDING MACHINES YEAH
 		user << "\red Access denied." //Unless emagged of course
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
 
-	if (R in coin_records)
+	if (!by_voucher && (R in coin_records))
 		if(!coin)
 			user << "\blue You need to insert a coin to get this item."
 			return
@@ -550,9 +608,11 @@
 				user << "\blue You successfully pull the coin out before the [src] could swallow it."
 			else
 				user << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
-				del(coin)
+		if(coinbox)
+			coin.loc = coinbox
+			coin = null
 		else
-			del(coin)
+			qdel(coin)
 
 	R.amount--
 
@@ -1286,7 +1346,7 @@
 
 	pack = /obj/structure/vendomatpack/nazivend
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EMAGGABLE
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | EMAGGABLE
 
 /obj/machinery/vending/nazivend/emag(mob/user)
 	if(!emagged)
@@ -1332,7 +1392,7 @@
 
 	pack = /obj/structure/vendomatpack/sovietvend
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EMAGGABLE
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | EMAGGABLE
 
 
 /obj/machinery/vending/sovietvend/emag(mob/user)
