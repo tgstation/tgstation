@@ -700,7 +700,7 @@
 				- metal rod (kebab)
 
 				<h2>Table Craft:</h2>
-				Put ingredients on table, then click and drag the table onto yourself to prepare recipes.
+				Put ingredients on table, then click and drag the table onto yourself to see what recipes you can prepare.
 
 				<h2>Microwave:</h2>
 				Use it to cook or boil food ingredients (meats, doughs, egg, spaghetti, donkpocket, etc...).
@@ -718,14 +718,14 @@
 
 				<h2>Example recipes:</h2>
 				<b>Vanilla Cake</b>: Microwave cake batter.<br>
-				<b>Burger:</b> 1 bun + 1 meat<br>
+				<b>Burger:</b> 1 bun + 1 meat steak<br>
 				<b>Bread:</b> Microwave dough.<br>
-				<b>Waffles:</b> 2 doughslices<br>
+				<b>Waffles:</b> 2 pastry base<br>
 				<b>Popcorn:</b> Microwave corn.<br>
 				<b>Meat Steak:</b> Microwave meat.<br>
-				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 1 meat<br>
+				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 2 meat cutlets<br>
 				<b>Boiled Spagetti:</b> Microwave spaghetti.<br>
-				<b>Donuts:</b> 1u sugar + 1 doughslice<br>
+				<b>Donuts:</b> 1u sugar + 1 pastry base<br>
 				<b>Fries:</b> Process potato.
 
 				</body>

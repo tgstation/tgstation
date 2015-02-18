@@ -3,63 +3,18 @@
 /mob/living/carbon/alien/larva
 	var/temperature_alert = 0
 
-
 /mob/living/carbon/alien/larva/Life()
-	set invisibility = 0
-	set background = BACKGROUND_ENABLED
 
-	if (notransform)
-		return
-
-	..()
-	var/datum/gas_mixture/enviroment = loc.return_air()
-	if (stat != DEAD) //still breathing
-
+	if(..())
 		// GROW!
 		if(amount_grown < max_grown)
 			amount_grown++
 
-		//First, resolve location and get a breath
-		if(SSair.times_fired%4==2)
-			//Only try to take a breath every 4 seconds, unless suffocating
-			spawn(0) breathe()
-		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
-
-	//Handle temperature/pressure differences between body and environment
-	handle_environment(enviroment)
-
-	//stuff in the stomach
-	//handle_stomach()
-
-	//Status updates, death etc.
-	handle_regular_status_updates()
-	update_canmove()
-
-	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
-
 	//some kind of bug in canmove() isn't properly calling update_icons, so this is here as a placeholder
 	update_icons()
 
-	if(client)
-		handle_regular_hud_updates()
 
-/mob/living/carbon/alien/larva/proc/handle_regular_status_updates()
+/mob/living/carbon/alien/larva/handle_regular_status_updates()
 	updatehealth()
 
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -69,6 +24,7 @@
 		if(health < -25 || !getorgan(/obj/item/organ/brain))
 			death()
 			eye_blind = max(1, eye_blind)
+
 			silent = 0
 			return 1
 
@@ -134,7 +90,7 @@
 	return 1
 
 
-/mob/living/carbon/alien/larva/proc/handle_regular_hud_updates()
+/mob/living/carbon/alien/larva/handle_regular_hud_updates()
 
 	if (stat == 2)
 		sight |= SEE_TURFS
@@ -213,6 +169,4 @@
 
 	return 1
 
-/mob/living/carbon/alien/larva/proc/handle_random_events()
-	return
 

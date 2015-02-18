@@ -186,7 +186,7 @@
 	if(energy <= max_energy)
 		if(!recharging)
 			recharging = 1
-			SSobj.processing.Add(src)
+			SSobj.processing |= src
 		if(energy <= 0)
 			user << "<span class='warning'>You've overused the battery of [src], now it needs time to recharge!</span>"
 			recharge_locked = 1

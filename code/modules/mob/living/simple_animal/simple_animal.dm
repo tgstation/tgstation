@@ -85,6 +85,8 @@
 
 /mob/living/simple_animal/Life()
 
+	update_gravity(mob_has_gravity())
+
 	//Health
 	if(stat == DEAD)
 		if(health > 0)

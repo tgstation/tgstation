@@ -22,6 +22,7 @@ datum/reagent
 	var/volume = 0
 	//var/list/viruses = list()
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
+	var/can_synth = 1
 	var/metabolization_rate = REAGENTS_METABOLISM
 	var/overrides_metab = 0
 	var/overdose_threshold = 0
