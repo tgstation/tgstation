@@ -302,6 +302,7 @@
 			radio.recalculateChannels()
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
+			module_sprites["Bladewolf Mk2"] = "bladewolfmk2"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
 			module_sprites["Marina-CB"] = "marinaCB"
 			module_sprites["Squadbot"] = "squats"
