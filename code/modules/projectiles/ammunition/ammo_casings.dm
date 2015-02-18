@@ -31,6 +31,11 @@
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/midbullet
 
+/obj/item/ammo_casing/c22
+	desc = "A .22 bullet casing."
+	caliber = ".22"
+	projectile_type = /obj/item/projectile/bullet/weakbullet4
+
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
