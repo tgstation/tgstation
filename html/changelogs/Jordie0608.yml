@@ -1,6 +1,0 @@
-author: Jordie0608
-
-delete-after: True
-
-changes: 
-  - tweak: "Veil render and rifts changed to spawn with vars, rifts can be closed with a nullrod."
