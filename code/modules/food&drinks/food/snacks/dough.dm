@@ -29,6 +29,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
 	list_reagents = list("nutriment" = 3)
 	w_class = 3
+	flags = OPENCONTAINER
 
 
 // Dough + rolling pin = flat dough
@@ -55,6 +56,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pizzabread
 	list_reagents = list("nutriment" = 3)
 	w_class = 3
+	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzabread
 	name = "pizza bread"
@@ -73,6 +75,7 @@
 	icon_state = "doughslice"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/bun
 	filling_color = "#CD853F"
+	flags = OPENCONTAINER
 
 
 /obj/item/weapon/reagent_containers/food/snacks/bun

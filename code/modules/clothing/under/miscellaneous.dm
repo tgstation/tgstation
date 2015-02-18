@@ -246,7 +246,7 @@
 	can_adjust = 0
 
 /obj/item/clothing/under/schoolgirl
-	name = "schoolgirl uniform"
+	name = "blue schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
 	icon_state = "schoolgirl"
 	item_state = "schoolgirl"
@@ -254,6 +254,24 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = 0
 	can_adjust = 0
+
+/obj/item/clothing/under/schoolgirl/red
+	name = "red schoolgirl uniform"
+	icon_state = "schoolgirlred"
+	item_state = "schoolgirlred"
+	item_color = "schoolgirlred"
+
+/obj/item/clothing/under/schoolgirl/green
+	name = "green schoolgirl uniform"
+	icon_state = "schoolgirlgreen"
+	item_state = "schoolgirlgreen"
+	item_color = "schoolgirlgreen"
+
+/obj/item/clothing/under/schoolgirl/orange
+	name = "orange schoolgirl uniform"
+	icon_state = "schoolgirlorange"
+	item_state = "schoolgirlorange"
+	item_color = "schoolgirlorange"
 
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
@@ -415,3 +433,26 @@
 	body_parts_covered = CHEST|GROIN
 	fitted = 0
 	can_adjust = 0
+
+/obj/item/clothing/under/plaid_skirt
+	name = "red plaid skirt"
+	desc = "A preppy red skirt with a white blouse."
+	icon_state = "plaid_red"
+	item_state = "plaid_red"
+	item_color = "plaid_red"
+	fitted = 0
+	can_adjust = 0
+
+/obj/item/clothing/under/plaid_skirt/blue
+	name = "blue plaid skirt"
+	desc = "A preppy blue skirt with a white blouse."
+	icon_state = "plaid_blue"
+	item_state = "plaid_blue"
+	item_color = "plaid_blue"
+
+/obj/item/clothing/under/plaid_skirt/purple
+	name = "purple plaid skirt"
+	desc = "A preppy purple skirt with a white blouse."
+	icon_state = "plaid_purple"
+	item_state = "plaid_purple"
+	item_color = "plaid_purple"

@@ -62,6 +62,7 @@
 	for(var/obj/item/I in ingredients)
 		if(!istype(S, I.type))
 			customname = "custom"
+			break
 	if(ingredients.len == 1) //first ingredient
 		if(istype(S, /obj/item/weapon/reagent_containers/food/snacks/meat/human))
 			var/obj/item/weapon/reagent_containers/food/snacks/meat/human/H = S
@@ -198,7 +199,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
-	name = "sandwich"
+	name = "toast"
 	desc = "A timeless classic."
 	Ingredientsplacement = INGREDIENTS_STACK
 	icon_state = "breadslice"
@@ -215,6 +216,7 @@
 			return
 		user << "<span class='notice'>You finish the [src.name].</span>"
 		finished = 1
+		name = "[customname] sandwich"
 		BS.reagents.trans_to(src, BS.reagents.total_volume)
 		ingMax = ingredients.len //can't add more ingredients after that
 		var/image/TOP = new(icon, "[BS.icon_state]")

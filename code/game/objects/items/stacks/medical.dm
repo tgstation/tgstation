@@ -101,6 +101,11 @@
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
 	stop_bleeding = 900
 
+/obj/item/stack/medical/gauze/cyborg/
+	m_amt = 0
+	is_cyborg = 1
+	cost = 250
+
 /obj/item/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burn wounds."

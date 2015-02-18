@@ -39,6 +39,7 @@
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
 
+	var/list/upgrades = list()
 
 /obj/item/weapon/gun/New()
 	..()
