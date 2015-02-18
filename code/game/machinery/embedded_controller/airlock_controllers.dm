@@ -71,6 +71,108 @@
 
 	return 1
 
+/obj/machinery/embedded_controller/radio/advanced_airlock_controller/linkMenu(var/obj/O)
+	var/dat = ""
+	if(istype(O, /obj/machinery/airlock_sensor))
+		dat += "<a href='?src=\ref[src];link=1;slot=ext'>\[Link @ exterior\]</a><br>"
+		dat += "<a href='?src=\ref[src];link=1;slot=chamber'>\[Link @ chamber\]</a><br>"
+		dat += "<a href='?src=\ref[src];link=1;slot=int'>\[Link @ interior\]</a>"
+	else if(istype(O, /obj/machinery/atmospherics/unary/vent_pump))
+		dat += "<a href='?src=\ref[src];link=1'>\[Link @ pump\]</a>"
+	else if(istype(O, /obj/machinery/door/airlock))
+		dat += "<a href='?src=\ref[src];link=1;slot=ext'>\[Link @ exterior\]</a><br>"
+		dat += "<a href='?src=\ref[src];link=1;slot=int'>\[Link @ interior\]</a>"
+	return dat
+
+/obj/machinery/embedded_controller/radio/advanced_airlock_controller/canLink(var/obj/O, var/list/context)
+	if(istype(O, /obj/machinery/door))
+		if(context["slot"] in list("int", "ext"))
+			return 1
+
+	if(istype(O, /obj/machinery/atmospherics))
+		return 1
+
+	if(istype(O, /obj/machinery/airlock_sensor))
+		if(context["slot"] in list("int", "ext", "chamber"))
+			return 1
+
+	return 0
+
+/obj/machinery/embedded_controller/radio/advanced_airlock_controller/unlinkFrom(var/mob/user, var/obj/O)
+	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
+		return 0
+
+	if(istype(O, /obj/machinery/door))
+		if(tag_exterior_door == O:id_tag)
+			tag_exterior_door = null
+			return 1
+		else if(tag_interior_door == O:id_tag)
+			tag_interior_door = null
+			return 1
+
+	if(istype(O, /obj/machinery/airlock_sensor))
+		if(tag_chamber_sensor == O:id_tag)
+			tag_chamber_sensor = null
+			return 1
+		else if(tag_interior_sensor == O:id_tag)
+			tag_interior_sensor = null
+			return 1
+		else if(tag_exterior_sensor == O:id_tag)
+			tag_exterior_sensor = null
+			return 1
+
+	if(istype(O, /obj/machinery/atmospherics) && O:id_tag == tag_airpump)//not doing /unary/vent because it could very well be a DP vent, zhich is /binary
+		tag_airpump = null
+		return 1
+
+/obj/machinery/embedded_controller/radio/advanced_airlock_controller/isLinkedWith(var/obj/O)
+	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
+		return 0
+
+	if(istype(O, /obj/machinery/door))
+		if(tag_interior_door  == O:id_tag)
+			return 1
+		if(tag_exterior_door  == O:id_tag)
+			return 1
+
+	if(istype(O, /obj/machinery/airlock_sensor))
+		if(tag_interior_sensor  == O:id_tag)
+			return 1
+		if(tag_exterior_sensor  == O:id_tag)
+			return 1
+		if(tag_chamber_sensor  == O:id_tag)
+			return 1
+
+	if(istype(O, /obj/machinery/atmospherics) && O:id_tag == tag_airpump)
+		return 1
+
+/obj/machinery/embedded_controller/radio/advanced_airlock_controller/linkWith(var/mob/user, var/obj/O, var/list/context)
+	if(!("id_tag" in O.vars))
+		return 0
+	if(istype(O, /obj/machinery/atmospherics))
+		tag_airpump = O:id_tag
+		return 1
+	if(istype(O, /obj/machinery/door))
+		if(context["slot"] == "int")
+			tag_interior_door = O:id_tag
+			return 1
+		if(context["slot"] == "ext")
+			tag_exterior_door = O:id_tag
+			return 1
+
+	if(istype(O, /obj/machinery/airlock_sensor))
+		if(context["slot"] == "int")
+			tag_interior_sensor = O:id_tag
+			O:master_tag = id_tag
+			return 1
+		if(context["slot"] == "ext")
+			tag_exterior_sensor = O:id_tag
+			O:master_tag = id_tag
+			return 1
+		if(context["slot"] == "chamber")
+			tag_chamber_sensor = O:id_tag
+			O:master_tag = id_tag
+			return 1
 
 //Airlock controller for airlock control - most airlocks on the station use this
 /obj/machinery/embedded_controller/radio/airlock_controller
@@ -137,6 +239,89 @@
 		program.receive_user_command(href_list["command"])
 
 	return 1
+
+/obj/machinery/embedded_controller/radio/airlock_controller/linkMenu(var/obj/O)
+	var/dat = ""
+	if(istype(O, /obj/machinery/airlock_sensor))
+		dat += "<a href='?src=\ref[src];link=1;slot=chamber'>\[Link @ chamber\]</a><br>"
+	else if(istype(O, /obj/machinery/atmospherics/unary/vent_pump))
+		dat += "<a href='?src=\ref[src];link=1'>\[Link @ pump\]</a>"
+	else if(istype(O, /obj/machinery/door/airlock))
+		dat += "<a href='?src=\ref[src];link=1;slot=ext'>\[Link @ exterior\]</a><br>"
+		dat += "<a href='?src=\ref[src];link=1;slot=int'>\[Link @ interior\]</a>"
+	return dat
+
+/obj/machinery/embedded_controller/radio/airlock_controller/canLink(var/obj/O, var/list/context)
+	if(istype(O, /obj/machinery/door))
+		if(context["slot"] in list("int", "ext"))
+			return 1
+
+	if(istype(O, /obj/machinery/atmospherics))
+		return 1
+
+	if(istype(O, /obj/machinery/airlock_sensor))
+		if(context["slot"] == "chamber")//don't need the slot here, but it's because I'm using the code from the other controllers
+			return 1
+
+	return 0
+
+/obj/machinery/embedded_controller/radio/airlock_controller/unlinkFrom(var/mob/user, var/obj/O)
+	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
+		return 0
+
+	if(istype(O, /obj/machinery/door))
+		if(tag_exterior_door == O:id_tag)
+			tag_exterior_door = null
+			return 1
+		else if(tag_interior_door == O:id_tag)
+			tag_interior_door = null
+			return 1
+
+	if(istype(O, /obj/machinery/airlock_sensor))
+		if(tag_chamber_sensor == O:id_tag)
+			tag_chamber_sensor = null
+			return 1
+
+	if(istype(O, /obj/machinery/atmospherics) && O:id_tag == tag_airpump)//not doing /unary/vent because it could very well be a DP vent, zhich is /binary
+		tag_airpump = null
+		return 1
+
+/obj/machinery/embedded_controller/radio/airlock_controller/isLinkedWith(var/obj/O)
+	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
+		return 0
+
+	if(istype(O, /obj/machinery/door))
+		if(tag_interior_door  == O:id_tag)
+			return 1
+		if(tag_exterior_door  == O:id_tag)
+			return 1
+
+	if(istype(O, /obj/machinery/airlock_sensor))
+		if(tag_chamber_sensor  == O:id_tag)
+			return 1
+
+	if(istype(O, /obj/machinery/atmospherics) && O:id_tag == tag_airpump)
+		return 1
+
+/obj/machinery/embedded_controller/radio/airlock_controller/linkWith(var/mob/user, var/obj/O, var/list/context)
+	if(!("id_tag" in O.vars))
+		return 0
+	if(istype(O, /obj/machinery/atmospherics))
+		tag_airpump = O:id_tag
+		return 1
+	if(istype(O, /obj/machinery/door))
+		if(context["slot"] == "int")
+			tag_interior_door = O:id_tag
+			return 1
+		if(context["slot"] == "ext")
+			tag_exterior_door = O:id_tag
+			return 1
+
+	if(istype(O, /obj/machinery/airlock_sensor))
+		if(context["slot"] == "chamber")
+			tag_chamber_sensor = O:id_tag
+			O:master_tag = id_tag
+			return 1
 
 
 //Access controller for door control - used in virology and the like
@@ -211,3 +396,50 @@
 		program.receive_user_command(href_list["command"])
 
 	return 1
+
+/obj/machinery/embedded_controller/radio/access_controller/linkMenu(var/obj/O)
+	var/dat = ""
+	if(istype(O, /obj/machinery/door/airlock))
+		dat += "<a href='?src=\ref[src];link=1;slot=ext'>\[Link @ exterior\]</a><br>"
+		dat += "<a href='?src=\ref[src];link=1;slot=int'>\[Link @ interior\]</a>"
+	return dat
+
+/obj/machinery/embedded_controller/radio/access_controller/canLink(var/obj/O, var/list/context)
+	if(istype(O, /obj/machinery/door))
+		if(context["slot"] in list("int", "ext"))
+			return 1
+
+	return 0
+
+/obj/machinery/embedded_controller/radio/access_controller/unlinkFrom(var/mob/user, var/obj/O)
+	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
+		return 0
+
+	if(istype(O, /obj/machinery/door))
+		if(tag_exterior_door == O:id_tag)
+			tag_exterior_door = null
+			return 1
+		else if(tag_interior_door == O:id_tag)
+			tag_interior_door = null
+			return 1
+
+/obj/machinery/embedded_controller/radio/access_controller/isLinkedWith(var/obj/O)
+	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
+		return 0
+
+	if(istype(O, /obj/machinery/door))
+		if(tag_interior_door  == O:id_tag)
+			return 1
+		if(tag_exterior_door  == O:id_tag)
+			return 1
+
+/obj/machinery/embedded_controller/radio/access_controller/linkWith(var/mob/user, var/obj/O, var/list/context)
+	if(!("id_tag" in O.vars))
+		return 0
+	if(istype(O, /obj/machinery/door))
+		if(context["slot"] == "int")
+			tag_interior_door = O:id_tag
+			return 1
+		if(context["slot"] == "ext")
+			tag_exterior_door = O:id_tag
+			return 1
