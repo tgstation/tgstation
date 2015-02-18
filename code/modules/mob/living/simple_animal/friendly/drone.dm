@@ -524,6 +524,10 @@
 	origin_tech = "programming=2;biotech=4"
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
+/obj/item/drone_shell/New()
+	..()
+	notify_ghosts("Drone shell created at [get_area(loc)]")
+
 /obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"pAI"))
 		return
