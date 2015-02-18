@@ -10,6 +10,7 @@
 /obj/item/weapon/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(!target.reagents) return
+	if(reject_bad_chem(target,user)) return
 
 	if(reagents.total_volume > 0)
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -75,6 +76,7 @@
 		if(!target.reagents.total_volume)
 			user << "<span class='notice'>[target] is empty.</span>"
 			return
+
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 
