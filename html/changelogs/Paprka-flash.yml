@@ -1,0 +1,6 @@
+author: Paprka
+
+delete-after: True
+
+changes: 
+  - rscadd: "Flashlights can be attached to pulse carbines."

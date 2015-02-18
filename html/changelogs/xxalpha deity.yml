@@ -1,0 +1,6 @@
+author: xxalpha
+
+delete-after: True
+
+changes: 
+  - rscadd: "You now hear the voice of the chosen deity in prayers."

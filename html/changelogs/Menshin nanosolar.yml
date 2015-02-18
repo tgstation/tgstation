@@ -1,0 +1,6 @@
+author: Menshin
+
+delete-after: True
+
+changes: 
+  - rscadd: "Solar control computers remade with NanoUI"

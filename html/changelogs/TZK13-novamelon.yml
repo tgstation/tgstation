@@ -1,0 +1,7 @@
+author: TZK13
+
+delete-after: True
+
+changes: 
+  - tweak: "Novaflowers apply a firestack for every 20 potency they have."
+  - tweak: "You can now juice whole watermelons instead of slices."

@@ -1,0 +1,8 @@
+author: Iamgoofball
+
+delete-after: True
+
+changes: 
+  - tweak: "Improves kinetic accelerator's mining strength."
+  - tweak: "The kinetic accelerator's cooldown can be decreased by tweaking the thermal exchanger with a screwdriver."
+  - tweak: "The range can be increased with plasma sheets"
