@@ -73,6 +73,8 @@
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
+	emag = new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
+
 	fix_modules()
 
 
@@ -96,6 +98,8 @@
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
+	emag = new /obj/item/borg/stun(src)
+	emag = new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 
 	emag.reagents.add_reagent("facid", 250)
 	emag.name = "Fluacid spray"
@@ -195,6 +199,7 @@
 	modules += new /obj/item/device/lightreplacer/cyborg(src)
 	modules += new /obj/item/weapon/holosign_creator(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
+	emag = new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 
 	emag.reagents.add_reagent("lube", 250)
 	emag.name = "lube spray"
@@ -212,6 +217,8 @@
 	modules += new /obj/item/weapon/pen(src)
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/device/violin(src)
+	emag = new /obj/item/borg/stun(src)
+	emag = new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 
 	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 	M.matter = 30
@@ -236,7 +243,6 @@
 	..()
 	var/mob/living/silicon/robot/R = loc
 	modules += new /obj/item/borg/sight/meson(src)
-	emag = new /obj/item/borg/stun(src)
 	modules += new /obj/item/weapon/storage/bag/ore(src)
 	if(R.emagged)
 		modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
@@ -246,6 +252,8 @@
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
+	emag = new /obj/item/borg/stun(src)
+	emag = new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 	fix_modules()
 
 /obj/item/weapon/robot_module/miner/on_emag()
