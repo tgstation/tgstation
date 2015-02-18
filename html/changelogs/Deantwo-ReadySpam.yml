@@ -1,0 +1,6 @@
+author: Deantwo
+
+delete-after: True
+
+changes: 
+  - bugfix: "You can now spam the 'Ready' button as much as you want without it setting you 'Not ready' again."

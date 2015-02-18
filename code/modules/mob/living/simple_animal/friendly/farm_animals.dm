@@ -251,7 +251,7 @@ var/global/chicken_count = 0
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
 		if(chicken_count < MAX_CHICKENS && prob(25))
-			SSobj.processing.Add(E)
+			SSobj.processing |= E
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()

@@ -119,7 +119,7 @@
 
 /obj/item/weapon/rcs/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 /obj/item/weapon/rcs/examine(mob/user)
 	..()
