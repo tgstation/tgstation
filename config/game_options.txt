@@ -21,7 +21,7 @@ REVIVAL_BRAIN_LIFE -1
 ### RENAMING ###
 
 #Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
-#RENAME_CYBORG
+RENAME_CYBORG
 
 ### OOC DURING ROUND ###
 #Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
@@ -29,7 +29,7 @@ OOC_DURING_ROUND
 
 ### EMOJI ###
 #Comment this out if you want to disable emojis
-EMOJIS
+#EMOJIS
 
 ### MOB MOVEMENT ###
 
@@ -41,7 +41,7 @@ EMOJIS
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
-RUN_DELAY 1
+RUN_DELAY 0
 WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types.
@@ -58,7 +58,7 @@ ANIMAL_DELAY 0
 #HUMANS_NEED_SURNAMES
 
 ## If uncommented, this forces all players to use random names !and appearances!.
-#FORCE_RANDOM_NAMES
+FORCE_RANDOM_NAMES
 
 
 ### ALERT LEVELS ###
@@ -77,15 +77,15 @@ ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are
 ## Default probablity is 1, increase to make that mode more likely to be picked.
 ## Set to 0 to disable that mode.
 
-PROBABILITY TRAITOR 5
-PROBABILITY TRAITORCHAN 4
-PROBABILITY DOUBLE_AGENTS 3
-PROBABILITY NUCLEAR 2
-PROBABILITY REVOLUTION 2
-PROBABILITY GANG 0
-PROBABILITY CULT 2
-PROBABILITY CHANGELING 2
-PROBABILITY WIZARD 4
+PROBABILITY TRAITOR 2
+PROBABILITY TRAITORCHAN 1
+PROBABILITY DOUBLE_AGENTS 1
+PROBABILITY NUCLEAR 1
+PROBABILITY REVOLUTION 1
+PROBABILITY GANG 1
+PROBABILITY CULT 1
+PROBABILITY CHANGELING 1
+PROBABILITY WIZARD 1
 PROBABILITY MALFUNCTION 1
 PROBABILITY BLOB 2
 PROBABILITY RAGINMAGES 2
@@ -119,11 +119,11 @@ SECURITY_SCALING_COEFF 8
 
 # The number of objectives traitors get.
 # Not including escaping/hijacking.
-TRAITOR_OBJECTIVES_AMOUNT 2
+TRAITOR_OBJECTIVES_AMOUNT 4
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
-#PROTECT_ROLES_FROM_ANTAGONIST
+PROTECT_ROLES_FROM_ANTAGONIST
 
 ## Uncomment to prohibit assistants from becoming most antagonists.
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
@@ -185,7 +185,7 @@ SEC_START_BRIG
 
 ### GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
-#GHOST_INTERACTION
+GHOST_INTERACTION
 
 ### NON-VOCAL SILICONS ###
 ## Uncomment to stop the AI, or cyborgs, from having vocal communication.
@@ -212,7 +212,7 @@ DEFAULT_LAWS 1
 SILICON_MAX_LAW_AMOUNT 12
 
 ## Uncoment to give players the choice of their species before they join the game
-#JOIN_WITH_MUTANT_RACE
+JOIN_WITH_MUTANT_RACE
 
 ## Uncomment to allow certain species to have custom colors
 

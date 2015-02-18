@@ -13,7 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\tgstation2.dm"
+#include "_maps\metastation.dm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -900,6 +900,7 @@
 #include "code\modules\events\carp_migration.dm"
 #include "code\modules\events\communications_blackout.dm"
 #include "code\modules\events\disease_outbreak.dm"
+#include "code\modules\events\drone_uprising.dm"
 #include "code\modules\events\dust.dm"
 #include "code\modules\events\electrical_storm.dm"
 #include "code\modules\events\event.dm"

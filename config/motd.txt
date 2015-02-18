@@ -1,5 +1,8 @@
 <!-- Most valid html will work in here, excluding images. -->
 
 <h1>Welcome to Space Station 13!</h1>
+<h2>https://tgstation13.org/wiki/ - Use this one for everything</h2>
+<h1>There's a new rule regarding heads</h1>
+<i>My server is too shit for /vg/, sorry folks</i>
 
-<i>This server is running a /tg/station 13 Git build.</i>
+
