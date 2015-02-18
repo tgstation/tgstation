@@ -19,6 +19,11 @@
 		brainmob.loc = src
 		brainmob.container = src
 
+		src.brainmob << "<b><font color='red' size=3>Recall your positronic directives!</font></b>"
+		src.brainmob << "<b>You are \a [posibrain], brought into existence on [station_name()].</b>"
+		src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
+		src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
+
 		user.drop_item()
 		posibrain.loc = src
 
