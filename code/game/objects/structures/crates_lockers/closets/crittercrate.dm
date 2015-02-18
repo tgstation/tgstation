@@ -22,7 +22,7 @@
 		return ..()
 
 	if(content_mob != null && already_opened == 0)
-		for(var/i = 0, i <= amount, i++)
+		for(var/i = 1, i <= amount, i++)
 			new content_mob(loc)
 		already_opened = 1
 	..()
