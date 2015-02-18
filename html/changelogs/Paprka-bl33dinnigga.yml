@@ -1,0 +1,6 @@
+author: Paprka
+
+delete-after: True
+
+changes: 
+  - tweak: "Changed the values at which your limbs show as bleeding on self-examine, so it's easier to identify which limbs are bleeding."
