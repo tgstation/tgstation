@@ -10,16 +10,7 @@
 
 
 /mob/living/carbon/monkey/Life()
-	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-	if (notransform)	return
-	..()
-
-	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
-	if(loc)
-		environment = loc.return_air()
-
-	if (stat != DEAD) //still breathing
+	if(..())
 		//First, resolve location and get a breath
 		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
@@ -28,42 +19,6 @@
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
-
-
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
-
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-		//Disabilities
-		handle_disabilities()
-
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
-
-	//Handle temperature/pressure differences between body and environment
-	if(environment)	// More error checking -- TLE
-		handle_environment(environment)
-
-	//Check if we're on fire
-	handle_fire()
-
-	//Status updates, death etc.
-	handle_regular_status_updates()
-	update_canmove()
-
-	if(client)
-		handle_regular_hud_updates()
-
-	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
 
 	if(!client && stat == CONSCIOUS)
 		if(prob(33) && canmove && isturf(loc) && !pulledby && !grabbed_by.len)
@@ -75,9 +30,9 @@
 	..()
 	return pressure
 
-/mob/living/carbon/monkey/proc/handle_disabilities()
+/mob/living/carbon/monkey/handle_disabilities()
 
-/mob/living/carbon/monkey/proc/handle_mutations_and_radiation()
+/mob/living/carbon/monkey/handle_mutations_and_radiation()
 
 	if (radiation)
 		if (radiation > 100)
@@ -272,7 +227,7 @@
 
 	return 1
 
-/mob/living/carbon/monkey/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
 	var/environment_heat_capacity = environment.heat_capacity()
@@ -320,7 +275,7 @@
 	else
 		adjustFireLoss(5.0*discomfort)
 
-/mob/living/carbon/monkey/proc/handle_chemicals_in_body()
+/mob/living/carbon/monkey/handle_chemicals_in_body()
 
 	if(reagents) reagents.metabolize(src)
 
@@ -342,7 +297,7 @@
 
 	return //TODO: DEFERRED
 
-/mob/living/carbon/monkey/proc/handle_regular_status_updates()
+/mob/living/carbon/monkey/handle_regular_status_updates()
 	updatehealth()
 
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -412,7 +367,7 @@
 	return 1
 
 
-/mob/living/carbon/monkey/proc/handle_regular_hud_updates()
+/mob/living/carbon/monkey/handle_regular_hud_updates()
 
 	if (stat == 2)
 		sight |= SEE_TURFS
@@ -513,14 +468,14 @@
 
 	return 1
 
-/mob/living/carbon/monkey/proc/handle_random_events()
+/mob/living/carbon/monkey/handle_random_events()
 	if (prob(1) && prob(2))
 		spawn(0)
 			emote("scratch")
 			return
 
 
-/mob/living/carbon/monkey/proc/handle_changeling()
+/mob/living/carbon/monkey/handle_changeling()
 	if(mind && mind.changeling)
 		mind.changeling.regenerate()
 		hud_used.lingchemdisplay.invisibility = 0
