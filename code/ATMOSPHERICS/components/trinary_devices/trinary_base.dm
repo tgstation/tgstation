@@ -15,33 +15,38 @@ obj/machinery/atmospherics/trinary
 	var/datum/pipe_network/network2
 	var/datum/pipe_network/network3
 
+	var/activity_log = ""
+
 obj/machinery/atmospherics/trinary/New()
 	..()
-	switch(dir)
-		if(NORTH)
-			initialize_directions = EAST|NORTH|SOUTH
-		if(SOUTH)
-			initialize_directions = SOUTH|WEST|NORTH
-		if(EAST)
-			initialize_directions = EAST|WEST|SOUTH
-		if(WEST)
-			initialize_directions = WEST|NORTH|EAST
+	initialize_directions()
 	air1 = new
 	air2 = new
 	air3 = new
 
-	air1.volume = 200
-	air2.volume = 200
-	air3.volume = 200
+	air1.volume = starting_volume
+	air2.volume = starting_volume
+	air3.volume = starting_volume
 
-obj/machinery/atmospherics/trinary/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+/obj/machinery/atmospherics/trinary/proc/initialize_directions()
+	switch(dir)
+		if(NORTH)
+			initialize_directions = SOUTH|NORTH|EAST
+		if(SOUTH)
+			initialize_directions = NORTH|SOUTH|WEST
+		if(EAST)
+			initialize_directions = WEST|EAST|SOUTH
+		if(WEST)
+			initialize_directions = EAST|WEST|NORTH
+
+obj/machinery/atmospherics/trinary/buildFrom(var/mob/usr,var/obj/item/pipe/pipe, var/mirrored = 0)
 	if(!(pipe.dir in list(NORTH, SOUTH, EAST, WEST)) && src.mirror) //because the dir isn't in the right set, we want to make the mirror kind
 		var/obj/machinery/atmospherics/trinary/mirrored_pipe = new mirror(src.loc)
 		pipe.dir = turn(pipe.dir, -45)
 		qdel(src)
-		return mirrored_pipe.buildFrom(usr, pipe)
+		return mirrored_pipe.buildFrom(usr, pipe, 1)
 	dir = pipe.dir
-	initialize_directions = pipe.get_pipe_dir()
+	initialize_directions = pipe.get_pipe_dir(mirrored)
 	if (pipe.pipename)
 		name = pipe.pipename
 	var/turf/T = loc

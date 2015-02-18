@@ -3,7 +3,7 @@
 	use_power = 0
 	var/datum/gas_mixture/air_contents = new
 
-	var/obj/machinery/atmospherics/portables_connector/connected_port
+	var/obj/machinery/atmospherics/unary/portables_connector/connected_port
 	var/obj/item/weapon/tank/holding
 
 	var/volume = 0
@@ -22,7 +22,7 @@
 	initialize()
 		. = ..()
 		spawn()
-			var/obj/machinery/atmospherics/portables_connector/port = locate() in loc
+			var/obj/machinery/atmospherics/unary/portables_connector/port = locate() in loc
 			if(port)
 				connect(port)
 				update_icon()
@@ -44,7 +44,7 @@
 
 	proc
 
-		connect(obj/machinery/atmospherics/portables_connector/new_port)
+		connect(obj/machinery/atmospherics/unary/portables_connector/new_port)
 			//Make sure not already connected to something else
 			if(connected_port || !new_port || new_port.connected_device)
 				return 0
@@ -101,7 +101,7 @@
 			update_icon()
 			return
 		else
-			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+			var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc
 			if(possible_port)
 				if(connect(possible_port))
 					user << "\blue You connect [name] to the port."
