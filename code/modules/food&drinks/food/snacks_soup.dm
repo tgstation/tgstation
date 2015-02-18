@@ -44,7 +44,7 @@
 	name = "clown's tears"
 	desc = "Not very funny."
 	icon_state = "clownstears"
-	list_reagents = list("nutriment" = 1, "vitamin" = 8)
+	list_reagents = list("nutriment" = 1, "banana" = 5, "vitamin" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/vegetable
 	name = "vegetable soup"
@@ -74,13 +74,13 @@
 	name = "hot chili"
 	desc = "A five alarm Texan Chili!"
 	icon_state = "hotchili"
-	list_reagents = list("nutriment" = 1, "vitamin" = 2)
+	list_reagents = list("nutriment" = 1, "tomatojuice" = 2, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/coldchili
 	name = "cold chili"
 	desc = "This slush is barely a liquid!"
 	icon_state = "coldchili"
-	list_reagents = list("nutriment" = 1, "vitamin" = 2)
+	list_reagents = list("nutriment" = 1, "tomatojuice" = 2, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/monkeysdelight
 	name = "monkey's delight"
@@ -92,7 +92,7 @@
 	name = "tomato soup"
 	desc = "Drinking this feels like being a vampire! A tomato vampire..."
 	icon_state = "tomatosoup"
-	list_reagents = list("nutriment" = 1, "vitamin" = 3)
+	list_reagents = list("nutriment" = 1, "tomatojuice" = 10, "vitamin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/milo
 	name = "milosoup"
@@ -135,5 +135,5 @@
 	name = "stew"
 	desc = "A nice and warm stew. Healthy and strong."
 	icon_state = "stew"
-	list_reagents = list("nutriment" = 1, "vitamin" = 5)
+	list_reagents = list("nutriment" = 1, "tomatojuice" = 5, "vitamin" = 5)
 	bitesize = 7
