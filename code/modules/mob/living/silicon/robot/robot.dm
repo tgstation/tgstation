@@ -1406,7 +1406,7 @@
 	else
 		src << "Your icon has been set. You now require a module reset to change it."
 
-/mob/living/silicon/robot/rejuvenate()
+/mob/living/silicon/robot/rejuvenate(animation = 0)
 	for(var/C in components)
 		var/datum/robot_component/component = components[C]
 		component.electronics_damage = 0

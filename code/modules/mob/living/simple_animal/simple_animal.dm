@@ -76,9 +76,9 @@
 
 	languages = ALL
 
-/mob/living/simple_animal/rejuvenate()
+/mob/living/simple_animal/rejuvenate(animation = 0)
 	var/turf/T = get_turf(src)
-	T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
+	if(animation) T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
 	src.health = src.maxHealth
 	return 1
 /mob/living/simple_animal/New()

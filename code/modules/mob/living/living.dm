@@ -357,8 +357,8 @@
 
 
 
-/mob/living/proc/revive()
-	rejuvenate()
+/mob/living/proc/revive(animation = 0)
+	rejuvenate(animation)
 	/*
 	buckled = initial(src.buckled)
 	*/
@@ -375,10 +375,10 @@
 	hud_updateflag |= 1 << HEALTH_HUD
 	hud_updateflag |= 1 << STATUS_HUD
 
-/mob/living/proc/rejuvenate()
+/mob/living/proc/rejuvenate(animation = 0)
 
 	var/turf/T = get_turf(src)
-	T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
+	if(animation) T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
 
 	// shut down various types of badness
 	setToxLoss(0)
