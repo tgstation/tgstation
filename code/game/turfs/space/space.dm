@@ -15,6 +15,13 @@
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+	update_starlight()
+
+/turf/space/proc/update_starlight()
+	for(var/turf/T in range(src,1))
+		if(istype(T,/turf/simulated))
+			src.SetLuminosity(2)
+			return
 
 /turf/space/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
