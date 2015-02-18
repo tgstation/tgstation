@@ -1363,7 +1363,7 @@ var/global/list/common_tools = list(
 		return 1
 
 	if(is_type_in_list(W,sharp_things_2))
-		return 1
+		return 2 //cutting food
 
 	if(istype(W, /obj/item/weapon/melee/energy))
 		var/obj/item/weapon/melee/energy/E = W
