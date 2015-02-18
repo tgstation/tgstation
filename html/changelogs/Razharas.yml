@@ -1,0 +1,15 @@
+
+author: Razharas
+
+delete-after: False
+
+changes:
+  - rscadd: "Vines now can grow on any tiles that is not dense, including space, shuttles, centcomm tiles and so on."
+  - rscadd: "Added 'Bluespace' mutation to vines, makes them be able to grow through absolutely everything."
+  - rscadd: "Added 'Space Proofing' mutation to vines, after they grow if the tile under them is space it will become special vinetile, which is just resprited regular floor, if the vine on the vinetile dies the vineturf changes back to space."
+  - rscadd: "Made vines spreading speed depend on the seed's production, can be both slower and faster than current."
+  - rscadd: "Made vines mutation chance be 1/10th of the potency of the seed it is spawned from."
+  - rscadd: "Special chemicals added to vine seeds durning their growth can increase/decrease their potency and productivity."
+  - rscadd: "Special chemicals now can remove good, bad or neutral mutations from vine seeds while they are growing, cultivating actually helpful vines is now possible."
+  - rscadd: "Plant analyzers now show the vine seeds mutations."
+  - tweak: "Buffed numbers in some of the more useless mutations."

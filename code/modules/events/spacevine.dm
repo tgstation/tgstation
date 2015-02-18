@@ -65,6 +65,41 @@
 /turf/simulated/floor/vines
 	color = "#aa77aa"
 	icon_state = "vinefloor"
+	broken_states = list()
+	ignoredirt = 1
+
+
+//All of this shit is useless for vines
+
+/turf/simulated/floor/vines/attackby()
+	return
+
+/turf/simulated/floor/vines/burn_tile()
+	return
+
+/turf/simulated/floor/vines/break_tile()
+	return
+
+/turf/simulated/floor/vines/make_plating()
+	return
+
+/turf/simulated/floor/vines/break_tile_to_plating()
+	return
+
+/turf/simulated/floor/vines/narsie_act()
+	if(prob(20))
+		ChangeTurf(/turf/space) //nar sie eats this shit
+
+/turf/simulated/floor/vines/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		if(prob(50))
+			ChangeTurf(/turf/space)
+
+/turf/simulated/floor/vines/ChangeTurf(turf/simulated/floor/T)
+	for(var/obj/effect/spacevine/SV in src)
+		qdel(src)
+	..()
+
 
 /datum/spacevine_mutation/space_covering/on_grow(obj/effect/spacevine/holder)
 	if(istype(holder.loc, /turf/space))
