@@ -415,11 +415,12 @@
 	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
 		return 0
 
-	if(istype(O, /obj/machinery/door))
-		if(tag_exterior_door == O:id_tag)
+	var/obj/machinery/door/airlock/D = O
+	if(istype(D))
+		if(tag_exterior_door == D.id_tag)
 			tag_exterior_door = null
 			return 1
-		else if(tag_interior_door == O:id_tag)
+		else if(tag_interior_door == D.id_tag)
 			tag_interior_door = null
 			return 1
 
@@ -427,19 +428,21 @@
 	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
 		return 0
 
-	if(istype(O, /obj/machinery/door))
-		if(tag_interior_door  == O:id_tag)
+	var/obj/machinery/door/airlock/D = O
+	if(istype(D))
+		if(tag_interior_door  == D.id_tag)
 			return 1
-		if(tag_exterior_door  == O:id_tag)
+		if(tag_exterior_door  == D.id_tag)
 			return 1
 
 /obj/machinery/embedded_controller/radio/access_controller/linkWith(var/mob/user, var/obj/O, var/list/context)
 	if(!("id_tag" in O.vars))
 		return 0
-	if(istype(O, /obj/machinery/door))
+	var/obj/machinery/door/airlock/D = O
+	if(istype(D))
 		if(context["slot"] == "int")
-			tag_interior_door = O:id_tag
+			tag_interior_door = D.id_tag
 			return 1
 		if(context["slot"] == "ext")
-			tag_exterior_door = O:id_tag
+			tag_exterior_door = D.id_tag
 			return 1
