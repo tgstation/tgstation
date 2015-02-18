@@ -1,2 +1,11 @@
 author: Duny
-changes: []
+changes: 
+  - wip: Following changes made to Defficiency.
+  - wip: Tcomms cooling is now safe from incompetent engineers, outside of the potential explosion radius of the AME and SME. It is also accessible from atmospherics, allowing easier repairs from competent players in case something happens. Telecomms itself is still endangered by both potential explosions, especially the AME.
+  - bugfix: Added missing air alarm, vent and scrubber to the AME room.
+  - tweak: Removed the two main SMES cells, made the SME buffer SMES cells the new main cells, as this setup was confusing players.
+  - tweak: The AME's output now goes into the new main SMES cells instead of the grid by default.
+  - wip: SME room layout revised to allow for easier customisation of the mediocre default setup.
+  - tweak: The four radiation collectors in secure storage have been moved to the SME's default setup.
+  - rscadd: Added HoP attire locker and privacy shutters to the HoP's office.
+  - bugfix: Fixed visible pipe in the mining outpost.
