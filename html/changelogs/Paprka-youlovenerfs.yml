@@ -1,0 +1,8 @@
+author: Paprka
+
+delete-after: True
+
+changes: 
+  - tweak: "Added a firing delay between shooting electrodes."
+  - tweak: "Changed the stun revolver from a high-capacity taser to a disabler with extra capacity."
+  - rscadd: "Added a unique stun pistol for the head of security. It is a double capacity taser with no shot delay and a loyalty pin, though it lacks a disable mode."
