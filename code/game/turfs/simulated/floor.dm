@@ -534,9 +534,9 @@ turf/simulated/floor/proc/update_icon()
 				user << "<span class='warning'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
 
 
-	if(istype(C, /obj/item/weapon/cable_coil))
+	if(istype(C, /obj/item/stack/cable_coil))
 		if(is_plating() || is_catwalk())
-			var/obj/item/weapon/cable_coil/coil = C
+			var/obj/item/stack/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
 			user << "<span class='warning'>You must remove the plating first.</span>"

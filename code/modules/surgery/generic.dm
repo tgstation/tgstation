@@ -182,7 +182,7 @@
 /datum/surgery_step/generic/clamp_bleeders
 	allowed_tools = list(
 		/obj/item/weapon/hemostat = 100,
-		/obj/item/weapon/cable_coil = 75,
+		/obj/item/stack/cable_coil = 75,
 		/obj/item/device/assembly/mousetrap = 20,
 		)
 

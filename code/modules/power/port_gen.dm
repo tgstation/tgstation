@@ -114,8 +114,8 @@ display round(lastgen) and plasmatank amount
 	component_parts = newlist(
 		/obj/item/weapon/stock_parts/matter_bin,
 		/obj/item/weapon/stock_parts/micro_laser,
-		/obj/item/weapon/cable_coil,
-		/obj/item/weapon/cable_coil,
+		/obj/item/stack/cable_coil,
+		/obj/item/stack/cable_coil,
 		/obj/item/weapon/stock_parts/capacitor,
 		board_path
 	)

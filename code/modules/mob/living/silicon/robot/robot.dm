@@ -527,7 +527,7 @@
 
 
 /mob/living/silicon/robot/proc/show_cable_lengths()
-	var/obj/item/weapon/cable_coil/coil = installed_module(/obj/item/weapon/cable_coil)
+	var/obj/item/stack/cable_coil/coil = installed_module(/obj/item/stack/cable_coil)
 	if(coil)
 		stat(null, text("Cable Lengths: [coil.amount]/[coil.max_amount]"))
 
@@ -748,11 +748,11 @@
 			user << "Need more welding fuel!"
 			return
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
+	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		if (!getFireLoss())
 			user << "Nothing to fix here!"
 			return
-		var/obj/item/weapon/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = W
 		adjustFireLoss(-30)
 		updatehealth()
 		coil.use(1)

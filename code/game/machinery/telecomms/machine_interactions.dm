@@ -42,12 +42,12 @@
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You remove the cables."
 				construct_op ++
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
+				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( user.loc )
 				A.amount = 5
 				stat |= BROKEN // the machine's been borked!
 		if(3)
-			if(istype(P, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/A = P
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/A = P
 				if(A.amount >= 5)
 					user << "You insert the cables."
 					A.amount -= 5
@@ -79,8 +79,8 @@
 								newpath = text2path(I)
 								var/obj/item/s = new newpath
 								s.loc = user.loc
-								if(istype(s, /obj/item/weapon/cable_coil))
-									var/obj/item/weapon/cable_coil/A = s
+								if(istype(s, /obj/item/stack/cable_coil))
+									var/obj/item/stack/cable_coil/A = s
 									A.amount = 1
 
 						// Drop a circuit board too

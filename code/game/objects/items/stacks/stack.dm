@@ -109,7 +109,7 @@
 		list_recipes(usr, text2num(href_list["sublist"]))
 
 	if (href_list["make"])
-		if (src.amount < 1) del(src) //Never should happen
+		if (src.amount < 1) returnToPool(src) //Never should happen
 
 		var/list/recipes_list = recipes
 		if (href_list["sublist"])
@@ -147,15 +147,19 @@
 			var/oldsrc = src
 			src = null //dont kill proc after del()
 			usr.before_take_item(oldsrc)
-			del(oldsrc)
+			returnToPool(oldsrc)
 			if (istype(O,/obj/item))
 				usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
-				del(I)
+				qdel(I)
 		//BubbleWrap END
+		if(istype(O, /obj/item/weapon/handcuffs/cable))
+			var/obj/item/weapon/handcuffs/cable/C = O
+			C._color = _color
+			C.update_icon()
 	if (src && usr.machine==src) //do not reopen closed window
 		spawn( 0 )
 			src.interact(usr)
@@ -172,7 +176,7 @@
 	if (src.amount<=0)
 		if(usr)
 			usr.before_take_item(src)
-		spawn qdel(src)
+		spawn returnToPool(src)
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
 	var/obj/item/stack/oldsrc = src
@@ -206,7 +210,8 @@
 	..()
 	if (istype(W, src.type) && src.type==W.type)
 		var/obj/item/stack/S = W
-		if (S.amount >= max_amount)
+		if (S.amount >= S.max_amount)
+			user << "\The [S] cannot hold anymore [S.singular_name]."
 			return 1
 		var/to_transfer as num
 		if (user.get_inactive_hand()==src)
@@ -214,11 +219,15 @@
 		else
 			to_transfer = min(src.amount, S.max_amount-S.amount)
 		S.amount+=to_transfer
-		if (S && usr.machine==S)
-			spawn(0) S.interact(usr)
+		user << "You add [to_transfer] [S.singular_name] to \the [S]. It now contains [S.amount] [S.singular_name]."
+		if (S && user.machine==S)
+			spawn(0) S.interact(user)
 		src.use(to_transfer)
-		if (src && usr.machine==src)
-			spawn(0) src.interact(usr)
+		if (src && user.machine==src)
+			spawn(0) src.interact(user)
+		update_icon()
+		S.update_icon()
+		return 1
 	else return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)

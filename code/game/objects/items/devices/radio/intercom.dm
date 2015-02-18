@@ -81,7 +81,7 @@
 
 /obj/item/device/radio/intercom/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!installed)
-		if(istype(W,/obj/item/weapon/cable_coil))
+		if(istype(W,/obj/item/stack/cable_coil))
 			if(!circuitry_installed)
 				user << "\red You need to install intercom electronics first!"
 				return 1

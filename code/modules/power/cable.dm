@@ -138,9 +138,9 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			getFromPool(/obj/item/weapon/cable_coil, T, 2, l_color)
+			getFromPool(/obj/item/stack/cable_coil, T, 2, l_color)
 		else
-			getFromPool(/obj/item/weapon/cable_coil, T, 1, l_color)
+			getFromPool(/obj/item/stack/cable_coil, T, 1, l_color)
 
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
@@ -169,8 +169,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		returnToPool(src)
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
 	else if(istype(W, /obj/item/device/multitool))
 		if((powernet) && (powernet.avail > 0))		// is it powered?
@@ -206,12 +206,12 @@ By design, d1 is the smallest direction and d2 is the highest
 			returnToPool(src)
 		if(2.0)
 			if(prob(50))
-				getFromPool(/obj/item/weapon/cable_coil,  src.loc, src.d1 ? 2 : 1, l_color)
+				getFromPool(/obj/item/stack/cable_coil,  src.loc, src.d1 ? 2 : 1, l_color)
 				returnToPool(src)
 
 		if(3.0)
 			if(prob(25))
-				getFromPool(/obj/item/weapon/cable_coil, src.loc, src.d1 ? 2 : 1, l_color)
+				getFromPool(/obj/item/stack/cable_coil, src.loc, src.d1 ? 2 : 1, l_color)
 				returnToPool(src)
 	return
 
@@ -476,15 +476,19 @@ By design, d1 is the smallest direction and d2 is the highest
 // Definitions
 ////////////////////////////////
 
+var/global/list/datum/stack_recipe/cable_recipes = list ( \
+	new/datum/stack_recipe("cable cuffs", /obj/item/weapon/handcuffs/cable, 15, time = 3, one_per_turf = 0, on_floor = 0))
+
 #define MAXCOIL 30
 
-/obj/item/weapon/cable_coil
+/obj/item/stack/cable_coil
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil_red"
 	gender = NEUTER
-	var/amount = MAXCOIL
-	var/max_amount = MAXCOIL
+	amount = MAXCOIL
+	singular_name = "cable pieces"
+	max_amount = MAXCOIL
 	_color = "red"
 	desc = "A coil of power cable."
 	throwforce = 10
@@ -499,13 +503,14 @@ By design, d1 is the smallest direction and d2 is the highest
 	item_state = "coil_red"
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
-/obj/item/weapon/cable_coil/suicide_act(mob/user)
+/obj/item/stack/cable_coil/suicide_act(mob/user)
 	viewers(user) << "<SPAN CLASS='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</SPAN>"
 	return(OXYLOSS)
 
-/obj/item/weapon/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
+/obj/item/stack/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
 	..()
-	amount = length
+
+	recipes = cable_recipes
 
 	if(param_color)
 		_color = param_color
@@ -519,7 +524,7 @@ By design, d1 is the smallest direction and d2 is the highest
 ///////////////////////////////////
 
 // you can use wires to heal robotics
-/obj/item/weapon/cable_coil/attack(mob/M as mob, mob/user as mob)
+/obj/item/stack/cable_coil/attack(mob/M as mob, mob/user as mob)
 	if(hasorgans(M))
 		var/datum/organ/external/S = M:get_organ(user.zone_sel.selecting)
 
@@ -542,7 +547,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		return ..()
 
-/obj/item/weapon/cable_coil/update_icon()
+/obj/item/stack/cable_coil/update_icon()
 	if(!_color)
 		_color = pick("red", "yellow", "blue", "green")
 
@@ -556,7 +561,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		icon_state = "coil_[_color]"
 		name = "cable coil"
 
-/obj/item/weapon/cable_coil/examine()
+/obj/item/stack/cable_coil/examine()
 	set src in view(1)
 
 	if(amount == 1)
@@ -566,90 +571,24 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
 
-/obj/item/weapon/cable_coil/verb/make_restraint()
-	set name = "Make Cable Restraints"
-	set category = "Object"
-
-	var/mob/M = usr
-
-	if(ishuman(M) && !M.restrained() && !M.stat && M.canmove)
-		if(!isturf(usr.loc))
-			return
-
-		if(amount <= 14)
-			usr << "<SPAN CLASS='warning'>You need at least 15 lengths to make restraints!</SPAN>"
-			return
-
-		var/obj/item/weapon/handcuffs/cable/B = new(usr.loc)
-		B.icon_state = "cuff_[_color]"
-		usr << "<SPAN CLASS='notice'>You wind some cable together to make some restraints.</SPAN>"
-		use(15)
-	else
-		usr << "<SPAN CLASS='notice'>You cannot do that.</SPAN>"
-
-	..()
-
 // Items usable on a cable coil :
 //   - Wirecutters : cut them duh !
 //   - Cable coil : merge cables
-/obj/item/weapon/cable_coil/attackby(obj/item/weapon/W, mob/user)
-	..()
-
+/obj/item/stack/cable_coil/attackby(obj/item/weapon/W, mob/user)
 	if((istype(W, /obj/item/weapon/wirecutters)) && (amount > 1))
-		amount--
-		getFromPool(/obj/item/weapon/cable_coil, user.loc, 1, _color)
+		use(1)
+		getFromPool(/obj/item/stack/cable_coil, user.loc, 1, _color)
 		user << "You cut a piece off the cable coil."
 		update_icon()
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = W
-
-		if(C.amount >= max_amount)
-			user << "<SPAN CLASS='warning'>The coil is too long, you cannot add any more cable to it.</SPAN>"
-			return
-
-		if((C.amount + src.amount <= max_amount))
-			user << "<SPAN CLASS='notice'>You join the cable coils together.</SPAN>"
-			C.give(amount) // give it cable
-			use(amount) // make sure this one cleans up right
-			return
-		else
-			var/amt = max_amount - C.amount
-			user << "<SPAN CLASS='notice'>You transfer [amt] length\s of cable from one coil to the other.</SPAN>"
-			C.give(amt)
-			use(amt)
-			return
-
-//remove cables from the stack
-/obj/item/weapon/cable_coil/proc/use(var/used)
-	if(amount < used)
-		return 0
-	else if (amount == used) //remove cables from the stack
-		//if(ismob(loc)) //handle mob icon update
-			//var/mob/M = loc
-			//M.unEquip(src)
-
-		returnToPool(src)
-	else
-		amount -= used
-		update_icon()
-		return 1
-
-// add cables to the stack
-/obj/item/weapon/cable_coil/proc/give(var/extra)
-	if(amount + extra > max_amount)
-		amount = max_amount
-	else
-		amount += extra
-
-	update_icon()
+	return ..()
 
 ///////////////////////////////////////////////
 // Cable laying procedures
 //////////////////////////////////////////////
 
 // called when cable_coil is clicked on a turf/simulated/floor
-/obj/item/weapon/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user)
+/obj/item/stack/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user)
 	if(!isturf(user.loc))
 		return
 
@@ -696,12 +635,12 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(C.shock(user, 50))
 			if(prob(50)) // fail
-				getFromPool(/obj/item/weapon/cable_coil, C.loc)
+				getFromPool(/obj/item/stack/cable_coil, C.loc)
 				returnToPool(C)
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
-/obj/item/weapon/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
+/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
 	var/turf/U = user.loc
 
 	if(!isturf(U))
@@ -760,7 +699,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
-					new/obj/item/weapon/cable_coil(NC.loc, 1, NC.l_color)
+					new/obj/item/stack/cable_coil(NC.loc, 1, NC.l_color)
 					returnToPool(NC)
 
 			return
@@ -805,7 +744,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(C.shock(user, 50))
 			if(prob(50)) //fail
-				getFromPool(/obj/item/weapon/cable_coil, C.loc, 1, C.l_color)
+				getFromPool(/obj/item/stack/cable_coil, C.loc, 1, C.l_color)
 				returnToPool(C)
 				return
 
@@ -815,45 +754,45 @@ By design, d1 is the smallest direction and d2 is the highest
 // Misc.
 /////////////////////////////
 
-/obj/item/weapon/cable_coil/cut
+/obj/item/stack/cable_coil/cut
 	item_state = "coil_red2"
 
-/obj/item/weapon/cable_coil/cut/New(loc)
+/obj/item/stack/cable_coil/cut/New(loc)
 	..(loc)
 	src.amount = rand(1, 2)
 	pixel_x = rand(-2, 2)
 	pixel_y = rand(-2, 2)
 	update_icon()
 
-/obj/item/weapon/cable_coil/yellow
+/obj/item/stack/cable_coil/yellow
 	_color = "yellow"
 	icon_state = "coil_yellow"
 
-/obj/item/weapon/cable_coil/blue
+/obj/item/stack/cable_coil/blue
 	_color = "blue"
 	icon_state = "coil_blue"
 
-/obj/item/weapon/cable_coil/green
+/obj/item/stack/cable_coil/green
 	_color = "green"
 	icon_state = "coil_green"
 
-/obj/item/weapon/cable_coil/pink
+/obj/item/stack/cable_coil/pink
 	_color = "pink"
 	icon_state = "coil_pink"
 
-/obj/item/weapon/cable_coil/orange
+/obj/item/stack/cable_coil/orange
 	_color = "orange"
 	icon_state = "coil_orange"
 
-/obj/item/weapon/cable_coil/cyan
+/obj/item/stack/cable_coil/cyan
 	_color = "cyan"
 	icon_state = "coil_cyan"
 
-/obj/item/weapon/cable_coil/white
+/obj/item/stack/cable_coil/white
 	_color = "white"
 	icon_state = "coil_white"
 
-/obj/item/weapon/cable_coil/random/New()
+/obj/item/stack/cable_coil/random/New()
 	_color = pick("red","yellow","green","blue","pink")
 	icon_state = "coil_[_color]"
 	..()

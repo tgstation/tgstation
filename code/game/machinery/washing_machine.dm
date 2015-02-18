@@ -128,8 +128,8 @@
 					break
 				del(H)
 
-			for(var/T in typesof(/obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/test = new T
+			for(var/T in typesof(/obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/test = new T
 				if(test._color == color)
 					//world << "Found the right cable coil, _color: [test._color]"
 					ccoil_test = 1
@@ -181,7 +181,7 @@
 					H.desc = new_desc
 
 			if(ccoil_test)
-				for(var/obj/item/weapon/cable_coil/H in contents)
+				for(var/obj/item/stack/cable_coil/H in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
 					H._color = color
 					H.icon_state = "coil_[color]"
@@ -233,7 +233,7 @@
 		istype(W,/obj/item/clothing/gloves) || \
 		istype(W,/obj/item/clothing/shoes) || \
 		istype(W,/obj/item/clothing/suit) || \
-		istype(W,/obj/item/weapon/cable_coil) || \
+		istype(W,/obj/item/stack/cable_coil) || \
 		istype(W,/obj/item/weapon/bedsheet))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.

@@ -195,9 +195,9 @@
 			anchored = !anchored
 		busy = 0
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && state == 0 && anchored )
+	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
 		busy = 1
-		var/obj/item/weapon/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = W
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
 		if(do_after(user, 40))
 			if(!src) return
@@ -214,7 +214,7 @@
 		if(do_after(user, 40))
 			if(!src) return
 			user << "<span class='notice'>You cut the airlock wires.!</span>"
-			new/obj/item/weapon/cable_coil(src.loc, 1)
+			new/obj/item/stack/cable_coil(src.loc, 1)
 			src.state = 0
 		busy = 0
 
