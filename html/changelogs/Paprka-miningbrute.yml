@@ -1,7 +1,0 @@
-author: Paprika
-
-delete-after: True
-
-changes: 
-  - rscadd: "Miners spawn with a brute patch."
-  - tweak: "Mining station's sleeper has been replaced with an IV drip and more medkits."

@@ -1,8 +1,0 @@
-author: Incoming5643
-
-delete-after: True
-
-changes: 
-  - rscadd: "Medical borgs have been given full surgery tools which they can't fail a procedure with."
-  - rscadd: "Medical borgs also have rechargeable gauze."
-  - tweak: "Borg hypo's omnizine replaced with salbutamol, salglu and charcoal."
