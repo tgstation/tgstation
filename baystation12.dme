@@ -55,6 +55,7 @@
 #include "code\_onclick\other_mobs.dm"
 #include "code\_onclick\overmind.dm"
 #include "code\_onclick\telekinesis.dm"
+#include "code\_onclick\ventcrawl.dm"
 #include "code\_onclick\hud\_defines.dm"
 #include "code\_onclick\hud\adminbus.dm"
 #include "code\_onclick\hud\ai.dm"
