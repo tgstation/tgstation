@@ -1,0 +1,4 @@
+author: Paprika
+delete-after: True
+changes:
+  - tweak: "Computers now emit light when they're on or bluescreened."

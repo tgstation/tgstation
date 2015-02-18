@@ -74,9 +74,8 @@
 	// Broken
 	if(stat & BROKEN)
 		icon_state += "b"
-		SetLuminosity(0)
 
-	// Powered
+	// Unpowered
 	else if(stat & NOPOWER)
 		icon_state = initial(icon_state)
 		icon_state += "0"

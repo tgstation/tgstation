@@ -402,7 +402,6 @@
 	SetLuminosity(brightness_on)
 	if(stat & BROKEN)
 		icon_state = "commb"
-		SetLuminosity(0)
 	else
 		if(stat & NOPOWER)
 			src.icon_state = "c_unpowered"

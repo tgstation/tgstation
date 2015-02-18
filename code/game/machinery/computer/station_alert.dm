@@ -102,7 +102,6 @@
 	SetLuminosity(brightness_on)
 	if(stat & BROKEN)
 		icon_state = "alert:b"
-		SetLuminosity(0)
 		return
 	else if (stat & NOPOWER)
 		icon_state = "alert:O"
