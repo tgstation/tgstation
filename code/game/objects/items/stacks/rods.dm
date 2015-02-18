@@ -21,7 +21,6 @@
 	return RECYK_METAL
 
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
-	..()
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -42,8 +41,8 @@
 			R.use(2)
 			if (!R && replace)
 				user.put_in_hands(M)
-		return
-	..()
+		return 1
+	return ..()
 
 
 /obj/item/stack/rods/attack_self(mob/user as mob)

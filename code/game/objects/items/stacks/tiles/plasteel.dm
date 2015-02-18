@@ -27,6 +27,7 @@
 		spawn
 			src.Destroy()
 			returnToPool(src)
+
 /obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
 	. = ..()
 	pixel_x = rand(1, 14)
@@ -63,7 +64,6 @@
 	return
 
 /obj/item/stack/tile/plasteel/attackby(obj/item/W as obj, mob/user as mob)
-	..()
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(amount < 4)
@@ -83,5 +83,5 @@
 			R.use(4)
 			if (!R && replace)
 				user.put_in_hands(M)
-		return
-	..()
+		return 1
+	return ..()

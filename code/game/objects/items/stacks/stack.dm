@@ -207,7 +207,6 @@
 	return
 
 /obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
-	..()
 	if (istype(W, src.type) && src.type==W.type)
 		var/obj/item/stack/S = W
 		if (S.amount >= S.max_amount)

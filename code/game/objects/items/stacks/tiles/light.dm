@@ -27,7 +27,6 @@
 		state = 0 //fine
 
 /obj/item/stack/tile/light/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	..()
 	if(istype(O,/obj/item/weapon/crowbar))
 		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 		M.amount = 1
@@ -36,3 +35,5 @@
 		if(amount <= 0)
 			user.drop_from_inventory(src)
 			del(src)
+		return 1
+	return ..()
