@@ -149,7 +149,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		"The word 'nerd' was first coined by Dr. Seuss in 'If I Ran the Zoo.'",
 		"Revolvers cannot be silenced because of all the noisy gasses which escape the cylinder gap at the rear of the barrel.",
 		"Every human spent about half an hour as a single cell.",
-		"7.5 million toothpicks can be created from a cord of wood."
+		"7.5 million toothpicks can be created from a cord of wood.",
+		"If the Earth's sun were just inch in diameter, the nearest star would be 445 miles away.",
+		"There is no word in the English language that rhymes with month, orange, silver or purple.",
+		"Starfish have no brains.",
+		"2 and 5 are the only prime numbers that end in 2 or 5.",
+		"'Pronunciation' is the word which is mispronounced the most in the English language.",
+		"Women blink nearly twice as much as men.",
+		"Owls are the only birds who can see the color blue.",
+		"A pizza that has radius 'z' and height 'a' has volume Pi × z × z × a.",
+		"Months that begin on a Sunday will always have a 'Friday the 13th.'",
+		"Zero is an even number.",
+		"The longest English word that can be spelled without repeating any letters is 'uncopyrightable'.",
+		"10! (Ten factorial) seconds equals exactly six Earth weeks.",
+		"Moths don't have a stomach or mouth. They never eat again after undergoing metamorphosis.",
+		"'J' is the only letter that doesn't appear in the Periodic Table of Elements.",
+		"Want to remember the first digits of Pi easily? You can do it by counting each word's letters in 'May I have a large container of plasma?'"
 		)
 	var/currentevent1 = null
 	var/currentevent2 = null
