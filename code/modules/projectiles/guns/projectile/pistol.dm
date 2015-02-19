@@ -15,6 +15,17 @@
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
+/obj/item/weapon/gun/projectile/automatic/pistol/suppressed/New()
+	..()
+	suppressed = new /obj/item/weapon/suppressor(src)
+	var/obj/item/weapon/suppressor/S = suppressed
+	S.oldsound = fire_sound
+	S.initial_w_class = w_class
+	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
+	w_class = 3
+	update_icon()
+
+
 /obj/item/weapon/gun/projectile/automatic/pistol/m1911
 	name = "M1911 pistol"
 	desc = "A classic .45 handgun with a small magazine capacity."

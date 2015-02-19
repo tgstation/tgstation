@@ -102,7 +102,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/dangerous/pistol
 	name = "Syndicate Pistol"
 	desc = "A small, easily concealable suppressed handgun that uses 10mm auto rounds in 8-round magazines."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	item = /obj/item/weapon/gun/projectile/automatic/pistol/suppressed
 	cost = 9
 	excludefrom = list(/datum/game_mode/nuclear) //nuke ops spawn with a pistol and must purchase a suppressor seperately
 
@@ -280,6 +280,13 @@ var/list/uplink_items = list()
 	desc = "A box of 4 additional 40mm HE grenades for use the M-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
 	item = /obj/item/ammo_box/a40mm
 	cost = 4
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/nugget
+	name = "Stripper Clip - 7.62x51mm"
+	desc = "A 5-rnd 7.62 CLIP for operators."
+	item = /obj/item/ammo_box/a762
+	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun

@@ -234,7 +234,7 @@ var/list/world_uplinks = list()
 			new /obj/item/weapon/gun/projectile/shotgun/boltaction(redeemer.loc)
 			new /obj/item/ammo_box/a762(redeemer.loc)
 		if("Extra Telecrystals")
-			uses += 3
+			hidden_uplink.uses += 3
 	qdel(voucher)
 
 /obj/item/weapon/syndie_voucher
