@@ -217,7 +217,7 @@ var/list/world_uplinks = list()
 		return
 
 /obj/item/device/radio/uplink/proc/RedeemVoucher(obj/item/weapon/syndie_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Weapon Voucher Redemption") as null|anything in list("C-20r SMG", "Bulldog Shotgun", "Grenade Launcher", "Surplus Rifle")
+	var/selection = input(redeemer, "Pick your equipment", "Weapon Voucher Redemption") as null|anything in list("C-20r SMG", "Bulldog Shotgun", "Grenade Launcher", "Surplus Rifle", "Extra Telecrystals")
 	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
 	switch(selection)
@@ -233,6 +233,8 @@ var/list/world_uplinks = list()
 		if("Surplus Rifle")
 			new /obj/item/weapon/gun/projectile/shotgun/boltaction(redeemer.loc)
 			new /obj/item/ammo_box/a762(redeemer.loc)
+		if("Extra Telecrystals")
+			uses += 3
 	qdel(voucher)
 
 /obj/item/weapon/syndie_voucher
