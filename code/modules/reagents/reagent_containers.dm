@@ -81,7 +81,7 @@
     if(istype(RC))
         for(var/bad_reg in RC.banned_reagents)
             if(reagents.has_reagent(bad_reg, 1))
-                user << "<span class='warning'> A chemical in [src] is far too dangerous to transfer to [RC]!</span>"
-            	return 1
-    	return 0
+            user << "<span class='warning'> A chemical in [src] is far too dangerous to transfer to [RC]!</span>"
+            return 1
+    return 0
 
