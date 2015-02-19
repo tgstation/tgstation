@@ -211,7 +211,7 @@ var/next_external_rsc = 0
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid)")
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
 	query_insert.Execute()
 
 	//Logging player access
@@ -244,9 +244,11 @@ var/next_external_rsc = 0
 		'nano/css/shared.css',
 		'nano/css/icons.css',
 		'nano/templates/chem_dispenser.tmpl',
+		'nano/templates/chem_heater.tmpl',
 		'nano/templates/smes.tmpl',
 		'nano/templates/apc.tmpl',
 		'nano/templates/cryo.tmpl',
+		'nano/templates/solar_control.tmpl',
 		'nano/images/uiBackground.png',
 		'nano/images/uiIcons16.png',
 		'nano/images/uiIcons24.png',

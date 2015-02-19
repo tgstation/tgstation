@@ -60,7 +60,7 @@
 /mob/living/carbon/alien/getToxLoss()
 	return 0
 
-/mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/carbon/alien/handle_environment(var/datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
 	if(locate(/obj/structure/alien/weeds) in loc)
@@ -111,7 +111,7 @@
 					fire_alert = max(fire_alert, 2)
 	return
 
-/mob/living/carbon/alien/proc/handle_mutations_and_radiation()
+/mob/living/carbon/alien/handle_mutations_and_radiation()
 
 	// Aliens love radiation nom nom nom
 	if (radiation)
@@ -150,21 +150,12 @@
 	return 1 // Aliens can eat, and they can be fed food/drink
 
 /mob/living/carbon/alien/Stat()
-
-	statpanel("Status")
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
 	..()
 
-	if (client.statpanel == "Status")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
 		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
-
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)

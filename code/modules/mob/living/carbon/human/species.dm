@@ -8,7 +8,7 @@
 #define TINT_BLIND 3
 
 #define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /3)
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30)
 
 #define HEAT_DAMAGE_LEVEL_1 2
 #define HEAT_DAMAGE_LEVEL_2 3
@@ -37,6 +37,7 @@
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
+	var/exotic_blood = null	// If your race wants to bleed something other than bog standard blood, change this.
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
@@ -181,7 +182,7 @@
 		img_eyes_s.color = "#" + H.eye_color
 		standing	+= img_eyes_s
 
-	//Underwear & Undershirts
+	//Underwear, Undershirts & Socks
 	if(H.underwear)
 		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
 		if(U)
@@ -194,6 +195,11 @@
 				standing	+=	H.wear_female_version(U2.icon_state, U2.icon, BODY_LAYER)
 			else
 				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
+
+	if(H.socks)
+		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
+		if(U3)
+			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
@@ -396,7 +402,7 @@
 	else
 		if(H.overeatduration > 500)
 			H << "<span class='danger'>You suddenly feel blubbery!</span>"
-			H.mutations |= FAT
+			H.disabilities |= FAT
 			H.update_inv_w_uniform(0)
 			H.update_inv_wear_suit()
 
@@ -409,7 +415,7 @@
 			H.satiety++
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
-			hunger_rate = 5 * HUNGER_FACTOR
+			hunger_rate = 3 * HUNGER_FACTOR
 		H.nutrition = max (0, H.nutrition - hunger_rate)
 
 
@@ -470,11 +476,12 @@
 		if(H.seer)
 			H.see_invisible = SEE_INVISIBLE_OBSERVER
 
-		if(H.mind && H.mind.changeling)
-			H.hud_used.lingchemdisplay.invisibility = 0
-			H.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[H.mind.changeling.chem_charges]</font></div>"
-		else
-			H.hud_used.lingchemdisplay.invisibility = 101
+		if(H.mind)
+			if(H.mind.changeling)
+				H.hud_used.lingchemdisplay.invisibility = 0
+				H.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[H.mind.changeling.chem_charges]</font></div>"
+			else
+				H.hud_used.lingchemdisplay.invisibility = 101
 
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))
@@ -492,14 +499,16 @@
 		if(H.tinttotal >= TINT_IMPAIR)
 			if(tinted_weldhelh)
 				if(H.tinttotal >= TINT_BLIND)
-					H.eye_blind = max(H.eye_blind, 1)								// You get the sudden urge to learn to play keyboard
-					H.client.screen += global_hud.darkMask
-				else
+					H.eye_blind = max(H.eye_blind, 1)
+				if(H.client)
 					H.client.screen += global_hud.darkMask
 
 		if(H.blind)
 			if(H.eye_blind)		H.blind.layer = 18
 			else			H.blind.layer = 0
+
+		if(!H.client)//no client, no screen to update
+			return 1
 
 		if( H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 			H.client.screen += global_hud.vimpaired
@@ -689,8 +698,8 @@
 
 	if((H.disabilities & FAT) && grav)
 		mspeed += 1.5
-	if(H.bodytemperature < 283.222 && grav)
-		mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
+	if(H.bodytemperature < 283.222)
+		mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
 
 	mspeed += speedmod
 
@@ -723,7 +732,7 @@
 				return 0
 
 			if(H.cpr_time < world.time + 30)
-				add_logs(H, M, "CPRed")
+				add_logs(M, H, "CPRed")
 				M.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>", \
 								"<span class='notice'>You try to perform CPR on [H]. Hold still!</span>")
 				if(!do_mob(M, H))
@@ -1069,7 +1078,7 @@
 		return
 
 	if(!breath || (breath.total_moles() == 0))
-		if(H.reagents.has_reagent("inaprovaline"))
+		if(H.reagents.has_reagent("epinephrine"))
 			return
 		if(H.health >= config.health_threshold_crit)
 			if(NOBREATH in specflags)	return 1

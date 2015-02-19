@@ -466,7 +466,7 @@ body
 				usr << "This can only be used on instances of type /mob"
 				return
 
-			var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null),1,MAX_NAME_LEN)
+			var/new_name = stripped_input(usr,"What would you like to name this mob?","Input a name",M.real_name,MAX_NAME_LEN)
 			if( !new_name || !M )	return
 
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")

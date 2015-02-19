@@ -1,37 +1,5 @@
-/mob/living/carbon/brain/Life()
-	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-	..()
 
-	if(stat != DEAD)
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-	var/datum/gas_mixture/environment // Added to prevent null location errors
-	if(loc)
-		environment = loc.return_air()
-
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
-
-	//Handle temperature/pressure differences between body and environment
-	if(environment)	// More error checking
-		handle_environment(environment)
-
-	//Status updates, death etc.
-	handle_regular_status_updates()
-	update_canmove()
-
-	if(client)
-		handle_regular_hud_updates()
-
-
-/mob/living/carbon/brain/proc/handle_mutations_and_radiation()
+/mob/living/carbon/brain/handle_mutations_and_radiation()
 
 	if (radiation)
 		if (radiation > 100)
@@ -68,7 +36,7 @@
 				updatehealth()
 
 
-/mob/living/carbon/brain/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/brain/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
 	var/environment_heat_capacity = environment.heat_capacity()
@@ -104,7 +72,7 @@
 
 
 
-/mob/living/carbon/brain/proc/handle_chemicals_in_body()
+/mob/living/carbon/brain/handle_chemicals_in_body()
 
 	if(reagents) reagents.metabolize(src)
 
@@ -120,7 +88,7 @@
 	return //TODO: DEFERRED
 
 
-/mob/living/carbon/brain/proc/handle_regular_status_updates()	//TODO: comment out the unused bits >_>
+/mob/living/carbon/brain/handle_regular_status_updates()	//TODO: comment out the unused bits >_>
 	updatehealth()
 
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -144,7 +112,7 @@
 					emp_damage = 30//Let's not overdo it
 				if(21 to 30)//High level of EMP damage, unable to see, hear, or speak
 					eye_blind = max(eye_blind, 1)
-					ear_deaf = 1
+					setEarDamage(-1,1)
 					silent = 1
 					if(!alert)//Sounds an alarm, but only once per 'level'
 						emote("alarm")
@@ -155,12 +123,12 @@
 				if(20)
 					alert = 0
 					eye_blind = 0
-					ear_deaf = 0
+					setEarDamage(-1,0)
 					silent = 0
 					emp_damage -= 1
 				if(11 to 19)//Moderate level of EMP damage, resulting in nearsightedness and ear damage
 					eye_blurry = 1
-					ear_damage = 1
+					setEarDamage(1,-1)
 					if(!alert)
 						emote("alert")
 						src << "<span class='danger'>Primary systems are now online.</span>"
@@ -170,7 +138,7 @@
 				if(10)
 					alert = 0
 					eye_blurry = 0
-					ear_damage = 0
+					setEarDamage(0,-1)
 					emp_damage -= 1
 				if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
 					if(!alert)
@@ -204,7 +172,7 @@
 	return 1
 
 
-/mob/living/carbon/brain/proc/handle_regular_hud_updates()
+/mob/living/carbon/brain/handle_regular_hud_updates()
 
 	if (stat == 2)
 		sight |= SEE_TURFS

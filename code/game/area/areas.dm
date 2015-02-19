@@ -42,11 +42,11 @@
 
 	..()
 
-//	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
 	InitializeLighting()
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructure so that it stops the icons being screwed up in the map editor.
+
 
 
 /area/proc/poweralert(var/state, var/obj/source as obj)
@@ -346,9 +346,6 @@
 				if(L.&& L.client)
 					L.client.played = 0
 
-/area/proc/mob_activate(var/mob/living/L)
-	return
-
 /proc/has_gravity(atom/AT, turf/T)
 	if(!T)
 		T = get_turf(AT)
@@ -362,7 +359,7 @@
 		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
 			return 1
 	return 0
-
+/*
 /area/proc/clear_docking_area()
 	var/list/dstturfs = list()
 	var/throwy = world.maxy
@@ -398,3 +395,4 @@
 		if(ismob(bug))
 			continue
 		qdel(bug)*/
+*/

@@ -17,4 +17,8 @@
 	. = src.say_dead(message)
 
 /mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
-	src << message
+	if(radio_freq)
+		var/atom/movable/virtualspeaker/V = speaker
+		speaker = V.source
+	src << "<a href=?src=\ref[src];follow=\ref[speaker]>(F)</a> [message]"
+

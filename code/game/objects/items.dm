@@ -2,6 +2,8 @@
 	name = "item"
 	icon = 'icons/obj/items.dmi'
 	var/item_state = null
+	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/hitsound = null
 	var/throwhitsound = null
 	var/w_class = 3.0
@@ -44,6 +46,21 @@
 
 	var/suittoggled = 0
 	var/hooded = 0
+
+	var/list/can_be_placed_into = list(
+		/obj/structure/table,
+		/obj/structure/rack,
+		/obj/structure/closet,
+		/obj/item/weapon/storage,
+		/obj/structure/safe,
+		/obj/machinery/disposal
+	)
+/obj/item/proc/check_allowed_items(atom/target, not_inside)
+	if((src in target) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
+		return 0
+	else
+		return 1
+
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'

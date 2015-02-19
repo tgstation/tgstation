@@ -303,7 +303,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="Creating new Feed Message..."
 				dat+="<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [src.channel_name]<BR>" //MARK
 				dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> [src.msg] <BR>"
+				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> <BR><font face=\"[PEN_FONT]\">[parsepencode(src.msg, user, SIGNFONT)]</font><BR>"
 				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>:</B>  [(src.photo ? "Photo Attached" : "No Photo")]</BR>"
 				dat+="<B><A href='?src=\ref[src];set_comment=1'>Comments [allow_comments ? "Enabled" : "Disabled"]</A></B><BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
@@ -565,8 +565,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.updateUsrDialog()
 
 		else if(href_list["set_new_message"])
-			src.msg = trim(stripped_input(usr, "Write your Feed story", "Network Channel Handler"))
-			src.updateUsrDialog()
+			var/temp_message = trim(stripped_multiline_input(usr, "Write your Feed story", "Network Channel Handler", src.msg))
+			if(temp_message)
+				src.msg = temp_message
+				src.updateUsrDialog()
 
 		else if(href_list["set_attachment"])
 			AttachPhoto(usr)
@@ -576,9 +578,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
 			else
-				news_network.SubmitArticle(msg, scanned_user, channel_name, photo, allow_comments)
+				news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsepencode(src.msg, usr, SIGNFONT)]</font>", scanned_user, channel_name, photo, allow_comments)
 				feedback_inc("newscaster_stories",1)
 				src.screen=4
+				src.msg = ""
 			src.updateUsrDialog()
 
 		else if(href_list["create_channel"])
@@ -786,18 +789,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 /obj/machinery/newscaster/attackby(obj/item/I as obj, mob/living/user as mob)
 
-/*	if (istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda) ) //Name verification for channels or messages
-		if(src.screen == 4 || src.screen == 5)
-			if( istype(I, /obj/item/device/pda) )
-				var/obj/item/device/pda/P = I
-				if(P.id)
-					src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
-					src.screen=2
-			else
-				var/obj/item/weapon/card/id/T = I
-				src.scanned_user = text("[T.registered_name] ([T.assignment])")
-				src.screen=2*/  //Obsolete after autorecognition
-
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -807,28 +798,26 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			qdel(src)
 		return
 
-	if (src.isbroken)
+	if (isbroken)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
-		for (var/mob/O in hearers(5, src.loc))
-			O.show_message("<span class='danger'>[user.name] further abuses the shattered [src.name].</span>")
+		audible_message("<span class='danger'>[user.name] further abuses the shattered [src.name].</span>", null, 5 )
 	else
 		if(istype(I, /obj/item/weapon) )
 			user.do_attack_animation(src)
 			var/obj/item/weapon/W = I
+			if(W.damtype == STAMINA)
+				return
 			if(W.force <15)
-				for (var/mob/O in hearers(5, src.loc))
-					O.show_message("<span class='danger'>[user.name] hits the [src.name] with the [W.name] with no visible effect.</span>" )
-					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
+				audible_message("<span class='danger'>[user.name] hits the [src.name] with the [W.name] with no visible effect.</span>", null , 5 )
+				playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 			else
-				src.hitstaken++
-				if(src.hitstaken==3)
-					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("<span class='danger'>[user.name] smashes the [src.name]!</span>" )
-					src.isbroken=1
+				hitstaken++
+				if(hitstaken==3)
+					audible_message("<span class='danger'>[user.name] smashes the [src.name]!</span>", null, 5 )
+					isbroken=1
 					playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 				else
-					for (var/mob/O in hearers(5, src.loc))
-						O.show_message("<span class='danger'>[user.name] forcefully slams the [src.name] with the [I.name]!</span>" )
+					audible_message("<span class='danger'>[user.name] forcefully slams the [src.name] with the [I.name]!</span>", null, 5 )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
 			user << "<FONT COLOR='blue'>This does nothing.</FONT>"

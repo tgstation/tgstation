@@ -196,6 +196,8 @@
 		health -= W.force * 0.1
 	else if(!shock(user, 70))
 		switch(W.damtype)
+			if(STAMINA)
+				return
 			if(BURN)
 				playsound(loc, 'sound/items/welder.ogg', 80, 1)
 			else

@@ -75,14 +75,14 @@
 			inserted_id = I
 			interact(user)
 		return
+	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
+		updateUsrDialog()
+		return
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/crowbar))
 			empty_content()
 			default_deconstruction_crowbar(W)
 		return 1
-	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
-		updateUsrDialog()
-		return
 	..()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
@@ -161,8 +161,8 @@
 				I.loc = src
 				inserted_id = I
 			else usr << "<span class='warning'>No valid ID.</span>"
-	if(href_list["release"] && istype(inserted_id))
-		if(check_access(inserted_id))
+	if(href_list["release"])
+		if(check_access(inserted_id) || usr.has_unlimited_silicon_privilege)
 			if(!(text2path(href_list["release"]) in stack_list)) return
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/out = new inp.type()
@@ -173,8 +173,8 @@
 				unload_mineral(out)
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
-	if(href_list["plasteel"] && istype(inserted_id))
-		if(check_access(inserted_id))
+	if(href_list["plasteel"])
+		if(check_access(inserted_id) || usr.has_unlimited_silicon_privilege)
 			if(!(/obj/item/stack/sheet/metal in stack_list)) return
 			if(!(/obj/item/stack/sheet/mineral/plasma in stack_list)) return
 			var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
@@ -422,7 +422,7 @@
 		var/list/L = list()
 		for(var/obj/item/device/radio/beacon/B in world)
 			var/turf/T = get_turf(B)
-			if(T.z == 1)
+			if(T.z == ZLEVEL_STATION)
 				L += B
 		if(!L.len)
 			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
@@ -471,19 +471,11 @@
 	force = 10
 	throwforce = 10
 	var/cooldown = 0
-	var/list/can_be_placed_into = list(
-		/obj/structure/table,
-		/obj/structure/closet,
-		/obj/item/weapon/storage,
-		/obj/structure/safe,
-		/obj/machinery/disposal
-		)
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
 	if(cooldown <= 0)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
-		R.creator = creator
+		new /obj/effect/resonance(get_turf(target), creator)
 		cooldown = 1
 		spawn(20)
 			cooldown = 0
@@ -493,12 +485,8 @@
 	..()
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
-	if(target in user.contents)
-		return
 	if(proximity_flag)
-		for(var/type in can_be_placed_into)
-			if(istype(target, type))
-				return
+		if(!check_allowed_items(target, 1)) return
 		CreateResonance(target, user)
 
 /obj/effect/resonance
@@ -509,16 +497,15 @@
 	layer = 4.1
 	mouse_opacity = 0
 	var/resonance_damage = 20
-	var/creator = null
 
-/obj/effect/resonance/New()
+/obj/effect/resonance/New(loc, var/creator = null)
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
 		playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-		M.gets_drilled()
+		M.gets_drilled(creator)
 		spawn(5)
 			qdel(src)
 	else

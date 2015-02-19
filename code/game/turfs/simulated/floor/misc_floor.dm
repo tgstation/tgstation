@@ -47,6 +47,23 @@
 	density = 1
 	blocks_air = 1
 
+//sub-type to be used for interior shuttle walls
+//won't get an underlay of the destination turf on shuttle move
+/turf/simulated/shuttle/wall/interior/copyTurf(turf/T)
+	if(T.type != type)
+		T = new type(T)
+		if(underlays.len)
+			T.underlays = underlays
+	if(T.icon_state != icon_state)
+		T.icon_state = icon_state
+	if(T.icon != icon)
+		T.icon = icon
+	if(T.color != color)
+		T.color = color
+	if(T.dir != dir)
+		T.dir = dir
+	return T
+
 /turf/simulated/shuttle/floor
 	name = "floor"
 	icon_state = "floor"
@@ -56,6 +73,11 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
 
+/turf/simulated/shuttle/plating/airless
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
 	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
 	icon_state = "floor4"
@@ -63,6 +85,7 @@
 /turf/simulated/floor/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
+	ignoredirt = 1
 
 /turf/simulated/floor/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -84,11 +107,13 @@
 	..()
 	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
+	ignoredirt = 1
 
 /turf/simulated/floor/plating/snow
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+	ignoredirt = 1
 
 /turf/simulated/floor/plating/snow/ex_act(severity, target)
 	contents_explosion(severity, target)

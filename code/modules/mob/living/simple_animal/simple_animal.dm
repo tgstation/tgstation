@@ -20,6 +20,7 @@
 	var/turns_since_move = 0
 	var/meat_amount = 0
 	var/meat_type
+	var/skin_type
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/wander = 1	// Does the mob wander around when idle?
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
@@ -84,6 +85,8 @@
 
 /mob/living/simple_animal/Life()
 
+	update_gravity(mob_has_gravity())
+
 	//Health
 	if(stat == DEAD)
 		if(health > 0)
@@ -108,6 +111,8 @@
 		AdjustWeakened(-1)
 	if(paralysis)
 		AdjustParalysis(-1)
+
+	adjustEarDamage((ear_damage < 25 ? -0.05 : 0), -1)
 
 	//Movement
 	if(!client && !stop_automated_movement && wander)
@@ -217,6 +222,8 @@
 	if(meat_amount && meat_type)
 		for(var/i = 0; i < meat_amount; i++)
 			new meat_type(src.loc)
+	if(skin_type)
+		new skin_type(src.loc)
 	..()
 
 
@@ -345,8 +352,8 @@
 		else
 			user << "<span class='notice'> [src] is dead, medical items won't bring it back to life.</span>"
 			return
-	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
+	if((meat_type || skin_type) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
+		if(istype(O, /obj/item/weapon/kitchenknife))
 			harvest()
 
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -378,8 +385,8 @@
 /mob/living/simple_animal/Stat()
 	..()
 
-	statpanel("Status")
-	stat(null, "Health: [round((health / maxHealth) * 100)]%")
+	if(statpanel("Status"))
+		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
 	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them

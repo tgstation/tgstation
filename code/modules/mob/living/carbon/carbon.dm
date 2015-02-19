@@ -1,8 +1,3 @@
-/mob/living/carbon/UnarmedAttack(var/atom/A, var/proximity_flag)
-	..()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		. += HM.on_attack_hand(A, src)
-
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -87,12 +82,13 @@
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
 	src.visible_message(
-		"<span class='danger'>[src] was shocked by the [source]!</span>", \
+		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='danger'>You hear a heavy electrical crack.</span>" \
 	)
-	src.jitteriness += 1000 //High numbers for violent convulsions
-	src.stuttering += 2
+	jitteriness += 1000 //High numbers for violent convulsions
+	do_jitter_animation(jitteriness)
+	stuttering += 2
 	Stun(2)
 	spawn(20)
 		src.jitteriness -= 990 //Still jittery, but vastly less
@@ -173,6 +169,8 @@
 				if(status == "")
 					status = "OK"
 				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
+			if(H.blood_max)
+				src << "<span class='danger'>You are bleeding!</span>"
 			if(staminaloss)
 				if(staminaloss > 30)
 					src << "<span class='info'>You're completely exhausted.</span>"
@@ -319,6 +317,8 @@
 		update_inv_wear_mask(0)
 	else if(I == handcuffed)
 		handcuffed = null
+		if(buckled && buckled.buckle_requires_restraints)
+			buckled.unbuckle_mob()
 		update_inv_handcuffed(0)
 	else if(I == legcuffed)
 		legcuffed = null
@@ -364,7 +364,7 @@
 
 	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'> [back ? back : "Nothing"]</A>"
 
-	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
+	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank/internals))
 		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
 	if(handcuffed)
@@ -386,7 +386,7 @@
 		if(href_list["internal"])
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
-			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+			if(ITEM && istype(ITEM, /obj/item/weapon/tank/internals) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>", \
 								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>")
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
@@ -394,7 +394,7 @@
 						internal = null
 						if(internals)
 							internals.icon_state = "internal0"
-					else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+					else if(ITEM && istype(ITEM, /obj/item/weapon/tank/internals) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 						internal = ITEM
 						if(internals)
 							internals.icon_state = "internal1"

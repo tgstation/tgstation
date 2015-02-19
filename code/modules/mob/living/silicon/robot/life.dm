@@ -14,7 +14,11 @@
 		update_items()
 	if (src.stat != DEAD) //still using power
 		use_power()
+
 	update_canmove()
+
+	update_gravity(mob_has_gravity())
+
 	handle_fire()
 
 
@@ -110,17 +114,10 @@
 	if (src.eye_blind)
 		src.eye_blind--
 
-	if (src.ear_deaf > 0) src.ear_deaf--
-	if (src.ear_damage < 25)
-		src.ear_damage -= 0.05
-		src.ear_damage = max(src.ear_damage, 0)
-
 	src.density = !( src.lying )
 
 	if (src.disabilities & BLIND)
 		src.eye_blind = max(1, eye_blind)
-	if (src.disabilities & DEAF)
-		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
 		src.eye_blurry--

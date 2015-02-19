@@ -2,6 +2,7 @@
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
+	buckle_lying = 0 //you sit in a chair, not lay
 
 /obj/structure/stool/bed/chair/New()
 	..()
@@ -68,10 +69,6 @@
 			return
 		spin()
 
-/obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if(!istype(M)) return
-	buckle_mob(M, user)
-	return
 
 // Chair types
 /obj/structure/stool/bed/chair/wood/normal
@@ -105,11 +102,12 @@
 
 	return ..()
 
-/obj/structure/stool/bed/chair/comfy/afterbuckle()
+/obj/structure/stool/bed/chair/comfy/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
 		overlays += armrest
 	else
 		overlays -= armrest
+
 
 /obj/structure/stool/bed/chair/comfy/brown
 	color = rgb(255,113,0)

@@ -43,7 +43,7 @@ var/next_mob_id = 0
 	t+= "<span class='notice'>Plasma : [environment.toxins] \n</span>"
 	t+= "<span class='notice'>Carbon Dioxide: [environment.carbon_dioxide] \n</span>"
 	for(var/datum/gas/trace_gas in environment.trace_gases)
-		usr << "<span class='notice'>[trace_gas.type]: [trace_gas.moles] \n</span>"
+		t+= "<span class='notice'>[trace_gas.type]: [trace_gas.moles] \n</span>"
 
 	usr.show_message(t, 1)
 
@@ -82,24 +82,37 @@ var/next_mob_id = 0
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /mob/visible_message(var/message, var/self_message, var/blind_message)
-	var/list/atom_viewers = list()
-	for(var/atom/movable/A in view(src))
-		atom_viewers |= recursive_hear_check(A)
-	atom_viewers |= src
-	for(var/mob/M in atom_viewers)
+	var/list/mob_viewers = list()
+	var/list/possible_viewers = list()
+	mob_viewers |= src
+	mob_viewers |= viewers(src)
+	var/heard = get_hear(7, src)
+	for(var/atom/movable/A in heard)
+		possible_viewers |= recursive_hear_check(A)
+	for(var/mob/B in possible_viewers)
+		if(B in mob_viewers)
+			continue
+		if(isturf(B.loc))
+			continue
+		var/turf/T = get_turf(B)
+		if(src in view(T))
+			mob_viewers |= B
+
+	for(var/mob/M in mob_viewers)
 		if(M.see_invisible < invisibility)
 			continue //can't view the invisible
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
-		M.show_message( msg, 1)
+		M.show_message(msg, 1)
+
 	if(blind_message)
-		var/list/atom_hearers = list()
-		for(var/atom/movable/O in get_hearers_in_view(7, src))
-			if(O in atom_viewers)
+		var/list/mob_hearers = list()
+		for(var/mob/C in get_hearers_in_view(7, src))
+			if(C in mob_viewers)
 				continue
-			atom_hearers |= O
-		for(var/mob/MOB in atom_hearers)
+			mob_hearers |= C
+		for(var/mob/MOB in mob_hearers)
 			MOB.show_message(blind_message, 2)
 
 // Show a message to all mobs who sees this atom
@@ -108,18 +121,31 @@ var/next_mob_id = 0
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /atom/proc/visible_message(var/message, var/blind_message)
-	var/list/atom_viewers = list()
-	for(var/atom/movable/A in view(src))
-		atom_viewers |= recursive_hear_check(A)
-	for(var/mob/M in atom_viewers)
-		M.show_message( message, 1)
+	var/list/mob_viewers = list()
+	var/list/possible_viewers = list()
+	mob_viewers |= viewers(src)
+	var/heard = get_hear(7, src)
+	for(var/atom/movable/A in heard)
+		possible_viewers |= recursive_hear_check(A)
+	for(var/mob/B in possible_viewers)
+		if(B in mob_viewers)
+			continue
+		if(isturf(B.loc))
+			continue
+		var/turf/T = get_turf(B)
+		if(src in view(T))
+			mob_viewers |= B
+
+	for(var/mob/M in mob_viewers)
+		M.show_message(message, 1)
+
 	if(blind_message)
-		var/list/atom_hearers = list()
-		for(var/atom/movable/O in get_hearers_in_view(7, src))
-			if(O in atom_viewers)
+		var/list/mob_hearers = list()
+		for(var/mob/C in get_hearers_in_view(7, src))
+			if(C in mob_viewers)
 				continue
-			atom_hearers |= O
-		for(var/mob/MOB in atom_hearers)
+			mob_hearers |= C
+		for(var/mob/MOB in mob_hearers)
 			MOB.show_message(blind_message, 2)
 
 // Show a message to all mobs in earshot of this one
@@ -668,30 +694,37 @@ var/list/slot_equipment_priority = list( \
 /mob/Stat()
 	..()
 
-	if(client && client.holder)
+	if(statpanel("Status"))
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_RECALL)
+				ETA = "RCL"
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+			if(SHUTTLE_ESCAPE)
+				ETA = "ESC"
+			if(SHUTTLE_STRANDED)
+				ETA = "ERR"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-		if(statpanel("Status"))	//not looking at that panel
-			stat(null,"Location:\t([x], [y], [z])")
-			stat(null,"CPU:\t[world.cpu]")
-			stat(null,"Instances:\t[world.contents.len]")
+
+	if(client && client.holder)
+		if(statpanel("MC"))
+			stat("Location:","([x], [y], [z])")
+			stat("CPU:","[world.cpu]")
+			stat("Instances:","[world.contents.len]")
 
 			if(master_controller)
-				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"Air-[master_controller.air_cost]\t#[global_activeturfs]")
-				stat(null,"Turfs-[master_controller.air_turfs]\tGroups-[master_controller.air_groups]")
-				stat(null,"SC-[master_controller.air_superconductivity]\tHP-[master_controller.air_highpressure]\tH-[master_controller.air_hotspots]")
-				stat(null,"Sun-[master_controller.sun_cost]")
-				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
-				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
-				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")
-				stat(null,"Bots-[master_controller.aibots_cost]\t#[aibots.len]")
-				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
-				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
-				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-				stat(null,"GC-[master_controller.gc_cost]\t#[garbage.destroyed.len]-#dels[garbage.dels]")
-				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
+				stat("MasterController:","[round(master_controller.cost,0.001)]ds (Interval:[master_controller.processing_interval] | Iteration:[master_controller.iteration])")
+				for(var/datum/subsystem/SS in master_controller.subsystems)
+					if(SS.can_fire)
+						SS.stat_entry()
 			else
-				stat(null,"MasterController-ERROR")
+				stat("MasterController:","ERROR")
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -737,11 +770,12 @@ var/list/slot_equipment_priority = list( \
 	if(restrained())					return 0
 	return 1
 
+
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
-	var/bed = !(buckled && istype(buckled, /obj/structure/stool/bed/chair))
+	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	if(ko || resting || stunned)
 		drop_r_hand()
 		drop_l_hand()
@@ -749,7 +783,7 @@ var/list/slot_equipment_priority = list( \
 		lying = 0
 		canmove = 1
 	if(buckled)
-		lying = 90 * bed
+		lying = 90*buckle_lying
 	else
 		if((ko || resting) && !lying)
 			fall(ko)
@@ -761,6 +795,7 @@ var/list/slot_equipment_priority = list( \
 		update_icon = 0
 		regenerate_icons()
 	return canmove
+
 
 /mob/proc/fall(var/forced)
 	drop_l_hand()
@@ -834,8 +869,8 @@ var/list/slot_equipment_priority = list( \
 		update_canmove()
 	return
 
-/mob/proc/Weaken(amount)
-	if(status_flags & CANWEAKEN)
+/mob/proc/Weaken(amount, var/ignore_canweaken = 0)
+	if(status_flags & CANWEAKEN || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
 		update_canmove()	//updates lying, canmove and icons
 	return
@@ -910,3 +945,9 @@ var/list/slot_equipment_priority = list( \
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G
 				break
+
+/mob/proc/adjustEarDamage()
+	return
+
+/mob/proc/setEarDamage()
+	return

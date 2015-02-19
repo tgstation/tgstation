@@ -50,7 +50,8 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> "
 
 	if(M.client)
-		body += "| <A HREF='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
+		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
+		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
 		body += "\[<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
@@ -578,10 +579,8 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
-	if(!ticker)
-		alert("Unable to start the game as it is not set up.")
-		return
 	if(ticker.current_state == GAME_STATE_PREGAME)
+		ticker.can_fire = 1
 		ticker.current_state = GAME_STATE_SETTING_UP
 		log_admin("[usr.key] has started the game.")
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
@@ -636,10 +635,10 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Delay the game start"
 	set name="Delay"
-	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!", null, null, null, null, null)
-	going = !( going )
-	if (!( going ))
+	if(ticker.current_state > GAME_STATE_PREGAME)
+		return alert("Too late... The game has already started!")
+	ticker.can_fire = !ticker.can_fire
+	if(!ticker.can_fire)
 		world << "<b>The game start has been delayed.</b>"
 		log_admin("[key_name(usr)] delayed the game.")
 	else
@@ -668,7 +667,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (M.z == 2)
+	if (M.z == ZLEVEL_CENTCOM)
 		M.loc = pick(latejoin)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
@@ -810,8 +809,8 @@ var/global/floorIsLava = 0
 		alert(usr, "You cannot manage jobs before the round starts!")
 		return
 
-	if(job_master)
-		for(var/datum/job/job in job_master.occupations)
+	if(SSjob)
+		for(var/datum/job/job in SSjob.occupations)
 			count++
 			var/J_title = html_encode(job.title)
 			var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))

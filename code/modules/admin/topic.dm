@@ -66,10 +66,14 @@
 				log_admin("[key_name(usr)] started a gang war.")
 				if(!src.makeGangsters())
 					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
-
+			if("13")
+				message_admins("[key_name(usr)] created a emergency response team.")
+				log_admin("[key_name(usr)] created a emergency response team.")
+				if(!src.makeEmergencyresponseteam())
+					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
 
 	else if(href_list["forceevent"])
-		var/datum/round_event_control/E = locate(href_list["forceevent"]) in events.control
+		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevent.control
 		if(E)
 			var/datum/round_event/event = E.runEvent()
 			if(event.announceWhen>0)
@@ -182,34 +186,36 @@
 
 		switch(href_list["call_shuttle"])
 			if("1")
-				if ((!( ticker ) || emergency_shuttle.location))
+				if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
 					return
-				emergency_shuttle.incall()
+				SSshuttle.emergency.request()
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>")
 
 			if("2")
-				if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
+				if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
 					return
-				switch(emergency_shuttle.direction)
-					if(-1)
-						emergency_shuttle.incall()
-						log_admin("[key_name(usr)] called the Emergency Shuttle")
-						message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>")
-					if(1)
-						emergency_shuttle.recall()
+				switch(SSshuttle.emergency.mode)
+					if(SHUTTLE_CALL)
+						SSshuttle.emergency.cancel()
 						log_admin("[key_name(usr)] sent the Emergency Shuttle back")
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] sent the Emergency Shuttle back</span>")
+					else
+						SSshuttle.emergency.cancel()
+						log_admin("[key_name(usr)] called the Emergency Shuttle")
+						message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>")
+
 
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["edit_shuttle_time"])
 		if(!check_rights(R_SERVER))	return
 
-		emergency_shuttle.settimeleft( input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", emergency_shuttle.timeleft() ) as num )
-		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [emergency_shuttle.timeleft()]")
-		minor_announce("The emergency shuttle will reach its destination in [round(emergency_shuttle.timeleft()/60)] minutes.")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [emergency_shuttle.timeleft()]</span>")
+		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num
+		SSshuttle.emergency.setTimer(timer*10)
+		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds")
+		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds</span>")
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["delay_round_end"])
@@ -384,9 +390,6 @@
 		if(!M.ckey)	//sanity
 			usr << "This mob has no ckey"
 			return
-		if(!job_master)
-			usr << "Job Master has not been setup!"
-			return
 
 		var/dat = ""
 		var/header = "<head><title>Job-Ban Panel: [M.name]</title></head>"
@@ -405,7 +408,7 @@
 		jobs += "<tr align='center' bgcolor='ccccff'><th colspan='[length(command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in command_positions)
 			if(!jobPos)	continue
-			var/datum/job/job = job_master.GetJob(jobPos)
+			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
@@ -426,7 +429,7 @@
 		jobs += "<tr bgcolor='ffddf0'><th colspan='[length(security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in security_positions)
 			if(!jobPos)	continue
-			var/datum/job/job = job_master.GetJob(jobPos)
+			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
@@ -447,7 +450,7 @@
 		jobs += "<tr bgcolor='fff5cc'><th colspan='[length(engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in engineering_positions)
 			if(!jobPos)	continue
-			var/datum/job/job = job_master.GetJob(jobPos)
+			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
@@ -468,7 +471,7 @@
 		jobs += "<tr bgcolor='ffeef0'><th colspan='[length(medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in medical_positions)
 			if(!jobPos)	continue
-			var/datum/job/job = job_master.GetJob(jobPos)
+			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
@@ -489,7 +492,7 @@
 		jobs += "<tr bgcolor='e79fff'><th colspan='[length(science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in science_positions)
 			if(!jobPos)	continue
-			var/datum/job/job = job_master.GetJob(jobPos)
+			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
@@ -504,13 +507,34 @@
 				counter = 0
 		jobs += "</tr></table>"
 
+	//Supply (Brown)
+		counter = 0
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='663300'><th colspan='[length(supply_positions)]'><a href='?src=\ref[src];jobban3=supplydept;jobban4=\ref[M]'>Supply Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in supply_positions)
+			if(!jobPos)	continue
+			var/datum/job/job = SSjob.GetJob(jobPos)
+			if(!job) continue
+
+			if(jobban_isbanned(M, job.title))
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[replacetext(job.title, " ", "&nbsp")]</font></a></td>"
+				counter++
+			else
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+
+			if(counter >= 5) //So things dont get COPYPASTE!
+				jobs += "</tr><tr align='center'>"
+				counter = 0
+		jobs += "</tr></table>"
+
 	//Civilian (Grey)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
 		jobs += "<tr bgcolor='dddddd'><th colspan='[length(civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in civilian_positions)
 			if(!jobPos)	continue
-			var/datum/job/job = job_master.GetJob(jobPos)
+			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
@@ -531,7 +555,7 @@
 		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in nonhuman_positions)
 			if(!jobPos)	continue
-			var/datum/job/job = job_master.GetJob(jobPos)
+			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
@@ -636,7 +660,7 @@
 			usr << "This can only be used on instances of type /mob"
 			return
 
-		if(!job_master)
+		if(!SSjob)
 			usr << "Job Master has not been setup!"
 			return
 
@@ -646,43 +670,49 @@
 			if("commanddept")
 				for(var/jobPos in command_positions)
 					if(!jobPos)	continue
-					var/datum/job/temp = job_master.GetJob(jobPos)
+					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			if("securitydept")
 				for(var/jobPos in security_positions)
 					if(!jobPos)	continue
-					var/datum/job/temp = job_master.GetJob(jobPos)
+					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			if("engineeringdept")
 				for(var/jobPos in engineering_positions)
 					if(!jobPos)	continue
-					var/datum/job/temp = job_master.GetJob(jobPos)
+					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			if("medicaldept")
 				for(var/jobPos in medical_positions)
 					if(!jobPos)	continue
-					var/datum/job/temp = job_master.GetJob(jobPos)
+					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			if("sciencedept")
 				for(var/jobPos in science_positions)
 					if(!jobPos)	continue
-					var/datum/job/temp = job_master.GetJob(jobPos)
+					var/datum/job/temp = SSjob.GetJob(jobPos)
+					if(!temp) continue
+					joblist += temp.title
+			if("supplydept")
+				for(var/jobPos in supply_positions)
+					if(!jobPos)	continue
+					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			if("civiliandept")
 				for(var/jobPos in civilian_positions)
 					if(!jobPos)	continue
-					var/datum/job/temp = job_master.GetJob(jobPos)
+					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			if("nonhumandept")
 				for(var/jobPos in nonhuman_positions)
 					if(!jobPos)	continue
-					var/datum/job/temp = job_master.GetJob(jobPos)
+					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			else
@@ -1020,6 +1050,31 @@
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!")
+
+	else if(href_list["sendbacktolobby"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["sendbacktolobby"])
+
+		if(!isobserver(M))
+			usr << "<span class='notice'>You can only send ghost players back to the Lobby.</span>"
+			return
+
+		if(!M.client)
+			usr << "<span class='warning'>[M] doesn't seem to have an active client.</span>"
+			return
+
+		if(alert(usr, "Send [key_name(M)] back to Lobby?", "Message", "Yes", "No") != "Yes")
+			return
+
+		log_admin("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
+		message_admins("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
+
+		var/mob/new_player/NP = new()
+		NP.ckey = M.ckey
+		qdel(M)
+
 	else if(href_list["tdome1"])
 		if(!check_rights(R_FUN))	return
 
@@ -1330,7 +1385,7 @@
 
 		var/Add = href_list["addjobslot"]
 
-		for(var/datum/job/job in job_master.occupations)
+		for(var/datum/job/job in SSjob.occupations)
 			if(job.title == Add)
 				job.total_positions += 1
 				break
@@ -1342,7 +1397,7 @@
 
 		var/Remove = href_list["removejobslot"]
 
-		for(var/datum/job/job in job_master.occupations)
+		for(var/datum/job/job in SSjob.occupations)
 			if(job.title == Remove && job.total_positions - job.current_positions > 0)
 				job.total_positions -= 1
 				break
@@ -1525,7 +1580,7 @@
 			else if(!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 				removed_paths += dirty_path
 				continue
-			else if(ispath(path, /obj/item/weapon/gun/energy/pulse_rifle))
+			else if(ispath(path, /obj/item/weapon/gun/energy/pulse))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
@@ -1808,7 +1863,7 @@
 				message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.")
 
 				for(var/turf/simulated/floor/F in world)
-					if(F.z == 1)
+					if(F.z == ZLEVEL_STATION)
 						F.name = "lava"
 						F.desc = "The floor is LAVA!"
 						F.overlays += "lava"
@@ -1833,7 +1888,7 @@
 						sleep(10)
 
 					for(var/turf/simulated/floor/F in world) // Reset everything.
-						if(F.z == 1)
+						if(F.z == ZLEVEL_STATION)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
 							F.overlays.Cut()
@@ -1865,7 +1920,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
 				for(var/obj/machinery/door/airlock/W in world)
-					if(W.z == 1 && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
+					if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 				priority_announce("Centcom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/AI/commandreport.ogg')
@@ -1892,21 +1947,21 @@
 
 				rightandwrong(1, usr, survivor_probability)
 			if("events")
-				if(events && !events.wizardmode)
+				if(!SSevent.wizardmode)
 					if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
 						summonevents()
 						feedback_inc("admin_secrets_fun_used",1)
 						feedback_add_details("admin_secrets_fun_used","SE")
 
-				else if(events && events.wizardmode)
+				else
 					switch(alert("What would you like to do?",,"Intensify Summon Events","Turn Off Summon Events","Nothing"))
 						if("Intensify Summon Events")
 							summonevents()
 							feedback_inc("admin_secrets_fun_used",1)
 							feedback_add_details("admin_secrets_fun_used","SE")
 						if("Turn Off Summon Events")
-							events.toggleWizardmode()
-							events.resetFrequency()
+							SSevent.toggleWizardmode()
+							SSevent.resetFrequency()
 			if("dorf")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","DF")
@@ -1939,7 +1994,7 @@
 				var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
 				if(choice == "Yes")
 					message_admins("[key_name_admin(usr)] has cured all diseases.")
-					for(var/datum/disease/D in active_diseases)
+					for(var/datum/disease/D in SSdisease.processing)
 						D.cure(D)
 			if("list_bombers")
 				var/dat = "<B>Bombing List<HR>"
@@ -1958,27 +2013,28 @@
 				usr << browse(dat, "window=lawchanges;size=800x500")
 			if("check_antagonist")
 				check_antagonists()
+
 			if("moveminingshuttle")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShM")
-				var/datum/shuttle_manager/s = shuttles["mining"]
-				if(istype(s)) s.move_shuttle(0)
-				message_admins("[key_name_admin(usr)] moved mining shuttle")
-				log_admin("[key_name(usr)] moved the mining shuttle")
+				if(!SSshuttle.toggleShuttle("mining","mining_home","mining_away"))
+					message_admins("[key_name_admin(usr)] moved mining shuttle")
+					log_admin("[key_name(usr)] moved the mining shuttle")
+
 			if("movelaborshuttle")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShL")
-				var/datum/shuttle_manager/s = shuttles["laborcamp"]
-				if(istype(s)) s.move_shuttle(0)
-				message_admins("[key_name_admin(usr)] moved labor shuttle")
-				log_admin("[key_name(usr)] moved the labor shuttle")
+				if(!SSshuttle.toggleShuttle("laborcamp","laborcamp_home","laborcamp_away"))
+					message_admins("[key_name_admin(usr)] moved labor shuttle")
+					log_admin("[key_name(usr)] moved the labor shuttle")
+
 			if("moveferry")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShF")
-				var/datum/shuttle_manager/s = shuttles["ferry"]
-				if(istype(s)) s.move_shuttle(0)
-				message_admins("[key_name_admin(usr)] moved the centcom ferry")
-				log_admin("[key_name(usr)] moved the centcom ferry")
+				if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
+					message_admins("[key_name_admin(usr)] moved the centcom ferry")
+					log_admin("[key_name(usr)] moved the centcom ferry")
+
 			if("kick_all_from_lobby")
 				if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 					var/afkonly = text2num(href_list["afkonly"])
@@ -2046,11 +2102,11 @@
 				usr << browse(dat, "window=admin_log")
 			if("list_job_debug")
 				var/dat = "<B>Job Debug info.</B><HR>"
-				if(job_master)
-					for(var/line in job_master.job_debug)
+				if(SSjob)
+					for(var/line in SSjob.job_debug)
 						dat += "[line]<BR>"
 					dat+= "*******<BR><BR>"
-					for(var/datum/job/job in job_master.occupations)
+					for(var/datum/job/job in SSjob.occupations)
 						if(!job)	continue
 						dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 					usr << browse(dat, "window=jobdebug;size=600x500")
@@ -2080,7 +2136,7 @@
 						M.req_one_access = list(access_brig,access_engine)
 				message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
 			if("infinite_sec")
-				var/datum/job/J = job_master.GetJob("Security Officer")
+				var/datum/job/J = SSjob.GetJob("Security Officer")
 				if(!J) return
 				J.total_positions = -1
 				J.spawn_positions = -1

@@ -18,7 +18,7 @@
 	var/operating = 0//cooldown
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
-	var/obj/item/weapon/tank/plasma/ptank = null
+	var/obj/item/weapon/tank/internals/plasma/ptank = null
 
 
 /obj/item/weapon/flamethrower/Destroy()
@@ -33,7 +33,7 @@
 
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return null
 	var/turf/location = loc
 	if(istype(location, /mob/))
@@ -100,7 +100,7 @@
 		update_icon()
 		return
 
-	if(istype(W,/obj/item/weapon/tank/plasma))
+	if(istype(W,/obj/item/weapon/tank/internals/plasma))
 		if(ptank)
 			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
 			return
@@ -140,7 +140,7 @@
 		if(!status)	return
 		lit = !lit
 		if(lit)
-			processing_objects.Add(src)
+			SSobj.processing |= src
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))
@@ -189,7 +189,7 @@
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
-	air_master.add_to_active(target, 0)
+	SSair.add_to_active(target, 0)
 	return
 
 
@@ -204,5 +204,5 @@
 
 /obj/item/weapon/flamethrower/full/tank/New(var/loc)
 	..()
-	ptank = new /obj/item/weapon/tank/plasma/full(src)
+	ptank = new /obj/item/weapon/tank/internals/plasma/full(src)
 	update_icon()

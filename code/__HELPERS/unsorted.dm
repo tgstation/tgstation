@@ -816,15 +816,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
-//Returns: all the areas in the world
-/proc/return_areas()
-	. = list()
+//Returns sortedAreas list if populated
+//else populates the list first before returning it
+/proc/SortAreas()
 	for(var/area/A in world)
-		. += A
+		if(A.lighting_subarea)
+			continue
+		sortedAreas.Add(A)
 
-//Returns: all the areas in the world, sorted.
-/proc/return_sorted_areas()
-	return sortNames(return_areas())
+	sortTim(sortedAreas, /proc/cmp_name_asc)
+
+/area/proc/addSorted()
+	sortedAreas.Add(src)
+	sortTim(sortedAreas, /proc/cmp_name_asc)
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -1010,15 +1014,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
-			air_master.remove_from_active(T1)
+			SSair.remove_from_active(T1)
 			T1.CalculateAdjacentTurfs()
-			air_master.add_to_active(T1,1)
+			SSair.add_to_active(T1,1)
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
-			air_master.remove_from_active(T2)
+			SSair.remove_from_active(T2)
 			T2.CalculateAdjacentTurfs()
-			air_master.add_to_active(T2,1)
+			SSair.add_to_active(T2,1)
 
 
 
@@ -1163,7 +1167,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
 			T1.CalculateAdjacentTurfs()
-			air_master.add_to_active(T1,1)
+			SSair.add_to_active(T1,1)
 
 
 	return copiedobjs
@@ -1339,28 +1343,43 @@ var/global/list/common_tools = list(
 
 //Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
 /proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	return ( \
-		istype(W, /obj/item/weapon/screwdriver)                   || \
-		istype(W, /obj/item/weapon/pen)                           || \
-		istype(W, /obj/item/weapon/weldingtool)					  || \
-		istype(W, /obj/item/weapon/lighter/zippo)				  || \
-		istype(W, /obj/item/weapon/match)            		      || \
-		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
-		istype(W, /obj/item/weapon/wirecutters)                   || \
-		istype(W, /obj/item/weapon/circular_saw)                  || \
-		istype(W, /obj/item/weapon/melee/energy/sword)            || \
-		istype(W, /obj/item/weapon/melee/energy/blade)            || \
-		istype(W, /obj/item/weapon/shovel)                        || \
-		istype(W, /obj/item/weapon/kitchenknife)                  || \
-		istype(W, /obj/item/weapon/butch)						  || \
-		istype(W, /obj/item/weapon/scalpel)                       || \
-		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
-		istype(W, /obj/item/weapon/shard)                         || \
-		istype(W, /obj/item/weapon/broken_bottle)				  || \
-		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
-		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
-		istype(W, /obj/item/weapon/twohanded/fireaxe) \
-	)
+	if(istype(W, /obj/item/weapon/circular_saw))
+		return 1
+	if(istype(W, /obj/item/weapon/melee/energy))
+		var/obj/item/weapon/melee/energy/E = W
+		if(E.active)
+			return 1
+		else
+			return 0
+	if(istype(W, /obj/item/weapon/shovel))
+		return 1
+	if(istype(W, /obj/item/weapon/kitchenknife))
+		return 2
+	if(istype(W, /obj/item/weapon/scalpel))
+		return 2
+	if(istype(W, /obj/item/weapon/kitchen/utensil/knife))
+		return 2
+	if(istype(W, /obj/item/weapon/shard))
+		return 1
+	if(istype(W, /obj/item/weapon/broken_bottle))
+		return 1
+	if(istype(W, /obj/item/weapon/twohanded/fireaxe))
+		return 1
+	if(istype(W, /obj/item/weapon/hatchet))
+		return 1
+
+/proc/is_pointed(obj/item/W as obj)
+	if(istype(W, /obj/item/weapon/pen))
+		return 1
+	if(istype(W, /obj/item/weapon/screwdriver))
+		return 1
+	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
+		return 1
+	if(istype(W, /obj/item/weapon/kitchen/utensil/fork))
+		return 1
+	else
+		return 0
+
 
 /*
 Checks if that loc and dir has a item on the wall

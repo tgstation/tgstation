@@ -110,10 +110,11 @@
 				/obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1,
 				/obj/item/weapon/storage/toolbox/mechanical = 1,
 				/obj/item/weapon/screwdriver = 3,
-				/obj/item/weapon/tank/emergency_oxygen = 2,
+				/obj/item/weapon/tank/internals/emergency_oxygen = 2,
 				/obj/item/weapon/vending_refill/cola = 1,
 				/obj/item/weapon/weldingtool = 3,
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
+				/obj/item/weapon/relic = 3,
 				"" = 11
 				)

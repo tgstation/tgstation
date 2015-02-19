@@ -33,7 +33,7 @@ BONUS
 			switch(A.stage)
 				if(1, 2)
 					if(H.facial_hair_style == "Shaved")
-						H.facial_hair_style = "Adam Jensen Beard"
+						H.facial_hair_style = "Jensen Beard"
 						H.update_hair()
 				if(3, 4)
 					if(!(H.facial_hair_style == "Dwarf Beard") && !(H.facial_hair_style == "Very Long Beard") && !(H.facial_hair_style == "Full Beard"))

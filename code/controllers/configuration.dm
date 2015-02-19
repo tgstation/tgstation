@@ -36,7 +36,7 @@
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
-	var/Ticklag = 0.9
+	var/fps = 10
 	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
@@ -47,8 +47,9 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
+	var/minimal_access_threshold = 0	//If the number of players is larger than this threshold, minimal access will be turned on.
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
-	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
+	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above.
 	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
 	var/server
@@ -262,7 +263,9 @@
 				if("allow_metadata")
 					config.allow_Metadata = 1
 				if("kick_inactive")
-					config.kick_inactive = 1
+					if(value < 1)
+						value = INACTIVITY_KICK
+					config.kick_inactive = value
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
 				if("forbid_singulo_possession")
@@ -274,7 +277,11 @@
 				if("useircbot")
 					useircbot = 1
 				if("ticklag")
-					Ticklag = text2num(value)
+					var/ticklag = text2num(value)
+					if(ticklag > 0)
+						fps = 10 / ticklag
+				if("fps")
+					fps = text2num(value)
 				if("tickcomp")
 					Tickcomp = 1
 				if("automute_on")
@@ -389,6 +396,8 @@
 					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")
 					config.allow_random_events		= 1
+				if("minimal_access_threshold")
+					config.minimal_access_threshold	= text2num(value)
 				if("jobs_have_minimal_access")
 					config.jobs_have_minimal_access	= 1
 				if("humans_need_surnames")
@@ -413,6 +422,10 @@
 					config.mutant_colors			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
+
+	fps = round(fps)
+	if(fps <= 0)
+		fps = initial(fps)
 
 /datum/configuration/proc/loadsql(filename)
 	var/list/Lines = file2list(filename)

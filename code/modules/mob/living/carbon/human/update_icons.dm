@@ -38,7 +38,7 @@ There are several things that need to be remembered:
 		update_base_icon_state()	//Handles updating var/base_icon_state (WIP) This is used to update the
 									mob's icon_state easily e.g. "[base_icon_state]_s" is the standing icon_state
 		update_body()				//Handles updating your mob's icon_state (using update_base_icon_state())
-									as well as sprite-accessories that didn't really fit elsewhere (underwear, undershirts, lips, eyes)
+									as well as sprite-accessories that didn't really fit elsewhere (underwear, undershirts, socks, lips, eyes)
 									//NOTE: update_mutantrace() is now merged into this!
 		update_hair()				//Handles updating your hair overlay (used to be update_face, but mouth and
 									eyes were merged into update_body())
@@ -56,7 +56,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 //Human Overlays Indexes/////////
 #define SPECIES_LAYER			23		// mutantrace colors... these are on a seperate layer in order to prvent
-#define BODY_LAYER				22		//underwear, undershirts, eyes, lips(makeup)
+#define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
 #define MUTATIONS_LAYER			21		//Tk headglows etc.
 #define AUGMENTS_LAYER			20
 #define DAMAGE_LAYER			19		//damage indicators (cuts and burns)
@@ -262,8 +262,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
-			if(G == "f" && U.fitted == 1)
-				standing	= wear_female_version(t_color, 'icons/mob/uniform.dmi', UNIFORM_LAYER)
+			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
+				standing	= wear_female_version(t_color, 'icons/mob/uniform.dmi', UNIFORM_LAYER, U.fitted)
 				overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(w_uniform.blood_DNA)
@@ -311,7 +311,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	else
 		if(blood_DNA)
-			overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands", "layer"=-GLOVES_LAYER)
 
 	apply_overlay(GLOVES_LAYER)
 
@@ -539,7 +539,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
 
-		overlays_standing[R_HAND_LAYER] = image("icon"='icons/mob/items_righthand.dmi', "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
+		overlays_standing[R_HAND_LAYER] = image("icon" = r_hand.righthand_file, "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
 
 	apply_overlay(R_HAND_LAYER)
 
@@ -558,15 +558,15 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/t_state = l_hand.item_state
 		if(!t_state)	t_state = l_hand.icon_state
 
-		overlays_standing[L_HAND_LAYER] = image("icon"='icons/mob/items_lefthand.dmi', "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
+		overlays_standing[L_HAND_LAYER] = image("icon" = l_hand.lefthand_file, "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
 
 	apply_overlay(L_HAND_LAYER)
 
-/mob/living/carbon/human/proc/wear_female_version(t_color, icon, layer)
+/mob/living/carbon/human/proc/wear_female_version(t_color, icon, layer, type)
 	var/index = "[t_color]_s"
 	var/icon/female_clothing_icon = female_clothing_icons[index]
 	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
-		generate_female_clothing(index,t_color,icon)
+		generate_female_clothing(index,t_color,icon,type)
 	var/standing	= image("icon"=female_clothing_icons["[t_color]_s"], "layer"=-layer)
 	return(standing)
 

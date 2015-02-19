@@ -204,12 +204,12 @@ Transponder Codes:<UL>"}
 		else if(href_list["edit"])
 			var/codekey = href_list["code"]
 
-			var/newkey = input("Enter Transponder Code Key", "Navigation Beacon", codekey) as text|null
+			var/newkey = stripped_input(usr, "Enter Transponder Code Key", "Navigation Beacon", codekey)
 			if(!newkey)
 				return
 
 			var/codeval = codes[codekey]
-			var/newval = input("Enter Transponder Code Value", "Navigation Beacon", codeval) as text|null
+			var/newval = stripped_input(usr, "Enter Transponder Code Value", "Navigation Beacon", codeval)
 			if(!newval)
 				newval = codekey
 				return
@@ -226,11 +226,11 @@ Transponder Codes:<UL>"}
 
 		else if(href_list["add"])
 
-			var/newkey = input("Enter New Transponder Code Key", "Navigation Beacon") as text|null
+			var/newkey = stripped_input(usr, "Enter New Transponder Code Key", "Navigation Beacon")
 			if(!newkey)
 				return
 
-			var/newval = input("Enter New Transponder Code Value", "Navigation Beacon") as text|null
+			var/newval = stripped_input(usr, "Enter New Transponder Code Value", "Navigation Beacon")
 			if(!newval)
 				newval = "1"
 				return

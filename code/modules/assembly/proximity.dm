@@ -5,6 +5,7 @@
 	m_amt = 800
 	g_amt = 200
 	origin_tech = "magnets=1"
+	attachable = 1
 
 	var/scanning = 0
 	var/timing = 0
@@ -30,11 +31,11 @@
 /obj/item/device/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(secured)
-		processing_objects.Add(src)
+		SSobj.processing |= src
 	else
 		scanning = 0
 		timing = 0
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 	update_icon()
 	return secured
 
@@ -48,8 +49,7 @@
 /obj/item/device/assembly/prox_sensor/sense()
 	if((!secured)||(!scanning)||(cooldown > 0))	return 0
 	pulse(0)
-	if(src.loc)
-		src.loc.audible_message("\icon[src] *beep* *beep*", null, 3)
+	audible_message("\icon[src] *beep* *beep*", null, 3)
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
