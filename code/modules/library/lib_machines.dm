@@ -2,8 +2,8 @@
  *
  * Contains:
  *		Borrowbook datum
- *		Cachedbook datum
  *		Library Public Computer
+ *		Cachedbook datum
  *		Library Computer
  *		Library Scanner
  *		Book Binder
@@ -181,7 +181,6 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	libcomp_menu = ""
 	for(var/datum/cachedbook/C in cachedbooks)
 		libcomp_menu += "<tr><td>[C.author]</td><td>[C.title]</td><td>[C.category]</td><td><A href='?src=\ref[src];targetid=[C.id]'>\[Order\]</A></td></tr>\n"
-
 
 /obj/machinery/computer/libraryconsole/bookmanagement/New()
 	..()
