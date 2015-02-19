@@ -371,13 +371,6 @@
 	name = "Iced Beer"
 	id = "iced_beer"
 	result = "iced_beer"
-	required_reagents = list("beer" = 10, "frostoil" = 1)
-	result_amount = 10
-
-/datum/chemical_reaction/iced_beer2
-	name = "Iced Beer"
-	id = "iced_beer"
-	result = "iced_beer"
 	required_reagents = list("beer" = 5, "ice" = 1)
 	result_amount = 6
 
