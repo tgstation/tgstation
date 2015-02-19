@@ -43,7 +43,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				src << "<span class='warning'>The blood soaks through your bandage.</span>"
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/human/proc/handle_blood()
+/mob/living/carbon/human/handle_blood()
 
 	if(NOBLOOD in dna.species.specflags)
 		return

@@ -609,8 +609,8 @@
 			user << "<span class='notice'>[src] does not react.</span>"
 			return
 		else if(src.loc == user)
-			call(src,realProc)(user)
 			cooldown = TRUE
+			call(src,realProc)(user)
 			spawn(cooldownMax)
 				cooldown = FALSE
 	else
@@ -661,10 +661,10 @@
 		R.realProc = realProc
 		R.revealed = TRUE
 		dupes |= R
-		R.throw_at(pick(oview(7,src)),10,1)
+		R.throw_at(pick(oview(7,get_turf(src))),10,1)
 	counter = 0
 	spawn(rand(10,100))
-		for(counter = 1; counter < dupes.len; counter++)
+		for(counter = 1; counter <= dupes.len; counter++)
 			var/obj/item/weapon/relic/R = dupes[counter]
 			qdel(R)
 

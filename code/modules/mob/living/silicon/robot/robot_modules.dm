@@ -87,6 +87,13 @@
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
+	modules += new /obj/item/weapon/surgical_drapes(src)
+	modules += new /obj/item/weapon/retractor(src)
+	modules += new /obj/item/weapon/hemostat(src)
+	modules += new /obj/item/weapon/cautery(src)
+	modules += new /obj/item/weapon/surgicaldrill(src)
+	modules += new /obj/item/weapon/scalpel(src)
+	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
@@ -95,6 +102,14 @@
 
 	var/obj/item/weapon/reagent_containers/spray/S = emag
 	S.banned_reagents = list()
+
+	var/datum/robot_energy_storage/gauze/gauzestore = new /datum/robot_energy_storage/gauze(src)
+
+	var/obj/item/stack/medical/gauze/cyborg/G = new /obj/item/stack/medical/gauze/cyborg(src)
+	G.source = gauzestore
+	modules += G
+
+	storages += gauzestore
 
 	fix_modules()
 
@@ -289,3 +304,8 @@
 	max_energy = 50
 	recharge_rate = 2
 	name = "Wire Synthesizer"
+
+/datum/robot_energy_storage/gauze
+	max_energy = 2500
+	recharge_rate = 250
+	name = "Gauze Synthesizer"
