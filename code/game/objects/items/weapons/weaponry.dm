@@ -107,7 +107,7 @@ obj/item/weapon/wirerod
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
-obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
+obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
 	..()
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear

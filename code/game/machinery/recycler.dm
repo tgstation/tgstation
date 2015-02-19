@@ -30,7 +30,7 @@ var/const/SAFETY_COOLDOWN = 100
 	update_icon()
 
 
-/obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(emagged)
 			emagged = 0

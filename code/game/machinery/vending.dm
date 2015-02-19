@@ -147,7 +147,7 @@
 			total += restock
 	return total
 
-/obj/machinery/vending/snack/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/vending/snack/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!compartment_access_check(user))
 			return
@@ -212,7 +212,7 @@
 		dish_quants[S.name] = 1
 	sortList(dish_quants)
 
-/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user, params)
 	if(panel_open)
 		if(default_unfasten_wrench(user, W, time = 60))
 			return

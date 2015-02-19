@@ -34,7 +34,7 @@
 			bananium -= sheet_amount * 2000
 			user << "<span class='notice'>You retrieve [sheet_amount] sheets of bananium.</span>"
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user)
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user, params)
 	if(istype(O,/obj/item/stack/sheet/mineral/bananium))
 		var/obj/item/stack/sheet/mineral/bananium/M = O
 		bananium += 2000 * M.amount

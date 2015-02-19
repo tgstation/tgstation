@@ -72,7 +72,7 @@
 /obj/machinery/recharge_station/attack_ai(user as mob)
 	return attack_hand(user)
 
-/obj/machinery/recharge_station/attackby(obj/item/P as obj, mob/user as mob)
+/obj/machinery/recharge_station/attackby(obj/item/P as obj, mob/user as mob, params)
 	if(state_open)
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return

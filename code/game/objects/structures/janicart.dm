@@ -36,7 +36,7 @@
 	return
 
 
-/obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
+/obj/structure/janitorialcart/attackby(obj/item/I, mob/user, params)
 	var/fail_msg = "<span class='notice'>There is already one of those in [src].</span>"
 
 	if(istype(I, /obj/item/weapon/mop))
@@ -194,7 +194,7 @@
 		user << "It has been upgraded with a floor buffer."
 
 
-/obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user)
+/obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, keytype))
 		user << "Hold [I] in one of your hands while you drive this [callme]."
 	else if(istype(I, /obj/item/weapon/storage/bag/trash))

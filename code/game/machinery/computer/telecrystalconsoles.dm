@@ -29,7 +29,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		name = "[name] [rand(1,999)]"
 
 
-/obj/machinery/computer/telecrystals/uplinker/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/computer/telecrystals/uplinker/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item))
 
 		if(uplinkholder)

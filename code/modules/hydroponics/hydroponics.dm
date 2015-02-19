@@ -49,7 +49,7 @@
 	waterlevel = maxwater
 	nutrilevel = 3
 
-/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user)
+/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
 	if(exchange_parts(user, I))
 		return
 
@@ -571,7 +571,7 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 			if(1   to 32)	mutatepest()
 			else 			usr << "Nothing happens..."
 
-obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
+obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 
 	//Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
@@ -977,7 +977,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		SetLuminosity(0)
 	return
 
-/obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	..()
 	if(istype(O, /obj/item/weapon/shovel))
 		user << "You clear up [src]!"

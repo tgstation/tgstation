@@ -180,7 +180,7 @@
 	attack_generic(user, rand(10, 15))
 	update_nearby_icons()
 
-/obj/structure/window/attackby(obj/item/I, mob/living/user)
+/obj/structure/window/attackby(obj/item/I, mob/living/user, params)
 	if(!can_be_reached(user))
 		return 1 //skip the afterattack
 

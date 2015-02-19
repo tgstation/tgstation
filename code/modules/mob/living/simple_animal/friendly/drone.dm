@@ -147,7 +147,7 @@
 	qdel(access_card) //Otherwise it ends up on the floor!
 	..()
 
-/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
+/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
 		if(health < health_repair_max)
 			user << "<span class='notice'>You start to tighten loose screws on [src].</span>"

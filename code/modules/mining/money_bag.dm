@@ -56,7 +56,7 @@
 		dat += text("Adamantine coins: [amt_adamantine] <A href='?src=\ref[src];remove=adamantine'>Remove one</A><br>")
 	user << browse("[dat]", "window=moneybag")
 
-/obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W

@@ -41,7 +41,7 @@ var/bomb_set
 				src.attack_hand(M)
 	return
 
-/obj/machinery/nuclearbomb/attackby(obj/item/weapon/I as obj, mob/user as mob)
+/obj/machinery/nuclearbomb/attackby(obj/item/weapon/I as obj, mob/user as mob, params)
 	if (istype(I, /obj/item/weapon/disk/nuclear))
 		usr.drop_item()
 		I.loc = src

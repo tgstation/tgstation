@@ -44,7 +44,7 @@
 		cell.emp_act(severity)
 	..(severity)
 
-/obj/machinery/space_heater/attackby(obj/item/I, mob/user)
+/obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(open)
 			if(cell)

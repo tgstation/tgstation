@@ -89,7 +89,7 @@
 
 	return
 
-/obj/machinery/autolathe/attackby(obj/item/O, mob/user)
+/obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
 	if (busy)
 		user << "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>"
 		return 1

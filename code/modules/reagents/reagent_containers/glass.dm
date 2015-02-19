@@ -204,7 +204,7 @@
 	volume = 70
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob, params)
 	if(isprox(D))
 		user << "<span class='notice'>You add [D] to [src].</span>"
 		qdel(D)

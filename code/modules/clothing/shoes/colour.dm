@@ -89,7 +89,7 @@
 		src.icon_state = "orange"
 	return
 
-/obj/item/clothing/shoes/sneakers/orange/attackby(H as obj, loc)
+/obj/item/clothing/shoes/sneakers/orange/attackby(H as obj, loc, params)
 	..()
 	if ((istype(H, /obj/item/weapon/restraints/handcuffs) && !( src.chained )))
 		//H = null

@@ -67,7 +67,7 @@
 		SNG.drain("CELL",src,H.wear_suit)
 	return
 
-/obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
+/obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W

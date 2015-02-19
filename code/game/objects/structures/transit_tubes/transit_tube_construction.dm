@@ -77,7 +77,7 @@
 	R.generate_automatic_corners(R.tube_dirs)
 	return R
 
-/obj/structure/c_transit_tube/attackby(var/obj/item/I, var/mob/user)
+/obj/structure/c_transit_tube/attackby(var/obj/item/I, var/mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start attaching the [name]...</span>"
 		src.add_fingerprint(user)

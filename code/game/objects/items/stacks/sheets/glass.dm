@@ -24,7 +24,7 @@
 /obj/item/stack/sheet/glass/attack_self(mob/user as mob)
 	construct_window(user)
 
-/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
+/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
 	..()
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -315,7 +315,7 @@
 		M.adjustBruteLoss(force / 2)
 
 
-/obj/item/weapon/shard/attackby(obj/item/I, mob/user)
+/obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))

@@ -74,7 +74,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/update_icon()
 	return null
 
-/obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
 	if(can_unwrench && istype(W, /obj/item/weapon/wrench))
 		var/turf/T = src.loc
 		if (level==1 && isturf(T) && T.intact)

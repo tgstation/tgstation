@@ -94,7 +94,7 @@ field_generator power level display
 		return
 
 
-/obj/machinery/field/generator/attackby(obj/item/W, mob/user)
+/obj/machinery/field/generator/attackby(obj/item/W, mob/user, params)
 	if(active)
 		user << "The [src] needs to be off."
 		return

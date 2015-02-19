@@ -81,7 +81,7 @@
 			break
 
 
-/obj/structure/transit_tube/station/attackby(obj/item/W, mob/user)
+/obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/grab) && icon_state == "open")
 		var/obj/item/weapon/grab/G = W
 		if(ismob(G.affecting) && G.state >= GRAB_AGGRESSIVE)

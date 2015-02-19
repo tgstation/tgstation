@@ -71,7 +71,7 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/prisoner/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/prisoner/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		return attack_hand(user)
 	..()

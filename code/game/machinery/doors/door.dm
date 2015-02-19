@@ -118,7 +118,7 @@
 		return
 	..()
 
-/obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
 	if(isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.

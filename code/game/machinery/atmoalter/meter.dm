@@ -85,7 +85,7 @@
 	user << status()
 
 
-/obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"

@@ -42,7 +42,7 @@
 	mob_storage_capacity = 2
 
 
-/obj/structure/closet/body_bag/attackby(obj/item/I, mob/user)
+/obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null, 53)
 		if(user.get_active_hand() != I)

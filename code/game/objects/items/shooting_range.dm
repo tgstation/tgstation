@@ -32,7 +32,7 @@
 
 
 
-/obj/item/target/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/target/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))

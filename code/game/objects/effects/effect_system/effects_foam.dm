@@ -225,7 +225,7 @@
 	user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
 
 
-/obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user)
+/obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user, params)
 	if (istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		G.affecting.loc = src.loc

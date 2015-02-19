@@ -144,7 +144,7 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
-/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
+/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob, params)
 	if(isrobot(user))
 		return
 
@@ -222,7 +222,7 @@
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents = sortList(dispensable_reagents | special_reagents[i])
 
-/obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user, params)
 	..()
 	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
 		return
@@ -278,7 +278,7 @@
 			stat |= NOPOWER
 
 
-/obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob)
+/obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
 
 	if(default_unfasten_wrench(user, B))
 		return
@@ -849,7 +849,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	return
 
 
-/obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(stat & (NOPOWER|BROKEN)) return
 		if(src.beaker)
@@ -971,7 +971,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		return
 
 
-/obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 
 		if(default_unfasten_wrench(user, O))
 				return
@@ -1367,7 +1367,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			stat |= NOPOWER
 	SSnano.update_uis(src)
 
-/obj/machinery/chem_heater/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/chem_heater/attackby(var/obj/item/I as obj, var/mob/user as mob, params)
 	if(isrobot(user))
 		return
 

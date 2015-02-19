@@ -38,7 +38,7 @@ obj/structure/transit_tube/ex_act(severity, target)
 	if(tube_dirs == null)
 		init_dirs()
 
-/obj/structure/transit_tube/attackby(obj/item/W, mob/user)
+/obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(copytext(icon_state, 1, 3) != "D-") //decorative diagonals cannot be unwrenched directly
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)

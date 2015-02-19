@@ -70,7 +70,7 @@
 	..()
 	user << "It has [uses] light\s remaining."
 
-/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
+/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W

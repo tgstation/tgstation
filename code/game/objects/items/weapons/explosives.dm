@@ -40,7 +40,7 @@
 	explode(get_turf(user))
 	return .
 
-/obj/item/weapon/c4/attackby(var/obj/item/I, var/mob/user)
+/obj/item/weapon/c4/attackby(var/obj/item/I, var/mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"

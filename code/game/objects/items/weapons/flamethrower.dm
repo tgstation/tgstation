@@ -67,7 +67,7 @@
 			var/turflist = getline(user, target_turf)
 			flame_turf(turflist)
 
-/obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(user.stat || user.restrained() || user.lying)	return
 	if(istype(W, /obj/item/weapon/wrench) && !status)//Taking this apart
 		var/turf/T = get_turf(src)

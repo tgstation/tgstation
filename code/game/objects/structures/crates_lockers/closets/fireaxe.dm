@@ -15,7 +15,7 @@
 	locked = 1
 	var/smashed = 0
 
-/obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/living/user as mob)  //Marker -Agouri
+/obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/living/user as mob, params)  //Marker -Agouri
 	//..() //That's very useful, Erro
 
 	var/hasaxe = 0       //gonna come in handy later~

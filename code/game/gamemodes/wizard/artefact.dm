@@ -53,7 +53,7 @@
 	if(spawn_amt_left <= 0)
 		qdel(src)
 
-/obj/effect/rend/attackby(obj/item/I as obj, mob/user as mob)
+/obj/effect/rend/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/nullrod))
 		user.visible_message("<span class='danger'>[usr] seals \the [src] with \the [I].</span>")
 		qdel(src)

@@ -24,7 +24,7 @@
 			return
 
 
-/obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user)
+/obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user, params)
 	if(isrobot(user) || isalien(user))
 		return
 	if(istype(O, /obj/item/weapon/extinguisher))

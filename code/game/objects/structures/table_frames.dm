@@ -20,7 +20,7 @@
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2
 
-/obj/structure/table_frame/attackby(var/obj/item/I, mob/user)
+/obj/structure/table_frame/attackby(var/obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>Now disassembling [src].</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -66,7 +66,7 @@
 	framestack = /obj/item/stack/sheet/mineral/wood
 	framestackamount = 2
 
-/obj/structure/table_frame/wood/attackby(var/obj/item/I, mob/user)
+/obj/structure/table_frame/wood/attackby(var/obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		..()
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))

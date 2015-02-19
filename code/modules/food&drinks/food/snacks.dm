@@ -133,7 +133,7 @@
 		user << "[src] was bitten multiple times!"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
 		return 0
@@ -263,7 +263,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/store
 	w_class = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.w_class > 2 || custom_food_type) //can't store objects inside food needed to start a customizable snack.
 		..()
 	else

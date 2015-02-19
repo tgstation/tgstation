@@ -29,7 +29,7 @@
 	else
 		overlays += orangelight
 
-/obj/structure/closet/crate/bin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/crate/bin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = W
 		user << "<span class='notice'>You fill the bag.</span>"

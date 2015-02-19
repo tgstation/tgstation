@@ -296,7 +296,7 @@ obj/structure/sign/poster/New(serial,subtype)
 				desc += " This is a bug, please report the circumstances under which you encountered this poster at https://github.com/NTStation/NTstation13/issues."
 	..()
 
-obj/structure/sign/poster/attackby(obj/item/I, mob/user)
+obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wirecutters))
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)

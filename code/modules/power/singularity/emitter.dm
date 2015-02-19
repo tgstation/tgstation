@@ -148,7 +148,7 @@
 		A.fire()
 
 
-/obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
+/obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)

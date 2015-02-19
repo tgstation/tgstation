@@ -73,7 +73,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user)
+/obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = I
 		if(prob(2))

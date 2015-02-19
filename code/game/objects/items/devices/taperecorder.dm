@@ -31,7 +31,7 @@
 	user << "The wire panel is [open_panel ? "opened" : "closed"]."
 
 
-/obj/item/device/taperecorder/attackby(obj/item/I, mob/user)
+/obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)
 	if(!mytape && istype(I, /obj/item/device/tape))
 		user.drop_item()
 		I.loc = src
@@ -280,7 +280,7 @@
 	ruined = 0
 
 
-/obj/item/device/tape/attackby(obj/item/I, mob/user)
+/obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined && istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start winding the tape back in.</span>"
 		if(do_after(user, 120))

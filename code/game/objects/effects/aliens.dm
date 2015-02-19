@@ -132,7 +132,7 @@
 	healthcheck()
 
 
-/obj/structure/alien/resin/attackby(obj/item/I, mob/living/user)
+/obj/structure/alien/resin/attackby(obj/item/I, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	health -= I.force
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
@@ -213,7 +213,7 @@
 	qdel(src)
 
 
-/obj/structure/alien/weeds/attackby(obj/item/I, mob/user)
+/obj/structure/alien/weeds/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(I.attack_verb.len)
 		visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [src] with [I]!</span>")
@@ -369,7 +369,7 @@
 	healthcheck()
 
 
-/obj/structure/alien/egg/attackby(obj/item/I, mob/user)
+/obj/structure/alien/egg/attackby(obj/item/I, mob/user, params)
 	if(I.attack_verb.len)
 		visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [src] with [I]!</span>")
 	else

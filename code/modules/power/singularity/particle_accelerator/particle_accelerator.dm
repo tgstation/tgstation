@@ -129,7 +129,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	..()
 
 
-/obj/structure/particle_accelerator/attackby(obj/item/W, mob/user)
+/obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
 	if(istool(W))
 		if(src.process_tool_hit(W,user))
 			return
@@ -308,7 +308,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	..()
 
 
-/obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user)
+/obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user, params)
 	if(istool(W))
 		if(src.process_tool_hit(W,user))
 			return

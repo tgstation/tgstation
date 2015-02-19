@@ -186,7 +186,7 @@
 	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
 
 
-/obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user)
+/obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		flamethrower_screwdriver(I, user)
 	if(istype(I, /obj/item/stack/rods))

@@ -132,7 +132,7 @@
 	return
 
 
-/obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob)
+/obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob, params)
 	if(istype(W, /obj/item/stack/tile/plasteel))
 		var/obj/item/stack/tile/plasteel/T = W
 		if(amount >= 50)
@@ -474,7 +474,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 	return
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob)
+/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob, params)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
 		return
@@ -493,7 +493,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		user << "<span class='alert'>You need 10 floor tiles to start building a floorbot.</span>"
 		return
 
-/obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
+/obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob, params)
 	..()
 	if(isprox(W))
 		qdel(W)
@@ -513,7 +513,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 
 		created_name = t
 
-/obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob)
+/obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		qdel(W)

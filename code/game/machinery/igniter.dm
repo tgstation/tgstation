@@ -69,7 +69,7 @@
 		icon_state = "[base_state]-p"
 //		src.sd_SetLuminosity(0)
 
-/obj/machinery/sparker/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/sparker/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	if (istype(W, /obj/item/weapon/screwdriver))
@@ -123,7 +123,7 @@
 /obj/machinery/ignition_switch/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/ignition_switch/attackby(obj/item/weapon/W, mob/user as mob)
+/obj/machinery/ignition_switch/attackby(obj/item/weapon/W, mob/user as mob, params)
 	return src.attack_hand(user)
 
 /obj/machinery/ignition_switch/attack_hand(mob/user as mob)

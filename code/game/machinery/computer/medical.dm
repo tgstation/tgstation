@@ -19,7 +19,7 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
-/obj/machinery/computer/med_data/attackby(obj/item/O as obj, user as mob)
+/obj/machinery/computer/med_data/attackby(obj/item/O as obj, user as mob, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_item()
 		O.loc = src

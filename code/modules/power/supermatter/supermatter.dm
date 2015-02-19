@@ -237,7 +237,7 @@
 			R.receive_pulse(power/10)
 	return
 
-/obj/machinery/power/supermatter_shard/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/machinery/power/supermatter_shard/attackby(obj/item/W as obj, mob/living/user as mob, params)
 	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
 		return
 	if(user.drop_item(W))

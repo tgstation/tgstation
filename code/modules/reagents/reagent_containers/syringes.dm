@@ -43,7 +43,7 @@
 /obj/item/weapon/reagent_containers/syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user)
+/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
 /obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user , proximity)
