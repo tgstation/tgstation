@@ -86,3 +86,31 @@
 #define iscrowbar(A) istype(A, /obj/item/weapon/crowbar)
 
 #define iswire(O) istype(O, /obj/item/stack/cable_coil)
+
+//Macros for antags
+
+#define isvampire(H) ((H.mind in ticker.mode.vampires) || H.mind.vampire)
+
+#define iscult(H) (H.mind in ticker.mode.cult)
+
+#define isculthead(H) (iscult(H)&&(H.mind in ticker.mode.modePlayer))
+
+#define ischangeling(H) (H.mind in ticker.mode.changelings)
+
+#define isrev(H) (H.mind in ticker.mode.revolutionaries)
+
+#define isrevhead(H) (H.mind in ticker.mode.head_revolutionaries)
+
+#define istraitor(H) (H.mind in ticker.mode.traitors)
+
+#define ismalf(H) (H.mind in ticker.mode.malf_ai)
+
+#define isnukeop(H) (H.mind in ticker.mode.syndicates)
+
+#define iswizard(H) (H.mind in ticker.mode.wizards)
+
+#define isborer(H) (H.mind in ticker.mode.borers)
+
+#define isbadmonkey(H) ((/datum/disease/jungle_fever in H.viruses) || H.mind in ticker.mode.infected_monkeys)
+
+#define isdeathsquad(H) (H.mind in ticker.mode.deathsquads)

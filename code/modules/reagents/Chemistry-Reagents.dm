@@ -678,13 +678,13 @@
 
 	if(!holder) return
 	if(ishuman(M))
-		if((M.mind in ticker.mode.cult) && !(M.mind in ticker.mode.modePlayer) && prob(10))
+		if(iscult(M) && !isculthead(M) && prob(10))
 			M << "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>"
 			ticker.mode.remove_cultist(M.mind)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("<span class='notice'>[]'s eyes blink and become clearer.</span>", M), 1) // So observers know it worked.
 		// Vamps react to this like acid
-		if(((M.mind in ticker.mode.vampires) || M.mind.vampire) && prob(10))
+		if(isvampire(M) && prob(10))
 			if(!(VAMP_FULL in M.mind.vampire.powers))
 				if(!M) M = holder.my_atom
 				M.adjustToxLoss(1*REM)
@@ -694,7 +694,7 @@
 /datum/reagent/holywater/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	// Vamps react to this like acid
 	if(ishuman(M))
-		if((M.mind in ticker.mode.vampires))
+		if(isvampire(M))
 			if(!(VAMP_FULL in M.mind.vampire.powers))
 				var/mob/living/carbon/human/H=M
 				if(method == TOUCH)
