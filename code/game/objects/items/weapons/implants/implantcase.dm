@@ -99,3 +99,13 @@
 /obj/item/weapon/implantcase/loyalty/New()
 	imp = new /obj/item/weapon/implant/loyalty(src)
 	..()
+
+/obj/item/weapon/implantcase/weapons_auth
+	name = "glass case- 'Firearms Authentication'"
+	desc = "A case containing a firearms authentication implant."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "implantcase-r"
+
+/obj/item/weapon/implantcase/weapons_auth/New()
+	imp = new /obj/item/weapon/implant/weapons_auth(src)
+	..()
