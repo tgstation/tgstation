@@ -80,3 +80,9 @@
 #define THERMAL_PROTECTION_ARM_RIGHT	0.075
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
+
+//flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
+
+#define NO_FEMALE_UNIFORM			0
+#define FEMALE_UNIFORM_FULL			1
+#define FEMALE_UNIFORM_TOP			2

@@ -20,10 +20,10 @@
 	if(!ishuman(user))
 		user << "<span class='warning'>You don't know how to use this!</span>"
 		return
-	if(ishuman(user) && (user.mind.miming)) //Humans get their muteness checked
+	if(user.can_speak())
 		user << "<span class='warning'>You find yourself unable to speak at all.</span>"
 		return
-	if(spamcheck)
+	if(spamcheck > world.time)
 		user << "<span class='warning'>\The [src] needs to recharge!</span>"
 		return
 
@@ -34,19 +34,15 @@
 	if ((src.loc == user && usr.stat == 0))
 		if(emagged)
 			if(insults)
-				for(var/mob/O in (viewers(user)))
-					O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>",2) // 2 stands for hearable message
+				user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>", null, 1) // 2 stands for hearable message
 				insults--
 			else
 				user << "<span class='warning'>*BZZZZzzzzzt*</span>"
 		else
-			for(var/mob/O in (viewers(user)))
-				O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>",2) // 2 stands for hearable message
+			user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>", null, 1) // 2 stands for hearable message
 
 		playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
-		spamcheck = 1
-		spawn(20)
-			spamcheck = 0
+		spamcheck = world.time + 50
 		return
 
 /obj/item/device/megaphone/emag_act(mob/user)

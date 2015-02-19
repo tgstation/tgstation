@@ -74,7 +74,7 @@
 		src.force = 3
 		src.damtype = "fire"
 		src.icon_state = "cake1"
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 	else
 		src.force = null
 		src.damtype = "brute"

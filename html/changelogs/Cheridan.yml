@@ -1,2 +1,4 @@
 author: Cheridan
-changes: []
+
+changes:
+  - rscadd: "Foam now carries reagents, similarly to smoke. Have fun with that."

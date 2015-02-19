@@ -1,0 +1,6 @@
+author: Paprka
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added megaphones for the HoS, HoP, and QM."

@@ -119,6 +119,8 @@
 	var/what = O
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
+		if(!user.Adjacent(G.affecting))
+			return
 		what = G.affecting
 
 	var/datum/food_processor_process/P = select_recipe(what)
