@@ -237,12 +237,18 @@
 	var/start_flush = 0
 	var/c_mode = 0
 
-/obj/machinery/disposal/deliveryChute/New()
+/obj/machinery/disposal/deliveryChute/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
+	stored.ptype = DISP_END_CHUTE
 	spawn(5)
 		trunk = locate() in loc
 		if(trunk)
 			trunk.linked = src	// link the pipe trunk to self
+
+/obj/machinery/disposal/deliveryChute/Destroy()
+	if(trunk)
+		trunk.linked = null
+	..()
 
 /obj/machinery/disposal/deliveryChute/interact()
 	return
@@ -332,18 +338,14 @@
 			return
 	else if(istype(I,/obj/item/weapon/weldingtool) && c_mode==1)
 		var/obj/item/weapon/weldingtool/W = I
+
 		if(W.remove_fuel(0,user))
 			playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start slicing the floorweld off the delivery chute.</span>"
 			if(do_after(user,20))
 				if(!src || !W.isOn()) return
+				Deconstruct()
 				user << "<span class='notice'>You sliced the floorweld off the delivery chute.</span>"
-				var/obj/structure/disposalconstruct/C = new (loc)
-				C.ptype = 8 // 8 =  Delivery chute
-				C.update()
-				C.anchored = 1
-				C.density = 1
-				qdel(src)
 			return
 		else
 			return

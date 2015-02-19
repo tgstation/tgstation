@@ -59,23 +59,14 @@ var/list/teleportlocs = list()
 
 proc/process_teleport_locs()
 	for(var/area/AR in world)
-		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station)) continue
+		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == 1)
+		if (picked.z == ZLEVEL_STATION)
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
-	var/not_in_order = 0
-	do
-		not_in_order = 0
-		if(teleportlocs.len <= 1)
-			break
-		for(var/i = 1, i <= (teleportlocs.len - 1), i++)
-			if(sorttext(teleportlocs[i], teleportlocs[i+1]) == -1)
-				teleportlocs.Swap(i, i+1)
-				not_in_order = 1
-	while(not_in_order)
+	sortTim(teleportlocs, /proc/cmp_text_dsc)
 
 var/list/ghostteleportlocs = list()
 
@@ -86,20 +77,11 @@ proc/process_ghost_teleport_locs()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = safepick(get_area_turfs(AR.type))
-		if (picked && (picked.z == 1 || picked.z == 5 || picked.z == 3))
+		if (picked && (picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_MINING || picked.z == ZLEVEL_ABANDONNEDTSAT))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 
-	var/not_in_order = 0
-	do
-		not_in_order = 0
-		if(ghostteleportlocs.len <= 1)
-			break
-		for(var/i = 1, i <= (ghostteleportlocs.len - 1), i++)
-			if(sorttext(ghostteleportlocs[i], ghostteleportlocs[i+1]) == -1)
-				ghostteleportlocs.Swap(i, i+1)
-				not_in_order = 1
-	while(not_in_order)
+	sortTim(ghostteleportlocs, /proc/cmp_text_dsc)
 
 
 /*-----------------------------------------------------------------------------*/
@@ -135,174 +117,21 @@ proc/process_ghost_teleport_locs()
 //place to another. Look at escape shuttle for example.
 //All shuttles show now be under shuttle since we have smooth-wall code.
 
-/area/shuttle //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+/area/shuttle
+	name = "\improper Shuttle"
 	requires_power = 0
 	luminosity = 1
-	lighting_use_dynamic = 0
-	var/push_dir = SOUTH
-	var/destination
-
-/area/shuttle/arrival
-	name = "\improper Arrival Shuttle"
-
-/area/shuttle/arrival/pre_game
-	icon_state = "shuttle2"
-	destination = /area/shuttle/arrival/station
-
-/area/shuttle/arrival/station
-	icon_state = "shuttle"
-	destination = /area/shuttle/arrival/pre_game
-
-/area/shuttle/escape
-	name = "\improper Emergency Shuttle"
-
-/area/shuttle/escape/station
-	name = "\improper Emergency Shuttle Station"
-	icon_state = "shuttle2"
-	destination = /area/shuttle/escape/transit
-
-/area/shuttle/escape/centcom
-	name = "\improper Emergency Shuttle Centcom"
-	icon_state = "shuttle"
-	destination = /area/shuttle/escape/station
-
-/area/shuttle/escape/transit // the area to pass through for 3 minute transit
-	name = "\improper Emergency Shuttle Transit"
-	icon_state = "shuttle"
-	destination = /area/shuttle/escape/centcom
-
-/area/shuttle/escape_pod1
-	name = "\improper Escape Pod One"
-
-/area/shuttle/escape_pod1/station
-	icon_state = "shuttle2"
-	destination = /area/shuttle/escape_pod1/transit
-
-/area/shuttle/escape_pod1/centcom
-	icon_state = "shuttle"
-	destination = /area/shuttle/escape_pod1/station
-
-/area/shuttle/escape_pod1/transit
-	icon_state = "shuttle"
-	destination = /area/shuttle/escape_pod1/centcom
+	lighting_use_dynamic = 1
+	has_gravity = 1
 
 
-	mob_activate(var/mob/living/L)
-		push_mob_back(L, push_dir)
-
-/area/shuttle/escape_pod2
-	name = "\improper Escape Pod Two"
-
-/area/shuttle/escape_pod2/station
-	icon_state = "shuttle2"
-	destination = /area/shuttle/escape_pod2/transit
-
-/area/shuttle/escape_pod2/centcom
-	icon_state = "shuttle"
-	destination = /area/shuttle/escape_pod2/station
-
-/area/shuttle/escape_pod2/transit
-	icon_state = "shuttle"
-	destination = /area/shuttle/escape_pod2/centcom
-
-	mob_activate(var/mob/living/L)
-		push_mob_back(L, push_dir)
-
-/area/shuttle/escape_pod3
-	name = "\improper Escape Pod Three"
-	push_dir = WEST
-
-/area/shuttle/escape_pod3/station
-	icon_state = "shuttle2"
-	destination = /area/shuttle/escape_pod3/transit
-
-/area/shuttle/escape_pod3/centcom
-	icon_state = "shuttle"
-	destination = /area/shuttle/escape_pod3/station
-
-/area/shuttle/escape_pod3/transit
-	icon_state = "shuttle"
-	destination = /area/shuttle/escape_pod3/centcom
-
-	mob_activate(var/mob/living/L)
-		push_mob_back(L, push_dir)
-
-/area/shuttle/escape_pod4 //Renaming areas 2hard
-	name = "\improper Escape Pod Four"
-	push_dir = WEST
-
-/area/shuttle/escape_pod4/station
-	icon_state = "shuttle2"
-	destination = /area/shuttle/escape_pod4/transit
-
-/area/shuttle/escape_pod4/centcom
-	icon_state = "shuttle"
-	destination = /area/shuttle/escape_pod4/station
-
-/area/shuttle/escape_pod4/transit
-	icon_state = "shuttle"
-	destination = /area/shuttle/escape_pod4/centcom
-
-	mob_activate(var/mob/living/L)
-		push_mob_back(L, push_dir)
-
-/area/shuttle/mining
-	name = "\improper Mining Shuttle"
-
-/area/shuttle/mining/station
-	icon_state = "shuttle2"
-	destination = /area/shuttle/mining/outpost
-
-/area/shuttle/mining/outpost
-	icon_state = "shuttle"
-	destination = /area/shuttle/mining/station
-
-/area/shuttle/laborcamp
-	name = "\improper Labor Camp Shuttle"
-
-/area/shuttle/laborcamp/station
-	icon_state = "shuttle"
-	destination = /area/shuttle/laborcamp/outpost
-
-/area/shuttle/laborcamp/outpost
-	icon_state = "shuttle"
-	destination = /area/shuttle/laborcamp/station
-
-/area/shuttle/transport1/centcom
-	icon_state = "shuttle"
-	name = "\improper Transport Shuttle Centcom"
-	destination = /area/shuttle/transport1/station
-
-/area/shuttle/transport1/station
-	icon_state = "shuttle"
-	name = "\improper Transport Shuttle"
-	destination = /area/shuttle/transport1/centcom
-
-/area/shuttle/prison/
-	name = "\improper Prison Shuttle"
-
-/area/shuttle/specops/centcom
-	name = "\improper Special Ops Shuttle"
-	icon_state = "shuttlered"
-	destination = /area/shuttle/specops/station
-
-/area/shuttle/specops/station
-	name = "\improper Special Ops Shuttle"
-	icon_state = "shuttlered2"
-	destination = /area/shuttle/specops/centcom
-
-/area/shuttle/thunderdome
-	name = "honk"
-
-/area/start            // will be unused once kurper gets his login interface patch done
+/area/start
 	name = "start area"
 	icon_state = "start"
 	requires_power = 0
 	luminosity = 1
 	lighting_use_dynamic = 0
 	has_gravity = 1
-
-// === end remove
 
 // CENTCOM
 
@@ -410,52 +239,6 @@ proc/process_ghost_teleport_locs()
 
 //ENEMY
 
-//names are used
-/area/syndicate_station
-	name = "\improper Syndicate Station"
-	icon_state = "yellow"
-	requires_power = 0
-
-/area/syndicate_station/start
-	name = "\improper Syndicate Forward Operating Base"
-	icon_state = "yellow"
-	has_gravity = 1
-
-/area/syndicate_station/southwest
-	name = "\improper south-west of SS13"
-	icon_state = "southwest"
-
-/area/syndicate_station/northwest
-	name = "\improper north-west of SS13"
-	icon_state = "northwest"
-
-/area/syndicate_station/northeast
-	name = "\improper north-east of SS13"
-	icon_state = "northeast"
-
-/area/syndicate_station/southeast
-	name = "\improper south-east of SS13"
-	icon_state = "southeast"
-
-/area/syndicate_station/north
-	name = "\improper north of SS13"
-	icon_state = "north"
-
-/area/syndicate_station/south
-	name = "\improper south of SS13"
-	icon_state = "south"
-
-/area/syndicate_station/commssat
-	name = "\improper south of the communication satellite"
-	icon_state = "south"
-
-/area/syndicate_station/mining
-	name = "\improper north east of the mining asteroid"
-	icon_state = "north"
-
-/area/syndicate_station/transit
-	name = "\improper hyperspace"
-	icon_state = "shuttle"
 
 /area/wizard_station
 	name = "\improper Wizard's Den"
@@ -1193,9 +976,9 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Server Room"
 	icon_state = "server"
 
-/area/toxins/telesci
-	name = "\improper Telescience Lab"
-	icon_state = "toxtest"
+/area/toxins/explab
+	name = "\improper Experimentation Lab"
+	icon_state = "toxmisc"
 
 //Storage
 
@@ -1757,30 +1540,8 @@ proc/process_ghost_teleport_locs()
  Used in gamemodes code at the moment. --rastaf0
 */
 
-// CENTCOM
-var/list/centcom_areas = list (
-	/area/centcom,
-	/area/shuttle/escape/centcom,
-	/area/shuttle/escape_pod1/centcom,
-	/area/shuttle/escape_pod2/centcom,
-	/area/shuttle/escape_pod3/centcom,
-	/area/shuttle/escape_pod4/centcom,
-	/area/shuttle/transport1/centcom,
-	/area/shuttle/specops/centcom,
-)
-
 //SPACE STATION 13
 var/list/the_station_areas = list (
-	/area/shuttle/arrival,
-	/area/shuttle/escape/station,
-	/area/shuttle/escape_pod1/station,
-	/area/shuttle/escape_pod2/station,
-	/area/shuttle/escape_pod3/station,
-	/area/shuttle/escape_pod4/station,
-	/area/shuttle/mining/station,
-	/area/shuttle/transport1/station,
-//	/area/shuttle/transport2/station,	//not present on map
-	/area/shuttle/specops/station,
 	/area/atmos,
 	/area/maintenance,
 	/area/hallway,

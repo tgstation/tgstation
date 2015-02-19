@@ -1,22 +1,18 @@
-
-////////////////////////////////////////////////////////////////////////////////
-/// (Mixing)Glass.
-////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/glass
 	name = "glass"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "null"
-	item_state = "null"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50)
 	volume = 50
 	flags = OPENCONTAINER
 
-	var/list/can_be_placed_into = list(
+	can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
+		/obj/machinery/chem_heater/,
 		/obj/machinery/reagentgrinder,
+		/obj/machinery/biogenerator,
 		/obj/structure/table,
+		/obj/structure/rack,
 		/obj/structure/closet,
 		/obj/structure/sink,
 		/obj/item/weapon/storage,
@@ -35,10 +31,7 @@
 
 
 /obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
-	if(!proximity) return // not adjacent
-	for(var/type in can_be_placed_into)
-		if(istype(target, type))
-			return
+	if((!proximity) || !check_allowed_items(target)) return
 
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		var/mob/M = target
@@ -105,6 +98,10 @@
 	m_amt = 0
 	g_amt = 500
 
+/obj/item/weapon/reagent_containers/glass/beaker/New()
+	..()
+	update_icon()
+
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
 	update_icon()
 
@@ -169,22 +166,29 @@
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
-	New()
-		..()
-		reagents.add_reagent("cryoxadone", 30)
-		update_icon()
+	list_reagents = list("cryoxadone" = 30)
 
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric
-	New()
-		..()
-		reagents.add_reagent("sacid", 50)
-		update_icon()
+	list_reagents = list("sacid" = 50)
 
 /obj/item/weapon/reagent_containers/glass/beaker/slime
-	New()
-		..()
-		reagents.add_reagent("slimejelly", 50)
-		update_icon()
+	list_reagents = list("slimejelly" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/styptic
+	name = "styptic reserve tank"
+	list_reagents = list("styptic_powder" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/silver_sulfadiazine
+	name = "silver sulfadiazine reserve tank"
+	list_reagents = list("silver_sulfadiazine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/charcoal
+	name = "antitoxin reserve tank"
+	list_reagents = list("charcoal" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/epinephrine
+	name = "epinephrine reserve tank"
+	list_reagents = list("epinephrine" = 50)
 
 /obj/item/weapon/reagent_containers/glass/bucket
 	name = "bucket"
@@ -207,52 +211,3 @@
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.unEquip(src)
 		qdel(src)
-
-/*
-/obj/item/weapon/reagent_containers/glass/blender_jug
-	name = "Blender Jug"
-	desc = "A blender jug, part of a blender."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "blender_jug_e"
-	volume = 100
-
-/obj/item/weapon/reagent_containers/glass/blender_jug/on_reagent_change()
-	switch(src.reagents.total_volume)
-		if(0)
-			icon_state = "blender_jug_e"
-		if(1 to 75)
-			icon_state = "blender_jug_h"
-		if(76 to 100)
-			icon_state = "blender_jug_f"
-
-/obj/item/weapon/reagent_containers/glass/canister		//not used apparantly
-	desc = "It's a canister. Mainly used for transporting fuel."
-	name = "canister"
-	icon = 'icons/obj/tank.dmi'
-	icon_state = "canister"
-	item_state = "canister"
-	m_amt = 300
-	g_amt = 0
-	w_class = 4.0
-
-	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(10,20,30,60)
-	volume = 120
-
-/obj/item/weapon/reagent_containers/glass/dispenser
-	name = "reagent glass"
-	desc = "A reagent glass."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "beaker0"
-	amount_per_transfer_from_this = 10
-	flags = OPENCONTAINER
-
-/obj/item/weapon/reagent_containers/glass/dispenser/surfactant
-	name = "reagent glass (surfactant)"
-	icon_state = "liquid"
-
-	New()
-		..()
-		reagents.add_reagent("fluorosurfactant", 20)
-
-*/

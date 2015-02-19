@@ -75,6 +75,8 @@
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
+		if(D.z != ZLEVEL_STATION && D.z != ZLEVEL_MINING)
+			continue
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
@@ -193,7 +195,7 @@
 				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
-					if(M)
+					if(M && !M.gc_destroyed)
 						new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, src, 1)
 			else src << "<span class='notice'>Out of uses.</span>"
 	else src << "<span class='notice'>That's not a machine.</span>"
@@ -339,7 +341,7 @@
 						C.upgradeMotion()
 						upgraded = 1
 						// Add it to machines that process
-						machines |= C
+						SSmachine.processing |= C//machines |= C
 
 					if(upgraded)
 						UC.uses --

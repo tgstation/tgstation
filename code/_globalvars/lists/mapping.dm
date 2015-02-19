@@ -43,7 +43,10 @@ var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()
 var/list/secequipment = list()
 var/list/deathsquadspawn = list()
-var/list/global_activeturfs
+var/list/emergencyresponseteamspawn = list()
 
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
+
+	//used by jump-to-area etc. Updated by area/updateName()
+var/list/sortedAreas = list()

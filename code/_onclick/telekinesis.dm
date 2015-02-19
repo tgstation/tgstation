@@ -175,6 +175,10 @@ var/const/tk_maxrange = 15
 		overlays += icon(focus.icon,focus.icon_state)
 	return
 
+obj/item/tk_grab/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is using \his telekinesis to choke \himself! It looks like \he's trying to commit suicide.</span>")
+	return (OXYLOSS)
+
 /*Not quite done likely needs to use something thats not get_step_to
 /obj/item/tk_grab/proc/check_path()
 	var/turf/ref = get_turf(src.loc)

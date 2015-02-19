@@ -17,6 +17,15 @@ var/bomb_set
 	use_power = 0
 	var/previous_level = ""
 	var/lastentered = ""
+	var/immobile = 0 //Not all nukes should be moved
+
+/obj/machinery/nuclearbomb/selfdestruct
+	name = "station self-destruct terminal"
+	desc = "For when it all gets too much to bear. Do not taunt."
+	icon = 'icons/obj/machines/bignuke.dmi'
+	anchored = 1 //stops it being moved
+	immobile = 1 //prevents it from ever being moved
+	layer = 4
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
@@ -140,8 +149,10 @@ var/bomb_set
 					src.timing = 0
 					bomb_set = 0
 			if (href_list["anchor"])
-				if(!isinspace())
+				if(!isinspace()&&(!immobile))
 					src.anchored = !( src.anchored )
+				else if(immobile)
+					usr << "<span class='warning'>This device is immovable!</span>"
 				else
 					usr << "<span class='warning'>There is nothing to anchor to!</span>"
 	src.add_fingerprint(usr)
@@ -179,41 +190,39 @@ var/bomb_set
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
-	if( bomb_location && (bomb_location.z == 1) )
+	if( bomb_location && (bomb_location.z == ZLEVEL_STATION) )
 		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
 			off_station = 1
 	else
 		off_station = 2
 
-	if(ticker)
-		if(ticker.mode && ticker.mode.name == "nuclear emergency")
-			var/obj/machinery/computer/syndicate_station/syndie_location = locate(/obj/machinery/computer/syndicate_station)
-			if(syndie_location)
-				ticker.mode:syndies_didnt_escape = (syndie_location.z > 1 ? 0 : 1)	//muskets will make me change this, but it will do for now
-			ticker.mode:nuke_off_station = off_station
-		ticker.station_explosion_cinematic(off_station,null)
-		if(ticker.mode)
-			ticker.mode.explosion_in_progress = 0
-			if(ticker.mode.name == "nuclear emergency")
-				ticker.mode:nukes_left --
-			else
-				world << "<B>The station was destoyed by the nuclear blast!</B>"
+	if(ticker.mode && ticker.mode.name == "nuclear emergency")
+		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
+		ticker.mode:syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
+		ticker.mode:nuke_off_station = off_station
+	ticker.station_explosion_cinematic(off_station,null)
+	if(ticker.mode)
+		ticker.mode.explosion_in_progress = 0
+		if(ticker.mode.name == "nuclear emergency")
+			ticker.mode:nukes_left --
+		else
+			world << "<B>The station was destoyed by the nuclear blast!</B>"
 
-			ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
-															//kinda shit but I couldn't  get permission to do what I wanted to do.
+		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
+														//kinda shit but I couldn't  get permission to do what I wanted to do.
 
-			if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-				world << "<B>Resetting in 30 seconds!</B>"
+		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
+			world << "<B>Resetting in 30 seconds!</B>"
 
-				feedback_set_details("end_error","nuke - unhandled ending")
+			feedback_set_details("end_error","nuke - unhandled ending")
 
-				if(blackbox)
-					blackbox.save_all_data_to_sql()
-				sleep(300)
-				log_game("Rebooting due to nuclear detonation")
-				kick_clients_in_lobby("<span class='danger'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-				world.Reboot()
-				return
+			if(blackbox)
+				blackbox.save_all_data_to_sql()
+			sleep(300)
+			log_game("Rebooting due to nuclear detonation")
+			kick_clients_in_lobby("<span class='danger'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
+			world.Reboot()
+			return
 	return
 
 
@@ -227,11 +236,11 @@ var/bomb_set
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
-	if(disk_loc.z > 2)
+	if(disk_loc.z > ZLEVEL_CENTCOM)
 		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
 		Destroy()
 

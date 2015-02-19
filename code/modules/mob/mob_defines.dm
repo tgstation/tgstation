@@ -47,11 +47,12 @@
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/hand = null
-	var/eye_blind = null	//Carbon
-	var/eye_blurry = null	//Carbon
-	var/ear_deaf = null		//Carbon
-	var/ear_damage = null	//Carbon
+	var/eye_blind = 0		//Carbon
+	var/eye_blurry = 0		//Carbon
+	var/ear_deaf = 0		//Carbon
+	var/ear_damage = 0		//Carbon
 	var/stuttering = null	//Carbon
+	var/slurring = 0		//Carbon
 	var/real_name = null
 	var/bhunger = 0			//Carbon
 	var/ajourn = 0
@@ -111,10 +112,6 @@
 
 	var/job = null//Living
 
-	var/const/blindness = 1//Carbon
-	var/const/deafness = 2//Carbon
-	var/const/muteness = 4//Carbon
-
 	var/radiation = 0//Carbon
 
 	var/list/mutations = list() //Carbon -- Doohl
@@ -161,5 +158,7 @@
 	var/force_compose = 0 //If this is nonzero, the mob will always compose it's own hear message instead of using the one given in the arguments.
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
+	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
+	var/last_movement = 0 // Last world.time the mob actually moved of its own accord.

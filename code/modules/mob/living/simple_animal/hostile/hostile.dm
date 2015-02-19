@@ -311,5 +311,6 @@
 
 /mob/living/simple_animal/hostile/RangedAttack(var/atom/A, var/params) //Player firing
 	if(ranged && ranged_cooldown <= 0)
+		target = A
 		OpenFire(A)
 	..()

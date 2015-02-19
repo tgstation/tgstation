@@ -37,12 +37,12 @@
 	return t
 
 //Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","�"="�"))
+/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
 			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+1)
-			index = findtext(t, char)
+			index = findtext(t, char, index+1)
 	return t
 
 //Runs byond's sanitization proc along-side sanitize_simple
@@ -76,6 +76,11 @@
 // Used to get a properly sanitized input, of max_length
 /proc/stripped_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
 	var/name = input(user, message, title, default) as text|null
+	return strip_html_properly(name, max_length)
+
+// Used to get a properly sanitized multiline input, of max_length
+/proc/stripped_multiline_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
+	var/name = input(user, message, title, default) as message|null
 	return strip_html_properly(name, max_length)
 
 //Filters out undesirable characters from names
@@ -142,23 +147,63 @@
 
 	return t_out
 
-//this proc strips html properly, but it's not lazy like the other procs.
-//this means that it doesn't just remove < and > and call it a day. seriously, who the fuck thought that would be useful.
+//this proc strips html properly, this means that it removes everything between < and >, and between "http" and "://"
 //also limit the size of the input, if specified to
 /proc/strip_html_properly(var/input,var/max_length=MAX_MESSAGE_LEN)
 	if(!input)
 		return
-	var/opentag = 1 //These store the position of < and > respectively.
-	var/closetag = 1
-	while(1)
-		opentag = findtext(input, "<")
-		closetag = findtext(input, ">")
-		if(!closetag || !opentag)
-			break
-		input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
+
 	if(max_length)
 		input = copytext(input,1,max_length)
-	return input
+
+	var/sanitized_output
+	var/next_html_tag = findtext(input, "<")
+	var/next_http = findtext(input, "http", 1, next_html_tag)
+
+	//the opening and closing of the expression to skip, e.g '<' and '>'
+	var/opening = non_zero_min(next_html_tag, next_http)
+	var/closing
+
+	sanitized_output = copytext(input, 1, opening)
+
+	while(next_html_tag || next_http)
+
+		//we treat < ... >
+		if(opening == next_html_tag)
+			closing = findtext(input, ">", opening + 1)
+			if(closing)
+				next_html_tag = findtext(input, "<", closing)
+				next_http = findtext(input, "http", closing, next_html_tag)
+			else //no matching ">"
+				next_html_tag = 0
+
+		//we treat "http(s)://"
+		else
+			closing = findtext(input, "://", opening + 1)
+			if(closing)
+				closing += 2 //skip these extra //
+				next_http = findtext(input, "http", closing)
+				next_html_tag = findtext(input, "<", closing, next_http)
+			else //no matching "://"
+				next_http = 0
+
+		//check if we've something to skip
+		if(closing)
+			opening = non_zero_min(next_html_tag, next_http)
+			sanitized_output += copytext(input, closing + 1, opening)
+
+	sanitized_output += copytext(input, opening) //don't forget the remaining text
+
+	return sanitized_output
+
+//strip_html_properly helper proc that returns the smallest non null of two numbers
+//or 0 if they're both null (needed because of findtext returning 0 when a value is not present)
+/proc/non_zero_min(var/a, var/b)
+	if(!a)
+		return b
+	if(!b)
+		return a
+	return (a < b ? a : b)
 
 /*
  * Text searches
@@ -383,3 +428,34 @@ var/list/binary = list("0","1")
 		temp = findtextEx(haystack, ascii2text(text2ascii(needles,i)), start, end)	//Note: ascii2text(text2ascii) is faster than copytext()
 		if(temp)	end = temp
 	return end
+
+
+/proc/parsepencode(t, mob/user=null, signfont=SIGNFONT)
+	if(length(t) < 1)		//No input means nothing needs to be parsed
+		return
+
+	t = replacetext(t, "\[center\]", "<center>")
+	t = replacetext(t, "\[/center\]", "</center>")
+	t = replacetext(t, "\[br\]", "<BR>")
+	t = replacetext(t, "\[b\]", "<B>")
+	t = replacetext(t, "\[/b\]", "</B>")
+	t = replacetext(t, "\[i\]", "<I>")
+	t = replacetext(t, "\[/i\]", "</I>")
+	t = replacetext(t, "\[u\]", "<U>")
+	t = replacetext(t, "\[/u\]", "</U>")
+	t = replacetext(t, "\[large\]", "<font size=\"4\">")
+	t = replacetext(t, "\[/large\]", "</font>")
+	if(user)
+		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
+	else
+		t = replacetext(t, "\[sign\]", "")
+	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+
+	t = replacetext(t, "\[*\]", "<li>")
+	t = replacetext(t, "\[hr\]", "<HR>")
+	t = replacetext(t, "\[small\]", "<font size = \"1\">")
+	t = replacetext(t, "\[/small\]", "</font>")
+	t = replacetext(t, "\[list\]", "<ul>")
+	t = replacetext(t, "\[/list\]", "</ul>")
+
+	return t

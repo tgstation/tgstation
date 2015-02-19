@@ -6,7 +6,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=3;magnets=2"
 	modifystate = 2
-
+	can_flashlight = 1
 
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user as mob)
 	select_fire(user)
@@ -21,14 +21,16 @@
 	var/charge_tick = 0
 	modifystate = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	can_flashlight = 0
+	pin = null
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 
@@ -62,7 +64,7 @@
 			M << "<span class='danger'>You feel a wave of heat wash over you.</span>"
 			M.apply_effect(300, IRRADIATE)
 		crit_fail = 1 //break the gun so it stops recharging
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		update_icon()
 	return 0
 

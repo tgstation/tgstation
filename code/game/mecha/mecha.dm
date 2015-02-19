@@ -1455,7 +1455,7 @@ var/year_integer = text2num(year) // = 2013???
 		return
 	if (href_list["change_name"])
 		if(usr != src.occupant)	return
-		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit",initial(name), MAX_NAME_LEN)
+		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
 		if(newname && trim(newname))
 			name = newname
 		else

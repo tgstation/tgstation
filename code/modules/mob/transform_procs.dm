@@ -19,15 +19,17 @@
 	canmove = 0
 	stunned = 1
 	icon = null
+	overlays.Cut()
 	invisibility = 101
-	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
-	O.invisibility = 101
 
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
+	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 	flick("h2monkey", animation)
+	sleep(22)
+	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
+	qdel(animation)
 
 	// hash the original name?
 	if	(tr_flags & TR_HASHNAME)
@@ -38,10 +40,11 @@
 		O.real_name = newname
 
 	//handle DNA and other attributes
-	O.dna = dna
-	dna = null
-	if (!(tr_flags & TR_KEEPSE))
-		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(BAD_MUTATION_DIFFICULTY,BAD_MUTATION_DIFFICULTY))
+	if(dna)
+		dna.transfer_identity(O)
+		if(tr_flags & TR_KEEPSE)
+			O.dna.struc_enzymes = dna.struc_enzymes
+
 	if(suiciding)
 		O.suiciding = suiciding
 	O.loc = loc
@@ -82,14 +85,8 @@
 	updateappearance(O)
 	. = O
 	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
-		var/mob/deleted = src
-		src = O
-		qdel(deleted)
+		qdel(src)
 
-	spawn(22)
-	//animation = null
-		O.invisibility = 0
-		qdel(animation)
 
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
@@ -125,17 +122,27 @@
 	canmove = 0
 	stunned = 1
 	icon = null
+	overlays.Cut()
 	invisibility = 101
-	var/mob/living/carbon/human/O = new( loc )
-	O.invisibility = 101
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
+	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 	flick("monkey2h", animation)
+	sleep(22)
+	var/mob/living/carbon/human/O = new( loc )
+	for(var/obj/item/C in O.loc)
+		O.equip_to_appropriate_slot(C)
+	qdel(animation)
 
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
-	O.dna = dna
+
+	if(dna)
+		dna.transfer_identity(O)
+		O.update_icons()
+		if(tr_flags & TR_KEEPSE)
+			O.dna.struc_enzymes = dna.struc_enzymes
+			domutcheck(O)
 
 	if(!dna.species)
 		O.dna.species = new /datum/species/human()
@@ -143,17 +150,13 @@
 		O.dna.species = new dna.species.type()
 
 	dna = null
-	if (newname) //if there's a name as an argument, always take that one over the current name
+	if(newname) //if there's a name as an argument, always take that one over the current name
 		O.real_name = newname
 	else
-		if ( !(cmptext 	("monkey",copytext(O.dna.real_name,1,7))  ) )
-			O.real_name = O.dna.real_name
-		else
-			O.real_name = random_name(O.gender)
-	O.name = O.real_name
-
-	if (!(tr_flags & TR_KEEPSE))
-		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(1,BAD_MUTATION_DIFFICULTY))
+		if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
+			O.dna.real_name = random_name(O.gender)
+		O.real_name = O.dna.real_name
+		O.name = O.real_name
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -188,9 +191,6 @@
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
 
-	for(var/obj/item/C in O.loc)
-		O.equip_to_appropriate_slot(C)
-
 	updateappearance(O)
 	. = O
 
@@ -199,17 +199,8 @@
 			loc.vars[A] = O
 
 	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
-		var/mob/deleted = src
-		src = O
-		qdel(deleted)
+		qdel(src)
 
-	spawn(22)
-		O.invisibility = 0
-		for(var/obj/item/C in O.loc)
-			O.equip_to_appropriate_slot(C)
-		qdel(animation)
-
-	return
 
 /mob/new_player/AIize()
 	spawning = 1

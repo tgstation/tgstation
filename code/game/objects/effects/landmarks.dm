@@ -13,10 +13,6 @@
 	landmarks_list += src
 
 	switch(name)			//some of these are probably obsolete
-		if("shuttle")
-			shuttle_z = z
-			qdel(src)
-			return
 		if("monkey")
 			monkeystart += loc
 			qdel(src)
@@ -61,6 +57,10 @@
 			return
 		if("Deathsquad")
 			deathsquadspawn += loc
+			qdel(src)
+			return
+		if("Emergencyresponseteam")
+			emergencyresponseteamspawn += loc
 			qdel(src)
 			return
 		if("xeno_spawn")

@@ -50,7 +50,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "lit match"
 		desc = "A match. This one is lit."
 		attack_verb = list("burnt","singed")
-		processing_objects.Add(src)
+		SSobj.processing |= src
 		update_icon()
 	return
 
@@ -64,7 +64,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "burnt match"
 		desc = "A match. This one has seen better days."
 		attack_verb = null
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 
 /obj/item/weapon/match/dropped(mob/user as mob)
 	matchburnout()
@@ -108,12 +108,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
 	var/smoketime = 300
-	var/chem_volume = 15
+	var/chem_volume = 30
+
+/obj/item/clothing/mask/cigarette/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is huffing the [src.name] as quickly as they can! It looks like \he's trying to give \himself cancer.</span>")
+	return (TOXLOSS|OXYLOSS)
 
 /obj/item/clothing/mask/cigarette/New()
 	..()
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarette a chemical holder with a maximum volume of 15
+	reagents.add_reagent("nicotine", 15)
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -180,7 +185,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(flavor_text)
 			var/turf/T = get_turf(src)
 			T.visible_message(flavor_text)
-		processing_objects.Add(src)
+		SSobj.processing |= src
 
 		//can't think of any other way to update the overlays :<
 		if(ismob(loc))
@@ -209,7 +214,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime--
 	if(smoketime < 1)
 		new type_butt(location)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		if(ismob(loc))
 			M << "<span class='notice'>Your [name] goes out.</span>"
 			M.unEquip(src, 1)	//un-equip it so the overlays can update //Force the un-equip so the overlays update
@@ -228,7 +233,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/turf/T = get_turf(src)
 		new type_butt(T)
 		new /obj/effect/decal/cleanable/ash(T)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		qdel(src)
 	return ..()
 
@@ -354,7 +359,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			M.update_inv_wear_mask(0)
 			packeditem = 0
 			name = "empty [initial(name)]"
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return
 	if(location)
 		location.hotspot_expose(700, 5)
@@ -391,7 +396,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return
 	if(!lit && smoketime > 0)
 		user << "<span class='notice'>You empty [src] onto [location].</span>"
@@ -470,7 +475,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src], they however burn their finger in the process.</span>")
 
 			user.AddLuminosity(1)
-			processing_objects.Add(src)
+			SSobj.processing |= src
 		else
 			lit = 0
 			icon_state = icon_off
@@ -484,7 +489,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user.visible_message("<span class='notice'>[user] quietly shuts off [src].")
 
 			user.AddLuminosity(-1)
-			processing_objects.Remove(src)
+			SSobj.processing.Remove(src)
 	else
 		return ..()
 	return

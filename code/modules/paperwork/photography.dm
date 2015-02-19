@@ -332,22 +332,22 @@
 	else
 		injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject)
 
-
-obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
+obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/siliconcam/targetloc)
 	var/list/nametemp = list()
 	var/find
-	var/datum/picture/selection
 	if(targetloc.aipictures.len == 0)
 		usr << "<span class='userdanger'>No images saved</span>"
 		return
 	for(var/datum/picture/t in targetloc.aipictures)
 		nametemp += t.fields["name"]
 	find = input("Select image (numbered in order taken)") in nametemp
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	for(var/datum/picture/q in targetloc.aipictures)
 		if(q.fields["name"] == find)
-			selection = q
-			break  	// just in case some AI decides to take 10 thousand pictures in a round
+			return q
+
+obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
+	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
+	var/datum/picture/selection = selectpicture(targetloc)
 	P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
 	P.pixel_x = selection.fields["pixel_x"]
 	P.pixel_y = selection.fields["pixel_y"]

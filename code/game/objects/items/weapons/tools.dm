@@ -28,6 +28,10 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
+/obj/item/weapon/wrench/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 /*
  * Screwdriver
@@ -119,10 +123,17 @@
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		qdel(C.handcuffed)
 		C.handcuffed = null
+		if(C.buckled && C.buckled.buckle_requires_restraints)
+			C.buckled.unbuckle_mob()
 		C.update_inv_handcuffed(0)
 		return
 	else
 		..()
+
+/obj/item/weapon/wirecutters/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 /*
  * Welding Tool
@@ -204,7 +215,7 @@
 			force = 3
 			damtype = "brute"
 			update_icon()
-			processing_objects.Remove(src)
+			SSobj.processing.Remove(src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -306,7 +317,7 @@
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			icon_state = "welder1"
-			processing_objects.Add(src)
+			SSobj.processing |= src
 		else
 			user << "<span class='notice'>You need more fuel.</span>"
 			welding = 0
@@ -444,6 +455,11 @@
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+
+/obj/item/weapon/crowbar/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 /obj/item/weapon/crowbar/red
 	icon = 'icons/obj/items.dmi'

@@ -36,7 +36,7 @@
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0
 	if(reagents)
-		if(reagents.has_reagent("hyperzine")) return -1
+		if(reagents.has_reagent("morphine")) return -1
 
 		if(reagents.has_reagent("nuka_cola")) return -1
 
@@ -174,11 +174,10 @@
 
 /mob/living/carbon/monkey/Stat()
 	..()
-	statpanel("Status")
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-	if(client && mind)
-		if (client.statpanel == "Status")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
+		if(client && mind)
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)

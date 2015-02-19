@@ -227,12 +227,6 @@
 	for(var/item in holographic_items)
 		derez(item)
 
-	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
-		qdel(B)
-
-	for(var/mob/living/simple_animal/hostile/carp/C in linkedholodeck)
-		qdel(C)
-
 	holographic_items = A.copy_contents_to(linkedholodeck , 1)
 
 	if(emagged)

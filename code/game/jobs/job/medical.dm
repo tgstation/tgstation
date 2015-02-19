@@ -57,7 +57,7 @@ Medical Doctor
 	default_backpack = /obj/item/weapon/storage/backpack/medic
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_med
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
 	minimal_access = list(access_medical, access_morgue, access_surgery)
 
 /datum/job/doctor/equip_items(var/mob/living/carbon/human/H)
@@ -109,7 +109,7 @@ Geneticist
 	default_pda = /obj/item/device/pda/geneticist
 	default_headset = /obj/item/device/radio/headset/headset_medsci
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_research)
+	access = list(access_medical, access_morgue, access_chemistry, access_virology, access_genetics, access_research, access_xenobiology, access_robotics, access_mineral_storeroom, access_tech_storage)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
 
 /datum/job/geneticist/equip_items(var/mob/living/carbon/human/H)

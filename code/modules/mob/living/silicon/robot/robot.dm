@@ -56,10 +56,9 @@
 
 	var/obj/item/weapon/tank/internal = null	//Hatred. Used if a borg has a jetpack.
 	var/obj/item/robot_parts/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
-	var/obj/item/device/camera/siliconcam/aicamera = null //photography
 	var/toner = 0
 	var/tonermax = 40
-
+	var/jetpackoverlay = 0
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -118,13 +117,19 @@
 	toner = 40
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
-//Improved /N
 /mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
-		mind.transfer_to(mmi.brainmob)
+		if(mmi.brainmob)
+			mind.transfer_to(mmi.brainmob)
+		else
+			src << "<span class='userdanger'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>"
+			ghostize()
+			ERROR("A borg has been destroyed, but its MMI lacked a brainmob, so the mind could not be transferred. Player: [ckey].")
 		mmi = null
+	if(connected_ai)
+		connected_ai.connected_robots -= src
 	..()
 
 
@@ -290,13 +295,7 @@
 
 /mob/living/silicon/robot/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
+	if(statpanel("Status"))
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
@@ -311,6 +310,7 @@
 		else
 			stat(null, text("No Cell Inserted!"))
 
+		stat(null, "Station Time: [worldtime2text()]")
 		if(module)
 			internal = locate(/obj/item/weapon/tank/jetpack) in module.modules
 			if(internal)
@@ -318,6 +318,8 @@
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 			for (var/datum/robot_energy_storage/st in module.storages)
 				stat("[st.name]: [st.energy]/[st.max_energy]")
+		if(connected_ai)
+			stat(null, text("Master AI: [connected_ai.name]"))
 
 /mob/living/silicon/robot/restrained()
 	return 0
@@ -729,7 +731,7 @@
 				overlays += "eyes-engiborg"
 			if("janiborg")
 				overlays += "eyes-janiborg"
-			if("minerborg" || "Miner+j")
+			if("minerborg")
 				overlays += "eyes-minerborg"
 			if("syndie_bloodhound")
 				overlays += "eyes-syndie_bloodhound"
@@ -744,6 +746,8 @@
 		else
 			overlays += "ov-opencover -c"
 
+	if(jetpackoverlay)
+		overlays += "minerjetpack"
 	update_fire()
 
 
@@ -846,6 +850,9 @@
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()
+				if (istype(tile, /turf/simulated/floor))
+					var/turf/simulated/floor/F = tile
+					F.dirt = 0
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
@@ -1012,6 +1019,7 @@
 	modtype = "Synd"
 	faction = list("syndicate")
 	designation = "Syndicate"
+	req_access = list(access_syndicate)
 
 /mob/living/silicon/robot/syndicate/New(loc)
 	..()

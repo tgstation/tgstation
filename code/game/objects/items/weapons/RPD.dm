@@ -48,12 +48,14 @@ var/global/list/disposalpipeID2State=list(
 	"pipe-s",
 	"pipe-c",
 	"pipe-j1",
+	"pipe-j2",
 	"pipe-y",
 	"pipe-t",
 	"disposal",
 	"outlet",
 	"intake",
-	"pipe-j1s"
+	"pipe-j1s",
+	"pipe-j2s"
 )
 
 /datum/pipe_info/disposal
@@ -65,7 +67,7 @@ var/global/list/disposalpipeID2State=list(
 	src.icon_state=disposalpipeID2State[pid+1]
 	src.dir=2
 	src.dirtype=dt
-	if(pid<5 || pid>7)
+	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)
 		icon_state = "con[icon_state]"
 
 /datum/pipe_info/disposal/Render(var/dispenser,var/label)
@@ -137,16 +139,17 @@ var/global/list/RPD_recipes=list(
 	var/p_type = 0
 	var/p_conntype = 0
 	var/p_dir = 1
+	var/p_flipped = 0
 	var/p_class = ATMOS_MODE
 	var/p_disposal = 0
 	var/list/paint_colors = list(
-		"grey"   = "#cccccc",
-		"red"    = "#800000",
-		"blue"   = "#000080",
-		"cyan"   = "#1C94C4",
-		"green"  = "#00CC00",
-		"yellow" = "#FFCC00",
-		"purple" = "#822BFF"
+		"grey"		= rgb(255,255,255),
+		"red"		= rgb(255,0,0),
+		"blue"		= rgb(0,0,255),
+		"cyan"		= rgb(0,256,249),
+		"green"		= rgb(30,255,0),
+		"yellow"	= rgb(255,198,0),
+		"purple"	= rgb(130,43,255)
 	)
 	var/paint_color="grey"
 
@@ -159,11 +162,11 @@ var/global/list/RPD_recipes=list(
 /obj/item/weapon/pipe_dispenser/attack_self(mob/user as mob)
 	show_menu(user)
 
-/obj/item/weapon/pipe_dispenser/proc/render_dir_img(var/_dir,var/pic,var/title)
+/obj/item/weapon/pipe_dispenser/proc/render_dir_img(var/_dir,var/pic,var/title,var/flipped=0)
 	var/selected=""
 	if(_dir == p_dir)
 		selected=" class=\"selected\""
-	return "<a href=\"?src=\ref[src];setdir=[_dir]\" title=\"[title]\"[selected]><img src=\"[pic]\" /></a>"
+	return "<a href=\"?src=\ref[src];setdir=[_dir];flipped=[flipped]\" title=\"[title]\"[selected]><img src=\"[pic]\" /></a>"
 
 /obj/item/weapon/pipe_dispenser/proc/show_menu(mob/user as mob)
 	if(!user || !src)	return 0
@@ -228,8 +231,8 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=1" title="vertical">&#8597;</a>
-			<a href="?src=\ref[src];setdir=4" title="horizontal">&harr;</a>
+			<a href="?src=\ref[src];setdir=1; flipped=0" title="vertical">&#8597;</a>
+			<a href="?src=\ref[src];setdir=4; flipped=0" title="horizontal">&harr;</a>
 		</p>
 				"}
 		if(PIPE_BENT) // Bent, N-W, N-E etc
@@ -249,11 +252,11 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=9" title="West to North">&#9565;</a>
-			<a href="?src=\ref[src];setdir=5" title="North to East">&#9562;</a>
+			<a href="?src=\ref[src];setdir=9; flipped=0" title="West to North">&#9565;</a>
+			<a href="?src=\ref[src];setdir=5; flipped=0" title="North to East">&#9562;</a>
 			<br />
-			<a href="?src=\ref[src];setdir=10" title="South to West">&#9559;</a>
-			<a href="?src=\ref[src];setdir=6" title="East to South">&#9556;</a>
+			<a href="?src=\ref[src];setdir=10; flipped=0" title="South to West">&#9559;</a>
+			<a href="?src=\ref[src];setdir=6; flipped=0" title="East to South">&#9556;</a>
 		</p>
 				"}
 		if(PIPE_TRINARY) // Manifold
@@ -273,11 +276,11 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=1" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=4" title="North, West, South">&#9571;</a>
+			<a href="?src=\ref[src];setdir=1; flipped=0" title="West, South, East">&#9574;</a>
+			<a href="?src=\ref[src];setdir=4; flipped=0" title="North, West, South">&#9571;</a>
 			<br />
-			<a href="?src=\ref[src];setdir=2" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=8" title="South, East, North">&#9568;</a>
+			<a href="?src=\ref[src];setdir=2; flipped=0" title="East, North, West">&#9577;</a>
+			<a href="?src=\ref[src];setdir=8; flipped=0" title="South, East, North">&#9568;</a>
 		</p>
 				"}
 		if(PIPE_TRIN_M) // Mirrored ones
@@ -298,26 +301,26 @@ var/global/list/RPD_recipes=list(
 				dirsel += render_dir_img(2,"n.png","East North West")
 				dirsel += render_dir_img(8,"e.png","South East North")
 				dirsel += "<br />"
-				dirsel += render_dir_img(6,"sm.png","West South East")
-				dirsel += render_dir_img(5,"wm.png","North West South")
+				dirsel += render_dir_img(6,"sm.png","West South East", 1)
+				dirsel += render_dir_img(5,"wm.png","North West South", 1)
 				dirsel += "<br />"
-				dirsel += render_dir_img(9,"nm.png","East North West")
-				dirsel += render_dir_img(10,"em.png","South East North")
+				dirsel += render_dir_img(9,"nm.png","East North West", 1)
+				dirsel += render_dir_img(10,"em.png","South East North", 1)
 				dirsel += "</p>"
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=1" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=4" title="North, West, South">&#9571;</a>
+			<a href="?src=\ref[src];setdir=1; flipped=0" title="West, South, East">&#9574;</a>
+			<a href="?src=\ref[src];setdir=4; flipped=0" title="North, West, South">&#9571;</a>
 			<br />
-			<a href="?src=\ref[src];setdir=2" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=8" title="South, East, North">&#9568;</a>
+			<a href="?src=\ref[src];setdir=2; flipped=0" title="East, North, West">&#9577;</a>
+			<a href="?src=\ref[src];setdir=8; flipped=0" title="South, East, North">&#9568;</a>
 			<br />
-			<a href="?src=\ref[src];setdir=6" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=5" title="North, West, South">&#9571;</a>
+			<a href="?src=\ref[src];setdir=6; flipped=1" title="West, South, East">&#9574;</a>
+			<a href="?src=\ref[src];setdir=5; flipped=1" title="North, West, South">&#9571;</a>
 			<br />
-			<a href="?src=\ref[src];setdir=9" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=10" title="South, East, North">&#9568;</a>
+			<a href="?src=\ref[src];setdir=9; flipped=1" title="East, North, West">&#9577;</a>
+			<a href="?src=\ref[src];setdir=10; flipped=1" title="South, East, North">&#9568;</a>
 		</p>
 				"}
 		if(PIPE_UNARY) // Unary
@@ -336,10 +339,10 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=[NORTH]" title="North">&uarr;</a>
-			<a href="?src=\ref[src];setdir=[EAST]" title="East">&rarr;</a>
-			<a href="?src=\ref[src];setdir=[SOUTH]" title="South">&darr;</a>
-			<a href="?src=\ref[src];setdir=[WEST]" title="West">&larr;</a>
+			<a href="?src=\ref[src];setdir=[NORTH]; flipped=0" title="North">&uarr;</a>
+			<a href="?src=\ref[src];setdir=[EAST]; flipped=0" title="East">&rarr;</a>
+			<a href="?src=\ref[src];setdir=[SOUTH]; flipped=0" title="South">&darr;</a>
+			<a href="?src=\ref[src];setdir=[WEST]; flipped=0" title="West">&larr;</a>
 		</p>
 					"}
 		if(PIPE_QUAD) // Single icon_state (eg 4-way manifolds)
@@ -352,7 +355,7 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=1" title="Pipe">&#8597;</a>
+			<a href="?src=\ref[src];setdir=1; flipped=0" title="Pipe">&#8597;</a>
 		</p>
 				"}
 
@@ -400,13 +403,14 @@ var/global/list/RPD_recipes=list(
 	return
 
 /obj/item/weapon/pipe_dispenser/Topic(href, href_list)
-	if(usr.stat || usr.restrained())
+	if(!usr.canUseTopic(src))
 		usr << browse(null, "window=pipedispenser")
 		return
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["setdir"])
 		p_dir= text2num(href_list["setdir"])
+		p_flipped = text2num(href_list["flipped"])
 		show_menu(usr)
 
 	if(href_list["eatpipes"])
@@ -459,10 +463,13 @@ var/global/list/RPD_recipes=list(
 
 
 /obj/item/weapon/pipe_dispenser/afterattack(atom/A, mob/user)
-	if(!in_range(A,user))
-		return
-	if(loc != user)
-		return
+	if(!in_range(A,user) || loc != user)
+		return 0
+
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+		return 0
+
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
 
@@ -478,7 +485,8 @@ var/global/list/RPD_recipes=list(
 			P.pipe_color = paint_colors[paint_color]
 			P.stored.color = paint_colors[paint_color]
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
-			P.update_icon()
+			//P.update_icon()
+			P.update_node_icon()
 			return 1
 		if(EATING_MODE) // Eating pipes
 			// Must click on an actual pipe or meter.
@@ -487,7 +495,7 @@ var/global/list/RPD_recipes=list(
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5))
 					activate()
-					del(A)
+					qdel(A)
 					return 1
 				return 0
 
@@ -503,6 +511,7 @@ var/global/list/RPD_recipes=list(
 			if(do_after(user, 20))
 				activate()
 				var/obj/item/pipe/P = new (A, pipe_type=p_type, dir=p_dir)
+				P.flipped = p_flipped
 				P.update()
 				P.add_fingerprint(usr)
 				return 1
@@ -527,33 +536,15 @@ var/global/list/RPD_recipes=list(
 			user << "<span class='notice'>Building Pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
+				var/obj/structure/disposalconstruct/C = new (A,p_type,p_dir)
+
+				if(!C.can_place())
+					user << "<span class='warning'>There's not enough room to build that here!</span>"
+					qdel(C)
+					return 0
+
 				activate()
-				var/obj/structure/disposalconstruct/C = new (A)
-				// This may still produce runtimes, but I checked and /obj/structure/disposalconstruct
-				//  DOES have a dir property, inherited from /obj/structure. - N3X
-				C.dir=p_dir
-				switch(p_type)
-					if(0)
-						C.ptype = 0
-					if(1)
-						C.ptype = 1
-					if(2)
-						C.ptype = 2
-					if(3)
-						C.ptype = 4
-					if(4)
-						C.ptype = 5
-					if(5)
-						C.ptype = 6
-						C.density = 1
-					if(6)
-						C.ptype = 7
-						C.density = 1
-					if(7)
-						C.ptype = 8
-						C.density = 1
-					if(8)
-						C.ptype = 9
+
 				C.add_fingerprint(usr)
 				C.update()
 				return 1

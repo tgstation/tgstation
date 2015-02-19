@@ -57,7 +57,7 @@
 	plant_type = 0
 	growthstages = 6
 	rarity = 0 // CentComm knows about this species already, it's in exotic seeds crates.
-	mutatelist = list(/obj/item/seeds/icepepperseed, /obj/item/seeds/chillighost)
+	mutatelist = list(/obj/item/seeds/icepepperseed, /obj/item/seeds/chilighost)
 
 /obj/item/seeds/replicapod
 	name = "pack of replica pod seeds"
@@ -81,10 +81,11 @@
 	var/blood_gender = null
 	var/blood_type = null
 	var/factions = null
+	var/contains_sample = 0
 
 /obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers/syringe))
-		if(ckey == null)
+		if(!contains_sample)
 			for(var/datum/reagent/blood/bloodSample in W.reagents.reagent_list)
 				if(bloodSample.data["mind"] && bloodSample.data["cloneable"] == 1)
 					mind = bloodSample.data["mind"]
@@ -95,6 +96,7 @@
 					factions = bloodSample.data["factions"]
 					W.reagents.clear_reagents()
 					user << "You inject the contents of the syringe into the seeds."
+					contains_sample = 1
 				else
 					user << "The seeds reject the sample!"
 		else
@@ -1092,13 +1094,13 @@
 	new /obj/effect/spacevine_controller(user.loc, mutations)
 	qdel(src)
 
-/obj/item/seeds/chillighost
-	name = "pack of ghost chilli seeds"
+/obj/item/seeds/chilighost
+	name = "pack of ghost chili seeds"
 	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
 	icon_state = "seed-chilighost"
 	species = "chilighost"
 	plantname = "chilighost"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
 	lifespan = 20
 	endurance = 10
 	maturation = 10

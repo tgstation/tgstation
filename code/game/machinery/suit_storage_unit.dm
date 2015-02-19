@@ -33,8 +33,8 @@
 //The units themselves/////////////////
 
 /obj/machinery/suit_storage_unit/standard_unit
-	SUIT_TYPE = /obj/item/clothing/suit/space
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space
+	SUIT_TYPE = /obj/item/clothing/suit/space/eva
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/eva
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/captain
@@ -45,34 +45,28 @@
 
 /obj/machinery/suit_storage_unit/engine
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/ce
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/elite
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/elite
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	STORAGE_TYPE= /obj/item/clothing/shoes/magboots/advance
 
 /obj/machinery/suit_storage_unit/security
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/security
 	MASK_TYPE = /obj/item/clothing/mask/gas
 
 /obj/machinery/suit_storage_unit/atmos
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/atmos
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/atmos
 	MASK_TYPE = /obj/item/clothing/mask/gas
 	STORAGE_TYPE = /obj/item/weapon/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/mining
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/mining
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/cmo
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/medical
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/medical
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/syndicate
@@ -80,6 +74,30 @@
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
 	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
+
+/obj/machinery/suit_storage_unit/ertCom
+	SUIT_TYPE = /obj/item/clothing/suit/space/ert
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
+
+/obj/machinery/suit_storage_unit/ertSec
+	SUIT_TYPE = /obj/item/clothing/suit/space/ert/sec
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
+
+/obj/machinery/suit_storage_unit/ertEngi
+	SUIT_TYPE = /obj/item/clothing/suit/space/ert/engi
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
+
+/obj/machinery/suit_storage_unit/ertMed
+	SUIT_TYPE = /obj/item/clothing/suit/space/ert/med
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/New()
 	src.update_icon()

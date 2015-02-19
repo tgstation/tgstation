@@ -445,8 +445,8 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
-	if(S.has_reagent("anti_toxin", 1))
-		adjustToxic(-round(S.get_reagent_amount("anti_toxin") * 2))
+	if(S.has_reagent("charcoal", 1))
+		adjustToxic(-round(S.get_reagent_amount("charcoal") * 2))
 
 	// NIGGA, YOU JUST WENT ON FULL RETARD.
 	if(S.has_reagent("toxin", 1))
@@ -512,9 +512,9 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 		adjustWeeds(-rand(1,2))
 
 	// SERIOUSLY
-	if(S.has_reagent("pacid", 1))
-		adjustHealth(-round(S.get_reagent_amount("pacid") * 2))
-		adjustToxic(round(S.get_reagent_amount("pacid") * 3))
+	if(S.has_reagent("facid", 1))
+		adjustHealth(-round(S.get_reagent_amount("facid") * 2))
+		adjustToxic(round(S.get_reagent_amount("facid") * 3))
 		adjustWeeds(-rand(1,4))
 
 	// Plant-B-Gone is just as bad
@@ -708,13 +708,25 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			return
 
 		if(!anchored && !isinspace())
+			user.visible_message("<span class='notice'>[user] begins to wrench [src] into place.</span>", \
+								"<span class='notice'>You begin to wrench [src] in place.</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 1
-			user << "You wrench [src] in place."
+			if (do_after(user, 20))
+				if(anchored)
+					return
+				anchored = 1
+				user.visible_message("<span class='notice'>[user] wrenches [src] into place.</span>", \
+									"<span class='notice'>You wrench [src] in place.</span>")
 		else if(anchored)
+			user.visible_message("<span class='notice'>[user] begins to unwrench [src].</span>", \
+								"<span class='notice'>You begin to unwrench [src].</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = 0
-			user << "You unwrench [src]."
+			if (do_after(user, 20))
+				if(!anchored)
+					return
+				anchored = 0
+				user.visible_message("<span class='notice'>[user] unwrenches [src].</span>", \
+									"<span class='notice'>You unwrench [src].</span>")
 
 	else if(istype(O, /obj/item/weapon/screwdriver) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
 		if(anchored)
@@ -793,16 +805,29 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 /obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
 	var/make_podman = 0
-	if(ckey && config.revival_pod_plants)
-		for(var/mob/M in player_list)
-			if(M.ckey == ckey && M.stat == 2 && !M.suiciding)
+	var/ckey_holder = null
+	if(config.revival_pod_plants)
+		if(ckey)
+			for(var/mob/M in player_list)
 				if(istype(M, /mob/dead/observer))
 					var/mob/dead/observer/O = M
-					if(O.can_reenter_corpse)
+					if(O.ckey == ckey && O.can_reenter_corpse)
 						make_podman = 1
+						break
+				else
+					if(M.ckey == ckey && M.stat == 2 && !M.suiciding)
+						make_podman = 1
+						break
+		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
+			for(var/mob/M in player_list)
+				if(ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding)
+					if(istype(M, /mob/dead/observer))
+						var/mob/dead/observer/O = M
+						if(!O.can_reenter_corpse)
+							break
+					make_podman = 1
+					ckey_holder = M.ckey
 					break
-				make_podman = 1
-				break
 
 	if(make_podman)	//all conditions met!
 		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
@@ -811,7 +836,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			podman.real_name = "Pod Person [rand(0,999)]"
 		mind.transfer_to(podman)
-		podman.ckey = ckey
+		if(ckey)
+			podman.ckey = ckey
+		else
+			podman.ckey = ckey_holder
 		podman.gender = blood_gender
 		podman.faction |= factions
 		hardset_dna(podman,null,null,podman.real_name,blood_type,/datum/species/plant/pod,"#59CE00")//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman

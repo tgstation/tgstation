@@ -375,7 +375,7 @@ ________________________________________________________________________________
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_belt)
 	equip_to_slot_or_del(new /obj/item/weapon/c4(src), slot_r_store)
 	equip_to_slot_or_del(new /obj/item/weapon/c4(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen(src), slot_s_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(src), slot_back)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
@@ -1555,7 +1555,7 @@ ________________________________________________________________________________
 			P.tnote += "<i><b>&larr; From [!s_control?(A):"an unknown source"]:</b></i><br>[t]<br>"
 			if (!P.silent)
 				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
+				P.audible_message("\icon[P] *[P.ttone]*", null, 3)
 			P.overlays.Cut()
 			P.overlays += image('icons/obj/pda.dmi', "pda-r")
 

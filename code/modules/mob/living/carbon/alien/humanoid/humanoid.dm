@@ -46,15 +46,13 @@
 
 			f_loss += 60
 
-			ear_damage += 30
-			ear_deaf += 120
+			adjustEarDamage(30, 120)
 
 		if(3.0)
 			b_loss += 30
 			if (prob(50) && !shielded)
 				Paralyse(1)
-			ear_damage += 15
-			ear_deaf += 60
+			adjustEarDamage(15 , 60)
 
 	adjustBruteLoss(b_loss)
 	adjustFireLoss(f_loss)
@@ -178,3 +176,6 @@
 			if(do_mob(usr, src, POCKET_STRIP_DELAY * 0.5))
 				unEquip(r_store)
 				unEquip(l_store)
+
+/mob/living/carbon/alien/humanoid/reagent_check(var/datum/reagent/R)
+	return 0

@@ -123,10 +123,6 @@
 			eprojectile = /obj/item/projectile/beam
 			eshot_sound = 'sound/weapons/Laser.ogg'
 
-		if(/obj/item/weapon/gun/energy/stunrevolver)
-			eprojectile = /obj/item/projectile/beam
-			eshot_sound = 'sound/weapons/Laser.ogg'
-
 		if(/obj/item/weapon/gun/energy/gun)
 			eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
 			eshot_sound = 'sound/weapons/Laser.ogg'
@@ -792,8 +788,7 @@
 				return
 
 	if(istype(I, /obj/item/weapon/pen))	//you can rename turrets like bots!
-		var/t = input(user, "Enter new turret name", name, finish_name) as text
-		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		var/t = stripped_input(user, "Enter new turret name", name, finish_name)
 		if(!t)
 			return
 		if(!in_range(src, usr) && loc != usr)

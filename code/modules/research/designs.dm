@@ -39,7 +39,6 @@ datum/design						//Datum for object designs, used in construction
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/construction_time				//Amount of time required for building the object
 	var/build_path = ""					//The file path of the object that gets created
-	var/locked = 0						//If true it will spawn inside a lockbox with currently sec access
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 
 
@@ -332,14 +331,14 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
 
-/datum/design/advmop
-	name = "Advanced Mop"
-	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
-	id = "advmop"
-	req_tech = list("materials" = 4, "engineering" = 3)
+/datum/design/buffer
+	name = "Floor Buffer Upgrade"
+	desc = "A floor buffer that can be attached to vehicular janicarts."
+	id = "buffer"
+	req_tech = list("materials" = 5, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 2500, "$glass" = 200)
-	build_path = /obj/item/weapon/mop/advanced
+	materials = list("$metal" = 3000, "$glass" = 200)
+	build_path = /obj/item/janiupgrade
 	category = list("Equipement")
 
 /datum/design/holosign

@@ -14,6 +14,9 @@
 	var/secondary = 0 // set to nonzero if secondary reaction
 	var/mob_react = 0 //Determines if a chemical reaction can occur inside a mob
 
+	var/required_temp = 0
+	var/mix_message = "The solution begins to bubble."
+
 /datum/chemical_reaction/proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 	return
 
@@ -66,21 +69,7 @@ silicate
 	name = "Sterilizine"
 	id = "sterilizine"
 	result = "sterilizine"
-	required_reagents = list("ethanol" = 1, "anti_toxin" = 1, "chlorine" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/inaprovaline
-	name = "Inaprovaline"
-	id = "inaprovaline"
-	result = "inaprovaline"
-	required_reagents = list("oxygen" = 1, "carbon" = 1, "sugar" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/anti_toxin
-	name = "Anti-Toxin (Dylovene)"
-	id = "anti_toxin"
-	result = "anti_toxin"
-	required_reagents = list("silicon" = 1, "potassium" = 1, "nitrogen" = 1)
+	required_reagents = list("ethanol" = 1, "charcoal" = 1, "chlorine" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/mutagen
@@ -125,13 +114,6 @@ silicate
 	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 	result_amount = 4
 
-/datum/chemical_reaction/pacid
-	name = "Polytrinic acid"
-	id = "pacid"
-	result = "pacid"
-	required_reagents = list("sacid" = 1, "chlorine" = 1, "potassium" = 1)
-	result_amount = 3
-
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
 	id = "synaptizine"
@@ -139,32 +121,11 @@ silicate
 	required_reagents = list("sugar" = 1, "lithium" = 1, "water" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/hyronalin
-	name = "Hyronalin"
-	id = "hyronalin"
-	result = "hyronalin"
-	required_reagents = list("radium" = 1, "anti_toxin" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/arithrazine
-	name = "Arithrazine"
-	id = "arithrazine"
-	result = "arithrazine"
-	required_reagents = list("hyronalin" = 1, "hydrogen" = 1)
-	result_amount = 2
-
 /datum/chemical_reaction/impedrezene
 	name = "Impedrezene"
 	id = "impedrezene"
 	result = "impedrezene"
 	required_reagents = list("mercury" = 1, "oxygen" = 1, "sugar" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/kelotane
-	name = "Kelotane"
-	id = "kelotane"
-	result = "kelotane"
-	required_reagents = list("silicon" = 1, "carbon" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/leporazine
@@ -182,111 +143,18 @@ silicate
 	required_reagents = list("potassium" = 1, "oxygen" = 1, "sugar" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/tricordrazine
-	name = "Tricordrazine"
-	id = "tricordrazine"
-	result = "tricordrazine"
-	required_reagents = list("inaprovaline" = 1, "anti_toxin" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/alkysine
-	name = "Alkysine"
-	id = "alkysine"
-	result = "alkysine"
-	required_reagents = list("chlorine" = 1, "nitrogen" = 1, "anti_toxin" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/dexalin
-	name = "Dexalin"
-	id = "dexalin"
-	result = "dexalin"
-	required_reagents = list("oxygen" = 2)
-	required_catalysts = list("plasma" = 5)
-	result_amount = 1
-
-/datum/chemical_reaction/dermaline
-	name = "Dermaline"
-	id = "dermaline"
-	result = "dermaline"
-	required_reagents = list("oxygen" = 1, "phosphorus" = 1, "kelotane" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/dexalinp
-	name = "Dexalin Plus"
-	id = "dexalinp"
-	result = "dexalinp"
-	required_reagents = list("dexalin" = 1, "carbon" = 1, "iron" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/bicaridine
-	name = "Bicaridine"
-	id = "bicaridine"
-	result = "bicaridine"
-	required_reagents = list("inaprovaline" = 1, "carbon" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/hyperzine
-	name = "Hyperzine"
-	id = "hyperzine"
-	result = "hyperzine"
-	required_reagents = list("sugar" = 1, "phosphorus" = 1, "sulfur" = 1,)
-	result_amount = 3
-
-/datum/chemical_reaction/ryetalyn
-	name = "Ryetalyn"
-	id = "ryetalyn"
-	result = "ryetalyn"
-	required_reagents = list("arithrazine" = 1, "carbon" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/cryoxadone
-	name = "Cryoxadone"
-	id = "cryoxadone"
-	result = "cryoxadone"
-	required_reagents = list("dexalin" = 1, "water" = 1, "oxygen" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/clonexadone
-	name = "Clonexadone"
-	id = "clonexadone"
-	result = "clonexadone"
-	required_reagents = list("cryoxadone" = 1, "sodium" = 1)
-	required_catalysts = list("plasma" = 5)
-	result_amount = 2
-
 /datum/chemical_reaction/spaceacillin
 	name = "Spaceacillin"
 	id = "spaceacillin"
 	result = "spaceacillin"
-	required_reagents = list("cryptobiolin" = 1, "inaprovaline" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/imidazoline
-	name = "imidazoline"
-	id = "imidazoline"
-	result = "imidazoline"
-	required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
+	required_reagents = list("cryptobiolin" = 1, "epinephrine" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/inacusiate
 	name = "inacusiate"
 	id = "inacusiate"
 	result = "inacusiate"
-	required_reagents = list("water" = 1, "carbon" = 1, "anti_toxin" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/ethylredoxrazine
-	name = "Ethylredoxrazine"
-	id = "ethylredoxrazine"
-	result = "ethylredoxrazine"
-	required_reagents = list("oxygen" = 1, "anti_toxin" = 1, "carbon" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/ethanoloxidation
-	name = "ethanoloxidation"	//Kind of a placeholder in case someone ever changes it so that chemicals
-	id = "ethanoloxidation"		//	react in the body. Also it would be silly if it didn't exist.
-	result = "water"
-	required_reagents = list("ethylredoxrazine" = 1, "ethanol" = 1)
+	required_reagents = list("water" = 1, "carbon" = 1, "charcoal" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/glycerol
@@ -300,7 +168,7 @@ silicate
 	name = "Nitroglycerin"
 	id = "nitroglycerin"
 	result = "nitroglycerin"
-	required_reagents = list("glycerol" = 1, "pacid" = 1, "sacid" = 1)
+	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
 	result_amount = 2
 /datum/chemical_reaction/nitroglycerin/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -434,7 +302,7 @@ silicate
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
 	result = "mindbreaker"
-	required_reagents = list("silicon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
+	required_reagents = list("silicon" = 1, "hydrogen" = 1, "charcoal" = 1)
 	result_amount = 5
 
 /datum/chemical_reaction/lipozine
@@ -568,7 +436,7 @@ silicate
 	name = "Metal Foam"
 	id = "metalfoam"
 	result = null
-	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "pacid" = 1)
+	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "facid" = 1)
 	result_amount = 5
 	mob_react = 1
 
@@ -589,7 +457,7 @@ silicate
 	name = "Iron Foam"
 	id = "ironlfoam"
 	result = null
-	required_reagents = list("iron" = 3, "foaming_agent" = 1, "pacid" = 1)
+	required_reagents = list("iron" = 3, "foaming_agent" = 1, "facid" = 1)
 	result_amount = 5
 	mob_react = 1
 
@@ -767,7 +635,7 @@ datum/chemical_reaction/pestkiller
 	name = "Slime Teleport"
 	id = "m_tele"
 	result = null
-	required_reagents = list("pacid" = 2, "mutagen" = 2)
+	required_reagents = list("facid" = 2, "mutagen" = 2)
 	required_catalysts = list("plasma" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_core
@@ -961,9 +829,9 @@ datum/chemical_reaction/pestkiller
 	S.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimeinaprov
-	name = "Slime Inaprovaline"
+	name = "Slime epinephrine"
 	id = "m_inaprov"
-	result = "inaprovaline"
+	result = "epinephrine"
 	required_reagents = list("water" = 5)
 	result_amount = 3
 	required_other = 1
@@ -1030,61 +898,7 @@ datum/chemical_reaction/pestkiller
 		O.show_message(text("<span class='danger'>The slime extract begins to vibrate violently !</span>"), 1)
 	spawn(50)
 
-		if(holder && holder.my_atom)
-
-			var/blocked = list(/mob/living/simple_animal/hostile,
-				/mob/living/simple_animal/hostile/pirate,
-				/mob/living/simple_animal/hostile/pirate/ranged,
-				/mob/living/simple_animal/hostile/russian,
-				/mob/living/simple_animal/hostile/russian/ranged,
-				/mob/living/simple_animal/hostile/syndicate,
-				/mob/living/simple_animal/hostile/syndicate/melee,
-				/mob/living/simple_animal/hostile/syndicate/melee/space,
-				/mob/living/simple_animal/hostile/syndicate/ranged,
-				/mob/living/simple_animal/hostile/syndicate/ranged/space,
-				/mob/living/simple_animal/hostile/alien/queen/large,
-				/mob/living/simple_animal/hostile/retaliate,
-				/mob/living/simple_animal/hostile/retaliate/clown,
-				/mob/living/simple_animal/hostile/mushroom,
-				/mob/living/simple_animal/hostile/asteroid,
-				/mob/living/simple_animal/hostile/asteroid/basilisk,
-				/mob/living/simple_animal/hostile/asteroid/goldgrub,
-				/mob/living/simple_animal/hostile/asteroid/goliath,
-				/mob/living/simple_animal/hostile/asteroid/hivelord,
-				/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-				/mob/living/simple_animal/hostile/carp/holocarp,
-				/mob/living/simple_animal/hostile/mining_drone
-				)//exclusion list for things you don't want the reaction to create.
-			var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
-
-			var/atom/A = holder.my_atom
-			var/turf/T = get_turf(A)
-			var/area/my_area = get_area(T)
-			var/message = "A gold slime reaction has occured in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
-			message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
-
-			var/mob/M = get(A, /mob)
-			if(M)
-				message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
-			else
-				message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
-
-			message_admins(message, 0, 1)
-
-			playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
-
-			for(var/mob/living/carbon/human/H in viewers(get_turf(holder.my_atom), null))
-				if(H:eyecheck() <= 0)
-					flick("e_flash", H.flash)
-
-			for(var/i = 1, i <= 5, i++)
-				var/chosen = pick(critters)
-				var/mob/living/simple_animal/hostile/C = new chosen
-				C.faction |= "slimesummon"
-				C.loc = get_turf(holder.my_atom)
-				if(prob(50))
-					for(var/j = 1, j <= rand(1, 3), j++)
-						step(C, pick(NORTH,SOUTH,EAST,WEST))
+		chemical_mob_spawn(holder, 1, "Gold Slime")
 
 /datum/chemical_reaction/slimecritlesser
 	name = "Slime Crit Lesser"
@@ -1100,43 +914,7 @@ datum/chemical_reaction/pestkiller
 		O.show_message(text("<span class='danger'>The slime extract begins to vibrate violently !</span>"), 1)
 	spawn(50)
 
-		if(holder && holder.my_atom)
-
-			var/blocked = list(/mob/living/simple_animal/hostile,
-				/mob/living/simple_animal/hostile/pirate,
-				/mob/living/simple_animal/hostile/pirate/ranged,
-				/mob/living/simple_animal/hostile/russian,
-				/mob/living/simple_animal/hostile/russian/ranged,
-				/mob/living/simple_animal/hostile/syndicate,
-				/mob/living/simple_animal/hostile/syndicate/melee,
-				/mob/living/simple_animal/hostile/syndicate/melee/space,
-				/mob/living/simple_animal/hostile/syndicate/ranged,
-				/mob/living/simple_animal/hostile/syndicate/ranged/space,
-				/mob/living/simple_animal/hostile/alien/queen/large,
-				/mob/living/simple_animal/hostile/retaliate,
-				/mob/living/simple_animal/hostile/retaliate/clown,
-				/mob/living/simple_animal/hostile/mushroom,
-				/mob/living/simple_animal/hostile/asteroid,
-				/mob/living/simple_animal/hostile/asteroid/basilisk,
-				/mob/living/simple_animal/hostile/asteroid/goldgrub,
-				/mob/living/simple_animal/hostile/asteroid/goliath,
-				/mob/living/simple_animal/hostile/asteroid/hivelord,
-				/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-				/mob/living/simple_animal/hostile/carp/holocarp,
-				/mob/living/simple_animal/hostile/mining_drone
-				)//exclusion list for things you don't want the reaction to create.
-			var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
-
-			playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
-
-			for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-				if(M:eyecheck() <= 0)
-					flick("e_flash", M.flash)
-
-			var/chosen = pick(critters)
-			var/mob/living/simple_animal/hostile/C = new chosen
-			C.faction |= "neutral"
-			C.loc = get_turf(holder.my_atom)
+		chemical_mob_spawn(holder, 1, "Lesser Gold Slime")
 
 //Silver
 /datum/chemical_reaction/slimebork
@@ -1288,7 +1066,7 @@ datum/chemical_reaction/pestkiller
 	required_other = 1
 /datum/chemical_reaction/slimecell/on_reaction(var/datum/reagents/holder, var/created_volume)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
+	var/obj/item/weapon/stock_parts/cell/high/slime/P = new /obj/item/weapon/stock_parts/cell/high/slime
 	P.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimeglow

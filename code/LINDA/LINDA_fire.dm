@@ -34,9 +34,9 @@
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 
-		active_hotspot.just_spawned = (current_cycle < air_master.current_cycle)
+		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
-		air_master.add_to_active(src, 0)
+		SSair.add_to_active(src, 0)
 	return igniting
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
@@ -56,11 +56,11 @@
 
 /obj/effect/hotspot/New()
 	..()
-	air_master.hotspots += src
+	SSair.hotspots += src
 	perform_exposure()
 
 /obj/effect/hotspot/proc/perform_exposure()
-	var/turf/simulated/floor/location = loc
+	var/turf/simulated/location = loc
 	if(!istype(location))	return 0
 
 	if(volume > CELL_VOLUME*0.95)	bypassing = 1
@@ -89,7 +89,7 @@
 		just_spawned = 0
 		return 0
 
-	var/turf/simulated/floor/location = loc
+	var/turf/simulated/location = loc
 	if(!istype(location))
 		Kill()
 		return
@@ -142,7 +142,7 @@
 // Garbage collect itself by nulling reference to it
 
 /obj/effect/hotspot/proc/Kill()
-	air_master.hotspots -= src
+	SSair.hotspots -= src
 	DestroyTurf()
 	qdel(src)
 

@@ -5,7 +5,7 @@
 	action_button_is_hands_free = 1
 	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like loyalty implants
 	var/implanted = null
-	var/mob/imp_in = null
+	var/mob/living/imp_in = null
 	item_color = "b"
 	var/allow_reagents = 0
 
@@ -64,7 +64,18 @@
 				Implant Specifics:<BR>"}
 	return dat
 
+/obj/item/weapon/implant/weapons_auth
+	name = "firearms authentication implant"
+	desc = "Lets you shoot your guns"
+	icon_state = "auth"
 
+/obj/item/weapon/implant/weapons_auth/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Firearms Authentication Implant<BR>
+				<b>Life:</b> 4 hours after death of host<BR>
+				<b>Implant Details:</b> <BR>
+				<b>Function:</b> Allows operation of implant-locked weaponry, preventing equipment from falling into enemy hands."}
+	return dat
 
 /obj/item/weapon/implant/explosive
 	name = "explosive implant"
@@ -91,7 +102,7 @@
 	if(!cause || !imp_in)	return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your explosive implant? This will cause you to explode and gib!", "Explosive Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
-	explosion(src, -1, 0, 2, 3, 0)	//This might be a bit much, dono will have to see.
+	explosion(src,0,1,5,7,10, flame_range = 5)
 	if(imp_in)
 		imp_in.gib()
 
@@ -190,12 +201,13 @@
 	imp_in.SetStunned(0)
 	imp_in.SetWeakened(0)
 	imp_in.SetParalysis(0)
+	imp_in.adjustStaminaLoss(-75)
 	imp_in.lying = 0
 	imp_in.update_canmove()
 
 	imp_in.reagents.add_reagent("synaptizine", 10)
-	imp_in.reagents.add_reagent("tricordrazine", 10)
-	imp_in.reagents.add_reagent("hyperzine", 10)
+	imp_in.reagents.add_reagent("omnizine", 10)
+	imp_in.reagents.add_reagent("morphine", 10)
 
 
 /obj/item/weapon/implant/emp

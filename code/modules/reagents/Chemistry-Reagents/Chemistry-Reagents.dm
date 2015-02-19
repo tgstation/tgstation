@@ -22,9 +22,15 @@ datum/reagent
 	var/volume = 0
 	//var/list/viruses = list()
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
+	var/can_synth = 1
 	var/metabolization_rate = REAGENTS_METABOLISM
+	var/overrides_metab = 0
+	var/overdose_threshold = 0
+	var/addiction_threshold = 0
+	var/addiction_stage = 0
+	var/overdosed = 0 // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
 
-datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
+datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
 		return 0
 	var/datum/reagent/self = src
@@ -69,7 +75,7 @@ datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
 
 datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
 	if(!istype(M, /mob/living))
-		return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
+		return //Noticed runtime errors from facid trying to damage ghosts, this should fix. --NEO
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
@@ -86,6 +92,31 @@ datum/reagent/proc/on_merge(var/data)
 
 datum/reagent/proc/on_update(var/atom/A)
 	return
+
+// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
+datum/reagent/proc/overdose_process(var/mob/living/M as mob)
+	return
+
+datum/reagent/proc/addiction_act_stage1(var/mob/living/M as mob)
+	if(prob(30))
+		M << "<span class = 'notice'>You feel like some [name] right about now.</span>"
+	return
+
+datum/reagent/proc/addiction_act_stage2(var/mob/living/M as mob)
+	if(prob(30))
+		M << "<span class = 'notice'>You feel like you need [name]. You just can't get enough.</span>"
+	return
+
+datum/reagent/proc/addiction_act_stage3(var/mob/living/M as mob)
+	if(prob(30))
+		M << "<span class = 'danger'>You have an intense craving for [name].</span>"
+	return
+
+datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
+	if(prob(30))
+		M << "<span class = 'userdanger'>You're not feeling good at all! You really need some [name].</span>"
+	return
+
 
 datum/reagent/blood
 			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
@@ -135,7 +166,6 @@ datum/reagent/blood/on_merge(var/list/data)
 						preserve += D
 				src.data["viruses"] = preserve
 	return 1
-
 
 datum/reagent/blood/reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
 	if(!istype(T)) return
@@ -641,19 +671,26 @@ datum/reagent/space_cleaner/reaction_obj(var/obj/O, var/volume)
 	else
 		if(O)
 			O.clean_blood()
+			O.color = initial(O.color)
 
 datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 	if(volume >= 1)
 		T.clean_blood()
+		T.color = initial(T.color)
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
 		for(var/mob/living/carbon/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
+	if(istype(T, /turf/simulated/floor))
+		var/turf/simulated/floor/F = T
+		if(volume >= 1)
+			F.dirt = 0
 
 datum/reagent/space_cleaner/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
+		C.color = initial(C.color)
 		if(C.r_hand)
 			C.r_hand.clean_blood()
 		if(C.l_hand)
@@ -689,6 +726,7 @@ datum/reagent/cryptobiolin/on_mob_life(var/mob/living/M as mob)
 	if(!M.confused)
 		M.confused = 1
 	M.confused = max(M.confused, 20)
+	..()
 	return
 
 datum/reagent/impedrezene
@@ -707,7 +745,7 @@ datum/reagent/impedrezene/on_mob_life(var/mob/living/M as mob)
 
 datum/reagent/nanites
 	name = "Nanomachines"
-	id = "nanites"
+	id = "nanomachines"
 	description = "Microscopic construction robots."
 	color = "#535E66" // rgb: 83, 94, 102
 
