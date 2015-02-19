@@ -110,5 +110,11 @@
 
 /obj/item/weapon/gun/energy/gun/turret
 	name = "hybrid turret gun"
-	desc = "A basic hybrid energy gun with two settings: Stun and kill."
+	desc = "A heavy hybrid energy cannon with two settings: Stun and kill."
+	icon_state = "turretlaser"
+	w_class = 5
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	heavy_weapon = 1
+
+obj/item/weapon/gun/energy/gun/turret/update_icon()
+	icon_state = initial(icon_state)

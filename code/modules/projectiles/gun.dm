@@ -30,6 +30,7 @@
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1
 	var/fire_delay = 0
+	var/heavy_weapon = 0
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -135,6 +136,10 @@
 			if(NOGUNS in user.dna.species.specflags)
 				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
 				return 0
+	if(heavy_weapon)
+		if(user.get_inactive_hand())
+			user << "<span class='warning'>[src] is too heavy to use with one hand!</span>"
+			return 0
 	return 1
 
 
