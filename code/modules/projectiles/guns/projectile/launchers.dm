@@ -1,10 +1,10 @@
 //KEEP IN MIND: These are different from gun/grenadelauncher. These are designed to shoot premade rocket and grenade projectiles, not flashbangs or chemistry casings etc.
 //Put handheld rocket launchers here if someone ever decides to make something so hilarious ~Paprika
 
-/obj/item/weapon/gun/projectile/revolver/grenadelauncher//this is only used for underbarrel grenade launchers at the moment, but admins can still spawn it if they feel like being assholes
-	desc = "A break-operated grenade launcher."
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher
+	desc = "A break-action grenade launcher."
 	name = "grenade launcher"
-	icon_state = "dshotgun-sawn"
+	icon_state = "m79"
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
@@ -14,6 +14,11 @@
 	..()
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
+		update_icon()
+
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg
 	desc = "A 6-shot grenade launcher."
@@ -23,6 +28,9 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher/multi
 
 /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg/attack_self()
+	return
+
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg/update_icon()
 	return
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
