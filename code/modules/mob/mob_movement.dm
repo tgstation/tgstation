@@ -69,10 +69,10 @@
 
 
 /client/Center()
-	if (isobj(mob.loc))
+	if(isobj(mob.loc))
 		var/obj/O = mob.loc
-		if (mob.canmove)
-			return O.relaymove(mob, 16)
+		if(mob.canmove)
+			return O.relaymove(mob, 0)
 	return
 
 
