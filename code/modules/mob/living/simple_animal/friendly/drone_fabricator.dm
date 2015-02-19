@@ -26,7 +26,7 @@
 		return
 
 	if(stat & NOPOWER || !produce_drones)
-		if(icon_state != "drone_fab_nopower") icon_state = "drone_fab_nopower"
+		icon_state = "drone_fab_nopower"
 		return
 
 	if(drone_progress >= 100)
@@ -43,7 +43,7 @@
 /obj/machinery/drone_fabricator/examine(mob/user)
 	..(user)
 	if(produce_drones && drone_progress >= 100 && istype(user,/mob/dead) && count_drones() < config.max_maint_drones)
-		user << "<BR><B>A drone is prepared! Click on the machine to create a drone for yourself..</B>"
+		user << "<BR><span class='warning'>A drone is prepared! Click on the machine to create a drone for yourself..</span>"
 
 /obj/machinery/drone_fabricator/proc/count_drones()
 	var/drones = 0
@@ -83,7 +83,7 @@
 		return
 
 	if(jobban_isbanned(user,"pAI"))
-		usr << "<span class='warning'>You are banned from playing synthetics and cannot spawn as a drone.</span>"
+		usr << "<span class='warning'>You are banned from playing drones.</span>"
 		return
 
 	var/deathtime = world.time - user.timeofdeath
