@@ -79,6 +79,10 @@
 
 /obj/machinery/atmospherics/pipe/Destroy()
 	del(parent)
+	for(var/obj/machinery/meter/M in src.loc)
+		if(M.target == src)
+			new /obj/item/pipe_meter(src.loc)
+			qdel(M)
 	if(air_temporary && loc)
 		loc.assume_air(air_temporary)
 
@@ -425,165 +429,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/hidden/blue
 	color=IPIPE_COLOR_BLUE
 	_color = "blue"
-
-/obj/machinery/atmospherics/pipe/tank
-	icon = 'icons/obj/atmospherics/pipe_tank.dmi'
-	icon_state = "intact"
-	name = "Pressure Tank"
-	desc = "A large vessel containing pressurized gas."
-	volume = 2000 //in liters, 1 meters by 1 meters by 2 meters
-	dir = SOUTH
-	initialize_directions = SOUTH
-	density = 1
-	var/obj/machinery/atmospherics/node1
-
-/obj/machinery/atmospherics/pipe/tank/New()
-	initialize_directions = dir
-	..()
-
-
-/obj/machinery/atmospherics/pipe/tank/process()
-	if(!parent)
-		..()
-	else
-		. = PROCESS_KILL
-	/*			if(!node1)
-		parent.mingle_with_turf(loc, 200)
-		if(!nodealert)
-			//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
-			nodealert = 1
-	else if (nodealert)
-		nodealert = 0
-	*/
-
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide
-	name = "Pressure Tank (Carbon Dioxide)"
-
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/New()
-	air_temporary = new
-	air_temporary.volume = volume
-	air_temporary.temperature = T20C
-
-	air_temporary.carbon_dioxide = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-	..()
-
-/obj/machinery/atmospherics/pipe/tank/toxins
-	icon = 'icons/obj/atmospherics/orange_pipe_tank.dmi'
-	name = "Pressure Tank (Plasma)"
-
-/obj/machinery/atmospherics/pipe/tank/toxins/New()
-	air_temporary = new
-	air_temporary.volume = volume
-	air_temporary.temperature = T20C
-
-	air_temporary.toxins = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-	..()
-
-/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b
-	icon = 'icons/obj/atmospherics/red_orange_pipe_tank.dmi'
-	name = "Pressure Tank (Oxygen + Plasma)"
-
-/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b/New()
-	air_temporary = new
-	air_temporary.volume = volume
-	air_temporary.temperature = T0C
-
-	var/datum/gas/oxygen_agent_b/trace_gas = new
-	trace_gas.moles = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-	air_temporary.trace_gases += trace_gas
-
-	..()
-
-/obj/machinery/atmospherics/pipe/tank/oxygen
-	icon = 'icons/obj/atmospherics/blue_pipe_tank.dmi'
-	name = "Pressure Tank (Oxygen)"
-
-/obj/machinery/atmospherics/pipe/tank/oxygen/New()
-	air_temporary = new
-	air_temporary.volume = volume
-	air_temporary.temperature = T20C
-
-	air_temporary.oxygen = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-	..()
-
-/obj/machinery/atmospherics/pipe/tank/nitrogen
-	icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
-	name = "Pressure Tank (Nitrogen)"
-
-/obj/machinery/atmospherics/pipe/tank/nitrogen/New()
-	air_temporary = new
-	air_temporary.volume = volume
-	air_temporary.temperature = T20C
-
-	air_temporary.nitrogen = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-	..()
-
-/obj/machinery/atmospherics/pipe/tank/air
-	icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
-	name = "Pressure Tank (Air)"
-
-/obj/machinery/atmospherics/pipe/tank/air/New()
-	air_temporary = new
-	air_temporary.volume = volume
-	air_temporary.temperature = T20C
-
-	air_temporary.oxygen = (25*ONE_ATMOSPHERE*O2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-	air_temporary.nitrogen = (25*ONE_ATMOSPHERE*N2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-	..()
-
-
-/obj/machinery/atmospherics/pipe/tank/Destroy()
-	if(node1)
-		node1.disconnect(src)
-
-	..()
-
-
-/obj/machinery/atmospherics/pipe/tank/pipeline_expansion()
-	return list(node1)
-
-
-/obj/machinery/atmospherics/pipe/tank/update_icon()
-	if(node1)
-		icon_state = "intact"
-		dir = get_dir(src, node1)
-	else
-		icon_state = "exposed"
-
-
-/obj/machinery/atmospherics/pipe/tank/initialize()
-
-	var/connect_direction = dir
-
-	node1=findConnecting(connect_direction)
-
-	update_icon()
-
-
-/obj/machinery/atmospherics/pipe/tank/disconnect(obj/machinery/atmospherics/reference)
-	if(reference == node1)
-		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			del(parent)
-		node1 = null
-
-	update_icon()
-
-	return null
-
-
-/obj/machinery/atmospherics/pipe/tank/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))
-		return // Coloring pipes.
-	if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
-		user.visible_message("<span class='attack'>[user] has used [W] on \icon[icon] [src]</span>", "<span class='attack'>You use \the [W] on \icon[icon] [src]</span>")
-		var/obj/item/device/analyzer/analyzer = W
-		user.show_message(analyzer.output_gas_scan(air_temporary, src, 0), 1)
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
@@ -1061,10 +906,6 @@
 /obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))
 		return // Coloring pipes.
-	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
-		return ..()
-	if (istype(src, /obj/machinery/atmospherics/unary/vent))
-		return ..()
 
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/red))
 		src._color = "red"
@@ -1090,43 +931,4 @@
 		user << "<span class='notice'>You paint the pipe yellow.</span>"
 		update_icon()
 		return 1
-
-	if (!istype(W, /obj/item/weapon/wrench))
-		return ..()
-	var/turf/T = src.loc
-	if (level==1 && isturf(T) && T.intact)
-		user << "<span class='warning'>You must remove the plating first.</span>"
-		return 1
-	var/datum/gas_mixture/int_air = return_air()
-	var/datum/gas_mixture/env_air = loc.return_air()
-	add_fingerprint(user)
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		if(istype(W, /obj/item/weapon/wrench/socket))
-			user << "<span class='warning'>You begin to open the pressure release valve on the pipe...</span>"
-			if(do_after(user, 50))
-				playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
-				user.visible_message("[user] vents \the [src].",
-									"You have vented \the [src].",
-									"You hear a ratchet.")
-				var/datum/gas_mixture/transit = new
-				transit.add(int_air)
-				transit.divide(parent.members.len) //we get the total pressure over the number of pipes to find gas per pipe
-				env_air.add(transit) //put it in the air
-				del(transit) //remove the carrier
-		else
-			user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
-			return 1
-	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
-	if (do_after(user, 40))
-		user.visible_message( \
-			"[user] unfastens \the [src].", \
-			"<span class='notice'>You have unfastened \the [src].</span>", \
-			"You hear a ratchet.")
-		var/obj/item/pipe/P = getFromPool(/obj/item/pipe,loc)
-		P.New(loc, make_from=src) //new /obj/item/pipe(loc, make_from=src)
-		for (var/obj/machinery/meter/meter in T)
-			if (meter.target == src)
-				new /obj/item/pipe_meter(T)
-				qdel(meter)
-		qdel(src)
+	return ..()

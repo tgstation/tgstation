@@ -14,7 +14,8 @@
 		initialize_directions = dir
 		air_contents = new
 
-		air_contents.volume = 200
+		air_contents.temperature = T0C
+		air_contents.volume = starting_volume
 
 	buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 		dir = pipe.dir
