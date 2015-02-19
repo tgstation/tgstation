@@ -400,11 +400,12 @@
 			if(src.get_active_hand() == W)
 				src.u_equip(W)
 			W.loc = src.back
+			return
 		else
 			src << "\red You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"
 			return
 
-	update_hidden_item_icons(W, redraw_mob)
+	update_hidden_item_icons(W)
 
 	W.layer = 20
 	W.equipped(src, slot)
