@@ -487,7 +487,8 @@
 	else if (W == legcuffed)
 		legcuffed = null
 		update_inv_legcuffed()
-	..()
+	else
+	 ..()
 
 	return
 /*
