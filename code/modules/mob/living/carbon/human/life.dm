@@ -396,6 +396,8 @@
 			if( prob(10) && health && !hal_crit )
 				spawn(0)
 					emote("snore")
+		else if (status_flags & FAKEDEATH)
+			stat = UNCONSCIOUS
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS
