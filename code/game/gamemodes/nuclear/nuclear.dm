@@ -173,6 +173,7 @@
 	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol(synd_mob), slot_belt)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/syndie_voucher(synd_mob), slot_r_hand)
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
 	U.hidden_uplink.uplink_owner="[synd_mob.key]"
