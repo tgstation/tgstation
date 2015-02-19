@@ -191,6 +191,8 @@
 	if(istype(W, /obj/item/device/multitool))
 		update_multitool_menu(user)
 		return 1
+	if(istype(W, /obj/item/device/device_analyser))
+		return 0
 	user.drop_item(src)
 	return 0
 
@@ -206,6 +208,10 @@
 			<a href="?src=\ref[src];setdir=[EAST]" title="East">&rarr;</a>
 			<a href="?src=\ref[src];setdir=[SOUTH]" title="South">&darr;</a>
 			<a href="?src=\ref[src];setdir=[WEST]" title="West">&larr;</a>
+			<a href="?src=\ref[src];setdir=[NORTHEAST]" title="Northeast">&#8625;</a>
+			<a href="?src=\ref[src];setdir=[NORTHWEST]" title="Northwest">&#8624;</a>
+			<a href="?src=\ref[src];setdir=[SOUTHEAST]" title="Southeast">&#8627;</a>
+			<a href="?src=\ref[src];setdir=[SOUTHWEST]" title="Southwest">&#8626;</a>
 		</li>
 		<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=1367">Reset</a>)</li>
 		<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[dis_id_tag]</a></li>
@@ -386,7 +392,7 @@
 	return ..()
 
 /obj/machinery/conveyor_switch/oneway
-	var/convdir = 1 //Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.)
+	var/convdir = 1 //Set to 1 or -1 depending on which way you want the conveyor to go. (In other words keep at 1 and set the proper dir on the belts.)
 	desc = "A conveyor control switch. It appears to only go in one direction."
 
 // attack with hand, switch position
