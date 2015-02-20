@@ -49,6 +49,7 @@
 /obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user , proximity)
 	if(busy)
 		return
+	if(reject_bad_chem(target,user)) return
 	if(!proximity) return
 	if(!target.reagents) return
 
@@ -130,6 +131,7 @@
 				return
 			if(istype(target, /obj/item/weapon/implantcase/chem))
 				return
+
 
 			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
 				user << "<span class='notice'>You cannot directly fill [target].</span>"
@@ -239,3 +241,5 @@
 
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
 	list_reagents = list("chloralhydrate" = 50)
+
+
