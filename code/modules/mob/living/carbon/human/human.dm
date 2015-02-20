@@ -637,3 +637,9 @@
 	if(mob_negates_gravity())
 		return
 	..()
+
+
+
+/mob/living/carbon/human/generateStaticOverlay()
+	staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
+	staticOverlay.override = 1

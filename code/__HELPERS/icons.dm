@@ -798,3 +798,12 @@ The _flatIcons list is a cache for generated icon files.
 		var/image/I = O
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 	return composite
+
+
+/proc/getStaticIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(255,255,255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/static_icon = new/icon('icons/effects/effects.dmi', "static_base")
+	static_icon.AddAlphaMask(flat_icon)
+	return static_icon

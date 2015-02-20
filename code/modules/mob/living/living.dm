@@ -8,11 +8,30 @@ Sorry Giacom. Please don't be mad :(
 		push_mob_back(src, A.push_dir)
 */
 
+
+/mob/living/New()
+	. = ..()
+	generateStaticOverlay()
+	for(var/mob/living/simple_animal/drone/D in player_list)
+		if(D && D.seeStatic)
+			D.staticOverlays |= staticOverlay
+			D.client.images |= staticOverlay
+
 /mob/living/Destroy()
-//	if(mind)
-//		mind.current = null
-	..()
+	. = ..()
+
+	for(var/mob/living/simple_animal/drone/D in player_list)
+		D.staticOverlays.Remove(staticOverlay)
+		D.client.images.Remove(staticOverlay)
+	del(staticOverlay)
+
 	del(src)
+
+
+/mob/living/proc/generateStaticOverlay()
+	staticOverlay = image(getStaticIcon(new/icon(icon, icon_state)), loc = src)
+	staticOverlay.override = 1
+
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
