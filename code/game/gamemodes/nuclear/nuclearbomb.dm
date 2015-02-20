@@ -2,7 +2,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb
 	name = "nuclear fission explosive"
-	desc = "Uh oh. RUN!!!!"
+	desc = "You probably shouldn't stick around to see if this is armed."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
 	density = 1
@@ -160,6 +160,7 @@ var/bomb_set
 		if ((M.client && M.machine == src))
 			src.attack_hand(M)
 
+
 /obj/machinery/nuclearbomb/ex_act(severity, target)
 	return
 
@@ -224,6 +225,21 @@ var/bomb_set
 			world.Reboot()
 			return
 	return
+
+/*
+This is here to make the tiles around the station mininuke change when it's armed.
+*/
+
+/obj/machinery/nuclearbomb/selfdestruct/proc/SetTurfs()
+	if(loc == initial(loc))
+		var/text_icon_state = "[timing ? "rcircuitanim" : "gcircuit"]"
+		for(var/turf/simulated/floor/bluegrid/T in orange(src, 1))
+			T.icon_state = text_icon_state
+
+/obj/machinery/nuclearbomb/selfdestruct/Topic()
+        ..()
+        SetTurfs()
+
 
 
 //==========DAT FUKKEN DISK===============
