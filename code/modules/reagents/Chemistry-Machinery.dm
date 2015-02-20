@@ -1488,5 +1488,5 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
 	uiname = "Booze Dispenser"
-	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale")
+	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequila","vermouth","cognac","ale")
 
