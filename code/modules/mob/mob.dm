@@ -242,7 +242,7 @@
 						equip_to_slot(W, slot, redraw_mob)
 						u_equip(wearing)
 						put_in_active_hand(wearing)
-					if(!H.s_store.mob_can_equip(src, slot_s_store, 1))
+					if(H.s_store && !H.s_store.mob_can_equip(src, slot_s_store, 1))
 						u_equip(H.s_store)
 		return 1
 	else
