@@ -54,6 +54,19 @@
 			update_overlays(S)
 			user << "<span class='notice'>You add the [I.name] to the [name].</span>"
 			update_name(S)
+	else if(istype(I, /obj/item/weapon/pen))
+		var/txt = stripped_input(user, "What would you like the food to be called?", "Food Naming", "", 30)
+		if(txt)
+			ingMax = ingredients.len
+			user << "<span class='notice'>You add a last touch to the dish by renaming it.</span>"
+			customname = txt
+			if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich))
+				var/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/S = I
+				if(S.finished)
+					name = "[customname] sandwich"
+					return
+			name = "[customname] [initial(name)]"
+
 
 	else . = ..()
 	return

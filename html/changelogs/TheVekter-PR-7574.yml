@@ -1,7 +1,0 @@
-author: Vekter
-
-delete-after: True
-
-  - rscadd: "Added shot glasses! Can be obtained from the Booze-o-Mat."
-  - rscadd: "A new premium vodka has been added to the game, hidden in a special spot."
-  - tweak: "Due to constant attempts to break into the station's safe, the contents have been relocated and have not been replaced. We promise. There is absolutely NO reason to break into the vault's safe anymore."

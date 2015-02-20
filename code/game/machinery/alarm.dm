@@ -664,10 +664,7 @@ table tr:first-child th:first-child { border: none;}
 	if(panel_open)
 		switch(buildstage)
 			if(2)
-				if(wires.wires_status == (2 ** wires.wire_count) - 1) // All wires cut
-					icon_state = "alarm_b2"
-				else
-					icon_state = "alarmx"
+				icon_state = "alarmx"
 			if(1)
 				icon_state = "alarm_b2"
 			if(0)
@@ -773,7 +770,7 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
 	switch(buildstage)
 		if(2)
-			if(istype(W, /obj/item/weapon/wirecutters) && wires.wires_status == (2 ** wires.wire_count) - 1)   //this checks for all wires to be cut, disregard the ammount of wires, binary fuckery with the wires_status
+			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && (wires.wires_status == 27 || wires.wires_status == 31))   //this checks for all wires to be cut, except the syphon wire which is optional.
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You cut the final wires."
 				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil( src.loc )
@@ -803,12 +800,12 @@ table tr:first-child th:first-child { border: none;}
 						user << "<span class='warning'>Access denied.</span>"
 				return
 		if(1)
-			if(istype(W, /obj/item/weapon/crowbar) && wires.wires_status == (2 ** wires.wire_count) - 1)
+			if(istype(W, /obj/item/weapon/crowbar))
 				user.visible_message("<span class='warning'>[user.name] removes the electronics from [src.name].</span>",\
 									"You start prying out the circuit.")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if (do_after(user, 20))
-					if (buildstage ==1)
+					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
 						new /obj/item/weapon/airalarm_electronics( src.loc )
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -828,6 +825,11 @@ table tr:first-child th:first-child { border: none;}
 						cable.use(5)
 						user << "<span class='notice'>You wire the air alarm.</span>"
 						wires.wires_status = 0
+						aidisabled = 0
+						locked = 1
+						mode = 1
+						shorted = 0
+						post_alert(0)
 						buildstage = 2
 						update_icon()
 				return
