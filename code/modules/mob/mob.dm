@@ -1019,7 +1019,7 @@ var/list/slot_equipment_priority = list( \
 				stat(null, "\tqdel - [garbageCollector.del_everything ? "off" : "on"]")
 				stat(null, "\ton queue - [garbageCollector.queue.len]")
 				stat(null, "\ttotal delete - [garbageCollector.dels_count]")
-				stat(null, "\tsoft delete - [garbageCollector.dels_count - garbageCollector.hard_dels]")
+				stat(null, "\tsoft delete - [garbageCollector.soft_dels]")
 				stat(null, "\thard delete - [garbageCollector.hard_dels]")
 			else
 				stat(null, "Garbage Controller is not running.")
