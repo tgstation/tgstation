@@ -25,26 +25,26 @@
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
 	..()
 
-/mob/living/carbon/alien/humanoid/queen/handle_regular_hud_updates()
-	..() //-Yvarov
-
+/mob/living/carbon/alien/humanoid/queen/handle_hud_icons_health()
 	if (src.healths)
 		if (src.stat != 2)
 			switch(health)
 				if(250 to INFINITY)
 					src.healths.icon_state = "health0"
-				if(175 to 250)
+				if(200 to 250)
 					src.healths.icon_state = "health1"
-				if(100 to 175)
+				if(150 to 200)
 					src.healths.icon_state = "health2"
-				if(50 to 100)
+				if(100 to 150)
 					src.healths.icon_state = "health3"
-				if(0 to 50)
+				if(50 to 100)
 					src.healths.icon_state = "health4"
-				else
+				if(0 to 50)
 					src.healths.icon_state = "health5"
+				else
+					src.healths.icon_state = "health6"
 		else
-			src.healths.icon_state = "health6"
+			src.healths.icon_state = "health7"
 
 /mob/living/carbon/alien/humanoid/queen/movement_delay()
 	. = ..()

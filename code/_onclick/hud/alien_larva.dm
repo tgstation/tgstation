@@ -60,7 +60,7 @@
 	mymob.blind.layer = 0
 
 	mymob.flash = new /obj/screen()
-	mymob.flash.icon = 'icons/mob/screen_alien.dmi'
+	mymob.flash.icon = 'icons/mob/screen_gen.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
 	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"

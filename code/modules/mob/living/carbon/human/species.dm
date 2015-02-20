@@ -390,7 +390,6 @@
 	////////
 
 /datum/species/proc/handle_chemicals_in_body(var/mob/living/carbon/human/H)
-	if(H.reagents) H.reagents.metabolize(H)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.disabilities & FAT)
@@ -442,22 +441,6 @@
 			H << "<span class='notice'>You no longer feel vigorous.</span>"
 		H.metabolism_efficiency = 1
 
-	if (H.drowsyness)
-		H.drowsyness--
-		H.eye_blurry = max(2, H.eye_blurry)
-		if (prob(5))
-			H.sleeping += 1
-			H.Paralyse(5)
-
-	H.confused = max(0, H.confused - 1)
-	// decrement dizziness counter, clamped to 0
-	if(H.resting)
-		H.dizziness = max(0, H.dizziness - 15)
-		H.jitteriness = max(0, H.jitteriness - 15)
-	else
-		H.dizziness = max(0, H.dizziness - 3)
-		H.jitteriness = max(0, H.jitteriness - 3)
-
 	H.updatehealth()
 
 	return
@@ -475,13 +458,6 @@
 
 		if(H.seer)
 			H.see_invisible = SEE_INVISIBLE_OBSERVER
-
-		if(H.mind)
-			if(H.mind.changeling)
-				H.hud_used.lingchemdisplay.invisibility = 0
-				H.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[H.mind.changeling.chem_charges]</font></div>"
-			else
-				H.hud_used.lingchemdisplay.invisibility = 101
 
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))
@@ -617,29 +593,17 @@
 
 /datum/species/proc/handle_mutations_and_radiation(var/mob/living/carbon/human/H)
 
-	if (H.radiation && !(RADIMMUNE in specflags))
-		if (H.radiation > 100)
-			H.radiation = 100
-			H.Weaken(10)
-			H << "<span class='danger'>You feel weak.</span>"
-			H.emote("collapse")
+	if(!(RADIMMUNE in specflags))
+		if(H.radiation)
+			if (H.radiation > 100)
+				H.Weaken(10)
+				H << "<span class='danger'>You feel weak.</span>"
+				H.emote("collapse")
 
-		if (H.radiation < 0)
-			H.radiation = 0
-
-		else
 			switch(H.radiation)
-				if(0 to 50)
-					H.radiation--
-					if(prob(25))
-						H.adjustToxLoss(1)
-						H.updatehealth()
 
 				if(50 to 75)
-					H.radiation -= 2
-					H.adjustToxLoss(1)
 					if(prob(5))
-						H.radiation -= 5
 						H.Weaken(3)
 						H << "<span class='danger'>You feel weak.</span>"
 						H.emote("collapse")
@@ -650,17 +614,14 @@
 								H.facial_hair_style = "Shaved"
 								H.hair_style = "Bald"
 								H.update_hair()
-					H.updatehealth()
 
 				if(75 to 100)
-					H.radiation -= 3
-					H.adjustToxLoss(3)
 					if(prob(1))
 						H << "<span class='danger'>You mutate!</span>"
 						randmutb(H)
 						domutcheck(H,null)
 						H.emote("gasp")
-					H.updatehealth()
+		return 1
 
 ////////////////
 // MOVE SPEED //
@@ -1041,20 +1002,9 @@
 				breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
 				breath = H.loc.remove_air(breath_moles)
+
 				// Handle chem smoke effect  -- Doohl
-				var/block = 0
-				if(H.wear_mask)
-					if(H.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
-						block = 1
-				if(H.glasses)
-					if(H.glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
-						block = 1
-				if(H.head)
-					if(H.head.flags & BLOCK_GAS_SMOKE_EFFECT)
-						block = 1
-
-				if(!block)
-
+				if(!H.has_smoke_protection())
 					for(var/obj/effect/effect/chem_smoke/smoke in view(1, H))
 						if(smoke.reagents.total_volume)
 							smoke.reagents.reaction(H, INGEST)
@@ -1068,12 +1018,12 @@
 				var/obj/location_as_object = H.loc
 				location_as_object.handle_internal_lifeform(H, 0)
 
-	handle_breath(breath, H)
+	check_breath(breath, H)
 
 	if(breath)
 		H.loc.assume_air(breath)
 
-/datum/species/proc/handle_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
+/datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
 		return
 
@@ -1172,11 +1122,11 @@
 				if(prob(20))
 					spawn(0) H.emote(pick("giggle", "laugh"))
 
-	handle_temperature(breath, H)
+	handle_breath_temperature(breath, H)
 
 	return 1
 
-/datum/species/proc/handle_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
+/datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
 	if( (abs(310.15 - breath.temperature) > 50) && !(mutations_list[COLDRES] in H.dna.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
 		if(breath.temperature < 260.15)
 			if(prob(20))

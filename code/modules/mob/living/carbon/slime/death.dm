@@ -25,3 +25,6 @@
 		ticker.mode.check_win()
 
 	return ..(gibbed)
+
+/mob/living/carbon/slime/gib()
+	qdel(src)
