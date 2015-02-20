@@ -16,6 +16,18 @@
 			return 0
 	return 1
 
+//Objectives revamped in February 2015 by Deity Link #vgstation
+
+//Cult round flow:
+//* at the beginning of the round, cultists aren't able to summon Nar-Sie.
+//* during the first phase, cultists start the round with only one objective: either "bloodspill", "convert", or "sacrifice"
+//* once they complete that objective, the game checks how well the cult is performing (Are there still at least 4 of them? Are they getting outnumbered by loyalty implanted people?)
+//* if the cult is performing well, the game will try to give them another objective among the above three.
+//* if the cult is in bad shape, or all objectives have been completed, or none of the remaining possible objectives are feasible, then the game let's them summon Nar-Sie
+//* once Nar-Sie is summonned, the shuttle automatically arrives after 10 minutes (even if the shuttle was already on its way) and can't be recalled
+//* the cultists get one last bonus objective to complete before the round ends: either "harvest", "hijack", or "massacre"
+
+//* the cult "wins" as soon as it summons Nar-Sie.
 
 /datum/game_mode/cult
 	name = "cult"
@@ -27,8 +39,8 @@
 	required_enemies = 3
 	recommended_enemies = 4
 
-	uplink_welcome = "Nar-Sie Uplink Console:"
-	uplink_uses = 10
+	uplink_welcome = "Nar-Sie Uplink Console:"//what?
+	uplink_uses = 10//whaaaat?
 
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0
@@ -39,13 +51,29 @@
 
 	var/list/objectives = list()
 
-	var/const/acolytes_needed_base = 3 //Minimum acolytes needed for survive objective. Player-scaled later, so pick with caution. Should be starting cultists logically
-	var/acolytes_needed = 3 //Scaled later on, failsafe
 	var/const/min_cultists_to_start = 3
 	var/const/max_cultists_to_start = 4
 	var/acolytes_survived = 0
 	var/ext_survivors = 0
 
+	var/narsie_condition_cleared = 0	//allows Nar-Sie to be summonned during cult rounds. set to 1 once the cult reaches the second phase.
+	var/current_objective = 1	//equals the number of cleared objectives + 1
+	var/list/bloody_floors = list()
+	var/spilltarget = 150	//how many floor tiles must be covered in blood to complete the bloodspill objective
+	var/convert_target = 0	//how many members the cult needs to reach to complete the convert objective
+	var/harvested = 0
+
+	var/list/sacrificed = list()	//contains the mind of the sacrifice target ONCE the sacrifice objective has been completed
+	var/mass_convert = 0	//set to 1 if the convert objective has been accomplised once that round
+	var/spilled_blood = 0	//set to 1 if the bloodspill objective has been accomplised once that round
+	var/bonus = 0	//set to 1 if the cult has completed the bonus (third phase) objective (harvest, hijack, massacre)
+
+	var/harvest_target = 10
+	var/massacre_target = 5
+
+	var/escaped_shuttle = 0
+	var/escaped_pod = 0
+	var/survivors = 0
 
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
@@ -55,9 +83,6 @@
 /datum/game_mode/cult/pre_setup()
 	if(istype(ticker.mode, /datum/game_mode/mixed))
 		mixed = 1
-
-	objectives += pick("survive", "eldergod") //Either you escape, or you don't
-	objectives += "sacrifice" //This one always fire. If you want more variety, add more objectives
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -75,59 +100,209 @@
 		cultists_possible -= cultist
 		cult += cultist
 
-	ext_survivors = round(num_players()/4)
-
 	return (cult.len > 0)
 
+/datum/game_mode/cult/proc/blood_check()
+	if((objectives[current_objective] == "bloodspill") && (bloody_floors.len >= spilltarget) && !spilled_blood)
+		spilled_blood = 1
+		additional_phase()
 
-/datum/game_mode/cult/post_setup()
-	acolytes_needed = acolytes_needed_base + ext_survivors
-	modePlayer += cult
-	if("sacrifice" in objectives)
-		var/list/possible_targets = get_unconvertables()
+/datum/game_mode/cult/proc/check_numbers()
+	if((objectives[current_objective] == "convert") && (cult.len >= convert_target) && !mass_convert)
+		mass_convert = 1
+		additional_phase()
 
-		if(!possible_targets.len)
-			for(var/mob/living/carbon/human/player in player_list)
-				if(player.mind && !(player.mind in cult))
-					possible_targets += player.mind
+/datum/game_mode/cult/proc/first_phase()
 
-		if(possible_targets.len > 0)
-			sacrifice_target = pick(possible_targets)
-		if(!sacrifice_target)
-			for(var/datum/mind/possible_target in ticker.minds)
-				if(ishuman(possible_target.current) && (possible_target.current.stat != 2) && !(possible_target in cult))
-					possible_targets += possible_target
-			sacrifice_target = pick(possible_targets)
+	var/new_objective = pick_objective()
+
+	objectives += new_objective
+
+	var/explanation
+
+	switch(new_objective)
+		if("convert")
+			explanation = "We must increase our influence before we can summon Nar-Sie. Convert [convert_target] crew members. Take it slowly to avoid raising suspicions."
+		if("bloodspill")
+			explanation = "We must prepare this place for the Geometer of Blood's coming. Spill blood and gibs over [spilltarget] floor tiles."
+		if("sacrifice")
+			explanation = "We need to sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role], for his blood is the key that will lead our master to this realm. You will need 3 cultists around a Sacrifice rune (Hell Blood Join) to perform the ritual."
+
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
 		grant_runeword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
-		cult_mind.current << "<span class='sinister'>You are a member of the cult!</span>"
-		memoize_cult_objectives(cult_mind)
 		cult_mind.special_role = "Cultist"
+		cult_mind.current << "<span class='sinister'>You are a member of the cult!</span>"
+		//memoize_cult_objectives(cult_mind)
+
+
+
+		cult_mind.current << "<B>Objective #[current_objective]</B>: [explanation]"
+		cult_mind.memory += "<B>Objective #[current_objective]</B>: [explanation]<BR>"
+
+/datum/game_mode/cult/proc/additional_phase()
+	current_objective++
+
+	var/new_objective = "eldergod"
+	//the idea here is that if the cult performs well, the should get more objectives before they can summon Nar-Sie.
+	if(cult.len >= 4)//if there are less than 4 remaining cultists, they get a free pass to the summon objective.
+		var/list/unconvertables = get_unconvertables()
+		if(unconvertables.len < (cult.len * 2))//if cultists are getting radically outnumbered, they get a free pass to the summon objective.
+			new_objective = pick_objective()
+
+	if(!sacrificed.len && (new_objective != "sacrifice"))
+		sacrifice_target = null
+
+	if(new_objective == "eldergod")
+		second_phase()
+		return
+	else
+		objectives += new_objective
+
+		var/explanation
+
+		switch(new_objective)
+			if("convert")
+				explanation = "We must increase our influence before we can summon Nar-Sie. Convert [convert_target] crew members. Take it slowly to avoid raising suspicions."
+			if("bloodspill")
+				explanation = "We must prepare this place for the Geometer of Blood's coming. Spill blood and gibs over [spilltarget] floor tiles."
+			if("sacrifice")
+				explanation = "We need to sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role], for his blood is the key that will lead our master to this realm. You will need 3 cultists around a Sacrifice rune (Hell Blood Join) to perform the ritual."
+
+		for(var/datum/mind/cult_mind in cult)
+			cult_mind.current << "<span class='sinister'>You and your acolytes have completed your task, but this place requires yet more preparation!</span>"
+			cult_mind.current << "<B>Objective #[current_objective]</B>: [explanation]"
+			cult_mind.memory += "<B>Objective #[current_objective]</B>: [explanation]<BR>"
+
+/datum/game_mode/cult/proc/second_phase()
+	narsie_condition_cleared = 1
+
+	objectives += "eldergod"
+
+	var/explanation = "Summon Nar-Sie via the use of the Tear Reality rune (Hell Join Self). You will need 9 cultists standing on and around the rune to summon Him."
+
+	for(var/datum/mind/cult_mind in cult)
+		cult_mind.current << "<span class='sinister'>You and your acolytes have succeeded in preparing the station for the ultimate ritual!</span>"
+		cult_mind.current << "<B>Objective #[current_objective]</B>: [explanation]"
+		cult_mind.memory += "<B>Objective #[current_objective]</B>: [explanation]<BR>"
+
+/datum/game_mode/cult/proc/third_phase()
+	current_objective++
+
+	sleep(10)
+
+	var/last_objective = pick_bonus_objective()
+
+	objectives += last_objective
+
+	var/explanation
+
+	switch(last_objective)
+		if("harvest")
+			explanation = "The Geometer of Blood hungers for his first meal of this never-ending day. Offer him [harvest_target] humans in sacrifice."
+		if("hijack")
+			explanation = "Nar-Sie wishes for his troops to start the assault on Centcom immediately. Hijack the escape shuttle and don't let a single non-cultist board it."
+		if("massacre")
+			explanation = "Nar-Sie wants to watch you as you massacre the remaining humans on the station (until less than [massacre_target] humans are left alive)."
+
+	for(var/datum/mind/cult_mind in cult)
+		cult_mind.current << "<B>Objective #[current_objective]</B>: [explanation]"
+		cult_mind.memory += "<B>Objective #[current_objective]</B>: [explanation]<BR>"
+
+/datum/game_mode/cult/post_setup()
+	modePlayer += cult
+
+	first_phase()
+
 	if(!mixed)
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept()
 	..()
 
+/datum/game_mode/cult/proc/pick_objective()
+	var/list/possible_objectives = list()
+
+	if(!spilled_blood && (bloody_floors.len < spilltarget))
+		possible_objectives |= "bloodspill"
+
+	if(!sacrificed.len)
+		var/list/possible_targets = list()
+		for(var/mob/living/carbon/human/player in player_list)
+			if(player.mind && !is_convertable_to_cult(player.mind) && (player.stat != DEAD))
+				possible_targets += player.mind
+		if(!possible_targets.len)
+			//There are no living Unconvertables on the station. Looking for a Sacrifice Target among the ordinary crewmembers
+			for(var/mob/living/carbon/human/player in player_list)
+				if(player.mind && !(player.mind in cult))
+					possible_targets += player.mind
+		if(possible_targets.len > 0)
+			sacrifice_target = pick(possible_targets)
+			possible_objectives |= "sacrifice"
+		//else
+			//Couldn't pick a Sacrifice Target among the ordinary crewmembers, what the hell?
+
+	if(!mass_convert)
+		var/living_crew = 0
+		var/living_cultists = 0
+		for(var/mob/living/L in player_list)
+			if(L.stat != DEAD)
+				if(L.mind in cult)
+					living_cultists++
+				else
+					if(istype(L, /mob/living/carbon))
+						living_crew++
+
+		var/total = living_crew + living_cultists
+
+		if((living_cultists * 2) < total)
+			if ((total > 15) && (total < 50))
+				possible_objectives |= "convert"
+				convert_target = round(total / 2)
+
+	if(!possible_objectives.len)//No more possible objectives, time to summon Nar-Sie
+		return "eldergod"
+	else
+		return pick(possible_objectives)
+
+/datum/game_mode/cult/proc/pick_bonus_objective()
+	var/list/possible_objectives = list()
+
+	var/living_crew = 0
+	for(var/mob/living/carbon/C in player_list)
+		if(C.stat != DEAD)
+			if(!(C.mind in cult))
+				var/turf/T = get_turf(C)
+				if(T.z == map.zMainStation)	//we're only interested in the remaining humans on the station
+					living_crew++
+
+	if(living_crew > 5)
+		possible_objectives |= "massacre"
+
+	if(living_crew > 10)
+		possible_objectives |= "harvest"
+
+	possible_objectives |= "hijack"	//we need at least one objective guarranted to fire
+
+	return pick(possible_objectives)
+
 
 /datum/game_mode/cult/proc/memoize_cult_objectives(var/datum/mind/cult_mind)
+	cult_mind.current << "The convert rune is Join Blood Self"
+	cult_mind.memory += "The convert rune is Join Blood Self<BR>"
 	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
 		var/explanation
 		switch(objectives[obj_count])
-			if("survive")
-				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
+			if("convert")
+				explanation = "We must increase our influence before we can summon Nar-Sie. Convert [convert_target] crew members. Take it slowly to avoid raising suspicions."
+			if("bloodspill")
+				explanation = "We must prepare this place for the Geometer of Blood's coming. Spill blood and gibs over [spilltarget] floor tiles."
 			if("sacrifice")
-				if(sacrifice_target)
-					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell Blood Join) and three cultists to perform a sacrifice."
-				else
-					explanation = "Free objective."
+				explanation = "We need to sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role], for his blood is the key that will lead our master to this realm. You will need 3 cultists around a Sacrifice rune (Hell Blood Join) to perform the ritual."
 			if("eldergod")
-				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell Join Self). You will need nine cultists standing on and around the rune to summon Him."
+				explanation = "Summon Nar-Sie via the use of the Tear Reality rune (Hell Join Self). You will need 9 cultists standing on and around the rune to summon Him."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-	cult_mind.current << "The convert rune is join blood self"
-	cult_mind.memory += "The convert rune is join blood self<BR>"
 
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
@@ -181,6 +356,9 @@
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult += cult_mind
 		update_cult_icons_added(cult_mind)
+		if(name == "cult")
+			var/datum/game_mode/cult/C = src
+			C.check_numbers()
 		return 1
 
 
@@ -257,59 +435,82 @@
 			ucs += player.mind
 	return ucs
 
+/datum/game_mode/cult/proc/bonus_check()
+	if(universe.name == "Hell Rising")
+		switch(objectives[current_objective])
+			if("harvest")
+				if(harvested >= harvest_target)
+					bonus = 1
 
-/datum/game_mode/cult/proc/check_cult_victory()
-	var/cult_fail = 0
-	if(objectives.Find("survive"))
-		cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
-	if(objectives.Find("eldergod"))
-		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
-	if(objectives.Find("sacrifice"))
-		if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
-			cult_fail++
+			if("hijack")
+				for(var/mob/living/L in player_list)
+					if(L.stat != DEAD)
+						if(!(L.mind in cult))
+							var/turf/T = get_turf(L)
+							if(istype(T.loc, /area/shuttle/escape/centcom))
+								escaped_shuttle++
+							else if(istype(T.loc, /area/shuttle/escape_pod1/centcom) || istype(T.loc, /area/shuttle/escape_pod2/centcom) || istype(T.loc, /area/shuttle/escape_pod3/centcom) || istype(T.loc, /area/shuttle/escape_pod5/centcom))
+								escaped_pod++
+				if(!escaped_shuttle)
+					bonus = 1
 
-	return cult_fail //if any objectives aren't met, failure
-
-
-/datum/game_mode/cult/proc/check_survive()
-	acolytes_survived = 0
-	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat!=2)
-			var/area/A = get_area(cult_mind.current )
-			if ( is_type_in_list(A, centcom_areas))
-				acolytes_survived++
-	if(acolytes_survived>=acolytes_needed)
-		return 0
-	else
-		return 1
-
+			if("massacre")
+				for(var/mob/living/carbon/C in player_list)
+					if(C.stat != DEAD)
+						if(!(C.mind in cult))
+							var/turf/T = get_turf(C)
+							if(T.z == map.zMainStation)	//we're only interested in the remaining humans on the station
+								survivors++
+				if(survivors < massacre_target)
+					bonus = 1
 
 /datum/game_mode/cult/declare_completion()
 
-	if(!check_cult_victory())
-		feedback_set_details("round_end_result","win - cult win")
-		feedback_set("round_end_result",acolytes_survived)
-		world << "\red <FONT size = 3><B> The cult wins! It has succeeded in serving its dark masters!</B></FONT>"
-	else
-		feedback_set_details("round_end_result","loss - staff stopped the cult")
-		feedback_set("round_end_result",acolytes_survived)
-		world << "\red <FONT size = 3><B> The staff managed to stop the cult!</B></FONT>"
+	bonus_check()
 
-	var/text = "<b>Cultists escaped:</b> [acolytes_survived]"
+	if(universe.name == "Hell Rising")
+		if(bonus)
+			feedback_set_details("round_end_result","win - narsie summoned - all objectives completed")
+			world << "<FONT size = 3><B>Cult Total Victory!</B></FONT>"
+			world << "<B>The Cult has summoned Nar-Sie and fulfilled all of his requests</B>"
+		else
+			feedback_set_details("round_end_result","win - narsie summoned")
+			world << "<FONT size = 3><B>Cult Major Victory!</B></FONT>"
+			world << "<B>The Cult has managed to summon Nar-Sie</B>"
+	else
+		if(current_objective > 1)
+			feedback_set_details("round_end_result","halfwin - some objectives completed")
+			world << "<FONT size = 3><B>Crew Minor Victory!</B></FONT>"
+			world << "<B>The Cult didn't summon Nar-Sie in time but still managed to fulfill some of his requests.</B>"
+		else
+			feedback_set_details("round_end_result","loss - no objective done")
+			world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
+			world << "<B>The Staff has managed to stop the Cult</B>"
+
+	var/text = "<b>Objectives Completed:</b> [current_objective - 1 + bonus]"
 
 	if(objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"
 		for(var/obj_count=1, obj_count <= objectives.len, obj_count++)
 			var/explanation
 			switch(objectives[obj_count])
-				if("survive")
-					if(!check_survive())
-						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <font color='green'><B>Success!</B></font>"
-						feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
+				if("convert")//convert half the crew
+					if(obj_count < objectives.len)
+						explanation = "Convert [convert_target] crewmembers ([cult.len] cultists at round end). <font color='green'><B>Success!</B></font>"
+						feedback_add_details("cult_objective","cult_convertion|SUCCESS")
 					else
-						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <font color='red'>Fail.</font>"
-						feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
-				if("sacrifice")
+						explanation = "Convert [convert_target] crewmembers ([cult.len] total cultists). <font color='red'><B>Fail!</B></font>"
+						feedback_add_details("cult_objective","cult_convertion|FAIL")
+
+				if("bloodspill")//cover a large portion of the station in blood
+					if(obj_count < objectives.len)
+						explanation = "Cover [spilltarget] tiles of the station in blood ([bloody_floors.len] tiles covered at round end). <font color='green'><B>Success!</B></font>"
+						feedback_add_details("cult_objective","cult_bloodspill|SUCCESS")
+					else
+						explanation = "Cover [spilltarget] tiles of the station in blood ([bloody_floors.len] tiles covered). <font color='red'><B>Fail!</B></font>"
+						feedback_add_details("cult_objective","cult_bloodspill|FAIL")
+
+				if("sacrifice")//sacrifice a high value target
 					if(sacrifice_target)
 						if(sacrifice_target in sacrificed)
 							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <font color='green'><B>Success!</B></font>"
@@ -320,13 +521,39 @@
 						else
 							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <font color='red'>Fail (Gibbed).</font>"
 							feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
-				if("eldergod")
-					if(!eldergod)
+
+				if("eldergod")//summon narsie
+					if(universe.name == "Hell Rising")
 						explanation = "Summon Nar-Sie. <font color='green'><B>Success!</B></font>"
 						feedback_add_details("cult_objective","cult_narsie|SUCCESS")
 					else
 						explanation = "Summon Nar-Sie. <font color='red'>Fail.</font>"
 						feedback_add_details("cult_objective","cult_narsie|FAIL")
+
+				if("harvest")
+					if(bonus)
+						explanation = "Offer [harvest_target] humans for Nar-Sie's first meal of the day. ([harvested] eaten) <font color='green'><B>Success!</B></font>"
+						feedback_add_details("cult_objective","cult_harvest|SUCCESS")
+					else
+						explanation = "Offer [harvest_target] humans for Nar-Sie's first meal of the day. ([harvested] eaten) <font color='red'><B>Fail!</B></font>"
+						feedback_add_details("cult_objective","cult_harvest|FAIL")
+
+				if("hijack")
+					if(bonus)
+						explanation = "Do not let a single non-cultist board the Escape Shuttle. ([escaped_shuttle] escaped on the shuttle) ([escaped_pod] escaped on pods) <font color='green'><B>Success!</B></font>"
+						feedback_add_details("cult_objective","cult_hijack|SUCCESS")
+					else
+						explanation = "Do not let a single non-cultist board the Escape Shuttle. ([escaped_shuttle] escaped on the shuttle) ([escaped_pod] escaped on pods) <font color='red'><B>Fail!</B></font>"
+						feedback_add_details("cult_objective","cult_hijack|FAIL")
+
+				if("massacre")
+					if(bonus)
+						explanation = "Massacre the crew until less than [massacre_target] humans are left on the station. ([survivors] humans left alive) <font color='green'><B>Success!</B></font>"
+						feedback_add_details("cult_objective","cult_massacre|SUCCESS")
+					else
+						explanation = "Massacre the crew until less than [massacre_target] humans are left on the station. ([survivors] humans left alive) <font color='red'><B>Fail!</B></font>"
+						feedback_add_details("cult_objective","cult_massacre|FAIL")
+
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 
 	world << text
