@@ -22,8 +22,9 @@
 		return
 	for(var/turf/T in orange(src,1))
 		if(istype(T,/turf/simulated))
-			src.SetLuminosity(3)
-			return
+			SetLuminosity(3)
+		else
+			SetLuminosity(0)
 
 /turf/space/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
