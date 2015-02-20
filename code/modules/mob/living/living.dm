@@ -76,6 +76,11 @@
 			G.overlays += H.obj_overlays[HANDCUFF_LAYER]
 		G.invisibility = 0
 		G << "<span class='sinister'>You feel relieved as what's left of your soul finally escapes its prison of flesh.</span>"
+
+		if(ticker.mode.name == "cult")
+			var/datum/game_mode/cult/mode_ticker = ticker.mode
+			mode_ticker.harvested++
+
 	else
 		dust()
 

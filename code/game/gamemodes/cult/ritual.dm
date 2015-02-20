@@ -40,6 +40,10 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	var/atom/movable/overlay/c_animation = null
 	var/nullblock = 0
 	var/mob/living/ajourn
+
+	var/summoning = 0
+	var/list/summonturfs = list()
+
 // Places these combos are mentioned: this file - twice in the rune code, once in imbued tome, once in tome's HTML runes.dm - in the imbue rune code. If you change a combination - dont forget to change it everywhere.
 
 // travel self [word] - Teleport to random [rune with word destination matching]
