@@ -54,11 +54,6 @@
 /obj/item/projectile/beam/pulse/shot
 	damage = 40
 
-/obj/item/projectile/beam/pulse/breach
-	name = "breach"
-	damage = 20
-	range = 2
-
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
 	icon_state = "emitter"

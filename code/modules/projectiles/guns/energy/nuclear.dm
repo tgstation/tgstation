@@ -17,7 +17,7 @@
 	icon_state = "hoslaser"
 	item_state = null
 	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/laser/pulse/breach)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "advanced energy gun"

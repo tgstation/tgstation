@@ -41,12 +41,6 @@
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
-/obj/item/ammo_casing/energy/laser/pulse/breach
-	projectile_type = /obj/item/projectile/beam/pulse/breach
-	e_cost = 200
-	select_name = "breach"
-	fire_sound = 'sound/weapons/pulse.ogg'
-
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/item/projectile/lasertag/bluetag
 	select_name = "bluetag"
