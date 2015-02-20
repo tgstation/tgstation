@@ -24,6 +24,7 @@
 	"3. Destroy."
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
+	seeStatic = 0 //Our programming is superior.
 
 
 /mob/living/simple_animal/drone/syndrone/New()

@@ -74,6 +74,12 @@
 
 	alert_drones(DRONE_NET_CONNECT)
 
+	//Ensure drones see other drones.
+	for(var/mob/living/simple_animal/drone/D in player_list)
+		if(D && D.seeStatic)
+			D.staticOverlays.Remove(staticOverlay)
+			D.client.images.Remove(staticOverlay)
+
 
 /mob/living/simple_animal/drone/Destroy()
 	qdel(access_card) //Otherwise it ends up on the floor!
