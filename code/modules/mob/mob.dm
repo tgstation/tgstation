@@ -218,226 +218,32 @@
 			if(1)
 				equip_to_slot(W, slot, redraw_mob)
 			if(2)
-				var/obj/item/wearing = null
-				var/hand
-				if(W == l_hand)
-					hand = 0
-				else if(W == r_hand)
-					hand = 1
-				switch(slot)
-					if(slot_wear_mask)
-						wearing = wear_mask
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
+				var/in_the_hand = (src.get_active_hand() == W || src.get_inactive_hand() == W)
+				var/obj/item/wearing = get_item_by_slot(slot)
+				if(wearing)
+					if(!in_the_hand) //if we aren't holding it, the proc is abstract so get rid of it
+						switch(act_on_fail)
+							if(EQUIP_FAILACTION_DELETE)
+								qdel(W)
+							if(EQUIP_FAILACTION_DROP)
+								W.loc=get_turf(src) // I think.
+						return
+					drop_item()
+					if(!(put_in_active_hand(wearing)))
+						equip_to_slot(wearing, slot, redraw_mob)
+						switch(act_on_fail)
+							if(EQUIP_FAILACTION_DELETE)
+								qdel(W)
 							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_back)
-						wearing = back
+								if(!disable_warning && act_on_fail != EQUIP_FAILACTION_DROP)
+									src << "<span class='warning'> You are unable to equip that.</span>" //Only print if act_on_fail is NOTHING
+						return
+					else
 						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_wear_suit)
-						wearing = H.wear_suit
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-						if(H.s_store)
-							if(!H.s_store.mob_can_equip(src, slot_s_store, 1))
-								u_equip(H.s_store)
-					if(slot_gloves)
-						wearing = H.gloves
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_shoes)
-						wearing = H.shoes
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_belt)
-						wearing = H.belt
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_glasses)
-						wearing = H.glasses
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_head)
-						wearing = H.head
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					// oh god what am I doing - N3X
-					if(slot_ears)
-						wearing = H.ears
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_w_uniform)
-						wearing = H.w_uniform
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-/*
-						if(H.wear_id)
-							if(!H.wear_id.mob_can_equip(src, slot_wear_id, 1))
-								u_equip(H.wear_id)
-						if(H.l_store)
-							if(!H.l_store.mob_can_equip(src, slot_l_store, 1))
-								u_equip(H.l_store)
-						if(H.r_store)
-							if(!H.r_store.mob_can_equip(src, slot_r_store, 1))
-								u_equip(H.r_store)
-						if(H.belt)
-							if(!H.belt.mob_can_equip(src, slot_belt, 1))
-								u_equip(H.belt)*/
-					if(slot_wear_id)
-						wearing = H.wear_id
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_s_store)
-						wearing = H.s_store
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_l_store)
-						wearing = H.l_store
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_r_store)
-						wearing = H.r_store
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
+						u_equip(wearing)
+						put_in_active_hand(wearing)
+					if(H.s_store && !H.s_store.mob_can_equip(src, slot_s_store, 1))
+						u_equip(H.s_store)
 		return 1
 	else
 		if(!W.mob_can_equip(src, slot, disable_warning))

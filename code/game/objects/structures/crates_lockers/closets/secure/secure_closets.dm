@@ -79,6 +79,7 @@
 		else
 			for(var/mob/O in viewers(user, 3))
 				O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
+		update_icon()
 	else
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -155,6 +156,8 @@
 	if(!opened)
 		if(locked)
 			icon_state = icon_locked
+		else if(broken)
+			icon_state = icon_off
 		else
 			icon_state = icon_closed
 		if(welded)

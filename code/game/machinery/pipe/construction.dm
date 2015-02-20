@@ -121,7 +121,7 @@ Buildable meters
 			src.pipe_type = PIPE_INSULATED_STRAIGHT + is_bent
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple))
 			src.pipe_type = PIPE_SIMPLE_STRAIGHT + is_bent
-		else if(istype(make_from, /obj/machinery/atmospherics/portables_connector))
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/portables_connector))
 			src.pipe_type = PIPE_CONNECTOR
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold))
 			if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold/insulated))
@@ -130,9 +130,9 @@ Buildable meters
 				src.pipe_type = PIPE_MANIFOLD
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_pump))
 			src.pipe_type = PIPE_UVENT
-		else if(istype(make_from, /obj/machinery/atmospherics/valve/digital))
+		else if(istype(make_from, /obj/machinery/atmospherics/binary/valve/digital))
 			src.pipe_type = PIPE_DVALVE
-		else if(istype(make_from, /obj/machinery/atmospherics/valve))
+		else if(istype(make_from, /obj/machinery/atmospherics/binary/valve))
 			src.pipe_type = PIPE_MVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/pump))
 			src.pipe_type = PIPE_PUMP
@@ -152,12 +152,12 @@ Buildable meters
 			src.pipe_type = PIPE_VOLUME_PUMP
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/heat_exchanger))
 			src.pipe_type = PIPE_HEAT_EXCHANGE
-		else if(istype(make_from, /obj/machinery/atmospherics/tvalve))
-			if(istype(make_from, /obj/machinery/atmospherics/tvalve/digital) || istype(make_from, /obj/machinery/atmospherics/tvalve/mirrored/digital))
+		else if(istype(make_from, /obj/machinery/atmospherics/trinary/tvalve))
+			if(istype(make_from, /obj/machinery/atmospherics/trinary/tvalve/digital))
 				src.pipe_type = PIPE_DTVALVE
 			else
 				src.pipe_type = PIPE_MTVALVE
-			if(istype(make_from, /obj/machinery/atmospherics/tvalve/mirrored))
+			if(istype(make_from, /obj/machinery/atmospherics/trinary/tvalve/mirrored) || istype(make_from, /obj/machinery/atmospherics/trinary/tvalve/digital/mirrored))
 				src.dir = turn(src.dir, 45) //sets the angle and icon correctly
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w))
 			if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w/insulated))
@@ -285,7 +285,7 @@ var/global/list/nlist = list( \
 
 // returns all pipe's endpoints
 
-/obj/item/pipe/proc/get_pipe_dir()
+/obj/item/pipe/proc/get_pipe_dir(var/mirrored)
 	if (!dir)
 		return 0
 	var/flip = turn(dir, 180)
@@ -313,6 +313,8 @@ var/global/list/nlist = list( \
 		if(PIPE_MANIFOLD, PIPE_INSUL_MANIFOLD)
 			return flip|cw|acw
 		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER,PIPE_MTVALVE,PIPE_DTVALVE)
+			if(mirrored)
+				return dir|flip|acw
 			return dir|flip|cw
 		if(PIPE_CAP)
 			return flip
@@ -381,7 +383,7 @@ var/global/list/nlist = list( \
 			P=new/obj/machinery/atmospherics/pipe/simple/heat_exchanging(loc)
 
 		if(PIPE_CONNECTOR)		// connector
-			P=new/obj/machinery/atmospherics/portables_connector(loc)
+			P=new/obj/machinery/atmospherics/unary/portables_connector(loc)
 
 		if(PIPE_MANIFOLD)		//manifold
 			P=new /obj/machinery/atmospherics/pipe/manifold(loc)
@@ -396,10 +398,10 @@ var/global/list/nlist = list( \
 			P=new /obj/machinery/atmospherics/unary/vent_pump( src.loc )
 
 		if(PIPE_MVALVE)		//manual valve
-			P=new /obj/machinery/atmospherics/valve( src.loc )
+			P=new /obj/machinery/atmospherics/binary/valve( src.loc )
 
 		if(PIPE_DVALVE)		//digital valve
-			P=new /obj/machinery/atmospherics/valve/digital( src.loc )
+			P=new /obj/machinery/atmospherics/binary/valve/digital( src.loc )
 
 		if(PIPE_PUMP)		//gas pump
 			P=new /obj/machinery/atmospherics/binary/pump( src.loc )
@@ -417,7 +419,7 @@ var/global/list/nlist = list( \
 			P=new /obj/machinery/atmospherics/pipe/simple/insulated( src.loc )
 
 		if(PIPE_MTVALVE)		//manual t-valve
-			P=new /obj/machinery/atmospherics/tvalve(src.loc)
+			P=new /obj/machinery/atmospherics/trinary/tvalve(src.loc)
 
 		if(PIPE_CAP)
 			P=new /obj/machinery/atmospherics/unary/cap(src.loc)
@@ -444,7 +446,7 @@ var/global/list/nlist = list( \
 			P=new /obj/machinery/atmospherics/unary/vent(src.loc)
 
 		if(PIPE_DTVALVE)
-			P=new /obj/machinery/atmospherics/tvalve/digital(src.loc)
+			P=new /obj/machinery/atmospherics/trinary/tvalve/digital(src.loc)
 
 		if(PIPE_INSUL_MANIFOLD)
 			P=new /obj/machinery/atmospherics/pipe/manifold/insulated(src.loc)

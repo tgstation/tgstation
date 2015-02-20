@@ -377,7 +377,7 @@ mob
 					world << "error"
 					P.overlays += icon('icons/Testing/atmos_testing.dmi',"marker0")
 
-			for(var/obj/machinery/atmospherics/valve/V in world)
+			for(var/obj/machinery/atmospherics/binary/valve/V in world)
 				V.overlays.len = 0
 
 				if(V.network_node1)

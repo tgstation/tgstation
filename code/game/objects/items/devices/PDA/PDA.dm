@@ -45,6 +45,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/ownjob = null //related to above
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
+	var/obj/item/device/analyzer/atmos_analys = new
 	var/obj/item/device/device_analyser/dev_analys = null
 
 	var/MM = null
@@ -149,7 +150,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		"The word 'nerd' was first coined by Dr. Seuss in 'If I Ran the Zoo.'",
 		"Revolvers cannot be silenced because of all the noisy gasses which escape the cylinder gap at the rear of the barrel.",
 		"Every human spent about half an hour as a single cell.",
-		"7.5 million toothpicks can be created from a cord of wood."
+		"7.5 million toothpicks can be created from a cord of wood.",
+		"If the Earth's sun were just inch in diameter, the nearest star would be 445 miles away.",
+		"There is no word in the English language that rhymes with month, orange, silver or purple.",
+		"Starfish have no brains.",
+		"2 and 5 are the only prime numbers that end in 2 or 5.",
+		"'Pronunciation' is the word which is mispronounced the most in the English language.",
+		"Women blink nearly twice as much as men.",
+		"Owls are the only birds who can see the color blue.",
+		"A pizza that has radius 'z' and height 'a' has volume Pi × z × z × a.",
+		"Months that begin on a Sunday will always have a 'Friday the 13th.'",
+		"Zero is an even number.",
+		"The longest English word that can be spelled without repeating any letters is 'uncopyrightable'.",
+		"10! (Ten factorial) seconds equals exactly six Earth weeks.",
+		"Moths don't have a stomach or mouth. They never eat again after undergoing metamorphosis.",
+		"'J' is the only letter that doesn't appear in the Periodic Table of Elements.",
+		"Want to remember the first digits of Pi easily? You can do it by counting each word's letters in 'May I have a large container of plasma?'"
 		)
 	var/currentevent1 = null
 	var/currentevent2 = null
@@ -1616,68 +1632,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				user << "\blue No significant chemical agents found in [A]."
 
 		if(5)
-			if((istype(A, /obj/item/weapon/tank)) || (istype(A, /obj/machinery/portable_atmospherics)))
-				var/obj/icon = A
-				for (var/mob/O in viewers(user, null))
-					O << "\red [user] has used [src] on \icon[icon] [A]"
-				var/pressure = A:air_contents.return_pressure()
-
-				var/total_moles = A:air_contents.total_moles()
-
-				user << "\blue Results of analysis of \icon[icon]"
-				if (total_moles>0)
-					var/o2_concentration = A:air_contents.oxygen/total_moles
-					var/n2_concentration = A:air_contents.nitrogen/total_moles
-					var/co2_concentration = A:air_contents.carbon_dioxide/total_moles
-					var/plasma_concentration = A:air_contents.toxins/total_moles
-
-					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
-					user << "\blue Pressure: [round(pressure,0.1)] kPa"
-					user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-					user << "\blue Oxygen: [round(o2_concentration*100)]%"
-					user << "\blue CO2: [round(co2_concentration*100)]%"
-					user << "\blue Plasma: [round(plasma_concentration*100)]%"
-					if(unknown_concentration>0.01)
-						user << "\red Unknown: [round(unknown_concentration*100)]%"
-					user << "\blue Temperature: [round(A:air_contents.temperature-T0C)]&deg;C"
-				else
-					user << "\blue Tank is empty!"
-
-			if (istype(A, /obj/machinery/atmospherics/pipe/tank))
-				var/obj/icon = A
-				for (var/mob/O in viewers(user, null))
-					O << "\red [user] has used [src] on \icon[icon] [A]"
-
-				var/obj/machinery/atmospherics/pipe/tank/T = A
-				var/pressure = T.parent.air.return_pressure()
-				var/total_moles = T.parent.air.total_moles()
-
-				user << "\blue Results of analysis of \icon[icon]"
-				if (total_moles>0)
-					var/o2_concentration = T.parent.air.oxygen/total_moles
-					var/n2_concentration = T.parent.air.nitrogen/total_moles
-					var/co2_concentration = T.parent.air.carbon_dioxide/total_moles
-					var/plasma_concentration = T.parent.air.toxins/total_moles
-
-					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
-					user << "\blue Pressure: [round(pressure,0.1)] kPa"
-					user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-					user << "\blue Oxygen: [round(o2_concentration*100)]%"
-					user << "\blue CO2: [round(co2_concentration*100)]%"
-					user << "\blue Plasma: [round(plasma_concentration*100)]%"
-					if(unknown_concentration>0.01)
-						user << "\red Unknown: [round(unknown_concentration*100)]%"
-					user << "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C"
-				else
-					user << "\blue Tank is empty!"
-
+			if(atmos_analys)
+				if(A.Adjacent(user))
+					if(!A.attackby(atmos_analys))
+						atmos_analys.afterattack(A, user, 1)
 		if (6)
 			if(dev_analys) //let's use this instead. Much neater
-				if(A in range(user, 1))
+				if(A.Adjacent(user))
 					dev_analys.afterattack(A, user, 1)
-					A.attackby(src, user)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info

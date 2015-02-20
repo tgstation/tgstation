@@ -1,5 +1,5 @@
-/proc/iswizard(mob/living/M as mob)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)
+/*/proc/iswizard(mob/living/M as mob)
+	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)*/ //See _macros.dm
 
 /datum/game_mode
 	var/list/datum/mind/wizards = list()
