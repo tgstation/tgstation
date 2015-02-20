@@ -213,7 +213,10 @@
 	if(H.socks)
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)
-			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
+			if(H.dna && H.dna.species.clothfittings)
+				standing	+=	H.wear_alternate_version("[U3.icon_state]_s", U3.icon, BODY_LAYER, H.dna.species.clothfittings)
+			else
+				standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
