@@ -32,6 +32,44 @@ proc
 	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
 	return flat_icon
 
+/proc/getStaticIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(255, 255, 255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/static_icon = new/icon('icons/effects/effects.dmi', "static_base")
+	static_icon.AddAlphaMask(flat_icon)
+	return static_icon
+
+/proc/getBlankIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(50, 50, 50))
+	return flat_icon
+
+/proc/getLetterImage(atom/A, letter = "", uppercase = 0)
+	if(!A)
+		return
+
+	if(!letter)
+		var/last_name = A.name //helps us to avoid prefixes. Space carp show up as C, for example
+		while(last_name && findtext(last_name, " "))
+			last_name = copytext(A.name, findtext(last_name, " ") + 1)
+		if(last_name)
+			letter = copytext(last_name, 1, 2)
+		else
+			letter = copytext(A.name, 1, 2)
+
+	var/icon/atom_icon = new(A.icon, A.icon_state)
+
+	if(atom_icon.Height() > 8 || atom_icon.Width() > 8 || uppercase)
+		letter = uppertext(letter)
+	else
+		letter = lowertext(letter)
+
+	var/image/text_image = new(loc = A)
+	text_image.maptext = letter
+	text_image.color = atom_icon.GetPixel(16, 16)
+	return text_image
+
 //For photo camera.
 /proc/build_composite_icon(atom/A)
 	var/icon/composite = icon(A.icon, A.icon_state, A.dir, 1)

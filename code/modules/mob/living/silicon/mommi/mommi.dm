@@ -17,6 +17,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/subtype="keeper"
 	var/obj/screen/inv_tool = null
 
+	static_overlays = list()
+	var/static_choice = "static"
+	var/list/static_choices = list("static", "letter", "blank")
+
 	mob_bump_flag = ROBOT
 	mob_swap_flags = ALLMOBS
 	mob_push_flags = 0
@@ -35,6 +39,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 /mob/living/carbon/can_use_hands()
 	return 1
+
+/mob/living/silicon/robot/mommi/generate_static_overlay()
+	return
 
 /mob/living/silicon/robot/mommi/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -140,6 +147,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
 /mob/living/silicon/robot/mommi/Destroy()
+	remove_static_overlays()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/obj/item/device/mmi/nmmi = mmi
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
@@ -165,6 +173,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		user << "<span class='warning'>Nanotrasen Patented Anti-Emancipation Override initiated.</span>"
 		return
 	..()
+	remove_static_overlays()
 	updateicon()
 
 /mob/living/silicon/robot/mommi/attackby(obj/item/weapon/W as obj, mob/user as mob)
