@@ -126,18 +126,21 @@ Pipelines + Other Objects -> Pipe network
 	var/datum/gas_mixture/env_air = loc.return_air()
 	add_fingerprint(user)
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		if(istype(W, /obj/item/weapon/wrench/socket))
+		if(istype(W, /obj/item/weapon/wrench/socket) && istype(src, /obj/machinery/atmospherics/pipe))
 			user << "<span class='warning'>You begin to open the pressure release valve on the pipe...</span>"
 			if(do_after(user, 50))
+				if(!loc) return
 				playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
 				user.visible_message("[user] vents \the [src].",
 									"You have vented \the [src].",
 									"You hear a ratchet.")
+				var/obj/machinery/atmospherics/pipe/P = src
 				var/datum/gas_mixture/transit = new
 				transit.add(int_air)
-				var/datum/pipeline/pipe_parent = return_network(src)
-				transit.divide(pipe_parent.members.len) //we get the total pressure over the number of pipes to find gas per pipe
-				env_air.add(transit) //put it in the air
+				var/datum/pipeline/pipe_parent = P.parent
+				if(pipe_parent)
+					transit.divide(pipe_parent.members.len) //we get the total pressure over the number of pipes to find gas per pipe
+					env_air.add(transit) //put it in the air
 				del(transit) //remove the carrier
 		else
 			user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
