@@ -1,6 +1,0 @@
-author: iconleap
-
-delete-after: True
-
-changes: 
-  - bugfix: fixed lighting update at area created by blueprints
