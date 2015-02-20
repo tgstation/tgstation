@@ -140,6 +140,43 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	sawn_desc = "Omar's coming!"
 
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/verb/rename_gun() //BARMAN CAN INTO SNOWFLAKES TOO
+	set name = "Name Gun"
+	set category = "Object"
+	set desc = "Click to rename your gun."
+
+	var/mob/M = usr
+	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
+
+	if(src && input && !M.stat && in_range(M,src))
+		name = input
+		M << "You name the gun [input]. Say hello to your new friend."
+		return 1
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/verb/reskin_gun()
+	set name = "Change gun furniture"
+	set category = "Object"
+	set desc = "Click to change the color of your gun's wooden furniture." //since naming it reskin when its the same gun with different colors would be dumb
+
+	var/mob/M = usr
+	var/list/options = list()
+	options["Standard Walnut"] = "dshotgun"
+	options["Dark Red Finish"] = "dshotgun-d"
+	options["Ash"] = "dshotgun-f"
+	options["Faded Grey"] = "dshotgun-g"
+	options["Maple"] = "dshotgun-l"
+	options["Rosewood"] = "dshotgun-p"
+	var/choice = input(M,"What do you want to change the color to?","Refurnish Gun") in options
+	if(src && choice && !M.stat && in_range(M,src))
+		if(sawn_state == SAWN_OFF)
+			refurnished_state = options[choice] + "-sawn"
+		else
+			refurnished_state = options[choice]
+		icon_state = refurnished_state
+		M << "Your gun is now refurnished with [choice]. Say hello to your new friend."
+		return 1
+
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
@@ -228,7 +265,7 @@
 		user.visible_message("<span class='warning'>[user] shortens \the [src]!</span>", "<span class='warning'>You shorten \the [src]!</span>")
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
-		icon_state = initial(icon_state) + "-sawn"
+		icon_state = refurnished_state + "-sawn"
 		w_class = 3.0
 		item_state = "gun"
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
