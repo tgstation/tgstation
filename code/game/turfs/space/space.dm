@@ -18,9 +18,11 @@
 	update_starlight()
 
 /turf/space/proc/update_starlight()
-	for(var/turf/T in range(src,1))
+	if(!config.starlight)
+		return
+	for(var/turf/T in orange(src,1))
 		if(istype(T,/turf/simulated))
-			src.SetLuminosity(2)
+			src.SetLuminosity(3)
 			return
 
 /turf/space/attack_paw(mob/user as mob)
