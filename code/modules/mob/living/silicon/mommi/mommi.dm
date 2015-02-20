@@ -161,7 +161,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	name = real_name
 
 /mob/living/silicon/robot/mommi/emag_act(mob/user as mob)
-	if(user == src && !emagged)//Dont shitpost inside the game, thats just going too far
+	if(user == src && emagged != 1)//Dont shitpost inside the game, thats just going too far
 		user << "<span class='warning'>Nanotrasen Patented Anti-Emancipation Override initiated.</span>"
 		return
 	..()

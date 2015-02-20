@@ -8,3 +8,9 @@
 		ticker.mode.remove_revolutionary(mind)
 	return
 	*/
+	if(keeper && !emagged)
+		for(var/mob/living/living in mob_list)
+			if(istype(living, /mob/living/silicon))
+				continue
+			static_overlays.Add(living.static_overlay)
+			client.images.Add(living.static_overlay)

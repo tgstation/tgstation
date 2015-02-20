@@ -1,3 +1,17 @@
+/mob/living/New()
+	. = ..()
+	generate_static_overlay()
+	for(var/mob/living/silicon/robot/mommi/MoMMI in player_list)
+		if(MoMMI.keeper && !MoMMI.emagged)
+			MoMMI.static_overlays.Add(static_overlay)
+			MoMMI.client.images.Add(static_overlay)
+
+/mob/living/Destroy()
+	for(var/mob/living/silicon/robot/mommi/MoMMI in player_list)
+		MoMMI.static_overlays.Remove(static_overlay) //no checks, since it's either there or its not
+		MoMMI.client.images.Remove(static_overlay)
+	del(static_overlay)
+	. = ..()
 
 /mob/living/Life()
 	..()
