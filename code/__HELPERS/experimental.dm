@@ -67,7 +67,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 		#endif
 		//so the GC knows we're pooling this type.
 		if(isnull(masterPool["[A]"]))
-			masterPool["[A]"] = new A
+			masterPool["[A]"] = list(new A)
 		if(B && B.len)
 			return new A(arglist(B))
 		else
@@ -108,7 +108,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 		return
 
 	if(isnull(masterPool["[AM.type]"]))
-		masterPool["[AM.type]"] = new
+		masterPool["[AM.type]"] = list()
 
 	AM.resetVariables()
 	masterPool["[AM.type]"] += AM
