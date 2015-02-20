@@ -79,7 +79,7 @@
 /datum/barsign/thesingulo
 	name = "The Singulo"
 	icon = "thesingulo"
-	desc = "You feel yourself gravitating towards this bar"
+	desc = "Where people go that'd rather not be called by their name"
 
 /datum/barsign/thedrunkcarp
 	name = "The Drunk Carp"
