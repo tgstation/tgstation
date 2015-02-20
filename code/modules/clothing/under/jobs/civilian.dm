@@ -128,7 +128,7 @@
 	icon_state = "lawyer_purp"
 	item_state = "lawyer_purp"
 	item_color = "lawyer_purp"
-	fitted = NO_FEMALE_UNIFORM
+	fitted = null
 	can_adjust = 1
 
 

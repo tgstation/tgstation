@@ -331,7 +331,7 @@
 	item_state = "gladiator"
 	item_color = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = NO_FEMALE_UNIFORM
+	fitted = null
 	can_adjust = 0
 
 /obj/item/clothing/under/sundress

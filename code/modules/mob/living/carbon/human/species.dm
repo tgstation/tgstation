@@ -41,7 +41,7 @@
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
-
+	var/clothfittings = null //If your species has something like a tail, you can define a zone (clothing_variations.dmi) to be exposed while wearing outfits that would otherwise cover it. Bitflag field
 	var/say_mod = "says"	// affects the speech message
 
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
@@ -186,16 +186,30 @@
 	if(H.underwear)
 		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
 		if(U)
-			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
+			var/fittingU
+			if(H.dna)
+				if(H.dna.species.sexes && H.gender == FEMALE)
+					fittingU += FEMALE_UNIFORM_TOP
+				if(H.dna.species.clothfittings)
+					fittingU += H.dna.species.clothfittings
+				if(fittingU)
+					standing	+=	H.wear_alternate_version("[U.icon_state]_s", U.icon, BODY_LAYER, fittingU)
+			if(!fittingU)
+				standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(H.undershirt)
 		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[H.undershirt]
 		if(U2)
-			if(H.dna && H.dna.species.sexes && H.gender == FEMALE)
-				standing	+=	H.wear_female_version(U2.icon_state, U2.icon, BODY_LAYER)
-			else
+			var/fittingU2
+			if(H.dna)
+				if(H.dna.species.sexes && H.gender == FEMALE)
+					fittingU2 += FEMALE_UNIFORM_TOP
+				if(H.dna.species.clothfittings)
+					fittingU2 += H.dna.species.clothfittings
+				if(fittingU2)
+					standing	+=	H.wear_alternate_version("[U2.icon_state]_s", U2.icon, BODY_LAYER, fittingU2)
+			if(!fittingU2)
 				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
-
 	if(H.socks)
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)

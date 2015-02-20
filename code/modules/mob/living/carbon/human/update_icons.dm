@@ -261,9 +261,14 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(dna && dna.species.sexes)
+			var/fittings = U.fitted
 			var/G = (gender == FEMALE) ? "f" : "m"
-			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				standing	= wear_female_version(t_color, 'icons/mob/uniform.dmi', UNIFORM_LAYER, U.fitted)
+			if(G == "m" || !U.fitted)
+				fittings &= ~U.fitted
+			if(dna.species.clothfittings)
+				fittings |= dna.species.clothfittings
+			if(fittings)
+				standing	= wear_alternate_version("[t_color]_s", 'icons/mob/uniform.dmi', UNIFORM_LAYER, fittings)
 				overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(w_uniform.blood_DNA)
@@ -426,6 +431,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += wear_suit						//Either way, add the item to the HUD
 
 		var/image/standing	= image("icon"='icons/mob/suit.dmi', "icon_state"="[wear_suit.icon_state]", "layer"=-SUIT_LAYER)
+
+		if(dna && dna.species.clothfittings)
+			standing = wear_alternate_version(wear_suit.icon_state, 'icons/mob/suit.dmi', SUIT_LAYER, dna.species.clothfittings)
+
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
@@ -562,12 +571,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	apply_overlay(L_HAND_LAYER)
 
-/mob/living/carbon/human/proc/wear_female_version(t_color, icon, layer, type)
-	var/index = "[t_color]_s"
-	var/icon/female_clothing_icon = female_clothing_icons[index]
-	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
-		generate_female_clothing(index,t_color,icon,type)
-	var/standing	= image("icon"=female_clothing_icons["[t_color]_s"], "layer"=-layer)
+/mob/living/carbon/human/proc/wear_alternate_version(t_color, icon, layer, fittings)
+	var/index = "[t_color][fittings]"
+	var/icon/clothing_icon = generated_clothing_icons[index]
+	if(!clothing_icon) 	//Create icons if they don't exist
+		generate_clothing(index,t_color,icon,fittings)
+	var/standing	= image("icon"=generated_clothing_icons["[t_color][fittings]"], "layer"=-layer)
 	return(standing)
 
 
