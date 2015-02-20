@@ -28,7 +28,6 @@
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
 	origin_tech = null
-	fire_delay = 5
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg
 	name = "cyborg taser"
