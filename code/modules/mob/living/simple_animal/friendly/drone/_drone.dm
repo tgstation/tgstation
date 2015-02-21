@@ -81,11 +81,6 @@
 	qdel(access_card) //Otherwise it ends up on the floor!
 	..()
 
-/mob/living/simple_animal/drone/Life()
-	updateSeeStaticMobs()
-	..()
-
-
 /mob/living/simple_animal/drone/Login()
 	..()
 	update_inv_hands()
