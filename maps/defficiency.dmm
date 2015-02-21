@@ -2018,7 +2018,7 @@
 "aMP" = (/obj/structure/table,/obj/item/device/analyzer,/obj/item/device/healthanalyzer,/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating,/area/storage/tech)
 "aMQ" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1},/turf/simulated/floor/plating,/area/storage/tech)
 "aMR" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/circuitboard/mining,/obj/item/weapon/circuitboard/autolathe{pixel_x = 3; pixel_y = -3},/obj/item/weapon/circuitboard/arcade,/turf/simulated/floor/plating,/area/storage/tech)
-"aMS" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/circuitboard/secure_data{pixel_x = -2; pixel_y = 2},/obj/item/weapon/circuitboard/security{pixel_x = 1; pixel_y = -1},/obj/item/weapon/circuitboard/security/advance,/turf/simulated/floor/plating,/area/storage/tech)
+"aMS" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/circuitboard/secure_data{pixel_x = -2; pixel_y = 2},/obj/item/weapon/circuitboard/security{pixel_x = 1; pixel_y = -1},/obj/item/weapon/circuitboard/security/advanced,/turf/simulated/floor/plating,/area/storage/tech)
 "aMT" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor/plating,/area/storage/tech)
 "aMU" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/storage/toolbox/electrical{pixel_x = 1; pixel_y = -1},/obj/item/device/multitool,/obj/item/clothing/glasses/meson,/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating,/area/storage/tech)
 "aMV" = (/obj/machinery/camera{c_tag = "Engineering AME Hallway 2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/turf/simulated/floor,/area/engineering/engine)

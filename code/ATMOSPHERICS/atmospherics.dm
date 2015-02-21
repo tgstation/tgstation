@@ -118,6 +118,8 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/attackby(var/obj/item/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
+	if(src.machine_flags & WRENCHMOVE)
+		return ..()
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
 		user << "<span class='warning'>You must remove the plating first.</span>"

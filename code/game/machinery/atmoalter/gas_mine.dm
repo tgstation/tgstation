@@ -9,6 +9,7 @@
 	w_type = NOT_RECYCLABLE
 
 	var/datum/gas_mixture/air_contents
+	var/datum/gas_mixture/pumping = new //used in transfering air around
 
 	var/on=1
 
@@ -97,8 +98,7 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
 
-	var/datum/gas_mixture/pumped = new
-	pumped.copy_from(air_contents)
+	pumping.copy_from(air_contents)
 
 	var/pressure_delta = 10000
 
@@ -109,9 +109,9 @@
 	//pressure_delta = min(pressure_delta, (internal_pressure - environment_pressure))
 
 	if(pressure_delta > 0.1)
-		var/transfer_moles = pressure_delta*environment.volume/(pumped.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = pressure_delta*environment.volume/(pumping.temperature * R_IDEAL_GAS_EQUATION)
 
-		var/datum/gas_mixture/removed = pumped.remove(transfer_moles)
+		var/datum/gas_mixture/removed = pumping.remove(transfer_moles)
 
 		loc.assume_air(removed)
 

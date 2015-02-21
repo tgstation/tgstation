@@ -3,7 +3,7 @@
 	desc = "Used to access the various cameras on the station with an interactive user interface."
 	circuit = "/obj/item/weapon/circuitboard/security/advanced"
 
-/obj/item/weapon/circuitboard/security/advance
+/obj/item/weapon/circuitboard/security/advanced
 	name = "Circuit board (Advanced Security)"
 	build_path = /obj/machinery/computer/security/advanced
 
