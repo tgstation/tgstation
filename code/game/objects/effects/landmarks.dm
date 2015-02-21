@@ -164,6 +164,7 @@
 	qdel(src)
 
 /obj/effect/landmark/costume/nightowl/New()
+	new /obj/item/clothing/suit/toggle/owlwings(src.loc)
 	new /obj/item/clothing/under/owl(src.loc)
 	new /obj/item/clothing/mask/gas/owl_mask(src.loc)
 	qdel(src)
