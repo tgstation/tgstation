@@ -327,7 +327,7 @@
 	desc = "A well polished helmet belonging to a Space-Knight. Favored by space-jousters for its ability to stay on tight after being launched from a mass driver."
 	icon_state = "rig-knight"
 	item_state = "rig-knight"
-	armor = list(melee = 55, bullet = 50, laser = 40,energy = 25, bomb = 40, bio = 100, rad = 60)
+	armor = list(melee = 60, bullet = 40, laser = 40,energy = 25, bomb = 40, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude","Vox")
@@ -339,8 +339,9 @@
 	desc = "A well polished set of armour belonging to a Space-Knight. Maidens Rescued in Space: 100, Maidens who have slept with me in Space: 0"
 	icon_state = "rig-knight"
 	item_state = "rig-knight"
+	slowdown = 1
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/melee/baton,/obj/item/weapon/tank,/obj/item/weapon/shield/energy,/obj/item/weapon/claymore)
-	armor = list(melee = 60, bullet = 50, laser = 55,energy = 30, bomb = 60, bio = 100, rad = 60)
+	armor = list(melee = 60, bullet = 40, laser = 55,energy = 30, bomb = 60, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.5
 	species_restricted = list("exclude","Vox")
