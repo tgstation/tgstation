@@ -62,7 +62,7 @@ var/list/uplink_items = list()
 	if(!istype(U))
 		return 0
 
-	if (!user || user.stat || user.restrained())
+	if (!user || user.incapacitated())
 		return 0
 
 	// If the uplink's holder is in the user's contents
