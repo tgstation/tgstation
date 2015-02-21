@@ -13,9 +13,6 @@
 		if(M_HARDCORE in mutations)
 			mutations.Remove(M_HARDCORE)
 			src << "<span class='notice'>You feel like a pleb.</span>"
-	if(buckled)
-		if(buckled.loc != loc)
-			buckled.unbuckle()
 	handle_beams()
 
 	if(mind)
