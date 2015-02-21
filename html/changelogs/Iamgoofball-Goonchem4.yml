@@ -2,18 +2,17 @@ author: Iamgoofball
 delete-after: True
 
 changes: 
+  - rscadd: "You can now go into hyperglycaemic shock from having over 200u of Sugar in your body at once. Treat it with Insulin."
   - rscadd: "Insulin has been added. Use it to treat hyperglycaemic shock. You can get it from medical vendors and the Cargo medicine supplies crate."
   - rscadd: "Medvendor contents have been reduced from medical having everything they need at roundstart level, and toxin bottles are now back in the vendor."
   - rscadd: "Medical Analyzers now show all reagents in a mob, along with any addictions the mob has. It will show if a reagent is overdosing."
-  - rscadd: "Bacon has been added to the game. It contains Porktonium. The chef starts with 2 boxes in his freezer."
-  - rscadd: "Meaty foods now have Cholesterol in them."
   - rscadd: "Tobacco and Space Tobacco have Nicotine in them now."
   - rscadd: "Adds Methamphetamine to the game. Mix it with Ephedrine, Iodine, Phosphorous, and Hydrogen at 374K."
   - rscadd: "Or, look around in Maintenance for Muriatic Acid, Caustic Soda, and Hydrogen Chloride. Recipes are also available for these."
   - rscadd: "Adds Saltpetre. Mix it with Potassium, Nitrogen, and Oxygen."
   - rscadd: "Adds Bath Salts, mix it with Bad Food, Saltpetre, Nutriment, Space Cleaner, Universal Enzyme, Tea, and Mercury at 374K."
   - rscadd: "Adds Aranesp. Mix it with Epinephrine, Atropine, and Morphine."
-  - rscadd: "Adds Cocaine. Get it from Poppy plants."
+  - rscadd: "Adds Hotline. Get it from Poppy plants."
   - rscadd: "Strange Reagent revival was commented out. The reagent still exists in using for making Life."
   - rscadd: "Carpet now applies carpet tiles to whatever flooring it hits. Mix it with Space Drugs and Blood."
   - rscadd: "Colorful Reagent colors have been improved drastically and now are more varied and nicer looking."
@@ -23,5 +22,3 @@ changes:
   - rscadd: "Adds Quantum Hair Dye. Mix it with Colorful Reagent, Radium, and Space Drugs."
   - rscadd: "Adds Barber's Aid. Mix it with Carpet, Radium, and Space Drugs."
   - rscadd: "Adds Concentrated Barber's Aid. Mix it with Barber's Aid and Unstable Mutagen."
-  - rscadd: "Adds Untable Mutagen. Mix it with Liquid Dark Matter, Iron, and Unstable Mutagen."
-  - rscadd: "You can now go into hyperglycaemic shock from having over 200u of Sugar in your body at once. Treat it with Insulin."

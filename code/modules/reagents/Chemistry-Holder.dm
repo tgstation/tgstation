@@ -16,6 +16,7 @@ datum/reagents
 	var/list/datum/reagent/addiction_list = new/list()
 
 datum/reagents/New(maximum=100)
+	SSchemistry.add_reagent_datum_to_list(src)
 	maximum_volume = maximum
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
@@ -202,6 +203,9 @@ datum/reagents/proc/trans_id_to(var/obj/target, var/reagent, var/amount=1, var/p
 */
 
 datum/reagents/proc/metabolize(var/mob/M)
+	if(M)
+		chem_temp = M.bodytemperature
+		handle_reactions()
 	if(last_tick == 3)
 		last_tick = 1
 		for(var/A in reagent_list)
@@ -256,6 +260,11 @@ datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
 datum/reagents/proc/conditional_update(var/atom/A)
 	for(var/datum/reagent/R in reagent_list)
 		R.on_update (A)
+	update_total()
+
+datum/reagents/proc/reagents_on_tick()
+	for(var/datum/reagent/R in reagent_list)
+		R.reagents_on_tick(src)
 	update_total()
 
 datum/reagents/proc/handle_reactions()

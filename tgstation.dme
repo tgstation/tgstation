@@ -124,6 +124,7 @@
 #include "code\controllers\verbs.dm"
 #include "code\controllers\subsystem\air.dm"
 #include "code\controllers\subsystem\bots.dm"
+#include "code\controllers\subsystem\chemistry.dm"
 #include "code\controllers\subsystem\diseases.dm"
 #include "code\controllers\subsystem\events.dm"
 #include "code\controllers\subsystem\garbage.dm"

@@ -21,8 +21,6 @@
 	for(var/i = 0, i < 3, i++)
 		new /obj/item/weapon/reagent_containers/food/condiment/flour(src)
 	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
-	new /obj/item/weapon/storage/box/bacon(src)
-	new /obj/item/weapon/storage/box/bacon(src)
 	return
 
 
