@@ -285,7 +285,7 @@ var/global/list/nlist = list( \
 
 // returns all pipe's endpoints
 
-/obj/item/pipe/proc/get_pipe_dir(var/mirrored)
+/obj/item/pipe/proc/get_pipe_dir()
 	if (!dir)
 		return 0
 	var/flip = turn(dir, 180)
@@ -313,8 +313,6 @@ var/global/list/nlist = list( \
 		if(PIPE_MANIFOLD, PIPE_INSUL_MANIFOLD)
 			return flip|cw|acw
 		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER,PIPE_MTVALVE,PIPE_DTVALVE)
-			if(mirrored)
-				return dir|flip|acw
 			return dir|flip|cw
 		if(PIPE_CAP)
 			return flip
