@@ -4,7 +4,7 @@
 	if (ending == "?")
 		return "queries, \"<span class = 'robot'>[text]</span>\"";
 	else if (ending == "!")
-		return "declares, \"<span class = 'robot'>[text]</span>\"";
+		return "declares, \"<span class = 'robotyell'>[text]</span>\"";
 
 	return "states, \"<span class = 'robot'>[text]</span>\"";
 

@@ -64,7 +64,7 @@ var/list/freqtospan = list(
 	if (ending == "?")
 		return "asks, \"[text]\""
 	if (ending == "!")
-		return "exclaims, \"[text]\""
+		return "exclaims, \"<span class = 'yell'>[text]</span>\""
 
 	return "says, \"[text]\""
 

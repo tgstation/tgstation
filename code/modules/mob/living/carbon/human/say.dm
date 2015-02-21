@@ -13,7 +13,7 @@
 	if (ending == "?")
 		return "asks, \"[text]\"";
 	if (ending == "!")
-		return "exclaims, \"[text]\"";
+		return "exclaims, \"<span class = 'yell'>[text]</span>\"";
 
 	if(dna)
 		return "[dna.species.say_mod], \"[text]\"";
