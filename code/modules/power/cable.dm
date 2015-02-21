@@ -507,7 +507,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	viewers(user) << "<SPAN CLASS='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</SPAN>"
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
+/obj/item/stack/cable_coil/New(loc, length = MAXCOIL, var/param_color = null, amount = length)
 	..()
 
 	recipes = cable_recipes

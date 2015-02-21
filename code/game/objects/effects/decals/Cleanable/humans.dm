@@ -46,7 +46,7 @@ var/global/list/image/splatter_cache=list()
 	..()
 	update_icon()
 
-	if(ticker.mode && ticker.mode.name == "cult")
+	if(ticker && ticker.mode && ticker.mode.name == "cult")
 		var/datum/game_mode/cult/mode_ticker = ticker.mode
 		if((mode_ticker.objectives[mode_ticker.current_objective] == "bloodspill") && !mode_ticker.narsie_condition_cleared)
 			var/turf/T = get_turf(src)

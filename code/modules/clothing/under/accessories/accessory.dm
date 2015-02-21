@@ -44,6 +44,8 @@
 	src.add_fingerprint(user)
 
 /obj/item/clothing/accessory/proc/on_accessory_interact(mob/user, delayed = 0)
+	if(!has_suit)
+		return
 	if(delayed)
 		has_suit.remove_accessory(user, src)
 		attack_hand(user)

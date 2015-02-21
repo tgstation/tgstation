@@ -23,9 +23,10 @@
 	c_animation.icon_state = "[animation_icon]"
 	flick("cultification",c_animation)
 	spawn(10)
-		c_animation.master = null
-		qdel(c_animation)
-		c_animation = null
+		if(c_animation)
+			c_animation.master = null
+			qdel(c_animation)
+			c_animation = null
 
 /////////////////////////////////////////FIRST RUNE
 /obj/effect/rune/proc/teleport(var/key)

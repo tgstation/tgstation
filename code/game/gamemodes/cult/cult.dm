@@ -400,6 +400,8 @@
 
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
+	if(!cult_mind)
+		return 0
 	spawn(0)
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)

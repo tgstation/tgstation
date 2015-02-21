@@ -1575,7 +1575,7 @@
 		var/client/C = usr.client
 		if(!isobserver(usr))	C.admin_ghost()
 		sleep(2)
-		C.jumptomob(M)
+		if(C) C.jumptomob(M)
 
 	else if(href_list["check_antagonist"])
 		check_antagonists()
