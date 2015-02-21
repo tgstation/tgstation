@@ -1585,7 +1585,7 @@
 			return
 
 		var/datum/game_mode/cult/mode_ticker = ticker.mode
-		mode_ticker.additional_phase()
+		mode_ticker.bypass_phase()
 		check_antagonists()
 
 	else if(href_list["cult_mindspeak"])
@@ -1596,6 +1596,9 @@
 		for(var/datum/mind/H in ticker.mode.cult)
 			if (H.current)
 				H.current << "<span class='game say'><span class='danger'>Nar-Sie</span> murmurs, <span class='sinister'>[input]</span></span>"
+
+		for(var/mob/dead/observer/O in player_list)
+			O << "<span class='game say'><span class='danger'>Nar-Sie</span> murmurs, <span class='sinister'>[input]</span></span>"
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!check_rights(R_ADMIN))	return
