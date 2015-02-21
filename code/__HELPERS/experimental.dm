@@ -82,7 +82,8 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 	if(!O || !istype(O))
 		O = new A(arglist(B))
 	else
-		O.loc = B[1]
+		if(length(B))
+			O.loc = B[1]
 		O.New(arglist(B))
 	return O
 

@@ -99,7 +99,7 @@
 		for(var/mob/M in player_list)
 			if(M.ckey)
 				keys["[M.ckey]"] = M //used to be M.client but GHOSTED PEOPLE WERE PUTTING NULL ENTRIES IN THE FUCKING LIST
-		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortNames(keys)
 		if(!selection)
 			src << "No keys found."
 			return

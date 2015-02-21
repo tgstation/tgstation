@@ -67,8 +67,7 @@ var/global/list/image/fluidtrack_cache=list()
 	* @param bloodcolor Color of the blood when wet.
 	*/
 /obj/effect/decal/cleanable/blood/tracks/resetVariables()
-	if(!stack) stack = list()
-	else stack.len = 0
+	stack = list()
 	..("stack")
 /obj/effect/decal/cleanable/blood/tracks/proc/AddTracks(var/list/DNA, var/comingdir, var/goingdir, var/bloodcolor="#A10808")
 	var/updated=0
@@ -98,7 +97,7 @@ var/global/list/image/fluidtrack_cache=list()
 				// Remove existing stack entry
 				stack.Remove(track)
 			track=new /datum/fluidtrack(b,bloodcolor,t)
-			if(!stack)
+			if(!istype(stack))
 				stack = list()
 			stack.Add(track)
 			setdirs["[b]"]=stack.Find(track)
@@ -117,6 +116,8 @@ var/global/list/image/fluidtrack_cache=list()
 				// Remove existing stack entry
 				stack.Remove(track)
 			track=new /datum/fluidtrack(b,bloodcolor,t)
+			if(!istype(stack))
+				stack = list()
 			stack.Add(track)
 			setdirs["[b]"]=stack.Find(track)
 			updatedtracks |= b
