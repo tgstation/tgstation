@@ -61,10 +61,6 @@
 	var/AAlarmwires = 31
 	var/shorted = 0
 
-	// Waiting on a device to respond.
-	// Specifies an id_tag.  NULL means we aren't waiting.
-	var/waiting_on_device=null
-
 	var/mode = AALARM_MODE_SCRUBBING
 	var/preset = AALARM_PRESET_HUMAN
 	var/screen = AALARM_SCREEN_MAIN
@@ -257,8 +253,6 @@
 				remote_control = 0
 		if(RCON_YES)
 			remote_control = 1
-	if(screen == AALARM_SCREEN_MAIN)
-		updateDialog()
 	return
 
 /obj/machinery/alarm/proc/calculate_local_danger_level(const/datum/gas_mixture/environment)
@@ -352,16 +346,11 @@
 	var/dev_type = signal.data["device"]
 	if(!(id_tag in areaMaster.air_scrub_names) && !(id_tag in areaMaster.air_vent_names))
 		register_env_machine(id_tag, dev_type)
-	var/got_update=0
+
 	if(dev_type == "AScr")
 		areaMaster.air_scrub_info[id_tag] = signal.data
-		got_update=1
 	else if(dev_type == "AVP")
 		areaMaster.air_vent_info[id_tag] = signal.data
-		got_update=1
-	if(got_update && waiting_on_device==id_tag)
-		updateUsrDialog()
-		waiting_on_device=null
 
 /obj/machinery/alarm/proc/register_env_machine(var/m_id, var/device_type)
 	var/new_name
@@ -482,21 +471,13 @@
 //END HACKING//
 ///////////////
 
-/obj/machinery/alarm/attack_ai(mob/user)
-	src.add_hiddenprint(user)
-	return ui_interact(user)
-
-/obj/machinery/alarm/attack_robot(mob/user)
-	if(isMoMMI(user) && !wiresexposed)
-		return interact(user)
-	else
-		return attack_ai(user)
-
 /obj/machinery/alarm/attack_hand(mob/user)
 	. = ..()
+
 	if (.)
 		return
-	return interact(user)
+
+	interact(user)
 
 /obj/machinery/alarm/proc/ui_air_status()
 	var/turf/location = get_turf(src)
@@ -621,40 +602,27 @@
 	return data
 
 
-/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
-	if(user.stat && !isobserver(user))
-		return
-
+/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	var/list/data=src.get_nano_data(user,FALSE)
 
-	if (!ui) // no ui has been passed, so we'll search for one
-	{
-		ui = nanomanager.get_open_ui(user, src, ui_key)
-	}
-	if (!ui)
-		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "air_alarm.tmpl", name, 550, 410)
-		// When the UI is first opened this is the data it will use
-		ui.set_initial_data(data)
-		ui.open()
-		// Auto update every Master Controller tick
-		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 
+	if (!ui)
+		// The ui does not exist, so we'll create a new one.
+		ui = new(user, src, ui_key, "air_alarm.tmpl", name, 550, 410)
+		// When the UI is first opened this is the data it will use.
+		ui.set_initial_data(data)
+		// Open the new ui window.
+		ui.open()
+		// Auto update every Master Controller tick.
+		ui.set_auto_update(1)
 
 /obj/machinery/alarm/interact(mob/user)
-	user.set_machine(src)
-
 	if(buildstage!=2)
 		return
 
 	if ( (get_dist(src, user) > 1 ))
 		if (!istype(user, /mob/living/silicon))
-			user.machine = null
-			user << browse(null, "window=air_alarm")
 			user << browse(null, "window=AAlarmwires")
 			return
 
@@ -670,21 +638,15 @@
 		ui_interact(user)
 
 /obj/machinery/alarm/Topic(href, href_list)
-	var/changed=0
-
 	if(href_list["rcon"])
 		rcon_setting = text2num(href_list["rcon"])
-		changed=1
 
 	if ( (get_dist(src, usr) > 1 ))
 		if (!istype(usr, /mob/living/silicon))
-			usr.machine = null
-			usr << browse(null, "window=air_alarm")
 			usr << browse(null, "window=AAlarmwires")
 			return
 
 	add_fingerprint(usr)
-	usr.machine = src
 
 	//testing(href)
 	if(href_list["command"])
@@ -716,8 +678,6 @@
 					val = newval
 
 				send_signal(device_id, list(href_list["command"] = val ) )
-				changed=0 // We wait for the device to reply.
-				waiting_on_device=device_id
 
 			if("set_threshold")
 				var/env = href_list["env"]
@@ -768,40 +728,32 @@
 						selected[3] = selected[4]
 
 				apply_mode()
-				ui_interact(usr)
 				return 1
 
 	if(href_list["screen"])
-		var/prevscreen=screen
 		screen = text2num(href_list["screen"])
-		if(prevscreen==screen) return 0
-		ui_interact(usr)
 		return 1
 
 	if(href_list["atmos_alarm"])
 		alarmActivated=1
 		areaMaster.updateDangerLevel()
 		update_icon()
-		ui_interact(usr)
 		return 1
 
 	if(href_list["atmos_reset"])
 		alarmActivated=0
 		areaMaster.updateDangerLevel()
 		update_icon()
-		ui_interact(usr)
 		return 1
 
 	if(href_list["mode"])
 		mode = text2num(href_list["mode"])
 		apply_mode()
-		ui_interact(usr)
 		return 1
 
 	if(href_list["preset"])
 		preset = text2num(href_list["preset"])
 		apply_preset()
-		ui_interact(usr)
 		return 1
 
 	if(href_list["temperature"])
@@ -815,11 +767,7 @@
 			usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
 		else
 			target_temperature = input_temperature + T0C
-		ui_interact(usr)
 		return 1
-	if(changed)
-		updateUsrDialog()
-
 
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
 /*	if (istype(W, /obj/item/weapon/wirecutters))
@@ -852,7 +800,6 @@
 					if(allowed(user) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 						locked = !locked
 						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
-						updateUsrDialog()
 					else
 						user << "<span class='warning'>Access denied.</span>"
 			return
