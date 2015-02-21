@@ -3110,3 +3110,53 @@
 	..()
 	reagents.add_reagent("nutriment", 3)
 	bitesize = 1
+
+
+//////////////////CURRY//////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/curry
+	name = "Chicken Balti"
+	desc = "Finest Indian Cuisine, at least you think it is chicken."
+	icon_state = "curry_balti"
+	item_state = "curry_balti"
+
+/obj/item/weapon/reagent_containers/food/snacks/curry/New()
+	..()
+	reagents.add_reagent("nutriment", 20)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/curry/vindaloo
+	name = "Chicken Vindaloo"
+	desc = "Me and me Mum and me Dad and me Nan are off to Waterloo, me and me Mum and me Dad and me Nan and a bucket of Vindaloo!"
+	icon_state = "curry_vindaloo"
+	item_state = "curry_vindaloo"
+
+/obj/item/weapon/reagent_containers/food/snacks/curry/vindaloo/New()
+	..()
+	reagents.add_reagent("nutriment", 20)
+	reagents.add_reagent("capsaicin", 10)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/curry/Lemon
+	name = "Lemon Curry"
+	desc = "This actually exists?"
+	icon_state = "curry_lemon"
+	item_state = "curry_lemon"
+
+/obj/item/weapon/reagent_containers/food/snacks/curry/lemon/New()
+	..()
+	reagents.add_reagent("nutriment", 20)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/curry/xeno
+	name = "Xeno Balti"
+	desc = "Waste not want not."
+	icon_state = "curry_xeno"
+	item_state = "curry_xeno"
+
+/obj/item/weapon/reagent_containers/food/snacks/curry/xeno/New()
+	..()
+	reagents.add_reagent("nutriment", 20)
+	bitesize = 3
+
+

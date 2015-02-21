@@ -300,9 +300,9 @@ client/proc/antag_madness(var/mob/M in mob_list)
 
 			M << "<span class='danger'>You suddenly realize that you clearly remember every single rune word! Check your notes.</span>"
 
-			M << "A tome, a message from your new master, appears in your backpack."
+			M << "<span class='sinister'>A tome, a message from your new master, appears in your backpack.</span>"
 
-			M << "You have a talisman in your backpack, one that will help you start the cult on this station. Use it well and remember - there are others...or maybe not..."//duh
+			M << "<span class='sinister'>You have a talisman in your backpack, one that will help you start the cult on this station. Use it well and remember - there are others...or maybe not...</span>"//duh
 			return 1
 
 

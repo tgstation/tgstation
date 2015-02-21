@@ -87,6 +87,8 @@
 
 #define iswire(O) istype(O, /obj/item/stack/cable_coil)
 
+#define iscamera(A) istype(A, /obj/machinery/camera)
+
 //Macros for antags
 
 #define isvampire(H) ((H.mind in ticker.mode.vampires) || H.mind.vampire)

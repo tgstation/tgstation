@@ -1619,7 +1619,7 @@ var/global/list/organ_damage_overlays = list(
 				if((temp_turf.z != 1 && temp_turf.z != 5) || remoteview_target.stat!=CONSCIOUS)
 					src << "\red Your psy-connection grows too faint to maintain!"
 					isRemoteObserve = 0
-			if(!isRemoteObserve && client && !client.adminobs)
+			if(!isRemoteObserve && client && !client.adminobs && !iscamera(client.eye))
 				remoteview_target = null
 				reset_view(null)
 	return 1

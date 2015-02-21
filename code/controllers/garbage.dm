@@ -21,6 +21,7 @@ var/datum/garbage_collector/garbageCollector
 	// To let them know how hardworking am I :^).
 	var/dels_count = 0
 	var/hard_dels = 0
+	var/soft_dels = 0
 
 /datum/garbage_collector/proc/addTrash(const/atom/movable/AM)
 	if(!istype(AM))

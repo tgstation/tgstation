@@ -57,15 +57,17 @@
 
 			del_profiling["[type]"] += 1
 		if(1)
-			if (!("[type]" in gdel_profiling))
-				gdel_profiling["[type]"] = 0
-
-			ghdel_profiling["[type]"] += 1
-		if(2)
 			if (!("[type]" in ghdel_profiling))
 				ghdel_profiling["[type]"] = 0
 
+			ghdel_profiling["[type]"] += 1
+		if(2)
+			if (!("[type]" in gdel_profiling))
+				gdel_profiling["[type]"] = 0
+
 			gdel_profiling["[type]"] += 1
+			if(garbageCollector)
+				garbageCollector.soft_dels++
 
 /atom/movable/Del()
 	if (gcDestroyed)
