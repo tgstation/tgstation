@@ -148,6 +148,7 @@ BLIND     // can't see anything
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
+	fitted = HIDE_SPECIES_BODY
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 

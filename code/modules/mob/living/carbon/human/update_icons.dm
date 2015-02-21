@@ -258,18 +258,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(!t_color)		t_color = icon_state
 		var/image/standing	= image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
 
-		overlays_standing[UNIFORM_LAYER]	= standing
-
-		if(dna && dna.species.sexes)
-			var/fittings = U.fitted
-			var/G = (gender == FEMALE) ? "f" : "m"
-			if(G == "m" || !U.fitted)
-				fittings &= ~U.fitted
-			if(dna.species.clothfittings)
-				fittings |= dna.species.clothfittings
+		if(dna)
+			var/fittings = manage_fittings(U.fitted, dna.species.clothfittings, gender)
 			if(fittings)
 				standing	= wear_alternate_version("[t_color]_s", 'icons/mob/uniform.dmi', UNIFORM_LAYER, fittings)
-				overlays_standing[UNIFORM_LAYER]	= standing
+
+		overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(w_uniform.blood_DNA)
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
@@ -432,8 +426,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 		var/image/standing	= image("icon"='icons/mob/suit.dmi', "icon_state"="[wear_suit.icon_state]", "layer"=-SUIT_LAYER)
 
-		if(dna && dna.species.clothfittings)
-			standing = wear_alternate_version(wear_suit.icon_state, 'icons/mob/suit.dmi', SUIT_LAYER, dna.species.clothfittings)
+		if(dna)
+			var/obj/item/clothing/suit/S = wear_suit
+			var/fittings = manage_fittings(S.fitted, dna.species.clothfittings, gender)
+			if(fittings)
+				standing	= wear_alternate_version(wear_suit.icon_state, 'icons/mob/suit.dmi', SUIT_LAYER, fittings)
 
 		overlays_standing[SUIT_LAYER]	= standing
 
@@ -578,6 +575,18 @@ Please contact me on #coderbus IRC. ~Carnie x
 		generate_clothing(index,t_color,icon,fittings)
 	var/standing	= image("icon"=generated_clothing_icons["[t_color][fittings]"], "layer"=-layer)
 	return(standing)
+
+/mob/living/carbon/human/proc/manage_fittings(fitted, clothfittings, gender)
+	var/fittings = (fitted|clothfittings)
+
+	if(gender != FEMALE)
+		fittings &= ~FEMALE_UNIFORM_FULL
+		fittings &= ~FEMALE_UNIFORM_TOP
+
+	if(fittings & HIDE_SPECIES_BODY)
+		fittings &= ~SHOW_LIZARD_TAIL
+
+	return(fittings)
 
 
 //Human Overlays Indexes/////////

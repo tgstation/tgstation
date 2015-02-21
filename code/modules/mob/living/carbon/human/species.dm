@@ -186,35 +186,36 @@
 	if(H.underwear)
 		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
 		if(U)
-			var/fittingU
 			if(H.dna)
-				if(H.dna.species.sexes && H.gender == FEMALE)
-					fittingU += FEMALE_UNIFORM_TOP
-				if(H.dna.species.clothfittings)
-					fittingU += H.dna.species.clothfittings
-				if(fittingU)
-					standing	+=	H.wear_alternate_version("[U.icon_state]_s", U.icon, BODY_LAYER, fittingU)
-			if(!fittingU)
+				var/fittings = H.manage_fittings(FEMALE_UNIFORM_TOP, H.dna.species.clothfittings, H.gender)
+				if(fittings)
+					standing	+= H.wear_alternate_version("[U.icon_state]_s", U.icon, BODY_LAYER, fittings)
+				else
+					standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
+			else
 				standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(H.undershirt)
 		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[H.undershirt]
 		if(U2)
-			var/fittingU2
 			if(H.dna)
-				if(H.dna.species.sexes && H.gender == FEMALE)
-					fittingU2 += FEMALE_UNIFORM_TOP
-				if(H.dna.species.clothfittings)
-					fittingU2 += H.dna.species.clothfittings
-				if(fittingU2)
-					standing	+=	H.wear_alternate_version("[U2.icon_state]_s", U2.icon, BODY_LAYER, fittingU2)
-			if(!fittingU2)
+				var/fittings = H.manage_fittings(FEMALE_UNIFORM_TOP, H.dna.species.clothfittings, H.gender)
+				if(fittings)
+					standing	+= H.wear_alternate_version("[U2.icon_state]_s", U2.icon, BODY_LAYER, fittings)
+				else
+					standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
+			else
 				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
+
 	if(H.socks)
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)
-			if(H.dna && H.dna.species.clothfittings)
-				standing	+=	H.wear_alternate_version("[U3.icon_state]_s", U3.icon, BODY_LAYER, H.dna.species.clothfittings)
+			if(H.dna)
+				var/fittings = H.manage_fittings(null, H.dna.species.clothfittings, H.gender)
+				if(fittings)
+					standing	+= H.wear_alternate_version("[U3.icon_state]_s", U3.icon, BODY_LAYER, fittings)
+				else
+					standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
 			else
 				standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
 

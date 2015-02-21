@@ -81,8 +81,10 @@
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
-//bitflags for outfits modification: How much the game should "take off" the uniform so it doesn't look weird
+//bitflags for mob modification: How much the game should "take off" the uniform/mob so it doesn't look weird
 
 #define FEMALE_UNIFORM_FULL			1
 #define FEMALE_UNIFORM_TOP			2
 #define SHOW_LIZARD_TAIL			4
+#define HIDE_SPECIES_BODY			8
+#define HIDE_SPECIES_HEAD			16
