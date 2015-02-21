@@ -117,7 +117,7 @@ datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	result = "neurotoxin2"
 	required_reagents = list("space_drugs" = 1)
 	result_amount = 1
-	required_temp = 200
+	required_temp = 370
 
 datum/reagent/cyanide
 	name = "Cyanide"

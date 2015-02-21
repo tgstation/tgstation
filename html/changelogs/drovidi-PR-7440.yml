@@ -1,8 +1,0 @@
-author: drovidi
-
-delete-after: True
-
-changes:
-  - tweak: "Blobs who burst in space will be given a 30 second warning before dying."
-  - tweak: "If a blob does die from bursting in space, a new crewmember will be infected."
-  - bugfix: "If there are no blobs or infected crew left after bursting, the round will now end properly, rather than becoming endless."

@@ -40,12 +40,6 @@
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
-/obj/machinery/r_n_d/experimentor/proc/ConvertReqList2String(var/list/source_list)
-	var/returnString = ""
-	for(var/O in source_list)
-		returnString += "[O];"
-	return returnString
-
 /* //uncomment to enable forced reactions.
 /obj/machinery/r_n_d/experimentor/verb/forceReaction()
 	set name = "Force Experimentor Reaction"
@@ -503,7 +497,7 @@
 			var/list/reqs = ConvertReqString2List(exp_on.origin_tech)
 			for(var/T in reqs)
 				reqs[T] = reqs[T] + 1
-			exp_on.origin_tech = ConvertReqList2String(reqs)
+			exp_on.origin_tech = list2params(reqs)
 		if(globalMalf > 51 && globalMalf < 75)
 			visible_message("<span class='notice'>[src] encounters a run-time error!</span>")
 			throwSmoke(src.loc)
@@ -609,8 +603,8 @@
 			user << "<span class='notice'>[src] does not react.</span>"
 			return
 		else if(src.loc == user)
-			call(src,realProc)(user)
 			cooldown = TRUE
+			call(src,realProc)(user)
 			spawn(cooldownMax)
 				cooldown = FALSE
 	else
@@ -661,10 +655,10 @@
 		R.realProc = realProc
 		R.revealed = TRUE
 		dupes |= R
-		R.throw_at(pick(oview(7,src)),10,1)
+		R.throw_at(pick(oview(7,get_turf(src))),10,1)
 	counter = 0
 	spawn(rand(10,100))
-		for(counter = 1; counter < dupes.len; counter++)
+		for(counter = 1; counter <= dupes.len; counter++)
 			var/obj/item/weapon/relic/R = dupes[counter]
 			qdel(R)
 

@@ -7,12 +7,13 @@
 	bitesize = 2
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"
+	slot_flags = SLOT_HEAD // i'm going to kill myself. i'm going to murder my own self.
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
 	desc = "Some plain old Earthen bread."
 	icon_state = "bread"
-	list_reagents = list("nutriment" = 10)
+	list_reagents = list("nutriment" = 7)
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/bread
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/plain
 

@@ -1,9 +1,0 @@
-author: Vekter
-
-delete-after: True
-
-  - tweak: "Each shot glass now holds 15 units, and the drinker takes all 15 in one gulp instead of 5 at a time. This means you can mix certain shots (namely, the B-52 and Toxins Special) in a shot glass. Both drinks have been made exclusive to shot glasses and will no longer show their specific sprite in a normal glass."
-  - rscadd: "Added new sprites for most alcohol in shot glasses. Everything else will show up as 'shot of... what?'."
-  - bugfix: "Fixed shot glasses turning into regular glasses when filled."
-  - bugfix: "Fixed tequila bottle sprites not showing up."
-  - bugfix: "Fixed a typo!"
