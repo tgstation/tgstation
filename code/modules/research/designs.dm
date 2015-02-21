@@ -2733,6 +2733,15 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/airlock
 
+/datum/design/airlock
+	name = "Circuit Design (Intercom)"
+	desc = "Allows for the construction of circuit boards used to build an intercom."
+	id = "intercom"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/intercom_electronics
+
 /datum/design/conveyor
 	name = "Circuit Design (Conveyor)"
 	desc = "Allows for the construction of circuit boards used to build a conveyor belt."

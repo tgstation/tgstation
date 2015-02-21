@@ -834,17 +834,21 @@
 
 	switch(buildstage)
 		if(2)
-			if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
+			if(isscrewdriver(W))  // Opening that Air Alarm up.
 				//user << "You pop the Air Alarm's maintence panel open."
 				wiresexposed = !wiresexposed
 				user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
 				update_icon()
 				return
 
-			if (wiresexposed && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
+			if(wiresexposed && !wires.IsAllCut() && (ismultitool(W) || (iswirecutter(W))))
 				return attack_hand(user)
-
-			if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
+			else if(wiresexposed && wires.IsAllCut() && iswirecutter(W))
+				buildstage = 1
+				update_icon()
+				new /obj/item/stack/cable_coil(get_turf(src),5)
+				return
+			if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
 					user << "It does nothing"
 					return
@@ -858,23 +862,23 @@
 			return
 
 		if(1)
-			if(istype(W, /obj/item/stack/cable_coil))
+			if(iscoil(W))
 				var/obj/item/stack/cable_coil/coil = W
 				if(coil.amount < 5)
 					user << "You need more cable for this!"
 					return
+				for(var/i, i<= 5, i++)
+					wires.UpdateCut(i,1)
 
 				user << "You wire \the [src]!"
-				coil.amount -= 5
-				if(!coil.amount)
-					qdel(coil)
+				coil.use(5)
 
 				buildstage = 2
 				update_icon()
 				first_run()
 				return
 
-			else if(istype(W, /obj/item/weapon/crowbar))
+			else if(iscrowbar(W))
 				user << "You start prying out the circuit."
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,20))
@@ -892,7 +896,7 @@
 				update_icon()
 				return
 
-			else if(istype(W, /obj/item/weapon/wrench))
+			else if(iswrench(W))
 				user << "You remove the air alarm assembly from the wall!"
 				new /obj/item/mounted/frame/alarm_frame(get_turf(user))
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
@@ -991,13 +995,13 @@ FIRE ALARM
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
-				if (istype(W, /obj/item/device/multitool))
+				if (ismultitool(W))
 					src.detecting = !( src.detecting )
 					if (src.detecting)
 						user.visible_message("<span class='attack'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("<span class='attack'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
-				if(istype(W, /obj/item/weapon/wirecutters))
+				if(iswirecutter(W))
 					if(do_after(user,50))
 						buildstage=1
 						user.visible_message("<span class='attack'>[user] has cut the wiring from \the [src]!</span>", "You have cut the last of the wiring from \the [src].")
@@ -1005,15 +1009,12 @@ FIRE ALARM
 						new /obj/item/stack/cable_coil(user.loc,5)
 						playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 			if(1)
-				if(istype(W, /obj/item/stack/cable_coil))
+				if(iscoil(W))
 					var/obj/item/stack/cable_coil/coil = W
 					if(coil.amount < 5)
 						user << "You need more cable for this!"
 						return
-
-					coil.amount -= 5
-					if(!coil.amount)
-						qdel(coil)
+					coil.use(5)
 
 					buildstage = 2
 					user << "You wire \the [src]!"
@@ -1034,7 +1035,7 @@ FIRE ALARM
 					buildstage = 1
 					update_icon()
 
-				else if(istype(W, /obj/item/weapon/wrench))
+				else if(iswrench(W))
 					user << "You remove the fire alarm assembly from the wall!"
 					new /obj/item/mounted/frame/firealarm(get_turf(user))
 					playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)

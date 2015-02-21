@@ -157,7 +157,7 @@
 /turf/simulated/floor/plating/New()
 	..()
 	if(floor_tile)
-		returnToPool(floor_tile)
+		returnToPool(src.floor_tile)
 		floor_tile = null
 
 

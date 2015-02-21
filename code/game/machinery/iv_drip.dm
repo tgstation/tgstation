@@ -147,6 +147,7 @@
 
 /obj/machinery/iv_drip/verb/toggle_mode()
 	set name = "Toggle Mode"
+	set category = "Object"
 	set src in view(1)
 
 	if(!istype(usr, /mob/living))

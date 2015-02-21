@@ -76,6 +76,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("apc frame", /obj/item/mounted/frame/apc_frame, 2), \
 	new/datum/stack_recipe("air alarm frame", /obj/item/mounted/frame/alarm_frame, 2), \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/mounted/frame/firealarm, 2), \
+	new/datum/stack_recipe("lightswitch frame", /obj/item/mounted/frame/light_switch, 2), \
+	new/datum/stack_recipe("intercom frame", /obj/item/mounted/frame/intercom, 2), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/machinery/door/mineral/iron, 20, one_per_turf = 1, on_floor = 1), \
 )
