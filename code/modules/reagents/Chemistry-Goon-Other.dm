@@ -294,25 +294,3 @@ datum/reagent/concentrated_barbers_aid/reaction_mob(var/mob/living/M, var/volume
 		H.update_hair()
 	..()
 	return
-
-datum/reagent/untable_mutagen
-	name = "Untable Mutagen"
-	id = "untable_mutagen"
-	description = "A solution."
-	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
-
-/datum/chemical_reaction/untable_mutagen
-	name = "untable_mutagen"
-	id = "untable_mutagen"
-	result = "untable_mutagen"
-	required_reagents = list("liquid_dark_matter" = 1, "iron" = 1, "mutagen" = 1)
-	result_amount = 3
-
-datum/reagent/untable_mutagen/reaction_obj(var/obj/O, var/volume)
-	if(istype(O, /obj/structure/table))
-		O.visible_message("<span class = 'notice'>[O] melts into goop!</span>")
-		new/obj/item/trash/candle(O.loc)
-		qdel(O)
-	..()
-	return
