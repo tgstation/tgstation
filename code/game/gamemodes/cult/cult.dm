@@ -58,8 +58,9 @@
 
 	var/narsie_condition_cleared = 0	//allows Nar-Sie to be summonned during cult rounds. set to 1 once the cult reaches the second phase.
 	var/current_objective = 1	//equals the number of cleared objectives + 1
+	var/prenarsie_objectives = 2 //how many objectives at most before the cult gets to summon narsie
 	var/list/bloody_floors = list()
-	var/spilltarget = 150	//how many floor tiles must be covered in blood to complete the bloodspill objective
+	var/spilltarget = 100	//how many floor tiles must be covered in blood to complete the bloodspill objective
 	var/convert_target = 0	//how many members the cult needs to reach to complete the convert objective
 	var/harvested = 0
 
@@ -141,15 +142,26 @@
 		cult_mind.current << "<B>Objective #[current_objective]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[current_objective]</B>: [explanation]<BR>"
 
+/datum/game_mode/cult/proc/bypass_phase()
+	switch(objectives[current_objective])
+		if("convert")
+			mass_convert = 1
+		if("bloodspill")
+			spilled_blood = 1
+		if("sacrifice")
+			sacrificed += sacrifice_target
+	additional_phase()
+
 /datum/game_mode/cult/proc/additional_phase()
 	current_objective++
 
 	var/new_objective = "eldergod"
 	//the idea here is that if the cult performs well, the should get more objectives before they can summon Nar-Sie.
 	if(cult.len >= 4)//if there are less than 4 remaining cultists, they get a free pass to the summon objective.
-		var/list/unconvertables = get_unconvertables()
-		if(unconvertables.len < (cult.len * 2))//if cultists are getting radically outnumbered, they get a free pass to the summon objective.
-			new_objective = pick_objective()
+		if(current_objective <= prenarsie_objectives)
+			var/list/unconvertables = get_unconvertables()
+			if(unconvertables.len < (cult.len * 2))//if cultists are getting radically outnumbered, they get a free pass to the summon objective.
+				new_objective = pick_objective()
 
 	if(!sacrificed.len && (new_objective != "sacrifice"))
 		sacrifice_target = null
@@ -533,7 +545,7 @@
 						feedback_add_details("cult_objective","cult_narsie|FAIL")
 
 				if("harvest")
-					if(bonus)
+					if(harvested > harvest_target)
 						explanation = "Offer [harvest_target] humans for Nar-Sie's first meal of the day. ([harvested] eaten) <font color='green'><B>Success!</B></font>"
 						feedback_add_details("cult_objective","cult_harvest|SUCCESS")
 					else
@@ -541,7 +553,7 @@
 						feedback_add_details("cult_objective","cult_harvest|FAIL")
 
 				if("hijack")
-					if(bonus)
+					if(!escaped_shuttle)
 						explanation = "Do not let a single non-cultist board the Escape Shuttle. ([escaped_shuttle] escaped on the shuttle) ([escaped_pod] escaped on pods) <font color='green'><B>Success!</B></font>"
 						feedback_add_details("cult_objective","cult_hijack|SUCCESS")
 					else
@@ -549,7 +561,7 @@
 						feedback_add_details("cult_objective","cult_hijack|FAIL")
 
 				if("massacre")
-					if(bonus)
+					if(survivors < massacre_target)
 						explanation = "Massacre the crew until less than [massacre_target] humans are left on the station. ([survivors] humans left alive) <font color='green'><B>Success!</B></font>"
 						feedback_add_details("cult_objective","cult_massacre|SUCCESS")
 					else

@@ -112,6 +112,13 @@
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
 			var/obj/item/device/soulstone/C = src
+
+			if(istype(ticker.mode, /datum/game_mode/cult))
+				var/datum/game_mode/cult/mode_ticker = ticker.mode
+				if(T.mind && (mode_ticker.sacrifice_target == T.mind))
+					U << "<span class='warning'>The soul stone is unable to rip this soul. Such a powerful soul, it must be coveted by some powerful being.</span>"
+					return
+
 			if(C.imprinted != "empty")
 				U << "\red <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!"
 			else
