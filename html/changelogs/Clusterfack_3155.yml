@@ -1,6 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- bugfix: Fix air alarms not being deconstructable
-- rscadd: Made intercoms constructable and deconstructable
-- rscadd: Made light switches constructable and deconstructable

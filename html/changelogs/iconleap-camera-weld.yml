@@ -1,6 +1,0 @@
-author: iconleap
-
-delete-after: True
-
-changes: 
-  - bugfix: Fixed cameras deconstruction not dropping camera assembly after welding it off
