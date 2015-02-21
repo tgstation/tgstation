@@ -412,18 +412,9 @@ datum/reagent/consumable/atomicbomb/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 50)
 	M.confused = max(M.confused+2,0)
 	M.Dizzy(10)
-	if (!M.slurring)
-		M.slurring = 1
-	M.slurring += 3
-	if(!data)
-		data = 1
-	data++
-	switch(data)
-		if(51 to 200)
-			M.sleeping += 1
-		if(201 to INFINITY)
-			M.sleeping += 1
-			M.adjustToxLoss(2)
+	M.drunkness += 2
+	if(M.drunkness >= 80)
+		M.sleeping += 1
 	..()
 	return
 
@@ -434,20 +425,8 @@ datum/reagent/consumable/gargle_blaster
 	color = "#664300" // rgb: 102, 67, 0
 
 datum/reagent/consumable/gargle_blaster/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	data++
-	M.dizziness +=6
-	if(data >= 15 && data <45)
-		if (!M.slurring)
-			M.slurring = 1
-		M.slurring += 3
-	else if(data >= 45 && prob(50) && data <55)
-		M.confused = max(M.confused+3,0)
-	else if(data >=55)
-		M.druggy = max(M.druggy, 55)
-	else if(data >=200)
-		M.adjustToxLoss(2)
+	M.dizziness += 6
+	M.drunkness += 2
 	..()
 	return
 
@@ -459,20 +438,8 @@ datum/reagent/consumable/neurotoxin
 
 datum/reagent/consumable/neurotoxin/on_mob_life(var/mob/living/carbon/M as mob)
 	M.weakened = max(M.weakened, 3)
-	if(!data)
-		data = 1
-	data++
-	M.dizziness +=6
-	if(data >= 15 && data <45)
-		if (!M.slurring)
-			M.slurring = 1
-		M.slurring += 3
-	else if(data >= 45 && prob(50) && data <55)
-		M.confused = max(M.confused+3,0)
-	else if(data >=55)
-		M.druggy = max(M.druggy, 55)
-	else if(data >=200)
-		M.adjustToxLoss(2)
+	M.dizziness += 6
+	M.drunkness += 2
 	..()
 	return
 
@@ -486,33 +453,11 @@ datum/reagent/consumable/hippies_delight
 
 datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 50)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
-		if(1 to 5)
-			if (!M.slurring) M.slurring = 1
-			M.Dizzy(10)
-			if(prob(10)) M.emote(pick("twitch","giggle"))
-		if(5 to 10)
-			if (!M.slurring) M.slurring = 1
-			M.Jitter(20)
-			M.Dizzy(20)
-			M.druggy = max(M.druggy, 45)
-			if(prob(20)) M.emote(pick("twitch","giggle"))
-		if (10 to 200)
-			if (!M.slurring) M.slurring = 1
-			M.Jitter(40)
-			M.Dizzy(40)
-			M.druggy = max(M.druggy, 60)
-			if(prob(30)) M.emote(pick("twitch","giggle"))
-		if(200 to INFINITY)
-			if (!M.slurring) M.slurring = 1
-			M.Jitter(60)
-			M.Dizzy(60)
-			M.druggy = max(M.druggy, 75)
-			if(prob(40)) M.emote(pick("twitch","giggle"))
-			if(prob(30)) M.adjustToxLoss(2)
+	M.drunkness += 2
+	M.Dizzy(10)
+	M.Jitter(10)
+	if(prob(10))
+		M.emote("giggle")
 	..()
 	return
 

@@ -287,22 +287,18 @@ datum/reagent/water/holywater
 datum/reagent/water/holywater/on_mob_life(var/mob/living/M as mob)
 	if(!data) data = 1
 	data++
-	M.jitteriness = max(M.jitteriness-5,0)
+	M.drunkness += 0.5
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
-		if (!M.stuttering) M.stuttering = 1
-		M.stuttering += 4
-		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","Egkau'haom'nai en Chaous","Ho Diak'nos tou Ap'iron","R'ge Na'sie","Diabo us Vo'iscum","Si gn'um Co'nu"))
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
-		if (!M.confused) M.confused = 1
-		M.confused += 3
 		if(iscultist(M))
 			ticker.mode.remove_cultist(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
 			M.stuttering = 0
 			M.confused = 0
+			M.drunkness = 0
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 	return
 

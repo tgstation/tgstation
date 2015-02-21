@@ -19,6 +19,8 @@
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
+		handle_nausea()
+		handle_drunkness()
 
 	if(!client && stat == CONSCIOUS)
 		if(prob(33) && canmove && isturf(loc) && !pulledby && !grabbed_by.len)

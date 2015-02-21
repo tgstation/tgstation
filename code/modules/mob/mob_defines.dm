@@ -64,7 +64,6 @@
 	var/lying_prev = 0
 	var/canmove = 1
 	var/eye_stat = null//Living, potentially Carbon
-	var/lastpuke = 0
 	var/unacidable = 0
 
 	var/name_archive //For admin things like possession
@@ -79,6 +78,8 @@
 	var/jitteriness = 0//Carbon
 	var/nutrition = NUTRITION_LEVEL_FED + 50//Carbon
 	var/satiety = 0//Carbon
+	var/drunkness = 0//living
+	var/nausea = 0//living
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/paralysis = 0

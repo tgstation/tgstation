@@ -50,6 +50,8 @@
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
+		handle_nausea()
+		handle_drunkness()
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
@@ -577,29 +579,6 @@
 		dna.species.handle_hud_icons(src)
 
 	return 1
-
-/mob/living/carbon/human/handle_random_events()
-	// Puke if toxloss is too high
-	if(!stat)
-		if (getToxLoss() >= 45 && nutrition > 20)
-			lastpuke ++
-			if(lastpuke >= 25) // about 25 second delay I guess
-				Stun(5)
-
-				visible_message("<span class='danger'>[src] throws up!</span>", \
-						"<span class='userdanger'>[src] throws up!</span>")
-				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-				var/turf/location = loc
-				if (istype(location, /turf/simulated))
-					location.add_vomit_floor(src, 1)
-
-				nutrition -= 20
-				adjustToxLoss(-3)
-
-				// make it so you can only puke so fast
-				lastpuke = 0
-
 
 /mob/living/carbon/human/handle_changeling()
 	if(mind && mind.changeling)
