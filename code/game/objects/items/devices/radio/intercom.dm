@@ -82,6 +82,7 @@
 					update_icon()
 					processing_objects.Remove(src)
 				return 1
+			else return ..()
 		if(2)
 			if(isscrewdriver(W))
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
@@ -134,7 +135,6 @@
 					new /obj/item/mounted/frame/intercom(get_turf(src))
 					qdel(src)
 					return 1
-	return ..()
 
 /obj/item/device/radio/intercom/update_icon()
 	if(!circuitry_installed)
