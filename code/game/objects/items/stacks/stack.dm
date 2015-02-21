@@ -206,28 +206,28 @@
 		..()
 	return
 
-/obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, src.type) && src.type==W.type)
-		var/obj/item/stack/S = W
-		if (S.amount >= S.max_amount)
-			user << "\The [S] cannot hold anymore [S.singular_name]."
+/obj/item/stack/preattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if (istype(target, src.type) && src.type==target.type)
+		var/obj/item/stack/S = target
+		if (amount >= max_amount)
+			user << "\The [src] cannot hold anymore [singular_name]."
 			return 1
 		var/to_transfer as num
-		if (user.get_inactive_hand()==src)
+		if (user.get_inactive_hand()==S)
 			to_transfer = 1
 		else
-			to_transfer = min(src.amount, S.max_amount-S.amount)
-		S.amount+=to_transfer
-		user << "You add [to_transfer] [S.singular_name] to \the [S]. It now contains [S.amount] [S.singular_name]."
+			to_transfer = min(S.amount, max_amount-amount)
+		amount+=to_transfer
+		user << "You add [to_transfer] [singular_name] to \the [src]. It now contains [amount] [singular_name]\s."
 		if (S && user.machine==S)
-			spawn(0) S.interact(user)
-		src.use(to_transfer)
+			spawn(0) interact(user)
+		S.use(to_transfer)
 		if (src && user.machine==src)
 			spawn(0) src.interact(user)
 		update_icon()
 		S.update_icon()
 		return 1
-	else return ..()
+	return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
 	src.blood_DNA = from.blood_DNA
