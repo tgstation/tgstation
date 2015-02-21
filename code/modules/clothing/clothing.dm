@@ -5,6 +5,7 @@
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
 	var/visor_flags = 0			// flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
+	var/fitted = null			//Bitflag field. This controls if there special instructions on how the icon should look on certain players. Species specific fitting is handed in species.dm.
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 
@@ -147,6 +148,7 @@ BLIND     // can't see anything
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
+	fitted = HIDE_SPECIES_BODY
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 
@@ -200,7 +202,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
+	fitted = FEMALE_UNIFORM_FULL
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 	var/can_adjust = 1
@@ -259,12 +261,20 @@ BLIND     // can't see anything
 	if(hastie)
 		user << "\A [hastie] is attached to it."
 
-atom/proc/generate_female_clothing(index,t_color,icon,type)
-	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"="[t_color]_s")
-	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
-	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
-	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
-	female_clothing_icons[index] = female_clothing_icon
+atom/proc/generate_clothing(index,t_color,icon,fittings)
+	var/icon/clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
+	var/icon/mask
+	if(fittings & FEMALE_UNIFORM_FULL)
+		mask = icon("icon"='icons/mob/clothing_variations.dmi', "icon_state"="female_full")
+		clothing_icon.Blend(mask, ICON_MULTIPLY)
+	if(fittings & FEMALE_UNIFORM_TOP)
+		mask = icon("icon"='icons/mob/clothing_variations.dmi', "icon_state"="female_top")
+		clothing_icon.Blend(mask, ICON_MULTIPLY)
+	if(fittings & SHOW_LIZARD_TAIL)
+		mask = icon("icon"='icons/mob/clothing_variations.dmi', "icon_state"="lizard")
+		clothing_icon.Blend(mask, ICON_MULTIPLY)
+	clothing_icon 			= fcopy_rsc(clothing_icon)
+	generated_clothing_icons[index] = clothing_icon
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
@@ -323,7 +333,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 		usr << "You adjust the suit back to normal."
 		src.adjusted = 0
 	else
-		src.fitted = NO_FEMALE_UNIFORM
+		src.fitted = null
 		src.item_color += "_d"
 		usr << "You adjust the suit to wear it more casually."
 		src.adjusted = 1

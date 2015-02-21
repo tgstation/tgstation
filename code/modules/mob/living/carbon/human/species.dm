@@ -41,7 +41,7 @@
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
-
+	var/clothfittings = null //If your species has something like a tail, you can define a zone (clothing_variations.dmi) to be exposed while wearing outfits that would otherwise cover it. Bitflag field
 	var/say_mod = "says"	// affects the speech message
 
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
@@ -186,20 +186,38 @@
 	if(H.underwear)
 		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
 		if(U)
-			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
+			if(H.dna)
+				var/fittings = H.manage_fittings(FEMALE_UNIFORM_TOP, H.dna.species.clothfittings, H.gender)
+				if(fittings)
+					standing	+= H.wear_alternate_version("[U.icon_state]_s", U.icon, BODY_LAYER, fittings)
+				else
+					standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
+			else
+				standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(H.undershirt)
 		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[H.undershirt]
 		if(U2)
-			if(H.dna && H.dna.species.sexes && H.gender == FEMALE)
-				standing	+=	H.wear_female_version(U2.icon_state, U2.icon, BODY_LAYER)
+			if(H.dna)
+				var/fittings = H.manage_fittings(FEMALE_UNIFORM_TOP, H.dna.species.clothfittings, H.gender)
+				if(fittings)
+					standing	+= H.wear_alternate_version("[U2.icon_state]_s", U2.icon, BODY_LAYER, fittings)
+				else
+					standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
 			else
 				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(H.socks)
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)
-			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
+			if(H.dna)
+				var/fittings = H.manage_fittings(null, H.dna.species.clothfittings, H.gender)
+				if(fittings)
+					standing	+= H.wear_alternate_version("[U3.icon_state]_s", U3.icon, BODY_LAYER, fittings)
+				else
+					standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
+			else
+				standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing

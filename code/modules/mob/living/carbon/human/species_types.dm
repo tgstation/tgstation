@@ -29,6 +29,7 @@
 	say_mod = "hisses"
 	default_color = "00FF00"
 	roundstart = 1
+	clothfittings = SHOW_LIZARD_TAIL
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'

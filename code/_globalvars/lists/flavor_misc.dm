@@ -20,8 +20,8 @@ var/global/list/socks_m = list()	 //stores only socks name
 var/global/list/socks_f = list()	 //stores only socks name
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
-	//Female Uniforms
-var/global/list/female_clothing_icons = list()
+	//Altered clothing items
+var/global/list/generated_clothing_icons = list()
 
 	//radical shit
 var/list/hit_appends = list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF")
