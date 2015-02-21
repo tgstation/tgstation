@@ -39,14 +39,14 @@ obj/machinery/atmospherics/trinary/New()
 		if(WEST)
 			initialize_directions = EAST|WEST|NORTH
 
-obj/machinery/atmospherics/trinary/buildFrom(var/mob/usr,var/obj/item/pipe/pipe, var/mirrored = 0)
+obj/machinery/atmospherics/trinary/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	if(!(pipe.dir in list(NORTH, SOUTH, EAST, WEST)) && src.mirror) //because the dir isn't in the right set, we want to make the mirror kind
 		var/obj/machinery/atmospherics/trinary/mirrored_pipe = new mirror(src.loc)
 		pipe.dir = turn(pipe.dir, -45)
 		qdel(src)
-		return mirrored_pipe.buildFrom(usr, pipe, 1)
+		return mirrored_pipe.buildFrom(usr, pipe)
 	dir = pipe.dir
-	initialize_directions = pipe.get_pipe_dir(mirrored)
+	initialize_directions = pipe.get_pipe_dir()
 	if (pipe.pipename)
 		name = pipe.pipename
 	var/turf/T = loc
@@ -102,9 +102,20 @@ obj/machinery/atmospherics/trinary/Destroy()
 obj/machinery/atmospherics/trinary/initialize()
 	if(node1 && node2 && node3) return
 
-	node1 = findConnecting(turn(dir, -180))
-	node2 = findConnecting(turn(dir, -90))
-	node3 = findConnecting(dir)
+	//mirrored pipes face the same way and have their nodes in the same place
+	//The 1 and 3 nodes are reversed, however.
+	//   1           3
+	// 2-- becomes 2-- facing south, for example
+	//   3           1
+	if(!(pipe_flags & IS_MIRROR))
+		node1 = findConnecting(turn(dir, -180))
+		node2 = findConnecting(turn(dir, -90))
+		node3 = findConnecting(dir)
+	else
+		node1 = findConnecting(dir)
+		node2 = findConnecting(turn(dir, -90))
+		node3 = findConnecting(turn(dir, -180))
+
 
 	update_icon()
 

@@ -13,6 +13,9 @@ Pipelines + Other Objects -> Pipe network
 #define PIPE_TYPE_STANDARD 0
 #define PIPE_TYPE_HE       1
 
+//Pipe bitflags
+#define IS_MIRROR	1
+
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
@@ -33,6 +36,8 @@ Pipelines + Other Objects -> Pipe network
 
 	// Investigation logs
 	var/log
+
+	var/pipe_flags = 0
 
 // Find a connecting /obj/machinery/atmospherics in specified direction.
 /obj/machinery/atmospherics/proc/findConnecting(var/direction)

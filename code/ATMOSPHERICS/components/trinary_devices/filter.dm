@@ -215,15 +215,7 @@ obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
 
 /obj/machinery/atmospherics/trinary/filter/mirrored
 	icon_state = "intactm_off"
-
-/obj/machinery/atmospherics/trinary/filter/mirrored/initialize()
-	if(node1 && node2 && node3) return
-
-	node1 = findConnecting(dir)
-	node2 = findConnecting(turn(dir, -90))
-	node3 = findConnecting(turn(dir, -180))
-
-	update_icon()
+	pipe_flags = IS_MIRROR
 
 /obj/machinery/atmospherics/trinary/filter/mirrored/update_icon()
 	if(stat & NOPOWER)

@@ -142,6 +142,7 @@ obj/machinery/atmospherics/trinary/mixer/Topic(href,href_list)
 
 /obj/machinery/atmospherics/trinary/mixer/mirrored
 	icon_state = "intactm_off"
+	pipe_flags = IS_MIRROR
 
 /obj/machinery/atmospherics/trinary/mixer/mirrored/update_icon()
 	if(stat & NOPOWER)
@@ -153,12 +154,3 @@ obj/machinery/atmospherics/trinary/mixer/Topic(href,href_list)
 		on = 0
 
 	return
-
-/obj/machinery/atmospherics/trinary/mixer/mirrored/initialize()
-	if(node1 && node2 && node3) return
-
-	node1 = findConnecting(dir)
-	node2 = findConnecting(turn(dir, -90))
-	node3 = findConnecting(turn(dir, -180))
-
-	update_icon()
