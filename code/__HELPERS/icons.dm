@@ -42,32 +42,31 @@ proc
 
 /proc/getBlankIcon(icon/A, safety=1)
 	var/icon/flat_icon = safety ? A : new(A)
-	flat_icon.Blend(rgb(50, 50, 50))
-	return flat_icon
+	flat_icon.Blend(rgb(255, 255, 255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/blank_icon = new/icon('icons/effects/effects.dmi', "blank_base")
+	blank_icon.AddAlphaMask(flat_icon)
+	return blank_icon
 
 /proc/getLetterImage(atom/A, letter = "", uppercase = 0)
 	if(!A)
 		return
 
-	if(!letter)
-		var/last_name = A.name //helps us to avoid prefixes. Space carp show up as C, for example
-		while(last_name && findtext(last_name, " "))
-			last_name = copytext(A.name, findtext(last_name, " ") + 1)
-		if(last_name)
-			letter = copytext(last_name, 1, 2)
-		else
-			letter = copytext(A.name, 1, 2)
-
 	var/icon/atom_icon = new(A.icon, A.icon_state)
 
-	if(atom_icon.Height() > 8 || atom_icon.Width() > 8 || uppercase)
-		letter = uppertext(letter)
-	else
-		letter = lowertext(letter)
+	if(!letter)
+		letter = copytext(A.name, 1, 2)
+		if(uppercase == 1)
+			letter = uppertext(letter)
+		else if(uppercase == -1)
+			letter = lowertext(letter)
 
 	var/image/text_image = new(loc = A)
-	text_image.maptext = letter
-	text_image.color = atom_icon.GetPixel(16, 16)
+	text_image.maptext = "<font size = 4>[letter]</font>"
+	text_image.color = AverageColor(atom_icon)
+	text_image.pixel_x = 7
+	text_image.pixel_y = 5
+	del(atom_icon)
 	return text_image
 
 //For photo camera.
@@ -87,3 +86,19 @@ proc/adjust_brightness(var/color, var/value)
 	RGB[2] = Clamp(RGB[2]+value,0,255)
 	RGB[3] = Clamp(RGB[3]+value,0,255)
 	return rgb(RGB[1],RGB[2],RGB[3])
+
+/proc/AverageColor(var/icon/I)
+	var/list/colors = list()
+	for(var/x_pixel = 1 to I.Width())
+		for(var/y_pixel = 1 to I.Height())
+			var/this_color = I.GetPixel(x_pixel, y_pixel)
+			if(this_color)
+				colors.Add(this_color)
+
+	if(!colors.len)
+		return null
+
+	var/final_average = colors[1]
+	for(var/color in (colors - colors[1]))
+		final_average = BlendRGB(final_average, color, 1)
+	return final_average

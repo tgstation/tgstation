@@ -21,7 +21,7 @@
 			continue
 		var/image/chosen
 		if(static_choice in living.static_overlays)
-			chosen = living.static_overlays[chosen]
+			chosen = living.static_overlays[static_choice]
 		else
 			chosen = living.static_overlays[1]
 		static_overlays.Add(chosen)
@@ -37,7 +37,7 @@
 	set desc = "Change the filter on the system used to remove organics from your viewscreen."
 	set category = "Robot Commands"
 
-	if(!keeper || emagged == 1 || syndicate)
+	if(!can_see_static())
 		return
 	var/selected_style = input("Select a vision filter", "Vision Filter") as null|anything in static_choices
 	if(selected_style in static_choices)
