@@ -617,24 +617,3 @@
 	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
 	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
 	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
-
-/obj/item/weapon/storage/box/bacon
-	name = "box of bacon"
-	desc = "To be used to encouage bacon usage."
-
-/obj/item/weapon/storage/box/bacon/New()
-	..()
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/bacon(src)
