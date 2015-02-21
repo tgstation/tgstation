@@ -224,6 +224,8 @@
 		if (G.affecting.abiotic())
 			user << "\blue <B>Subject cannot have abiotic items on.</B>"
 			return
+		if(G.affecting.buckled)
+			return
 		put_in(G.affecting)
 		src.add_fingerprint(user)
 		qdel(G)
