@@ -224,16 +224,17 @@
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
-		if(i >= 10)
+		if(i >= 20)
 			user << "\red The biogenerator is already full! Activate it."
 		else
+			var/obj/item/weapon/storage/bag/B = O
 			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-				G.loc = src
+				B.remove_from_storage(G,src)
 				i++
-				if(i >= 10)
+				if(i >= 20)
 					user << "\blue You fill the biogenerator to its capacity."
 					break
-			if(i<10)
+			if(i<20)
 				user << "\blue You empty the plant bag into the biogenerator."
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
@@ -242,7 +243,7 @@
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
-		if(i >= 10)
+		if(i >= 20)
 			user << "\red The biogenerator is full! Activate it."
 		else
 			user.before_take_item(O)

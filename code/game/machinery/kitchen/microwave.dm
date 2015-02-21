@@ -131,11 +131,9 @@
 		usr << "The machine cannot hold anymore items."
 		return 1
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
-
+		var/obj/item/weapon/storage/bag/B = O
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-			O.contents -= G
-			G.loc = src
-			contents += G
+			B.remove_from_storage(G,src)
 			if(contents && contents.len >= limit) //Sanity checking so the microwave doesn't overfill
 				user << "You fill the Microwave to the brim."
 				break
