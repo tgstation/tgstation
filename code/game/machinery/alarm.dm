@@ -638,6 +638,9 @@
 		ui_interact(user)
 
 /obj/machinery/alarm/Topic(href, href_list)
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(href_list["rcon"])
 		rcon_setting = text2num(href_list["rcon"])
 

@@ -299,6 +299,9 @@ var/global/datum/controller/vote/vote = new()
 
 /datum/controller/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)	return	//not necessary but meh...just in-case somebody does something stupid
+	if(href_list["close"])
+		voting -= usr.client
+		return
 	switch(href_list["vote"])
 		if("close")
 			voting -= usr.client

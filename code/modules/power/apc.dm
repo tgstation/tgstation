@@ -816,7 +816,9 @@
 /obj/machinery/power/apc/Topic(href, href_list)
 	if(..())
 		return 0
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(!can_use(usr, 1))
 		return 0
 	if(!istype(usr, /mob/living/silicon) && locked)

@@ -177,6 +177,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/Topic(href, href_list)
 	if(..())
 		return
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(stat & (NOPOWER|BROKEN))
 		return 0 // don't update UIs attached to this object
 

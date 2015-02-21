@@ -190,6 +190,8 @@
 
 	if(..())
 		return 1
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
 
 	if(href_list["eject_packet"])
 		if(!seed) return

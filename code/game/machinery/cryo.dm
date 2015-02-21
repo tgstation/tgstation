@@ -220,6 +220,10 @@
 	if(..())
 		return 0 // don't update UIs attached to this object
 
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
+
 	if(href_list["switchOn"])
 		on = 1
 		update_icon()

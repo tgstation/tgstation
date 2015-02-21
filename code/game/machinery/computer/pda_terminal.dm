@@ -114,7 +114,9 @@
 /obj/machinery/computer/pda_terminal/Topic(href, href_list)
 	if(..())
 		return 1
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	switch(href_list["choice"])
 		if ("pda_device")
 			if (pda_device)

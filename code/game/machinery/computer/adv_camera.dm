@@ -94,6 +94,8 @@
 		current = null
 	if(href_list["close"])
 		usr.reset_view(null)
+		if(usr.machine == src)
+			usr.unset_machine()
 	if(href_list["view"])
 		var/obj/machinery/camera/cam = locate(href_list["view"])
 		if(cam)

@@ -492,7 +492,9 @@
 
 	if(..()) // critical exploit prevention, do not remove unless you replace it -walter0o
 		return
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 
 	if(href_list["remove_from_queue"])

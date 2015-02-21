@@ -137,6 +137,9 @@
 /obj/machinery/computer/atmoscontrol/Topic(href, href_list)
 	if(..())
 		return 0
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(href_list["reset"])
 		current = null
 
