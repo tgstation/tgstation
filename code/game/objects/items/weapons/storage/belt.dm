@@ -7,6 +7,12 @@
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
+/obj/item/weapon/storage/belt/update_icon()
+	overlays.Cut()
+	for(var/obj/item/I in contents)
+		overlays += "[I.name]"
+	..()
+
 /obj/item/weapon/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."

@@ -323,6 +323,7 @@ datum/reagents/proc/handle_reactions()
 					var/list/seen = viewers(4, get_turf(my_atom))
 
 					if(!istype(my_atom, /mob)) // No bubbling mobs
+						playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 						for(var/mob/M in seen)
 							M << "<span class='notice'>\icon[my_atom] [C.mix_message]</span>"
 
@@ -334,8 +335,6 @@ datum/reagents/proc/handle_reactions()
 								M << "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>"
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
-
-					playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 
 					C.on_reaction(src, created_volume)
 					reaction_occured = 1
