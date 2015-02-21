@@ -543,7 +543,7 @@
 						feedback_add_details("cult_objective","cult_narsie|FAIL")
 
 				if("harvest")
-					if(bonus)
+					if(harvested > harvest_target)
 						explanation = "Offer [harvest_target] humans for Nar-Sie's first meal of the day. ([harvested] eaten) <font color='green'><B>Success!</B></font>"
 						feedback_add_details("cult_objective","cult_harvest|SUCCESS")
 					else
@@ -551,7 +551,7 @@
 						feedback_add_details("cult_objective","cult_harvest|FAIL")
 
 				if("hijack")
-					if(bonus)
+					if(!escaped_shuttle)
 						explanation = "Do not let a single non-cultist board the Escape Shuttle. ([escaped_shuttle] escaped on the shuttle) ([escaped_pod] escaped on pods) <font color='green'><B>Success!</B></font>"
 						feedback_add_details("cult_objective","cult_hijack|SUCCESS")
 					else
@@ -559,7 +559,7 @@
 						feedback_add_details("cult_objective","cult_hijack|FAIL")
 
 				if("massacre")
-					if(bonus)
+					if(survivors < massacre_target)
 						explanation = "Massacre the crew until less than [massacre_target] humans are left on the station. ([survivors] humans left alive) <font color='green'><B>Success!</B></font>"
 						feedback_add_details("cult_objective","cult_massacre|SUCCESS")
 					else
