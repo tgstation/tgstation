@@ -3137,7 +3137,7 @@
 	reagents.add_reagent("capsaicin", 10)
 	bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/curry/Lemon
+/obj/item/weapon/reagent_containers/food/snacks/curry/lemon
 	name = "Lemon Curry"
 	desc = "This actually exists?"
 	icon_state = "curry_lemon"
