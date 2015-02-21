@@ -2994,3 +2994,29 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/prism
+
+
+/*
+ *
+ *
+ * Xeno botany boards!
+ *
+ *
+ */
+/datum/design/botany_centrifuge
+	name = "Circuit Design (Lysis-Isolation Centrifuge)"
+	desc = "Allows for the cosntruction of circuit boards used to build a centrifuge used in hydroponics research."
+	id="botany_centrifuge"
+	req_tech = list ("engineering" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/botany_centrifuge
+
+/datum/design/botany_bioballistic
+	name = "Circuit Design (Bioballistic Delivery System)"
+	desc = "Allows for the cosntruction of circuit boards used to build a Bioballistic delivery system used in hydroponics research."
+	id="botany_bioballistic"
+	req_tech = list ("engineering" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/botany_bioballistic
