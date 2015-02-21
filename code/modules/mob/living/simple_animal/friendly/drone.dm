@@ -131,6 +131,10 @@
 			user << "<span class='notice'>Your hands are full.</span>"
 			return
 		src << "<span class='warning'>[user] is trying to pick you up!</span>"
+
+		if(buckled)
+			user << "<span class='warning'>[src] is buckled to something and can't be picked up.</span>"
+			return
 		user << "<span class='notice'>You pick [src] up.</span>"
 		drop_l_hand()
 		drop_r_hand()
