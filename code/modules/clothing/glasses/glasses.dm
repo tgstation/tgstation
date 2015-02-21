@@ -2,11 +2,18 @@
 	name = "Optical Meson Scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
-	item_state = "glasses"
+	item_state = "meson"
 	origin_tech = "magnets=2;engineering=2"
 	darkness_view = 1
 	vision_flags = SEE_TURFS
 	invis_view = SEE_INVISIBLE_MINIMUM
+
+/obj/item/clothing/glasses/meson/night
+	name = "Night Vision Optical Meson Scanner"
+	desc = "An Optical Meson Scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
+	icon_state = "nvgmeson"
+	item_state = "nvgmeson"
+	darkness_view = 8
 
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
