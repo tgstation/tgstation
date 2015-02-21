@@ -1,14 +1,15 @@
 /mob/living/New()
 	. = ..()
 	generate_static_overlay()
-	for(var/mob/living/silicon/robot/mommi/MoMMI in player_list)
-		if(MoMMI.keeper && !MoMMI.emagged && !MoMMI.syndicate)
-			if(MoMMI.static_choice in static_overlays)
-				MoMMI.static_overlays.Add(static_overlays[MoMMI.static_choice])
-				MoMMI.client.images.Add(static_overlays[MoMMI.static_choice])
-			else
-				MoMMI.static_overlays.Add(static_overlays["static"])
-				MoMMI.client.images.Add(static_overlays["static"])
+	if(static_overlays.len)
+		for(var/mob/living/silicon/robot/mommi/MoMMI in player_list)
+			if(MoMMI.can_see_static())
+				if(MoMMI.static_choice in static_overlays)
+					MoMMI.static_overlays.Add(static_overlays[MoMMI.static_choice])
+					MoMMI.client.images.Add(static_overlays[MoMMI.static_choice])
+				else
+					MoMMI.static_overlays.Add(static_overlays["static"])
+					MoMMI.client.images.Add(static_overlays["static"])
 
 /mob/living/Destroy()
 	for(var/mob/living/silicon/robot/mommi/MoMMI in player_list)
