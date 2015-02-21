@@ -429,6 +429,7 @@
 #include "code\game\machinery\camera\motion.dm"
 #include "code\game\machinery\camera\presets.dm"
 #include "code\game\machinery\camera\tracking.dm"
+#include "code\game\machinery\computer\adv_camera.dm"
 #include "code\game\machinery\computer\ai_core.dm"
 #include "code\game\machinery\computer\aifixer.dm"
 #include "code\game\machinery\computer\arcade.dm"
