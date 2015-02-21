@@ -241,7 +241,7 @@
 					for(var/turf/T in view())
 						turfs += T
 					var/turf/target = pick(turfs)
-					return W.afterattack(target,src)
+					return W.afterattack(target,src, "struggle" = 1)
 
 			var/randn = rand(1, 100)
 			if (randn <= 25)
