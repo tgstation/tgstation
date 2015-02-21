@@ -41,7 +41,7 @@ datum/reagent/consumable/vitamin/on_mob_life(var/mob/living/M as mob)
 	if(prob(50))
 		M.heal_organ_damage(1,1)
 	if(M.satiety < 600)
-		M.satiety += 20
+		M.satiety += 30
 	..()
 	return
 
@@ -51,7 +51,7 @@ datum/reagent/consumable/sugar
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 
@@ -206,17 +206,17 @@ datum/reagent/consumable/frostoil/on_mob_life(var/mob/living/M as mob)
 	if(!data) data = 1
 	switch(data)
 		if(1 to 15)
-			M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(5,20)
 		if(15 to 25)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(10,20)
 		if(25 to INFINITY)
-			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(1))
 				M.emote("shiver")
 			if(istype(M, /mob/living/carbon/slime))
@@ -280,22 +280,22 @@ datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 		data = 1
 	switch(data)
 		if(1 to 5)
-			if (!M.stuttering)
-				M.stuttering = 1
+			if (!M.slurring)
+				M.slurring = 1
 			M.Dizzy(5)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if (!M.stuttering)
-				M.stuttering = 1
+			if (!M.slurring)
+				M.slurring = 1
 			M.Jitter(10)
 			M.Dizzy(10)
 			M.druggy = max(M.druggy, 35)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
-			if (!M.stuttering)
-				M.stuttering = 1
+			if (!M.slurring)
+				M.slurring = 1
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.druggy = max(M.druggy, 40)

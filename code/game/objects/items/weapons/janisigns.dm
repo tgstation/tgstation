@@ -29,6 +29,7 @@
 		var/obj/effect/overlay/holograph/H = locate() in T
 		if(H)
 			user << "<span class='notice'>You use [src] to destroy [H].</span>"
+			signs.Remove(H)
 			qdel(H)
 		else
 			if(signs.len < max_signs)

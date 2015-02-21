@@ -3,7 +3,7 @@
 	desc = "95% Polyester, 5% Spandex!"
 	gender = PLURAL
 	body_parts_covered = GROIN
-	fitted = 0
+	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
 
 /obj/item/clothing/under/shorts/red

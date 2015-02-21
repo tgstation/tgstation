@@ -55,5 +55,5 @@
 		var/obj/item/weapon/tank/T = W
 		blow(T, user)
 		return
-	if (is_sharp(W) || is_hot(W))
+	if (is_sharp(W) || is_hot(W) || is_pointed(W))
 		burst()

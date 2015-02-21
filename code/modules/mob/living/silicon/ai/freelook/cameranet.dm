@@ -23,8 +23,10 @@ var/datum/cameranet/cameranet = new()
 // Returns the chunk in the x, y, z.
 // If there is no chunk, it creates a new chunk and returns that.
 /datum/cameranet/proc/getCameraChunk(x, y, z)
+	x &= ~(CHUNK_SIZE - 1)
+	y &= ~(CHUNK_SIZE - 1)
 	var/key = "[x],[y],[z]"
-	if(!chunkGenerated(x, y, z))
+	if(!chunks[key])
 		chunks[key] = new /datum/camerachunk(null, x, y, z)
 
 	return chunks[key]

@@ -117,29 +117,29 @@
 
 /obj/item/ammo_box/magazine/m45
 	name = "handgun magazine (.45)"
-	icon_state = "45"
+	icon_state = "45-8"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
 	max_ammo = 8
 
 /obj/item/ammo_box/magazine/m45/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ammo_count() ? "8" : "0"]"
+	icon_state = "45-[ammo_count() ? "8" : "0"]"
 
 /obj/item/ammo_box/magazine/smgm9mm
 	name = "SMG magazine (9mm)"
-	icon_state = "smg9mm"
+	icon_state = "smg9mm-20"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 20
 
 /obj/item/ammo_box/magazine/smgm9mm/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),5)]"
+	icon_state = "smg9mm-[round(ammo_count(),5)]"
 
 /obj/item/ammo_box/magazine/smgm45
 	name = "SMG magazine (.45)"
-	icon_state = "c20r45"
+	icon_state = "c20r45-20"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
@@ -147,7 +147,7 @@
 
 /obj/item/ammo_box/magazine/smgm45/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
+	icon_state = "c20r45-[round(ammo_count(),2)]"
 
 obj/item/ammo_box/magazine/tommygunm45
 	name = "drum magazine (.45)"
@@ -184,7 +184,7 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/ammo_box/magazine/m762
 	name = "box magazine (7.62mm)"
-	icon_state = "a762"
+	icon_state = "a762-50"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/a762
 	caliber = "a762"
@@ -192,13 +192,14 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/ammo_box/magazine/m762/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
+	icon_state = "a762-[round(ammo_count(),10)]"
+
 
 /obj/item/ammo_box/magazine/m12g
-	name = "shotgun magazine (12g taser slugs)"
-	icon_state = "m12gs"
+	name = "shotgun magazine (12g buckshot)"
+	icon_state = "m12gb"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	origin_tech = "combat=3;syndicate=1"
-	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
 	caliber = "shotgun"
 	max_ammo = 8
 
@@ -206,12 +207,10 @@ obj/item/ammo_box/magazine/tommygunm45
 	..()
 	icon_state = "[initial(icon_state)]-[Ceiling(ammo_count(0)/8)*8]"
 
-
-/obj/item/ammo_box/magazine/m12g/buckshot
-	name = "shotgun magazine (12g buckshot)"
-	icon_state = "m12gb"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-
+/obj/item/ammo_box/magazine/m12g/stun
+	name = "shotgun magazine (12g taser slugs)"
+	icon_state = "m12gs"
+	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
 
 /obj/item/ammo_box/magazine/m12g/dragon
 	name = "shotgun magazine (12g dragon's breath)"

@@ -324,6 +324,7 @@ datum/reagents/proc/handle_reactions()
 					var/list/seen = viewers(4, get_turf(my_atom))
 
 					if(!istype(my_atom, /mob)) // No bubbling mobs
+						playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 						for(var/mob/M in seen)
 							M << "<span class='notice'>\icon[my_atom] [C.mix_message]</span>"
 
@@ -335,8 +336,6 @@ datum/reagents/proc/handle_reactions()
 								M << "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>"
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
-
-					playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 
 					C.on_reaction(src, created_volume)
 					reaction_occured = 1
@@ -389,25 +388,15 @@ datum/reagents/proc/clear_reagents()
 		del_reagent(R.id)
 	return 0
 
-datum/reagents/proc/reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0)
+datum/reagents/proc/reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0,var/show_message=1)
+	for(var/datum/reagent/R in reagent_list)
+		if(ismob(A))
+			R.reaction_mob(A, method, R.volume+volume_modifier, show_message)
+		if(isturf(A))
+			R.reaction_turf(A, R.volume+volume_modifier, show_message)
+		if(isobj(A))
+			R.reaction_obj(A, R.volume+volume_modifier, show_message)
 
-	switch(method)
-		if(TOUCH)
-			for(var/datum/reagent/R in reagent_list)
-				if(ismob(A))
-					R.reaction_mob(A, TOUCH, R.volume+volume_modifier)
-				if(isturf(A))
-					R.reaction_turf(A, R.volume+volume_modifier)
-				if(isobj(A))
-					R.reaction_obj(A, R.volume+volume_modifier)
-		if(INGEST)
-			for(var/datum/reagent/R in reagent_list)
-				if(ismob(A))
-					R.reaction_mob(A, INGEST, R.volume+volume_modifier)
-				if(isturf(A))
-					R.reaction_turf(A, R.volume+volume_modifier)
-				if(isobj(A))
-					R.reaction_obj(A, R.volume+volume_modifier)
 	return
 
 datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null, var/reagtemp = 300)

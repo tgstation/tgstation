@@ -144,6 +144,8 @@
 			make_maint_all_access()
 			feedback_inc("alert_keycard_auth_maint",1)
 
+
+
 /var/emergency_access = 0
 /proc/make_maint_all_access()
 	for(var/area/maintenance/A in world)
@@ -160,3 +162,4 @@
 			D.update_icon(0)
 	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
 	emergency_access = 0
+

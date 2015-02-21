@@ -509,7 +509,7 @@
 "kv" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 "kw" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows"; dir = 9},/area/syndicate_mothership)
 "kx" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/syndicate_mothership)
-"ky" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice,/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
+"ky" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroompizza,/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
 "kz" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2; step_x = 0},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
 "kA" = (/obj/machinery/computer/telecrystals/uplinker,/turf/unsimulated/floor{tag = "icon-podhatch (WEST)"; icon_state = "podhatch"; dir = 8},/area/syndicate_mothership)
 "kI" = (/turf/unsimulated/wall/fakeglass{color = "#008000"; dir = 6; icon_state = "fakewindows2"},/area/wizard_station)

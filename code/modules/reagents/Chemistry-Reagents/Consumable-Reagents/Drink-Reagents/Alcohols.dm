@@ -27,8 +27,8 @@ datum/reagent/consumable/ethanol/on_mob_life(var/mob/living/M as mob)
 	data++
 	M.jitteriness = max(M.jitteriness-5,0)
 	if(data >= boozepwr)
-		if (!M.stuttering) M.stuttering = 1
-		M.stuttering += 4
+		if (!M.slurring) M.slurring = 1
+		M.slurring += 4
 		M.Dizzy(5)
 	if(data >= boozepwr*2.5 && prob(33))
 		if (!M.confused) M.confused = 1

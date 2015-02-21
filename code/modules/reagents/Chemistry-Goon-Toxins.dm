@@ -117,7 +117,7 @@ datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	result = "neurotoxin2"
 	required_reagents = list("space_drugs" = 1)
 	result_amount = 1
-	required_temp = 200
+	required_temp = 370
 
 datum/reagent/cyanide
 	name = "Cyanide"
@@ -205,48 +205,3 @@ datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
 	required_reagents = list("sacid" = 1, "fluorine" = 1, "hydrogen" = 1, "potassium" = 1)
 	result_amount = 4
 	required_temp = 380
-
-datum/reagent/cholesterol
-	name = "Cholesterol"
-	id = "cholesterol"
-	description = "Minor stamina penalty."
-	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0]
-	overdose_threshold = 25
-
-datum/reagent/cholesterol/on_mob_life(var/mob/living/M as mob)
-	if(!M) M = holder.my_atom
-	M.adjustStaminaLoss(0.5)
-	..()
-	return
-
-datum/reagent/cholesterol/overdose_process(var/mob/living/M as mob)
-	if(prob(rand(1,100)))
-		M.adjustToxLoss(1)
-	if(prob(rand(1,100)))
-		var/obj/item/I = M.get_active_hand()
-		if(I)
-			M.drop_item()
-			M.show_message("You fumble and drop [I]!")
-	if(prob(rand(1,100)))
-		M.Stun(1)
-	..()
-	return
-
-datum/reagent/porktonium
-	name = "Porktonium"
-	id = "porktonium"
-	description = "OVERDOSE - An 8% chance of metabolizing to 10 cyanide, 15 radium and 2 cholesterol for every 0.2 units above 125."
-	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0]
-	overdose_threshold = 125
-	metabolization_rate = 0.2
-
-datum/reagent/porktonium/overdose_process(var/mob/living/M as mob)
-	if(prob(8) && volume > 125)
-		M.reagents.add_reagent("cyanide", 10)
-		M.reagents.add_reagent("radium", 15)
-		M.reagents.add_reagent("cholesterol", 2)
-		M.reagents.remove_reagent("corn_syrup", 0.2)
-	..()
-	return

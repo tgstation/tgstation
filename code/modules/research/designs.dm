@@ -307,6 +307,16 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_path = /obj/item/clothing/glasses/meson
 	category = list("Equipement")
 
+/datum/design/nvgmesons
+	name = "Night Vision Optical Meson Scanners"
+	desc = "Prototype meson scanners fitted with an extra sensor which amplifies the visible light spectrum and overlays it to the UHD display."
+	id = "nvgmesons"
+	req_tech = list("materials" = 5, "magnets" = 5, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 300, "$glass" = 400, "$plasma" = 250, "$uranium" = 1000)
+	build_path = /obj/item/clothing/glasses/meson/night
+	category = list("Equipement")
+
 /datum/design/night_vision_goggles
 	name = "Night Vision Goggles"
 	desc = "Goggles that let you see through darkness unhindered."

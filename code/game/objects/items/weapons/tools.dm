@@ -317,7 +317,7 @@
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			icon_state = "welder1"
-			SSobj.processing.Add(src)
+			SSobj.processing |= src
 		else
 			user << "<span class='notice'>You need more fuel.</span>"
 			welding = 0

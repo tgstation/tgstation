@@ -34,7 +34,6 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 		icon_state = "rods"
 
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
-	..()
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -54,6 +53,17 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 			R.use(2)
 			if (!R && replace)
 				user.put_in_hands(new_item)
+		return
+
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+		var/obj/item/weapon/reagent_containers/food/snacks/S = W
+		if(amount != 1)
+			user << "<span class='warning'>You must use a single rod.</span>"
+		else if(S.w_class > 2)
+			user << "<span class='warning'>The ingredient is too big for [src].</span>"
+		else
+			var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/kebab(get_turf(src))
+			A.initialize_custom_food(src, S, user)
 		return
 	..()
 

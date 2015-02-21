@@ -203,6 +203,29 @@ proc/isorgan(A)
 		p++
 	return sanitize(t)
 
+proc/slur(n)
+	var/phrase = html_decode(n)
+	var/leng = lentext(phrase)
+	var/counter=lentext(phrase)
+	var/newphrase=""
+	var/newletter=""
+	while(counter>=1)
+		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
+		if(rand(1,3)==3)
+			if(lowertext(newletter)=="o")	newletter="u"
+			if(lowertext(newletter)=="s")	newletter="ch"
+			if(lowertext(newletter)=="a")	newletter="ah"
+			if(lowertext(newletter)=="u")	newletter="oo"
+			if(lowertext(newletter)=="c")	newletter="k"
+		if(rand(1,20)==20)
+			if(newletter==" ")	newletter="...huuuhhh..."
+			if(newletter==".")	newletter=" *BURP*."
+		switch(rand(1,20))
+			if(1)	newletter+="'"
+			if(10)	newletter+="[newletter]"
+			if(20)	newletter+="[newletter][newletter]"
+		newphrase+="[newletter]";counter-=1
+	return newphrase
 
 /proc/stutter(n)
 	var/te = html_decode(n)

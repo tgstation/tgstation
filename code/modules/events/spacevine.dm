@@ -323,7 +323,7 @@
 		qdel(src)
 
 	spawn_spacevine_piece(loc, , muts)
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	init_subtypes(/datum/spacevine_mutation/, mutations_list)
 	if(mttv != null)
 		mutativness = mttv
