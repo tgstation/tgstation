@@ -33,6 +33,9 @@
 	languages = DRONE
 	mob_size = 0
 	has_unlimited_silicon_privilege = 1
+	staticOverlays = list()
+	var/staticChoice = "static"
+	var/list/staticChoices = list("static", "blank", "letter")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
 	var/laws = \
@@ -49,7 +52,6 @@
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
-	var/list/staticOverlays = list()//references to all staticOverlays we see, for quick removal
 
 
 /mob/living/simple_animal/drone/New()
@@ -74,15 +76,13 @@
 
 	alert_drones(DRONE_NET_CONNECT)
 
-	//Ensure drones see other drones.
-	for(var/mob/living/simple_animal/drone/D in player_list)
-		if(D && D.seeStatic)
-			D.staticOverlays.Remove(staticOverlay)
-			D.client.images.Remove(staticOverlay)
-
 
 /mob/living/simple_animal/drone/Destroy()
 	qdel(access_card) //Otherwise it ends up on the floor!
+	..()
+
+/mob/living/simple_animal/drone/Life()
+	updateSeeStaticMobs()
 	..()
 
 

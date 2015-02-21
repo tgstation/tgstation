@@ -133,20 +133,27 @@
 		if(REPAIRDRONE)
 			. = -6
 
-
 /mob/living/simple_animal/drone/proc/updateSeeStaticMobs()
+	if(!client)
+		return
+
+	for(var/i in staticOverlays)
+		client.images.Remove(i)
+		staticOverlays.Remove(i)
+	staticOverlays.len = 0
+
 	if(seeStatic)
 		for(var/mob/living/L in mob_list)
 			if(isdrone(L))
-				staticOverlays.Remove(L.staticOverlay)
-				client.images.Remove(L.staticOverlay)
 				continue
-			staticOverlays |= L.staticOverlay
-			client.images |= L.staticOverlay
-	else
-		for(var/i in staticOverlays)
-			staticOverlays.Remove(i)
-		staticOverlays.len = 0
+			var/image/chosen
+			if(staticChoice in L.staticOverlays)
+				chosen = L.staticOverlays[staticChoice]
+			else
+				chosen = L.staticOverlays["static"]
+			staticOverlays |= chosen
+			client.images |= chosen
 
 
-
+/mob/living/simple_animal/drone/generateStaticOverlay()
+	return

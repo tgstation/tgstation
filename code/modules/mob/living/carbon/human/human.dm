@@ -639,7 +639,16 @@
 	..()
 
 
-
 /mob/living/carbon/human/generateStaticOverlay()
-	staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
+	var/image/staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
 	staticOverlay.override = 1
+	staticOverlays["static"] = staticOverlay
+
+	staticOverlay = image(icon('icons/effects/effects.dmi', "blank"), loc = src)
+	staticOverlay.override = 1
+	staticOverlays["blank"] = staticOverlay
+
+	staticOverlay = getLetterImage(src, "H", 1)
+	staticOverlay.override = 1
+	staticOverlays["letter"] = staticOverlay
+

@@ -43,4 +43,4 @@
 	var/mob_size = 1  //size of the mob. 0 is small, 1 is human sized, and 2 is large.
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 
-	var/image/staticOverlay = null
+	var/list/image/staticOverlays = list()
