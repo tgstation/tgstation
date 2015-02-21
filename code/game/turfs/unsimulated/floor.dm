@@ -7,7 +7,6 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
-	cancable = 1
 
 /turf/unsimulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
