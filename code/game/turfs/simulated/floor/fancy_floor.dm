@@ -40,7 +40,7 @@
 	name = "Grass patch"
 	icon_state = "grass1"
 	floor_tile = /obj/item/stack/tile/grass
-	broken_states = list("sand1", "sand2", "sand3")
+	broken_states = list("ironsand1", "ironsand3", "ironsand5", "ironsand6", "ironsand10", "ironsand12", "ironsand15")
 	ignoredirt = 1
 
 /turf/simulated/floor/fancy/grass/New()
