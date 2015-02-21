@@ -103,8 +103,6 @@
 					new /obj/item/weapon/spellbook/oneuse/forcewall(get_turf(H))
 				if("knock")
 					new /obj/item/weapon/spellbook/oneuse/knock(get_turf(H))
-				if("horsemask")
-					new /obj/item/weapon/spellbook/oneuse/horsemask(get_turf(H))
 				if("charge")
 					new /obj/item/weapon/spellbook/oneuse/charge(get_turf(H))
 				if("summonitem")

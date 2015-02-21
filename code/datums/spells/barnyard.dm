@@ -29,49 +29,14 @@
 		user << "<span class='notice'>They are too far away!</span>"
 		return
 
-	if (prob(33))
+	var/choice = pick(/obj/item/clothing/mask/spig, /obj/item/clothing/mask/cowmask, /obj/item/clothing/mask/horsehead)
+	var/obj/item/clothing/mask/magichead = new choice
+	magichead.flags |=NODROP
+	magichead.flags_inv = null
+	target.visible_message("<span class='danger'>[target]'s face lights up in fire, and after the event a barnyard animal's head takes it's place!</span>", \
+						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
+	if(!target.unEquip(target.wear_mask))
+		qdel(target.wear_mask)
+	target.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 
-		var/obj/item/clothing/mask/spig/magicpig = new /obj/item/clothing/mask/spig //needs to be different otherwise you could turn it off and on.
-		magicpig.flags |=NODROP
-		magicpig.flags_inv = null
-		magicpig.voicechange = 1
-		target.equip_to_slot_if_possible(magicpig, slot_wear_mask,1,1)
-		target.visible_message("<span class='danger'>[target]'s face lights up in fire, and after the event a pig's head takes it's place!</span>", \
-							   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a pig!</span>")
-		if(!target.unEquip(target.wear_mask))
-			qdel(target.wear_mask)
-		target.equip_to_slot_if_possible(magicpig,slot_wear_mask,1,1)
-
-		flick("e_flash", target.flash)
-		return
-
-	if (prob(55))
-
-		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
-		magichead.flags |=NODROP
-		magichead.flags_inv = null
-		magichead.voicechange = 1
-		target.equip_to_slot_if_possible(magichead, slot_wear_mask,1,1)
-		target.visible_message("<span class='danger'>[target]'s face lights up in fire, and after the event a horses head takes it's place!</span>", \
-							   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a horse!</span>")
-		if(!target.unEquip(target.wear_mask))
-			qdel(target.wear_mask)
-		target.equip_to_slot_if_possible(magichead,slot_wear_mask,1,1)
-
-		flick("e_flash", target.flash)
-		return
-
-	if (prob(100)) //If nothing else works then it will be a cow head.
-
-		var/obj/item/clothing/mask/cowmask/magiccow = new /obj/item/clothing/mask/cowmask
-		magiccow.flags |=NODROP
-		magiccow.flags_inv = null
-		target.equip_to_slot_if_possible(magiccow, slot_wear_mask,1,1)
-		target.visible_message("<span class='danger'>[target]'s face lights up in fire, and after the event a cow's head takes it's place!</span>", \
-							   "<span class='danger'>Your face burns up. and shortly after the fire you realise you have the face of a cow!</span>")
-		if(!target.unEquip(target.wear_mask))
-			qdel(target.wear_mask)
-		target.equip_to_slot_if_possible(magiccow,slot_wear_mask,1,1)
-
-		flick("e_flash", target.flash)
-		return
+	flick("e_flash", target.flash)

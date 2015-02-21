@@ -69,7 +69,7 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
-	var/voicechange = 0
+	var/voicechange = 1
 
 /obj/item/clothing/mask/spig/speechModification(message)
 	if(voicechange)
@@ -85,7 +85,7 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
-	var/voicechange = 0
+	var/voicechange = 1
 
 /obj/item/clothing/mask/cowmask/speechModification(message)
 	if(voicechange)
@@ -100,7 +100,7 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
-	var/voicechange = 0
+	var/voicechange = 1
 
 /obj/item/clothing/mask/horsehead/speechModification(message)
 	if(voicechange)
