@@ -5400,7 +5400,7 @@
 "bZR" = (/obj/structure/sign/securearea,/turf/simulated/wall/r_wall,/area/storage/tech)
 "bZS" = (/obj/structure/table,/obj/item/weapon/screwdriver{pixel_y = 16},/obj/item/weapon/wirecutters,/turf/simulated/floor/plating,/area/storage/tech)
 "bZT" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/circuitboard/cloning,/obj/item/weapon/circuitboard/med_data{pixel_x = 3; pixel_y = -3},/obj/item/weapon/circuitboard/clonescanner,/obj/item/weapon/circuitboard/clonepod,/obj/item/weapon/circuitboard/scan_consolenew,/turf/simulated/floor/plating,/area/storage/tech)
-"bZU" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/circuitboard/secure_data{pixel_x = -2; pixel_y = 2},/obj/item/weapon/circuitboard/security{pixel_x = 1; pixel_y = -1},/obj/item/weapon/circuitboard/security/advance,/turf/simulated/floor/plating,/area/storage/tech)
+"bZU" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/circuitboard/secure_data{pixel_x = -2; pixel_y = 2},/obj/item/weapon/circuitboard/security{pixel_x = 1; pixel_y = -1},/obj/item/weapon/circuitboard/security/advanced,/turf/simulated/floor/plating,/area/storage/tech)
 "bZV" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/circuitboard/powermonitor{pixel_x = -2; pixel_y = 2},/obj/item/weapon/circuitboard/stationalert{pixel_x = 1; pixel_y = -1},/obj/item/weapon/circuitboard/atmos_alert{pixel_x = 3; pixel_y = -3},/turf/simulated/floor/plating,/area/storage/tech)
 "bZW" = (/obj/machinery/light_switch{pixel_x = 27},/turf/simulated/floor/plating,/area/storage/tech)
 "bZX" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/turf/simulated/floor{dir = 8; icon_state = "cautioncorner"},/area/hallway/primary/aft)

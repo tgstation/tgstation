@@ -1992,7 +1992,7 @@
 "aMp" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/science/podbay)
 "aMq" = (/turf/simulated/wall/r_wall,/area/science/podbay)
 "aMr" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/circuitboard/cloning,/obj/item/weapon/circuitboard/med_data{pixel_x = 3; pixel_y = -3},/obj/item/weapon/circuitboard/clonescanner,/obj/item/weapon/circuitboard/clonepod,/obj/item/weapon/circuitboard/scan_consolenew,/turf/simulated/floor/plating,/area/storage/tech)
-"aMs" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/circuitboard/secure_data{pixel_x = -2; pixel_y = 2},/obj/item/weapon/circuitboard/security{pixel_x = 1; pixel_y = -1},/obj/item/weapon/circuitboard/security/advance,/turf/simulated/floor/plating,/area/storage/tech)
+"aMs" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/circuitboard/secure_data{pixel_x = -2; pixel_y = 2},/obj/item/weapon/circuitboard/security{pixel_x = 1; pixel_y = -1},/obj/item/weapon/circuitboard/security/advanced,/turf/simulated/floor/plating,/area/storage/tech)
 "aMt" = (/obj/machinery/shield_capacitor,/turf/simulated/floor/plating,/area/engine/storage{name = "\improper Engineering Storage"})
 "aMu" = (/obj/machinery/shield_capacitor,/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating,/area/engine/storage{name = "\improper Engineering Storage"})
 "aMv" = (/turf/space,/obj/structure/cable,/turf/simulated/floor/plating/airless/catwalk{icon_state = "catwalk3"},/area/solar/aport{name = "\improper Cargo Solar Array"})

@@ -130,6 +130,14 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/security
 
+/datum/design/advseccamera
+name = "Circuit Design (Advanced Security Cameras)"
+desc = "Allows for the construction of circuit boards used to build advanced security camera computers."
+id = "advseccamera"
+req_tech = list("programming" = 4)
+build_type = IMPRINTER
+materials = list("$glass" = 2000, "sacid" = 20)
+build_path = /obj/item/weapon/circuitboard/security/advanced
 
 /datum/design/aicore
 	name = "Circuit Design (AI Core)"
