@@ -12,14 +12,15 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/New()
 	. = ..()
 	generateStaticOverlay()
-	for(var/mob/living/simple_animal/drone/D in player_list)
-		if(D && D.seeStatic && staticOverlays.len)
-			if(D.staticChoice in staticOverlays)
-				D.staticOverlays |= staticOverlays[D.staticChoice]
-				D.client.images |= staticOverlays[D.staticChoice]
-			else //no choice? force static
-				D.staticOverlays |= staticOverlays["static"]
-				D.client.images |= staticOverlays["static"]
+	if(staticOverlays.len)
+		for(var/mob/living/simple_animal/drone/D in player_list)
+			if(D && D.seeStatic)
+				if(D.staticChoice in staticOverlays)
+					D.staticOverlays |= staticOverlays[D.staticChoice]
+					D.client.images |= staticOverlays[D.staticChoice]
+				else //no choice? force static
+					D.staticOverlays |= staticOverlays["static"]
+					D.client.images |= staticOverlays["static"]
 
 
 /mob/living/Destroy()
