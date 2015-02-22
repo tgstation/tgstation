@@ -160,10 +160,9 @@
 			var/turf/T = get_turf(src)
 			C.loc = T
 
-	if(issilicon(M))
-		var/mob/living/silicon/S = M
+	if(M.has_unlimited_silicon_privilege)
 		var/turf/T = get_turf(src)
-		S.loc = T
+		M.loc = T
 
 /obj/item/holotape/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(!density) return 1
