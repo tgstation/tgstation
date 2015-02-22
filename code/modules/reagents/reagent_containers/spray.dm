@@ -49,7 +49,7 @@
 			var/mob/living/carbon/human/M = user
 			M.adjustBruteLoss(50) //This is high because actually spraying yourself with facid will do around 100 brute, this is supposed to represent a fraction of acid.
 			M.visible_message("<span class='danger'>[user] sprays acid from his [src]! It melts the pump covering him in acid!</span>", \
-			"<span class='userdanger'>The pump of [src] melts as you spray acid from it making it unusuable! and covering you in acid!</span>")
+			"<span class='userdanger'>The pump of [src] melts as you spray acid from it making it unusable, and covering you in acid!</span>")
 
 	spray(A)
 
