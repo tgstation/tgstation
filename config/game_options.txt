@@ -218,4 +218,4 @@ SILICON_MAX_LAW_AMOUNT 12
 #MUTANT_COLORS
 
 ## Assistant slot cap. Set to -1 for unlimited.
-ASSISTANT_CAP 10
+ASSISTANT_CAP -1
