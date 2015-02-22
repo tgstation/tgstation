@@ -31,7 +31,7 @@
 	if(!message)
 		return
 	message = capitalize(message)
-	if ((src.loc == user && usr.stat == 0))
+	if ((src.loc == user && user.stat == 0))
 		if(emagged)
 			if(insults)
 				user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>", null, 1) // 2 stands for hearable message
