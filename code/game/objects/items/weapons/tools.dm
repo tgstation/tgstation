@@ -127,6 +127,15 @@
 			C.buckled.unbuckle_mob()
 		C.update_inv_handcuffed(0)
 		return
+	else if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/stack/zipties))
+		user.visible_message("<span class='notice'>[user] cuts [C]'s zipties with [src]!</span>")
+		qdel(C.handcuffed)
+		C.handcuffed = null
+		new /obj/item/stack/zipties/used(C.loc)
+		if(C.buckled && C.buckled.buckle_requires_restraints)
+			C.buckled.unbuckle_mob()
+		C.update_inv_handcuffed(0)
+		return
 	else
 		..()
 

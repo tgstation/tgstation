@@ -303,7 +303,7 @@ Auto Patrol[]"},
 							if( !Adjacent(target) || !isturf(target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
 							if(!target.handcuffed)
-								target.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(target)
+								target.handcuffed = new /obj/item/stack/zipties/used(target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
 								back_to_idle()
 					else

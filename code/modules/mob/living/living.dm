@@ -545,7 +545,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
     return null
 
-/mob/living/proc/cuff_break(obj/item/weapon/restraints/I, mob/living/carbon/C)
+/mob/living/proc/cuff_break(obj/item/I, mob/living/carbon/C)
 
 	if(C.dna.check_mutation(HULK))
 		C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -563,12 +563,15 @@ Sorry Giacom. Please don't be mad :(
 		C.update_inv_legcuffed(0)
 
 
-/mob/living/proc/cuff_resist(obj/item/weapon/restraints/I, mob/living/carbon/C)
+/mob/living/proc/cuff_resist(obj/item/I, mob/living/carbon/C)
 	var/breakouttime = 600
 	var/displaytime = 1
 	if(istype(I, /obj/item/weapon/restraints/handcuffs))
 		var/obj/item/weapon/restraints/handcuffs/HC = C.handcuffed
 		breakouttime = HC.breakouttime
+	if(istype(I, /obj/item/stack/zipties))
+		var/obj/item/stack/zipties/Z = C.handcuffed
+		breakouttime = Z.breakouttime
 	else if(istype(I, /obj/item/weapon/restraints/legcuffs))
 		var/obj/item/weapon/restraints/legcuffs/LC = C.legcuffed
 		breakouttime = LC.breakouttime
