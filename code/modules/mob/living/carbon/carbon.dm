@@ -153,16 +153,16 @@
 
 				if(brutedamage > 0)
 					status = "bruised"
-				if(brutedamage > 20)
+				if(brutedamage > 30)
 					status = "bleeding"
-				if(brutedamage > 40)
+				if(brutedamage > 50)
 					status = "mangled"
 				if(brutedamage > 0 && burndamage > 0)
 					status += " and "
 				if(burndamage > 40)
 					status += "peeling away"
 
-				else if(burndamage > 10)
+				else if(burndamage > 20)
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
