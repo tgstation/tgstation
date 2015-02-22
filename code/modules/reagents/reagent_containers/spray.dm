@@ -151,7 +151,6 @@
 	volume = 600
 	facidallowed = 1
 	origin_tech = "combat=3;materials=3;engineering=3"
-	banned_reagents = list()//the safeties are off, spray and pay!
 
 
 /obj/item/weapon/reagent_containers/spray/chemsprayer/spray(var/atom/A)
