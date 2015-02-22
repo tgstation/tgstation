@@ -211,5 +211,35 @@ var/list/world_uplinks = list()
 	hidden_uplink = new(src)
 	hidden_uplink.uses = 20
 
+/obj/item/device/radio/uplink/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/syndie_voucher))
+		RedeemVoucher(I, user)
+		return
 
+/obj/item/device/radio/uplink/proc/RedeemVoucher(obj/item/weapon/syndie_voucher/voucher, mob/redeemer)
+	var/selection = input(redeemer, "Pick your equipment", "Weapon Voucher Redemption") as null|anything in list("C-20r SMG", "Bulldog Shotgun", "Grenade Launcher", "Surplus Rifle", "Extra Telecrystals")
+	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
+		return
+	switch(selection)
+		if("C-20r SMG")
+			new /obj/item/weapon/gun/projectile/automatic/c20r(redeemer.loc)
+			new /obj/item/ammo_box/magazine/smgm45(redeemer.loc)
+		if("Bulldog Shotgun")
+			new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(redeemer.loc)
+			new /obj/item/ammo_box/magazine/m12g/buckshot(redeemer.loc)
+		if("Grenade Launcher")
+			new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(redeemer.loc)
+			new /obj/item/ammo_box/a40mm(redeemer.loc)
+		if("Surplus Rifle")
+			new /obj/item/weapon/gun/projectile/shotgun/boltaction(redeemer.loc)
+			new /obj/item/ammo_box/a762(redeemer.loc)
+		if("Extra Telecrystals")
+			hidden_uplink.uses += 3
+	qdel(voucher)
 
+/obj/item/weapon/syndie_voucher
+	name = "weapon voucher"
+	desc = "A voucher that allows an operative to select a weapon suited to their mission. Redeem with your operative uplink."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "syndie_voucher"
+	w_class = 1

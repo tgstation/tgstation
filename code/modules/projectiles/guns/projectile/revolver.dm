@@ -34,6 +34,7 @@
 		num_unloaded++
 	if (num_unloaded)
 		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
+		update_icon()
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
 

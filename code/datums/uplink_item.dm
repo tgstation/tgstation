@@ -101,9 +101,10 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/pistol
 	name = "Syndicate Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	desc = "A small, easily concealable suppressed handgun that uses 10mm auto rounds in 8-round magazines."
+	item = /obj/item/weapon/gun/projectile/automatic/pistol/suppressed
 	cost = 9
+	excludefrom = list(/datum/game_mode/nuclear) //nuke ops spawn with a pistol and must purchase a suppressor seperately
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
@@ -111,7 +112,8 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 13
 	surplus = 50
-
+	excludefrom = list(/datum/game_mode/nuclear) //more of a traitor weapon for powerful asassinations
+/*
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun that fires .45 rounds with a 20-round magazine and is compatible with suppressors."
@@ -119,7 +121,7 @@ var/list/uplink_items = list()
 	cost = 14
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 40
-
+*/
 /datum/uplink_item/dangerous/carbine
 	name = "M-90gl Carbine"
 	desc = "A fully-loaded three-round burst carbine that uses 30-round 5.56mm magazines with a togglable underslung 40mm grenade launcher."
@@ -236,6 +238,7 @@ var/list/uplink_items = list()
 	desc = "A speed loader that contains seven additional .357 Magnum rounds for the syndicate revolver. For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
 	cost = 4
+	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/smg
 	name = "SMG Magazine - .45"
@@ -277,6 +280,13 @@ var/list/uplink_items = list()
 	desc = "A box of 4 additional 40mm HE grenades for use the M-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
 	item = /obj/item/ammo_box/a40mm
 	cost = 4
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/nugget
+	name = "Stripper Clip - 7.62x51mm"
+	desc = "A 5-rnd 7.62 CLIP for operators."
+	item = /obj/item/ammo_box/a762
+	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
@@ -327,6 +337,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/suppressor
 	cost = 3
 	surplus = 10
+	gamemodes = list(/datum/game_mode/nuclear)
 
 // STEALTHY TOOLS
 
