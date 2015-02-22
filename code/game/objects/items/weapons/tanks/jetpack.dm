@@ -107,3 +107,17 @@
 	ion_trail = new /datum/effect/effect/system/ion_trail_follow()
 	ion_trail.set_up(src)
 	air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+
+/obj/item/weapon/tank/jetpack/attack_self(mob/user)
+	if (!(src.air_contents))
+		return
+	user.set_machine(src)
+
+	var/message = {"
+<b>Tank</b><BR>
+<FONT color='blue'><b>Tank Pressure:</b> [air_contents.return_pressure()]</FONT><BR>
+"}
+
+	user << browse(message, "window=tank;size=200x100")
+	onclose(user, "tank")
+	return
