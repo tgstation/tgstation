@@ -44,13 +44,14 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	var/plant_cooldown = 30
+	var/plants_off = 0
 
 /mob/living/simple_animal/hostile/alien/drone/Life()
 	..()
 	if(!stat)
 		plant_cooldown--
 		if(stance==HOSTILE_STANCE_IDLE)
-			if(prob(10) && plant_cooldown<=0)
+			if(!plant_off && prob(10) && plant_cooldown<=0)
 				plant_cooldown = initial(plant_cooldown)
 				SpreadPlants()
 
@@ -86,6 +87,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
 	var/sterile = 1
+	var/plants_off = 0
 	var/egg_cooldown = 30
 	var/plant_cooldown = 30
 
@@ -95,7 +97,7 @@
 		egg_cooldown--
 		plant_cooldown--
 		if(stance==HOSTILE_STANCE_IDLE)
-			if(prob(10) && plant_cooldown<=0)
+			if(!plants_off && prob(10) && plant_cooldown<=0)
 				plant_cooldown = initial(plant_cooldown)
 				SpreadPlants()
 			if(!sterile && prob(10) && egg_cooldown<=0)
