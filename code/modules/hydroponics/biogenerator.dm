@@ -36,7 +36,7 @@
 	productivity = P
 
 /obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
-		update_icon()
+	update_icon()
 
 /obj/machinery/biogenerator/update_icon()
 	if(panel_open)
@@ -232,7 +232,7 @@
 			else beaker.reagents.add_reagent("cream",10)
 		if("cmilk")
 			if (check_cost(100/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/food/drinks/milk(src.loc)
+			else new/obj/item/weapon/reagent_containers/food/condiment/milk(src.loc)
 		if("ccream")
 			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/drinks/bottle/cream(src.loc)

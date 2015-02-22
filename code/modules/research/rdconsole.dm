@@ -168,7 +168,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='notice'> You you disable the security protocols</span>"
+		user << "<span class='notice'> You disable the security protocols</span>"
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
@@ -202,7 +202,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			t_disk = null
 		screen = 1.0
 
-	else if(href_list["copy_tech"]) //Copys some technology data from the research holder to the disk.
+	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
 		for(var/datum/tech/T in files.known_tech)
 			if(href_list["copy_tech_ID"] == T.id)
 				t_disk.stored = T
@@ -353,6 +353,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(being_built)
 				var/power = 2000
 				var/amount=text2num(href_list["amount"])
+				var/old_screen = screen
 				amount = max(1, min(10, amount))
 				for(var/M in being_built.materials)
 					power += round(being_built.materials[M] * amount / 5)
@@ -412,7 +413,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc
 						linked_lathe.busy = 0
-						screen = 3.15
+						screen = old_screen
 						updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
@@ -426,6 +427,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					break
 			if(being_built)
 				var/power = 2000
+				var/old_screen = screen
 				for(var/M in being_built.materials)
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
@@ -464,7 +466,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							new_item.reliability = R
 							new_item.loc = linked_imprinter.loc
 						linked_imprinter.busy = 0
-						screen = 4.1
+						screen = old_screen
 						updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)

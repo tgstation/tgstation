@@ -6,13 +6,18 @@
 	var/bitesize = 2
 	var/bitecount = 0
 	var/trash = null
-	var/slice_path
+	var/slice_path    // for sliceable food. path of the item resulting from the slicing
 	var/slices_num
 	var/eatverb
 	var/wrapped = 0
 	var/dried_type = null
 	var/potency = null
 	var/dry = 0
+	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
+	var/filling_color = "#FFFFFF" //color to use when added to custom food.
+	var/custom_food_type = null  //for food customizing. path of the custom food to create
+	var/junkiness = 0  //for junk food. used to lower human satiety.
+
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
@@ -95,6 +100,8 @@
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.
+			if(M.satiety > -200)
+				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
@@ -130,24 +137,27 @@
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
 		return 0
-	if((slices_num <= 0 || !slices_num) || !slice_path)
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+		var/obj/item/weapon/reagent_containers/food/snacks/S = W
+		if(S.w_class > 2)
+			user << "<span class='warning'>The ingredient is too big for [src].</span>"
+			return 0
+		if(contents.len >= 20)
+			user << "<span class='warning'>You can't add more ingredients to [src].</span>"
+			return 0
+		if(custom_food_type && ispath(custom_food_type))
+			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
+			C.initialize_custom_food(src, S, user)
+			return 0
+	if(is_sharp(W))
+		var/sharpness = is_sharp(W)
+		if(slice(sharpness, W, user))
+			return 1
+
+
+/obj/item/weapon/reagent_containers/food/snacks/proc/slice(var/accuracy, obj/item/weapon/W, mob/user)
+	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
 		return 0
-	var/inaccurate = 0
-	if( \
-			istype(W, /obj/item/weapon/kitchenknife) || \
-			istype(W, /obj/item/weapon/scalpel) || \
-			istype(W, /obj/item/weapon/kitchen/utensil/knife) \
-		)
-	else if( \
-			istype(W, /obj/item/weapon/circular_saw) || \
-			istype(W, /obj/item/weapon/melee/energy/sword) && W:active || \
-			istype(W, /obj/item/weapon/melee/energy/blade) || \
-			istype(W, /obj/item/weapon/shovel) || \
-			istype(W, /obj/item/weapon/hatchet) \
-		)
-		inaccurate = 1
-	else
-		return 0 // --- this is everything that is NOT a slicing implement, and which is not being slipped into food; allow afterattack ---
 
 	if ( \
 			!isturf(src.loc) || \
@@ -159,7 +169,7 @@
 		return 1
 
 	var/slices_lost = 0
-	if (!inaccurate)
+	if (accuracy > 1)
 		user.visible_message( \
 			"<span class='notice'>[user] slices [src].</span>", \
 			"<span class='notice'>You slice [src].</span>" \
@@ -170,19 +180,39 @@
 			"<span class='notice'>You inaccurately slice [src] with your [W]!</span>" \
 		)
 		slices_lost = rand(1,min(1,round(slices_num/2)))
+
+	if(!slice_path && !slices_num)
+		return
 	var/reagents_per_slice = reagents.total_volume/slices_num
 	for(var/i=1 to (slices_num-slices_lost))
-		var/obj/slice = new slice_path (src.loc)
+		var/obj/item/weapon/reagent_containers/food/snacks/slice = new slice_path (loc)
+		initialize_slice(slice)
 		reagents.trans_to(slice,reagents_per_slice)
-	qdel(src) // so long and thanks for all the fish
+	qdel(src)
 
+/obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice)
+	return
+
+/obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
+	overlays.Cut()
+	var/image/I = new(src.icon, "[initial(icon_state)]_filling")
+	if(S.filling_color == "#FFFFFF")
+		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
+	else
+		I.color = S.filling_color
+
+	overlays += I
+
+// cook() is called when microwaving the food
+/obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
+	if(reagents)
+		reagents.trans_to(S, reagents.total_volume)
 
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)
 	..()
-
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))
@@ -224,19 +254,19 @@
 //		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
 //		bitesize = 3													//This is the amount each bite consumes.
 
-//All foods (except slicable, since they have unique procs) are distributed among various categories. Use common sense.
+//All foods are distributed among various categories. Use common sense.
 
-/////////////////////////////////////////////////Sliceable////////////////////////////////////////
-// All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
+/////////////////////////////////////////////////Store////////////////////////////////////////
+// All the food items that can store an item inside itself, like bread or cake.
 
-//sliceable only changes w class, storage is handled by sliceable/store
-/obj/item/weapon/reagent_containers/food/snacks/sliceable
+
+/obj/item/weapon/reagent_containers/food/snacks/store
 	w_class = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/store
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/store/attackby(obj/item/weapon/W, mob/user)
-	if(W.w_class <= 2)
+/obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user)
+	if(W.w_class > 2 || custom_food_type) //can't store objects inside food needed to start a customizable snack.
+		..()
+	else
 		if(contents.len)
 			return 0
 		if(!iscarbon(user))
@@ -246,23 +276,3 @@
 		add_fingerprint(user)
 		contents += W
 		return 1 // no afterattack here
-	else
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel
-	name = "cheese wheel"
-	desc = "A big wheel of delcious Cheddar."
-	icon_state = "cheesewheel"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
-	slices_num = 5
-	list_reagents = list("nutriment" = 20, "vitamin" = 5)
-
-/obj/item/weapon/reagent_containers/food/snacks/cheesewedge
-	name = "cheese wedge"
-	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
-	icon_state = "cheesewedge"
-
-/obj/item/weapon/reagent_containers/food/snacks/watermelonslice
-	name = "watermelon slice"
-	desc = "A slice of watery goodness."
-	icon_state = "watermelonslice"

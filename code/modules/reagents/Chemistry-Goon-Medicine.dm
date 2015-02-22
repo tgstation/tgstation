@@ -687,7 +687,8 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 			/mob/living/simple_animal/hostile/asteroid/hivelord,
 			/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
 			/mob/living/simple_animal/hostile/carp/holocarp,
-			/mob/living/simple_animal/hostile/mining_drone
+			/mob/living/simple_animal/hostile/mining_drone,
+			/mob/living/simple_animal/hostile/poison
 			)//exclusion list for things you don't want the reaction to create.
 		var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 		var/atom/A = holder.my_atom

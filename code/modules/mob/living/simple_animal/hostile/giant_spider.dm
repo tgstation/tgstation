@@ -33,7 +33,7 @@
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/spidermeat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/spider
 	meat_amount = 2
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"

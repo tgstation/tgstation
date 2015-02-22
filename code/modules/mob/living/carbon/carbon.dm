@@ -86,8 +86,9 @@
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='danger'>You hear a heavy electrical crack.</span>" \
 	)
-	src.jitteriness += 1000 //High numbers for violent convulsions
-	src.stuttering += 2
+	jitteriness += 1000 //High numbers for violent convulsions
+	do_jitter_animation(jitteriness)
+	stuttering += 2
 	Stun(2)
 	spawn(20)
 		src.jitteriness -= 990 //Still jittery, but vastly less

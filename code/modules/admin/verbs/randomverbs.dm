@@ -767,6 +767,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		usr << "Admin only."
 		return
+
+	var/confirm = alert(src, "You sure you want to blank all NTSL scripts?", "Confirm", "Yes", "No")
+	if(confirm !="Yes") return
+
 	for(var/obj/machinery/telecomms/server/S in telecomms_list)
 		var/datum/TCS_Compiler/C = S.Compiler
 		S.rawcode = ""

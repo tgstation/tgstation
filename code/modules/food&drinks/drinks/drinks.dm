@@ -120,28 +120,6 @@
 //	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
 //	Formatting is the same as food.
 
-/obj/item/weapon/reagent_containers/food/drinks/milk
-	name = "Space Milk"
-	desc = "It's milk. White and nutritious goodness!"
-	icon_state = "milk"
-	item_state = "carton"
-	list_reagents = list("milk" = 50)
-
-/obj/item/weapon/reagent_containers/food/drinks/flour
-	name = "flour sack"
-	desc = "A big bag of flour. Good for baking!"
-	icon = 'icons/obj/food.dmi'
-	icon_state = "flour"
-	item_state = "flour"
-	list_reagents = list("flour" = 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/soymilk
-	name = "SoyMilk"
-	desc = "It's soy milk. White and nutritious goodness!"
-	icon_state = "soymilk"
-	item_state = "carton"
-	list_reagents = list("soymilk" = 50)
-
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
