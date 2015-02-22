@@ -137,6 +137,8 @@
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
 
+	var/assistant_cap = -1
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -420,6 +422,8 @@
 					config.mutant_races				= 1
 				if("mutant_colors")
 					config.mutant_colors			= 1
+				if("assistant_cap")
+					config.assistant_cap			= text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
