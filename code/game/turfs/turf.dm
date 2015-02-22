@@ -146,6 +146,9 @@
 		if(W.lighting_lumcount)				//unless we're being illuminated, don't bother (may be buggy, hard to test)
 			W.UpdateAffectingLights()
 
+	for(var/turf/space/S in range(W,1))
+		S.update_starlight()
+
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
 	return W
