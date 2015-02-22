@@ -311,7 +311,7 @@
 		return
 	welding = !welding
 	if(welding)
-		if(remove_fuel(1))
+		if(get_fuel() >= 1)
 			user << "<span class='notice'>You switch [src] on.</span>"
 			force = 15
 			damtype = "fire"
