@@ -68,11 +68,6 @@
 	name = "floor"
 	icon_state = "floor"
 
-/turf/simulated/shuttle/floor/airless
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
-
 /turf/simulated/shuttle/plating
 	name = "plating"
 	icon = 'icons/turf/floors.dmi'
