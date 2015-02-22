@@ -137,9 +137,10 @@
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
 
+	var/assistant_cap = -1
+
 	var/max_maint_drones = 10				//This many drones can spawn,
 	var/drone_build_time = 1200				//A drone will become available every X ticks since last drone spawn. Default is 2 minutes.
-
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -420,14 +421,16 @@
 					config.default_laws				= text2num(value)
 				if("silicon_max_law_amount")
 					config.silicon_max_law_amount	= text2num(value)
-				if("drone_build_time")
-					config.drone_build_time = text2num(value)
-				if("max_maint_drones")
-					config.max_maint_drones = text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
 				if("mutant_colors")
 					config.mutant_colors			= 1
+				if("drone_build_time")
+					config.drone_build_time = text2num(value)
+				if("max_maint_drones")
+					config.max_maint_drones = text2num(value)
+				if("assistant_cap")
+					config.assistant_cap			= text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
