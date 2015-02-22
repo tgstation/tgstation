@@ -10,12 +10,12 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 7
+	var/facidallowed = 0
 	var/spray_maxrange = 3 //what the sprayer will set spray_currentrange to in the attack_self.
 	var/spray_currentrange = 3 //the range of tiles the sprayer will reach when in fixed mode.
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = null
-	banned_reagents = list("facid","sacid")
 
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob)
@@ -42,6 +42,14 @@
 	if(reagents.total_volume < amount_per_transfer_from_this)
 		user << "<span class='notice'>\The [src] is empty!</span>"
 		return
+
+	if(!facidallowed)
+		if(reagents.has_reagent("facid"))
+			qdel(src)
+			var/mob/living/carbon/human/M = user
+			M.adjustBruteLoss(50) //This is high because actually spraying yourself with facid will do around 100 brute, this is supposed to represent a fraction of acid.
+			M.visible_message("<span class='danger'>[user] melts his [src]! covering himself in acid!</span>", \
+			"<span class='userdanger'>The [src] melts! covering you in acid!</span>")
 
 	spray(A)
 
@@ -141,6 +149,7 @@
 	spray_currentrange = 7
 	amount_per_transfer_from_this = 10
 	volume = 600
+	facidallowed = 1
 	origin_tech = "combat=3;materials=3;engineering=3"
 	banned_reagents = list()//the safeties are off, spray and pay!
 
