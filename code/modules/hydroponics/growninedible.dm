@@ -45,7 +45,7 @@
 	seed = /obj/item/seeds/towermycelium
 	name = "tower-cap log"
 	desc = "It's better than bad, it's good!"
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
@@ -97,7 +97,7 @@
 	seed = /obj/item/seeds/sunflowerseed
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	damtype = "fire"
 	force = 0
@@ -116,7 +116,7 @@
 	seed = /obj/item/seeds/novaflowerseed
 	name = "novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "novaflower"
 	damtype = "fire"
 	force = 0
@@ -281,7 +281,7 @@
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
 	w_class = 1.0
@@ -291,9 +291,34 @@
 
 /obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife))
+	if(is_sharp(W))
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
-		usr.unEquip(src)
+		user.unEquip(src)
 		qdel(src)
 		return
+
+/obj/item/weapon/grown/snapcorn
+	name = "snap corn"
+	desc = "A cob with snap pops"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "snapcorn"
+	item_state = "corncob"
+	w_class = 1.0
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	var/snap_pops = 1
+
+/obj/item/weapon/grown/snapcorn/add_juice()
+	..()
+	snap_pops = max(round(potency/8), 1)
+
+/obj/item/weapon/grown/snapcorn/attack_self(mob/user as mob)
+	..()
+	user << "<span class='notice'>You pick up the snap pops from the cob.</span>"
+	for(var/i, i<=snap_pops, i++)
+		new /obj/item/toy/snappop(user.loc)
+	user.unEquip(src)
+	new /obj/item/weapon/grown/corncob(user.loc)
+	qdel(src)
