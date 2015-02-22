@@ -145,7 +145,7 @@
 		src.amount-=R.req_amount*multiplier
 		if (src.amount<=0)
 			var/oldsrc = src
-			src = null //dont kill proc after del()
+			//src = null //dont kill proc after del()
 			usr.before_take_item(oldsrc)
 			returnToPool(oldsrc)
 			if (istype(O,/obj/item))
