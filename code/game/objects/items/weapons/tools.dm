@@ -113,6 +113,14 @@
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/Wirecutter.ogg'
 
+
+/obj/item/weapon/wirecutters/standard
+	name = "wirecutters"
+
+
+/obj/item/weapon/wirecutters/cyborg
+	name = "cyborg wirecutters"
+
 /obj/item/weapon/wirecutters/New()
 	if(prob(50))
 		icon_state = "cutters-y"
@@ -130,10 +138,18 @@
 	else
 		..()
 
+
+/obj/item/weapon/wirecutters/proc/attachable()
+	return
+
+
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+
+
+
 
 /*
  * Welding Tool
