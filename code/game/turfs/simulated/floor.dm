@@ -191,4 +191,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			for(I in I.loc)
 				if(!istype(I, dropping.type))
 					continue
+				if(I.anchored)
+					continue
 				I.loc = src
+				sleep(1)
