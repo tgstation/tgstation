@@ -158,6 +158,11 @@
 		var/turf/T = get_turf(src)
 		C.loc = T
 
+/obj/item/holotape/Bumped(var/mob/living/silicon/S)
+	if(S.a_intent == "help")
+		var/turf/T = get_turf(src)
+		S.loc = T
+
 /obj/item/holotape/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(!density) return 1
 	if(air_group || (height==0)) return 1
