@@ -7,6 +7,10 @@
 	permeability_coefficient = 0.05
 	item_color="yellow"
 
+/obj/item/clothing/gloves/color/yellow/fake
+	desc = "These gloves will protect the wearer from electric shock. They don't feel like rubber..."
+	siemens_coefficient = 1
+
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
 	name = "budget insulated gloves"
