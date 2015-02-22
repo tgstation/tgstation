@@ -192,7 +192,7 @@
 /obj/machinery/r_n_d/reverse_engine/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(src.stat & (BROKEN|NOPOWER))
 		return
-	if((user.stat && !isobserver(user)) || user.restrained() || !allowed(user))
+	if((user.stat && !isobserver(user)) || user.restrained() || !allowed(user) || !Adjacent(user))
 		return
 
 	var/data[0]

@@ -434,7 +434,7 @@
 /obj/machinery/r_n_d/fabricator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	if(user.stat || user.restrained() || !allowed(user))
+	if(user.stat || user.restrained() || !allowed(user) || !Adjacent(user))
 		return
 
 	var/data[0]
