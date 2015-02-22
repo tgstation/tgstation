@@ -47,7 +47,7 @@
 	gender = PLURAL	//"this is grass" not "this is a grass"
 
 /obj/structure/flora/grass/brown
-	icon_state = "snowgrass1bb"
+	icon_state = "snowgrassbb"
 
 /obj/structure/flora/grass/brown/New()
 	icon_state = "snowgrass[rand(1, 3)]bb"
@@ -55,7 +55,7 @@
 
 
 /obj/structure/flora/grass/green
-	icon_state = "snowgrass1gb"
+	icon_state = "snowgrassgb"
 
 /obj/structure/flora/grass/green/New()
 	icon_state = "snowgrass[rand(1, 3)]gb"
