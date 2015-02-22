@@ -216,7 +216,7 @@
 				playsound(user, fire_sound, 50, 1)
 				var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 				var/limb_name = affecting.getDisplayName()
-				if(affecting == "head" || affecting == "eyes" || affecting == "mouth")
+				if(affecting.name == "head" || affecting.name == "eyes" || affecting.name == "mouth")
 					user.apply_damage(300, BRUTE, affecting)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "You hear a gunshot!")
 				else

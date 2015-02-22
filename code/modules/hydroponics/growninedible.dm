@@ -278,6 +278,13 @@
 /obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
 	if(..())	qdel(src)
 
+/obj/item/weapon/grown/bananapeel/mimanapeel
+	name = "mimana peel"
+	desc = "A mimana peel."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "mimana_peel"
+
+
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
@@ -316,9 +323,11 @@
 
 /obj/item/weapon/grown/snapcorn/attack_self(mob/user as mob)
 	..()
-	user << "<span class='notice'>You pick up the snap pops from the cob.</span>"
-	for(var/i, i<=snap_pops, i++)
-		new /obj/item/toy/snappop(user.loc)
-	user.unEquip(src)
-	new /obj/item/weapon/grown/corncob(user.loc)
-	qdel(src)
+	user << "<span class='notice'>You pick up a snap pops from the cob.</span>"
+	var/obj/item/toy/snappop/S = new /obj/item/toy/snappop(user.loc)
+	if(ishuman(user))
+		user.put_in_hands(S)
+	snap_pops -= 1
+	if(!snap_pops)
+		new /obj/item/weapon/grown/corncob(user.loc)
+		qdel(src)

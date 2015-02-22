@@ -210,7 +210,7 @@
 	name = "pack of mimana seeds"
 	desc = "They're seeds that grow into mimana trees. When grown, keep away from mime."
 	icon_state = "seed-mimana"
-	species = "banana"
+	species = "mimana"
 	plantname = "Mimana Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mimana
 	lifespan = 50
