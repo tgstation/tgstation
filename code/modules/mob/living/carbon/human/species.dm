@@ -4,7 +4,7 @@
 #define BODY_BEHIND_LAYER		25
 #define BODY_LAYER				24
 #define BODY_ADJ_LAYER			23
-#define HAIR_LAYER				8
+#define HAIR_LAYER				9
 #define BODY_FRONT_LAYER		2
 
 #define TINT_IMPAIR 2

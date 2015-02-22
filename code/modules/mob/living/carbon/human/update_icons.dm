@@ -161,6 +161,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if(dna && !(disabilities & HUSK))
 		dna.species.update_color(src)
 
+/mob/living/carbon/human/proc/update_mutant_bodyparts()
+	if(dna)
+		dna.species.handle_mutant_bodyparts(src)
+
+
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
 
@@ -441,10 +446,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
 
 	src.update_hair()
-	src.update_body()
+	src.update_mutant_bodyparts()
 
 	apply_overlay(SUIT_LAYER)
-
 
 /mob/living/carbon/human/update_inv_pockets()
 	if(l_store)
@@ -472,10 +476,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(wear_mask.blood_DNA && !istype(wear_mask, /obj/item/clothing/mask/cigarette))
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 
-	src.update_body()
+	update_mutant_bodyparts()
+
 	apply_overlay(FACEMASK_LAYER)
-
-
 
 /mob/living/carbon/human/update_inv_back()
 	remove_overlay(BACK_LAYER)
