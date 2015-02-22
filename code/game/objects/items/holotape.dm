@@ -153,13 +153,15 @@
 		spawn(40)
 			charging = 0
 
-/obj/item/holotape/Bumped(var/mob/living/carbon/C)
-	if(C.m_intent == "walk")
-		var/turf/T = get_turf(src)
-		C.loc = T
+/obj/item/holotape/Bumped(var/mob/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.m_intent == "walk")
+			var/turf/T = get_turf(src)
+			C.loc = T
 
-/obj/item/holotape/Bumped(var/mob/living/silicon/S)
-	if(S.a_intent == "help")
+	if(issilicon(M))
+		var/mob/living/silicon/S = M
 		var/turf/T = get_turf(src)
 		S.loc = T
 
