@@ -286,8 +286,10 @@
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
 	if(manifest)
 		user << "<span class='notice'>You tear the manifest off of the crate.</span>"
-		playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
+		playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
 		manifest.loc = loc
+		if(ishuman(user))
+			user.put_in_hands(manifest)
 		manifest = null
 		update_icon()
 		return
@@ -308,8 +310,10 @@
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
 	if(manifest)
 		user << "<span class='notice'>You tear the manifest off of the crate.</span>"
-		playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
+		playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
 		manifest.loc = loc
+		if(ishuman(user))
+			user.put_in_hands(manifest)
 		manifest = null
 		update_icon()
 		return

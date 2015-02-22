@@ -300,6 +300,10 @@ var/datum/subsystem/shuttle/SSshuttle
 		var/obj/structure/closet/crate/CR = Crate
 		CR.manifest = slip
 		CR.update_icon()
+	if(istype(Crate, /obj/structure/largecrate))
+		var/obj/structure/largecrate/LC = Crate
+		LC.manifest = slip
+		LC.update_icon()
 
 	return Crate
 
