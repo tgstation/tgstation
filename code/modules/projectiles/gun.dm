@@ -88,6 +88,11 @@
 		else
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
+	if(heavy_weapon)
+		if(user.get_inactive_hand())
+			if(prob(40))
+				user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
+				user.drop_item()
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -136,10 +141,6 @@
 			if(NOGUNS in user.dna.species.specflags)
 				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
 				return 0
-	if(heavy_weapon)
-		if(user.get_inactive_hand())
-			user << "<span class='warning'>[src] is too heavy to use with one hand!</span>"
-			return 0
 	return 1
 
 
@@ -157,6 +158,12 @@
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	add_fingerprint(user)
+
+	if(heavy_weapon)
+		if(user.get_inactive_hand())
+			recoil = 3 //one-handed kick
+		else
+			recoil = 1 //still kicks
 
 	for(var/i = 1 to burst_size)
 		if(!issilicon(user))
