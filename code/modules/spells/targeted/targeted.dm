@@ -28,6 +28,7 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 
 	var/list/compatible_mobs = list()
 
+
 /spell/targeted/choose_targets(mob/user = usr)
 	var/list/targets = list()
 

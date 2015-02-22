@@ -286,19 +286,6 @@
 // USELESS SHIT //
 //////////////////
 
-// WAS: /datum/bioEffect/strong
-/datum/dna/gene/disability/strong
-	// pretty sure this doesn't do jack shit, putting it here until it does
-	name = "Strong"
-	desc = "Enhances the subject's ability to build and retain heavy muscles."
-	activation_message = "You feel buff!"
-	deactivation_message = "You feel wimpy and weak."
-
-	mutation = M_STRONG
-
-	New()
-		..()
-		block=STRONGBLOCK
 
 // WAS: /datum/bioEffect/horns
 /datum/dna/gene/disability/horns
@@ -369,7 +356,7 @@
 
 	spell_flags = INCLUDEUSER
 	invocation_type = "none"
-	range = -1
+	range = 0
 	selection_type = "range"
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	cast_sound = 'sound/effects/bamf.ogg'

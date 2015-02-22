@@ -40,7 +40,7 @@
 		M.alpha=255
 
 // WAS: /datum/bioEffect/darkcloak
-/datum/dna/gene/basic/stealth/darkcloak
+/*/datum/dna/gene/basic/stealth/darkcloak
 	name = "Cloak of Darkness"
 	desc = "Enables the subject to bend low levels of light around themselves, creating a cloaking effect."
 	activation_messages = list("You begin to fade into the shadows.")
@@ -57,7 +57,7 @@
 			M.alpha -= 25
 		else
 			M.alpha = round(255 * 0.80)
-
+*/
 //WAS: /datum/bioEffect/chameleon
 /datum/dna/gene/basic/stealth/chameleon
 	name = "Chameleon"
@@ -224,7 +224,72 @@
 		H.UpdateDamageIcon()
 		H.updatehealth()
 
+/spell/targeted/eat/choose_targets(mob/user = usr)
+	var/list/targets = list()
 
+	if(max_targets == 0) //unlimited
+		for(var/atom/movable/target in view_or_range(range, user, selection_type))
+			if(!is_type_in_list(target, compatible_mobs) && !istype(target, /obj/item)) continue
+			targets += target
+	else if(max_targets == 1) //single target can be picked
+		if(range <= 0 && spell_flags & INCLUDEUSER)
+			targets += user
+		else
+			var/list/possible_targets = list()
+
+			for(var/atom/movable/M in view_or_range(range, user, selection_type))
+				if(!(spell_flags & INCLUDEUSER) && M == user)
+					continue
+				if(!is_type_in_list(M, compatible_mobs) && !istype(M, /obj/item)) continue
+				possible_targets += M
+
+			if(possible_targets.len)
+				if(spell_flags & SELECTABLE) //if we are allowed to choose. see setup.dm for details
+					targets += input("Choose the target for the spell.", "Targeting") as anything in possible_targets
+				else
+					targets += pick(possible_targets)
+			//Adds a safety check post-input to make sure those targets are actually in range.
+
+
+	else
+		var/list/possible_targets = list()
+
+		for(var/atom/movable/target in view_or_range(range, user, selection_type))
+			possible_targets += target
+
+		if(spell_flags & SELECTABLE)
+			for(var/i = 1; i<=max_targets, i++)
+				var/atom/movable/M = input("Choose the target for the spell.", "Targeting") as anything in possible_targets
+				if(M in view_or_range(range, user, selection_type))
+					targets += M
+					possible_targets -= M
+		else
+			for(var/i=1,i<=max_targets,i++)
+				if(!possible_targets.len)
+					break
+				if(target_ignore_prev)
+					var/target = pick(possible_targets)
+					possible_targets -= target
+					targets += target
+				else
+					targets += pick(possible_targets)
+
+	if(!(spell_flags & INCLUDEUSER) && (user in targets))
+		targets -= user
+
+	if(compatible_mobs && compatible_mobs.len)
+		for(var/mob/living/target in targets) //filters out all the non-compatible mobs
+			var/found = 0
+			for(var/mob_type in compatible_mobs)
+				if(istype(target, mob_type))
+					found = 1
+			if(!found)
+				targets -= target
+	for(var/obj/item/I in targets)
+		if(!istype(I) || Adjacent(I))
+			targets -= I
+
+	return targets
 /spell/targeted/eat/cast(list/targets, mob/user)
 	var/atom/movable/the_item = targets[1]
 	if(!the_item || !the_item.Adjacent(usr))
@@ -255,9 +320,14 @@
 		if(!do_mob(user,the_item,EAT_MOB_DELAY))
 			user << "<span class='warning'> You were interrupted before you could eat [the_item]!</span>"
 		else
-			user.visible_message("\red [user] eats \the [the_item].")
-			qdel(the_item)
+			user.visible_message("\red [user] eats \the [limb].")
+			limb.droplimb("override" = 1, "spawn_limb" = 0)
 			doHeal(user)
+	else
+		usr.visible_message("<span class='warning'> [usr] eats \the [the_item].")
+		playsound(usr.loc, 'sound/items/eatfood.ogg', 50, 0)
+		qdel(the_item)
+		doHeal(usr)
 	return
 
 ////////////////////////////////////////////////////////////////////////
@@ -386,7 +456,7 @@
 	range = 1
 	max_targets = 1
 	selection_type = "range"
-	compatible_mobs = (/mob/living/carbon/human)
+	compatible_mobs = list(/mob/living/carbon/human)
 
 /spell/targeted/polymorph/cast(list/targets, mob/living/carbon/human/user)
 	..()
@@ -527,3 +597,17 @@
 	New()
 		..()
 		block = SUPERFARTBLOCK
+
+// WAS: /datum/bioEffect/strong
+/datum/dna/gene/basic/strong
+	// pretty sure this doesn't do jack shit, putting it here until it does
+	name = "Strong"
+	desc = "Enhances the subject's ability to build and retain heavy muscles."
+	activation_messages = list("You feel buff!")
+	deactivation_messages = list("You feel wimpy and weak.")
+
+	mutation = M_STRONG
+
+	New()
+		..()
+		block=STRONGBLOCK
