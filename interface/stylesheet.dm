@@ -72,7 +72,6 @@ h1.alert, h2.alert		{color: #000000;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
-.robotyell				{font-family: "Courier New", cursive, sans-serif;	font-weight: bold;}
 
 BIG IMG.icon 			{width: 32px; height: 32px;}
 
