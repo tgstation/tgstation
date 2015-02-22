@@ -44,7 +44,7 @@
 			return 1
 		else
 			return 0
-
+/*
 /obj/item/weapon/melee/baton/proc/update_process()
 	if(status)
 		SSobj.processing |= src
@@ -63,7 +63,7 @@
 					R.cell.use(losspertick)
 			else
 				bcell.use(losspertick)
-
+*/
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
 		icon_state = "[initial(name)]_active"
@@ -71,7 +71,7 @@
 		icon_state = "[initial(name)]_nocell"
 	else
 		icon_state = "[initial(name)]"
-	update_process()
+	//update_process()
 
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()
