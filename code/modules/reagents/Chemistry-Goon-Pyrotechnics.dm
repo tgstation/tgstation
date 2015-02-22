@@ -172,33 +172,3 @@ proc/goonchem_vortex(var/turf/simulated/T, var/setting_type, var/range, var/pull
 		ex_light = 14
 	explosion(T,ex_severe,ex_heavy,ex_light,ex_flash, 1, 1)
 	return
-
-/datum/reagent/pyrosium
-	name = "Pyrosium"
-	id = "pyrosium"
-	description = "Comes into existance at 20K. Heats the beaker up over time."
-	reagent_state = LIQUID
-	color = "#000000"  //rgb: 96, 165, 132
-	metabolization_rate = 0.05
-
-/datum/chemical_reaction/pyrosium
-	name = "Pyrosium"
-	id = "pyrosium"
-	result = "pyrosium"
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "sulfur" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/pyrosium/on_reaction(var/datum/reagents/holder, var/created_volume)
-	if(holder)
-		holder.chem_temp = 20
-	..()
-	return
-
-/datum/reagent/pyrosium/reagents_on_tick(var/datum/reagents/R)
-	if(R)
-		if(R.chem_temp < 1000)
-			R.chem_temp += 10
-		if(R.chem_temp > 1000)
-			R.chem_temp = 1000
-		R.handle_reactions()
-	return

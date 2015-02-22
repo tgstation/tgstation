@@ -120,9 +120,6 @@ datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
 		M << "<span class = 'userdanger'>You're not feeling good at all! You really need some [name].</span>"
 	return
 
-datum/reagent/proc/reagents_on_tick(var/datum/reagents/R)
-	return
-
 datum/reagent/blood
 			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 			name = "Blood"

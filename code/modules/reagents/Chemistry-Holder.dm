@@ -16,7 +16,6 @@ datum/reagents
 	var/list/datum/reagent/addiction_list = new/list()
 
 datum/reagents/New(maximum=100)
-	SSchemistry.add_reagent_datum_to_list(src)
 	maximum_volume = maximum
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
@@ -260,11 +259,6 @@ datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
 datum/reagents/proc/conditional_update(var/atom/A)
 	for(var/datum/reagent/R in reagent_list)
 		R.on_update (A)
-	update_total()
-
-datum/reagents/proc/reagents_on_tick()
-	for(var/datum/reagent/R in reagent_list)
-		R.reagents_on_tick(src)
 	update_total()
 
 datum/reagents/proc/handle_reactions()
