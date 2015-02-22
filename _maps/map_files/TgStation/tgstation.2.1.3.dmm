@@ -1203,7 +1203,7 @@
 "axg" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/turf/simulated/floor/plasteel{dir = 4; icon_state = "arrival"},/area/hallway/secondary/entry)
 "axh" = (/obj/structure/closet/wardrobe/white,/obj/item/clothing/shoes/jackboots,/obj/item/weapon/reagent_containers/blood/random,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "axi" = (/obj/structure/table/glass,/obj/item/weapon/hemostat,/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
-"axj" = (/obj/structure/table/glass,/obj/item/weapon/restraints/handcuffs/cable/zipties,/obj/item/weapon/reagent_containers/blood/random,/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
+"axj" = (/obj/structure/table/glass,/obj/item/stack/zipties,/obj/item/weapon/reagent_containers/blood/random,/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "axk" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "axl" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/turf/simulated/floor/plating,/area/maintenance/fpmaint2)
 "axm" = (/obj/structure/closet/firecloset,/turf/simulated/floor/plating,/area/maintenance/fpmaint2)

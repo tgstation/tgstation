@@ -396,6 +396,9 @@
 	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
+	if (istype(W, /obj/item/stack/zipties))
+		return
+
 	if (istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W

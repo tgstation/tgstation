@@ -16,7 +16,6 @@
 	origin_tech = "materials=1"
 	var/breakouttime = 600 //Deciseconds = 60s = 1 minute
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
-	var/trashtype = null //for disposable cuffs
 
 /obj/item/weapon/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
@@ -43,12 +42,8 @@
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user)
 	if(!target.handcuffed)
 		user.drop_item()
-		if(trashtype)
-			target.handcuffed = new trashtype(target)
-			qdel(src)
-		else
-			loc = target
-			target.handcuffed = src
+		loc = target
+		target.handcuffed = src
 		target.update_inv_handcuffed(0)
 		return
 
@@ -89,7 +84,7 @@
 	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
-		if (R.use(1))
+		if(R.use(1))
 			var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
 			user.unEquip(src)
 			user.put_in_hands(W)
@@ -98,36 +93,6 @@
 		else
 			user << "<span class='warning'>You need one rod to make a wired rod.</span>"
 			return
-
-/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(isrobot(user))
-		if(!C.handcuffed)
-			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
-			if(do_mob(user, C, 30))
-				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
-					C.update_inv_handcuffed(0)
-					user << "<span class='notice'>You handcuff [C].</span>"
-					add_logs(user, C, "handcuffed")
-			else
-				user << "<span class='warning'>You fail to handcuff [C].</span>"
-
-/obj/item/weapon/restraints/handcuffs/cable/zipties
-	name = "zipties"
-	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
-	icon_state = "cuff_white"
-	breakouttime = 450 //Deciseconds = 45s
-	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
-
-/obj/item/weapon/restraints/handcuffs/cable/zipties/used
-	desc = "A pair of broken zipties."
-	icon_state = "cuff_white_used"
-
-/obj/item/weapon/restraints/handcuffs/cable/zipties/used/attack()
-	return
-
 
 //Legcuffs
 
