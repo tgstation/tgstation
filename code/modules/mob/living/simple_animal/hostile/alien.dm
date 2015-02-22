@@ -51,7 +51,7 @@
 	if(!stat)
 		plant_cooldown--
 		if(stance==HOSTILE_STANCE_IDLE)
-			if(!plant_off && prob(10) && plant_cooldown<=0)
+			if(!plants_off && prob(10) && plant_cooldown<=0)
 				plant_cooldown = initial(plant_cooldown)
 				SpreadPlants()
 
