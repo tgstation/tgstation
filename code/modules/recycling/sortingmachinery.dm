@@ -11,6 +11,7 @@
 
 
 /obj/structure/bigDelivery/attack_hand(mob/user as mob)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 
 /obj/structure/bigDelivery/Destroy()
@@ -74,7 +75,7 @@
 			user.put_in_hands(wrapped)
 		else
 			wrapped.loc = get_turf(src)
-
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 
 
