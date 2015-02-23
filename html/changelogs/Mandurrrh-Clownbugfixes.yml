@@ -1,0 +1,10 @@
+
+author: Mandurrrh
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+
+changes: 
+  - bugfix- 'Fixes clown cuffing both mobs and two pairs of cuffs appearing.'
+  - bugfix- 'Fixes clown not being able to use his stamp as antag so no meta.'
