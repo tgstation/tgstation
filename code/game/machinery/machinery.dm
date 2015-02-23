@@ -230,7 +230,7 @@ Class Procs:
 	return
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
-	if(restrained() || lying || stat || stunned || weakened)
+	if(incapacitated() || lying )
 		return
 	if(!in_range(M, src))
 		if((be_close == 0) && (dna.check_mutation(TK)))
