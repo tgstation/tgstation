@@ -427,7 +427,7 @@
 				if("assistant_cap")
 					config.assistant_cap			= text2num(value)
 				if("starlight")
-					config.starlight				= 1
+					config.starlight			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

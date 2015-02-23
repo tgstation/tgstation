@@ -89,6 +89,9 @@ var/datum/subsystem/lighting/SSlighting
 	else
 		changed_turfs.Cut()
 
+	for(var/turf/T in world)
+		T.initialize_lighting()
+
 	..()
 
 //Used to strip valid information from an existing instance and transfer it to the replacement. i.e. when a crash occurs
