@@ -48,9 +48,10 @@
 	set category = "Malfunction"
 	set name = "Upgrade Turrets"
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
-	for(var/obj/machinery/turret/turret in machines)
-		turret.health += 30
-		turret.shot_delay = 20
+	for(var/obj/machinery/porta_turret/turret in machines)
+		if(turret.ai) //Make sure only the AI's turrets are affected.
+			turret.health += 30
+			turret.shot_delay = 10 //Standard portable turret delay is 15.
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
 /datum/AI_Module/large/lockdown
