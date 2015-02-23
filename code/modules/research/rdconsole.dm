@@ -1004,3 +1004,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	circuit = "/obj/item/weapon/circuitboard/rdconsole"
 
 	l_color = "#CD00CD"
+
+/obj/machinery/computer/rdconsole/pod
+	name = "Pod Bay R&D Console"
+	id = 5
+	req_access=list()
+	circuit = "/obj/item/weapon/circuitboard/rdconsole/pod"
+
+	l_color = "#CD00CD"

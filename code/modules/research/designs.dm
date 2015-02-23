@@ -512,7 +512,7 @@ k
 	id = "rdconsole_robotics"
 	build_path = /obj/item/weapon/circuitboard/rdconsole/robotics
 
-/datum/design/rdconsole/robotics
+/datum/design/rdconsole/mechanic
 	name = "Circuit Design (Mechanic R&D Console)"
 	id = "rdconsole_mechanic"
 	build_path = /obj/item/weapon/circuitboard/rdconsole/mechanic
@@ -521,6 +521,11 @@ k
 	name = "Circuit Design (MoMMI R&D Console)"
 	id = "rdconsole_mommi"
 	build_path = /obj/item/weapon/circuitboard/rdconsole/mommi
+
+/datum/design/rdconsole/pod
+	name = "Circuit Design (Pod Bay R&D Console)"
+	id = "rdconsole_pod"
+	build_path = /obj/item/weapon/circuitboard/rdconsole/pod
 
 /datum/design/ordercomp
 	name = "Circuit Design (Supply ordering console)"
