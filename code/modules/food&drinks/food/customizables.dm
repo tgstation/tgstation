@@ -60,8 +60,8 @@
 			ingMax = ingredients.len
 			user << "<span class='notice'>You add a last touch to the dish by renaming it.</span>"
 			customname = txt
-			if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich))
-				var/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/S = I
+			if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich))
+				var/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/S = src
 				if(S.finished)
 					name = "[customname] sandwich"
 					return
