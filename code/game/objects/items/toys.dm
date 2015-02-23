@@ -449,9 +449,15 @@
 	..()
 	name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
 	drawtype = pick(pick(graffiti), pick(letters), "rune[rand(1,6)]")
+	if(config)
+		if(config.mutant_races == 1)
+			graffiti |= "antilizard"
+			graffiti |= "prolizard"
+
+/obj/item/toy/crayon/initialize()
 	if(config.mutant_races == 1)
-		graffiti += "antilizard"
-		graffiti += "prolizard"
+		graffiti |= "antilizard"
+		graffiti |= "prolizard"
 
 /obj/item/toy/crayon/attack_self(mob/living/user as mob)
 	update_window(user)
