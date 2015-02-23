@@ -41,7 +41,6 @@
 			dir = buckled_mob.dir
 			return 0
 		buckled_mob.buckled = src //Restoring
-	handle_layer()
 	return 1
 
 /obj/structure/stool/bed/chair/proc/handle_layer()

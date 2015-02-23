@@ -45,7 +45,6 @@
 	var/burn_dam = 0
 	var/max_damage = 0
 	var/status = ORGAN_ORGANIC
-	var/list/embedded_objects = list()
 
 
 

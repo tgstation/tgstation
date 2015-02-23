@@ -399,14 +399,13 @@
 	scantemp = "Subject successfully scanned."
 
 /obj/machinery/computer/cloning/update_icon()
-	SetLuminosity(brightness_on)
+
 	if(stat & BROKEN)
 		icon_state = "commb"
 	else
 		if(stat & NOPOWER)
 			src.icon_state = "c_unpowered"
 			stat |= NOPOWER
-			SetLuminosity(0)
 		else
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER

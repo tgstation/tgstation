@@ -1,6 +1,0 @@
-author: Incoming5643
-
-delete-after: True
-
-changes: 
-  - rscadd: "Optional population cap functionality has been added to the game. By default all caps are disabled. Server owners should refer to config.txt to see their list of options."

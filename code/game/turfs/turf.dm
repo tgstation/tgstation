@@ -103,7 +103,7 @@
 
 /turf/proc/is_plasteel_floor()
 	return 0
-/turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
+/turf/proc/return_siding_icon_state()
 	return 0
 
 /turf/proc/levelupdate()
@@ -145,9 +145,6 @@
 	if(old_opacity != W.opacity)			//opacity has changed. Need to update surrounding lights
 		if(W.lighting_lumcount)				//unless we're being illuminated, don't bother (may be buggy, hard to test)
 			W.UpdateAffectingLights()
-
-	for(var/turf/space/S in range(W,1))
-		S.update_starlight()
 
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()

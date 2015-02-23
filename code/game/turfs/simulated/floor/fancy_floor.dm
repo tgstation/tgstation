@@ -38,14 +38,14 @@
 
 /turf/simulated/floor/fancy/grass
 	name = "Grass patch"
-	icon_state = "grass1"
+	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand1", "sand2", "sand3")
 	ignoredirt = 1
 
 /turf/simulated/floor/fancy/grass/New()
 	..()
-	icon_state = "grass[pick("1","2","3","4")]"
+	icon_state = "grass"
 	spawn(1)
 		update_icon()
 		fancy_update(type)
@@ -58,17 +58,6 @@
 		new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
 		user << "<span class='notice'>You shovel the grass.</span>"
 		make_plating()
-
-/turf/simulated/floor/fancy/grass/return_siding_icon_state()
-	..()
-	var/dir_sum = 0
-	for(var/direction in cardinal)
-		if(!istype(get_step(src,direction), /turf/simulated/floor/fancy/grass))
-			dir_sum += direction
-	if(dir_sum)
-		return "wood_siding[dir_sum]"
-	else
-		return 0
 
 /turf/simulated/floor/fancy/carpet
 	name = "Carpet"
