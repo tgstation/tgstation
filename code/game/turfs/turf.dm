@@ -205,9 +205,6 @@
 /turf/proc/Bless()
 	flags |= NOJAUNT
 
-/turf/proc/initialize_lighting()
-	return
-
 /////////////////////////////////////////////////////////////////////////
 // Navigation procs
 // Used for A-star pathfinding

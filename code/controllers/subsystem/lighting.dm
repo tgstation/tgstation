@@ -89,8 +89,9 @@ var/datum/subsystem/lighting/SSlighting
 	else
 		changed_turfs.Cut()
 
-	for(var/turf/T in world)
-		T.initialize_lighting()
+	if(config.starlight)
+		for(var/turf/space/S in world)
+			S.initialize_starlight()
 
 	..()
 

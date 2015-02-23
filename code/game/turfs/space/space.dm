@@ -26,7 +26,7 @@
 					return
 			SetLuminosity(0)
 
-/turf/space/initialize_lighting()
+/turf/space/proc/initialize_starlight()
 	update_starlight()
 
 /turf/space/attack_paw(mob/user as mob)
