@@ -169,6 +169,13 @@
 	new /obj/item/clothing/mask/gas/owl_mask(src.loc)
 	qdel(src)
 
+/obj/effect/landmark/costume/thegriffin/New()
+	new /obj/item/clothing/suit/toggle/owlwings/griffinwings(src.loc)
+	new /obj/item/clothing/shoes/griffin(src.loc)
+	new /obj/item/clothing/under/griffin(src.loc)
+	new /obj/item/clothing/head/griffin(src.loc)
+	qdel(src)
+
 /obj/effect/landmark/costume/waiter/New()
 	new /obj/item/clothing/under/waiter(src.loc)
 	var/CHOICE= pick( /obj/item/clothing/head/kitty, /obj/item/clothing/head/rabbitears)
