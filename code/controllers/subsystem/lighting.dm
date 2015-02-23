@@ -91,7 +91,7 @@ var/datum/subsystem/lighting/SSlighting
 
 	if(config.starlight)
 		for(var/turf/space/S in world)
-			S.initialize_starlight()
+			S.update_starlight()
 
 	..()
 
