@@ -263,3 +263,17 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security
+
+/obj/item/clothing/head/helmet/space/hardsuit/security/hos
+	name = "head of security's hardsuit helmet"
+	desc = "a special bulky helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
+	icon_state = "hardsuit0-hos"
+	item_color = "hos"
+	armor = list(melee = 45, bullet = 25, laser = 30,energy = 10, bomb = 25, bio = 100, rad = 50)
+
+/obj/item/clothing/suit/space/hardsuit/security/hos
+	icon_state = "hardsuit-hos"
+	name = "head of security's hardsuit"
+	desc = "A special bulky suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
+	armor = list(melee = 45, bullet = 25, laser = 30, energy = 10, bomb = 25, bio = 100, rad = 50)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
