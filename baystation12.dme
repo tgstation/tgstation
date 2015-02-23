@@ -1677,6 +1677,8 @@
 #include "code\ZAS\Zone.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
+#include "interface\web\info.dms"
+#include "interface\web\interface.dms"
 #include "maps\_map.dm"
 #include "maps\tgstation.dm"
 #include "maps\RandomZLevels\Academy.dm"
