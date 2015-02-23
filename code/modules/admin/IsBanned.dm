@@ -47,6 +47,11 @@ world/IsBanned(key,address,computer_id)
 		message_admins("<span class='adminnotice'>Failed Login: [key] - Guests not allowed</span>")
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 
+	//Population Cap Checking
+	if(config.extreme_popcap && living_player_count() >= config.extreme_popcap && !(ckey(key) in admin_datums))
+		log_access("Failed Login: [key] - Population cap reached")
+		return list("reason"="popcap", "desc"= "\nReason: [config.extreme_popcap_message]")
+
 	if(config.ban_legacy_system)
 
 		//Ban Checking
