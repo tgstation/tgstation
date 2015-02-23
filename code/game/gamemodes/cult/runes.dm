@@ -159,14 +159,22 @@ var/list/sacrificed = list()
 			cultist_count += M
 	if(cultist_count.len >= 9)
 		if(ticker.mode.name == "cult")
-			if("eldergod" in ticker.mode.cult_objectives)
-				ticker.mode:eldergod = 0
-			else
+			var/datum/game_mode/cult/cultmode = ticker.mode
+			if(!("eldergod" in cultmode.cult_objectives))
 				message_admins("[usr.real_name]([usr.ckey]) tried to summon a god when she didn't want to come out to play.")	// Admin alert because you *KNOW* dickbutts are going to abuse this.
 				for(var/mob/M in cultist_count)
 					M.reagents.add_reagent("hell_water", 10)
 					M << "<span class='h2.userdanger'>YOUR SOUL BURNS WITH YOUR ARROGANCE!!!</span>"
 				return
+			else
+				for(var/obj_count=1, obj_count <= cultmode.cult_objectives.len, obj_count++)
+					if(cultmode.cult_objectives[obj_count] == "sacrifice")
+						if(cultmode.sacrifice_target)
+							if(!(cultmode.sacrifice_target in sacrificed))
+								for(var/mob/M in cultist_count)
+									M << "<span class='h2.userdanger'>Nar-sie refuses to be summoned while the sacrifice isn't complete.</span>"
+								return
+				cultmode.eldergod = 0
 		var/narsie_type = /obj/singularity/narsie/large
 		// Moves narsie if she was already summoned.
 		var/obj/her = locate(narsie_type, SSobj.processing)
