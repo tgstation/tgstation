@@ -128,7 +128,7 @@
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
-	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
+	desc = "A soft brown jumpsuit made of synthetic feathers and strong conviction."
 	icon_state = "owl"
 	item_color = "owl"
 	can_adjust = 0
