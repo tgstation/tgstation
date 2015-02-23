@@ -177,7 +177,10 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=scrying'>Scrying Orb</A><BR>"
 		dat += "<I>An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision.</I><BR>"
+		dat += "<HR>"
 
+		dat += "<A href='byond://?src=\ref[src];spell_choice=phylactery'>Phylactery</A><BR>"
+		dat += "<I>A pendant imbued with forbidden power, it allows for the life beyond death of lichdom. After looking upon it so long as it is kept intact and away from the den you will live forever.</I><BR>"
 		dat += "<HR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=return'><B>Return</B></A><BR>"
@@ -387,6 +390,12 @@
 								H.dna.add_mutation(XRAY)
 							temp = "You have purchased a scrying orb, and gained x-ray vision."
 							max_uses--
+						if("phylactery")
+							feedback_add_details("wizard_spell_learned","PH") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							new /obj/item/clothing/tie/pendant/phylactery(get_turf(H))
+							temp = "You have purchased a phylactery."
+							max_uses--
+
 		else
 			if(href_list["temp"])
 				temp = null

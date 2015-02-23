@@ -277,3 +277,89 @@
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
 	item_color = "stripedbluescarf"
+
+//////////////////
+//Magic Pendants//
+//////////////////
+
+/obj/item/clothing/tie/pendant
+	name = "jewel pendent"
+	desc = "A bejeweled necklace, there's a slightly mystic air to it."
+	icon_state = "stripedredscarf" //Does not exist, needs sprite
+	item_color = "stripedredscarf" //Does not exist, needs sprites
+
+/obj/item/clothing/tie/pendant/phylactery
+	var/datum/mind/lichmind = null
+	var/lichckey = null
+	var/regeneration_timer = 0
+	var/regeneration_number = 0
+
+/obj/item/clothing/tie/pendant/phylactery/New()
+	SSobj.processing |= src
+	..()
+
+/obj/item/clothing/tie/pendant/phylactery/process()
+
+	if(!lichmind)	return
+
+	if(regeneration_timer)
+		regeneration_timer--
+
+		for(var/obj/effect/proc_holder/spell/S in lichmind.spell_list)
+			S.charge_counter = 0 //Lots of weird interactions with spellcasting in objects
+
+		if(regeneration_timer <= 0)
+			for(var/mob/M in src)
+				M.loc = get_turf(src)
+				M << "<span class='warning'>You feel yourself pass through the eye of the gem, reborn as a being of undeath.</span>"
+				for(var/obj/effect/proc_holder/spell/S in lichmind.spell_list)
+					S.charge_counter = S.charge_max
+
+		return
+
+
+	if(lichmind.current && lichmind.current.stat != DEAD)
+		var/turf/L = get_turf(lichmind.current)
+		var/turf/P = get_turf(src)
+		if(L.z != P.z) //To avoid hiding it in the den or  the relatively safety of deep space, you're tied to the same z level it occupies.
+			var/mob/M = lichmind.current
+			if(P.z == 2) //if it was in the den, we give it back to the wizard to avoid stranding him there
+				src.loc = M.loc
+				M << "<span class='notice'>You see your phylactery appears at your feet. To think you almost left it behind!</span>"
+			else
+				M << "<span class='warning'>You've strayed too far from your phylactery! You feel your physical form fall apart!</span>"
+				M.death()
+		return
+
+	if(lichmind.current) //Give a hint to the wearabouts of the phylactery to anyone who happens to see the wizard bite it
+		var/where_wizdo = dir2text(get_dir(lichmind.current, src))
+		if(where_wizdo)
+			lichmind.current.visible_message("<span class='warning'>As [lichmind.current] dies, you see a strange energy rise from the corpse, and speed off towards the [where_wizdo]!</span>")
+
+	spawn(0) //to avoid some interactions with ghostmaking, we let it work itself out before we pull them back in
+		var/mob/living/carbon/human/lich = new /mob/living/carbon/human(src)
+
+		lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(lich), slot_shoes)
+		lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), slot_w_uniform)
+		lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), slot_wear_suit)
+		lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), slot_head)
+
+		lich.real_name = lichmind.name
+		lichmind.transfer_to(lich)
+		lich.ckey = lichckey
+		hardset_dna(lich,null,null,lich.real_name,null,/datum/species/skeleton)
+		lich << "<span class='warning'>As your physical form dies, you feel your consciousness gathering in the gem.</span>"
+		regeneration_timer = regeneration_number * 60 + 120 //2 minutes + 1 more minute per resurection
+		regeneration_number++
+
+/obj/item/clothing/tie/pendant/phylactery/pickup(mob/user)
+	if(!lichmind && user.stat != DEAD && user.mind)
+		user << "<span class='warning'>You stare into the gleaming gem and feel a part of yourself slip away into its void...</span>"
+		lichmind = user.mind
+		lichckey = user.ckey
+	..()
+
+/obj/item/clothing/tie/pendant/phylactery/attack_hand(mob/user)
+	if(user.loc == src) //Prevents recursively picking up the pendant while inside it
+		return 0
+	..()
