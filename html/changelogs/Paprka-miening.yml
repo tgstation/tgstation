@@ -1,0 +1,9 @@
+author: Paprka
+
+delete-after: True
+
+changes: 
+  - tweak: "Goliath tentacles no longer stun you if you cross them. They will only stun you if you don't move away from them in time. They can do up to 15 damage now, in addition to stunning you."
+  - tweak: "Changed a lot of mining gear and prices. The resonator can now have up to 3 fields active at once, but the fields need to detonate before they crush rocks. Tweak the time before the fields detonate with a screwdriver and upgrade the amount of fields at once with sheets of diamond."
+  - tweak: "Overhauled straight mining tools. The sonic jackhammer is now the wall-crushing tool, the diamond drill simply mines really fast. Borgs can now get upgraded with the diamond mining tool with only a single sheet of diamond and an upgrade module, they don't need illegal tech modules."
+  - tweak: "Mining drills and the sonic jackhammer now draw power when they drill down mineral walls. They can be recharged using any type of weapon recharger or by replacing the cell using a screwdriver on them."
