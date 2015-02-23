@@ -1,14 +1,2 @@
 author: Duny
-changes: 
-  - wip: Following changes made to defficiency.
-  - rscadd: Added fire lockers (wall mounted) in various locations.
-  - tweak: Added a sink, moved the fabricators up a tile, added bodybags and a posibrain to robotics.
-  - rscadd: Added plant clippers to hydrophonics.
-  - bugfix: Brig lockers should now be properly linked to timers. Also added flashes.
-  - bugfix: Hopefully fixed every floating APC.
-  - rscdel: The MoMMI nest is no longer accessible to roboticists, as robotics access effectively no longer exist now. Now requires AI upload access.
-  - rscdel: Roboticists can no longer access Advanced Robotics (AI upload, core, foyer) for the same reason.
-  - bugfix: Added missing lights to the right side of the SME room.
-  - bugfix: Removed the fucking camera which teleports with the research pod, thought I had removed this one long ago.
-  - bugfix: Fixed visible 4way manifold above toxins mixing.
-  - tweak: Added a pump from coolant waste to coolant input to the basic SME setup.
+changes: []
