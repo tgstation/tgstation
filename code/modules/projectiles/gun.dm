@@ -90,7 +90,7 @@
 
 	if(heavy_weapon)
 		if(user.get_inactive_hand())
-			if(prob(40))
+			if(prob(15))
 				user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
 				user.drop_item()
 
@@ -161,9 +161,9 @@
 
 	if(heavy_weapon)
 		if(user.get_inactive_hand())
-			recoil = 3 //one-handed kick
+			recoil = 4 //one-handed kick
 		else
-			recoil = 1 //still kicks
+			recoil = initial(recoil)
 
 	for(var/i = 1 to burst_size)
 		if(!issilicon(user))
