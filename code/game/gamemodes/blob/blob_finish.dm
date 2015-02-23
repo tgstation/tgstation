@@ -1,9 +1,21 @@
 /datum/game_mode/blob/check_finished()
+	if(round_converted)
+		return 0
 	if(infected_crew.len > burst)//Some blobs have yet to burst
 		return 0
 	if(blobwincount <= blobs.len)//Blob took over
 		return 1
 	if(!blob_cores.len) // blob is dead
+		if(config.continuous_round_blob)
+			if(!convert_roundtype())
+				return ..()
+			else
+				if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+					SSshuttle.emergency.mode = SHUTTLE_DOCKED
+					SSshuttle.emergency.timer = world.time
+					priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+				round_converted = 1
+				return 0
 		return 1
 	if(station_was_nuked)//Nuke went off
 		return 1
