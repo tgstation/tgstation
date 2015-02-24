@@ -150,12 +150,20 @@
 	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)))
 		if(!narsimage)
 			narsimage = image('icons/obj/narsie.dmi',src.loc,"narsie",9,1)
-		narsimage.pixel_x = 32 * (N.x - src.x) + N.pixel_x
-		narsimage.pixel_y = 32 * (N.y - src.y) + N.pixel_y
+		var/new_x = 32 * (N.x - src.x) + N.pixel_x
+		var/new_y = 32 * (N.y - src.y) + N.pixel_y
+		var/thing = abs(new_x+new_y-narsimage.pixel_x-narsimage.pixel_y)
+		world << "[thing]"
+		if((thing == 0) || (thing == 32) || (thing == 64)) //lel cant believe I coded this
+			animate(narsimage, pixel_x = new_x, pixel_y = new_y, time = 8)
+		narsimage.pixel_x = new_x
+		narsimage.pixel_y = new_y
 		narsimage.loc = src.loc
 		narsimage.mouse_opacity = 0
 		if(!narglow)
 			narglow = image('icons/obj/narsie.dmi',narsimage.loc,"glow-narsie",LIGHTING_LAYER+2,1)
+		if((thing == 0) || (thing == 32) || (thing == 64)) //lel cant believe I coded this
+			animate(narglow, pixel_x = narsimage.pixel_x, pixel_y = narsimage.pixel_y, time = 8)
 		narglow.pixel_x = narsimage.pixel_x
 		narglow.pixel_y = narsimage.pixel_y
 		narglow.loc = narsimage.loc
@@ -166,6 +174,7 @@
 		if(narsimage)
 			del(narsimage)
 			del(narglow)
+
 
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)

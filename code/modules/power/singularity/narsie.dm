@@ -26,7 +26,6 @@ var/global/narsie_cometh = 0
 	luminosity = 1
 	l_color = "#3e0000"
 
-
 	current_size = 12
 	consume_range = 12 // How many tiles out do we eat.
 	var/announce=1
@@ -43,12 +42,14 @@ var/global/narsie_cometh = 0
 			mode_ticker.third_phase()
 
 	if (emergency_shuttle)
-		emergency_shuttle.incall(0.3)
+		emergency_shuttle.incall()
 		emergency_shuttle.can_recall = 0
 		emergency_shuttle.settimeleft(600)
 
 	SetUniversalState(/datum/universal_state/hell)
 	narsie_cometh = 1
+	sleep(10)
+	alpha = 0
 /*
 	updateicon()
 */
@@ -69,7 +70,7 @@ var/global/narsie_cometh = 0
 
 	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
-	for (var/atom/A in orange(consume_range, src))
+	for (var/turf/A in orange(consume_range, src))
 		consume(A)
 	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
@@ -89,16 +90,12 @@ var/global/narsie_cometh = 0
 		narsiewall(A)
 	else if(istype(A, /obj/structure/cult))
 		qdel(A)
-	else
-		consume(A)
 
 /obj/machinery/singularity/narsie/Bumped(atom/A)
 	if(isturf(A))
 		narsiewall(A)
 	else if(istype(A, /obj/structure/cult))
 		qdel(A)
-	else
-		consume(A)
 
 /obj/machinery/singularity/narsie/move(var/force_move = 0)
 	if(!move_self)
@@ -136,7 +133,7 @@ var/global/narsie_cometh = 0
 		for(var/mob/M in mob_list)
 			if(M.client)
 				M.see_narsie(src)
-	spawn(1)
+	spawn(10)
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
 		for(var/mob/M in mob_list)
@@ -181,9 +178,6 @@ var/global/narsie_cometh = 0
 			var/dist = get_dist(A, src)
 
 			for (var/atom/movable/AM in A.contents)
-				if (AM == src) // This is the snowflake.
-					continue
-
 				if (dist <= consume_range)
 					consume(AM)
 					continue
@@ -357,10 +351,10 @@ var/global/narsie_cometh = 0
 /obj/machinery/singularity/narsie/large/on_capture()
 	chained = 1
 	move_self = 0
-	icon_state ="narsie-chains"
+	icon_state ="narsie-chains"/*
 	for(var/mob/M in mob_list)//removing the client image of nar-sie while it is chained
 		if(M.client)
-			M.see_narsie(src)
+			M.see_narsie(src)*/
 
 /obj/machinery/singularity/narsie/large/on_release()
 	chained = 0
