@@ -249,7 +249,6 @@
 		if(job.title == "Assistant")
 			for(var/datum/job/J in SSjob.occupations)
 				if(J && J.current_positions < J.total_positions && J.title != job.title)
-					world << "[J.title]"
 					return 0
 		else
 			return 0
