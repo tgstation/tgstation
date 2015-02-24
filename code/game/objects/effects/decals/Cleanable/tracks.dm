@@ -68,7 +68,18 @@ var/global/list/image/fluidtrack_cache=list()
 	*/
 /obj/effect/decal/cleanable/blood/tracks/resetVariables()
 	stack = list()
-	..("stack")
+	setdirs=list(
+		"1"=0,
+		"2"=0,
+		"4"=0,
+		"8"=0,
+		"16"=0,
+		"32"=0,
+		"64"=0,
+		"128"=0
+	)
+
+	..("stack", setdirs)
 /obj/effect/decal/cleanable/blood/tracks/proc/AddTracks(var/list/DNA, var/comingdir, var/goingdir, var/bloodcolor="#A10808")
 	var/updated=0
 	// Shift our goingdir 4 spaces to the left so it's in the GOING bitblock.
