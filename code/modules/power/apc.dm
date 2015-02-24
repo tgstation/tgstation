@@ -869,7 +869,7 @@
 			malfai.malfhack = src
 			malfai.malfhacking = 1
 			sleep(600)
-			if(src)
+			if(src && malfai)
 				if (!src.aidisabled)
 					malfai.malfhack = null
 					malfai.malfhacking = 0

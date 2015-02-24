@@ -14,7 +14,7 @@
 
 /obj/item/clothing/shoes/syndigaloshes/New()
 	..()
-	for(var/Type in typesof(/obj/item/clothing/shoes) - /obj/item/clothing/shoes)
+	for(var/Type in typesof(/obj/item/clothing/shoes) - list(/obj/item/clothing/shoes, /obj/item/clothing/shoes/syndigaloshes))
 		clothing_choices += new Type
 	return
 

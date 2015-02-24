@@ -644,7 +644,10 @@ Auto Patrol: []"},
 				src.threatlevel = src.assess_perp(C)
 			else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
 				src.threatlevel = 4
-
+			else
+				continue
+		else
+			continue
 		/*
 		else if(istype(M, /mob/living/simple_animal/hostile))
 			if(M.stat == DEAD)
