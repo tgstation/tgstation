@@ -664,7 +664,7 @@ datum/reagent/life
 /datum/chemical_reaction/life/on_reaction(var/datum/reagents/holder, var/created_volume)
 	chemical_mob_spawn(holder, 1, "Life")
 
-proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reaction_name)
+proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reaction_name, var/mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
 		var/blocked = list(/mob/living/simple_animal/hostile,
 			/mob/living/simple_animal/hostile/pirate,
@@ -713,7 +713,7 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen = pick(critters)
 			var/mob/living/simple_animal/hostile/C = new chosen
-			C.faction |= "chemicalsummon"
+			C.faction |= mob_faction
 			C.loc = get_turf(holder.my_atom)
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)

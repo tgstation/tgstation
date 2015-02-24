@@ -89,6 +89,10 @@ var/datum/subsystem/lighting/SSlighting
 	else
 		changed_turfs.Cut()
 
+	if(config.starlight)
+		for(var/turf/space/S in world)
+			S.update_starlight()
+
 	..()
 
 //Used to strip valid information from an existing instance and transfer it to the replacement. i.e. when a crash occurs

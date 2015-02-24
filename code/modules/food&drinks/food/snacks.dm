@@ -139,13 +139,13 @@
 		return 0
 	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
-		if(S.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src].</span>"
-			return 0
-		if(contents.len >= 20)
-			user << "<span class='warning'>You can't add more ingredients to [src].</span>"
-			return 0
 		if(custom_food_type && ispath(custom_food_type))
+			if(S.w_class > 2)
+				user << "<span class='warning'>The ingredient is too big for [src].</span>"
+				return 0
+			if(contents.len >= 20)
+				user << "<span class='warning'>You can't add more ingredients to [src].</span>"
+				return 0
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0

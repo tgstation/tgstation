@@ -6,7 +6,7 @@
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
 	icon_state = "hburger"
-	list_reagents = list("nutriment" = 2, "vitamin" = 2)
+	list_reagents = list("vitamin" = 1)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/human
@@ -15,10 +15,12 @@
 	name = "-burger"
 	desc = "A bloody burger."
 	icon_state = "hburger"
+	list_reagents = list("vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/appendix
 	name = "appendix burger"
 	desc = "Tastes like appendicitis."
+	list_reagents = list("nutriment" = 6, "vitamin" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/fish
 	name = "fillet -o- carp sandwich"
@@ -30,6 +32,7 @@
 	name = "tofu burger"
 	desc = "What.. is that meat?"
 	icon_state = "tofuburger"
+	list_reagents = list("nutriment" = 2, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburger
 	name = "roburger"
@@ -48,27 +51,31 @@
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
+	list_reagents = list("nutriment" = 2, "vitamin" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/clown
 	name = "clown burger"
 	desc = "This tastes funny..."
 	icon_state = "clownburger"
+	list_reagents = list("nutriment" = 4, "vitamin" = 6, "banana" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/mime
 	name = "mime burger"
 	desc = "Its taste defies language."
 	icon_state = "mimeburger"
+	list_reagents = list("nutriment" = 4, "vitamin" = 6, "nothing" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/brain
 	name = "brainburger"
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
-	list_reagents = list("nutriment" = 1, "mannitol" = 6, "vitamin" = 5)
+	list_reagents = list("nutriment" = 6, "mannitol" = 6, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
 	desc = "Too Spooky!"
 	alpha = 125
+	list_reagents = list("nutriment" = 5, "vitamin" = 12)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/red
 	name = "red burger"
@@ -116,6 +123,7 @@
 	name = "spell burger"
 	desc = "This is absolutely Ei Nath."
 	icon_state = "spellburger"
+	list_reagents = list("nutriment" = 6, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/bigbite
 	name = "big bite burger"
@@ -141,3 +149,4 @@
 	icon_state = "superbiteburger"
 	list_reagents = list("vitamin" = 10)
 	w_class = 3
+	volume = 80

@@ -344,6 +344,8 @@ obj/mecha/proc/can_use(mob/user)
 	return ..()
 
 /obj/mecha/relaymove(mob/user,direction)
+	if(!direction)
+		return
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		user << "You climb out from [src]"

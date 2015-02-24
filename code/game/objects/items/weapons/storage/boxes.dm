@@ -138,17 +138,17 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
 
 /obj/item/weapon/storage/box/medipens/utility
-	name = "medipens kit"
-	desc = "A box with several utility medipens for the economical miner."
+	name = "stimpack value kit"
+	desc = "A box with several stimpack medipens for the economical miner."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/medipens/utility/New()
 	..()
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
 
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"

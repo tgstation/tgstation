@@ -35,6 +35,7 @@
 #define AALARM_MODE_PANIC 3 //constantly sucks all air
 #define AALARM_MODE_REPLACEMENT 4 //sucks off all air, then refill and swithes to scrubbing
 #define AALARM_MODE_OFF 5
+#define AALARM_MODE_FLOOD 6 //Emagged mode; turns off scrubbers and pressure checks on vents
 
 #define AALARM_SCREEN_MAIN    1
 #define AALARM_SCREEN_VENT    2
@@ -252,7 +253,7 @@
 	if(!usr.has_unlimited_silicon_privilege && locked)
 		dat += "[return_status()]"
 	else
-		dat += "[return_status()]<hr>[return_controls()]"
+		dat += "[return_safety()][return_status()]<hr>[return_controls()]"
 	return dat
 
 /obj/machinery/alarm/proc/return_status()
@@ -336,6 +337,15 @@ Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]
 		output += {"<span class='dl0'>Optimal</span>"}
 
 	return output
+
+/obj/machinery/alarm/proc/return_safety()
+	var/output = ""
+	if(src.emagged)
+		output += "<font color='red'>NOTICE: Safety measures nonfunctional. Device may exhibit abnormal behavior.</font><br><br>"
+	else
+		output += "Safety measures functioning properly.<br><br>"
+	return output
+
 
 /obj/machinery/alarm/proc/return_controls()
 	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
@@ -443,13 +453,24 @@ Nitrous Oxide
 			output += {"
 <a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'><< Main Menu</a><hr><br />
 <b>Air machinery mode for the area:</b><ul>"}
-			var/list/modes = list(
-				AALARM_MODE_SCRUBBING   = "Filtering",
-				AALARM_MODE_VENTING     = "Draught",
-				AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",
-				AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
-				AALARM_MODE_OFF         = "Off",
-			)
+			var/list/modes = list()
+			if(src.emagged)
+				modes = list(
+					AALARM_MODE_SCRUBBING   = "Filtering",
+					AALARM_MODE_VENTING     = "Draught",
+					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",
+					AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
+					AALARM_MODE_OFF         = "Off",
+					AALARM_MODE_FLOOD		= "<font color='red'>FLOOD</font>", //Below everything else because it shouldn't be there normally
+				)
+			else
+				modes = list(
+					AALARM_MODE_SCRUBBING   = "Filtering",
+					AALARM_MODE_VENTING     = "Draught",
+					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",
+					AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
+					AALARM_MODE_OFF         = "Off",
+				)
 			for (var/m=1,m<=modes.len,m++)
 				if (mode==m)
 					output += {"<li><A href='?src=\ref[src];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"}
@@ -659,6 +680,17 @@ table tr:first-child th:first-child { border: none;}
 				send_signal(device_id, list(
 					"power"= 0
 				))
+		if(AALARM_MODE_FLOOD)
+			for(var/device_id in alarm_area.air_scrub_names)
+				send_signal(device_id, list(
+					"panic_siphon"= 0,
+					"power"=0
+				))
+			for(var/device_id in alarm_area.air_vent_names)
+				send_signal(device_id, list(
+					"power"= 1,
+					"checks"= 0,
+				))
 
 /obj/machinery/alarm/update_icon()
 	if(panel_open)
@@ -860,6 +892,15 @@ table tr:first-child th:first-child { border: none;}
 		if(loc)
 			update_icon()
 
+
+/obj/machinery/alarm/emag_act(mob/user as mob)
+	if(!emagged)
+		src.emagged = 1
+		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='warning'>You emag the [src], disabling its safeties.</span>")
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+		return
+
+
 /*
 AIR ALARM CIRCUIT
 Just a object used in constructing air alarms
@@ -981,10 +1022,19 @@ FIRE ALARM
 
 
 
+/obj/machinery/firealarm/emag_act(mob/user as mob)
+	if(!emagged)
+		src.emagged = 1
+		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='warning'>You emag the [src], disabling its thermal sensors.</span>")
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+		return
+
+
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
 		if(temperature > T0C+200)
-			src.alarm()			// added check of detector status here
+			if(!emagged) //Doesn't give off alarm when emagged
+				src.alarm()			// added check of detector status here
 	return
 
 /obj/machinery/firealarm/attack_ai(mob/user as mob)
@@ -1106,12 +1156,16 @@ FIRE ALARM
 
 	user.set_machine(src)
 	var/area/A = src.loc
+	var/safety_warning
 	var/d1
 	var/d2
 	var/dat = ""
 	if (istype(user, /mob/living/carbon/human) || user.has_unlimited_silicon_privilege)
 		A = A.loc
-
+		if (src.emagged)
+			safety_warning = text("<font color='red'>NOTICE: Thermal sensors nonfunctional. Device will not report or recognize high temperatures.</font>")
+		else
+			safety_warning = text("Safety measures functioning properly.")
 		if (A.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>Reset - Lockdown</A>", src)
 		else
@@ -1122,7 +1176,7 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = round(src.time) % 60
 		var/minute = (round(src.time) - second) / 60
-		dat = "[d1]<br /><b>The current alert level is: [get_security_level()]</b><br /><br />Timer System: [d2]<br />Time Left: <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
+		dat = "[safety_warning]<br /><br />[d1]<br /><b>The current alert level is: [get_security_level()]</b><br /><br />Timer System: [d2]<br />Time Left: <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
 		//user << browse(dat, "window=firealarm")
 		//onclose(user, "firealarm")
 	else

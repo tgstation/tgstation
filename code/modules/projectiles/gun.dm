@@ -30,6 +30,7 @@
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1
 	var/fire_delay = 0
+	var/heavy_weapon = 0
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -87,6 +88,11 @@
 		else
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
+	if(heavy_weapon)
+		if(user.get_inactive_hand())
+			if(prob(15))
+				user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
+				user.drop_item()
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -152,6 +158,12 @@
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	add_fingerprint(user)
+
+	if(heavy_weapon)
+		if(user.get_inactive_hand())
+			recoil = 4 //one-handed kick
+		else
+			recoil = initial(recoil)
 
 	for(var/i = 1 to burst_size)
 		if(!issilicon(user))

@@ -22,7 +22,7 @@
 	F << "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
 
 //ADMINVERBS
-/client/proc/investigate_show( subject in list("hrefs","notes","ntsl","singulo","wires","telesci", "gravity", "records", "cargo", "supermatter", "atmos") )
+/client/proc/investigate_show( subject in list("hrefs","notes","ntsl","singulo","wires","telesci", "gravity", "records", "cargo", "supermatter", "atmos", "experimentor") )
 	set name = "Investigate"
 	set category = "Admin"
 	if(!holder)	return

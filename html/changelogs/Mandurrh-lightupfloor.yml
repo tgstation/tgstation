@@ -1,0 +1,10 @@
+
+author: Mandurrrh
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+
+changes: 
+  - rscadd: "Added color tiles to the light up floor tiles."
+  - rscadd: "Added metal, glass, and cable to bar back room at round start for bartender to make colored light dance floors."
