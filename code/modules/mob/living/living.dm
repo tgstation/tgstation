@@ -890,7 +890,7 @@ default behaviour is:
 
 /mob/living/Bump(atom/movable/AM as mob|obj, yes)
 	spawn(0)
-		if ((!( yes ) || now_pushing))
+		if ((!( yes ) || now_pushing) || !loc)
 			return
 		now_pushing = 1
 		if (istype(AM, /mob/living))
