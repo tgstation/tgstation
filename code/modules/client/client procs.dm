@@ -107,7 +107,7 @@
 	if(holder)
 		admins += src
 		holder.owner = src
-	
+
 	if(connection != "seeker")					//Invalid connection type.
 		if(holder)
 			src << "<span class='warning'> You connected to the server with a web client please notify a coder about any issues.</span>"
@@ -211,7 +211,6 @@
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
 		related_accounts_ip += "[query_ip.item[1]], "
-		break
 
 	var/sql_computerid = sanitizeSQL(computer_id)
 
@@ -220,7 +219,6 @@
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
 		related_accounts_cid += "[query_cid.item[1]], "
-		break
 
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
