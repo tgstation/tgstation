@@ -110,16 +110,17 @@
 
 	var/list/living_crew = list()
 
-	for(var/mob in player_list)
-		if(mob in living_mob_list)
+	for(var/mob/mob in player_list)
+		if(mob in living_mob_list && mob.ckey in joined_player_list)
 			living_crew += mob
-	if(living_crew.len / player_list.len <= 0.7) //If a lot of the player base died, we start fresh
+	if(living_crew.len / joined_player_list.len <= 0.7) //If a lot of the player base died, we start fresh
 		return 0
 
 	var/list/antag_canadates = list()
 
 	for(var/mob/living/carbon/human/H in living_crew)
-		antag_canadates += H
+		if(H.client && H.client.prefs.allow_midround_antag)
+			antag_canadates += H
 
 	if(!antag_canadates)	return 1
 
