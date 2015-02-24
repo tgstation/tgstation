@@ -88,6 +88,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 			var/dist = cheap_pythag(T.x - x0,T.y - y0)
 			var/flame_dist = 0
+			var/throw_dist = dist
 
 			if(dist < flame_range)
 				flame_dist = 1
@@ -97,7 +98,6 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			else if(dist < light_impact_range)	dist = 3
 			else 								dist = 0
 
-
 			//------- TURF FIRES -------
 
 			if(T)
@@ -105,6 +105,15 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 					new/obj/effect/hotspot(T) //Mostly for ambience!
 				if(dist > 0)
 					T.ex_act(dist)
+
+			//--- THROW ITEMS AROUND ---
+
+			var/throw_dir = get_dir(epicenter,T)
+			for(var/obj/item/I in T)
+				spawn(0) //Simultaneously not one at a time
+					var/throw_range = rand(throw_dist, max_range)
+					var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
+					I.throw_at(throw_at, throw_range,1)
 
 		var/took = (world.timeofday-start)/10
 		//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare

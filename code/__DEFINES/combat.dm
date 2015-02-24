@@ -48,3 +48,8 @@
 #define HOSTILE_STANCE_ATTACKING	4
 //#define HOSTILE_STANCE_TIRED		5 //Was also only used by bears
 
+
+//Embedded objects
+#define EMBEDDED_PAIN_CHANCE 		15	//Chance for embedded objects to cause pain (damage user)
+#define EMBEDDED_ITEM_FALLOUT 		5	//Chance for embedded object to fall out (causing pain but removing the object)
+#define EMBED_CHANCE				45	//Chance for an object to embed into somebody when thrown (if it's sharp)

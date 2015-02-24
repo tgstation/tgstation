@@ -1343,30 +1343,34 @@ var/global/list/common_tools = list(
 
 //Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
 /proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	if(istype(W, /obj/item/weapon/circular_saw))
+	var/list/sharp_things_1 = list(\
+	/obj/item/weapon/circular_saw,\
+	/obj/item/weapon/shovel,\
+	/obj/item/weapon/shard,\
+	/obj/item/weapon/broken_bottle,\
+	/obj/item/weapon/twohanded/fireaxe,\
+	/obj/item/weapon/hatchet,\
+	/obj/item/weapon/throwing_star,\
+	/obj/item/weapon/twohanded/spear)
+
+	//Because is_sharp is used for food or something.
+	var/list/sharp_things_2 = list(\
+	/obj/item/weapon/kitchenknife,\
+	/obj/item/weapon/scalpel,\
+	/obj/item/weapon/kitchen/utensil/knife)
+
+	if(is_type_in_list(W,sharp_things_1))
 		return 1
+
+	if(is_type_in_list(W,sharp_things_2))
+		return 2 //cutting food
+
 	if(istype(W, /obj/item/weapon/melee/energy))
 		var/obj/item/weapon/melee/energy/E = W
 		if(E.active)
 			return 1
 		else
 			return 0
-	if(istype(W, /obj/item/weapon/shovel))
-		return 1
-	if(istype(W, /obj/item/weapon/kitchenknife))
-		return 2
-	if(istype(W, /obj/item/weapon/scalpel))
-		return 2
-	if(istype(W, /obj/item/weapon/kitchen/utensil/knife))
-		return 2
-	if(istype(W, /obj/item/weapon/shard))
-		return 1
-	if(istype(W, /obj/item/weapon/broken_bottle))
-		return 1
-	if(istype(W, /obj/item/weapon/twohanded/fireaxe))
-		return 1
-	if(istype(W, /obj/item/weapon/hatchet))
-		return 1
 
 /proc/is_pointed(obj/item/W as obj)
 	if(istype(W, /obj/item/weapon/pen))
@@ -1379,6 +1383,21 @@ var/global/list/common_tools = list(
 		return 1
 	else
 		return 0
+
+//For objects that should embed, but make no sense being is_sharp or is_pointed()
+//e.g: rods
+/proc/can_embed(obj/item/W)
+	if(is_sharp(W))
+		return 1
+	if(is_pointed(W))
+		return 1
+
+	var/list/embed_items = list(\
+	/obj/item/stack/rods,\
+	)
+
+	if(is_type_in_list(W, embed_items))
+		return 1
 
 
 /*
@@ -1465,3 +1484,9 @@ var/list/WALLITEMS = list(
 		chance = max(chance - (initial_chance / steps), 0)
 		steps--
 
+/proc/living_player_count()
+	var/living_player_count = 0
+	for(var/mob in player_list)
+		if(mob in living_mob_list)
+			living_player_count += 1
+	return living_player_count

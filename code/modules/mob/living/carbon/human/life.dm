@@ -51,6 +51,9 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
+
+		//Stuff jammed in your limbs hurts
+		handle_embedded_objects()
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -604,5 +607,19 @@
 /mob/living/carbon/human/handle_changeling()
 	if(mind && mind.changeling)
 		mind.changeling.regenerate()
+
+
+/mob/living/carbon/human/proc/handle_embedded_objects()
+	for(var/obj/item/organ/limb/L in organs)
+		for(var/obj/item/I in L.embedded_objects)
+			if(prob(I.embedded_pain_chance))
+				L.take_damage(I.w_class*2)
+				src << "<span class='userdanger'>\the [I] embedded in your [L.getDisplayName()] hurts!</span>"
+
+			if(prob(I.embedded_fall_chance))
+				L.take_damage(I.w_class*5)
+				L.embedded_objects -= I
+				I.loc = get_turf(src)
+				visible_message("<span class='danger'>\the [I] falls out of [name]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I] falls out of your [L.getDisplayName()]!</span>")
 
 #undef HUMAN_MAX_OXYLOSS
