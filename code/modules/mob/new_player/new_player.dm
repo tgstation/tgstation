@@ -126,12 +126,12 @@
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
 			return
-		var/relevent_cap
+		var/relevant_cap
 		if(config.hard_popcap && config.extreme_popcap)
-			relevent_cap = min(config.hard_popcap, config.extreme_popcap)
+			relevant_cap = min(config.hard_popcap, config.extreme_popcap)
 		else
-			relevent_cap = max(config.hard_popcap, config.extreme_popcap)
-		if(relevent_cap && living_player_count() >= relevent_cap && !(ckey(key) in admin_datums))
+			relevant_cap = max(config.hard_popcap, config.extreme_popcap)
+		if(relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums))
 			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
 			return
 		LateChoices()
