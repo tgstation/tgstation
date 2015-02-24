@@ -236,25 +236,9 @@ var/next_external_rsc = 0
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
+	//Send nanoui files to client
+	SSnano.send_resources(src)
 	getFiles(
-		'nano/js/libraries.min.js',
-		'nano/js/nano_update.js',
-		'nano/js/nano_config.js',
-		'nano/js/nano_base_helpers.js',
-		'nano/css/shared.css',
-		'nano/css/icons.css',
-		'nano/templates/chem_dispenser.tmpl',
-		'nano/templates/chem_heater.tmpl',
-		'nano/templates/smes.tmpl',
-		'nano/templates/apc.tmpl',
-		'nano/templates/cryo.tmpl',
-		'nano/templates/solar_control.tmpl',
-		'nano/images/uiBackground.png',
-		'nano/images/uiIcons16.png',
-		'nano/images/uiIcons24.png',
-		'nano/images/uiLinkPendingIcon.gif',
-		'nano/images/uiNoticeBackground.jpg',
-		'nano/images/uiTitleFluff.png',
 		'html/search.js',
 		'html/panels.css',
 		'html/browser/common.css',
