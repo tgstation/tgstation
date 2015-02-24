@@ -130,3 +130,24 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
 		qdel(I)
 		qdel(src)
+
+
+/obj/item/weapon/throwing_star
+	name = "throwing star"
+	desc = "An ancient weapon still used to this day due to it's ease of lodging itself into victim's body parts"
+	icon_state = "throwingstar"
+	item_state = "eshield0"
+	force = 2
+	throwforce = 20
+	w_class = 2
+	embed_chance = 100
+	embedded_fall_chance = 0 //Hahaha!
+
+/obj/item/weapon/storage/box/throwing_stars/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)

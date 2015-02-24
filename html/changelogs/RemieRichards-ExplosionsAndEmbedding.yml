@@ -1,0 +1,12 @@
+  
+author: RemieRichards
+
+delete-after: True
+
+changes: 
+  - rscadd: "Explosions will now blow (throw) items away from the epicenter"
+  - rscadd: "Sharp items can now embedd themselves in a human's limbs"
+  - rscadd: "Embedded items have a chance to do some damage (based on w_class) each life() call"
+  - rscadd: "Embedded items have a chance to fall out doing some more damage, but removing the object"
+  - rscadd: "Adds a surgery to remove Embdedded objects"
+  - rscadd: "Adds throwing stars as an uplink item (100% chance to embedd)"

@@ -603,7 +603,7 @@ datum/chemical_reaction/pestkiller
 		O.show_message(text("<span class='danger'>The slime extract begins to vibrate violently !</span>"), 1)
 	spawn(50)
 
-		chemical_mob_spawn(holder, 1, "Gold Slime")
+		chemical_mob_spawn(holder, 5, "Gold Slime")
 
 /datum/chemical_reaction/slimecritlesser
 	name = "Slime Crit Lesser"
@@ -619,7 +619,7 @@ datum/chemical_reaction/pestkiller
 		O.show_message(text("<span class='danger'>The slime extract begins to vibrate violently !</span>"), 1)
 	spawn(50)
 
-		chemical_mob_spawn(holder, 1, "Lesser Gold Slime")
+		chemical_mob_spawn(holder, 1, "Lesser Gold Slime", "neutral")
 
 //Silver
 /datum/chemical_reaction/slimebork
