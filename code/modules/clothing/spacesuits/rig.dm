@@ -353,6 +353,7 @@
 	icon_state = "rig0-blackknight"
 	item_state = "rig0-blackknight"
 	armor = list(melee = 70, bullet = 65, laser = 50,energy = 25, bomb = 60, bio = 100, rad = 60)
+	_color="blackknight"
 
 /obj/item/clothing/suit/space/rig/knight/black
 	name = "Black Knight's armour"
@@ -360,3 +361,18 @@
 	icon_state = "rig-blackknight"
 	item_state = "rig-blackknight"
 	armor = list(melee = 70, bullet = 65, laser = 50,energy = 25, bomb = 60, bio = 100, rad = 60)
+
+/obj/item/clothing/head/helmet/space/rig/knight/solaire
+	name = "Solar helm"
+	desc = "A simple helmet. 'Made in Astora' is inscribed on the back."
+	icon_state = "rig0-solaire"
+	item_state = "rig0-solaire"
+	armor = list(melee = 60, bullet = 65, laser = 90,energy = 30, bomb = 60, bio = 100, rad = 100)
+	_color="solaire"
+
+/obj/item/clothing/suit/space/rig/knight/solaire
+	name = "Black Knight's armour"
+	desc = "A solar powered hardsuit with a fancy insignia on the chest. Perfect for stargazers and adventurers alike."
+	icon_state = "rig-solaire"
+	item_state = "rig-solaire"
+	armor = list(melee = 60, bullet = 65, laser = 90,energy = 30, bomb = 60, bio = 100, rad = 100)
