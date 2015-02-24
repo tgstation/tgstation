@@ -1,8 +1,0 @@
-author: Deantwo
-
-delete-after: True
-
-changes: 
-  - bugfix: "Removes duplicate fluorine from Chemical Dispenser."
-  - bugfix: "Added GoonChems to the Portable Chem Dispenser."
-  - bugfix: "Added cancel buttons to the ChemMaster and CondiMaster when making bottles, pills, etc."

@@ -391,6 +391,9 @@
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
+
+		if(!P.powered)
+			return
 /*
 	if (istype(W, /obj/item/weapon/pickaxe/radius))
 		var/turf/T = user.loc
@@ -406,6 +409,20 @@
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed))
+			if(istype(P, /obj/item/weapon/pickaxe/drill))
+				var/obj/item/weapon/pickaxe/drill/D = P
+				if(isrobot(user))
+					var/mob/living/silicon/robot/R = user
+					if(R && R.cell)
+						if(!R.cell.use(D.drillcost))
+							D.update_charge()
+							return
+				else
+					if(!D.bcell.use(D.drillcost))
+						user << "<span class='warning'>Your drill ran out of power.</span>"
+						D.update_charge()
+						return
+				D.update_charge()
 			user << "<span class='notice'>You finish cutting into the rock.</span>"
 			gets_drilled(user)
 	else
@@ -536,45 +553,30 @@
 		user << "<span class='danger'>You start digging.</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
-		sleep(40)
+		sleep(20)
 		if ((user.loc == T && user.get_active_hand() == W))
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 			return
 
-	if ((istype(W,/obj/item/weapon/pickaxe/drill)))
+	if ((istype(W, /obj/item/weapon/pickaxe)))
+		var/obj/item/weapon/pickaxe/P = W
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
 
 		if (dug)
-			user << "<span class='warning'>This area has already been dug.</span>"
+			user << "<span class='danger'>This area has already been dug.</span>"
 			return
 
 		user << "<span class='danger'>You start digging.</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
-		sleep(30)
+		sleep(P.digspeed)
 		if ((user.loc == T && user.get_active_hand() == W))
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
-
-	if ((istype(W,/obj/item/weapon/pickaxe/drill/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/jackhammer/borgdrill)))
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
 			return
-
-		if (dug)
-			user << "<span class='warning'>This area has already been dug.</span>"
-			return
-
-		user << "<span class='danger'>You start digging.</span>"
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
-
-		sleep(0)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dug a hole.</span>"
-			gets_dug()
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W

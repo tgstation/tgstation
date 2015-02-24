@@ -58,7 +58,7 @@ Bonus
 
 /datum/symptom/heal/metabolism
 
-	name = "Anti-Bodies Metabolism "
+	name = "Anti-Bodies Metabolism"
 	stealth = -1
 	resistance = -1
 	stage_speed = -1

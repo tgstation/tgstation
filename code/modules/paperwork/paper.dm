@@ -287,11 +287,6 @@
 		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)
 			return
 
-		if(istype(P, /obj/item/weapon/stamp/clown))
-			if(!clown)
-				user << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
-				return
-
 		stamps += "<img src=large_[P.icon_state].png>"
 
 		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')

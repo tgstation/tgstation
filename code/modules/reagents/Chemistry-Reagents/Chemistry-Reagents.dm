@@ -22,6 +22,7 @@ datum/reagent
 	var/volume = 0
 	//var/list/viruses = list()
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
+	var/can_synth = 1
 	var/metabolization_rate = REAGENTS_METABOLISM
 	var/overrides_metab = 0
 	var/overdose_threshold = 0
@@ -29,7 +30,7 @@ datum/reagent
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
 
-datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
+datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
 		return 0
 	var/datum/reagent/self = src
@@ -165,7 +166,6 @@ datum/reagent/blood/on_merge(var/list/data)
 						preserve += D
 				src.data["viruses"] = preserve
 	return 1
-
 
 datum/reagent/blood/reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
 	if(!istype(T)) return

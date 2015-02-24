@@ -57,7 +57,7 @@ datum/reagent/toxin/plasma
 	name = "Plasma"
 	id = "plasma"
 	description = "Plasma in its liquid form."
-	color = "#DB2D08" // rgb: 219, 45, 8
+	color = "#500064" // rgb: 80, 0, 100
 	toxpwr = 3
 
 datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)

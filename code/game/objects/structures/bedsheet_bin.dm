@@ -32,6 +32,12 @@ LINEN BINS
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/weapon/shard))
+		new /obj/item/stack/medical/gauze/improvised(src.loc)
+		qdel(src)
+		user << "<span class='notice'>You tear [src] up.</span>"
+	..()
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"

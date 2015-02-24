@@ -8,61 +8,6 @@
 	var/temperature_alert = 0
 
 
-/mob/living/carbon/alien/humanoid/Life()
-	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-
-	if (notransform)
-		return
-
-	..()
-
-	var/datum/gas_mixture/environment = loc.return_air()
-
-	if (stat != DEAD) //still breathing
-
-		//First, resolve location and get a breath
-
-		if(SSmob.times_fired%4==2)
-			//Only try to take a breath every 4 seconds, unless suffocating
-			spawn(0) breathe()
-
-		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
-
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
-
-	//Handle temperature/pressure differences between body and environment
-	handle_environment(environment)
-
-	//stuff in the stomach
-	handle_stomach()
-
-	//Handle being on fire
-	handle_fire()
-
-	//Status updates, death etc.
-	handle_regular_status_updates()
-	update_canmove()
-
-	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
-
-	if(client)
-		handle_regular_hud_updates()
-
 /mob/living/carbon/alien/humanoid/proc/adjust_body_temperature(current, loc_temp, boost)
 	var/temperature = current
 	var/difference = abs(current-loc_temp)	//get difference
@@ -80,7 +25,7 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/carbon/alien/humanoid/proc/handle_regular_status_updates()
+/mob/living/carbon/alien/humanoid/handle_regular_status_updates()
 	updatehealth()
 
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -160,7 +105,7 @@
 	return 1
 
 
-/mob/living/carbon/alien/humanoid/proc/handle_regular_hud_updates()
+/mob/living/carbon/alien/humanoid/handle_regular_hud_updates()
 
 	if (stat == 2)
 		sight |= SEE_TURFS

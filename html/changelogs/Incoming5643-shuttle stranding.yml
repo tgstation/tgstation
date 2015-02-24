@@ -1,6 +1,0 @@
-author: Incoming5643
-
-delete-after: True
-
-changes: 
-  - tweak: "Shuttle will now always arrive, but won't launch in rounds where it would've been previously auto-recalled."

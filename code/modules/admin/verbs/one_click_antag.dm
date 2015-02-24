@@ -465,14 +465,22 @@ client/proc/one_click_antag()
 
 			//Spawn and equip the officer
 			var/mob/living/carbon/human/ERTOperative = new(spawnloc)
+			var/list/lastname = last_names
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
 			ready_dna(ERTOperative)
-			if(numagents == 1) //If Squad Leader
-				ERTOperative.real_name = "Commander [pick(ERTOperative.real_name)]"
-				equip_emergencyresponsesquad(ERTOperative, 1)
-			else
-				ERTOperative.real_name = "Officer [pick(ERTOperative.real_name)]"
-				equip_emergencyresponsesquad(ERTOperative)
+			switch(numagents)
+				if(1)
+					ERTOperative.real_name = "Commander [pick(lastname)]"
+					equip_emergencyresponsesquad(ERTOperative, "commander")
+				if(2 || 5)
+					ERTOperative.real_name = "Security Officer [pick(lastname)]"
+					equip_emergencyresponsesquad(ERTOperative, "sec")
+				if(3 || 6)
+					ERTOperative.real_name = "Medical Officer [pick(lastname)]"
+					equip_emergencyresponsesquad(ERTOperative, "med")
+				if(4 || 7)
+					ERTOperative.real_name = "Engineer [pick(lastname)]"
+					equip_emergencyresponsesquad(ERTOperative, "eng")
 			ERTOperative.key = chosen_candidate.key
 			ERTOperative.mind.assigned_role = "ERT"
 
@@ -486,7 +494,7 @@ client/proc/one_click_antag()
 			ERTOperative.mind.objectives += missionobj
 
 			//Greet the commando
-			ERTOperative << "<B><font size=3 color=red>You are the [numagents==1?"Emergency Response Team Commander":"Emergency Response Officer"].</font></B>"
+			ERTOperative << "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>"
 			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Avoid civilian casualites when possible. Board the shuttle when your team is ready."
@@ -498,7 +506,7 @@ client/proc/one_click_antag()
 			//Logging and cleanup
 			if(numagents == 1)
 				message_admins("The emergency response team has spawned with the mission: [mission].")
-			log_game("[key_name(ERTOperative)] has been selected as a Emergency Response Officer")
+			log_game("[key_name(ERTOperative)] has been selected as an Emergency Response Officer")
 			spawnpoints -= spawnloc
 			numagents--
 

@@ -50,7 +50,7 @@
 	ignore_flags = 1 // So they can heal their comrades.
 	list_reagents = list("epinephrine" = 15, "salglu_solution" = 15)
 
-obj/item/weapon/reagent_containers/hypospray/combat/nanites
+/obj/item/weapon/reagent_containers/hypospray/combat/nanites
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with expensive medical nanites for rapid healing."
 	volume = 100
 	list_reagents = list("nanites" = 80, "synaptizine" = 20)
@@ -91,17 +91,13 @@ obj/item/weapon/reagent_containers/hypospray/combat/nanites
 	else
 		usr << "<span class='notice'>It is spent.</span>"
 
-/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine //basilisks
-	name = "leporazine medipen"
-	desc = "A rapid way to regulate your body's temperature in the event of a hardsuit malfunction at the cost of some shortness of breath."
-	icon_state = "lepopen"
-	list_reagents = list("leporazine" = 9, "lexorin" = 1)
-
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack //goliath kiting
-	name = "ephedrine medipen"
-	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor at the cost of some shortness of breath."
+	name = "stimpack medipen"
+	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor as well as a ."
 	icon_state = "stimpen"
-	list_reagents = list("ephedrine" = 9, "lexorin" = 1)
+	volume = 20
+	amount_per_transfer_from_this = 20
+	list_reagents = list("ephedrine" = 10, "coffee" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/morphine
 	name = "morphine medipen"

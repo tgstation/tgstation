@@ -1,0 +1,6 @@
+author: Paprka
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added hotkeys for OOC and custom emotes. Press O and M when in hotkey mode. Remember not to ick in ock!"

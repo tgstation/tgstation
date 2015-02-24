@@ -107,10 +107,14 @@ datum/reagents/proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var
 	var/part = amount / src.total_volume
 	var/trans_data = null
 	for (var/datum/reagent/current_reagent in src.reagent_list)
+		if (current_reagent.id == "blood" && ishuman(target))
+			var/mob/living/carbon/human/H = target
+			H.inject_blood(my_atom, amount)
+			continue
 		var/current_reagent_transfer = current_reagent.volume * part
 		if(preserve_data)
-			trans_data = current_reagent.data
-		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+			trans_data = copy_data(current_reagent)
+		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, src.chem_temp)
 		src.remove_reagent(current_reagent.id, current_reagent_transfer)
 
 	src.update_total()
@@ -155,7 +159,7 @@ datum/reagents/proc/trans_id_to(var/obj/target, var/reagent, var/amount=1, var/p
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
-			R.add_reagent(current_reagent.id, amount, trans_data)
+			R.add_reagent(current_reagent.id, amount, trans_data, src.chem_temp)
 			src.remove_reagent(current_reagent.id, amount, 1)
 			break
 
@@ -314,11 +318,12 @@ datum/reagents/proc/handle_reactions()
 					if(C.result)
 						feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
-						add_reagent(C.result, C.result_amount*multiplier)
+						add_reagent(C.result, C.result_amount*multiplier, null, chem_temp)
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 
 					if(!istype(my_atom, /mob)) // No bubbling mobs
+						playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 						for(var/mob/M in seen)
 							M << "<span class='notice'>\icon[my_atom] [C.mix_message]</span>"
 
@@ -330,8 +335,6 @@ datum/reagents/proc/handle_reactions()
 								M << "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>"
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
-
-					playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 
 					C.on_reaction(src, created_volume)
 					reaction_occured = 1
@@ -384,31 +387,22 @@ datum/reagents/proc/clear_reagents()
 		del_reagent(R.id)
 	return 0
 
-datum/reagents/proc/reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0)
+datum/reagents/proc/reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0,var/show_message=1)
+	for(var/datum/reagent/R in reagent_list)
+		if(ismob(A))
+			R.reaction_mob(A, method, R.volume+volume_modifier, show_message)
+		if(isturf(A))
+			R.reaction_turf(A, R.volume+volume_modifier, show_message)
+		if(isobj(A))
+			R.reaction_obj(A, R.volume+volume_modifier, show_message)
 
-	switch(method)
-		if(TOUCH)
-			for(var/datum/reagent/R in reagent_list)
-				if(ismob(A))
-					R.reaction_mob(A, TOUCH, R.volume+volume_modifier)
-				if(isturf(A))
-					R.reaction_turf(A, R.volume+volume_modifier)
-				if(isobj(A))
-					R.reaction_obj(A, R.volume+volume_modifier)
-		if(INGEST)
-			for(var/datum/reagent/R in reagent_list)
-				if(ismob(A))
-					R.reaction_mob(A, INGEST, R.volume+volume_modifier)
-				if(isturf(A))
-					R.reaction_turf(A, R.volume+volume_modifier)
-				if(isobj(A))
-					R.reaction_obj(A, R.volume+volume_modifier)
 	return
 
-datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null)
+datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null, var/reagtemp = 300)
 	if(!isnum(amount)) return 1
 	update_total()
 	if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
+	chem_temp = round(((amount * reagtemp) + (total_volume * chem_temp)) / (total_volume + amount)) //equalize with new chems
 
 	for(var/A in reagent_list)
 
@@ -523,6 +517,38 @@ datum/reagents/proc/delete()
 		R.holder = null
 	if(my_atom)
 		my_atom.reagents = null
+
+			//two helper functions to preserve data across reactions (needed for xenoarch)
+datum/reagents/proc/get_data(var/reagent_id)
+	for(var/datum/reagent/D in reagent_list)
+		if(D.id == reagent_id)
+			//world << "proffering a data-carrying reagent ([reagent_id])"
+			return D.data
+
+datum/reagents/proc/set_data(var/reagent_id, var/new_data)
+	for(var/datum/reagent/D in reagent_list)
+		if(D.id == reagent_id)
+			//world << "reagent data set ([reagent_id])"
+			D.data = new_data
+
+datum/reagents/proc/copy_data(var/datum/reagent/current_reagent)
+	if (!current_reagent || !current_reagent.data) return null
+	if (!istype(current_reagent.data, /list)) return current_reagent.data
+
+	var/list/trans_data = current_reagent.data.Copy()
+
+	// We do this so that introducing a virus to a blood sample
+	// doesn't automagically infect all other blood samples from
+	// the same donor.
+	//
+	// Technically we should probably copy all data lists, but
+	// that could possibly eat up a lot of memory needlessly
+	// if most data lists are read-only.
+	if (trans_data["viruses"])
+		var/list/v = trans_data["viruses"]
+		trans_data["viruses"] = v.Copy()
+
+	return trans_data
 
 
 ///////////////////////////////////////////////////////////////////////////////////

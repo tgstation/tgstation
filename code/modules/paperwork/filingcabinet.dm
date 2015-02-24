@@ -35,6 +35,11 @@
 		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
 			I.loc = src
 
+/obj/structure/filingcabinet/ex_act(severity, target)
+	for(var/obj/item/I in src)
+		I.loc = src.loc
+	qdel(src)
+	..()
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user)
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/documents))

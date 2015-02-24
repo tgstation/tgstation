@@ -510,7 +510,7 @@
 	//Supply (Brown)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='663300'><th colspan='[length(supply_positions)]'><a href='?src=\ref[src];jobban3=supplydept;jobban4=\ref[M]'>Supply Positions</a></th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='DDAA55'><th colspan='[length(supply_positions)]'><a href='?src=\ref[src];jobban3=supplydept;jobban4=\ref[M]'>Supply Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in supply_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
@@ -1580,7 +1580,7 @@
 			else if(!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 				removed_paths += dirty_path
 				continue
-			else if(ispath(path, /obj/item/weapon/gun/energy/pulse_rifle))
+			else if(ispath(path, /obj/item/weapon/gun/energy/pulse))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue

@@ -10,7 +10,7 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/xenomeat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/xeno
 	skin_type = /obj/item/stack/sheet/animalhide/xeno
 	meat_amount = 3
 	maxHealth = 100

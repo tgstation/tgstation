@@ -144,7 +144,15 @@
 	list_reagents = list("vodka" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tequila
-	name = "Caccavo Guaranteed Quality tequila"
+	name = "Caccavo Guaranteed Quality Tequila"
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka
+	name = "Badminka Vodka"
+	desc = "The label's written in Cyrillic. All you can make out is the name and a word that looks vaguely like 'Vodka'."
+	icon_state = "badminka"
+	list_reagents = list("vodka" = 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila
+	name = "Caccavo Guaranteed Quality Tequila"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequilabottle"
 	list_reagents = list("tequila" = 100)

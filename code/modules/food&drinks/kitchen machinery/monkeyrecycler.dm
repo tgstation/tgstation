@@ -20,6 +20,8 @@
 		return
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
+		if(!user.Adjacent(G.affecting))
+			return
 		var/grabbed = G.affecting
 		if(istype(grabbed, /mob/living/carbon/monkey))
 			var/mob/living/carbon/monkey/target = grabbed

@@ -1,8 +1,0 @@
-author: Paprika
-
-delete-after: True
-
-changes: 
-  - wip: "Helmets for hardsuits are stored inside the suit and cannot be equipped without the suit on."
-  - tweak: "EVA space suits are now lighter for faster movement but lack flash or welding protection, don't hide your identity and have less radiation protection."
-  

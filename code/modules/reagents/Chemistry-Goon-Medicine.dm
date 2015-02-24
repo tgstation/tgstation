@@ -12,21 +12,22 @@ datum/reagent/silver_sulfadiazine
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 2
 
-datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
-		M.adjustFireLoss((volume-(volume*2))*REM)
-		M << "<span class='notice'>You feel your burns healing!</span>"
+		M.adjustFireLoss(-volume)
+		if(show_message)
+			M << "<span class='notice'>You feel your burns healing!</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+		if(show_message)
+			M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
 
 datum/reagent/silver_sulfadiazine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(55))
-		M.adjustFireLoss(-2*REM)
+	M.adjustFireLoss(-2*REM)
 	..()
 	return
 
@@ -38,21 +39,23 @@ datum/reagent/styptic_powder
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 2
 
-datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
-		M.heal_organ_damage(volume*REM,0)
-		M << "<span class='notice'>You feel your wounds knitting back together!</span>"
+		M.adjustBruteLoss(-volume)
+		if(show_message)
+			M << "<span class='notice'>You feel your wounds knitting back together!</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
-		M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+		if(show_message)
+			M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
 
 datum/reagent/styptic_powder/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(prob(55))
-		M.adjustBruteLoss(-2*REM)
+		M.adjustBruteLoss(-8*REM)
 	..()
 	return
 
@@ -78,12 +81,13 @@ datum/reagent/synthflesh
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume,var/show_message = 1)
 	if(!M) M = holder.my_atom
 	if(method == TOUCH)
-		M.adjustBruteLoss(-(1*volume)*REM)
-		M.adjustFireLoss(-(1*volume)*REM)
-		M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
+		M.adjustBruteLoss(-1.5*volume)
+		M.adjustFireLoss(-1.5*volume)
+		if(show_message)
+			M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
 	return
 
@@ -496,7 +500,7 @@ datum/reagent/oculine/on_mob_life(var/mob/living/M as mob)
 	name = "Oculine"
 	id = "oculine"
 	result = "oculine"
-	required_reagents = list("atropine" = 1, "spaceacillin" = 1, "salglu_solution" = 1)
+	required_reagents = list("charcoal" = 1, "carbon" = 1, "hydrogen" = 1)
 	result_amount = 3
 	mix_message = "The mixture sputters loudly and becomes a pale pink color."
 
@@ -553,7 +557,7 @@ datum/reagent/atropine/overdose_process(var/mob/living/M as mob)
 datum/reagent/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
-	description = "Reduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to cap OXY damage at 35 and LOSEBREATH at 3. If health is between -10 to -65, heals 1 TOX, 1 BRUTE, 1 BURN."
+	description = "Reduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to cap OXY damage at 35 and LOSEBREATH at 10. If health is between -10 to -65, heals 1 TOX, 1 BRUTE, 1 BURN."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.2
@@ -567,8 +571,8 @@ datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 		M.adjustFireLoss(-1*REM)
 	if(M.oxyloss > 35)
 		M.setOxyLoss(35)
-	if(M.losebreath > 3)
-		M.losebreath = 3
+	if(M.losebreath >= 10)
+		M.losebreath = max(10, M.losebreath-5)
 	M.adjustStaminaLoss(-1*REM)
 	if(prob(30))
 		M.AdjustParalysis(-1)
@@ -601,24 +605,23 @@ datum/reagent/strange_reagent
 	metabolization_rate = 0.2
 
 datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob, var/method=TOUCH, var/volume)
-	if(M.bruteloss > 80 || M.fireloss > 80)
-		if(ishuman(M) || ismonkey(M))
-			var/mob/living/carbon/C_target = M
-			var/obj/item/organ/brain/B = C_target.getorgan(/obj/item/organ/brain)
-			if(B)
-				B.loc = get_turf(C_target)
-				B.transfer_identity(C_target)
-				C_target.internal_organs -= B
-			M.gib()
-	else if(M.stat == DEAD)
+	if(M.stat == DEAD)
+		if(M.getBruteLoss() >= 80 || M.getFireLoss() >= 80)
+			if(ishuman(M) || ismonkey(M))
+				var/mob/living/carbon/C_target = M
+				var/obj/item/organ/brain/B = C_target.getorgan(/obj/item/organ/brain)
+				if(B)
+					B.loc = get_turf(C_target)
+					B.transfer_identity(C_target)
+					C_target.internal_organs -= B
+				M.gib(M)
+				return
 		var/mob/dead/observer/ghost = M.get_ghost()
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(M.health <= config.health_threshold_dead && !M.suiciding && !ghost && !(NOCLONE in M.mutations))
+		if(!M.suiciding && !ghost && !(NOCLONE in M.mutations))
 			M.stat = 1
-			M.adjustBruteLoss(-10)
-			M.adjustFireLoss(-10)
-			M.adjustOxyLoss(-10)
-			M.adjustToxLoss(-10)
+			M.adjustOxyLoss(-20)
+			M.adjustToxLoss(-20)
 			dead_mob_list -= M
 			living_mob_list |= list(M)
 			M.emote("gasp")
@@ -661,7 +664,7 @@ datum/reagent/life
 /datum/chemical_reaction/life/on_reaction(var/datum/reagents/holder, var/created_volume)
 	chemical_mob_spawn(holder, 1, "Life")
 
-proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reaction_name)
+proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reaction_name, var/mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
 		var/blocked = list(/mob/living/simple_animal/hostile,
 			/mob/living/simple_animal/hostile/pirate,
@@ -684,7 +687,8 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 			/mob/living/simple_animal/hostile/asteroid/hivelord,
 			/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
 			/mob/living/simple_animal/hostile/carp/holocarp,
-			/mob/living/simple_animal/hostile/mining_drone
+			/mob/living/simple_animal/hostile/mining_drone,
+			/mob/living/simple_animal/hostile/poison
 			)//exclusion list for things you don't want the reaction to create.
 		var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 		var/atom/A = holder.my_atom
@@ -709,7 +713,7 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen = pick(critters)
 			var/mob/living/simple_animal/hostile/C = new chosen
-			C.faction |= "chemicalsummon"
+			C.faction |= mob_faction
 			C.loc = get_turf(holder.my_atom)
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
@@ -764,7 +768,7 @@ datum/reagent/antihol
 datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.stuttering = 0
+	M.slurring = 0
 	M.confused = 0
 	M.reagents.remove_reagent("ethanol", 8)
 	M.adjustToxLoss(-0.2*REM)

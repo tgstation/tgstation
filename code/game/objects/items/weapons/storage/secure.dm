@@ -168,9 +168,9 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/storage/secure/briefcase/New()
-	..()
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
+	return ..()
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user as mob)
 	if ((src.loc == user) && (src.locked == 1))
@@ -194,9 +194,10 @@
 	force = 15.0
 
 /obj/item/weapon/storage/secure/briefcase/syndie/New()
-	..()
-	for(var/i = 0, i < 5, i++)
+	for(var/i = 0, i < storage_slots - 2, i++)
 		new /obj/item/weapon/spacecash/c1000(src)
+	return ..()
+
 
 // -----------------------------
 //        Secure Safe

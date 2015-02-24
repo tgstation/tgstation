@@ -37,6 +37,7 @@
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
+	var/exotic_blood = null	// If your race wants to bleed something other than bog standard blood, change this.
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
@@ -667,8 +668,6 @@
 
 /datum/species/proc/movement_delay(var/mob/living/carbon/human/H)
 	var/mspeed = 0
-	if(H.status_flags & GOTTAGOFAST)
-		mspeed -= 1
 
 	var/hasjetpack = 0
 	if(istype(H.back, /obj/item/weapon/tank/jetpack))
@@ -701,6 +700,9 @@
 		mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
 
 	mspeed += speedmod
+
+	if(H.status_flags & GOTTAGOFAST)
+		mspeed = 0
 
 	return mspeed
 

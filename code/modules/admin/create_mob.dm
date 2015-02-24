@@ -20,4 +20,5 @@
 	H.hair_color = random_short_color()
 	H.facial_hair_color = H.hair_color
 	H.eye_color = random_eye_color()
+	H.dna.blood_type = random_blood_type()
 	H.update_icons()

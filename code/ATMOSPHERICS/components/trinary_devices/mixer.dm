@@ -26,12 +26,13 @@
 		icon_state = "mixer_on[flipped?"_f":""]"
 		return
 
-	on = 0
 	icon_state = "mixer_off[flipped?"_f":""]"
 
 /obj/machinery/atmospherics/trinary/mixer/power_change()
 	var/old_stat = stat
 	..()
+	if(stat & NOPOWER)
+		on = 0
 	if(old_stat != stat)
 		update_icon()
 

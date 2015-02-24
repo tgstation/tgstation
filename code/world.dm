@@ -58,7 +58,7 @@
 			world.log << "Database connection established."
 
 
-	data_core = new /obj/effect/datacore()
+	data_core = new /datum/datacore()
 
 
 	spawn(-1)

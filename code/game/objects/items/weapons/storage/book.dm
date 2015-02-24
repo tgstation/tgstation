@@ -18,6 +18,10 @@
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
+/obj/item/weapon/storage/book/bible/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is offering \himself to [src.deity_name]! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS)
+
 /obj/item/weapon/storage/book/bible/booze
 	name = "bible"
 	desc = "To be applied to the head repeatedly."

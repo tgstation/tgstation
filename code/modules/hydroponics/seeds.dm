@@ -57,7 +57,7 @@
 	plant_type = 0
 	growthstages = 6
 	rarity = 0 // CentComm knows about this species already, it's in exotic seeds crates.
-	mutatelist = list(/obj/item/seeds/icepepperseed, /obj/item/seeds/chillighost)
+	mutatelist = list(/obj/item/seeds/icepepperseed, /obj/item/seeds/chilighost)
 
 /obj/item/seeds/replicapod
 	name = "pack of replica pod seeds"
@@ -1094,13 +1094,13 @@
 	new /obj/effect/spacevine_controller(user.loc, mutations)
 	qdel(src)
 
-/obj/item/seeds/chillighost
-	name = "pack of ghost chilli seeds"
+/obj/item/seeds/chilighost
+	name = "pack of ghost chili seeds"
 	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
 	icon_state = "seed-chilighost"
 	species = "chilighost"
 	plantname = "chilighost"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
 	lifespan = 20
 	endurance = 10
 	maturation = 10

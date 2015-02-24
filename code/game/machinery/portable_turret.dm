@@ -123,10 +123,6 @@
 			eprojectile = /obj/item/projectile/beam
 			eshot_sound = 'sound/weapons/Laser.ogg'
 
-		if(/obj/item/weapon/gun/energy/stunrevolver)
-			eprojectile = /obj/item/projectile/beam
-			eshot_sound = 'sound/weapons/Laser.ogg'
-
 		if(/obj/item/weapon/gun/energy/gun)
 			eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
 			eshot_sound = 'sound/weapons/Laser.ogg'

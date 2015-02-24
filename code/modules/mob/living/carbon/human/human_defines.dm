@@ -17,7 +17,7 @@
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 
 	var/age = 30		//Player's age (pure fluff)
-	var/blood_type = "A+"	//Player's bloodtype (Not currently used, just character fluff)
+	var/blood_type = "A+"	//Player's bloodtype
 
 	var/underwear = "Nude"	//Which underwear the player wants
 	var/undershirt = "Nude" //Which undershirt the player wants
@@ -49,3 +49,6 @@
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine
+
+	var/blood_max = 0 //how much are we bleeding
+	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding

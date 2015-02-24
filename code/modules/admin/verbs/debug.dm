@@ -34,8 +34,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	spawn(0)
 		var/target = null
 		var/targetselected = 0
-		var/lst[] // List reference
-		lst = new/list() // Make the list
 		var/returnval = null
 		var/class = null
 
@@ -64,53 +62,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
 		if(!procname)	return
 
-		var/argnum = input("Number of arguments","Number:",0) as num|null
-		if(!argnum && (argnum!=0))	return
-
-		lst.len = argnum // Expand to right length
-		//TODO: make a list to store whether each argument was initialised as null.
-		//Reason: So we can abort the proccall if say, one of our arguments was a mob which no longer exists
-		//this will protect us from a fair few errors ~Carn
-
-		var/i
-		for(i=1, i<argnum+1, i++) // Lists indexed from 1 forwards in byond
-
-			// Make a list with each index containing one variable, to be given to the proc
-			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
-			switch(class)
-				if("CANCEL")
-					return
-
-				if("text")
-					lst[i] = input("Enter new text:","Text",null) as text
-
-				if("num")
-					lst[i] = input("Enter new number:","Num",0) as num
-
-				if("type")
-					lst[i] = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
-
-				if("reference")
-					lst[i] = input("Select reference:","Reference",src) as mob|obj|turf|area in world
-
-				if("mob reference")
-					lst[i] = input("Select reference:","Reference",usr) as mob in world
-
-				if("file")
-					lst[i] = input("Pick file:","File") as file
-
-				if("icon")
-					lst[i] = input("Pick icon:","Icon") as icon
-
-				if("client")
-					var/list/keys = list()
-					for(var/mob/M in world)
-						keys += M.client
-					lst[i] = input("Please, select a player!", "Selection", null, null) as null|anything in keys
-
-				if("mob's area")
-					var/mob/temp = input("Select mob", "Selection", usr) as mob in world
-					lst[i] = temp.loc
+		var/list/lst = get_callproc_args()
+		if(!lst)
+			return
 
 		if(targetselected)
 			if(!target)
@@ -128,6 +82,87 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
 		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/callproc_datum(var/atom/A as null|area|mob|obj|turf)
+	set category = "Debug"
+	set name = "Atom ProcCall"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(!istype(A))
+		return
+
+	var/procname = input("Proc name, eg: fake_blood","Proc:", null) as text|null
+	if(!procname)
+		return
+
+	var/list/lst = get_callproc_args()
+	if(!lst)
+		return
+
+	if(!A || A.gc_destroyed)
+		usr << "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>"
+		return
+	if(!hascall(A,procname))
+		usr << "<span class='warning'>Error: callproc_datum(): target has no such call [procname].</span>"
+		return
+	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
+
+	spawn()
+		var/returnval = call(A,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
+		usr << "<span class='notice'>[procname] returned: [returnval ? returnval : "null"]</span>"
+
+	feedback_add_details("admin_verb","DPC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/get_callproc_args()
+	var/argnum = input("Number of arguments","Number:",0) as num|null
+	if(!argnum && (argnum!=0))	return
+
+	var/list/lst = list()
+	//TODO: make a list to store whether each argument was initialised as null.
+	//Reason: So we can abort the proccall if say, one of our arguments was a mob which no longer exists
+	//this will protect us from a fair few errors ~Carn
+
+	while(argnum--)
+		// Make a list with each index containing one variable, to be given to the proc
+		var/class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
+		switch(class)
+			if("CANCEL")
+				return null
+
+			if("text")
+				lst += input("Enter new text:","Text",null) as text
+
+			if("num")
+				lst += input("Enter new number:","Num",0) as num
+
+			if("type")
+				lst += input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
+
+			if("reference")
+				lst += input("Select reference:","Reference",src) as mob|obj|turf|area in world
+
+			if("mob reference")
+				lst += input("Select reference:","Reference",usr) as mob in world
+
+			if("file")
+				lst += input("Pick file:","File") as file
+
+			if("icon")
+				lst += input("Pick icon:","Icon") as icon
+
+			if("client")
+				var/list/keys = list()
+				for(var/mob/M in world)
+					keys += M.client
+				lst += input("Please, select a player!", "Selection", null, null) as null|anything in keys
+
+			if("mob's area")
+				var/mob/temp = input("Select mob", "Selection", usr) as mob in world
+				lst += temp.loc
+	return lst
+
 
 /client/proc/Cell()
 	set category = "Debug"
@@ -597,6 +632,7 @@ var/global/list/g_fancy_list_of_types = null
 		"assassin",
 		"mobster",
 		"death commando",
+		"emergency response officer",
 		"centcom official",
 		"centcom commander",
 		"special ops officer",
@@ -653,7 +689,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/thunderdome(M), slot_head)
 
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(M), slot_r_hand)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/destroyer(M), slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_l_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/smokebomb(M), slot_r_store)
 
@@ -820,7 +856,15 @@ var/global/list/g_fancy_list_of_types = null
 			equip_deathsquad(M)
 
 		if("emergency response officer")
-			equip_emergencyresponsesquad(M)
+			switch(input("Which class?") in list("Commander","Security","Engineer","Medical"))
+				if("Commander")
+					equip_emergencyresponsesquad(M, "commander")
+				if("Security")
+					equip_emergencyresponsesquad(M, "sec")
+				if("Engineer")
+					equip_emergencyresponsesquad(M, "eng")
+				if("Medic")
+					equip_emergencyresponsesquad(M, "med")
 
 		if("centcom official")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
@@ -883,7 +927,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/havana(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad/beret(M), slot_head)
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/M1911(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/pistol/m1911(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
@@ -1090,7 +1134,7 @@ var/global/list/g_fancy_list_of_types = null
 	M.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen(M), slot_s_store)
 	M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(M), slot_belt)
 
-	M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(M), slot_r_hand)
+	M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse(M), slot_r_hand)
 
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)//Here you go Deuryn
@@ -1107,22 +1151,82 @@ var/global/list/g_fancy_list_of_types = null
 	M.equip_to_slot_or_del(W, slot_wear_id)
 
 //Emergency Response Team
-/proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/officer)
+/proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/ertrole)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
 	R.set_frequency(1441)
 	M.equip_to_slot_or_del(R, slot_ears)
 
-	if(officer)
-		M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert(M), slot_wear_suit)
-		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
-		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
-		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
-//		M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(M), slot_back)
-		M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert(M), slot_wear_id)
-	else
-		M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
-		M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
-		M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+	switch(ertrole)
+		if("commander")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert(M), slot_wear_id)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/hardsuit/ert(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/sechailer/swat(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/pistol/loyalpin(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/security/full(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/saber(M), slot_l_store)
+
+		if("sec")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert/sec(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert/Security(M), slot_wear_id)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(M), slot_glasses)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/handcuffs(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/hardsuit/ert/sec(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/sechailer/swat(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/carbine/loyalpin(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/security/full(M), slot_belt)
+
+		if("med")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert/med(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert/Medical(M), slot_wear_id)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(M), slot_glasses)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/hardsuit/ert/med(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/sechailer/swat(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/hypospray/combat/nanites(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/pistol/loyalpin(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/medical(M), slot_belt)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(M), slot_r_hand)
+
+		if("eng")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/ert/engi(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert/Engineer(M), slot_wear_id)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/meson(M), slot_glasses)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/hardsuit/ert/engi(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/sechailer/swat(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/rcd/combat(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/pistol/loyalpin(M), slot_in_backpack)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/rcd_ammo/large(M), slot_l_store)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 	L.imp_in = M

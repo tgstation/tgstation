@@ -205,9 +205,9 @@
 	return
 
 /mob/living/carbon/slime/MouseDrop(var/atom/movable/A as mob|obj)
-	if(isliving(A) && A != usr)
+	if(isliving(A) && A != src && usr == src)
 		var/mob/living/Food = A
-		if(Food.Adjacent(usr) && !stat && Food.stat != DEAD) //messy
+		if(Food.Adjacent(src) && !stat && Food.stat != DEAD) //messy
 			Feedon(Food)
 	..()
 
@@ -815,7 +815,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	New()
 		..()
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
