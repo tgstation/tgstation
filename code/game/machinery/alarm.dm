@@ -150,6 +150,10 @@
 	if(wires)
 		wires.Destroy()
 		wires = null
+	for(var/obj/machinery/computer/atmoscontrol/AC in atmos_controllers)
+		if(AC.current == src)
+			AC.current = null
+			nanomanager.update_uis(src)
 
 	..()
 
