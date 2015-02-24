@@ -164,7 +164,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	M.AdjustStunned(-3)
 	M.AdjustWeakened(-3)
 	M.adjustStaminaLoss(-3)
-	M.status_flags |= GOTTAGOFAST
+	M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(3)
 	M.adjustBrainLoss(0.5)
 	if(prob(5))

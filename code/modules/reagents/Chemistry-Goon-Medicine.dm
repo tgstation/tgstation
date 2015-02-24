@@ -341,7 +341,7 @@ datum/reagent/ephedrine
 
 datum/reagent/ephedrine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.status_flags |= GOTTAGOFAST
+	M.status_flags |= IGNORESLOWDOWN
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
@@ -424,7 +424,7 @@ datum/reagent/morphine
 
 datum/reagent/morphine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.status_flags |= GOTTAGOFAST
+	M.status_flags |= IGNORESLOWDOWN
 	if(cycle_count == 36)
 		M.drowsyness += 1
 	cycle_count++
@@ -800,7 +800,7 @@ datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 
 datum/reagent/stimulants/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.status_flags |= GOTTAGOFAST
+	M.status_flags |= IGNORESLOWDOWN
 	if(M.health < 50 && M.health > 0)
 		if(prob(50))
 			M.adjustOxyLoss(-5*REM)

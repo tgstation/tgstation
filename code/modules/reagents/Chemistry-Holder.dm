@@ -363,18 +363,34 @@ datum/reagents/proc/del_reagent(var/reagent)
 			del(A)
 			update_total()
 			my_atom.on_reagent_change()
+			check_ignoreslow(my_atom)
 			check_gofast(my_atom)
+			check_goreallyfast(my_atom)
 			return 0
 
 
 	return 1
 
+datum/reagents/proc/check_ignoreslow(var/mob/M)
+	if(istype(M, /mob))
+		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
+			return 1
+		else
+			M.status_flags &= ~IGNORESLOWDOWN
+
 datum/reagents/proc/check_gofast(var/mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("hotline")||M.reagents.has_reagent("methamphetamine"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("hotline"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
+
+datum/reagents/proc/check_goreallyfast(var/mob/M)
+	if(istype(M, /mob))
+		if(M.reagents.has_reagent("methamphetamine"))
+			return 1
+		else
+			M.status_flags &= ~GOTTAGOREALLYFAST
 
 datum/reagents/proc/update_total()
 	total_volume = 0

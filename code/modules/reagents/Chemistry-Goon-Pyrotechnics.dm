@@ -158,7 +158,7 @@ proc/goonchem_vortex(var/turf/simulated/T, var/setting_type, var/range, var/pull
 	mix_message = "<span class = 'userdanger'>Sparks start flying around the black powder!</span>"
 
 /datum/chemical_reaction/blackpowder_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
-	sleep(rand(10,30))
+	sleep(rand(50,100))
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	var/ex_severe = round(created_volume / 10)
 	var/ex_heavy = round(created_volume / 8)
