@@ -71,7 +71,7 @@
 	LoadBans()
 	SetupHooks() // /vg/
 
-	load_library_db_to_cache()
+	library_catalog.initialize()
 
 	copy_logs() // Just copy the logs.
 	if(config && config.log_runtimes)

@@ -2,13 +2,13 @@
 	id = 4
 	name = "Add IP to Sessions"
 
-/datum/migration/ss13/_003/up()
+/datum/migration/ss13/_004/up()
 	if(!hasColumn("admin_sessions","IP"))
 		execute("ALTER TABLE admin_sessions ADD COLUMN `IP` VARCHAR(255) DEFAULT NULL;");
 	else
 		warning("IP column exists. Skipping addition.")
 
-/datum/migration/ss13/_003/down()
+/datum/migration/ss13/_004/down()
 	if(hasColumn("admin_sessions","IP"))
 		execute("ALTER TABLE admin_sessions DROP COLUMN `IP`;");
 	else
