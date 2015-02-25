@@ -148,6 +148,7 @@
 	var/assistant_cap = -1
 
 	var/starlight = 0
+	var/gray_assistants = 0
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -448,6 +449,8 @@
 					config.assistant_cap			= text2num(value)
 				if("starlight")
 					config.starlight			= 1
+				if("gray_assistants")
+					config.gray_assistants			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
