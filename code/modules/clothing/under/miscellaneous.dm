@@ -431,3 +431,10 @@
 	icon_state = "jester"
 	item_state = "jester"
 	_color = "jester"
+
+/obj/item/clothing/under/stilsuit
+	name = "Stilsuit"
+	desc = "Designed to preserve bodymoisture."
+	icon_state = "stilsuit"
+	item_state = "stilsuit"
+	_color = "stilsuit"
