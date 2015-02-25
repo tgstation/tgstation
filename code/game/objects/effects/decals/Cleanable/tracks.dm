@@ -85,17 +85,12 @@ var/global/list/image/fluidtrack_cache=list()
 	// Shift our goingdir 4 spaces to the left so it's in the GOING bitblock.
 	var/realgoing=goingdir<<4
 
-	// Current bit
-	var/b=0
-
 	// When tracks will start to dry out
 	var/t=world.time + TRACKS_CRUSTIFY_TIME
 
 	var/datum/fluidtrack/track
 
-	// Process 4 bits
-	for(var/bi=0;bi<4;bi++)
-		b=1<<bi
+	for (var/b in cardinal)
 		// COMING BIT
 		// If setting
 		if(comingdir&b)
