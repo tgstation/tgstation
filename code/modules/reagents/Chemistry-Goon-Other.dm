@@ -41,8 +41,6 @@ datum/reagent/carpet
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
 /datum/reagent/carpet/reaction_turf(var/turf/simulated/T, var/volume)
-	if(istype(T, /turf/simulated/floor/fancy/carpet))
-		return
 	if(istype(T, /turf/simulated/floor/plating) || istype(T, /turf/simulated/floor/plasteel))
 		var/turf/simulated/floor/F = T
 		F.visible_message("[T] gets a layer of carpeting applied!")
