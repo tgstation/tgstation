@@ -143,8 +143,6 @@
 	icon_state = "vodkabottle"
 	list_reagents = list("vodka" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila
-	name = "Caccavo Guaranteed Quality Tequila"
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka
 	name = "Badminka Vodka"
 	desc = "The label's written in Cyrillic. All you can make out is the name and a word that looks vaguely like 'Vodka'."
