@@ -343,7 +343,7 @@
 			eater.say("Nom")
 		qdel(src)
 
-/obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (!W || !user || !W.type) return
 	user.changeNext_move(CLICK_CD_MELEE)
 

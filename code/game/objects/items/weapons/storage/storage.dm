@@ -321,7 +321,7 @@
 
 
 //This proc is called when you want to place an item into the storage item.
-/obj/item/weapon/storage/attackby(obj/item/W, mob/user)
+/obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
 	..()
 
 	if(isrobot(user))

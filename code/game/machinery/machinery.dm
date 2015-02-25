@@ -232,7 +232,7 @@ Class Procs:
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )
 		return
-	if(!in_range(M, src))
+	if(!Adjacent(M))
 		if((be_close == 0) && (dna.check_mutation(TK)))
 			if(tkMaxRangeCheck(src, M))
 				return 1

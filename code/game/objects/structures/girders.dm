@@ -7,7 +7,7 @@
 	var/state = 0
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 
-/obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wrench) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
@@ -261,7 +261,7 @@
 	density = 1
 	layer = 2
 
-/obj/structure/cultgirder/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/cultgirder/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		user << "<span class='notice'>Now disassembling the girder...</span>"

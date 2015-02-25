@@ -166,7 +166,7 @@
 	update_icon()
 
 
-/obj/item/pizzabox/attackby(obj/item/I, mob/user)
+/obj/item/pizzabox/attackby(obj/item/I, mob/user, params)
 	if( istype(I, /obj/item/pizzabox/) )
 		var/obj/item/pizzabox/box = I
 
