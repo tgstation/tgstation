@@ -327,14 +327,12 @@
 	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
 
 	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
+		if(options[choice] == null)
+			return
 		if(sawn_state == SAWN_OFF)
 			icon_state = options[choice] + "-sawn"
-			if(icon_state == "[initial(icon_state)]-sawn")
-				return
 		else
 			icon_state = options[choice]
-			if(icon_state == initial(icon_state))
-				return
 		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
 		reskinned = 1
 		return

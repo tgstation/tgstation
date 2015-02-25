@@ -66,11 +66,12 @@
 
 /obj/item/weapon/gun/projectile/revolver/detective/New()
 	..()
+	options["Default"] = "detective"
 	options["Leopard Spots"] = "detective_leopard"
 	options["Black Panther"] = "detective_panther"
 	options["Gold Trim"] = "detective_gold"
 	options["The Peacemaker"] = "detective_peacemaker"
-	options["Cancel"] = "detective"
+	options["Cancel"] = null
 
 /obj/item/weapon/gun/projectile/revolver/detective/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	if(magazine.caliber != initial(magazine.caliber))

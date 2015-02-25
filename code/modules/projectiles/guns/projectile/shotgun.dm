@@ -144,12 +144,13 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/New()
 	..()
+	options["Default"] = "dshotgun"
 	options["Dark Red Finish"] = "dshotgun-d"
 	options["Ash"] = "dshotgun-f"
 	options["Faded Grey"] = "dshotgun-g"
 	options["Maple"] = "dshotgun-l"
 	options["Rosewood"] = "dshotgun-p"
-	options["Cancel"] = "dshotgun"
+	options["Cancel"] = null
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	..()
