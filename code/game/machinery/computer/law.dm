@@ -4,7 +4,7 @@
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_state = null //To make sure mappers understand THIS ISN'T A VALID TYPE
 
-/obj/machinery/computer/upload/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/computer/upload/attackby(obj/item/O as obj, mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/aiModule))
 		var/obj/item/weapon/aiModule/M = O
 		if(src.stat & (NOPOWER|BROKEN|MAINT))

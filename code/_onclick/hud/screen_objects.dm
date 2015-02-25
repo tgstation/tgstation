@@ -201,7 +201,7 @@
 /obj/screen/storage
 	name = "storage"
 
-/obj/screen/storage/Click()
+/obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
 		return 1
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
@@ -211,7 +211,7 @@
 	if(master)
 		var/obj/item/I = usr.get_active_hand()
 		if(I)
-			master.attackby(I, usr)
+			master.attackby(I, usr, params)
 	return 1
 
 /obj/screen/throw_catch

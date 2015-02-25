@@ -33,7 +33,7 @@
 /obj/machinery/shield/CanAtmosPass(var/turf/T)
 	return !density
 
-/obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(!istype(W)) return
 
 	//Calculate damage
@@ -231,7 +231,7 @@
 			user << "The device must first be secured to the floor."
 	return
 
-/obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
@@ -449,7 +449,7 @@
 		CF.dir = field_dir
 
 
-/obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
+/obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
 			user << "Turn off the field generator first."

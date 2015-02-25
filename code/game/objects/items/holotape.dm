@@ -204,7 +204,7 @@
 		breaktape()
 	return
 
-/obj/item/holotape/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/holotape/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	health -= W.force * 0.3

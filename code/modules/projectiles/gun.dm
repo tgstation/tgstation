@@ -197,7 +197,7 @@
 	else
 		return
 
-/obj/item/weapon/gun/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	if(istype(A, /obj/item/device/flashlight/seclite))
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)

@@ -31,7 +31,7 @@
 			return
 	..()
 
-/obj/item/device/electropack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/electropack/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )

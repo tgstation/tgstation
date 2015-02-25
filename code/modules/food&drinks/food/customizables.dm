@@ -35,7 +35,7 @@
 		size = "monster"
 	user << "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
@@ -222,7 +222,7 @@
 	icon_state = BASE.icon_state
 	..()
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/attackby(obj/item/I, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/breadslice)) //we're finishing the custom food.
 		var/obj/item/weapon/reagent_containers/food/snacks/breadslice/BS = I
 		if(finished)
@@ -271,7 +271,7 @@
 	flags = OPENCONTAINER
 	w_class = 3
 
-/obj/item/weapon/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user)
+/obj/item/weapon/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)

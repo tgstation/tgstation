@@ -42,7 +42,7 @@
 /turf/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
 
-/turf/attackby(obj/item/C, mob/user)
+/turf/attackby(obj/item/C, mob/user, params)
 	if(cancable && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
 		for(var/obj/structure/cable/LC in src)

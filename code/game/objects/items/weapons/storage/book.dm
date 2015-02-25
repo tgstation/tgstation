@@ -132,6 +132,6 @@
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
 
-/obj/item/weapon/storage/book/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/book/bible/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
 	..()
