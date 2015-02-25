@@ -86,6 +86,10 @@
 /turf/simulated/floor/vines/break_tile_to_plating()
 	return
 
+/turf/simulated/floor/vines/ex_act(severity, target)
+	if(severity < 3 || target == src)
+		ChangeTurf(/turf/space)
+
 /turf/simulated/floor/vines/narsie_act()
 	if(prob(20))
 		ChangeTurf(/turf/space) //nar sie eats this shit
@@ -97,9 +101,9 @@
 
 /turf/simulated/floor/vines/ChangeTurf(turf/simulated/floor/T)
 	for(var/obj/effect/spacevine/SV in src)
-		qdel(src)
+		qdel(SV)
 	..()
-
+	UpdateAffectingLights()
 
 /datum/spacevine_mutation/space_covering/on_grow(obj/effect/spacevine/holder)
 	if(istype(holder.loc, /turf/space))
@@ -114,7 +118,8 @@
 /datum/spacevine_mutation/space_covering/on_death(obj/effect/spacevine/holder)
 	if(istype(holder.loc, /turf/simulated/floor/vines))
 		var/turf/spaceturf = holder.loc
-		spaceturf.ChangeTurf(/turf/space)
+		spawn(0)
+			spaceturf.ChangeTurf(/turf/space)
 
 /datum/spacevine_mutation/bluespace
 	name = "bluespace"
@@ -156,8 +161,10 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/explosive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
-	sleep(10)
-	explosion(holder.loc, 0, 0, 2, 0, 0)
+	var/turf/T = holder.loc
+	src = T
+	spawn(10)
+		explosion(T, 0, 0, 2, 0, 0)
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire proof"
@@ -415,6 +422,15 @@
 	if(spreading != null)
 		spread_cap *= spreading / 50
 		spread_multiplier /= spreading / 50
+
+/obj/effect/spacevine_controller/ex_act() //only killing all vines will end this suffering
+	return
+
+/obj/effect/spacevine_controller/singularity_act()
+	return
+
+/obj/effect/spacevine_controller/singularity_pull()
+	return
 
 /obj/effect/spacevine_controller/Destroy()
 	SSobj.processing.Remove(src)
