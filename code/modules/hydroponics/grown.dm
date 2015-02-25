@@ -861,7 +861,6 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	desc = "<I>Pueraria Virallis</I>: An invasive species with vines that rapidly creep and wrap around whatever they contact."
 	icon_state = "kudzupod"
 	var/list/mutations = list()
-	var/mutating = 0
 	filling_color = "#6B8E23"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/add_juice()
