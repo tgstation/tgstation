@@ -273,7 +273,7 @@
 			src.die()
 	return
 
-/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
+/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user, params)//I can't believe no one added this before/N
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/weapons/smash.ogg', 60, 1)
@@ -527,7 +527,7 @@
 	//don't have to check if control_area is path, since get_area_all_atoms can take path.
 	return
 
-/obj/machinery/areaturretid/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/areaturretid/attackby(obj/item/weapon/W, mob/user, params)
 	if(stat & BROKEN) return
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)

@@ -338,7 +338,7 @@
 	user.set_machine(src)
 	song.interact(user)
 
-/obj/structure/piano/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/piano/attackby(obj/item/O as obj, mob/user as mob, params)
 	if (istype(O, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)

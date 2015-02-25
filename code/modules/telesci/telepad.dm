@@ -27,7 +27,7 @@
 		E += C.rating
 	efficiency = E
 
-/obj/machinery/telepad/attackby(obj/item/I, mob/user)
+/obj/machinery/telepad/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "pad-idle-o", "pad-idle", I))
 		return
 
@@ -54,7 +54,7 @@
 	idle_power_usage = 20
 	active_power_usage = 500
 	var/stage = 0
-/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = 0
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)

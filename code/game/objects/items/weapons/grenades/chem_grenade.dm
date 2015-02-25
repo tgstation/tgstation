@@ -47,7 +47,7 @@
 				prime()
 
 
-/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user)
+/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(stage == WIRED)
 			if(beakers.len)
@@ -250,7 +250,7 @@
 	//I tried to just put it in the allowed_containers list but
 	//if you do that it must have reagents.  If you're going to
 	//make a special case you might as well do it explicitly. -Sayu
-/obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user)
+/obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/slime_extract) && stage == WIRED)
 		user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
 		user.drop_item()
@@ -363,6 +363,24 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
 	B1.reagents.add_reagent("facid", 25)
+	B1.reagents.add_reagent("potassium", 25)
+	B2.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("sugar", 25)
+
+	beakers += B1
+	beakers += B2
+
+/obj/item/weapon/grenade/chem_grenade/colorful
+	name = "colorful grenade"
+	desc = "Used for wide scale painting projects."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/colorful/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+
+	B1.reagents.add_reagent("colorful_reagent", 25)
 	B1.reagents.add_reagent("potassium", 25)
 	B2.reagents.add_reagent("phosphorus", 25)
 	B2.reagents.add_reagent("sugar", 25)

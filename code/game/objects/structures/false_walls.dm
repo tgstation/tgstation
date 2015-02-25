@@ -95,7 +95,7 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user, params)
 	if(opening)
 		user << "<span class='warning'>You must wait until the door has stopped moving.</span>"
 		return
@@ -209,7 +209,7 @@
 	var/active = null
 	var/last_event = 0
 
-/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user, params)
 	radiate()
 	..()
 
@@ -261,7 +261,7 @@
 	mineral = "plasma"
 	walltype = "plasma"
 
-/obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(is_hot(W) > 300)
 		message_admins("Plasma falsewall ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma falsewall ignited by [user.ckey]([user]) in ([x],[y],[z])")

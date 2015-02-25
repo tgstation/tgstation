@@ -116,5 +116,8 @@
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
 				/obj/item/weapon/relic = 3,
+				/obj/item/weapon/reagent_containers/food/drinks/muriatic_acid = 3,
+				/obj/item/weapon/reagent_containers/food/drinks/caustic_soda = 3,
+				/obj/item/weapon/reagent_containers/food/drinks/hydrogen_chloride = 3,
 				"" = 11
 				)

@@ -22,7 +22,7 @@
 	return
 
 
-/obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U as obj, mob/user as mob)
+/obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U as obj, mob/user as mob, params)
 	..()
 	if(istype(U, /obj/item/clothing/under/chameleon))
 		user << "\<span class='notice'>Nothing happens.</span>"

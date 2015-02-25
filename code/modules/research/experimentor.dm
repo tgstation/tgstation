@@ -114,7 +114,7 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/r_n_d/experimentor/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/experimentor/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if (shocked)
 		shock(user,50)
 

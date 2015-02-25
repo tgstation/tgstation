@@ -94,7 +94,7 @@
 		update_icon()
 	return
 
-/obj/machinery/computer/attackby(I as obj, user as mob)
+/obj/machinery/computer/attackby(I as obj, user as mob, params)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor.</span>"
