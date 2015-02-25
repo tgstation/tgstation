@@ -66,7 +66,7 @@
 						else
 							break
 
-/obj/machinery/mineral/ore_redemption/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/machinery/mineral/ore_redemption/attackby(var/obj/item/weapon/W, var/mob/user, params)
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
@@ -229,24 +229,23 @@
 	anchored = 1.0
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-		new /datum/data/mining_equipment("Stimpack MediPen",	/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    50),
-		new /datum/data/mining_equipment("Leporazine MediPen",	/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine,   50),
-		new /datum/data/mining_equipment("MediPen Bundle",		/obj/item/weapon/storage/box/medipens/utility,	 				   200),
+		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    50),
+		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/medipens/utility,	 				   200),
 		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    100),
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    150),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           200),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 250),
-		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     300),
-		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   400),
-		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   450),
-		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone/,                   500),
-		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   650),
-		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   650),
-		new /datum/data/mining_equipment("Sonic Jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               800),
+		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   300),
+		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   300),
+		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     400),
+		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                    500),
+		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   750),
+		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
-		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               2000),
-		new /datum/data/mining_equipment("Space Cash",    		/obj/item/weapon/spacecash/c1000,                    			  5000),
-		new /datum/data/mining_equipment("Point Card",    		/obj/item/weapon/card/mining_point_card,               			   500),
+		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  1200),
+		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               1500),
+		new /datum/data/mining_equipment("Space Cash",    		/obj/item/weapon/spacecash/c1000,                    			  2000),
+		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   500),
 		)
 
 /datum/data/mining_equipment/
@@ -320,7 +319,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/equipment_vendor/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/mineral/equipment_vendor/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
@@ -342,14 +341,19 @@
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Mining Drill", "Kinetic Accelerator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Mining Drill", "Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
 	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Mining Drill")
 			new /obj/item/weapon/pickaxe/drill(src.loc)
+			new /obj/item/weapon/stock_parts/cell/high(src.loc)
 		if("Kinetic Accelerator")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
+			new /obj/item/weapon/screwdriver(src.loc)
+		if("Resonator")
+			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/screwdriver(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
@@ -378,12 +382,12 @@
 /**********************Mining Point Card**********************/
 
 /obj/item/weapon/card/mining_point_card
-	name = "mining point card"
+	name = "mining points card"
 	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
 	icon_state = "data"
 	var/points = 500
 
-/obj/item/weapon/card/mining_point_card/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/card/mining_point_card/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		if(points)
 			var/obj/item/weapon/card/id/C = I
@@ -468,21 +472,44 @@
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
 	w_class = 3
-	force = 10
+	force = 8
 	throwforce = 10
 	var/cooldown = 0
+	var/fieldsactive = 0
+	var/burst_time = 50
+	var/fieldlimit = 3
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
-	if(cooldown <= 0)
+	if(fieldsactive < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		new /obj/effect/resonance(get_turf(target), creator)
-		cooldown = 1
-		spawn(20)
-			cooldown = 0
+		new /obj/effect/resonance(get_turf(target), creator, burst_time)
+		fieldsactive++
+		spawn(50)
+			fieldsactive--
 
 /obj/item/weapon/resonator/attack_self(mob/user as mob)
 	CreateResonance(src, user)
 	..()
+
+/obj/item/weapon/resonator/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(burst_time == 50)
+			burst_time = 30
+			user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
+		else
+			burst_time = 50
+			user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
+
+	else if(istype(W, /obj/item/stack))
+		var/obj/item/stack/S = W
+
+		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
+			if(fieldlimit < 8)
+				fieldlimit++
+				user << "<span class='info'>You upgrade [src]'s field generator with diamonds.</span>"
+				S.use(1)
+			else
+				user << "<span class='info'>The [src.name]'s field generator is at the limit.</span>"
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -498,23 +525,23 @@
 	mouse_opacity = 0
 	var/resonance_damage = 20
 
-/obj/effect/resonance/New(loc, var/creator = null)
+/obj/effect/resonance/New(loc, var/creator = null, var/timetoburst)
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
-		playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-		M.gets_drilled(creator)
-		spawn(5)
+		spawn(timetoburst)
+			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
+			M.gets_drilled(creator)
 			qdel(src)
 	else
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()
 		if(pressure < 50)
 			name = "strong resonance field"
-			resonance_damage = 45
-		spawn(50)
+			resonance_damage = 50
+		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
 				for(var/mob/living/L in src.loc)
@@ -582,7 +609,7 @@
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
 						  /obj/item/weapon/ore/bananium)
 
-/mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I as obj, mob/user as mob)
+/mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding && !stat)
@@ -788,7 +815,7 @@
 /obj/item/device/t_scanner/adv_mining_scanner/scan()
 	if(!cooldown)
 		cooldown = 1
-		spawn(80)
+		spawn(60)
 			cooldown = 0
 		var/turf/t = get_turf(src)
 		var/list/mobs = recursive_mob_check(t, 1,0,0)

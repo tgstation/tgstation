@@ -11,8 +11,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
 
-/obj/item/weapon/gun/projectile/shotgun/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = magazine.attackby(A, user, 1)
+/obj/item/weapon/gun/projectile/shotgun/attackby(var/obj/item/A as obj, mob/user as mob, params)
+	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		A.update_icon()
@@ -81,7 +81,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shotriot
 	sawn_desc = "Come with me if you want to live."
 
-/obj/item/weapon/gun/projectile/shotgun/riot/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/shotgun/riot/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	..()
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
 		sawoff(user)
@@ -113,7 +113,7 @@
 	update_icon()	//I.E. fix the desc
 	return 1
 
-/obj/item/weapon/gun/projectile/shotgun/boltaction/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/shotgun/boltaction/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	if(!bolt_open)
 		user << "<span class='notice'>The bolt is closed!</span>"
 		return
@@ -140,7 +140,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	sawn_desc = "Omar's coming!"
 
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	..()
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
@@ -180,7 +180,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/improvised
 	sawn_desc = "I'm just here for the gasoline."
 
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	..()
 	if(istype(A, /obj/item/stack/cable_coil) && !sawn_state)
 		var/obj/item/stack/cable_coil/C = A

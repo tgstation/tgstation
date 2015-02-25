@@ -13,7 +13,7 @@
 	var/obj/item/projectile/BB = null 			//The loaded bullet
 	var/pellets = 0								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
-
+	var/delay = 0								//Delay for energy weapons
 
 /obj/item/ammo_casing/New()
 	..()
@@ -93,7 +93,7 @@
 
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0, var/replace_spent = 0)
+/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, params, var/silent = 0, var/replace_spent = 0)
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A

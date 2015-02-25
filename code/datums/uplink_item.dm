@@ -62,7 +62,7 @@ var/list/uplink_items = list()
 	if(!istype(U))
 		return 0
 
-	if (!user || user.stat || user.restrained())
+	if (!user || user.incapacitated())
 		return 0
 
 	// If the uplink's holder is in the user's contents
@@ -291,6 +291,14 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
+
+
+/datum/uplink_item/stealthy_weapons/throwingstars
+	name = "Box of Throwing Stars"
+	desc = "A box of throwing stars with a high chance of embedding themselves in people's limbs."
+	item = /obj/item/weapon/storage/box/throwing_stars
+	cost = 6
+	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/sleepy_pen
 	name = "Sleepy Pen"

@@ -1,7 +1,0 @@
-author: Menshin
-
-delete-after: True
-
-changes: 
-  - tweak : "Getting into regenerative statis now puts the changeling into unconscious state."
-  - bugfix: "Fixed changeling 'Revive' not working."

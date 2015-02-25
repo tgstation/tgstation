@@ -50,7 +50,7 @@
 	user.update_inv_r_hand()
 	qdel(src)
 
-/obj/item/weapon/storage/box/attackby(obj/item/W, mob/user)
+/obj/item/weapon/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))
 		return 0
 	..()
@@ -138,17 +138,17 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
 
 /obj/item/weapon/storage/box/medipens/utility
-	name = "medipens kit"
-	desc = "A box with several utility medipens for the economical miner."
+	name = "stimpack value kit"
+	desc = "A box with several stimpack medipens for the economical miner."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/medipens/utility/New()
 	..()
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
 
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
@@ -546,7 +546,7 @@
 	for(var/i=1; i <= storage_slots; i++)
 		new /obj/item/weapon/match(src)
 
-/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob)
+/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/match))
 		W.matchignite()
 	return

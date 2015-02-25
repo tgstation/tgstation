@@ -202,6 +202,9 @@ datum/reagents/proc/trans_id_to(var/obj/target, var/reagent, var/amount=1, var/p
 */
 
 datum/reagents/proc/metabolize(var/mob/M)
+	if(M)
+		chem_temp = M.bodytemperature
+		handle_reactions()
 	if(last_tick == 3)
 		last_tick = 1
 		for(var/A in reagent_list)
@@ -211,6 +214,7 @@ datum/reagents/proc/metabolize(var/mob/M)
 					if(R.volume >= R.overdose_threshold && !R.overdosed && R.overdose_threshold > 0)
 						R.overdosed = 1
 						M << "<span class = 'userdanger'>You feel like you took too much of [R.name]!</span>"
+						R.overdose_start(M)
 					if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list) && R.addiction_threshold > 0)
 						var/datum/reagent/new_reagent = new R.type()
 						addiction_list.Add(new_reagent)
@@ -359,18 +363,34 @@ datum/reagents/proc/del_reagent(var/reagent)
 			del(A)
 			update_total()
 			my_atom.on_reagent_change()
+			check_ignoreslow(my_atom)
 			check_gofast(my_atom)
+			check_goreallyfast(my_atom)
 			return 0
 
 
 	return 1
 
+datum/reagents/proc/check_ignoreslow(var/mob/M)
+	if(istype(M, /mob))
+		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
+			return 1
+		else
+			M.status_flags &= ~IGNORESLOWDOWN
+
 datum/reagents/proc/check_gofast(var/mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("hotline"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
+
+datum/reagents/proc/check_goreallyfast(var/mob/M)
+	if(istype(M, /mob))
+		if(M.reagents.has_reagent("methamphetamine"))
+			return 1
+		else
+			M.status_flags &= ~GOTTAGOREALLYFAST
 
 datum/reagents/proc/update_total()
 	total_volume = 0

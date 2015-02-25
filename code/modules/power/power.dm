@@ -114,7 +114,7 @@
 
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
-/obj/machinery/power/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/power/attackby(obj/item/weapon/W, mob/user, params)
 
 	if(istype(W, /obj/item/stack/cable_coil))
 
@@ -464,7 +464,7 @@
 // return a knot cable (O-X) if one is present in the turf
 // null if there's none
 /turf/proc/get_cable_node()
-	if(!src.cancable)
+	if(!istype(src, /turf/simulated/floor))
 		return null
 	for(var/obj/structure/cable/C in src)
 		if(C.d1 == 0)

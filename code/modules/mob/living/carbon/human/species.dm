@@ -629,8 +629,6 @@
 
 /datum/species/proc/movement_delay(var/mob/living/carbon/human/H)
 	var/mspeed = 0
-	if(H.status_flags & GOTTAGOFAST)
-		mspeed -= 1
 
 	var/hasjetpack = 0
 	if(istype(H.back, /obj/item/weapon/tank/jetpack))
@@ -663,6 +661,16 @@
 		mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
 
 	mspeed += speedmod
+
+	if(H.status_flags & IGNORESLOWDOWN)
+		mspeed = 0
+
+	if(H.status_flags & GOTTAGOFAST)
+		mspeed -= 1
+
+	if(H.status_flags & GOTTAGOREALLYFAST)
+		mspeed -= 2
+
 
 	return mspeed
 

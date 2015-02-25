@@ -8,7 +8,7 @@
 	emote_see = list("flutters")
 	response_help = "shoos"
 	response_disarm = "brushes aside"
-	response_harm = "aquashes"
+	response_harm = "squashes"
 	speak_chance = 0
 	maxHealth = 2
 	health = 2

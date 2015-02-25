@@ -93,7 +93,6 @@
 		update_icons()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(A)
-	var/msg = ""
 
 	if(!leaping)
 		return ..()
@@ -101,7 +100,7 @@
 	if(A)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
-			msg = "<span class ='alertalien'>[src] pounces on [A]!</span>"
+			L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
 			L.Weaken(5)
 			sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src,L)
@@ -111,13 +110,13 @@
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
 		else
-			msg = "<span class ='alertalien'>[src] smashes into [A]!</span>"
+			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
 			weakened = 2
 
 		if(leaping)
 			leaping = 0
 			update_canmove()
-			visible_message(msg)
+
 
 
 /mob/living/carbon/alien/humanoid/float(on)
