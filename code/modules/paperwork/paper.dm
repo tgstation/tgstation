@@ -271,10 +271,6 @@
 	if(is_blind(user))
 		return
 
-	var/clown = 0
-	if(user.disabilities & CLUMSY)
-		clown = 1
-
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.IsAdvancedToolUser())
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
