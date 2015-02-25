@@ -61,7 +61,6 @@
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	e_cost = 100
-	delay = 0
 
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/item/projectile/ion
@@ -116,10 +115,6 @@
 	select_name  = "disable"
 	e_cost = 50
 	fire_sound = "sound/weapons/taser2.ogg"
-
-/obj/item/ammo_casing/energy/disabler/gun
-	e_cost = 40
-	fire_sound = 'sound/weapons/gunshot.ogg'
 
 /obj/item/ammo_casing/energy/wormhole
 	projectile_type = /obj/item/projectile/beam/wormhole

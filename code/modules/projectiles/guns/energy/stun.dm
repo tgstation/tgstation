@@ -6,19 +6,11 @@
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 
-/obj/item/weapon/gun/energy/hospistol
-	name = "stun pistol"
-	desc = "A high-tech handgun that fires reusable stun cartridges in an internal magazine. The prize of the Head of Security."
-	icon_state = "hospistol"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
-	can_flashlight = 0
-	pin = /obj/item/device/firing_pin/implant/loyalty
-
 /obj/item/weapon/gun/energy/stunrevolver
 	name = "stun revolver"
-	desc = "A high-tech revolver that fires internal, reusable disabler cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
+	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
 	icon_state = "stunrevolver"
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler/gun)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
 	can_flashlight = 0
 	pin = null
 

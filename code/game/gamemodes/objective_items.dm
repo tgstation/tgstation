@@ -17,12 +17,6 @@ datum/objective_item/steal/caplaser
 	difficulty = 5
 	excludefromjob = list("Captain")
 
-datum/objective_item/steal/hospistol
-	name = "the head of security's stun pistol"
-	targetitem = /obj/item/weapon/gun/energy/hospistol
-	difficulty = 6
-	excludefromjob = list("Head of Security")
-
 datum/objective_item/steal/handtele
 	name = "a hand teleporter"
 	targetitem = /obj/item/weapon/hand_tele

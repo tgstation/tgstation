@@ -24,7 +24,7 @@
 
 /datum/design/stunrevolver
 	name = "Stun Revolver"
-	desc = "A high-tech revolver that fires internal, reusable disabler cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
+	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
 	id = "stunrevolver"
 	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 2)
 	build_type = PROTOLATHE
