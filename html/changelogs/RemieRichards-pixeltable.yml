@@ -1,0 +1,6 @@
+author: RemieRichards
+
+delete-after: True
+
+changes: 
+  - rscadd: "Items placed on tables now center to exactly where you clicked."

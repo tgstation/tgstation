@@ -1,0 +1,7 @@
+author: TheVekter
+
+delete-after: True
+
+changes:
+  - rscadd: "Box's vault nuke has been replaced with immobile Nuclear Self-Destruct Mechanism."
+  - rscadd: "Vault's new green floor tiles turn flashing red when Self-Destruct is activated."

@@ -1,0 +1,6 @@
+author: Paprika
+
+delete-after: True
+
+changes: 
+  - tweak: "Syndicate shotguns now start with buckshot instead of stunslugs."

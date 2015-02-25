@@ -1,0 +1,6 @@
+author: Paprika
+
+delete-after: True
+
+changes: 
+  - rscadd: "Batons, flashbangs and handcuffs can be seen when stored in a belt."

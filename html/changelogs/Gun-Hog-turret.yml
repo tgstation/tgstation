@@ -1,0 +1,9 @@
+
+author: Gun Hog
+
+
+delete-after: True
+
+
+changes: 
+  - bugfix: "Fixed malf AI's turret upgrade power not working."

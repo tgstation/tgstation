@@ -1,7 +1,3 @@
-
-#################################
-
-# Your name.  
 author: Mandurrh
 
 # Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
@@ -9,5 +5,4 @@ delete-after: True
 
 
 changes: 
-  - rscadd: "Added interchangeable bar signs"
-
+  - bugfix: "Fixed silicons not being able to pass through holotape."
