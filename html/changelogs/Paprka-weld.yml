@@ -1,6 +1,0 @@
-author: Paprika
-
-delete-after: True
-
-changes: 
-  - bugfix: "Fixed welding tools using fuel when being switched on."

@@ -1,6 +1,0 @@
-author: Paprika
-
-delete-after: True
-
-changes: 
-  - experiment: "Space now emits a dim light to adjacent tiles."

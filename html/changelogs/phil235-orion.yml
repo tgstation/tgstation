@@ -1,6 +1,0 @@
-author: phil235
-
-delete-after: True
-
-changes: 
-  - bugfix: "Fixed arcade machines being usable from inside lockers to dupe rewards."

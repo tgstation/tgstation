@@ -1,7 +1,0 @@
-author: Delimusca
-
-delete-after: True
-
-changes: 
-  - rscadd: "Turret's guns replaced by a heavy energy cannon."
-  - tweak: "Firing a heavy weapon sindlehandedly can make it recoil out of your hands."
