@@ -135,7 +135,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 20), 1))
-		reagents.add_reagent("salglu_solution", 1 + round((potency / 10), 1))
+		reagents.add_reagent("hotline", 3 + round((potency / 10), 1))
 		bitesize = 1 + round(reagents.total_volume / 3, 1)
 
 
@@ -1153,7 +1153,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 40), 1))
-		reagents.add_reagent("vitamin", 1 + round((potency / 40), 1))
+		reagents.add_reagent("nicotine", 1 + round((potency / 40), 1))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space
@@ -1166,7 +1166,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space/add_juice()
 	..()
 	reagents.add_reagent("salbutamol", 1 + round((potency / 20), 1))
-
+	reagents.add_reagent("nicotine", 1 + round((potency / 20), 1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea //abstract type
 	seed = /obj/item/seeds/tea_aspera_seed

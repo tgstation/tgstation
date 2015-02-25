@@ -27,7 +27,6 @@
 	var/lightfail = 0
 	var/charge_tick = 0
 	modifystate = 0
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	can_flashlight = 0
 	pin = null
 

@@ -701,8 +701,15 @@
 
 	mspeed += speedmod
 
-	if(H.status_flags & GOTTAGOFAST)
+	if(H.status_flags & IGNORESLOWDOWN)
 		mspeed = 0
+
+	if(H.status_flags & GOTTAGOFAST)
+		mspeed -= 1
+
+	if(H.status_flags & GOTTAGOREALLYFAST)
+		mspeed -= 2
+
 
 	return mspeed
 
