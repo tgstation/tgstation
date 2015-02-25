@@ -20,6 +20,38 @@
 	rec.addAmount("iron",amount/2)
 	return RECYK_METAL
 
+/obj/item/stack/rods/afterattack(atom/Target, mob/user, adjacent, params)
+	if(adjacent)
+		if (isturf(Target))
+			var/turf/T = Target
+			var/obj/item/stack/rods/R = src
+			var/obj/structure/lattice/L = T.canBuildCatwalk(R)
+			if(istype(L))
+				if(R.amount < 2)
+					user << "<span class='warning'>You need atleast 2 rods to build a catwalk!</span>"
+					return
+				user << "<span class='notice'>You begin to build a catwalk.</span>"
+				if(do_after(user,30))
+					if(R.amount < 2)
+						user << "<span class='warning'>You ran out of rods!</span>"
+						return
+					if(!istype(L) || L.loc != T)
+						user << "<span class='warning'>You need a lattice first!</span>"
+						return
+					playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+					user << "<span class='notice'>You build a catwalk!</span>"
+					R.use(2)
+					T.ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
+					qdel(L)
+					return
+
+			if(T.canBuildLattice(R))
+				user << "<span class='notice'>Constructing support lattice ...</span>"
+				playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+				new /obj/structure/lattice(T)
+				R.use(1)
+				return
+
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W

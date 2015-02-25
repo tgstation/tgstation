@@ -15,43 +15,17 @@
 /turf/space/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/turf/space/attackby(obj/item/C as obj, mob/user as mob)
+/turf/space/canBuildCatwalk()
+	return locate(/obj/structure/lattice) in contents
 
-	if (istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(L)
-			if(R.amount < 2)
-				user << "<span class='warning'>You don't have enough rods to do that.</span>"
-				return
-			user << "<span class='notice'>You begin to build a catwalk.</span>"
-			if(do_after(user,30))
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				user << "<span class='notice'>You build a catwalk!</span>"
-				R.use(2)
-				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
-				qdel(L)
-				return
 
-		user << "<span class='notice'>Constructing support lattice ...</span>"
-		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
-		ReplaceWithLattice()
-		R.use(1)
-		return
+/turf/space/canBuildLattice()
+	if(!(locate(/obj/structure/lattice) in contents))
+		return 1
+	return 0
 
-	if (istype(C, /obj/item/stack/tile/plasteel))
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
-			qdel(L)
-			playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
-			S.build(src)
-			S.use(1)
-			return
-		else
-			user << "<span class='warning'>The plating is going to need some support.</span>"
-	return
-
+/turf/space/canBuildPlating()
+	return locate(/obj/structure/lattice) in contents
 
 // Ported from unstable r355
 
