@@ -15,7 +15,9 @@
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
-	update_starlight()
+	if(config)
+		if(config.starlight)
+			update_starlight()
 
 /turf/space/proc/update_starlight()
 	if(config)
