@@ -371,7 +371,7 @@
 	return
 
 /obj/item/weapon/storage/dropped(mob/user as mob)
-	return
+	..()
 
 /obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
 	..()
