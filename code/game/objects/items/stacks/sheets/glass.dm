@@ -283,6 +283,7 @@
 	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/plasmareinforced
 	full_window = /obj/structure/window/full/plasmareinforced
+	windoor = /obj/structure/windoor_assembly/plasma
 	perunit = 2875
 	reinforced = 1
 	glass_quality = 1.3
