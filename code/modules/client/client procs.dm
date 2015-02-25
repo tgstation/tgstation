@@ -176,7 +176,10 @@ var/next_external_rsc = 0
 
 	while (query.NextRow())
 		player_age = text2num(query.item[2])
-		break
+		return
+	//player not found.
+	player_age = 0
+	message_admins("[key_name_admin(src)] is connecting here for the first time.")
 
 
 /client/proc/sync_client_with_db()
