@@ -24,7 +24,7 @@
 		AM.loc = T
 	..()
 
-/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -78,7 +78,7 @@
 	qdel(src)
 
 
-/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -321,7 +321,7 @@
 	update()
 	return
 
-/obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user, params)
 	if(!I || !user)
 		return
 

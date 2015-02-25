@@ -1,0 +1,9 @@
+author: Xhuis
+delete-after: true
+
+changes: 
+  - rscadd: "Syndicate contacts have discovered new ways to manipulate alarms. Malfunctioning AIs, as well as normal emags, can now disable the safeties on air and fire alarms."
+  - rscadd: "When one emags an air alarm, its safeties are disabled, giving it the Flood environmental type, which disables scrubbers as well as vent pressure checks. Burn, pigs, burn!"
+  - rscadd: "When one emags a fire alarm, its thermal sesnsors are disabled. This will prevent automatic alerts due to the alarm being unable to recognize high temperatures."
+  - rscadd: "Malf AIs gain two new modules, both of which disable ALL air alarm safeties and thermal sensors. These are separate abilities."
+  - tweak: "Air and fire alarms have notifications on their interface about the current safety status. One only has to glance at one to see that it's been tampered with."

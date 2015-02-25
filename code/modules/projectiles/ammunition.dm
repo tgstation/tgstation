@@ -93,7 +93,7 @@
 
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0, var/replace_spent = 0)
+/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, params, var/silent = 0, var/replace_spent = 0)
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A

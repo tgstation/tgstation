@@ -167,7 +167,7 @@ Passive gate is similar to the regular pump except:
 
 
 
-/obj/machinery/atmospherics/binary/passive_gate/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/binary/passive_gate/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (on)

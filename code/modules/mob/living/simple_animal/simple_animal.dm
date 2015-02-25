@@ -85,6 +85,8 @@
 
 /mob/living/simple_animal/Life()
 
+	update_gravity(mob_has_gravity())
+
 	//Health
 	if(stat == DEAD)
 		if(health > 0)
@@ -325,7 +327,7 @@
 		updatehealth()
 
 
-/mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/living/user as mob) //Marker -Agouri
+/mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/living/user as mob, params) //Marker -Agouri
 	if(O.flags & NOBLUDGEON)
 		return
 
@@ -462,7 +464,7 @@
 		else if(istype(M, childtype)) //Check for children FIRST.
 			children++
 		else if(istype(M, species))
-			if(M.client)
+			if(M.ckey)
 				continue
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M

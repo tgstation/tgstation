@@ -169,7 +169,7 @@ var/list/sacrificed = list()
 				return
 		var/narsie_type = /obj/singularity/narsie/large
 		// Moves narsie if she was already summoned.
-		var/obj/her = locate(narsie_type, SSmachine.processing)
+		var/obj/her = locate(narsie_type, SSobj.processing)
 		if(her)
 			her.loc = get_turf(src)
 			return

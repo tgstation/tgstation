@@ -28,7 +28,7 @@
 	user << "You are too primitive to use this device."
 	return
 
-/obj/machinery/keycard_auth/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/keycard_auth/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(stat & (NOPOWER|BROKEN))
 		user << "This device is not powered."
 		return

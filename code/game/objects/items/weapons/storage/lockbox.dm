@@ -17,7 +17,7 @@
 	var/icon_broken = "lockbox+b"
 
 
-/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (W.GetID())
 		if(src.broken)
 			user << "<span class='danger'>It appears to be broken.</span>"

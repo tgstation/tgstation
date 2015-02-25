@@ -36,35 +36,14 @@
 
 
 /mob/living/carbon/human/Life()
-	set invisibility = 0
-	set background = BACKGROUND_ENABLED
 
-	if (notransform)	return
-	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
-
-	..()
-
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
 	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
 	tinttotal = tintcheck() //here as both hud updates and status updates call it
 
-	//TODO: seperate this out
-	var/datum/gas_mixture/environment = loc.return_air()
-
-	handle_regular_hud_updates()
-
-	//Status updates, death etc.
-		//TODO: optimise ~Carn
-	handle_regular_status_updates()
-
-	//No need to update all of these procs if the guy is dead.
-	if(stat != DEAD)
-		for(var/datum/mutation/human/HM in dna.mutations)
-			HM.on_life(src)
-
+	if(..())
+		if(dna)
+			for(var/datum/mutation/human/HM in dna.mutations)
+				HM.on_life(src)
 		if(SSmob.times_fired%4==2 || failed_last_breath) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 		else //Still give containing object the chance to interact
@@ -72,45 +51,14 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
 
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-		//Disabilities
-		handle_disabilities()
-
-		//Blud
-		handle_blood()
-
-		//Random events (vomiting etc)
-		handle_random_events()
-
-	//Handle temperature/pressure differences between body and environment
-	handle_environment(environment)
-
-	//Check if we're on fire
-	handle_fire()
-
-	//stuff in the stomach
-	handle_stomach()
-
-
-	update_canmove()
-
+		//Stuff jammed in your limbs hurts
+		handle_embedded_objects()
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
 	if(dna)
 		dna.species.spec_life(src) // for mutantraces
-
-	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
@@ -130,7 +78,7 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 
-/mob/living/carbon/human/proc/handle_disabilities()
+/mob/living/carbon/human/handle_disabilities()
 	if (getBrainLoss() >= 60 && stat != 2)
 		if (prob(3))
 			switch(pick(1,2,3))
@@ -142,7 +90,7 @@
 					emote("drool")
 
 
-/mob/living/carbon/human/proc/handle_mutations_and_radiation()
+/mob/living/carbon/human/handle_mutations_and_radiation()
 	if(dna)
 		dna.species.handle_mutations_and_radiation(src)
 
@@ -152,7 +100,7 @@
 
 	return
 
-/mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	if(dna)
 		dna.species.handle_environment(environment, src)
 
@@ -407,13 +355,13 @@
 			apply_damage(0.4*discomfort, BURN, "r_arm")
 */
 
-/mob/living/carbon/human/proc/handle_chemicals_in_body()
+/mob/living/carbon/human/handle_chemicals_in_body()
 	if(dna)
 		dna.species.handle_chemicals_in_body(src)
 
 	return //TODO: DEFERRED
 
-/mob/living/carbon/human/proc/handle_regular_status_updates()
+/mob/living/carbon/human/handle_regular_status_updates()
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
@@ -451,6 +399,8 @@
 			if( prob(10) && health && !hal_crit )
 				spawn(0)
 					emote("snore")
+		else if (status_flags & FAKEDEATH)
+			stat = UNCONSCIOUS
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS
@@ -539,7 +489,7 @@
 
 	return 1
 
-/mob/living/carbon/human/proc/handle_regular_hud_updates()
+/mob/living/carbon/human/handle_regular_hud_updates()
 	if(!client)	return 0
 
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
@@ -631,7 +581,7 @@
 
 	return 1
 
-/mob/living/carbon/human/proc/handle_random_events()
+/mob/living/carbon/human/handle_random_events()
 	// Puke if toxloss is too high
 	if(!stat)
 		if (getToxLoss() >= 45 && nutrition > 20)
@@ -653,25 +603,23 @@
 				// make it so you can only puke so fast
 				lastpuke = 0
 
-/mob/living/carbon/human/proc/handle_stomach()
-	spawn(0)
-		for(var/mob/living/M in stomach_contents)
-			if(M.loc != src)
-				stomach_contents.Remove(M)
-				continue
-			if(istype(M, /mob/living/carbon) && stat != 2)
-				if(M.stat == 2)
-					M.death(1)
-					stomach_contents.Remove(M)
-					qdel(M)
-					continue
-				if(SSmob.times_fired%3==1)
-					if(!(M.status_flags & GODMODE))
-						M.adjustBruteLoss(5)
-					nutrition += 10
 
-/mob/living/carbon/human/proc/handle_changeling()
+/mob/living/carbon/human/handle_changeling()
 	if(mind && mind.changeling)
 		mind.changeling.regenerate()
+
+
+/mob/living/carbon/human/proc/handle_embedded_objects()
+	for(var/obj/item/organ/limb/L in organs)
+		for(var/obj/item/I in L.embedded_objects)
+			if(prob(I.embedded_pain_chance))
+				L.take_damage(I.w_class*2)
+				src << "<span class='userdanger'>\the [I] embedded in your [L.getDisplayName()] hurts!</span>"
+
+			if(prob(I.embedded_fall_chance))
+				L.take_damage(I.w_class*5)
+				L.embedded_objects -= I
+				I.loc = get_turf(src)
+				visible_message("<span class='danger'>\the [I] falls out of [name]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I] falls out of your [L.getDisplayName()]!</span>")
 
 #undef HUMAN_MAX_OXYLOSS

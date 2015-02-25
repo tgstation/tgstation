@@ -124,7 +124,7 @@
 	add_hiddenprint(user)
 	deactivate(user,0)
 
-/obj/machinery/camera/attackby(W as obj, mob/living/user as mob)
+/obj/machinery/camera/attackby(W as obj, mob/living/user as mob, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
 	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
 

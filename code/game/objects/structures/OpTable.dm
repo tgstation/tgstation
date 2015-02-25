@@ -28,7 +28,7 @@
 		return 0
 
 
-/obj/structure/optable/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/optable/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
 		if(!G.confirm())
