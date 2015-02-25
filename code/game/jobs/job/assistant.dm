@@ -15,7 +15,7 @@ Assistant
 
 /datum/job/assistant/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	if (config.gray_assistants)
+	if (config.grey_assistants)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(H), slot_w_uniform)
 	else
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/color/random(H), slot_w_uniform)
