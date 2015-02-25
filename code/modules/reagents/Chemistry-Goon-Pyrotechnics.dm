@@ -22,7 +22,7 @@
 
 /datum/reagent/clf3/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.adjust_fire_stacks(20)
+	M.adjust_fire_stacks(5)
 	M.IgniteMob()
 	M.adjustFireLoss(5*REM)
 	..()
@@ -54,7 +54,7 @@
 
 /datum/reagent/clf3/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(method == TOUCH && ishuman(M))
-		M.adjust_fire_stacks(20)
+		M.adjust_fire_stacks(5)
 		M.IgniteMob()
 		new /obj/effect/hotspot(M.loc)
 		return

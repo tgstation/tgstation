@@ -1,8 +1,9 @@
 #define SOLID 1
 #define LIQUID 2
 #define GAS 3
-
 #define REM REAGENTS_EFFECT_MULTIPLIER
+
+var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 
 datum/reagent/oil
 	name = "Oil"
@@ -40,7 +41,9 @@ datum/reagent/carpet
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
 /datum/reagent/carpet/reaction_turf(var/turf/simulated/T, var/volume)
-	if(istype(T, /turf/simulated/floor/) && !istype(T, /turf/simulated/floor/fancy/carpet))
+	if(istype(T, /turf/simulated/floor/fancy/carpet))
+		return
+	if(istype(T, /turf/simulated/floor/plating) || istype(T, /turf/simulated/floor/plasteel))
 		var/turf/simulated/floor/F = T
 		F.visible_message("[T] gets a layer of carpeting applied!")
 		F.ChangeTurf(/turf/simulated/floor/fancy/carpet)
@@ -118,7 +121,6 @@ datum/reagent/colorful_reagent
 	description = "A solution."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	var/list/potential_colors = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 
 /datum/chemical_reaction/colorful_reagent
 	name = "colorful_reagent"
@@ -129,23 +131,23 @@ datum/reagent/colorful_reagent
 
 datum/reagent/colorful_reagent/on_mob_life(var/mob/living/M as mob)
 	if(M && isliving(M))
-		M.color = pick(potential_colors)
+		M.color = pick(random_color_list)
 	..()
 	return
 
 datum/reagent/colorful_reagent/reaction_mob(var/mob/living/M, var/volume)
 	if(M && isliving(M))
-		M.color = pick(potential_colors)
+		M.color = pick(random_color_list)
 	..()
 	return
 datum/reagent/colorful_reagent/reaction_obj(var/obj/O, var/volume)
 	if(O)
-		O.color = pick(potential_colors)
+		O.color = pick(random_color_list)
 	..()
 	return
 datum/reagent/colorful_reagent/reaction_turf(var/turf/T, var/volume)
 	if(T)
-		T.color = pick(potential_colors)
+		T.color = pick(random_color_list)
 	..()
 	return
 
@@ -228,15 +230,6 @@ datum/reagent/hair_dye
 	result = "hair_dye"
 	required_reagents = list("colorful_reagent" = 1, "radium" = 1, "space_drugs" = 1)
 	result_amount = 5
-
-datum/reagent/hair_dye/on_mob_life(var/mob/living/M as mob)
-	if(M && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.hair_color = pick(potential_colors)
-		H.facial_hair_color = pick(potential_colors)
-		H.update_hair()
-	..()
-	return
 
 datum/reagent/hair_dye/reaction_mob(var/mob/living/M, var/volume)
 	if(M && ishuman(M))

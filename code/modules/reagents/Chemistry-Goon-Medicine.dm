@@ -599,25 +599,15 @@ datum/reagent/epinephrine/overdose_process(var/mob/living/M as mob)
 datum/reagent/strange_reagent
 	name = "Strange Reagent"
 	id = "strange_reagent"
-	description = "A chemical used in creation of other chemicals."
+	description = "A miracle medical chem, this little beauty can bring the dead back to life!"
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-/*
-
---Commented out for now due to balance issues, defibs were kind of worthless.
 
 datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob, var/method=TOUCH, var/volume)
 	if(M.stat == DEAD)
-		if(M.getBruteLoss() >= 80 || M.getFireLoss() >= 80)
-			if(ishuman(M) || ismonkey(M))
-				var/mob/living/carbon/C_target = M
-				var/obj/item/organ/brain/B = C_target.getorgan(/obj/item/organ/brain)
-				if(B)
-					B.loc = get_turf(C_target)
-					B.transfer_identity(C_target)
-					C_target.internal_organs -= B
-				M.gib(M)
-				return
+		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
+			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
+			return
 		var/mob/dead/observer/ghost = M.get_ghost()
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
 		if(!M.suiciding && !ghost && !(NOCLONE in M.mutations))
@@ -631,7 +621,6 @@ datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob,
 			hardset_dna(M, null, null, null, null, /datum/species/zombie)
 	..()
 	return
-*/
 datum/reagent/strange_reagent/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(prob(rand(1,100)))
