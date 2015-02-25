@@ -83,8 +83,13 @@ In short:
 
 		A.updateicon()
 
-	for(var/turf/space/spess in world)
+	/*for(var/turf/space/spess in world)
 		spess.overlays += "hell01"
+	*/
+	var/image/I = image("icon" = 'icons/turf/space.dmi', "icon_state" = "hell01", "layer" = 10)
+	var/area/space = locate(/area)
+	if(space.name = "Space")
+		space.overlays += I
 
 	for(var/turf/simulated/floor/T in world)
 		if(!T.holy && prob(1))
@@ -97,7 +102,9 @@ In short:
 	for (var/obj/machinery/power/apc/APC in power_machines)
 		if (!(APC.stat & BROKEN) && !istype(APC.areaMaster,/area/turret_protected/ai))
 			if(APC.cell)
-				APC.cell.charge = 0
+				qdel(APC.cell)
+				APC.cell = null
+				power_machines -= APC
 			APC.emagged = 1
 			APC.queue_icon_update()
 
