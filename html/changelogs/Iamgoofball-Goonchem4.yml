@@ -14,7 +14,7 @@ changes:
   - rscadd: "Adds Bath Salts, mix it with Bad Food, Saltpetre, Nutriment, Space Cleaner, Universal Enzyme, Tea, and Mercury at 374K."
   - rscadd: "Adds Aranesp. Mix it with Epinephrine, Atropine, and Morphine."
   - rscadd: "Adds Hotline. Get it from Poppy plants."
-  - rscadd: "Strange Reagent revival was commented out. The reagent still exists in using for making Life."
+  - rscadd: "Strange Reagent revival was changed. It now won't gib but won't do anything above a 100 BRUTE or BURN threshold."
   - rscadd: "Carpet now applies carpet tiles to whatever flooring it hits. Mix it with Space Drugs and Blood."
   - rscadd: "Colorful Reagent colors have been improved drastically and now are more varied and nicer looking."
   - rscadd: "Corn Starch has been added. Get it from juicing Corn."
