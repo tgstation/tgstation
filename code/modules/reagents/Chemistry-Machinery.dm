@@ -938,6 +938,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		var/list/juice_items = list (
 
 				//Juicer Stuff
+				/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("corn_starch" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
