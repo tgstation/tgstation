@@ -75,8 +75,17 @@ MASS SPECTROMETER
 	throw_range = 7
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
-	var/mode = 1;
+	var/mode = 1
+	var/scanchems = 0
 
+/obj/item/device/healthanalyzer/attack_self(mob/user)
+	if(!scanchems)
+		user << "<span class = 'notice'>You switch the health analyzer to scan chemical contents.</span>"
+		scanchems = 1
+	else
+		user << "<span class = 'notice'>You switch the health analyzer to check physical health.</span>"
+		scanchems = 0
+	return
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
 
 	// Clumsiness/brain damage check
@@ -92,7 +101,10 @@ MASS SPECTROMETER
 
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
 
-	healthscan(user, M, mode)
+	if(!scanchems)
+		healthscan(user, M, mode)
+	else
+		chemscan(user, M)
 
 	src.add_fingerprint(user)
 	return
@@ -177,6 +189,22 @@ MASS SPECTROMETER
 			else
 				user.show_message("<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span>")
 
+/proc/chemscan(var/mob/living/user, var/mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.reagents)
+			if(H.reagents.reagent_list.len)
+				user.show_message("<span class='notice'>Subject contains the following reagents:</span>")
+				for(var/datum/reagent/R in H.reagents.reagent_list)
+					user.show_message("<span class='notice'>[R.volume]u of [R.name][R.overdosed == 1 ? "</span> - <span class = 'userdanger'>OVERDOSING</span>" : ".</span>"]")
+			else
+				user.show_message("<span class = 'notice'>Subject contains no reagents.</span>")
+			if(H.reagents.addiction_list.len)
+				user.show_message("<span class='userdanger'>Subject is addicted to the following reagents:</span>")
+				for(var/datum/reagent/R in H.reagents.addiction_list)
+					user.show_message("<span class='danger'>[R.name]</span>")
+			else
+				user.show_message("<span class='notice'>Subject is not addicted to any reagents.</span>")
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
