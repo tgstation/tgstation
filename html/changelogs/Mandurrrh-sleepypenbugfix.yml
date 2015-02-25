@@ -1,8 +1,0 @@
-author: Mandurrrh
-
-# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
-delete-after: True
-
-
-changes: 
-  - bugfix - 'Fixes sleepypen bug. Instead of only dispensing 50u it dispenses the full 55u.'
