@@ -139,8 +139,7 @@
 		..()
 
 
-/obj/item/weapon/wirecutters/proc/attachable()
-	return
+
 
 
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
