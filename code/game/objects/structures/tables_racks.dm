@@ -324,8 +324,11 @@
 	return
 
 
-/obj/structure/table/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/table/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (!W) return
+
+	var/list/params_list = params2list(params)
+
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if (istype(G.affecting, /mob/living))
@@ -347,11 +350,12 @@
 			return
 
 	if (istype(W, /obj/item/weapon/wrench))
-		user << "\blue Now disassembling table"
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user,50))
-			destroy()
-		return
+		if(!params_list.len || text2num(params_list["icon-y"]) < 8) //8 above the bottom of the icon
+			user << "\blue Now disassembling table"
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user,50))
+				destroy()
+			return
 
 	if(isrobot(user))
 		return
@@ -366,7 +370,10 @@
 			O.show_message("\blue The [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
 		destroy()
 
-	user.drop_item(src.loc)
+	if(user.drop_item(src.loc))
+		if(W.loc == src.loc && params_list.len)
+			W.pixel_x = text2num(params_list["icon-x"]) - 16
+			W.pixel_y = text2num(params_list["icon-y"]) - 16
 	return
 
 /obj/structure/table/proc/straight_table_check(var/direction)
@@ -520,12 +527,12 @@
 	else
 		return ..()
 
-/obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+	var/list/params_list = params2list(params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(!(WT.welding))
-			user.drop_item(src.loc)
-			return
+		if(!(WT.welding) || (params_list.len && text2num(params_list["icon-y"]) > 8)) //8 above the bottom of the icon
+			return ..()
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
 				user << "\blue Now weakening the reinforced table"
@@ -546,9 +553,11 @@
 
 	if (istype(W, /obj/item/weapon/wrench))
 		if(src.status == 2)
-			user.drop_item(src.loc)
+			if(user.drop_item(src.loc))
+				if(W.loc == src.loc && params_list.len)
+					W.pixel_x = text2num(params_list["icon-x"]) - 16
+					W.pixel_y = text2num(params_list["icon-y"]) - 16
 			return
-
 	..()
 
 /*
