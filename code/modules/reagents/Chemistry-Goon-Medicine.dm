@@ -62,15 +62,15 @@ datum/reagent/styptic_powder/on_mob_life(var/mob/living/M as mob)
 datum/reagent/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "33% chance per cycle of healing 3 point each of BRUTE and BURN damage."
+	description = "33% chance per cycle of healing 1 point each of BRUTE and BURN damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
 datum/reagent/salglu_solution/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(50))
-		M.adjustBruteLoss(-3*REM)
-		M.adjustFireLoss(-3*REM)
+	if(prob(33))
+		M.adjustBruteLoss(-1*REM)
+		M.adjustFireLoss(-1*REM)
 	..()
 	return
 

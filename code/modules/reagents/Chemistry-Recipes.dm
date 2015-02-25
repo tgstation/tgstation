@@ -183,8 +183,8 @@ silicate
 	name = "Sodium Chloride"
 	id = "sodiumchloride"
 	result = "sodiumchloride"
-	required_reagents = list("sodium" = 1, "chlorine" = 1)
-	result_amount = 2
+	required_reagents = list("water" = 1, "sodium" = 1, "chlorine" = 1)
+	result_amount = 3
 
 /datum/chemical_reaction/flash_powder
 	name = "Flash powder"
