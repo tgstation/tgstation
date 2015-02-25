@@ -49,7 +49,7 @@
 	waterlevel = maxwater
 	nutrilevel = 3
 
-/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user)
+/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
 	if(exchange_parts(user, I))
 		return
 
@@ -402,6 +402,8 @@ obj/machinery/hydroponics/proc/mutatepest()
 
 obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 
+	myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
+
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
 	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
 		switch(rand(100))
@@ -571,7 +573,7 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 			if(1   to 32)	mutatepest()
 			else 			usr << "Nothing happens..."
 
-obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
+obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 
 	//Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
@@ -671,20 +673,18 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "-Plant Production: <span class='notice'> [myseed.production]</span>"
 			if(myseed.potency != -1)
 				user << "-Plant Potency: <span class='notice'> [myseed.potency]</span>"
-			user << "-Weed level: <span class='notice'> [weedlevel] / 10</span>"
-			user << "-Pest level: <span class='notice'> [pestlevel] / 10</span>"
-			user << "-Toxicity level: <span class='notice'> [toxic] / 100</span>"
-			user << "-Water level: <span class='notice'> [waterlevel] / [maxwater]</span>"
-			user << "-Nutrition level: <span class='notice'> [nutrilevel] / [maxnutri]</span>"
-			user << ""
+			var/list/text_strings = myseed.get_analyzer_text()
+			if(text_strings)
+				for(var/string in text_strings)
+					user << string
 		else
 			user << "<B>No plant found.</B>"
-			user << "-Weed level: <span class='notice'> [weedlevel] / 10</span>"
-			user << "-Pest level: <span class='notice'> [pestlevel] / 10</span>"
-			user << "-Toxicity level: <span class='notice'> [toxic] / 100</span>"
-			user << "-Water level: <span class='notice'> [waterlevel] / [maxwater]</span>"
-			user << "-Nutrition level: <span class='notice'> [nutrilevel] / [maxnutri]</span>"
-			user << ""
+		user << "-Weed level: <span class='notice'> [weedlevel] / 10</span>"
+		user << "-Pest level: <span class='notice'> [pestlevel] / 10</span>"
+		user << "-Toxicity level: <span class='notice'> [toxic] / 100</span>"
+		user << "-Water level: <span class='notice'> [waterlevel] / [maxwater]</span>"
+		user << "-Nutrition level: <span class='notice'> [nutrilevel] / [maxnutri]</span>"
+		user << ""
 
 	else if(istype(O, /obj/item/weapon/minihoe))
 		if(weedlevel > 0)
@@ -977,7 +977,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		SetLuminosity(0)
 	return
 
-/obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	..()
 	if(istype(O, /obj/item/weapon/shovel))
 		user << "You clear up [src]!"

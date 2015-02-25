@@ -111,11 +111,6 @@
 	icon = "slipperyshots"
 	desc = "Slippery slope to drunkeness with our shots!"
 
-/datum/barsign/thegreytide
-	name = "The Grey Tide"
-	icon = "thegreytide"
-	desc = "Take a break from toolboxing and enjoy a lazy beer!"
-
 /datum/barsign/honkednloaded
 	name = "Honked 'n' Loaded"
 	icon = "honkednloaded"

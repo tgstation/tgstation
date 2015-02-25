@@ -22,25 +22,25 @@
 	build_path = /obj/item/device/firing_pin/implant/loyalty
 	category = list("Firing Pins")
 
+/datum/design/stunrevolver
+	name = "Stun Revolver"
+	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
+	id = "stunrevolver"
+	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000, "$glass" = 1000)
+	build_path = /obj/item/weapon/gun/energy/stunrevolver
+	category = list("Weapons")
+
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
 	desc = "An energy gun with an experimental miniaturized reactor."
 	id = "nuclear_gun"
-	req_tech = list("combat" = 3, "materials" = 5, "powerstorage" = 3)
+	req_tech = list("combat" = 4, "materials" = 5, "powerstorage" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 2000)
 	reliability = 76
 	build_path = /obj/item/weapon/gun/energy/gun/nuclear
-	category = list("Weapons")
-
-/datum/design/stunrevolver
-	name = "Stun Revolver"
-	desc = "A high-tech revolver that fires internal, reusable stun cartridges in a revolving cylinder. The stun cartridges can be recharged using a conventional energy weapon recharger."
-	id = "stunrevolver"
-	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 2)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 4000)
-	build_path = /obj/item/weapon/gun/energy/stunrevolver
 	category = list("Weapons")
 
 /datum/design/tele_shield

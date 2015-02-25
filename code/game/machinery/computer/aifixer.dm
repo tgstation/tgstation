@@ -13,7 +13,7 @@
 	..()
 
 
-/obj/machinery/computer/aifixer/attackby(I as obj, user as mob)
+/obj/machinery/computer/aifixer/attackby(I as obj, user as mob, params)
 	if(occupier && istype(I, /obj/item/weapon/screwdriver))
 		if(stat & (NOPOWER|BROKEN))
 			user << "<span class='warning'>The screws on [name]'s screen won't budge.</span>"

@@ -99,11 +99,13 @@
 	return
 
 /obj/machinery/computer/station_alert/update_icon()
+	SetLuminosity(brightness_on)
 	if(stat & BROKEN)
 		icon_state = "alert:b"
 		return
 	else if (stat & NOPOWER)
 		icon_state = "alert:O"
+		SetLuminosity(0)
 		return
 	var/active_alarms = 0
 	for (var/cat in src.alarms)

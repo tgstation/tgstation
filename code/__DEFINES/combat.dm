@@ -28,7 +28,9 @@
 #define CANWEAKEN	2
 #define CANPARALYSE	4
 #define CANPUSH		8
-#define GOTTAGOFAST	16
+#define IGNORESLOWDOWN	16
+#define GOTTAGOFAST	32
+#define GOTTAGOREALLYFAST	64
 #define GODMODE		4096
 #define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
 #define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
@@ -48,3 +50,8 @@
 #define HOSTILE_STANCE_ATTACKING	4
 //#define HOSTILE_STANCE_TIRED		5 //Was also only used by bears
 
+
+//Embedded objects
+#define EMBEDDED_PAIN_CHANCE 		15	//Chance for embedded objects to cause pain (damage user)
+#define EMBEDDED_ITEM_FALLOUT 		5	//Chance for embedded object to fall out (causing pain but removing the object)
+#define EMBED_CHANCE				45	//Chance for an object to embed into somebody when thrown (if it's sharp)

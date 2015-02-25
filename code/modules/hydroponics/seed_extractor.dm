@@ -52,7 +52,7 @@
 	anchored = 1
 	var/piles = list()
 
-obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob)
+obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(isrobot(user))
 		return
 

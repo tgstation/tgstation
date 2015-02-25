@@ -145,7 +145,7 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
-/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
+/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob, params)
 	if(isrobot(user))
 		return
 
@@ -223,7 +223,7 @@
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents = sortList(dispensable_reagents | special_reagents[i])
 
-/obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user, params)
 	..()
 	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
 		return
@@ -279,7 +279,7 @@
 			stat |= NOPOWER
 
 
-/obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob)
+/obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
 
 	if(default_unfasten_wrench(user, B))
 		return
@@ -850,7 +850,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	return
 
 
-/obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(stat & (NOPOWER|BROKEN)) return
 		if(src.beaker)
@@ -939,6 +939,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		var/list/juice_items = list (
 
 				//Juicer Stuff
+				/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("corn_starch" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
@@ -973,7 +974,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		return
 
 
-/obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 
 		if(default_unfasten_wrench(user, O))
 				return
@@ -1318,7 +1319,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	idle_power_usage = 40
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/desired_temp = 300
-	var/heater_coefficient = 0.15
+	var/heater_coefficient = 0.10
 	var/on = FALSE
 
 /obj/machinery/chem_heater/New()
@@ -1330,7 +1331,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	RefreshParts()
 
 /obj/machinery/chem_heater/RefreshParts()
-	heater_coefficient = 0.15
+	heater_coefficient = 0.10
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
 		heater_coefficient *= M.rating
 
@@ -1341,14 +1342,14 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	var/state_change = 0
 	if(on)
 		if(beaker)
-			if(beaker.reagents.chem_temp != desired_temp)
-				beaker.reagents.chem_temp += ((desired_temp - beaker.reagents.chem_temp) * heater_coefficient)
+			if(beaker.reagents.chem_temp > desired_temp)
+				beaker.reagents.chem_temp += min(-1, (desired_temp - beaker.reagents.chem_temp) * heater_coefficient)
+			if(beaker.reagents.chem_temp < desired_temp)
+				beaker.reagents.chem_temp += max(1, (desired_temp - beaker.reagents.chem_temp) * heater_coefficient)
+			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp) //stops stuff like 456.12312312302
 
-				beaker.reagents.chem_temp = round(beaker.reagents.chem_temp) //stops stuff like 456.12312312302
-				if(beaker.reagents.chem_temp == ((desired_temp-3) || (desired_temp+3)))//need better way to stop superdecimals and rounding drops
-					beaker.reagents.chem_temp = desired_temp
-				beaker.reagents.handle_reactions()
-				state_change = 1
+			beaker.reagents.handle_reactions()
+			state_change = 1
 
 	if(state_change)
 		SSnano.update_uis(src)
@@ -1369,7 +1370,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			stat |= NOPOWER
 	SSnano.update_uis(src)
 
-/obj/machinery/chem_heater/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/chem_heater/attackby(var/obj/item/I as obj, var/mob/user as mob, params)
 	if(isrobot(user))
 		return
 

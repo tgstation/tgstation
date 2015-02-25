@@ -13,7 +13,7 @@
 
 /obj/item/device/encryptionkey/New()
 
-/obj/item/device/encryptionkey/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/encryptionkey/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 
 /obj/item/device/encryptionkey/syndicate
 	icon_state = "cypherkey"

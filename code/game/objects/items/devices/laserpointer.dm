@@ -44,7 +44,7 @@
 /obj/item/device/laser_pointer/attack(mob/living/M, mob/user)
 	laser_act(M, user)
 
-/obj/item/device/laser_pointer/attackby(obj/item/W, mob/user)
+/obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
 		if(!diode)
 			user.drop_item()

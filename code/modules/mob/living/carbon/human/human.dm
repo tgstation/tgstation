@@ -160,7 +160,7 @@
 	<tr><td>&nbsp;</td></tr>"}
 
 	dat += "<tr><td><B>Back:</B></td><td><A href='?src=\ref[src];item=[slot_back]'>[(back && !(back.flags&ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A>"
-	if(has_breathable_mask && istype(back, /obj/item/weapon/tank/internals))
+	if(has_breathable_mask && istype(back, /obj/item/weapon/tank))
 		dat += "&nbsp;<A href='?src=\ref[src];internal=[slot_back]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
 	dat += "</td></tr><tr><td>&nbsp;</td></tr>"
@@ -187,7 +187,7 @@
 	dat += "<tr><td><B>Exosuit:</B></td><td><A href='?src=\ref[src];item=[slot_wear_suit]'>[(wear_suit && !(wear_suit.flags&ABSTRACT)) ? wear_suit : "<font color=grey>Empty</font>"]</A></td></tr>"
 	if(wear_suit)
 		dat += "<tr><td>&nbsp;&#8627;<B>Suit Storage:</B></td><td><A href='?src=\ref[src];item=[slot_s_store]'>[(s_store && !(s_store.flags&ABSTRACT)) ? s_store : "<font color=grey>Empty</font>"]</A>"
-		if(has_breathable_mask && istype(s_store, /obj/item/weapon/tank/internals))
+		if(has_breathable_mask && istype(s_store, /obj/item/weapon/tank))
 			dat += "&nbsp;<A href='?src=\ref[src];internal=[slot_s_store]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 		dat += "</td></tr>"
 	else
@@ -214,7 +214,7 @@
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
 	else
 		dat += "<tr><td>&nbsp;&#8627;<B>Belt:</B></td><td><A href='?src=\ref[src];item=[slot_belt]'>[(belt && !(belt.flags&ABSTRACT)) ? belt : "<font color=grey>Empty</font>"]</A>"
-		if(has_breathable_mask && istype(belt, /obj/item/weapon/tank/internals))
+		if(has_breathable_mask && istype(belt, /obj/item/weapon/tank))
 			dat += "&nbsp;<A href='?src=\ref[src];internal=[slot_belt]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 		dat += "</td></tr>"
 		dat += "<tr><td>&nbsp;&#8627;<B>Pockets:</B></td><td><A href='?src=\ref[src];pockets=left'>[(l_store && !(l_store.flags&ABSTRACT)) ? "Left (Full)" : "<font color=grey>Left (Empty)</font>"]</A>"
@@ -251,6 +251,23 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+
+		if(href_list["embedded_object"])
+			var/obj/item/I = locate(href_list["embedded_object"])
+			var/obj/item/organ/limb/L = locate(href_list["embedded_limb"])
+			if(!I || !L || I.loc != src) //no item, no limb, or item is not in limb (the person atleast) anymore
+				return
+			var/time_taken = 30*I.w_class
+			usr.visible_message("<span class='notice'>[usr] attempts to remove [I] from their [L.getDisplayName()]!</span>","<span class='notice'>You attempt to remove [I] from your [L.getDisplayName()], it will take [time_taken/10] seconds.</span>")
+			if(do_after(usr, time_taken, needhand = 1))
+				L.embedded_objects -= I
+				L.take_damage(8*I.w_class)//It hurts to rip it out, get surgery you dingus.
+				I.loc = get_turf(src)
+				usr.put_in_hands(I)
+				usr.emote("scream")
+				usr.visible_message("<span class='danger'>[usr] successfully rips [I] out of their [L.getDisplayName()]!</span>","<span class='userdanger'>You successfully remove [I] from your [L.getDisplayName()]!</span>")
+			return
+
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			if(slot in check_obscured_slots())
@@ -637,3 +654,66 @@
 	if(mob_negates_gravity())
 		return
 	..()
+
+
+
+/mob/living/carbon/human/help_shake_act(mob/living/carbon/human/M)
+	if(!istype(M))
+		return
+
+	var/mob/living/carbon/human/H = src
+
+	if(health >= 0)
+		if(src == M)
+			visible_message( \
+				"<span class='notice'>[src] examines \himself.", \
+				"<span class='notice'>You check yourself for injuries.</span>")
+
+			for(var/obj/item/organ/limb/org in H.organs)
+				var/status = ""
+				var/brutedamage = org.brute_dam
+				var/burndamage = org.burn_dam
+				if(hallucination)
+					if(prob(30))
+						brutedamage += rand(30,40)
+					if(prob(30))
+						burndamage += rand(30,40)
+
+				if(brutedamage > 0)
+					status = "bruised"
+				if(brutedamage > 20)
+					status = "bleeding"
+				if(brutedamage > 40)
+					status = "mangled"
+				if(brutedamage > 0 && burndamage > 0)
+					status += " and "
+				if(burndamage > 40)
+					status += "peeling away"
+
+				else if(burndamage > 10)
+					status += "blistered"
+				else if(burndamage > 0)
+					status += "numb"
+				if(status == "")
+					status = "OK"
+				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
+
+				for(var/obj/item/I in org.embedded_objects)
+					src << "\t <a href='byond://?src=\ref[H];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
+
+			if(H.blood_max)
+				src << "<span class='danger'>You are bleeding!</span>"
+			if(staminaloss)
+				if(staminaloss > 30)
+					src << "<span class='info'>You're completely exhausted.</span>"
+				else
+					src << "<span class='info'>You feel fatigued.</span>"
+			if(dna && dna.species.id && dna.species.id == "skeleton" && !H.w_uniform && !H.wear_suit)
+				H.play_xylophone()
+		else
+			if(H.wear_suit)
+				H.wear_suit.add_fingerprint(M)
+			else if(H.w_uniform)
+				H.w_uniform.add_fingerprint(M)
+
+			..()

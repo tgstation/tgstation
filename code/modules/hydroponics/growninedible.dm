@@ -64,7 +64,7 @@
 	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
 
 
-/obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
@@ -296,7 +296,7 @@
 	throw_speed = 3
 	throw_range = 7
 
-/obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W as obj, mob/user as mob)
+/obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W as obj, mob/user as mob, params)
 	..()
 	if(is_sharp(W))
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"

@@ -153,10 +153,16 @@
 		spawn(40)
 			charging = 0
 
-/obj/item/holotape/Bumped(var/mob/living/carbon/C)
-	if(C.m_intent == "walk")
+/obj/item/holotape/Bumped(var/mob/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.m_intent == "walk")
+			var/turf/T = get_turf(src)
+			C.loc = T
+
+	if(M.has_unlimited_silicon_privilege)
 		var/turf/T = get_turf(src)
-		C.loc = T
+		M.loc = T
 
 /obj/item/holotape/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(!density) return 1
@@ -198,7 +204,7 @@
 		breaktape()
 	return
 
-/obj/item/holotape/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/holotape/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	health -= W.force * 0.3
