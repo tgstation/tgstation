@@ -12,7 +12,7 @@
 	..()
 
 
-/mob/living/carbon/attackby(obj/item/I, mob/user)
+/mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	if(lying || isslime(src))
 		if(surgeries.len)
 			if(user.a_intent == "help")

@@ -13,7 +13,7 @@
 	desc = "A plain cake, not a lie."
 	icon_state = "plaincake"
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/cake
-	list_reagents = list("nutriment" = 5, "vitamin" = 5)
+	list_reagents = list("nutriment" = 10, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/plain
 	name = "vanilla cake slice"
@@ -27,7 +27,7 @@
 	icon_state = "carrotcake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/carrot
 	slices_num = 5
-	list_reagents = list("oculine" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 3, "oculine" = 5, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/carrot
 	name = "carrot cake slice"
@@ -42,7 +42,7 @@
 	icon_state = "braincake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/brain
 	slices_num = 5
-	list_reagents = list("mannitol" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 5, "mannitol" = 10, "vitamin" = 10)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/brain
@@ -73,7 +73,7 @@
 	icon_state = "orangecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/orange
 	slices_num = 5
-	list_reagents = list("vitamin" = 10)
+	list_reagents = list("nutriment" = 3, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/orange
 	name = "orange cake slice"
@@ -87,7 +87,7 @@
 	icon_state = "limecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/lime
 	slices_num = 5
-	list_reagents = list("vitamin" = 10)
+	list_reagents = list("nutriment" = 3, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/lime
 	name = "lime cake slice"
@@ -102,7 +102,7 @@
 	icon_state = "lemoncake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/lemon
 	slices_num = 5
-	list_reagents = list("vitamin" = 10)
+	list_reagents = list("nutriment" = 3, "vitamin" = 10)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/lemon
@@ -118,7 +118,7 @@
 	icon_state = "chocolatecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/chocolate
 	slices_num = 5
-	list_reagents = list("vitamin" = 10)
+	list_reagents = list("nutriment" = 3, "vitamin" = 10)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/chocolate
@@ -134,7 +134,7 @@
 	icon_state = "birthdaycake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday
 	slices_num = 5
-	list_reagents = list("sprinkles" = 10, "vitamin" = 5)
+	list_reagents = list("nutriment" = 7, "sprinkles" = 10, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday
 	name = "birthday cake slice"
@@ -149,7 +149,7 @@
 	icon_state = "applecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/apple
 	slices_num = 5
-	list_reagents = list("vitamin" = 10)
+	list_reagents = list("nutriment" = 3, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/apple
 	name = "apple cake slice"

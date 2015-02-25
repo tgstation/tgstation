@@ -67,6 +67,14 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
+	//Population cap vars
+	var/soft_popcap				= 0
+	var/hard_popcap				= 0
+	var/extreme_popcap			= 0
+	var/soft_popcap_message		= "Be warned that the server is currently serving a high number of users, consider using alternative game servers."
+	var/hard_popcap_message		= "The server is currently serving a high number of users, You cannot currently join. You may wait for the number of living crew to decline, observe, or find alternative servers."
+	var/extreme_popcap_message	= "The server is currently serving a high number of users, find alternative servers."
+
 	//game_options.txt configs
 	var/force_random_names = 0
 	var/list/mode_names = list()
@@ -136,6 +144,10 @@
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
+
+	var/assistant_cap = -1
+
+	var/starlight = 0
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -292,6 +304,18 @@
 						global.comms_allowed = 1
 				if("see_own_notes")
 					config.see_own_notes = 1
+				if("soft_popcap")
+					config.soft_popcap = text2num(value)
+				if("hard_popcap")
+					config.hard_popcap = text2num(value)
+				if("extreme_popcap")
+					config.extreme_popcap = text2num(value)
+				if("soft_popcap_message")
+					config.soft_popcap_message = value
+				if("hard_popcap_message")
+					config.hard_popcap_message = value
+				if("extreme_popcap_message")
+					config.extreme_popcap_message = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -420,6 +444,10 @@
 					config.mutant_races				= 1
 				if("mutant_colors")
 					config.mutant_colors			= 1
+				if("assistant_cap")
+					config.assistant_cap			= text2num(value)
+				if("starlight")
+					config.starlight			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

@@ -164,7 +164,7 @@
 	name = "meat steak"
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 2, "vitamin" = 1)
 	trash = /obj/item/trash/plate
 	filling_color = "#B22222"
 

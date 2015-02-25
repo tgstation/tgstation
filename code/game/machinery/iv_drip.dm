@@ -72,7 +72,7 @@
 			usr << "There's nothing attached to the IV drip!"
 
 
-/obj/machinery/iv_drip/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/iv_drip/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(beaker))
 			user << "There is already a reagent container loaded!"

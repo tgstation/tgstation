@@ -23,3 +23,10 @@ Assistant
 		. |= list(access_maint_tunnels)
 	else
 		return ..()
+
+/datum/job/assistant/config_check()
+	if(config && !(config.assistant_cap == 0))
+		total_positions = config.assistant_cap
+		spawn_positions = config.assistant_cap
+		return 1
+	return 0
