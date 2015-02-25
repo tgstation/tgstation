@@ -164,11 +164,5 @@ proc/goonchem_vortex(var/turf/simulated/T, var/setting_type, var/range, var/pull
 	var/ex_heavy = round(created_volume / 8)
 	var/ex_light = round(created_volume / 6)
 	var/ex_flash = round(created_volume / 4)
-	if(ex_severe > 3)
-		ex_severe = 3
-	if(ex_heavy > 7)
-		ex_heavy = 7
-	if(ex_light > 14)
-		ex_light = 14
-	explosion(T,ex_severe,ex_heavy,ex_light,ex_flash, 1, 1)
+	explosion(T,ex_severe,ex_heavy,ex_light,ex_flash, 1)
 	return
