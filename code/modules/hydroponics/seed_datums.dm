@@ -296,7 +296,7 @@ proc/populate_seed_list()
 	else if(vine_prob < 10)
 		spread = 1
 
-	if(prob(5))
+	if(prob(10))
 		biolum = 1
 		biolum_colour = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 
@@ -364,11 +364,11 @@ proc/populate_seed_list()
 				if(prob(degree*5))
 					harvest_repeat = !harvest_repeat
 			if(10)
-				if(prob(degree*2))
+				if(prob(degree*4))
 					biolum = !biolum
 					if(biolum)
 						source_turf.visible_message("\blue \The [display_name] begins to glow!")
-						if(prob(degree*2))
+						if(prob(degree*4))
 							biolum_colour = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 							source_turf.visible_message("\blue \The [display_name]'s glow <font color='[biolum_colour]'>changes colour</font>!")
 					else
