@@ -65,9 +65,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 #define SHOES_LAYER				16
 #define GLOVES_LAYER			15
 #define EARS_LAYER				14
-#define SUIT_LAYER				13
-#define GLASSES_LAYER			12
-#define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
+#define BELT_LAYER				13		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_LAYER				12
+#define GLASSES_LAYER			11
 #define SUIT_STORE_LAYER		10
 #define BACK_LAYER				9
 #define HAIR_LAYER				8		//TODO: make part of head layer?
