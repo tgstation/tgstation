@@ -1288,12 +1288,12 @@ var/global/list/organ_damage_overlays = list(
 
 		//Jitteryness
 		if(jitteriness)
-			var/amplitude = min(4, (jitteriness/100) + 1) + 2
+			var/amplitude = min(8, (jitteriness/70) + 2)
 			var/pixel_x_diff = rand(-amplitude, amplitude)
 			var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
 
 			spawn()
-				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
+				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = -1)
 				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
 			jitteriness = max(jitteriness-1, 0)
 
