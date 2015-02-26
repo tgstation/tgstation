@@ -88,7 +88,7 @@ In short:
 	*/
 	var/image/I = image("icon" = 'icons/turf/space.dmi', "icon_state" = "hell01", "layer" = 10)
 	var/area/space = locate(/area)
-	if(space.name = "Space")
+	if(space.name == "Space")
 		space.overlays += I
 
 	for(var/turf/simulated/floor/T in world)
