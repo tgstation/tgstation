@@ -104,7 +104,7 @@
 /datum/barsign/theouterspess
 	name = "The Outer Spess"
 	icon = "theouterspess"
-	desc = "This bar isn't <i>actually</i> located in outer space."
+	desc = "Thankfully, while located in outer space, this bar isn't <i>actually</i> outer space."
 
 /datum/barsign/slipperyshots
 	name = "Slippery Shots"
@@ -124,4 +124,4 @@
 /datum/barsign/coderbus
 	name = "The Coderbus"
 	icon = "thecoderbus"
-	desc = "The Coderbus is a very controversial establishment known for its large variety of drinks."
+	desc = "The Coderbus is a very controversial establishment known for its large variety of constantly-changing drinks."
