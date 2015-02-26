@@ -64,7 +64,7 @@
 /datum/barsign/maltesefalcon
 	name = "Maltese Falcon"
 	icon = "maltesefalcon"
-	desc = "The Maltese Faclon, Space Bar and Grill."
+	desc = "The Maltese Falcon, Space Bar and Grill." //you tried
 
 /datum/barsign/thebark
 	name = "The Bark"
