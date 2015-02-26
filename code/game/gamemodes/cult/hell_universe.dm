@@ -97,12 +97,9 @@ In short:
 
 		A.updateicon()
 
-<<<<<<< HEAD
-	/*for(var/turf/space/spess in world)
-=======
 /datum/universal_state/hell/proc/OverlaySet()
+/*
 	for(var/turf/space/spess in world)
->>>>>>> f2ca7d7... Narsie Fixes, Lag Fixes, Power Failure Fixes
 		spess.overlays += "hell01"
 	*/
 	var/image/I = image("icon" = 'icons/turf/space.dmi', "icon_state" = "hell01", "layer" = 10)
@@ -124,8 +121,7 @@ In short:
 		if (!(APC.stat & BROKEN) && !istype(APC.areaMaster,/area/turret_protected/ai))
 			APC.chargemode = 0
 			if(APC.cell)
-				qdel(APC.cell)
-				APC.cell = null
+				APC.cell.charge = 0
 				power_machines -= APC
 			APC.emagged = 1
 			APC.queue_icon_update()
