@@ -1,3 +1,4 @@
+var/global/list/atmos_controllers = list()
 /obj/item/weapon/circuitboard/atmoscontrol
 	name = "\improper Central Atmospherics Computer Circuitboard"
 	build_path = /obj/machinery/computer/atmoscontrol
@@ -24,6 +25,13 @@
 	req_one_access = list(access_ce)
 
 	l_color = "#7BF9FF"
+
+/obj/machinery/computer/atmoscontrol/New()
+	..()
+	atmos_controllers |= src
+/obj/machinery/computer/atmoscontrol/Destroy()
+	atmos_controllers -= src
+	..()
 
 /obj/machinery/computer/atmoscontrol/xeno
 	name = "\improper Xenobiology Atmospherics Computer"
@@ -137,6 +145,9 @@
 /obj/machinery/computer/atmoscontrol/Topic(href, href_list)
 	if(..())
 		return 0
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(href_list["reset"])
 		current = null
 

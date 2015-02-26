@@ -66,22 +66,31 @@ var/global/list/image/fluidtrack_cache=list()
 	* @param goingdir Direction tracks are going to (or 0).
 	* @param bloodcolor Color of the blood when wet.
 	*/
+/obj/effect/decal/cleanable/blood/tracks/resetVariables()
+	stack = list()
+	setdirs=list(
+		"1"=0,
+		"2"=0,
+		"4"=0,
+		"8"=0,
+		"16"=0,
+		"32"=0,
+		"64"=0,
+		"128"=0
+	)
+
+	..("stack", setdirs)
 /obj/effect/decal/cleanable/blood/tracks/proc/AddTracks(var/list/DNA, var/comingdir, var/goingdir, var/bloodcolor="#A10808")
 	var/updated=0
 	// Shift our goingdir 4 spaces to the left so it's in the GOING bitblock.
 	var/realgoing=goingdir<<4
-
-	// Current bit
-	var/b=0
 
 	// When tracks will start to dry out
 	var/t=world.time + TRACKS_CRUSTIFY_TIME
 
 	var/datum/fluidtrack/track
 
-	// Process 4 bits
-	for(var/bi=0;bi<4;bi++)
-		b=1<<bi
+	for (var/b in cardinal)
 		// COMING BIT
 		// If setting
 		if(comingdir&b)
@@ -94,6 +103,8 @@ var/global/list/image/fluidtrack_cache=list()
 				// Remove existing stack entry
 				stack.Remove(track)
 			track=new /datum/fluidtrack(b,bloodcolor,t)
+			if(!istype(stack))
+				stack = list()
 			stack.Add(track)
 			setdirs["[b]"]=stack.Find(track)
 			updatedtracks |= b
@@ -111,6 +122,8 @@ var/global/list/image/fluidtrack_cache=list()
 				// Remove existing stack entry
 				stack.Remove(track)
 			track=new /datum/fluidtrack(b,bloodcolor,t)
+			if(!istype(stack))
+				stack = list()
 			stack.Add(track)
 			setdirs["[b]"]=stack.Find(track)
 			updatedtracks |= b

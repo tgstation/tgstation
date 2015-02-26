@@ -1,5 +1,5 @@
-/proc/iswizard(mob/living/M as mob)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)
+/*/proc/iswizard(mob/living/M as mob)
+	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)*/ //See _macros.dm
 
 /datum/game_mode
 	var/list/datum/mind/wizards = list()
@@ -279,7 +279,7 @@
 			if(wizard.current && wizard.current.spell_list)
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1
-				for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
+				for(var/spell/S in wizard.current.spell_list)
 					text += "[S.name]"
 					if(wizard.current.spell_list.len > i)
 						text += ", "
@@ -293,7 +293,7 @@
 
 //To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(var/mob/M as mob)
-	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
+	for(var/spell/spell_to_remove in src.spell_list)
 		del(spell_to_remove)
 
 // Does this clothing slot count as wizard garb? (Combines a few checks)

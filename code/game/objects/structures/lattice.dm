@@ -11,9 +11,6 @@
 /obj/structure/lattice/New(loc)
 	..(loc)
 
-	if(!(istype(loc, /turf/space)))
-		qdel(src)
-
 	for(var/obj/structure/lattice/ExistingLattice in loc)
 		if(ExistingLattice != src)
 			qdel(ExistingLattice)

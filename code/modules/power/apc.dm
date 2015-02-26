@@ -458,11 +458,11 @@
 					update_icon()
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
-	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
+	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
 			user << "\red You must remove the floor plating in front of the APC first."
 			return
-		var/obj/item/weapon/cable_coil/C = W
+		var/obj/item/stack/cable_coil/C = W
 		if(C.amount < 10)
 			user << "\red You need more wires."
 			return
@@ -494,7 +494,7 @@
 				s.set_up(5, 1, src)
 				s.start()
 				return
-			new /obj/item/weapon/cable_coil(loc,10)
+			new /obj/item/stack/cable_coil(loc,10)
 			user.visible_message(\
 				"\red [user.name] cut the cables and dismantled the power terminal.",\
 				"You cut the cables and dismantle the power terminal.")
@@ -816,10 +816,15 @@
 /obj/machinery/power/apc/Topic(href, href_list)
 	if(..())
 		return 0
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(!can_use(usr, 1))
 		return 0
-
+	if(!istype(usr, /mob/living/silicon) && locked)
+	// Shouldn't happen, this is here to prevent href exploits
+		usr << "You must unlock the panel to use this!"
+		return 1
 	if (href_list["lock"])
 		coverlocked = !coverlocked
 
@@ -864,7 +869,7 @@
 			malfai.malfhack = src
 			malfai.malfhacking = 1
 			sleep(600)
-			if(src)
+			if(src && malfai)
 				if (!src.aidisabled)
 					malfai.malfhack = null
 					malfai.malfhacking = 0
@@ -1088,22 +1093,25 @@
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
-			areaMaster.poweralert(0, src)
+			if(areaMaster.poweralm)
+				areaMaster.poweralert(0, src)
 		else if(cell.percent() < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
-			areaMaster.poweralert(0, src)
+			if(areaMaster.poweralm)
+				areaMaster.poweralert(0, src)
 		else if(cell.percent() < 30 && longtermpower < 0)			// <30%, turn off equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			areaMaster.poweralert(0, src)
+			if(areaMaster.poweralm)
+				areaMaster.poweralert(0, src)
 		else									// otherwise all can be on
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			if(cell.percent() > 75)
+			if(cell.percent() > 75 && !areaMaster.poweralm)
 				areaMaster.poweralert(1, src)
 
 		// now trickle-charge the cell

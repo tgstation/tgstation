@@ -255,7 +255,7 @@ proc/populate_seed_list()
 
 	if(prob(90))
 		requires_nutrients = 1
-		nutrient_consumption = rand(100)*0.1
+		nutrient_consumption = rand(100)/100
 	else
 		requires_nutrients = 0
 
@@ -420,6 +420,7 @@ proc/populate_seed_list()
 					if(isnull(gene_chem[i]))
 						chems[rid][i] = 0
 						gene_chem[i] = 0
+					if(!chems[rid][i]) continue
 
 					if(chems[rid][i])
 						chems[rid][i] = max(1,round((gene_chem[i] + chems[rid][i])/2))
@@ -645,9 +646,12 @@ proc/populate_seed_list()
 	if(consume_gasses) new_seed.consume_gasses = consume_gasses.Copy()
 	if(exude_gasses)   new_seed.exude_gasses = exude_gasses.Copy()
 
-	new_seed.seed_name =            "[(roundstart ? "[(modified ? "modified" : "mutant")] " : "")][seed_name]"
-	new_seed.display_name =         "[(roundstart ? "[(modified ? "modified" : "mutant")] " : "")][display_name]"
-	new_seed.seed_noun =            seed_noun
+	if(modified != -1)
+		new_seed.seed_name = "[(roundstart ? "[(modified ? "modified" : "mutant")] " : "")][seed_name]"
+		new_seed.display_name = "[(roundstart ? "[(modified ? "modified" : "mutant")] " : "")][display_name]"
+	else
+		new_seed.seed_name = "[seed_name]"
+		new_seed.display_name = "[display_name]"
 
 	new_seed.requires_nutrients =   requires_nutrients
 	new_seed.nutrient_consumption = nutrient_consumption
@@ -1037,7 +1041,7 @@ proc/populate_seed_list()
 	mutants = list("libertycap","glowshroom")
 	packet_icon = "mycelium-reishi"
 	plant_icon = "reishi"
-	chems = list("nutriment" = list(1,50), "psilocybin" = list(3,5))
+	chems = list("nutriment" = list(1), "stoxin" = list(3,3), "space_drugs" = list(1,25))
 
 	maturation = 10
 	production = 5
@@ -1053,7 +1057,7 @@ proc/populate_seed_list()
 	mutants = null
 	packet_icon = "mycelium-liberty"
 	plant_icon = "liberty"
-	chems = list("nutriment" = list(1), "stoxin" = list(3,3), "space_drugs" = list(1,25))
+	chems = list("nutriment" = list(1,50), "psilocybin" = list(3,5))
 
 	lifespan = 25
 	production = 1

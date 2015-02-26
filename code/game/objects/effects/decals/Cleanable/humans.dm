@@ -26,14 +26,37 @@ var/global/list/image/splatter_cache=list()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 		D.holder = null
+
+	if(ticker.mode && ticker.mode.name == "cult")
+		var/datum/game_mode/cult/mode_ticker = ticker.mode
+		var/turf/T = get_turf(src)
+		if(T)
+			if(locate(T) in mode_ticker.bloody_floors)
+				mode_ticker.bloody_floors -= T
+				mode_ticker.blood_check()
 	..()
 
 /obj/effect/decal/cleanable/blood/resetVariables()
 	Destroy()
-	..()
+	viruses = list()
+	virus2 = list()
+	blood_DNA = list()
+	..("viruses","virus2", "blood_DNA", args)
 /obj/effect/decal/cleanable/blood/New()
 	..()
 	update_icon()
+
+	if(ticker && ticker.mode && ticker.mode.name == "cult")
+		var/datum/game_mode/cult/mode_ticker = ticker.mode
+		if((mode_ticker.objectives[mode_ticker.current_objective] == "bloodspill") && !mode_ticker.narsie_condition_cleared)
+			var/turf/T = get_turf(src)
+			if(T && (T.z == map.zMainStation))
+				if(locate("\ref[T]") in mode_ticker.bloody_floors)
+				else
+					mode_ticker.bloody_floors += T
+					mode_ticker.bloody_floors[T] = T
+					mode_ticker.blood_check()
+
 	if(istype(src, /obj/effect/decal/cleanable/blood/gibs))
 		return
 	if(istype(src, /obj/effect/decal/cleanable/blood/tracks))
@@ -70,7 +93,8 @@ var/global/list/image/splatter_cache=list()
 		perp.shoes.overlays -= perp.shoes.blood_overlay
 		perp.shoes.blood_overlay.color = basecolor
 		perp.shoes.overlays += perp.shoes.blood_overlay
-		perp.shoes.blood_DNA |= blood_DNA.Copy()
+		if(blood_DNA)
+			perp.shoes.blood_DNA |= blood_DNA.Copy()
 		perp.shoes.blood_color=basecolor
 		perp.update_inv_shoes(1)
 	else

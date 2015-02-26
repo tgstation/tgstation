@@ -16,6 +16,7 @@
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 	var/greytoggle = "Greyscale"
 	var/mob/living/ass = null
+	var/copying = 0
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -71,90 +72,109 @@
 	if(..())
 		return
 	if(href_list["copy"])
+		if(copying)
+			usr << "<span class='warning'>\The [src] is busy with another print job.</span>"
+			return
 		if(copy)
-			for(var/i = 0, i < copies, i++)
-				if(toner > 0)
-					var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
-					if(toner > 10)	//lots of toner, make it dark
-						c.info = "<font color = #101010>"
-					else			//no toner? shitty copies for you!
-						c.info = "<font color = #808080>"
-					var/copied = html_decode(copy.info)
-					copied = replacetext(copied, "color:", "nocolor:")	//state of the art techniques in action
-					c.info += copied
-					c.info += "</font>"
-					c.name = copy.name
-					c.fields = copy.fields
-					c.updateinfolinks()
-					toner--
-					sleep(15)
-				else
-					break
-			updateUsrDialog()
-		else if(photocopy)
-			for(var/i = 0, i < copies, i++)
-				if(toner >= 5)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
-					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
-					var/icon/I = icon(photocopy.icon, photocopy.icon_state)
-					var/icon/img = icon(photocopy.img)
-					if(greytoggle == "Greyscale")
-						if(toner > 10) //plenty of toner, go straight greyscale
-							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)) //I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.
-							img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-						else //not much toner left, lighten the photo
-							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
-							img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
-						toner -= 5	//photos use a lot of ink!
-					else if(greytoggle == "Color")
-						if(toner >= 10)
-							toner -= 10 //Color photos use even more ink!
-						else
-							continue
-					p.icon = I
-					p.img = img
-					p.name = photocopy.name
-					p.desc = photocopy.desc
-					p.scribble = photocopy.scribble
-					p.pixel_x = rand(-10, 10)
-					p.pixel_y = rand(-10, 10)
-					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
-
-					sleep(15)
-				else
-					break
-		else if(ass) //ASS COPY. By Miauw
-			for(var/i = 0, i < copies, i++)
-				var/icon/temp_img
-				if(ishuman(ass) && (ass.get_item_by_slot(slot_w_uniform) || ass.get_item_by_slot(slot_wear_suit)))
-					usr << "<span class='notice'>You feel kind of silly copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>"
-				else if(toner >= 5 && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
-					if(isalien(ass) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
-						temp_img = icon("icons/ass/assalien.png")
-					else if(ishuman(ass)) //Suit checks are in check_ass
-						if(ass.gender == MALE)
-							temp_img = icon("icons/ass/assmale.png")
-						else if(ass.gender == FEMALE)
-							temp_img = icon("icons/ass/assfemale.png")
-						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
-							temp_img = icon("icons/ass/assmale.png")
+			copies = Clamp(copies, 0, 10)
+			spawn()
+				copying = 1
+				for(var/i = 0, i < copies, i++)
+					if(!copying) break
+					if(toner > 0)
+						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
+						if(toner > 10)	//lots of toner, make it dark
+							c.info = "<font color = #101010>"
+						else			//no toner? shitty copies for you!
+							c.info = "<font color = #808080>"
+						var/copied = html_decode(copy.info)
+						copied = replacetext(copied, "color:", "nocolor:")	//state of the art techniques in action
+						c.info += copied
+						c.info += "</font>"
+						c.name = copy.name
+						c.fields = copy.fields
+						c.updateinfolinks()
+						toner--
+						sleep(15)
 					else
 						break
-					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
-					p.desc = "You see [ass]'s ass on the photo."
-					p.pixel_x = rand(-10, 10)
-					p.pixel_y = rand(-10, 10)
-					p.img = temp_img
-					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
-					var/icon/ic = icon('icons/obj/items.dmi',"photo")
-					small_img.Scale(8, 8)
-					ic.Blend(small_img,ICON_OVERLAY, 10, 13)
-					p.icon = ic
-					toner -= 5
-					sleep(15)
-				else
-					break
+				copying = 0
+			updateUsrDialog()
+		else if(photocopy)
+			copies = Clamp(copies, 0, 10)
+			spawn()
+				copying = 1
+				for(var/i = 0, i < copies, i++)
+					if(!copying) break
+					if(toner >= 5)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
+						var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+						var/icon/I = icon(photocopy.icon, photocopy.icon_state)
+						var/icon/img = icon(photocopy.img)
+						if(greytoggle == "Greyscale")
+							if(toner > 10) //plenty of toner, go straight greyscale
+								I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)) //I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.
+								img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+							else //not much toner left, lighten the photo
+								I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
+								img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
+							toner -= 5	//photos use a lot of ink!
+						else if(greytoggle == "Color")
+							if(toner >= 10)
+								toner -= 10 //Color photos use even more ink!
+							else
+								continue
+						p.icon = I
+						p.img = img
+						p.name = photocopy.name
+						p.desc = photocopy.desc
+						p.scribble = photocopy.scribble
+						p.pixel_x = rand(-10, 10)
+						p.pixel_y = rand(-10, 10)
+						p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
+
+						sleep(15)
+					else
+						break
+				copying = 0
+		else if(ass) //ASS COPY. By Miauw
+			copies = Clamp(copies, 0, 10)
+			spawn()
+				copying = 1
+				for(var/i = 0, i < copies, i++)
+					if(!copying) break
+					var/icon/temp_img
+					if(ishuman(ass) && (ass.get_item_by_slot(slot_w_uniform) || ass.get_item_by_slot(slot_wear_suit)))
+						usr << "<span class='notice'>You feel kind of silly copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>"
+					else if(toner >= 5 && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
+						if(isalien(ass) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+							temp_img = icon("icons/ass/assalien.png")
+						else if(ishuman(ass)) //Suit checks are in check_ass
+							if(ass.gender == MALE)
+								temp_img = icon("icons/ass/assmale.png")
+							else if(ass.gender == FEMALE)
+								temp_img = icon("icons/ass/assfemale.png")
+							else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
+								temp_img = icon("icons/ass/assmale.png")
+						else
+							break
+						var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+						p.desc = "You see [ass]'s ass on the photo."
+						p.pixel_x = rand(-10, 10)
+						p.pixel_y = rand(-10, 10)
+						p.img = temp_img
+						var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
+						var/icon/ic = icon('icons/obj/items.dmi',"photo")
+						small_img.Scale(8, 8)
+						ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+						p.icon = ic
+						toner -= 5
+						sleep(15)
+					else
+						break
+				copying = 0
 		updateUsrDialog()
 	else if(href_list["remove"])
+		copying = 0
 		if(copy)
 			if(!istype(usr,/mob/living/silicon/ai)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
 				copy.loc = usr.loc
@@ -176,14 +196,29 @@
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
 	else if(href_list["min"])
+		if(copying)
+			if(!alert("Cancel current print job?","","Yes","No") == "Yes")
+				usr << "<span class='warning'>Must wait for current print job to finish.</span>"
+				return
+			copying = 0
 		if(copies > 1)
 			copies--
 			updateUsrDialog()
 	else if(href_list["add"])
+		if(copying)
+			if(!alert("Cancel current print job?","","Yes","No") == "Yes")
+				usr << "<span class='warning'>Must wait for current print job to finish.</span>"
+				return
+			copying = 0
 		if(copies < maxcopies)
 			copies++
 			updateUsrDialog()
 	else if(href_list["aipic"])
+		if(copying)
+			if(!alert("Cancel current print job?","","Yes","No") == "Yes")
+				usr << "<span class='warning'>Must wait for current print job to finish.</span>"
+				return
+			copying = 0
 		if(!istype(usr,/mob/living/silicon/ai)) return
 		if(toner >= 5)
 			var/list/nametemp = list()
@@ -213,6 +248,11 @@
 			sleep(15)
 		updateUsrDialog()
 	else if(href_list["colortoggle"])
+		if(copying)
+			if(!alert("Cancel current print job?","","Yes","No") == "Yes")
+				usr << "<span class='warning'>Must wait for current print job to finish.</span>"
+				return
+			copying = 0
 		if(greytoggle == "Greyscale")
 			greytoggle = "Color"
 		else
@@ -220,6 +260,11 @@
 		updateUsrDialog()
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user)
+	if(copying)
+		if(!alert("Cancel current print job?","","Yes","No") == "Yes")
+			usr << "<span class='warning'>Must wait for current print job to finish.</span>"
+			return
+		copying = 0
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
 			user.drop_item()

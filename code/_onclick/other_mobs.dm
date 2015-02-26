@@ -45,7 +45,7 @@
 		if(istype(G) && G.Touch(A, src, 0)) // for magic gloves
 			return
 	if(mutations.len)
-		if((M_LASER in mutations) && a_intent == "hurt")
+		if((M_LASER in mutations) && a_intent == I_HURT)
 			LaserEyes(A) // moved into a proc below
 
 		else if(M_TK in mutations)
@@ -95,7 +95,7 @@
 	things considerably
 */
 /mob/living/carbon/monkey/RestrainedClickOn(var/atom/A)
-	if(a_intent != "hurt" || !ismob(A)) return
+	if(a_intent != I_HURT || !ismob(A)) return
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 	var/mob/living/carbon/ML = A

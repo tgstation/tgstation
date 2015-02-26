@@ -199,8 +199,12 @@
 				if(prob(10))
 					H.lastcycle -= 5
 				if(prob(10))
+					if(!isnull(seed_types[H.seed.name]))
+						H.seed = H.seed.diverge(-1)
 					H.seed.lifespan = max(initial(H.seed.lifespan) * 1.5, H.seed.lifespan + 1)
 				if(prob(10))
+					if(!isnull(seed_types[H.seed.name]))
+						H.seed = H.seed.diverge(-1)
 					H.seed.endurance = max(initial(H.seed.endurance) * 1.5, H.seed.endurance + 1)
 				if(H.toxins && prob(10))
 					H.toxins = min(0, H.toxins - 1)

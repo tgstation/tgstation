@@ -1,5 +1,5 @@
 var/global/narsie_behaviour = "CultStation13"
-
+var/global/narsie_cometh = 0
 /obj/machinery/singularity/narsie //Moving narsie to its own file for the sake of being clearer
 	name = "Nar-Sie"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
@@ -26,20 +26,36 @@ var/global/narsie_behaviour = "CultStation13"
 	luminosity = 1
 	l_color = "#3e0000"
 
-
 	current_size = 12
 	consume_range = 12 // How many tiles out do we eat.
 	var/announce=1
+	var/old_x
+	var/old_y
 
 /obj/machinery/singularity/narsie/large/New()
 	..()
 	if(announce)
 		world << "<font size='15' color='red'><b>[uppertext(name)] HAS RISEN</b></font>"
 		world << sound('sound/effects/wind/wind_5_1.ogg')
+
+	if(istype(ticker.mode, /datum/game_mode/cult))
+		var/datum/game_mode/cult/mode_ticker = ticker.mode
+		if (mode_ticker.objectives[mode_ticker.current_objective] == "eldergod")
+			mode_ticker.third_phase()
+
 	if (emergency_shuttle)
-		emergency_shuttle.incall(0.3) // Cannot recall.
+		emergency_shuttle.incall()
+		emergency_shuttle.can_recall = 0
+		emergency_shuttle.settimeleft(600)
 
 	SetUniversalState(/datum/universal_state/hell)
+	narsie_cometh = 1
+
+	//Begin narsie vision
+	for(var/mob/M in player_list)
+		if(M.client)
+			M.see_narsie(src)
+	alpha = 0
 /*
 	updateicon()
 */
@@ -60,7 +76,7 @@ var/global/narsie_behaviour = "CultStation13"
 
 	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
-	for (var/atom/A in orange(consume_range, src))
+	for (var/turf/A in orange(consume_range, src))
 		consume(A)
 	if (defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
@@ -79,17 +95,13 @@ var/global/narsie_behaviour = "CultStation13"
 	if(isturf(A))
 		narsiewall(A)
 	else if(istype(A, /obj/structure/cult))
-		del(A)
-	else
-		consume(A)
+		qdel(A)
 
 /obj/machinery/singularity/narsie/Bumped(atom/A)
 	if(isturf(A))
 		narsiewall(A)
 	else if(istype(A, /obj/structure/cult))
-		del(A)
-	else
-		consume(A)
+		qdel(A)
 
 /obj/machinery/singularity/narsie/move(var/force_move = 0)
 	if(!move_self)
@@ -120,19 +132,22 @@ var/global/narsie_behaviour = "CultStation13"
 
 	if(target && prob(60))
 		movement_dir = get_dir(src,target)
-
 	spawn(0)
+		old_x = src.x
+		old_y = src.y
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
-		for(var/mob/M in mob_list)
+		for(var/mob/M in player_list)
 			if(M.client)
-				M.see_narsie(src)
-	spawn(1)
+				M.see_narsie(src,movement_dir)
+	spawn(10)
+		old_x = src.x
+		old_y = src.y
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
-		for(var/mob/M in mob_list)
+		for(var/mob/M in player_list)
 			if(M.client)
-				M.see_narsie(src)
+				M.see_narsie(src,movement_dir)
 	return 1
 
 /obj/machinery/singularity/narsie/proc/narsiefloor(var/turf/T)//leaving "footprints"
@@ -172,9 +187,6 @@ var/global/narsie_behaviour = "CultStation13"
 			var/dist = get_dist(A, src)
 
 			for (var/atom/movable/AM in A.contents)
-				if (AM == src) // This is the snowflake.
-					continue
-
 				if (dist <= consume_range)
 					consume(AM)
 					continue
@@ -207,7 +219,7 @@ var/global/narsie_behaviour = "CultStation13"
 				var/obj/machinery/bot/B = A
 				if(B.flags & INVULNERABLE)
 					return
-			A.ex_act(1)
+			qdel(A)
 
 			if (A)
 				qdel(A)
@@ -254,7 +266,7 @@ var/global/narsie_behaviour = "CultStation13"
 			var/obj/machinery/bot/B = A
 			if(B.flags & INVULNERABLE)
 				return
-		A.ex_act(1)
+		qdel(A)
 
 		if (A)
 			qdel(A)

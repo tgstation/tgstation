@@ -102,6 +102,8 @@
 	if(usr.abiotic())
 		usr << "<span class='notice'>Subject cannot have abiotic items on.</span>"
 		return
+	if(usr.buckled)
+		return
 	usr.pulling = null
 	usr.client.perspective = EYE_PERSPECTIVE
 	usr.client.eye = src

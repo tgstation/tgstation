@@ -174,7 +174,7 @@
 		new_mob.setBrainLoss(100)
 
 
-		new_mob.a_intent = "hurt"
+		new_mob.a_intent = I_HURT
 		if(M.mind)
 			M.mind.transfer_to(new_mob)
 		else

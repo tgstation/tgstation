@@ -325,7 +325,9 @@
 /obj/machinery/radiocarbon_spectrometer/Topic(href, href_list)
 	if(stat & (NOPOWER|BROKEN))
 		return 0 // don't update UIs attached to this object
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(href_list["scanItem"])
 		if(scanning)
 			stop_scanning()

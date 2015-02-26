@@ -50,7 +50,7 @@
 
 /obj/machinery/media/proc/update_media_source()
 	var/area/A = get_area_master(src)
-
+	if(!A) return
 	// Check if there's a media source already.
 	if(A.media_source && A.media_source!=src)	//if it does, the new media source replaces it. basically, the last media source arrived gets played on top.
 		A.media_source.disconnect_media_source()//you can turn a media source off and on for it to come back on top.

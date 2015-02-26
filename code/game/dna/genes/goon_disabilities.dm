@@ -286,19 +286,6 @@
 // USELESS SHIT //
 //////////////////
 
-// WAS: /datum/bioEffect/strong
-/datum/dna/gene/disability/strong
-	// pretty sure this doesn't do jack shit, putting it here until it does
-	name = "Strong"
-	desc = "Enhances the subject's ability to build and retain heavy muscles."
-	activation_message = "You feel buff!"
-	deactivation_message = "You feel wimpy and weak."
-
-	mutation = M_STRONG
-
-	New()
-		..()
-		block=STRONGBLOCK
 
 // WAS: /datum/bioEffect/horns
 /datum/dna/gene/disability/horns
@@ -353,13 +340,13 @@
 	activation_messages = list("You suddenly feel rather hot.")
 	deactivation_messages = list("You no longer feel uncomfortably hot.")
 
-	spelltype=/obj/effect/proc_holder/spell/targeted/immolate
+	spelltype = /spell/targeted/immolate
 
 	New()
 		..()
 		block = IMMOLATEBLOCK
 
-/obj/effect/proc_holder/spell/targeted/immolate
+/spell/targeted/immolate
 	name = "Incendiary Mitochondria"
 	desc = "The subject becomes able to convert excess cellular energy into thermal energy."
 	panel = "Mutant Powers"
@@ -367,22 +354,20 @@
 	charge_type = "recharge"
 	charge_max = 600
 
-	clothes_req = 0
-	stat_allowed = 0
+	spell_flags = INCLUDEUSER
 	invocation_type = "none"
-	range = -1
+	range = 0
 	selection_type = "range"
-	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	include_user = 1
+	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	cast_sound = 'sound/effects/bamf.ogg'
 
-/obj/effect/proc_holder/spell/targeted/immolate/cast(list/targets)
-	var/mob/living/L = usr
-
-	L.adjust_fire_stacks(0.5) // Same as walking into fire. Was 100 (goon fire)
-	L.visible_message("\red <b>[L.name]</b> suddenly bursts into flames!")
-	L.on_fire = 1
-	L.update_icon = 1
-	playsound(L.loc, 'sound/effects/bamf.ogg', 50, 0)
+/spell/targeted/immolate/cast(list/targets)
+	..()
+	for(var/mob/living/target in targets)
+		target.adjust_fire_stacks(0.5) // Same as walking into fire. Was 100 (goon fire)
+		target.visible_message("<span class='danger'><b>[target.name]</b> suddenly bursts into flames!</span>")
+		target.on_fire = 1
+		target.update_icon = 1
 
 ////////////////////////////////////////////////////////////////////////
 

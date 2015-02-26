@@ -510,7 +510,7 @@
 		block = PSYRESISTBLOCK
 		..()
 
-/obj/item/weapon/dnainjector/darkcloak
+/*/obj/item/weapon/dnainjector/darkcloak
 	name = "DNA-Injector (Dark Cloak)"
 	desc = "BLEH BLEH, I AM HERE TO SUCK YOUR BLOOD!"
 	datatype = DNA2_BUF_SE
@@ -529,7 +529,7 @@
 	New()
 		block = SHADOWBLOCK
 		..()
-
+*/
 /obj/item/weapon/dnainjector/chameleon
 	name = "DNA-Injector (Chameleon)"
 	desc = "You cant see me."

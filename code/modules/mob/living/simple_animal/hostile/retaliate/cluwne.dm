@@ -19,7 +19,7 @@
 	speak_emote = list("squeals", "cries","sobs")
 	emote_see = list("honks sadly")
 	speak_chance = 1
-	a_intent = "help"
+	a_intent = I_HELP
 	var/footstep=0 // For clownshoe noises
 	//deny_client_move=1 // HONK // Doesn't work right yet
 

@@ -5,7 +5,7 @@
 
 var/list/gc_hard_del_types = new
 var/datum/garbage_collector/garbageCollector
-
+var/soft_dels = 0
 /client/verb/gc_dump_hdl()
 	set name = "(GC) Hard Del List"
 	set desc = "List types that are hard del()'d by the GC."
@@ -32,16 +32,13 @@ var/datum/garbage_collector/garbageCollector
 		dels_count++
 		return
 
-	var/timeofday = world.timeofday
-	AM.timeDestroyed = timeofday
-	queue -= "\ref[AM]"
-	queue["\ref[AM]"] = timeofday
+	queue["\ref[AM]"] = world.timeofday
 
 /datum/garbage_collector/proc/process()
 	var/remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
 	var/remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
 	var/collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
-
+	if(narsie_cometh) return //don't even fucking bother, its over.
 	while(queue.len && --remainingCollectionPerTick >= 0)
 		var/refID = queue[1]
 		var/destroyedAtTime = queue[refID]
@@ -50,9 +47,10 @@ var/datum/garbage_collector/garbageCollector
 			break
 
 		var/atom/movable/AM = locate(refID)
-
-		// Something's still referring to the qdel'd object. Kill it.
-		if(AM && AM.timeDestroyed == destroyedAtTime)
+		if(AM) // Something's still referring to the qdel'd object. del it.
+			if(isnull(AM.gcDestroyed))
+				queue -= refID
+				continue
 			if(remainingForceDelPerTick <= 0)
 				break
 
@@ -60,20 +58,11 @@ var/datum/garbage_collector/garbageCollector
 			WARNING("gc process force delete [AM.type]")
 			#endif
 
-			//gc_hard_del_types |= "[AM.type]"
-			if(!("[AM.type]" in gc_hard_del_types))
-				gc_hard_del_types["[AM.type]"] = 0
-			gc_hard_del_types["[AM.type]"]++
-
 			AM.hard_deleted = 1
-			del(AM)
+			del AM
 
 			hard_dels++
 			remainingForceDelPerTick--
-
-		if(!queue.Remove(refID))
-			queue.Cut(1,2)
-		dels_count++
 
 #ifdef GC_DEBUG
 #undef GC_DEBUG
@@ -83,11 +72,17 @@ var/datum/garbage_collector/garbageCollector
 #undef GC_COLLECTION_TIMEOUT
 #undef GC_COLLECTIONS_PER_TICK
 
+/datum/garbage_collector/proc/dequeue(id)
+	if (queue)
+		queue -= id
+
+	dels_count++
+
 /*
  * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
  * OTHER TYPES CANNOT BE QDEL'D BECAUSE THEIR LOC IS LOCKED OR THEY DON'T HAVE ONE.
  */
-/proc/qdel(const/atom/movable/AM)
+/proc/qdel(const/atom/movable/AM, ignore_pooling = 0)
 	if(isnull(AM))
 		return
 
@@ -100,6 +95,11 @@ var/datum/garbage_collector/garbageCollector
 		del(AM)
 		garbageCollector.hard_dels++
 		garbageCollector.dels_count++
+		return
+
+	//We are object pooling this.
+	if(("[AM.type]" in masterPool) && !ignore_pooling)
+		returnToPool(AM)
 		return
 
 	if(isnull(AM.gcDestroyed))

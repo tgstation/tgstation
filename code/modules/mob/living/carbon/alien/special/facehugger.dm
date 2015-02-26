@@ -28,6 +28,9 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	var/attached = 0
 
+/obj/item/clothing/mask/facehugger/can_contaminate()
+	return 0
+
 /obj/item/clothing/mask/facehugger/attack_paw(user as mob) //can be picked up by aliens
 	if(isalien(user))
 		attack_hand(user)
@@ -236,6 +239,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/mob/living/carbon/C = M
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(H.check_body_part_coverage(MOUTH))
+		if(H.check_body_part_coverage(MOUTH) || (locate(/obj/item/alien_embryo) in H))
 			return 0
 	return 1

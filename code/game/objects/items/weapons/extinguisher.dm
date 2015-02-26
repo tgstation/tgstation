@@ -84,7 +84,7 @@
 				flags &= ~OPENCONTAINER
 		return
 
-	if (istype(W, /obj/item) && !is_open_container())
+	if (istype(W, /obj/item) && !is_open_container() && !istype(src, /obj/item/weapon/extinguisher/foam))
 		if(W.w_class>1)
 			user << "\The [W] won't fit into the nozzle!"
 			return
@@ -100,7 +100,6 @@
 		message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	user.delayNextAttack(5)
 	if(get_dist(src,target) <= 1)
 		if((istype(target, /obj/structure/reagent_dispensers)))
 			var/obj/o = target
@@ -132,7 +131,7 @@
 
 		if (world.time < src.last_use + 20)
 			return
-
+		user.delayNextAttack(5, 1)
 		var/list/badshit=list()
 		for(var/bad_reagent in src.reagents_to_log)
 			if(reagents.has_reagent(bad_reagent))
@@ -240,7 +239,7 @@
 
 		if (world.time < src.last_use + 20)
 			return
-
+		user.delayNextAttack(5, 1)
 		src.last_use = world.time
 
 		playsound(get_turf(src), 'sound/effects/extinguish.ogg', 75, 1, -3)

@@ -15,8 +15,15 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
+/obj/machinery/power/New()
+	. = ..()
+	machines -= src
+	power_machines += src
+	return .
+
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
+	power_machines -= src
 	..()
 
 ///////////////////////////////
@@ -359,7 +366,7 @@
 	C.powernet = null
 
 	if(is_empty())	// the powernet is now empty...
-		qdel(src)	// ... delete it
+		del(src)	// ... delete it
 
 // add a cable to the current powernet
 // warning : this proc DON'T check if the cable exists
@@ -381,7 +388,7 @@
 	M.powernet = null
 
 	if(is_empty())	// the powernet is now empty...
-		qdel(src)	// ... delete it
+		del(src)	// ... delete it
 
 // add a power machine to the current powernet
 // warning : this proc DON'T check if the machine exists

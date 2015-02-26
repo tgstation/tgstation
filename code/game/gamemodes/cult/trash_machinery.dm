@@ -20,9 +20,6 @@
 /obj/machinery/hologram/cultify()
 	qdel(src)
 
-/obj/machinery/atmospherics/cultify()
-	qdel(src)
-
 /obj/machinery/status_display/cultify()
 	qdel(src)
 

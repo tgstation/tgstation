@@ -41,7 +41,7 @@
 				list(
 					"desc" = "An empty pod frame.",
 					state_next = list(
-						"key"      = /obj/item/weapon/cable_coil,
+						"key"      = /obj/item/stack/cable_coil,
 						"vis_msg"  = "{USER} wires the {HOLDER}.",
 						"self_msg" = "You wire the {HOLDER}."
 					)

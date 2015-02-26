@@ -326,7 +326,7 @@ Code:
 			var/powercount = 0
 			var/found = 0
 
-			for(var/obj/machinery/power/monitor/pMon in machines)
+			for(var/obj/machinery/power/monitor/pMon in power_machines)
 				if(!(pMon.stat & (NOPOWER|BROKEN)))
 					var/turf/T = get_turf(src)
 					if(T.z == pMon.z)//the application may only detect power monitoring computers on its Z-level.

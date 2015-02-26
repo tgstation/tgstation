@@ -15,6 +15,7 @@
 	var/size = 3.0
 	var/obj/item/gift = null
 	w_class = 3.0
+	autoignition_temperature=AUTOIGNITION_PAPER
 
 /obj/item/weapon/gift/small
 	icon_state = "gift-small"
@@ -37,6 +38,11 @@
 	del(src)
 	return
 
+/obj/item/weapon/gift/ashify()//so the content of player-made gifts can be recovered.
+	if(gift)
+		gift.loc = get_turf(src)
+	..()
+
 ////WINTER GIFTS////
 
 /obj/item/weapon/winter_gift
@@ -46,6 +52,7 @@
 	icon_state = "gift"
 	item_state = "gift"
 	w_class = 4.0
+	autoignition_temperature=AUTOIGNITION_PAPER
 
 /obj/item/weapon/winter_gift/New()
 	..()
@@ -130,9 +137,11 @@
 		/obj/item/device/paicard,
 		/obj/item/device/violin,
 		/obj/item/weapon/storage/belt/utility/complete,
-		/obj/item/clothing/tie/horrible,
+		/obj/item/clothing/accessory/tie/horrible,
 		/obj/item/device/maracas,
 		/obj/item/weapon/gun/energy/temperature,
+		/obj/item/weapon/pickaxe/shovel,
+		/obj/item/clothing/shoes/galoshes,
 		)
 
 	var/obj/item/I = new gift_type(M)
@@ -143,6 +152,7 @@
 	qdel(src)
 	return
 
+//christmas and festive food
 /obj/item/weapon/winter_gift/food/attack_self(mob/M as mob)
 	var/gift_type = pick(
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake,
@@ -158,10 +168,18 @@
 	qdel(src)
 	return
 
+//warm clothes
 /obj/item/weapon/winter_gift/cloth/attack_self(mob/M as mob)
+	if(prob(30))
+		cloth_bundle()
+		M << "<span class='notice'>You unwrapped a bundle of clothes! Looks comfy!</span>"
+		qdel(src)
+		return
+
 	var/gift_type = pick(
 		/obj/item/clothing/gloves/black,
 		/obj/item/clothing/head/ushanka,
+		/obj/item/clothing/head/bearpelt,
 		)
 
 	var/obj/item/I = new gift_type(M)
@@ -172,11 +190,46 @@
 	qdel(src)
 	return
 
+/obj/item/weapon/winter_gift/cloth/proc/cloth_bundle()
+	var/bundle = pick(
+		3;"batman",
+		10;"russian fur",
+		10;"chicken",
+		8;"pirate captain",
+		2;"cuban pete"
+		)
+
+	switch(bundle)
+		if("batman")
+			new /obj/item/weapon/storage/belt/security/batmanbelt(get_turf(loc))
+			new /obj/item/clothing/head/batman(get_turf(loc))
+			new /obj/item/clothing/gloves/batmangloves(get_turf(loc))
+			new /obj/item/clothing/shoes/jackboots/batmanboots(get_turf(loc))
+			new /obj/item/clothing/under/batmansuit(get_turf(loc))
+		if("russian fur")
+			new /obj/item/clothing/suit/russofurcoat(get_turf(loc))
+			new /obj/item/clothing/head/russofurhat(get_turf(loc))
+		if("chicken")
+			new /obj/item/clothing/head/chicken(get_turf(loc))
+			new /obj/item/clothing/suit/chickensuit(get_turf(loc))
+		if("pirate captain")
+			new /obj/item/clothing/glasses/eyepatch(get_turf(loc))
+			new /obj/item/clothing/head/hgpiratecap(get_turf(loc))
+			new /obj/item/clothing/suit/hgpirate(get_turf(loc))
+			new /obj/item/clothing/under/captain_fly(get_turf(loc))
+			new /obj/item/clothing/shoes/jackboots(get_turf(loc))
+		if("cuban pete")
+			new /obj/item/clothing/head/collectable/petehat(get_turf(loc))
+			new /obj/item/device/maracas(get_turf(loc))
+			new /obj/item/device/maracas(get_turf(loc))
+
+//dangerous items
 /obj/item/weapon/winter_gift/special/attack_self(mob/M as mob)
 	var/gift_type = pick(
 		/obj/item/device/fuse_bomb,
 		/obj/item/weapon/card/emag,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned,
+		/obj/item/weapon/tome,
 		)
 
 	var/obj/item/I = new gift_type(M)
@@ -205,6 +258,16 @@
 	qdel(src)
 	return
 
+//black gifts have 2% chance to spawn by default.
+/obj/item/weapon/winter_gift/proc/pick_a_gift(var/turf/T,var/special_chance = 2)
+	var/gift_type = pick(
+		50;/obj/item/weapon/winter_gift/regular,
+		25;/obj/item/weapon/winter_gift/food,
+		25;/obj/item/weapon/winter_gift/cloth,
+		special_chance;/obj/item/weapon/winter_gift/special,
+		)
+	new gift_type(T)
+
 ////STRANGE PRESENTS(wrapped people)////
 
 /obj/effect/spresent
@@ -222,21 +285,22 @@
 	user << "<span class='notice'>You can't move.</span>"
 
 /obj/effect/spresent/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+	if (istype(W, /obj/item/weapon/wirecutters))
+		user << "<span class='notice'>You cut open the present.</span>"
 
-	if (!istype(W, /obj/item/weapon/wirecutters))
+		for(var/mob/M in src) //Should only be one but whatever.
+			M.loc = get_turf(src)
+			if (M.client)
+				M.client.eye = M.client.mob
+				M.client.perspective = MOB_PERSPECTIVE
+
+		qdel(src)
+
+	else
 		user << "<span class='notice'>You need wirecutters for that.</span>"
-		return
+		return	..()
 
-	user << "<span class='notice'>You cut open the present.</span>"
 
-	for(var/mob/M in src) //Should only be one but whatever.
-		M.loc = src.loc
-		if (M.client)
-			M.client.eye = M.client.mob
-			M.client.perspective = MOB_PERSPECTIVE
-
-	del(src)
 
 /*
  * Wrapping Paper
@@ -293,9 +357,12 @@
 	return
 */
 
-/obj/item/weapon/wrapping_paper/examine(mob/user)
+/obj/item/weapon/wrapping_paper/examine()
+	set src in oview(1)
+
 	..()
-	user << "<span class='info'>There is about [amount] square units of paper left!</span>"
+	usr << "There is about [amount] square units of paper left!"
+	return
 
 /obj/item/weapon/wrapping_paper/attack(mob/target as mob, mob/user as mob)
 	if (!istype(target, /mob/living/carbon/human)) return
@@ -327,7 +394,7 @@
 
 	if (src.amount <= 0)
 		new /obj/item/weapon/c_tube( src.loc )
-		del(src)
+		qdel(src)
 	return
 
 /obj/item/weapon/wrapping_paper/afterattack(var/obj/target as obj, mob/user as mob)

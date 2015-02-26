@@ -14,6 +14,19 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	max_amount = 60
+/obj/item/stack/tile/use(var/amount)
+	ASSERT(isnum(src.amount))
+	if(src.amount>=amount)
+		src.amount-=amount
+	else
+		return 0
+	. = 1
+	if (src.amount<=0)
+		if(usr)
+			usr.before_take_item(src)
+		spawn
+			src.Destroy()
+			returnToPool(src)
 
 /obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
 	. = ..()
@@ -51,7 +64,6 @@
 	return
 
 /obj/item/stack/tile/plasteel/attackby(obj/item/W as obj, mob/user as mob)
-	..()
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(amount < 4)
@@ -71,5 +83,22 @@
 			R.use(4)
 			if (!R && replace)
 				user.put_in_hands(M)
-		return
-	..()
+		return 1
+	return ..()
+
+/obj/item/stack/tile/plasteel/afterattack(atom/target, mob/user, adjacent, params)
+	if(adjacent)
+		if(isturf(target))
+			var/turf/T = target
+			var/obj/structure/lattice/L = T.canBuildPlating()
+			if(istype(L))
+				var/obj/item/stack/tile/plasteel/S = src
+				qdel(L)
+				playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+				S.build(T)
+				S.use(1)
+				return
+			else
+				if(!L)
+					user << "<span class='warning'>The plating is going to need some support.</span>"
+					return

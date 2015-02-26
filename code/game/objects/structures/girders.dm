@@ -13,7 +13,9 @@
 			if(do_after(user,40))
 				if(!src) return
 				user << "<span class='info'>You dissasembled the girder!</span>"
-				new /obj/item/stack/sheet/metal(get_turf(src))
+				//new /obj/item/stack/sheet/metal(get_turf(src))
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+				M.amount = 1
 				qdel(src)
 		else if(!anchored)
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)

@@ -140,9 +140,11 @@ var/list/camera_names=list()
 	else if(istype(W, /obj/item/weapon/weldingtool) && wires.CanDeconstruct())
 		if(weld(W, user))
 			if(assembly)
-				assembly.loc = src.loc
 				assembly.state = 1
-			del(src)
+				assembly.loc = src.loc
+				assembly = null
+
+			qdel(src)
 
 
 	// OTHER

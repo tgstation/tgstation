@@ -101,6 +101,29 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 	return str
 
 /datum/automation/Topic(href,href_list)
+	var/ghost_flags=0
+	if(parent.ghost_write)
+		ghost_flags |= PERMIT_ALL
+	if(!canGhostWrite(usr,parent,"",ghost_flags))
+		if(usr.restrained() || usr.lying || usr.stat)
+			return 1
+		if ( ! (istype(usr, /mob/living/carbon/human) || \
+				istype(usr, /mob/living/silicon) || \
+				istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+			return 1
+
+		var/norange = 0
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			if(istype(H.l_hand, /obj/item/tk_grab))
+				norange = 1
+			else if(istype(H.r_hand, /obj/item/tk_grab))
+				norange = 1
+
+		if(!norange)
+			if ((!in_range(parent, usr) || !istype(parent.loc, /turf)) && !istype(usr, /mob/living/silicon))
+				return 1
 	if(href_list["add"])
 		var/new_child=selectValidChildFor(usr)
 		if(!new_child) return 1
@@ -133,6 +156,11 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 			A.OnReset()
 		parent.updateUsrDialog()
 		return 1
+	else if(!parent.custom_aghost_alerts)
+		log_adminghost("[key_name(usr)] screwed with [parent] ([href])!")
+
+	parent.add_fingerprint(usr)
+
 	return 0 // 1 if handled
 
 /datum/automation/proc/selectValidChildFor(var/mob/user, var/list/returntypes=valid_child_returntypes)

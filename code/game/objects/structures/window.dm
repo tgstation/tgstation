@@ -135,7 +135,7 @@
 			log_admin("Window destroyed by hulk [user.real_name] ([user.ckey]) with pdiff [pdiff] at [loc]!")
 		user.delayNextAttack(8)
 		destroy()
-	else if (usr.a_intent == "hurt")
+	else if (usr.a_intent == I_HURT)
 		user.delayNextAttack(8) // not so polite
 		playsound(get_turf(src), 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("<span class='warning'>[usr.name] bangs against the [src.name]!</span>", \

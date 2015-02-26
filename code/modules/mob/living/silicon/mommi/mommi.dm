@@ -106,7 +106,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/list/modules = list("MoMMI")
 	if(modules.len)
 		modtype = input("Please, select a module!", "Robot", null, null) in modules
-	else:
+	else
 		modtype=modules[0]
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
@@ -180,8 +180,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			user << "Need more welding fuel!"
 			return
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+		var/obj/item/stack/cable_coil/coil = W
 		adjustFireLoss(-30)
 		updatehealth()
 		coil.use(1)
@@ -299,7 +299,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	if(!istype(user, /mob/living/silicon))
 		switch(user.a_intent)
-			if("disarm")
+			if(I_DISARM)
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [user.name] ([user.ckey])</font>")
 				log_admin("ATTACK: [user.name] ([user.ckey]) disarmed [src.name] ([src.ckey])")
@@ -331,10 +331,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 						visible_message("\red <B>[user] attempted to disarm [src]!</B>")
 					return
-
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				visible_message("\red <B>[user] attempted to disarm [src]!</B>")
-
+			if (I_HELP)
+				help_shake_act(user)
+				return
 
 /mob/living/silicon/robot/mommi/installed_modules()
 	if(weapon_lock)

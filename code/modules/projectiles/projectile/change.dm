@@ -145,10 +145,10 @@
 			else
 				return
 
-		for (var/obj/effect/proc_holder/spell/S in M.spell_list)
+		for (var/spell/S in M.spell_list)
 			new_mob.spell_list += new S.type
 
-		new_mob.a_intent = "hurt"
+		new_mob.a_intent = I_HURT
 		if(M.mind)
 			M.mind.transfer_to(new_mob)
 		else

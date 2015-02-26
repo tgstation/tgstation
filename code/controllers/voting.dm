@@ -41,12 +41,18 @@ var/global/datum/controller/vote/vote = new()
 		// Calculate how much time is remaining by comparing current time, to time of vote start,
 		// plus vote duration
 		time_remaining = (ismapvote && ismapvote.len) ? (round((started_time + 600 - world.time)/10)) : (round((started_time + config.vote_period - world.time)/10))
+
 		if(time_remaining <= 0)
 			result()
 			for(var/client/C in voting)
 				if(C)
 					nanomanager.close_user_uis(C.mob, src)
 			src.reset()
+		else
+			if(ticker.current_state < 2)
+				for(var/client/C in voting)
+					if(C && C.mob)
+						ui_interact(C.mob, force_open = 0)
 /datum/controller/vote/proc/reset()
 	initiator = null
 	time_remaining = 0
@@ -286,13 +292,16 @@ var/global/datum/controller/vote/vote = new()
 			data["custom_vote"] = "<a href='?src=\ref[src];vote=custom'>Custom</a>"
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if(!ui)
-		ui = new(user, src, ui_key, "vote.tmpl", "Voting Panel", VOTE_SCREEN_WIDTH, VOTE_SCREEN_HEIGHT)
+		ui = new(user, src, ui_key, "vote.tmpl", "Voting Panel", VOTE_SCREEN_WIDTH, VOTE_SCREEN_HEIGHT, ignore_distance = 1)
 		ui.set_initial_data(data)
 		ui.set_auto_update(1)
 		ui.open()
 
 /datum/controller/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)	return	//not necessary but meh...just in-case somebody does something stupid
+	if(href_list["close"])
+		voting -= usr.client
+		return
 	switch(href_list["vote"])
 		if("close")
 			voting -= usr.client

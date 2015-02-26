@@ -183,7 +183,7 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
 	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
+		if(!istype(M,/mob/new_player) && M.client)
 			M << sound('sound/AI/aimalf.ogg')
 
 
@@ -210,7 +210,7 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
-		M << 'sound/machines/Alarm.ogg'
+		if(M.client) M << 'sound/machines/Alarm.ogg'
 	world << "<span class='danger'>Self-destruction signal received. Self-destructing in 10...</span>"
 	for (var/i=9 to 1 step -1)
 		sleep(10)

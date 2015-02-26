@@ -74,12 +74,17 @@
 		O.loc = C
 		C.occupant = O
 		connected = null
-	O.real_name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
-	O.take_overall_damage(M.getBruteLoss() + 40, M.getFireLoss())
-	O.adjustToxLoss(M.getToxLoss() + 20)
-	O.adjustOxyLoss(M.getOxyLoss())
+
+	if(istype(O))//so chicken don't instantly die, or get named as "monkey"
+		O.real_name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
+		O.take_overall_damage(M.getBruteLoss() + 40, M.getFireLoss())
+		O.adjustToxLoss(M.getToxLoss() + 20)
+		O.adjustOxyLoss(M.getOxyLoss())
+	else
+		O.a_intent = "help"
+
 	O.stat = M.stat
-	O.a_intent = "hurt"
+	O.a_intent = I_HURT
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O

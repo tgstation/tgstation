@@ -192,6 +192,21 @@
 	else
 		media.stop_music()
 
+/client/verb/toggle_wmp()
+	set name = "Change Streaming Program"
+	set category = "Preferences"
+	set desc = "Toggle between using VLC and WMP to stream jukebox media"
+
+	prefs.usewmp = !prefs.usewmp
+	prefs.save_preferences_sqlite(src, ckey)
+	usr << "You will use [(prefs.usewmp) ? "WMP" : "VLC"] to hear streamed media."
+	if(!media) return
+	media.stop_music()
+	media.playerstyle = (prefs.usewmp ? PLAYER_OLD_HTML : PLAYER_HTML)
+	if(prefs.toggles & SOUND_STREAMING)
+		media.open()
+		media.update_music()
+
 /client/verb/setup_special_roles()
 	set name = "Setup Special Roles"
 	set category = "Preferences"

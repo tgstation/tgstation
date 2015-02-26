@@ -6,6 +6,7 @@
 	desc = "Light (people on fire), now at a distance."
 	fire_sound = 'sound/weapons/shotgun.ogg'
 	icon_state = "flaregun"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns.dmi', "right_hand" = 'icons/mob/in-hand/right/guns.dmi')
 	item_state = "flaregun"
 	max_shells = 1
 	w_class = 3.0

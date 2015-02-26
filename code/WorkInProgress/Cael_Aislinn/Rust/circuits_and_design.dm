@@ -81,7 +81,7 @@ datum/design/rust_fuel_compressor
 							"/obj/item/weapon/stock_parts/micro_laser/ultra" = 1,
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/cable_coil" = 5)
+							"/obj/item/stack/cable_coil" = 5)
 
 datum/design/rust_core
 	name = "Internal circuitry (RUST tokamak core)"
@@ -107,7 +107,7 @@ datum/design/rust_core
 							"/obj/item/weapon/stock_parts/scanning_module/phasic" = 1,
 							"/obj/item/weapon/stock_parts/matter_bin/super" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/cable_coil" = 5)
+							"/obj/item/stack/cable_coil" = 5)
 
 datum/design/rust_injector
 	name = "Internal circuitry (RUST tokamak core)"

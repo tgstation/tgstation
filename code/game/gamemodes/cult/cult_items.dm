@@ -74,8 +74,8 @@
 	icon_state = "magus"
 	item_state = "magus"
 	desc = "A helm worn by the followers of Nar-Sie."
-	flags_inv = HIDEFACE
-	flags = FPRINT|BLOCKHAIR
+	flags_inv = HIDEFACE|HIDEHAIR
+	flags = FPRINT
 	body_parts_covered = FULL_HEAD
 	armor = list(melee = 30, bullet = 30, laser = 30,energy = 20, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0

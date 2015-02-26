@@ -1363,7 +1363,8 @@
 				AM.loc = src.loc
 				AM.pipe_eject(dir)
 				spawn(5)
-					AM.throw_at(target, 3, 1)
+					if(AM)
+						AM.throw_at(target, 3, 1)
 			H.vent_gas(src.loc)
 			qdel(H)
 

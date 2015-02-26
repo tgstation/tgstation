@@ -40,6 +40,10 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	var/atom/movable/overlay/c_animation = null
 	var/nullblock = 0
 	var/mob/living/ajourn
+
+	var/summoning = 0
+	var/list/summonturfs = list()
+
 // Places these combos are mentioned: this file - twice in the rune code, once in imbued tome, once in tome's HTML runes.dm - in the imbue rune code. If you change a combination - dont forget to change it everywhere.
 
 // travel self [word] - Teleport to random [rune with word destination matching]
@@ -74,7 +78,8 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	blood_image = image(loc = src)
 	blood_image.override = 1
 	for(var/mob/living/silicon/ai/AI in player_list)
-		AI.client.images += blood_image
+		if(AI.client)
+			AI.client.images += blood_image
 	rune_list.Add(src)
 
 /obj/effect/rune/Destroy()
@@ -82,7 +87,8 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		ajourn.ajourn = null
 	ajourn = null
 	for(var/mob/living/silicon/ai/AI in player_list)
-		AI.client.images -= blood_image
+		if(AI.client)
+			AI.client.images -= blood_image
 	qdel(blood_image)
 	blood_image = null
 	rune_list.Remove(src)

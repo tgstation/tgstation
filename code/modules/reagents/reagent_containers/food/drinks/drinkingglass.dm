@@ -119,7 +119,7 @@
 					desc = "You wonder why you're even drinking this straight."
 				if("tequilla")
 					icon_state = "tequillaglass"
-					name = "glass of tequilla"
+					name = "glass of tequila"
 					desc = "Now all that's missing is the weird colored shades!"
 				if("patron")
 					icon_state = "patronglass"
@@ -164,10 +164,10 @@
 				if("bravebull")
 					icon_state = "bravebullglass"
 					name = "Brave Bull"
-					desc = "Tequilla and coffee liquor, brought together in a mouthwatering mixture. Drink up."
+					desc = "Tequila and coffee liquor, brought together in a mouthwatering mixture. Drink up."
 				if("tequillasunrise")
 					icon_state = "tequillasunriseglass"
-					name = "Tequilla Sunrise"
+					name = "Tequila Sunrise"
 					desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
 				if("toxinsspecial")
 					icon_state = "toxinsspecialglass"

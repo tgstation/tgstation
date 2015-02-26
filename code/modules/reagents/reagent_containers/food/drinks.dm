@@ -46,7 +46,7 @@
 	var/fillevel = gulp_size
 
 	//smashing on someone
-	if(user.a_intent == "hurt" && isGlass && molotov != 1)  //to smash on someone, must be harm intent, breakable glass, and have no rag inside
+	if(user.a_intent == I_HURT && isGlass && molotov != 1)  //to smash on someone, must be harm intent, breakable glass, and have no rag inside
 		if(!M)
 			return
 
@@ -798,7 +798,7 @@
 		reagents.add_reagent("vodka", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla
-	name = "Caccavo Guaranteed Quality Tequilla"
+	name = "Caccavo Guaranteed Quality Tequila"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequillabottle"
 	isGlass = 1
@@ -820,7 +820,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
-	desc = "Silver laced tequilla, served in space night clubs across the galaxy."
+	desc = "Silver laced tequila, served in space night clubs across the galaxy."
 	icon_state = "patronbottle"
 	bottleheight = 26 //has a cork but for now it goes on top of the cork
 	molotov = -1

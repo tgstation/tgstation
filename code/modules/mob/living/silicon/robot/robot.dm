@@ -302,6 +302,7 @@
 			radio.recalculateChannels()
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
+			module_sprites["Bladewolf Mk2"] = "bladewolfmk2"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
 			module_sprites["Marina-CB"] = "marinaCB"
 			module_sprites["Squadbot"] = "squats"
@@ -526,7 +527,7 @@
 
 
 /mob/living/silicon/robot/proc/show_cable_lengths()
-	var/obj/item/weapon/cable_coil/coil = installed_module(/obj/item/weapon/cable_coil)
+	var/obj/item/stack/cable_coil/coil = installed_module(/obj/item/stack/cable_coil)
 	if(coil)
 		stat(null, text("Cable Lengths: [coil.amount]/[coil.max_amount]"))
 
@@ -747,11 +748,11 @@
 			user << "Need more welding fuel!"
 			return
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
+	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		if (!getFireLoss())
 			user << "Nothing to fix here!"
 			return
-		var/obj/item/weapon/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = W
 		adjustFireLoss(-30)
 		updatehealth()
 		coil.use(1)
@@ -908,12 +909,12 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (I_HELP)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("<span class='notice'>[M] caresses [src]'s plating with its scythe like arm.</span>"), 1)
 
-		if ("grab")
+		if (I_GRAB)
 			if (M == src)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
@@ -927,7 +928,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("<span class='attack'>[] has grabbed [] passively!</span>", M, src), 1)
 
-		if ("hurt")
+		if (I_HURT)
 			var/damage = rand(10, 20)
 			if (prob(90))
 				/*
@@ -951,7 +952,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("<span class='danger'>[] took a swipe at []!</span>", M, src), 1)
 
-		if ("disarm")
+		if (I_DISARM)
 			if(!(lying))
 				if (rand(1,100) <= 85)
 					Stun(7)
@@ -1064,14 +1065,9 @@
 			user << "You remove \the [broken_device]."
 			user.put_in_active_hand(broken_device)
 
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
-			return
-		else
-			if (user:a_intent == "help")
-				help_shake_act(user)
-			return
+	if (user.a_intent == I_HELP)
+		help_shake_act(user)
+		return
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
@@ -1411,7 +1407,7 @@
 	else
 		src << "Your icon has been set. You now require a module reset to change it."
 
-/mob/living/silicon/robot/rejuvenate()
+/mob/living/silicon/robot/rejuvenate(animation = 0)
 	for(var/C in components)
 		var/datum/robot_component/component = components[C]
 		component.electronics_damage = 0

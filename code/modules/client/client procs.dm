@@ -102,8 +102,17 @@
 		src << "<span class='warning'>The stylesheet wasn't properly setup call an administrator to reload the stylesheet or relog.</span>"
 	TopicData = null							//Prevent calls to client.Topic from connect
 
+	//Admin Authorisation
+	holder = admin_datums[ckey]
+	if(holder)
+		admins += src
+		holder.owner = src
+
 	if(connection != "seeker")					//Invalid connection type.
-		return null
+		if(holder)
+			src << "<span class='warning'> You connected to the server with a web client please notify a coder about any issues.</span>"
+		else
+			return null
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
@@ -122,11 +131,6 @@
 	clients += src
 	directory[ckey] = src
 
-	//Admin Authorisation
-	holder = admin_datums[ckey]
-	if(holder)
-		admins += src
-		holder.owner = src
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
@@ -207,7 +211,6 @@
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
 		related_accounts_ip += "[query_ip.item[1]], "
-		break
 
 	var/sql_computerid = sanitizeSQL(computer_id)
 
@@ -216,7 +219,6 @@
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
 		related_accounts_cid += "[query_cid.item[1]], "
-		break
 
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
@@ -280,7 +282,7 @@
 			hi.sendResources(src)
 
 	// Send NanoUI resources to this client
-	nanomanager.send_resources(src)
+	spawn nanomanager.send_resources(src)
 
 	getFiles(
 		'html/search.js',
@@ -356,7 +358,7 @@
 	if(display_to_user && !(role_desired & ROLEPREF_PERSIST))
 		if(!(role_desired & ROLEPREF_POLLED))
 			spawn
-				var/answer = alert(src,"[display_to_user]\n\nNOTE:  You will only be polled about this role once per round. To change your choice, use Preferences > Setup Special Roles.  The change will take place AFTER this recruiting period.","Role Recruitment", "Yes","No","Never")
+				var/answer = alert(src,"[role_desired]\n\nNOTE:  You will only be polled about this role once per round. To change your choice, use Preferences > Setup Special Roles.  The change will take place AFTER this recruiting period.","Role Recruitment", "Yes","No","Never")
 				switch(answer)
 					if("Never")
 						prefs.roles[role_id] = ROLEPREF_NEVER

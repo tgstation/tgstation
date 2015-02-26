@@ -12,6 +12,47 @@
 	siemens_coefficient = 0.8
 	species_fit = list("Vox")
 
+/obj/item/clothing/shoes/syndigaloshes/New()
+	..()
+	for(var/Type in typesof(/obj/item/clothing/shoes) - list(/obj/item/clothing/shoes, /obj/item/clothing/shoes/syndigaloshes))
+		clothing_choices += new Type
+	return
+
+/obj/item/clothing/shoes/syndigaloshes/attackby(obj/item/I, mob/user)
+	..()
+	if(!istype(I, /obj/item/clothing/shoes) || istype(I, src.type))
+		return 0
+	else
+		var/obj/item/clothing/shoes/S = I
+		if(src.clothing_choices.Find(S))
+			user << "<span class='warning'>[S.name]'s pattern is already stored.</span>"
+			return
+		src.clothing_choices += S
+		user << "<span class='notice'>[S.name]'s pattern absorbed by \the [src].</span>"
+		return 1
+	return 0
+
+/obj/item/clothing/shoes/syndigaloshes/verb/change()
+	set name = "Change Color"
+	set category = "Object"
+	set src in usr
+
+	var/obj/item/clothing/shoes/A
+	A = input("Select Colour to change it to", "BOOYEA", A) in clothing_choices
+	if(!A)
+		return
+
+	desc = null
+	permeability_coefficient = 0.90
+
+	desc = A.desc
+	desc += " They seem to have extra grip."
+	name = A.name
+	icon_state = A.icon_state
+	item_state = A.item_state
+	_color = A._color
+	usr.update_inv_w_uniform()	//so our overlays update.
+
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
 	icon_state = "mime"

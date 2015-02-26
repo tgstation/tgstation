@@ -1,11 +1,10 @@
 <!-- 
 Title: Mech Fabricator UI 
-Used In File(s): \code\game\mecha\mech_fabricator.dm
+Used In File(s): \code\game\r_n_d\fabricator\mech.dm
 -->
 
 <!-- 
 #define MECH_SCREEN_MAIN		1
-#define	MECH_SCREEN_QUEUE		2
 
 #define	MECH_SCREEN_ROBOT		3
 #define	MECH_SCREEN_RIPLEY		4
@@ -43,6 +42,33 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 			{{:helper.link('Sync', 'transferthick-e-w', {'sync':1}, null, 'fixedLeft')}}
 		</div>
 	</div>
+
+		<div class="item">
+			<div class="itemLabel">
+				Queue
+			</div>
+			<div class="itemContentWide">
+				<div class="statusDisplay">
+					<div class="line">
+								{{for data.queue}}
+								<div class="line">
+										<div class="statusValue">
+											{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+											{{:helper.link("Remove", 'circle-arrow-s', value.commands, null, 'fixedLeftWide')}}
+										</div>
+								</div>
+								{{empty}}
+									<i>No parts in memory</i>
+								{{/for}}
+					</div>
+					<div class="item">&nbsp;</div>
+					<div class="line">
+						{{:helper.link('Process Queue', 'circle-arrow-s', {'process_queue':null}, null, null, 'misc')}}
+						{{:helper.link('Clear Queue', 'circle-arrow-s', {'clear_queue':null}, null, 'fixedLeftWide')}}
+					</div>
+				</div>
+			</div>
+		</div>
 		
 	<div class="item">&nbsp;</div>
 	
@@ -52,7 +78,6 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 			<div class="itemContents">
 			<div class="line">
 				{{:helper.link('Main', 		'gear',{'screen':1},(data.screen==1)?'linkOn':'', 'fixedLeft')}}
-				{{:helper.link('Queue',		'gear',{'screen':2},(data.screen==2)?'linkOn':'', 'fixedLeft')}}
 			</div>
 			<div class="line">&nbsp;</div>
 			<div class="line">
@@ -144,35 +169,6 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 		</div>
 	{{/if}}
 	
-	{{if data.screen == 2}}
-		<div class="item">
-			<div class="itemLabel">
-				Queue
-			</div>
-			<div class="itemContentWide">
-				<div class="statusDisplay">
-					<div class="line">
-								{{for data.queue}}
-								<div class="line">
-										<div class="statusValue">
-											{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
-											{{:helper.link("Remove", 'circle-arrow-s', value.commands, null, 'fixedLeftWide')}}
-										</div>
-								</div>
-								{{empty}}
-									<i>No parts in memory</i>
-								{{/for}}
-					</div>
-					<div class="item">&nbsp;</div>
-					<div class="line">
-						{{:helper.link('Process Queue', 'circle-arrow-s', {'process_queue':null}, null, null, 'misc')}}
-						{{:helper.link('Clear Queue', 'circle-arrow-s', {'clear_queue':null}, null, 'fixedLeftWide')}}
-					</div>
-				</div>
-			</div>
-		</div>
-	{{/if}}
-	
 	{{if data.screen == 3}}
 		<div class="item">
 			<div class="itemLabel">
@@ -187,9 +183,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 								{{for data.parts.Robot}}
 									<div class="line">
 										<div class="statusValue">
-											{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+											{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 											{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-											{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 											{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 										</div>
 									</div>
@@ -216,9 +211,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 						{{for data.parts.Ripley}}
 							<div class="line">
 								<div class="statusValue">
-									{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 								</div>
 							</div>
@@ -245,9 +239,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 						{{for data.parts.Odysseus}}
 							<div class="line">
 								<div class="statusValue">
-									{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 								</div>
 							</div>
@@ -274,9 +267,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 						{{for data.parts.Gygax}}
 							<div class="line">
 								<div class="statusValue">
-									{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 								</div>
 							</div>
@@ -303,9 +295,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 						{{for data.parts.Durand}}
 							<div class="line">
 								<div class="statusValue">
-									{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 								</div>
 							</div>
@@ -332,9 +323,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 						{{for data.parts.HONK}}
 							<div class="line">
 								<div class="statusValue">
-									{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 								</div>
 							</div>
@@ -361,9 +351,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 						{{for data.parts.Phazon}}
 							<div class="line">
 								<div class="statusValue">
-									{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 								</div>
 							</div>
@@ -387,9 +376,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 						{{for data.parts.Exosuit_Equipment}}
 							<div class="line">
 								<div class="statusValue">
-									{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 								</div>
 							</div>
@@ -413,9 +401,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 						{{for data.parts.Robotic_Upgrade_Modules}}
 							<div class="line">
 								<div class="statusValue">
-									{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 								</div>
 							</div>
@@ -439,9 +426,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 						{{for data.parts.Space_Pod}}
 							<div class="line">
 								<div class="statusValue">
-									{{:helper.link(value.name, 'gear', null, null, 'fixedLeftWidest')}}
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 								</div>
 							</div>
@@ -465,9 +451,8 @@ Used In File(s): \code\game\mecha\mech_fabricator.dm
 						{{for data.parts.Misc}}
 							<div class="line">
 								<div class="statusValue">
-									{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
 									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-									{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
 									{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
 								</div>
 							</div>

@@ -192,7 +192,7 @@
 		if(src.occupant)
 			user << "\blue <B>The sleeper is already occupied!</B>"
 			return
-		if(!L) return
+		if(!L || L.buckled) return
 
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE
@@ -207,7 +207,7 @@
 			OO.loc = src.loc
 		src.add_fingerprint(user)
 		if(user.pulling == L)
-			user.pulling = null
+			user.stop_pulling()
 		return
 	return
 
@@ -249,6 +249,8 @@
 			return
 		if(!G || !G.affecting) return
 		var/mob/M = G.affecting
+		if(!isliving(M) || M.buckled)
+			return
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
 			M.client.eye = src
@@ -397,10 +399,14 @@
 		if(M.Victim == usr)
 			usr << "You're too busy getting your life sucked out of you."
 			return
+	if(usr.buckled)
+		return
 	visible_message("[usr] starts climbing into the sleeper.", 3)
 	if(do_after(usr, 20))
 		if(src.occupant)
 			usr << "\blue <B>The sleeper is already occupied!</B>"
+			return
+		if(usr.buckled)
 			return
 		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE

@@ -22,7 +22,7 @@ var/global/list/all_money_accounts = list()
 		T.target_name = station_account.owner_name
 		T.purpose = "Account creation"
 		T.amount = 75000
-		T.date = "2nd April, 2555"
+		T.date = "2nd April, [game_year]"
 		T.time = "11:24"
 		T.source_terminal = "Biesel GalaxyNet Terminal #277"
 
@@ -44,7 +44,7 @@ var/global/list/all_money_accounts = list()
 	T.target_name = department_account.owner_name
 	T.purpose = "Account creation"
 	T.amount = department_account.money
-	T.date = "2nd April, 2555"
+	T.date = "2nd April, [game_year]"
 	T.time = "11:24"
 	T.source_terminal = "Biesel GalaxyNet Terminal #277"
 
@@ -286,6 +286,11 @@ var/global/list/all_money_accounts = list()
 /obj/machinery/account_database/attackby(O as obj, user as mob)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card))
 		var/obj/item/weapon/card/id/idcard = O
+		if(access_level == 3)
+			return attack_hand(user)
+		if(istype(idcard, /obj/item/weapon/card/emag))
+			emag(user)
+			return
 		if(!held_card)
 			usr.drop_item()
 			idcard.loc = src
@@ -297,6 +302,24 @@ var/global/list/all_money_accounts = list()
 				access_level = 1
 	else
 		..()
+
+/obj/machinery/account_database/emag(mob/user)
+	if(emagged)
+		emagged = 0
+		access_level = 0
+		if(held_card)
+			var/obj/item/weapon/card/id/C = held_card
+			if(access_cent_captain in C.access)
+				access_level = 2
+			else if(access_hop in C.access || access_captain in C.access)
+				access_level = 1
+		attack_hand(user)
+		user << "<span class='notice'>You re-enable the security checks of [src].</span>"
+	else
+		emagged = 1
+		access_level = 3
+		user << "<span class='warning'>You disable the security checks of [src].</span>"
+	return
 
 /obj/machinery/account_database/Topic(var/href, var/href_list)
 	..()
@@ -333,20 +356,24 @@ var/global/list/all_money_accounts = list()
 					if(ishuman(usr) && !usr.get_active_hand())
 						usr.put_in_hands(held_card)
 					held_card = null
-					access_level = 0
+					if(access_level < 3)
+						access_level = 0
 
 				else
 					var/obj/item/I = usr.get_active_hand()
+					if(isEmag(I))
+						emag(usr)
+						return
 					if (istype(I, /obj/item/weapon/card/id))
 						var/obj/item/weapon/card/id/C = I
 						usr.drop_item()
 						C.loc = src
 						held_card = C
-
-						if(access_cent_captain in C.access)
-							access_level = 2
-						else if(access_hop in C.access || access_captain in C.access)
-							access_level = 1
+						if(access_level < 3)
+							if(access_cent_captain in C.access)
+								access_level = 2
+							else if(access_hop in C.access || access_captain in C.access)
+								access_level = 1
 			if("view_account_detail")
 				var/index = text2num(href_list["account_index"])
 				if(index && index <= all_money_accounts.len)

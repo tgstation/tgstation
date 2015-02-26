@@ -321,7 +321,7 @@
 					for(var/image/I in rev_mind_1.current.client.images)
 						if((I.icon_state == "rev" || I.icon_state == "rev_head") && I.loc == rev_mind.current)
 							//del(I)
-							rev_mind.current.client.images -= I
+							rev_mind_1.current.client.images -= I
 
 		if(rev_mind.current)
 			if(rev_mind.current.client)

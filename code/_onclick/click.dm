@@ -30,6 +30,9 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
+
+#define MAX_ITEM_DEPTH	3 //how far we can recurse before we can't get an item
+
 /mob/proc/ClickOn( var/atom/A, var/params )
 	if(click_delayer.blocked())
 		return
@@ -89,21 +92,13 @@
 
 		return
 
-	// operate two levels deep here (item in backpack in src; NOT item in box in backpack in src)
-	if(A == loc || (A in loc) || (A in contents) || (A.loc in contents))
+	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
+		return
 
-		/*/ faster access to objects already on you
-		if(A in contents)
-			next_move = world.time + 6 // on your person
-		else
-			next_move = world.time + 8 // in a box/bag or in your square
-		*/
-		// No adjacency needed
+	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
+	if(A.Adjacent(src, MAX_ITEM_DEPTH)) // see adjacent.dm
 		if(W)
-			/*
-			if(W.flags&USEDELAY)
-				next_move += 5
-			*/
+
 			var/resolved = W.preattack(A, src, 1, params)
 			if(!resolved)
 				resolved = A.attackby(W,src)
@@ -116,42 +111,17 @@
 		else
 			if(ismob(A) || istype(W, /obj/item/weapon/grab))
 				delayNextAttack(10)
-			UnarmedAttack(A)
+			UnarmedAttack(A, 1)
 		return
-
-	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
-		return
-
-	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
-	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		//next_move = world.time + 10
-		if(A.Adjacent(src)) // see adjacent.dm
-			if(W)
-
-				var/resolved = W.preattack(A, src, 1, params)
-				if(!resolved)
-					resolved = A.attackby(W,src)
-					if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
-						delayNextAttack(10)
-					if(!resolved && A && W)
-						W.afterattack(A,src,1,params) // 1 indicates adjacency
-					else
-						delayNextAttack(10)
-			else
-				if(ismob(A) || istype(W, /obj/item/weapon/grab))
-					delayNextAttack(10)
-				UnarmedAttack(A, 1)
-			return
-		else // non-adjacent click
-			if(W)
-				if(ismob(A))
-					delayNextAttack(10)
-				W.afterattack(A,src,0,params) // 0: not Adjacent
-			else
-				if(ismob(A))
-					delayNextAttack(10)
-				RangedAttack(A, params)
-
+	else // non-adjacent click
+		if(W)
+			if(ismob(A))
+				delayNextAttack(10)
+			W.afterattack(A,src,0,params) // 0: not Adjacent
+		else
+			if(ismob(A))
+				delayNextAttack(10)
+			RangedAttack(A, params)
 	return
 
 // Default behavior: ignore double clicks, consider them normal clicks instead
@@ -185,7 +155,7 @@
 */
 /mob/proc/RangedAttack(var/atom/A, var/params)
 	if(!mutations || !mutations.len) return
-	if((M_LASER in mutations) && a_intent == "hurt")
+	if((M_LASER in mutations) && a_intent == I_HURT)
 		LaserEyes(A) // moved into a proc below
 	else if(M_TK in mutations)
 		/*switch(get_dist(src,A))
@@ -246,11 +216,13 @@
 	A.CtrlClick(src)
 	return
 /atom/proc/CtrlClick(var/mob/user)
+	user.stop_pulling()
 	return
 
 /atom/movable/CtrlClick(var/mob/user)
 	if(Adjacent(user))
 		user.start_pulling(src)
+
 
 /*
 	Alt click

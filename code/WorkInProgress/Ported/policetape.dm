@@ -157,7 +157,7 @@
 	breaktape(W, user)
 
 /obj/item/tape/attack_hand(mob/user as mob)
-	if (user.a_intent == "help" && src.allowed(user))
+	if (user.a_intent == I_HELP && src.allowed(user))
 		if(density == 0)
 			user.visible_message("<span class='notice'>[user] pulls [src] back down.</span>")
 			src.density = 1
@@ -173,7 +173,7 @@
 	breaktape(/obj/item/weapon/wirecutters,user)
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W as obj, mob/user as mob)
-	if(user.a_intent == "help" && ((!is_sharp(W) && src.allowed(user))))
+	if(user.a_intent == I_HELP && ((!is_sharp(W) && src.allowed(user))))
 		user << "<span class='notice'>You can't break [src] with that!</span>"
 		return
 	user.visible_message("<span class='warning'>[user] breaks [src]!</span>")

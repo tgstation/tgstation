@@ -14,6 +14,7 @@ var/global/list/type_instances[0]
 // be using tickers instead (eg narsie, singulo). Major target
 // for cutting down on lag and boosting overall performance.
 var/global/list/machines = list()
+var/global/list/power_machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
 var/global/list/events = list()
@@ -100,7 +101,7 @@ var/ELVISBLOCK = 0
 // Powers
 var/SOBERBLOCK = 0
 var/PSYRESISTBLOCK = 0
-var/SHADOWBLOCK = 0
+//var/SHADOWBLOCK = 0
 var/CHAMELEONBLOCK = 0
 var/CRYOBLOCK = 0
 var/EATBLOCK = 0

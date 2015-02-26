@@ -78,7 +78,7 @@
 					else
 						aiPlayer.triggerAlarm("Power", src, cameras, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				if(locate(src.type) in (a.covered_areas))
+				if(master in (a.covered_areas))
 					if(state == 1)
 						a.cancelAlarm("Power", src, source)
 					else
@@ -123,7 +123,7 @@
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				if(locate(src.type) in (a.covered_areas))
+				if(master in (a.covered_areas))
 					a.triggerAlarm("Atmosphere", src, cameras, src)
 			door_alerts |= DOORALERT_ATMOS
 			UpdateFirelocks()
@@ -135,7 +135,7 @@
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				if(locate(src.type) in (a.covered_areas))
+				if(master in (a.covered_areas))
 					a.cancelAlarm("Atmosphere", src, src)
 			door_alerts &= ~DOORALERT_ATMOS
 			UpdateFirelocks()
@@ -216,7 +216,7 @@
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
-			if(locate(src.type) in (a.covered_areas))
+			if(master in (a.covered_areas))
 				a.triggerAlarm("Fire", src, cameras, src)
 
 /area/proc/send_firealert(var/obj/machinery/computer/station_alert/a)//sending alerts to newly built Station Alert Computers.
@@ -237,7 +237,7 @@
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
-			if(locate(src.type) in (a.covered_areas))
+			if(master in (a.covered_areas))
 				a.cancelAlarm("Fire", src, src)
 		door_alerts &= ~DOORALERT_FIRE
 		UpdateFirelocks()

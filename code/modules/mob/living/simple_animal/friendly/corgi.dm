@@ -520,8 +520,8 @@
 /mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	switch(M.a_intent)
-		if("help")	wuv(1,M)
-		if("hurt")	wuv(-1,M)
+		if(I_HELP)	wuv(1,M)
+		if(I_HURT)	wuv(-1,M)
 
 /mob/living/simple_animal/corgi/proc/wuv(change, mob/M)
 	if(change)

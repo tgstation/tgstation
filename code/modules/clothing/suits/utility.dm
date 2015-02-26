@@ -21,7 +21,8 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/extinguisher)
 	slowdown = 1.0
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	flags = FPRINT  | ONESIZEFITSALL | STOPSPRESSUREDMG
+	flags = FPRINT  | ONESIZEFITSALL
+	pressure_resistance = 3 * ONE_ATMOSPHERE
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
@@ -47,9 +48,9 @@
 	name = "bomb hood"
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
-	flags = FPRINT|BLOCKHAIR
+	flags = FPRINT
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	body_parts_covered = FULL_HEAD
 	siemens_coefficient = 0
 
@@ -87,9 +88,9 @@
 	desc = "Use in case of very large bomb."
 	icon_state = "advancedeod_helmet"
 	item_state = "advancedeod_helmet"
-	flags = FPRINT|BLOCKHAIR
+	flags = FPRINT
 	armor = list(melee = 80, bullet = 80, laser = 40,energy = 20, bomb = 100, bio = 0, rad = 0)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	body_parts_covered = FULL_HEAD
 	species_restricted = list("exclude","Vox")
 	siemens_coefficient = 0
@@ -120,7 +121,8 @@
 	name = "Radiation Hood"
 	icon_state = "rad"
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
-	flags = FPRINT|BLOCKHAIR
+	flags = FPRINT
+	flags_inv = HIDEHAIR
 	body_parts_covered = FULL_HEAD
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
 	species_fit = list("Vox")

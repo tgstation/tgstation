@@ -482,7 +482,7 @@ var/global/list/RPD_recipes=list(
 
 	switch(p_class)
 		if(-2) // Paint pipes
-			if(!istype(A,/obj/machinery/atmospherics/pipe) || istype(A,/obj/machinery/atmospherics/pipe/tank) || istype(A,/obj/machinery/atmospherics/unary/vent) || istype(A,/obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A,/obj/machinery/atmospherics/pipe/simple/insulated))
+			if(!istype(A,/obj/machinery/atmospherics/pipe) || istype(A,/obj/machinery/atmospherics/unary/tank) || istype(A,/obj/machinery/atmospherics/unary/vent) || istype(A,/obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A,/obj/machinery/atmospherics/pipe/simple/insulated))
 				// Avoid spewing errors about invalid mode -2 when clicking on stuff that aren't pipes.
 				user << "\The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
 				return 0
@@ -501,9 +501,13 @@ var/global/list/RPD_recipes=list(
 				user << "Destroying Pipe..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5))
-					activate()
-					del(A)
-					return 1
+					if(A)
+						activate()
+						if(istype(A, /obj/item/pipe))
+							returnToPool(A)
+						else
+							qdel(A)
+						return 1
 				return 0
 
 			// Avoid spewing errors about invalid mode -1 when clicking on stuff that aren't pipes.
@@ -517,7 +521,8 @@ var/global/list/RPD_recipes=list(
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				activate()
-				var/obj/item/pipe/P = new (A, pipe_type=p_type, dir=p_dir)
+				var/obj/item/pipe/P = getFromPool(/obj/item/pipe, A)
+				P.New(A,pipe_type=p_type,dir=p_dir) //new (A, pipe_type=p_type, dir=p_dir)
 				P.update()
 				P.add_fingerprint(usr)
 				return 1

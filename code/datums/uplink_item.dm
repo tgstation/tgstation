@@ -90,6 +90,14 @@ var/list/uplink_items = list()
 /datum/uplink_item/jobspecific
 	category = "Job Specific Tools"
 
+//Librarian
+/datum/uplink_item/jobspecific/etwenty
+	name = "The E20"
+	desc = "A seemingly innocent dice, those who are not afraid to roll for attack will find it's effects quite explosive. Has a four second timer."
+	item = /obj/item/weapon/dice/d20/e20
+	cost = 3
+	job = list("Librarian")
+
 //Shaft Miner
 /datum/uplink_item/jobspecific/mastertrainer
 	name = "Master Trainer's Belt"

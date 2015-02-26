@@ -17,7 +17,7 @@ var/global/list/whitelisted_species = list("Human")
 	for(. in (typesof(/datum/species)-/datum/species))
 		S = new .
 		all_species[S.name] = S
-		if(S.flags & WHITELISTED) whitelisted_species += S.name
+		if(S.flags & IS_WHITELISTED) whitelisted_species += S.name
 	return
 
 ////////////////////////////////////////////////////////////////
@@ -59,6 +59,8 @@ var/global/list/whitelisted_species = list("Human")
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
+
+	var/pressure_resistance = 0 //how much we can take a change in pressure, in kPa
 
 	// This shit is apparently not even wired up.
 	var/brute_resist    // Physical damage reduction.
@@ -346,7 +348,7 @@ var/global/list/whitelisted_species = list("Human")
 	language = "Sol Common"
 	primitive = /mob/living/carbon/monkey
 
-	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
+	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT | NO_BLOOD
 
 /datum/species/unathi
 	name = "Unathi"
@@ -473,7 +475,7 @@ var/global/list/whitelisted_species = list("Human")
 
 	primitive = /mob/living/carbon/monkey // TODO
 
-	flags = WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
+	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | CAN_BE_FAT
 
 	// Both must be set or it's only a 45% chance of manifesting.
 	default_mutations=list(M_REMOTE_TALK)
@@ -526,6 +528,8 @@ var/global/list/whitelisted_species = list("Human")
 
 	survival_gear = /obj/item/weapon/storage/box/survival/vox
 
+	primitive = /mob/living/simple_animal/chicken
+
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
 
@@ -536,7 +540,7 @@ var/global/list/whitelisted_species = list("Human")
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
 
-	flags = WHITELISTED | NO_SCAN | NO_BLOOD
+	flags = IS_WHITELISTED | NO_SCAN
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"

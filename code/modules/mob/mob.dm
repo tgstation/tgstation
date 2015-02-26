@@ -141,31 +141,74 @@
 /mob/proc/Life()
 	return
 
-/mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N)
+/mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N, var/dir)
 	if(N.chained)
 		if(narsimage)
 			del(narsimage)
 			del(narglow)
 		return
 	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)))
-		if(!narsimage)
+		if(!narsimage) //Create narsimage
 			narsimage = image('icons/obj/narsie.dmi',src.loc,"narsie",9,1)
-		narsimage.pixel_x = 32 * (N.x - src.x) + N.pixel_x
-		narsimage.pixel_y = 32 * (N.y - src.y) + N.pixel_y
-		narsimage.loc = src.loc
-		narsimage.mouse_opacity = 0
-		if(!narglow)
+			narsimage.mouse_opacity = 0
+		if(!narglow) //Create narglow
 			narglow = image('icons/obj/narsie.dmi',narsimage.loc,"glow-narsie",LIGHTING_LAYER+2,1)
-		narglow.pixel_x = narsimage.pixel_x
-		narglow.pixel_y = narsimage.pixel_y
-		narglow.loc = narsimage.loc
-		narglow.mouse_opacity = 0
+			narglow.mouse_opacity = 0
+		if(!N.old_x || !N.old_y)
+			N.old_x = src.x
+			N.old_y = src.y
+		//Reset narsie's location to the mob
+		var/old_pixel_x = 32 * (N.old_x - src.x) + N.pixel_x
+		var/old_pixel_y = 32 * (N.old_y - src.y) + N.pixel_y
+		narsimage.pixel_x = old_pixel_x
+		narsimage.pixel_y = old_pixel_y
+		narglow.pixel_x = old_pixel_x
+		narglow.pixel_y = old_pixel_y
+		narsimage.loc = src.loc
+		narglow.loc = src.loc
+		//Animate narsie based on dir
+		if(dir)
+			var/x_diff = 0
+			var/y_diff = 0
+			switch(dir) //I bet somewhere out there a proc does something like this already
+				if(1)
+					x_diff = 32
+				if(2)
+					x_diff = -32
+				if(4)
+					y_diff = 32
+				if(8)
+					y_diff = -32
+				if(5)
+					x_diff = 32
+					y_diff = 32
+				if(6)
+					x_diff = 32
+					y_diff = -32
+				if(9)
+					x_diff = -32
+					y_diff = 32
+				if(10)
+					x_diff = -32
+					y_diff = -32
+			animate(narsimage, pixel_x = old_pixel_x+x_diff, pixel_y = old_pixel_y+y_diff, time = 8) //Animate the movement of narsie to narsie's new location
+			animate(narglow, pixel_x = old_pixel_x+x_diff, pixel_y = old_pixel_y+y_diff, time = 8)
+		else
+			//Else if no dir is given, simply send them the image of narsie
+			var/new_x = 32 * (N.x - src.x) + N.pixel_x
+			var/new_y = 32 * (N.y - src.y) + N.pixel_y
+			narsimage.pixel_x = new_x
+			narsimage.pixel_y = new_y
+			narglow.pixel_x = new_x
+			narglow.pixel_y = new_y
+		//Display the new narsimage to the player
 		src << narsimage
 		src << narglow
 	else
 		if(narsimage)
 			del(narsimage)
 			del(narglow)
+
 
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)
@@ -218,226 +261,32 @@
 			if(1)
 				equip_to_slot(W, slot, redraw_mob)
 			if(2)
-				var/obj/item/wearing = null
-				var/hand
-				if(W == l_hand)
-					hand = 0
-				else if(W == r_hand)
-					hand = 1
-				switch(slot)
-					if(slot_wear_mask)
-						wearing = wear_mask
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
+				var/in_the_hand = (src.get_active_hand() == W || src.get_inactive_hand() == W)
+				var/obj/item/wearing = get_item_by_slot(slot)
+				if(wearing)
+					if(!in_the_hand) //if we aren't holding it, the proc is abstract so get rid of it
+						switch(act_on_fail)
+							if(EQUIP_FAILACTION_DELETE)
+								qdel(W)
+							if(EQUIP_FAILACTION_DROP)
+								W.loc=get_turf(src) // I think.
+						return
+					drop_item()
+					if(!(put_in_active_hand(wearing)))
+						equip_to_slot(wearing, slot, redraw_mob)
+						switch(act_on_fail)
+							if(EQUIP_FAILACTION_DELETE)
+								qdel(W)
 							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_back)
-						wearing = back
+								if(!disable_warning && act_on_fail != EQUIP_FAILACTION_DROP)
+									src << "<span class='warning'> You are unable to equip that.</span>" //Only print if act_on_fail is NOTHING
+						return
+					else
 						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_wear_suit)
-						wearing = H.wear_suit
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-						if(H.s_store)
-							if(!H.s_store.mob_can_equip(src, slot_s_store, 1))
-								u_equip(H.s_store)
-					if(slot_gloves)
-						wearing = H.gloves
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_shoes)
-						wearing = H.shoes
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_belt)
-						wearing = H.belt
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_glasses)
-						wearing = H.glasses
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_head)
-						wearing = H.head
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					// oh god what am I doing - N3X
-					if(slot_ears)
-						wearing = H.ears
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_w_uniform)
-						wearing = H.w_uniform
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-/*
-						if(H.wear_id)
-							if(!H.wear_id.mob_can_equip(src, slot_wear_id, 1))
-								u_equip(H.wear_id)
-						if(H.l_store)
-							if(!H.l_store.mob_can_equip(src, slot_l_store, 1))
-								u_equip(H.l_store)
-						if(H.r_store)
-							if(!H.r_store.mob_can_equip(src, slot_r_store, 1))
-								u_equip(H.r_store)
-						if(H.belt)
-							if(!H.belt.mob_can_equip(src, slot_belt, 1))
-								u_equip(H.belt)*/
-					if(slot_wear_id)
-						wearing = H.wear_id
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_s_store)
-						wearing = H.s_store
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_l_store)
-						wearing = H.l_store
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
-					if(slot_r_store)
-						wearing = H.r_store
-						equip_to_slot(W, slot, redraw_mob)
-						if(wearing)
-							if(hand)
-								r_hand = wearing
-								update_inv_r_hand()
-							else if(hand == 0)
-								l_hand = wearing
-								update_inv_l_hand()
-							else
-								u_equip(W)
-								del(W)
-								equip_to_slot(wearing, slot, redraw_mob)
+						u_equip(wearing)
+						put_in_active_hand(wearing)
+					if(H.s_store && !H.s_store.mob_can_equip(src, slot_s_store, 1))
+						u_equip(H.s_store)
 		return 1
 	else
 		if(!W.mob_can_equip(src, slot, disable_warning))
@@ -917,7 +766,7 @@ var/list/slot_equipment_priority = list( \
 	A.examine(src)
 
 
-/mob/living/verb/verb_pickup(obj/I in view())
+/mob/living/verb/verb_pickup(obj/I in view(1))
 	set name = "Pick up"
 	set category = "Object"
 
@@ -1213,7 +1062,7 @@ var/list/slot_equipment_priority = list( \
 				stat(null, "\tqdel - [garbageCollector.del_everything ? "off" : "on"]")
 				stat(null, "\ton queue - [garbageCollector.queue.len]")
 				stat(null, "\ttotal delete - [garbageCollector.dels_count]")
-				stat(null, "\tsoft delete - [garbageCollector.dels_count - garbageCollector.hard_dels]")
+				stat(null, "\tsoft delete - [soft_dels]")
 				stat(null, "\thard delete - [garbageCollector.hard_dels]")
 			else
 				stat(null, "Garbage Controller is not running.")
@@ -1257,6 +1106,9 @@ var/list/slot_equipment_priority = list( \
 				process = processScheduler.getProcess("machinery")
 				stat(null, "MAC([machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
+				process = processScheduler.getProcess("pow_machine")
+				stat(null, "POM([power_machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
 				process = processScheduler.getProcess("obj")
 				stat(null, "OBJ([processing_objects.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
@@ -1286,8 +1138,8 @@ var/list/slot_equipment_priority = list( \
 					statpanel(listed_turf.name, null, A)
 
 		if(spell_list && spell_list.len)
-			for(var/obj/effect/proc_holder/spell/S in spell_list)
-				if(istype(S, /obj/effect/proc_holder/spell/noclothes) || !statpanel(S.panel))
+			for(var/spell/S in spell_list)
+				if(istype(S, /spell/noclothes) || !statpanel(S.panel))
 					continue //Not showing the noclothes spell
 				switch(S.charge_type)
 					if("recharge")

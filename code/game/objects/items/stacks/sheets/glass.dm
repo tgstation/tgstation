@@ -201,8 +201,8 @@
 	return 1
 
 /obj/item/stack/sheet/glass/glass/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/CC = W
+	if(istype(W,/obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/CC = W
 		if(CC.amount < 5)
 			user << "\b There is not enough wire in this coil. You need 5 lengths."
 			return

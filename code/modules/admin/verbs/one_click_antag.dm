@@ -121,6 +121,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
+		if(!applicant.client) continue
 		if(applicant.client.desires_role(ROLE_REV))
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)

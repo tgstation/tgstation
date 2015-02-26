@@ -18,26 +18,48 @@
 	var/turf/source
 	var/movetotarget = 1
 
+/obj/effect/accelerated_particle/resetVariables()
+	..("movement_range", "target", "ionizing", "particle_type", "source", "movetotarget", args)
+	movement_range = 10
+	target = null
+	ionizing = 0
+	particle_type = null
+	source = null
+	movetotarget = 1
+
 /obj/effect/accelerated_particle/weak
 	movement_range = 8
 	energy = 5
 	icon_state="particle0"
+	resetVariables()
+		..("energy", "movement_range")
+		movement_range = 8
+		energy = 5
 
 /obj/effect/accelerated_particle/strong
 	movement_range = 15
 	energy = 15
 	icon_state="particle2"
+	resetVariables()
+		..("energy", "movement_range")
+		energy = 15
+		movement_range = 15
 
 /obj/effect/accelerated_particle/powerful
 	movement_range = 20
 	energy = 50
 	icon_state="particle3"
+	resetVariables()
+		..("energy", "movement_range")
+		energy = 50
+		movement_range = 20
 
 /obj/effect/accelerated_particle/New(loc, dir = 2, move = 0)
 	. = ..()
 	src.loc = loc
 	src.dir = dir
 
+/obj/effect/accelerated_particle/proc/startMove(move = 0)
 	if(movement_range > 20)
 		movement_range = 20
 	if(move)
@@ -91,6 +113,7 @@
 
 
 /obj/effect/accelerated_particle/proc/move(var/lag)
+	if(!loc) return 0
 	if(target)
 		if(movetotarget)
 			if(!step_towards(src,target))
@@ -106,6 +129,8 @@
 	movement_range--
 	if(movement_range <= 0)
 		returnToPool(src)
+		loc = null
+		return 0
 	else
 		sleep(lag)
 		move(lag)

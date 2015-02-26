@@ -318,7 +318,7 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 	//I want to avoid using global variables.
 	spawn(1)
 		var/temp = 1 //stops spam
-		for(var/obj/machinery/singularity/O in machines)
+		for(var/obj/machinery/singularity/O in power_machines)
 			if(O.last_warning && temp)
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0

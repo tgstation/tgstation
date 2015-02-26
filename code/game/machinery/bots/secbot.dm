@@ -321,7 +321,7 @@ Auto Patrol: []"},
 				mode = SECBOT_HUNT
 				return
 
-			if(istype(src.target,/mob/living/carbon))
+			if(istype(src.target,/mob/living/carbon) && !isalien(target))
 				var/mob/living/carbon/C = target
 				if(!C.handcuffed && !src.arrest_type)
 					playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -2)
@@ -329,11 +329,11 @@ Auto Patrol: []"},
 					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
 					spawn(60)
-						if(get_dist(src, src.target) <= 1)
+						if(Adjacent(target))
 							/*if(src.target.handcuffed)
 								return*/
 
-							if(istype(src.target,/mob/living/carbon))
+							if(istype(src.target,/mob/living/carbon) && !isalien(target))
 								C = target
 								if(!C.handcuffed)
 									C.handcuffed = new /obj/item/weapon/handcuffs(target)
@@ -644,7 +644,10 @@ Auto Patrol: []"},
 				src.threatlevel = src.assess_perp(C)
 			else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
 				src.threatlevel = 4
-
+			else
+				continue
+		else
+			continue
 		/*
 		else if(istype(M, /mob/living/simple_animal/hostile))
 			if(M.stat == DEAD)

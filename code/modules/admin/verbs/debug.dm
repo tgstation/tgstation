@@ -1107,13 +1107,13 @@ Pressure: [env.return_pressure()]"}
 	set name = "Dump Instance Counts"
 	set desc = "MEMORY PROFILING IS TOO HIGH TECH"
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
-	var/F=file("data/logs/profiling/instances_[date_string].csv")
+	var/F=file("data/logs/profiling/[date_string]_instances.csv")
 	fdel(F)
 	F << "Types,Number of Instances"
 	for(var/key in type_instances)
 		F << "[key],[type_instances[key]]"
 
-	usr << "\blue Dumped to instances.csv."
+	usr << "\blue Dumped to [F]"
 
 #ifdef PROFILE_MACHINES
 /client/proc/cmd_admin_dump_macprofile()
@@ -1121,33 +1121,33 @@ Pressure: [env.return_pressure()]"}
 	set name = "Dump Machine and Object Profiling"
 
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
-	var/F =file("data/logs/profiling/machine_profiling_[date_string].csv")
+	var/F =file("data/logs/profiling/[date_string]_machine_profiling.csv")
 	fdel(F)
 	F << "type,nanoseconds"
 	for(var/typepath in machine_profiling)
 		var/ns = machine_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to machine_profiling.csv."
-	var/FF = file("data/logs/profiling/object_profiling_[date_string].csv")
+	usr << "\blue Dumped to [F]"
+	var/FF = file("data/logs/profiling/[date_string]_object_profiling.csv")
 	fdel(FF)
 	FF << "type,nanoseconds"
 	for(var/typepath in object_profiling)
 		var/ns = object_profiling[typepath]
 		FF << "[typepath],[ns]"
 
-	usr << "\blue Dumped to object_profiling.csv."
+	usr << "\blue Dumped to [FF]."
 
 
 /client/proc/cmd_admin_dump_machine_type_list()
 	set category = "Debug"
 	set name = "Dump Machine type list"
 
-	if(!machines.len)
+	if(!machines.len && !power_machines.len)
 		usr << "Machines has no length!"
 		return
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
-	var/F =file("data/logs/profiling/machine_instances_[date_string].csv")
+	var/F =file("data/logs/profiling/[date_string]_machine_instances.csv")
 	fdel(F)
 	F << "type,count"
 	var/list/machineinstances = list()
@@ -1159,7 +1159,20 @@ Pressure: [env.return_pressure()]"}
 		var/count = machineinstances[T]
 		F << "[T],[count]"
 
-	usr << "\blue Dumped to [F].csv."
+	usr << "\blue Dumped to [F]."
+	F =file("data/logs/profiling/[date_string]_power_machine_instances.csv")
+	fdel(F)
+	F << "type,count"
+	machineinstances.len = 0
+	for(var/atom/typepath in power_machines)
+		if(!typepath.type in machineinstances)
+			machineinstances["[typepath.type]"] = 0
+		machineinstances["[typepath.type]"] += 1
+	for(var/T in machineinstances)
+		var/count = machineinstances[T]
+		F << "[T],[count]"
+
+	usr << "\blue Dumped to [F]."
 #endif
 
 /client/proc/cmd_admin_dump_delprofile()
@@ -1167,31 +1180,31 @@ Pressure: [env.return_pressure()]"}
 	set name = "Dump Del Profiling"
 
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
-	var/F =file("data/logs/profiling/del_profiling_[date_string].csv")
+	var/F =file("data/logs/profiling/[date_string]_del_profiling.csv")
 	fdel(F)
 	F << "type,deletes"
 	for(var/typepath in del_profiling)
 		var/ns = del_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to del_profiling.csv."
-	F =file("data/logs/profiling/gdel_profiling_[date_string].csv")
+	usr << "\blue Dumped to [F]."
+	F =file("data/logs/profiling/[date_string]_gdel_profiling.csv")
 	fdel(F)
 	F << "type,soft deletes"
 	for(var/typepath in gdel_profiling)
 		var/ns = gdel_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to gdel_profiling.csv."
+	usr << "\blue Dumped to [F]."
 
-	F =file("data/logs/profiling/ghdel_profiling_[date_string].csv")
+	F =file("data/logs/profiling/[date_string]_ghdel_profiling.csv")
 	fdel(F)
 	F << "type,hard deletes"
 	for(var/typepath in ghdel_profiling)
 		var/ns = ghdel_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to ghdel_profiling.csv."
+	usr << "\blue Dumped to [F]."
 
 /client/proc/gib_money()
 	set category = "Fun"
@@ -1298,3 +1311,41 @@ client/proc/mob_list()
 	if(foundnull)
 		usr << "Found [foundnull] null entries in the mob list, running null clearer."
 		listclearnulls(mob_list)
+
+client/proc/cure_disease()
+	set name = "Cure Disease"
+	set category = "Debug"
+	if(!holder) return
+
+	var/list/disease_by_name = list("-Cure All-" = null) + disease2_list + active_diseases
+
+	var/disease_name = input(src, "Disease to cure?") as null|anything in sortTim(disease_by_name, /proc/cmp_text_asc)
+	if(!disease_name) return
+	var/count = 0
+	if(disease_name == "-Cure All-")
+		for(var/mob/living/carbon/C in mob_list)
+			for(var/ID in C.virus2)
+				if(ID && C.virus2[ID])
+					var/datum/disease2/disease/DD = C.virus2[ID]
+					DD.cure(C)
+					count++
+			for(var/datum/disease/D in C.viruses)
+				if(D)
+					D.cure(1)
+					count++
+					active_diseases -= D
+	else
+		for(var/mob/living/carbon/C in mob_list)
+			for(var/ID in C.virus2)
+				if(ID == disease_name)
+					var/datum/disease2/disease/DD = C.virus2[ID]
+					DD.cure(C)
+					count++
+			for(var/datum/disease/D in C.viruses)
+				if(D && D.name == disease_name)
+					D.cure(1)
+					count++
+					active_diseases -= D
+	src << "<span class='notice'>Cured [count] mob\s of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]</span>"
+	log_admin("[src]/([ckey(src.key)] Cured all mobs of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]")
+	message_admins("[src]/([ckey(src.key)] Cured all mobs of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]")

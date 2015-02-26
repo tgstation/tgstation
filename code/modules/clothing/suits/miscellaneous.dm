@@ -414,3 +414,8 @@
 	item_state = "raincoat"
 	allowed = list (/obj/item/weapon/fireaxe)
 
+/obj/item/clothing/suit/kefkarobe
+	name = "Crazed Jester's Robe"
+	desc = "Do I look like a waiter?"
+	icon_state = "kefkarobe"
+	item_state = "kefkarobe"

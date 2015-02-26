@@ -19,7 +19,7 @@
 				user << "<span class='rose'>There is another network terminal here.</span>"
 				return
 			else
-				var/obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(turf_loc)
+				var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(turf_loc)
 				C.amount = 10
 				user << "You cut the cables and disassemble the unused power terminal."
 				qdel(T)

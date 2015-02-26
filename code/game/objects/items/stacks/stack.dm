@@ -109,7 +109,7 @@
 		list_recipes(usr, text2num(href_list["sublist"]))
 
 	if (href_list["make"])
-		if (src.amount < 1) del(src) //Never should happen
+		if (src.amount < 1) returnToPool(src) //Never should happen
 
 		var/list/recipes_list = recipes
 		if (href_list["sublist"])
@@ -145,17 +145,21 @@
 		src.amount-=R.req_amount*multiplier
 		if (src.amount<=0)
 			var/oldsrc = src
-			src = null //dont kill proc after del()
+			//src = null //dont kill proc after del()
 			usr.before_take_item(oldsrc)
-			del(oldsrc)
+			returnToPool(oldsrc)
 			if (istype(O,/obj/item))
 				usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
-				del(I)
+				qdel(I)
 		//BubbleWrap END
+		if(istype(O, /obj/item/weapon/handcuffs/cable))
+			var/obj/item/weapon/handcuffs/cable/C = O
+			C._color = _color
+			C.update_icon()
 	if (src && usr.machine==src) //do not reopen closed window
 		spawn( 0 )
 			src.interact(usr)
@@ -172,7 +176,7 @@
 	if (src.amount<=0)
 		if(usr)
 			usr.before_take_item(src)
-		spawn qdel(src)
+		spawn returnToPool(src)
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
 	var/obj/item/stack/oldsrc = src
@@ -202,24 +206,28 @@
 		..()
 	return
 
-/obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
-	..()
-	if (istype(W, src.type) && src.type==W.type)
-		var/obj/item/stack/S = W
-		if (S.amount >= max_amount)
+/obj/item/stack/preattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if (istype(target, src.type) && src.type==target.type)
+		var/obj/item/stack/S = target
+		if (amount >= max_amount)
+			user << "\The [src] cannot hold anymore [singular_name]."
 			return 1
 		var/to_transfer as num
-		if (user.get_inactive_hand()==src)
+		if (user.get_inactive_hand()==S)
 			to_transfer = 1
 		else
-			to_transfer = min(src.amount, S.max_amount-S.amount)
-		S.amount+=to_transfer
-		if (S && usr.machine==S)
-			spawn(0) S.interact(usr)
-		src.use(to_transfer)
-		if (src && usr.machine==src)
-			spawn(0) src.interact(usr)
-	else return ..()
+			to_transfer = min(S.amount, max_amount-amount)
+		amount+=to_transfer
+		user << "You add [to_transfer] [singular_name] to \the [src]. It now contains [amount] [singular_name]\s."
+		if (S && user.machine==S)
+			spawn(0) interact(user)
+		S.use(to_transfer)
+		if (src && user.machine==src)
+			spawn(0) src.interact(user)
+		update_icon()
+		S.update_icon()
+		return 1
+	return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
 	src.blood_DNA = from.blood_DNA

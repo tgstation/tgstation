@@ -152,14 +152,16 @@
 	item_state = "vox-pressure-normal"
 	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 25)
+	pressure_resistance = 5 * ONE_ATMOSPHERE
 
 /obj/item/clothing/head/helmet/space/vox/civ
 	name = "vox assistant pressure helmet"
 	icon_state = "vox-civ-assistant"
 	item_state = "vox-pressure-normal"
 	desc = "A very alien-looking helmet for vox crewmembers."
-	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMG //Flags need updating from inheritance above
+	flags = FPRINT //Flags need updating from inheritance above
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 25)
+	pressure_resistance = 5 * ONE_ATMOSPHERE
 
 /obj/item/clothing/suit/space/vox/civ/bartender
 	name = "vox bartender pressure suit"
@@ -202,6 +204,7 @@
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 50)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	pressure_resistance = 200 * ONE_ATMOSPHERE
 
 /obj/item/clothing/head/helmet/space/vox/civ/engineer
 	name = "vox engineer pressure helmet"
@@ -211,6 +214,7 @@
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 50)
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	pressure_resistance = 200 * ONE_ATMOSPHERE
 
 /obj/item/clothing/suit/space/vox/civ/engineer/atmos
 	name = "vox atmos pressure suit"
@@ -231,14 +235,14 @@
 	desc = "A more advanced pressure suit made for vox crewmembers. Has some radiation and heat protection."
 	icon_state = "vox-civ-ce"
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
-	flags = FPRINT  | STOPSPRESSUREDMG | PLASMAGUARD
+	flags = FPRINT  | PLASMAGUARD
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/head/helmet/space/vox/civ/engineer/ce
 	name = "vox chief engineer pressure helmet"
 	icon_state = "vox-civ-ce"
 	desc = "A very alien-looking helmet for vox crewmembers. Has some radiation and heat protection."
-	flags = FPRINT  | BLOCKHAIR | STOPSPRESSUREDMG | PLASMAGUARD
+	flags = FPRINT  | PLASMAGUARD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
 //Science
@@ -276,12 +280,14 @@
 	icon_state = "vox-civ-medical"
 	item_state = "vox-pressure-medical"
 	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/device/flashlight,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
+	pressure_resistance = 40 * ONE_ATMOSPHERE
 
 /obj/item/clothing/head/helmet/space/vox/civ/medical
 	name = "vox medical pressure helmet"
 	icon_state = "vox-civ-medical"
 	item_state = "vox-pressure-medical"
 	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is for medical personnel."
+	pressure_resistance = 40 * ONE_ATMOSPHERE
 
 /obj/item/clothing/suit/space/vox/civ/medical/virologist
 	name = "vox virologist pressure suit"
@@ -341,13 +347,14 @@
 	item_state = "vox-pressure-security"
 	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/baton)
+	pressure_resistance = 40 * ONE_ATMOSPHERE
 
 /obj/item/clothing/head/helmet/space/vox/civ/security
 	name = "vox security pressure helmet"
 	icon_state = "vox-civ-security"
 	item_state = "vox-pressure-security"
 	desc = "A very alien-looking helmet for Nanotrasen-hired Vox. This one is for security aligned vox."
-
+	pressure_resistance = 40 * ONE_ATMOSPHERE
 
 //Old Vox Suits
 /*

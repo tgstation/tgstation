@@ -80,8 +80,8 @@
 	desc = "A rubber pig mask."
 	icon_state = "pig"
 	item_state = "pig"
-	flags = FPRINT|BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags = FPRINT
+	flags_inv = HIDEFACE|HIDEHAIR
 	body_parts_covered = HEAD
 	w_class = 2
 	siemens_coefficient = 0.9
@@ -91,8 +91,8 @@
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
 	icon_state = "horsehead"
 	item_state = "horsehead"
-	flags = FPRINT|BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags = FPRINT
+	flags_inv = HIDEFACE|HIDEHAIR
 	body_parts_covered = HEAD
 	w_class = 2
 	var/voicechange = 0

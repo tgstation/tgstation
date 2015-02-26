@@ -150,6 +150,7 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("plastic knife", /obj/item/weapon/kitchen/utensil/knife/plastic, 1, on_floor = 1), \
 	new/datum/stack_recipe("plastic bag", /obj/item/weapon/storage/bag/plasticbag, 3, on_floor = 1), \
 	new/datum/stack_recipe("blood bag", /obj/item/weapon/reagent_containers/blood, 3, on_floor = 1), \
+	new/datum/stack_recipe("plastic coat", /obj/item/clothing/suit/raincoat, 5), \
 	)
 
 /obj/item/stack/sheet/mineral/plastic/New(var/loc, var/amount=null)
@@ -309,6 +310,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=4"
 	perunit = 2000
 
+/*
 /obj/item/stack/sheet/mineral/pharosium
 	name = "pharosium"
 	icon_state = "sheet-pharosium"
@@ -462,4 +464,4 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=5"
 	perunit = 3750
-
+*/

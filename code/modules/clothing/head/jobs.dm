@@ -34,7 +34,8 @@
 	name = "chaplain's hood"
 	desc = "It's hood that covers the head. It keeps you warm during the space winters."
 	icon_state = "chaplain_hood"
-	flags = FPRINT|BLOCKHAIR
+	flags = FPRINT
+	flags_inv = HIDEHAIR
 	body_parts_covered = HEAD|EARS
 	siemens_coefficient = 0.9
 
@@ -43,7 +44,8 @@
 	name = "nun hood"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun_hood"
-	flags = FPRINT|BLOCKHAIR
+	flags = FPRINT
+	flags_inv = HIDEHAIR
 	body_parts_covered = HEAD|EARS
 	siemens_coefficient = 0.9
 
@@ -67,7 +69,8 @@
 	name = "surgical cap"
 	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs."
 	icon_state = "surgcap_blue"
-	flags = FPRINT  | BLOCKHEADHAIR
+	flags = FPRINT
+	flags_inv = HIDEHEADHAIR
 
 /obj/item/clothing/head/surgery/purple
 	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs. This one is deep purple."

@@ -220,6 +220,10 @@
 	if(..())
 		return 0 // don't update UIs attached to this object
 
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
+
 	if(href_list["switchOn"])
 		on = 1
 		update_icon()
@@ -370,6 +374,8 @@
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
+	if(usr.pulling == M)
+		usr.stop_pulling()
 	M.stop_pulling()
 	M.loc = src
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
@@ -404,7 +410,7 @@
 	set name = "Move Inside"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || usr.buckled) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)

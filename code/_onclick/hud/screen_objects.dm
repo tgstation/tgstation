@@ -366,16 +366,16 @@
 		if("act_intent")
 			usr.a_intent_change("right")
 		if("help")
-			usr.a_intent = "help"
+			usr.a_intent = I_HELP
 			usr.hud_used.action_intent.icon_state = "intent_help"
 		if("harm")
-			usr.a_intent = "hurt"
+			usr.a_intent = I_HURT
 			usr.hud_used.action_intent.icon_state = "intent_hurt"
 		if("grab")
-			usr.a_intent = "grab"
+			usr.a_intent = I_GRAB
 			usr.hud_used.action_intent.icon_state = "intent_grab"
 		if("disarm")
-			usr.a_intent = "disarm"
+			usr.a_intent = I_DISARM
 			usr.hud_used.action_intent.icon_state = "intent_disarm"
 
 		if("pull")
@@ -571,80 +571,73 @@
 		if("wall")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/wall))
+					if(istype(D, /spell/aoe_turf/conjure/wall))
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("floor")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/floor ))
+					if(istype(D, /spell/aoe_turf/conjure/floor ))
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("soulstone")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone ))
+					if(istype(D, /spell/aoe_turf/conjure/soulstone ))
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("shell")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser  ))
+					if(istype(D, /spell/aoe_turf/conjure/construct/lesser  ))
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("pylon")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/builder/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/pylon ))
+					if(istype(D, /spell/aoe_turf/conjure/pylon ))
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("shift")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/wraith/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift ))
+					if(istype(D, /spell/targeted/ethereal_jaunt/shift ))
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("juggerwall")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/armoured/C = usr
-				var/obj/effect/proc_holder/spell/S = null
+				var/spell/S = null
 				for(var/datum/D in C.spell_list)
-					if(istype(D, /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall ))
+					if(istype(D, /spell/aoe_turf/conjure/forcewall/lesser ))
 						S = D
 						break
 				if(S)
-					if(S.cast_check())
-						S.choose_targets()
+					S.perform()
 		if("rune")
 			if(isconstruct(usr))
 				var/mob/living/simple_animal/construct/harvester/C = usr

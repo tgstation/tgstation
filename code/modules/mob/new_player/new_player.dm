@@ -108,7 +108,12 @@
 		return 1
 
 	if(href_list["ready"])
-		ready = !ready
+		switch(text2num(href_list["ready"]))
+			if(1)
+				ready = 1
+			if(2)
+				ready = 0
+		usr << "<span class='recruit'>You [ready ? "have declared ready" : "have unreadied"].</span>"
 		new_player_panel_proc()
 		//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
 		return 1

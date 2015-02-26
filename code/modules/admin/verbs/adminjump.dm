@@ -97,12 +97,13 @@
 	if(config.allow_admin_jump)
 		var/list/keys = list()
 		for(var/mob/M in player_list)
-			keys += M.client
-		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
+			if(M.ckey)
+				keys["[M.ckey]"] = M //used to be M.client but GHOSTED PEOPLE WERE PUTTING NULL ENTRIES IN THE FUCKING LIST
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortList(keys)
 		if(!selection)
 			src << "No keys found."
 			return
-		var/mob/M = selection:mob
+		var/mob/M = keys[selection]
 		log_admin("[key_name(usr)] jumped to [key_name(M)]")
 		message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]", 1)
 		usr.loc = M.loc
@@ -137,11 +138,11 @@
 	if(config.allow_admin_jump)
 		var/list/keys = list()
 		for(var/mob/M in player_list)
-			keys += M.client
+			if(M) keys += M //used to be M.key but it was putting FUCKING NULLS IN THE LIST
 		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 		if(!selection)
 			return
-		var/mob/M = selection:mob
+		var/mob/M = selection
 
 		if(!M)
 			return

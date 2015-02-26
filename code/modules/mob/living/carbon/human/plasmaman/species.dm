@@ -7,7 +7,7 @@
 
 	//flags = IS_WHITELISTED /*| HAS_LIPS | HAS_TAIL | NO_EAT | NO_BREATHE | NON_GENDERED*/ | NO_BLOOD
 	// These things are just really, really griefy. IS_WHITELISTED removed for now - N3X
-	flags = NO_BLOOD
+	flags = NO_BLOOD|IS_WHITELISTED
 
 	//default_mutations=list(SKELETON) // This screws things up
 

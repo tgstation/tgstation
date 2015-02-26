@@ -211,7 +211,7 @@
 			circuit=null
 			new /obj/machinery/constructable_frame/machine_frame(T)
 		del(src)
-	else if(user.a_intent == "hurt")
+	else if(user.a_intent == I_HURT)
 		user.delayNextAttack(8)
 		src.health -= W.force
 		src.healthcheck()
@@ -240,7 +240,7 @@
 			src.add_fingerprint(user)
 			update_icon()
 	else
-		if(user.a_intent == "hurt")
+		if(user.a_intent == I_HURT)
 			user.delayNextAttack(8)
 			user.visible_message("<span class='danger'>[user.name] kicks \the [src]!</span>", \
 				"<span class='danger'>You kick \the [src]!</span>", \

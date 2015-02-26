@@ -31,7 +31,7 @@
 			return 1
 		if(href_list["set_subject"])
 			var/list/valves=list()
-			for(var/obj/machinery/atmospherics/valve/digital/V in machines)
+			for(var/obj/machinery/atmospherics/binary/valve/digital/V in machines)
 				if(!isnull(V.id_tag) && V.frequency == parent.frequency)
 					valves|=V.id_tag
 			if(valves.len==0)

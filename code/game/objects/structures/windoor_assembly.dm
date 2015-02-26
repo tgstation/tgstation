@@ -126,12 +126,12 @@ obj/structure/windoor_assembly/Destroy()
 						src.name = "Secure Windoor Assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
-			else if(istype(W, /obj/item/weapon/cable_coil) && anchored)
+			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
 
 				if(do_after(user, 40))
 					if(!src) return
-					var/obj/item/weapon/cable_coil/CC = W
+					var/obj/item/stack/cable_coil/CC = W
 					CC.use(1)
 					user << "<span class='notice'>You wire the windoor!</span>"
 					src.state = "02"
@@ -153,7 +153,7 @@ obj/structure/windoor_assembly/Destroy()
 					if(!src) return
 
 					user << "<span class='notice'>You cut the windoor wires!</span>"
-					new/obj/item/weapon/cable_coil(get_turf(user), 1)
+					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
 						src.name = "Secure Wired Windoor Assembly"

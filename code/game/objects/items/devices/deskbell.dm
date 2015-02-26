@@ -274,8 +274,8 @@
 					M.amount = 2
 					qdel(src)
 					return
-				if(istype(W,/obj/item/weapon/cable_coil))
-					var/obj/item/weapon/cable_coil/C=W
+				if(istype(W,/obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/C=W
 					user.visible_message(
 						"<span class='warning'>[user.name] has added cables to \the [src]!</span>",
 						"You add cables to \the [src].")
@@ -292,7 +292,7 @@
 					if(has_signaler)
 						user << "<span class='warning'>You must remove the signaler first.</span>"
 						return
-					new /obj/item/weapon/cable_coil(get_turf(src),1)
+					new /obj/item/stack/cable_coil(get_turf(src),1)
 					user.visible_message(
 						"<span class='warning'>[user.name] cut the cables.</span>",
 						"You cut the cables.")

@@ -79,7 +79,7 @@ move an amendment</a> to the drawing.</p>
 	return A
 
 /obj/item/blueprints/proc/get_area_type(var/area/A = get_area())
-	if (A.name == "Space")
+	if (A.name == "Space" && A.tag)
 		return AREA_SPACE
 	var/list/SPECIALS = list(
 		/area/shuttle,
@@ -131,14 +131,11 @@ move an amendment</a> to the drawing.</p>
 	A.power_light = 0
 	A.power_environ = 0
 	A.always_unpowered = 0
-	A.SetDynamicLighting()
 	A.addSorted()
-	spawn() move_turfs_to_area(turfs, A)
 
-	A.always_unpowered = 0
-	for(var/turf/T in A.contents)
-		T.lighting_changed = 1
-		lighting_controller.changed_turfs += T
+	spawn(0)
+		move_turfs_to_area(turfs, A)
+		A.SetDynamicLighting()
 
 	spawn(5)
 		//ma = A.master ? "[A.master]" : "(null)"

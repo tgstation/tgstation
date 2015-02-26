@@ -19,6 +19,7 @@ var/global/list/ghdel_profiling = list()
 	var/pass_flags = 0
 	var/throwpass = 0
 	var/germ_level = 0 // The higher the germ level, the more germ on the atom.
+	var/pressure_resistance = ONE_ATMOSPHERE
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -86,22 +87,11 @@ var/global/list/ghdel_profiling = list()
 		WARNING("Type [type] does not inherit /atom/New().  Please ensure ..() is called, or that the type calls AddToProfiler().")
 
 /atom/Del()
-	if(ismob(src))
-		if(mob_list.Find(src))
-			diary << "WARNING: found [src]|[src.type] in the mob list"
-			mob_list.Remove(src)
-		if(living_mob_list.Find(src))
-			diary << "WARNING: found [src]|[src.type] in the living mob list"
-			living_mob_list.Remove(src)
-		if(dead_mob_list.Find(src))
-			diary << "WARNING: found [src]|[src.type] in the dead mob list"
-			dead_mob_list.Remove(src)
+	DeleteFromProfiler()
 	..()
+
 /atom/Destroy()
 	SetOpacity(0)
-
-	// Only call when we're actually deleted.
-	DeleteFromProfiler()
 
 	if(reagents)
 		reagents.Destroy()

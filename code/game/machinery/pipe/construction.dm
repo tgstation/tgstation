@@ -58,9 +58,10 @@ Buildable meters
 
 /obj/item/pipe_spawner/New()
 	..()
-	var/obj/item/pipe/P = new (src.loc, pipe_type=src.pipe_type, dir=src.dir)
+	var/obj/item/pipe/P = getFromPool(/obj/item/pipe,loc)
+	P.New(src.loc, pipe_type=src.pipe_type, dir=src.dir)
 	P.update()
-	del(src)
+	qdel(src)
 
 /obj/item/pipe_spawner/mvalve
 	icon_state="mvalve"
@@ -84,6 +85,24 @@ Buildable meters
 	w_class = 3
 	level = 2
 
+/obj/item/pipe/ex_act(severity)
+	switch(severity)
+		if(1)
+			returnToPool(src)
+		if(2)
+			if(prob(40))
+				returnToPool(src)
+		if(3)
+			if(prob(10))
+				returnToPool(src)
+
+/obj/item/pipe/blob_act()
+	returnToPool(src)
+
+/obj/item/pipe/singularity_act()
+	returnToPool(src)
+	return 2
+
 /obj/item/pipe/New(var/loc, var/pipe_type as num, var/dir as num, var/obj/machinery/atmospherics/make_from = null)
 	..()
 	if (make_from)
@@ -102,7 +121,7 @@ Buildable meters
 			src.pipe_type = PIPE_INSULATED_STRAIGHT + is_bent
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple))
 			src.pipe_type = PIPE_SIMPLE_STRAIGHT + is_bent
-		else if(istype(make_from, /obj/machinery/atmospherics/portables_connector))
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/portables_connector))
 			src.pipe_type = PIPE_CONNECTOR
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold))
 			if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold/insulated))
@@ -111,9 +130,9 @@ Buildable meters
 				src.pipe_type = PIPE_MANIFOLD
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_pump))
 			src.pipe_type = PIPE_UVENT
-		else if(istype(make_from, /obj/machinery/atmospherics/valve/digital))
+		else if(istype(make_from, /obj/machinery/atmospherics/binary/valve/digital))
 			src.pipe_type = PIPE_DVALVE
-		else if(istype(make_from, /obj/machinery/atmospherics/valve))
+		else if(istype(make_from, /obj/machinery/atmospherics/binary/valve))
 			src.pipe_type = PIPE_MVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/pump))
 			src.pipe_type = PIPE_PUMP
@@ -133,12 +152,12 @@ Buildable meters
 			src.pipe_type = PIPE_VOLUME_PUMP
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/heat_exchanger))
 			src.pipe_type = PIPE_HEAT_EXCHANGE
-		else if(istype(make_from, /obj/machinery/atmospherics/tvalve))
-			if(istype(make_from, /obj/machinery/atmospherics/tvalve/digital) || istype(make_from, /obj/machinery/atmospherics/tvalve/mirrored/digital))
+		else if(istype(make_from, /obj/machinery/atmospherics/trinary/tvalve))
+			if(istype(make_from, /obj/machinery/atmospherics/trinary/tvalve/digital))
 				src.pipe_type = PIPE_DTVALVE
 			else
 				src.pipe_type = PIPE_MTVALVE
-			if(istype(make_from, /obj/machinery/atmospherics/tvalve/mirrored))
+			if(istype(make_from, /obj/machinery/atmospherics/trinary/tvalve/mirrored) || istype(make_from, /obj/machinery/atmospherics/trinary/tvalve/digital/mirrored))
 				src.dir = turn(src.dir, 45) //sets the angle and icon correctly
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w))
 			if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w/insulated))
@@ -196,38 +215,39 @@ var/global/list/pipeID2State = list(
 	"insulated_manifold",
 	"insulated_manifold4w"
 )
+var/global/list/nlist = list( \
+	"pipe", \
+	"bent pipe", \
+	"h/e pipe", \
+	"bent h/e pipe", \
+	"connector", \
+	"manifold", \
+	"junction", \
+	"uvent", \
+	"manual valve", \
+	"pump", \
+	"scrubber", \
+	"insulated pipe", \
+	"bent insulated pipe", \
+	"gas filter", \
+	"gas mixer", \
+	"passive gate", \
+	"volume pump", \
+	"heat exchanger", \
+	"digital valve", \
+	"t-valve", \
+	"4-way manifold", \
+	"pipe cap", \
+	"thermal plate", \
+	"injector", \
+	"dual-port vent", \
+	"passive vent", \
+	"digital t-valve", \
+	"insulated manifold", \
+	"insulated 4-way manifold"
+)
 /obj/item/pipe/proc/update()
-	var/list/nlist = list( \
-		"pipe", \
-		"bent pipe", \
-		"h/e pipe", \
-		"bent h/e pipe", \
-		"connector", \
-		"manifold", \
-		"junction", \
-		"uvent", \
-		"manual valve", \
-		"pump", \
-		"scrubber", \
-		"insulated pipe", \
-		"bent insulated pipe", \
-		"gas filter", \
-		"gas mixer", \
-		"passive gate", \
-		"volume pump", \
-		"heat exchanger", \
-		"digital valve", \
-		"t-valve", \
-		"4-way manifold", \
-		"pipe cap", \
-		"thermal plate", \
-		"injector", \
-		"dual-port vent", \
-		"passive vent", \
-		"digital t-valve", \
-		"insulated manifold", \
-		"insulated 4-way manifold"
-	)
+
 	name = nlist[pipe_type+1] + " fitting"
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = pipeID2State[pipe_type + 1]
@@ -361,7 +381,7 @@ var/global/list/pipeID2State = list(
 			P=new/obj/machinery/atmospherics/pipe/simple/heat_exchanging(loc)
 
 		if(PIPE_CONNECTOR)		// connector
-			P=new/obj/machinery/atmospherics/portables_connector(loc)
+			P=new/obj/machinery/atmospherics/unary/portables_connector(loc)
 
 		if(PIPE_MANIFOLD)		//manifold
 			P=new /obj/machinery/atmospherics/pipe/manifold(loc)
@@ -376,10 +396,10 @@ var/global/list/pipeID2State = list(
 			P=new /obj/machinery/atmospherics/unary/vent_pump( src.loc )
 
 		if(PIPE_MVALVE)		//manual valve
-			P=new /obj/machinery/atmospherics/valve( src.loc )
+			P=new /obj/machinery/atmospherics/binary/valve( src.loc )
 
 		if(PIPE_DVALVE)		//digital valve
-			P=new /obj/machinery/atmospherics/valve/digital( src.loc )
+			P=new /obj/machinery/atmospherics/binary/valve/digital( src.loc )
 
 		if(PIPE_PUMP)		//gas pump
 			P=new /obj/machinery/atmospherics/binary/pump( src.loc )
@@ -397,7 +417,7 @@ var/global/list/pipeID2State = list(
 			P=new /obj/machinery/atmospherics/pipe/simple/insulated( src.loc )
 
 		if(PIPE_MTVALVE)		//manual t-valve
-			P=new /obj/machinery/atmospherics/tvalve(src.loc)
+			P=new /obj/machinery/atmospherics/trinary/tvalve(src.loc)
 
 		if(PIPE_CAP)
 			P=new /obj/machinery/atmospherics/unary/cap(src.loc)
@@ -424,7 +444,7 @@ var/global/list/pipeID2State = list(
 			P=new /obj/machinery/atmospherics/unary/vent(src.loc)
 
 		if(PIPE_DTVALVE)
-			P=new /obj/machinery/atmospherics/tvalve/digital(src.loc)
+			P=new /obj/machinery/atmospherics/trinary/tvalve/digital(src.loc)
 
 		if(PIPE_INSUL_MANIFOLD)
 			P=new /obj/machinery/atmospherics/pipe/manifold/insulated(src.loc)
@@ -438,7 +458,7 @@ var/global/list/pipeID2State = list(
 			"[user] fastens \the [src].", \
 			"\blue You have fastened \the [src].", \
 			"You hear a ratchet.")
-		del(src)	// remove the pipe item
+		returnToPool(src)	// remove the pipe item
 		return 0
 	else
 		// If the pipe's still around, nuke it.

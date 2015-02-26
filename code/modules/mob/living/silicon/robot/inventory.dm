@@ -232,3 +232,8 @@
 		if(slot_num > 3) slot_num = 1 //Wrap around.
 
 	return
+
+/mob/living/silicon/robot/before_take_item(var/obj/item/W)
+	..()
+	if(W.loc == src.module)
+		src.module.modules -= W //maybe fix the cable issues.

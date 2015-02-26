@@ -107,7 +107,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/editappear,
 	/client/proc/commandname,
 	/client/proc/delete_all_adminbus,
-	/client/proc/gib_money // /vg/
+	/client/proc/gib_money, // /vg/
+	/client/proc/smissmas,
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -159,11 +160,14 @@ var/list/admin_verbs_debug = list(
 	/client/proc/disable_bloodvirii,       // /vg/
 	/client/proc/reload_style_sheet,
 	/client/proc/reset_style_sheet,
+	/client/proc/test_movable_UI,
+	/client/proc/test_snap_UI,
 	/client/proc/configFood,
 	/client/proc/debug_reagents,
 	/client/proc/make_invulnerable,
 	/client/proc/cmd_admin_dump_delprofile,
 	/client/proc/mob_list,
+	/client/proc/cure_disease,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
 #endif
@@ -600,7 +604,7 @@ var/list/admin_verbs_mod = list(
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
-	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spells
+	var/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spells
 	if(!S) return
 	T.spell_list += new S
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

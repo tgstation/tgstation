@@ -32,7 +32,11 @@
 	areaMaster = get_area_master(src)
 
 /atom/movable/Destroy()
-	gcDestroyed = "bye world!"
+	if(opacity)
+		if(isturf(loc))
+			if(loc:lighting_lumcount > 1)
+				UpdateAffectingLights()
+	gcDestroyed = "Bye, world!"
 	tag = null
 	loc = null
 	if(istype(beams) && beams.len)
@@ -44,34 +48,39 @@
 		beams.len = 0
 	..()
 
-/proc/delete_profile(var/type, soft = 0)
-	switch(soft)
-		if(0)
-			if(!("[type]" in del_profiling))
-				del_profiling["[type]"] = 0
-			del_profiling["[type]"] += 1
-		if(1)
-			if(!("[type]" in gdel_profiling))
-				gdel_profiling["[type]"] = 0
-			gdel_profiling["[type]"] += 1
-		if(2)
-			if(!("[type]" in ghdel_profiling))
-				ghdel_profiling["[type]"] = 0
-			ghdel_profiling["[type]"] += 1
-/atom/movable/Del()
-	if(!ticker || ticker.current_state != 3)
-		return ..()
-	// Pass to Destroy().
-	if(!gcDestroyed)
-		delete_profile("[type]",0)
-		Destroy()
-	else
-		if(hard_deleted)
-			delete_profile("[type]",2)
-		else
-			delete_profile("[type]",1)
-	..()
+/proc/delete_profile(var/type, code = 0)
+	if(!ticker || ticker.current_state < 3) return
+	if(code == 0)
+		if (!("[type]" in del_profiling))
+			del_profiling["[type]"] = 0
 
+		del_profiling["[type]"] += 1
+	else if(code == 1)
+		if (!("[type]" in ghdel_profiling))
+			ghdel_profiling["[type]"] = 0
+
+		ghdel_profiling["[type]"] += 1
+	else
+		if (!("[type]" in gdel_profiling))
+			gdel_profiling["[type]"] = 0
+
+		gdel_profiling["[type]"] += 1
+		soft_dels += 1
+
+/atom/movable/Del()
+	if (gcDestroyed)
+
+
+		if (hard_deleted)
+			delete_profile("[type]", 1)
+		else
+			garbageCollector.dequeue("\ref[src]") // hard deletions have already been handled by the GC queue.
+			delete_profile("[type]", 2)
+	else // direct del calls or nulled explicitly.
+		delete_profile("[type]", 0)
+		Destroy()
+
+	..()
 
 // Used in shuttle movement and AI eye stuff.
 // Primarily used to notify objects being moved by a shuttle/bluespace fuckup.
@@ -273,7 +282,7 @@
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
-	if(isobj(src)) src.throw_impact(get_turf(src),throw_speed)
+	if(isobj(src)) src.throw_impact(get_turf(src),throw_speed,usr)
 
 
 //Overlays

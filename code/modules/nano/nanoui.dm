@@ -60,6 +60,7 @@ nanoui is used to open and update nano browser uis
 	// Only allow users with a certain user.stat to get updates. Defaults to 0 (concious)
 	var/allowed_user_stat = 0 // -1 = ignore, 0 = alive, 1 = unconcious or alive, 2 = dead concious or alive
 
+	var/distance_check = 1
  /**
   * Create a new nanoui instance.
   *
@@ -74,12 +75,12 @@ nanoui is used to open and update nano browser uis
   *
   * @return /nanoui new nanoui object
   */
-/datum/nanoui/New(nuser, nsrc_object, nui_key, ntemplate_filename, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null)
+/datum/nanoui/New(nuser, nsrc_object, nui_key, ntemplate_filename, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null, ignore_distance = 0)
 	user = nuser
 	src_object = nsrc_object
 	ui_key = nui_key
 	window_id = "[ui_key]\ref[src_object]"
-
+	distance_check = !ignore_distance
 	// add the passed template filename as the "main" template, this is required
 	add_template("main", ntemplate_filename)
 
@@ -138,15 +139,13 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/update_status(var/push_update = 0)
-	if (istype(user, /mob/living/silicon/ai))
+	if (istype(user, /mob/living/silicon/ai) || !distance_check)
 		set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
 	else if (istype(user, /mob/living/silicon/robot))
 		if (src_object in view(7, user)) // robots can see and interact with things they can see within 7 tiles
 			set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
 		else
 			set_status(STATUS_DISABLED, push_update) // no updates, completely disabled (red visibility)
-	else if(istype(src_object, /datum))
-		set_status(STATUS_INTERACTIVE, push_update)
 	else
 		var/dist = 0
 		if(istype(src_object, /atom))

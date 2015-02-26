@@ -29,6 +29,8 @@ datum/shuttle_controller
 
 	var/shutdown = 0 // Completely shut down.
 
+	var/can_recall = 1
+
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
@@ -63,6 +65,7 @@ datum/shuttle_controller
 
 	proc/recall()
 		if(shutdown) return
+		if(!can_recall)	return
 		if(direction == 1)
 			var/timeleft = timeleft()
 			if(alert == 0)
@@ -236,6 +239,8 @@ datum/shuttle_controller
 									AM.Move(D)
 								// Remove windows, grills, lattice, etc.
 								if(istype(A,/obj/structure) || istype(A,/obj/machinery))
+									if(istype(A,/obj/machinery/singularity))
+										continue
 									qdel(A)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*

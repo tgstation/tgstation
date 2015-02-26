@@ -29,20 +29,19 @@ var/global/list/boo_phrases_silicon=list(
 	"Unauthorized access attempted by: unknown."
 )
 
-/obj/effect/proc_holder/spell/aoe_turf/boo
+/spell/aoe_turf/boo
 	name = "Boo!"
 	desc = "Fuck with the living."
 
-	ghost = 1
+	spell_flags = STATALLOWED | GHOSTCAST
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 0
 	invocation = ""
 	invocation_type = "none"
 	range = 1 // Or maybe 3?
 
-/obj/effect/proc_holder/spell/aoe_turf/boo/cast(list/targets)
+/spell/aoe_turf/boo/cast(list/targets)
 	for(var/turf/T in targets)
 		for(var/atom/A in T.contents)
 

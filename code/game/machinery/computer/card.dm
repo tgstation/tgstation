@@ -180,7 +180,9 @@
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return 1
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)

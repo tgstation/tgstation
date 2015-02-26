@@ -124,6 +124,12 @@
 	icon_state = "engsci_cypherkey"
 	channels = list("Science" = 1, "Engineering" = 1)
 
+/obj/item/device/encryptionkey/headset_servsci
+	name = "Research Botany Radio Encryption Key"
+	desc = "An encryption key for a radio headset.  Contains cypherkeys."
+	icon_state = "servsci_cypherkey"
+	channels = list("Science" = 1, "Service" = 1)
+
 /obj/item/device/encryptionkey/ert
 	name = "NanoTrasen ERT Radio Encryption Key"
 	desc = "An encryption key for a radio headset.  Contains cypherkeys."

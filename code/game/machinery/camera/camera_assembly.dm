@@ -59,7 +59,7 @@
 		if(2)
 			// State 2
 			if(iscoil(W))
-				var/obj/item/weapon/cable_coil/C = W
+				var/obj/item/stack/cable_coil/C = W
 				if(C.use(2))
 					user << "You add wires to the assembly."
 					state = 3
@@ -112,7 +112,7 @@
 
 			else if(iswirecutter(W))
 
-				new/obj/item/weapon/cable_coil(get_turf(src), 2)
+				new/obj/item/stack/cable_coil(get_turf(src), 2)
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You cut the wires from the circuits."
 				state = 2

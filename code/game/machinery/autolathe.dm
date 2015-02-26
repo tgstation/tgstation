@@ -61,6 +61,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/ammo_storage/box/flare(), \
 		new /obj/item/weapon/rcd(), \
 		new /obj/item/weapon/pipe_dispenser(),\
+		new /obj/item/weapon/rsf(), \
 		new /obj/item/device/radio/electropack(), \
 		new /obj/item/weapon/weldingtool/largetank(), \
 		new /obj/item/weapon/handcuffs(), \
@@ -191,7 +192,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return 1
 	if (O.m_amt == 0 && O.g_amt == 0)
 		user << "<span class='warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by \the [src] due to size or hazardous materials.</span>"
-		return
+		return 1
 	/*
 		if (istype(O, /obj/item/weapon/grab) && src.hacked)
 			var/obj/item/weapon/grab/G = O
@@ -228,6 +229,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		qdel(O)
 	busy = 0
 	src.updateUsrDialog()
+	return 1 // SO WE DONT GET AFTERATTACK CALLED
 
 /obj/machinery/autolathe/crowbarDestroy(mob/user)
 	if(..() == 1)

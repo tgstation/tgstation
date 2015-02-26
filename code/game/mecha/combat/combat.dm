@@ -25,7 +25,7 @@
 	if(!melee_can_hit || !istype(target, /atom)) return
 	if(istype(target, /mob/living))
 		var/mob/living/M = target
-		if(src.occupant.a_intent == "hurt")
+		if(src.occupant.a_intent == I_HURT)
 			playsound(src, 'sound/mecha/mechsmash.ogg', 50, 1)
 			if(damtype == "brute")
 				step_away(M,src,15)

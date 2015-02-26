@@ -107,8 +107,8 @@
 	return eyestab(M,user)
 
 /obj/item/weapon/screwdriver/attackby(var/obj/O)
-	if(istype(O, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = O
+	if(istype(O, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = O
 		var/mob/M = usr
 		if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
 			if(!istype(M.loc,/turf)) return
@@ -427,33 +427,34 @@
 			return
 		if(H.species.flags & IS_SYNTHETIC)
 			return
-		switch(safety)
-			if(1)
-				usr << "<span class='warning'>Your eyes sting a little.</span>"
-				E.damage += rand(1, 2)
-				if(E.damage > 12)
-					user.eye_blurry += rand(3,6)
-			if(0)
-				usr << "<span class='warning'>Your eyes burn.</span>"
-				E.damage += rand(2, 4)
-				if(E.damage > 10)
-					E.damage += rand(4,10)
-			if(-1)
-				usr << "<span class='warning'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>"
-				user.eye_blurry += rand(12,20)
-				E.damage += rand(12, 16)
-		if(E.damage > 10 && safety < 2)
-			user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
-		if (E.damage >= E.min_broken_damage)
-			user << "<span class='warning'>You go blind!</span>"
-			user.sdisabilities |= BLIND
-		else if (E.damage >= E.min_bruised_damage)
-			user << "<span class='warning'>You go blind!</span>"
-			user.eye_blind = 5
-			user.eye_blurry = 5
-			user.disabilities |= NEARSIGHTED
-			spawn(100)
-				user.disabilities &= ~NEARSIGHTED
+		if(safety < 2)
+			switch(safety)
+				if(1)
+					usr << "<span class='warning'>Your eyes sting a little.</span>"
+					E.damage += rand(1, 2)
+					if(E.damage > 12)
+						user.eye_blurry += rand(3,6)
+				if(0)
+					usr << "<span class='warning'>Your eyes burn.</span>"
+					E.damage += rand(2, 4)
+					if(E.damage > 10)
+						E.damage += rand(4,10)
+				if(-1)
+					usr << "<span class='warning'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>"
+					user.eye_blurry += rand(12,20)
+					E.damage += rand(12, 16)
+			if(E.damage > 10 && safety < 2)
+				user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
+			if (E.damage >= E.min_broken_damage)
+				user << "<span class='warning'>You go blind!</span>"
+				user.sdisabilities |= BLIND
+			else if (E.damage >= E.min_bruised_damage)
+				user << "<span class='warning'>You go blind!</span>"
+				user.eye_blind = 5
+				user.eye_blurry = 5
+				user.disabilities |= NEARSIGHTED
+				spawn(100)
+					user.disabilities &= ~NEARSIGHTED
 	return
 
 
@@ -532,7 +533,7 @@
 	if(hasorgans(M))
 		var/datum/organ/external/S = M:organs_by_name[user.zone_sel.selecting]
 		if (!S) return
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+		if(!(S.status & ORGAN_ROBOT) || user.a_intent != I_HELP)
 			return ..()
 		if(S.brute_dam)
 			S.heal_damage(15,0,0,1)

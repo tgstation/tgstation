@@ -34,12 +34,15 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
-	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
+	var/obj/item/stack/tile/floor_tile
 
 	melt_temperature = 1643.15 // Melting point of steel
 
 /turf/simulated/floor/New()
 	..()
+	if(!floor_tile)
+		floor_tile = getFromPool(/obj/item/stack/tile/plasteel, null)
+		floor_tile.amount = 1
 	if(icon_state in icons_to_ignore_at_floor_init) //so damaged/burned tiles or plating icons aren't saved as the default
 		icon_regular_floor = "floor"
 	else
@@ -307,8 +310,9 @@ turf/simulated/floor/proc/update_icon()
 						var/turf/simulated/floor/FF = get_step(src,direction)
 						FF.update_icon() //so siding get updated properly
 
-	if(!floor_tile) return
-	qdel(floor_tile)
+	if(floor_tile)
+		//qdel(floor_tile)
+		returnToPool(floor_tile)
 	icon_plating = "plating"
 	SetLuminosity(0)
 	floor_tile = null
@@ -327,6 +331,8 @@ turf/simulated/floor/proc/update_icon()
 	burnt = 0
 	intact = 1
 	SetLuminosity(0)
+	if(floor_tile) returnToPool(floor_tile)
+	floor_tile = null
 	if(T)
 		if(istype(T,/obj/item/stack/tile/plasteel))
 			floor_tile = T
@@ -339,7 +345,7 @@ turf/simulated/floor/proc/update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/plasteel
+	floor_tile = getFromPool(/obj/item/stack/tile/plasteel, null)
 	icon_state = "floor"
 	icon_regular_floor = icon_state
 
@@ -353,6 +359,8 @@ turf/simulated/floor/proc/update_icon()
 	broken = 0
 	burnt = 0
 	intact = 1
+	if(floor_tile) returnToPool(floor_tile)
+	floor_tile = null
 	if(T)
 		if(istype(T,/obj/item/stack/tile/light))
 			floor_tile = T
@@ -360,7 +368,7 @@ turf/simulated/floor/proc/update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/light
+	floor_tile = getFromPool(/obj/item/stack/tile/light, null)
 
 	update_icon()
 	levelupdate()
@@ -371,6 +379,8 @@ turf/simulated/floor/proc/update_icon()
 	broken = 0
 	burnt = 0
 	intact = 1
+	if(floor_tile) returnToPool(floor_tile)
+	floor_tile = null
 	if(T)
 		if(istype(T,/obj/item/stack/tile/grass))
 			floor_tile = T
@@ -378,8 +388,7 @@ turf/simulated/floor/proc/update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/grass
-
+	floor_tile = getFromPool(/obj/item/stack/tile/wood, null)
 	update_icon()
 	levelupdate()
 
@@ -389,6 +398,8 @@ turf/simulated/floor/proc/update_icon()
 	broken = 0
 	burnt = 0
 	intact = 1
+	if(floor_tile) returnToPool(floor_tile)
+	floor_tile = null
 	if(T)
 		if(istype(T,/obj/item/stack/tile/wood))
 			floor_tile = T
@@ -396,8 +407,7 @@ turf/simulated/floor/proc/update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/wood
-
+	floor_tile = getFromPool(/obj/item/stack/tile/wood, null)
 	update_icon()
 	levelupdate()
 
@@ -407,6 +417,8 @@ turf/simulated/floor/proc/update_icon()
 	broken = 0
 	burnt = 0
 	intact = 1
+	if(floor_tile) returnToPool(floor_tile)
+	floor_tile = null
 	if(T)
 		if(istype(T,/obj/item/stack/tile/carpet))
 			floor_tile = T
@@ -414,7 +426,7 @@ turf/simulated/floor/proc/update_icon()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/carpet
+	floor_tile = getFromPool(/obj/item/stack/tile/carpet, null)
 
 	update_icon()
 	levelupdate()
@@ -444,7 +456,8 @@ turf/simulated/floor/proc/update_icon()
 				user << "<span class='warning'>You forcefully pry off the planks, destroying them in the process.</span>"
 			else
 				user << "<span class='notice'>You remove the [floor_tile.name].</span>"
-				new floor_tile.type(src)
+				floor_tile.loc = src
+				floor_tile = null
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
@@ -495,7 +508,9 @@ turf/simulated/floor/proc/update_icon()
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
 				if(T.use(1))
-					floor_tile = new T.type
+					if(floor_tile) returnToPool(floor_tile)
+					floor_tile = null
+					floor_tile = getFromPool(T.type, null)
 					intact = 1
 					if(istype(T,/obj/item/stack/tile/light))
 						var/obj/item/stack/tile/light/L = T
@@ -519,9 +534,9 @@ turf/simulated/floor/proc/update_icon()
 				user << "<span class='warning'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
 
 
-	if(istype(C, /obj/item/weapon/cable_coil))
+	if(istype(C, /obj/item/stack/cable_coil))
 		if(is_plating() || is_catwalk())
-			var/obj/item/weapon/cable_coil/coil = C
+			var/obj/item/stack/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
 			user << "<span class='warning'>You must remove the plating first.</span>"

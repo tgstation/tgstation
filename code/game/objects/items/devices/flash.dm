@@ -83,7 +83,7 @@
 			Subject.Weaken(10)
 			flick("e_flash", Subject.flash)
 
-			if(ishuman(user) && user.mind && user.mind in ticker.mode.head_revolutionaries) // alien revhead when?
+			if(user.mind && isrevhead(user)) // alien revhead when?
 				if(ishuman(Subject))
 					if(Subject.stat != DEAD)
 						Subject.mind_initialize() // give them a mind datum if they don't have one

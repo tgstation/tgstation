@@ -245,7 +245,7 @@ var/list/vox_tens=list(
 		//if (words != "")
 		//	words += "and "
 
-		if (number < 20)
+		if (number < 19) //BYOND LISTS START KEYS AT 1 NOT 0
 			words += vox_units[number+1]
 		else
 			words += vox_tens[(number / 10)+1]

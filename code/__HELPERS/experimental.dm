@@ -43,7 +43,7 @@
 // Uncomment to show debug messages.
 //#define DEBUG_OBJECT_POOL
 
-#define MAINTAINING_OBJECT_POOL_COUNT 20
+#define MAINTAINING_OBJECT_POOL_COUNT 500
 
 var/global/list/masterPool = new
 
@@ -57,23 +57,34 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
  *
  * Example call: getFromPool(/obj/item/weapon/shard, loc)
  */
-/proc/getFromPool(const/A, const/B)
+/proc/getFromPool()
+	var/A = args[1]
+	var/list/B = list()
+	B += (args - A)
 	if(length(masterPool["[A]"]) <= 0)
 		#ifdef DEBUG_OBJECT_POOL
-		world << text("DEBUG_OBJECT_POOL: new proc has been called ([]).", A)
+		world << text("DEBUG_OBJECT_POOL: new proc has been called ([] | []).", A, list2params(B))
 		#endif
-
-		return new A(B)
+		//so the GC knows we're pooling this type.
+		if(isnull(masterPool["[A]"]))
+			masterPool["[A]"] = list(new A)
+		if(B && B.len)
+			return new A(arglist(B))
+		else
+			return new A()
 
 	var/atom/movable/O = masterPool["[A]"][1]
 	masterPool["[A]"] -= O
 
 	#ifdef DEBUG_OBJECT_POOL
-	world << text("DEBUG_OBJECT_POOL: getFromPool([]) [] left.", A, length(masterPool[A]))
+	world << text("DEBUG_OBJECT_POOL: getFromPool([]) [] left arglist([]).", A, length(masterPool[A]), list2params(B))
 	#endif
-	if(!O)
-		O = new A
-	O.loc = B
+	if(!O || !istype(O))
+		O = new A(arglist(B))
+	else
+		if(length(B))
+			O.loc = B[1]
+		O.New(arglist(B))
 	return O
 
 /*
@@ -94,11 +105,11 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 		world << text("DEBUG_OBJECT_POOL: returnToPool([]) exceeds [] discarding...", AM.type, MAINTAINING_OBJECT_POOL_COUNT)
 		#endif
 
-		qdel(AM)
+		qdel(AM, 1)
 		return
 
 	if(isnull(masterPool["[AM.type]"]))
-		masterPool["[AM.type]"] = new
+		masterPool["[AM.type]"] = list()
 
 	AM.resetVariables()
 	masterPool["[AM.type]"] += AM

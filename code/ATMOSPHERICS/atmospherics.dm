@@ -13,6 +13,9 @@ Pipelines + Other Objects -> Pipe network
 #define PIPE_TYPE_STANDARD 0
 #define PIPE_TYPE_HE       1
 
+//Pipe bitflags
+#define IS_MIRROR	1
+
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
@@ -20,6 +23,7 @@ Pipelines + Other Objects -> Pipe network
 	power_channel = ENVIRON
 	var/nodealert = 0
 
+	var/starting_volume = 200
 	// Which directions can we connect with?
 	var/initialize_directions = 0
 
@@ -32,6 +36,8 @@ Pipelines + Other Objects -> Pipe network
 
 	// Investigation logs
 	var/log
+
+	var/pipe_flags = 0
 
 // Find a connecting /obj/machinery/atmospherics in specified direction.
 /obj/machinery/atmospherics/proc/findConnecting(var/direction)
@@ -113,3 +119,52 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	error("[src] does not define a buildFrom!")
 	return FALSE
+
+/obj/machinery/atmospherics/cultify()
+	if(src.invisibility != INVISIBILITY_MAXIMUM)
+		src.invisibility = INVISIBILITY_MAXIMUM
+
+
+/obj/machinery/atmospherics/attackby(var/obj/item/W, mob/user)
+	if (!istype(W, /obj/item/weapon/wrench))
+		return ..()
+	if(src.machine_flags & WRENCHMOVE)
+		return ..()
+	var/turf/T = src.loc
+	if (level==1 && isturf(T) && T.intact)
+		user << "<span class='warning'>You must remove the plating first.</span>"
+		return 1
+	var/datum/gas_mixture/int_air = return_air()
+	var/datum/gas_mixture/env_air = loc.return_air()
+	add_fingerprint(user)
+	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+		if(istype(W, /obj/item/weapon/wrench/socket) && istype(src, /obj/machinery/atmospherics/pipe))
+			user << "<span class='warning'>You begin to open the pressure release valve on the pipe...</span>"
+			if(do_after(user, 50))
+				if(!loc) return
+				playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
+				user.visible_message("[user] vents \the [src].",
+									"You have vented \the [src].",
+									"You hear a ratchet.")
+				var/obj/machinery/atmospherics/pipe/P = src
+				var/datum/gas_mixture/transit = new
+				transit.add(int_air)
+				var/datum/pipeline/pipe_parent = P.parent
+				if(pipe_parent)
+					transit.divide(pipe_parent.members.len) //we get the total pressure over the number of pipes to find gas per pipe
+					env_air.add(transit) //put it in the air
+				del(transit) //remove the carrier
+		else
+			user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+			return 1
+	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+	if (do_after(user, 40))
+		user.visible_message( \
+			"[user] unfastens \the [src].", \
+			"<span class='notice'>You have unfastened \the [src].</span>", \
+			"You hear a ratchet.")
+		getFromPool(/obj/item/pipe, loc, null, null, src)
+		//P.New(loc, make_from=src) //new /obj/item/pipe(loc, make_from=src)
+		qdel(src)
+	return 1

@@ -89,6 +89,7 @@ datum/controller/game_controller/proc/setup()
 	setupfactions()
 	setup_economy()
 	SetupXenoarch()
+	cachedamageicons()
 
 	for(var/i=0, i<max_secret_rooms, i++)
 		make_mining_asteroid_secret()
@@ -102,6 +103,26 @@ datum/controller/game_controller/proc/setup()
 
 	lighting_controller.Initialize()
 */
+datum/controller/game_controller/proc/cachedamageicons()
+	var/mob/living/carbon/human/H = new(locate(1,1,2))
+	var/datum/species/list/slist = list(new /datum/species/human, new /datum/species/vox, new /datum/species/diona)
+	var/icon/DI
+	var/species_blood
+	for(var/datum/species/S in slist)
+		species_blood = (S.blood_color == "#A10808" ? "" : S.blood_color)
+		testing("Generating [S], Blood([species_blood])")
+		for(var/datum/organ/external/O in H.organs)
+			testing("[O] part")
+			for(var/brute = 1 to 3)
+				for(var/burn = 1 to 3)
+					var/damage_state = "[brute][burn]"
+					DI = icon('icons/mob/dam_human.dmi', "[damage_state]")			// the damage icon for whole human
+					DI.Blend(icon('icons/mob/dam_mask.dmi', O.icon_name), ICON_MULTIPLY)
+					if(species_blood)
+						DI.Blend(S.blood_color, ICON_MULTIPLY)
+					testing("Completed [damage_state]/[O.icon_name]/[species_blood]")
+					damage_icon_parts["[damage_state]/[O.icon_name]/[species_blood]"] = DI
+	del(H)
 
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"

@@ -57,10 +57,10 @@
 	name = "gladiator helmet"
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
-	flags = FPRINT|BLOCKHAIR
+	flags = FPRINT
 	body_parts_covered = FULL_HEAD
 	item_state = "gladiator"
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	siemens_coefficient = 1
 
 /obj/item/clothing/head/helmet/roman

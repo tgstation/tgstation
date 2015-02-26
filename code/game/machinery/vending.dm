@@ -66,7 +66,10 @@
 	var/datum/wires/vending/wires = null
 	var/list/overlays_vending[2]//1 is the panel layer, 2 is the dangermode layer
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY
+	var/list/vouchers
+	var/obj/item/weapon/storage/lockbox/coinbox/coinbox
+
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL
 	languages = HUMAN
 
 	var/obj/machinery/account_database/linked_db
@@ -108,7 +111,8 @@
 		reconnect_database()
 		linked_account = vendor_account
 
-		return
+	coinbox = new(src)
+	coinbox.req_access |= src.req_access
 
 	return
 
@@ -122,6 +126,8 @@
 	cvc.contraband = contraband
 	cvc.premium = premium
 */
+	if(coinbox)
+		coinbox.loc = get_turf(src)
 	..()
 
 /obj/machinery/vending/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -238,6 +244,16 @@
 		else
 			R.product_name = temp.name
 
+/obj/machinery/vending/proc/get_item_by_type(var/this_type)
+	var/list/datum_products = list()
+	datum_products |= hidden_records
+	datum_products |= coin_records
+	datum_products |= product_records
+	for(var/datum/data/vending_product/product in datum_products)
+		if(product.product_path == this_type)
+			return product
+	return null
+
 //		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 
 /obj/machinery/vending/emag(mob/user)
@@ -247,18 +263,60 @@
 		return 1
 	return -1
 
+/obj/machinery/vending/proc/can_accept_voucher(var/obj/item/voucher/voucher, mob/user)
+	if(istype(voucher, /obj/item/voucher/free_item))
+		var/obj/item/voucher/free_item/free_vouch = voucher
+		for(var/vend_item in free_vouch.freebies)
+			var/datum/data/vending_product/product = get_item_by_type(vend_item)
+			if(product && product.amount)
+				return 1
+	return 0
+
+//this should ideally be called last as a parent method, since it can delete the voucher
+/obj/machinery/vending/proc/voucher_act(var/obj/item/voucher/voucher, mob/user)
+	if(istype(voucher, /obj/item/voucher/free_item))
+		var/obj/item/voucher/free_item/free_vouch = voucher
+		for(var/i = 1; i <= free_vouch.vend_amount; i++)
+			if(!free_vouch.freebies || !free_vouch.freebies.len)
+				break
+			var/to_vend = pick(free_vouch.freebies)
+			if(free_vouch.single_items)
+				free_vouch.freebies.Remove(to_vend)
+			var/datum/data/vending_product/product = get_item_by_type(to_vend)
+			if(product && product.amount)
+				src.vend(product, user, by_voucher = 1)
+
+	if(voucher.shred_on_use)
+		qdel(voucher)
+	else
+		if(!vouchers)
+			vouchers = list()
+		vouchers.Add(voucher)
+		if(coinbox)
+			voucher.loc = coinbox
+	return 1
+
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
-	..()
+	. = ..()
+	if(.)
+		return .
 	if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_item()
-		W.loc = src
+		user.drop_item(src)
 		coin = W
 		user << "<span class='notice'>You insert [W] into [src].</span>"
 		return
+	else if(istype(W, /obj/item/voucher))
+		if(can_accept_voucher(W, user))
+			user.drop_item(src)
+			user << "<span class='notice'>You insert [W] into [src].</span>"
+			return voucher_act(W, user)
+		else
+			user << "<span class='notice'>\The [src] refuses to take [W].</span>"
+			return 1
 	/*else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
 		if(!linked_db)
@@ -534,14 +592,14 @@
 		return
 	return
 
-/obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
+/obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user, by_voucher = 0)
 	if (!allowed(user) && !emagged && wires.IsIndexCut(VENDING_WIRE_IDSCAN)) //For SECURE VENDING MACHINES YEAH
 		user << "\red Access denied." //Unless emagged of course
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
 
-	if (R in coin_records)
+	if (!by_voucher && (R in coin_records))
 		if(!coin)
 			user << "\blue You need to insert a coin to get this item."
 			return
@@ -550,9 +608,11 @@
 				user << "\blue You successfully pull the coin out before the [src] could swallow it."
 			else
 				user << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
-				del(coin)
+		if(coinbox)
+			coin.loc = coinbox
+			coin = null
 		else
-			del(coin)
+			qdel(coin)
 
 	R.amount--
 
@@ -889,7 +949,7 @@
 			qdel(I)
 
 		new /obj/item/weapon/circuitboard/vendomat(src.loc)
-		new /obj/item/weapon/cable_coil(loc,5)
+		new /obj/item/stack/cable_coil(loc,5)
 
 		return 1
 	return -1
@@ -907,7 +967,7 @@
 			qdel(I)
 
 		new /obj/item/weapon/circuitboard/vendomat(src.loc)
-		new /obj/item/weapon/cable_coil(loc,5)
+		new /obj/item/stack/cable_coil(loc,5)
 
 		return 1
 	return -1
@@ -980,8 +1040,8 @@
 						"<span class='warning'>[user.name] has removed \the [C]!</span>",\
 						"You remove \the [C].")
 				return 1
-			if(istype(W, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/C=W
+			if(istype(W, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C=W
 				user << "You start adding cables to \the [src]..."
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 				if(do_after(user, 20) && C.amount >= 5)
@@ -995,7 +1055,7 @@
 			if(istype(W, /obj/item/weapon/wirecutters))
 				usr << "You begin to remove the wiring from \the [src]."
 				if(do_after(user, 50))
-					new /obj/item/weapon/cable_coil(loc,5)
+					new /obj/item/stack/cable_coil(loc,5)
 					user.visible_message(\
 						"<span class='warning'>[user.name] cut the cables.</span>",\
 						"You cut the cables.")
@@ -1126,7 +1186,7 @@
 	desc = "A kitchen and restaurant equipment vendor"
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
-	products = list(/obj/item/weapon/tray = 8,/obj/item/weapon/kitchen/utensil/fork = 6,/obj/item/weapon/kitchen/utensil/knife/large = 3,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2,/obj/item/trash/bowl = 20)
+	products = list(/obj/item/weapon/tray = 8,/obj/item/weapon/kitchen/utensil/fork = 6,/obj/item/weapon/kitchen/utensil/knife/large = 3,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2,/obj/item/trash/bowl = 20, /obj/item/weapon/reagent_containers/food/condiment/peppermill = 5, /obj/item/weapon/reagent_containers/food/condiment/saltshaker	= 5)
 	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/utensil/knife = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/kitchen/utensil/knife/large/butch = 2)
 
 	pack = /obj/structure/vendomatpack/dinnerware
@@ -1148,7 +1208,7 @@
 	icon_state = "tool"
 	icon_deny = "tool-deny"
 	//req_access_txt = "12" //Maintenance access
-	products = list(/obj/item/weapon/cable_coil/random = 10,/obj/item/weapon/crowbar = 5,/obj/item/weapon/weldingtool = 3,/obj/item/weapon/wirecutters = 5,
+	products = list(/obj/item/stack/cable_coil/random = 10,/obj/item/weapon/crowbar = 5,/obj/item/weapon/weldingtool = 3,/obj/item/weapon/wirecutters = 5,
 					/obj/item/weapon/wrench = 5,/obj/item/device/analyzer = 5,/obj/item/device/t_scanner = 5,/obj/item/weapon/screwdriver = 5)
 	contraband = list(/obj/item/weapon/weldingtool/hugetank = 2,/obj/item/clothing/gloves/fyellow = 2)
 	premium = list(/obj/item/clothing/gloves/yellow = 1)
@@ -1161,7 +1221,7 @@
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/circuitboard/airlock = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/circuitboard/air_alarm = 10,/obj/item/weapon/cell/high = 10)
+	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/circuitboard/airlock = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/circuitboard/air_alarm = 10,/obj/item/weapon/intercom_electronics = 10,/obj/item/weapon/cell/high = 10)
 	contraband = list(/obj/item/weapon/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
 
@@ -1177,7 +1237,7 @@
 	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/orange = 4,/obj/item/clothing/head/hardhat = 4,
 					/obj/item/weapon/storage/belt/utility = 4,/obj/item/clothing/glasses/meson = 4,/obj/item/clothing/gloves/yellow = 4, /obj/item/weapon/screwdriver = 12,
 					/obj/item/weapon/crowbar = 12,/obj/item/weapon/wirecutters = 12,/obj/item/device/multitool = 12,/obj/item/weapon/wrench = 12,/obj/item/device/t_scanner = 12,
-					/obj/item/weapon/cable_coil/heavyduty = 8, /obj/item/weapon/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,
+					/obj/item/stack/cable_coil/heavyduty = 8, /obj/item/weapon/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,
 					/obj/item/weapon/light/tube = 10,/obj/item/clothing/suit/fire = 4, /obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,
 					/obj/item/weapon/stock_parts/matter_bin = 5,/obj/item/weapon/stock_parts/manipulator = 5,/obj/item/weapon/stock_parts/console_screen = 5)
 	// There was an incorrect entry (cablecoil/power).  I improvised to cablecoil/heavyduty.
@@ -1193,7 +1253,7 @@
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
 	req_access_txt = "29"
-	products = list(/obj/item/clothing/suit/storage/labcoat = 4,/obj/item/clothing/under/rank/roboticist = 4,/obj/item/weapon/cable_coil = 4,/obj/item/device/flash = 4,
+	products = list(/obj/item/clothing/suit/storage/labcoat = 4,/obj/item/clothing/under/rank/roboticist = 4,/obj/item/stack/cable_coil = 4,/obj/item/device/flash = 4,
 					/obj/item/weapon/cell/high = 12, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/weapon/screwdriver = 5,/obj/item/weapon/crowbar = 5)
@@ -1224,9 +1284,9 @@
 					/obj/item/clothing/suit/wizrobe/marisa/fake = 3,/obj/item/clothing/under/sundress = 3,/obj/item/clothing/head/witchwig = 3,/obj/item/weapon/staff/broom = 3,
 					/obj/item/clothing/suit/wizrobe/fake = 3,/obj/item/clothing/head/wizard/fake = 3,/obj/item/weapon/staff = 3,/obj/item/clothing/mask/gas/sexyclown = 3,
 					/obj/item/clothing/under/sexyclown = 3,/obj/item/clothing/mask/gas/sexymime = 3,/obj/item/clothing/under/sexymime = 3,/obj/item/clothing/suit/apron/overalls = 3,
-					/obj/item/clothing/head/rabbitears = 3,/obj/item/clothing/head/lordadmiralhat = 3,/obj/item/clothing/suit/lordadmiral = 3,/obj/item/clothing/suit/doshjacket = 3,/obj/item/clothing/under/jester = 3, /obj/item/clothing/head/jesterhat = 3,/obj/item/clothing/shoes/jestershoes = 3) //Pretty much everything that had a chance to spawn.
+					/obj/item/clothing/head/rabbitears = 3,/obj/item/clothing/head/lordadmiralhat = 3,/obj/item/clothing/suit/lordadmiral = 3,/obj/item/clothing/suit/doshjacket = 3,/obj/item/clothing/under/jester = 3, /obj/item/clothing/head/jesterhat = 3,/obj/item/clothing/shoes/jestershoes = 3, /obj/item/clothing/suit/kefkarobe = 3) //Pretty much everything that had a chance to spawn.
 	contraband = list(/obj/item/clothing/suit/cardborg = 3,/obj/item/clothing/head/cardborg = 3,/obj/item/clothing/suit/judgerobe = 3,/obj/item/clothing/head/powdered_wig = 3)
-	premium = list(/obj/item/clothing/suit/hgpirate = 3, /obj/item/clothing/head/hgpiratecap = 3, /obj/item/clothing/head/helmet/roman = 3, /obj/item/clothing/head/helmet/roman/legionaire = 3, /obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/weapon/shield/riot/roman = 3)
+	premium = list(/obj/item/clothing/suit/hgpirate = 3, /obj/item/clothing/head/hgpiratecap = 3, /obj/item/clothing/head/helmet/roman = 3, /obj/item/clothing/head/helmet/roman/legionaire = 3, /obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/weapon/shield/riot/roman = 3,/obj/item/clothing/under/stilsuit = 3)
 
 	pack = /obj/structure/vendomatpack/autodrobe
 
@@ -1286,7 +1346,7 @@
 
 	pack = /obj/structure/vendomatpack/nazivend
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EMAGGABLE
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | EMAGGABLE
 
 /obj/machinery/vending/nazivend/emag(mob/user)
 	if(!emagged)
@@ -1332,7 +1392,7 @@
 
 	pack = /obj/structure/vendomatpack/sovietvend
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EMAGGABLE
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | EMAGGABLE
 
 
 /obj/machinery/vending/sovietvend/emag(mob/user)

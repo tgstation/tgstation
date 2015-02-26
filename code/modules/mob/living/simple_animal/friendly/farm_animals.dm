@@ -130,7 +130,7 @@
 			udder.add_reagent("milk", rand(5, 10))
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
-	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
+	if(!stat && M.a_intent == I_DISARM && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
 		Weaken(30)
 		icon_state = icon_dead
@@ -240,6 +240,9 @@ var/global/chicken_count = 0
 			//world << eggsleft
 		else
 			user << "\blue [name] doesn't seem hungry!"
+	else if(istype(O, /obj/item/weapon/dnainjector))
+		var/obj/item/weapon/dnainjector/I = O
+		I.inject(src, user)
 	else
 		..()
 

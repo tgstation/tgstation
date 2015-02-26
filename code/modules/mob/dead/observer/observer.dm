@@ -40,7 +40,7 @@
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	// Our new boo spell.
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/boo(src)
+	spell_list += new /spell/aoe_turf/boo(src)
 
 	can_reenter_corpse = flags & GHOST_CAN_REENTER
 	started_as_observer = flags & GHOST_IS_OBSERVER
@@ -289,10 +289,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")	return	//didn't want to ghost after-all
 		resting = 1
-		var/mob/dead/observer/ghost = ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
-		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
-		if(ghost.client)
-			ghost.client.time_died_as_mouse = world.time //We don't want people spawning infinite mice on the station
+		if(client && key)
+			var/mob/dead/observer/ghost = ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+			ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
+			if(ghost.client)
+				ghost.client.time_died_as_mouse = world.time //We don't want people spawning infinite mice on the station
 	return
 
 // Check for last poltergeist activity.
@@ -442,7 +443,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/L = list()
 	var/holyblock = 0
 
-	if((usr.invisibility == 0) || ((ticker.mode.name == "cult") && (usr.mind in ticker.mode.cult)))
+	if((usr.invisibility == 0) || (ticker && ticker.mode && (ticker.mode.name == "cult") && (usr.mind in ticker.mode.cult)))
 		for(var/turf/T in get_area_turfs(thearea.type))
 			if(!T.holy)
 				L+=T
@@ -468,9 +469,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/mobs = getmobs()
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
-	if(istype(target,/mob/living/silicon/ai))
-		var/mob/living/silicon/ai/M = target
-		target = M.eyeobj
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
@@ -786,10 +784,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 
 	if (href_list["follow"])
-		var/mob/target = locate(href_list["follow"]) in mob_list
+		var/target = locate(href_list["follow"])
+		if(following == target) return
 		var/mob/A = usr;
 		A << "You are now following [target]"
-		//var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
+		if(istype(target,/mob/living/silicon/ai))
+			var/mob/living/silicon/ai/M = target
+			target = M.eyeobj
 		if(target && target != usr)
 			following = target
 			spawn(0)

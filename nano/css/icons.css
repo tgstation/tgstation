@@ -256,6 +256,9 @@
 /* AirAlarm */
 .mapIcon16.icon-airalarm { background-position: 0 -144px; }
 
+/* Camera */
+.mapIcon16.icon-camera { background-position: -96px -224px; }
+
 /* Command Positions */
 .mapIcon16.rank-captain {
     background-position: -224px -112px;

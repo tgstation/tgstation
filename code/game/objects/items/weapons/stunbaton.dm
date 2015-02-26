@@ -116,7 +116,7 @@
 
 	var/mob/living/L = M
 
-	if(user.a_intent == "hurt")
+	if(user.a_intent == I_HURT)
 		..()
 		playsound(loc, "swing_hit", 50, 1, -1)
 

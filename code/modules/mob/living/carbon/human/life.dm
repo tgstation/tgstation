@@ -326,13 +326,22 @@ var/global/list/organ_damage_overlays = list(
 	..()
 	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
 
-	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
-	if(wear_suit && (wear_suit.flags & STOPSPRESSUREDMG))
-		pressure_adjustment_coefficient -= PRESSURE_SUIT_REDUCTION_COEFFICIENT
-	if(head && (head.flags & STOPSPRESSUREDMG))
-		pressure_adjustment_coefficient -= PRESSURE_HEAD_REDUCTION_COEFFICIENT
-	pressure_adjustment_coefficient = max(pressure_adjustment_coefficient,0) //So it isn't less than 0
-	pressure_difference = pressure_difference * pressure_adjustment_coefficient
+	//mainly used in horror form, but other things work as well
+	var/species_difference = 0
+	if(species)
+		species_difference = species.pressure_resistance
+
+	//look for what's protecting the head and body, and adjust tolerable pressure by those resistance
+	var/equip_difference = 0
+	var/obj/item/press_protect = get_body_part_coverage(FULL_HEAD)
+	if(press_protect)
+		equip_difference += press_protect.pressure_resistance * PRESSURE_HEAD_REDUCTION_COEFFICIENT
+	press_protect = get_body_part_coverage(FULL_BODY)
+	if(press_protect)
+		equip_difference += press_protect.pressure_resistance * PRESSURE_SUIT_REDUCTION_COEFFICIENT
+
+	pressure_difference = max(pressure_difference - equip_difference - species_difference, 0) //brings us as close to one atmosphere as possible
+
 	if(pressure > ONE_ATMOSPHERE)
 		return ONE_ATMOSPHERE + pressure_difference
 	else
@@ -594,7 +603,7 @@ var/global/list/organ_damage_overlays = list(
 			// This was OP.
 			//environment.adjust(tx = environment.total_moles()*BREATH_PERCENTAGE) // About one breath's worth. (I know we aren't breathing it out, but this should be about the right amount)
 			if(environment)
-				if((environment.oxygen / environment.total_moles()) >= OXYCONCEN_PLASMEN_IGNITION) //how's the concentration doing?
+				if(environment.oxygen && environment.total_moles() && (environment.oxygen / environment.total_moles()) >= OXYCONCEN_PLASMEN_IGNITION) //how's the concentration doing?
 					if(!on_fire)
 						src << "<span class='warning'>Your body reacts with the atmosphere and bursts into flame!</span>"
 					adjust_fire_stacks(0.5)
@@ -1008,10 +1017,11 @@ var/global/list/organ_damage_overlays = list(
 	if(reagents)
 
 		var/alien = 0 //Not the best way to handle it, but neater than checking this for every single reagent proc.
-		if(species && species.name == "Diona")
-			alien = 1
-		else if(species && species.name == "Vox")
-			alien = 2
+		if(src.species)
+			switch(src.species.type)
+				if(/datum/species/diona)	alien = IS_DIONA
+				if(/datum/species/vox)	alien = IS_VOX
+				if(/datum/species/plasmaman)	alien = IS_PLASMA
 		reagents.metabolize(src,alien)
 
 	var/total_plasmaloss = 0
@@ -1278,12 +1288,12 @@ var/global/list/organ_damage_overlays = list(
 
 		//Jitteryness
 		if(jitteriness)
-			var/amplitude = min(4, (jitteriness/100) + 1)
+			var/amplitude = min(4, (jitteriness/100) + 1) + 2
 			var/pixel_x_diff = rand(-amplitude, amplitude)
 			var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
 
 			spawn()
-				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = -1)
+				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
 			jitteriness = max(jitteriness-1, 0)
 
@@ -1609,7 +1619,7 @@ var/global/list/organ_damage_overlays = list(
 				if((temp_turf.z != 1 && temp_turf.z != 5) || remoteview_target.stat!=CONSCIOUS)
 					src << "\red Your psy-connection grows too faint to maintain!"
 					isRemoteObserve = 0
-			if(!isRemoteObserve && client && !client.adminobs)
+			if(!isRemoteObserve && client && !client.adminobs && !iscamera(client.eye))
 				remoteview_target = null
 				reset_view(null)
 	return 1

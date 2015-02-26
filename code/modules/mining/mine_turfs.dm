@@ -1004,3 +1004,14 @@
 /turf/unsimulated/floor/asteroid/plating
 	intact=0
 	icon_state="asteroidplating"
+
+/turf/unsimulated/floor/asteroid/canBuildCatwalk()
+	return 0
+
+/turf/unsimulated/floor/asteroid/canBuildLattice()
+	if(!(locate(/obj/structure/lattice) in contents))
+		return 1
+	return 0
+
+/turf/unsimulated/floor/asteroid/canBuildPlating()
+	return locate(/obj/structure/lattice) in contents

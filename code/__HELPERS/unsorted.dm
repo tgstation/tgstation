@@ -1211,7 +1211,7 @@ proc/get_mob_with_client_list()
 
 //Quick type checks for some tools
 var/global/list/common_tools = list(
-/obj/item/weapon/cable_coil,
+/obj/item/stack/cable_coil,
 /obj/item/weapon/wrench,
 /obj/item/weapon/weldingtool,
 /obj/item/weapon/screwdriver,
@@ -1342,3 +1342,7 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 	if (!O) return 0
 	if(O.edge) return 1
 	return 0
+
+/proc/isEmag(obj/O)
+	if(!O) return 0
+	return istype(O, /obj/item/weapon/card/emag)

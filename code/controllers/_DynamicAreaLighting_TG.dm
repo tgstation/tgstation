@@ -159,15 +159,6 @@ atom/movable/New()
 		trueLuminosity = luminosity * luminosity
 		light = new(src)
 
-//Objects with opacity will trigger nearby lights to update at next lighting process.
-atom/movable/Destroy()
-	if(opacity)
-		if(isturf(loc))
-			if(loc:lighting_lumcount > 1)
-				UpdateAffectingLights()
-
-	..()
-
 //Sets our luminosity.
 //If we have no light it will create one.
 //If we are setting luminosity to 0 the light will be cleaned up by the controller and garbage collected once all its

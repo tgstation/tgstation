@@ -88,7 +88,7 @@
 		show_silenced()
 
 		if (proc_holder_list.len)//Generic list for proc_holder objects.
-			for(var/obj/effect/proc_holder/P in proc_holder_list)
+			for(var/spell/P in proc_holder_list)
 				statpanel("[P.panel]","",P)
 
 /mob/living/silicon/pai/check_eye(var/mob/user as mob)
@@ -193,7 +193,7 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (I_HELP)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src]'s casing with its scythe like arm."), 1)

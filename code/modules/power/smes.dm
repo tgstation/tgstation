@@ -97,8 +97,8 @@
 	if(..())
 		return 1
 	if(panel_open)
-		if(istype(W, /obj/item/weapon/cable_coil) && !terminal)
-			var/obj/item/weapon/cable_coil/CC = W
+		if(istype(W, /obj/item/stack/cable_coil) && !terminal)
+			var/obj/item/stack/cable_coil/CC = W
 
 			if (CC.amount < 10)
 				user << "<span class=\"warning\">You need 10 length cable coil to make a terminal.</span>"
@@ -126,7 +126,7 @@
 					s.set_up(5, 1, src)
 					s.start()
 					return
-				new /obj/item/weapon/cable_coil(loc,10)
+				new /obj/item/stack/cable_coil(loc,10)
 				user.visible_message(\
 					"<span class='warning'>[user.name] cut the cables and dismantled the power terminal.</span>",\
 					"You cut the cables and dismantle the power terminal.")
@@ -283,7 +283,9 @@
 
 /obj/machinery/power/smes/Topic(href, href_list)
 	..()
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if (usr.stat || usr.restrained() )
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")

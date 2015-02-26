@@ -11,8 +11,6 @@ var/global/media_receivers=list()
 	var/media_crypto    = null // Crypto key
 
 /obj/machinery/media/receiver/New()
-	del(src)
-	if(1) return
 	..()
 	connect_frequency()
 

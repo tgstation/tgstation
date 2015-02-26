@@ -261,11 +261,11 @@ datum
 				return total_transfered
 */
 
-			metabolize(var/mob/M)
+			metabolize(var/mob/M, var/alien)
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
 					if(M && R)
-						R.on_mob_life(M)
+						R.on_mob_life(M, alien)
 				update_total()
 
 			update_aerosol(var/mob/M)
@@ -405,6 +405,7 @@ datum
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
 					if (R.id == reagent)
+						R.reagent_deleted()
 						reagent_list -= A
 						R.holder = null
 						total_dirty=1

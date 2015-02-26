@@ -54,10 +54,7 @@
 		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 		return 0
 	if( href_list["close"] )
-		var/mob/user = usr
-		var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
-		usr.unset_machine()
-		ui.close()
+		if(usr.machine == src) usr.unset_machine()
 		return 0
 	if(href_list["update"])
 		src.updateDialog()

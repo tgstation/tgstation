@@ -107,7 +107,8 @@
 	M.current.verbs -= /client/proc/vampire_hypnotise
 	spawn(1800)
 		M.current.verbs += /client/proc/vampire_hypnotise
-	if(do_mob(M.current, C, 50))
+	var/enhancements = ((C.weakened ? 2 : 0) + (C.stunned ? 1 : 0) + (C.sleeping || C.paralysis ? 3 : 0))
+	if(do_mob(M.current, C, 10 - enhancements))
 		if(C.mind && C.mind.vampire)
 			M.current << "<span class='warning'>Your piercing gaze fails to knock out [C.name].</span>"
 			C << "<span class='notice'>[M.current.name]'s feeble gaze is ineffective.</span>"
@@ -115,9 +116,8 @@
 		else
 			M.current << "<span class='warning'>Your piercing gaze knocks out [C.name].</span>"
 			C << "<span class='warning'>You find yourself unable to move and barely able to speak.</span>"
-			C.Weaken(20)
-			C.Stun(20)
-			C.stuttering = 20
+			C.stuttering = 50
+			C.Paralyse(20)
 	else
 		M.current << "<span class='warning'>You broke your gaze.</span>"
 		return
@@ -173,13 +173,32 @@
 		if(istype(M.current:glasses, /obj/item/clothing/glasses/sunglasses/blindfold))
 			M.current << "<span class='warning'>You're blindfolded!</span>"
 			return
+		var/list/close_mobs = list()
+		var/list/dist_mobs = list()
 		for(var/mob/living/carbon/C in view(1))
 			if(!C.vampire_affected(M)) continue
-			if(!M.current.vampire_can_reach(C, 1)) continue
+			//if(!M.current.vampire_can_reach(C, 1)) continue
+			if(istype(C)) close_mobs |= C // using |= prevents adding 'large bounded' mobs twice with how the loop works
+		for(var/mob/living/carbon/C in view(3))
+			if(!C.vampire_affected(M)) continue
+			if(istype(C)) dist_mobs |= C
+		dist_mobs -= close_mobs //So they don't get double affected.
+		for(var/mob/living/carbon/C in close_mobs)
 			C.Stun(8)
 			C.Weaken(8)
-			C.stuttering = 20
-			C << "<span class='warning'>You are blinded by [M.current.name]'s glare</span>"
+			C.stuttering += 20
+			if(!C.blinded) C.blinded = 1
+			C.blinded += 5
+		for(var/mob/living/carbon/C in dist_mobs)
+			var/distance_value = max(0, abs((get_dist(C, M.current)-3)) + 1)
+			C.Stun(distance_value)
+			if(distance_value > 1)
+				C.Weaken(distance_value)
+			C.stuttering += 5+distance_value
+			if(!C.blinded) C.blinded = 1
+			C.blinded += max(1, distance_value)
+		(dist_mobs + close_mobs) << "<span class='warning'>You are blinded by [M.current.name]'s glare</span>"
+
 
 /client/proc/vampire_shapeshift()
 	set category = "Vampire"
@@ -234,7 +253,7 @@
 		M.current << "<span class='warning'>You can only enthrall humans</span>"
 		return
 
-	if(do_mob(M.current, C, 50))
+	if(M.current.can_enthrall(C) && M.current.vampire_power(300, 0) && do_mob(M.current, C, 50))
 		if(M.current.can_enthrall(C) && M.current.vampire_power(300, 0)) // recheck
 			M.current.handle_enthrall(C)
 			M.current.remove_vampire_blood(300)

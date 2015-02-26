@@ -677,7 +677,7 @@ datum/mind
 						if (!where)
 							usr << "\red Spawning tome failed!"
 						else
-							H << "A tome, a message from your new master, appears in your [where]."
+							H << "<span class='sinister'>A tome, a message from your new master, appears in your [where].</span>"
 
 				if("amulet")
 					if (!ticker.mode.equip_cultist(current))

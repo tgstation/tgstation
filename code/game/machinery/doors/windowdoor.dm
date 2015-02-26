@@ -123,7 +123,7 @@
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
 		getFromPool(/obj/item/weapon/shard, loc)
-		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+		var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 		CC.amount = 2
 		src.density = 0
 		del(src)
@@ -163,7 +163,7 @@
 		visible_message("<span class='warning'>[user] smashes against the [src.name].</span>", 1)
 		if (src.health <= 0)
 			getFromPool(/obj/item/weapon/shard, loc)
-			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
 			del(src)
@@ -205,7 +205,7 @@
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if (src.health <= 0)
 			getFromPool(/obj/item/weapon/shard, loc)
-			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
 			CC.amount = 2
 			src.density = 0
 			del(src)

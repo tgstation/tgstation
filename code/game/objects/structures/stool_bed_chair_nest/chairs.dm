@@ -178,6 +178,9 @@
 
 	if(buckled_mob)
 		if(buckled_mob.loc != src.loc)
+			if(!isturf(buckled_mob.loc)) //We lost our mob!
+				unbuckle()
+				return
 			buckled_mob.buckled = null //Temporary, so Move() succeeds.
 			if(!buckled_mob.Move(loc))
 				unbuckle()
