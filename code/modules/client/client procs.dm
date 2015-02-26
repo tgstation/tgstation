@@ -136,6 +136,24 @@ var/next_external_rsc = 0
 	add_verbs_from_config()
 	set_client_age_from_db()
 
+	if (isnum(player_age) && player_age == -1) //first connection
+		if (config.panic_bunker && !holder && !(ckey in deadmins))
+			src << "Sorry but the server is currently not accepting connections from never before seen players."
+			del(src)
+			return 0
+
+		if (config.notify_new_player_age >= 0)
+			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
+
+		if (config.irc_first_connection_alert)
+			send2irc("New user", "[key_name(src)] is connecting for the first time!")
+
+		player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
+
+	else if (isnum(player_age) && player_age < config.notify_new_player_age)
+		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
+
+
 	if (!ticker || ticker.current_state == GAME_STATE_PREGAME)
 		spawn (rand(10,150))
 			if (src)
@@ -172,14 +190,15 @@ var/next_external_rsc = 0
 	var/sql_ckey = sanitizeSQL(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-	query.Execute()
+	if (!query.Execute())
+		return
 
 	while (query.NextRow())
 		player_age = text2num(query.item[2])
 		return
-	//player not found.
-	player_age = 0
-	message_admins("[key_name_admin(src)] is connecting here for the first time.")
+
+	//no match mark it as a first connection for use in client/New()
+	player_age = -1
 
 
 /client/proc/sync_client_with_db()
