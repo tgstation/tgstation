@@ -1,6 +1,0 @@
-author: iconleap
-
-delete-after: True
-
-changes: 
-  - bugfix: Fix cable coils creating max amount of length when attacked by empty hand.
