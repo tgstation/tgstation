@@ -38,7 +38,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	return(OXYLOSS)
 
 /obj/item/stack/cable_coil/New(loc, length = MAXCOIL, var/param_color = null, amount = length)
-	..()
+	..(loc, amount)
 
 	recipes = cable_recipes
 
