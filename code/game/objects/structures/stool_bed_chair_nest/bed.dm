@@ -70,10 +70,9 @@
 	else
 		density = 0
 		icon_state = "down"
-		if(buckled_mob)
-			buckled_mob.pixel_y = initial(buckled_mob.pixel_y)
-			if(buckled_mob.lying)
-				buckled_mob.pixel_y -= buckled_pixel_y_offset
+		M.pixel_y = initial(M.pixel_y)
+		if(M.lying)
+			M.pixel_y -= buckled_pixel_y_offset
 
 
 /obj/item/roller
