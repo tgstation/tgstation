@@ -40,6 +40,7 @@
 				if(do_after(user,10))
 					user << "<span class='notice'>You unscrew the cover blocking the inner wiring of \the [src].</span>"
 					buildstage = 1
+					on = areaMaster.lightswitch
 			return
 		if(1)
 			if(isscrewdriver(W))

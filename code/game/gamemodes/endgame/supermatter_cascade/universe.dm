@@ -81,6 +81,7 @@
 
 	for (var/obj/machinery/power/apc/APC in world)
 		if (!(APC.stat & BROKEN) && !APC.is_critical)
+			APC.chargemode = 0
 			if(APC.cell)
 				APC.cell.charge = 0
 			APC.emagged = 1

@@ -120,6 +120,11 @@ Pipelines + Other Objects -> Pipe network
 	error("[src] does not define a buildFrom!")
 	return FALSE
 
+/obj/machinery/atmospherics/cultify()
+	if(src.invisibility != INVISIBILITY_MAXIMUM)
+		src.invisibility = INVISIBILITY_MAXIMUM
+
+
 /obj/machinery/atmospherics/attackby(var/obj/item/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
