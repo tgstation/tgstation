@@ -170,30 +170,29 @@
 		if(dir)
 			var/x_diff = 0
 			var/y_diff = 0
-			world << "[dir]"
 			switch(dir) //I bet somewhere out there a proc does something like this already
 				if(1)
-					x_diff = 1
+					x_diff = 32
 				if(2)
-					x_diff = -1
+					x_diff = -32
 				if(4)
-					y_diff = 1
+					y_diff = 32
 				if(8)
-					y_diff = -1
+					y_diff = -32
 				if(5)
-					x_diff = 1
-					y_diff = 1
+					x_diff = 32
+					y_diff = 32
 				if(6)
-					x_diff = 1
-					y_diff = -1
+					x_diff = 32
+					y_diff = -32
 				if(9)
-					x_diff = -1
-					y_diff = 1
+					x_diff = -32
+					y_diff = 32
 				if(10)
-					x_diff = -1
-					y_diff = -1
-			animate(narsimage, x = x+x_diff, y = y+y_diff, time = 8) //Animate the movement of narsie to narsie's new location
-			animate(narglow, x = x+x_diff, y = y+y_diff, time = 8)
+					x_diff = -32
+					y_diff = -32
+			animate(narsimage, pixel_x = old_pixel_x+x_diff, pixel_y = old_pixel_y+y_diff, time = 8) //Animate the movement of narsie to narsie's new location
+			animate(narglow, pixel_x = old_pixel_x+x_diff, pixel_y = old_pixel_y+y_diff, time = 8)
 		else
 			//Else if no dir is given, simply send them the image of narsie
 			var/new_x = 32 * (N.x - src.x) + N.pixel_x
