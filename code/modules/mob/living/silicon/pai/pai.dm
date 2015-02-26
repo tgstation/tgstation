@@ -15,6 +15,7 @@
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
+	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
 	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
