@@ -29,6 +29,8 @@ var/global/narsie_cometh = 0
 	current_size = 12
 	consume_range = 12 // How many tiles out do we eat.
 	var/announce=1
+	var/old_x
+	var/old_y
 
 /obj/machinery/singularity/narsie/large/New()
 	..()
@@ -48,7 +50,11 @@ var/global/narsie_cometh = 0
 
 	SetUniversalState(/datum/universal_state/hell)
 	narsie_cometh = 1
-	sleep(10)
+
+	//Begin narsie vision
+	for(var/mob/M in player_list)
+		if(M.client)
+			M.see_narsie(src)
 	alpha = 0
 /*
 	updateicon()
@@ -126,19 +132,22 @@ var/global/narsie_cometh = 0
 
 	if(target && prob(60))
 		movement_dir = get_dir(src,target)
-
 	spawn(0)
+		old_x = src.x
+		old_y = src.y
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
-		for(var/mob/M in mob_list)
+		for(var/mob/M in player_list)
 			if(M.client)
-				M.see_narsie(src)
+				M.see_narsie(src,movement_dir)
 	spawn(10)
+		old_x = src.x
+		old_y = src.y
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
-		for(var/mob/M in mob_list)
+		for(var/mob/M in player_list)
 			if(M.client)
-				M.see_narsie(src)
+				M.see_narsie(src,movement_dir)
 	return 1
 
 /obj/machinery/singularity/narsie/proc/narsiefloor(var/turf/T)//leaving "footprints"
@@ -351,10 +360,10 @@ var/global/narsie_cometh = 0
 /obj/machinery/singularity/narsie/large/on_capture()
 	chained = 1
 	move_self = 0
-	icon_state ="narsie-chains"/*
+	icon_state ="narsie-chains"
 	for(var/mob/M in mob_list)//removing the client image of nar-sie while it is chained
 		if(M.client)
-			M.see_narsie(src)*/
+			M.see_narsie(src)
 
 /obj/machinery/singularity/narsie/large/on_release()
 	chained = 0

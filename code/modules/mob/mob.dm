@@ -141,33 +141,68 @@
 /mob/proc/Life()
 	return
 
-/mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N)
+/mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N, var/dir)
 	if(N.chained)
 		if(narsimage)
 			del(narsimage)
 			del(narglow)
 		return
 	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)))
-		if(!narsimage)
+		if(!narsimage) //Create narsimage
 			narsimage = image('icons/obj/narsie.dmi',src.loc,"narsie",9,1)
-		var/new_x = 32 * (N.x - src.x) + N.pixel_x
-		var/new_y = 32 * (N.y - src.y) + N.pixel_y
-		var/thing = abs(new_x+new_y-narsimage.pixel_x-narsimage.pixel_y)
-		world << "[thing]"
-		if((thing == 0) || (thing == 32) || (thing == 64)) //lel cant believe I coded this
-			animate(narsimage, pixel_x = new_x, pixel_y = new_y, time = 8)
-		narsimage.pixel_x = new_x
-		narsimage.pixel_y = new_y
-		narsimage.loc = src.loc
-		narsimage.mouse_opacity = 0
-		if(!narglow)
+			narsimage.mouse_opacity = 0
+		if(!narglow) //Create narglow
 			narglow = image('icons/obj/narsie.dmi',narsimage.loc,"glow-narsie",LIGHTING_LAYER+2,1)
-		if((thing == 0) || (thing == 32) || (thing == 64)) //lel cant believe I coded this
-			animate(narglow, pixel_x = narsimage.pixel_x, pixel_y = narsimage.pixel_y, time = 8)
-		narglow.pixel_x = narsimage.pixel_x
-		narglow.pixel_y = narsimage.pixel_y
-		narglow.loc = narsimage.loc
-		narglow.mouse_opacity = 0
+			narglow.mouse_opacity = 0
+		if(!N.old_x || !N.old_y)
+			N.old_x = src.x
+			N.old_y = src.y
+		//Reset narsie's location to the mob
+		var/old_pixel_x = 32 * (N.old_x - src.x) + N.pixel_x
+		var/old_pixel_y = 32 * (N.old_y - src.y) + N.pixel_y
+		narsimage.pixel_x = old_pixel_x
+		narsimage.pixel_y = old_pixel_y
+		narglow.pixel_x = old_pixel_x
+		narglow.pixel_y = old_pixel_y
+		narsimage.loc = src.loc
+		narglow.loc = src.loc
+		//Animate narsie based on dir
+		if(dir)
+			var/x_diff = 0
+			var/y_diff = 0
+			world << "[dir]"
+			switch(dir) //I bet somewhere out there a proc does something like this already
+				if(1)
+					x_diff = 32
+				if(2)
+					x_diff = -32
+				if(4)
+					y_diff = 32
+				if(8)
+					y_diff = -32
+				if(5)
+					x_diff = 32
+					y_diff = 32
+				if(6)
+					x_diff = 32
+					y_diff = -32
+				if(9)
+					x_diff = -32
+					y_diff = 32
+				if(10)
+					x_diff = -32
+					y_diff = -32
+			animate(narsimage, pixel_x = old_pixel_x+x_diff, pixel_y = old_pixel_y+y_diff, time = 8) //Animate the movement of narsie to narsie's new location
+			animate(narglow, pixel_x = old_pixel_x+x_diff, pixel_y = old_pixel_y+y_diff, time = 8)
+		else
+			//Else if no dir is given, simply send them the image of narsie
+			var/new_x = 32 * (N.x - src.x) + N.pixel_x
+			var/new_y = 32 * (N.y - src.y) + N.pixel_y
+			narsimage.pixel_x = new_x
+			narsimage.pixel_y = new_y
+			narglow.pixel_x = new_x
+			narglow.pixel_y = new_y
+		//Display the new narsimage to the player
 		src << narsimage
 		src << narglow
 	else
