@@ -59,4 +59,7 @@
 	if(ckey in deadmins)
 		verbs += /client/proc/readmin
 
+	if(client)
+		if(M_FARSIGHT in mutations)
+			client.view = max(client.view, world.view+2)
 	CallHook("Login", list("client" = src.client, "mob" = src))

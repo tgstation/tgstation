@@ -1196,3 +1196,23 @@
 	New()
 		block = SANSBLOCK
 		..()
+
+/obj/item/weapon/dnainjector/farsightmut
+	name = "DNA-Injector (Farsight)"
+	desc = "This will allow you to focus your eyes better."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = FARSIGHTBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antifarsight
+	name = "DNA-Injector (Anti-Farsight)"
+	desc = "No fun allowed"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = FARSIGHTBLOCK
+		..()
