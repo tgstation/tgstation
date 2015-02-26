@@ -132,8 +132,7 @@
 	icon_state = "owl_wings"
 	item_state = "owl_wings"
 	togglename = "wings"
-	body_parts_covered = ARMS
-	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	body_parts_covered = ARMS|CHEST
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic)
 	action_button_name = "Toggle Owl Wings"
 

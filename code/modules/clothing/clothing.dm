@@ -169,6 +169,7 @@ BLIND     // can't see anything
 	flash_protect = 2
 	strip_delay = 50
 	put_on_delay = 50
+	var/alt_desc = null
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -190,7 +191,7 @@ BLIND     // can't see anything
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
 	put_on_delay = 80
-
+	var/alt_desc = null
 
 //Under clothing
 /obj/item/clothing/under
