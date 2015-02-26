@@ -122,7 +122,6 @@ In short:
 			APC.chargemode = 0
 			if(APC.cell)
 				APC.cell.charge = 0
-				power_machines -= APC
 			APC.emagged = 1
 			APC.queue_icon_update()
 

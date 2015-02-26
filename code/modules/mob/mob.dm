@@ -147,13 +147,14 @@
 			del(narsimage)
 			del(narglow)
 		return
-	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)))
+	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)) && ((get_dist(N,src)) > (src.world.view)))
 		if(!narsimage) //Create narsimage
 			narsimage = image('icons/obj/narsie.dmi',src.loc,"narsie",9,1)
 			narsimage.mouse_opacity = 0
 		if(!narglow) //Create narglow
 			narglow = image('icons/obj/narsie.dmi',narsimage.loc,"glow-narsie",LIGHTING_LAYER+2,1)
 			narglow.mouse_opacity = 0
+/* Animating narsie works like shit thanks to fucking byond
 		if(!N.old_x || !N.old_y)
 			N.old_x = src.x
 			N.old_y = src.y
@@ -193,14 +194,16 @@
 					y_diff = -32
 			animate(narsimage, pixel_x = old_pixel_x+x_diff, pixel_y = old_pixel_y+y_diff, time = 8) //Animate the movement of narsie to narsie's new location
 			animate(narglow, pixel_x = old_pixel_x+x_diff, pixel_y = old_pixel_y+y_diff, time = 8)
-		else
-			//Else if no dir is given, simply send them the image of narsie
-			var/new_x = 32 * (N.x - src.x) + N.pixel_x
-			var/new_y = 32 * (N.y - src.y) + N.pixel_y
-			narsimage.pixel_x = new_x
-			narsimage.pixel_y = new_y
-			narglow.pixel_x = new_x
-			narglow.pixel_y = new_y
+*/
+		//Else if no dir is given, simply send them the image of narsie
+		var/new_x = 32 * (N.x - src.x) + N.pixel_x
+		var/new_y = 32 * (N.y - src.y) + N.pixel_y
+		narsimage.pixel_x = new_x
+		narsimage.pixel_y = new_y
+		narglow.pixel_x = new_x
+		narglow.pixel_y = new_y
+		narsimage.loc = src.loc
+		narglow.loc = src.loc
 		//Display the new narsimage to the player
 		src << narsimage
 		src << narglow

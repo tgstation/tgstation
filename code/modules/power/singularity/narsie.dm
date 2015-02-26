@@ -51,11 +51,13 @@ var/global/narsie_cometh = 0
 	SetUniversalState(/datum/universal_state/hell)
 	narsie_cometh = 1
 
+	/* //For animating narsie manually, doesn't work well
 	//Begin narsie vision
 	for(var/mob/M in player_list)
 		if(M.client)
 			M.see_narsie(src)
 	alpha = 0
+	*/
 /*
 	updateicon()
 */
@@ -133,16 +135,16 @@ var/global/narsie_cometh = 0
 	if(target && prob(60))
 		movement_dir = get_dir(src,target)
 	spawn(0)
-		old_x = src.x
-		old_y = src.y
+//		old_x = src.x
+//		old_y = src.y
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
 		for(var/mob/M in player_list)
 			if(M.client)
 				M.see_narsie(src,movement_dir)
 	spawn(10)
-		old_x = src.x
-		old_y = src.y
+//		old_x = src.x
+//		old_y = src.y
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
 		for(var/mob/M in player_list)
