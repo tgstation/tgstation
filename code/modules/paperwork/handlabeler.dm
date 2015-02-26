@@ -7,9 +7,10 @@
 	var/labels_left = 30
 	var/mode = 0	//off or on.
 
-/obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user as mob)
-	if(!user.Adjacent(A))
-		return 0
+/obj/item/weapon/hand_labeler/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if (!proximity_flag)
+		return
+
 	if(!mode)	//if it's off, give up.
 		return
 	if(A == loc)	// if placing the labeller into something (e.g. backpack)
