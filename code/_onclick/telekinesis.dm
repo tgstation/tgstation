@@ -25,6 +25,9 @@ var/const/tk_maxrange = 15
 /atom/proc/attack_self_tk(mob/user)
 	return
 
+/obj/item/attack_self_tk(mob/user)
+	attack_self(user)
+
 /obj/attack_tk(mob/user)
 	if(user.stat) return
 	if(anchored)

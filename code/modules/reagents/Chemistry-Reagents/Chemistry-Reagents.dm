@@ -721,7 +721,7 @@ datum/reagent/cryptobiolin
 	id = "cryptobiolin"
 	description = "Cryptobiolin causes confusion and dizzyness."
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/cryptobiolin/on_mob_life(var/mob/living/M as mob)
 	M.Dizzy(1)
