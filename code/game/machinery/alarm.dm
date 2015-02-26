@@ -799,7 +799,7 @@ table tr:first-child th:first-child { border: none;}
 		post_alert(new_area_danger_level)
 	update_icon()
 
-/obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob, params)
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && (wires.wires_status == 27 || wires.wires_status == 31))   //this checks for all wires to be cut, except the syphon wire which is optional.
@@ -927,7 +927,7 @@ Code shamelessly copied from apc_frame
 	icon_state = "alarm_bitem"
 	flags = CONDUCT
 
-/obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
 		qdel(src)
@@ -1050,7 +1050,7 @@ FIRE ALARM
 	if(prob(50/severity)) alarm()
 	..()
 
-/obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob, params)
 	src.add_fingerprint(user)
 
 	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
@@ -1288,7 +1288,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 
-/obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
 		qdel(src)

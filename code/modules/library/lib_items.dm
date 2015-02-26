@@ -31,7 +31,7 @@
 	update_icon()
 
 
-/obj/structure/bookcase/attackby(obj/item/I, mob/user)
+/obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
 		if(0)
 			if(istype(I, /obj/item/weapon/wrench))
@@ -186,7 +186,7 @@
 		user << "<span class='notice'>This book is completely blank!</span>"
 
 
-/obj/item/weapon/book/attackby(obj/item/I, mob/user)
+/obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		if(is_blind(user))
 			return

@@ -137,7 +137,7 @@
 		charge.range += range_add
 
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/screwdriver) && upgrades["screwdriver"] < 3)
 		upgrades["screwdriver"]++
 		overheat_time -= 1

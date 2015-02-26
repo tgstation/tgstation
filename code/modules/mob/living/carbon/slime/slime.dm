@@ -422,7 +422,7 @@
 			updatehealth()
 	return
 
-/mob/living/carbon/slime/attackby(obj/item/W, mob/living/user)
+/mob/living/carbon/slime/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W,/obj/item/stack/sheet/mineral/plasma)) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]

@@ -215,7 +215,7 @@ BLIND     // can't see anything
 		*/
 	var/obj/item/clothing/tie/hastie = null
 
-/obj/item/clothing/under/attackby(obj/item/I, mob/user)
+/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	attachTie(I, user)
 	..()
 

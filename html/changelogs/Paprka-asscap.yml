@@ -1,4 +1,0 @@
-author: Paprika
-delete-after: True
-changes:
-  - rscadd: "Added an assistant cap, unlimited by default."

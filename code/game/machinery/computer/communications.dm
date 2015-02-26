@@ -321,7 +321,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		attack_hand(user)
 	else

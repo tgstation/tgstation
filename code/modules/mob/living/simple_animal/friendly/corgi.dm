@@ -61,7 +61,7 @@
 	onclose(user, "mob[real_name]")
 	return
 
-/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(inventory_head && inventory_back)
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
@@ -150,6 +150,7 @@
 					//The objects that corgis can wear on their backs.
 					var/list/allowed_types = list(
 						/obj/item/clothing/suit/armor/vest,
+						/obj/item/clothing/suit/space/deathsquad,
 						/obj/item/device/radio,
 						/obj/item/device/radio/off,
 						/obj/item/clothing/suit/cardborg,
@@ -253,7 +254,7 @@
 
 			if(/obj/item/clothing/head/nursehat)
 				name = "Nurse [real_name]"
-				desc = "[name] needs 100cc of beef jerky...STAT!"
+				desc = "[name] needs 100cc of beef jerky... STAT!"
 				valid = 1
 
 			if(/obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate)
@@ -267,10 +268,10 @@
 			if(/obj/item/clothing/head/ushanka)
 				name = "[pick("Comrade","Commissar","Glorious Leader")] [real_name]"
 				desc = "A follower of Karl Barx."
-				emote_see = list("contemplates the failings of the capitalist economic model.", "ponders the pros and cons of vangaurdism.")
+				emote_see = list("contemplates the failings of the capitalist economic model.", "ponders the pros and cons of vanguardism.")
 				valid = 1
 
-			if(/obj/item/clothing/head/collectable/police)
+			if(/obj/item/clothing/head/warden, /obj/item/clothing/head/collectable/police)
 				name = "Officer [real_name]"
 				emote_see = list("drools.","looks for donuts.")
 				desc = "Stop right there criminal scum!"
@@ -298,7 +299,7 @@
 
 			if(/obj/item/clothing/head/helmet/space/santahat)
 				name = "Santa's Corgi Helper"
-				emote_hear = list("barks christmas songs.", "yaps merrily!")
+				emote_hear = list("barks Christmas songs.", "yaps merrily!")
 				emote_see = list("looks for presents.", "checks his list.")
 				desc = "He's very fond of milk and cookies."
 				valid = 1
@@ -323,6 +324,11 @@
 			if(/obj/item/clothing/head/hopcap)
 				name = "Lieutenant [real_name]"
 				desc = "Can actually be trusted to not run off on his own."
+				valid = 1
+
+			if(/obj/item/clothing/head/helmet/space/deathsquad)
+				name = "Trooper [real_name]"
+				desc = "That's not red paint. That's real corgi blood."
 				valid = 1
 
 	if(valid)

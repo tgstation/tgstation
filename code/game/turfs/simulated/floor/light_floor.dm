@@ -59,7 +59,7 @@
 
 
 
-/turf/simulated/floor/light/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/floor/light/attackby(obj/item/C as obj, mob/user as mob, params)
     if(..())
         return
     if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
