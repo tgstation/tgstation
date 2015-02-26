@@ -14,17 +14,6 @@
 	var/rigged = 0
 	var/sound_effect_open = 'sound/machines/click.ogg'
 	var/sound_effect_close = 'sound/machines/click.ogg'
-	var/obj/item/weapon/paper/manifest/manifest
-
-/obj/structure/closet/crate/New()
-	..()
-	update_icon()
-
-/obj/structure/closet/crate/update_icon()
-	..()
-	overlays.Cut()
-	if(manifest)
-		overlays += "manifest"
 
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
@@ -213,16 +202,13 @@
 //		new /obj/item/weapon/reagent_containers/spray/pestspray(src)
 
 
-/obj/structure/closet/crate/secure/update_icon()
+/obj/structure/closet/crate/secure/New()
 	..()
-	overlays.Cut()
-	if(manifest)
-		overlays += "manifest"
 	if(locked)
+		overlays.Cut()
 		overlays += redlight
-	else if(broken)
-		overlays += emag
 	else
+		overlays.Cut()
 		overlays += greenlight
 
 /obj/structure/closet/crate/rcd/New()
@@ -284,15 +270,6 @@
 	return 1
 
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
-	if(manifest)
-		user << "<span class='notice'>You tear the manifest off of the crate.</span>"
-		playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
-		manifest.loc = loc
-		if(ishuman(user))
-			user.put_in_hands(manifest)
-		manifest = null
-		update_icon()
-		return
 	if(opened)
 		close()
 	else
@@ -308,15 +285,6 @@
 	return
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
-	if(manifest)
-		user << "<span class='notice'>You tear the manifest off of the crate.</span>"
-		playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
-		manifest.loc = loc
-		if(ishuman(user))
-			user.put_in_hands(manifest)
-		manifest = null
-		update_icon()
-		return
 	if(locked && !broken)
 		if (allowed(user))
 			user << "<span class='notice'>You unlock [src].</span>"
@@ -331,20 +299,22 @@
 	else
 		..()
 
-/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
 		user << "<span class='notice'>You lock \the [src].</span>"
 		src.locked = 1
-		update_icon()
+		overlays.Cut()
+		overlays += redlight
 		add_fingerprint(user)
 		return
 	else if (istype(W, /obj/item/weapon/melee/energy/blade) && locked && !broken)
+		overlays.Cut()
+		overlays += emag
 		overlays += sparks
 		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 		playsound(src.loc, "sparks", 60, 1)
 		src.locked = 0
 		src.broken = 1
-		update_icon()
 		user << "<span class='notice'>You unlock \the [src].</span>"
 		add_fingerprint(user)
 		return
@@ -353,19 +323,20 @@
 
 /obj/structure/closet/crate/secure/emag_act(mob/user as mob)
 	if(locked && !broken)
+		overlays.Cut()
+		overlays += emag
 		overlays += sparks
 		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 		playsound(src.loc, "sparks", 60, 1)
 		src.locked = 0
 		src.broken = 1
-		update_icon()
 		user << "<span class='notice'>You unlock \the [src].</span>"
 		add_fingerprint(user)
 
 /obj/structure/closet/crate/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
-/obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(opened)
 		if(isrobot(user))
 			return
@@ -424,3 +395,4 @@
 			src.req_access = list()
 			src.req_access += pick(get_all_accesses())
 	..()
+
