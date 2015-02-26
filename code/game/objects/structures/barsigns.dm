@@ -122,6 +122,6 @@
 	desc = "Honk."
 
 /datum/barsign/coderbus
-	name = "The Git Hub"
-	icon = "thegithub"
-	desc = "Renowned for its custom-made drinks. Sift through all that mud and you might just find a diamond."
+	name = "The Coderbus"
+	icon = "thecoderbus"
+	desc = "The Coderbus is a very controversial establishment known for its large variety of drinks."
