@@ -1,0 +1,5 @@
+author: Vekter
+
+delete-after: True
+
+  - tweak: "Cargo manifests now come in taped to a cargo crate instead of inside them. You'll no longer have to get that crated unlocked to claim your extra points!"
