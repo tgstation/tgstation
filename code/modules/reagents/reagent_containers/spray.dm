@@ -190,9 +190,6 @@
 /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
 	list_reagents = list("spore" = 150, "cryptobiolin" = 150, "mutagen" = 150, "chloralhydrate" = 150)
 
-/obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror/New()
-	..()
-
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
 	name = "Plant-B-Gone"
