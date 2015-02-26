@@ -29,8 +29,8 @@ var/global/narsie_cometh = 0
 	current_size = 12
 	consume_range = 12 // How many tiles out do we eat.
 	var/announce=1
-	var/old_x
-	var/old_y
+//	var/old_x
+//	var/old_y
 
 /obj/machinery/singularity/narsie/large/New()
 	..()
