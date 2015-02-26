@@ -135,16 +135,17 @@
 
 	if(isturf(mob.loc))
 
+		move_delay = world.time//set move delay
+
 		if(mob.restrained())	//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.incapacitated() && mob.Adjacent(M))
 						src << "<span class='notice'>You're restrained! You can't move!</span>"
+						move_delay += 10
 						return 0
 					else
 						M.stop_pulling()
-
-		move_delay = world.time//set move delay
 
 		switch(mob.m_intent)
 			if("run")
