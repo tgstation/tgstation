@@ -1,9 +1,9 @@
 
 //########################## CONTRABAND ;3333333333333333333 -Agouri ###################################################
 
-#define NUM_OF_POSTER_DESIGNS 32 //subtype 0-contraband posters
+#define NUM_OF_POSTER_DESIGNS 33 //subtype 0-contraband posters
 
-#define NUM_OF_POSTER_DESIGNS_LEGIT 32 //subtype 1-corporate approved posters
+#define NUM_OF_POSTER_DESIGNS_LEGIT 33 //subtype 1-corporate approved posters
 
 /obj/item/weapon/contraband
 	name = "contraband item"
@@ -188,6 +188,9 @@ obj/structure/sign/poster/New(serial,subtype)
 			if(32)
 				name += " - Punch Shit"
 				desc += " Fight things for no reason, like a man!"
+			if(33)
+				name += " - The Griffin"
+				desc += " The Griffin commands you to be the worst you can be. Will you?"
 			else
 				name += " - Error (subtype 0 serial_number)"
 				desc += " This is a bug, please report the circumstances under which you encountered this poster at https://github.com/tgstation/-tg-station/issues."
@@ -291,6 +294,9 @@ obj/structure/sign/poster/New(serial,subtype)
 			if(32)
 				name += " - High-Class Martini"
 				desc += " I told you to shake it, no stirring"
+			if(33)
+				name += " - The Owl"
+				desc += " The Owl would do his best to protect the station. Will you?"
 			else
 				name += " - Error (subtype 1 serial_number)"
 				desc += " This is a bug, please report the circumstances under which you encountered this poster at https://github.com/NTStation/NTstation13/issues."

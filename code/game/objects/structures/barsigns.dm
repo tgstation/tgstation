@@ -120,3 +120,8 @@
 	name = "Honked 'n' Loaded"
 	icon = "honkednloaded"
 	desc = "Honk."
+
+/datum/barsign/thenest
+	name = "The Nest"
+	icon = "thenest"
+	desc = "A good place to retire for a drink after a night of crime fighting."
