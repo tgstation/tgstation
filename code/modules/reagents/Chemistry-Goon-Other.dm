@@ -285,3 +285,18 @@ datum/reagent/concentrated_barbers_aid/reaction_mob(var/mob/living/M, var/volume
 		H.update_hair()
 	..()
 	return
+
+
+datum/reagent/liquid_drama
+	name = "Liquid Drama"
+	id = "liquid_drama"
+	description = "All the hatred of the galaxy, compacted into 1 liquid."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/chemical_reaction/liquid_drama
+	name = "liquid_drama"
+	id = "liquid_drama"
+	result = "liquid_drama"
+	required_reagents = list("stardust" = 1, "eye_of_toad" = 1,  "solid_errors" = 1, "liquid_rage" = 1, "paprika" = 1)
+	result_amount = 5
