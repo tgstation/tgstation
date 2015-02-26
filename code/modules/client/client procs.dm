@@ -90,7 +90,9 @@ var/list/external_rsc_urls
 var/next_external_rsc = 0
 #endif
 
+
 /client/New(TopicData)
+
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker")					//Invalid connection type.
@@ -144,9 +146,8 @@ var/next_external_rsc = 0
 
 		if (config.notify_new_player_age >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
-
-		if (config.irc_first_connection_alert)
-			send2irc("New user", "[key_name(src)] is connecting for the first time!")
+			if (config.irc_first_connection_alert)
+				send2irc_adminless_only("New user", "[key_name(src)] is connecting for the first time!")
 
 		player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
 
