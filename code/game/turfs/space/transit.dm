@@ -33,13 +33,13 @@
 	return
 
 /turf/space/transit/canBuildCatwalk()
-	return 0
+	return BUILD_FAILURE
 
 /turf/space/transit/canBuildLattice()
-	return 0
+	return BUILD_FAILURE
 
 /turf/space/transit/canBuildPlating()
-	return -1
+	return BUILD_SILENT_FAILURE
 
 /turf/space/transit/north // moving to the north
 

@@ -95,17 +95,21 @@
 		if(isturf(target))
 			var/turf/T = target
 			var/obj/structure/lattice/L
+			var/obj/item/stack/tile/plasteel/S = src
 			switch(T.canBuildPlating())
-				if(1)
+				if(BUILD_SUCCESS)
 					L = locate(/obj/structure/lattice) in T
 					if(!istype(L))
 						return
-					var/obj/item/stack/tile/plasteel/S = src
 					qdel(L)
 					playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
 					S.build(T)
 					S.use(1)
 					return
-				if(0)
+				if(BUILD_IGNORE)
+					playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+					S.build(T)
+					S.use(1)
+				if(BUILD_FAILURE)
 					user << "<span class='warning'>The plating is going to need some support.</span>"
 					return

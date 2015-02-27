@@ -22,12 +22,12 @@
 /turf/space/canBuildLattice()
 	if(!(locate(/obj/structure/lattice) in contents))
 		return 1
-	return 0
+	return BUILD_FAILURE
 
 /turf/space/canBuildPlating()
 	if((locate(/obj/structure/lattice) in contents))
 		return 1
-	return 0
+	return BUILD_FAILURE
 
 // Ported from unstable r355
 

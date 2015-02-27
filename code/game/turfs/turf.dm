@@ -478,12 +478,12 @@
 
 //Return a lattice to allow catwalk building
 /turf/proc/canBuildCatwalk()
-	return 0
+	return BUILD_FAILURE
 
 //Return true to allow lattice building
 /turf/proc/canBuildLattice()
-	return 0
+	return BUILD_FAILURE
 
 //Return a lattice to allow plating building, return 0 for error message, return -1 for silent fail.
 /turf/proc/canBuildPlating()
-	return -1
+	return BUILD_SILENT_FAILURE

@@ -1000,16 +1000,16 @@
 	icon_state="asteroidplating"
 
 /turf/unsimulated/floor/asteroid/canBuildCatwalk()
-	return 0
+	return BUILD_FAILURE
 
 /turf/unsimulated/floor/asteroid/canBuildLattice()
 	if(!(locate(/obj/structure/lattice) in contents))
-		return 1
-	return 0
+		return BUILD_SUCCESS
+	return BUILD_FAILURE
 
 /turf/unsimulated/floor/asteroid/canBuildPlating()
+	if(locate(/obj/structure/lattice) in contents)
+		return BUILD_FAILURE
 	if(!dug)
-		return 1
-	else if(locate(/obj/structure/lattice) in contents)
-		return 1
+		return BUILD_IGNORE
 	return 0

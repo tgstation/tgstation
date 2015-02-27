@@ -1077,3 +1077,10 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define IS_DIONA 1
 #define IS_VOX 2
 #define IS_PLASMA 3
+
+
+//Turf Construction defines
+#define BUILD_SILENT_FAILURE -1		//We failed but don't give an error message
+#define BUILD_FAILURE 0				//We failed so give an error message
+#define BUILD_SUCCESS 1			//We met the requirements for building our turf.
+#define BUILD_IGNORE 2		//Ignores requirements to build, and just build.
