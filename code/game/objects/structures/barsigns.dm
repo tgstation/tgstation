@@ -210,7 +210,7 @@
 	icon = "honkednloaded"
 	desc = "Honk."
 
-/datm/barsign/thenest
+/datum/barsign/thenest
 	name = "The Nest"
 	icon = "thenest"
 	desc = "A good place to retire for a drink after a long night of crime fighting."
