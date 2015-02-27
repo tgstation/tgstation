@@ -388,7 +388,7 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "materials=2;engineering=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
 //Almost the same recipe as destructive analyzer to give people choices.
