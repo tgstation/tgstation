@@ -60,8 +60,10 @@ In short:
 
 	runedec += 9000	//basically removing the rune cap
 
-	ticker.StartThematic("endgame")
+	for(var/turf/T in world)
+		T.update_lumcount(1, 255, 0, 0, 0)
 
+	ticker.StartThematic("endgame")
 
 
 /datum/universal_state/hell/proc/AreaSet()
@@ -122,9 +124,13 @@ In short:
 			APC.chargemode = 0
 			if(APC.cell)
 				APC.cell.charge = 0
-				power_machines -= APC
 			APC.emagged = 1
 			APC.queue_icon_update()
+
+			APC.areaMaster.power_light = 0
+			APC.areaMaster.power_equip = 0
+			APC.areaMaster.power_environ = 0
+			APC.areaMaster.power_change()
 
 /datum/universal_state/hell/proc/KillMobs()
 	for(var/mob/living/simple_animal/M in mob_list)

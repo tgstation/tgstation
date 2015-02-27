@@ -33,6 +33,9 @@
 	// holy water
 	var/holy = 0
 
+	// For building on the asteroid.
+	var/under_turf = /turf/space
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)

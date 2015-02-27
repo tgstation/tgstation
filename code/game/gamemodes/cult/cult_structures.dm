@@ -72,6 +72,8 @@
 	name = "Desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
 	icon_state = "tomealtar"
+	luminosity = 2
+	l_color = "#3e0000"
 //	luminosity = 5
 
 //sprites for this no longer exist	-Pete

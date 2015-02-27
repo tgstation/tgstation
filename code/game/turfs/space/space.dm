@@ -25,7 +25,9 @@
 	return 0
 
 /turf/space/canBuildPlating()
-	return locate(/obj/structure/lattice) in contents
+	if((locate(/obj/structure/lattice) in contents))
+		return 1
+	return 0
 
 // Ported from unstable r355
 

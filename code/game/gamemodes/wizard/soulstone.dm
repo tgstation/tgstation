@@ -261,5 +261,7 @@
 				U << "<span class='warning'><b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!</span>"
 	ticker.mode.update_all_necro_icons()
 	if(deleteafter)
+		for(var/atom/A in src)//we get rid of the empty shade once we've transferred its mind to the construct, so it isn't dropped on the floor when the soulstone is destroyed.
+			qdel(A)
 		qdel(src)
 	return
