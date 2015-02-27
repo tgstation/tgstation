@@ -47,171 +47,18 @@
 
 	suspend_alert = 1
 
-	for(var/area/ca in world)
-		var/area/A=get_area_master(ca)
-		if(!istype(A,/area) || A.name=="Space" || istype(A,/area/beach))
-			continue
-
-		// No cheating~
-		A.jammed=2
-
-		// Reset all alarms.
-		A.fire     = null
-		A.atmos    = 1
-		A.atmosalm = 0
-		A.poweralm = 1
-		A.party    = null
-		A.radalert = 0
-
-		// Slap random alerts on shit
-		if(prob(25))
-			switch(rand(1,4))
-				if(1)
-					A.fire=1
-				if(2)
-					A.atmosalm=1
-				if(3)
-					A.radalert=1
-				if(4)
-					A.party=1
-
-		A.updateicon()
-
-	for(var/turf/space/spess in world)
-		spess.overlays += "end01"
-
-	for (var/obj/machinery/firealarm/alm in world)
-		if (!(alm.stat & BROKEN))
-			alm.ex_act(2)
-
-	for (var/obj/machinery/power/apc/APC in world)
-		if (!(APC.stat & BROKEN) && !APC.is_critical)
-			APC.chargemode = 0
-			if(APC.cell)
-				APC.cell.charge = 0
-			APC.emagged = 1
-			APC.queue_icon_update()
-
-			APC.areaMaster.power_light = 0
-			APC.areaMaster.power_equip = 0
-			APC.areaMaster.power_environ = 0
-			APC.areaMaster.power_change()
-
-	spawn()
-		for(var/turf/T in world)
-			if(T.z != map.zCentcomm)
-				T.update_lumcount(1, 160, 255, 0, 0)
+	AreaSet()
+	OverlaySet()
+	MiscSet()
+	APCSet()
+	AmbientSet()
 
 	// Disable Nar-Sie.
 	ticker.mode.eldergod=0
 
 	ticker.StartThematic("endgame")
-	for(var/datum/mind/M in player_list)
-		if(!istype(M.current,/mob/living))
-			continue
-		if(M.current.stat!=2)
-			M.current.Weaken(10)
-			flick("e_flash", M.current.flash)
 
-		var/failed_objectives=0
-		for(var/datum/objective/O in M.objectives)
-			O.blocked=O.type != /datum/objective/survive
-			if(O.blocked)
-				failed_objectives=1
-
-		if(!locate(/datum/objective/survive) in M.objectives)
-			var/datum/objective/survive/live = new("Escape collapsing universe through the rift on the research output.")
-			live.owner=M
-			M.objectives += live
-
-		if(failed_objectives)
-			M << "\red<b><font size=3>You have permitted the universe to collapse and have therefore failed your objectives.</font></b>"
-
-		// Delete all runes
-		for(var/obj/effect/rune/R in rune_list)
-			if(R)
-				qdel(R)
-
-		if(M in ticker.mode.revolutionaries)
-			ticker.mode.revolutionaries -= M
-			M << "\red <FONT size = 3><B>The massive pulse of energy clears your mind.  You are no longer a revolutionary.</B></FONT>"
-			ticker.mode.update_rev_icons_removed(M)
-			M.special_role = null
-
-		if(M in ticker.mode.head_revolutionaries)
-			ticker.mode.head_revolutionaries -= M
-			M.current << "\red <FONT size = 3><B>The massive pulse of energy clears your mind.  You are no longer a head revolutionary.</B></FONT>"
-			ticker.mode.update_rev_icons_removed(M)
-			M.special_role = null
-
-		if(M in ticker.mode.cult)
-			ticker.mode.cult -= M
-			ticker.mode.update_cult_icons_removed(M)
-			M.special_role = null
-			var/datum/game_mode/cult/cult = ticker.mode
-			if (istype(cult))
-				cult.memoize_cult_objectives(M)
-			M.current << "\red <FONT size = 3><B>Nar-Sie loses interest in this plane. You are no longer a cultist.</B></FONT>"
-			M.memory = ""
-
-		if(M in ticker.mode.wizards)
-			ticker.mode.wizards -= M
-			M.special_role = null
-			M.current.spellremove(M.current, config.feature_object_spell_system? "object":"verb")
-			M.current << "\red <FONT size = 3><B>Your powers ebb and you feel weak. You are no longer a wizard.</B></FONT>"
-			ticker.mode.update_wizard_icons_removed(M)
-
-		if(M in ticker.mode.changelings)
-			ticker.mode.changelings -= M
-			M.special_role = null
-			M.current.remove_changeling_powers()
-			M.current.verbs -= /datum/changeling/proc/EvolutionMenu
-			if(M.changeling)
-				del(M.changeling)
-			M.current << "<FONT color='red' size = 3><B>You grow weak and lose your powers. You are no longer a changeling and are stuck in your current form.</B></FONT>"
-
-		if(M in ticker.mode.vampires)
-			ticker.mode.vampires -= M
-			M.special_role = null
-			M.current.remove_vampire_powers()
-			if(M.vampire)
-				del(M.vampire)
-			M.current << "<FONT color='red' size = 3><B>You grow weak and lose your powers. You are no longer a vampire and are stuck in your current form.</B></FONT>"
-
-		if(M in ticker.mode.syndicates)
-			ticker.mode.syndicates -= M
-			ticker.mode.update_synd_icons_removed(M)
-			M.special_role = null
-			//for (var/datum/objective/nuclear/O in objectives)
-			//	objectives-=O
-			M.current << "\red <FONT size = 3><B>Your masters are likely dead or dying. You are no longer a syndicate operative.</B></FONT>"
-
-		if(M in ticker.mode.traitors)
-			ticker.mode.traitors -= M
-			M.special_role = null
-			M.current << "\red <FONT size = 3><B>Your masters are likely dead or dying.  You are no longer a traitor.</B></FONT>"
-			if(isAI(M.current))
-				var/mob/living/silicon/ai/A = M.current
-				A.set_zeroth_law("")
-				A.show_laws()
-
-		if(M in ticker.mode.malf_ai)
-			ticker.mode.malf_ai -= M
-			M.special_role = null
-			var/mob/living/silicon/ai/A = M.current
-
-			A.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
-			/datum/game_mode/malfunction/proc/takeover,
-			/datum/game_mode/malfunction/proc/ai_win)
-
-			A.malf_picker.remove_verbs(A)
-
-			A.laws = new base_law_type
-			del(A.malf_picker)
-			A.show_laws()
-			A.icon_state = "ai"
-
-			A << "\red <FONT size = 3><B>The massive blast of energy has fried the systems that were malfunctioning.  You are no longer malfunctioning.</B></FONT>"
+	PlayerSet()
 
 	new /obj/machinery/singularity/narsie/large/exit(pick(endgame_exits))
 	spawn(rand(30,60) SECONDS)
@@ -244,3 +91,166 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 		CallHook("Reboot",list())
 		world.Reboot()
 		return
+
+/datum/universal_state/supermatter_cascade/proc/AreaSet()
+	for(var/area/ca in world)
+		var/area/A=get_area_master(ca)
+		if(!istype(A,/area) || A.name=="Space" || istype(A,/area/beach))
+			continue
+
+		// No cheating~
+		A.jammed=2
+
+		// Reset all alarms.
+		A.fire     = null
+		A.atmos    = 1
+		A.atmosalm = 0
+		A.poweralm = 1
+		A.party    = null
+		A.radalert = 0
+
+		// Slap random alerts on shit
+		if(prob(25))
+			switch(rand(1,4))
+				if(1)
+					A.fire=1
+				if(2)
+					A.atmosalm=1
+				if(3)
+					A.radalert=1
+				if(4)
+					A.party=1
+
+		A.updateicon()
+
+/datum/universal_state/supermatter_cascade/proc/OverlaySet()
+	for(var/turf/space/spess in world)
+		spess.overlays += "end01"
+
+/datum/universal_state/supermatter_cascade/proc/AmbientSet()
+	for(var/turf/T in world)
+		if(istype(T, /turf/space))	continue
+		if(T.z != map.zCentcomm)
+			T.update_lumcount(1, 160, 255, 0, 0)
+
+/datum/universal_state/supermatter_cascade/proc/MiscSet()
+	for (var/obj/machinery/firealarm/alm in world)
+		if (!(alm.stat & BROKEN))
+			alm.ex_act(2)
+
+/datum/universal_state/supermatter_cascade/proc/APCSet()
+	for (var/obj/machinery/power/apc/APC in world)
+		if (!(APC.stat & BROKEN) && !APC.is_critical)
+			APC.chargemode = 0
+			if(APC.cell)
+				APC.cell.charge = 0
+			APC.emagged = 1
+			APC.queue_icon_update()
+
+/datum/universal_state/supermatter_cascade/proc/PlayerSet()
+	for(var/datum/mind/M in player_list)
+		if(!istype(M.current,/mob/living))
+			continue
+		if(M.current.stat!=2)
+			M.current.Weaken(10)
+			flick("e_flash", M.current.flash)
+
+		var/failed_objectives=0
+		for(var/datum/objective/O in M.objectives)
+			O.blocked=O.type != /datum/objective/survive
+			if(O.blocked)
+				failed_objectives=1
+
+		if(!locate(/datum/objective/survive) in M.objectives)
+			var/datum/objective/survive/live = new("Escape collapsing universe through the rift on the research output.")
+			live.owner=M
+			M.objectives += live
+
+		if(failed_objectives)
+			M << "<span class='danger'><font size=3>You have permitted the universe to collapse and have therefore failed your objectives.</font></span>"
+
+		// Delete all runes
+		for(var/obj/effect/rune/R in rune_list)
+			if(R)
+				qdel(R)
+
+		if(M in ticker.mode.revolutionaries)
+			ticker.mode.revolutionaries -= M
+			M << "<span class='danger'><FONT size = 3>The massive pulse of energy clears your mind.  You are no longer a revolutionary.</FONT></span>"
+			ticker.mode.update_rev_icons_removed(M)
+			M.special_role = null
+
+		if(M in ticker.mode.head_revolutionaries)
+			ticker.mode.head_revolutionaries -= M
+			M.current << "<span class='danger'><FONT size = 3>The massive pulse of energy clears your mind.  You are no longer a head revolutionary.</FONT></span>"
+			ticker.mode.update_rev_icons_removed(M)
+			M.special_role = null
+
+		if(M in ticker.mode.cult)
+			ticker.mode.cult -= M
+			ticker.mode.update_cult_icons_removed(M)
+			M.special_role = null
+			var/datum/game_mode/cult/cult = ticker.mode
+			if (istype(cult))
+				cult.memoize_cult_objectives(M)
+			M.current << "<span class='danger'><FONT size = 3>Nar-Sie loses interest in this plane. You are no longer a cultist.</FONT></span>"
+			M.memory = ""
+
+		if(M in ticker.mode.wizards)
+			ticker.mode.wizards -= M
+			M.special_role = null
+			M.current.spellremove(M.current, config.feature_object_spell_system? "object":"verb")
+			M.current << "<span class='danger'><FONT size = 3>Your powers ebb and you feel weak. You are no longer a wizard.</FONT></span>"
+			ticker.mode.update_wizard_icons_removed(M)
+
+		if(M in ticker.mode.changelings)
+			ticker.mode.changelings -= M
+			M.special_role = null
+			M.current.remove_changeling_powers()
+			M.current.verbs -= /datum/changeling/proc/EvolutionMenu
+			if(M.changeling)
+				del(M.changeling)
+			M.current << "<span class='danger'><FONT size = 3>You grow weak and lose your powers. You are no longer a changeling and are stuck in your current form.</FONT></span>"
+
+		if(M in ticker.mode.vampires)
+			ticker.mode.vampires -= M
+			M.special_role = null
+			M.current.remove_vampire_powers()
+			if(M.vampire)
+				del(M.vampire)
+			M.current << "<span class='danger'><FONT size = 3>You grow weak and lose your powers. You are no longer a vampire and are stuck in your current form.</FONT></span>"
+
+		if(M in ticker.mode.syndicates)
+			ticker.mode.syndicates -= M
+			ticker.mode.update_synd_icons_removed(M)
+			M.special_role = null
+			//for (var/datum/objective/nuclear/O in objectives)
+			//	objectives-=O
+			M.current << "<span class='danger'><FONT size = 3>Your masters are likely dead or dying. You are no longer a syndicate operative.</FONT></span>"
+
+		if(M in ticker.mode.traitors)
+			ticker.mode.traitors -= M
+			M.special_role = null
+			M.current << "<span class='danger'><FONT size = 3>Your masters are likely dead or dying.  You are no longer a traitor.</FONT></span>"
+			if(isAI(M.current))
+				var/mob/living/silicon/ai/A = M.current
+				A.set_zeroth_law("")
+				A.show_laws()
+
+		if(M in ticker.mode.malf_ai)
+			ticker.mode.malf_ai -= M
+			M.special_role = null
+			var/mob/living/silicon/ai/A = M.current
+
+			A.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
+			/datum/game_mode/malfunction/proc/takeover,
+			/datum/game_mode/malfunction/proc/ai_win)
+
+			A.malf_picker.remove_verbs(A)
+
+			A.laws = new base_law_type
+			del(A.malf_picker)
+			A.show_laws()
+			A.icon_state = "ai"
+
+			A << "<span class='danger'><FONT size = 3>The massive blast of energy has fried the systems that were malfunctioning.  You are no longer malfunctioning.</FONT></span>"
