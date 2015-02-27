@@ -85,6 +85,9 @@
 	var/humans_need_surnames = 0
 	var/allow_random_events = 0			// enables random events mid-round when set to 1
 	var/allow_ai = 0					// allow ai job
+	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
+	var/notify_new_player_age = 0		// how long do we notify admins of a new player
+	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
@@ -316,6 +319,12 @@
 					config.hard_popcap_message = value
 				if("extreme_popcap_message")
 					config.extreme_popcap_message = value
+				if("panic_bunker")
+					config.panic_bunker = 1
+				if("notify_new_player_age")
+					config.notify_new_player_age = text2num(value)
+				if("irc_first_connection_alert")
+					config.irc_first_connection_alert = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
