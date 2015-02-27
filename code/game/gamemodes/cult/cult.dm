@@ -155,13 +155,20 @@
 /datum/game_mode/cult/proc/additional_phase()
 	current_objective++
 
+	message_admins("Picking a new Cult objective.")
 	var/new_objective = "eldergod"
 	//the idea here is that if the cult performs well, the should get more objectives before they can summon Nar-Sie.
 	if(cult.len >= 4)//if there are less than 4 remaining cultists, they get a free pass to the summon objective.
 		if(current_objective <= prenarsie_objectives)
 			var/list/unconvertables = get_unconvertables()
-			if(unconvertables.len < (cult.len * 2))//if cultists are getting radically outnumbered, they get a free pass to the summon objective.
+			if(unconvertables.len <= (cult.len * 2))//if cultists are getting radically outnumbered, they get a free pass to the summon objective.
 				new_objective = pick_objective()
+			else
+				message_admins("There are over twice more unconvertables than there are cultists! Nar-Sie objective unlocked.")
+		else
+			message_admins("The Cult has already completed [prenarsie_objectives] objectives! Nar-Sie objective unlocked.")
+	else
+		message_admins("There are less than 4 cultists! Nar-Sie objective unlocked.")
 
 	if(!sacrificed.len && (new_objective != "sacrifice"))
 		sacrifice_target = null
@@ -251,8 +258,8 @@
 		if(possible_targets.len > 0)
 			sacrifice_target = pick(possible_targets)
 			possible_objectives |= "sacrifice"
-		//else
-			//Couldn't pick a Sacrifice Target among the ordinary crewmembers, what the hell?
+		else
+			message_admins("Didn't find a suitable sacrifice target...what the hell? Shout at Deity.")
 
 	if(!mass_convert)
 		var/living_crew = 0
@@ -268,11 +275,16 @@
 		var/total = living_crew + living_cultists
 
 		if((living_cultists * 2) < total)
-			if ((total > 15) && (total < 50))
+			if (total < 15)
+				message_admins("There are [total] players, too little for the mass convert objective!")
+			else if (total > 50)
+				message_admins("There are [total] players, too many for the mass convert objective!")
+			else
 				possible_objectives |= "convert"
 				convert_target = round(total / 2)
 
 	if(!possible_objectives.len)//No more possible objectives, time to summon Nar-Sie
+		message_admins("No suitable objectives left! Nar-Sie objective unlocked.")
 		return "eldergod"
 	else
 		return pick(possible_objectives)
