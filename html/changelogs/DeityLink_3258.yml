@@ -1,0 +1,11 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed a bug that prevented the Supermatter Cascade's bluespace blob from ever expanding.
+  - bugfix: Fixed a bug that prevented the Supermatter Cascade's Bluespace rift from teleporting the mobs in range.
+  - imageadd: The Bluespace Rift has a brand new sprite!
+  - tweak: The Bluespace Rift can now be seen through walls.
+  - tweak: Reduced the Bluespace Rift's teleport range so it matches its sprite (it's actually much easier to reach now anyway since you can see it from afar)
+  - rscadd: The world now bakes in a weak green/yellowish light during a Supermatter Cascade, improving visibility.
+  - soundadd: Added a sound that plays when a Supermatter Cascade is triggered.
+  - rscadd: All players are now actually flashed by a blinding light when a Supermatter Cascade is triggered
