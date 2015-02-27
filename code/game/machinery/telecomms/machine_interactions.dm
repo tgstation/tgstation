@@ -88,6 +88,7 @@
 
 					// Create a machine frame and delete the current machine
 					var/obj/machinery/constructable_frame/machine_frame/F = new
+					F.build_state = 2
 					F.loc = src.loc
 					del(src)
 

@@ -1,9 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed a bug that caused soulstones to spawn a mindless shade when used to create a construct. (due to atoms dropping all their content upon deletion)
-  - rscadd: Admins now get notified of who used the Voice of Nar-Sie.
-  - rscadd: Added a bunch of admin messages to debug cult objectives.
-  - tweak: The "tome" cult structure now emits a weak red light (there is one by default in the librarian's study)
-  - bugfix: All the equipment/light/environnement machines are now properly disabled once Nar-Sie rises (they would previously stay powered even after the APC gets drained)
-  - rscadd: The entire world now bakes in a weak reddish ambient light once Nar-Sie rises, greatly improving visibility, and making the whole place look nicer.

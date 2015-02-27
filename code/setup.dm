@@ -402,7 +402,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_WHISPER	209		// causes quiet whispering
 #define M_DIZZY		210		// Trippy.
 #define M_SANS		211		// IF YOU SEE THIS WHILST BROWSING CODE, YOU HAVE BEEN VISITED BY: THE FONT OF SHITPOSTING. GREAT LUCK AND WEALTH WILL COME TO YOU, BUT ONLY IF YOU SAY 'fuck comic sans' IN YOUR PR.
-#define M_FARSIGHT	212		// Increases mob's view range by 2
 
 // Bustanuts
 #define M_HARDCORE      300
@@ -1082,5 +1081,5 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 //Turf Construction defines
 #define BUILD_SILENT_FAILURE -1		//We failed but don't give an error message
 #define BUILD_FAILURE 0				//We failed so give an error message
-#define BUILD_SUCCESS 1			//We met the requirements for building our turf.
-#define BUILD_IGNORE 2		//Ignores requirements to build, and just build.
+#define BUILD_SUCCESS 1			//Looks for a lattice to build.
+#define BUILD_IGNORE 2		//Ignores the need for lattice to build.

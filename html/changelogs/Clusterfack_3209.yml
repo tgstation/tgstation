@@ -1,7 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- bugfix: Made suit storage units not drop all equipment on power failure, instead it must be crowbarred open
-- rscadd: Made narsie not lag
-- bugfix: Fixes a bug in powernet not fully shutting off power
-- bugfix: Shuttle shouldn't kill singulo/narsie if it lands on it anymore
