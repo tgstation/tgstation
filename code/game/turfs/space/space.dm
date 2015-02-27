@@ -42,12 +42,11 @@
 			return
 		if(L)
 			if(R.use(1))
-				user << "<span class='notice'>Constructing catwalk...</span>"
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				qdel(L)
-				ReplaceWithCatwalk()
-			else
-				user << "<span class='warning'>You need two rods to build a catwalk.</span>"
+				if(do_after(user, 15))
+					user << "<span class='notice'>Constructing catwalk...</span>"
+					playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+					qdel(L)
+					ReplaceWithCatwalk()
 			return
 		if(R.use(1))
 			user << "<span class='notice'>Constructing support lattice...</span>"

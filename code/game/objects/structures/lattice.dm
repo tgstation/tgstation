@@ -11,8 +11,6 @@
 
 /obj/structure/lattice/New()
 	..()
-	if(!(istype(src.loc, /turf/space)))
-		qdel(src)
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
 			qdel(LAT)
@@ -125,7 +123,7 @@
 	..()
 	if(istype(C, /obj/item/stack/cable_coil))
 		var/turf/T = get_turf(src)
-		T.attackby(C, user) //catwalks 'enable' coil laying on space tiles, not the catwalks themselves
+		T.attackby(C, user) //catwalks 'enable' coil laying on tiles, not the catwalks themselves
 		return
 
 /obj/structure/lattice/catwalk/updateOverlays()
