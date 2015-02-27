@@ -140,6 +140,8 @@ var/next_external_rsc = 0
 
 	if (isnum(player_age) && player_age == -1) //first connection
 		if (config.panic_bunker && !holder && !(ckey in deadmins))
+			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
+			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			src << "Sorry but the server is currently not accepting connections from never before seen players."
 			del(src)
 			return 0
