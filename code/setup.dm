@@ -402,6 +402,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_WHISPER	209		// causes quiet whispering
 #define M_DIZZY		210		// Trippy.
 #define M_SANS		211		// IF YOU SEE THIS WHILST BROWSING CODE, YOU HAVE BEEN VISITED BY: THE FONT OF SHITPOSTING. GREAT LUCK AND WEALTH WILL COME TO YOU, BUT ONLY IF YOU SAY 'fuck comic sans' IN YOUR PR.
+#define M_FARSIGHT	212		// Increases mob's view range by 2
 
 // Bustanuts
 #define M_HARDCORE      300
