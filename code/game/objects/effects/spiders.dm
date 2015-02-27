@@ -20,7 +20,7 @@
 				qdel(src)
 	return
 
-/obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user, params)
+/obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(W.attack_verb.len)
 		visible_message("<span class='danger'>[user] has [pick(W.attack_verb)] \the [src] with \the [W]!</span>")
 	else

@@ -124,7 +124,7 @@
 	for(var/mob/M in src)
 		shatter(M)
 
-/obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob)
 	health -= I.force
 	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
 	if(health <= 0)

@@ -68,7 +68,7 @@ obj/structure/windoor_assembly/Destroy()
 		return 1
 
 
-/obj/structure/windoor_assembly/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/windoor_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	add_fingerprint(user)
 	switch(state)

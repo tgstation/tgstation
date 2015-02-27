@@ -80,7 +80,7 @@
 	if(!bcell)
 		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
-/obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)

@@ -13,7 +13,7 @@
 		return
 	evidencebagEquip(I, user)
 
-/obj/item/weapon/evidencebag/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/evidencebag/attackby(obj/item/I, mob/user)
 	if(evidencebagEquip(I, user))
 		return 1
 

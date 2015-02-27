@@ -42,7 +42,7 @@
 /turf/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
 
-/turf/attackby(obj/item/C, mob/user, params)
+/turf/attackby(obj/item/C, mob/user)
 	if(cancable && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
 		for(var/obj/structure/cable/LC in src)
@@ -145,9 +145,6 @@
 	if(old_opacity != W.opacity)			//opacity has changed. Need to update surrounding lights
 		if(W.lighting_lumcount)				//unless we're being illuminated, don't bother (may be buggy, hard to test)
 			W.UpdateAffectingLights()
-
-	for(var/turf/space/S in range(W,1))
-		S.update_starlight()
 
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()

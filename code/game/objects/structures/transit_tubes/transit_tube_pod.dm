@@ -25,7 +25,7 @@
 
 	..()
 
-/obj/structure/transit_tube_pod/attackby(var/obj/item/I, var/mob/user, params)
+/obj/structure/transit_tube_pod/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!moving)
 			for(var/obj/structure/transit_tube/station/T in loc)

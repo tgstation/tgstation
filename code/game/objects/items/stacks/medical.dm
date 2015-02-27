@@ -36,10 +36,8 @@
 		if(stop_bleeding)
 			if(H.bleedsuppress)
 				user << "[H]'s bleeding is already bandaged."
-				return
-			else if(!H.blood_max)
+			if(!H.blood_max)
 				user << "[H] isn't bleeding."
-				return
 
 	if(isliving(M))
 		if(!M.can_inject(user, 1))

@@ -11,7 +11,6 @@
 
 
 /obj/structure/bigDelivery/attack_hand(mob/user as mob)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 
 /obj/structure/bigDelivery/Destroy()
@@ -25,7 +24,7 @@
 		AM.loc = T
 	..()
 
-/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -75,11 +74,11 @@
 			user.put_in_hands(wrapped)
 		else
 			wrapped.loc = get_turf(src)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+
 	qdel(src)
 
 
-/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -322,7 +321,7 @@
 	update()
 	return
 
-/obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user, params)
+/obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user)
 	if(!I || !user)
 		return
 

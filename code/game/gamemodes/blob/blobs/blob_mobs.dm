@@ -113,7 +113,7 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
-	icon_dead = "blobbernaut_dead"
+	icon_dead = "blobbernaut_death"
 	pass_flags = PASSBLOB
 	health = 240
 	maxHealth = 240
@@ -147,7 +147,3 @@
 
 /mob/living/simple_animal/hostile/blobbernaut/blob_act()
 	return
-
-/mob/living/simple_animal/hostile/blobbernaut/Die()
-	..()
-	flick("blobbernaut_death", src)

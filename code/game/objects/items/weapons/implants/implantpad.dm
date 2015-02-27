@@ -32,7 +32,7 @@
 		return ..()
 
 
-/obj/item/weapon/implantpad/attackby(obj/item/weapon/implantcase/C, mob/user, params)
+/obj/item/weapon/implantpad/attackby(obj/item/weapon/implantcase/C, mob/user)
 	..()
 	if(istype(C, /obj/item/weapon/implantcase))
 		if(!case)

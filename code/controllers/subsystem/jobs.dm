@@ -4,10 +4,9 @@ var/datum/subsystem/job/SSjob
 	name = "Jobs"
 	priority = 5
 
-	var/list/occupations = list()		//List of all jobs
-	var/list/unassigned = list()		//Players who need jobs
-	var/list/job_debug = list()			//Debug info
-	var/initial_players_to_assign = 0 	//used for checking against population caps
+	var/list/occupations = list()	//List of all jobs
+	var/list/unassigned = list()	//Players who need jobs
+	var/list/job_debug = list()		//Debug info
 
 /datum/subsystem/job/New()
 	NEW_SS_GLOBAL(SSjob)
@@ -206,8 +205,6 @@ var/datum/subsystem/job/SSjob
 		if(player.ready && player.mind && !player.mind.assigned_role)
 			unassigned += player
 
-	initial_players_to_assign = unassigned.len
-
 	Debug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)	return 0
 
@@ -263,8 +260,6 @@ var/datum/subsystem/job/SSjob
 
 		// Loop through all unassigned players
 		for(var/mob/new_player/player in unassigned)
-			if(PopcapReached())
-				RejectPlayer(player)
 
 			// Loop through all jobs
 			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
@@ -297,15 +292,11 @@ var/datum/subsystem/job/SSjob
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
 	for(var/mob/new_player/player in unassigned)
-		if(PopcapReached())
-			RejectPlayer(player)
-		else if(jobban_isbanned(player, "Assistant"))
+		if(jobban_isbanned(player, "Assistant"))
 			GiveRandomJob(player) //you get to roll for random before everyone else just to be sure you don't get assistant. you're so speshul
 
 	for(var/mob/new_player/player in unassigned)
-		if(PopcapReached())
-			RejectPlayer(player)
-		else if(player.client.prefs.userandomjob)
+		if(player.client.prefs.userandomjob)
 			GiveRandomJob(player)
 
 	Debug("DO, Standard Check end")
@@ -314,8 +305,6 @@ var/datum/subsystem/job/SSjob
 
 	// For those who wanted to be assistant if their preferences were filled, here you go.
 	for(var/mob/new_player/player in unassigned)
-		if(PopcapReached())
-			RejectPlayer(player)
 		Debug("AC2 Assistant located, Player: [player]")
 		AssignRole(player, "Assistant")
 	return 1
@@ -442,16 +431,3 @@ var/datum/subsystem/job/SSjob
 
 		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
 		feedback_add_details("job_preferences",tmp_str)
-
-/datum/subsystem/job/proc/PopcapReached()
-	if(config.hard_popcap || config.extreme_popcap)
-		var/relevent_cap = max(config.hard_popcap, config.extreme_popcap)
-		if((initial_players_to_assign - unassigned.len) >= relevent_cap)
-			return 1
-	return 0
-
-/datum/subsystem/job/proc/RejectPlayer(var/mob/new_player/player)
-	Debug("Popcap overflow Check observer located, Player: [player]")
-	player << "<b>You have failed to qualify for any job you desired.</b>"
-	unassigned -= player
-	player.ready = 0

@@ -183,8 +183,8 @@ silicate
 	name = "Sodium Chloride"
 	id = "sodiumchloride"
 	result = "sodiumchloride"
-	required_reagents = list("water" = 1, "sodium" = 1, "chlorine" = 1)
-	result_amount = 3
+	required_reagents = list("sodium" = 1, "chlorine" = 1)
+	result_amount = 2
 
 /datum/chemical_reaction/flash_powder
 	name = "Flash powder"
@@ -603,7 +603,7 @@ datum/chemical_reaction/pestkiller
 		O.show_message(text("<span class='danger'>The slime extract begins to vibrate violently !</span>"), 1)
 	spawn(50)
 
-		chemical_mob_spawn(holder, 5, "Gold Slime")
+		chemical_mob_spawn(holder, 1, "Gold Slime")
 
 /datum/chemical_reaction/slimecritlesser
 	name = "Slime Crit Lesser"
@@ -619,7 +619,7 @@ datum/chemical_reaction/pestkiller
 		O.show_message(text("<span class='danger'>The slime extract begins to vibrate violently !</span>"), 1)
 	spawn(50)
 
-		chemical_mob_spawn(holder, 1, "Lesser Gold Slime", "neutral")
+		chemical_mob_spawn(holder, 1, "Lesser Gold Slime")
 
 //Silver
 /datum/chemical_reaction/slimebork

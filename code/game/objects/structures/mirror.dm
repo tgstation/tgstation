@@ -56,7 +56,7 @@
 	..()
 
 
-/obj/structure/mirror/attackby(obj/item/I as obj, mob/living/user as mob, params)
+/obj/structure/mirror/attackby(obj/item/I as obj, mob/living/user as mob)
 	user.do_attack_animation(src)
 	if(I.damtype == STAMINA)
 		return

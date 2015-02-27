@@ -151,7 +151,7 @@ datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TO
 	var/turf/pull = get_turf(M)
 	for(var/atom/movable/X in orange(4,pull))
 		if(istype(X, /atom/movable))
-			if((X) && !X.anchored)
+			if((X))
 				if(setting_type)
 					step_away(X,pull)
 					step_away(X,pull)

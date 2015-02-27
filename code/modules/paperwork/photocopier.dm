@@ -218,7 +218,7 @@
 			greytoggle = "Greyscale"
 		updateUsrDialog()
 
-/obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
+/obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
 			user.drop_item()

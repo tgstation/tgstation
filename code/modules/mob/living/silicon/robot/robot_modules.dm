@@ -95,7 +95,6 @@
 	modules += new /obj/item/weapon/scalpel(src)
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
-	modules += new /obj/item/roller/robo(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("facid", 250)
@@ -235,16 +234,26 @@
 
 /obj/item/weapon/robot_module/miner/New()
 	..()
+	var/mob/living/silicon/robot/R = loc
 	modules += new /obj/item/borg/sight/meson(src)
 	emag = new /obj/item/borg/stun(src)
 	modules += new /obj/item/weapon/storage/bag/ore(src)
-	modules += new /obj/item/weapon/pickaxe/drill/cyborg(src)
-	modules += new /obj/item/weapon/shovel(src)
+	if(R.emagged)
+		modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
+	else
+		modules += new /obj/item/weapon/pickaxe/jackhammer/borgdrill(src)
 	modules += new /obj/item/device/flashlight/lantern(src)
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	fix_modules()
+
+/obj/item/weapon/robot_module/miner/on_emag()
+	..()
+	for(var/obj/item/weapon/pickaxe/jackhammer/borgdrill/D in modules)
+		qdel(D)
+	modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
+	rebuild()
 
 
 /obj/item/weapon/robot_module/syndicate

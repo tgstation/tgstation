@@ -6,7 +6,7 @@
 	var/list/authorized = list()
 
 
-/obj/machinery/computer/emergency_shuttle/attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob, params)
+/obj/machinery/computer/emergency_shuttle/attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))	return
 	if(!istype(W, /obj/item/weapon/card))
 		return

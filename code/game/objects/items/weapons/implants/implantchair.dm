@@ -73,7 +73,7 @@
 	return
 
 
-/obj/machinery/implantchair/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob, params)
+/obj/machinery/implantchair/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
 	if(istype(G, /obj/item/weapon/grab))
 		if(!ismob(G:affecting))
 			return

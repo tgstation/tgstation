@@ -155,7 +155,7 @@ Auto Patrol: []"},
 			updateUsrDialog()
 
 
-/obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
@@ -386,7 +386,7 @@ Auto Patrol: []"},
 
 //Secbot Construction
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob, params)
+/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
 	..()
 	if(!issignaler(S))
 		..()
@@ -405,7 +405,7 @@ Auto Patrol: []"},
 	else
 		return
 
-/obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/weapon/weldingtool))
 		if(!build_step)

@@ -31,8 +31,6 @@
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_l_hand(0)
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
 		return 1
 	return 0
 
@@ -50,8 +48,6 @@
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_r_hand(0)
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
 		return 1
 	return 0
 

@@ -16,7 +16,7 @@
 		icon_state = "implantcase-0"
 
 
-/obj/item/weapon/implantcase/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/implantcase/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)

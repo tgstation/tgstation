@@ -62,7 +62,7 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user, params)
+/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user)
 	if(!istype(i))
 		return ..()
 

@@ -12,7 +12,7 @@
 	var/grinded = 0
 
 
-/obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(default_unfasten_wrench(user, O))
 		return
 

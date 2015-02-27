@@ -154,7 +154,7 @@
 		qdel(src)
 
 
-/obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			if(src.large)
@@ -260,7 +260,7 @@
 	src.add_fingerprint(user)
 
 	if(!src.toggle())
-		user << "<span class='notice'>It won't budge!</span>"
+		usr << "<span class='notice'>It won't budge!</span>"
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)

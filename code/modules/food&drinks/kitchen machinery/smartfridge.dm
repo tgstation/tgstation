@@ -34,7 +34,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(default_unfasten_wrench(user, O))
 		power_change()
 		return

@@ -515,14 +515,6 @@ macro "hotkeymode"
 		name = "CTRL+G"
 		command = "a-intent right"
 		is-disabled = false
- 	elem 
-		name = "M"
-		command = "me"
-		is-disabled = false
-	elem 
-		name = "O"
-		command = "ooc"
-		is-disabled = false
 	elem 
 		name = "Q"
 		command = ".northwest"

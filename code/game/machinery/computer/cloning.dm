@@ -73,7 +73,7 @@
 
 	return null
 
-/obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			user.drop_item()
@@ -399,14 +399,13 @@
 	scantemp = "Subject successfully scanned."
 
 /obj/machinery/computer/cloning/update_icon()
-	SetLuminosity(brightness_on)
+
 	if(stat & BROKEN)
 		icon_state = "commb"
 	else
 		if(stat & NOPOWER)
 			src.icon_state = "c_unpowered"
 			stat |= NOPOWER
-			SetLuminosity(0)
 		else
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER

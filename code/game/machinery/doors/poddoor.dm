@@ -20,7 +20,7 @@
 		return ..()
 
 
-/obj/machinery/door/poddoor/attackby(obj/item/I, mob/user, params)
+/obj/machinery/door/poddoor/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 
 	if(istype(I, /obj/item/weapon/twohanded/fireaxe))

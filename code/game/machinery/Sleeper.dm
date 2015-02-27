@@ -69,7 +69,7 @@
 		qdel(src)
 	return
 
-/obj/machinery/sleeper/attackby(obj/item/I, mob/user, params)
+/obj/machinery/sleeper/attackby(obj/item/I, mob/user)
 	if(!state_open && !occupant)
 		if(default_deconstruction_screwdriver(user, "sleeper-o", "sleeper", I))
 			return

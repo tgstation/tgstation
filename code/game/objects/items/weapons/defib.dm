@@ -100,7 +100,7 @@
 				H.put_in_l_hand(src)
 	return
 
-/obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user)
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()
@@ -257,7 +257,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/compact/combat/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/defibrillator/compact/combat/attackby(obj/item/weapon/W, mob/user)
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()

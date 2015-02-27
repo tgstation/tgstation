@@ -54,11 +54,7 @@
 
 /obj/machinery/suit_storage_unit/security
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security
-	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
-
-/obj/machinery/suit_storage_unit/hos
-	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security/hos
-	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
+	MASK_TYPE = /obj/item/clothing/mask/gas
 
 /obj/machinery/suit_storage_unit/atmos
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/atmos
@@ -508,7 +504,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
 	if(!src.ispowered)
 		if(istype(I, /obj/item/weapon/crowbar) && !isopen)
 			if(toggle_open(user))

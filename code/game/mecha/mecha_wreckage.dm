@@ -15,7 +15,7 @@
 	var/list/crowbar_salvage = list()
 	var/salvage_num = 5
 
-/obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user, params)
+/obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		if(salvage_num <= 0)
 			user << "<span class='notice'>You don't see anything that can be cut with [I].</span>"

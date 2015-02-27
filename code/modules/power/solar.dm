@@ -55,7 +55,7 @@
 
 
 
-/obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -221,7 +221,7 @@
 		glass_type = null
 
 
-/obj/item/solar_assembly/attackby(var/obj/item/weapon/W, var/mob/user, params)
+/obj/item/solar_assembly/attackby(var/obj/item/weapon/W, var/mob/user)
 
 	if(!anchored && isturf(loc))
 		if(istype(W, /obj/item/weapon/wrench))
@@ -394,7 +394,7 @@
 		ui.push_data(data)
 		return
 
-/obj/machinery/power/solar_control/attackby(I as obj, user as mob, params)
+/obj/machinery/power/solar_control/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
