@@ -228,5 +228,5 @@
 	New()
 		..()
 		reagents.add_reagent("impedrezene", 10)
-		reagents.add_reagent("synaptizine", 5)
-		reagents.add_reagent("hyperzine", 5)
+		reagents.add_reagent("synaptizine", 1)
+		reagents.add_reagent("hyperzine", 10)
