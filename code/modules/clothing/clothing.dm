@@ -311,8 +311,13 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 	..()
 	rolldown()
 
-/obj/item/clothing/under/proc/rolldown()
+/obj/item/clothing/under/verb/jumpsuit_adjust()
+	set name = "Adjust Jumpsuit Style"
+	set category = null
 	set src in usr
+	rolldown()
+
+/obj/item/clothing/under/proc/rolldown()
 	if(!can_use(usr))
 		return
 	if(!can_adjust)
