@@ -555,6 +555,7 @@ var/global/loopModeNames=list(
 		"rock" = "Rock",
 		"muzak" = "Muzak",
 		"thunderdome" = "Thunderdome", // For thunderdome I guess
+		"beach" = "Beach",
 	)
 
 // So I don't have to do all this shit manually every time someone sacrifices pun-pun.
@@ -575,6 +576,8 @@ var/global/loopModeNames=list(
 		"jazz" = "Jazz",
 		"rock" = "Rock",
 		"muzak" = "Muzak",
+
+		"beach" = "Beach",
 
 		"emagged" = "Syndie Mix",
 		"shuttle" = "Shuttle",
