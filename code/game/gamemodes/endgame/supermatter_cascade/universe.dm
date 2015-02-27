@@ -35,6 +35,11 @@
 	set background = 1
 	world << "<span class='sinister' style='font-size:22pt'>You are blinded by a brilliant flash of energy.</span>"
 
+	world << sound('sound/effects/cascade.ogg')
+
+	for(var/mob/M in player_list)
+		flick("e_flash", M.flash)
+
 	if(emergency_shuttle.direction==2)
 		captain_announce("The emergency shuttle has returned due to bluespace distortion.")
 
@@ -44,7 +49,7 @@
 
 	for(var/area/ca in world)
 		var/area/A=get_area_master(ca)
-		if(!istype(A,/area) || A.name=="Space")
+		if(!istype(A,/area) || A.name=="Space" || istype(A,/area/beach))
 			continue
 
 		// No cheating~
@@ -86,6 +91,16 @@
 				APC.cell.charge = 0
 			APC.emagged = 1
 			APC.queue_icon_update()
+
+			APC.areaMaster.power_light = 0
+			APC.areaMaster.power_equip = 0
+			APC.areaMaster.power_environ = 0
+			APC.areaMaster.power_change()
+
+	spawn()
+		for(var/turf/T in world)
+			if(T.z != map.zCentcomm)
+				T.update_lumcount(1, 160, 255, 0, 0)
 
 	// Disable Nar-Sie.
 	ticker.mode.eldergod=0

@@ -60,8 +60,9 @@ In short:
 
 	runedec += 9000	//basically removing the rune cap
 
-	for(var/turf/T in world)
-		T.update_lumcount(1, 255, 0, 0, 0)
+	spawn()
+		for(var/turf/T in world)
+			T.update_lumcount(1, 255, 0, 0, 0)
 
 	ticker.StartThematic("endgame")
 
