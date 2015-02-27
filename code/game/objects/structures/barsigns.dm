@@ -64,52 +64,52 @@
 /datum/barsign/maltesefalcon
 	name = "Maltese Falcon"
 	icon = "maltesefalcon"
-	desc = "The Maltese Faclon, Space Bar and Grill"
+	desc = "The Maltese Falcon, Space Bar and Grill." //you tried
 
 /datum/barsign/thebark
 	name = "The Bark"
 	icon = "thebark"
-	desc = "Ian's bar of choice"
+	desc = "Ian's bar of choice."
 
 /datum/barsign/harmbaton
 	name = "The Harmbaton"
 	icon = "theharmbaton"
-	desc = "A great dining experience for both security members and assistants"
+	desc = "A great dining experience for both security members and assistants."
 
 /datum/barsign/thesingulo
 	name = "The Singulo"
 	icon = "thesingulo"
-	desc = "Where people go that'd rather not be called by their name"
+	desc = "Where people go that'd rather not be called by their name."
 
 /datum/barsign/thedrunkcarp
 	name = "The Drunk Carp"
 	icon = "thedrunkcarp"
-	desc = "Don't drink and Swim"
+	desc = "Don't drink and drift."
 
 /datum/barsign/scotchservinwill
 	name = "Scotch Servin Willy's"
 	icon = "scotchservinwill"
-	desc = "Willy sure moved up in the world from clown to bartender"
+	desc = "Willy sure moved up in the world, from clown to bartender."
 
 /datum/barsign/officerbeersky
 	name = "Officer Beersky's"
 	icon = "officerbeersky"
-	desc = "Man eat a dong, these drinks are great"
+	desc = "Man eat a dong, these drinks are great."
 
 /datum/barsign/thecavern
 	name = "The Cavern"
 	icon = "thecavern"
-	desc = "Fine drinks while listening to some fine tunes"
+	desc = "Fine drinks while listening to some fine tunes."
 
 /datum/barsign/theouterspess
 	name = "The Outer Spess"
 	icon = "theouterspess"
-	desc = "This bar isn't actually located in outer space"
+	desc = "Thankfully, while located in outer space, this bar isn't <i>actually</i> outer space."
 
 /datum/barsign/slipperyshots
 	name = "Slippery Shots"
 	icon = "slipperyshots"
-	desc = "Slippery slope to drunkeness with our shots!"
+	desc = "Slippery slope to being hammered with our shots!"
 
 /datum/barsign/thegreytide
 	name = "The Grey Tide"
@@ -120,3 +120,8 @@
 	name = "Honked 'n' Loaded"
 	icon = "honkednloaded"
 	desc = "Honk."
+
+/datum/barsign/coderbus
+	name = "The Coderbus"
+	icon = "thecoderbus"
+	desc = "The Coderbus is a very controversial establishment known for its large variety of constantly-changing drinks."
