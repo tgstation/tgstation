@@ -60,8 +60,6 @@ In short:
 
 	runedec += 9000	//basically removing the rune cap
 
-	for(var/obj/machinery/light in machines)
-
 	for(var/turf/T in world)
 		T.update_lumcount(1, 255, 0, 0, 0)
 
