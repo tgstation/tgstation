@@ -268,7 +268,10 @@
 /obj/machinery/door/window/proc/make_assembly(mob/user as mob)
 	// Windoor assembly
 	var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
+	set_assembly(user, WA)
+	return WA
 
+/obj/machinery/door/window/proc/set_assembly(mob/user as mob, var/obj/structure/windoor_assembly/WA)
 	WA.name = "Near finished Windoor Assembly"
 	WA.dir = src.dir
 	WA.anchored = 1
@@ -294,8 +297,6 @@
 			AE.conf_access = src.req_one_access
 			AE.one_access = 1
 
-	return WA
-
 /obj/machinery/door/window/brigdoor
 	name = "Secure Window Door"
 	icon = 'icons/obj/doors/windoor.dmi'
@@ -318,6 +319,12 @@
 	icon = 'icons/obj/doors/plasmawindoor.dmi'
 	health = 300
 
+/obj/machinery/door/window/plasma/make_assembly(mob/user as mob)
+	// Windoor assembly
+	var/obj/structure/windoor_assembly/plasma/WA = new /obj/structure/windoor_assembly/plasma(src.loc)
+	set_assembly(user, WA)
+	return WA
+
 /obj/machinery/door/window/plasma/take_damage(var/damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
@@ -336,7 +343,7 @@
 	secure = 1
 
 /obj/machinery/door/window/plasma/secure/make_assembly(mob/user as mob)
-	var/obj/structure/windoor_assembly/WA = ..(user)
+	var/obj/structure/windoor_assembly/plasma/WA = ..(user)
 	WA.secure = "secure_"
 	WA.update_icon()
 	return WA

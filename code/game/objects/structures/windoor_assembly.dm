@@ -67,7 +67,7 @@ obj/structure/windoor_assembly/Destroy()
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	switch(state)
 		if("01")
-			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+			if(iswelder(W) && !anchored )
 				var/obj/item/weapon/weldingtool/WT = W
 				if (WT.remove_fuel(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
@@ -85,7 +85,7 @@ obj/structure/windoor_assembly/Destroy()
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(istype(W, /obj/item/weapon/wrench) && !anchored)
+			if(iswrench(W) && !anchored)
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
 
@@ -151,14 +151,14 @@ obj/structure/windoor_assembly/Destroy()
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(istype(W, /obj/item/weapon/wirecutters))
+			if(iswirecutter(W))
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
 				if(do_after(user, 40))
-					if(!src) return
-
+					if(!src || state != "02") return
 					user << "<span class='notice'>You cut the windoor wires!</span>"
+					world << state
 					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
@@ -198,7 +198,7 @@ obj/structure/windoor_assembly/Destroy()
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			else if(istype(W, /obj/item/weapon/crowbar))
+			else if(iscrowbar(W))
 				if(!src.electronics)
 					usr << "<span class='rose'>The assembly is missing electronics.</span>"
 					return
@@ -212,8 +212,10 @@ obj/structure/windoor_assembly/Destroy()
 					var/obj/machinery/door/window/windoor = Create()
 					density = 1 //Shouldn't matter but just incase
 					user << "<span class='notice'>You finish the windoor!</span>"
+					if(secure == "secure_")
+						secure = "secure"
 					if(src.facing == "l")
-						windoor.icon_state = "lefts[secure]open"
+						windoor.icon_state = "left[secure]open"
 						windoor.base_state = "left[secure]"
 					else
 						windoor.icon_state = "right[secure]open"
