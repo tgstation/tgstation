@@ -202,7 +202,7 @@
 /datum/barsign/thegreytide
 	name = "The Grey Tide"
 	icon = "thegreytide"
-	desc = "Take a break from toolboxing and enjoy a lazy beer!"
+	desc = "Abandon your toolboxing ways and enjoy a lazy beer!"
 
 
 /datum/barsign/honkednloaded
