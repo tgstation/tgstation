@@ -88,7 +88,7 @@
 
 	if(href_list["ready"])
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
-			ready = !ready
+			ready = text2num(href_list["ready"])
 		else
 			ready = 0
 
@@ -125,6 +125,14 @@
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
+			return
+		var/relevant_cap
+		if(config.hard_popcap && config.extreme_popcap)
+			relevant_cap = min(config.hard_popcap, config.extreme_popcap)
+		else
+			relevant_cap = max(config.hard_popcap, config.extreme_popcap)
+		if(relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums))
+			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
 			return
 		LateChoices()
 

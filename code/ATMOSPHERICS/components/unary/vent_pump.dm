@@ -265,7 +265,7 @@
 	update_icon()
 	return
 
-/obj/machinery/atmospherics/unary/vent_pump/attackby(obj/item/W, mob/user)
+/obj/machinery/atmospherics/unary/vent_pump/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
 		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
 		return 1

@@ -43,7 +43,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				src << "<span class='warning'>The blood soaks through your bandage.</span>"
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/human/proc/handle_blood()
+/mob/living/carbon/human/handle_blood()
 
 	if(NOBLOOD in dna.species.specflags)
 		return
@@ -108,6 +108,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		blood_max = 0
 		for(var/obj/item/organ/limb/org in organs)
 			var/brutedamage = org.brute_dam
+
+			//We want an accurate reading of .len
+			listclearnulls(org.embedded_objects)
+			blood_max += 0.5*org.embedded_objects.len
 
 			if(brutedamage > 30)
 				blood_max += 0.5

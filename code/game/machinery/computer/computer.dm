@@ -8,6 +8,7 @@
 	active_power_usage = 300
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
+	var/brightness_on = 2
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
 	..(location)
@@ -69,14 +70,16 @@
 /obj/machinery/computer/update_icon()
 	..()
 	icon_state = initial(icon_state)
+	SetLuminosity(brightness_on)
 	// Broken
 	if(stat & BROKEN)
 		icon_state += "b"
 
-	// Powered
+	// Unpowered
 	else if(stat & NOPOWER)
 		icon_state = initial(icon_state)
 		icon_state += "0"
+		SetLuminosity(0)
 
 
 
@@ -91,7 +94,7 @@
 		update_icon()
 	return
 
-/obj/machinery/computer/attackby(I as obj, user as mob)
+/obj/machinery/computer/attackby(I as obj, user as mob, params)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor.</span>"

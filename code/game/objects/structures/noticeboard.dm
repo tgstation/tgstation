@@ -16,7 +16,7 @@
 	icon_state = "nboard0[notices]"
 
 //attaching papers!!
-/obj/structure/noticeboard/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+/obj/structure/noticeboard/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(notices < 5)
 			O.add_fingerprint(user)

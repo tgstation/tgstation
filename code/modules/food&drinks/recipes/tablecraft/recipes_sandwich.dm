@@ -28,7 +28,6 @@
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 2,
-		/obj/item/weapon/reagent_containers/food/snacks/tofu = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime
 
@@ -37,7 +36,6 @@
 	reqs = list(
 		/datum/reagent/consumable/cherryjelly = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 2,
-		/obj/item/weapon/reagent_containers/food/snacks/tofu = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/cherry
 

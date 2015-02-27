@@ -4,15 +4,25 @@
 	icon_state = "ionrifle"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	origin_tech = "combat=2;magnets=4"
+	can_flashlight = 1
 	w_class = 5
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-	pin = null
 
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	return
+
+/obj/item/weapon/gun/energy/ionrifle/carbine
+	name = "ion carbine"
+	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
+	icon_state = "ioncarbine"
+	item_state = "ioncarbine"
+	origin_tech = "combat=4;magnets=4;materials=4"
+	w_class = 3
+	slot_flags = SLOT_BELT
+	pin = null
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
@@ -35,7 +45,7 @@
 
 /obj/item/weapon/gun/energy/floragun/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/floragun/Destroy()
@@ -71,7 +81,7 @@
 
 /obj/item/weapon/gun/energy/meteorgun/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/meteorgun/Destroy()
@@ -115,10 +125,45 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/emproof"
 	var/overheat = 0
 	var/recent_reload = 1
+	var/range_add = 0
+	var/overheat_time = 20
+	upgrades = list("diamond" = 0, "screwdriver" = 0, "plasma" = 0)
+
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/newshot()
+	..()
+	if(chambered && chambered.BB)
+		var/obj/item/projectile/kinetic/charge = chambered.BB
+		charge.range += range_add
+
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+	if(istype(W, /obj/item/weapon/screwdriver) && upgrades["screwdriver"] < 3)
+		upgrades["screwdriver"]++
+		overheat_time -= 1
+		user << "<span class='info'>You tweak [src]'s thermal exchanger.</span>"
+
+
+	else if(istype(W, /obj/item/stack))
+		var/obj/item/stack/S = W
+
+		if(istype(S, /obj/item/stack/sheet/mineral/diamond) && upgrades["diamond"] < 3)
+			upgrades["diamond"]++
+			overheat_time -= 3
+			user << "<span class='info'>You upgrade [src]'s thermal exchanger with diamonds.</span>"
+			S.use(1)
+
+		if(istype(S, /obj/item/stack/sheet/mineral/plasma) && upgrades["plasma"] < 2)
+			upgrades["plasma"]++
+			range_add++
+			user << "<span class='info'>You upgrade [src]'s accelerating chamber with plasma.</span>"
+			if(prob(5 * (range_add + 1) * (range_add + 1)) && power_supply)
+				power_supply.rigged = 1 // This is dangerous!
+			S.use(1)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1
-	spawn(20)
+	spawn(overheat_time)
 		overheat = 0
 		recent_reload = 0
 	..()
@@ -174,7 +219,7 @@
 
 /obj/item/weapon/gun/energy/disabler/cyborg/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
@@ -259,7 +304,7 @@
 
 /obj/item/weapon/gun/energy/printer/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/printer/Destroy()

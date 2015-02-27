@@ -50,7 +50,7 @@
 		else
 	return
 
-/obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
+/obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob, params)
 	var/turf/T = get_turf(src)
 	if (istype(C, /obj/item/stack/tile/plasteel))
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead (for building plating)
@@ -121,7 +121,7 @@
 		C.Deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob)
+/obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob, params)
 	..()
 	if(istype(C, /obj/item/stack/cable_coil))
 		var/turf/T = get_turf(src)

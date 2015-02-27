@@ -71,7 +71,7 @@
 	name = "faggot"
 	desc = "A great meal all round. Not a cord of wood."
 	icon_state = "faggot"
-	list_reagents = list("nutriment" = 3, "vitamin" = 1)
+	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	filling_color = "#800000"
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage

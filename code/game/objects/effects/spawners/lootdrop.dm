@@ -61,7 +61,7 @@
 				/obj/item/bodybag = 1,
 				/obj/item/clothing/glasses/meson = 2,
 				/obj/item/clothing/glasses/sunglasses = 1,
-				/obj/item/clothing/gloves/color/white{color = "yellow"; desc = "The colors are a bit dodgy."; icon_state = "yellow"; item_color = "yellow"; item_state = "ygloves"; name = "insulated gloves"} = 1,
+				/obj/item/clothing/gloves/color/yellow/fake = 1,
 				/obj/item/clothing/head/hardhat = 1,
 				/obj/item/clothing/head/hardhat/red = 1,
 				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,
@@ -116,5 +116,8 @@
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
 				/obj/item/weapon/relic = 3,
+				/obj/item/weapon/reagent_containers/food/drinks/muriatic_acid = 3,
+				/obj/item/weapon/reagent_containers/food/drinks/caustic_soda = 3,
+				/obj/item/weapon/reagent_containers/food/drinks/hydrogen_chloride = 3,
 				"" = 11
 				)

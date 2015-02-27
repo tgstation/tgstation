@@ -333,7 +333,7 @@ obj/structure/door_assembly/New()
 	mineral = "glass"
 	icon_state = "door_as_gviro1"
 
-/obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter the name for the door.", src.name, src.created_name,MAX_NAME_LEN)
 		if(!t)
@@ -466,7 +466,7 @@ obj/structure/door_assembly/New()
 			if(!D.sub_door)
 				door_check = 0
 				break
-		
+
 		if(door_check)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("<span class='warning'>[user] secures the airlock assembly to the floor.</span>", \

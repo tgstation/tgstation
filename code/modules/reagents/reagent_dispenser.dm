@@ -30,7 +30,7 @@
 	if(prob(50))
 		qdel(src)
 
-/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	return
 
 /obj/structure/reagent_dispensers/New()
@@ -153,7 +153,7 @@
 	user.put_in_hands(new /obj/item/weapon/reagent_containers/food/drinks/sillycup)
 	user.visible_message("<span class='notice'>[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].")
 
-/obj/structure/reagent_dispensers/water_cooler/attackby(var/obj/item/I, var/mob/user)
+/obj/structure/reagent_dispensers/water_cooler/attackby(var/obj/item/I, var/mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))
 		user.drop_item()
 		qdel(I)

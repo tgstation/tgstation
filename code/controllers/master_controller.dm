@@ -108,6 +108,7 @@ Note: you can set the datum's defined processing_interval to some integer to set
 /datum/controller/game_controller/proc/roundHasStarted()
 	for(var/datum/subsystem/SS in subsystems)
 		SS.can_fire = 1
+		SS.next_fire = world.time
 
 /datum/controller/game_controller/proc/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"

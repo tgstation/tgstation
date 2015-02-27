@@ -33,7 +33,7 @@
 	return
 
 
-/obj/machinery/juicer/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/juicer/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(default_unfasten_wrench(user, O))
 		return
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \

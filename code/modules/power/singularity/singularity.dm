@@ -32,7 +32,7 @@
 
 	src.energy = starting_energy
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in world)
 		if(singubeacon.active)
 			target = singubeacon

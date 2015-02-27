@@ -107,7 +107,7 @@
 		return P
 	return 0
 
-/obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(src.processing)
 		user << "<span class='danger'>The processor is in the process of processing.</span>"
 		return 1
@@ -119,6 +119,8 @@
 	var/what = O
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
+		if(!user.Adjacent(G.affecting))
+			return
 		what = G.affecting
 
 	var/datum/food_processor_process/P = select_recipe(what)

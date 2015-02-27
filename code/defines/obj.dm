@@ -4,7 +4,7 @@
 	anchored = 1
 	density = 1
 
-/obj/structure/signpost/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/signpost/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	return attack_hand(user)
 
 /obj/structure/signpost/attack_hand(mob/user as mob)

@@ -31,7 +31,7 @@
 /obj/item/device/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(secured)
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 	else
 		scanning = 0
 		timing = 0
