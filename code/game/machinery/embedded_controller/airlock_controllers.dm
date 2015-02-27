@@ -99,78 +99,91 @@
 	return 0
 
 /obj/machinery/embedded_controller/radio/advanced_airlock_controller/unlinkFrom(var/mob/user, var/obj/O)
-	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
-		return 0
-
-	if(istype(O, /obj/machinery/door))
-		if(tag_exterior_door == O:id_tag)
+	var/obj/machinery/door/airlock/D = O
+	if(istype(D))
+		if(tag_exterior_door == D.id_tag)
 			tag_exterior_door = null
 			return 1
-		else if(tag_interior_door == O:id_tag)
+		else if(tag_interior_door == D.id_tag)
 			tag_interior_door = null
 			return 1
-
-	if(istype(O, /obj/machinery/airlock_sensor))
-		if(tag_chamber_sensor == O:id_tag)
+	var/obj/machinery/airlock_sensor/S = O
+	if(istype(S))
+		if(tag_chamber_sensor == S.id_tag)
 			tag_chamber_sensor = null
 			return 1
-		else if(tag_interior_sensor == O:id_tag)
+		else if(tag_interior_sensor == S.id_tag)
 			tag_interior_sensor = null
 			return 1
-		else if(tag_exterior_sensor == O:id_tag)
+		else if(tag_exterior_sensor == S.id_tag)
 			tag_exterior_sensor = null
 			return 1
-
-	if(istype(O, /obj/machinery/atmospherics) && O:id_tag == tag_airpump)//not doing /unary/vent because it could very well be a DP vent, zhich is /binary
+	var/obj/machinery/atmospherics/unary/vent_pump/UV
+	if(istype(UV) && UV.id_tag == tag_airpump)
 		tag_airpump = null
 		return 1
+	var/obj/machinery/atmospherics/binary/dp_vent_pump/DPV
+	if(istype(DPV))
+		if(DPV.id_tag == tag_airpump)
+			tag_airpump = null
+			return 1
+		
 
 /obj/machinery/embedded_controller/radio/advanced_airlock_controller/isLinkedWith(var/obj/O)
-	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
-		return 0
-
-	if(istype(O, /obj/machinery/door))
-		if(tag_interior_door  == O:id_tag)
+	
+	var/obj/machinery/door/airlock/D = O
+	if(istype(D))
+		if(tag_interior_door  == D.id_tag)
 			return 1
-		if(tag_exterior_door  == O:id_tag)
+		if(tag_exterior_door  == D.id_tag)
 			return 1
-
-	if(istype(O, /obj/machinery/airlock_sensor))
-		if(tag_interior_sensor  == O:id_tag)
+	var/obj/machinery/airlock_sensor/S = O
+	if(istype(S))
+		if(tag_interior_sensor  == S.id_tag)
 			return 1
-		if(tag_exterior_sensor  == O:id_tag)
+		if(tag_exterior_sensor  == S.id_tag)
 			return 1
-		if(tag_chamber_sensor  == O:id_tag)
+		if(tag_chamber_sensor  == S.id_tag)
 			return 1
-
-	if(istype(O, /obj/machinery/atmospherics) && O:id_tag == tag_airpump)
+	var/obj/machinery/atmospherics/binary/dp_vent_pump/DP
+	if(istype(DP) && DP.id_tag == tag_airpump)
+		return 1
+	var/obj/machinery/atmospherics/unary/vent_pump/UV
+	if(istype(UV) && UV.id_tag == tag_airpump)
 		return 1
 
 /obj/machinery/embedded_controller/radio/advanced_airlock_controller/linkWith(var/mob/user, var/obj/O, var/list/context)
-	if(!("id_tag" in O.vars))
-		return 0
-	if(istype(O, /obj/machinery/atmospherics))
-		tag_airpump = O:id_tag
+	
+	var/obj/machinery/atmospherics/binary/dp_vent_pump/DP
+	if(istype(DP) && DP.id_tag == tag_airpump)
+		tag_airpump = DP.id_tag
 		return 1
-	if(istype(O, /obj/machinery/door))
+	var/obj/machinery/atmospherics/unary/vent_pump/UV
+	if(istype(UV) && UV.id_tag == tag_airpump)
+		tag_airpump = UV.id_tag
+		return 1
+	
+	var/obj/machinery/door/airlock/D = O
+	if(istype(D))
 		if(context["slot"] == "int")
-			tag_interior_door = O:id_tag
+			tag_interior_door = D.id_tag
 			return 1
 		if(context["slot"] == "ext")
-			tag_exterior_door = O:id_tag
+			tag_exterior_door = D.id_tag
 			return 1
-
-	if(istype(O, /obj/machinery/airlock_sensor))
+	
+	var/obj/machinery/airlock_sensor/S = O
+	if(istype(S))
 		if(context["slot"] == "int")
-			tag_interior_sensor = O:id_tag
+			tag_interior_sensor = S.id_tag
 			O:master_tag = id_tag
 			return 1
 		if(context["slot"] == "ext")
-			tag_exterior_sensor = O:id_tag
+			tag_exterior_sensor = S.id_tag
 			O:master_tag = id_tag
 			return 1
 		if(context["slot"] == "chamber")
-			tag_chamber_sensor = O:id_tag
+			tag_chamber_sensor = S.id_tag
 			O:master_tag = id_tag
 			return 1
 
@@ -266,60 +279,70 @@
 	return 0
 
 /obj/machinery/embedded_controller/radio/airlock_controller/unlinkFrom(var/mob/user, var/obj/O)
-	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
-		return 0
-
-	if(istype(O, /obj/machinery/door))
-		if(tag_exterior_door == O:id_tag)
+	var/obj/machinery/door/airlock/D = O
+	if(istype(D))
+		if(tag_exterior_door == D.id_tag)
 			tag_exterior_door = null
 			return 1
-		else if(tag_interior_door == O:id_tag)
+		else if(tag_interior_door == D.id_tag)
 			tag_interior_door = null
 			return 1
-
-	if(istype(O, /obj/machinery/airlock_sensor))
-		if(tag_chamber_sensor == O:id_tag)
+	var/obj/machinery/airlock_sensor/S = O
+	if(istype(S))
+		if(tag_chamber_sensor == S.id_tag)
 			tag_chamber_sensor = null
 			return 1
-
-	if(istype(O, /obj/machinery/atmospherics) && O:id_tag == tag_airpump)//not doing /unary/vent because it could very well be a DP vent, zhich is /binary
+	var/obj/machinery/atmospherics/unary/vent_pump/UV
+	if(istype(UV) && UV.id_tag == tag_airpump)
 		tag_airpump = null
 		return 1
-
+	var/obj/machinery/atmospherics/binary/dp_vent_pump/DPV
+	if(istype(DPV))
+		if(DPV.id_tag == tag_airpump)
+			tag_airpump = null
+			return 1
 /obj/machinery/embedded_controller/radio/airlock_controller/isLinkedWith(var/obj/O)
-	if(!("id_tag" in O.vars))//erm, stop HTML Injecting you! (can you even HTML inject this?) ((this can't happen, atleast not on this UI without cheating)), and tbh why would you even do this.
-		return 0
-
-	if(istype(O, /obj/machinery/door))
-		if(tag_interior_door  == O:id_tag)
+	var/obj/machinery/door/airlock/D = O
+	if(istype(D))
+		if(tag_interior_door  == D.id_tag)
 			return 1
-		if(tag_exterior_door  == O:id_tag)
+		if(tag_exterior_door  == D.id_tag)
 			return 1
-
-	if(istype(O, /obj/machinery/airlock_sensor))
-		if(tag_chamber_sensor  == O:id_tag)
+	var/obj/machinery/airlock_sensor/S = O
+	if(istype(S))
+		if(tag_chamber_sensor  == S.id_tag)
 			return 1
-
-	if(istype(O, /obj/machinery/atmospherics) && O:id_tag == tag_airpump)
+	var/obj/machinery/atmospherics/binary/dp_vent_pump/DP
+	if(istype(DP) && DP.id_tag == tag_airpump)
+		return 1
+	var/obj/machinery/atmospherics/unary/vent_pump/UV
+	if(istype(UV) && UV.id_tag == tag_airpump)
 		return 1
 
 /obj/machinery/embedded_controller/radio/airlock_controller/linkWith(var/mob/user, var/obj/O, var/list/context)
-	if(!("id_tag" in O.vars))
-		return 0
-	if(istype(O, /obj/machinery/atmospherics))
-		tag_airpump = O:id_tag
+	
+	var/obj/machinery/atmospherics/binary/dp_vent_pump/DP
+	if(istype(DP) && DP.id_tag == tag_airpump)
+		tag_airpump = DP.id_tag
 		return 1
-	if(istype(O, /obj/machinery/door))
+	var/obj/machinery/atmospherics/unary/vent_pump/UV
+	if(istype(UV) && UV.id_tag == tag_airpump)
+		tag_airpump = UV.id_tag
+		return 1
+	
+	var/obj/machinery/door/airlock/D = O
+	if(istype(D))
 		if(context["slot"] == "int")
-			tag_interior_door = O:id_tag
+			tag_interior_door = D.id_tag
 			return 1
 		if(context["slot"] == "ext")
-			tag_exterior_door = O:id_tag
+			tag_exterior_door = D.id_tag
 			return 1
-
-	if(istype(O, /obj/machinery/airlock_sensor))
+	
+	var/obj/machinery/airlock_sensor/S = O
+	if(istype(S))
 		if(context["slot"] == "chamber")
-			tag_chamber_sensor = O:id_tag
+			tag_chamber_sensor = S.id_tag
 			O:master_tag = id_tag
 			return 1
 
