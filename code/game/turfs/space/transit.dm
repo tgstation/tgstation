@@ -32,6 +32,15 @@
 /turf/space/transit/attackby(obj/O as obj, mob/user as mob)
 	return
 
+/turf/space/transit/canBuildCatwalk()
+	return 0
+
+/turf/space/transit/canBuildLattice()
+	return 0
+
+/turf/space/transit/canBuildPlating()
+	return -1
+
 /turf/space/transit/north // moving to the north
 
 	pushdirection = SOUTH  // south because the space tile is scrolling south
