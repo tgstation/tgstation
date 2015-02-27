@@ -10,8 +10,8 @@
 /obj/item/mounted/frame/apc_frame/try_build(turf/on_wall, mob/user)
 	if(..())
 		var/turf/turf_loc = get_turf(user)
-		var/area/area_loc = turf_loc.loc
-		if (area_loc.get_apc())
+
+		if (areaMaster.get_apc())
 			user << "<span class='rose'>This area already has an APC.</span>"
 			return //only one APC per area
 		for(var/obj/machinery/power/terminal/T in turf_loc)
