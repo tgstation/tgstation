@@ -1490,3 +1490,22 @@ var/list/WALLITEMS = list(
 		if(mob in living_mob_list)
 			living_player_count += 1
 	return living_player_count
+
+//RANDOM WEB COLOR PICKER
+/*
+	color picking modes:
+	0 - All colors
+	1 - No white or black or gray
+*/
+/proc/randomColor(var/mode = 0)
+	switch(mode)
+		if(0)
+			return pick("white","black","gray","red","green","blue","brown","yellow","orange",
+					"aquamarine","coral","cyan","fuchsia","gold","indigo","lime","magenta","maroon","navy",
+					"pink","purple","teal","turquoise","violet")
+		if(1)
+			return pick("red","green","blue","brown","yellow","orange",
+					"aquamarine","coral","cyan","fuchsia","gold","indigo","lime","magenta","maroon","navy",
+					"pink","purple","teal","turquoise","violet")
+		else
+			return "black"

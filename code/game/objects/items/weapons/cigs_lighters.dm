@@ -439,13 +439,47 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	attack_verb = null
 	var/lit = 0
 
+/obj/item/weapon/lighter/grayscale
+	name = "cheap lighter"
+	desc ="A cheap-as-free lighter."
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "lighter-off"
+	item_state = "lighter-off"
+	icon_on = "lighter-on"
+	icon_off = "lighter-off"
+
+/obj/item/weapon/lighter/grayscale/New()
+	var/icon/overlay = new /icon('icons/obj/cigarettes.dmi',"lighter-overlay")
+	overlay.ColorTone(color2hex(randomColor(1)))
+	overlays += overlay
+
 /obj/item/weapon/lighter/zippo
 	name = "\improper Zippo lighter"
 	desc = "The zippo."
-	icon_state = "zippo"
-	item_state = "zippo"
-	icon_on = "zippoon"
-	icon_off = "zippo"
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "zippo-steel-off"
+	item_state = "zippo-steel-off"
+	var/style = "steel"
+
+/obj/item/weapon/lighter/zippo/New()
+	icon_on = "zippo-[style]-on"
+	icon_off = "zippo-[style]-off"
+	update_icon()
+
+/obj/item/weapon/lighter/update_icon()
+	icon_state = lit ? icon_on : icon_off
+
+/obj/item/weapon/lighter/zippo/nanotrasen
+	desc = "A Zippo from a limited edition sponsored by Nanotrasen."
+	style = "nt"
+	icon_state = "zippo-nt-off"
+	item_state = "zippo-nt-off"
+
+/obj/item/weapon/lighter/zippo/syndicate
+	desc = "A black Zippo with an ominous red 'S'."
+	style = "syndie"
+	icon_state = "zippo-syndie-off"
+	item_state = "zippo-syndie-off"
 
 /obj/item/weapon/lighter/random
 	New()
@@ -458,8 +492,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(user.r_hand == src || user.l_hand == src)
 		if(!lit)
 			lit = 1
-			icon_state = icon_on
-			item_state = icon_on
+			update_icon()
 			force = 5
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
@@ -478,8 +511,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			SSobj.processing |= src
 		else
 			lit = 0
-			icon_state = icon_off
-			item_state = icon_off
+			update_icon()
 			hitsound = "swing_hit"
 			force = 0
 			attack_verb = null //human_defense.dm takes care of it
