@@ -1,0 +1,6 @@
+author: xxalpha
+
+delete-after: True
+
+changes:
+  - rscadd: "Added a surgery table and tools to the Nuke Ops ship."
