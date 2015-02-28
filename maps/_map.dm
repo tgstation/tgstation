@@ -26,6 +26,9 @@
 	//nanoui stuff
 	var/map_dir = ""
 
+	//Fuck the preprocessor
+	var/dorf = 0
+
 /datum/map/New()
 	. = ..()
 	src.zLevels = src.loadZLevels(src.zLevels)

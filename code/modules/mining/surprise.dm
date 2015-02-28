@@ -3,6 +3,7 @@
 
 #define TURF_FLOOR 0
 #define TURF_WALL 1
+
 var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 
 /surprise_turf_info

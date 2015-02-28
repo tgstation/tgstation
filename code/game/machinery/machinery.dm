@@ -319,6 +319,8 @@ Class Procs:
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 1
+	if(href_list["close"])
+		return
 	var/ghost_flags=0
 	if(ghost_write)
 		ghost_flags |= PERMIT_ALL
