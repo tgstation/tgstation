@@ -221,11 +221,6 @@
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
 
-/obj/item/weapon/storage/backpack/satchel_hyd
-	name = "hydroponics satchel"
-	desc = "A green satchel for plant related work."
-	icon_state = "satchel_hyd"
-
 /obj/item/weapon/storage/backpack/satchel_cap
 	name = "captain's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
