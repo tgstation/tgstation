@@ -5,6 +5,9 @@ var/const/INGEST = 2
 
 ///////////////////////////////////////////////////////////////////////////////////
 
+datum/reagent //why are these named so similarly ugh
+	var/flammable = 0
+
 datum/reagents
 	var/list/datum/reagent/reagent_list = new/list()
 	var/total_volume = 0

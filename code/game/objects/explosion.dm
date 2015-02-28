@@ -19,7 +19,7 @@ proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY process
 	return block(x1y1,x2y2)
 
 
-proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0)
+proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0, flame_prob = 40)
 	src = null	//so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
 
@@ -101,7 +101,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			//------- TURF FIRES -------
 
 			if(T)
-				if(flame_dist && prob(40) && !istype(T, /turf/space) && !T.density)
+				if(flame_dist && prob(flame_prob) && !istype(T, /turf/space) && !T.density)
 					new/obj/effect/hotspot(T) //Mostly for ambience!
 				if(dist > 0)
 					T.ex_act(dist)
