@@ -218,6 +218,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/process()
 	if(lit)
 		if(toohottohandle < world.time - rand(50,70))
+			var/turf/T = get_turf(src)
 			throw_impact(T)
 
 // Bottle Types //
