@@ -138,3 +138,9 @@
 	item_state = "roman"
 	strip_delay = 100
 	put_on_delay = 100
+
+/obj/item/clothing/shoes/griffin
+	name = "griffon boots"
+	desc = "A pair of costume boots fashioned after bird talons."
+	icon_state = "griffinboots"
+	item_state = "griffinboots"
