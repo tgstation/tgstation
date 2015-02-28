@@ -117,7 +117,7 @@ datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	result = "neurotoxin2"
 	required_reagents = list("space_drugs" = 1)
 	result_amount = 1
-	required_temp = 370
+	required_temp = 674
 
 datum/reagent/cyanide
 	name = "Cyanide"
@@ -205,3 +205,195 @@ datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
 	required_reagents = list("sacid" = 1, "fluorine" = 1, "hydrogen" = 1, "potassium" = 1)
 	result_amount = 4
 	required_temp = 380
+
+datum/reagent/regadenoson
+	name = "Regadenoson"
+	id = "regadenoson"
+	description = "Major stamina regeneration buff. 33% chance to hit with 5-25 TOX. 5-10% chances to stun and cause suffocation or immediate heart failure."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	metabolization_rate = 0.4
+
+datum/reagent/regadenoson/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.adjustStaminaLoss(-5)
+	if(prob(33))
+		M.adjustToxLoss(rand(5,25))
+	if(prob(rand(5,10)))
+		var/picked_option = rand(1,3)
+		switch(picked_option)
+			if(1)
+				M.Stun(3)
+				M.Weaken(3)
+			if(2)
+				M.losebreath += 10
+				M.adjustOxyLoss(rand(5,25))
+			if(3)
+				M.visible_message("<span class = 'userdanger'>[M] clutches at their chest as if their heart stopped!</span>")
+				M.adjustBruteLoss(100) // rip in pepperoni
+	..()
+	return
+
+datum/reagent/pancuronium
+	name = "Pancuronium"
+	id = "pancuronium"
+	description = "10 cycles to paralysis, 7% chance to cause 3-5 LOSEBREATH."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	metabolization_rate = 0.2
+	var/current_cycle = 0
+
+datum/reagent/pancuronium/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	current_cycle++
+	if(current_cycle == 10)
+		M.SetParalysis(10)
+	if(prob(7))
+		M.losebreath += rand(3,5)
+	..()
+	return
+
+datum/reagent/sodium_thiopental
+	name = "Sodium Thiopental"
+	id = "sodium_thiopental"
+	description = "KOs in ten cycles. Major total stamina penalty."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	metabolization_rate = 0.7
+	var/current_cycle = 0
+
+datum/reagent/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	current_cycle++
+	if(current_cycle == 10)
+		M.sleeping += 20
+	M.adjustStaminaLoss(10)
+	..()
+	return
+
+datum/reagent/sulfonal
+	name = "Sulfonal"
+	id = "sulfonal"
+	description = "+1 TOX, KOs in 22 cycles."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	metabolization_rate = 0.1
+	var/current_cycle = 0
+
+/datum/chemical_reaction/sulfonal
+	name = "sulfonal"
+	id = "sulfonal"
+	result = "sulfonal"
+	required_reagents = list("acetone" = 1, "diethylamine" = 1, "sulfur" = 1)
+	result_amount = 3
+
+datum/reagent/sulfonal/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	current_cycle++
+	if(current_cycle == 22)
+		M.sleeping += 20
+	M.adjustToxLoss(1)
+	..()
+	return
+
+datum/reagent/amanitin
+	name = "Amanitin"
+	id = "amanitin"
+	description = "On the last cycle that it's in you, it hits you with a stack of TOX damage based on elapsed cycles * rand(2,4). The more you use, the longer it takes before anything happens, but the harder it hits when it does."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	var/cycles = 0
+
+datum/reagent/amanitin/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	cycles++
+	..()
+	return
+
+datum/reagent/amanitin/reagent_deleted(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.adjustToxLoss(cycles*rand(2,4))
+	..()
+	return
+
+datum/reagent/lipolicide
+	name = "Lipolicide"
+	id = "lipolicide"
+	description = "+1 TOX unless they keep eating food."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+
+/datum/chemical_reaction/lipolicide
+	name = "lipolicide"
+	id = "lipolicide"
+	result = "lipolicide"
+	required_reagents = list("mercury" = 1, "diethylamine" = 1, "ephedrine" = 1)
+	result_amount = 3
+
+datum/reagent/lipolicide/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	if(!holder.has_reagent("nutriment"))
+		M.adjustToxLoss(1)
+	..()
+	return
+
+datum/reagent/coniine
+	name = "Coniine"
+	id = "coniine"
+	description = "+2 TOX, +5 LOSEBREATH."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	metabolization_rate = 0.05
+
+datum/reagent/coniine/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.losebreath += 5
+	M.adjustToxLoss(2)
+	..()
+	return
+
+datum/reagent/curare
+	name = "Curare"
+	id = "curare"
+	description = "+1 TOX, +1 OXY, paralyzes after 11 cycles."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+	metabolization_rate = 0.1
+	var/current_cycle = 0
+
+datum/reagent/curare/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	current_cycle++
+	if(current_cycle == 11)
+		M.SetParalysis(20)
+	M.adjustToxLoss(1)
+	M.adjustOxyLoss(1)
+	..()
+	return
+
+datum/reagent/capulettium
+	name = "Capulettium"
+	id = "capulettium"
+	description = "Makes living things appear dead. This essentially lets you play possum. Know someone is hunting you? Inject yourself with this and Rest just before they find you, and they'll mistake you for dead!"
+	reagent_state = SOLID
+	color = "#669900" // rgb: 102, 153, 0
+
+datum/reagent/capulettium/on_mob_life(var/mob/living/carbon/M as mob)
+	M.status_flags |= CAPDEATH
+	M.tod = worldtime2text()
+	..()
+	return
+
+datum/reagent/capulettium/reagent_deleted()
+	if(holder && ismob(holder.my_atom))
+		var/mob/M = holder.my_atom
+		M.status_flags &= ~CAPDEATH
+	..()
+	return
+
+/datum/chemical_reaction/capulettium
+	name = "capulettium"
+	id = "capulettium"
+	result = "capulettium"
+	required_reagents = list("neurotoxin2" = 1, "chlorine" = 1, "hydrogen" = 1)
+	result_amount = 3

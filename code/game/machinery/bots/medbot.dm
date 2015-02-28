@@ -51,6 +51,17 @@
 	treatment_fire = "omnizine"
 	treatment_tox = "omnizine"
 
+/obj/machinery/bot/medbot/derelict
+	name = "\improper Old Medibot"
+	desc = "Looks like it hasn't been modified since the late 2080s."
+	skin = "bezerk"
+	heal_threshold = 0
+	declare_crit = 0
+	treatment_oxy = "pancuronium"
+	treatment_brute = "pancuronium"
+	treatment_fire = "sodium_thiopental"
+	treatment_tox = "sodium_thiopental"
+
 /obj/item/weapon/firstaid_arm_assembly
 	name = "incomplete medibot assembly."
 	desc = "A first aid kit with a robot arm permanently grafted to it."

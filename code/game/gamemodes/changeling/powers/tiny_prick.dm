@@ -174,5 +174,6 @@ obj/effect/proc_holder/changeling/sting/cryo
 	add_logs(user, target, "stung", object="cryo sting")
 	if(target.reagents)
 		target.reagents.add_reagent("cryostylane", 30)
+		target.reagents.add_reagent("oxygen", 30)
 	feedback_add_details("changeling_powers","CS")
 	return 1

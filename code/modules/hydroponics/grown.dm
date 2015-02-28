@@ -536,7 +536,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = /obj/item/seeds/icepepperseed
-	name = "ice-pepper"
+	name = "chilly pepper"
 	desc = "It's a mutant strain of chili"
 	icon_state = "icepepper"
 	filling_color = "#0000CD"
@@ -546,6 +546,7 @@
 	reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
 	reagents.add_reagent("vitamin", 1 + round((potency / 50), 1))
 	reagents.add_reagent("cryostylane", 3+round(potency / 5, 1))
+	reagents.add_reagent("oxygen", 3+round(potency / 5, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(var/obj/item/O as obj, var/mob/user as mob, params)

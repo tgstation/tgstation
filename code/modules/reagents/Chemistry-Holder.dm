@@ -359,6 +359,9 @@ datum/reagents/proc/del_reagent(var/reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
+			if(istype(my_atom, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = my_atom
+				R.reagent_deleted(H)
 			reagent_list -= A
 			del(A)
 			update_total()
