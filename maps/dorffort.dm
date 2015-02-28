@@ -60,8 +60,7 @@
 /obj/item/toy/gooncode
 	origin_tech = "materials=10;plasmatech=5;syndicate=3;programming=10;bluespace=5;power=5"
 
-/mining_surprise/dorf
-	name = "Dorf!"
+
 
 /mining_surprise/dorf/medbay
 	name= "Abandoned Medbay"
@@ -224,6 +223,37 @@
 
 	complex_max_size=1
 	room_size_max = 8
+	flags = CONTIGUOUS_WALLS
+
+/mining_surprise/dorf/cargo
+	name= "Abandoned Cache"
+	max_richness = 5
+	floortypes = list(
+		/turf/simulated/floor/plating/airless = 100
+	)
+	walltypes = list(
+		/turf/simulated/wall/r_wall		= 100
+	)
+
+	spawntypes = list(
+		/obj/mecha/working/ripley/mining			= 1,
+		/obj/item/weapon/pickaxe/jackhammer			= 1,
+		/obj/item/weapon/pickaxe/drill/diamond		= 1,
+		/obj/structure/closet/syndicate/resources	= 2,
+		/obj/structure/closet/cash_closet			= 3,
+	)
+
+	fluffitems = list(
+		/obj/effect/decal/cleanable/blood								= 3,
+		/obj/effect/decal/remains/human									= 1,
+		/obj/item/clothing/under/overalls								= 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chili		= 1,
+		/obj/item/weapon/tank/oxygen/red								= 2,
+		/obj/item/weapon/gun/projectile/mateba							= 1
+	)
+
+	complex_max_size=3
+	room_size_max=7
 	flags = CONTIGUOUS_WALLS
 
 ////////////////////////////////////////////////////////////////

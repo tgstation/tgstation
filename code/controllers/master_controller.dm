@@ -92,6 +92,7 @@ datum/controller/game_controller/proc/setup()
 	cachedamageicons()
 	//if(map && map.dorf)
 		//mining_surprises = typesof(/mining_surprise/dorf) - /mining_surprise/dorf
+		//max_secret_rooms += 2
 	for(var/i=0, i<max_secret_rooms, i++)
 		//if(map && map.dorf)
 			//make_dorf_secret()
