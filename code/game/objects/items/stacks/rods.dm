@@ -22,8 +22,8 @@
 
 /obj/item/stack/rods/afterattack(atom/Target, mob/user, adjacent, params)
 	if(adjacent)
-		if (isturf(Target))
-			var/turf/T = Target
+		if (isturf(Target) || istype(Target, /obj/structure/lattice))
+			var/turf/T = get_turf(Target)
 			var/obj/item/stack/rods/R = src
 			var/obj/structure/lattice/L = T.canBuildCatwalk(R)
 			if(istype(L))
