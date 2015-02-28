@@ -153,6 +153,27 @@
 		R.module.rebuild()
 		return 1
 
+/obj/item/borg/upgrade/ddrill
+	name = "mining cyborg diamond drill"
+	desc = "A diamond drill replacement for the mining module's standard drill."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+
+/obj/item/borg/upgrade/ddrill/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+
+	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
+		R << "Upgrade mounting error!  No suitable hardpoint detected!"
+		usr << "There's no mounting point for the module!"
+		return 0
+	else
+		for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module.modules)
+			qdel(D)
+		for(var/obj/item/weapon/shovel/S in R.module.modules)
+			qdel(S)
+		R.module.modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
+		R.module.rebuild()
+		return 1
 
 /obj/item/borg/upgrade/syndicate/
 	name = "illegal equipment module"

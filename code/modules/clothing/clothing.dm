@@ -7,7 +7,7 @@
 	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
-
+	var/alt_desc = null
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -191,7 +191,6 @@ BLIND     // can't see anything
 	strip_delay = 80
 	put_on_delay = 80
 
-
 //Under clothing
 /obj/item/clothing/under
 	icon = 'icons/obj/clothing/uniforms.dmi'
@@ -214,7 +213,7 @@ BLIND     // can't see anything
 		*/
 	var/obj/item/clothing/tie/hastie = null
 
-/obj/item/clothing/under/attackby(obj/item/I, mob/user)
+/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	attachTie(I, user)
 	..()
 

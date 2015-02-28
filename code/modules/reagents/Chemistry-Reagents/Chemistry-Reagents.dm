@@ -97,6 +97,9 @@ datum/reagent/proc/on_update(var/atom/A)
 datum/reagent/proc/overdose_process(var/mob/living/M as mob)
 	return
 
+datum/reagent/proc/overdose_start(var/mob/living/M as mob)
+	return
+
 datum/reagent/proc/addiction_act_stage1(var/mob/living/M as mob)
 	if(prob(30))
 		M << "<span class = 'notice'>You feel like some [name] right about now.</span>"
@@ -116,7 +119,6 @@ datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
 	if(prob(30))
 		M << "<span class = 'userdanger'>You're not feeling good at all! You really need some [name].</span>"
 	return
-
 
 datum/reagent/blood
 			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
@@ -719,7 +721,7 @@ datum/reagent/cryptobiolin
 	id = "cryptobiolin"
 	description = "Cryptobiolin causes confusion and dizzyness."
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/cryptobiolin/on_mob_life(var/mob/living/M as mob)
 	M.Dizzy(1)

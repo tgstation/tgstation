@@ -82,6 +82,9 @@
 			else if(copytext(input,1,9) == "exclaims")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
+			else if(copytext(input,1,6) == "yells")
+				src << "<span class='danger'>Invalid emote.</span>"
+				return
 			else if(copytext(input,1,5) == "asks")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
@@ -201,6 +204,9 @@
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(message,1,9) == "exclaims")
+				src << "<span class='danger'>Invalid emote.</span>"
+				return
+			else if(copytext(message,1,6) == "yells")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(message,1,5) == "asks")

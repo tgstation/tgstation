@@ -67,7 +67,7 @@
 		C += PC.maxcharge
 	capacity = C / (15000) * 1e6
 
-/obj/machinery/power/smes/attackby(obj/item/I, mob/user)
+/obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		update_icon()

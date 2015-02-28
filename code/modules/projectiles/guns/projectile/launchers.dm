@@ -10,7 +10,7 @@
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	w_class = 3
 
-/obj/item/weapon/gun/projectile/revolver/grenadelauncher/attackby(var/obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/attackby(var/obj/item/A, mob/user, params)
 	..()
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
@@ -68,8 +68,8 @@
 /obj/item/weapon/gun/projectile/automatic/speargun/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/speargun/attackby(var/obj/item/A, mob/user)
-	var/num_loaded = magazine.attackby(A, user, 1)
+/obj/item/weapon/gun/projectile/automatic/speargun/attackby(var/obj/item/A, mob/user, params)
+	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] spear\s into \the [src].</span>"
 		update_icon()

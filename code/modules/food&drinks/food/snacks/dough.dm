@@ -3,7 +3,7 @@
 /////////////////// Dough Ingredients ////////////////////////
 
 // Flour + egg = dough
-/obj/item/weapon/reagent_containers/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/egg))
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = W
 		if(flags & OPENCONTAINER)
@@ -33,7 +33,7 @@
 
 
 // Dough + rolling pin = flat dough
-/obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/I, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
 		if(isturf(loc))
 			new /obj/item/weapon/reagent_containers/food/snacks/flatdough(loc)
@@ -64,7 +64,7 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "pizzabread"
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list("nutriment" = 7)
 	w_class = 3
 
 
@@ -93,11 +93,11 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "cakebatter"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list("nutriment" = 3)
 	w_class = 3
 
 // Cake batter + rolling pin = pie dough
-/obj/item/weapon/reagent_containers/food/snacks/cakebatter/attackby(obj/item/I, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/cakebatter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
 		if(isturf(loc))
 			new /obj/item/weapon/reagent_containers/food/snacks/piedough(loc)
@@ -116,7 +116,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
 	slices_num = 3
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pie/plain
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list("nutriment" = 3)
 	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
@@ -126,6 +126,7 @@
 	icon_state = "rawpastrybase"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pastrybase
 	filling_color = "#CD853F"
+	list_reagents = list("nutriment" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pastrybase
 	name = "pastry base"

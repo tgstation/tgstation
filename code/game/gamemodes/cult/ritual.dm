@@ -31,12 +31,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	set category = "Cultist"
 	set name = "Communicate"
 
-	#define CHECK_STATUS (usr.stat || usr.restrained() || usr.paralysis || usr.stunned || usr.weakened)
-
 	if(!iscultist(usr))		//they shouldn't have this verb, but just to be sure...
 		return
 
-	if(CHECK_STATUS)
+	if(usr.incapacitated())
 		return	//dead men tell no tales
 
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
@@ -48,15 +46,15 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		apply_damage(25,BRUTE, "l_arm")
 		apply_damage(25,BRUTE, "r_arm")
 		sleep(50)
-		if(CHECK_STATUS)
+		if(usr.incapacitated())
 			return	//Hard to drawn intrinsic symbols when you're bleeding out in your cell.
 		var/turf/location = loc
 		if(istype(location, /turf/simulated))	// tearing your arms apart is going to spill a bit of blood, in fact thats the idea
 			location.add_blood(usr)				// TO-DO change this to a badly drawn rune
 		apply_damage(15,BRUTE, "l_arm")		// does a metric fuck ton of damage because this meant to be an emergency method of communication.
 		apply_damage(15,BRUTE, "r_arm")
-		if(CHECK_STATUS)
-			return	//dead men tell no tales
+		if(usr.incapacitated())
+			return
 		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood")
 		sleep(20)
 
@@ -67,7 +65,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
 			M << "<span class='userdanger'>[input]</span>"
 	return
-	#undef CHECK_STATUS
 
 
 /proc/runerandom() //randomizes word meaning
@@ -153,7 +150,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 
 
-/obj/effect/rune/attackby(I as obj, user as mob)
+/obj/effect/rune/attackby(I as obj, user as mob, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
 		user << "<span class='notice'>You retrace your steps, carefully undoing the lines of the rune.</span>"
 		qdel(src)
@@ -662,7 +659,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		user << "The book seems full of illegible scribbles. Is this a joke?"
 		return
 
-/obj/item/weapon/tome/attackby(obj/item/weapon/tome/T as obj, mob/living/user as mob)
+/obj/item/weapon/tome/attackby(obj/item/weapon/tome/T as obj, mob/living/user as mob, params)
 	if(istype(T, /obj/item/weapon/tome)) // sanity check to prevent a runtime error
 		switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
 			if("cancel")

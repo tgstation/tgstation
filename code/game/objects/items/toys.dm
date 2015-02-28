@@ -50,7 +50,7 @@
 		src.update_icon()
 	return
 
-/obj/item/toy/balloon/attackby(obj/O as obj, mob/user as mob)
+/obj/item/toy/balloon/attackby(obj/O as obj, mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(O.reagents)
 			if(O.reagents.total_volume < 1)
@@ -131,7 +131,7 @@
 	..()
 	user << "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
-/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob)
+/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob, params)
 
 	if (istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
@@ -207,7 +207,7 @@
 	if (bullets)
 		user << "<span class='notice'>It is loaded with [bullets] foam dart\s.</span>"
 
-/obj/item/toy/crossbow/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/toy/crossbow/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/toy/ammo/crossbow))
 		if(bullets <= 4)
 			user.drop_item()
@@ -337,7 +337,7 @@
 	return
 
 // Copied from /obj/item/weapon/melee/energy/sword/attackby
-/obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user)
+/obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/toy/sword))
 		if(W == src)
@@ -434,7 +434,7 @@
 	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
 	var/drawtype = "rune"
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
@@ -449,6 +449,15 @@
 	..()
 	name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
 	drawtype = pick(pick(graffiti), pick(letters), "rune[rand(1,6)]")
+	if(config)
+		if(config.mutant_races == 1)
+			graffiti |= "antilizard"
+			graffiti |= "prolizard"
+
+/obj/item/toy/crayon/initialize()
+	if(config.mutant_races == 1)
+		graffiti |= "antilizard"
+		graffiti |= "prolizard"
 
 /obj/item/toy/crayon/attack_self(mob/living/user as mob)
 	update_window(user)
@@ -677,7 +686,43 @@
 		return
 	..()
 
+/obj/item/toy/owl
+	name = "owl action figure"
+	desc = "An action figure modeled after 'The Owl', defender of justice."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "owlprize"
+	w_class = 2.0
+	var/cooldown = 0
 
+/obj/item/toy/owl/attack_self(mob/user)
+	if(!cooldown) //for the sanity of everyone
+		var/message = pick("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
+		user << "<span class='notice'>You pull the string on the [src].</span>"
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		src.loc.visible_message("<span class='danger'>\icon[src] [message]</span>")
+		cooldown = 1
+		spawn(30) cooldown = 0
+		return
+	..()
+
+/obj/item/toy/griffin
+	name = "griffin action figure"
+	desc = "An action figure modeled after 'The Griffin', criminal mastermind."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "griffinprize"
+	w_class = 2.0
+	var/cooldown = 0
+
+/obj/item/toy/griffin/attack_self(mob/user)
+	if(!cooldown) //for the sanity of everyone
+		var/message = pick("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
+		user << "<span class='notice'>You pull the string on the [src].</span>"
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		src.loc.visible_message("<span class='danger'>\icon[src] [message]</span>")
+		cooldown = 1
+		spawn(30) cooldown = 0
+		return
+	..()
 
 
 /*
@@ -769,7 +814,7 @@ obj/item/toy/cards/deck/attack_self(mob/user as mob)
 		user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
 		cooldown = world.time
 
-obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/user)
+obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	..()
 	if(istype(C))
 		if(C.parentdeck == src)
@@ -789,7 +834,7 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/use
 			src.icon_state = "deck_[deckstyle]_low"
 
 
-obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user)
+obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user, params)
 	..()
 	if(istype(C))
 		if(C.parentdeck == src)
@@ -893,7 +938,7 @@ obj/item/toy/cards/cardhand/Topic(href, href_list)
 				qdel(src)
 		return
 
-obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user)
+obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
@@ -963,7 +1008,7 @@ obj/item/toy/cards/singlecard/verb/Flip()
 		src.name = "card"
 		src.pixel_x = -5
 
-obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user)
+obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/cards/singlecard/))
 		var/obj/item/toy/cards/singlecard/C = I
 		if(C.parentdeck == src.parentdeck)

@@ -20,16 +20,18 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
-	var/suppressed = 0
+	var/suppressed = 0					//whether or not a message is displayed when fired
 	var/can_suppress = 0
-	var/recoil = 0
+	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
-	var/trigger_guard = 1
-	var/sawn_desc = null
+	var/trigger_guard = 1				//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
+	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_state = SAWN_INTACT
-	var/burst_size = 1
-	var/fire_delay = 0
+	var/burst_size = 1					//how large a burst is
+	var/fire_delay = 0					//rate of fire for burst firing and semi auto
+	var/semicd = 0						//cooldown handler
+	var/heavy_weapon = 0
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -87,6 +89,11 @@
 		else
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
+	if(heavy_weapon)
+		if(user.get_inactive_hand())
+			if(prob(15))
+				user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
+				user.drop_item()
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -153,14 +160,40 @@
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	add_fingerprint(user)
 
-	for(var/i = 1 to burst_size)
-		if(!issilicon(user))
-			if( i>1 && !(src in get_both_hands(user))) //for burst firing
+	if(semicd)
+		return
+
+	if(heavy_weapon)
+		if(user.get_inactive_hand())
+			recoil = 4 //one-handed kick
+		else
+			recoil = initial(recoil)
+
+	if(burst_size > 1)
+		for(var/i = 1 to burst_size)
+			if(!issilicon(user))
+				if( i>1 && !(src in get_both_hands(user))) //for burst firing
+					break
+			if(chambered)
+				if(!chambered.fire(target, user, params, , suppressed))
+					shoot_with_empty_chamber(user)
+					break
+				else
+					if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+						shoot_live_shot(user, 1, target, message)
+					else
+						shoot_live_shot(user, 0, target, message)
+			else
+				shoot_with_empty_chamber(user)
 				break
+			process_chamber()
+			update_icon()
+			sleep(fire_delay)
+	else
 		if(chambered)
 			if(!chambered.fire(target, user, params, , suppressed))
 				shoot_with_empty_chamber(user)
-				break
+				return
 			else
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 					shoot_live_shot(user, 1, target, message)
@@ -168,10 +201,12 @@
 					shoot_live_shot(user, 0, target, message)
 		else
 			shoot_with_empty_chamber(user)
-			break
+			return
 		process_chamber()
 		update_icon()
-		sleep(fire_delay)
+		semicd = 1
+		spawn(fire_delay)
+			semicd = 0
 
 	if(user.hand)
 		user.update_inv_l_hand(0)
@@ -185,7 +220,7 @@
 	else
 		return
 
-/obj/item/weapon/gun/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	if(istype(A, /obj/item/device/flashlight/seclite))
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)

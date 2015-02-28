@@ -123,7 +123,7 @@
 /obj/screen/internals/Click()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
-		if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
+		if(!C.incapacitated())
 			if(C.internal)
 				C.internal = null
 				C << "<span class='notice'>No longer running on internals.</span>"
@@ -201,7 +201,7 @@
 /obj/screen/storage
 	name = "storage"
 
-/obj/screen/storage/Click()
+/obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
 		return 1
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
@@ -211,7 +211,7 @@
 	if(master)
 		var/obj/item/I = usr.get_active_hand()
 		if(I)
-			master.attackby(I, usr)
+			master.attackby(I, usr, params)
 	return 1
 
 /obj/screen/throw_catch
@@ -304,7 +304,7 @@
 	if(world.time <= usr.next_move)
 		return 1
 
-	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened || usr.restrained())
+	if(usr.incapacitated())
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1

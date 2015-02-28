@@ -254,7 +254,7 @@
 		open()
 		emagged = 1
 
-/obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/living/user as mob)
+/obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/living/user as mob, params)
 
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating)

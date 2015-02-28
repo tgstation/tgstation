@@ -294,6 +294,10 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/suit/toggle/labcoat/chemist(src)
 	new /obj/item/clothing/suit/toggle/labcoat/chemist(src)
+	new /obj/item/weapon/storage/backpack/chemistry(src)
+	new /obj/item/weapon/storage/backpack/chemistry(src)
+	new /obj/item/weapon/storage/backpack/satchel_chem(src)
+	new /obj/item/weapon/storage/backpack/satchel_chem(src)
 	return
 
 
@@ -309,6 +313,10 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/suit/toggle/labcoat/genetics(src)
 	new /obj/item/clothing/suit/toggle/labcoat/genetics(src)
+	new /obj/item/weapon/storage/backpack/genetics(src)
+	new /obj/item/weapon/storage/backpack/genetics(src)
+	new /obj/item/weapon/storage/backpack/satchel_gen(src)
+	new /obj/item/weapon/storage/backpack/satchel_gen(src)
 	return
 
 
@@ -326,6 +334,10 @@
 	new /obj/item/clothing/suit/toggle/labcoat/virologist(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/weapon/storage/backpack/virology(src)
+	new /obj/item/weapon/storage/backpack/virology(src)
+	new /obj/item/weapon/storage/backpack/satchel_vir(src)
+	new /obj/item/weapon/storage/backpack/satchel_vir(src)
 	return
 
 

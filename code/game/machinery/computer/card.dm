@@ -42,7 +42,7 @@ var/time_last_changed_position = 0
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
 
-/obj/machinery/computer/card/attackby(O as obj, user as mob)//TODO:SANITY
+/obj/machinery/computer/card/attackby(O as obj, user as mob, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = O
 		if(check_access(idcard))

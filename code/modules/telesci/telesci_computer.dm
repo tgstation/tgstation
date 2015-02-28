@@ -53,7 +53,7 @@
 	user << "You are too primitive to use this computer."
 	return
 
-/obj/machinery/computer/telescience/attackby(obj/item/W, mob/user)
+/obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/bluespace_crystal))
 		if(crystals.len >= max_crystals)
 			user << "<span class='warning'>There are not enough crystal slots.</span>"

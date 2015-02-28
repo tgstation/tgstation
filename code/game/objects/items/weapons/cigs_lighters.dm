@@ -120,7 +120,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	create_reagents(chem_volume) // making the cigarette a chemical holder with a maximum volume of 15
 	reagents.add_reagent("nicotine", 15)
 
-/obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	var/lighting_text = "<span class='notice'>[user] lights their [name] with [W].</span>"
 	if(istype(W, /obj/item/weapon/weldingtool))
@@ -368,7 +368,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 
-/obj/item/clothing/mask/cigarette/pipe/attackby(var/obj/item/O, var/mob/user)
+/obj/item/clothing/mask/cigarette/pipe/attackby(var/obj/item/O, var/mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
 		if(!packeditem)

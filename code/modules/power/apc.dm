@@ -370,7 +370,7 @@
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
-/obj/machinery/power/apc/attackby(obj/item/W, mob/living/user)
+/obj/machinery/power/apc/attackby(obj/item/W, mob/living/user, params)
 
 	if (istype(user, /mob/living/silicon) && get_dist(src,user)>1)
 		return src.attack_hand(user)
