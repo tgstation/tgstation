@@ -228,7 +228,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	name = "methamphetamine"
 	id = "methamphetamine"
 	result = "methamphetamine"
-	required_reagents = list("ephedrine" = 1, "iodine" = 1, "phosphorous" = 1, "hydrogen" = 1)
+	required_reagents = list("ephedrine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1)
 	result_amount = 4
 	required_temp = 374
 
