@@ -3,7 +3,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/game_mode
 	var/list/datum/mind/changelings = list()
 
-
+/*
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
@@ -89,7 +89,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				if(!(character.job in ticker.mode.restricted_jobs))
 					character.mind.make_Changling()
 	..()
-
+*/
 /datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
