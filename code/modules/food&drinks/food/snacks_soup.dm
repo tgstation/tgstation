@@ -67,7 +67,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/soup/mystery/New()
 	..()
 
-	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
+	extra_reagent = pick("capsaicin", "cryostylane", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
 	reagents.add_reagent("[extra_reagent]", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/hotchili

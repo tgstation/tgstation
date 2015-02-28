@@ -545,13 +545,13 @@
 	..()
 	reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
 	reagents.add_reagent("vitamin", 1 + round((potency / 50), 1))
-	reagents.add_reagent("frostoil", 3+round(potency / 5, 1))
+	reagents.add_reagent("cryostylane", 3+round(potency / 5, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
+		user << "<span class='info'>- cryostylane: <i>[reagents.get_reagent_amount("cryostylane")]%</i></span>"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili

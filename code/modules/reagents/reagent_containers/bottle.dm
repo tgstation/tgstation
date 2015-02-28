@@ -99,11 +99,11 @@
 	icon_state = "bottle3"
 	list_reagents = list("capsaicin" = 30)
 
-/obj/item/weapon/reagent_containers/glass/bottle/frostoil
+/obj/item/weapon/reagent_containers/glass/bottle/cryostylane
 	name = "Frost Oil Bottle"
 	desc = "A small bottle. Contains cold sauce."
 	icon_state = "bottle17"
-	list_reagents = list("frostoil" = 30)
+	list_reagents = list("cryostylane" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/traitor
 	name = "syndicate bottle"

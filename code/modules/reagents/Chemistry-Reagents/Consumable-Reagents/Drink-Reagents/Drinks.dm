@@ -174,8 +174,8 @@ datum/reagent/consumable/coffee/on_mob_life(var/mob/living/M as mob)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
-	if(holder.has_reagent("frostoil"))
-		holder.remove_reagent("frostoil", 5)
+	if(holder.has_reagent("cryostylane"))
+		holder.remove_reagent("cryostylane", 5)
 	..()
 	return
 

@@ -23,7 +23,6 @@
 /datum/reagent/clf3/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjust_fire_stacks(5)
-	M.IgniteMob()
 	M.adjustFireLoss(5*REM)
 	..()
 	return
@@ -269,3 +268,105 @@
 			C << "<span class='warning'>Your ears start to ring badly!</span>"
 		else if(C.ear_damage >= 5)
 			C << "<span class='warning'>Your ears start to ring!</span>"
+
+/datum/reagent/phlogiston
+	name = "Phlogiston"
+	id = "phlogiston"
+	description = "+1 BURN, +1 BURNING and sets you alight. Don't be deceived by that meager +1, having phlogiston in the bloodstream can be very dangerous without a fire extinguisher or firebot. Even then, they can't prevent you from spontaneously igniting every cycle."
+	reagent_state = LIQUID
+	color = "#60A584" // rgb: 96, 165, 132
+
+/datum/chemical_reaction/phlogiston
+	name = "phlogiston"
+	id = "phlogiston"
+	result = "phlogiston"
+	required_reagents = list("phosphorus" = 1, "sacid" = 1, "stable_plasma" = 1)
+	result_amount = 3
+
+/datum/reagent/phlogiston/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.adjust_fire_stacks(1)
+	M.IgniteMob()
+	M.adjustFireLoss(1*REM)
+	..()
+	return
+
+datum/reagent/cryostylane
+	name = "Cryostylane"
+	id = "cryostylane"
+	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, cryostylane slowly cools all other reagents in the mob down to 0K."
+	color = "#B31008" // rgb: 139, 166, 233
+
+/datum/chemical_reaction/cryostylane
+	name = "cryostylane"
+	id = "cryostylane"
+	result = "cryostylane"
+	required_reagents = list("water" = 1, "stable_plasma" = 1, "nitrogen" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/cryostylane/on_reaction(var/datum/reagents/holder, var/created_volume)
+	holder.chem_temp = 20 // cools the fuck down
+	return
+
+
+datum/reagent/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code freezing into an ice cube
+	if(M.reagents.has_reagent("oxygen"))
+		M.reagents.remove_reagent("oxygen", 1)
+		M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
+	..()
+	return
+
+datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
+	if(volume >= 5)
+		for(var/mob/living/carbon/slime/M in T)
+			M.adjustToxLoss(rand(15,30))
+
+datum/reagent/pyrosium
+	name = "Pyrosium"
+	id = "pyrosium"
+	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, cryostylane slowly cools all other reagents in the mob down to 0K."
+	color = "#B31008" // rgb: 139, 166, 233
+
+/datum/chemical_reaction/pyrosium
+	name = "pyrosium"
+	id = "pyrosium"
+	result = "pyrosium"
+	required_reagents = list("stable_plasma" = 1, "radium" = 1, "phosphorus" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/pyrosium/on_reaction(var/datum/reagents/holder, var/created_volume)
+	holder.chem_temp = 20 // also cools the fuck down
+	return
+
+datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
+	if(M.reagents.has_reagent("oxygen"))
+		M.reagents.remove_reagent("oxygen", 1)
+		M.bodytemperature += 30 * TEMPERATURE_DAMAGE_COEFFICIENT
+	..()
+	return
+
+/datum/reagent/argine
+	name = "Argine"
+	id = "argine"
+	description = "Explodes when lowered to freezing temperatures."
+	reagent_state = LIQUID
+	color = "#000000"  //rgb: 96, 165, 132
+
+/datum/chemical_reaction/argine_explosion
+	name = "Argine Kaboom"
+	id = "argine_explosion"
+	result = null
+	required_reagents = list("argine" = 1)
+	result_amount = 1
+	required_temp = 474
+	mix_message = "<span class = 'userdanger'>Sparks start flying around the argine!</span>"
+
+/datum/chemical_reaction/argine_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
+	sleep(rand(50,100))
+	var/turf/simulated/T = get_turf(holder.my_atom)
+	var/ex_severe = round(created_volume / 100)
+	var/ex_heavy = round(created_volume / 42)
+	var/ex_light = round(created_volume / 21)
+	var/ex_flash = round(created_volume / 8)
+	explosion(T,ex_severe,ex_heavy,ex_light,ex_flash, 1)
+	return
