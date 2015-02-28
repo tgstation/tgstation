@@ -58,18 +58,6 @@ datum/reagent/blob/skin_melter/reaction_mob(var/mob/living/M as mob, var/method=
 			M << "<span class = 'userdanger'>The blob strikes you, and you feel your skin char and melt!</span>"
 			M.emote("scream")
 
-datum/reagent/blob/lung_destroying_toxin
-	name = "Lung Destroying Toxin"
-	id = "lung_destroying_toxin"
-	description = ""
-	color = "#00FFC5"
-
-datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume,var/show_message = 1)
-	if(method == TOUCH)
-		M.apply_damage(20, OXY)
-		M.apply_damage(20, TOX)
-		if(show_message)
-			M << "<span class = 'userdanger'>The blob strikes you, and your lungs feel heavy and weak!</span>"
 // Special Reagents
 
 datum/reagent/blob/acid
