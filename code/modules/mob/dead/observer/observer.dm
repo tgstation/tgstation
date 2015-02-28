@@ -1,4 +1,4 @@
-var/list/image/ghostimages = list() //this is a list of images of other ghosts that ghosts see when they toggle darkness
+
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -20,6 +20,7 @@ var/list/image/ghostimages = list() //this is a list of images of other ghosts t
 	var/atom/movable/following = null
 	var/fun_verbs = 0
 	var/image/ghostimage = null
+	var/static/list/image/ghostimages = list() //this is a list of images of other ghosts that ghosts see when they toggle darkness
 
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
