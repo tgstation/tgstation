@@ -29,6 +29,7 @@ datum/reagent
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
+	var/flammable = 0
 
 datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
@@ -565,6 +566,7 @@ datum/reagent/thermite
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
 	reagent_state = SOLID
 	color = "#673910" // rgb: 103, 57, 16
+	flammable = 1
 
 datum/reagent/thermite/reaction_turf(var/turf/T, var/volume)
 	src = null
@@ -648,6 +650,7 @@ datum/reagent/fuel
 	id = "fuel"
 	description = "Required for welders. Flamable."
 	color = "#660000" // rgb: 102, 0, 0
+	flammable = 1
 
 datum/reagent/fuel/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(!istype(M, /mob/living))

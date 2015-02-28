@@ -10,6 +10,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
+	var/obj/item/stack/medical/gauze/rigged = null //firebomb gauze holder, needs to be at this level to prevent drinking without all the checks
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
 	..()
@@ -30,6 +31,9 @@
 		return 0
 
 	if(!canconsume(M, user))
+		return 0
+
+	if(rigged) //firebomb rigging check
 		return 0
 
 	if(M == user)

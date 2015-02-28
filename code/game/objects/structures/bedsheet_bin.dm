@@ -32,8 +32,8 @@ LINEN BINS
 	add_fingerprint(user)
 	return
 
-/obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/weapon/shard))
+/obj/item/weapon/bedsheet/attackby(obj/item/weapon/W, mob/user, params)
+	if(is_sharp(W))
 		new /obj/item/stack/medical/gauze/improvised(src.loc)
 		qdel(src)
 		user << "<span class='notice'>You tear [src] up.</span>"

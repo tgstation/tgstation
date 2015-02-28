@@ -20,6 +20,7 @@ datum/reagent/consumable/ethanol
 	color = "#404030" // rgb: 64, 64, 48
 	nutriment_factor = 0
 	var/boozepwr = 10 //lower numbers mean the booze will have an effect faster.
+	flammable = 1
 
 datum/reagent/consumable/ethanol/on_mob_life(var/mob/living/M as mob)
 	if(!data)

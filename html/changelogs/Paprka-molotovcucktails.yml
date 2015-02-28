@@ -1,0 +1,7 @@
+author: Paprka
+
+delete-after: True
+
+changes: 
+  - rscadd: 'Added firebombs by stuffing gauze into glass bottles and setting them on fire.'
+  - tweak: 'All sharp objects can cut gauze from bedsheets now.'
