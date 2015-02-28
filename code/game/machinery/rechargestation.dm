@@ -11,6 +11,7 @@
 	req_access = list(access_robotics)
 	var/recharge_speed
 	var/repairs
+	state_open = 1
 
 /obj/machinery/recharge_station/New()
 	..()
