@@ -12,7 +12,6 @@
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 	var/canfirebomb = 0 //can we be a firebomb?
 	var/lit = 0 //are we lit?
-	var/toohottohandle = 0 //drop firebombs after they get too hot
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target as mob, mob/living/user as mob)
 
@@ -183,11 +182,11 @@
 			src.lit = 1
 			name = "lit [name]"
 			update_icon()
-			toohottohandle = world.time
-			SSobj.processing |= src
 			var/area/A = get_area(T)
 			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] firebomb for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
 			log_game("[key_name(usr)] has primed a [name] firebomb for detonation at [A.name] ([T.x],[T.y],[T.z]).")
+			spawn(rand(50,70))
+				throw_impact(T)
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack_hand(mob/user)
@@ -214,12 +213,6 @@
 		thrown_shatter()
 	else
 		..()
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/process()
-	if(lit)
-		if(toohottohandle < world.time - rand(50,70))
-			var/turf/T = get_turf(src)
-			throw_impact(T)
 
 // Bottle Types //
 
