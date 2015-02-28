@@ -142,7 +142,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
 	name = "harebell"
-	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweetenâ€™d not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = SLOT_HEAD
 	filling_color = "#E6E6FA"
@@ -353,7 +353,6 @@
 	..()
 	reagents.add_reagent("omnizine", 1 + round(potency / 8, 1))
 	reagents.add_reagent("synaptizine", 1 + round(potency / 8, 1))
-	reagents.add_reagent("morphine", 1 + round(potency / 10, 1))
 	reagents.add_reagent("space_drugs", 1 + round(potency / 10, 1))
 	reagents.add_reagent("vitamin", 1 + round((potency / 25), 1))
 
