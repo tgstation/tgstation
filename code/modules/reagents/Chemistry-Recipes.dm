@@ -186,26 +186,6 @@ silicate
 	required_reagents = list("water" = 1, "sodium" = 1, "chlorine" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/flash_powder
-	name = "Flash powder"
-	id = "flash_powder"
-	result = null
-	required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1 )
-	result_amount = null
-/datum/chemical_reaction/flash_powder/on_reaction(var/datum/reagents/holder, var/created_volume)
-	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(2, 1, location)
-	s.start()
-	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
-		if(C.eyecheck())
-			continue
-		flick("e_flash", C.flash)
-		if(get_dist(C, location) < 4)
-			C.Weaken(5)
-			continue
-		C.Stun(5)
-
 /datum/chemical_reaction/napalm
 	name = "Napalm"
 	id = "napalm"
@@ -217,57 +197,6 @@ silicate
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, created_volume)
 	holder.del_reagent(id)
-	return
-
-/*
-/datum/chemical_reaction/smoke
-	name = "Smoke"
-	id = "smoke"
-	result = null
-	required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1 )
-	result_amount = null
-	secondary = 1
-	on_reaction(var/datum/reagents/holder, var/created_volume)
-		var/location = get_turf(holder.my_atom)
-		var/datum/effect/system/bad_smoke_spread/S = new /datum/effect/system/bad_smoke_spread
-		S.attach(location)
-		S.set_up(10, 0, location)
-		playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
-		spawn(0)
-			S.start()
-			sleep(10)
-			S.start()
-			sleep(10)
-			S.start()
-			sleep(10)
-			S.start()
-			sleep(10)
-			S.start()
-		holder.clear_reagents()
-		return	*/
-
-/datum/chemical_reaction/chemsmoke
-	name = "Chemsmoke"
-	id = "chemsmoke"
-	result = null
-	required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
-	result_amount = null
-	secondary = 1
-	mob_react = 1
-
-/datum/chemical_reaction/chemsmoke/on_reaction(var/datum/reagents/holder, var/created_volume)
-	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/chem_smoke_spread/S = new /datum/effect/effect/system/chem_smoke_spread
-	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
-	spawn(0)
-		if(S)
-			S.set_up(holder, 10, 0, location)
-			S.start()
-			sleep(10)
-			S.start()
-		if(holder && holder.my_atom)
-			holder.clear_reagents()
 	return
 
 /datum/chemical_reaction/chloralhydrate

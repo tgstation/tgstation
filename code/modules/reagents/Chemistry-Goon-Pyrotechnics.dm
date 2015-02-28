@@ -42,7 +42,7 @@
 			F.ChangeTurf(/turf/space)
 	if(istype(T, /turf/simulated/floor/))
 		var/turf/simulated/floor/F = T
-		if(prob(volume/10))
+		if(prob(volume/5))
 			F.make_plating()
 		if(istype(F, /turf/simulated/floor/))
 			new /obj/effect/hotspot(F)
@@ -72,20 +72,15 @@
 	result = "sorium"
 	required_reagents = list("mercury" = 1, "oxygen" = 1, "nitrogen" = 1, "carbon" = 1)
 	result_amount = 4
+
+/datum/chemical_reaction/sorium_vortex
+	name = "sorium_vortex"
+	id = "sorium_vortex"
+	result = null
+	required_reagents = list("sorium" = 1)
 	required_temp = 474
 
-/datum/reagent/sorium/reaction_turf(var/turf/simulated/T, var/volume)
-	if(istype(T, /turf/simulated/floor/))
-		goonchem_vortex(T, 1, 5, 3)
-/datum/reagent/sorium/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-	if(!istype(M, /mob/living))
-		return
-	if(method == TOUCH)
-		var/turf/simulated/T = get_turf(M)
-		goonchem_vortex(T, 1, 5, 3)
-
-
-/datum/chemical_reaction/sorium/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/sorium_vortex/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	goonchem_vortex(T, 1, 5, 6)
 
@@ -101,21 +96,16 @@
 	id = "liquid_dark_matter"
 	result = "liquid_dark_matter"
 	required_reagents = list("stable_plasma" = 1, "radium" = 1, "carbon" = 1)
-	result_amount = null
+	result_amount = 3
+
+/datum/chemical_reaction/ldm_vortex
+	name = "LDM Vortex"
+	id = "ldm_vortex"
+	result = null
+	required_reagents = list("liquid_dark_matter" = 1)
 	required_temp = 474
 
-/*/datum/reagent/liquid_dark_matter/reaction_turf(var/turf/simulated/T, var/volume)
-	if(istype(T, /turf/simulated/floor/))
-		goonchem_vortex(T, 0, 5, 3)
-		return
-/datum/reagent/liquid_dark_matter/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-	if(!istype(M, /mob/living))
-		return
-	if(method == TOUCH)
-		var/turf/simulated/T = get_turf(M)
-		goonchem_vortex(T, 0, 5, 3)
-		return*/ //o god what the fuck goof
-/datum/chemical_reaction/liquid_dark_matter/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/ldm_vortex/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	goonchem_vortex(T, 0, 5, 6)
 	return
@@ -160,9 +150,122 @@
 /datum/chemical_reaction/blackpowder_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
 	sleep(rand(50,100))
 	var/turf/simulated/T = get_turf(holder.my_atom)
-	var/ex_severe = round(created_volume / 10)
-	var/ex_heavy = round(created_volume / 8)
-	var/ex_light = round(created_volume / 6)
-	var/ex_flash = round(created_volume / 4)
+	var/ex_severe = round(created_volume / 100)
+	var/ex_heavy = round(created_volume / 42)
+	var/ex_light = round(created_volume / 21)
+	var/ex_flash = round(created_volume / 8)
 	explosion(T,ex_severe,ex_heavy,ex_light,ex_flash, 1)
 	return
+
+/datum/reagent/flash_powder
+	name = "Flash Powder"
+	id = "flash_powder"
+	description = "Makes a very bright flash."
+	reagent_state = LIQUID
+	color = "#000000"  //rgb: 96, 165, 132
+
+/datum/chemical_reaction/flash_powder
+	name = "Flash powder"
+	id = "flash_powder"
+	result = "flash_powder"
+	required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1 )
+	result_amount = 3
+
+/datum/chemical_reaction/flash_powder_flash
+	name = "Flash powder activation"
+	id = "flash_powder_flash"
+	result = null
+	required_reagents = list("flash_powder" = 1)
+	required_temp = 374
+
+/datum/chemical_reaction/flash_powder_flash/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/location = get_turf(holder.my_atom)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(2, 1, location)
+	s.start()
+	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
+		if(C.eyecheck())
+			continue
+		flick("e_flash", C.flash)
+		if(get_dist(C, location) < 4)
+			C.Weaken(5)
+			continue
+		C.Stun(5)
+
+/datum/reagent/smoke_powder
+	name = "Smoke Powder"
+	id = "smoke_powder"
+	description = "Makes a large cloud of smoke that can carry reagents."
+	reagent_state = LIQUID
+	color = "#000000"  //rgb: 96, 165, 132
+
+/datum/chemical_reaction/smoke_powder
+	name = "smoke_powder"
+	id = "smoke_powder"
+	result = "smoke_powder"
+	required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
+	result_amount = 3
+
+
+/datum/chemical_reaction/smoke_powder_smoke
+	name = "smoke_powder_smoke"
+	id = "smoke_powder_smoke"
+	result = null
+	required_reagents = list("smoke_powder" = 1)
+	required_temp = 374
+	secondary = 1
+	mob_react = 1
+
+/datum/chemical_reaction/smoke_powder_smoke/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/location = get_turf(holder.my_atom)
+	var/datum/effect/effect/system/chem_smoke_spread/S = new /datum/effect/effect/system/chem_smoke_spread
+	S.attach(location)
+	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	spawn(0)
+		if(S)
+			S.set_up(holder, 10, 0, location)
+			S.start()
+			sleep(10)
+			S.start()
+		if(holder && holder.my_atom)
+			holder.clear_reagents()
+	return
+
+/datum/reagent/sonic_powder
+	name = "Sonic Powder"
+	id = "sonic_powder"
+	description = "Makes a deafening noise."
+	reagent_state = LIQUID
+	color = "#000000"  //rgb: 96, 165, 132
+
+/datum/chemical_reaction/sonic_powder
+	name = "sonic_powder"
+	id = "sonic_powder"
+	result = "sonic_powder"
+	required_reagents = list("oxygen" = 1, "cola" = 1, "phosphorus" = 1)
+	result_amount = 3
+
+
+/datum/chemical_reaction/sonic_powder_deafen
+	name = "sonic_powder_deafen"
+	id = "sonic_powder_deafen"
+	result = null
+	required_reagents = list("sonic_powder" = 1)
+	required_temp = 374
+
+/datum/chemical_reaction/sonic_powder_deafen/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/location = get_turf(holder.my_atom)
+	playsound(location, 'sound/effects/bang.ogg', 25, 1)
+	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if((H.ears && (H.ears.flags & EARBANGPROTECT)) || (H.head && (H.head.flags & HEADBANGPROTECT)))
+				continue
+		C.show_message("<span class='warning'>BANG</span>", 2)
+		C.Stun(5)
+		C.Weaken(5)
+		C.setEarDamage(C.ear_damage + rand(0, 5), max(C.ear_deaf,15))
+		if(C.ear_damage >= 15)
+			C << "<span class='warning'>Your ears start to ring badly!</span>"
+		else if(C.ear_damage >= 5)
+			C << "<span class='warning'>Your ears start to ring!</span>"
