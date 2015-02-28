@@ -4,6 +4,20 @@
 
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
+/datum/reagent/stabilizing_agent
+	name = "Stabilizing Agent"
+	id = "stabilizing_agent"
+	description = "Keeps unstable chemicals stable. This does not work on everything."
+	reagent_state = LIQUID
+	color = "#60A584" // rgb: 96, 165, 132
+
+/datum/chemical_reaction/stabilizing_agent
+	name = "stabilizing_agent"
+	id = "stabilizing_agent"
+	result = "stabilizing_agent"
+	required_reagents = list("iron" = 1, "oxygen" = 1, "hydrogen" = 1)
+	result_amount = 3
+
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
 	id = "clf3"
@@ -22,14 +36,16 @@
 
 /datum/reagent/clf3/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.adjust_fire_stacks(5)
-	M.adjustFireLoss(5*REM)
+	M.adjust_fire_stacks(4)
+	M.adjustFireLoss(0.35*M.fire_stacks)
 	..()
 	return
 
 /datum/chemical_reaction/clf3/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	for(var/turf/simulated/turf in range(1,T))
+		if(istype(turf, /turf/simulated/wall))
+			continue
 		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 1000 // hot as shit
 	return
@@ -83,6 +99,13 @@
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	goonchem_vortex(T, 1, 5, 6)
 
+/datum/chemical_reaction/sorium/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(holder.has_reagent("stabilizing_agent"))
+		return
+	holder.remove_reagent("sorium", created_volume)
+	var/turf/simulated/T = get_turf(holder.my_atom)
+	goonchem_vortex(T, 1, 5, 6)
+
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
 	id = "liquid_dark_matter"
@@ -105,6 +128,13 @@
 	required_temp = 474
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/turf/simulated/T = get_turf(holder.my_atom)
+	goonchem_vortex(T, 0, 5, 6)
+	return
+/datum/chemical_reaction/liquid_dark_matter/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(holder.has_reagent("stabilizing_agent"))
+		return
+	holder.remove_reagent("liquid_dark_matter", created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	goonchem_vortex(T, 0, 5, 6)
 	return
@@ -191,6 +221,23 @@
 			continue
 		C.Stun(5)
 
+/datum/chemical_reaction/flash_powder/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(holder.has_reagent("stabilizing_agent"))
+		return
+	var/location = get_turf(holder.my_atom)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(2, 1, location)
+	s.start()
+	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
+		if(C.eyecheck())
+			continue
+		flick("e_flash", C.flash)
+		if(get_dist(C, location) < 4)
+			C.Weaken(5)
+			continue
+		C.Stun(5)
+	holder.remove_reagent("flash_powder", created_volume)
+
 /datum/reagent/smoke_powder
 	name = "Smoke Powder"
 	id = "smoke_powder"
@@ -216,6 +263,24 @@
 	mob_react = 1
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/location = get_turf(holder.my_atom)
+	var/datum/effect/effect/system/chem_smoke_spread/S = new /datum/effect/effect/system/chem_smoke_spread
+	S.attach(location)
+	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	spawn(0)
+		if(S)
+			S.set_up(holder, 10, 0, location)
+			S.start()
+			sleep(10)
+			S.start()
+		if(holder && holder.my_atom)
+			holder.clear_reagents()
+	return
+
+/datum/chemical_reaction/smoke_powder/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(holder.has_reagent("stabilizing_agent"))
+		return
+	holder.remove_reagent("smoke_powder", created_volume)
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect/effect/system/chem_smoke_spread/S = new /datum/effect/effect/system/chem_smoke_spread
 	S.attach(location)
@@ -269,6 +334,26 @@
 		else if(C.ear_damage >= 5)
 			C << "<span class='warning'>Your ears start to ring!</span>"
 
+/datum/chemical_reaction/sonic_powder/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(holder.has_reagent("stabilizing_agent"))
+		return
+	holder.remove_reagent("sonic_powder", created_volume)
+	var/location = get_turf(holder.my_atom)
+	playsound(location, 'sound/effects/bang.ogg', 25, 1)
+	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if((H.ears && (H.ears.flags & EARBANGPROTECT)) || (H.head && (H.head.flags & HEADBANGPROTECT)))
+				continue
+		C.show_message("<span class='warning'>BANG</span>", 2)
+		C.Stun(5)
+		C.Weaken(5)
+		C.setEarDamage(C.ear_damage + rand(0, 5), max(C.ear_deaf,15))
+		if(C.ear_damage >= 15)
+			C << "<span class='warning'>Your ears start to ring badly!</span>"
+		else if(C.ear_damage >= 5)
+			C << "<span class='warning'>Your ears start to ring!</span>"
+
 /datum/reagent/phlogiston
 	name = "Phlogiston"
 	id = "phlogiston"
@@ -287,14 +372,14 @@
 	if(!M) M = holder.my_atom
 	M.adjust_fire_stacks(1)
 	M.IgniteMob()
-	M.adjustFireLoss(1*REM)
+	M.adjustFireLoss(0.2*M.fire_stacks)
 	..()
 	return
 
 datum/reagent/cryostylane
 	name = "Cryostylane"
 	id = "cryostylane"
-	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, cryostylane slowly cools all other reagents in the mob down to 0K."
+	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the mob down to 0K."
 	color = "#B31008" // rgb: 139, 166, 233
 
 /datum/chemical_reaction/cryostylane
@@ -324,7 +409,7 @@ datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
 datum/reagent/pyrosium
 	name = "Pyrosium"
 	id = "pyrosium"
-	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, cryostylane slowly cools all other reagents in the mob down to 0K."
+	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly cools all other reagents in the mob down to 0K."
 	color = "#B31008" // rgb: 139, 166, 233
 
 /datum/chemical_reaction/pyrosium
@@ -358,7 +443,7 @@ datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
 	result = null
 	required_reagents = list("argine" = 1)
 	result_amount = 1
-	required_temp = 474
+	required_temp = 174
 	mix_message = "<span class = 'userdanger'>Sparks start flying around the argine!</span>"
 
 /datum/chemical_reaction/argine_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
