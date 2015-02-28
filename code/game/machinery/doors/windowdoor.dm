@@ -4,7 +4,7 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
 	var/base_state = "left"
-	var/health = 100 //If you change this, consiter changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	var/health = 100
 	visible = 0.0
 	use_power = 0
 	flags = ON_BORDER
@@ -17,6 +17,7 @@
 	ghost_read=0
 	machine_flags = EMAGGABLE
 	soundeffect = 'sound/machines/windowdoor.ogg'
+	var/shard = /obj/item/weapon/shard
 
 /obj/machinery/door/window/New()
 	..()
@@ -126,10 +127,8 @@
 /obj/machinery/door/window/proc/take_damage(var/damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		getFromPool(/obj/item/weapon/shard, loc)
-		var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-		CC.amount = 2
-		src.density = 0
+		getFromPool(shard, loc)
+		getFromPool(/obj/item/stack/cable_coil,src.loc,2)
 		qdel(src)
 		return
 
@@ -166,10 +165,8 @@
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("<span class='warning'>[user] smashes against the [src.name].</span>", 1)
 		if (src.health <= 0)
-			getFromPool(/obj/item/weapon/shard, loc)
-			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-			CC.amount = 2
-			src.density = 0
+			getFromPool(shard, loc)
+			getFromPool(/obj/item/stack/cable_coil, loc, 2)
 			qdel(src)
 	else
 		return src.attack_hand(user)
@@ -208,10 +205,8 @@
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if (src.health <= 0)
-			getFromPool(/obj/item/weapon/shard, loc)
-			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-			CC.amount = 2
-			src.density = 0
+			getFromPool(shard, loc)
+			getFromPool(/obj/item/stack/cable_coil, src.loc, 2)
 			qdel(src)
 		return
 
@@ -318,22 +313,13 @@
 	desc = "A sliding glass door strengthened by plasma."
 	icon = 'icons/obj/doors/plasmawindoor.dmi'
 	health = 300
+	shard = /obj/item/weapon/shard/plasma
 
 /obj/machinery/door/window/plasma/make_assembly(mob/user as mob)
 	// Windoor assembly
 	var/obj/structure/windoor_assembly/plasma/WA = new /obj/structure/windoor_assembly/plasma(src.loc)
 	set_assembly(user, WA)
 	return WA
-
-/obj/machinery/door/window/plasma/take_damage(var/damage)
-	src.health = max(0, src.health - damage)
-	if (src.health <= 0)
-		getFromPool(/obj/item/weapon/shard/plasma, loc)
-		var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-		CC.amount = 2
-		src.density = 0
-		qdel(src)
-		return
 
 /obj/machinery/door/window/plasma/secure
 	name = "Secure Plasma Window Door"
