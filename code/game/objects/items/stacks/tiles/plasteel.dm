@@ -92,8 +92,8 @@
 
 /obj/item/stack/tile/plasteel/afterattack(atom/target, mob/user, adjacent, params)
 	if(adjacent)
-		if(isturf(target))
-			var/turf/T = target
+		if(isturf(target) || istype(target, /obj/structure/lattice))
+			var/turf/T = get_turf(target)
 			var/obj/structure/lattice/L
 			var/obj/item/stack/tile/plasteel/S = src
 			switch(T.canBuildPlating())
