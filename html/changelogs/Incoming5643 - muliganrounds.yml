@@ -1,0 +1,7 @@
+author: Incoming5643
+delete-after: True
+
+
+changes:
+  - rscadd: "On servers where malfunction, wizard, and blob rounds do not end with the death of the primary antagonist, new antagonists from traitor and changeling derivative modes will now sometimes spawn. This depends on the state of the station, the state of the crew, and the server's gamemode probabilities. Server owners should consider revising their configuration choices"
+  - rscdel: "If you would like to opt out of this midround chance, a new toggle to disable it can be found in your preferences"

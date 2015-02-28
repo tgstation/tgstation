@@ -29,6 +29,8 @@
 	var/pre_setup_before_jobs = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/datum/mind/sacrifice_target = null
+	var/round_converted = 0
+	var/reroll_friendly 	//During mode conversion only these are in the running
 
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
@@ -87,6 +89,51 @@
 ///Handles late-join antag assignments
 /datum/game_mode/proc/make_antag_chance(var/mob/living/carbon/human/character)
 	return
+
+///convert_roundtype()
+///Allows rounds to basically be "rerolled" should the initial premise fall through
+/datum/game_mode/proc/convert_roundtype()
+	var/list/datum/game_mode/runnable_modes = config.get_runnable_modes()
+	for(var/datum/game_mode/G in runnable_modes)
+		if(!G.reroll_friendly)	del(G)
+
+	if(!runnable_modes)	return 0
+
+	var/list/datum/game_mode/replacementmode = pickweight(runnable_modes)
+
+	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out
+		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE)
+			return 1
+		if(SHUTTLE_CALL)
+			if(SSshuttle.emergency.timeLeft(1) < initial(SSshuttle.emergencyCallTime)*0.5)
+				return 1
+
+	var/list/living_crew = list()
+
+	for(var/mob/mob in player_list)
+		if(mob in living_mob_list && mob.ckey in joined_player_list)
+			living_crew += mob
+	if(living_crew.len / joined_player_list.len <= 0.7) //If a lot of the player base died, we start fresh
+		return 0
+
+	var/list/antag_canadates = list()
+
+	for(var/mob/living/carbon/human/H in living_crew)
+		if(H.client && H.client.prefs.allow_midround_antag)
+			antag_canadates += H
+
+	if(!antag_canadates)	return 1
+
+	antag_canadates = shuffle(antag_canadates)
+
+	if(config.protect_roles_from_antagonist)
+		replacementmode.restricted_jobs += replacementmode.protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		replacementmode.restricted_jobs += "Assistant"
+	for(var/mob/living/carbon/human/H in antag_canadates)
+		replacementmode.make_antag_chance(H)
+
+	return 1
 
 ///process()
 ///Called by the gameticker

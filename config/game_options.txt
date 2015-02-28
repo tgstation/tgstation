@@ -102,6 +102,7 @@ PROBABILITY SANDBOX 0
 #CONTINUOUS_ROUND_REV
 #CONTINUOUS_ROUND_WIZ
 #CONTINUOUS_ROUND_MALF
+#CONTINUOUS_ROUND_BLOB
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000

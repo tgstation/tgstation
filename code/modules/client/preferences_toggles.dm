@@ -73,6 +73,15 @@
 	src << "You will [(prefs.toggles & CHAT_PULLR) ? "now" : "no longer"] see new pull request announcements."
 	feedback_add_details("admin_verb","TPullR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/togglemidroundantag()
+	set name = "Toggle Midround Antagonist"
+	set category = "Preferences"
+	set desc = "Toggles whether or not you will be considered for antagonist status given during a round."
+	prefs.toggles ^= MIDROUND_ANTAG
+	prefs.save_preferences()
+	src << "You will [(prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions."
+	feedback_add_details("admin_verb","TMidroundA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/toggletitlemusic()
 	set name = "Hear/Silence LobbyMusic"
 	set category = "Preferences"
