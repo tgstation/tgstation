@@ -19,8 +19,10 @@
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/atom/movable/following = null
 	var/fun_verbs = 0
-	var/image/ghostimage = null
-	var/static/list/image/ghostimages = list() //this is a list of images of other ghosts that ghosts see when they toggle darkness
+	var/static/list/image/ghostimages = list() //this is a list of images of other ghosts that ghosts will use to see ghosts when they toggle darkness
+	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
+	var/seeghosts = 1 //so ghosts can hide other ghosts, requested
+	var/seedarkness = 1
 
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -266,14 +268,26 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set hidden = 1
 	src << "<span class='danger'>You are dead! You have no mind to store memory!</span>"
 
+/mob/dead/observer/verb/toggle_ghostsee()
+	set name = "Toggle Other Ghosts"
+	set desc = "Toggle your ability to see other ghosts"
+	set category = "Ghost"
+	seeghosts = !(seeghosts)
+	updateghostsight()
+
 /mob/dead/observer/verb/toggle_darkness()
 	set name = "Toggle Darkness"
 	set category = "Ghost"
+	seedarkness = !(seedarkness)
+	updateghostsight()
 
-	if (see_invisible == SEE_INVISIBLE_OBSERVER_NOLIGHTING)
-		see_invisible = SEE_INVISIBLE_OBSERVER
-	else
+/mob/dead/observer/proc/updateghostsight()
+	if (!seedarkness)
 		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	else
+		see_invisible = SEE_INVISIBLE_OBSERVER
+		if (!seeghosts)
+			see_invisible = INVISIBILITY_OBSERVER - 1;
 	updateghostimages()
 
 /mob/dead/observer/proc/updateallghostimages()
@@ -283,7 +297,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/updateghostimages()
 	if (!client)
 		return
-	if (see_invisible >= SEE_INVISIBLE_OBSERVER)
+	if (seedarkness || !seeghosts)
 		client.images -= ghostimages
 	else
 		client.images |= ghostimages //add images for all the ghosts so we can see them
