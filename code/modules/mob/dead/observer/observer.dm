@@ -1,3 +1,4 @@
+var/list/image/ghostimages = list() //this is a list of images of other ghosts that ghosts see when they toggle darkness
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -18,6 +19,7 @@
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/atom/movable/following = null
 	var/fun_verbs = 0
+	var/image/ghostimage = null
 
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -25,6 +27,9 @@
 	see_in_dark = 100
 	verbs += /mob/dead/observer/proc/dead_tele
 	stat = DEAD
+
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghostimages |= ghostimage
 
 	var/turf/T
 	if(ismob(body))
@@ -54,7 +59,13 @@
 		verbs -= /mob/dead/observer/verb/possess
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
+	updateallghostimages()
 
+	..()
+/mob/dead/observer/Destroy()
+	ghostimages -= ghostimage
+	qdel(ghostimage)
+	updateallghostimages()
 	..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
@@ -262,6 +273,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		see_invisible = SEE_INVISIBLE_OBSERVER
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	updateghostimages()
+
+/mob/dead/observer/proc/updateallghostimages()
+	for (var/mob/dead/observer/O in player_list)
+		O.updateghostimages()
+
+/mob/dead/observer/proc/updateghostimages()
+	if (!client)
+		return
+	if (see_invisible >= SEE_INVISIBLE_OBSERVER)
+		client.images -= ghostimages
+	else
+		client.images |= ghostimages //add images for all the ghosts so we can see them
+		client.images -= ghostimage //remove ourself
 
 /mob/dead/observer/verb/possess()
 	set category = "Ghost"
