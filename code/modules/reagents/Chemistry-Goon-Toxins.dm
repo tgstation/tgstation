@@ -370,30 +370,3 @@ datum/reagent/curare/on_mob_life(var/mob/living/M as mob)
 	M.adjustOxyLoss(1)
 	..()
 	return
-
-datum/reagent/capulettium
-	name = "Capulettium"
-	id = "capulettium"
-	description = "Makes living things appear dead. This essentially lets you play possum. Know someone is hunting you? Inject yourself with this and Rest just before they find you, and they'll mistake you for dead!"
-	reagent_state = SOLID
-	color = "#669900" // rgb: 102, 153, 0
-
-datum/reagent/capulettium/on_mob_life(var/mob/living/carbon/M as mob)
-	M.status_flags |= CAPDEATH
-	M.tod = worldtime2text()
-	..()
-	return
-
-datum/reagent/capulettium/reagent_deleted()
-	if(holder && ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
-		M.status_flags &= ~CAPDEATH
-	..()
-	return
-
-/datum/chemical_reaction/capulettium
-	name = "capulettium"
-	id = "capulettium"
-	result = "capulettium"
-	required_reagents = list("neurotoxin2" = 1, "chlorine" = 1, "hydrogen" = 1)
-	result_amount = 3
