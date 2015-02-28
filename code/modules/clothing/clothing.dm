@@ -7,7 +7,7 @@
 	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
-
+	var/alt_desc = null
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -169,7 +169,6 @@ BLIND     // can't see anything
 	flash_protect = 2
 	strip_delay = 50
 	put_on_delay = 50
-	var/alt_desc = null
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -191,7 +190,6 @@ BLIND     // can't see anything
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
 	put_on_delay = 80
-	var/alt_desc = null
 
 //Under clothing
 /obj/item/clothing/under
