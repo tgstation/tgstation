@@ -175,7 +175,6 @@
 				rigged = GZ
 				G.use(1)
 				canfirebomb = 0
-				flags = null //no longer an open container
 				update_icon()
 	if(is_hot(I))
 		if(!lit)
