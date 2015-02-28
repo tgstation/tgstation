@@ -90,13 +90,13 @@ datum/controller/game_controller/proc/setup()
 	setup_economy()
 	SetupXenoarch()
 	cachedamageicons()
-	if(map && map.dorf)
-		mining_surprises = typesof(/mining_surprise/dorf) - /mining_surprise/dorf
+	//if(map && map.dorf)
+		//mining_surprises = typesof(/mining_surprise/dorf) - /mining_surprise/dorf
 	for(var/i=0, i<max_secret_rooms, i++)
-		if(map && map.dorf)
-			make_dorf_secret()
-		else
-			make_mining_asteroid_secret()
+		//if(map && map.dorf)
+			//make_dorf_secret()
+		//else
+		make_mining_asteroid_secret()
 
 	//if(config.socket_talk)
 	//	keepalive()
