@@ -162,6 +162,8 @@
 	return
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
+	if(isobserver(user) || user.stat)
+		return
 	spawn()
 		var/area/A = get_area_master(src)
 		ASSERT(istype(A)) // This worries me.
