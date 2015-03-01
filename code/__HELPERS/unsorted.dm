@@ -1491,21 +1491,13 @@ var/list/WALLITEMS = list(
 			living_player_count += 1
 	return living_player_count
 
-//RANDOM WEB COLOR PICKER
-/*
-	color picking modes:
-	0 - All colors
-	1 - No white or black or gray
-*/
-/proc/randomColor(var/mode = 0)
+/proc/randomColor(var/mode = 0)	//if 1 it doesn't pick white, black or gray
 	switch(mode)
 		if(0)
-			return pick("white","black","gray","red","green","blue","brown","yellow","orange",
-					"aquamarine","coral","cyan","fuchsia","gold","indigo","lime","magenta","maroon","navy",
-					"pink","purple","teal","turquoise","violet")
+			return pick("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
+						"crimson","lime","darkgreen","cyan","navy","teal","purple","indigo")
 		if(1)
-			return pick("red","green","blue","brown","yellow","orange",
-					"aquamarine","coral","cyan","fuchsia","gold","indigo","lime","magenta","maroon","navy",
-					"pink","purple","teal","turquoise","violet")
+			return pick("red","green","blue","brown","yellow","orange","darkred","crimson",
+						"lime","darkgreen","cyan","navy","teal","purple","indigo")
 		else
-			return "black"
+			return "white"

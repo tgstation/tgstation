@@ -456,30 +456,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/zippo
 	name = "\improper Zippo lighter"
 	desc = "The zippo."
-	icon = 'icons/obj/cigarettes.dmi'
-	icon_state = "zippo-steel-off"
-	item_state = "zippo-steel-off"
-	var/style = "steel"
-
-/obj/item/weapon/lighter/zippo/New()
-	icon_on = "zippo-[style]-on"
-	icon_off = "zippo-[style]-off"
-	update_icon()
+	icon_state = "zippo"
+	item_state = "zippo"
+	icon_on = "zippoon"
+	icon_off = "zippo"
 
 /obj/item/weapon/lighter/update_icon()
 	icon_state = lit ? icon_on : icon_off
-
-/obj/item/weapon/lighter/zippo/nanotrasen
-	desc = "A Zippo from a limited edition sponsored by Nanotrasen."
-	style = "nt"
-	icon_state = "zippo-nt-off"
-	item_state = "zippo-nt-off"
-
-/obj/item/weapon/lighter/zippo/syndicate
-	desc = "A black Zippo with an ominous red 'S'."
-	style = "syndie"
-	icon_state = "zippo-syndie-off"
-	item_state = "zippo-syndie-off"
 
 /obj/item/weapon/lighter/random
 	New()

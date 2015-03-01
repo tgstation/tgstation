@@ -555,47 +555,35 @@ for(var/t in test_times)
 			return "#000000"
 		if("gray")
 			return "#808080"
-		if("red")
-			return "#FF0000"
-		if("green")
-			return "#008000"
-		if("blue")
-			return "#0000FF"
 		if("brown")
 			return "#A52A2A"
-		if("yellow")
-			return "#FFFF00"
+		if("red")
+			return "#FF0000"
+		if("darkred")
+			return "#8B0000"
+		if("crimson")
+			return "#DC143C"
 		if("orange")
 			return "#FFA500"
-		if("aquamarine")
-			return "#7FFFD4"
-		if("coral")
-			return "#FF7F50"
-		if("cyan")
-			return "#00FFFF"
-		if("fuchsia")
-			return "#FF00FF"
-		if("gold")
-			return "#FFD700"
-		if("indigo")
-			return "#4B0082"
+		if("yellow")
+			return "#FFFF00"
+		if("green")
+			return "#008000"
 		if("lime")
 			return "#00FF00"
-		if("magenta")
-			return "#FF00FF"
-		if("maroon")
-			return "#800000"
+		if("darkgreen")
+			return "#006400"
+		if("cyan")
+			return "#00FFFF"
+		if("blue")
+			return "#0000FF"
 		if("navy")
 			return "#000080"
-		if("pink")
-			return "#FFC0CB"
-		if("purple")
-			return "#800080"
 		if("teal")
 			return "#008080"
-		if("turquoise")
-			return "#40E0D0"
-		if("violet")
-			return "#EE82EE"
+		if("purple")
+			return "#800080"
+		if("indigo")
+			return "#4B0082"
 		else
 			return "#FFFFFF"
