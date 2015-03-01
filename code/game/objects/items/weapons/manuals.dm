@@ -657,8 +657,8 @@
 				<h2>Meat Pie:<h2>
 				Put 1 meat and 10 flour into the microwave and wait.
 
-				<h2>Boiled Spagetti:<h2>
-				Put 1 spagetti and 5 units of water into the microwave and wait.
+				<h2>Boiled Spaghetti:<h2>
+				Put 1 spaghetti and 5 units of water into the microwave and wait.
 
 				<h2>Donuts:<h2>
 				Add 1 egg and 5 flour to the microwave and wait.
