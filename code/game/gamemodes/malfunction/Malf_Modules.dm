@@ -250,34 +250,54 @@
 	mod_pick_name = "cyborgtransformer"
 	description = "Build a machine anywhere, using expensive nanomachines, that can convert a living human into a loyal cyborg slave when placed inside."
 	cost = 100
-
 	power_type = /mob/living/silicon/ai/proc/place_transformer
 
 /mob/living/silicon/ai/proc/place_transformer()
 	set name = "Place Robotic Factory"
 	set category = "Malfunction"
 
+	var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in src.current_modules
+	if(place_machine(PCT, /obj/machinery/transformer/conveyor, "3x1", 'sound/effects/phasein.ogg'))
+		src.can_shunt = 0
+		src << "<span class='warning'>You cannot shunt anymore.</span>"
+
+/datum/AI_Module/large/place_drone_factory
+	module_name = "Drone Factory"
+	mod_pick_name = "dronefactory"
+	description = "Build a drone factory anywhere. The drones built by the factory work to maintain the factory by ripping the station apart."
+	cost = 40
+	one_time = 1
+	power_type = /mob/living/silicon/ai/proc/place_factory
+
+/mob/living/silicon/ai/proc/place_factory()
+	set name = "Place Drone Factory"
+	set category = "Malfunction"
+
+	var/datum/AI_Module/large/place_drone_factory/PDF = locate() in src.current_modules
+	place_machine(PDF, /obj/machinery/mecha_part_fabricator/dronefactory/malf, "1x2", 'sound/items/rped.ogg')
+
+/mob/living/silicon/ai/proc/place_machine(var/datum/AI_Module/mod, var/type, var/size, var/placement_sound)
+	if(!mod)
+		return
 	if(!eyeobj)
 		return
-
 	if(!isturf(src.loc)) // AI must be in it's core.
 		return
-
-	var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in src.current_modules
-	if(!PCT)
-		return
-
-	if(PCT.uses < 1)
+	if(mod.uses < 1)
 		src << "Out of uses."
 		return
 
-	var/sure = alert(src, "Make sure the room it is in is big enough, there is camera vision and that there is a 1x3 area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
+	var/sure = alert(src, "Make sure the room it is in is big enough, there is camera vision and that there is a [size] area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
 	if(sure != "Yes")
 		return
 
 	// Make sure there is enough room.
 	var/turf/middle = get_turf(eyeobj.loc)
-	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
+	var/list/turfs
+	if(size == "1x2")
+		turfs = list(middle, locate(middle.x, middle.y-1, middle.z))
+	else
+		turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
 
 	var/alert_msg = "There isn't enough room. Make sure you are placing the machine in a clear area and on a floor."
 
@@ -287,7 +307,6 @@
 		return
 
 	for(var/T in turfs)
-
 		// Make sure the turfs are clear and the correct type.
 		if(!istype(T, /turf/simulated/floor))
 			alert(src, alert_msg)
@@ -298,13 +317,12 @@
 			if(AM.density)
 				alert(src, alert_msg)
 				return
-
-	// All clear, place the transformer
-	new /obj/machinery/transformer/conveyor(middle)
-	playsound(middle, 'sound/effects/phasein.ogg', 100, 1)
-	src.can_shunt = 0
-	PCT.uses -= 1
-	src << "<span class='warning'>You cannot shunt anymore.</span>"
+	// All clear, place the machine
+	new type(middle)
+	playsound(middle, placement_sound, 100, 1)
+	mod.uses -=1
+	verbs -= mod.power_type
+	return 1
 
 
 /datum/AI_Module/small/blackout

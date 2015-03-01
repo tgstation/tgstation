@@ -485,6 +485,14 @@ obj/item/weapon/circuitboard/rdserver
 							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
+/obj/item/weapon/circuitboard/mechfab/dronefactory
+	name = "circuit board (Drone Factory)"
+	build_path = /obj/machinery/mecha_part_fabricator/dronefactory
+
+/obj/item/weapon/circuitboard/mechfab/dronefactory/malf
+	build_path = /obj/machinery/mecha_part_fabricator/dronefactory/malf
+	origin_tech = "programming=3;engineering=3;syndicate=3"
+
 /obj/item/weapon/circuitboard/clonepod
 	name = "circuit board (Clone Pod)"
 	build_path = /obj/machinery/clonepod
