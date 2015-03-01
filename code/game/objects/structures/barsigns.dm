@@ -210,10 +210,23 @@
 	icon = "honkednloaded"
 	desc = "Honk."
 
+
 /datum/barsign/thenest
 	name = "The Nest"
 	icon = "thenest"
 	desc = "A good place to retire for a drink after a long night of crime fighting."
+
+
+/datum/barsign/thecoderbus
+	name = "The Coderbus"
+	icon = "thecoderbus"
+	desc = "A very controversial bar known for its wide variety of constantly-changing drinks."
+
+
+/datum/barsign/theadminbus
+	name = "The Adminbus"
+	icon = "theadminbus"
+	desc = "An establishment visited mainly by space-judges. It isn't bombed nearly as much as court hearings."
 
 
 
