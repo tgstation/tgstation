@@ -40,6 +40,8 @@
 	maxbodytemp = 1500
 
 	faction = list("russian")
+	robust_searching = 0
+	stat_attack = 0 //you're actually supposed to sleep if a bear attacks you!
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
