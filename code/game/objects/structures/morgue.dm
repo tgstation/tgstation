@@ -246,17 +246,20 @@ Crematorium Switch
 		user << "That's not connected to anything."
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
+	if(!istype(O, /atom/movable) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
 		return
-	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
-		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if(!ismob(O))
+		if(!istype(O, /obj/structure/closet/body_bag))
+			return
+	else
+		var/mob/M = O
+		if(M.buckled)
+			return
+	if(!ismob(user) || user.lying || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)
-		for(var/mob/B in viewers(user, 3))
-			B.show_message("<span class='danger'>[user] stuffs [O] into [src]!</span>", 1)
-			//Foreach goto(99)
+		visible_message("<span class='warning'>[user] stuffs [O] into [src]!</span>")
 	return
 
 /*

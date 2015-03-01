@@ -495,7 +495,7 @@ Sorry Giacom. Please don't be mad :(
 						M.stop_pulling()
 
 						//this is the gay blood on floor shit -- Added back -- Skie
-						if(M.lying && (prob(M.getBruteLoss() / 2)))
+						if(M.lying && !M.buckled && (prob(M.getBruteLoss() / 2)))
 							makeTrail(T, M)
 						pulling.Move(T, get_dir(pulling, T))
 						if(M)
