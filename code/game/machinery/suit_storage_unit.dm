@@ -131,7 +131,6 @@
 			stat |= NOPOWER
 			src.islocked = 0
 			src.isopen = 1
-			src.dump_everything()
 			src.update_icon()
 
 
@@ -579,6 +578,11 @@
 	src.updateUsrDialog()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
+	if((stat & NOPOWER) && iscrowbar(I) && !islocked)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+		user << "<span class='notice'>You begin prying the equipment out of the suit storage unit</span>"
+		if(do_after(20))
+			dump_everything()
 	if(stat & NOPOWER)
 		return
 	if(..())

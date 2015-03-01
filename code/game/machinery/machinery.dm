@@ -319,6 +319,8 @@ Class Procs:
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 1
+	if(href_list["close"])
+		return
 	var/ghost_flags=0
 	if(ghost_write)
 		ghost_flags |= PERMIT_ALL
@@ -413,7 +415,8 @@ Class Procs:
 
 /obj/machinery/proc/dropFrame()
 	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-	M.state = 2
+	M.state = 1
+	M.build_state = 2
 	M.icon_state = "box_1"
 
 /obj/machinery/proc/crowbarDestroy(mob/user)

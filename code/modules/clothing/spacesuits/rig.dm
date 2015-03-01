@@ -371,7 +371,7 @@
 	_color="solaire"
 
 /obj/item/clothing/suit/space/rig/knight/solaire
-	name = "Black Knight's armour"
+	name = "Solar armour"
 	desc = "A solar powered hardsuit with a fancy insignia on the chest. Perfect for stargazers and adventurers alike."
 	icon_state = "rig-solaire"
 	item_state = "rig-solaire"

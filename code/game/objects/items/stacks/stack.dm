@@ -15,6 +15,7 @@
 	var/amount = 1
 	var/perunit = 3750
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/redeemed = 0 // For selling minerals to central command via supply shuttle.
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()

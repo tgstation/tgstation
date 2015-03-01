@@ -38,14 +38,13 @@
 	for(var/obj/machinery/power/apc/C in power_machines)
 		if(C.cell && C.z == 1)
 			var/area/A = get_area(C)
-
 			var/skip = 0
 			for(var/area_type in skipped_areas)
 				if(istype(A,area_type))
 					skip = 1
 					break
 			if(skip) continue
-
+			C.chargemode = 0
 			C.cell.charge = 0
 
 /proc/power_restore(var/announce = 1)
@@ -57,6 +56,7 @@
 	for(var/obj/machinery/power/apc/C in power_machines)
 		if(C.cell && C.z == 1)
 			C.cell.charge = C.cell.maxcharge
+			C.chargemode = 1
 	for(var/obj/machinery/power/smes/S in power_machines)
 		if(S.z != 1)
 			continue

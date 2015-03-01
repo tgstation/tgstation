@@ -55,10 +55,14 @@
 */
 
 /obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
+	var/oldturf = S.type
+	var/turf/T
 	if (istype(S,/turf/space) || istype(S,/turf/unsimulated))
-		S.ChangeTurf(/turf/simulated/floor/plating/airless)
+		T = S.ChangeTurf(/turf/simulated/floor/plating/airless)
 	else
-		S.ChangeTurf(/turf/simulated/floor/plating)
+		T = S.ChangeTurf(/turf/simulated/floor/plating)
+	if(T)
+		T.under_turf = oldturf
 //	var/turf/simulated/floor/W = S.ReplaceWithFloor()
 //	W.make_plating()
 	return
@@ -85,3 +89,27 @@
 				user.put_in_hands(M)
 		return 1
 	return ..()
+
+/obj/item/stack/tile/plasteel/afterattack(atom/target, mob/user, adjacent, params)
+	if(adjacent)
+		if(isturf(target) || istype(target, /obj/structure/lattice))
+			var/turf/T = get_turf(target)
+			var/obj/structure/lattice/L
+			var/obj/item/stack/tile/plasteel/S = src
+			switch(T.canBuildPlating())
+				if(BUILD_SUCCESS)
+					L = locate(/obj/structure/lattice) in T
+					if(!istype(L))
+						return
+					qdel(L)
+					playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+					S.build(T)
+					S.use(1)
+					return
+				if(BUILD_IGNORE)
+					playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+					S.build(T)
+					S.use(1)
+				if(BUILD_FAILURE)
+					user << "<span class='warning'>The plating is going to need some support.</span>"
+					return

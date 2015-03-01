@@ -1586,6 +1586,7 @@
 
 		var/datum/game_mode/cult/mode_ticker = ticker.mode
 		mode_ticker.bypass_phase()
+		message_admins("Admin [key_name_admin(usr)] has unlocked the Cult's next objective.")
 		check_antagonists()
 
 	else if(href_list["cult_mindspeak"])
@@ -1599,6 +1600,8 @@
 
 		for(var/mob/dead/observer/O in player_list)
 			O << "<span class='game say'><span class='danger'>Nar-Sie</span> murmurs, <span class='sinister'>[input]</span></span>"
+
+		message_admins("Admin [key_name_admin(usr)] has talked with the Voice of Nar-Sie.")
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!check_rights(R_ADMIN))	return

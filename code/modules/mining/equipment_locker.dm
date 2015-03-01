@@ -77,6 +77,7 @@
 	if(O.material)
 		var/datum/material/mat = materials.getMaterial(O.material)
 		var/obj/item/stack/sheet/M = new mat.sheettype(src)
+		M.redeemed = 1
 		//credits += mat.value // Old behavior
 		return M
 	return
@@ -157,6 +158,7 @@
 			if(desired==0)
 				return 1
 			var/obj/item/stack/sheet/out = new mat.sheettype(output.loc)
+			out.redeemed = 1 //Central command will not pay for this mineral stack.
 			out.amount = Clamp(desired, 0, min(mat.stored, out.max_amount))
 			mat.stored -= out.amount
 	updateUsrDialog()

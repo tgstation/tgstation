@@ -1288,7 +1288,7 @@ var/global/list/organ_damage_overlays = list(
 
 		//Jitteryness
 		if(jitteriness)
-			var/amplitude = min(4, (jitteriness/100) + 1)
+			var/amplitude = min(8, (jitteriness/70) + 2)
 			var/pixel_x_diff = rand(-amplitude, amplitude)
 			var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
 

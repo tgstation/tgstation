@@ -17,11 +17,11 @@
 /obj/item/mounted/frame/try_build(turf/on_wall, mob/user)
 	if(..()) //if we pass the parent tests
 		var/turf/turf_loc = get_turf(user)
-		var/area/area_loc = turf_loc.loc
+
 		if (src.mount_reqs.Find("simfloor") && !istype(turf_loc, /turf/simulated/floor))
 			user << "<span class='rose'>[src] cannot be placed on this spot.</span>"
 			return
-		if (src.mount_reqs.Find("nospace") && (area_loc.requires_power == 0 || area_loc.name == "Space"))
+		if (src.mount_reqs.Find("nospace") && (areaMaster.requires_power == 0 || areaMaster.name == "Space"))
 			user << "<span class='rose'>[src] cannot be placed in this area.</span>"
 			return
 		return 1

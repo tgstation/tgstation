@@ -201,6 +201,7 @@ var/global/list/datum/stack_recipe/phazon_recipes = list()
 	desc = "Holy christ what is this?"
 	icon_state = "sheet-phazon"
 	item_state = "sheet-phazon"
+	sheettype = "phazon"
 	perunit = 1500
 	melt_temperature = MELTPOINT_PLASTIC
 	throwforce = 15.0

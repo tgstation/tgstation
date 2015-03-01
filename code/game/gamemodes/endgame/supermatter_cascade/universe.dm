@@ -32,6 +32,7 @@
 
 // Apply changes when entering state
 /datum/universal_state/supermatter_cascade/OnEnter()
+	set background = 1
 	world << "<span class='sinister' style='font-size:22pt'>You are blinded by a brilliant flash of energy.</span>"
 
 	if(emergency_shuttle.direction==2)
@@ -80,6 +81,7 @@
 
 	for (var/obj/machinery/power/apc/APC in world)
 		if (!(APC.stat & BROKEN) && !APC.is_critical)
+			APC.chargemode = 0
 			if(APC.cell)
 				APC.cell.charge = 0
 			APC.emagged = 1

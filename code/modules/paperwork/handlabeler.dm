@@ -7,12 +7,13 @@
 	var/labels_left = 30
 	var/mode = 0	//off or on.
 
-/obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user as mob)
-	if(!user.Adjacent(A))
-		return 0
+/obj/item/weapon/hand_labeler/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if (!proximity_flag)
+		return
+
 	if(!mode)	//if it's off, give up.
 		return
-	if(A == loc)	// if placing the labeller into something (e.g. backpack)
+	if(target == loc)	// if placing the labeller into something (e.g. backpack)
 		return		// don't set a label
 
 	if(!labels_left)
@@ -21,22 +22,22 @@
 	if(!label || !length(label))
 		user << "<span class='notice'>No text set.</span>"
 		return
-	if(length(A.name) + length(label) > 64)
+	if(length(target.name) + length(label) > 64)
 		user << "<span class='notice'>Label too big.</span>"
 		return
-	if(ishuman(A))
+	if(ishuman(target))
 		user << "<span class='notice'>You can't label humans.</span>"
 		return
-	if(issilicon(A))
+	if(issilicon(target))
 		user << "<span class='notice'>You can't label cyborgs.</span>"
 		return
-	if(istype(A, /obj/item/weapon/reagent_containers/glass))
-		user << "<span class='notice'>The label can't stick to the [A.name].  (Try using a pen)</span>"
+	if(istype(target, /obj/item/weapon/reagent_containers/glass))
+		user << "<span class='notice'>The label can't stick to the [target.name].  (Try using a pen)</span>"
 		return
 
-	user.visible_message("<span class='notice'>[user] labels [A] as [label].</span>", \
-						 "<span class='notice'>You label [A] as [label].</span>")
-	A.name = "[A.name] ([label])"
+	user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
+						 "<span class='notice'>You label [target] as [label].</span>")
+	target.name = "[target.name] ([label])"
 
 /obj/item/weapon/hand_labeler/attack_self(mob/user as mob)
 	mode = !mode

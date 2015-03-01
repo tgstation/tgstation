@@ -33,6 +33,9 @@
 	// holy water
 	var/holy = 0
 
+	// For building on the asteroid.
+	var/under_turf = /turf/space
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
@@ -472,3 +475,15 @@
 				O.singularity_act()
 	ChangeTurf(/turf/space)
 	return(2)
+
+//Return a lattice to allow catwalk building
+/turf/proc/canBuildCatwalk()
+	return BUILD_FAILURE
+
+//Return true to allow lattice building
+/turf/proc/canBuildLattice()
+	return BUILD_FAILURE
+
+//Return a lattice to allow plating building, return 0 for error message, return -1 for silent fail.
+/turf/proc/canBuildPlating()
+	return BUILD_SILENT_FAILURE
