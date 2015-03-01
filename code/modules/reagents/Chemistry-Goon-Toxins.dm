@@ -206,15 +206,15 @@ datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
 	result_amount = 4
 	required_temp = 380
 
-datum/reagent/regadenoson
-	name = "Regadenoson"
-	id = "regadenoson"
+datum/reagent/initropidril
+	name = "Initropidril"
+	id = "initropidril"
 	description = "Major stamina regeneration buff. 33% chance to hit with 5-25 TOX. 5-10% chances to stun and cause suffocation or immediate heart failure."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.4
 
-datum/reagent/regadenoson/on_mob_life(var/mob/living/M as mob)
+datum/reagent/initropidril/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustStaminaLoss(-5)
 	if(prob(33))
@@ -241,13 +241,11 @@ datum/reagent/pancuronium
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.2
-	var/current_cycle = 0
 
 datum/reagent/pancuronium/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	current_cycle++
-	if(current_cycle == 10)
-		M.SetParalysis(10)
+	if(current_cycle >= 10)
+		M.SetParalysis(3)
 	if(prob(7))
 		M.losebreath += rand(3,5)
 	..()
@@ -260,13 +258,11 @@ datum/reagent/sodium_thiopental
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.7
-	var/current_cycle = 0
 
 datum/reagent/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	current_cycle++
-	if(current_cycle == 10)
-		M.sleeping += 20
+	if(current_cycle >= 10)
+		M.sleeping += 3
 	M.adjustStaminaLoss(10)
 	..()
 	return
@@ -278,7 +274,6 @@ datum/reagent/sulfonal
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.1
-	var/current_cycle = 0
 
 /datum/chemical_reaction/sulfonal
 	name = "sulfonal"
@@ -289,9 +284,8 @@ datum/reagent/sulfonal
 
 datum/reagent/sulfonal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	current_cycle++
-	if(current_cycle == 22)
-		M.sleeping += 20
+	if(current_cycle >= 22)
+		M.sleeping += 3
 	M.adjustToxLoss(1)
 	..()
 	return
@@ -302,17 +296,15 @@ datum/reagent/amanitin
 	description = "On the last cycle that it's in you, it hits you with a stack of TOX damage based on elapsed cycles * rand(2,4). The more you use, the longer it takes before anything happens, but the harder it hits when it does."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
-	var/cycles = 0
 
 datum/reagent/amanitin/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	cycles++
 	..()
 	return
 
 datum/reagent/amanitin/reagent_deleted(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.adjustToxLoss(cycles*rand(2,4))
+	M.adjustToxLoss(current_cycle*rand(2,4))
 	..()
 	return
 
@@ -334,6 +326,10 @@ datum/reagent/lipolicide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(!holder.has_reagent("nutriment"))
 		M.adjustToxLoss(1)
+	M.nutrition -= 10 * REAGENTS_METABOLISM
+	M.overeatduration = 0
+	if(M.nutrition < 0)//Prevent from going into negatives.
+		M.nutrition = 0
 	..()
 	return
 
@@ -359,13 +355,11 @@ datum/reagent/curare
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.1
-	var/current_cycle = 0
 
 datum/reagent/curare/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	current_cycle++
-	if(current_cycle == 11)
-		M.SetParalysis(20)
+	if(current_cycle >= 11)
+		M.Weaken(3)
 	M.adjustToxLoss(1)
 	M.adjustOxyLoss(1)
 	..()

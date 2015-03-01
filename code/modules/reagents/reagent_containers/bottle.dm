@@ -141,11 +141,11 @@
 	icon_state = "bottle16"
 	list_reagents = list("formaldehyde" = 30)
 
-/obj/item/weapon/reagent_containers/glass/bottle/regadenoson
-	name = "regadenoson bottle"
-	desc = "A small bottle. Contains regadenoson."
+/obj/item/weapon/reagent_containers/glass/bottle/initropidril
+	name = "initropidril bottle"
+	desc = "A small bottle. Contains initropidril."
 	icon_state = "bottle16"
-	list_reagents = list("regadenoson" = 30)
+	list_reagents = list("initropidril" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/pancuronium
 	name = "pancuronium bottle"

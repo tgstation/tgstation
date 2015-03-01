@@ -19,6 +19,7 @@ datum/reagent
 	var/datum/reagents/holder = null
 	var/reagent_state = LIQUID
 	var/list/data
+	var/current_cycle = 0
 	var/volume = 0
 	//var/list/viruses = list()
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
@@ -74,6 +75,7 @@ datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
 	return
 
 datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
+	current_cycle++
 	if(!istype(M, /mob/living))
 		return //Noticed runtime errors from facid trying to damage ghosts, this should fix. --NEO
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.

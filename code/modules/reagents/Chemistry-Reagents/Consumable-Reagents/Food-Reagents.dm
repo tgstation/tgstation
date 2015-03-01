@@ -101,9 +101,7 @@ datum/reagent/consumable/capsaicin
 	color = "#B31008" // rgb: 179, 16, 8
 
 datum/reagent/consumable/capsaicin/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	switch(data)
+	switch(current_cycle)
 		if(1 to 15)
 			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("cryostylane"))
@@ -118,7 +116,7 @@ datum/reagent/consumable/capsaicin/on_mob_life(var/mob/living/M as mob)
 			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature += rand(15,20)
-	data++
+	current_cycle++
 	..()
 	return
 
@@ -240,9 +238,7 @@ datum/reagent/mushroomhallucinogen
 
 datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 30)
-	if(!data)
-		data = 1
-	switch(data)
+	switch(current_cycle)
 		if(1 to 5)
 			if (!M.slurring)
 				M.slurring = 1
@@ -265,7 +261,7 @@ datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 			M.druggy = max(M.druggy, 40)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
-	data++
+	current_cycle++
 	..()
 	return
 
