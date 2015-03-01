@@ -65,6 +65,20 @@
 		facial_s.Blend("#[facial_hair_color]", ICON_MULTIPLY)
 		eyes_s.Blend(facial_s, ICON_OVERLAY)
 
+	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	var/icon_state_string = "[pref_species.id]_"
+
+	if(pref_species.sexes)
+		icon_state_string += "[g]_s"
+	else
+		icon_state_string += "_s"
+
+	for(var/layer in relevent_layers)
+		for(var/bodypart in pref_species.mutant_bodyparts)
+			var/icon/part = new/icon("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[icon_state_string]_[bodypart]_[layer]")
+			part.Blend("#[mutant_color]", ICON_MULTIPLY)
+			preview_icon.Blend(part, ICON_OVERLAY)
+
 	var/icon/clothes_s = null
 	if(job_civilian_low & ASSISTANT)//This gives the preview icon clothes depending on which job(if any) is set to 'high'
 		clothes_s = new /icon('icons/mob/uniform.dmi', "grey_s")
