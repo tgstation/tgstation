@@ -56,8 +56,7 @@ Emergency internals tanks can be used from your hands, your pockets, your belt, 
 When walking through halls, stay on the Help intent to pass through people rather than bumping into them.
 Trying to do surgery but you keep cutting your patient? Remember to be on the help intent and to target the right limb!
 Glass shards can be welded to make glass, and metal rods can be welded to make metal. Ores can be welded, too, but this takes a lot of fuel.
-Many monsters won't attack you if you're unconscious. If you see a space bear, go to sleep, quick!
-Many monsters won't attack you if you're unconscious, but a medibot will still heal you. Keep one around when you're mining and never worry about dying again.
+If you're unconscious a medibot will still heal you. Keep one around when you're mining and never worry about dying again.
 Two people are critical and need your help, but you don't have time for two trips? Pull one and use the grab intent to grab the other. This will make you slower, but you will be able to take them both.
 When using the grab intent, grab someone by clicking on them then upgrade your grab by clicking on your hand slot. Holding them by the hands lets you throw them or table them.
 Can't seem to get a patient into the cryo tube or sleepers? Just drag their sprite to it to put them in it instantly. No more needing to shuffle around pulling them into it awkwardly.

@@ -18,8 +18,6 @@
 	response_harm = "strikes"
 	status_flags = 0
 	a_intent = "harm"
-	robust_searching = 1 //Activate more advance targetting AI
-	stat_attack = 1 //Attack people who sleep on the job, because that's not a valid combat technique
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 
