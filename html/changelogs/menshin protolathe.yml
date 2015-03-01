@@ -1,5 +1,0 @@
-author: Menshin
-
-delete-after: True
-changes: 
-  - bugfix: "Fixed the protolathe not requiring displayed amount of materials to make items."

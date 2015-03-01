@@ -1,9 +1,0 @@
-author: Dannno
-
-delete-after: True
-
-changes: 
-  - rscadd: 'Resprited all owl items. Wings are now a seperate toggleable suit item.'
-  - rscadd: 'Added The Griffin costume, arch nemesis of The Owl. Found in the autodrobe.'
-  - rscadd: 'Added admin-only Owl hardsuit. Only for the most vengeful souls.'
-  - rscadd: 'Added Owl and Griffin merchandise; The Nest barsign, Owl/Griffin toys and posters.'
