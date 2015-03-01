@@ -51,7 +51,7 @@ var/global/list/rad_collectors = list()
 ..()
 
 
-/obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
+/obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		user << "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>"
 		return 1

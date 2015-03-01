@@ -153,6 +153,8 @@
 				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 			SSshuttle.emergencyNoEscape = 0
 			malf_mode_declared = 0
+			convert_roundtype()
+			round_converted = 1
 		else
 			return 1
 	return ..() //check for shuttle and nuke

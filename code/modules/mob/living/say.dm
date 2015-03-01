@@ -261,6 +261,9 @@ var/list/department_radio_keys = list(
 	if(stuttering)
 		message = stutter(message)
 
+	if(slurring)
+		message = slur(message)
+
 	message = capitalize(message)
 
 	return message

@@ -58,7 +58,7 @@
 	var/obj/item/robot_parts/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/toner = 0
 	var/tonermax = 40
-
+	var/jetpackoverlay = 0
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -392,7 +392,7 @@
 	return !cleared
 
 
-/mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
@@ -731,7 +731,7 @@
 				overlays += "eyes-engiborg"
 			if("janiborg")
 				overlays += "eyes-janiborg"
-			if("minerborg" || "Miner+j")
+			if("minerborg")
 				overlays += "eyes-minerborg"
 			if("syndie_bloodhound")
 				overlays += "eyes-syndie_bloodhound"
@@ -746,6 +746,8 @@
 		else
 			overlays += "ov-opencover -c"
 
+	if(jetpackoverlay)
+		overlays += "minerjetpack"
 	update_fire()
 
 

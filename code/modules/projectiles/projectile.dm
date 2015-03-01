@@ -33,6 +33,7 @@
 	var/paralyze = 0
 	var/irradiate = 0
 	var/stutter = 0
+	var/slur = 0
 	var/eyeblur = 0
 	var/drowsy = 0
 	var/stamina = 0
@@ -59,7 +60,7 @@
 	if(isanimal(target))	return 0
 	var/mob/living/L = target
 	L.on_hit(type)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked, stamina, jitter)
+	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, slur, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)

@@ -126,16 +126,6 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 /////////////////Mining//////////////////
 /////////////////////////////////////////
 
-/datum/design/jackhammer
-	name = "Sonic Jackhammer"
-	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
-	id = "jackhammer"
-	req_tech = list("materials" = 3, "powerstorage" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 2000, "$glass" = 500, "$silver" = 500)
-	build_path = /obj/item/weapon/pickaxe/jackhammer
-	category = list("Mining Designs")
-
 /datum/design/drill
 	name = "Mining Drill"
 	desc = "Yours is the drill that will pierce through the rock walls."
@@ -152,30 +142,30 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	id = "plasmacutter"
 	req_tech = list("materials" = 4, "plasmatech" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 1500, "$glass" = 500, "$gold" = 500, "$plasma" = 500)
+	materials = list("$metal" = 5000, "$glass" = 1000, "$gold" = 500, "$plasma" = 500)
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/plasmacutter
 	category = list("Mining Designs")
 
-/datum/design/pick_diamond
-	name = "Diamond Pickaxe"
-	desc = "A pickaxe with a diamond pick head, this is just like minesim 2554!."
-	id = "pick_diamond"
-	req_tech = list("materials" = 6)
-	build_type = PROTOLATHE
-	materials = list("$diamond" = 3000)
-	build_path = /obj/item/weapon/pickaxe/diamond
-	category = list("Mining Designs")
-
 /datum/design/drill_diamond
-	name = "Diamond Mining Drill"
+	name = "Diamond-Tipped Mining Drill"
 	desc = "Yours is the drill that will pierce the heavens!"
 	id = "drill_diamond"
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
+	materials = list("$metal" = 6000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/drill/diamonddrill
+	category = list("Mining Designs")
+
+/datum/design/jackhammer
+	name = "Sonic Jackhammer"
+	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well, but has high power cost for doing so."
+	id = "jackhammer"
+	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 8000, "$glass" = 1500, "$silver" = 2000, "$diamond" = 6000)
+	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 
 /////////////////////////////////////////
@@ -297,6 +287,16 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_path = /obj/item/clothing/mask/gas/welding
 	category = list("Equipement")
 
+/datum/design/air_horn
+	name = "Air Horn"
+	desc = "Damn son, where'd you find this?"
+	id = "air_horn"
+	req_tech = list("materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000, "$bananium" = 1000)
+	build_path = /obj/item/weapon/bikehorn/airhorn
+	category = list("Equipement")
+
 /datum/design/mesons
 	name = "Optical Meson Scanners"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
@@ -305,6 +305,16 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
 	build_path = /obj/item/clothing/glasses/meson
+	category = list("Equipement")
+
+/datum/design/nvgmesons
+	name = "Night Vision Optical Meson Scanners"
+	desc = "Prototype meson scanners fitted with an extra sensor which amplifies the visible light spectrum and overlays it to the UHD display."
+	id = "nvgmesons"
+	req_tech = list("materials" = 5, "magnets" = 5, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 300, "$glass" = 400, "$plasma" = 250, "$uranium" = 1000)
+	build_path = /obj/item/clothing/glasses/meson/night
 	category = list("Equipement")
 
 /datum/design/night_vision_goggles

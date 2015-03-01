@@ -39,7 +39,7 @@
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
 	user.color = "#00FF00"
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)

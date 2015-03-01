@@ -170,7 +170,7 @@
 
 /datum/game_mode/wizard/check_finished()
 
-	if(config.continuous_round_wiz)
+	if(round_converted)
 		return ..()
 
 	var/wizards_alive = 0
@@ -192,11 +192,17 @@
 
 	if (wizards_alive || traitors_alive)
 		return ..()
-	else
-		finished = 1
-		return 1
 
+	if(config.continuous_round_wiz)
+		if(!convert_roundtype())
+			finished = 1
+			return 1
+		else
+			round_converted = 1
+			return ..()
 
+	finished = 1
+	return 1
 
 /datum/game_mode/wizard/declare_completion()
 	if(finished)

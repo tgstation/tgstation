@@ -126,6 +126,7 @@
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
 	strip_delay = 130
 	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
+	brightness_on = 7
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
 	desc = "Standard issue security helmet for the ERT."

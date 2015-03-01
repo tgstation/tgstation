@@ -87,7 +87,7 @@ obj/machinery/bot/mulebot/bot_reset()
 // screwdriver: open/close hatch
 // cell: insert it
 // other: chance to knock rider off bot
-/obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if(toggle_lock(user))
 			user << "<span class='notice'>Controls [(locked ? "locked" : "unlocked")].</span>"

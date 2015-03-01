@@ -43,7 +43,7 @@
 /obj/item/weapon/reagent_containers/syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user)
+/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
 /obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user , proximity)
@@ -68,7 +68,7 @@
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
 					if(H.dna)
-						if(NOBLOOD in H.dna.species.specflags)
+						if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
 							user << "<span class='notice'>You are unable to locate any blood.</span>"
 							return
 				if(reagents.has_reagent("blood"))
@@ -94,6 +94,13 @@
 					var/datum/reagent/B
 					B = T.take_blood(src,amount)
 
+					if(!B && ishuman(target))
+						var/mob/living/carbon/human/H = target
+						if(H.dna && H.dna.species.exotic_blood && H.reagents.total_volume)
+							target.reagents.trans_to(src, amount)
+						else
+							user << "<span class='notice'>You are unable to locate any blood.</span>"
+							return
 					if (B)
 						src.reagents.reagent_list += B
 						src.reagents.update_total()

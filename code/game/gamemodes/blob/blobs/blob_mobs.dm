@@ -141,7 +141,7 @@
 	desc = "Some HUGE blob thing."
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
-	icon_dead = "blobbernaut_death"
+	icon_dead = "blobbernaut_dead"
 	health = 240
 	maxHealth = 240
 	melee_damage_lower = 10
@@ -162,3 +162,9 @@
 			overmind.blob_reagent_datum.reaction_mob(target, TOUCH)
 
 
+/mob/living/simple_animal/hostile/blob/blobbernaut/blob_act()
+	return
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/Die()
+	..()
+	flick("blobbernaut_death", src)

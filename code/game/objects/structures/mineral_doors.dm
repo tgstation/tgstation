@@ -122,7 +122,7 @@
 	else
 		icon_state = mineralType
 
-/obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
 		user << "You start digging the [name]."
@@ -217,7 +217,7 @@
 /obj/structure/mineral_door/transparent/plasma
 	mineralType = "plasma"
 
-/obj/structure/mineral_door/transparent/plasma/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/mineral_door/transparent/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(is_hot(W))
 		message_admins("Plasma mineral door ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma mineral door ignited by [user.ckey]([user]) in ([x],[y],[z])")

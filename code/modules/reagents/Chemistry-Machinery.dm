@@ -18,6 +18,7 @@
 	var/recharged = 0
 	var/recharge_delay = 5  //Time it game ticks between recharges
 	var/image/icon_beaker = null //cached overlay
+	var/uiname = "Chem Dispenser 5000"
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid","fuel","silver","iodine","bromine","stable_plasma")
@@ -108,7 +109,7 @@
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 490, 710)
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "[uiname]", 490, 710)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -144,7 +145,7 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
-/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
+/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob, params)
 	if(isrobot(user))
 		return
 
@@ -222,7 +223,7 @@
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents = sortList(dispensable_reagents | special_reagents[i])
 
-/obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user, params)
 	..()
 	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
 		return
@@ -278,7 +279,7 @@
 			stat |= NOPOWER
 
 
-/obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob)
+/obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
 
 	if(default_unfasten_wrench(user, B))
 		return
@@ -340,25 +341,48 @@
 			reagents.trans_to(P, 50)
 
 	if(beaker)
-		var/datum/reagents/R = beaker.reagents
-		if (href_list["analyze"])
-			var/dat = ""
-			dat += "<B>[condi ? "Condiment" : "Chemical"] information:</B><BR><BR>"
-			dat += "<B>Name:</B><BR>[href_list["name"]]<BR><BR>"
-			dat += "<B>Description:</B><BR>[href_list["desc"]]<BR><BR><BR>"
-			dat += "<A href='?src=\ref[src];main=1'>Back</A>"
-			var/datum/browser/popup = new(usr, "chem_master", name)
-			popup.set_content(dat)
-			popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
-			popup.open(1)
+
+		if(href_list["analyze"])
+			if(locate(href_list["reagent"]))
+				var/datum/reagent/R = locate(href_list["reagent"])
+				if(R)
+					var/dat = ""
+					dat += "<H1>[condi ? "Condiment" : "Chemical"] information:</H1>"
+					dat += "<B>Name:</B> [initial(R.name)]<BR><BR>"
+					dat += "<B>State:</B> "
+					if(initial(R.reagent_state) == 1)
+						dat += "Solid"
+					else if(initial(R.reagent_state) == 2)
+						dat += "Liquid"
+					else if(initial(R.reagent_state) == 3)
+						dat += "Gas"
+					else
+						dat += "Unknown"
+					dat += "<BR>"
+					dat += "<B>Color:</B> <span style='color:[initial(R.color)];background-color:[initial(R.color)];font:Lucida Console'>[initial(R.color)]</span><BR><BR>"
+					dat += "<B>Description:</B> [initial(R.description)]<BR><BR>"
+					var/const/P = 3 //The number of seconds between life ticks
+					var/T = initial(R.metabolization_rate) * (60 / P)
+					dat += "<B>Metabolization Rate:</B> [T]u/minute<BR>"
+					dat += "<B>Overdose Threshold:</B> [initial(R.overdose_threshold) ? "[initial(R.overdose_threshold)]u" : "none"]<BR>"
+					dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
+					dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
+					var/datum/browser/popup = new(usr, "chem_master", name)
+					popup.set_content(dat)
+					popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+					popup.open(1)
+					return
+
+		else if(href_list["main"]) // Used to exit the analyze screen.
+			attack_hand(usr)
 			return
 
 		else if(href_list["add"])
 			if(href_list["amount"])
 				var/id = href_list["add"]
 				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
-				R.trans_id_to(src, id, amount)
+				if (amount > 0)
+					beaker.reagents.trans_id_to(src, id, amount)
 
 		else if(href_list["addcustom"])
 			var/id = href_list["addcustom"]
@@ -372,11 +396,11 @@
 			if(href_list["amount"])
 				var/id = href_list["remove"]
 				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
-				if(mode)
-					reagents.trans_id_to(beaker, id, amount)
-				else
-					reagents.remove_reagent(id, amount)
+				if (amount > 0)
+					if(mode)
+						reagents.trans_id_to(beaker, id, amount)
+					else
+						reagents.remove_reagent(id, amount)
 
 		else if(href_list["removecustom"])
 			var/id = href_list["removecustom"]
@@ -385,10 +409,6 @@
 				return
 			useramount = amt_temp
 			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
-
-		else if(href_list["main"])
-			attack_hand(usr)
-			return
 
 		else if(href_list["eject"])
 			if(beaker)
@@ -478,7 +498,7 @@
 		if(beaker.reagents.total_volume)
 			for(var/datum/reagent/G in beaker.reagents.reagent_list)
 				dat += "<LI>[G.name], [G.volume] Units - "
-				dat += "<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>Analyze</A> "
+				dat += "<A href='?src=\ref[src];analyze=1;reagent=\ref[G]'>Analyze</A> "
 				dat += "<A href='?src=\ref[src];add=[G.id];amount=1'>1</A> "
 				dat += "<A href='?src=\ref[src];add=[G.id];amount=5'>5</A> "
 				dat += "<A href='?src=\ref[src];add=[G.id];amount=10'>10</A> "
@@ -493,7 +513,7 @@
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
 			dat += "<LI>[N.name], [N.volume] Units - "
-			dat += "<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>Analyze</A> "
+			dat += "<A href='?src=\ref[src];analyze=1;reagent=\ref[N]'>Analyze</A> "
 			dat += "<A href='?src=\ref[src];remove=[N.id];amount=1'>1</A> "
 			dat += "<A href='?src=\ref[src];remove=[N.id];amount=5'>5</A> "
 			dat += "<A href='?src=\ref[src];remove=[N.id];amount=10'>10</A> "
@@ -830,7 +850,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	return
 
 
-/obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(stat & (NOPOWER|BROKEN)) return
 		if(src.beaker)
@@ -918,6 +938,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		var/list/juice_items = list (
 
 				//Juicer Stuff
+				/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("corn_starch" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
@@ -926,6 +947,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = list("lemonjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = list("orangejuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime = list("limejuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = list("watermelonjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = list("poisonberryjuice" = 0),
 		)
@@ -951,7 +973,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		return
 
 
-/obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 
 		if(default_unfasten_wrench(user, O))
 				return
@@ -981,12 +1003,12 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				usr << "The machine cannot hold anymore items."
 				return 1
 
-		//Fill machine with the plantbag!
-		if(istype(O, /obj/item/weapon/storage/bag/plants))
+		//Fill machine with a bag!
+		if(istype(O, /obj/item/weapon/storage/bag))
+				var/obj/item/weapon/storage/bag/B = O
 
-				for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-						O.contents -= G
-						G.loc = src
+				for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in B.contents)
+						B.remove_from_storage(G, src)
 						holdingitems += G
 						if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
 								user << "You fill the All-In-One grinder to the brim."
@@ -1284,7 +1306,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				O.reagents.trans_to(beaker, amount)
 				if(!O.reagents.total_volume)
 						remove_object(O)
-
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 /obj/machinery/chem_heater
 	name = "chemical heater"
 	density = 1
@@ -1294,22 +1317,22 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	use_power = 1
 	idle_power_usage = 40
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/temperature = 300
-	var/rate = 10 //heating/cooling rate, default is 10 kelvin per tick
+	var/desired_temp = 300
+	var/heater_coefficient = 0.10
 	var/on = FALSE
 
 /obj/machinery/chem_heater/New()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/chem_heater(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
 
 /obj/machinery/chem_heater/RefreshParts()
-	rate = 10
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		rate *= M.rating
+	heater_coefficient = 0.10
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		heater_coefficient *= M.rating
 
 /obj/machinery/chem_heater/process()
 	..()
@@ -1318,14 +1341,15 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	var/state_change = 0
 	if(on)
 		if(beaker)
-			if(beaker.reagents.chem_temp > temperature)
-				beaker.reagents.chem_temp = max(beaker.reagents.chem_temp-rate, temperature)
-				beaker.reagents.handle_reactions()
-				state_change = 1
-			else if(beaker.reagents.chem_temp < temperature)
-				beaker.reagents.chem_temp = min(beaker.reagents.chem_temp+rate, temperature)
-				beaker.reagents.handle_reactions()
-				state_change = 1
+			if(beaker.reagents.chem_temp > desired_temp)
+				beaker.reagents.chem_temp += min(-1, (desired_temp - beaker.reagents.chem_temp) * heater_coefficient)
+			if(beaker.reagents.chem_temp < desired_temp)
+				beaker.reagents.chem_temp += max(1, (desired_temp - beaker.reagents.chem_temp) * heater_coefficient)
+			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp) //stops stuff like 456.12312312302
+
+			beaker.reagents.handle_reactions()
+			state_change = 1
+
 	if(state_change)
 		SSnano.update_uis(src)
 
@@ -1345,7 +1369,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			stat |= NOPOWER
 	SSnano.update_uis(src)
 
-/obj/machinery/chem_heater/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/chem_heater/attackby(var/obj/item/I as obj, var/mob/user as mob, params)
 	if(isrobot(user))
 		return
 
@@ -1387,9 +1411,9 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	if(href_list["adjust_temperature"])
 		var/val = href_list["adjust_temperature"]
 		if(isnum(val))
-			temperature = Clamp(temperature+val, 0, 1000)
+			desired_temp = Clamp(desired_temp+val, 0, 1000)
 		else if(val == "input")
-			temperature = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
+			desired_temp = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
 		else
 			return 0
 		. = 1
@@ -1402,7 +1426,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	if(user.stat || user.restrained()) return
 
 	var/data[0]
-	data["targetTemp"] = temperature
+	data["targetTemp"] = desired_temp
 	data["isActive"] = on
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 
@@ -1423,3 +1447,47 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		ui = new(user, src, ui_key, "chem_heater.tmpl", "ChemHeater", 350, 270)
 		ui.set_initial_data(data)
 		ui.open()
+
+///////////////////////////////////////////////////////////////////////////
+
+/obj/machinery/chem_dispenser/drinks
+	name = "soda dispenser"
+	anchored = 1
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "soda_dispenser"
+	energy = 100
+	max_energy = 100
+	amount = 30
+	recharge_delay = 5
+	uiname = "Soda Dispenser"
+	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","tomatojuice")
+
+/obj/machinery/chem_dispenser/drinks/attackby(var/obj/item/O as obj, var/mob/user as mob)
+
+		if(default_unfasten_wrench(user, O))
+				return
+
+		if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
+				istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \
+				istype(O,/obj/item/weapon/reagent_containers/food/drinks/shaker))
+
+				if (beaker)
+						return 1
+				else
+						src.beaker =  O
+						user.drop_item()
+						O.loc = src
+						update_icon()
+						src.updateUsrDialog()
+						return 0
+
+
+
+/obj/machinery/chem_dispenser/drinks/beer
+	name = "booze dispenser"
+	anchored = 1
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "booze_dispenser"
+	uiname = "Booze Dispenser"
+	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequila","vermouth","cognac","ale")
+

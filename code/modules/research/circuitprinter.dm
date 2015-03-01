@@ -61,19 +61,19 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, var/M)
 	switch(M)
 		if("$glass")
-			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
 		if("$gold")
-			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
 		if("$diamond")
-			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
 		else
-			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
+			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0)
 
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials()
 	return g_amount + gold_amount + diamond_amount
 
-/obj/machinery/r_n_d/circuit_imprinter/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/circuit_imprinter/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if (shocked)
 		shock(user,50)
 	if (default_deconstruction_screwdriver(user, "circuit_imprinter_t", "circuit_imprinter", O))

@@ -66,6 +66,7 @@
 	new /obj/item/weapon/storage/firstaid/brute(src)
 	new /obj/item/weapon/storage/firstaid/regular(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
+	new /obj/item/weapon/defibrillator/compact/combat(src)
 	new /obj/machinery/bot/medbot(src)
 	return
 

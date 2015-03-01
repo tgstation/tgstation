@@ -16,7 +16,7 @@
 	density = 0
 	..()
 
-/obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user as mob)
+/obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user as mob, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -54,15 +54,18 @@
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			Dismantle(1)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
-		user.visible_message("<span class='notice'>[user] begins to drill apart the [name]!</span>", \
-							 "<span class='notice'>You begin to drill apart the [name]!</span>")
-		if(do_after(user,5))
-			if(!src.loc)
-				return
-			user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \
-								 "<span class='notice'>You destroy the [name]!</span>")
-			qdel(src)
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
+		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
+		if(!D.bcell.use(D.drillcost))
+			D.update_charge()
+			return
+		D.update_charge()
+		if(!src.loc)
+			return
+		user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \
+							 "<span class='notice'>You destroy the [name]!</span>")
+		D.playDigSound()
+		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored)
 		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
@@ -156,7 +159,7 @@
 	desc = "This statue has a sickening green colour."
 	icon_state = "eng"
 
-/obj/structure/statue/uranium/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/statue/uranium/attackby(obj/item/weapon/W, mob/user, params)
 	radiate()
 	..()
 
@@ -206,7 +209,7 @@
 		PlasmaBurn(500)
 	..()
 
-/obj/structure/statue/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/statue/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma statue ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma statue ignited by [user.ckey]([user]) in ([x],[y],[z])")
@@ -312,7 +315,7 @@
 	honk()
 	..()
 
-/obj/structure/statue/bananium/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/statue/bananium/attackby(obj/item/weapon/W, mob/user, params)
 	honk()
 	..()
 

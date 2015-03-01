@@ -308,7 +308,7 @@
 				break
 	src.updateSelfDialog()
 
-/obj/item/device/camera_bug/attackby(var/obj/item/W as obj,var/mob/living/user as mob)
+/obj/item/device/camera_bug/attackby(var/obj/item/W as obj,var/mob/living/user as mob, params)
 	if(istype(W,/obj/item/weapon/screwdriver) && expansion)
 		expansion.loc = get_turf(loc)
 		user << "You unscrew [expansion]."

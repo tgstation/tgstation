@@ -599,7 +599,7 @@
 /////////////////////////////////////////
 
 /datum/design/borg_upgrade_reset
-	name = "Cyborg Upgrade Module (Reset Module)"
+	name = "Cyborg Upgrade (Reset Module)"
 	id = "borg_upgrade_reset"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/reset
@@ -608,7 +608,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_rename
-	name = "Cyborg Upgrade Module (Rename Module)"
+	name = "Cyborg Upgrade (Rename Module)"
 	id = "borg_upgrade_rename"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rename
@@ -617,7 +617,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_restart
-	name = "Cyborg Upgrade Module (Restart Module)"
+	name = "Cyborg Upgrade (Restart Module)"
 	id = "borg_upgrade_restart"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/restart
@@ -626,7 +626,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_vtec
-	name = "Cyborg Upgrade Module (VTEC Module)"
+	name = "Cyborg Upgrade (VTEC Module)"
 	id = "borg_upgrade_vtec"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/vtec
@@ -636,7 +636,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_disablercooler
-	name = "Cyborg Upgrade Module (Rapid Disabler Cooling Module)"
+	name = "Cyborg Upgrade (Rapid Disabler Cooling Module)"
 	id = "borg_upgrade_disablercooler"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/disablercooler
@@ -646,18 +646,28 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_jetpack
-	name = "Cyborg Upgrade Module (Mining Jetpack)"
+	name = "Cyborg Upgrade (Mining Jetpack)"
 	id = "borg_upgrade_jetpack"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/jetpack
 	req_tech = list("engineering" = 4, "power" = 4)
-	materials = list("$metal"=10000,"$plasma"=12000,"$uranium" = 10000)
+	materials = list("$metal"=10000, "$plasma"=5000, "$uranium" = 6000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_diamonddrill
+	name = "Cyborg Upgrade (Diamond Drill)"
+	id = "borg_upgrade_diamonddrill"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/ddrill
+	req_tech = list("engineering" = 5, "materials" = 5)
+	materials = list("$metal"=10000, "$diamond"=3750)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_syndicate_module
-	name = "Borg Illegal Weapons Upgrade"
-	desc = "Allows for the construction of illegal upgrades for cyborgs"
+	name = "Cyborg Illegal Upgrades Module"
+	desc = "Allows for the construction of restricted upgrades for cyborgs"
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "syndicate" = 3)

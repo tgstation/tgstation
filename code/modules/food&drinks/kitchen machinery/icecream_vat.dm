@@ -87,7 +87,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/icecream_vat/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/icecream_vat/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/icecream))
 		var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = O
 		if(!I.ice_creamed)
@@ -188,8 +188,8 @@
 	ice_creamed = 1
 
 #undef ICECREAM_VANILLA
-#undef FLAVOUR_CHOCOLATE
-#undef FLAVOUR_STRAWBERRY
-#undef FLAVOUR_BLUE
+#undef ICECREAM_CHOCOLATE
+#undef ICECREAM_STRAWBERRY
+#undef ICECREAM_BLUE
 #undef CONE_WAFFLE
 #undef CONE_CHOC

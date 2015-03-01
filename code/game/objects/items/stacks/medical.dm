@@ -36,8 +36,10 @@
 		if(stop_bleeding)
 			if(H.bleedsuppress)
 				user << "[H]'s bleeding is already bandaged."
-			if(!H.blood_max)
+				return
+			else if(!H.blood_max)
 				user << "[H] isn't bleeding."
+				return
 
 	if(isliving(M))
 		if(!M.can_inject(user, 1))
@@ -100,6 +102,11 @@
 	singular_name = "improvised gauze"
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
 	stop_bleeding = 900
+
+/obj/item/stack/medical/gauze/cyborg/
+	m_amt = 0
+	is_cyborg = 1
+	cost = 250
 
 /obj/item/stack/medical/ointment
 	name = "ointment"

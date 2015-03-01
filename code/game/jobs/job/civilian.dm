@@ -209,7 +209,7 @@ Janitor
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	var/global/janitors = 1
+	var/global/janitors = 0
 
 	default_pda = /obj/item/device/pda/janitor
 	default_headset = /obj/item/device/radio/headset/headset_srv

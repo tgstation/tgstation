@@ -27,7 +27,13 @@
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
 
-/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
+	return
+
+/obj/item/seeds/proc/on_chem_reaction(var/datum/reagents/S)  //in case seeds have some special interaction with special chems
+	return
+
+/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "*** <B>[plantname]</B> ***"
 		user << "-Plant Endurance: <span class='notice'> [endurance]</span>"
@@ -38,6 +44,10 @@
 		user << "-Plant Production: <span class='notice'> [production]</span>"
 		if(potency != -1)
 			user << "-Plant Potency: <span class='notice'> [potency]</span>"
+		var/list/text_strings = get_analyzer_text()
+		if(text_strings)
+			for(var/string in text_strings)
+				user << string
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
@@ -83,7 +93,7 @@
 	var/factions = null
 	var/contains_sample = 0
 
-/obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W,/obj/item/weapon/reagent_containers/syringe))
 		if(!contains_sample)
 			for(var/datum/reagent/blood/bloodSample in W.reagents.reagent_list)
@@ -1073,26 +1083,64 @@
 	plant_type = 1
 	rarity = 30
 	var/list/mutations = list()
-	var/mutating
 
 /obj/item/seeds/kudzuseed/New(loc, obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/parent)
 	..()
 	if(parent)
 		mutations = parent.mutations
-		mutating = parent.mutating
 
 /obj/item/seeds/kudzuseed/harvest()
 	var/list/prod = ..()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/K in prod)
 		K.mutations = mutations
-		K.mutating = prob(15)
 
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
-	new /obj/effect/spacevine_controller(user.loc, mutations)
+	new /obj/effect/spacevine_controller(user.loc, mutations, potency, production)
 	qdel(src)
+
+/obj/item/seeds/kudzuseed/get_analyzer_text()
+	var/list/mut_text = list()
+	var/text_string = ""
+	for(var/datum/spacevine_mutation/SM in mutations)
+		text_string += "[(text_string == "") ? "" : ", "][SM.name]"
+	mut_text += "-Plant Mutations: [(text_string == "") ? "None" : text_string]"
+	return mut_text
+
+/obj/item/seeds/kudzuseed/on_chem_reaction(var/datum/reagents/S)
+
+	var/list/temp_mut_list = list()
+
+	if(S.has_reagent("sterilizine", 5))
+		for(var/datum/spacevine_mutation/SM in mutations)
+			if(SM.quality == NEGATIVE)
+				temp_mut_list += SM
+		if(prob(20))
+			mutations.Remove(pick(temp_mut_list))
+		temp_mut_list.Cut()
+	if(S.has_reagent("fuel", 5))
+		for(var/datum/spacevine_mutation/SM in mutations)
+			if(SM.quality == POSITIVE)
+				temp_mut_list += SM
+		if(prob(20))
+			mutations.Remove(pick(temp_mut_list))
+		temp_mut_list.Cut()
+	if(S.has_reagent("phenol", 5))
+		for(var/datum/spacevine_mutation/SM in mutations)
+			if(SM.quality == MINOR_NEGATIVE)
+				temp_mut_list += SM
+		if(prob(20))
+			mutations.Remove(pick(temp_mut_list))
+	if(S.has_reagent("blood", 15))
+		production += rand(15, -5)
+	if(S.has_reagent("amatoxin", 5))
+		production += rand(5, -15)
+	if(S.has_reagent("plasma", 5))
+		potency += rand(5, -15)
+	if(S.has_reagent("holywater", 10))
+		potency += rand(15, -5)
 
 /obj/item/seeds/chilighost
 	name = "pack of ghost chili seeds"

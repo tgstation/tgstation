@@ -57,7 +57,7 @@
 		close()
 	add_fingerprint(user)
 
-/obj/structure/bodycontainer/attackby(P as obj, mob/user as mob)
+/obj/structure/bodycontainer/attackby(P as obj, mob/user as mob, params)
 	if (istype(P, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_hand() != P)
@@ -208,7 +208,7 @@ Crematorium Switch
 		usr << "<span class='danger'>Access denied.</span>"
 	return
 
-/obj/machinery/crema_switch/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/crema_switch/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(W.GetID())
 		attack_hand(user)
 	else

@@ -12,6 +12,13 @@
 	select_fire(user)
 	update_icon()
 
+/obj/item/weapon/gun/energy/gun/hos
+	desc = "This is a modern recreation of the antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time, its also expensive."
+	icon_state = "hoslaser"
+	item_state = null
+	force = 10
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
+
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "advanced energy gun"
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
@@ -20,13 +27,12 @@
 	var/lightfail = 0
 	var/charge_tick = 0
 	modifystate = 0
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	can_flashlight = 0
 	pin = null
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/Destroy()
@@ -110,5 +116,14 @@
 
 /obj/item/weapon/gun/energy/gun/turret
 	name = "hybrid turret gun"
-	desc = "A basic hybrid energy gun with two settings: Stun and kill."
+	desc = "A heavy hybrid energy cannon with two settings: Stun and kill."
+	icon_state = "turretlaser"
+	slot_flags = null
+	w_class = 5
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	heavy_weapon = 1
+	can_flashlight = 0
+	trigger_guard = 0
+
+obj/item/weapon/gun/energy/gun/turret/update_icon()
+	icon_state = initial(icon_state)
