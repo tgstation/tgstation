@@ -122,7 +122,9 @@
 		if(H.client && H.client.prefs.allow_midround_antag)
 			antag_canadates += H
 
-	if(!antag_canadates)	return 1
+	if(!antag_canadates)
+		message_admins("The roundtype has been converted, antagonists may have been created")
+		return 1
 
 	antag_canadates = shuffle(antag_canadates)
 
@@ -132,6 +134,8 @@
 		replacementmode.restricted_jobs += "Assistant"
 	for(var/mob/living/carbon/human/H in antag_canadates)
 		replacementmode.make_antag_chance(H)
+
+	message_admins("The roundtype has been converted, antagonists may have been created")
 
 	return 1
 
