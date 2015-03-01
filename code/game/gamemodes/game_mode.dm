@@ -110,9 +110,9 @@
 
 	var/list/living_crew = list()
 
-	for(var/mob/mob in player_list)
-		if(mob in living_mob_list && mob.ckey in joined_player_list)
-			living_crew += mob
+	for(var/mob/Player in mob_list)
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+			living_crew++
 	if(living_crew.len / joined_player_list.len <= 0.7) //If a lot of the player base died, we start fresh
 		return 0
 
