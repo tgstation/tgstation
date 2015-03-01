@@ -345,8 +345,7 @@
 
 // CHECK PRESSURE
 /obj/machinery/door/firedoor/process()
-	if(1)
-		return ..()
+	..()
 
 	if(density)
 		var/changed = 0
