@@ -1,5 +1,5 @@
 author: Vekter
 
 delete-after: True
-
+changes: 
   - rscadd: "Chemists, Geneticists, Virologists, Scientists, and Botanists will now spawn with alternative backpacks and satchels in their lockers. Try them out!"

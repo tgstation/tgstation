@@ -1,0 +1,6 @@
+author: Iamgoofball
+
+delete-after: True
+changes: 
+  - bugfix: "Fixes the recipe for meth."
+  - bugfix: "Fixes sorium blobs flinging themselves."

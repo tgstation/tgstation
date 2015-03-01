@@ -37,4 +37,3 @@ changes:
   - tweak: 'This will prevent any player who has never connected before from connecting. (Admins are exempt)'
   - tweak: 'Can be enabled per-round by any admin with +SERVER or for longer periods via the config.'
   - recadd: 'Also adds some other config options relating to new joins, server operators should consult their configuration file for more details.'
-  

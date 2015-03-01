@@ -1,0 +1,5 @@
+author: Paprika
+
+delete-after: True
+changes: 
+  - rscadd: "Messages with two exclamation marks will be yelled in bold."
