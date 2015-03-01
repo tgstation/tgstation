@@ -108,12 +108,12 @@
 			if(SSshuttle.emergency.timeLeft(1) < initial(SSshuttle.emergencyCallTime)*0.5)
 				return 1
 
-	var/list/living_crew = list()
+	var/living_crew = 0
 
 	for(var/mob/Player in mob_list)
 		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
 			living_crew++
-	if(living_crew.len / joined_player_list.len <= 0.7) //If a lot of the player base died, we start fresh
+	if(living_crew / joined_player_list.len <= 0.7) //If a lot of the player base died, we start fresh
 		return 0
 
 	var/list/antag_canadates = list()
