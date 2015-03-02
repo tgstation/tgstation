@@ -15,6 +15,7 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+	can_flashlight = 1
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -195,3 +196,102 @@
 	desc = "Pukish armor."	//classy.
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
+
+//LightToggle
+
+/obj/item/clothing/suit/armor/update_icon()
+	if(F)
+		if(F.on)
+			overlays += "flight-[initial(icon_state)]-on"
+		else
+			overlays += "flight-[initial(icon_state)]"
+	return
+
+/obj/item/clothing/suit/armor/ui_action_click()
+	toggle_gunlight()
+
+/obj/item/clothing/suit/armor/attackby(var/obj/item/A as obj, mob/user as mob, params)
+	if(istype(A, /obj/item/device/flashlight/seclite))
+		var/obj/item/device/flashlight/seclite/S = A
+		if(can_flashlight)
+			if(!F)
+				if(user.l_hand != src && user.r_hand != src)
+					user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+					return
+				user.drop_item()
+				user << "<span class='notice'>You click [S] into place on [src].</span>"
+				if(S.on)
+					SetLuminosity(0)
+				F = S
+				A.loc = src
+				update_icon()
+				update_gunlight(user)
+				verbs += /obj/item/clothing/suit/armor/proc/toggle_gunlight
+
+	if(istype(A, /obj/item/weapon/screwdriver))
+		if(F)
+			if(user.l_hand != src && user.r_hand != src)
+				user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+				return
+			for(var/obj/item/device/flashlight/seclite/S in src)
+				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+				F = null
+				S.loc = get_turf(user)
+				update_gunlight(user)
+				S.update_brightness(user)
+				update_icon()
+				verbs -= /obj/item/clothing/suit/armor/proc/toggle_gunlight
+	..()
+	return
+
+/obj/item/clothing/suit/armor/proc/toggle_gunlight()
+	set name = "Toggle Armorlight"
+	set category = "Object"
+	set desc = "Click to toggle your armor's attached flashlight."
+
+	if(!F)
+		return
+
+	var/mob/living/carbon/human/user = usr
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]."
+	F.on = !F.on
+	user << "<span class='notice'>You toggle the armorlight [F.on ? "on":"off"].</span>"
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	update_gunlight(user)
+	return
+
+/obj/item/clothing/suit/armor/proc/update_gunlight(var/mob/user = null)
+	if(F)
+		action_button_name = "Toggle Armorlight"
+		if(F.on)
+			if(loc == user)
+				user.AddLuminosity(F.brightness_on)
+			else if(isturf(loc))
+				SetLuminosity(F.brightness_on)
+		else
+			if(loc == user)
+				user.AddLuminosity(-F.brightness_on)
+			else if(isturf(loc))
+				SetLuminosity(0)
+		update_icon()
+	else
+		action_button_name = null
+		if(loc == user)
+			user.AddLuminosity(-5)
+		else if(isturf(loc))
+			SetLuminosity(0)
+		return
+
+/obj/item/clothing/suit/armor/pickup(mob/user)
+	if(F)
+		if(F.on)
+			user.AddLuminosity(F.brightness_on)
+			SetLuminosity(0)
+
+/obj/item/clothing/suit/armor/dropped(mob/user)
+	if(F)
+		if(F.on)
+			user.AddLuminosity(-F.brightness_on)
+			SetLuminosity(F.brightness_on)
