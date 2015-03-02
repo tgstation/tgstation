@@ -132,10 +132,12 @@
 		replacementmode.restricted_jobs += replacementmode.protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
-	for(var/mob/living/carbon/human/H in antag_canadates)
-		replacementmode.make_antag_chance(H)
 
-	message_admins("The roundtype has been converted, antagonists may have been created")
+	spawn(rand(1800,4200)) //somewhere between 3 and 7 minutes from now
+		for(var/mob/living/carbon/human/H in antag_canadates)
+			replacementmode.make_antag_chance(H)
+
+		message_admins("The roundtype has been converted, antagonists may have been created")
 
 	return 1
 
