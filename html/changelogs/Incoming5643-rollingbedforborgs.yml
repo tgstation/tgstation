@@ -1,6 +1,0 @@
-author: Incoming5643
-
-delete-after: True
-
-changes: 
-  - rscadd: "Medical borgs now have access to a deployable onboard roller bed. Should the bed become lost, any roller bed may be used in its place."

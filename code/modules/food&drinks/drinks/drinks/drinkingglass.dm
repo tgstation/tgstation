@@ -518,7 +518,7 @@
 				name = "shot of nothing"
 				desc = "The mime insists there's booze in the glass. You're not so sure."
 			if ("goldschlager")
-				icon_state = "shotglassschlag"
+				icon_state = "shotglassgold"
 				name = "shot of goldschlager"
 				desc = "Yup. You're officially a college girl."
 			if ("cognac")

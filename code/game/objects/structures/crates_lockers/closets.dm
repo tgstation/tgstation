@@ -260,7 +260,7 @@
 	src.add_fingerprint(user)
 
 	if(!src.toggle())
-		usr << "<span class='notice'>It won't budge!</span>"
+		user << "<span class='notice'>It won't budge!</span>"
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)

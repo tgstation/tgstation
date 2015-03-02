@@ -33,10 +33,6 @@
 		return 0
 
 	if(M == user)
-		if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
-			M << "<span class='notice'>You don't feel like drinking any more sugary drink at the moment.</span>"
-			return 0
-
 		M << "<span class='notice'>You swallow a gulp of [src].</span>"
 		if(reagents.total_volume)
 			reagents.reaction(M, INGEST)
@@ -94,6 +90,16 @@
 				reagents.add_reagent(refill, trans)
 
 	return
+
+/obj/item/weapon/reagent_containers/food/drinks/attackby(var/obj/item/I, mob/user as mob, params)
+	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
+		return
+	if(is_hot(I))
+		var/added_heat = (is_hot(I) / 100) //ishot returns a temperature
+		if(src.reagents)
+			src.reagents.chem_temp += added_heat
+			user << "<span class='notice'>You heat [src] with [I].</span>"
+			src.reagents.handle_reactions()
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END

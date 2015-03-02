@@ -104,31 +104,28 @@
 	else
 		clear_alert("alien_fire")
 
-/mob/living/carbon/alien/handle_mutations_and_radiation()
 
-	// Aliens love radiation nom nom nom
-	if (radiation)
-		if (radiation > 100)
-			radiation = 100
+/mob/living/carbon/alien/ex_act(severity, target)
+	..()
 
-		if (radiation < 0)
-			radiation = 0
+	switch (severity)
+		if (1.0)
+			gib()
+			return
 
-		switch(radiation)
-			if(0 to 50)
-				radiation--
-				if(prob(25))
-					adjustToxLoss(1)
+		if (2.0)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+			adjustEarDamage(30,120)
 
-			if(50 to 75)
-				radiation -= 2
-				adjustToxLoss(1)
-				if(prob(5))
-					radiation -= 5
+		if(3.0)
+			adjustBruteLoss(30)
+			if (prob(50))
+				Paralyse(1)
+			adjustEarDamage(15,60)
 
-			if(75 to 100)
-				radiation -= 3
-				adjustToxLoss(3)
+	updatehealth()
+
 
 /mob/living/carbon/alien/handle_fire()//Aliens on fire code
 	if(..())

@@ -1,8 +1,11 @@
 // This code handles different species in the game.
 
-#define SPECIES_LAYER			23
-#define BODY_LAYER				22
-#define HAIR_LAYER				8
+#define SPECIES_LAYER			26
+#define BODY_BEHIND_LAYER		25
+#define BODY_LAYER				24
+#define BODY_ADJ_LAYER			23
+#define HAIR_LAYER				9
+#define BODY_FRONT_LAYER		2
 
 #define TINT_IMPAIR 2
 #define TINT_BLIND 3
@@ -43,6 +46,8 @@
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 
 	var/say_mod = "says"	// affects the speech message
+
+	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
 
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
@@ -87,19 +92,24 @@
 
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 
+	if(!config.mutant_colors)
+		H.dna.mutant_color = default_color
+
 	if(MUTCOLORS in specflags)
 		var/image/spec_base
+		var/icon_state_string = "[id]_"
 		if(sexes)
-			spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = "[id]_[g]_s", "layer" = -SPECIES_LAYER)
+			icon_state_string += "[g]_s"
 		else
-			spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = "[id]_s", "layer" = -SPECIES_LAYER)
-		if(!config.mutant_colors)
-			H.dna.mutant_color = default_color
+			icon_state_string += "_s"
+
+		spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = icon_state_string, "layer" = -SPECIES_LAYER)
+
 		spec_base.color = "#[H.dna.mutant_color]"
 		standing = spec_base
 
 	if(standing)
-		H.overlays_standing[SPECIES_LAYER]	= standing
+		H.overlays_standing[SPECIES_LAYER]	+= standing
 
 	H.apply_overlay(SPECIES_LAYER)
 
@@ -172,6 +182,8 @@
 
 	var/list/standing	= list()
 
+	handle_mutant_bodyparts(H)
+
 	// lipstick
 	if(H.lip_style && LIPS in specflags)
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]_s", "layer" = -BODY_LAYER)
@@ -207,6 +219,53 @@
 	H.apply_overlay(BODY_LAYER)
 
 	return
+
+/datum/species/proc/handle_mutant_bodyparts(var/mob/living/carbon/human/H)
+	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
+	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	var/list/standing	= list()
+
+	H.remove_overlay(BODY_BEHIND_LAYER)
+	H.remove_overlay(BODY_ADJ_LAYER)
+	H.remove_overlay(BODY_FRONT_LAYER)
+
+	if(!mutant_bodyparts)
+		return
+
+	if("tail" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "tail"
+
+	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
+		if(H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE))
+			bodyparts_to_add -= "snout"
+
+	if(!bodyparts_to_add)
+		return
+
+	var/icon_state_string = "[id]_"
+	var/g = (H.gender == FEMALE) ? "f" : "m"
+	var/image/I
+
+	if(sexes)
+		icon_state_string += "[g]_s"
+	else
+		icon_state_string += "_s"
+
+	if(!config.mutant_colors)
+		H.dna.mutant_color = default_color
+
+	for(var/layer in relevent_layers)
+		for(var/bodypart in bodyparts_to_add)
+			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[icon_state_string]_[bodypart]_[layer]", "layer" =- layer)
+			I.color = "#[H.dna.mutant_color]"
+			standing += I
+		H.overlays_standing[layer] = standing.Copy()
+		standing = list()
+
+	H.apply_overlay(BODY_BEHIND_LAYER)
+	H.apply_overlay(BODY_ADJ_LAYER)
+	H.apply_overlay(BODY_FRONT_LAYER)
 
 /datum/species/proc/spec_life(var/mob/living/carbon/human/H)
 	return
@@ -390,7 +449,6 @@
 	////////
 
 /datum/species/proc/handle_chemicals_in_body(var/mob/living/carbon/human/H)
-	if(H.reagents) H.reagents.metabolize(H)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.disabilities & FAT)
@@ -442,22 +500,6 @@
 			H << "<span class='notice'>You no longer feel vigorous.</span>"
 		H.metabolism_efficiency = 1
 
-	if (H.drowsyness)
-		H.drowsyness--
-		H.eye_blurry = max(2, H.eye_blurry)
-		if (prob(5))
-			H.sleeping += 1
-			H.Paralyse(5)
-
-	H.confused = max(0, H.confused - 1)
-	// decrement dizziness counter, clamped to 0
-	if(H.resting)
-		H.dizziness = max(0, H.dizziness - 15)
-		H.jitteriness = max(0, H.jitteriness - 15)
-	else
-		H.dizziness = max(0, H.dizziness - 3)
-		H.jitteriness = max(0, H.jitteriness - 3)
-
 	H.updatehealth()
 
 	return
@@ -475,13 +517,6 @@
 
 		if(H.seer)
 			H.see_invisible = SEE_INVISIBLE_OBSERVER
-
-		if(H.mind)
-			if(H.mind.changeling)
-				H.hud_used.lingchemdisplay.invisibility = 0
-				H.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[H.mind.changeling.chem_charges]</font></div>"
-			else
-				H.hud_used.lingchemdisplay.invisibility = 101
 
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))
@@ -585,29 +620,17 @@
 
 /datum/species/proc/handle_mutations_and_radiation(var/mob/living/carbon/human/H)
 
-	if (H.radiation && !(RADIMMUNE in specflags))
-		if (H.radiation > 100)
-			H.radiation = 100
-			H.Weaken(10)
-			H << "<span class='danger'>You feel weak.</span>"
-			H.emote("collapse")
+	if(!(RADIMMUNE in specflags))
+		if(H.radiation)
+			if (H.radiation > 100)
+				H.Weaken(10)
+				H << "<span class='danger'>You feel weak.</span>"
+				H.emote("collapse")
 
-		if (H.radiation < 0)
-			H.radiation = 0
-
-		else
 			switch(H.radiation)
-				if(0 to 50)
-					H.radiation--
-					if(prob(25))
-						H.adjustToxLoss(1)
-						H.updatehealth()
 
 				if(50 to 75)
-					H.radiation -= 2
-					H.adjustToxLoss(1)
 					if(prob(5))
-						H.radiation -= 5
 						H.Weaken(3)
 						H << "<span class='danger'>You feel weak.</span>"
 						H.emote("collapse")
@@ -618,17 +641,14 @@
 								H.facial_hair_style = "Shaved"
 								H.hair_style = "Bald"
 								H.update_hair()
-					H.updatehealth()
 
 				if(75 to 100)
-					H.radiation -= 3
-					H.adjustToxLoss(3)
 					if(prob(1))
 						H << "<span class='danger'>You mutate!</span>"
 						randmutb(H)
 						domutcheck(H,null)
 						H.emote("gasp")
-					H.updatehealth()
+		return 1
 
 ////////////////
 // MOVE SPEED //
@@ -1017,20 +1037,9 @@
 				breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
 				breath = H.loc.remove_air(breath_moles)
+
 				// Handle chem smoke effect  -- Doohl
-				var/block = 0
-				if(H.wear_mask)
-					if(H.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
-						block = 1
-				if(H.glasses)
-					if(H.glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
-						block = 1
-				if(H.head)
-					if(H.head.flags & BLOCK_GAS_SMOKE_EFFECT)
-						block = 1
-
-				if(!block)
-
+				if(!H.has_smoke_protection())
 					for(var/obj/effect/effect/chem_smoke/smoke in view(1, H))
 						if(smoke.reagents.total_volume)
 							smoke.reagents.reaction(H, INGEST)
@@ -1044,12 +1053,12 @@
 				var/obj/location_as_object = H.loc
 				location_as_object.handle_internal_lifeform(H, 0)
 
-	handle_breath(breath, H)
+	check_breath(breath, H)
 
 	if(breath)
 		H.loc.assume_air(breath)
 
-/datum/species/proc/handle_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
+/datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
 		return
 
@@ -1142,11 +1151,11 @@
 				if(prob(20))
 					spawn(0) H.emote(pick("giggle", "laugh"))
 
-	handle_temperature(breath, H)
+	handle_breath_temperature(breath, H)
 
 	return 1
 
-/datum/species/proc/handle_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
+/datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
 	if( (abs(310.15 - breath.temperature) > 50) && !(mutations_list[COLDRES] in H.dna.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
@@ -1283,8 +1292,11 @@
 		H.update_fire()
 
 #undef SPECIES_LAYER
+#undef BODY_BEHIND_LAYER
 #undef BODY_LAYER
+#undef BODY_ADJ_LAYER
 #undef HAIR_LAYER
+#undef BODY_FRONT_LAYER
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

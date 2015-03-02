@@ -307,6 +307,16 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_path = /obj/item/clothing/glasses/meson
 	category = list("Equipement")
 
+/datum/design/engine_goggles
+	name = "Engineering Scanner Goggles"
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
+	id = "engine_goggles"
+	req_tech = list("materials" = 4, "magnets" = 3, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
+	build_path = /obj/item/clothing/glasses/meson/engine
+	category = list("Equipement")
+
 /datum/design/nvgmesons
 	name = "Night Vision Optical Meson Scanners"
 	desc = "Prototype meson scanners fitted with an extra sensor which amplifies the visible light spectrum and overlays it to the UHD display."
