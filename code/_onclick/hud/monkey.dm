@@ -137,8 +137,17 @@
 	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
 	mymob.blind.layer = 0
 
+	mymob.damageoverlay = new /obj/screen()
+	mymob.damageoverlay.icon = 'icons/mob/screen_full.dmi'
+	mymob.damageoverlay.icon_state = "oxydamageoverlay0"
+	mymob.damageoverlay.name = "dmg"
+	mymob.damageoverlay.blend_mode = BLEND_MULTIPLY
+	mymob.damageoverlay.screen_loc = "CENTER-7,CENTER-7"
+	mymob.damageoverlay.mouse_opacity = 0
+	mymob.damageoverlay.layer = 18.1 //The black screen overlay sets layer to 18 to display it, this one has to be just on top.
+
 	mymob.flash = new /obj/screen()
-	mymob.flash.icon = ui_style
+	mymob.flash.icon = 'icons/mob/screen_gen.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
 	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
