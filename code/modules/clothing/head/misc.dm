@@ -323,3 +323,10 @@
 	item_state = "jesterhat"
 	flags = FPRINT
 	flags_inv = HIDEEARS|HIDEHEADHAIR
+
+/obj/item/clothing/head/libertyhat
+	name = "Liberty Top Hat"
+	desc = "Show everyone just how patriotic you are."
+	icon_state = "libertyhat"
+	item_state = "libertyhat"
+	flags = FPRINT
