@@ -33,11 +33,15 @@
 			else if(role == "changeling")
 				message_say = "FOR THE HIVE!"
 			else if(role == "cultist")
-				message_say = "FOR NARSIE!"
+				message_say = "FOR NAR-SIE!"
+			else if(role == "revolutionary" || role == "head revolutionary")
+				message_say = "VIVA LA REVOLUTION!"
 	user.say(message_say)
 	target = user
 	message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) suicided with [src.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+	sleep(10)
 	explode(get_turf(user))
+	user.gib()
 	return .
 
 /obj/item/weapon/c4/attackby(var/obj/item/I, var/mob/user, params)
