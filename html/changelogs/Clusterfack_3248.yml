@@ -1,6 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- bugfix: You can no longer dupe cable coils from windoors
-- rscadd: Added plasma windoors, with strengths 3x and 4x times the base windoor strengths
-- tweak: Basic windoor health by 1/3rd to compensate for the new doors
