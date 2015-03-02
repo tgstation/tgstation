@@ -97,6 +97,8 @@
 	for(var/datum/game_mode/G in runnable_modes)
 		if(!G.reroll_friendly)	del(G)
 
+	SSshuttle.emergencyNoEscape = 0 //Time to get the fuck out of here
+
 	if(!runnable_modes)	return 0
 
 	var/list/datum/game_mode/replacementmode = pickweight(runnable_modes)
