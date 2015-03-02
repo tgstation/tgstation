@@ -1,0 +1,5 @@
+author: xxalpha
+delete-after: True
+changes:
+  - rscadd: "Added Engineering Scanner Goggles to Engivend, Engineering Secure Closets and Research."
+  - tweak: "Doubled T-ray scanner range."
