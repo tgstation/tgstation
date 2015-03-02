@@ -84,3 +84,12 @@
 	item_state = "hopcap"
 	icon_state = "hopcap"
 	flags_inv = 0
+
+/obj/item/clothing/head/helmet/aviatorhelmet
+	name = "Aviator Helmet"
+	desc = "Help the Bombardier!"
+	armor = list(melee = 25, bullet = 0, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
+	item_state = "aviator_helmet"
+	icon_state = "aviator_helmet"
+	flags_inv = HIDEEARS|HIDEHAIR
+	species_restricted = list("exclude","Vox")

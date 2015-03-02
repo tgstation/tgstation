@@ -419,3 +419,9 @@
 	desc = "Do I look like a waiter?"
 	icon_state = "kefkarobe"
 	item_state = "kefkarobe"
+
+/obj/item/clothing/suit/libertycoat
+	name = "Liberty Coat"
+	desc = "Smells faintly of freedom."
+	icon_state = "libertycoat"
+	item_state = "libertycoat"
