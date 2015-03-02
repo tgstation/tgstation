@@ -203,7 +203,7 @@
 
 	overlays += I
 
-// cook() is called when microwaving the food
+// initialize_cooked_food() is called when microwaving the food
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)
