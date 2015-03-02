@@ -158,7 +158,7 @@
 	New()
 		..()
 		module = new /obj/item/weapon/robot_module/combat(src)
-		radio.config(list("Security" = 1))
+		radio.insert_key(new/obj/item/device/encryptionkey/headset_sec(radio))
 		base_icon = icon_state
 		icon_state = "droid-combat"
 		overlays -= "eyes"

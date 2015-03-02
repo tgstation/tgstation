@@ -69,7 +69,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	else
 		lawupdate = 0
 
-	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
@@ -110,7 +109,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		modtype=modules[0]
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
-	var/channels = list()
 
 	if(module)
 		return
@@ -134,7 +132,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	updatename()
 
 	choose_icon(6,module_sprites)
-	radio.config(channels)
 	base_icon = icon_state
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
