@@ -221,8 +221,8 @@
 /obj/structure/table/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(tableclimber)
-		tableclimber.Stun(2)
-		visible_message("You've been knocked off the table!")
+		tableclimber.Weaken(2)
+		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You've been knocked off the table", "You see [tableclimber.name] get knocked off the table</span>")
 
 
 /obj/structure/table/attack_tk() // no telehulk sorry
@@ -399,7 +399,7 @@
 			add_logs(user, src, "climbed onto")
 			user.Stun(2)
 			return 1
-			tableclimber = null
+	tableclimber = null
 	return 0
 
 
