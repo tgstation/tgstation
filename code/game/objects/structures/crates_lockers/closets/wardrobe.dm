@@ -38,9 +38,6 @@
 	new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/head/santa(src)
 	return
 
 /obj/structure/closet/wardrobe/pink
