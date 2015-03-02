@@ -44,6 +44,14 @@
 	throw_speed = 2
 	throw_range = 2
 	w_class = 1.0
+	var/cooldown = 0
+
+/obj/item/weapon/spacecash/attack_self(mob/user as mob)
+	if(user.r_hand == src || user.l_hand == src)
+		if(cooldown < world.time - 15)
+			cooldown = world.time
+			if(do_after(user, 15))
+				user.visible_message("<span class='rose'>[user] sniffs [src].</span>")
 
 /obj/item/weapon/spacecash/c10
 	icon_state = "spacecash10"
@@ -72,7 +80,6 @@
 /obj/item/weapon/spacecash/c1000
 	icon_state = "spacecash1000"
 	desc = "It's worth 1000 credits."
-
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"

@@ -22,7 +22,7 @@ Quartermaster
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargo(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
-	H.equip_to_slot_or_del(new /obj/item/weapon/clipboard(H), slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/spacecash/c100(H), slot_s_store)
 
 /*
 Cargo Technician

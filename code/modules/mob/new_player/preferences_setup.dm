@@ -128,7 +128,6 @@
 				clothes_s = new /icon('icons/mob/uniform.dmi', "qm_s")
 				clothes_s.Blend(new /icon('icons/mob/feet.dmi', "brown"), ICON_OVERLAY)
 				clothes_s.Blend(new /icon('icons/mob/eyes.dmi', "sun"), ICON_UNDERLAY)
-				clothes_s.Blend(new /icon('icons/mob/inhands/items_lefthand.dmi', "clipboard"), ICON_OVERLAY)
 				if(backbag == 2)
 					clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
 				if(backbag == 3)
