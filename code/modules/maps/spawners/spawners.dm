@@ -554,7 +554,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/cream,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla,
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
 		/obj/item/weapon/reagent_containers/food/drinks/coffee,

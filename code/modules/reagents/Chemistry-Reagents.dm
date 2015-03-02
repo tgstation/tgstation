@@ -3740,9 +3740,9 @@
 	description = "Yohoho and all that."
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/ethanol/tequilla
+/datum/reagent/ethanol/tequila
 	name = "Tequila"
-	id = "tequilla"
+	id = "tequila"
 	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 	color = "#FFFF91" // rgb: 255, 255, 145
 	//boozepwr = 2
@@ -3887,9 +3887,9 @@
 	description = "Anime's favorite drink."
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/ethanol/deadrum/tequilla
+/datum/reagent/ethanol/deadrum/tequila
 	name = "Tequila"
-	id = "tequilla"
+	id = "tequila"
 	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 	color = "#A8B0B7" // rgb: 168, 176, 183
 
@@ -4068,9 +4068,9 @@
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/ethanol/deadrum/tequilla_sunrise
+/datum/reagent/ethanol/deadrum/tequila_sunrise
 	name = "Tequila Sunrise"
-	id = "tequillasunrise"
+	id = "tequilasunrise"
 	description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
