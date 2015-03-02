@@ -135,12 +135,6 @@
 		else
 			pullin.icon_state = "pull0"
 
-	if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
-	if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-	if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
-	//NOTE: the alerts dont reset when youre out of danger. dont blame me,
-	//blame the person who coded them. Temporary fix added.
-
 
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 

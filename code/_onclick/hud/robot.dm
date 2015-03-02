@@ -110,13 +110,6 @@
 	adding += using
 	action_intent = using
 
-//Cell
-	mymobR.cells = new /obj/screen()
-	mymobR.cells.icon = 'icons/mob/screen_cyborg.dmi'
-	mymobR.cells.icon_state = "charge-empty"
-	mymobR.cells.name = "cell"
-	mymobR.cells.screen_loc = ui_toxin
-
 //Health
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen_cyborg.dmi'
@@ -131,25 +124,6 @@
 //Store
 	mymob.throw_icon = new /obj/screen/robot/store()
 	mymob.throw_icon.screen_loc = ui_borg_store
-
-//Temp
-	mymob.bodytemp = new /obj/screen()
-	mymob.bodytemp.icon_state = "temp0"
-	mymob.bodytemp.name = "body temperature"
-	mymob.bodytemp.screen_loc = ui_temp
-
-
-	mymob.oxygen = new /obj/screen()
-	mymob.oxygen.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.oxygen.icon_state = "oxy0"
-	mymob.oxygen.name = "oxygen"
-	mymob.oxygen.screen_loc = ui_oxygen
-
-	mymob.fire = new /obj/screen()
-	mymob.fire.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.fire.icon_state = "fire0"
-	mymob.fire.name = "fire"
-	mymob.fire.screen_loc = ui_fire
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen_cyborg.dmi'
@@ -176,7 +150,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list(mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymobR.cells, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list(mymob.zone_sel, mymob.hands, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
 
 	return
