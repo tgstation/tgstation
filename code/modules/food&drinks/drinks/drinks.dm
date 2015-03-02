@@ -95,6 +95,16 @@
 
 	return
 
+/obj/item/weapon/reagent_containers/food/drinks/attackby(var/obj/item/I, mob/user as mob, params)
+	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
+		return
+	if(is_hot(I))
+		var/added_heat = (is_hot(I) / 100) //ishot returns a temperature
+		if(src.reagents)
+			src.reagents.chem_temp += added_heat
+			user << "<span class='notice'>You heat [src] with [I].</span>"
+			src.reagents.handle_reactions()
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
