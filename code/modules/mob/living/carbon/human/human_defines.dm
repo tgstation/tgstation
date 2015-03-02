@@ -44,8 +44,6 @@
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
-	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
-
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine
