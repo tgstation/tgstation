@@ -39,6 +39,7 @@ datum/preferences
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
 	var/ghost_form = "ghost"
+	var/allow_midround_antag = 1
 
 	//character preferences
 	var/real_name						//our character's name
@@ -226,7 +227,7 @@ datum/preferences
 				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
 				dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(toggles & CHAT_GHOSTWHISPER) ? "Nearest Creatures" : "All Speech"]</a><br>"
 				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
-
+				dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
 				if(config.allow_Metadata)
 					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
 
@@ -784,6 +785,9 @@ datum/preferences
 
 					if("pull_requests")
 						toggles ^= CHAT_PULLR
+
+					if("allow_midround_antag")
+						toggles ^= MIDROUND_ANTAG
 
 					if("save")
 						save_preferences()

@@ -59,12 +59,11 @@ var/datum/subsystem/job/SSjob
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
-		if((job.current_positions < position_limit) || position_limit == -1)
-			Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
-			player.mind.assigned_role = rank
-			unassigned -= player
-			job.current_positions++
-			return 1
+		Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
+		player.mind.assigned_role = rank
+		unassigned -= player
+		job.current_positions++
+		return 1
 	Debug("AR has failed, Player: [player], Rank: [rank]")
 	return 0
 

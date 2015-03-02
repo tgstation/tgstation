@@ -255,7 +255,7 @@ datum/reagent/toxin/chloralhydrate
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
 	if(!data)
@@ -278,7 +278,7 @@ datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	id = "beer2"
 	description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
 	color = "#664300" // rgb: 102, 67, 0
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/beer2/on_mob_life(var/mob/living/M as mob)
 	if(!data)

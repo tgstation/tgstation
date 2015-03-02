@@ -102,6 +102,7 @@ PROBABILITY SANDBOX 0
 #CONTINUOUS_ROUND_REV
 #CONTINUOUS_ROUND_WIZ
 #CONTINUOUS_ROUND_MALF
+#CONTINUOUS_ROUND_BLOB
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000
@@ -222,3 +223,6 @@ ASSISTANT_CAP -1
 
 ## Starlight for exterior walls and breaches. Uncomment for starlight!
 STARLIGHT
+
+## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
+#GREY_ASSISTANTS

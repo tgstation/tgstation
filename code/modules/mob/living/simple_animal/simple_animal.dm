@@ -7,7 +7,7 @@
 	status_flags = CANPUSH
 
 	var/icon_living = ""
-	var/icon_dead = ""
+	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
 
 	var/list/speak = list()
