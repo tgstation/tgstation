@@ -46,10 +46,6 @@
 	scan()
 
 /obj/item/clothing/glasses/meson/engine/proc/scan()
-	var/mob/living/carbon/human/user = loc
-	if(user.glasses != src)
-		return
-
 	for(var/turf/T in range(1, loc))
 
 		if(!T.intact)
