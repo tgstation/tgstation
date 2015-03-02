@@ -12,6 +12,15 @@
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
 	can_flashlight = 1
+	attach_cam =  1
+
+	var/obj/machinery/camera/camera = null
+
+obj/item/clothing/head/helmet/New()
+	if(attach_cam)
+		camera = new /obj/machinery/camera(loc)
+		camera.c_tag = "Security Headset Camera [rand(1,999)]"
+		camera.network = list("SS13")
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
@@ -19,6 +28,7 @@
 	icon_state = "helmetalt"
 	item_state = "helmetalt"
 	armor = list(melee = 25, bullet = 80, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0)
+	attach_cam =  0
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -32,6 +42,7 @@
 	action_button_name = "Toggle Helmet Visor"
 	visor_flags = HEADCOVERSEYES|HEADCOVERSMOUTH
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE
+	attach_cam =  0
 
 /obj/item/clothing/head/helmet/riot/attack_self()
 	if(usr.canmove && !usr.stat && !usr.restrained())
@@ -61,6 +72,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
+	attach_cam =  0
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
@@ -73,6 +85,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
+	attach_cam =  0
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
@@ -82,12 +95,14 @@
 	icon_state = "roman"
 	item_state = "roman"
 	strip_delay = 100
+	attach_cam =  0
 
 /obj/item/clothing/head/helmet/roman/legionaire
 	name = "roman legionaire helmet"
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
+	attach_cam =  0
 
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"
@@ -96,6 +111,7 @@
 	flags = HEADCOVERSEYES|BLOCKHAIR
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	attach_cam =  0
 
 obj/item/clothing/head/helmet/redtaghelm
 	name = "red laser tag helmet"
@@ -106,6 +122,7 @@ obj/item/clothing/head/helmet/redtaghelm
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES
+	attach_cam =  0
 
 obj/item/clothing/head/helmet/bluetaghelm
 	name = "blue laser tag helmet"
@@ -116,6 +133,7 @@ obj/item/clothing/head/helmet/bluetaghelm
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES
+	attach_cam =  0
 
 //LightToggle
 

@@ -79,6 +79,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
+	var/attach_cam =  0
 
 //Mask
 /obj/item/clothing/mask

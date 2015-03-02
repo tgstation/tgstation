@@ -6,6 +6,7 @@
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 25)
 	strip_delay = 12
 	unacidable = 1
+	attach_cam =  0
 
 
 /obj/item/clothing/suit/space/space_ninja
