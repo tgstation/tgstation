@@ -80,8 +80,9 @@
 	if(traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
 		if(character.client.prefs.be_special & BE_TRAITOR)
 			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
-				if(!(character.job in ticker.mode.restricted_jobs))
-					add_latejoin_traitor(character.mind)
+				if(age_check(character.client))
+					if(!(character.job in ticker.mode.restricted_jobs))
+						add_latejoin_traitor(character.mind)
 	..()
 
 /datum/game_mode/traitor/proc/add_latejoin_traitor(var/datum/mind/character)

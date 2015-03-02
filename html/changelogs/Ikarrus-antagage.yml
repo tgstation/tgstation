@@ -1,0 +1,4 @@
+author: Ikarrus
+delete-after: True
+changes: 
+  - rscadd: "Antagonist roles are now restricted by player client age."

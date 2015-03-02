@@ -87,8 +87,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if(changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
 		if(character.client.prefs.be_special & BE_CHANGELING)
 			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
-				if(!(character.job in ticker.mode.restricted_jobs))
-					character.mind.make_Changling()
+				if(age_check(character.client))
+					if(!(character.job in ticker.mode.restricted_jobs))
+						character.mind.make_Changling()
 	..()
 
 /datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
