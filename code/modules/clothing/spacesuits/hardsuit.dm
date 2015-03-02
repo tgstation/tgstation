@@ -198,6 +198,7 @@
 	..()
 	flags ^= NODROP
 
+
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
 	name = "owl hardsuit helmet"
@@ -214,9 +215,7 @@
 	icon_state = "hardsuit1-owl"
 	item_state = "s_suit"
 	item_color = "owl"
-
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
-	icon_state = "hardsuit[on]-[item_color]"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
 
 
 	//Wizard hardsuit
