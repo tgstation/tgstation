@@ -26,6 +26,15 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGW") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ghost_pda()
+	set name = "Show/Hide GhostPDA"
+	set category = "Preferences"
+	set desc = ".Toggle Between seeing all mob pda messages, and only pda messages of nearby mobs"
+	prefs.toggles ^= CHAT_GHOSTPDA
+	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TGP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide RadioChatter"
 	set category = "Preferences"
