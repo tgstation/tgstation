@@ -69,8 +69,10 @@
 /obj/item/clothing/glasses/meson/engine/proc/invis_update()
 	for(var/obj/O in invis_objects)
 		if(!t_ray_on() || !(O in range(1, loc)))
-			O.invisibility = 101
 			invis_objects -= O
+			var/turf/T = O.loc
+			if(T.intact)
+				O.invisibility = 101
 
 /obj/item/clothing/glasses/meson/engine/proc/t_ray_on()
 	if(!istype(loc,/mob/living/carbon/human))
