@@ -7,6 +7,10 @@
 	var/obj/item/device/encryptionkey/keyslot = null//Borg radios can handle a single encryption key
 	subspace_transmission = 1
 
+/obj/item/device/radio/borg/proc/insert_key(obj/item/device/encryptionkey/key)
+	keyslot = key
+	recalculateChannels()
+
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
 	user.set_machine(src)
