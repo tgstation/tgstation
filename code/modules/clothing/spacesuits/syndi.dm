@@ -6,6 +6,7 @@
 	item_state = "syndicate"
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	canAttachCam =  0
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
