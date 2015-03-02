@@ -7,7 +7,7 @@
 	flags_inv = HIDEFACE
 	permeability_coefficient = 0.01
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
-	attach_cam =  0
+	canAttachCam =  0
 
 /obj/item/clothing/suit/space/captain
 	name = "captain's space suit"
@@ -30,7 +30,7 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
-	attach_cam =  0
+	canAttachCam =  0
 
 /obj/item/clothing/suit/space/deathsquad
 	name = "deathsquad suit"
@@ -50,7 +50,7 @@
 	icon_state = "beret_badge"
 	flags = STOPSPRESSUREDMAGE
 	flags_inv = 0
-	attach_cam =  0
+	canAttachCam =  0
 
 /obj/item/clothing/suit/space/deathsquad/officer
 	name = "officer's jacket"
@@ -69,7 +69,7 @@
 	desc = "An old, NASA Centcom branch designed, dark red space suit helmet."
 	icon_state = "void"
 	item_state = "void"
-	attach_cam =  0
+	canAttachCam =  0
 
 /obj/item/clothing/suit/space/nasavoid
 	name = "NASA Voidsuit"
@@ -86,7 +86,7 @@
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
 	flags = HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
-	attach_cam =  0
+	canAttachCam =  0
 
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"
@@ -108,7 +108,7 @@
 	flags = HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
 	strip_delay = 40
 	put_on_delay = 20
-	attach_cam =  0
+	canAttachCam =  0
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"
@@ -133,28 +133,28 @@
 	strip_delay = 130
 	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
 	brightness_on = 7
-	attach_cam =  0
+	canAttachCam =  0
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
 	desc = "Standard issue security helmet for the ERT."
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
 	item_color = "ert_security"
-	attach_cam =  0
+	canAttachCam =  0
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
 	desc = "Standard issue engineer helmet for the ERT."
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
 	item_color = "ert_engineer"
-	attach_cam =  0
+	canAttachCam =  0
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	desc = "Standard issue medical helmet for the ERT."
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
 	item_color = "ert_medical"
-	attach_cam =  0
+	canAttachCam =  0
 
 /obj/item/clothing/suit/space/ert
 	name = "emergency response team suit"
@@ -197,4 +197,4 @@
 	flash_protect = 0
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
-	attach_cam =  0
+	canAttachCam =  0
