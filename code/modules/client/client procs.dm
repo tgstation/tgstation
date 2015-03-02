@@ -167,6 +167,7 @@ var/next_external_rsc = 0
 	send_resources()
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
+		src << "<font color='green'><b>You have unread updates in the changelog.</b></font>"
 		winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
 
 
