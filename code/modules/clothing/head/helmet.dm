@@ -12,6 +12,16 @@
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
 	can_flashlight = 1
+	var/obj/machinery/camera/helmetCam = null
+	var/spawnWithHelmetCam = 0
+
+
+/obj/item/clothing/head/helmet/New()
+	..()
+	if(spawnWithHelmetCam)
+		helmetCam = new /obj/machinery/camera(src)
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
+		helmetCam.network = list("SS13")
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
@@ -120,13 +130,19 @@ obj/item/clothing/head/helmet/bluetaghelm
 //LightToggle
 
 /obj/item/clothing/head/helmet/update_icon()
+
+	var/state = "[initial(icon_state)]"
+	if(helmetCam)
+		state += "-cam" //"helmet-cam"
 	if(F)
 		if(F.on)
-			icon_state = "flight-[initial(icon_state)]-on"
-			usr.update_inv_head(0)
+			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
 		else
-			icon_state = "flight-[initial(icon_state)]"
-			usr.update_inv_head(0)
+			state += "-flight" //etc.
+
+	icon_state = state
+
+	usr.update_inv_head(0)
 	return
 
 /obj/item/clothing/head/helmet/ui_action_click()
@@ -158,6 +174,34 @@ obj/item/clothing/head/helmet/bluetaghelm
 				update_icon()
 				usr.update_inv_head(0)
 				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
+
+
+	if(istype(A, /obj/item/weapon/camera_assembly))
+		if(helmetCam)
+			user << "<span class='notice'>[src] already has a mounted camera.</span>"
+			return
+		user.drop_item()
+		helmetCam = new /obj/machinery/camera(src)
+		helmetCam.assembly = A
+		A.loc = helmetCam
+		helmetCam.c_tag = "Helmet-Mounted Camera ([user.name])([rand(1,999)])"
+		helmetCam.network = list("SS13")
+		update_icon()
+		user.visible_message("<span class='notice'>[user] attaches [A] to [src]</span>","<span class='notice'>You attach [A] to [src]</span>")
+		return
+
+	if(istype(A, /obj/item/weapon/crowbar))
+		if(!helmetCam)
+			..()
+			return
+		user.visible_message("<span class='notice'>[user] removes [helmetCam] from [src]</span>","<span class='notice'>You remove [helmetCam] from [src]</span>")
+		helmetCam.assembly.loc = get_turf(src)
+		helmetCam.assembly.state = 0//Not welded to a wall,. it was inside a helmet
+		qdel(helmetCam)
+		helmetCam = null
+		update_icon()
+		return
+
 	..()
 	return
 
@@ -207,8 +251,16 @@ obj/item/clothing/head/helmet/bluetaghelm
 			user.AddLuminosity(F.brightness_on)
 			SetLuminosity(0)
 
+
+/obj/item/clothing/head/helmet/equipped(mob/user)
+	if(helmetCam)
+		helmetCam.c_tag = "Helmet-Mounted Camera ([user.name])([rand(1,999)])"
+
 /obj/item/clothing/head/helmet/dropped(mob/user)
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+
+	if(helmetCam)
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
