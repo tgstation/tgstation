@@ -1,0 +1,6 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - tweak: "Cultist communications will now show the name and job of the speaker. Innate communications remain unchanged for balance."
+  - buxfix: "Fixed roundstart cultists not having the innate communications ability."
