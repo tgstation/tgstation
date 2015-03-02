@@ -108,12 +108,12 @@
 			if(SSshuttle.emergency.timeLeft(1) < initial(SSshuttle.emergencyCallTime)*0.5)
 				return 1
 
-	var/list/living_crew = list()
+	var/living_crew = 0
 
-	for(var/mob/mob in player_list)
-		if(mob in living_mob_list && mob.ckey in joined_player_list)
-			living_crew += mob
-	if(living_crew.len / joined_player_list.len <= 0.7) //If a lot of the player base died, we start fresh
+	for(var/mob/Player in mob_list)
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+			living_crew++
+	if(living_crew / joined_player_list.len <= 0.7) //If a lot of the player base died, we start fresh
 		return 0
 
 	var/list/antag_canadates = list()
@@ -122,7 +122,9 @@
 		if(H.client && H.client.prefs.allow_midround_antag)
 			antag_canadates += H
 
-	if(!antag_canadates)	return 1
+	if(!antag_canadates)
+		message_admins("The roundtype has been converted, antagonists may have been created")
+		return 1
 
 	antag_canadates = shuffle(antag_canadates)
 
@@ -130,8 +132,12 @@
 		replacementmode.restricted_jobs += replacementmode.protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
-	for(var/mob/living/carbon/human/H in antag_canadates)
-		replacementmode.make_antag_chance(H)
+
+	spawn(rand(1800,4200)) //somewhere between 3 and 7 minutes from now
+		for(var/mob/living/carbon/human/H in antag_canadates)
+			replacementmode.make_antag_chance(H)
+
+		message_admins("The roundtype has been converted, antagonists may have been created")
 
 	return 1
 
