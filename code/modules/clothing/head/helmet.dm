@@ -11,6 +11,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
+	can_flashlight = 1
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
@@ -115,3 +116,99 @@ obj/item/clothing/head/helmet/bluetaghelm
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES
+
+//LightToggle
+
+/obj/item/clothing/head/helmet/update_icon()
+	if(F)
+		if(F.on)
+			icon_state = "flight-[initial(icon_state)]-on"
+			usr.update_inv_head(0)
+		else
+			icon_state = "flight-[initial(icon_state)]"
+			usr.update_inv_head(0)
+	return
+
+/obj/item/clothing/head/helmet/ui_action_click()
+	toggle_helmlight()
+
+/obj/item/clothing/head/helmet/attackby(var/obj/item/A as obj, mob/user as mob, params)
+	if(istype(A, /obj/item/device/flashlight/seclite))
+		var/obj/item/device/flashlight/seclite/S = A
+		if(can_flashlight)
+			if(!F)
+				user.drop_item()
+				user << "<span class='notice'>You click [S] into place on [src].</span>"
+				if(S.on)
+					SetLuminosity(0)
+				F = S
+				A.loc = src
+				update_icon()
+				update_helmlight(user)
+				verbs += /obj/item/clothing/head/helmet/proc/toggle_helmlight
+
+	if(istype(A, /obj/item/weapon/screwdriver))
+		if(F)
+			for(var/obj/item/device/flashlight/seclite/S in src)
+				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+				F = null
+				S.loc = get_turf(user)
+				update_helmlight(user)
+				S.update_brightness(user)
+				update_icon()
+				usr.update_inv_head(0)
+				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
+	..()
+	return
+
+/obj/item/clothing/head/helmet/proc/toggle_helmlight()
+	set name = "Toggle Helmetlight"
+	set category = "Object"
+	set desc = "Click to toggle your helmet's attached flashlight."
+
+	if(!F)
+		return
+
+	var/mob/living/carbon/human/user = usr
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]."
+	F.on = !F.on
+	user << "<span class='notice'>You toggle the helmetlight [F.on ? "on":"off"].</span>"
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	update_helmlight(user)
+	return
+
+/obj/item/clothing/head/helmet/proc/update_helmlight(var/mob/user = null)
+	if(F)
+		action_button_name = "Toggle Helmetlight"
+		if(F.on)
+			if(loc == user)
+				user.AddLuminosity(F.brightness_on)
+			else if(isturf(loc))
+				SetLuminosity(F.brightness_on)
+		else
+			if(loc == user)
+				user.AddLuminosity(-F.brightness_on)
+			else if(isturf(loc))
+				SetLuminosity(0)
+		update_icon()
+	else
+		action_button_name = null
+		if(loc == user)
+			user.AddLuminosity(-5)
+		else if(isturf(loc))
+			SetLuminosity(0)
+		return
+
+/obj/item/clothing/head/helmet/pickup(mob/user)
+	if(F)
+		if(F.on)
+			user.AddLuminosity(F.brightness_on)
+			SetLuminosity(0)
+
+/obj/item/clothing/head/helmet/dropped(mob/user)
+	if(F)
+		if(F.on)
+			user.AddLuminosity(-F.brightness_on)
+			SetLuminosity(F.brightness_on)
