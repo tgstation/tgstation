@@ -556,6 +556,42 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
+	mutatelist = list(/obj/item/seeds/fourchantermycelium)
+
+/obj/item/seeds/fourchantermycelium
+	name = "pack of 4chanterelle mycelium"
+	desc = "This mycelium grows into 4chanterelle mushrooms."
+	icon_state = "mycelium-4chanter"
+	species = "4chanter"
+	plantname = "4Chanterelle Mushrooms"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/fourchanterelle
+	lifespan = 35
+	endurance = 20
+	maturation = 7
+	production = 1
+	yield = 5
+	potency = 15
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
+	mutatelist = list(/obj/item/seeds/eightchantermycelium)
+
+/obj/item/seeds/eightchantermycelium
+	name = "pack of 8chanterelle mycelium"
+	desc = "This mycelium grows into 8chanterelle mushrooms."
+	icon_state = "mycelium-8chanter"
+	species = "8chanter"
+	plantname = "8Chanterelle Mushrooms"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/eightchanterelle
+	lifespan = 35
+	endurance = 20
+	maturation = 7
+	production = 1
+	yield = 5
+	potency = 15
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
 
 /obj/item/seeds/towermycelium
 	name = "pack of tower-cap mycelium"

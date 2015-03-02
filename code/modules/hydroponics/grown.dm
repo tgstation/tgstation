@@ -1013,6 +1013,29 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	reagents.add_reagent("nutriment", 1 + round((potency / 25), 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/fourchanterelle
+	seed = /obj/item/seeds/fourchantermycelium
+	name = "4chanterelle cluster"
+	desc = "<I>4Chantharellus Toxarius</I>: These green toxic little shrooms sure look vile!"
+	icon_state = "4chanterelle"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/fourchanterelle/add_juice()
+	..()
+	reagents.add_reagent("toxin", 1 + round((potency / 25), 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/eightchanterelle
+	seed = /obj/item/seeds/eightchantermycelium
+	name = "8chanterelle cluster"
+	desc = "<I>8Chantharellus Viltoxarius</I>: These purple vile toxic little shrooms sure look like they'll rend your brain apart!"
+	icon_state = "8chanterelle"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/eightchanterelle/add_juice()
+	..()
+	reagents.add_reagent("venom", 1 + round((potency / 25), 1))
+	reagents.add_reagent("toxin", 1 + round((potency / 25), 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	seed = /obj/item/seeds/glowshroom
 	name = "glowshroom cluster"
