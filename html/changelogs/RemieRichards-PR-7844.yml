@@ -1,0 +1,12 @@
+author: RemieRichards
+
+delete-after: True
+
+  - rscadd: "Drones now see either Static, Black icons or Roguelike style lettering instead of actual mob icons"
+  - rscadd: "Icons for the above, from VG's SkowronX"
+  - rscadd: "Many icon procs for the above, from VG's ComicIronic"
+  - rscadd: "Drones moved into their own folder"
+  - tweak: "Drone.dm replaced with seperate files for each functionality"
+  - rscadd: "Drones now have 2 skins to choose from, Maintenance Drone (Current drones) and Repair Drone (A modified VG/Bay sprite)"
+  - rscadd: "Much more support for alternate skins on drones"
+  

@@ -8,11 +8,48 @@ Sorry Giacom. Please don't be mad :(
 		push_mob_back(src, A.push_dir)
 */
 
+
+/mob/living/New()
+	. = ..()
+	generateStaticOverlay()
+	if(staticOverlays.len)
+		for(var/mob/living/simple_animal/drone/D in player_list)
+			if(D && D.seeStatic)
+				if(D.staticChoice in staticOverlays)
+					D.staticOverlays |= staticOverlays[D.staticChoice]
+					D.client.images |= staticOverlays[D.staticChoice]
+				else //no choice? force static
+					D.staticOverlays |= staticOverlays["static"]
+					D.client.images |= staticOverlays["static"]
+
+
 /mob/living/Destroy()
-//	if(mind)
-//		mind.current = null
-	..()
+	. = ..()
+
+	for(var/mob/living/simple_animal/drone/D in player_list)
+		for(var/image/I in staticOverlays)
+			D.staticOverlays.Remove(I)
+			D.client.images.Remove(I)
+			del(I)
+	staticOverlays.len = 0
+
 	del(src)
+
+
+/mob/living/proc/generateStaticOverlay()
+	staticOverlays.Add(list("static", "blank", "letter"))
+	var/image/staticOverlay = image(getStaticIcon(new/icon(icon,icon_state)), loc = src)
+	staticOverlay.override = 1
+	staticOverlays["static"] = staticOverlay
+
+	staticOverlay = image(getBlankIcon(new/icon(icon, icon_state)), loc = src)
+	staticOverlay.override = 1
+	staticOverlays["blank"] = staticOverlay
+
+	staticOverlay = getLetterImage(src)
+	staticOverlay.override = 1
+	staticOverlays["letter"] = staticOverlay
+
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
