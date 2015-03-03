@@ -3,7 +3,7 @@
 	desc = "This curse will silence your target for a very long time."
 
 	school = "evocation"
-	charge_max = 600
+	charge_max = 300
 	invocation = "FU'K Y'U D'NY"
 	invocation_type = "shout"
 	range = 1
