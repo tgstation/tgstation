@@ -94,6 +94,12 @@
 	icon_state = "mime"
 	item_state = "mime"
 	species_fit = list("Vox")
+	var/muted = 0
+
+/obj/item/clothing/mask/gas/mime/treat_mask_message(var/message)
+	if(src.muted)
+		return("")
+	return message
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
