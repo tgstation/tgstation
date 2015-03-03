@@ -315,11 +315,11 @@
 					config.hard_popcap = text2num(value)
 				if("extreme_popcap")
 					config.extreme_popcap = text2num(value)
-				if("soft_popcap_message")
+				if("soft_message")
 					config.soft_popcap_message = value
-				if("hard_popcap_message")
+				if("hard_message")
 					config.hard_popcap_message = value
-				if("extreme_popcap_message")
+				if("extreme_message")
 					config.extreme_popcap_message = value
 				if("panic_bunker")
 					config.panic_bunker = 1
