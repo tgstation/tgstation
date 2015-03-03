@@ -93,3 +93,9 @@
 	icon_state = "aviator_helmet"
 	flags_inv = HIDEEARS|HIDEHAIR
 	species_restricted = list("exclude","Vox")
+
+/obj/item/clothing/head/helmet/piratelord
+	name = "pirate lord's helmet"
+	desc = "The headwear of an all powerful and bloodthirsty pirate lord. Simply looking at it sends chills down your spine."
+	armor = list(melee = 75, bullet = 75, laser = 75,energy = 75, bomb = 75, bio = 100, rad = 90)
+	icon_state = "piratelord"
