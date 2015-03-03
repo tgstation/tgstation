@@ -12,7 +12,7 @@
 	sparks_spread = 1
 	sparks_amt = 4
 
-	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	compatible_mobs = list(/mob/living/carbon/human)
 
 /spell/targeted/frenchcurse/cast(list/targets, mob/user = usr)
 	..()
