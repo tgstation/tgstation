@@ -261,10 +261,12 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
 			qdel(hotspot)
+	T.color = initial(T.color)
 	return
 
 datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
+	O.color = initial(O.color)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
@@ -274,6 +276,7 @@ datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 datum/reagent/water/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	if(!istype(M, /mob/living))
 		return
+	M.color = initial(M.color)
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(volume / 10))
 		if(M.fire_stacks <= 0)

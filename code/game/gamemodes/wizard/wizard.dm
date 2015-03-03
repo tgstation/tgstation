@@ -9,6 +9,7 @@
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
+	enemy_minimum_age = 14
 	var/use_huds = 0
 	var/finished = 0
 
@@ -194,11 +195,11 @@
 		return ..()
 
 	if(config.continuous_round_wiz)
-		if(!convert_roundtype())
+		round_converted = convert_roundtype()
+		if(!round_converted)
 			finished = 1
 			return 1
 		else
-			round_converted = 1
 			return ..()
 
 	finished = 1

@@ -98,6 +98,8 @@
 	..()
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
+			if(Proj.nodamage)
+				return
 			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
 			explosion(src.loc,-1,0,2, flame_range = 2)
