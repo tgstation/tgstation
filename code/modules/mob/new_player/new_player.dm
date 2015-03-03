@@ -251,7 +251,7 @@
 		return 0
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 		if(job.title == "Assistant")
-			if(isnum(player_age) && client.player_age <= 14) //Newbies can always be assistants
+			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
 				return 1
 			for(var/datum/job/J in SSjob.occupations)
 				if(J && J.current_positions < J.total_positions && J.title != job.title)
