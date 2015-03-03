@@ -91,12 +91,18 @@
 /obj/item/weapon/reagent_containers/glass/attackby(var/obj/item/I, mob/user as mob, params)
 	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
 		return
-	if(is_hot(I))
-		var/added_heat = (is_hot(I) / 100) //ishot returns a temperature
-		if(src.reagents)
-			src.reagents.chem_temp += added_heat
-			user << "<span class='notice'>You heat [src] with [I].</span>"
-			src.reagents.handle_reactions()
+	var/hotness = is_hot(I)
+	if(hotness)
+		var/added_heat = (hotness / 100) //ishot returns a temperature
+		if(reagents)
+			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
+				reagents.chem_temp += added_heat
+				user << "<span class='notice'>You heat [src] with [I].</span>"
+				reagents.handle_reactions()
+			else
+				user << "<span class='warning'>[src] is already hotter than [I].</span>"
+	..()
+
 
 /obj/item/weapon/reagent_containers/glass/beaker
 	name = "beaker"

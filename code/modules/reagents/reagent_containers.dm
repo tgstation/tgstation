@@ -77,3 +77,21 @@
 
 			return 0
 	return 1
+
+/obj/item/weapon/reagent_containers/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/egg)) //making dough
+		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = W
+		if(flags & OPENCONTAINER)
+			if(reagents)
+				if(reagents.has_reagent("flour"))
+					if(reagents.get_reagent_amount("flour") >= 15)
+						var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/dough(get_turf(src))
+						user << "<span class='notice'>You mix egg and flour to make some dough.</span>"
+						reagents.remove_reagent("flour", 15)
+						if(E.reagents)
+							E.reagents.trans_to(S,E.reagents.total_volume)
+						qdel(E)
+					else
+						user << "<span class='notice'>Not enough flour to make dough.</span>"
+			return
+	..()
