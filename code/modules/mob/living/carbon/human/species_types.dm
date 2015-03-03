@@ -281,7 +281,7 @@
 	id = "skeleton"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/skeleton
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,NOBLOOD)
 /*
  ZOMBIES
 */
@@ -293,7 +293,7 @@
 	say_mod = "moans"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/zombie
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,NOBLOOD)
 
 /datum/species/zombie/handle_speech(message)
 	var/list/message_list = text2list(message, " ")
