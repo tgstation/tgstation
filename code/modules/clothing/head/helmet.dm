@@ -199,7 +199,7 @@ obj/item/clothing/head/helmet/bluetaghelm
 		helmetCam = new /obj/machinery/camera(src)
 		helmetCam.assembly = A
 		A.loc = helmetCam
-		helmetCam.c_tag = "Helmet-Mounted Camera ([user.name])([rand(1,999)])"
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
 		helmetCam.network = list("SS13")
 		update_icon()
 		user.visible_message("<span class='notice'>[user] attaches [A] to [src]</span>","<span class='notice'>You attach [A] to [src]</span>")
