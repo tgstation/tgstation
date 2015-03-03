@@ -48,11 +48,12 @@
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/weapon/storage/box/ids(src)
 	new /obj/item/weapon/storage/box/ids(src)
-	new /obj/item/clothing/suit/armor/vest/alt(src)
-	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/device/megaphone/command(src)
+	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/mining_voucher(src)
+	new /obj/item/weapon/gun/energy/gun(src)
 	return
 
 
@@ -75,15 +76,18 @@
 	new /obj/item/clothing/under/hosparadefem(src)
 	new /obj/item/clothing/under/hosparademale(src)
 	new /obj/item/clothing/suit/armor/hos(src)
+	new /obj/item/clothing/under/rank/head_of_security/alt(src)
 	new /obj/item/clothing/head/HoS(src)
-	new /obj/item/clothing/glasses/hud/security/eyepatch(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
+	new /obj/item/device/megaphone/sec(src)
+	new /obj/item/tapeproj/security(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/gun/energy/gun/advtaser(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
+	new /obj/item/weapon/gun/energy/gun/hos(src)
 	return
 
 
@@ -103,16 +107,18 @@
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/clothing/suit/armor/vest/warden/(src)
 	new /obj/item/clothing/head/warden(src)
-	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
 	new /obj/item/clothing/head/beret/sec/navywarden(src)
+	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
+	new /obj/item/clothing/under/rank/warden/navyblue(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/zipties(src)
+	new /obj/item/tapeproj/security(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/gun/energy/gun/advtaser(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
+	new /obj/item/weapon/gun/energy/gun/advtaser(src)
 	return
 
 
@@ -203,9 +209,9 @@
 	new /obj/item/clothing/head/fedora(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/weapon/storage/box/evidence(src)
-	new /obj/item/weapon/clipboard(src)
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
 	new /obj/item/device/detective_scanner(src)
+	new /obj/item/tapeproj/security(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/ammo_box/c38(src)

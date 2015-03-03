@@ -271,3 +271,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		else
 			M.do_attack_animation(src)
 			return 1
+
+/mob/living/incapacitated()
+	if(stat || paralysis || stunned || weakened || restrained())
+		return 1

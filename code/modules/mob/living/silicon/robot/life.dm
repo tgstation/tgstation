@@ -14,7 +14,11 @@
 		update_items()
 	if (src.stat != DEAD) //still using power
 		use_power()
+
 	update_canmove()
+
+	update_gravity(mob_has_gravity())
+
 	handle_fire()
 
 

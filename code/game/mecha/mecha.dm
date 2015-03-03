@@ -344,6 +344,8 @@ obj/mecha/proc/can_use(mob/user)
 	return ..()
 
 /obj/mecha/relaymove(mob/user,direction)
+	if(!direction)
+		return
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		user << "You climb out from [src]"
@@ -660,7 +662,7 @@ obj/mecha/proc/can_use(mob/user)
 ////// AttackBy //////
 //////////////////////
 
-/obj/mecha/attackby(obj/item/W as obj, mob/user as mob)
+/obj/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
 
 	if(istype(W, /obj/item/device/mmi))
 		if(mmi_move_inside(W,user))

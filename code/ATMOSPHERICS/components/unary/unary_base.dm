@@ -69,6 +69,10 @@ Housekeeping and pipe network stuff below
 		showpipe = 1
 	update_icon()
 
+/obj/machinery/atmospherics/unary/construction()
+	..()
+	parent.update = 1
+
 /obj/machinery/atmospherics/unary/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(..())
 		initialize_directions = dir

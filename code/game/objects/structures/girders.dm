@@ -7,7 +7,7 @@
 	var/state = 0
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 
-/obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wrench) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
@@ -39,9 +39,15 @@
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
-		user << "<span class='notice'>You drill through the girder!</span>"
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
+		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
+		if(!D.bcell.use(D.drillcost))
+			D.update_charge()
+			return
+		D.update_charge()
+		user << "<span class='notice'>You smash through the girder!</span>"
 		new /obj/item/stack/sheet/metal(get_turf(src))
+		D.playDigSound()
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
@@ -255,7 +261,7 @@
 	density = 1
 	layer = 2
 
-/obj/structure/cultgirder/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/cultgirder/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		user << "<span class='notice'>Now disassembling the girder...</span>"
@@ -273,12 +279,18 @@
 			transfer_fingerprints_to(R)
 			qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
-		user << "<span class='notice'>You drill through the girder!</span>"
-		if(do_after(user, 5))
-			var/obj/effect/decal/remains/human/R = new (get_turf(src))
-			transfer_fingerprints_to(R)
-			qdel(src)
+
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
+		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
+		if(!D.bcell.use(D.drillcost))
+			D.update_charge()
+			return
+		D.update_charge()
+		user << "<span class='notice'>Your jackhammer smashes through the girder!</span>"
+		var/obj/effect/decal/remains/human/R = new (get_turf(src))
+		transfer_fingerprints_to(R)
+		D.playDigSound()
+		qdel(src)
 
 /obj/structure/cultgirder/blob_act()
 	if(prob(40))

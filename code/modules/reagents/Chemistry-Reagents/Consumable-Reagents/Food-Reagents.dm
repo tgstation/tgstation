@@ -41,7 +41,7 @@ datum/reagent/consumable/vitamin/on_mob_life(var/mob/living/M as mob)
 	if(prob(50))
 		M.heal_organ_damage(1,1)
 	if(M.satiety < 600)
-		M.satiety += 20
+		M.satiety += 30
 	..()
 	return
 
@@ -51,14 +51,20 @@ datum/reagent/consumable/sugar
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	metabolization_rate = 2 * REAGENTS_METABOLISM
+	overdose_threshold = 200 // Hyperglycaemic shock
 
-datum/reagent/consumable/sugar/on_mob_life(var/mob/living/M as mob)
-	if(M.satiety > -200)
-		M.satiety -= 20 //eating sugar makes you more hungry over time by making your hunger drop faster.
-	M.nutrition += max(((NUTRITION_LEVEL_FED + 50) - M.nutrition )/100, 0) * nutriment_factor // sugar doesn't help your hunger if your stomach is nearly full
-	holder.remove_reagent(src.id, metabolization_rate)
+datum/reagent/consumable/sugar/overdose_start(var/mob/living/M as mob)
+	M << "<span class = 'userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
+	M.sleeping += 30
+	..()
+	return
+
+datum/reagent/consumable/sugar/overdose_process(var/mob/living/M as mob)
+	M.sleeping += 3
+	..()
+	return
 
 datum/reagent/consumable/virus_food
 	name = "Virus Food"
@@ -194,17 +200,17 @@ datum/reagent/consumable/frostoil/on_mob_life(var/mob/living/M as mob)
 	if(!data) data = 1
 	switch(data)
 		if(1 to 15)
-			M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(5,20)
 		if(15 to 25)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(10,20)
 		if(25 to INFINITY)
-			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(1))
 				M.emote("shiver")
 			if(istype(M, /mob/living/carbon/slime))
@@ -236,7 +242,7 @@ datum/reagent/consumable/blackpepper
 
 datum/reagent/consumable/coco
 	name = "Coco Powder"
-	id = "coco"
+	id = "cocoa"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
@@ -268,22 +274,22 @@ datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 		data = 1
 	switch(data)
 		if(1 to 5)
-			if (!M.stuttering)
-				M.stuttering = 1
+			if (!M.slurring)
+				M.slurring = 1
 			M.Dizzy(5)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if (!M.stuttering)
-				M.stuttering = 1
+			if (!M.slurring)
+				M.slurring = 1
 			M.Jitter(10)
 			M.Dizzy(10)
 			M.druggy = max(M.druggy, 35)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
-			if (!M.stuttering)
-				M.stuttering = 1
+			if (!M.slurring)
+				M.slurring = 1
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.druggy = max(M.druggy, 40)
@@ -366,7 +372,7 @@ datum/reagent/consumable/hell_ramen/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/consumable/flour
-	name = "flour"
+	name = "Flour"
 	id = "flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = SOLID
@@ -383,3 +389,18 @@ datum/reagent/consumable/cherryjelly
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
 
+datum/reagent/consumable/rice
+	name = "Rice"
+	id = "rice"
+	description = "tiny nutritious grains"
+	reagent_state = SOLID
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+	color = "#FFFFFF" // rgb: 0, 0, 0
+
+datum/reagent/consumable/vanilla
+	name = "Vanilla Powder"
+	id = "vanilla"
+	description = "A fatty, bitter paste made from vanilla pods."
+	reagent_state = SOLID
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#FFFACD"

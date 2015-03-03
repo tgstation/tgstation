@@ -54,7 +54,11 @@
 
 /obj/machinery/suit_storage_unit/security
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security
-	MASK_TYPE = /obj/item/clothing/mask/gas
+	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
+
+/obj/machinery/suit_storage_unit/hos
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security/hos
+	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
 
 /obj/machinery/suit_storage_unit/atmos
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/atmos
@@ -79,25 +83,25 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/ert
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ertSec
 	SUIT_TYPE = /obj/item/clothing/suit/space/ert/sec
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ertEngi
 	SUIT_TYPE = /obj/item/clothing/suit/space/ert/engi
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ertMed
 	SUIT_TYPE = /obj/item/clothing/suit/space/ert/med
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/New()
 	src.update_icon()
@@ -504,7 +508,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(!src.ispowered)
 		if(istype(I, /obj/item/weapon/crowbar) && !isopen)
 			if(toggle_open(user))

@@ -54,7 +54,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	if (sterile)
 		user << "<span class='userdanger'>It looks like the proboscis has been removed.</span>"
 
-/obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m)
+/obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m, params)
 	if(O.force)
 		Die()
 	return

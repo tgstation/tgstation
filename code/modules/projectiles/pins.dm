@@ -47,8 +47,8 @@
 	var/obj/item/weapon/implant/req_implant = null
 
 /obj/item/device/firing_pin/implant/pin_auth(mob/living/user)
-	for(req_implant in user)
-		if(req_implant && req_implant.imp_in == user)
+	for(var/obj/item/weapon/implant/I in user)
+		if(req_implant &&  I.imp_in == user && I.type == req_implant)
 			return 1
 	return 0
 
@@ -63,6 +63,15 @@
 	icon_state = "firing_pin_pindi"
 	req_implant = /obj/item/weapon/implant/weapons_auth
 
+
+/obj/item/device/firing_pin/clown
+	name = "hilarious firing pin"
+	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
+	color = "yellow"
+
+/obj/item/device/firing_pin/clown/pin_auth(mob/living/user)
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	return 0
 
 //muh laser tag
 /obj/item/device/firing_pin/tag

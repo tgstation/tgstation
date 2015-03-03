@@ -33,10 +33,6 @@
 		return 0
 
 	if(M == user)
-		if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
-			M << "<span class='notice'>You don't feel like drinking any more sugary drink at the moment.</span>"
-			return 0
-
 		M << "<span class='notice'>You swallow a gulp of [src].</span>"
 		if(reagents.total_volume)
 			reagents.reaction(M, INGEST)
@@ -95,6 +91,16 @@
 
 	return
 
+/obj/item/weapon/reagent_containers/food/drinks/attackby(var/obj/item/I, mob/user as mob, params)
+	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
+		return
+	if(is_hot(I))
+		var/added_heat = (is_hot(I) / 100) //ishot returns a temperature
+		if(src.reagents)
+			src.reagents.chem_temp += added_heat
+			user << "<span class='notice'>You heat [src] with [I].</span>"
+			src.reagents.handle_reactions()
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
@@ -119,28 +125,6 @@
 //Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
 //	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
 //	Formatting is the same as food.
-
-/obj/item/weapon/reagent_containers/food/drinks/milk
-	name = "Space Milk"
-	desc = "It's milk. White and nutritious goodness!"
-	icon_state = "milk"
-	item_state = "carton"
-	list_reagents = list("milk" = 50)
-
-/obj/item/weapon/reagent_containers/food/drinks/flour
-	name = "flour sack"
-	desc = "A big bag of flour. Good for baking!"
-	icon = 'icons/obj/food.dmi'
-	icon_state = "flour"
-	item_state = "flour"
-	list_reagents = list("flour" = 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/soymilk
-	name = "SoyMilk"
-	desc = "It's soy milk. White and nutritious goodness!"
-	icon_state = "soymilk"
-	item_state = "carton"
-	list_reagents = list("soymilk" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
@@ -199,6 +183,8 @@
 		icon_state = "water_cup"
 	else
 		icon_state = "water_cup_e"
+
+
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink

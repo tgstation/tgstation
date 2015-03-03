@@ -52,7 +52,7 @@
 	else
 		user << "<span class='notice'>You turn off [src].</span>"
 
-/obj/item/weapon/hand_labeler/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/hand_labeler/attackby(obj/item/I as obj, mob/user as mob, params)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		user << "<span class='notice'>You insert [I] into [src].</span>"

@@ -34,7 +34,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(default_unfasten_wrench(user, O))
 		power_change()
 		return
@@ -186,7 +186,7 @@
 // ----------------------------
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack_on"
 	use_power = 1
 	idle_power_usage = 5

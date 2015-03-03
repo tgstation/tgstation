@@ -1,5 +1,3 @@
-# **Licensing has recently changed from GPLv3 to AGPLv3. See [#6689](https://github.com/tgstation/-tg-station/pull/6689) for more info.**
-
 ##/tg/station v1.0.1
 
 [![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)

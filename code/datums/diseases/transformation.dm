@@ -61,7 +61,7 @@
 				affected_mob.mind.transfer_to(new_mob)
 			else
 				new_mob.key = affected_mob.key
-				qdel(affected_mob)
+		qdel(affected_mob)
 
 
 

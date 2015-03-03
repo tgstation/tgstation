@@ -123,10 +123,6 @@
 			eprojectile = /obj/item/projectile/beam
 			eshot_sound = 'sound/weapons/Laser.ogg'
 
-		if(/obj/item/weapon/gun/energy/stunrevolver)
-			eprojectile = /obj/item/projectile/beam
-			eshot_sound = 'sound/weapons/Laser.ogg'
-
 		if(/obj/item/weapon/gun/energy/gun)
 			eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
 			eshot_sound = 'sound/weapons/Laser.ogg'
@@ -250,7 +246,7 @@
 
 
 
-/obj/machinery/porta_turret/attackby(obj/item/I, mob/user)
+/obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
 		if(istype(I, /obj/item/weapon/crowbar))
 			//If the turret is destroyed, you can remove it with a crowbar to
@@ -638,7 +634,7 @@
 	var/gun_charge = 0			//the gun charge of the gun type installed
 
 
-/obj/machinery/porta_turret_construct/attackby(obj/item/I, mob/user)
+/obj/machinery/porta_turret_construct/attackby(obj/item/I, mob/user, params)
 	//this is a bit unwieldy but self-explanatory
 	switch(build_step)
 		if(0)	//first step
@@ -957,7 +953,7 @@ Status: []<BR>"},
 	updateUsrDialog()
 
 
-/obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user)
+/obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench) && !Parent_Turret.on)
 		if(Parent_Turret.raised) return
 
@@ -1045,7 +1041,7 @@ Status: []<BR>"},
 	//don't have to check if control_area is path, since get_area_all_atoms can take path.
 	return
 
-/obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user, params)
 	if(stat & BROKEN) return
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)

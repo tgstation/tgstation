@@ -15,7 +15,7 @@
 		new /obj/singularity/(T, 50)
 		if(src) qdel(src)
 
-/obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
+/obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 
 		if(!anchored && !isinspace())

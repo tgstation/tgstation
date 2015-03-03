@@ -35,9 +35,10 @@
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)
 
-/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
+		return
 
 	if(istype(W,/obj/item/device/pipe_painter) || istype(W,/obj/item/weapon/pipe_dispenser))
 		return

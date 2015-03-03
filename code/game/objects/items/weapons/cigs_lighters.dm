@@ -50,7 +50,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "lit match"
 		desc = "A match. This one is lit."
 		attack_verb = list("burnt","singed")
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 		update_icon()
 	return
 
@@ -110,13 +110,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 300
 	var/chem_volume = 30
 
+/obj/item/clothing/mask/cigarette/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is huffing the [src.name] as quickly as they can! It looks like \he's trying to give \himself cancer.</span>")
+	return (TOXLOSS|OXYLOSS)
+
 /obj/item/clothing/mask/cigarette/New()
 	..()
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarette a chemical holder with a maximum volume of 15
 	reagents.add_reagent("nicotine", 15)
 
-/obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	var/lighting_text = "<span class='notice'>[user] lights their [name] with [W].</span>"
 	if(istype(W, /obj/item/weapon/weldingtool))
@@ -181,7 +185,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(flavor_text)
 			var/turf/T = get_turf(src)
 			T.visible_message(flavor_text)
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 
 		//can't think of any other way to update the overlays :<
 		if(ismob(loc))
@@ -364,7 +368,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 
-/obj/item/clothing/mask/cigarette/pipe/attackby(var/obj/item/O, var/mob/user)
+/obj/item/clothing/mask/cigarette/pipe/attackby(var/obj/item/O, var/mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
 		if(!packeditem)
@@ -471,7 +475,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src], they however burn their finger in the process.</span>")
 
 			user.AddLuminosity(1)
-			SSobj.processing.Add(src)
+			SSobj.processing |= src
 		else
 			lit = 0
 			icon_state = icon_off

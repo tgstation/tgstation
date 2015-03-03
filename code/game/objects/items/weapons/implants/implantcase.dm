@@ -16,7 +16,7 @@
 		icon_state = "implantcase-0"
 
 
-/obj/item/weapon/implantcase/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/implantcase/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
@@ -98,4 +98,14 @@
 
 /obj/item/weapon/implantcase/loyalty/New()
 	imp = new /obj/item/weapon/implant/loyalty(src)
+	..()
+
+/obj/item/weapon/implantcase/weapons_auth
+	name = "glass case- 'Firearms Authentication'"
+	desc = "A case containing a firearms authentication implant."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "implantcase-r"
+
+/obj/item/weapon/implantcase/weapons_auth/New()
+	imp = new /obj/item/weapon/implant/weapons_auth(src)
 	..()

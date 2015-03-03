@@ -488,7 +488,7 @@
 	else
 		user << "<span class='notice'>[name] can not be modified or attached.</span>"
 
-/obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) ))
@@ -536,7 +536,7 @@
 	..()
 	set_frequency(SYND_FREQ)
 
-/obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 //	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))

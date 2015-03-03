@@ -25,8 +25,6 @@
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
 
-/obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	return
 
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user as mob)
 	return
@@ -42,9 +40,6 @@
 		return 0
 
 	if(M == user)
-		if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
-			M << "<span class='notice'>You don't feel like drinking any more sugary food at the moment.</span>"
-			return 0
 		M << "<span class='notice'>You swallow some of contents of \the [src].</span>"
 		if(reagents.total_volume)
 			reagents.reaction(M, INGEST)
@@ -68,9 +63,6 @@
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
 	return 0
-
-/obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/I as obj, mob/user as mob)
-	return
 
 /obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
@@ -99,7 +91,7 @@
 		user << "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>"
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
-	if(icon_state == "saltshakersmall" || icon_state == "peppermillsmall")
+	if(!possible_states.len)
 		return
 	if(reagents.reagent_list.len > 0)
 		var/main_reagent = reagents.get_master_reagent_id()
@@ -130,6 +122,8 @@
 	list_reagents = list("enzyme" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
+	name = "sugar bottle"
+	desc = "Tasty spacey sugar!"
 	list_reagents = list("sugar" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
@@ -140,6 +134,7 @@
 	amount_per_transfer_from_this = 1
 	volume = 20
 	list_reagents = list("sodiumchloride" = 20)
+	possible_states = list()
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
@@ -149,8 +144,38 @@
 	amount_per_transfer_from_this = 1
 	volume = 20
 	list_reagents = list("blackpepper" = 20)
+	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/milk
+	name = "space milk"
+	desc = "It's milk. White and nutritious goodness!"
+	icon_state = "milk"
+	item_state = "carton"
+	list_reagents = list("milk" = 50)
+	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/flour
+	name = "flour sack"
+	desc = "A big bag of flour. Good for baking!"
+	icon = 'icons/obj/food.dmi'
+	icon_state = "flour"
+	item_state = "flour"
+	list_reagents = list("flour" = 30)
+	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/soymilk
+	name = "soy milk"
+	desc = "It's soy milk. White and nutritious goodness!"
+	icon_state = "soymilk"
+	item_state = "carton"
+	list_reagents = list("soymilk" = 50)
+	possible_states = list()
+
+
+
 
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
+
 /obj/item/weapon/reagent_containers/food/condiment/pack
 	name = "condiment pack"
 	desc = "A small plastic pack with condiments to put on your food"

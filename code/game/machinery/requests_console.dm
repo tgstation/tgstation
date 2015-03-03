@@ -433,7 +433,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				slip.name = "Message - [unlinkedsender]"
 	src.luminosity = 2
 
-/obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+/obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob, params)
 	if (istype(O, /obj/item/weapon/crowbar))
 		if(open)
 			user << "You close the maintenance panel."

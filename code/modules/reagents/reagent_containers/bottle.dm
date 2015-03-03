@@ -139,7 +139,7 @@
 	name = "formaldehyde bottle"
 	desc = "A small bottle. Contains Formaldehyde."
 	icon_state = "bottle16"
-	list_reagents = list("formaldehye" = 30)
+	list_reagents = list("formaldehyde" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/histamine
 	name = "histamine bottle"

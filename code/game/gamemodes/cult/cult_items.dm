@@ -97,6 +97,6 @@
 	item_state = "cult_armor"
 	desc = "A bulky suit of armor, bristling with spikes. It looks space proof."
 	w_class = 3
-	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)

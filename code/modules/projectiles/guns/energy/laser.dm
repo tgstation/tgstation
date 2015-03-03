@@ -23,6 +23,7 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/captain
 	icon_state = "caplaser"
+	item_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
 	origin_tech = null
@@ -30,7 +31,7 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/captain/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/laser/captain/Destroy()
@@ -109,7 +110,7 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/bluetag/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 /obj/item/weapon/gun/energy/laser/bluetag/Destroy()
 	SSobj.processing.Remove(src)
@@ -139,7 +140,7 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/redtag/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 /obj/item/weapon/gun/energy/laser/redtag/Destroy()
 	SSobj.processing.Remove(src)
