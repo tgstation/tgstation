@@ -1,6 +1,7 @@
 author: RemieRichards
 
 delete-after: True
+changes: 
   - rscadd: "Drones now see either Static, Black icons or Roguelike style lettering instead of actual mob icons"
   - rscadd: "Icons for the above, from VG's SkowronX"
   - rscadd: "Many icon procs for the above, from VG's ComicIronic"
