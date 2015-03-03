@@ -26,6 +26,15 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGW") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ghost_radio()
+	set name = "Show/Hide GhostRadio"
+	set category = "Preferences"
+	set desc = ".Enable or disable hearing radio chatter as a ghost"
+	prefs.toggles ^= CHAT_GHOSTRADIO
+	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTWHISPER) ? "see radio chatter" : "not see radio chatter"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc! //social experiment, increase the generation whenever you copypaste this shamelessly GENERATION 1
+
 /client/verb/toggle_ghost_pda()
 	set name = "Show/Hide GhostPDA"
 	set category = "Preferences"
