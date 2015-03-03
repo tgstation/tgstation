@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: true
+
+changes: 
+  - rscadd: "Added a mining satchel of holding to R&D that can hold an infinite amount of ores. It requires gold and uranium, in addition to a decently high bluespace and materials research."
