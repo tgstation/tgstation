@@ -6,4 +6,4 @@ author: Incoming5643
 delete-after: True
 
 changes: 
-  - tweak: "Due to the deleterious effects of low gravity environments on bones, skeletons and zombies have become noticeably less resilient to temperature and radiation. Remember to drink lots of milk."
+  - rscdel: "The skeleton and zombie hordes have been quelled, at least for the time being."
