@@ -1038,9 +1038,9 @@
 
 // Coder Snacks ///////////////////////////////////////////////////////
 
-/datum/recipe/spagetti
+/datum/recipe/spaghetti
 	reagents = list("flour" = 5)
-	result= /obj/item/weapon/reagent_containers/food/snacks/spagetti
+	result= /obj/item/weapon/reagent_containers/food/snacks/spaghetti
 
 /datum/recipe/copypasta
 	items = list(
@@ -1051,35 +1051,35 @@
 
 // Pasta ///////////////////////////////////////////////////////
 
-/datum/recipe/boiledspagetti
+/datum/recipe/boiledspaghetti
 	reagents = list("water" = 5)
-	items = list(/obj/item/weapon/reagent_containers/food/snacks/spagetti)
-	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/spaghetti)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 
 /datum/recipe/pastatomato
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 
-/datum/recipe/meatballspagetti
+/datum/recipe/meatballspaghetti
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		)
-	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
 
 // Salad ///////////////////////////////////////////////////////
 
 /datum/recipe/spesslaw
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,

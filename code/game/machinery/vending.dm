@@ -763,7 +763,7 @@
 	icon_state = "boozeomat"        //////////////18 drink entities below, plus the glasses, in case someone wants to edit the number of bottles
 	icon_deny = "boozeomat-deny"
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey = 5,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 5,/obj/item/weapon/reagent_containers/food/drinks/beer = 6,
@@ -1284,7 +1284,8 @@
 					/obj/item/clothing/suit/wizrobe/marisa/fake = 3,/obj/item/clothing/under/sundress = 3,/obj/item/clothing/head/witchwig = 3,/obj/item/weapon/staff/broom = 3,
 					/obj/item/clothing/suit/wizrobe/fake = 3,/obj/item/clothing/head/wizard/fake = 3,/obj/item/weapon/staff = 3,/obj/item/clothing/mask/gas/sexyclown = 3,
 					/obj/item/clothing/under/sexyclown = 3,/obj/item/clothing/mask/gas/sexymime = 3,/obj/item/clothing/under/sexymime = 3,/obj/item/clothing/suit/apron/overalls = 3,
-					/obj/item/clothing/head/rabbitears = 3,/obj/item/clothing/head/lordadmiralhat = 3,/obj/item/clothing/suit/lordadmiral = 3,/obj/item/clothing/suit/doshjacket = 3,/obj/item/clothing/under/jester = 3, /obj/item/clothing/head/jesterhat = 3,/obj/item/clothing/shoes/jestershoes = 3, /obj/item/clothing/suit/kefkarobe = 3) //Pretty much everything that had a chance to spawn.
+					/obj/item/clothing/head/rabbitears = 3,/obj/item/clothing/head/lordadmiralhat = 3,/obj/item/clothing/suit/lordadmiral = 3,/obj/item/clothing/suit/doshjacket = 3,/obj/item/clothing/under/jester = 3, /obj/item/clothing/head/jesterhat = 3,/obj/item/clothing/shoes/jestershoes = 3, /obj/item/clothing/suit/kefkarobe = 3,
+					/obj/item/clothing/head/helmet/aviatorhelmet = 3,/obj/item/clothing/shoes/aviatorboots = 3, /obj/item/clothing/under/aviatoruniform = 3,/obj/item/clothing/head/libertyhat = 3,/obj/item/clothing/suit/libertycoat = 3, /obj/item/clothing/under/libertyshirt = 3, /obj/item/clothing/shoes/libertyshoes = 3) //Pretty much everything that had a chance to spawn.
 	contraband = list(/obj/item/clothing/suit/cardborg = 3,/obj/item/clothing/head/cardborg = 3,/obj/item/clothing/suit/judgerobe = 3,/obj/item/clothing/head/powdered_wig = 3)
 	premium = list(/obj/item/clothing/suit/hgpirate = 3, /obj/item/clothing/head/hgpiratecap = 3, /obj/item/clothing/head/helmet/roman = 3, /obj/item/clothing/head/helmet/roman/legionaire = 3, /obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/weapon/shield/riot/roman = 3,/obj/item/clothing/under/stilsuit = 3)
 

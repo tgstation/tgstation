@@ -385,7 +385,7 @@ var/global/list/whitelisted_species = list("Human")
 	language = "Clatter"
 	attack_verb = "punch"
 
-	flags = IS_WHITELISTED | HAS_LIPS | /*HAS_TAIL | NO_EAT |*/ NO_BREATHE /*| NON_GENDERED*/ | NO_BLOOD
+	flags = IS_WHITELISTED | HAS_LIPS | NO_BREATHE | NO_BLOOD
 
 	default_mutations=list(SKELETON)
 

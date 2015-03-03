@@ -187,3 +187,10 @@
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
 	siemens_coefficient = 1
+
+/obj/item/clothing/suit/armor/vest/piratelord
+	name = "pirate lord's armor"
+	desc = "The attire of an all powerful and bloodthirsty pirate lord. Simply looking at sends chills down your spine."
+	armor = list(melee = 75, bullet = 75, laser = 75,energy = 75, bomb = 75, bio = 100, rad = 90)
+	icon_state = "piratelord"
+	item_state = "piratelord"

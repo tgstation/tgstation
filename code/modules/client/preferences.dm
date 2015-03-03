@@ -1322,8 +1322,8 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 		else if(status == "mechanical")
 			I.mechanize()
 		else continue
-
-	if(disabilities & DISABILITY_FLAG_FAT && species=="Human")//character.species.flags & CAN_BE_FAT)
+	var/datum/species/chosen_species = all_species[species]
+	if( (disabilities & DISABILITY_FLAG_FAT) && (chosen_species.flags & CAN_BE_FAT) )
 		character.mutations += M_FAT
 		character.mutations += M_OBESITY
 	if(disabilities & DISABILITY_FLAG_NEARSIGHTED)
