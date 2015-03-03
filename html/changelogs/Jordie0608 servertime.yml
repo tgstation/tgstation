@@ -1,6 +1,0 @@
-author: Jordie0608
-
-delete-after: True
-
-changes:
-  - rscadd: "The server's current local time is now displayed in status panel in ISO date format (YYYY-MM-DD hh:mm)"
