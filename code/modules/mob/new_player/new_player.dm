@@ -437,7 +437,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 		new_character.dna.SetSEState(GLASSESBLOCK,1,1)
 		new_character.disabilities |= NEARSIGHTED
 
-	var/datum/species/chosen_species = all_species[client.prefs.species]
+	chosen_species = all_species[client.prefs.species]
 	if( (client.prefs.disabilities & DISABILITY_FLAG_FAT) && (chosen_species.flags & CAN_BE_FAT) )
 		new_character.mutations += M_FAT
 		new_character.mutations += M_OBESITY
