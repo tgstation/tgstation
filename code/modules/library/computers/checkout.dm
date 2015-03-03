@@ -124,11 +124,18 @@
 					</tr>"}
 
 				for(var/datum/cachedbook/CB in get_page(page_num))
+					var/author = CB.author
+					var/controls =  "<A href='?src=\ref[src];id=[CB.id]'>\[Order\]</A>"
+					if(user.check_rights(R_ADMIN))
+						controls +=  " <A style='color:red' href='?src=\ref[src];del=[CB.id]'>\[Delete\]</A>"
+						author += " (<A style='color:red' href='?src=\ref[src];delbyckey=[ckey(CB.ckey)]'>[ckey(CB.ckey)])</A>)"
 					dat += {"<tr>
-						<td>[CB.author]</td>
+						<td>[author]</td>
 						<td>[CB.title]</td>
 						<td>[CB.category]</td>
-						<td><A href='?src=\ref[src];id=[CB.id]'>\[Order\]</A></td>
+						<td>
+							[controls]
+						</td>
 					</tr>"}
 
 				dat += "</table><br />[pagelist]"
@@ -191,7 +198,6 @@
 				Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>
 				<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>
 				<A href='?src=\ref[src];switchscreen=0'>No.</A><BR>"}
-			// END AUTOFIX
 
 	var/datum/browser/B = new /datum/browser/clean(user, "library", "Book Inventory Management")
 	B.set_content(dat)
@@ -219,6 +225,44 @@
 		usr << browse(null, "window=library")
 		onclose(usr, "library")
 		return
+
+	if(href_list["del"])
+		if(!usr.check_rights(R_ADMIN))
+			usr << "You aren't an admin, piss off."
+			return
+		var/datum/cachedbook/target = getBookByID(href_list["del"]) // Sanitized in getBookByID
+		var/ans = alert(usr, "Library System", "Are you sure you wish to delete \"[target.title]\", by [target.author]? This cannot be undone.", "Yes", "No")
+		if(ans=="Yes")
+			var/DBQuery/query = dbcon_old.NewQuery("DELETE FROM library WHERE id=[target.id]")
+			var/response = query.Execute()
+			if(!response)
+				usr << query.ErrorMsg()
+				return
+			log_admin("LIBRARY: [usr.name]/[usr.key] has deleted \"[target.title]\", by [target.author] ([target.ckey])!")
+			message_admins("[key_name_admin(usr)] has deleted \"[target.title]\", by [target.author] ([target.ckey])!")
+			src.updateUsrDialog()
+			return
+
+	if(href_list["delbyckey"])
+		if(!usr.check_rights(R_ADMIN))
+			usr << "You aren't an admin, piss off."
+			return
+		var/tckey = ckey(href_list["delbyckey"])
+		var/ans = alert(usr, "Library System", "Are you sure you wish to delete all books by [tckey]? This cannot be undone.", "Yes", "No")
+		if(ans=="Yes")
+			var/DBQuery/query = dbcon_old.NewQuery("DELETE FROM library WHERE ckey='[sanitizeSQL(tckey)]'")
+			var/response = query.Execute()
+			if(!response)
+				usr << query.ErrorMsg()
+				return
+			var/affected=query.RowsAffected()
+			if(affected==0)
+				usr << "<span class='danger'>Unable to find any matching rows.</span>"
+				return
+			log_admin("LIBRARY: [usr.name]/[usr.key] has deleted [affected] books written by [tckey]!")
+			message_admins("[key_name_admin(usr)] has deleted [affected] books written by [tckey]!")
+			src.updateUsrDialog()
+			return
 
 	if(href_list["switchscreen"])
 		switch(href_list["switchscreen"])
@@ -303,14 +347,14 @@
 						var/sqlauthor = sanitizeSQL(scanner.cache.author)
 						var/sqlcontent = sanitizeSQL(scanner.cache.dat)
 						var/sqlcategory = sanitizeSQL(upload_category)
-						var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category, ckey) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[sanitizeSQL(usr.name)]/[usr.key]')")
+						var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category, ckey) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[ckey(usr.key)]')")
 						var/response = query.Execute()
 						if(!response)
 							usr << query.ErrorMsg()
 						else
 							world.log << response
 							log_admin("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] characters in length")
-							message_admins("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] characters in length")
+							message_admins("[key_name_admin(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] characters in length")
 
 	if(href_list["id"])
 		if(href_list["id"]=="-1")
