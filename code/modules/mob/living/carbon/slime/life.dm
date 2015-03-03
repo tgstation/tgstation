@@ -381,6 +381,7 @@
 	//Mood starts here
 	var/newmood = ""
 	if (rabid || attacked) newmood = "angry"
+	else if (docile) newmood = ":3"
 	else if (Target) newmood = "mischevous"
 
 	if (!newmood)

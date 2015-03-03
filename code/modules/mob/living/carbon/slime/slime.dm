@@ -669,7 +669,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /obj/item/slimepotion2/afterattack(mob/living/M as mob, mob/user as mob)
 	if(!(isslime(M) || isanimal(M) || ismonkey(M) || !M.ckey)) //I'm sorry for this line
-		user << "<span class='warning'>[M] is already too inteligent for this to work!</span>"
+		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'>[M] is dead!</span>"
@@ -683,6 +683,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		M.key = C.key
 		M.languages |= HUMAN
 		M << "<span class='warning'>All at once it makes sense, you know what you are and who you are! Self awareness is yours!</span>"
+		M << "You are greatful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost."
 		user << "<span class='warning'>[M] is suddenly attentive and aware. It worked!</span>"
 		qdel(src)
 	else
