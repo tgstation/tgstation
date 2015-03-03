@@ -24,6 +24,9 @@
 		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
 		helmetCam.network = list("SS13")
 
+/obj/item/clothing/head/helmet/sec
+	spawnWithHelmetCam = 1
+
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
