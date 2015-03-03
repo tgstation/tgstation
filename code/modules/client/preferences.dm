@@ -4,15 +4,15 @@ var/list/preferences_datums = list()
 
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm
 //some autodetection here.
-	"traitor" = /datum/game_mode/traitor,			//1
-	"operative" = /datum/game_mode/nuclear,			//2
-	"changeling" = /datum/game_mode/changeling,		//3
-	"wizard" = /datum/game_mode/wizard,				//4
-	"malf AI" = /datum/game_mode/malfunction,		//5
-	"revolutionary" = /datum/game_mode/revolution,	//6
-	"alien",										//7
-	"pAI",											//8
-	"cultist" = /datum/game_mode/cult,				//7
+	"traitor" = /datum/game_mode/traitor,			//0
+	"operative" = /datum/game_mode/nuclear,			//1
+	"changeling" = /datum/game_mode/changeling,		//2
+	"wizard" = /datum/game_mode/wizard,				//3
+	"malf AI" = /datum/game_mode/malfunction,		//4
+	"revolutionary" = /datum/game_mode/revolution,	//5
+	"alien",										//6
+	"pAI",											//7
+	"cultist" = /datum/game_mode/cult,				//8
 	"blob" = /datum/game_mode/blob,					//9
 	"monkey" = /datum/game_mode/monkey,				//10
 	"gangster" = /datum/game_mode/gang,				//11
