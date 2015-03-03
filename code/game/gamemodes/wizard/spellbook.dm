@@ -69,6 +69,8 @@
 			<I>This spell opens nearby doors and does not require wizard garb.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=horseman'>Curse of the Horseman</A> (15)<BR>
 			<I>This spell will curse a person to wear an unremovable horse mask (it has glue on the inside) and speak like a horse. It does not require wizard garb.</I><BR>
+			<A href='byond://?src=\ref[src];spell_choice=frenchcurse'>The French Curse</A> (60)<BR>
+			<I>This spell silences sombody adjacent to you, and curses them with an unremovable Mime costume.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>
 			<I>This spell will curse a person to immediately turn into an unmoving statue. The effect will eventually wear off if the statue is not destroyed.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=arsenath'>Butt-Bot's Revenge</A> (50)<BR>
@@ -145,7 +147,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", summonguns = "Summon Guns", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes",fleshtostone = "Flesh to Stone", arsenath = "Butt-Bot's Revenge",)
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", frenchcurse = "The French Curse", summonguns = "Summon Guns", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes",fleshtostone = "Flesh to Stone", arsenath = "Butt-Bot's Revenge",)
 				var/already_knows = 0
 				for(var/spell/aspell in H.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -237,6 +239,10 @@
 							feedback_add_details("wizard_spell_learned","HH") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.spell_list += new /spell/targeted/horsemask(H)
 							temp = "You have learned curse of the horseman."
+						if("frenchcurse")
+							feedback_add_details("wizard_spell_learned","FC") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.spell_list += new /spell/targeted/frenchcurse(H)
+							temp = "You have learned the french curse."
 						if("fleshtostone")
 							feedback_add_details("wizard_spell_learned","FS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							H.spell_list += new /spell/targeted/flesh_to_stone(H)
