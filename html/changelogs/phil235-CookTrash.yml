@@ -1,0 +1,4 @@
+author: phil235
+delete-after: True
+changes:
+  - tweak: "Harvesting meat from dead simple animals now takes time, has a sound, and can be done with any sharp weapon."
