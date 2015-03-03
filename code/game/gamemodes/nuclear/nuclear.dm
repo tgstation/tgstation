@@ -10,6 +10,7 @@
 	recommended_enemies = 5
 	pre_setup_before_jobs = 1
 	antag_flag = BE_OPERATIVE
+	enemy_minimum_age = 14
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 

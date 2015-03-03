@@ -2,22 +2,20 @@
 
 var/list/preferences_datums = list()
 
-#define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
-
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm
 //some autodetection here.
-	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
-	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
-	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
-	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
-	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
-	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"alien" = 1, //always show                			 // 6
-	"pAI candidate" = 1,                                 // 7
-	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"blob" = IS_MODE_COMPILED("blob"),					 // 9
-	"monkey" = IS_MODE_COMPILED("monkey"),				// 10
-	"gangster" = IS_MODE_COMPILED("gang")				// 11
+	"traitor" = /datum/game_mode/traitor,			//0
+	"operative" = /datum/game_mode/nuclear,			//1
+	"changeling" = /datum/game_mode/changeling,		//2
+	"wizard" = /datum/game_mode/wizard,				//3
+	"malf AI" = /datum/game_mode/malfunction,		//4
+	"revolutionary" = /datum/game_mode/revolution,	//5
+	"alien",										//6
+	"pAI",											//7
+	"cultist" = /datum/game_mode/cult,				//8
+	"blob" = /datum/game_mode/blob,					//9
+	"monkey" = /datum/game_mode/monkey,				//10
+	"gangster" = /datum/game_mode/gang				//11
 )
 
 
@@ -250,17 +248,23 @@ datum/preferences
 				dat += "<h2>Antagonist Settings</h2>"
 
 				if(jobban_isbanned(user, "Syndicate"))
-					dat += "<b>You are banned from antagonist roles.</b>"
+					dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
 					src.be_special = 0
+
 				else
 					var/n = 0
 					for (var/i in special_roles)
-						if(special_roles[i]) //if mode is available on the server
-							if(jobban_isbanned(user, i))
-								dat += "<b>Be [i]:</b> <font color=red><b>\[BANNED]</b></font><br>"
-							else if(i == "pai candidate")
-								if(jobban_isbanned(user, "pAI"))
-									dat += "<b>Be [i]:</b> <font color=red><b>\[BANNED]</b></font><br>"
+						if(jobban_isbanned(user, i))
+							dat += "<b>Be [i]:</b> <font color=red><b>\[BANNED]</b></font><br>"
+						else
+							var/days_remaining = null
+							if(config.use_age_restriction_for_jobs && ispath(special_roles[i])) //If it's a game mode antag, check if the player meets the minimum age
+								var/mode_path = special_roles[i]
+								var/datum/game_mode/temp_mode = new mode_path
+								days_remaining = temp_mode.get_remaining_days(user.client)
+
+							if(days_remaining)
+								dat += "<b>Be [i]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
 							else
 								dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'>[src.be_special&(1<<n) ? "Yes" : "No"]</a><br>"
 						n++

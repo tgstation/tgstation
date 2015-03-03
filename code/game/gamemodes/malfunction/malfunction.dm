@@ -9,6 +9,7 @@
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
+	enemy_minimum_age = 30 //Same as AI minimum age
 
 
 	var/AI_win_timeleft = 5400 //started at 5400, in case I change this for testing round end.
