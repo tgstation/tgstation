@@ -227,6 +227,8 @@
 		A_gangsters += gangster_mind
 	else
 		B_gangsters += gangster_mind
+	if(check)
+		gangster_mind.current.Paralyse(5)
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
 	gangster_mind.current << "<font color='red'>Help your Boss take over the station by defeating the rival gang. You can identify your Boss by their brown \"B\" icon.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
@@ -270,6 +272,7 @@
 			message_admins("[key_name_admin(gangster_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[gangster_mind.current]'>?</A> has been borged while being a member of the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Gang. They are no longer a gangster.")
 		else
 			if(!silent)
+				gangster_mind.current.Paralyse(5)
 				gangster_mind.current.visible_message("[gangster_mind.current] looks like they've given up the life of crime!")
 			gangster_mind.current << "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B></FONT>"
 
