@@ -177,6 +177,7 @@ var/datum/subsystem/ticker/ticker
 	auto_toggle_ooc(0) // Turn it off
 	round_start_time = world.time
 
+	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
