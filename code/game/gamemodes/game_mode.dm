@@ -29,6 +29,7 @@
 	var/pre_setup_before_jobs = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/datum/mind/sacrifice_target = null
+	var/list/datum/game_mode/replacementmode = null
 	var/round_converted = 0
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
@@ -102,7 +103,7 @@
 
 	if(!runnable_modes)	return 0
 
-	var/list/datum/game_mode/replacementmode = pickweight(runnable_modes)
+	replacementmode = pickweight(runnable_modes)
 
 	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out
 		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE)
@@ -110,6 +111,9 @@
 		if(SHUTTLE_CALL)
 			if(SSshuttle.emergency.timeLeft(1) < initial(SSshuttle.emergencyCallTime)*0.5)
 				return 1
+
+	if(world.time >= 36000) //If it's been over an hour, just end it
+		return 0
 
 	var/living_crew = 0
 
@@ -126,8 +130,7 @@
 			antag_canadates += H
 
 	if(!antag_canadates)
-		message_admins("The roundtype has been converted, antagonists may have been created")
-		return 1
+		return 0
 
 	antag_canadates = shuffle(antag_canadates)
 
@@ -135,6 +138,8 @@
 		replacementmode.restricted_jobs += replacementmode.protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
+
+	message_admins("The roundtype will be converted. If you feel that the round should not continue, <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
 	spawn(rand(1800,4200)) //somewhere between 3 and 7 minutes from now
 		for(var/mob/living/carbon/human/H in antag_canadates)
