@@ -7,7 +7,7 @@
 	invocation = "FU'K Y'U D'NY"
 	invocation_type = "shout"
 	range = 1
-	cooldown_min = 100 //100 deciseconds reduction per rank
+	cooldown_min = 50
 
 	sparks_spread = 1
 	sparks_amt = 4
