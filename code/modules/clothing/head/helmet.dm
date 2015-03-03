@@ -21,7 +21,7 @@
 	..()
 	if(spawnWithHelmetCam)
 		helmetCam = new /obj/machinery/camera(src)
-		helmetCam.c_tag = "Helmet-Mounted Camera (real_name)([rand(1,999)])"
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
 		helmetCam.network = list("SS13")
 		update_icon()
 
