@@ -372,7 +372,7 @@ datum/reagent/consumable/hell_ramen/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/consumable/flour
-	name = "flour"
+	name = "Flour"
 	id = "flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = SOLID
@@ -389,3 +389,18 @@ datum/reagent/consumable/cherryjelly
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
 
+datum/reagent/consumable/rice
+	name = "Rice"
+	id = "rice"
+	description = "tiny nutritious grains"
+	reagent_state = SOLID
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+	color = "#FFFFFF" // rgb: 0, 0, 0
+
+datum/reagent/consumable/vanilla
+	name = "Vanilla Powder"
+	id = "vanilla"
+	description = "A fatty, bitter paste made from vanilla pods."
+	reagent_state = SOLID
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#FFFACD"

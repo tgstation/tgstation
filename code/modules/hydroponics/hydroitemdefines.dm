@@ -16,7 +16,7 @@
 
 /obj/item/weapon/reagent_containers/spray/weedspray // -- Skie
 	desc = "It's a toxic mixture, in spray form, to kill small weeds."
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "weed spray"
 	icon_state = "weedspray"
 	item_state = "spray"
@@ -38,7 +38,7 @@
 
 /obj/item/weapon/reagent_containers/spray/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest spray"
 	icon_state = "pestspray"
 	item_state = "spray"

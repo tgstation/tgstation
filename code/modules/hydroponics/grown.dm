@@ -17,7 +17,7 @@
 	var/production = 0
 	var/yield = 0
 	var/plant_type = 0
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	potency = -1
 	dried_type = -1 //bit different. saves us from having to define each stupid grown's dried_type as itself. If you don't want a plant to be driable (watermelons) set this to null in the time definition.
 
@@ -123,6 +123,19 @@
 		reagents.add_reagent("sugar", 1 + round((potency / 15), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
+	seed = /obj/item/seeds/bluecherryseed
+	name = "blue cherries"
+	desc = "They're cherries that are blue."
+	icon_state = "bluecherry"
+	filling_color = "#6495ED"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 15), 1))
+		reagents.add_reagent("sugar", 1 + round((potency / 50), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	seed = /obj/item/seeds/poppyseed
@@ -138,6 +151,19 @@
 		reagents.add_reagent("hotline", 3 + round((potency / 10), 1))
 		bitesize = 1 + round(reagents.total_volume / 3, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily
+	seed = /obj/item/seeds/lilyseed
+	name = "lily"
+	desc = "A beautiful orange flower"
+	icon_state = "lily"
+	filling_color = "#FFA500"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/poppy/geranium
+	seed = /obj/item/seeds/geraniumseed
+	name = "geranium"
+	desc = "A beautiful blue flower"
+	icon_state = "geranium"
+	filling_color = "#008B8B"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
@@ -302,6 +328,19 @@
 		reagents.add_reagent("cocoa", 4 + round((potency / 5), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod
+	seed = /obj/item/seeds/vanillapodseed
+	name = "vanilla pod"
+	desc = "Fattening... Mmmmm... vanilla."
+	icon_state = "vanillapod"
+	filling_color = "#FFD700"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
+		reagents.add_reagent("vanilla", 4 + round((potency / 5), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
 	seed = /obj/item/seeds/sugarcaneseed
 	name = "sugarcane"
@@ -417,6 +456,19 @@
 		reagents.add_reagent("vitamin", 1 + round((potency / 25), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/holymelon
+	seed = /obj/item/seeds/holymelonseed
+	name = "holymelon"
+	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
+	icon_state = "holymelon"
+	filling_color = "#FFD700"
+	dried_type = null
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/holymelon/add_juice()
+	if(..())
+		reagents.add_reagent("holywater", 1 + round((potency / 6), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	seed = /obj/item/seeds/pumpkinseed
 	name = "pumpkin"
@@ -432,12 +484,24 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
+	if(is_sharp(W))
 		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
 		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
 		qdel(src)
 		return
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
+	seed = /obj/item/seeds/blumpkinseed
+	name = "blumpkin"
+	desc = "When you're making a mess this blumpkin's there to clean you up."
+	icon_state = "blumpkin"
+	filling_color = "#87CEFA"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 6), 1))
+		reagents.add_reagent("ammonia", 1 + round((potency / 6), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/ //abstract type
 	seed = /obj/item/seeds/limeseed
@@ -487,6 +551,43 @@
 		reagents.add_reagent("sugar", 1 + round((potency / 5), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato
+	seed = /obj/item/seeds/sweetpotatoseed
+	name = "sweet potato"
+	desc = "It's sweet."
+	icon_state = "sweetpotato"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
+		reagents.add_reagent("vitamin", 1 + round((potency / 10), 1))
+		reagents.add_reagent("sugar", 1 + round((potency / 10), 1))
+		bitesize = reagents.total_volume
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
+	seed = /obj/item/seeds/parsnipseed
+	name = "parsnip"
+	desc = "Closely related to carrots."
+	icon_state = "parsnip"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/parsnip/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 20), 1))
+		reagents.add_reagent("vitamin", 1 + round((potency / 20), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
+	seed = /obj/item/seeds/redbeetseed
+	name = "red beet"
+	desc = "You can't beat red beet."
+	icon_state = "redbeet"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/redbeet/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", round((potency / 20), 1))
+		reagents.add_reagent("vitamin", 1 + round((potency / 20), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/bananaseed
 	name = "banana"
@@ -512,6 +613,20 @@
 	sleep(25)
 	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
 	return (OXYLOSS)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mimana
+	seed = /obj/item/seeds/mimanaseed
+	name = "mimana"
+	desc = "It's an excellent prop for a mime."
+	icon_state = "mimana"
+	filling_color = "#FFFFEE"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mimana/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
+		reagents.add_reagent("nothing", 2 + round((potency / 10), 1))
+		reagents.add_reagent("mutetoxin", 2 + round((potency / 10), 1))
+		bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = /obj/item/seeds/chiliseed
@@ -802,6 +917,32 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 25), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/oat
+	seed = /obj/item/seeds/oatseed
+	name = "oat"
+	desc = "Eat oats, do squats."
+	gender = PLURAL
+	icon_state = "oat"
+	filling_color = "#556B2F"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/oat/add_juice()
+	if(..())
+		reagents.add_reagent("nutriment", 1 + round((potency / 25), 1))
+		bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/rice
+	seed = /obj/item/seeds/riceseed
+	name = "rice"
+	desc = "Rice to meet you."
+	gender = PLURAL
+	icon_state = "rice"
+	filling_color = "#FAFAD2"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/rice/add_juice()
+	if(..())
+		reagents.add_reagent("rice", 1 + round((potency / 6), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass
