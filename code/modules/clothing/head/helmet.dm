@@ -23,6 +23,7 @@
 		helmetCam = new /obj/machinery/camera(src)
 		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
 		helmetCam.network = list("SS13")
+	icon_state = "helmet-cam"
 
 /obj/item/clothing/head/helmet/sec
 	spawnWithHelmetCam = 1
