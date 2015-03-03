@@ -9,7 +9,7 @@
 	id = "stabilizing_agent"
 	description = "Keeps unstable chemicals stable. This does not work on everything."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#FF0000" // rgb: 96, 165, 132
 
 /datum/chemical_reaction/stabilizing_agent
 	name = "stabilizing_agent"
@@ -23,7 +23,7 @@
 	id = "clf3"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#FFFFFF" // rgb: 96, 165, 132
 	metabolization_rate = 4
 
 /datum/chemical_reaction/clf3
@@ -57,7 +57,7 @@
 			F.ChangeTurf(/turf/space)
 	if(istype(T, /turf/simulated/floor/))
 		var/turf/simulated/floor/F = T
-		if(prob(volume/5))
+		if(prob(volume/10))
 			F.make_plating()
 		if(istype(F, /turf/simulated/floor/))
 			new /obj/effect/hotspot(F)
@@ -79,7 +79,7 @@
 	id = "sorium"
 	description = "Sends everything flying from the detonation point."
 	reagent_state = LIQUID
-	color = "#60A584"  //rgb: 96, 165, 132
+	color = "#FFA500"  //rgb: 96, 165, 132
 
 /datum/chemical_reaction/sorium
 	name = "Sorium"
@@ -111,7 +111,7 @@
 	id = "liquid_dark_matter"
 	description = "Sucks everything into the detonation point."
 	reagent_state = LIQUID
-	color = "#60A584"  //rgb: 96, 165, 132
+	color = "#800080"  //rgb: 96, 165, 132
 
 /datum/chemical_reaction/liquid_dark_matter
 	name = "Liquid Dark Matter"
@@ -359,7 +359,7 @@
 	id = "phlogiston"
 	description = "+1 BURN, +1 BURNING and sets you alight. Don't be deceived by that meager +1, having phlogiston in the bloodstream can be very dangerous without a fire extinguisher or firebot. Even then, they can't prevent you from spontaneously igniting every cycle."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#FF9999" // rgb: 96, 165, 132
 
 /datum/chemical_reaction/phlogiston
 	name = "phlogiston"
@@ -380,7 +380,7 @@ datum/reagent/cryostylane
 	name = "Cryostylane"
 	id = "cryostylane"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the mob down to 0K."
-	color = "#B31008" // rgb: 139, 166, 233
+	color = "#B2B2FF" // rgb: 139, 166, 233
 
 /datum/chemical_reaction/cryostylane
 	name = "cryostylane"
@@ -410,7 +410,7 @@ datum/reagent/pyrosium
 	name = "Pyrosium"
 	id = "pyrosium"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly cools all other reagents in the mob down to 0K."
-	color = "#B31008" // rgb: 139, 166, 233
+	color = "#B20000" // rgb: 139, 166, 233
 
 /datum/chemical_reaction/pyrosium
 	name = "pyrosium"
@@ -435,7 +435,7 @@ datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
 	id = "argine"
 	description = "Explodes when lowered to freezing temperatures."
 	reagent_state = LIQUID
-	color = "#000000"  //rgb: 96, 165, 132
+	color = "#FFFFFF"  //rgb: 96, 165, 132
 
 /datum/chemical_reaction/argine_explosion
 	name = "Argine Kaboom"

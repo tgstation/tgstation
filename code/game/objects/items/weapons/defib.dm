@@ -381,6 +381,8 @@
 								busy = 0
 								update_icon()
 								return
+					if(H.heart_attack)
+						H.heart_attack = 0
 					if(H.stat == 2)
 						var/health = H.health
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")

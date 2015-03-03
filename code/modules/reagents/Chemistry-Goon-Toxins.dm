@@ -229,8 +229,13 @@ datum/reagent/initropidril/on_mob_life(var/mob/living/M as mob)
 				M.losebreath += 10
 				M.adjustOxyLoss(rand(5,25))
 			if(3)
-				M.visible_message("<span class = 'userdanger'>[M] clutches at their chest as if their heart stopped!</span>")
-				M.adjustBruteLoss(100) // rip in pepperoni
+				var/mob/living/carbon/human/H = M
+				if(!H.heart_attack)
+					H.visible_message("<span class = 'userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
+					H.heart_attack = 1 // rip in pepperoni
+				else
+					H.losebreath += 10
+					H.adjustOxyLoss(rand(5,25))
 	..()
 	return
 
