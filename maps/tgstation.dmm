@@ -1480,7 +1480,7 @@
 "aCx" = (/obj/structure/window/reinforced{dir = 4},/obj/machinery/atmospherics/unary/vent_scrubber{on = 1},/turf/simulated/floor{icon_state = "dark"},/area/crew_quarters/fitness)
 "aCy" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor{icon_state = "green"; dir = 4},/area/crew_quarters/fitness)
 "aCz" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/crew_quarters/fitness)
-"aCA" = (/obj/structure/table,/obj/item/weapon/paper{info = "Brusies sustained in the holodeck can be healed simply by sleeping."; name = "Holodeck Disclaimer"},/turf/simulated/floor,/area/crew_quarters/fitness)
+"aCA" = (/obj/structure/table,/obj/item/weapon/paper{info = "Bruises sustained in the holodeck can be healed simply by sleeping."; name = "Holodeck Disclaimer"},/turf/simulated/floor,/area/crew_quarters/fitness)
 "aCB" = (/obj/structure/stool/bed/chair,/turf/simulated/floor/plating,/area/maintenance/fsmaint2)
 "aCC" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/maintenance/fsmaint2)
 "aCD" = (/obj/machinery/camera{c_tag = "Auxiliary Cyborg Station"; dir = 4},/obj/effect/decal/warning_stripes{tag = "icon-warning (NORTHWEST)"; icon_state = "warning"; dir = 9},/turf/simulated/floor/plating,/area/maintenance/auxcharge)
