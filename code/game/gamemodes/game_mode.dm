@@ -112,7 +112,7 @@
 			if(SSshuttle.emergency.timeLeft(1) < initial(SSshuttle.emergencyCallTime)*0.5)
 				return 1
 
-	if(world.time >= 36000) //If it's been over an hour, just end it
+	if(world.time >= (config.midround_antag_time_check * 600))
 		return 0
 
 	var/living_crew = 0
@@ -120,7 +120,7 @@
 	for(var/mob/Player in mob_list)
 		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
 			living_crew++
-	if(living_crew / joined_player_list.len <= 0.7) //If a lot of the player base died, we start fresh
+	if(living_crew / joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
 		return 0
 
 	var/list/antag_canadates = list()
