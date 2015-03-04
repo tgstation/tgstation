@@ -30,7 +30,7 @@
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/datum/mind/sacrifice_target = null
 	var/list/datum/game_mode/replacementmode = null
-	var/round_converted = 0
+	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
 
@@ -90,6 +90,8 @@
 ///make_antag_chance()
 ///Handles late-join antag assignments
 /datum/game_mode/proc/make_antag_chance(var/mob/living/carbon/human/character)
+	if(replacementmode && round_converted == 2)
+		replacementmode.make_antag_chance(character)
 	return
 
 ///convert_roundtype()
@@ -144,7 +146,7 @@
 	spawn(rand(1800,4200)) //somewhere between 3 and 7 minutes from now
 		for(var/mob/living/carbon/human/H in antag_canadates)
 			replacementmode.make_antag_chance(H)
-
+		round_converted = 2
 		message_admins("The roundtype has been converted, antagonists may have been created")
 
 	return 1
