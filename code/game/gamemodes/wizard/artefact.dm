@@ -96,3 +96,87 @@
 	visible_message("<span class='danger'>[usr] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 	return
+
+/////////////////////////////////////////Necromantic Stone///////////////////
+
+/obj/item/device/necromantic_stone
+	name = "necromantic stone"
+	desc = "A shard capable of resurrecting humans as skeleton thralls."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "necrostone"
+	item_state = "electronic"
+	origin_tech = "bluespace=4;materials=4"
+	w_class = 1
+	var/list/spooky_scaries = list()
+	var/unlimited = 0
+
+/obj/item/device/necromantic_stone/unlimited
+	unlimited = 1
+
+/obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+	if(!istype(M, /mob/living/carbon/human))
+		return ..()
+
+	if(!istype(user) || !user.canUseTopic(M,1))
+		return
+
+	if(M.stat != DEAD)
+		user << "<span class='warning'>This artifact can only affect the dead!</span>"
+		return
+
+	if(!M.mind || !M.client)
+		user << "<span class='warning'>There is no soul connected to this body...</span>"
+		return
+
+	check_spooky()//clean out/refresh the list
+	if(spooky_scaries.len >= 3 && !unlimited)
+		user << "<span class='warning'>This artifact can only affect three undead at a time!</span>"
+		return
+
+	hardset_dna(M, null, null, null, null, /datum/species/skeleton)
+	M.revive()
+	spooky_scaries |= M
+	M << "<span class='notice'>You have been revived by </span><B>[user.real_name]!</B>"
+	M << "<span class='notice'>They are your master now, assist them even if it costs you your new life!</span>"
+
+	if(prob(33))
+		equip_roman_skeleton(M)
+
+	var/mob/living/carbon/human/master = user
+
+	var/datum/objective/protect/protect_master = new /datum/objective/protect
+	protect_master.owner = M.mind
+	protect_master.target = master.mind
+	protect_master.explanation_text = "Protect [master.real_name], your master."
+	M.mind.objectives += protect_master
+	ticker.mode.traitors += M.mind
+	M.mind.special_role = "skeleton-thrall"
+
+	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
+
+/obj/item/device/necromantic_stone/proc/check_spooky()
+	if(unlimited) //no point, the list isn't used.
+		return
+
+	for(var/X in spooky_scaries)
+		if(!istype(X, /mob/living/carbon/human))
+			spooky_scaries.Remove(X)
+			continue
+		var/mob/living/carbon/human/H = X
+		if(H.stat)
+			spooky_scaries.Remove(X)
+			continue
+	listclearnulls(spooky_scaries)
+
+//Funny gimmick, skeletons always seem to wear roman/ancient armour
+/obj/item/device/necromantic_stone/proc/equip_roman_skeleton(var/mob/living/carbon/human/H)
+	for(var/obj/item/I in H)
+		H.unEquip(I)
+
+	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
+	H.equip_to_slot_or_del(new hat(H), slot_head)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/weapon/shield/riot/roman(H), slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_r_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
