@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: true
+
+changes: 
+  - tweak: "Convert runes now have a default conversion time of 90 seconds, reduced by 30 for each cultist around it. This means solo conversion is possible."
