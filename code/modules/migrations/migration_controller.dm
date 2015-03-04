@@ -21,7 +21,7 @@ var/global/datum/migration_controller/migration_controller = null
 
 	if(!hasTable(TABLE_NAME))
 		var/tableSQL = {"
-CREATE TABLE [TABLE_NAME] (
+CREATE TABLE IF NOT EXISTS [TABLE_NAME] (
 	pkgID VARCHAR(15) PRIMARY KEY, -- Implies NOT NULL
 	version INT(11) NOT NULL
 );
@@ -31,6 +31,7 @@ CREATE TABLE [TABLE_NAME] (
 		Q.Close()
 
 	Q = db.NewQuery("SELECT pkgID, version FROM [TABLE_NAME]")
+	Q.Execute()
 	while(Q.NextRow())
 		db_states[Q.item[1]] = text2num(Q.item[2])
 
@@ -38,7 +39,7 @@ CREATE TABLE [TABLE_NAME] (
 	for(var/mtype in typesof(/datum/migration)-/datum/migration)
 		var/datum/migration/M = new mtype()
 		M.db = db
-		if(M.package == "") continue
+		if(M.package == "" || M.name == "") continue
 		if(!(M.package in newpacks))
 			newpacks[M.package]=list()
 		var/list/pack = newpacks[M.package]
@@ -50,8 +51,9 @@ CREATE TABLE [TABLE_NAME] (
 		var/list/pack[prepack.len]
 		for(var/datum/migration/M in newpacks[pkgID])
 			pack[M.id] = M
+			//world.log << "\[Migrations] [pkgID]#[M.id] = [M.type] - [M.name]"
 		packages[pkgID]=pack
-		world.log << "Loaded [pack.len] DB migrations from package [pkgID]."
+		world.log << "\[Migrations] Loaded [pack.len] DB migrations from package [pkgID]."
 
 	//VersionCheck()
 	UpdateAll()
@@ -64,12 +66,14 @@ CREATE TABLE [TABLE_NAME] (
 
 /datum/migration_controller/proc/VersionCheck()
 	for(var/pkgID in packages)
+		var/currentVersion = getCurrentVersion(pkgID)
 		var/latestVersionAvail = 0
 		for(var/datum/migration/M in packages[pkgID])
 			if(M.id > latestVersionAvail)
 				latestVersionAvail = M.id
-		if(latestVersionAvail > getCurrentVersion())
-			world.log << "*** [pkgID] is behind [latestVersionAvail-db_states[pkgID]] versions!"
+		//world.log << "\[Migrations] Package [pkgID]: Current: [currentVersion], Avail: [latestVersionAvail]"
+		if(latestVersionAvail > currentVersion)
+			world.log << "\[Migrations] *** [pkgID] is behind [latestVersionAvail-currentVersion] versions!"
 
 /datum/migration_controller/proc/UpdateAll()
 	for(var/pkgID in packages)
@@ -88,16 +92,20 @@ CREATE TABLE [TABLE_NAME] (
 		for(var/datum/migration/M in packages[pkgID])
 			if(M.id > to_version)
 				to_version = M.id
-	var/log_text = "<b>Updating [pkgID] from [from_version] to [to_version]...</b>"
+	if(from_version == to_version)
+		world.log << "\[Migrations] [pkgID] is up to date."
+		return
+	world.log << "\[Migrations] Updating [pkgID] from [from_version] to [to_version]..."
 	for(var/datum/migration/M in package)
 		if(M.id > from_version && M.id <= to_version)
 			if(!M.up())
-				world << "[log_text] <span style='font-weight:bold;color:red;'>FAIL</span><br>Failed to process migration [pkgID] #[M.id]!"
+				//world << "[log_text] <span style='font-weight:bold;color:red;'>FAIL</span><br>Failed to process migration [pkgID] #[M.id]!"
 				world.log << "Failed to process migration [pkgID] #[M.id]"
 				return FALSE
 			else
 				M.execute("REPLACE INTO [TABLE_NAME] (pkgID,version) VALUES ('[pkgID]',[M.id])")
-	world << "[log_text] <span style='color:green;font-weight:bold;'>OK</span>"
+				world.log << "\[Migrations] Successfully applied [pkgID]#[M.id] ([M.name])"
+	world.log << "\[Migrations] Done!"
 	return TRUE
 
 /datum/migration_controller/proc/query(var/sql)

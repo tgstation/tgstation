@@ -13,15 +13,18 @@
 
 /datum/migration/proc/up()
 	// Make your changes here.
-	return
+	return TRUE
 
 /datum/migration/proc/down()
     // Undo your changes here (for rollbacks)
-    return
+    return TRUE
 
 // Helpers
 /datum/migration/proc/query(var/sql)
-	var/DBQuery/query = execute(sql)
+	var/DBQuery/query = db.NewQuery(sql)
+	if(!query.Execute())
+		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
+		return FALSE
 
 	var/list/rows=list()
 	while(query.NextRow())
@@ -29,7 +32,10 @@
 	return rows
 
 /datum/migration/proc/hasResult(var/sql)
-	var/DBQuery/query = execute(sql)
+	var/DBQuery/query = db.NewQuery(sql)
+	if(!query.Execute())
+		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
+		return FALSE
 
 	if (query.NextRow())
 		return TRUE
@@ -37,8 +43,10 @@
 
 /datum/migration/proc/execute(var/sql)
 	var/DBQuery/query = db.NewQuery(sql)
-	query.Execute()
-	return query
+	if(!query.Execute())
+		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
+		return FALSE
+	return TRUE
 
 /datum/migration/proc/hasTable(var/tableName)
 	return hasResult("SHOW TABLES LIKE '[tableName]'")

@@ -76,7 +76,8 @@
 		CB.author = B.author
 		CB.programmatic=1
 		CB.path=typepath
-		CB.id = "M"+newid++
+		CB.id = "M[newid]"
+		newid++
 		cached_books[CB.id]=CB
 
 
@@ -192,7 +193,7 @@ var/global/list/library_section_names = list("Any", "Fiction", "Non-Fiction", "A
 		src.visible_message("[src] whirs as it prints and binds a new book.")
 		var/obj/item/weapon/book/b = new(src.loc)
 		b.dat = O:info
-		b.name = "Print Job #" + "[rand(100, 999)]"
+		b.name = "Print Job #[rand(100, 999)]"
 		b.icon_state = "book[rand(1,7)]"
 		del(O)
 	else

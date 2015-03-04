@@ -36,7 +36,6 @@
 		return text2num(_query.item[1])
 	return 0
 
-
 /obj/machinery/computer/library/proc/get_pagelist()
 	var/pagelist = "<div class='pages'>"
 	var/start = max(0,page_num-3)
