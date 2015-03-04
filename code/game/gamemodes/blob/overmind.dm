@@ -28,6 +28,8 @@
 	for(var/type in (typesof(/datum/reagent/blob) - /datum/reagent/blob))
 		possible_reagents.Add(new type)
 	blob_reagent_datum = pick(possible_reagents)
+	if(blob_core)
+		blob_core.adjustcolors(blob_reagent_datum.color)
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
