@@ -571,8 +571,10 @@ datum/reagent/epinephrine/on_mob_life(var/mob/living/M as mob)
 		M.adjustFireLoss(-1*REM)
 	if(M.oxyloss > 35)
 		M.setOxyLoss(35)
-	if(M.losebreath >= 10)
-		M.losebreath = max(10, M.losebreath-5)
+	if(M.losebreath >= 4)
+		M.losebreath -= 4
+	if(M.losebreath < 0)
+		M.losebreath = 0
 	M.adjustStaminaLoss(-1*REM)
 	if(prob(30))
 		M.AdjustParalysis(-1)

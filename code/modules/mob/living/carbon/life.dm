@@ -51,6 +51,9 @@
 		//Heart Attacks, etc.
 		handle_heart()
 
+		//Critical condition handling
+		handle_crit()
+
 		. = 1
 
 	handle_fire()
@@ -101,6 +104,9 @@
 	return
 
 /mob/living/carbon/proc/handle_heart()
+	return
+
+/mob/living/carbon/proc/handle_crit()
 	return
 
 /mob/living/carbon/proc/handle_random_events()
