@@ -5,5 +5,3 @@ delete-after: True
 
 changes: 
   - tgs: You can now place things on tables where you click. Neaten your desks, today!
-  - tgs: You can now place wrenches and weldingtools on tables.
-  - tgs: Tables and reinforced table deconstruction actions - the wrench and weldingtool - now have to be applied to the table legs.
