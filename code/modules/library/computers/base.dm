@@ -8,6 +8,19 @@
 	var/num_results = 0
 	var/datum/library_query/query = new()
 
+/obj/machinery/computer/library/proc/interact_check(var/mob/user)
+	if(stat & (BROKEN | NOPOWER))
+		return TRUE
+
+	if ((get_dist(src, user) > 1))
+		if (!issilicon(user)&&!isobserver(user))
+			user.unset_machine()
+			user << browse(null, "window=library")
+			return TRUE
+
+	user.set_machine(src)
+	return FALSE
+
 /obj/machinery/computer/library/proc/get_page(var/page_num)
 	var/sql = "SELECT id, author, title, category, ckey FROM library"
 	if(query)

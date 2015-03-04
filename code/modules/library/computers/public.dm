@@ -6,7 +6,8 @@
 	interact(user)
 
 /obj/machinery/computer/library/public/interact(var/mob/user)
-	if(stat & (NOPOWER|BROKEN)) return
+	if(interact_check(user))
+		return
 
 	var/dat = ""
 	switch(screenstate)
