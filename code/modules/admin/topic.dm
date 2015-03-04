@@ -382,7 +382,7 @@
 			if("shade")				new_mob = M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
 		//world << "Made a [new_mob] [usr ? "usr still exists" : "usr does not exist"]"
 		if(new_mob && new_mob != M)
-			/world << "[new_mob.client] vs [CLIENT] they [new_mob.client == CLIENT ? "match" : "don't match"]"
+			//world << "[new_mob.client] vs [CLIENT] they [new_mob.client == CLIENT ? "match" : "don't match"]"
 			if(new_mob.client == CLIENT)
 				//world << "setting usr to new_mob"
 				usr = new_mob //We probably transformed ourselves
