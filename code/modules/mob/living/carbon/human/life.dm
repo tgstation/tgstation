@@ -635,6 +635,11 @@
 		var/cardiac_arrest_chance = 0
 		var/brain_damage_from_crit = 5
 		switch(health)
+			if(config.health_threshold_crit to -9)
+				paralyse_amount = 1
+				losebreath_amount = 1
+				cardiac_arrest_chance = 0
+				brain_damage_from_crit = 1
 			if(-20 to -10)
 				paralyse_amount = 1
 				losebreath_amount = 2
