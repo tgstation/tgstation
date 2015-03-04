@@ -3,6 +3,9 @@
 
 /obj/machinery/computer/library/public/attack_hand(var/mob/user as mob)
 	if(..()) return
+	interact(user)
+
+/obj/machinery/computer/library/public/interact(var/mob/user)
 	if(stat & (NOPOWER|BROKEN)) return
 
 	var/dat = ""
@@ -50,7 +53,6 @@
 	var/datum/browser/B = new /datum/browser/clean(user, "library", "Library Visitor")
 	B.set_content(dat)
 	B.open()
-
 
 /obj/machinery/computer/library/public/Topic(href, href_list)
 	if(..())

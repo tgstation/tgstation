@@ -231,7 +231,7 @@
 			usr << "You aren't an admin, piss off."
 			return
 		var/datum/cachedbook/target = getBookByID(href_list["del"]) // Sanitized in getBookByID
-		var/ans = alert(usr, "Library System", "Are you sure you wish to delete \"[target.title]\", by [target.author]? This cannot be undone.", "Yes", "No")
+		var/ans = alert(usr, "Are you sure you wish to delete \"[target.title]\", by [target.author]? This cannot be undone.", "Library System", "Yes", "No")
 		if(ans=="Yes")
 			var/DBQuery/query = dbcon_old.NewQuery("DELETE FROM library WHERE id=[target.id]")
 			var/response = query.Execute()
@@ -248,7 +248,7 @@
 			usr << "You aren't an admin, piss off."
 			return
 		var/tckey = ckey(href_list["delbyckey"])
-		var/ans = alert(usr, "Library System", "Are you sure you wish to delete all books by [tckey]? This cannot be undone.", "Yes", "No")
+		var/ans = alert(usr,"Are you sure you wish to delete all books by [tckey]? This cannot be undone.", "Library System", "Yes", "No")
 		if(ans=="Yes")
 			var/DBQuery/query = dbcon_old.NewQuery("DELETE FROM library WHERE ckey='[sanitizeSQL(tckey)]'")
 			var/response = query.Execute()

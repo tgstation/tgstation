@@ -9,11 +9,11 @@
 	var/datum/library_query/query = new()
 
 /obj/machinery/computer/library/proc/get_page(var/page_num)
-	var/sql = "SELECT * FROM library"
+	var/sql = "SELECT id, author, title, category, ckey FROM library"
 	if(query)
-		sql += query.toSQL()
+		sql += " [query.toSQL()]"
 	// Pagination
-	sql += "LIMIT [LIBRARY_BOOKS_PER_PAGE] OFFSET [page_num * LIBRARY_BOOKS_PER_PAGE]"
+	sql += " LIMIT [LIBRARY_BOOKS_PER_PAGE] OFFSET [page_num * LIBRARY_BOOKS_PER_PAGE]"
 
 	var/DBQuery/_query = dbcon_old.NewQuery(sql)
 	_query.Execute()
@@ -21,7 +21,13 @@
 	var/list/results = list()
 	while(_query.NextRow())
 		var/datum/cachedbook/CB = new()
-		CB.LoadFromRow(_query.item)
+		CB.LoadFromRow(list(
+			"id"      =_query.item[1],
+			"author"  =_query.item[2],
+			"title"   =_query.item[3],
+			"category"=_query.item[4],
+			"ckey"    =_query.item[5]
+		))
 		results += CB
 	return results
 
@@ -48,7 +54,7 @@
 	return pagelist
 
 /obj/machinery/computer/library/proc/getBookByID(var/id as text)
-	library_catalog.getBookByID(id)
+	return library_catalog.getBookByID(id)
 
 /obj/machinery/computer/library/cultify()
 	new /obj/structure/cult/tome(loc)
