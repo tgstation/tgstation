@@ -7,6 +7,9 @@
 	var/num_pages = 0
 	var/num_results = 0
 	var/datum/library_query/query = new()
+	
+	icon = 'icons/obj/library.dmi'
+	icon_state = "computer"
 
 /obj/machinery/computer/library/proc/interact_check(var/mob/user)
 	if(stat & (BROKEN | NOPOWER))
