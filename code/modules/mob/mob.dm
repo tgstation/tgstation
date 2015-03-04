@@ -212,6 +212,23 @@
 			del(narsimage)
 			del(narglow)
 
+/mob/proc/see_rift(var/obj/machinery/singularity/narsie/large/exit/R)
+	if((R.z == src.z) && (get_dist(R,src) <= (R.consume_range+10)) && !(R in view(src)))
+		if(!riftimage)
+			riftimage = image('icons/obj/rift.dmi',src.loc,"rift",LIGHTING_LAYER+2,1)
+			riftimage.mouse_opacity = 0
+
+		var/new_x = 32 * (R.x - src.x) + R.pixel_x
+		var/new_y = 32 * (R.y - src.y) + R.pixel_y
+		riftimage.pixel_x = new_x
+		riftimage.pixel_y = new_y
+		riftimage.loc = src.loc
+
+		src << riftimage
+
+	else
+		if(riftimage)
+			del(riftimage)
 
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)
