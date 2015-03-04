@@ -42,7 +42,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 
 	if(ishuman(usr) || ismonkey(usr))	//Damage only applies to humans and monkeys, to allow constructs to communicate
-		usr.visible_message("<span class='warning'>[usr.name] starts clawing at his arms like a mad man!")
+		usr.visible_message("<span class='warning'>[usr.name] starts clawing wildly at their arms!")
 		apply_damage(25,BRUTE, "l_arm")
 		apply_damage(25,BRUTE, "r_arm")
 		sleep(50)
@@ -55,7 +55,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		apply_damage(15,BRUTE, "r_arm")
 		if(usr.incapacitated())
 			return
-		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood")
+		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood!")
 		sleep(20)
 
 	usr.say("O bidai nabora se[pick("'","`")]sma!")
@@ -63,7 +63,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	usr.say("[input]")
 	for(var/mob/M in mob_list)
 		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
-			M << "<span class='userdanger'>[input]</span>"
+			if(ishuman(usr) || ismonkey(usr))
+				M << "<span class='deadsay'><b><i>???:</i> [input]</span></b>" //Clear that it's innate comms
+			else
+				M << "<span class='userdanger'><i>[usr.real_name]:</i> [input]</span>" //Same as a normal tome for constructs. Real name shouldn't need using but I did it anyway.
 	return
 
 
