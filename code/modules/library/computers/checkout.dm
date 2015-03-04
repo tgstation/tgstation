@@ -1,9 +1,5 @@
 /*
  * Library Computer
- *
- * TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
- * It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
- * It's 25th of January in the year of (our) Lord 2015... And it's still not a computer.
  */
 /obj/machinery/computer/library/checkout
 	name = "Check-In/Out Computer"
