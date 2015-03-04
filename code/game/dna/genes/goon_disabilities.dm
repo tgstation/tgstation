@@ -66,6 +66,14 @@
 
 	mutation = M_OBESITY
 
+	can_activate(var/mob/M, var/flags)
+		if(!ishuman(M)) return 0
+
+		var/mob/living/carbon/human/H = M
+		if(H.species && !(H.species.flags & CAN_BE_FAT)) return 0
+
+		return 1
+
 	New()
 		..()
 		block=FATBLOCK

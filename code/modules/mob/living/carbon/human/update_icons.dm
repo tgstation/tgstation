@@ -128,7 +128,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/species_override_icon()
 	//overlays.len = 0
 	icon = species.override_icon
-	icon_state = "[lowertext(species.name)]_[gender][(mutations & M_FAT)?"_fat":""]"
+	icon_state = "[lowertext(species.name)]_[gender][ (species.flags & CAN_BE_FAT ? (mutations & M_FAT) ? "_fat" : "" : "") ]"
 	//temporary fix for having mutations on top of overriden icons for like muton, horror, etc
 	overlays -= obj_overlays[MUTANTRACE_LAYER]
 
@@ -202,7 +202,7 @@ var/global/list/damage_icon_parts = list()
 	var/necrosis_color_mod = rgb(10,50,0)
 
 	var/husk = (M_HUSK in src.mutations)  //100% unnecessary -Agouri	//nope, do you really want to iterate through src.mutations repeatedly? -Pete
-	var/fat = (M_FAT in src.mutations)
+	var/fat = (M_FAT in src.mutations) && (species && species.flags & CAN_BE_FAT)
 	var/hulk = (M_HULK in src.mutations) && species.name == "Horror" // Part of the species.
 	var/skeleton = (SKELETON in src.mutations)
 
@@ -529,7 +529,7 @@ var/global/list/damage_icon_parts = list()
 		if(!t_color)		t_color = icon_state
 		var/image/standing	= image("icon_state" = "[t_color]_s")
 
-		if(M_FAT in mutations)
+		if(M_FAT in mutations && (species.flags & CAN_BE_FAT))
 			if(w_uniform.flags&ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
