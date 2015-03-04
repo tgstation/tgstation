@@ -7,7 +7,7 @@
 	var/turf/secondloc
 	if(!my_atom.equipment_system || !my_atom.equipment_system.weapon_system)
 		usr << "<span class='warning'>Missing equipment or weapons.</span>"
-		my_atom.verbs -= text2path("[type]/proc/fire_weapon_system")
+		my_atom.verbs -= /obj/item/device/spacepod_equipment/weaponry/proc/fire_weapon_system
 		return
 	my_atom.battery.use(shot_cost)
 	var/olddir
@@ -73,6 +73,8 @@
 	var/shots_per = 1
 	var/fire_sound
 	var/fire_delay = 10
+	var/verb_name = "What the fuck?"
+	var/verb_desc = "How did you get this?"
 
 /obj/item/device/spacepod_equipment/weaponry/taser
 	name = "\improper taser system"
@@ -81,14 +83,8 @@
 	projectile_type = /obj/item/projectile/energy/electrode
 	shot_cost = 10
 	fire_sound = "sound/weapons/Taser.ogg"
-
-/obj/item/device/spacepod_equipment/weaponry/taser/proc/fire_weapon_system()
-	set category = "Spacepod"
-	set name = "Fire Taser System"
-	set desc = "Fire ze tasers!"
-	set src = usr.loc
-	var/obj/spacepod/S = src
-	S.equipment_system.weapon_system.fire_weapons()
+	verb_name = "Fire Taser System"
+	verb_desc = "Fire ze tasers!"
 
 /obj/item/device/spacepod_equipment/weaponry/taser/burst
 	name = "\improper burst taser system"
@@ -96,14 +92,8 @@
 	icon_state = "pod_b_taser"
 	shot_cost = 20
 	shots_per = 3
-
-/obj/item/device/spacepod_equipment/weaponry/taser/burst/proc/fire_weapons_system()
-	set category = "Spacepod"
-	set name = "Fire Burst Taser System"
-	set desc = "Fire ze tasers!"
-	set src = usr.loc
-	var/obj/spacepod/S = src
-	S.equipment_system.weapon_system.fire_weapons()
+	verb_name = "Fire Burst Taser System"
+	verb_desc = "Fire ze tasers!"
 
 /obj/item/device/spacepod_equipment/weaponry/laser
 	name = "\improper laser system"
@@ -113,11 +103,14 @@
 	shot_cost = 15
 	fire_sound = 'sound/weapons/Laser.ogg'
 	fire_delay = 25
+	verb_name = "Fire Laser System"
+	verb_desc = "Fire ze lasers!"
 
-/obj/item/device/spacepod_equipment/weaponry/laser/proc/fire_weapon_system()
-	set category = "Spacepod"
-	set name = "Fire Laser System"
-	set desc = "Fire ze lasers!"
-	set src = usr.loc
+/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapon_system()
 	var/obj/spacepod/S = src
-	S.equipment_system.weapon_system.fire_weapons()
+	var/obj/item/device/spacepod_equipment/weaponry/SPE = S.equipment_system.weapon_system
+	set category = "Spacepod"
+	//set name = SPE.verb_name
+	//set desc = SPE.verb_desc
+	set src = usr.loc
+	SPE.fire_weapons()

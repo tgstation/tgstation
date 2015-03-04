@@ -141,9 +141,7 @@
 				W.loc = equipment_system
 				equipment_system.weapon_system = W
 				equipment_system.weapon_system.my_atom = src
-				var/path = text2path("[W.type]/proc/fire_weapon_system")
-				if(path)
-					verbs += path//obj/spacepod/proc/fire_weapons
+				new/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapon_system(src, equipment_system.weapon_system.verb_name, equipment_system.weapon_system.verb_desc) //Yes, it has to be referenced like that. W.verb_name/desc doesn't compile.
 				return
 
 
@@ -151,7 +149,7 @@
 	if(!hatch_open)
 		return ..()
 	if(!equipment_system || !istype(equipment_system))
-		user << "<span class='warning'>The pod has no equpment datum, or is the wrong type, yell at pomf.</span>"
+		user << "<span class='warning'>The pod has no equipment datum, or is the wrong type, yell at pomf.</span>"
 		return
 	var/list/possible = list()
 	if(battery)
@@ -176,7 +174,7 @@
 				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
 				SPE.my_atom = null
 				equipment_system.weapon_system = null
-				verbs -= text2path("[SPE.type]/proc/fire_weapon_system")
+				verbs -= typesof(/obj/item/device/spacepod_equipment/weaponry/proc)
 			else
 				user << "<span class='warning'>You need an open hand to do that.</span>"
 		/*
