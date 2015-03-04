@@ -22,10 +22,8 @@
 			if (contents.len >= max_butts)
 				user << "This ashtray is full."
 				return
-			user.u_equip(W)
+			user.drop_item(W)
 			W.loc = src
-			if ((user.client && user.s_active != src))
-				user.client.screen -= W
 			var/obj/item/clothing/mask/cigarette/cig = W
 			if(istype(cig, /obj/item/weapon/cigbutt))
 				user << "You drop the [cig] into [src]."
@@ -36,8 +34,6 @@
 					user << "You place [cig] in [src] without even lighting it. Why would you do that?"
 				else if (cig.lit == -1)
 					src.visible_message("[user] places [cig] in [src].")
-			user.update_inv_l_hand()
-			user.update_inv_r_hand()
 			add_fingerprint(user)
 			if (contents.len == max_butts)
 				icon_state = icon_full
