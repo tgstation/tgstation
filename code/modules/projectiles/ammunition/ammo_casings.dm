@@ -176,7 +176,11 @@
 	throw_speed = 3
 
 /obj/item/ammo_casing/caseless/gatling
-	name = "gatling casing"
-	projectile_type = /obj/item/projectile/bullet/pellet/weak
-	caliber = "gatling"
+	name = "minigun round casing"
+	projectile_type = /obj/item/projectile/bullet/weakbullet1
+	caliber = "minigun"
+
+/obj/item/ammo_casing/caseless/gatling/wiz //for the wizard variant
+	projectile_type = /obj/item/projectile/bullet/weakbullet1/wiz
+
 

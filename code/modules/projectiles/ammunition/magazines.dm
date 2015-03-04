@@ -6,7 +6,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder
 	name = "revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
+	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 7
@@ -24,7 +24,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "russian revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
+	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 6
@@ -35,14 +35,14 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	name = "d-tiv revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
+	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = "38"
 	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/shot
 	name = "shotgun internal magazine"
-	desc = "Oh god, this shouldn't be here"
+	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 4
@@ -50,7 +50,7 @@
 
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
-	desc = "Oh god, this shouldn't be here"
+	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = "shotgun"
 	max_ammo = 8
@@ -58,7 +58,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	name = "double-barrel shotgun internal magazine"
-	desc = "This doesn't even exist"
+	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 2
@@ -66,7 +66,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/improvised
 	name = "improvised shotgun internal magazine"
-	desc = "This doesn't even exist"
+	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
 	ammo_type = /obj/item/ammo_casing/shotgun/improvised
 	caliber = "shotgun"
 	max_ammo = 1
@@ -74,7 +74,7 @@
 
 /obj/item/ammo_box/magazine/internal/shotriot
 	name = "riot shotgun internal magazine"
-	desc = "Oh god, this shouldn't be here"
+	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 6
@@ -98,7 +98,7 @@
 
 /obj/item/ammo_box/magazine/internal/boltaction
 	name = "bolt action rifle internal magazine"
-	desc = "Oh god, this shouldn't be here"
+	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
 	ammo_type = /obj/item/ammo_casing/a762
 	caliber = "a762"
 	max_ammo = 5
@@ -110,6 +110,10 @@
 	ammo_type = /obj/item/ammo_casing/caseless/gatling
 	caliber = "gatling"
 	max_ammo = 400
+
+obj/item/ammo_box/magazine/internal/gatling/wiz   //balanced so that the wizard doesn't get his magical ass torn a new one
+	ammo_type = /obj/item/ammo_casing/caseless/gatling/wiz
+	max_ammo = 300   //fun = removed
 
 ///////////EXTERNAL MAGAZINES////////////////
 

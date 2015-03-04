@@ -8,12 +8,7 @@
 	fire_delay = 2
 	action_button_name = "Toggle Firemode"
 
-/obj/item/weapon/gun/projectile/automatic/proto
-	name = "prototype SMG"
-	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
-	icon_state = "saber"
-	mag_type = /obj/item/ammo_box/magazine/smgm9mm
-	pin = null
+/////Basic procs///////
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -76,6 +71,17 @@
 		alarmed = 1
 	return
 
+//R&D SMG//////
+
+/obj/item/weapon/gun/projectile/automatic/proto
+	name = "prototype SMG"
+	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
+	icon_state = "saber"
+	mag_type = /obj/item/ammo_box/magazine/smgm9mm
+	pin = null
+
+////////CR-20////////////
+
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "syndicate SMG"
 	desc = "A bullpup two-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
@@ -103,7 +109,7 @@
 	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
-
+/////////////////L6 SAW////////////////
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "syndicate LMG"
@@ -160,7 +166,7 @@
 		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
 		return
 	..()
-
+////////////////M90////////////////
 /obj/item/weapon/gun/projectile/automatic/m90
 	name = "syndicate carbine"
 	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
@@ -228,7 +234,7 @@
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_icon()
 	return
-
+/////////////TOMMYGUN/////////////////
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
 	desc = "A genuine 'Chicago Typewriter'."
@@ -242,14 +248,74 @@
 	burst_size = 4
 	fire_delay = 1
 
+//////////////////GATLING GUN//////////////////
+
 /obj/item/weapon/gun/projectile/automatic/gatling
-	name = "gatling gun"
-	desc = "More dakka is always the answer."
-	icon_state = "tommygun"
-	item_state = "shotgun"
+	name = "syndicate minigun"
+	desc = "More dakka is always the answer. Fires a massive stream of fairly weak bullets."
+	icon_state = "minigun"
 	w_class = 6
-	can_suppress = 0
+	suppressed = 1    //creates its own problems I guess, but it's infinitely preferable to twenty "YOU FIRE THE GATLING GUN"
+	can_suppress = 0 // gun is pre-supressed. What a stealthy gatling gun.
 	mag_type = /obj/item/ammo_box/magazine/internal/gatling
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-	burst_size = 25
-	fire_delay=1
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	burst_size = 20
+	fire_delay = 1
+	var/active = 0
+	slot_flags = SLOT_BACK
+	select = 0
+	force = 15    //Even when you've used all 400 bullets, you can still smack them over the head with it.
+	attack_verb = list("smashed", "walloped", "thunked")
+	recoil = 1
+
+/obj/item/weapon/gun/projectile/automatic/gatling/burst_select()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/gatling/update_icon()
+	overlays.Cut()
+	icon_state = "minigun[magazine ? "" : "-empty"]"
+	if(active == 1)
+		src.overlays += image('icons/obj/guns/projectile.dmi', "minigun_spin")
+
+/obj/item/weapon/gun/projectile/automatic/gatling/proc/spin_up()
+	switch(select)
+		if(0)
+			select = 1
+			slot_flags = 0
+			usr << "<span class='notice'>You grip the trigger to spin up the minigun.</span>"
+			sleep(10)
+			usr << "<span class='notice'>The minigun is spun up for firing.</span>"
+			active = 1 //so you cant fire while it spins up
+			update_icon(src)
+		if(1)
+			select = 0
+			active = 0
+			usr << "<span class='notice'>You release the trigger.</span>"
+			sleep(10)
+			update_icon(src)
+			usr << "<span class='notice'>The minigun spins to a halt and can be safely put on your back</span>"
+			slot_flags = SLOT_BACK
+	return
+
+/obj/item/weapon/gun/projectile/automatic/gatling/ui_action_click()  	//ready the dakka
+	spin_up()
+
+/obj/item/weapon/gun/projectile/automatic/gatling/attack_self()			//could be replaced in future, needs to exist for now to stop the mag being removed
+	spin_up()
+
+/obj/item/weapon/gun/projectile/automatic/gatling/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)
+	if(active)
+		..()
+
+	else if(select == 0)
+		usr << "<span class='warning'>The minigun must be spun up to shoot!</span>"
+		sleep (15) 									//punishment for not being spun up already is a delay to fire
+		spin_up()
+
+/obj/item/weapon/gun/projectile/automatic/gatling/dropped()
+	..()
+	if(usr.stat)
+		visible_message("<span class='warning'>The minigun stutters to a halt as it falls!</span>")
+	active = 0
+	select = 0
+	return
