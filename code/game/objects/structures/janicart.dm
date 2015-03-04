@@ -36,7 +36,7 @@
 	return
 
 
-/obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
+/obj/structure/janitorialcart/attackby(obj/item/I, mob/user, params)
 	var/fail_msg = "<span class='notice'>There is already one of those in [src].</span>"
 
 	if(istype(I, /obj/item/weapon/mop))
@@ -194,7 +194,7 @@
 		user << "It has been upgraded with a floor buffer."
 
 
-/obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user)
+/obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, keytype))
 		user << "Hold [I] in one of your hands while you drive this [callme]."
 	else if(istype(I, /obj/item/weapon/storage/bag/trash))
@@ -251,13 +251,9 @@
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>"
 
 
-/obj/structure/stool/bed/chair/janicart/user_buckle_mob(mob/M, mob/user)
-	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon))
-		return
-
-	..()
-
+/obj/structure/stool/bed/chair/janicart/user_buckle_mob(mob/living/M, mob/user)
 	M.loc = loc
+	..()
 	update_mob()
 
 /obj/structure/stool/bed/chair/janicart/unbuckle_mob()

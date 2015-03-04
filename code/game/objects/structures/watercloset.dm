@@ -46,7 +46,7 @@
 	icon_state = "toilet[open][cistern]"
 
 
-/obj/structure/toilet/attackby(obj/item/I, mob/living/user)
+/obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
@@ -113,7 +113,7 @@
 	anchored = 1
 
 
-/obj/structure/urinal/attackby(obj/item/I, mob/user)
+/obj/structure/urinal/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		if(!G.confirm())
@@ -167,7 +167,7 @@
 			tile.MakeSlippery()
 
 
-/obj/machinery/shower/attackby(obj/item/I, mob/user)
+/obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
@@ -375,7 +375,7 @@
 	user.visible_message("<span class='notice'>[user] washes their hands in [src].</span>")
 
 
-/obj/structure/sink/attackby(obj/item/O, mob/user)
+/obj/structure/sink/attackby(obj/item/O, mob/user, params)
 	if(busy)
 		user << "<span class='notice'>Someone's already washing here.</span>"
 		return
@@ -445,7 +445,7 @@
 	..()
 	icon_state = "puddle"
 
-/obj/structure/sink/puddle/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/sink/puddle/attackby(obj/item/O as obj, mob/user as mob, params)
 	icon_state = "puddle-splash"
 	..()
 	icon_state = "puddle"

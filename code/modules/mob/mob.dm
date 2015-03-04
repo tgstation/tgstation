@@ -229,6 +229,9 @@ var/next_mob_id = 0
 /mob/proc/restrained()
 	return
 
+/mob/proc/incapacitated()
+	return
+
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
@@ -467,13 +470,6 @@ var/list/slot_equipment_priority = list( \
 	if (popup)
 		memory()
 
-/*
-/mob/verb/help()
-	set name = "Help"
-	src << browse('html/help.html', "window=help")
-	return
-*/
-
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
@@ -510,8 +506,6 @@ var/list/slot_equipment_priority = list( \
 	set name = "Changelog"
 	set category = "OOC"
 	getFiles(
-		'html/postcardsmall.jpg',
-		'html/somerights20.png',
 		'html/88x31.png',
 		'html/bug-minus.png',
 		'html/cross-circle.png',
@@ -534,7 +528,7 @@ var/list/slot_equipment_priority = list( \
 	if(prefs.lastchangelog != changelog_hash)
 		prefs.lastchangelog = changelog_hash
 		prefs.save_preferences()
-		winset(src, "rpane.changelog", "background-color=none;font-style=;")
+		winset(src, "rpane.changelogb", "background-color=none;font-style=;")
 
 /mob/verb/observe()
 	set name = "Observe"
@@ -695,6 +689,7 @@ var/list/slot_equipment_priority = list( \
 	..()
 
 	if(statpanel("Status"))
+		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		var/ETA
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_RECALL)

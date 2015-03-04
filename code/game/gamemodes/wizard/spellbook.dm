@@ -12,8 +12,9 @@
 	var/op = 1
 	var/activepage
 	var/list/active_challenges = list()
+	var/mob/living/carbon/human/owner
 
-/obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob)
+/obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
 		var/obj/item/weapon/antag_spawner/contract/contract = O
 		if(contract.used)
@@ -28,6 +29,13 @@
 
 
 /obj/item/weapon/spellbook/attack_self(mob/user as mob)
+	if(!owner)
+		user << "You bind the spellbook to yourself."
+		owner = user
+		return
+	if(user != owner)
+		user << "The [name] does not recognize you as it's owner and refuses to open."
+		return
 	user.set_machine(src)
 	var/dat
 	if(temp)
@@ -38,7 +46,7 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=spells'>Learn and Improve Magical Abilities</A><BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=artifacts'>Summon Magical Tools and Weapons</A><BR>"
-		if(ticker.mode != "ragin' mages") // we totally need summon guns x100
+		if(ticker.mode.name != "ragin' mages") // we totally need summon guns x100
 			dat += "<A href='byond://?src=\ref[src];spell_choice=challenge'>Raise The Stakes For More Power</A><BR>"
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
@@ -100,7 +108,7 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=summonitem'>Instant Summons</A> (10)<BR>"
 		dat += "<I>This spell can be used to bind a valuable item to you, bringing it to your hand at will. Using this spell while holding the bound item will allow you to unbind it. It does not require wizard garb.</I><BR>"
-		if(ticker.mode != "ragin' mages") // we totally need summon guns x100
+		if(ticker.mode.name != "ragin' mages") // we totally need summon greentext x100
 			dat += "<A href='byond://?src=\ref[src];spell_choice=summonevents'>Summon Events</A> (One time use, persistent global spell)<BR>"
 			dat += "<I>Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events.</I><BR>"
 
@@ -153,6 +161,10 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=soulstone'>Six Soul Stone Shards and the spell Artificer</A><BR>"
 		dat += "<I>Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot.</I><BR>"
+		dat += "<HR>"
+
+		dat += "<A href='byond://?src=\ref[src];spell_choice=necrostone'>A Necromantic Stone</A><BR>"
+		dat += "<I>A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command.</I>"
 		dat += "<HR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=wands'>Wand Assortment</A><BR>"
@@ -208,7 +220,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", repulse = "Repulse", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonitem = "Instant Summons", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", repulse = "Repulse", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonitem = "Instant Summons", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", necrostone = "A Necromantic stone", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.mind.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -339,6 +351,11 @@
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
 							H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(null)
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
+							max_uses--
+						if("necrostone")
+							feedback_add_details("wizard_spell_learned","NS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							new /obj/item/device/necromantic_stone(get_turf(H))
+							temp = "You have purchased a necromantic stone."
 							max_uses--
 						if("armor")
 							feedback_add_details("wizard_spell_learned","HS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells

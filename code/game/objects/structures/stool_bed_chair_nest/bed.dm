@@ -70,10 +70,9 @@
 	else
 		density = 0
 		icon_state = "down"
-		if(buckled_mob)
-			buckled_mob.pixel_y = initial(buckled_mob.pixel_y)
-			if(buckled_mob.lying)
-				buckled_mob.pixel_y -= buckled_pixel_y_offset
+		M.pixel_y = initial(M.pixel_y)
+		if(M.lying)
+			M.pixel_y -= buckled_pixel_y_offset
 
 
 /obj/item/roller
@@ -100,3 +99,43 @@
 		new/obj/item/roller(get_turf(src))
 		qdel(src)
 		return
+
+/obj/item/roller/robo //ROLLER ROBO DA!
+	name = "roller bed dock"
+	var/loaded = null
+
+/obj/item/roller/robo/New()
+	loaded = new /obj/structure/stool/bed/roller(src)
+	desc = "A collapsed roller bed that can be ejected for emergency use. Must be collected or replaced after use."
+	..()
+
+/obj/item/roller/robo/examine(mob/user)
+	..()
+	user << "The dock is [loaded ? "loaded" : "empty"]"
+
+/obj/item/roller/robo/attack_self(mob/user)
+	if(loaded)
+		var/obj/structure/stool/bed/roller/R = loaded
+		R.loc = user.loc
+		user.visible_message("<span class='notice'>[user] deploys [loaded].</span>")
+		loaded = null
+	else
+		user << "<span class='warning'>The dock is empty!</span>"
+
+/obj/item/roller/robo/afterattack(obj/target, mob/user , proximity)
+	if(istype(target,/obj/structure/stool/bed/roller))
+		if(!proximity)
+			return
+		if(loaded)
+			user << "<span class='notice'>You already have a roller bed docked!</span>"
+			return
+
+		var/obj/structure/stool/bed/roller/R = target
+		if(R.buckled_mob)
+			R.user_unbuckle_mob(user)
+
+		loaded = target
+		target.loc = src
+		user.visible_message("<span class='notice'>[user] collects [loaded].</span>")
+	..()
+

@@ -67,6 +67,7 @@ datum/reagent/medicine/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.stuttering = 0
+	M.slurring = 0
 	M.confused = 0
 	M.sleeping = 0
 	M.jitteriness = 0

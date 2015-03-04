@@ -114,13 +114,17 @@ obj/item/projectile/kinetic/New()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
 		name = "full strength kinetic force"
-		damage = 30
+		damage *= 2
 	..()
 
 /obj/item/projectile/kinetic/Range()
 	range--
 	if(range <= 0)
 		new /obj/item/effect/kinetic_blast(src.loc)
+		for(var/turf/T in range(1, src.loc))
+			if(istype(T, /turf/simulated/mineral))
+				var/turf/simulated/mineral/M = T
+				M.gets_drilled(firer)
 		qdel(src)
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
@@ -129,6 +133,11 @@ obj/item/projectile/kinetic/New()
 		var/turf/simulated/mineral/M = target_turf
 		M.gets_drilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
+	if(isturf(target))
+		for(var/turf/T in range(1, target_turf))
+			if(istype(T, /turf/simulated/mineral))
+				var/turf/simulated/mineral/M = T
+				M.gets_drilled(firer)
 	..()
 
 /obj/item/effect/kinetic_blast

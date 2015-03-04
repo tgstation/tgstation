@@ -4,13 +4,17 @@
 	var/ending = copytext(text, length(text))
 	if (src.stuttering)
 		return "stammers, \"[text]\"";
+	if(src.slurring)
+		return "slurs, \"[text]\"";
 	if(isliving(src))
 		var/mob/living/L = src
 		if (L.getBrainLoss() >= 60)
 			return "gibbers, \"[text]\"";
-	if (ending == "?")
+	if(ending == "?")
 		return "asks, \"[text]\"";
-	if (ending == "!")
+	if(copytext(text, length(text) - 1) == "!!")
+		return "yells, \"<span class = 'yell'>[text]</span>\"";
+	if(ending == "!")
 		return "exclaims, \"[text]\"";
 
 	if(dna)

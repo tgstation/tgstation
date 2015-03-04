@@ -50,10 +50,10 @@
 		burst()
 	return
 
-/obj/item/latexballon/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/latexballon/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/tank))
 		var/obj/item/weapon/tank/T = W
 		blow(T, user)
 		return
-	if (is_sharp(W) || is_hot(W))
+	if (is_sharp(W) || is_hot(W) || is_pointed(W))
 		burst()

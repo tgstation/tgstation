@@ -17,7 +17,7 @@
 
 /obj/item/weapon/twohanded/singularityhammer/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/twohanded/singularityhammer/Destroy()

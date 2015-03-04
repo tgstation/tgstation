@@ -69,7 +69,7 @@
 	desc = "Lets you shoot your guns"
 	icon_state = "auth"
 
-/obj/item/weapon/implant/tracking/get_data()
+/obj/item/weapon/implant/weapons_auth/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Firearms Authentication Implant<BR>
 				<b>Life:</b> 4 hours after death of host<BR>

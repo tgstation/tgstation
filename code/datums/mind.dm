@@ -110,7 +110,6 @@
 			qdel(changeling)
 			changeling = null
 	special_role = null
-	remove_objectives()
 	remove_antag_equip()
 
 /datum/mind/proc/remove_traitor()
@@ -121,7 +120,6 @@
 			A.set_zeroth_law("")
 			A.show_laws()
 	special_role = null
-	remove_objectives()
 	remove_antag_equip()
 
 /datum/mind/proc/remove_nukeop()
@@ -137,7 +135,6 @@
 		ticker.mode.wizards -= src
 		current.spellremove(current)
 	special_role = null
-	remove_objectives()
 	remove_antag_equip()
 
 /datum/mind/proc/remove_cultist()
@@ -562,7 +559,7 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	usr << browse(out, "window=edit_memory[src];size=400x500")
+	usr << browse(out, "window=edit_memory[src];size=500x500")
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))	return

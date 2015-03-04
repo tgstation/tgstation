@@ -101,6 +101,14 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
+/obj/item/clothing/shoes/workboots
+	name = "work boots"
+	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
+	icon_state = "workboots"
+	item_state = "jackboots"
+	strip_delay = 40
+	put_on_delay = 40
+
 /obj/item/clothing/shoes/cult
 	name = "cultist boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."
@@ -130,3 +138,9 @@
 	item_state = "roman"
 	strip_delay = 100
 	put_on_delay = 100
+
+/obj/item/clothing/shoes/griffin
+	name = "griffon boots"
+	desc = "A pair of costume boots fashioned after bird talons."
+	icon_state = "griffinboots"
+	item_state = "griffinboots"

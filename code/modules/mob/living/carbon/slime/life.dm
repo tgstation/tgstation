@@ -9,35 +9,16 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if (src.notransform)
+	if (notransform)
 		return
-
-	..()
-
-	if(stat != DEAD)
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
+	if(..())
 		handle_nutrition()
-
 		handle_targets()
-
 		if (!ckey)
 			handle_speech_and_mood()
 
-	var/datum/gas_mixture/environment
-	if(src.loc)
-		environment = loc.return_air()
-
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
-
-	if(environment)
-		handle_environment(environment) // Handle temperature/pressure differences between body and environment
-
-	handle_regular_status_updates() // Status updates, death etc.
+/mob/living/carbon/slime/handle_breathing()
+	return
 
 /mob/living/carbon/slime/proc/AIprocess()  // the master AI process
 
@@ -51,14 +32,14 @@
 
 	AIproc = 1
 
-	while(AIproc && stat != 2 && (attacked || hungry || rabid || Victim))
+	while(AIproc && stat != DEAD && (attacked || hungry || rabid || Victim))
 		if(Victim) // can't eat AND have this little process at the same time
 			break
 
 		if(!Target || client)
 			break
 
-		if(Target.health <= -70 || Target.stat == 2)
+		if(Target.health <= -70 || Target.stat == DEAD)
 			Target = null
 			AIproc = 0
 			break
@@ -118,7 +99,7 @@
 
 	AIproc = 0
 
-/mob/living/carbon/slime/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/slime/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		adjustToxLoss(rand(10,20))
 		return
@@ -167,7 +148,7 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/carbon/slime/proc/handle_chemicals_in_body()
+/mob/living/carbon/slime/handle_chemicals_in_body()
 
 	if(reagents) reagents.metabolize(src)
 
@@ -181,24 +162,35 @@
 
 	return //TODO: DEFERRED
 
-/mob/living/carbon/slime/proc/handle_regular_status_updates()
+
+/mob/living/carbon/slime/handle_mutations_and_radiation()
+	return
+
+/mob/living/carbon/slime/handle_regular_hud_updates()
+	return
+
+/mob/living/carbon/slime/handle_regular_status_updates()
 
 	if(is_adult)
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
 		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
-	if(health < config.health_threshold_dead && stat != 2)
+	if(health < config.health_threshold_dead && stat != DEAD)
 		death()
 		return
 
-	else if(src.health < config.health_threshold_crit)
+	else if(health < config.health_threshold_crit)
 
-		if(!src.reagents.has_reagent("epinephrine"))
-			src.adjustOxyLoss(10)
+		if(!reagents.has_reagent("epinephrine"))
+			adjustOxyLoss(3)
 
-		if(src.stat != DEAD)
-			src.stat = UNCONSCIOUS
+		if(stat != DEAD)
+			Paralyse(3)
+			stat = UNCONSCIOUS
+	else
+		if(stat != DEAD)
+			stat = CONSCIOUS
 
 	if(prob(30))
 		adjustOxyLoss(-1)
@@ -207,46 +199,36 @@
 		adjustCloneLoss(-1)
 		adjustBruteLoss(-1)
 
-	if (src.stat == DEAD)
-		src.lying = 1
-		src.eye_blind = max(eye_blind, 1)
+	if (stat == DEAD)
+		lying = 1
+		eye_blind = max(eye_blind, 1)
 	else
-		if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
-			if (src.stunned > 0)
-				AdjustStunned(-1)
-				src.stat = 0
-			if (src.weakened > 0)
-				AdjustWeakened(-1)
-				src.lying = 0
-				src.stat = 0
-			if (src.paralysis > 0)
-				AdjustParalysis(-1)
-				src.eye_blind = 0
-				src.lying = 0
-				src.stat = 0
+		if(stunned > 0)
+			AdjustStunned(-1)
+		if(weakened > 0)
+			AdjustWeakened(-1)
+		if (paralysis > 0)
+			AdjustParalysis(-1)
 
-		else
-			src.lying = 0
-			src.stat = 0
+	if(stuttering)
+		stuttering = 0
 
-	if (src.stuttering) src.stuttering = 0
-
-	if (src.eye_blind)
-		src.eye_blind = 0
-		src.eye_blind = max(eye_blind, 1)
+	if(eye_blind)
+		eye_blind = 0
+		eye_blind = max(eye_blind, 1)
 
 	setEarDamage((ear_damage < 25 ? 0 : ear_damage),(disabilities & DEAF ? 1 :0))
 
-	src.density = !( src.lying )
+	density = !( src.lying )
 
-	if (src.disabilities & BLIND)
-		src.eye_blind = max(eye_blind, 1)
+	if(disabilities & BLIND)
+		eye_blind = max(eye_blind, 1)
 
-	if (src.eye_blurry > 0)
-		src.eye_blurry = 0
+	if(eye_blurry > 0)
+		eye_blurry = 0
 
-	if (src.druggy > 0)
-		src.druggy = 0
+	if(druggy > 0)
+		druggy = 0
 
 	return 1
 

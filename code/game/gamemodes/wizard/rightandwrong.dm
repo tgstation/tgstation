@@ -1,8 +1,13 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
 /proc/rightandwrong(var/summon_type, var/mob/user, var/survivor_probability) //0 = Summon Guns, 1 = Summon Magic
+<<<<<<< HEAD
 	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","uzi","crossbow","saw","car","boltaction","speargun","minigun")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
+=======
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun")
+	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "necromantic","staffdoor", "special")
+>>>>>>> e2554c55e69d77f3582a4935d3fc92a52eca75a1
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
 
 	if(user) //in this case either someone holding a spellbook or a badmin
@@ -45,12 +50,10 @@
 				if("gyrojet")
 					new /obj/item/weapon/gun/projectile/automatic/gyropistol(get_turf(H))
 				if("pulse")
-					new /obj/item/weapon/gun/energy/pulse_rifle(get_turf(H))
+					new /obj/item/weapon/gun/energy/pulse(get_turf(H))
 				if("suppressed")
 					new /obj/item/weapon/gun/projectile/automatic/pistol(get_turf(H))
 					new /obj/item/weapon/suppressor(get_turf(H))
-				if("cannon")
-					new /obj/item/weapon/gun/energy/lasercannon(get_turf(H))
 				if("doublebarrel")
 					new /obj/item/weapon/gun/projectile/revolver/doublebarrel(get_turf(H))
 				if("shotgun")
@@ -59,11 +62,25 @@
 					new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
 				if("mateba")
 					new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(H))
+				if("boltaction")
+					new /obj/item/weapon/gun/projectile/shotgun/boltaction(get_turf(H))
+				if("speargun")
+					new /obj/item/weapon/gun/projectile/automatic/speargun(get_turf(H))
+				if("cannon")
+					var/obj/item/weapon/gun/energy/lasercannon/gat
+					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.
+					new gat(get_turf(H))
 				if("crossbow")
-					new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large(get_turf(H))
+					var/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large/gat
+					gat.pin = /obj/item/device/firing_pin
+					new gat(get_turf(H))
 				if("nuclear")
 					var/obj/item/weapon/gun/energy/gun/nuclear/gat
+<<<<<<< HEAD
 					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed. PRAISE THE CODERBUS
+=======
+					gat.pin = /obj/item/device/firing_pin
+>>>>>>> e2554c55e69d77f3582a4935d3fc92a52eca75a1
 					new gat(get_turf(H))
 				if("sabr")
 					var/obj/item/weapon/gun/projectile/automatic/gat
@@ -85,6 +102,7 @@
 					var/obj/item/weapon/gun/projectile/automatic/m90/gat
 					gat.pin = /obj/item/device/firing_pin
 					new gat(get_turf(H))
+<<<<<<< HEAD
 				if("boltaction")
 					new /obj/item/weapon/gun/projectile/shotgun/boltaction(get_turf(H))
 				if("speargun")
@@ -93,6 +111,8 @@
 					var/obj/item/weapon/gun/projectile/automatic/gatling/gat     // This looks like fun addition but it's secretly fun removal
 					gat.mag_type = /obj/item/ammo_box/magazine/internal/gatling/wiz  //nerfed ammo, nerfed damage.
 					new gat(get_turf(H))
+=======
+>>>>>>> e2554c55e69d77f3582a4935d3fc92a52eca75a1
 		else
 			switch (randomizemagic)
 				if("fireball")
@@ -138,7 +158,8 @@
 					if (!(H.dna.check_mutation(XRAY)))
 						H.dna.add_mutation(XRAY)
 						H << "<span class='notice'>The walls suddenly disappear.</span>"
-
+				if("necromantic")
+					new /obj/item/device/necromantic_stone(get_turf(H))
 				if("special")
 					magiclist -= "special" //only one super OP item per summoning max
 					switch (randomizemagicspecial)

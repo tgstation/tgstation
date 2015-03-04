@@ -39,6 +39,10 @@
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
 
+/obj/item/weapon/storage/bag/trash/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] puts the [src.name] over their head and starts chomping at the insides! Disgusting!</span>")
+	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
+	return (TOXLOSS)
 
 /obj/item/weapon/storage/bag/trash/update_icon()
 	if(contents.len == 0)
@@ -82,7 +86,7 @@
 
 /obj/item/weapon/storage/bag/plants
 	name = "plant bag"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
 	storage_slots = 50; //the number of plant pieces it can carry.
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class

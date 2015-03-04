@@ -17,9 +17,7 @@
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
 	..()
 
-/mob/living/carbon/alien/humanoid/sentinel/handle_regular_hud_updates()
-	..() //-Yvarov
-
+/mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()
 	if (healths)
 		if (stat != 2)
 			switch(health)
@@ -29,14 +27,16 @@
 					healths.icon_state = "health1"
 				if(75 to 100)
 					healths.icon_state = "health2"
-				if(25 to 75)
+				if(50 to 75)
 					healths.icon_state = "health3"
-				if(0 to 25)
+				if(25 to 50)
 					healths.icon_state = "health4"
-				else
+				if(0 to 25)
 					healths.icon_state = "health5"
+				else
+					healths.icon_state = "health6"
 		else
-			healths.icon_state = "health6"
+			healths.icon_state = "health7"
 
 /mob/living/carbon/alien/humanoid/sentinel/movement_delay()
 	. = ..()

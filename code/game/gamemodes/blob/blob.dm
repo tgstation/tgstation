@@ -18,6 +18,7 @@ var/list/blob_nodes = list()
 	restricted_jobs = list("Cyborg", "AI")
 
 	var/declared = 0
+	var/burst = 0
 
 	var/cores_to_spawn = 1
 	var/players_per_core = 30
@@ -52,6 +53,40 @@ var/list/blob_nodes = list()
 	return 1
 
 
+/datum/game_mode/blob/proc/get_blob_candidates()
+	var/list/candidates = list()
+	for(var/mob/living/carbon/human/player in player_list)
+		if(!player.stat && player.mind && !player.mind.special_role && !jobban_isbanned(player, "Syndicate") && (player.client.prefs.be_special & BE_BLOB))
+			if(age_check(player.client))
+				candidates += player
+	return candidates
+
+
+/datum/game_mode/blob/proc/blobize(var/mob/living/carbon/human/blob)
+	var/datum/mind/blobmind = blob.mind
+	if(!istype(blobmind))
+		return 0
+	infected_crew += blobmind
+	blobmind.special_role = "Blob"
+	log_game("[blob.key] (ckey) has been selected as a Blob")
+	greet_blob(blobmind)
+	blob << "<span class='userdanger'>You feel very tired and bloated!  You don't have long before you burst!</span>"
+	spawn(600)
+		burst_blob(blobmind)
+	return 1
+
+/datum/game_mode/blob/proc/make_blobs(var/count)
+	var/list/candidates = get_blob_candidates()
+	var/mob/living/carbon/human/blob = null
+	count=min(count, candidates.len)
+	for(var/i = 0, i < count, i++)
+		blob = pick(candidates)
+		candidates -= blob
+		blobize(blob)
+	return count
+
+
+
 /datum/game_mode/blob/announce()
 	world << "<B>The current game mode is - <font color='green'>Blob</font>!</B>"
 	world << "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>"
@@ -72,27 +107,39 @@ var/list/blob_nodes = list()
 
 /datum/game_mode/blob/proc/burst_blobs()
 	for(var/datum/mind/blob in infected_crew)
+		burst_blob(blob)
 
-		var/client/blob_client = null
-		var/turf/location = null
+/datum/game_mode/blob/proc/burst_blob(var/datum/mind/blob, var/warned=0)
+	var/client/blob_client = null
+	var/turf/location = null
 
-		if(iscarbon(blob.current))
-			var/mob/living/carbon/C = blob.current
-			if(directory[ckey(blob.key)])
-				blob_client = directory[ckey(blob.key)]
-				location = get_turf(C)
-				if(location.z != ZLEVEL_STATION || istype(location, /turf/space))
-					location = null
+	if(iscarbon(blob.current))
+		var/mob/living/carbon/C = blob.current
+		if(directory[ckey(blob.key)])
+			blob_client = directory[ckey(blob.key)]
+			location = get_turf(C)
+			if(location.z != ZLEVEL_STATION || istype(location, /turf/space))
+				if(!warned)
+					C << "<span class='userdanger'>You feel ready to burst, but this isn't an appropriate place!  You must return to the station!</span>"
+					message_admins("[key_name(C)] was in space when the blobs burst, and will die if he doesn't return to the station.")
+					spawn(300)
+						burst_blob(blob, 1)
+				else
+					burst ++
+					log_admin("[key_name(C)] was in space when attempting to burst as a blob.")
+					message_admins("[key_name(C)] was in space when attempting to burst as a blob.")
+					C.gib()
+					make_blobs(1)
+					check_finished() //Still needed in case we can't make any blobs
+
+			else if(blob_client && location)
+				burst ++
 				C.gib()
-
-
-		if(blob_client && location)
-			var/obj/effect/blob/core/core = new(location, 200, blob_client, blob_point_rate)
-			if(core.overmind && core.overmind.mind)
-				core.overmind.mind.name = blob.name
-				infected_crew -= blob
-				infected_crew += core.overmind.mind
-
+				var/obj/effect/blob/core/core = new(location, 200, blob_client, blob_point_rate)
+				if(core.overmind && core.overmind.mind)
+					core.overmind.mind.name = blob.name
+					infected_crew -= blob
+					infected_crew += core.overmind.mind
 
 /datum/game_mode/blob/post_setup()
 

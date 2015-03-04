@@ -136,6 +136,12 @@ var/list/VVckey_edit = list("key", "ckey")
 /client/proc/mod_list(var/list/L, atom/O, original_name, objectvar)
 	if(!check_rights(R_VAREDIT))	return
 	if(!istype(L,/list)) src << "Not a List."
+
+	if(L.len > 1000)
+		var/confirm = alert(src, "The list you're trying to edit is very long, continuing may crash the server.", "Warning", "Continue", "Abort")
+		if(confirm != "Continue")
+			return
+
 	var/list/names = sortList(L)
 
 	var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
