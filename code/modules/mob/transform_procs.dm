@@ -81,7 +81,7 @@
 	new_mob.say("HONK!")
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
-	return
+	return new_mob
 
 /mob/new_player/AIize()
 	spawning = 1
@@ -292,7 +292,7 @@
 	new_xeno << "<B>You are now an alien.</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
-	return
+	return new_xeno
 
 /mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
 	if (monkeyizing)
@@ -328,7 +328,7 @@
 	new_slime << "<B>You are now a slime. Skreee!</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
-	return
+	return new_slime
 
 /mob/living/carbon/human/proc/corgize()
 	if (monkeyizing)
@@ -350,7 +350,7 @@
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
-	return
+	return new_corgi
 
 /mob/living/carbon/human/Animalize()
 
@@ -384,7 +384,7 @@
 	new_mob << "You suddenly feel more... animalistic."
 	spawn()
 		del(src)
-	return
+	return new_mob
 
 /mob/proc/Animalize()
 
@@ -401,7 +401,9 @@
 	new_mob.a_intent = I_HURT
 	new_mob << "You feel more... animalistic"
 
-	del(src)
+	spawn()
+		del(src)
+	return new_mob
 
 /* Certain mob types have problems and should not be allowed to be controlled by players.
  *

@@ -6,6 +6,7 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		return
 
+	var/client/CLIENT = usr.client
 	if(href_list["makeAntag"])
 		switch(href_list["makeAntag"])
 			if("1")
@@ -354,31 +355,38 @@
 
 		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
 		message_admins("\blue [key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]", 1)
-
+		var/mob/new_mob
 		switch(href_list["simplemake"])
-			if("observer")			M.change_mob_type( /mob/dead/observer , null, null, delmob )
-			if("drone")				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
-			if("hunter")			M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
-			if("queen")				M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob )
-			if("sentinel")			M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
-			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
-			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
-			if("slime")			M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
-			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
-			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
-			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
-			if("cat")				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
-			if("runtime")			M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob )
-			if("corgi")				M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob )
-			if("ian")				M.change_mob_type( /mob/living/simple_animal/corgi/Ian , null, null, delmob )
-			if("crab")				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
-			if("coffee")			M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
-			if("parrot")			M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
-			if("polyparrot")		M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
-			if("constructarmoured")	M.change_mob_type( /mob/living/simple_animal/construct/armoured , null, null, delmob )
-			if("constructbuilder")	M.change_mob_type( /mob/living/simple_animal/construct/builder , null, null, delmob )
-			if("constructwraith")	M.change_mob_type( /mob/living/simple_animal/construct/wraith , null, null, delmob )
-			if("shade")				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
+			if("observer")			new_mob = M.change_mob_type( /mob/dead/observer , null, null, delmob )
+			if("drone")				new_mob = M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
+			if("hunter")			new_mob = M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
+			if("queen")				new_mob = M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob )
+			if("sentinel")			new_mob = M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
+			if("larva")				new_mob = M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
+			if("human")				new_mob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
+			if("slime")				new_mob = M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
+			if("adultslime")		new_mob = M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
+			if("monkey")			new_mob = M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
+			if("robot")				new_mob = M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
+			if("cat")				new_mob = M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
+			if("runtime")			new_mob = M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob )
+			if("corgi")				new_mob = M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob )
+			if("ian")				new_mob = M.change_mob_type( /mob/living/simple_animal/corgi/Ian , null, null, delmob )
+			if("crab")				new_mob = M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
+			if("coffee")			new_mob = M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
+			if("parrot")			new_mob = M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
+			if("polyparrot")		new_mob = M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
+			if("constructarmoured")	new_mob = M.change_mob_type( /mob/living/simple_animal/construct/armoured , null, null, delmob )
+			if("constructbuilder")	new_mob = M.change_mob_type( /mob/living/simple_animal/construct/builder , null, null, delmob )
+			if("constructwraith")	new_mob = M.change_mob_type( /mob/living/simple_animal/construct/wraith , null, null, delmob )
+			if("shade")				new_mob = M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
+		//world << "Made a [new_mob] [usr ? "usr still exists" : "usr does not exist"]"
+		if(new_mob && new_mob != M)
+			/world << "[new_mob.client] vs [CLIENT] they [new_mob.client == CLIENT ? "match" : "don't match"]"
+			if(new_mob.client == CLIENT)
+				//world << "setting usr to new_mob"
+				usr = new_mob //We probably transformed ourselves
+			show_player_panel(new_mob)
 
 
 	/////////////////////////////////////new ban stuff
@@ -1137,7 +1145,10 @@
 
 		log_admin("[key_name(usr)] attempting to monkeyize [key_name(H)]")
 		message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(H)]", 1)
-		H.monkeyize()
+		var/mob/M = H.monkeyize()
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["corgione"])
 		if(!check_rights(R_SPAWN))	return
@@ -1149,7 +1160,10 @@
 
 		log_admin("[key_name(usr)] attempting to corgize [key_name(H)]")
 		message_admins("\blue [key_name_admin(usr)] attempting to corgize [key_name_admin(H)]", 1)
-		H.corgize()
+		var/mob/M = H.corgize()
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["forcespeech"])
 		if(!check_rights(R_FUN))	return
@@ -1450,7 +1464,10 @@
 
 		message_admins("\red Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!", 1)
 		log_admin("[key_name(usr)] AIized [key_name(H)]")
-		H.AIize()
+		var/mob/M = H.AIize()
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makealien"])
 		if(!check_rights(R_SPAWN))	return
@@ -1460,7 +1477,10 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_alienize(H)
+		var/mob/M = usr.client.cmd_admin_alienize(H)
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makeslime"])
 		if(!check_rights(R_SPAWN))	return
@@ -1470,7 +1490,10 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_slimeize(H)
+		var/mob/M = usr.client.cmd_admin_slimeize(H)
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makecluwne"])
 		if(!check_rights(R_SPAWN))	return
@@ -1480,7 +1503,10 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_cluwneize(H)
+		var/mob/M = usr.client.cmd_admin_cluwneize(H)
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))	return
@@ -1490,7 +1516,10 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_robotize(H)
+		var/mob/M = usr.client.cmd_admin_robotize(H)
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makemommi"])
 		if(!check_rights(R_SPAWN))	return
@@ -1500,7 +1529,10 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_mommify(H)
+		var/mob/M = usr.client.cmd_admin_mommify(H)
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makeanimal"])
 		if(!check_rights(R_SPAWN))	return
@@ -1510,7 +1542,10 @@
 			usr << "This cannot be used on instances of type /mob/new_player"
 			return
 
-		usr.client.cmd_admin_animalize(M)
+		var/mob/new_mob = usr.client.cmd_admin_animalize(M)
+		if(new_mob && new_mob != M)
+			if(new_mob.client == CLIENT) usr = new_mob //We probably transformed ourselves
+			show_player_panel(new_mob)
 
 	else if(href_list["togmutate"])
 		if(!check_rights(R_SPAWN))	return
