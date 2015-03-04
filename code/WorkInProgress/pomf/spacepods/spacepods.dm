@@ -176,6 +176,7 @@
 				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
 				SPE.my_atom = null
 				equipment_system.weapon_system = null
+				verbs -= text2path("[SPE.type]/proc/fire_weapon_system")
 			else
 				user << "<span class='warning'>You need an open hand to do that.</span>"
 		/*
