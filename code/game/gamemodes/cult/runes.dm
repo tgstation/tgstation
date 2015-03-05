@@ -823,7 +823,8 @@ var/list/sacrificed = list()
 		))
 			user << "<span class='danger'>The [cultist] is already free.</span>"
 			return
-		cultist.buckled = null
+		if(cultist.buckled)
+			cultist.buckled.unbuckle_mob()
 		if (cultist.handcuffed)
 			cultist.handcuffed.loc = cultist.loc
 			cultist.handcuffed = null
