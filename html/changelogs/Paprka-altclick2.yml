@@ -1,0 +1,7 @@
+author: Paprka
+
+delete-after: True
+
+changes:
+  - rscadd: "Alt click a PDA with an ID inside to eject the ID."
+  - tweak: "Renamed 'remove ID' verb to 'eject ID' so it's not immediately next to 'remove pen'."
