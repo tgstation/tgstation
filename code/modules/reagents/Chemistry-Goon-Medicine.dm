@@ -42,6 +42,7 @@ datum/reagent/styptic_powder
 datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
 		M.adjustBruteLoss(-volume)
+		stop_bleeding = 300
 		if(show_message)
 			M << "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>"
 		M.emote("scream")
@@ -63,14 +64,14 @@ datum/reagent/salglu_solution
 	id = "salglu_solution"
 	description = "This saline and glucose solution can help stabilize critically injured patients and cleanse wounds."
 	reagent_state = LIQUID
-	color = "#696969" // rgb: 200, 165, 220
+	color = "#696969"
 	metabolization_rate = 0.15
 
 datum/reagent/salglu_solution/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(prob(33))
-		M.adjustBruteLoss(-2*REM)
-		M.adjustFireLoss(-2*REM)
+		M.adjustBruteLoss(-1*REM)
+		M.adjustFireLoss(-1*REM)
 	..()
 	return
 
@@ -86,6 +87,7 @@ datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/vo
 	if(method == TOUCH)
 		M.adjustBruteLoss(-1.5*volume)
 		M.adjustFireLoss(-1.5*volume)
+		stop_bleeding = 1800
 		if(show_message)
 			M << "<span class='notice'>The synthetic flesh integrates itself into your wounds, healing you.</span>"
 	..()
