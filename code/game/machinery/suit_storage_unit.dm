@@ -105,12 +105,15 @@
 	var/hashelmet = 0
 	var/hassuit = 0
 	var/hashuman = 0
-	if(HELMET)
+	var/full = 0
+	if(HELMET && (!stat & NOPOWER))
 		hashelmet = 1
-	if(SUIT)
+	if(SUIT && (!stat & NOPOWER))
 		hassuit = 1
-	if(OCCUPANT)
+	if(OCCUPANT && (!stat & NOPOWER))
 		hashuman = 1
+	if((HELMET || SUIT || OCCUPANT) && (stat & NOPOWER))
+		full = 1
 	icon_state = text("suitstorage[][][][][][][][][]",
 					hashelmet,
 					hassuit,
@@ -118,7 +121,7 @@
 					src.isopen,
 					src.islocked,
 					src.isUV,
-					!(stat & NOPOWER),
+					(full||!(stat & NOPOWER)),
 					stat & BROKEN,
 					src.issuperUV)
 
@@ -581,8 +584,9 @@
 	if((stat & NOPOWER) && iscrowbar(I) && !islocked)
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		user << "<span class='notice'>You begin prying the equipment out of the suit storage unit</span>"
-		if(do_after(20))
+		if(do_after(user,20))
 			dump_everything()
+			update_icon()
 	if(stat & NOPOWER)
 		return
 	if(..())

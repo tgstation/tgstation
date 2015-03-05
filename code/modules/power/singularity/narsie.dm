@@ -29,6 +29,7 @@ var/global/narsie_cometh = 0
 	current_size = 12
 	consume_range = 12 // How many tiles out do we eat.
 	var/announce=1
+	var/narnar = 1
 //	var/old_x
 //	var/old_y
 
@@ -48,7 +49,8 @@ var/global/narsie_cometh = 0
 		emergency_shuttle.can_recall = 0
 		emergency_shuttle.settimeleft(600)
 
-	SetUniversalState(/datum/universal_state/hell)
+	if(narnar)
+		SetUniversalState(/datum/universal_state/hell)
 	narsie_cometh = 1
 
 	/* //For animating narsie manually, doesn't work well
@@ -93,13 +95,15 @@ var/global/narsie_cometh = 0
 				M.apply_effect(3, STUN)
 
 
-/obj/machinery/singularity/narsie/Bump(atom/A)
+/obj/machinery/singularity/narsie/large/Bump(atom/A)
+	if(!narnar) return
 	if(isturf(A))
 		narsiewall(A)
 	else if(istype(A, /obj/structure/cult))
 		qdel(A)
 
-/obj/machinery/singularity/narsie/Bumped(atom/A)
+/obj/machinery/singularity/narsie/large/Bumped(atom/A)
+	if(!narnar) return
 	if(isturf(A))
 		narsiewall(A)
 	else if(istype(A, /obj/structure/cult))
@@ -422,6 +426,7 @@ var/global/mr_clean_targets = list(
 	desc = "This universe is dirty. Time to change that."
 	icon = 'icons/obj/mrclean.dmi'
 	icon_state = ""
+	narnar = 0
 
 /obj/machinery/singularity/narsie/large/clean/process()
 	eat()

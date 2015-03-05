@@ -1113,6 +1113,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	user.set_machine(src)
 	interact(user)
 
+/obj/machinery/reagentgrinder/attack_robot(mob/user as mob)
+	return attack_hand(user)
+
 /obj/machinery/reagentgrinder/interact(mob/user as mob) // The microwave Menu
 	var/is_chamber_empty = 0
 	var/is_beaker_ready = 0
