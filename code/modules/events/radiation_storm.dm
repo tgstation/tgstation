@@ -43,7 +43,7 @@
 		for(var/i = 0, i < 15, i++)
 			var/irradiationThisBurst = rand(15,25) //everybody gets the same rads this radiation burst
 			var/randomMutation = prob(50)
-			var/badMutation = prob(75)
+			var/badMutation = prob(50)
 			for(var/mob/living/carbon/human/H in living_mob_list)
 				if(istype(H.loc, /obj/spacepod))
 					continue
