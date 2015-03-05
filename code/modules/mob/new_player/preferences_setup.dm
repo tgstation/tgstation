@@ -23,6 +23,21 @@
 	del(preview_icon_side)
 	var/icon/preview_icon = null
 
+	if(job_engsec_high) //cyborg/AI check, put first to avoid so much unneeded blending
+		switch(job_engsec_high)
+			if(AI)
+				preview_icon = new /icon('icons/mob/AI.dmi', "AI")
+
+			if(CYBORG)
+				preview_icon = new /icon('icons/mob/robots.dmi', "robot")
+
+		if(preview_icon) //We're busting out!
+			preview_icon_front = new(preview_icon, dir = SOUTH)
+			preview_icon_side = new(preview_icon, dir = WEST)
+
+			del(preview_icon)
+			return
+
 	var/g = "m"
 	if(gender == FEMALE)	g = "f"
 
