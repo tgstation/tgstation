@@ -4,6 +4,7 @@
 
 	school = "evocation"
 	charge_max = 300
+	spell_flags = 0
 	invocation = "FU'K Y'U D'NY"
 	invocation_type = "shout"
 	range = 1
