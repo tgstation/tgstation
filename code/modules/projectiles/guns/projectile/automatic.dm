@@ -20,7 +20,7 @@
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/A as obj, mob/user as mob)
 	. = ..()
 	if(.)
 		return
@@ -161,7 +161,7 @@
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob)
 	if(!cover_open)
 		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
 		return
@@ -194,11 +194,11 @@
 		..()
 		return
 
-/obj/item/weapon/gun/projectile/automatic/m90/attackby(var/obj/item/A, mob/user, params)
+/obj/item/weapon/gun/projectile/automatic/m90/attackby(var/obj/item/A, mob/user)
 	if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))
 			underbarrel.attack_self()
-			underbarrel.attackby(A, user, params)
+			underbarrel.attackby(A, user)
 	else
 		..()
 
@@ -256,7 +256,7 @@
 	icon_state = "minigun"
 	w_class = 6
 	suppressed = 1    //creates its own problems I guess, but it's infinitely preferable to twenty "YOU FIRE THE GATLING GUN"
-	can_suppress = 0 // gun is pre-supressed. What a stealthy gatling gun.
+	can_suppress = 0 // gun is pre-supressed. What a stealthy gatling gun it is..
 	mag_type = /obj/item/ammo_box/magazine/internal/gatling
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	burst_size = 20
@@ -266,7 +266,7 @@
 	select = 0
 	force = 15    //Even when you've used all 400 bullets, you can still smack them over the head with it.
 	attack_verb = list("smashed", "walloped", "thunked")
-	recoil = 1
+	heavy_weapon = 1
 
 /obj/item/weapon/gun/projectile/automatic/gatling/burst_select()
 	return

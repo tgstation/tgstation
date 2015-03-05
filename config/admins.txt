@@ -77,9 +77,6 @@ thurgatar = Game Master
 xerux = Game Master
 dannno = Game Master
 allura = Game Master
-<<<<<<< HEAD
-dorsidwarf = Game Master
-=======
 lo6a4evskiy = Game Master
 vekter = Game Master
->>>>>>> e2554c55e69d77f3582a4935d3fc92a52eca75a1
+

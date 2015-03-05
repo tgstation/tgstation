@@ -1,13 +1,8 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
 /proc/rightandwrong(var/summon_type, var/mob/user, var/survivor_probability) //0 = Summon Guns, 1 = Summon Magic
-<<<<<<< HEAD
 	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","uzi","crossbow","saw","car","boltaction","speargun","minigun")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
-=======
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun")
-	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "necromantic","staffdoor", "special")
->>>>>>> e2554c55e69d77f3582a4935d3fc92a52eca75a1
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
 
 	if(user) //in this case either someone holding a spellbook or a badmin
@@ -76,11 +71,8 @@
 					new gat(get_turf(H))
 				if("nuclear")
 					var/obj/item/weapon/gun/energy/gun/nuclear/gat
-<<<<<<< HEAD
 					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed. PRAISE THE CODERBUS
-=======
-					gat.pin = /obj/item/device/firing_pin
->>>>>>> e2554c55e69d77f3582a4935d3fc92a52eca75a1
+
 					new gat(get_turf(H))
 				if("sabr")
 					var/obj/item/weapon/gun/projectile/automatic/gat
@@ -102,7 +94,6 @@
 					var/obj/item/weapon/gun/projectile/automatic/m90/gat
 					gat.pin = /obj/item/device/firing_pin
 					new gat(get_turf(H))
-<<<<<<< HEAD
 				if("boltaction")
 					new /obj/item/weapon/gun/projectile/shotgun/boltaction(get_turf(H))
 				if("speargun")
@@ -111,8 +102,7 @@
 					var/obj/item/weapon/gun/projectile/automatic/gatling/gat     // This looks like fun addition but it's secretly fun removal
 					gat.mag_type = /obj/item/ammo_box/magazine/internal/gatling/wiz  //nerfed ammo, nerfed damage.
 					new gat(get_turf(H))
-=======
->>>>>>> e2554c55e69d77f3582a4935d3fc92a52eca75a1
+
 		else
 			switch (randomizemagic)
 				if("fireball")
