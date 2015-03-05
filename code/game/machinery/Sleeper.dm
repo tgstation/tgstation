@@ -232,6 +232,7 @@
 /obj/machinery/sleeper/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
 	if((!( istype(G, /obj/item/weapon/grab)) || !( ismob(G.affecting))))
 		return
+	if(G.affecting.buckled) return
 	if(src.occupant)
 		user << "\blue <B>The sleeper is already occupied!</B>"
 		return
