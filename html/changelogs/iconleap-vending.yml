@@ -1,6 +1,0 @@
-author: iconleap
-
-delete-after: True
-
-changes: 
-  - bugfix: Fix coin with a string can be recover after getting the premium item.
