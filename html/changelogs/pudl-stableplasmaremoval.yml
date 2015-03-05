@@ -1,0 +1,7 @@
+author: pudl
+
+delete-after: True
+
+changes: 
+  - rscdel: 'Removes all instances of "stable_plasma", replacing it with standard "plasma".'
+  - rscdel: 'Removes the plasma solidification recipe.'
