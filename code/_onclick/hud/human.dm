@@ -252,33 +252,9 @@
 	mymob.throw_icon.screen_loc = ui_drop_throw
 	hotkeybuttons += mymob.throw_icon
 
-	mymob.oxygen = new /obj/screen()
-	mymob.oxygen.icon_state = "oxy0"
-	mymob.oxygen.name = "oxygen"
-	mymob.oxygen.screen_loc = ui_oxygen
-
-	mymob.pressure = new /obj/screen()
-	mymob.pressure.icon_state = "pressure0"
-	mymob.pressure.name = "pressure"
-	mymob.pressure.screen_loc = ui_pressure
-
-	mymob.toxin = new /obj/screen()
-	mymob.toxin.icon_state = "tox0"
-	mymob.toxin.name = "toxin"
-	mymob.toxin.screen_loc = ui_toxin
 
 	mymob.internals = new /obj/screen/internals()
 	mymob.internals.screen_loc = ui_internal
-
-	mymob.fire = new /obj/screen()
-	mymob.fire.icon_state = "fire0"
-	mymob.fire.name = "fire"
-	mymob.fire.screen_loc = ui_fire
-
-	mymob.bodytemp = new /obj/screen()
-	mymob.bodytemp.icon_state = "temp1"
-	mymob.bodytemp.name = "body temperature"
-	mymob.bodytemp.screen_loc = ui_temp
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon_state = "health0"
@@ -288,11 +264,6 @@
 	mymob.healthdoll = new /obj/screen()
 	mymob.healthdoll.name = "health doll"
 	mymob.healthdoll.screen_loc = ui_healthdoll
-
-	mymob.nutrition_icon = new /obj/screen()
-	mymob.nutrition_icon.icon_state = "nutrition0"
-	mymob.nutrition_icon.name = "nutrition"
-	mymob.nutrition_icon.screen_loc = ui_nutrition
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
@@ -336,7 +307,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.healthdoll, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += adding + hotkeybuttons
 	inventory_shown = 0;
 

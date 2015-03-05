@@ -598,23 +598,15 @@
 				if(icon_num)
 					H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
 
-	if(H.nutrition_icon)
-		switch(H.nutrition)
-			if(NUTRITION_LEVEL_FULL to INFINITY)
-				H.nutrition_icon.icon_state = "nutritionFAT"
-			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-				H.nutrition_icon.icon_state = "nutrition0"
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				H.nutrition_icon.icon_state = "nutrition1"
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				H.nutrition_icon.icon_state = "nutrition2"
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				H.nutrition_icon.icon_state = "nutrition3"
-			else
-				H.nutrition_icon.icon_state = "nutrition4"
-
-	if(H.pressure)
-		H.pressure.icon_state = "pressure[H.pressure_alert]"
+	switch(H.nutrition)
+		if(NUTRITION_LEVEL_FULL to INFINITY)
+			H.throw_alert("nutrition","fat")
+		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
+			H.clear_alert("nutrition")
+		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+			H.throw_alert("nutrition","hungry")
+		else
+			H.throw_alert("nutrition","starving")
 
 	if(H.pullin)
 		if(H.pulling)								H.pullin.icon_state = "pull"
@@ -622,31 +614,7 @@
 //			if(rest)	//Not used with new UI
 //				if(resting || lying || sleeping)		rest.icon_state = "rest1"
 //				else									rest.icon_state = "rest0"
-	if(H.toxin)
-		if(H.hal_screwyhud == 4 || H.toxins_alert)	H.toxin.icon_state = "tox1"
-		else									H.toxin.icon_state = "tox0"
-	if(H.oxygen)
-		if(H.hal_screwyhud == 3 || H.oxygen_alert)	H.oxygen.icon_state = "oxy1"
-		else									H.oxygen.icon_state = "oxy0"
-	if(H.fire)
-		if(H.fire_alert)					H.fire.icon_state = "fire[H.fire_alert]" //fire_alert is either 0 if no alert, 1 for cold and 2 for heat.
-		else									H.fire.icon_state = "fire0"
 
-	if(H.bodytemp)
-		if(!(HEATRES in specflags))
-			switch(H.bodytemperature) //310.055 optimal body temp
-				if(370 to INFINITY)		H.bodytemp.icon_state = "temp4"
-				if(350 to 370)			H.bodytemp.icon_state = "temp3"
-				if(335 to 350)			H.bodytemp.icon_state = "temp2"
-		switch(H.bodytemperature)
-			if(320 to 335)			H.bodytemp.icon_state = "temp1"
-			if(300 to 320)			H.bodytemp.icon_state = "temp0"
-			if(295 to 300)			H.bodytemp.icon_state = "temp-1"
-		if(!(COLDRES in specflags))
-			switch(H.bodytemperature)
-				if(280 to 295)			H.bodytemp.icon_state = "temp-2"
-				if(260 to 280)			H.bodytemp.icon_state = "temp-3"
-				if(-INFINITY to 260)	H.bodytemp.icon_state = "temp-4"
 
 	return 1
 
@@ -1105,7 +1073,7 @@
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 			H.failed_last_breath = 1
 
-		H.oxygen_alert = max(H.oxygen_alert, 1)
+		H.throw_alert("oxy")
 
 		return 0
 
@@ -1138,18 +1106,12 @@
 			else
 				H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				H.failed_last_breath = 1
-			H.oxygen_alert = max(H.oxygen_alert, 1)
-		/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
-			spawn(0) emote("cough")
-			var/ratio = O2_pp/safe_oxygen_max
-			oxyloss += 5*ratio
-			oxygen_used = breath.oxygen*ratio/6
-			oxygen_alert = max(oxygen_alert, 1)*/
+			H.throw_alert("oxy")
 	else								// We're in safe limits
 		H.failed_last_breath = 0
 		H.adjustOxyLoss(-5)
 		oxygen_used = breath.oxygen/6
-		H.oxygen_alert = 0
+		H.clear_alert("oxy")
 
 	breath.oxygen -= oxygen_used
 	breath.carbon_dioxide += oxygen_used
@@ -1174,9 +1136,9 @@
 		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(H.reagents)
 			H.reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		H.toxins_alert = max(H.toxins_alert, 1)
+		H.throw_alert("tox_in_air")
 	else
-		H.toxins_alert = 0
+		H.clear_alert("tox_in_air")
 
 	if(breath.trace_gases.len && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
 		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
@@ -1195,39 +1157,24 @@
 
 /datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
 	if( (abs(310.15 - breath.temperature) > 50) && !(mutations_list[COLDRES] in H.dna.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
-		if(breath.temperature < 260.15)
-			if(prob(20))
-				H << "<span class='danger'>You feel your face freezing and an icicle forming in your lungs!</span>"
-		else if(breath.temperature > 360.15 && !(HEATRES in specflags))
-			if(prob(20))
-				H << "<span class='danger'>You feel your face burning and a searing heat in your lungs!</span>"
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
-					H.fire_alert = max(H.fire_alert, 1)
 				if(120 to 200)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
-					H.fire_alert = max(H.fire_alert, 1)
 				if(200 to 260)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
-					H.fire_alert = max(H.fire_alert, 1)
 
 		if(!(HEATRES in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
 				if(360 to 400)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
-					H.fire_alert = max(H.fire_alert, 2)
 				if(400 to 1000)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
-					H.fire_alert = max(H.fire_alert, 2)
 				if(1000 to INFINITY)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
-					H.fire_alert = max(H.fire_alert, 2)
-
-	return
-
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, var/mob/living/carbon/human/H)
 	if(!environment)
 		return
@@ -1255,35 +1202,37 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(HEATRES in specflags))
 		//Body temperature is too hot.
-		H.fire_alert = max(H.fire_alert, 1)
 		switch(H.bodytemperature)
 			if(360 to 400)
+				H.throw_alert("temp","hot",1)
 				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
-				H.fire_alert = max(H.fire_alert, 2)
 			if(400 to 460)
+				H.throw_alert("temp","hot",2)
 				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-				H.fire_alert = max(H.fire_alert, 2)
 			if(460 to INFINITY)
+				H.throw_alert("temp","hot",3)
 				if(H.on_fire)
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
-					H.fire_alert = max(H.fire_alert, 2)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-					H.fire_alert = max(H.fire_alert, 2)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		H.fire_alert = max(H.fire_alert, 1)
 		if(!istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			switch(H.bodytemperature)
 				if(200 to 260)
+					H.throw_alert("temp","cold",1)
 					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-					H.fire_alert = max(H.fire_alert, 1)
 				if(120 to 200)
+					H.throw_alert("temp","cold",2)
 					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-					H.fire_alert = max(H.fire_alert, 1)
 				if(-INFINITY to 120)
+					H.throw_alert("temp","cold",3)
 					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-					H.fire_alert = max(H.fire_alert, 1)
+		else
+			H.clear_alert("temp")
+
+	else
+		H.clear_alert("temp")
 
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
@@ -1294,23 +1243,21 @@
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!(HEATRES in specflags))
 				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-				H.pressure_alert = 2
+				H.throw_alert("pressure","highpressure",2)
 			else
-				H.pressure_alert = 1
+				H.clear_alert("pressure")
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.pressure_alert = 1
+			H.throw_alert("pressure","highpressure",1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			H.pressure_alert = 0
+			H.clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			H.pressure_alert = -1
+			H.throw_alert("pressure","lowpressure",1)
 		else
 			if(H.dna.check_mutation(COLDRES) || (COLDRES in specflags))
-				H.pressure_alert = -1
+				H.clear_alert("pressure")
 			else
 				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				H.pressure_alert = -2
-
-	return
+				H.throw_alert("pressure","lowpressure",2)
 
 //////////
 // FIRE //

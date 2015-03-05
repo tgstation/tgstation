@@ -90,22 +90,19 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360.15)
 		//Body temperature is too hot.
-		fire_alert = max(fire_alert, 1)
+		throw_alert("alien_fire")
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
-				fire_alert = max(fire_alert, 2)
 			if(400 to 460)
 				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-				fire_alert = max(fire_alert, 2)
 			if(460 to INFINITY)
 				if(on_fire)
 					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
-					fire_alert = max(fire_alert, 2)
 				else
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-					fire_alert = max(fire_alert, 2)
-	return
+	else
+		clear_alert("alien_fire")
 
 
 /mob/living/carbon/alien/ex_act(severity, target)

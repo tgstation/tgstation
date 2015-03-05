@@ -16,8 +16,7 @@
 
 	if(ishuman(L) || ismonkey(L) || iscorgi(L))
 		if(L.buckled)
-			L.buckled = 0
-			L.anchored = 0
+			L.buckled.unbuckle_mob()
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE
 			L.client.eye = src

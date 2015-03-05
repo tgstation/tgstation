@@ -16,12 +16,12 @@
 	if(Toxins_pp) // Detect toxins in air
 
 		adjustToxLoss(breath.toxins*250)
-		toxins_alert = max(toxins_alert, 1)
+		throw_alert("alien_tox")
 
 		toxins_used = breath.toxins
 
 	else
-		toxins_alert = 0
+		clear_alert("alien_tox")
 
 	//Breathe in toxins and out oxygen
 	breath.toxins -= toxins_used
@@ -30,15 +30,6 @@
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
 
-/mob/living/carbon/alien/handle_breath_temperature(datum/gas_mixture/breath)
-	if(breath.temperature > (T0C+66)) // Hot air hurts :(
-		if(prob(20))
-			src << "<span class='danger'>You feel a searing heat in your lungs!</span>"
-		fire_alert = max(fire_alert, 1)
-	else
-		fire_alert = 0
-
-	return 1
 
 /mob/living/carbon/alien/handle_regular_status_updates()
 	..()
@@ -106,8 +97,5 @@
 			pullin.icon_state = "pull0"
 
 
-	if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
-	if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-	if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
 
 	return 1
