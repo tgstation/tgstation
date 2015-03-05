@@ -12,7 +12,7 @@
 	var/list/req_components = null
 	var/list/req_component_names = null
 	var/list/components_in_use = null
-	var/build_state = 1
+	var/build_state = 2
 
 	// For pods
 	var/list/connected_parts = list()
