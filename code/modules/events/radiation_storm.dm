@@ -43,7 +43,7 @@
 		for(var/i = 0, i < 15, i++)
 			var/irradiationThisBurst = rand(15,25) //everybody gets the same rads this radiation burst
 			var/randomMutation = prob(50)
-			var/badMutation = prob(60)
+			var/badMutation = prob(75)
 			for(var/mob/living/carbon/human/H in living_mob_list)
 				if(istype(H.loc, /obj/spacepod))
 					continue
@@ -53,10 +53,10 @@
 				if(T.z != 1 || is_safe_zone(T.loc))
 					continue
 
-				H.apply_effect(irradiationThisBurst,IRRADIATE,0)
-				if(randomMutation)
-					//H.apply_effect((rand(40,70)),IRRADIATE,0)
+				var/applied_rads = (H.apply_effect(irradiationThisBurst,IRRADIATE,0) > (irradiationThisBurst/2))
+				if(randomMutation && applied_rads)
 					if (badMutation)
+						H.apply_effect((rand(25,50)),IRRADIATE,0)
 						randmutb(H) // Applies bad mutation
 						domutcheck(H,null,MUTCHK_FORCED)
 					else
