@@ -1,8 +1,0 @@
-author: N3X15
-delete-after: True
-changes:
-  - experiment: Library computers created tons of database lag.  They now return smaller recordsets and have many improvements.
-  - bugfix: Library computers refresh their menus when clicked.
-  - rscadd: Admins can now track who added a book to the library.
-  - rscadd: Admins can now easily delete books from the library (including all books by ckey).
-  - tweak: Library computer interfaces are now a little less ugly.
