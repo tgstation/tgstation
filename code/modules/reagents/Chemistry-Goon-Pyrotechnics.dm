@@ -7,7 +7,7 @@
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
 	id = "clf3"
-	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
+	description = "An extremely volatile substance, handle with the utmost care."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	metabolization_rate = 4
@@ -62,7 +62,7 @@
 /datum/reagent/sorium
 	name = "Sorium"
 	id = "sorium"
-	description = "Sends everything flying from the detonation point."
+	description = "Flammable material that causes a powerful shockwave on detonation."
 	reagent_state = LIQUID
 	color = "#60A584"  //rgb: 96, 165, 132
 
@@ -92,7 +92,7 @@
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
 	id = "liquid_dark_matter"
-	description = "Sucks everything into the detonation point."
+	description = "What has science done... It's concentrated dark matter in liquid form. And I thought you needed plutonic quarks for that."
 	reagent_state = LIQUID
 	color = "#60A584"  //rgb: 96, 165, 132
 
@@ -104,17 +104,6 @@
 	result_amount = null
 	required_temp = 474
 
-/*/datum/reagent/liquid_dark_matter/reaction_turf(var/turf/simulated/T, var/volume)
-	if(istype(T, /turf/simulated/floor/))
-		goonchem_vortex(T, 0, 5, 3)
-		return
-/datum/reagent/liquid_dark_matter/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-	if(!istype(M, /mob/living))
-		return
-	if(method == TOUCH)
-		var/turf/simulated/T = get_turf(M)
-		goonchem_vortex(T, 0, 5, 3)
-		return*/ //o god what the fuck goof
 /datum/chemical_reaction/liquid_dark_matter/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	goonchem_vortex(T, 0, 5, 6)
@@ -136,7 +125,7 @@
 /datum/reagent/blackpowder
 	name = "Black Powder"
 	id = "blackpowder"
-	description = "Explodes. Violently."
+	description = "A dangerous explosive material."
 	reagent_state = LIQUID
 	color = "#000000"  //rgb: 96, 165, 132
 	metabolization_rate = 0.05
