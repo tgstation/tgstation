@@ -117,7 +117,7 @@
 	if(stat & (BROKEN | NOPOWER))
 		return
 
-	if ((get_dist(src, user) > 1))
+	if (!src.Adjacent(user))
 		if (!issilicon(user)&&!isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=solcon")

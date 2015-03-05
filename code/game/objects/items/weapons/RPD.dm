@@ -407,7 +407,7 @@ var/global/list/RPD_recipes=list(
 		return
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
-	if(get_dist(usr,src)>=1)
+	if(!src.Adjacent(usr))
 		usr.unset_machine(usr)
 		return
 	if(href_list["setdir"])
