@@ -180,17 +180,14 @@
 		spawn returnToPool(src)
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
-	var/obj/item/stack/oldsrc = src
-	src = null
 	for (var/obj/item/stack/item in usr.loc)
-		if (item==oldsrc)
+		if (src == item)
 			continue
-		if(oldsrc.type != item.type)
+		if(src.type != item.type)
 			continue
 		if (item.amount>=item.max_amount)
 			continue
-		oldsrc.attackby(item, usr)
-		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
+		src.preattack(item, usr)
 		break
 
 /obj/item/stack/attack_hand(mob/user as mob)
