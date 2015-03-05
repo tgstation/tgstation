@@ -215,16 +215,15 @@
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if(!D.bcell.use(400))
-			D.update_charge()
-			user << "<span class='notice'>Your jackhammer doesn't have enough power to break through that wall.</span>"
+			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
 			return
-		D.update_charge()
+		D.update_icon()
 		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
 			return 1
 		if( user.loc == T && user.get_active_hand() == W )
 			D.playDigSound()
 			dismantle_wall()
-			visible_message("<span class='warning'>[user] smashes through the wall with [W]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
+			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
 			return 1
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/obj/item/weapon/melee/energy/blade/EB = W
