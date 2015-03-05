@@ -1,7 +1,0 @@
-
-author: RemieRichards
-
-delete-after: True
-
-changes: 
-  - rscadd: 'Allows the blob to reroll it's chemical for a cost'

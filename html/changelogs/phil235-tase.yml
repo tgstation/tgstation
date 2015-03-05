@@ -1,6 +1,0 @@
-author: phil235
-
-delete-after: True
-
-changes: 
-  - bugfix: "Fixes taser stun duration being longer due to jitter animation."

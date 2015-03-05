@@ -1,4 +1,2 @@
 author: MrPerson
-changes:
-  - rscadd: "Expanded the on-screen alerts you get on the top-right of your screen. You can shift-click them to get a description of what's wrong and maybe how to fix it."
-  - rscadd: "Getting buckled to something will show an alert of what you're buckled to. If you're not handcuffed, you can click the alert to unbuckle."
+changes: []
