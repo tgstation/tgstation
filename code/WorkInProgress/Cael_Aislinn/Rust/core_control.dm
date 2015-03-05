@@ -122,7 +122,7 @@
 	user.set_machine(src)
 
 /obj/machinery/computer/rust_core_control/Topic(href, href_list)
-	..()
+	if(..()) return
 
 	if( href_list["goto_scanlist"] )
 		cur_viewed_device = null
