@@ -12,13 +12,6 @@ datum/reagent/oil
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/plasma
-	name = "plasma"
-	id = "plasma"
-	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
-	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
-
 datum/reagent/iodine
 	name = "Iodine"
 	id = "iodine"
