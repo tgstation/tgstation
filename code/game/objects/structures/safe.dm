@@ -151,8 +151,7 @@ FLOOR SAFES
 	if(open)
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
-			user.drop_item()
-			I.loc = src
+			user.drop_item(src)
 			user << "<span class='notice'>You put [I] in [src].</span>"
 			updateUsrDialog()
 			return

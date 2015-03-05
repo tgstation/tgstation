@@ -580,7 +580,7 @@
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
-		user.drop_item(src)
+		user.drop_item(src.loc)
 		visible_message("\blue [user] dunks [W] into the [src]!", 3)
 		return
 

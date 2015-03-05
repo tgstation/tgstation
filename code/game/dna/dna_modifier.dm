@@ -211,8 +211,7 @@
 			return
 
 		beaker = item
-		user.drop_item()
-		item.loc = src
+		user.drop_item(src)
 		user.visible_message("[user] adds \a [item] to \the [src]!", "You add \a [item] to \the [src]!")
 		return
 	if(istype(item, /obj/item/weapon/grab)) //sanity checks, you chucklefucks
@@ -344,8 +343,7 @@
 	..()
 	if (istype(O, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!src.disk)
-			user.drop_item()
-			O.loc = src
+			user.drop_item(src)
 			src.disk = O
 			user << "You insert [O]."
 			nanomanager.update_uis(src) // update all UIs attached to src()

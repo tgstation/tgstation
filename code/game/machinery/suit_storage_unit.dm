@@ -631,8 +631,7 @@
 			user << "<font color='blue'>The unit already contains a suit.</font>"
 			return
 		user << "You load the [S.name] into the storage compartment."
-		user.drop_item()
-		S.loc = src
+		user.drop_item(src)
 		src.SUIT = S
 		src.update_icon()
 		src.updateUsrDialog()
@@ -645,8 +644,7 @@
 			user << "<font color='blue'>The unit already contains a helmet.</font>"
 			return
 		user << "You load the [H.name] into the storage compartment."
-		user.drop_item()
-		H.loc = src
+		user.drop_item(src)
 		src.HELMET = H
 		src.update_icon()
 		src.updateUsrDialog()
@@ -659,8 +657,7 @@
 			user << "<font color='blue'>The unit already contains a mask.</font>"
 			return
 		user << "You load the [M.name] into the storage compartment."
-		user.drop_item()
-		M.loc = src
+		user.drop_item(src)
 		src.MASK = M
 		src.update_icon()
 		src.updateUsrDialog()
@@ -673,8 +670,7 @@
 			user << "<font color='blue'>The unit already contains shoes.</font>"
 			return
 		user << "You load \the [M.name] into the storage compartment."
-		user.drop_item()
-		M.loc = src
+		user.drop_item(src)
 		src.BOOTS = M
 		src.update_icon()
 		src.updateUsrDialog()

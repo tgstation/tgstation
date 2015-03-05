@@ -185,8 +185,7 @@
 				var/obj/item/weapon/card/id/I = C.get_active_hand()
 				if(istype(I))
 					if(check_access(I))
-						C.drop_item()
-						I.loc = src
+						C.drop_item(src)
 						auth = I
 						create_log("has logged in.", usr)
 			else

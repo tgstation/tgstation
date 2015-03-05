@@ -31,7 +31,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 	// Fruits and vegetables.
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O, /obj/item/weapon/grown))
 
-		user.drop_item(O)
+		user.drop_item()
 
 		var/datum/seed/new_seed_type
 		if(istype(O, /obj/item/weapon/grown))
@@ -51,7 +51,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		else
 			user << "[O] doesn't seem to have any usable seeds inside it."
 
-		del(O)
+		qdel(O)
 
 	//Grass.
 	else if(istype(O, /obj/item/stack/tile/grass))
@@ -69,7 +69,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 			while(t_amount < t_max)
 				new F.nonplant_seed_type(src.loc)
 				t_amount++
-			del(F)
+			qdel(F)
 
 	..()
 

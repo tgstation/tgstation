@@ -73,7 +73,7 @@
 				M << "<span class='danger'>[src] blows up in your face.</span>"
 				M.take_organ_damage(0,20)
 				M.drop_item()
-				del(src)
+				qdel(src)
 				return
 
 	if (!user.IsAdvancedToolUser() || isMoMMI(user) || istype(user, /mob/living/carbon/monkey/diona))

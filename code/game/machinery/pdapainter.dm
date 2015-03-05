@@ -91,9 +91,8 @@ Feel free to do whatever with this if you think it lacks.
 		else
 			var/obj/item/device/pda/P = O
 			if(istype(P))
-				user.drop_item(P)
+				user.drop_item(src)
 				storedpda = P
-				P.loc = src
 				//P.add_fingerprint(usr)
 				update_icon()
 
@@ -132,10 +131,10 @@ Feel free to do whatever with this if you think it lacks.
 	set name = "Eject PDA"
 	set category = "Object"
 	set src in oview(1)
-	
+
 	if(!ishuman(usr))
 		return
-	
+
 	if(storedpda)
 		storedpda.loc = get_turf(src.loc)
 		storedpda = null
@@ -147,7 +146,7 @@ Feel free to do whatever with this if you think it lacks.
 	set name = "Print PDA"
 	set category = "Object"
 	set src in oview(1)
-	
+
 	if(!ishuman(usr))
 		return
 	if(storedpda)

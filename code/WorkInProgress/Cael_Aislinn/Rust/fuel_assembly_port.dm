@@ -18,8 +18,7 @@
 			user << "\red There is already a fuel rod assembly in there!"
 		else
 			cur_assembly = I
-			user.drop_item()
-			I.loc = src
+			user.drop_item(src)
 			icon_state = "port1"
 			user << "\blue You insert [I] into [src]. Touch the panel again to insert [I] into the injector."
 

@@ -61,8 +61,7 @@
 		if(ink)
 			user << "<span class='notice'>\the [name] already contains \a [ink].</span>"
 			return
-		user.drop_item()
-		W.loc = src
+		user.drop_item(src)
 		user << "<span class='notice'>You install \the [W] into \the [name].</span>"
 		ink = W
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
