@@ -259,7 +259,7 @@ proc/AirflowSpace(zone/A)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes:magpulse)
 						return
-		src << "\red You are sucked away by airflow!"
+		src << "<SPAN CLASS='warning'>You are sucked away by airflow!</SPAN>"
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
@@ -318,7 +318,7 @@ proc/AirflowSpace(zone/A)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes.flags & NOSLIP)
 						return
-		src << "\red You are pushed away by airflow!"
+		src << "<SPAN CLASS='warning'>You are pushed away by airflow!</SPAN>"
 		last_airflow = world.time
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
