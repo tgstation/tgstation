@@ -221,7 +221,6 @@ var/global/ingredientLimit = 10
 	icon_state_on = "mixer_on"
 	cookSound = 'sound/machines/juicer.ogg'
 
-	v
 
 /obj/machinery/cooking/candy/validateIngredient(var/obj/item/I)
 	. = ..()
@@ -240,6 +239,7 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/candy/getFoodChoices()
 	return (typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy))
+
 
 // Still ///////////////////////////////////////////////////////
 

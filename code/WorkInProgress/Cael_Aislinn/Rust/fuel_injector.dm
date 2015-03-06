@@ -137,7 +137,7 @@
 	user.set_machine(src)
 
 /obj/machinery/power/rust_fuel_injector/Topic(href, href_list)
-	..()
+	if(..()) return 1
 
 	if( href_list["modify_tag"] )
 		id_tag = input("Enter new ID tag", "Modifying ID tag") as text|null
