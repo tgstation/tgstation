@@ -33,7 +33,7 @@
 	icon_state = "syndi_cakes"
 
 /obj/item/trash/waffles
-	name = "waffles"
+	name = "waffles tray"
 	icon_state = "waffles"
 
 /obj/item/trash/plate
