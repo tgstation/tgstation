@@ -34,7 +34,7 @@ datum/reagent/nicotine/overdose_process(var/mob/living/M as mob)
 datum/reagent/crank
 	name = "Crank"
 	id = "crank"
-	description = "2x stun reduction per cycle. Warms you up, makes you jittery as hell."
+	description = "A cheap and dirty stimulant drug, commonly used by space biker gangs."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 20
@@ -87,7 +87,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/krokodil
 	name = "Krokodil"
 	id = "krokodil"
-	description = "Cools and calms you down, occasional BRAIN and TOX damage."
+	description = "A sketchy homemade opiate, often used by disgruntled Cosmonauts."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 20
@@ -144,7 +144,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/methamphetamine
 	name = "Methamphetamine"
 	id = "methamphetamine"
-	description = "3x stun reduction per cycle, significant stamina regeneration buff, makes you really jittery, dramatically increases movement speed."
+	description = "Methamphetamine is a highly effective and dangerous stimulant drug."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 20
@@ -291,14 +291,14 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/saltpetre
 	name = "Saltpetre"
 	id = "saltpetre"
-	description = "Volatile."
+	description = "Potassium nitrate, commonly used for fertilizer, cured meats and fireworks production."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
 /datum/reagent/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"
-	description = "Makes you nearly impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
+	description = "Sometimes packaged as a refreshing bathwater additive, these crystals are definitely not for human consumption."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 20
@@ -404,7 +404,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/aranesp
 	name = "Aranesp"
 	id = "aranesp"
-	description = "Volatile."
+	description = "An illegal performance enhancing drug. Side effects might include chest pain, seizures, swelling, headache, fever... ... ..."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 

@@ -7,21 +7,21 @@
 datum/reagent/silver_sulfadiazine
 	name = "Silver Sulfadiazine"
 	id = "silver_sulfadiazine"
-	description = "100% chance per cycle of healing 2 points of BURN damage."
+	description = "This antibacterial compound is used to treat burn victims."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#E1D00F"
 	metabolization_rate = 2
 
 datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
-		M.adjustFireLoss(-volume)
+		M.adjustFireLoss(-volume*2)
 		if(show_message)
-			M << "<span class='notice'>You feel your burns healing!</span>"
+			M << "<span class='notice'>The silver sulfadiazine soothes your burns.</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
 		if(show_message)
-			M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+			M << "<span class='notice'>You feel sick...</span>"
 	..()
 	return
 
@@ -34,37 +34,37 @@ datum/reagent/silver_sulfadiazine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/styptic_powder
 	name = "Styptic Powder"
 	id = "styptic_powder"
-	description = "100% chance per cycle of healing 2 points of BRUTE damage."
+	description = "Styptic (aluminium sulfate) powder helps control bleeding and heal physical wounds."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FF9696"
 	metabolization_rate = 2
 
 datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
 		M.adjustBruteLoss(-volume)
 		if(show_message)
-			M << "<span class='notice'>You feel your wounds knitting back together!</span>"
+			M << "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>"
 		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
 		if(show_message)
-			M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+			M << "<span class='notice'>You feel gross!</span>"
 	..()
 	return
 
 datum/reagent/styptic_powder/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(55))
-		M.adjustBruteLoss(-8*REM)
+	M.adjustBruteLoss(-8*REM)
 	..()
 	return
 
 datum/reagent/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "33% chance per cycle of healing 1 point each of BRUTE and BURN damage."
+	description = "This saline and glucose solution can help stabilize critically injured patients and cleanse wounds."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#696969"
+	metabolization_rate = 0.15
 
 datum/reagent/salglu_solution/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -75,11 +75,11 @@ datum/reagent/salglu_solution/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/synthflesh
-	name = "Synthflesh"
+	name = "Synthetic flesh"
 	id = "synthflesh"
-	description = "100% chance per cycle of healing 1 point each of BRUTE and BURN damage."
+	description = "A resorbable microfibrillar collagen and protein mixture that can rapidly heal injuries when applied topically."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFEBEB"
 
 datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume,var/show_message = 1)
 	if(!M) M = holder.my_atom
@@ -87,16 +87,16 @@ datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/vo
 		M.adjustBruteLoss(-1.5*volume)
 		M.adjustFireLoss(-1.5*volume)
 		if(show_message)
-			M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
+			M << "<span class='notice'>The synthetic flesh integrates itself into your wounds, healing you.</span>"
 	..()
 	return
 
 datum/reagent/charcoal
 	name = "Charcoal"
 	id = "charcoal"
-	description = "Heals 3 TOX damage per cycle and purges other chemicals slowly."
+	description = "Activated charcoal helps to absorb toxins."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#333333" // rgb: 200, 165, 220
 
 datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -122,6 +122,7 @@ datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	result = "silver_sulfadiazine"
 	required_reagents = list("ammonia" = 1, "silver" = 1, "sulfur" = 1, "oxygen" = 1, "chlorine" = 1)
 	result_amount = 5
+	mix_message = "The solution thickens then breaks into a odorous powder."
 
 /datum/chemical_reaction/salglu_solution
 	name = "Saline-Glucose Solution"
@@ -129,13 +130,15 @@ datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	result = "salglu_solution"
 	required_reagents = list("sodiumchloride" = 1, "water" = 1, "sugar" = 1)
 	result_amount = 3
+	mix_message = "The mixtures gives off a sweet smell as it mixes."
 
 /datum/chemical_reaction/synthflesh
-	name = "Synthflesh"
+	name = "Synthetic flesh"
 	id = "synthflesh"
 	result = "synthflesh"
 	required_reagents = list("blood" = 1, "carbon" = 1, "styptic_powder" = 1)
 	result_amount = 3
+	mix_message = "Large chunks of rubbery flesh form in the beaker."
 
 /datum/chemical_reaction/styptic_powder
 	name = "Styptic Powder"
@@ -174,9 +177,9 @@ datum/reagent/omnizine/overdose_process(var/mob/living/M as mob)
 datum/reagent/calomel
 	name = "Calomel"
 	id = "calomel"
-	description = "Increases all depletion rates by 5. +5 TOX damage while health > 20."
+	description = "This potent purgative rids the body of impurities. It is highly toxic however and close supervision is required."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#54BA63"
 
 datum/reagent/calomel/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -199,9 +202,9 @@ datum/reagent/calomel/on_mob_life(var/mob/living/M as mob)
 datum/reagent/potass_iodide
 	name = "Potassium Iodide"
 	id = "potass_iodide"
-	description = "80% chance of removing 1 RAD. Radiation is cumulative and causes tox+burn."
+	description = "Potassium Iodide is a medicinal drug used to counter the effects of radiation poisoning."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#6C9070"
 
 datum/reagent/potass_iodide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -223,9 +226,9 @@ datum/reagent/potass_iodide/on_mob_life(var/mob/living/M as mob)
 datum/reagent/pen_acid
 	name = "Pentetic Acid"
 	id = "pen_acid"
-	description = "Reduces 7 RAD, heals 4 TOX damage, increases all depletion rates by 4. 33% chance of taking 1 unit brute damage"
+	description = "Pentetic Acid is an aggressive chelation agent. May cause tissue damage. Use with caution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#E5FFF0"
 
 datum/reagent/pen_acid/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -248,13 +251,14 @@ datum/reagent/pen_acid/on_mob_life(var/mob/living/M as mob)
 	result = "pen_acid"
 	required_reagents = list("fuel" = 1, "chlorine" = 1, "ammonia" = 1, "formaldehyde" = 1, "sodium" = 1, "cyanide" = 1)
 	result_amount = 6
+	mix_message = "You hear a quiet sizzling as the chemicals react with one another."
 
 datum/reagent/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"
-	description = "If BRUTE damage is under 50, 50% chance to heal one unit."
+	description = "This is a is a standard salicylate pain reliever and fever reducer."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#1B1B1B"
 	overdose_threshold = 25
 
 datum/reagent/sal_acid/on_mob_life(var/mob/living/M as mob)
@@ -278,13 +282,14 @@ datum/reagent/sal_acid/overdose_process(var/mob/living/M as mob)
 	result = "sal_acid"
 	required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1, "sacid" = 1)
 	result_amount = 5
+	mix_message = "The mixture gives off soothing vapors."
 
 datum/reagent/salbutamol
 	name = "Salbutamol"
 	id = "salbutamol"
-	description = "Heals 6 OXY damage, reduces LOSEBREATH by 4."
+	description = "Salbutamol is a common bronchodilation medication for asthmatics. It may help with other breathing problems as well."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#00FFFF"
 	metabolization_rate = 0.2
 
 datum/reagent/salbutamol/on_mob_life(var/mob/living/M as mob)
@@ -301,13 +306,14 @@ datum/reagent/salbutamol/on_mob_life(var/mob/living/M as mob)
 	result = "salbutamol"
 	required_reagents = list("sal_acid" = 1, "lithium" = 1, "aluminium" = 1, "bromine" = 1, "ammonia" = 1)
 	result_amount = 5
+	mix_message = "The solution gives off a large puff of oxygen!"
 
 datum/reagent/perfluorodecalin
 	name = "Perfluorodecalin"
 	id = "perfluorodecalin"
-	description = "Heals 25 OXY damage, but you can't talk. 33% chance of healing 1 BRUTE and 1 BURN."
+	description = "This experimental perfluoronated solvent has applications in liquid breathing and tissue oxygenation. Use with caution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FFFFFF"
 	metabolization_rate = 0.2
 
 datum/reagent/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/M as mob)
@@ -327,14 +333,14 @@ datum/reagent/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/M as mob)
 	required_reagents = list("hydrogen" = 1, "fluorine" = 1, "oil" = 1)
 	result_amount = 3
 	required_temp = 370
-	mix_message = "The mixture rapidly turns into a dense pink liquid."
+	mix_message = "The mixture rapidly turns into a dense, milky liquid."
 
 datum/reagent/ephedrine
 	name = "Ephedrine"
 	id = "ephedrine"
-	description = "Stun reduction per cycle, increases run speed slightly, minor stamina regeneration buff, stabilizes crit."
+	description = "Ephedrine is a plant-derived stimulant."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#AFC9C5"
 	metabolization_rate = 0.3
 	overdose_threshold = 45
 	addiction_threshold = 30
@@ -392,9 +398,9 @@ datum/reagent/ephedrine/addiction_act_stage4(var/mob/living/M as mob)
 datum/reagent/diphenhydramine
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
-	description = "Causes a little bit of drowsiness, reduces jitteriness. Raises histamine depletion rates by 3"
+	description = "Anti-allergy medication. May cause drowsiness, do not operate heavy machinery while using this."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#67D6ED"
 datum/reagent/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.drowsyness += 1
@@ -416,7 +422,7 @@ datum/reagent/morphine
 	id = "morphine"
 	description = "Dramatically counters movement reduction from severe injury. Reduces jitteriness if someone is shaking like crazy from whatever. Will knock you out within 36 cycles if any remains in you."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#898989"
 	var/cycle_count = 0
 	overdose_threshold = 30
 	addiction_threshold = 25
@@ -507,18 +513,18 @@ datum/reagent/oculine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/oculine
 	name = "Oculine"
 	id = "oculine"
-	description = "30% chance to remove blindness, 80% chance to slightly reduce eye damage."
+	description = "Oculine is a saline eye medication with mydriatic and antibiotic effects."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#B5B4B4"
 	metabolization_rate = 0.4
 	var/cycle_amount = 0
 
 datum/reagent/atropine
 	name = "Atropine"
 	id = "atropine"
-	description = "1 TOX damage if used over -60 health. Causes dizziness and confusion. If under -25 health, heals 3 BRUTE + 3 BURN. Attempts to cap OXY damage at 65 and LOSEBREATH at 5."
+	description = "Atropine is a potent cardiac resuscitant but it can causes confusion, dizzyness and hyperthermia."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#000000"
 	metabolization_rate = 0.2
 	overdose_threshold = 35
 
@@ -553,13 +559,14 @@ datum/reagent/atropine/overdose_process(var/mob/living/M as mob)
 	result = "atropine"
 	required_reagents = list("ethanol" = 1, "acetone" = 1, "diethylamine" = 1, "phenol" = 1, "sacid" = 1)
 	result_amount = 5
+	mix_message = "The contents of the beaker quickly decay into an oily mess."
 
 datum/reagent/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
-	description = "Reduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to cap OXY damage at 35 and LOSEBREATH at 10. If health is between -10 to -65, heals 1 TOX, 1 BRUTE, 1 BURN."
+	description = "Epinephrine is a potent neurotransmitter, used in medical emergencies to halt anaphylactic shock and prevent cardiac arrest."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#AFC9C5"
 	metabolization_rate = 0.2
 	overdose_threshold = 30
 
@@ -595,6 +602,7 @@ datum/reagent/epinephrine/overdose_process(var/mob/living/M as mob)
 	result = "epinephrine"
 	required_reagents = list("phenol" = 1, "acetone" = 1, "diethylamine" = 1, "oxygen" = 1, "chlorine" = 1, "hydrogen" = 1)
 	result_amount = 6
+	mix_message = "The mixture fizzes and sputters!"
 
 datum/reagent/strange_reagent
 	name = "Strange Reagent"
@@ -634,6 +642,7 @@ datum/reagent/strange_reagent/on_mob_life(var/mob/living/M as mob)
 	result = "strange_reagent"
 	required_reagents = list("omnizine" = 1, "holywater" = 1, "mutagen" = 1)
 	result_amount = 3
+	mix_message = "The beaker shines and sparkles!"
 
 datum/reagent/life
 	name = "Life"
@@ -725,8 +734,8 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 /datum/reagent/mannitol
 	name = "Mannitol"
 	id = "mannitol"
-	description = "Heals 3 BRAIN damage."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	description = "Mannitol is a sugar alcohol that can help alleviate cranial swelling."
+	color = "#D6D6F6"
 
 /datum/reagent/mutadone/on_mob_life(var/mob/living/carbon/human/M as mob)
 	M.jitteriness = 0
@@ -746,14 +755,14 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 /datum/reagent/mutadone
 	name = "Mutadone"
 	id = "mutadone"
-	description = "Chance to remove genetic disabilities."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	description = "Mutadone is an experimental bromide that can cure genetic abnomalities."
+	color = "#5096C8"
 
 datum/reagent/antihol
 	name = "Antihol"
 	id = "antihol"
-	description = "A powerful oxidizer that reacts with ethanol."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	description = "A medicine which quickly eliminates alcohol in the body."
+	color = "#12BEAD"
 
 datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = 0
@@ -782,7 +791,7 @@ datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	name = "Stimulants"
 	id = "stimulants"
 	description = "Sets all stun-related vars to zero, gets you running really fast. Heals 5 OXY, TOX, BRUTE, and BURN damage if health is below 50. Reduces all stuns."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#8E18A9"
 	metabolization_rate = 0.4
 	overdose_threshold = 60
 

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
-	density = 1
+	density = 0
 	var/mob/living/carbon/human/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
@@ -93,7 +93,7 @@
 		return PROCESS_KILL
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
-		attached << "<span class='warning'>The IV drip needle is ripped out of you, doesn't that hurt?</span>"
+		attached << "<span class='warning'>The IV drip needle is ripped out of you!</span>"
 		attached.apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
 		attached = null
 		update_icon()

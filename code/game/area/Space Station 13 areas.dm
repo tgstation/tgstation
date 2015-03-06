@@ -986,6 +986,10 @@ proc/process_ghost_teleport_locs()
 	name = "Auxiliary Tool Storage"
 	icon_state = "storage"
 
+/area/storage/general
+	name = "General Storage"
+	icon_state = "storage"
+
 /area/storage/primary
 	name = "Primary Tool Storage"
 	icon_state = "primarystorage"

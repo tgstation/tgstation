@@ -25,7 +25,7 @@
 	if (prob(40))
 		new /obj/item/weapon/storage/toolbox/emergency(src)
 
-	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pickweight(list("aid" = 40, "small" = 30, "tank" = 25, "both" = 10)))
 		if ("small")
 			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
@@ -41,12 +41,12 @@
 			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
 
-		if ("nothing")
+		/*if ("nothing")
 			// doot
 
 		// teehee
 		if ("delete")
-			qdel(src)
+			qdel(src)*/ //please never re-add these
 
 		//If you want to re-add fire, just add "fire" = 15 to the pick list.
 		/*if ("fire")

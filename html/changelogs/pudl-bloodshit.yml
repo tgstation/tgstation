@@ -1,0 +1,27 @@
+author: pudl
+
+delete-after: True
+
+changes: 
+  - rscadd: 'Adds a spare oxygen kit to cryo.'
+  - rscadd: 'Improves first aid names and descriptions.'
+  - rscadd: 'Adds gauze to brute kits.'
+  - rscadd: 'Buffs the chance for oxygen kits to spawn in oxygen closets.'
+  - rscadd: 'Adds colors, mix messages, and real descriptions to most chemicals.'
+  - rscadd: 'Slightly buffs saline-glucose solution and silver sulfadiazine.'
+  - rscadd: 'Improves several chemistry fluff messages.'
+  - rscadd: 'Adds what chemical is inside of pre-spawned patches.'
+  - rscadd: 'Adds a "General Storage" room.'
+  - rscadd: 'Adds more medkits around the map.'
+  - rscadd: 'Gives improvised gauze a unique sprite.'
+  - rscadd: 'Puts several bits of gauze around maintenance.'
+  - rscdel: 'Removes an accidentally added Nanomed Plus.'
+  - rscdel: 'IV drips are no longer dense.'
+  - rscdel: 'Shortens a medical-related fluff message.'
+  - rscdel: 'Removes gauze from normal first aid.'
+  - rscdel: 'Corrects improper pill bottle names.'
+  - rscdel: 'Comments out the possibility for oxygen closets to be empty or not spawn at all.'
+  - rscdel: 'Nerfs the maximum volume on patches to 40.'
+  - rscdel: 'Pre-spawned patches now start with a volume of 20.'
+  - rscdel: 'Removes an extraneous medkit from the medkit supply crate.'
+  - rscdel: 'Renames improvised gauze to "strips of cloth".'

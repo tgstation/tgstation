@@ -54,7 +54,7 @@ datum/reagent/histamine/overdose_process(var/mob/living/M as mob)
 datum/reagent/formaldehyde
 	name = "Formaldehyde"
 	id = "formaldehyde"
-	description = "+1 TOX, 10% chance to decay into 5-15 units of histamine."
+	description = "Formaldehyde is a common industrial chemical and is used to preserve corpses and medical samples. It is highly toxic and irritating."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 
@@ -95,7 +95,7 @@ datum/reagent/venom/on_mob_life(var/mob/living/M as mob)
 datum/reagent/neurotoxin2
 	name = "Neurotoxin"
 	id = "neurotoxin2"
-	description = "+1 TOX, +1 BRAIN up to 60 before it slows down, confusion, knockout after 17 elapsed cycles."
+	description = "A dangerous toxin that attacks the nervous system."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	var/cycle_count = 0
@@ -122,7 +122,7 @@ datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 datum/reagent/cyanide
 	name = "Cyanide"
 	id = "cyanide"
-	description = "+1.5 TOX, 10% chance of +1 LOSEBREATH, 8% chance of stun and extra +2 TOX."
+	description = "A highly toxic chemical with some uses as a building block for other things."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.1
@@ -164,7 +164,7 @@ datum/reagent/questionmark/on_mob_life(var/mob/living/M as mob)
 datum/reagent/itching_powder
 	name = "Itching Powder"
 	id = "itching_powder"
-	description = "Lots of annoying random effects, chances to do BRUTE damage from scratching. 6% chance to decay into 1-3 units of histamine."
+	description = "An abrasive powder beloved by cruel pranksters."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.3

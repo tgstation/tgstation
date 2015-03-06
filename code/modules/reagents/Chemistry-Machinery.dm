@@ -455,12 +455,12 @@
 		else if(href_list["createpatch"])
 			if(reagents.total_volume == 0) return
 			var/amount = 1
-			var/vol_each = min(reagents.total_volume, 50)
+			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(href_list["many"]))
 				amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0), 10)
 				if(!amount)
 					return
-				vol_each = min(reagents.total_volume / amount, 50)
+				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 			if(!name || !reagents.total_volume)
 				return
@@ -536,12 +536,12 @@
 		if(beaker && reagents.total_volume)
 			dat += "<LI><A href='?src=\ref[src];createpill=1;many=0'>Create pill</A> (50 units max)"
 			dat += "<LI><A href='?src=\ref[src];createpill=1;many=1'>Create multiple pills</A><BR>"
-			dat += "<LI><A href='?src=\ref[src];createpatch=1;many=0'>Create patch</A> (50 units max)"
+			dat += "<LI><A href='?src=\ref[src];createpatch=1;many=0'>Create patch</A> (40 units max)"
 			dat += "<LI><A href='?src=\ref[src];createpatch=1;many=1'>Create multiple patches</A><BR>"
 		else
 			dat += "<LI><span class='linkOff'>Create pill</span> (50 units max)"
 			dat += "<LI><span class='linkOff'>Create multiple pills</span><BR>"
-			dat += "<LI><span class='linkOff'>Create patch</span> (50 units max)"
+			dat += "<LI><span class='linkOff'>Create patch</span> (40 units max)"
 			dat += "<LI><span class='linkOff'>Create multiple patches</span><BR>"
 	else
 		if(beaker && reagents.total_volume)

@@ -9,7 +9,7 @@
  * First Aid Kits
  */
 /obj/item/weapon/storage/firstaid
-	name = "first-aid kit"
+	name = "first aid"
 	desc = "It's an emergency medical kit for those serious boo-boos."
 	icon_state = "firstaid"
 	throw_speed = 3
@@ -18,23 +18,23 @@
 
 /obj/item/weapon/storage/firstaid/regular
 	icon_state = "firstaid"
-	desc = "A first aid kit with the ability to heal common types of injuries."
+	desc = "A general medical kit that contains medical patches for both brute damage and burn damage. Also contains an epinephrine syringe for emergency use and a health analyzer."
 
 /obj/item/weapon/storage/firstaid/regular/New()
 	..()
 	if(empty) return
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/weapon/reagent_containers/pill/salicyclic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 
 /obj/item/weapon/storage/firstaid/fire
-	name = "burn treatment kit"
-	desc = "A specialized medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
+	name = "fire first aid"
+	desc = "A medical kit that contains several medical patches and pills for treating burns. Contains one epinephrine syringe for emergency use and a health analyzer."
 	icon_state = "ointment"
 	item_state = "firstaid-ointment"
 
@@ -45,15 +45,15 @@
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/salicyclic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/pill/salicyclic(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 
 /obj/item/weapon/storage/firstaid/toxin
-	name = "toxin treatment kit"
-	desc = "Used to treat toxic blood content and radiation poisoning."
+	name = "toxin first aid"
+	desc = "A medical kit designed to counter poisoning by common toxins. Contains three pills and syringes, and a health analyzer to determine the health of the patient."
 	icon_state = "antitoxin"
 	item_state = "firstaid-toxin"
 
@@ -71,8 +71,8 @@
 	return
 
 /obj/item/weapon/storage/firstaid/o2
-	name = "oxygen deprivation treatment kit"
-	desc = "A box full of oxygen goodies."
+	name = "oxygen deprivation first aid"
+	desc = "A first aid kit that contains four pills of salbutamol, which is able to counter injuries caused by suffocation. Also contains a health analyzer to determine the health of the patient."
 	icon_state = "o2"
 	item_state = "firstaid-o2"
 
@@ -83,14 +83,12 @@
 	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
 	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
 	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 
 /obj/item/weapon/storage/firstaid/brute
-	name = "brute trauma treatment kit"
-	desc = "A first aid kit for when you get toolboxed."
+	name = "brute first aid"
+	desc = "A medical kit that contains several medical patches and pills for treating brute injuries. Contains one epinephrine syringe for emergency use and a health analyzer."
 	icon_state = "brute"
 	item_state = "firstaid-brute"
 
@@ -101,13 +99,13 @@
 	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
 	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
 	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 
 /obj/item/weapon/storage/firstaid/tactical
-	name = "combat medical kit"
+	name = "combat first aid"
 	desc = "I hope you've got insurance."
 	icon_state = "bezerk"
 	max_w_class = 3
@@ -178,7 +176,7 @@
 
 
 /obj/item/weapon/storage/pill_bottle/charcoal
-	name = "bottle of charcoal pills"
+	name = "pill bottle (charcoal)"
 	desc = "Contains pills used to counter toxins."
 
 /obj/item/weapon/storage/pill_bottle/charcoal/New()
@@ -192,7 +190,7 @@
 	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
 
 /obj/item/weapon/storage/pill_bottle/epinephrine
-	name = "bottle of epinephrine pills"
+	name = "pill bottle (epinephrine)"
 	desc = "Contains pills used to stabilize patients."
 
 /obj/item/weapon/storage/pill_bottle/epinephrine/New()
@@ -206,7 +204,7 @@
 	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
 
 /obj/item/weapon/storage/pill_bottle/mutadone
-	name = "bottle of mutadone pills"
+	name = "pill bottle (mutadone)"
 	desc = "Contains pills used to treat genetic abnormalities."
 
 /obj/item/weapon/storage/pill_bottle/mutadone/New()
@@ -220,7 +218,7 @@
 	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
 
 /obj/item/weapon/storage/pill_bottle/mannitol
-	name = "bottle of mannitol pills"
+	name = "pill bottle (mannitol)"
 	desc = "Contains pills used to treat brain damage."
 
 /obj/item/weapon/storage/pill_bottle/mannitol/New()
@@ -234,7 +232,7 @@
 	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
 
 /obj/item/weapon/storage/pill_bottle/stimulant
-	name = "bottle of stimulant pills"
+	name = "pill bottle (stimulants)"
 	desc = "Guaranteed to give you that extra burst of energy during a long shift!"
 
 /obj/item/weapon/storage/pill_bottle/stimulant/New()
