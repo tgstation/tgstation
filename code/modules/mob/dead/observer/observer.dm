@@ -762,16 +762,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	//find a viable mouse candidate
-	var/obj/machinery/mommi_spawner/spawner
 	var/list/found_spawners = list()
-	for(var/obj/machinery/mommi_spawner/s in world)
-		if(s.z == src.z && s.canSpawn())
+	for(var/obj/machinery/mommi_spawner/s in machines)
+		if(s.canSpawn())
 			found_spawners.Add(s)
 	if(found_spawners.len)
-		spawner = pick(found_spawners)
-		spawner.attack_ghost(src)
+		var/options[found_spawners.len]
+		for(var/t=1,t<=found_spawners.len,t++)
+			var/obj/machinery/mommi_spawner/S = found_spawners[t]
+			var/dat = text("[] on z-level = []",get_area(S),S.z)
+			options[t] = dat
+		var/selection = input(src,"Select a MoMMI spawn location", "Become MoMMI",null) as null|anything in options
+		if(selection)
+			for(var/i = 1, i<=options.len, i++)
+				if(options[i] == selection)
+					var/obj/machinery/mommi_spawner/final = found_spawners[i]
+					final.attack_ghost(src)
+					break
 	else
-		src << "<span class='warning'>Unable to find any powered MoMMI Spawners on this z-level.</span>"
+		src << "<span class='warning'>Unable to find any MoMMI Spawners ready to build a MoMMI in the universe. Please try again.</span>"
 
 	//if(host)
 	//	host.ckey = src.ckey

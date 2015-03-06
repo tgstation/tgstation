@@ -524,8 +524,6 @@ var/global/list/organ_damage_overlays = list(
 	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
 	if(L)
 		L.process()
-	else
-		src << "<span class='warning'>You have no lungs which to breathe with, panic and tell a coder.</span>"
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/datum/gas_mixture/breath
