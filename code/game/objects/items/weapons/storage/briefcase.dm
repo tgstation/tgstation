@@ -10,15 +10,24 @@
 	w_class = 4.0
 	max_w_class = 3
 	max_combined_w_class = 16
+	var/empty = 0
+
+/obj/item/weapon/storage/briefcase/empty
+	empty = 1
+
+/obj/item/weapon/storage/briefcase/biogen
+	empty = 1
+	desc = "Smells faintly of potato."
 
 /obj/item/weapon/storage/briefcase/suicide_act(mob/user)
 	viewers(user) << "<span class='danger'><b>[user] is smashing \his head inside the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
 	return (BRUTELOSS)
 
 /obj/item/weapon/storage/briefcase/New()
+	..()
+	if (empty) return
 	new /obj/item/weapon/paper/demotion_key(src)
 	new /obj/item/weapon/paper/commendation_key(src)
-	..()
 
 /obj/item/weapon/storage/briefcase/attack(mob/living/M as mob, mob/living/user as mob)
 	//..()

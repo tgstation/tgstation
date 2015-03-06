@@ -64,6 +64,13 @@
 	other_amounts=list(5)
 	result=/obj/item/weapon/reagent_containers/glass/fertilizer/rh
 
+/datum/biogen_recipe/nutrient/beez
+	cost=40
+	id="beez"
+	name="BeezEez"
+	other_amounts=list(5)
+	result=/obj/item/beezeez
+
 /datum/biogen_recipe/leather
 	category="Leather"
 
@@ -97,6 +104,53 @@
 	name="Leather Satchel"
 	result=/obj/item/weapon/storage/backpack/satchel
 
+/datum/biogen_recipe/leather/briefcase
+	cost=400
+	id="briefcase"
+	name="Leather Briefcase"
+	result=/obj/item/weapon/storage/briefcase/biogen
+
+/datum/biogen_recipe/paper
+	category="Paper"
+
+/datum/biogen_recipe/paper/papersheet
+	cost=15
+	id="papersheet"
+	name="Paper Sheet"
+	other_amounts=list(5,10)
+	result=/obj/item/weapon/paper
+
+/datum/biogen_recipe/paper/clipboard
+	cost=75
+	id="clipboard"
+	name="Clipboard"
+	result=/obj/item/weapon/clipboard
+
+/datum/biogen_recipe/paper/cardboard
+	cost=100
+	id="cardboard"
+	name="Cardboard Sheet"
+	other_amounts=list(5,10)
+	result=/obj/item/stack/sheet/cardboard
+
+/datum/biogen_recipe/paper/giftwrap
+	cost=300
+	id="giftwrap"
+	name="Wrapping Paper"
+	result=/obj/item/weapon/wrapping_paper
+
+/datum/biogen_recipe/paper/packagewrap
+	cost=350
+	id="packagewrap"
+	name="Package Wrapper"
+	result=/obj/item/weapon/packageWrap
+
+/datum/biogen_recipe/paper/paperbin
+	cost=550 //100 from the cardboard, 30*15=450 from the paper
+	id="paperbin"
+	name="Paper Bin (30 sheets)"
+	result=/obj/item/weapon/paper_bin
+
 /datum/biogen_recipe/misc
 	category="Misc."
 
@@ -107,19 +161,12 @@
 	other_amounts=list(5)
 	result=/obj/item/weapon/plantspray/pests
 
-/datum/biogen_recipe/misc/beez
-	cost=40
-	id="beez"
-	name="BeezEez"
+/datum/biogen_recipe/misc/candle
+	cost=50
+	id="candle"
+	name="Red Candle"
 	other_amounts=list(5)
-	result=/obj/item/beezeez
-
-/datum/biogen_recipe/misc/cardboard
-	cost=200
-	id="cardboard"
-	name="Cardboard Sheet"
-	other_amounts=list(5,10)
-	result=/obj/item/stack/sheet/cardboard
+	result=/obj/item/candle
 
 /datum/biogen_recipe/misc/charcoal
 	cost=100
@@ -128,13 +175,17 @@
 	other_amounts=list(5,10)
 	result=/obj/item/stack/sheet/charcoal
 
-/datum/biogen_recipe/misc/paper
-	cost=75
-	id="paper"
-	name="Sheet of Paper"
-	other_amounts=list(5,10)
-	result=/obj/item/weapon/paper
+/datum/biogen_recipe/misc/soap
+	cost=250
+	id="soap"
+	name="Bar of Soap"
+	result=/obj/item/weapon/soap/nanotrasen
 
+/datum/biogen_recipe/misc/crayons
+	cost=400
+	id="crayons"
+	name="Box of Crayons"
+	result=/obj/item/weapon/storage/fancy/crayons
 
 /obj/machinery/biogenerator
 	name = "Biogenerator"
