@@ -1490,3 +1490,14 @@ var/list/WALLITEMS = list(
 		if(mob in living_mob_list)
 			living_player_count += 1
 	return living_player_count
+
+/proc/randomColor(var/mode = 0)	//if 1 it doesn't pick white, black or gray
+	switch(mode)
+		if(0)
+			return pick("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
+						"crimson","lime","darkgreen","cyan","navy","teal","purple","indigo")
+		if(1)
+			return pick("red","green","blue","brown","yellow","orange","darkred","crimson",
+						"lime","darkgreen","cyan","navy","teal","purple","indigo")
+		else
+			return "white"
