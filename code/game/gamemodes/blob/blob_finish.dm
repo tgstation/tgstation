@@ -1,6 +1,6 @@
 /datum/game_mode/blob/check_finished()
 	if(round_converted)
-		return 0
+		return ..()
 	if(infected_crew.len > burst)//Some blobs have yet to burst
 		return 0
 	if(blobwincount <= blobs.len)//Blob took over

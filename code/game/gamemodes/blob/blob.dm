@@ -183,7 +183,8 @@ var/list/blob_nodes = list()
 
 		// Stage 2
 		sleep(30000)
-		stage(2)
+		if(!round_converted)
+			stage(2)
 
 	return ..(0)
 
