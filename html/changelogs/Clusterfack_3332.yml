@@ -1,0 +1,14 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Fixed a bug where you could use rpd's from far away
+- bugfix: Fixes a bug where wrapping paper would magically reduce the size of objects
+- bugfix: Made machine frames dropped from machines spawn at the right buildstage so you can wirecut them
+- rscadd: Added a local narrate button for admins
+- bugfix: Made stacks properly stack beneath you when welding shards for example
+- bugfix: Made Mr. Clean not act like narsie and set the universal state
+- rscadd: Made mommis/borgs able to interface with the all in one grinder
+- rscadd: Improvements made to the become mommi verb for observers
+- bugfix: Fixed a bug where using attack ghost on a mommi spawner wouldn't check your respawn timer
+- bugfix: Fixed another bug where ghosts wouldn't always be put inside the spawned mommis body
+- tweak: Fixes chem dispenser UI size so it properly shows all three columns

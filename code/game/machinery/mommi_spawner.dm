@@ -166,6 +166,7 @@
 	user.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 
 	M.mmi = new /obj/item/device/mmi(M)
+	M.mmi.transfer_identity(user)
 	M.Namepick()
 	M.updatename()
 
