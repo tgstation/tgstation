@@ -110,7 +110,6 @@
 			qdel(changeling)
 			changeling = null
 	special_role = null
-	remove_objectives()
 	remove_antag_equip()
 
 /datum/mind/proc/remove_traitor()
@@ -121,7 +120,6 @@
 			A.set_zeroth_law("")
 			A.show_laws()
 	special_role = null
-	remove_objectives()
 	remove_antag_equip()
 
 /datum/mind/proc/remove_nukeop()
@@ -137,7 +135,6 @@
 		ticker.mode.wizards -= src
 		current.spellremove(current)
 	special_role = null
-	remove_objectives()
 	remove_antag_equip()
 
 /datum/mind/proc/remove_cultist()
@@ -288,15 +285,15 @@
 		text = "<i><b>[text]</b></i>: "
 		if (src in ticker.mode.A_bosses)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A)</B> <a href='?src=\ref[src];gang=agang'>gangster</a> <b>BOSS</b>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-			text += "<br>Flash & Recaller: <a href='?src=\ref[src];gang=equip'>give</a>"
+			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
 
 			var/list/L = current.get_contents()
 			var/obj/item/device/flash/flash = locate() in L
 			if (flash)
 				if(!flash.broken)
-					text += "|<a href='?src=\ref[src];gang=takeequip'>take equipment</a>."
+					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
 				else
-					text += "|<a href='?src=\ref[src];gang=takeequip'>take equipment</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
+					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
 			else
 				text += "."
 
@@ -306,15 +303,15 @@
 
 		else if (src in ticker.mode.B_bosses)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B)</B> <a href='?src=\ref[src];gang=bgang'>gangster</a> <b>BOSS</b>"
-			text += "<br>Flash & Recaller: <a href='?src=\ref[src];gang=equip'>give</a>"
+			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
 
 			var/list/L = current.get_contents()
 			var/obj/item/device/flash/flash = locate() in L
 			if (flash)
 				if(!flash.broken)
-					text += "<br><a href='?src=\ref[src];gang=takeequip'>take equipment</a>."
+					text += "<br><a href='?src=\ref[src];gang=takeequip'>take</a>."
 				else
-					text += "<br><a href='?src=\ref[src];gang=takeequip'>take equipment</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
+					text += "<br><a href='?src=\ref[src];gang=takeequip'>take</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
 			else
 				text += "."
 
@@ -527,6 +524,8 @@
 
 
 	if (((src in ticker.mode.head_revolutionaries) || \
+		(src in ticker.mode.A_bosses)              || \
+		(src in ticker.mode.B_bosses)              || \
 		(src in ticker.mode.traitors)              || \
 		(src in ticker.mode.syndicates))           && \
 		istype(current,/mob/living/carbon/human)      )

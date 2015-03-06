@@ -59,12 +59,11 @@ var/datum/subsystem/job/SSjob
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
-		if((job.current_positions < position_limit) || position_limit == -1)
-			Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
-			player.mind.assigned_role = rank
-			unassigned -= player
-			job.current_positions++
-			return 1
+		Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
+		player.mind.assigned_role = rank
+		unassigned -= player
+		job.current_positions++
+		return 1
 	Debug("AR has failed, Player: [player], Rank: [rank]")
 	return 0
 
@@ -141,6 +140,7 @@ var/datum/subsystem/job/SSjob
 		for(var/command_position in command_positions)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)	continue
+			if((job.current_positions >= job.total_positions) && job.total_positions != -1)	continue
 			var/list/candidates = FindOccupationCandidates(job, level)
 			if(!candidates.len)	continue
 			var/mob/new_player/candidate = pick(candidates)
@@ -155,6 +155,7 @@ var/datum/subsystem/job/SSjob
 	for(var/command_position in command_positions)
 		var/datum/job/job = GetJob(command_position)
 		if(!job)	continue
+		if((job.current_positions >= job.total_positions) && job.total_positions != -1)	continue
 		var/list/candidates = FindOccupationCandidates(job, level)
 		if(!candidates.len)	continue
 		var/mob/new_player/candidate = pick(candidates)
@@ -329,7 +330,7 @@ var/datum/subsystem/job/SSjob
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
+		for(var/obj/effect/landmark/start/sloc in start_landmarks_list)
 			if(sloc.name != rank)	continue
 			if(locate(/mob/living) in sloc.loc)	continue
 			S = sloc

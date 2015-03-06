@@ -26,6 +26,15 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGW") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ghost_pda()
+	set name = "Show/Hide GhostPDA"
+	set category = "Preferences"
+	set desc = ".Toggle Between seeing all mob pda messages, and only pda messages of nearby mobs"
+	prefs.toggles ^= CHAT_GHOSTPDA
+	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TGP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide RadioChatter"
 	set category = "Preferences"
@@ -72,6 +81,15 @@
 	prefs.save_preferences()
 	src << "You will [(prefs.toggles & CHAT_PULLR) ? "now" : "no longer"] see new pull request announcements."
 	feedback_add_details("admin_verb","TPullR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/togglemidroundantag()
+	set name = "Toggle Midround Antagonist"
+	set category = "Preferences"
+	set desc = "Toggles whether or not you will be considered for antagonist status given during a round."
+	prefs.toggles ^= MIDROUND_ANTAG
+	prefs.save_preferences()
+	src << "You will [(prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions."
+	feedback_add_details("admin_verb","TMidroundA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggletitlemusic()
 	set name = "Hear/Silence LobbyMusic"

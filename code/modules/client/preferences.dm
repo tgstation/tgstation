@@ -2,22 +2,20 @@
 
 var/list/preferences_datums = list()
 
-#define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
-
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm
 //some autodetection here.
-	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
-	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
-	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
-	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
-	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
-	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"alien" = 1, //always show                			 // 6
-	"pAI candidate" = 1,                                 // 7
-	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"blob" = IS_MODE_COMPILED("blob"),					 // 9
-	"monkey" = IS_MODE_COMPILED("monkey"),				// 10
-	"gangster" = IS_MODE_COMPILED("gang")				// 11
+	"traitor" = /datum/game_mode/traitor,			//0
+	"operative" = /datum/game_mode/nuclear,			//1
+	"changeling" = /datum/game_mode/changeling,		//2
+	"wizard" = /datum/game_mode/wizard,				//3
+	"malf AI" = /datum/game_mode/malfunction,		//4
+	"revolutionary" = /datum/game_mode/revolution,	//5
+	"alien",										//6
+	"pAI",											//7
+	"cultist" = /datum/game_mode/cult,				//8
+	"blob" = /datum/game_mode/blob,					//9
+	"monkey" = /datum/game_mode/monkey,				//10
+	"gangster" = /datum/game_mode/gang				//11
 )
 
 
@@ -39,6 +37,7 @@ datum/preferences
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
 	var/ghost_form = "ghost"
+	var/allow_midround_antag = 1
 
 	//character preferences
 	var/real_name						//our character's name
@@ -176,44 +175,63 @@ datum/preferences
 					dat += "<b>Species:</b> Human<BR>"
 
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
-				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 				dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
 
+				if(pref_species.use_skintones)
 
-				dat += "</td><td valign='top' width='21%'>"
+					dat += "</td><td valign='top' width='21%'>"
 
-				dat += "<h3>Hair Style</h3>"
+					dat += "<h3>Skin Tone</h3>"
 
-				dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
-				dat += "<a href='?_src_=prefs;preference=previous_hair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hair_style;task=input'>&gt;</a><BR>"
-				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
+
+					dat += "</td>"
+
+				if(HAIR in pref_species.specflags)
+
+					dat += "<td valign='top' width='21%'>"
+
+					dat += "<h3>Hair Style</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=previous_hair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hair_style;task=input'>&gt;</a><BR>"
+					dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 
 
-				dat += "</td><td valign='top' width='21%'>"
+					dat += "</td><td valign='top' width='21%'>"
 
-				dat += "<h3>Facial Hair Style</h3>"
+					dat += "<h3>Facial Hair Style</h3>"
 
-				dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
-				dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
+					dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 
+					dat += "</td>"
 
-				dat += "</td><td valign='top' width='21%'>"
+				if(EYECOLOR in pref_species.specflags)
 
-				dat += "<h3>Eye Color</h3>"
+					dat += "<td valign='top' width='21%'>"
 
-				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
+					dat += "<h3>Eye Color</h3>"
 
-				dat += "</td><td valign='top' width='21%'>"
+					dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
-				dat += "<h3>Alien Color</h3>"  // even if choosing your mutantrace is off, this is here in case you gain one during a round
+					dat += "</td>"
 
-				dat += "<span style='border: 1px solid #161616; background-color: #[mutant_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+				if(MUTCOLORS in pref_species.specflags)
 
-				dat += "</td></tr></table>"
+					dat += "<td valign='top' width='21%'>"
+
+					dat += "<h3>Alien Color</h3>"
+
+					dat += "<span style='border: 1px solid #161616; background-color: #[mutant_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+
+					dat += "</td>"
+
+				dat += "</tr></table>"
 
 
 			if (1) // Game Preferences
@@ -225,8 +243,9 @@ datum/preferences
 				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
 				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
 				dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(toggles & CHAT_GHOSTWHISPER) ? "Nearest Creatures" : "All Speech"]</a><br>"
+				dat += "<b>Ghost pda:</b> <a href='?_src=prefs;preference=ghost_pda'>[(toggles & CHAT_GHOSTPDA) ? "Nearest Creatures" : "All Messages"]</a><br>"
 				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
-
+				dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
 				if(config.allow_Metadata)
 					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
 
@@ -248,17 +267,23 @@ datum/preferences
 				dat += "<h2>Antagonist Settings</h2>"
 
 				if(jobban_isbanned(user, "Syndicate"))
-					dat += "<b>You are banned from antagonist roles.</b>"
+					dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
 					src.be_special = 0
+
 				else
 					var/n = 0
 					for (var/i in special_roles)
-						if(special_roles[i]) //if mode is available on the server
-							if(jobban_isbanned(user, i))
-								dat += "<b>Be [i]:</b> <font color=red><b>\[BANNED]</b></font><br>"
-							else if(i == "pai candidate")
-								if(jobban_isbanned(user, "pAI"))
-									dat += "<b>Be [i]:</b> <font color=red><b>\[BANNED]</b></font><br>"
+						if(jobban_isbanned(user, i))
+							dat += "<b>Be [i]:</b> <font color=red><b>\[BANNED]</b></font><br>"
+						else
+							var/days_remaining = null
+							if(config.use_age_restriction_for_jobs && ispath(special_roles[i])) //If it's a game mode antag, check if the player meets the minimum age
+								var/mode_path = special_roles[i]
+								var/datum/game_mode/temp_mode = new mode_path
+								days_remaining = temp_mode.get_remaining_days(user.client)
+
+							if(days_remaining)
+								dat += "<b>Be [i]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
 							else
 								dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'>[src.be_special&(1<<n) ? "Yes" : "No"]</a><br>"
 						n++
@@ -782,8 +807,14 @@ datum/preferences
 					if("ghost_whispers")
 						toggles ^= CHAT_GHOSTWHISPER
 
+					if("ghost_pda")
+						toggles ^= CHAT_GHOSTPDA
+
 					if("pull_requests")
 						toggles ^= CHAT_PULLR
+
+					if("allow_midround_antag")
+						toggles ^= MIDROUND_ANTAG
 
 					if("save")
 						save_preferences()

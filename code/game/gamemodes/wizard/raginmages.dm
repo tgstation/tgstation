@@ -73,20 +73,22 @@
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_WIZARD)
 				if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
-					candidates += G
+					if(age_check(G.client))
+						candidates += G
 		if(!candidates.len)
 			message_admins("No applicable ghosts for the next ragin' mage, asking ghosts instead.")
 			var/time_passed = world.time
 			for(var/mob/dead/observer/G in player_list)
 				if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
-					spawn(0)
-						switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
-							if("Yes")
-								if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+					if(age_check(G.client))
+						spawn(0)
+							switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+								if("Yes")
+									if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+										continue
+									candidates += G
+								if("No")
 									continue
-								candidates += G
-							if("No")
-								continue
 
 			sleep(300)
 		if(!candidates.len)

@@ -55,12 +55,6 @@ datum/reagent/consumable/sugar
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 
-datum/reagent/consumable/sugar/on_mob_life(var/mob/living/M as mob)
-	if(M.satiety > -200)
-		M.satiety -= 20 //eating sugar makes you more hungry over time by making your hunger drop faster.
-	M.nutrition += max(((NUTRITION_LEVEL_FED + 50) - M.nutrition )/100, 0) * nutriment_factor // sugar doesn't help your hunger if your stomach is nearly full
-	holder.remove_reagent(src.id, metabolization_rate)
-
 datum/reagent/consumable/sugar/overdose_start(var/mob/living/M as mob)
 	M << "<span class = 'userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
 	M.sleeping += 30
@@ -378,7 +372,7 @@ datum/reagent/consumable/hell_ramen/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/consumable/flour
-	name = "flour"
+	name = "Flour"
 	id = "flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = SOLID
@@ -395,3 +389,18 @@ datum/reagent/consumable/cherryjelly
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
 
+datum/reagent/consumable/rice
+	name = "Rice"
+	id = "rice"
+	description = "tiny nutritious grains"
+	reagent_state = SOLID
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+	color = "#FFFFFF" // rgb: 0, 0, 0
+
+datum/reagent/consumable/vanilla
+	name = "Vanilla Powder"
+	id = "vanilla"
+	description = "A fatty, bitter paste made from vanilla pods."
+	reagent_state = SOLID
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#FFFACD"

@@ -144,6 +144,14 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
+/obj/item/clothing/head/griffin
+	name = "griffon head"
+	desc = "Why not 'eagle head'? Who knows."
+	icon_state = "griffinhat"
+	item_state = "griffinhat"
+	flags = BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
 	desc = "Fuzzy."

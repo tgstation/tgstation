@@ -59,8 +59,8 @@
 			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
 
 		if(M == user)								//If you're eating it yourself.
-			if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
-				M << "<span class='notice'>You don't feel like eating any more sugary food at the moment.</span>"
+			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
+				M << "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>"
 				return 0
 
 			if(wrapped)
@@ -203,7 +203,7 @@
 
 	overlays += I
 
-// cook() is called when microwaving the food
+// initialize_cooked_food() is called when microwaving the food
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)

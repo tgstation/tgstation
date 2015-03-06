@@ -78,7 +78,6 @@
 
 
 /mob/living/carbon/human/ex_act(severity, ex_target)
-	var/shielded = 0
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
@@ -95,8 +94,7 @@
 				//user.throw_at(target, 200, 4)
 
 		if (2.0)
-			if (!shielded)
-				b_loss += 60
+			b_loss += 60
 
 			f_loss += 60
 
@@ -106,7 +104,7 @@
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(70) && !shielded)
+			if (prob(70))
 				Paralyse(10)
 
 		if(3.0)
@@ -115,7 +113,7 @@
 				b_loss = b_loss/2
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(50) && !shielded)
+			if (prob(50))
 				Paralyse(10)
 
 	var/update = 0
@@ -138,16 +136,12 @@
 	..()
 
 /mob/living/carbon/human/blob_act()
-	if(stat == 2)	return
+	if(stat == DEAD)	return
 	show_message("<span class='userdanger'> The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
-
-/mob/living/carbon/human/var/co2overloadtime = null
-/mob/living/carbon/human/var/temperature_resistance = T0C+75
-
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
@@ -717,3 +711,19 @@
 				H.w_uniform.add_fingerprint(M)
 
 			..()
+
+
+/mob/living/carbon/human/generateStaticOverlay()
+	var/image/staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
+	staticOverlay.override = 1
+	staticOverlays["static"] = staticOverlay
+
+	staticOverlay = image(icon('icons/effects/effects.dmi', "blank"), loc = src)
+	staticOverlay.override = 1
+	staticOverlays["blank"] = staticOverlay
+
+	staticOverlay = getLetterImage(src, "H", 1)
+	staticOverlay.override = 1
+	staticOverlays["letter"] = staticOverlay
+
+

@@ -380,11 +380,6 @@
 		user << "<span class='notice'>Someone's already washing here.</span>"
 		return
 
-	if(istype(O, /obj/item/trash))
-		user.drop_item()
-		user << "<span class='notice'>You wash up [O].</span>"	//sims!!!
-		qdel(O)
-
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))

@@ -4,7 +4,7 @@
 
 /obj/item/seeds
 	name = "pack of seeds"
-	icon = 'icons/obj/seeds.dmi'
+	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed"				//Unknown plant seed - these shouldn't exist in-game.
 	w_class = 1						//Pocketable.
 	var/plantname = "Plants"		//Name of plant when planted.
@@ -163,6 +163,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 1
+	mutatelist = list(/obj/item/seeds/replicapod)
 
 /obj/item/seeds/berryseed
 	name = "pack of berry seeds"
@@ -205,6 +206,23 @@
 	species = "banana"
 	plantname = "Banana Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
+	lifespan = 50
+	endurance = 30
+	maturation = 6
+	production = 6
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+	mutatelist = list(/obj/item/seeds/mimanaseed)
+
+/obj/item/seeds/mimanaseed
+	name = "pack of mimana seeds"
+	desc = "They're seeds that grow into mimana trees. When grown, keep away from mime."
+	icon_state = "seed-mimana"
+	species = "mimana"
+	plantname = "Mimana Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mimana
 	lifespan = 50
 	endurance = 30
 	maturation = 6
@@ -350,6 +368,24 @@
 	oneharvest = 1
 	potency = 20
 	growthstages = 3
+	mutatelist = list(/obj/item/seeds/snapcornseed)
+
+/obj/item/seeds/snapcornseed
+	name = "pack of snapcorn seeds"
+	desc = "Oh snap!"
+	icon_state = "seed-snapcorn"
+	species = "snapcorn"
+	plantname = "Snapcorn Stalks"
+	product = /obj/item/weapon/grown/snapcorn
+	lifespan = 25
+	endurance = 15
+	maturation = 8
+	production = 6
+	yield = 3
+	plant_type = 0
+	oneharvest = 1
+	potency = 20
+	growthstages = 3
 
 /obj/item/seeds/poppyseed
 	name = "pack of poppy seeds"
@@ -367,14 +403,67 @@
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
+	mutatelist = list(/obj/item/seeds/bluetomatoseed, /obj/item/seeds/bloodtomatoseed)
+
+/obj/item/seeds/geraniumseed
+	name = "pack of geranium seeds"
+	desc = "These seeds grow into geranium."
+	icon_state = "seed-geranium"
+	species = "geranium"
+	plantname = "geranium Plants"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/geranium
+	lifespan = 25
+	endurance = 10
+	maturation = 8
+	production = 6
+	yield = 6
+	potency = 20
+	plant_type = 0
+	oneharvest = 1
+	growthstages = 3
+
+/obj/item/seeds/lilyseed
+	name = "pack of lily seeds"
+	desc = "These seeds grow into lilies."
+	icon_state = "seed-lily"
+	species = "lily"
+	plantname = "Lily Plants"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily
+	lifespan = 25
+	endurance = 10
+	maturation = 8
+	production = 6
+	yield = 6
+	potency = 20
+	plant_type = 0
+	oneharvest = 1
+	growthstages = 3
 
 /obj/item/seeds/potatoseed
 	name = "pack of potato seeds"
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
 	icon_state = "seed-potato"
 	species = "potato"
-	plantname = "Potato-Plants"
+	plantname = "Potato Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
+	lifespan = 30
+	endurance = 15
+	maturation = 10
+	production = 1
+	yield = 4
+	plant_type = 0
+	oneharvest = 1
+	potency = 10
+	growthstages = 4
+	mutatelist = list(/obj/item/seeds/sweetpotatoseed)
+
+/obj/item/seeds/sweetpotatoseed
+	name = "pack of sweet potato seeds"
+	desc = "These seeds grow into sweet potato plants"
+	icon_state = "seed-sweetpotato"
+	species = "sweetpotato"
+	plantname = "Sweet Potato Plants"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato
 	lifespan = 30
 	endurance = 15
 	maturation = 10
@@ -452,6 +541,41 @@
 	oneharvest = 1
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/oatseed, /obj/item/seeds/riceseed)
+
+/obj/item/seeds/oatseed
+	name = "pack of oat seeds"
+	desc = "These may, or may not, grow into oat."
+	icon_state = "seed-oat"
+	species = "oat"
+	plantname = "oat Stalks"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/oat
+	lifespan = 25
+	endurance = 15
+	maturation = 6
+	production = 1
+	yield = 4
+	potency = 15
+	oneharvest = 1
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/riceseed
+	name = "pack of rice seeds"
+	desc = "These may, or may not, grow into rice."
+	icon_state = "seed-rice"
+	species = "rice"
+	plantname = "rice Stalks"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/rice
+	lifespan = 25
+	endurance = 15
+	maturation = 6
+	production = 1
+	yield = 4
+	potency = 15
+	oneharvest = 1
+	plant_type = 0
+	growthstages = 6
 
 /obj/item/seeds/carrotseed
 	name = "pack of carrot seeds"
@@ -460,6 +584,24 @@
 	species = "carrot"
 	plantname = "Carrots"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
+	lifespan = 25
+	endurance = 15
+	maturation = 10
+	production = 1
+	yield = 5
+	potency = 10
+	oneharvest = 1
+	plant_type = 0
+	growthstages = 3
+	mutatelist = list(/obj/item/seeds/parsnipseed)
+
+/obj/item/seeds/parsnipseed
+	name = "pack of parsnip seeds"
+	desc = "These seeds grow into parsnips."
+	icon_state = "seed-parsnip"
+	species = "parsnip"
+	plantname = "Parsnip"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
 	lifespan = 25
 	endurance = 15
 	maturation = 10
@@ -564,6 +706,24 @@
 	species = "towercap"
 	plantname = "Tower Caps"
 	product = /obj/item/weapon/grown/log
+	lifespan = 80
+	endurance = 50
+	maturation = 15
+	production = 1
+	yield = 5
+	potency = 50
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
+	mutatelist = list(/obj/item/seeds/steelmycelium)
+
+/obj/item/seeds/steelmycelium
+	name = "pack of steel-cap mycelium"
+	desc = "This mycelium grows into metal rods."
+	icon_state = "mycelium-steelcap"
+	species = "steelcap"
+	plantname = "Steel Caps"
+	product = /obj/item/stack/rods
 	lifespan = 80
 	endurance = 50
 	maturation = 15
@@ -851,6 +1011,24 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/redbeetseed)
+
+/obj/item/seeds/redbeetseed
+	name = "pack of redbeet seeds"
+	desc = "These seeds grow into red beet producing plants."
+	icon_state = "seed-redbeet"
+	species = "redbeet"
+	plantname = "Red-Beet Plants"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
+	lifespan = 60
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 6
+	oneharvest = 1
+	potency = 10
+	plant_type = 0
+	growthstages = 6
 
 /obj/item/seeds/sugarcaneseed
 	name = "pack of sugarcane seeds"
@@ -883,6 +1061,23 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/holymelonseed)
+
+/obj/item/seeds/holymelonseed
+	name = "pack of holymelon seeds"
+	desc = "These seeds grow into holymelon plants."
+	icon_state = "seed-holymelon"
+	species = "holymelon"
+	plantname = "Holy Melon Vines"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/holymelon
+	lifespan = 50
+	endurance = 40
+	maturation = 6
+	production = 6
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 6
 
 /obj/item/seeds/pumpkinseed
 	name = "pack of pumpkin seeds"
@@ -891,6 +1086,23 @@
 	species = "pumpkin"
 	plantname = "Pumpkin Vines"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
+	lifespan = 50
+	endurance = 40
+	maturation = 6
+	production = 6
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 3
+	mutatelist = list(/obj/item/seeds/blumpkinseed)
+
+/obj/item/seeds/blumpkinseed
+	name = "pack of blumpkin seeds"
+	desc = "These seeds grow into blumpkin vines."
+	icon_state = "seed-blumpkin"
+	species = "blumpkin"
+	plantname = "Blumpkin Vines"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
 	lifespan = 50
 	endurance = 40
 	maturation = 6
@@ -915,6 +1127,7 @@
 	potency = 15
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/orangeseed)
 
 /obj/item/seeds/lemonseed
 	name = "pack of lemon seeds"
@@ -965,6 +1178,7 @@
 	potency = 20
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/limeseed)
 
 /obj/item/seeds/poisonberryseed
 	name = "pack of poison-berry seeds"
@@ -1049,6 +1263,23 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 5
+	mutatelist = list(/obj/item/seeds/vanillapodseed)
+
+/obj/item/seeds/vanillapodseed
+	name = "pack of vanilla pod seeds"
+	desc = "These seeds grow into vanilla trees. They look fattening."
+	icon_state = "seed-vanillapod"
+	species = "vanillapod"
+	plantname = "Vanilla Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 2
+	potency = 10
+	plant_type = 0
+	growthstages = 5
 
 /obj/item/seeds/cherryseed
 	name = "pack of cherry pits"
@@ -1057,6 +1288,22 @@
 	species = "cherry"
 	plantname = "Cherry Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cherries
+	lifespan = 35
+	endurance = 35
+	maturation = 5
+	production = 5
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 5
+
+/obj/item/seeds/bluecherryseed
+	name = "pack of blue cherry pits"
+	desc = "The blue kind of cherries"
+	icon_state = "seed-bluecherry"
+	species = "bluecherry"
+	plantname = "Blue Cherry Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
 	lifespan = 35
 	endurance = 35
 	maturation = 5

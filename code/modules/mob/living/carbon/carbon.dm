@@ -377,3 +377,10 @@ var/const/GALOSHES_DONT_HELP = 8
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+
+/mob/living/carbon/blob_act()
+	if (stat == DEAD)
+		return
+	else
+		show_message("<span class='userdanger'>The blob attacks!</span>")
+		adjustBruteLoss(10)

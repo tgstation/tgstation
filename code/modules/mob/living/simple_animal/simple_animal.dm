@@ -331,6 +331,8 @@
 	if(O.flags & NOBLUDGEON)
 		return
 
+	user.changeNext_move(CLICK_CD_MELEE)
+
 	if(istype(O, /obj/item/stack/medical))
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
@@ -352,11 +354,13 @@
 		else
 			user << "<span class='notice'> [src] is dead, medical items won't bring it back to life.</span>"
 			return
-	if((meat_type || skin_type) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchenknife))
-			harvest()
 
-	user.changeNext_move(CLICK_CD_MELEE)
+	if((meat_type || skin_type) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
+		var/sharpness = is_sharp(O)
+		if(sharpness)
+			harvest(user, sharpness)
+			return
+
 	user.do_attack_animation(src)
 	var/damage = 0
 	if(O.force)
@@ -475,8 +479,12 @@
 		new childtype(loc)
 
 // Harvest an animal's delicious byproducts
-/mob/living/simple_animal/proc/harvest()
-	gib()
+/mob/living/simple_animal/proc/harvest(mob/living/user, sharpness = 1)
+	user << "<span class='notice'>You begin to butcher [src].</span>"
+	playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+	if(do_mob(user, src, 80/sharpness))
+		visible_message("<span class='notice'>[user] butchers [src].</span>")
+		gib()
 	return
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
