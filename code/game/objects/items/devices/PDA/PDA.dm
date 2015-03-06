@@ -816,6 +816,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
+		for(var/mob/M in player_list)
+			if(isobserver(M) && M.client && (M.client.prefs.toggles & CHAT_GHOSTPDA))
+				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
 
 		if (!P.silent)
 			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
@@ -837,9 +840,23 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		U << "<span class='notice'>ERROR: Server isn't responding.</span>"
 
+/obj/item/device/pda/AltClick()
+	..()
+
+	if(issilicon(usr))
+		return
+
+	if(can_use(usr))
+		if(id)
+			remove_id()
+		else
+			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
+	else
+		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
-	set name = "Remove id"
+	set name = "Eject ID"
 	set src in usr
 
 	if(issilicon(usr))
@@ -856,7 +873,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/verb/verb_remove_pen()
 	set category = "Object"
-	set name = "Remove pen"
+	set name = "Remove Pen"
 	set src in usr
 
 	if(issilicon(usr))
@@ -898,7 +915,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 // access to status display signals
-/obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
+/obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob, params)
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C

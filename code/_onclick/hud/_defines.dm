@@ -77,25 +77,22 @@
 #define ui_borg_radio "EAST-1:28,SOUTH+1:7"
 #define ui_borg_intents "EAST-2:26,SOUTH:5"
 
-//Upper-middle right (damage indicators)
-#define ui_toxin "EAST-1:28,CENTER+5:27"
-#define ui_fire "EAST-1:28,CENTER+4:25"
-#define ui_oxygen "EAST-1:28,CENTER+3:23"
-#define ui_pressure "EAST-1:28,CENTER+2:21"
 
-#define ui_alien_toxin "EAST-1:28,CENTER+5:25"
-#define ui_alien_fire "EAST-1:28,CENTER+4:25"
-#define ui_alien_oxygen "EAST-1:28,CENTER+3:25"
-#define ui_alien_nightvision "EAST-1:28,CENTER+2:25"
+//Upper-middle right (alerts)
+#define ui_alert1 "EAST-1:28,CENTER+5:27"
+#define ui_alert2 "EAST-1:28,CENTER+4:25"
+#define ui_alert3 "EAST-1:28,CENTER+3:23"
+#define ui_alert4 "EAST-1:28,CENTER+2:21"
+#define ui_alert5 "EAST-1:28,CENTER+1:19"
+
 
 //Middle right (status indicators)
-#define ui_nutrition "EAST-1:28,CENTER-3:11"
-#define ui_temp "EAST-1:28,CENTER-2:13"
-#define ui_healthdoll "EAST-1:28,CENTER-1:15"
-#define ui_health "EAST-1:28,CENTER:17"
-#define ui_internal "EAST-1:28,CENTER+1:19"
+#define ui_healthdoll "EAST-1:28,CENTER-2:13"
+#define ui_health "EAST-1:28,CENTER-1:15"
+#define ui_internal "EAST-1:28,CENTER:17"
 
 //borgs and aliens
+#define ui_alien_nightvision "EAST-1:28,CENTER:17"
 #define ui_borg_health "EAST-1:28,CENTER-1:15"		//borgs have the health display where humans have the pressure damage indicator.
 #define ui_alien_health "EAST-1:28,CENTER-1:15"	//aliens have the health display where humans have the pressure damage indicator.
 #define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"

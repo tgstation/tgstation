@@ -30,6 +30,7 @@
 	default_color = "00FF00"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	mutant_bodyparts = list("tail", "snout")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -278,6 +279,7 @@
 	// 2spooky
 	name = "Spooky Scary Skeleton"
 	id = "skeleton"
+	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/skeleton
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)

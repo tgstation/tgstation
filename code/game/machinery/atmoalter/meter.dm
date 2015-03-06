@@ -73,7 +73,7 @@
 	if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
-			t += "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)]&deg;K ([round(environment.temperature-T0C,0.01)]&deg;C)"
+			t += "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)] K ([round(environment.temperature-T0C,0.01)]&deg;C)"
 		else
 			t += "The sensor error light is blinking."
 	else
@@ -85,7 +85,7 @@
 	user << status()
 
 
-/obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"

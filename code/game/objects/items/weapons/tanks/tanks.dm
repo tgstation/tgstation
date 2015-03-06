@@ -74,7 +74,7 @@
 
 		qdel(src)
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 
 	src.add_fingerprint(user)

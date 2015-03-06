@@ -148,7 +148,7 @@
 	name = "Meat bun"
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
-		/datum/reagent/consumable/flour = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/bun = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1
 	)

@@ -59,8 +59,8 @@
 			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
 
 		if(M == user)								//If you're eating it yourself.
-			if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
-				M << "<span class='notice'>You don't feel like eating any more sugary food at the moment.</span>"
+			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
+				M << "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>"
 				return 0
 
 			if(wrapped)
@@ -133,19 +133,19 @@
 		user << "[src] was bitten multiple times!"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
 		return 0
 	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
-		if(S.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src].</span>"
-			return 0
-		if(contents.len >= 20)
-			user << "<span class='warning'>You can't add more ingredients to [src].</span>"
-			return 0
 		if(custom_food_type && ispath(custom_food_type))
+			if(S.w_class > 2)
+				user << "<span class='warning'>The ingredient is too big for [src].</span>"
+				return 0
+			if(contents.len >= 20)
+				user << "<span class='warning'>You can't add more ingredients to [src].</span>"
+				return 0
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
@@ -203,7 +203,7 @@
 
 	overlays += I
 
-// cook() is called when microwaving the food
+// initialize_cooked_food() is called when microwaving the food
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)
@@ -263,7 +263,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/store
 	w_class = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.w_class > 2 || custom_food_type) //can't store objects inside food needed to start a customizable snack.
 		..()
 	else

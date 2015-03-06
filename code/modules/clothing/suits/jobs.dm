@@ -110,7 +110,6 @@
 	item_state = "suitjacket_blue"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
-	action_button_name = "Toggle Suit Buttons"
 	togglename = "buttons"
 
 /obj/item/clothing/suit/toggle/lawyer/purple

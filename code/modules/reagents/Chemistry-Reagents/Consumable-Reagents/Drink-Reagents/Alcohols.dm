@@ -315,9 +315,10 @@ datum/reagent/consumable/ethanol/beepsky_smash
 	description = "Deny drinking this and prepare for THE LAW."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 25
+	metabolization_rate = 0.8
 
 datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(var/mob/living/M as mob)
-	M.Stun(2)
+	M.Stun(1)
 	..()
 	return
 

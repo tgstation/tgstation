@@ -12,6 +12,11 @@
 //inventory slots
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null
-	var/obj/item/weapon/tank/internals/internal = null
+	var/obj/item/weapon/tank/internal = null
 
 	var/datum/dna/dna = null//Carbon
+
+	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
+
+	var/co2overloadtime = null
+	var/temperature_resistance = T0C+75

@@ -9,7 +9,7 @@
 	desc = "A simple pie, still delicious."
 	icon_state = "pie"
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pie
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream
 	name = "banana cream pie"

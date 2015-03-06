@@ -25,7 +25,7 @@
 	if(!broken && !burnt)
 		icon_state = icon_plating //Because asteroids are 'platings' too.
 
-/turf/simulated/floor/plating/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/floor/plating/attackby(obj/item/C as obj, mob/user as mob, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/stack/rods))
@@ -91,7 +91,7 @@
 		..()
 	return //unplateable
 
-/turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob, params)
 	if(!C || !user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))

@@ -13,7 +13,7 @@
 	name = "bread"
 	desc = "Some plain old Earthen bread."
 	icon_state = "bread"
-	list_reagents = list("nutriment" = 10)
+	list_reagents = list("nutriment" = 7)
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/bread
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/plain
 

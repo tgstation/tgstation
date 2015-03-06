@@ -62,15 +62,15 @@ datum/reagent/styptic_powder/on_mob_life(var/mob/living/M as mob)
 datum/reagent/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "33% chance per cycle of healing 3 point each of BRUTE and BURN damage."
+	description = "33% chance per cycle of healing 1 point each of BRUTE and BURN damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
 datum/reagent/salglu_solution/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(50))
-		M.adjustBruteLoss(-3*REM)
-		M.adjustFireLoss(-3*REM)
+	if(prob(33))
+		M.adjustBruteLoss(-1*REM)
+		M.adjustFireLoss(-1*REM)
 	..()
 	return
 
@@ -341,7 +341,7 @@ datum/reagent/ephedrine
 
 datum/reagent/ephedrine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.status_flags |= GOTTAGOFAST
+	M.status_flags |= IGNORESLOWDOWN
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
@@ -424,7 +424,7 @@ datum/reagent/morphine
 
 datum/reagent/morphine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.status_flags |= GOTTAGOFAST
+	M.status_flags |= IGNORESLOWDOWN
 	if(cycle_count == 36)
 		M.drowsyness += 1
 	cycle_count++
@@ -599,23 +599,15 @@ datum/reagent/epinephrine/overdose_process(var/mob/living/M as mob)
 datum/reagent/strange_reagent
 	name = "Strange Reagent"
 	id = "strange_reagent"
-	description = "A miracle medical chem, this little beauty can bring the dead back to life! ...Well, if you're careful that is. If the cadaver is rotten or has too much BRUTE/BURN damage, SR will gib them on use."
+	description = "A miracle medical chem, this little beauty can bring the dead back to life!"
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolization_rate = 0.2
 
 datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob, var/method=TOUCH, var/volume)
 	if(M.stat == DEAD)
-		if(M.getBruteLoss() >= 80 || M.getFireLoss() >= 80)
-			if(ishuman(M) || ismonkey(M))
-				var/mob/living/carbon/C_target = M
-				var/obj/item/organ/brain/B = C_target.getorgan(/obj/item/organ/brain)
-				if(B)
-					B.loc = get_turf(C_target)
-					B.transfer_identity(C_target)
-					C_target.internal_organs -= B
-				M.gib(M)
-				return
+		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
+			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
+			return
 		var/mob/dead/observer/ghost = M.get_ghost()
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
 		if(!M.suiciding && !ghost && !(NOCLONE in M.mutations))
@@ -626,10 +618,8 @@ datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob,
 			living_mob_list |= list(M)
 			M.emote("gasp")
 			add_logs(M, M, "revived", object="strange reagent")
-			hardset_dna(M, null, null, null, null, /datum/species/zombie)
 	..()
 	return
-
 datum/reagent/strange_reagent/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(prob(rand(1,100)))
@@ -664,7 +654,7 @@ datum/reagent/life
 /datum/chemical_reaction/life/on_reaction(var/datum/reagents/holder, var/created_volume)
 	chemical_mob_spawn(holder, 1, "Life")
 
-proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reaction_name)
+proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reaction_name, var/mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
 		var/blocked = list(/mob/living/simple_animal/hostile,
 			/mob/living/simple_animal/hostile/pirate,
@@ -713,7 +703,7 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen = pick(critters)
 			var/mob/living/simple_animal/hostile/C = new chosen
-			C.faction |= "chemicalsummon"
+			C.faction |= mob_faction
 			C.loc = get_turf(holder.my_atom)
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
@@ -798,7 +788,7 @@ datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 
 datum/reagent/stimulants/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.status_flags |= GOTTAGOFAST
+	M.status_flags |= IGNORESLOWDOWN
 	if(M.health < 50 && M.health > 0)
 		if(prob(50))
 			M.adjustOxyLoss(-5*REM)
@@ -817,5 +807,19 @@ datum/reagent/stimulants/overdose_process(var/mob/living/M as mob)
 		M.adjustStaminaLoss(5*REM)
 		M.adjustToxLoss(2*REM)
 		M.losebreath++
+	..()
+	return
+
+datum/reagent/insulin
+	name = "Insulin"
+	id = "insulin"
+	description = "Increases sugar depletion rates."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+datum/reagent/insulin/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	if(M.sleeping)
+		M.sleeping--
+	M.reagents.remove_reagent("sugar", 5)
 	..()
 	return

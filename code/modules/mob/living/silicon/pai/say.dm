@@ -3,6 +3,8 @@
 
 	if (ending == "?")
 		return "[src.speakQuery], \"<span class = 'robot'>[text]</span>\"";
+	else if(copytext(text, length(text) - 1) == "!!")
+		return "[src.speakDoubleExclamation], \"<span class = 'robot'><span class = 'yell'>[text]</span></span>\"";
 	else if (ending == "!")
 		return "[src.speakExclamation], \"<span class = 'robot'>[text]</span>\"";
 

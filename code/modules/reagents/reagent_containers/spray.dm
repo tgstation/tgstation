@@ -118,7 +118,7 @@
 /obj/item/weapon/reagent_containers/spray/waterflower
 	name = "water flower"
 	desc = "A seemingly innocent sunflower...with a twist."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
@@ -187,14 +187,14 @@
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
 	user << "<span class='notice'>You adjust the output switch. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
-/obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror/New()
+/obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
 	list_reagents = list("spore" = 150, "cryptobiolin" = 150, "mutagen" = 150, "chloralhydrate" = 150)
 
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
 	name = "Plant-B-Gone"
 	desc = "Kills those pesky weeds!"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbgone"
 	item_state = "plantbgone"
 	volume = 100
