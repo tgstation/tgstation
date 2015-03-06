@@ -1,7 +1,7 @@
-In-Hand DMI Compile System
+DMI Compile System
 ==========================
 
-A shitty hack by N3X15
+A (less) shitty hack by N3X15
 
 WHY THE FUCK?
 -------------
@@ -21,6 +21,21 @@ They closed it with "Not a Bug".
 So, here we are.  The only way to edit DMIs that big 
 is with third-party tools like BYONDTools.
 
+Compiled Files
+--------------
+
+Files that are currently compiled:
+
+ * icons/mob/head.dmi - Built from icons/mob/head/
+ * icons/mob/suit.dmi - Built from icons/mob/suit/
+ * icons/mob/uniform.dmi - Built from icons/mob/uniform/
+ * icons/mob/items_lefthand.dmi - Built from icons/mob/in-hand/left/
+ * icons/mob/items_righthand.dmi - Built from icons/mob/in-hand/right/
+ 
+To add new icon states to these files, add your state to the existing states, or add a new one.
+
+Ideally, things that should be logically grouped together should be in their own DMI.
+
 How to Compile
 --------------
 
@@ -30,8 +45,8 @@ How to Compile
 4. Run the following (with the correct paths, of course):
 
 ```
-cd icons/mobs/in-hand
-ss13_makeinhands
+cd path/to/vgstation13
+dmi_compile
 ```
 
 buildIcons.bat in the root folder of this repository will do steps 3-4 for you, if you're on Windows.
@@ -40,8 +55,7 @@ Adding More Output Targets
 --------------------------
 
 If you've run into the problem mentioned above with another
-DMI, have no fear:  Just edit compile.py and add the new
-output target to the ToBuild dict as shown in the comments.
+DMI, have no fear:  Just edit dmi_config.yml
 
 License
 -------
