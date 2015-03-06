@@ -503,6 +503,7 @@
 	icon_plating = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 	ignoredirt = 1
+	cancable = 0
 
 /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0.01
@@ -536,7 +537,7 @@
 			src.gets_dug()
 	return
 
-/turf/simulated/floor/plating/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/floor/plating/asteroid/attackby(obj/item/W as obj, mob/user as mob, params)
 	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0
@@ -584,6 +585,54 @@
 			for(var/obj/item/weapon/ore/O in src.contents)
 				O.attackby(W,user)
 				return
+
+	if(cancable && istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = W
+		for(var/obj/structure/cable/LC in src)
+			if((LC.d1==0)||(LC.d2==0))
+				LC.attackby(W,user)
+				return
+		coil.place_turf(src, user)
+		return 1
+
+	if(istype(W, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = W
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		var/obj/structure/lattice/catwalk/C = locate(/obj/structure/lattice/catwalk, src)
+		if(C)
+			user << "<span class='warning'>There is already a catwalk here.</span>"
+			return
+		if(L)
+			if(R.use(1))
+				user << "<span class='notice'>Constructing catwalk...</span>"
+				if(do_after(user, 15))
+					playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+					qdel(L)
+					cancable = 1//so cables can be laid
+					new /obj/structure/lattice/catwalk(locate(x, y, z))
+			return
+		if(R.use(1))
+			user << "<span class='notice'>Constructing support lattice...</span>"
+			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+			new /obj/structure/lattice(locate(x, y, z))
+		else
+			user << "<span class='warning'>You need one rod to build a lattice.</span>"
+		return
+	if(istype(W, /obj/item/stack/tile/plasteel))
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		if(L)
+			var/obj/item/stack/tile/plasteel/S = W
+			if(S.use(1))
+				qdel(L)
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				user << "<span class='notice'>You build a floor.</span>"
+				ChangeTurf(/turf/simulated/floor/plating)
+			else
+				user << "<span class='warning'>You need one floor tile to build a floor.</span>"
+		else
+			user << "<span class='danger'>The plating is going to need some support. Place metal rods first.</span>"
+
+
 
 /turf/simulated/floor/plating/asteroid/proc/gets_dug()
 	if(dug)
