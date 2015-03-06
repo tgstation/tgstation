@@ -14,7 +14,8 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'>Now disassembling the girder...</span>"
 			if(do_after(user,40))
-				if(!src) return
+				if(!src.loc)
+					return
 				user << "<span class='notice'>You dissasembled the girder!</span>"
 				new /obj/item/stack/sheet/metal(get_turf(src))
 				qdel(src)
@@ -25,7 +26,8 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'>Now securing the girder...</span>"
 			if(do_after(user, 40))
-				if(!src) return
+				if(!src.loc)
+					return
 				user << "<span class='notice'>You secured the girder!</span>"
 				var/obj/structure/girder/G = new (loc)
 				transfer_fingerprints_to(G)
@@ -34,7 +36,8 @@
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		user << "<span class='notice'>Now slicing apart the girder...</span>"
 		if(do_after(user,30))
-			if(!src) return
+			if(!src.loc)
+				return
 			user << "<span class='notice'>You slice apart the girder!</span>"
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
@@ -54,7 +57,8 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user << "<span class='notice'>Now unsecuring support struts...</span>"
 		if(do_after(user,40))
-			if(!src) return
+			if(!src.loc)
+				return
 			user << "<span class='notice'>You unsecured the support struts!</span>"
 			state = 1
 
@@ -62,7 +66,8 @@
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		user << "<span class='notice'>Now removing support struts...</span>"
 		if(do_after(user,40))
-			if(!src) return
+			if(!src.loc)
+				return
 			user << "<span class='notice'>You removed the support struts!</span>"
 			var/obj/structure/girder/G = new (loc)
 			transfer_fingerprints_to(G)
@@ -72,7 +77,8 @@
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		user << "<span class='notice'>Now dislodging the girder...</span>"
 		if(do_after(user, 40))
-			if(!src) return
+			if(!src.loc)
+				return
 			user << "<span class='notice'>You dislodged the girder!</span>"
 			var/obj/structure/girder/displaced/D = new (loc)
 			transfer_fingerprints_to(D)
@@ -129,7 +135,8 @@
 						if(S.amount < 1) return ..()
 						user << "<span class='notice'>Now finalising reinforced wall...</span>"
 						if(do_after(user, 50))
-							if(!src || !S || S.amount < 1) return
+							if(!src.loc || !S || S.amount < 1)
+								return
 							S.use(1)
 							user << "<span class='notice'>Wall fully reinforced!</span>"
 							var/turf/Tsrc = get_turf(src)
@@ -142,7 +149,8 @@
 						if(S.amount < 1) return ..()
 						user << "<span class='notice'>Now reinforcing girders...</span>"
 						if (do_after(user,60))
-							if(!src || !S || S.amount < 1) return
+							if(!src.loc || !S || S.amount < 1)
+								return
 							S.use(1)
 							user << "<span class='notice'>Girders reinforced!</span>"
 							var/obj/structure/girder/reinforced/R = new (loc)
@@ -166,7 +174,8 @@
 				if(S.amount < 2) return ..()
 				user << "<span class='notice'>Now adding plating...</span>"
 				if (do_after(user,40))
-					if(!src || !S || S.amount < 2) return
+					if(!src.loc || !S || S.amount < 2)
+						return
 					S.use(2)
 					user << "<span class='notice'>You added the plating!</span>"
 					var/turf/Tsrc = get_turf(src)
