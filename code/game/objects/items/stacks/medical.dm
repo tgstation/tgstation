@@ -90,7 +90,7 @@
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
-	desc = "A roll of elastic cloth that is extremely effective at stopping bleeding, but does not heal wounds."
+	desc = "A roll of elastic cloth with pins for securing that is extremely effective at stopping external blood loss, but does not heal wounds."
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
@@ -98,12 +98,13 @@
 	self_delay = 80
 
 /obj/item/stack/medical/gauze/improvised
-	name = "improvised gauze"
-	singular_name = "improvised gauze"
-	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
+	name = "strips of cloth"
+	singular_name = "strip of cloth"
+	icon_state = "igauze"
+	desc = "A roll of cloth roughly cut from something that can be used to stop bleeding."
 	stop_bleeding = 900
 
-/obj/item/stack/medical/gauze/cyborg/
+/obj/item/stack/medical/gauze/cyborg
 	m_amt = 0
 	is_cyborg = 1
 	cost = 250

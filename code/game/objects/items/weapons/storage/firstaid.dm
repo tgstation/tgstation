@@ -23,11 +23,11 @@
 /obj/item/weapon/storage/firstaid/regular/New()
 	..()
 	if(empty) return
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
 	new /obj/item/weapon/reagent_containers/pill/salicyclic(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
@@ -83,8 +83,6 @@
 	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
 	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
 	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 

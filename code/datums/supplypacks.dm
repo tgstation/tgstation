@@ -560,7 +560,6 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "First Aid Kits Crate"
 	contains = list(/obj/item/weapon/storage/firstaid/regular,
 					/obj/item/weapon/storage/firstaid/regular,
-					/obj/item/weapon/storage/firstaid/regular,
 					/obj/item/weapon/storage/firstaid/regular)
 	cost = 10
 	containername = "first aid kits crate"
