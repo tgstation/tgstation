@@ -654,37 +654,37 @@
 		do_colouration = 0
 
 	vox_quills_kingly
-		name = "Kingly"
+		name = "Vox Kingly"
 		icon_state = "vox_kingly"
 		species_allowed = list("Vox")
 		do_colouration = 0
 
 	vox_quills_afro
-		name = "Afro"
+		name = "Vox Afro"
 		icon_state = "vox_afro"
 		species_allowed = list("Vox")
 		do_colouration = 0
 
 	vox_quills_mohawk
-		name = "Mohawk"
+		name = "Vox Mohawk"
 		icon_state = "vox_mohawk"
 		species_allowed = list("Vox")
 		do_colouration = 0
 
 	vox_quills_yasu
-		name = "Yasuhiro"
+		name = "Vox Yasuhiro"
 		icon_state = "vox_yasu"
 		species_allowed = list("Vox")
 		do_colouration = 0
 
 	vox_quills_horns
-		name = "Quorns"
+		name = "Vox Quorns"
 		icon_state = "vox_horns"
 		species_allowed = list("Vox")
 		do_colouration = 0
 
 	vox_quills_nights
-		name = "Nights"
+		name = "Vox Nights"
 		icon_state = "vox_nights"
 		species_allowed = list("Vox")
 		do_colouration = 0
@@ -728,13 +728,13 @@
 		do_colouration = 0
 
 	vox_face_colonel
-		name = "Colonel"
+		name = "Vox Colonel"
 		icon_state = "vox_colonel"
 		species_allowed = list("Vox")
 		do_colouration = 0
 
 	vox_face_fu
-		name = "Fu"
+		name = "Quill Fu"
 		icon_state = "vox_fu"
 		species_allowed = list("Vox")
 		do_colouration = 0

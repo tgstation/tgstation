@@ -124,7 +124,7 @@
 			else
 				if (T.stat == 0)
 					U << "\red <b>Capture failed!</b>: \black Kill or maim the victim first!"
-				else
+				else if(T.isInCrit())
 					if(T.client == null)
 						U << "\red <b>Capture failed!</b>: \black The soul has already fled it's mortal frame."
 					else

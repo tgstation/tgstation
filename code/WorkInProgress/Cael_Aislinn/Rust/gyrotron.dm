@@ -28,7 +28,7 @@
 		//pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
 	Topic(href, href_list)
-		..()
+		if(..()) return 1
 		if( href_list["close"] )
 			usr << browse(null, "window=gyro_monitor")
 			usr.machine = null

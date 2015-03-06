@@ -101,7 +101,7 @@
 	max_w_class = 3
 	max_combined_w_class = 21
 	can_hold = list(
-		"/obj/item/weapon/grenade/flashbang",
+		"/obj/item/weapon/grenade",
 		"/obj/item/weapon/reagent_containers/spray/pepper",
 		"/obj/item/weapon/handcuffs",
 		"/obj/item/device/flash",
@@ -122,7 +122,8 @@
 		"/obj/item/taperoll/police",
 		"/obj/item/weapon/gun/energy/taser",
 		"/obj/item/weapon/legcuffs/bolas",
-		"/obj/item/device/hailer"
+		"/obj/item/device/hailer",
+		"obj/item/weapon/melee/telebaton"
 		)
 /obj/item/weapon/storage/belt/security/batmanbelt
 	name = "batbelt"

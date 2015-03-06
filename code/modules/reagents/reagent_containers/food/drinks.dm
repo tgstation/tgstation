@@ -1178,25 +1178,25 @@
 		update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/update_brightness(var/mob/user = null)
-	if(lit)
+	if(lit && molotov)
 		if(loc == user)
 			user.SetLuminosity(user.luminosity + brightness_lit)
 		else if(isturf(loc))
 			SetLuminosity(src.brightness_lit)
-	else
+	else if(molotov)
 		if(loc == user)
 			user.SetLuminosity(user.luminosity - brightness_lit)
 		else if(isturf(loc))
 			SetLuminosity(0)
 
 /obj/item/weapon/reagent_containers/food/drinks/pickup(mob/user)
-	if(lit)
+	if(lit && molotov)
 		user.SetLuminosity(user.luminosity + brightness_lit)
 		SetLuminosity(0)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/dropped(mob/user)
-	if(src)
+	if(src && lit && molotov)
 		user.SetLuminosity(user.luminosity - brightness_lit)
 		SetLuminosity(brightness_lit)
 

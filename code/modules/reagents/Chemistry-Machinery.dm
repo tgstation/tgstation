@@ -132,7 +132,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	if(stat & (BROKEN|NOPOWER)) return
 	if((user.stat && !isobserver(user)) || user.restrained()) return
 	if(!chemical_reagents_list || !chemical_reagents_list.len) return
-
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["amount"] = amount
@@ -162,13 +161,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(temp)
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
-
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 370, 605)
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 400, 610)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -1112,6 +1110,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/reagentgrinder/attack_hand(mob/user as mob)
 	user.set_machine(src)
 	interact(user)
+
+/obj/machinery/reagentgrinder/attack_robot(mob/user as mob)
+	return attack_hand(user)
 
 /obj/machinery/reagentgrinder/interact(mob/user as mob) // The microwave Menu
 	var/is_chamber_empty = 0

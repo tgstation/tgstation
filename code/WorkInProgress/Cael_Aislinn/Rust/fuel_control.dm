@@ -130,7 +130,7 @@
 	user.set_machine(src)
 
 /obj/machinery/computer/rust_fuel_control/Topic(href, href_list)
-	..()
+	if(..()) return 1
 
 	if( href_list["scan"] )
 		connected_injectors = list()

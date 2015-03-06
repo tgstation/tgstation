@@ -109,6 +109,27 @@
 	message_admins("\blue \bold DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR>", 1)
 	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_local_narrate()	// View targetted narration
+	set category = "Special Verbs"
+	set name = "Local Narrate"
+
+	if(!holder)
+		src << "Only administrators may use this command."
+		return
+
+	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
+
+	if( !msg )
+		return
+
+	for(var/mob/M in view())
+		if(M in player_list)
+			M << msg
+
+	log_admin("DirectNarrate: [key_name(usr)] at [formatJumpTo(get_turf(usr))]: [msg]")
+	message_admins("\blue \bold DirectNarrate: [key_name(usr)] at [formatJumpTo(get_turf(usr))]: [msg]<BR>", 1)
+	feedback_add_details("admin_verb","LIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/cmd_admin_godmode(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"

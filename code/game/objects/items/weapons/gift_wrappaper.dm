@@ -27,6 +27,10 @@
 	item_state = "gift-large"
 	w_class = 4.0
 
+/obj/item/weapon/gift/New(var/W)
+	..()
+	w_class = W
+
 /obj/item/weapon/gift/attack_self(mob/user as mob)
 	user.drop_item()
 	if(gift)
@@ -357,12 +361,9 @@
 	return
 */
 
-/obj/item/weapon/wrapping_paper/examine()
-	set src in oview(1)
-
+/obj/item/weapon/wrapping_paper/examine(mob/user)
 	..()
-	usr << "There is about [amount] square units of paper left!"
-	return
+	user << "There is about [amount] square units of paper left!"
 
 /obj/item/weapon/wrapping_paper/attack(mob/target as mob, mob/user as mob)
 	if (!istype(target, /mob/living/carbon/human)) return
@@ -427,11 +428,11 @@
 
 		switch(i)
 			if(0 to 2)
-				G = new /obj/item/weapon/gift/small(get_turf(O.loc))
+				G = new /obj/item/weapon/gift/small(get_turf(O.loc),i)
 			if(3)
-				G = new /obj/item/weapon/gift(get_turf(O.loc))
+				G = new /obj/item/weapon/gift(get_turf(O.loc),i)
 			else
-				G = new /obj/item/weapon/gift/large(get_turf(O.loc))
+				G = new /obj/item/weapon/gift/large(get_turf(O.loc),i)
 
 		if(!istype(O.loc, /turf))
 			if(user.client)

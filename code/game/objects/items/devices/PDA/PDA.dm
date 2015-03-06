@@ -1563,30 +1563,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		switch(scanmode)
 
 			if(1)
-
-				for (var/mob/O in viewers(C, null))
-					O.show_message("\red [user] has analyzed [C]'s vitals!", 1)
-
-				user.show_message("\blue Analyzing Results for [C]:")
-				user.show_message("\blue \t Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]", 1)
-				user.show_message("\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
-				user.show_message("\blue \t Key: Suffocation/Toxin/Burns/Brute", 1)
-				user.show_message("\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
-				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					user.show_message("\blue \t Time of Death: [C.tod]")
-				if(istype(C, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = C
-					var/list/damaged = H.get_damaged_organs(1,1)
-					user.show_message("\blue Localized Damage, Brute/Burn:",1)
-					if(length(damaged)>0)
-						for(var/datum/organ/external/org in damaged)
-							user.show_message(text("\blue \t []: []\blue-[]",capitalize(org.display_name),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
-					else
-						user.show_message("\blue \t Limbs are OK.",1)
-
-				for(var/datum/disease/D in C.viruses)
-					if(!D.hidden[SCANNER])
-						user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
+				healthanalyze(C,user,0)
 
 			if(2)
 				if (!istype(C:dna, /datum/dna))

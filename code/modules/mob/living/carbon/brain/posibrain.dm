@@ -118,7 +118,6 @@
 
 /obj/item/device/mmi/posibrain/examine(mob/user)
 	user << "<span class='info'>*---------</span>*"
-	..()
 	if(src.brainmob)
 		if(src.brainmob.stat == DEAD)
 			user << "<span class='deadsay'>It appears to be completely inactive.</span>" //suicided
