@@ -58,7 +58,7 @@ datum/reagent/toxin/plasma
 	id = "plasma"
 	description = "Plasma in its liquid form."
 	color = "#500064" // rgb: 80, 0, 100
-	toxpwr = 1
+	toxpwr = 2
 
 datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)
 	if(holder.has_reagent("epinephrine"))
