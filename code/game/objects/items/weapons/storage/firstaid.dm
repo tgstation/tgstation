@@ -18,7 +18,7 @@
 
 /obj/item/weapon/storage/firstaid/regular
 	icon_state = "firstaid"
-	desc = "A general medical kit that contains medical supplies for both brute damage and burn damage. Also contains an epinephrine syringe for emergency use and a health analyzer."
+	desc = "A general medical kit that contains medical patches for both brute damage and burn damage. Also contains an epinephrine syringe for emergency use and a health analyzer."
 
 /obj/item/weapon/storage/firstaid/regular/New()
 	..()
