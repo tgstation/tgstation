@@ -58,27 +58,12 @@ datum/reagent/toxin/plasma
 	id = "plasma"
 	description = "Plasma in its liquid form."
 	color = "#500064" // rgb: 80, 0, 100
-	toxpwr = 3
+	toxpwr = 1
 
 datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)
 	if(holder.has_reagent("epinephrine"))
 		holder.remove_reagent("epinephrine", 2*REM)
 	..()
-	return
-
-datum/reagent/toxin/plasma/reaction_obj(var/obj/O, var/volume)
-	src = null
-	/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
-		var/obj/item/weapon/reagent_containers/food/snacks/egg/slime/egg = O
-		if (egg.grown)
-			egg.Hatch()*/
-	if((!O) || (!volume))	return 0
-	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
-
-datum/reagent/toxin/plasma/reaction_turf(var/turf/simulated/T, var/volume)
-	src = null
-	if(istype(T))
-		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
 	return
 
 datum/reagent/toxin/plasma/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with plasma is stronger than fuel!
