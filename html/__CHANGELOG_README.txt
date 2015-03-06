@@ -10,7 +10,7 @@ TO MAKE A CHANGELOG .YML ENTRRY
 
 3. Remove the hash (#) before 'delete-after: True' (this will ensure that this file is delted once your changelog entry is merged with the master changelog)
 
-4. Replace the changes text with a description of the changes in your PR, keep either single or double quotes to avoid errors (your changelog can be written ICly or OOCly, it doesn't matter)
+4. Replace the changes text with a description of the changes in your PR, keep the double quotes to avoid errors (your changelog can be written ICly or OOCly, it doesn't matter)
 
 5. (Optional) set the change prefix (rscadd) to a different one listed above in example.yml (this affects what icon is used for your changelog entry)
 
