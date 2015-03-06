@@ -12,13 +12,6 @@ datum/reagent/oil
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/stable_plasma
-	name = "Stable Plasma"
-	id = "stable_plasma"
-	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
-	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
-
 datum/reagent/iodine
 	name = "Iodine"
 	id = "iodine"
@@ -124,7 +117,7 @@ datum/reagent/colorful_reagent
 	name = "colorful_reagent"
 	id = "colorful_reagent"
 	result = "colorful_reagent"
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
+	required_reagents = list("plasma" = 1, "radium" = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
 	result_amount = 5
 
 datum/reagent/colorful_reagent/on_mob_life(var/mob/living/M as mob)

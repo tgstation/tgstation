@@ -775,7 +775,7 @@ datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	name = "Cryoxadone"
 	id = "cryoxadone"
 	result = "cryoxadone"
-	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
+	required_reagents = list("plasma" = 1, "acetone" = 1, "mutagen" = 1)
 	result_amount = 3
 
 /datum/reagent/stimulants

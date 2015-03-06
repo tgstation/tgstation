@@ -312,19 +312,6 @@ silicate
 	required_reagents = list("sodiumchloride" = 1, "ethanol" = 1, "radium" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/plasmasolidification
-	name = "Solid Plasma"
-	id = "solidplasma"
-	result = null
-	required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
-	result_amount = 1
-	mob_react = 1
-
-/datum/chemical_reaction/plasmasolidification/on_reaction(var/datum/reagents/holder, var/created_volume)
-	var/location = get_turf(holder.my_atom)
-	new /obj/item/stack/sheet/mineral/plasma(location)
-	return
-
 /datum/chemical_reaction/capsaicincondensation
 	name = "Capsaicincondensation"
 	id = "capsaicincondensation"

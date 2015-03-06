@@ -100,7 +100,7 @@
 	name = "Liquid Dark Matter"
 	id = "liquid_dark_matter"
 	result = "liquid_dark_matter"
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "carbon" = 1)
+	required_reagents = list("plasma" = 1, "radium" = 1, "carbon" = 1)
 	result_amount = null
 	required_temp = 474
 
