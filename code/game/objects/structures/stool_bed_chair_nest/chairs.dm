@@ -9,7 +9,7 @@
 /obj/structure/stool/bed/chair/New()
 	..()
 	spawn(3)	//sorry. i don't think there's a better way to do this.
-		handle_rotation()
+		handle_layer()
 	return
 
 /obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -28,22 +28,28 @@
 		SK.master = E
 		del(src)
 
-/obj/structure/stool/bed/chair/proc/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
-	if(src.dir == NORTH)
+/obj/structure/stool/bed/chair/proc/handle_rotation(direction) //making this into a seperate proc so office chairs can call it on Move()
+	if(buckled_mob)
+		buckled_mob.buckled = null //Temporary, so Move() succeeds.
+		if(!buckled_mob.Move(direction))
+			buckled_mob.buckled = src
+			dir = buckled_mob.dir
+			return 0
+		buckled_mob.buckled = src //Restoring
+	return 1
+
+
+/obj/structure/stool/bed/chair/proc/handle_layer()
+	if(dir == NORTH)
 		src.layer = FLY_LAYER
 	else
 		src.layer = OBJ_LAYER
 
+/obj/structure/stool/bed/chair/proc/spin()
+	src.dir = turn(src.dir, 90)
+	handle_layer()
 	if(buckled_mob)
-		if(buckled_mob.loc != src.loc)
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			if(!buckled_mob.Move(loc))
-				unbuckle()
-				buckled_mob = null
-			else
-				buckled_mob.buckled = src //Restoring
-		if(buckled_mob)
-			buckled_mob.dir = dir
+		buckled_mob.dir = dir
 
 /obj/structure/stool/bed/chair/verb/rotate()
 	set name = "Rotate Chair"
@@ -57,8 +63,7 @@
 		if(usr.stat || usr.restrained())
 			return
 
-	src.dir = turn(src.dir, 90)
-	handle_rotation()
+	spin()
 	return
 
 
@@ -155,9 +160,10 @@
 /obj/structure/stool/bed/chair/comfy/lime
 	icon_state = "comfychair_lime"
 
-/obj/structure/stool/bed/chair/office/Move()
-	..()
-	handle_rotation()
+/obj/structure/stool/bed/chair/office/Move(direction)
+	if(handle_rotation(direction))
+		..()
+	handle_layer()
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"
