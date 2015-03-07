@@ -217,8 +217,8 @@ var/global/list/floorbot_targets=list()
 		return
 
 	if(prob(1))
-			var/message = pick("Metal to the metal.","I am the only engineering staff on this station.","Law 1. Place tiles.","Tiles, tiles, tiles...")
-			src.speak(message)
+		var/message = pick("Metal to the metal.","I am the only engineering staff on this station.","Law 1. Place tiles.","Tiles, tiles, tiles...")
+		src.speak(message)
 
 	switch(mode)
 		if(FLOORBOT_IDLE)		// idle
