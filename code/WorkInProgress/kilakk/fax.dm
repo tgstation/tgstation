@@ -110,7 +110,7 @@ var/list/alldepartments = list("Central Command")
 							new /obj/item/demote_chip(src.loc)
 						if(findtext(tofax.name,"Commendation"))
 							new /obj/item/mounted/poster(src.loc,-1)
-				sendcooldown = 1800
+				sendcooldown = 900
 
 			else
 				SendFax(tofax.info, tofax.name, usr, dpt)
@@ -191,6 +191,7 @@ var/list/alldepartments = list("Central Command")
 
 	var/msg = "\blue <b><font color='orange'>CENTCOMM FAX: </font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<a href='?_src_=holder;CentcommFaxReply=\ref[Sender]'>RPLY</a>)</b>: Receiving '[sentname]' via secure connection ... <a href='?_src_=holder;CentcommFaxView=\ref[sent]'>view message</a>"
 	admins << msg
+	admins << 'sound/effects/fax.ogg'
 
 proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt)
 

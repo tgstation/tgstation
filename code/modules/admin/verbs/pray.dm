@@ -23,6 +23,7 @@
 	for(var/client/C in admins)
 		if(C.prefs.toggles & CHAT_PRAYER)
 			C << msg
+			C << 'sound/effects/prayer.ogg'
 
 	if(!stat)
 		usr.whisper(orig_message)
