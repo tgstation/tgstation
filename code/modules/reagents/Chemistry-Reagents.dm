@@ -3666,7 +3666,7 @@
 			if (!L)
 				H.adjustToxLoss(5)
 			else if(istype(L))
-				L.take_damage(0.05, 1)
+				L.take_damage(0.05, 0.5)
 			H.adjustToxLoss(0.1)
 	if(!holder)
 		holder = M.reagents
