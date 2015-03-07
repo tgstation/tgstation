@@ -1253,3 +1253,37 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Strange and Bright stack of packs"
 	group = "Vending Machine packs"
 	hidden = 1
+
+
+/datum/supply_packs/bloodbags
+	name = "Bloodbag Crate"
+	contains = list(/obj/item/weapon/reagent_containers/blood/APlus,
+					/obj/item/weapon/reagent_containers/blood/AMinus,
+					/obj/item/weapon/reagent_containers/blood/BPlus,
+					/obj/item/weapon/reagent_containers/blood/BMinus,
+					/obj/item/weapon/reagent_containers/blood/OPlus,
+					/obj/item/weapon/reagent_containers/blood/OMinus,
+					/obj/item/weapon/reagent_containers/blood/empty)
+	cost = 10
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Bloodbag Crate"
+	access = access_medical
+	group = "Medical"
+
+/datum/supply_packs/carpet
+	name = "30 Carpet Tiles"
+	contains = list(/obj/item/stack/tile/carpet)
+	amount = 30
+	cost = 15
+	containertype = /obj/structure/closet/crate
+	containername = "Carpet Crate"
+	group = "Supplies"
+
+/datum/supply_packs/grass
+	name = "30 Grass Tiles"
+	contains = list(/obj/item/stack/tile/grass)
+	amount = 30
+	cost = 15
+	containertype = /obj/structure/closet/crate
+	containername = "Grass Crate"
+	group = "Supplies"
