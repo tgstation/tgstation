@@ -1,0 +1,10 @@
+
+# Your name.  
+author: Mandurrrh
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+
+changes: 
+  - bugfix: "Light up floor tile icon state was changing with merge so altered the code to fit the updated states"
