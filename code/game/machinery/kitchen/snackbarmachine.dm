@@ -11,7 +11,7 @@
 	var/opened = 0
 	var/useramount = 30 // Last used amount
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 	l_color = "#7BF9FF"
 	power_change()
