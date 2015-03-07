@@ -1,0 +1,10 @@
+
+# Your name.  
+author: Mandurrrh
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+
+changes: 
+  -bugfix: "Name of light floor tiles got changed this fixes their names to work with all colors"
