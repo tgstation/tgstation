@@ -11,6 +11,7 @@
  *		Candle Box
  *		Crayon Box
  *		Cigarette Box
+ *		Cigar Case
  */
 
 /obj/item/weapon/storage/fancy/
@@ -273,3 +274,45 @@
 	..()
 	for(var/i = 1 to storage_slots)
 		new /obj/item/weapon/rollingpaper(src)
+
+/////////////
+//CIGAR BOX//
+/////////////
+
+/obj/item/weapon/storage/fancy/cigars
+	name = "\improper premium cigar case"
+	desc = "A case of premium cigars. Very expensive."
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "cigarcasep"
+	item_state = "cigarcasep"
+	w_class = 3
+	throwforce = 0
+	slot_flags = SLOT_BELT
+	storage_slots = 7
+	can_hold = list(/obj/item/clothing/mask/cigarette/cigar)
+	icon_type = "cigar"
+	var/cigar_type = /obj/item/clothing/mask/cigarette/cigar
+
+/obj/item/weapon/storage/fancy/cigars/New()
+	..()
+	flags |= NOREACT
+	for(var/i = 1 to storage_slots)
+		new cigar_type(src)
+
+/obj/item/weapon/storage/fancy/cigars/update_icon()
+	icon_state = "[initial(icon_state)][contents.len]"
+	return
+
+/obj/item/weapon/storage/fancy/cigars/cohiba
+	name = "\improper cohiba robusto cigar case"
+	desc = "A case of imported Cohiba cigars, renowned for their strong flavor."
+	icon_state = "cigarcase"
+	item_state = "cigarcase"
+	cigar_type = /obj/item/clothing/mask/cigarette/cigar/cohiba
+
+/obj/item/weapon/storage/fancy/cigars/havana
+	name = "\improper premium havanian cigar case"
+	desc = "A case of classy Havanian cigars."
+	icon_state = "cigarcase"
+	item_state = "cigarcase"
+	cigar_type = /obj/item/clothing/mask/cigarette/cigar/havana

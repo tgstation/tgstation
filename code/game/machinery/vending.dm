@@ -744,7 +744,8 @@
 					/obj/item/weapon/lighter/grayscale = 4,
 					/obj/item/weapon/storage/fancy/rollingpapers = 5)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
-	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2, /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold = 1)
+	premium = list(/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold = 2, \
+	/obj/item/weapon/storage/fancy/cigars = 1, /obj/item/weapon/storage/fancy/cigars/havana = 1, /obj/item/weapon/storage/fancy/cigars/cohiba = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
 
