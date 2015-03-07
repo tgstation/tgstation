@@ -1,0 +1,11 @@
+author: pudl
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added red and blue office chairs to decorate security and medbay with, respectively."
+  - rscadd: "Added multi-tile couches, ported from Urist McStation."
+  - rscadd: "Added a chair painter item, used to paint chairs any color on the RGB spectrum."
+  - rscadd: "Several potted plants scattered around the station for cosmetics."
+  - rscdel: "A lot of floating catwalks axed or replaced with much more appealing plating."
+  - rscdel: "Strangely re-designed admin ferry redesigned to be more congruous with the old design."
