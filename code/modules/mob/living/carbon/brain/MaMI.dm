@@ -18,6 +18,7 @@
 		brainmob = posibrain.brainmob
 		brainmob.loc = src
 		brainmob.container = src
+		container = src //This stops the MaMI itself from decaying
 
 		src.brainmob << "<b><font color='red' size=3>Recall your positronic directives!</font></b>"
 		src.brainmob << "<b>You are \a [posibrain], brought into existence on [station_name()].</b>"
