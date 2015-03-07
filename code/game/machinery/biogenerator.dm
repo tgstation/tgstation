@@ -70,7 +70,7 @@
 /datum/biogen_recipe/nutrient/beez
 	cost=40
 	id="beez"
-	name="BeezEez Bottle"
+	name="Bottle of BeezEez"
 	other_amounts=list(5)
 	result=/obj/item/beezeez
 
@@ -110,7 +110,7 @@
 /datum/biogen_recipe/leather/ore
 	cost=350
 	id="ore"
-	name="Ore Satchel"
+	name="Mining Satchel"
 	result=/obj/item/weapon/storage/bag/ore
 
 /datum/biogen_recipe/leather/satchel
