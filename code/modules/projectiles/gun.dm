@@ -204,9 +204,8 @@
 			return
 		process_chamber()
 		update_icon()
-		semicd = 1
-		spawn(fire_delay)
-			semicd = 0
+		sleep(fire_delay)
+
 
 	if(user.hand)
 		user.update_inv_l_hand(0)
