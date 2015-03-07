@@ -252,13 +252,14 @@
 
 /obj/item/weapon/gun/projectile/automatic/gatling
 	name = "syndicate minigun"
-	desc = "More dakka is always the answer. Fires a massive stream of fairly weak bullets."
+	desc = "More dakka is always the answer. A bulky weapon that fires many weak bullets. Has serious kickback, use both hands."
 	icon_state = "minigun"
+	item_state = "minigun"
 	w_class = 6
 	suppressed = 1    //creates its own problems I guess, but it's infinitely preferable to twenty "YOU FIRE THE GATLING GUN"
-	can_suppress = 0 // gun is pre-supressed. What a stealthy gatling gun it is..
+	can_suppress = 0 // gun is pre-supressed. What a stealthy gatling gun it is.
 	mag_type = /obj/item/ammo_box/magazine/internal/gatling
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/grenadelaunch.ogg' //if anyone can make the proper minigun sound that would be swell. This works.
 	burst_size = 20
 	fire_delay = 1
 	var/active = 0
@@ -318,4 +319,5 @@
 		visible_message("<span class='warning'>The minigun stutters to a halt as it falls!</span>")
 	active = 0
 	select = 0
+	update_icon(src)
 	return
