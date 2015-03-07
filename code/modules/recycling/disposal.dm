@@ -204,10 +204,12 @@
 	return
 
 
-// monkeys can only pull the flush lever
+// monkeys and xenos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user as mob)
-	if(!user.canUseTopic(src))
+	if(stat & BROKEN)
 		return
+	flush = !flush
+	update()
 
 // ai as human but can't flush
 /obj/machinery/disposal/attack_ai(mob/user as mob)
