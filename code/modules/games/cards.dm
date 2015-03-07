@@ -64,6 +64,7 @@
 	else return ..()
 
 /obj/item/weapon/deck/attack_self(var/mob/user as mob)
+	user.delayNextAttack(10)
 	var/list/newcards           = list()
 	var/datum/playingcard/card
 
