@@ -45,29 +45,32 @@
 
 /datum/biogen_recipe/nutrient/ez
 	id="ez"
-	cost=10
 	name="E-Z-Nutrient"
+	reagent="eznutrient"
+	cost=10
+	amount_per_unit=10
 	other_amounts=list(5)
-	result=/obj/item/weapon/reagent_containers/glass/fertilizer/ez
 
 /datum/biogen_recipe/nutrient/l4z
 	id="l4z"
-	cost=20
 	name="Left 4 Zed"
+	reagent="left4zed"
+	cost=20
+	amount_per_unit=10
 	other_amounts=list(5)
-	result=/obj/item/weapon/reagent_containers/glass/fertilizer/l4z
 
 /datum/biogen_recipe/nutrient/rh
 	id="rh"
-	cost=25
 	name="Robust Harvest"
+	reagent="robustharvest"
+	cost=25
+	amount_per_unit=10
 	other_amounts=list(5)
-	result=/obj/item/weapon/reagent_containers/glass/fertilizer/rh
 
 /datum/biogen_recipe/nutrient/beez
 	cost=40
 	id="beez"
-	name="BeezEez"
+	name="BeezEez Bottle"
 	other_amounts=list(5)
 	result=/obj/item/beezeez
 
@@ -97,6 +100,18 @@
 	id="plants"
 	name="Plant Bag"
 	result=/obj/item/weapon/storage/bag/plants
+
+/datum/biogen_recipe/leather/gadget
+	cost=350
+	id="gadget"
+	name="Gadget Bag"
+	result=/obj/item/weapon/storage/bag/gadgets
+
+/datum/biogen_recipe/leather/ore
+	cost=350
+	id="ore"
+	name="Ore Satchel"
+	result=/obj/item/weapon/storage/bag/ore
 
 /datum/biogen_recipe/leather/satchel
 	cost=400
