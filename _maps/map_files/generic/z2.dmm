@@ -112,7 +112,7 @@
 "ch" = (/obj/machinery/door/poddoor{id = "thunderdomehea"; name = "Heavy Supply"},/turf/unsimulated/floor{icon_state = "dark"},/area/tdome/arena_source)
 "ci" = (/obj/structure/rack,/obj/item/clothing/under/color/red,/obj/item/clothing/shoes/sneakers/brown,/obj/item/clothing/suit/armor/vest,/obj/item/clothing/head/helmet/swat,/obj/item/weapon/gun/energy/laser,/turf/unsimulated/floor{icon_state = "dark"},/area/tdome/arena_source)
 "cj" = (/obj/structure/rack,/obj/item/clothing/under/color/green,/obj/item/clothing/shoes/sneakers/brown,/obj/item/clothing/suit/armor/vest,/obj/item/clothing/head/helmet/swat,/obj/item/weapon/gun/energy/laser,/turf/unsimulated/floor{icon_state = "dark"},/area/tdome/arena_source)
-"ck" = (/obj/docking_port/stationary/transit{dir = 8; dwidth = 2; height = 12; id = "ferry_transit"; width = 5},/turf/space/transit/horizontal,/area/space)
+"ck" = (/obj/docking_port/stationary/transit{dir = 8; dwidth = 2; height = 11; id = "ferry_transit"; width = 5},/turf/space/transit/horizontal,/area/space)
 "cl" = (/obj/docking_port/stationary/transit{dheight = 9; dir = 2; dwidth = 5; height = 22; id = "syndicate_transit"; width = 18},/turf/space/transit,/area/space)
 "cm" = (/obj/docking_port/stationary/transit{dwidth = 1; height = 4; id = "pod1_transit"; width = 3},/turf/space/transit,/area/space)
 "cn" = (/obj/docking_port/stationary/transit{dwidth = 1; height = 4; id = "pod2_transit"; width = 3},/turf/space/transit,/area/space)
