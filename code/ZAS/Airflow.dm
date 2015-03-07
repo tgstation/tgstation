@@ -259,12 +259,12 @@ proc/AirflowSpace(zone/A)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes:magpulse)
 						return
-		src << "\red You are sucked away by airflow!"
+		src << "<SPAN CLASS='warning'>You are sucked away by airflow!</SPAN>"
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
 		return
-	airflow_speed = min(max(n * (9/airflow_falloff),1),9)
+	airflow_speed = Clamp(n * (9 / airflow_falloff), 1, 9)
 	var
 		xo = airflow_dest.x - src.x
 		yo = airflow_dest.y - src.y
@@ -318,13 +318,13 @@ proc/AirflowSpace(zone/A)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes.flags & NOSLIP)
 						return
-		src << "\red You are pushed away by airflow!"
+		src << "<SPAN CLASS='warning'>You are pushed away by airflow!</SPAN>"
 		last_airflow = world.time
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
 		return
-	airflow_speed = min(max(n * (9/airflow_falloff),1),9)
+	airflow_speed = Clamp(n * (9 / airflow_falloff), 1, 9)
 	var
 		xo = -(airflow_dest.x - src.x)
 		yo = -(airflow_dest.y - src.y)
@@ -346,7 +346,7 @@ proc/AirflowSpace(zone/A)
 				airflow_dest = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 			if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 				return
-			if(!istype(loc, /turf))
+			if (!isturf(loc))
 				return
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client)
