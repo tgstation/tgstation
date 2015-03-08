@@ -1,0 +1,6 @@
+author: pudl
+
+delete-after: True
+
+changes:
+  - imageadd: "Updated the sprite for Fire extinguishers."

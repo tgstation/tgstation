@@ -1,0 +1,9 @@
+author: Ikarrus
+
+delete-after: True
+
+changes:
+  - wip: "Gang mode has been reworked to functionality without some of it's features."
+  - rscdel: "Gang membership visibility, conversion pens and weapons are removed until fixed."
+  - rscadd: "Gang bosses have been given uplinks to use in the meantime."
+  - tweak: "Chance of deconversion from repeated head trauma has been increased."
