@@ -425,7 +425,9 @@
 	var/area/A = get_area_master(mob)
 	if(A)
 		A.Entered(mob)
-	loc.Entered(mob)
+	if(isturf(loc))
+		var/turf/T = mob.loc
+		T.Entered(mob)
 	return 1
 
 
