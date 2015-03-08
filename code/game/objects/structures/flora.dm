@@ -79,7 +79,7 @@
 	icon = 'icons/obj/plants.dmi'
 	icon_state = "plant-26"
 	layer = FLY_LAYER
-	var/full = null
+	var/obj/item/full = null
 
 /obj/structure/flora/pottedplant/attackby(var/obj/item/I, var/mob/user)
 	if(!I)
@@ -92,13 +92,11 @@
 	else
 		full = I
 		full.loc = src
-		user << "You stuff \the [full] into the [src]."
-		user.visible_message("<span class='notice'>[user] stuffs something into the pot.</span>")
+		user.visible_message("<span class='notice'>[user] stuffs something into the pot.</span>","You stuff \the [full] into the [src].")
 
 /obj/structure/flora/pottedplant/attack_hand(mob/user)
 	if(full)
-		user << "You retrieve the [full] from the [src]."
-		user.visible_message("<span class='notice'>[user] retrieves something from the pot.</span>")
+		user.visible_message("<span class='notice'>[user] retrieves something from the pot.</span>","You retrieve the [full] from the [src].")
 		full.loc = src.loc
 		full = null
 	else
