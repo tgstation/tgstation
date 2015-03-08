@@ -136,13 +136,13 @@ datum/reagent/consumable/milk/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/consumable/soymilk
+datum/reagent/consumable/milk/soy
 	name = "Soy Milk"
 	id = "soymilk"
 	description = "An opaque white liquid made from soybeans."
 	color = "#DFDFC7" // rgb: 223, 223, 199
 
-datum/reagent/consumable/soymilk/on_mob_life(var/mob/living/M as mob)
+datum/reagent/consumable/milk/soy/on_mob_life(var/mob/living/M as mob)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_organ_damage(1,0)
 	..()
