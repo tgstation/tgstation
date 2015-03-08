@@ -317,7 +317,7 @@ datum/reagent/toxin/mutetoxin //the new zombie powder.
 	toxpwr = 0
 
 datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
-	M.silent = max(M.silent, 2)
+	M.silent = max(M.silent, 3)
 	..()
 
 datum/reagent/toxin/staminatoxin
