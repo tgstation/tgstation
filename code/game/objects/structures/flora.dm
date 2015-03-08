@@ -78,7 +78,31 @@
 	desc = "Oh, no. Not again"
 	icon = 'icons/obj/plants.dmi'
 	icon_state = "plant-26"
+	layer = FLY_LAYER
+	var/full = null
 
+/obj/structure/flora/pottedplant/attackby(var/obj/item/I, var/mob/user)
+	if(!I)
+		return
+	if(I.w_class>2.0)
+		user << "That item is too big."
+		return
+	if(full)
+		user << "There is already something in the pot."
+	else
+		full = I
+		full.loc = src
+		user << "You stuff \the [full] into the [src]."
+		user.visible_message("<span class='notice'>[user] stuffs something into the pot.</span>")
+
+/obj/structure/flora/pottedplant/attack_hand(mob/user)
+	if(full)
+		user << "You retrieve the [full] from the [src]."
+		user.visible_message("<span class='notice'>[user] retrieves something from the pot.</span>")
+		full.loc = src.loc
+		full = null
+	else
+		user << "You root around in the roots."
 
 // /vg/
 /obj/structure/flora/pottedplant/random/New()
