@@ -134,7 +134,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "comptank"
 	amount_per_transfer_from_this = 30
-	var/list/validCompostTypepaths = list(/obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom)
+	var/list/validCompostTypepaths = list(/obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds)
 
 /obj/structure/reagent_dispensers/compostbin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	var/load = 1
@@ -161,23 +161,16 @@
 /obj/structure/reagent_dispensers/compostbin/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if(is_type_in_list(O, validCompostTypepaths))
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing items into [src]!</span>")
-		var/staystill = get_turf(user)
-		for(var/obj/item/P in staystill)
-			sleep(3)
+		var/turf/itemTurf = get_turf(O)
+		for(var/obj/item/P in itemTurf)
 			playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1)
-			if(src.reagents.total_volume >= reagents.maximum_volume)
+			if(reagents.total_volume >= reagents.maximum_volume)
 				user << "<span class='danger'>[src] is full!</span>"
 				break
-			if(get_turf(user) != staystill)
+			if(!do_after(user,3, 1, 0))
 				break
-			var/addAmt = 0
-			if(istype(P,/obj/item/seeds))
-				addAmt = 2
-			else
-				var/obj/item/weapon/reagent_containers/food/snacks/grown/G = P
-				addAmt = G.compost_value
-			if(addAmt)
-				reagents.add_reagent("compost",addAmt)
+			if(P.compost_value > 0)
+				reagents.add_reagent("compost",P.compost_value)
 			qdel(P)
 		user << "<span class='notice'>You finish stuffing items into [src]!</span>"
 	else ..()

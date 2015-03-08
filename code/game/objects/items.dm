@@ -52,6 +52,8 @@
 	var/embedded_fall_chance = EMBEDDED_ITEM_FALLOUT
 	var/embedded_pain_chance = EMBEDDED_PAIN_CHANCE
 
+	var/compost_value = 0
+
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
 		/obj/structure/rack,

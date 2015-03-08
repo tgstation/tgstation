@@ -610,7 +610,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		// Compost bag
-		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/condiment/compost/))
+		if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/compost/))
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
 		// anchored == 2 means the hoses are screwed in place
