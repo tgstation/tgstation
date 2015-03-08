@@ -173,4 +173,4 @@
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/slimecake
 	name = "Slime cake slice"
 	icon_state = "slimecake_slice"
-	filling_color = "#FA8072"
+	filling_color = "#00FFFF"
