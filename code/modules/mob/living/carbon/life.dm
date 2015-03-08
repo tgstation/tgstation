@@ -561,10 +561,11 @@
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
+		if(!locate(SEE_TURFS|SEE_MOBS|SEE_OBJS,permanent_sight_flags))
+			sight &= ~SEE_TURFS
+			sight &= ~SEE_MOBS
+			sight &= ~SEE_OBJS
+			see_in_dark = 2
 		see_invisible = SEE_INVISIBLE_LIVING
 		if(see_override)
 			see_invisible = see_override

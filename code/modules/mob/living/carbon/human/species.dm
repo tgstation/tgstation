@@ -510,10 +510,11 @@
 		H.see_in_dark = 8
 		if(!H.druggy)		H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
-		H.sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		if(!locate(SEE_TURFS|SEE_MOBS|SEE_OBJS,H.permanent_sight_flags))
+			H.sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+			H.see_in_dark = darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
-		H.see_in_dark = darksight
 
 		if(H.seer)
 			H.see_invisible = SEE_INVISIBLE_OBSERVER
