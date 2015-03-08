@@ -619,6 +619,7 @@
 	name = "mimana"
 	desc = "It's an excellent prop for a mime."
 	icon_state = "mimana"
+	trash = /obj/item/weapon/grown/bananapeel/mimanapeel
 	filling_color = "#FFFFEE"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mimana/add_juice()

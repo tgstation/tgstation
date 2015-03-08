@@ -293,6 +293,45 @@ datum/reagent/toxin/beer2/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
+datum/reagent/toxin/coffeepowder
+	name = "Coffee Grounds"
+	id = "coffeepowder"
+	description = "Finely ground coffee beans, used to make coffee."
+	reagent_state = SOLID
+	color = "#5B2E0D" // rgb: 91, 46, 13
+	toxpwr = 0.5
+
+datum/reagent/toxin/teapowder
+	name = "Ground Tea Leaves"
+	id = "teapowder"
+	description = "Finely shredded tea leaves, used for making tea."
+	reagent_state = SOLID
+	color = "#7F8400" // rgb: 127, 132, 0
+	toxpwr = 0.5
+
+datum/reagent/toxin/mutetoxin //the new zombie powder.
+	name = "Mute Toxin"
+	id = "mutetoxin"
+	description = "A toxin that temporarily paralyzes the vocal cords."
+	color = "#F0F8FF" // rgb: 240, 248, 255
+	toxpwr = 0
+
+datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
+	M.silent = max(M.silent, 2)
+	..()
+
+datum/reagent/toxin/staminatoxin
+	name = "Tirizene"
+	id = "tirizene"
+	description = "A toxin that affects the stamina of a person when injected into the bloodstream."
+	color = "#6E2828"
+	data = 13
+	toxpwr = 0
+
+datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(REM * data)
+	data = max(data - 1, 3)
+	..()
 
 
 //ACID
@@ -328,47 +367,6 @@ datum/reagent/toxin/acid/fluacid
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
 	acidpwr = 20
-
-datum/reagent/toxin/coffeepowder
-	name = "Coffee Grounds"
-	id = "coffeepowder"
-	description = "Finely ground coffee beans, used to make coffee."
-	reagent_state = SOLID
-	color = "#5B2E0D" // rgb: 91, 46, 13
-	toxpwr = 0.5
-
-datum/reagent/toxin/teapowder
-	name = "Ground Tea Leaves"
-	id = "teapowder"
-	description = "Finely shredded tea leaves, used for making tea."
-	reagent_state = SOLID
-	color = "#7F8400" // rgb: 127, 132, 0
-	toxpwr = 0.5
-
-datum/reagent/toxin/mutetoxin //the new zombie powder.
-	name = "Mute Toxin"
-	id = "mutetoxin"
-	description = "A toxin that temporarily paralyzes the vocal cords."
-	color = "#F0F8FF" // rgb: 240, 248, 255
-	toxpwr = 0
-
-datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
-	M.silent += REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
-	..()
-
-datum/reagent/toxin/staminatoxin
-	name = "Tirizene"
-	id = "tirizene"
-	description = "A toxin that affects the stamina of a person when injected into the bloodstream."
-	color = "#6E2828"
-	data = 13
-	toxpwr = 0
-
-datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(REM * data)
-	data = max(data - 1, 3)
-	..()
-
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM
