@@ -136,48 +136,51 @@
 	amount_per_transfer_from_this = 30
 	var/list/validCompostTypepaths = list(/obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom)
 
-	/obj/structure/reagent_dispensers/compostbin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-		var/load = 1
-		if(is_type_in_list(O, validCompostTypepaths))
-			var/addAmt = 0
-				if(istype(P,/obj/item/seeds))
-					addAmt = 2
-				else
-					addAmt = P.compost_value
+/obj/structure/reagent_dispensers/compostbin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	var/load = 1
+	var/addAmt = 0
+	if(is_type_in_list(W, validCompostTypepaths))
+		if(istype(W,/obj/item/seeds))
+			addAmt = 2
 		else
-			load = 0
+			var/obj/item/reagent_containers/food/snacks/grown/G = W
+			addAmt = G.compost_value
+	else
+		load = 0
 
-		if(load)
-			user << "<span class='notice'>[src] mulches up [W].</span>"
-			playsound(src.loc, '/sounds/effects/blobattack.ogg', 50, 1)
-			user.unEquip(W)
-			qdel(W)
+	if(load)
+		user << "<span class='notice'>[src] mulches up [W].</span>"
+		playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1)
+		user.unEquip(W)
+		qdel(W)
+		if(addAmt)
+			reagents.add_reagent("compost",addAmt)
+		return
+	else ..()
+
+/obj/structure/reagent_dispensers/compostbin/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(is_type_in_list(O, validCompostTypepaths))
+		user.visible_message("<span class='notice'>[user] begins quickly stuffing items into [src]!</span>")
+		var/staystill = get_turf(user)
+		for(var/obj/item/weapon/P in staystill)
+			sleep(3)
+			playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1)
+			qdel(P)
+			if(src.reagents.total_volume >= reagents.maximum_volume)
+				user << "<span class='danger'>[src] is full!</span>"
+				break
+			if(get_turf(user) != staystill)
+				break
+			var/addAmt = 0
+			if(istype(P,/obj/item/seeds))
+				addAmt = 2
+			else
+				var/obj/item/reagent_containers/food/snacks/grown/G = P
+				addAmt = G.compost_value
 			if(addAmt)
 				reagents.add_reagent("compost",addAmt)
-			return
-		else ..()
-
-	/obj/structure/reagent_dispensers/compostbin/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if(is_type_in_list(O, validCompostTypepaths))
-			user.visible_message("<span class='notice'>[user] begins quickly stuffing items into [src]!</span>")
-			var/staystill = get_turf(user)
-			for(var/obj/item/weapon/P in staystill)
-				sleep(3)
-				playsound(src.loc, '/sounds/effects/blobattack.ogg', 50, 1)
-				qdel(P)
-				if(src.reagents.total_volume >= reagents.maximum_volume)
-					user << "<span class='danger'>[src] is full!</span>"
-					break
-				if(get_turf(user) != staystill) break
-				var/addAmt = 0
-				if(istype(P,/obj/item/seeds))
-					addAmt = 2
-				else
-					addAmt = P.compost_value
-				if(addAmt)
-					reagents.add_reagent("compost",addAmt)
-			user << "<span class='notice'>You finish stuffing items into [src]!</span>"
-		else ..()
+		user << "<span class='notice'>You finish stuffing items into [src]!</span>"
+	else ..()
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
