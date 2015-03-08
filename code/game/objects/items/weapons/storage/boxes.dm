@@ -551,6 +551,15 @@
 		new /obj/item/ammo_casing/shotgun/dart(src)
 		new /obj/item/ammo_casing/shotgun/dart(src)
 
+/obj/item/weapon/storage/box/labels
+	name = "label roll box"
+	icon_state = "labels"
+	
+	New()
+		..()
+		for(var/i=1; i <= storage_slots; i++)
+			new /obj/item/device/label_roll(src)
+
 /obj/item/weapon/storage/box/snappops
 	name = "snap pop box"
 	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."

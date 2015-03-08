@@ -41,6 +41,8 @@ var/global/list/ghdel_profiling = list()
 	// When this object moves. (args: loc)
 	var/event/on_moved = new()
 
+	var/labeled //Stupid and ugly way to do it, but the alternative would probably require rewriting everywhere a name is read.
+
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	if(!(B in beams))
 		beams.Add(B)
