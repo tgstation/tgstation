@@ -64,7 +64,7 @@
 	if(mode)
 		user << "<span class='notice'>You turn on \the [src].</span>"
 		//Now let them chose the text.
-		var/str = copytext(reject_bad_text(input(user,"Label text?","Set label","")),1,min(MAX_NAME_LEN,chars_left - 1))
+		var/str = copytext(reject_bad_text(input(user,"Label text?","Set label","")),1,min(MAX_NAME_LEN,chars_left))
 		if(!str || !length(str))
 			user << "<span class='notice'>Invalid text.</span>"
 			return
@@ -90,10 +90,7 @@
 			icon_state = "labeler0"
 
 /obj/item/weapon/hand_labeler/attack_hand(mob/user) //Shamelessly stolen from stack.dm.
-	if(mode)
-		user << "<span class='notice'>Turn it off first.</span>"
-		return
-	if (user.get_inactive_hand() == src)
+	if (!mode && user.get_inactive_hand() == src)
 		var/obj/item/device/label_roll/LR = new(user, amount=chars_left)
 		user.put_in_hands(LR)
 		user << "<span class='notice'>You remove the label roll.</span>"
@@ -122,6 +119,7 @@
 	name = "label roll"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "label_cart" //Placeholder image; recolored police tape
+	w_class = 1
 	var/left = 250
 
 /obj/item/device/label_roll/examine(mob/user) //Shamelessly stolen from above.

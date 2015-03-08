@@ -553,6 +553,7 @@
 
 /obj/item/weapon/storage/box/labels
 	name = "label roll box"
+	desc = "A box of refill rolls for a hand labeler."
 	icon_state = "labels"
 	
 	New()
