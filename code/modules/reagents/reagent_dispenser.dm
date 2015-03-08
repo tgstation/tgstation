@@ -152,9 +152,9 @@
 		user << "<span class='notice'>[src] mulches up [W].</span>"
 		playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1)
 		user.unEquip(W)
-		qdel(W)
 		if(addAmt)
 			reagents.add_reagent("compost",addAmt)
+		qdel(W)
 		return
 	else ..()
 
@@ -162,10 +162,9 @@
 	if(is_type_in_list(O, validCompostTypepaths))
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing items into [src]!</span>")
 		var/staystill = get_turf(user)
-		for(var/obj/item/weapon/P in staystill)
+		for(var/obj/item/P in staystill)
 			sleep(3)
 			playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1)
-			qdel(P)
 			if(src.reagents.total_volume >= reagents.maximum_volume)
 				user << "<span class='danger'>[src] is full!</span>"
 				break
@@ -179,6 +178,7 @@
 				addAmt = G.compost_value
 			if(addAmt)
 				reagents.add_reagent("compost",addAmt)
+			qdel(P)
 		user << "<span class='notice'>You finish stuffing items into [src]!</span>"
 	else ..()
 
