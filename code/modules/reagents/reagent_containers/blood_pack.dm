@@ -27,9 +27,13 @@
 				if(A.volume > the_volume && ("blood_type" in A.data))
 					the_volume = A.volume
 					target_type = A.data["blood_type"]
-			name = "[target_type] Bloodpack"
-			desc = "A bloodpack filled with [target_type] blood."
-			blood_type = target_type
+			if (target_type)
+				name = "[target_type] Bloodpack"
+				desc = "A bloodpack filled with [target_type] blood."
+				blood_type = target_type
+			else
+    				name = "Murky Bloodpack"
+    				desc = "A bloodpack filled with mysterious liquid."
 
 	update_icon()
 		var/percent = round((reagents.total_volume / volume) * 100)
@@ -45,7 +49,7 @@
 		user << "It contains:"
 		if(reagents.reagent_list.len)
 			for(var/datum/reagent/R in reagents.reagent_list)
-				if (R.id == "Blood")
+				if (R.id == "blood")
 					var/type = R.data["blood_type"]
 					user << "<span class='info'>[R.volume] units of [R.name], of type [type]</span>"
 				else
