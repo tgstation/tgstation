@@ -151,6 +151,11 @@ LINEN BINS
 	icon_state = "sheetwiz"
 	item_color = "wiz"
 
+/obj/item/weapon/bedsheet/patriot
+	name = "patriotic bedsheet"
+	desc = "You've never felt more free than when sleeping on this."
+	icon_state = "sheetUSA"
+	item_color = "sheetUSA"
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
