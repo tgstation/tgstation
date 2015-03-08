@@ -40,8 +40,8 @@
 	..()
 	update_bees()
 
-/mob/living/simple_animal/hostile/poison/bees/Die()
-	..()
+/mob/living/simple_animal/hostile/poison/bees/death(gibbed)
+	..(gibbed)
 	qdel(src)
 	return
 

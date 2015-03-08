@@ -92,7 +92,7 @@
 	damage = 30
 	icon_state = "toxin"
 
-/mob/living/simple_animal/hostile/alien/Die()
-	..()
+/mob/living/simple_animal/hostile/alien/death(gibbed)
+	..(gibbed)
 	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
 	playsound(src, 'sound/voice/hiss6.ogg', 100, 1)

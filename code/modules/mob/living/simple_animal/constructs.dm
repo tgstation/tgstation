@@ -34,7 +34,7 @@
 	for(var/spell in construct_spells)
 		mob_spell_list += new spell(src)
 
-/mob/living/simple_animal/construct/Die()
+/mob/living/simple_animal/construct/death()
 	..()
 	new /obj/item/weapon/ectoplasm (src.loc)
 	visible_message("<span class='danger'>[src] collapses in a shattered heap.</span>")

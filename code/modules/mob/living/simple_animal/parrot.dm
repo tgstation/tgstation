@@ -113,12 +113,12 @@
 			  /mob/living/simple_animal/parrot/proc/toggle_mode)
 
 
-/mob/living/simple_animal/parrot/Die()
+/mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
 		held_item.loc = src.loc
 		held_item = null
 	walk(src,0)
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/parrot/Stat()
 	..()

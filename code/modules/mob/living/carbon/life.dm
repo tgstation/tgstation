@@ -67,7 +67,7 @@
 ///////////////
 
 //Start of a breath chain, calls breathe()
-/mob/living/carbon/proc/handle_breathing()
+/mob/living/carbon/handle_breathing()
 	if(SSmob.times_fired%4==2 || failed_last_breath)
 		breathe() //Breathe per 4 ticks, unless suffocating
 	else
@@ -253,10 +253,10 @@
 	return
 
 
-/mob/living/carbon/proc/handle_changeling()
+/mob/living/carbon/handle_changeling()
 	return
 
-/mob/living/carbon/proc/handle_mutations_and_radiation()
+/mob/living/carbon/handle_mutations_and_radiation()
 	if(radiation)
 
 		switch(radiation)
@@ -281,7 +281,7 @@
 		radiation = Clamp(radiation, 0, 100)
 
 
-/mob/living/carbon/proc/handle_chemicals_in_body()
+/mob/living/carbon/handle_chemicals_in_body()
 	if(reagents)
 		reagents.metabolize(src)
 
@@ -304,16 +304,16 @@
 	updatehealth()
 	return
 
-/mob/living/carbon/proc/handle_blood()
+/mob/living/carbon/handle_blood()
 	return
 
-/mob/living/carbon/proc/handle_random_events()
+/mob/living/carbon/handle_random_events()
 	return
 
-/mob/living/carbon/proc/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/carbon/handle_environment(var/datum/gas_mixture/environment)
 	return
 
-/mob/living/carbon/proc/handle_stomach()
+/mob/living/carbon/handle_stomach()
 	spawn(0)
 		for(var/mob/living/M in stomach_contents)
 			if(M.loc != src)
@@ -330,26 +330,21 @@
 						M.adjustBruteLoss(5)
 					nutrition += 10
 
-/mob/living/carbon/proc/handle_regular_status_updates()
+/mob/living/carbon/handle_regular_status_updates()
 
-	if(stat == DEAD)
-		eye_blind = max(eye_blind, 1)
-		silent = 0
-	else
-		updatehealth()
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
-			death()
-			eye_blind = max(eye_blind, 1)
-			silent = 0
-			return 1
+	updatehealth()
+	if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
+		death()
+		return
 
-		if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
+	if(stat != DEAD)
+
+		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
 			Paralyse(3)
 
-		if(paralysis)
-			AdjustParalysis(-1)
-			stat = UNCONSCIOUS
-		else if(sleeping)
+		..()
+
+		if(sleeping && !paralysis)
 			handle_dreams()
 			adjustStaminaLoss(-10)
 			sleeping = max(sleeping-1, 0)
@@ -357,14 +352,6 @@
 			if( prob(10) && health && !hal_crit )
 				spawn(0)
 					emote("snore")
-
-		else if (status_flags & FAKEDEATH)
-			stat = UNCONSCIOUS
-
-		else
-			stat = CONSCIOUS
-
-		handle_disabilities()
 
 		//Dizziness
 		if(dizziness)
@@ -419,16 +406,6 @@
 		if(druggy)
 			druggy = max(druggy-1, 0)
 
-		if(stunned)
-			AdjustStunned(-1)
-			if(!stunned)
-				update_icons()
-
-		if(weakened)
-			weakened = max(weakened-1,0)
-			if(!weakened)
-				update_icons()
-
 		if(hallucination)
 			spawn handle_hallucinations()
 
@@ -442,28 +419,10 @@
 				qdel(a)
 
 		CheckStamina()
-	return 1
-
-/mob/living/carbon/proc/handle_disabilities()
-	//Eyes
-	if(disabilities & BLIND || stat)	//blindness from disability or unconsciousness doesn't get better on its own
-		eye_blind = max(eye_blind, 1)
-	else if(eye_blind)			//blindness, heals slowly over time
-		eye_blind = max(eye_blind-1,0)
-	else if(eye_blurry)			//blurry eyes heal slowly
-		eye_blurry = max(eye_blurry-1, 0)
-
-	//Ears
-	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
-		setEarDamage(-1, max(ear_deaf, 1))
-	else
-		// deafness heals slowly over time, unless ear_damage is over 100
-		if(ear_damage < 100)
-			adjustEarDamage(-0.05,-1)
-
+		return 1
 
 //this handles hud updates. Calles update_vision() and handle_hud_icons()
-/mob/living/carbon/proc/handle_regular_hud_updates()
+/mob/living/carbon/handle_regular_hud_updates()
 	if(!client)	return 0
 
 	update_action_buttons()
@@ -550,7 +509,7 @@
 
 	return 1
 
-/mob/living/carbon/proc/handle_vision()
+/mob/living/carbon/handle_vision()
 
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 
@@ -597,7 +556,7 @@
 			if(!client.adminobs)
 				reset_view(null)
 
-/mob/living/carbon/proc/handle_hud_icons()
+/mob/living/carbon/handle_hud_icons()
 	return
 
 /mob/living/carbon/proc/handle_hud_icons_health()

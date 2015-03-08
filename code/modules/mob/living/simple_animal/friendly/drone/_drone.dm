@@ -94,8 +94,8 @@
 		pickVisualAppearence()
 
 
-/mob/living/simple_animal/drone/Die()
-	..()
+/mob/living/simple_animal/drone/death(gibbed)
+	..(gibbed)
 	drop_l_hand()
 	drop_r_hand()
 	if(internal_storage)

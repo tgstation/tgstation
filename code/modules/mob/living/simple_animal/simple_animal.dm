@@ -81,13 +81,12 @@
 	..()
 
 /mob/living/simple_animal/updatehealth()
+	if(health > maxHealth)
+		health = maxHealth
 	return
 
 /mob/living/simple_animal/Life()
 
-	update_gravity(mob_has_gravity())
-
-	//Health
 	if(stat == DEAD)
 		if(health > 0)
 			icon_state = icon_living
@@ -98,21 +97,12 @@
 			update_canmove()
 		return 0
 
+	updatehealth()
 
-	if(health < 1 && stat != DEAD)
-		Die()
-
-	if(health > maxHealth)
-		health = maxHealth
-
-	if(stunned)
-		AdjustStunned(-1)
-	if(weakened)
-		AdjustWeakened(-1)
-	if(paralysis)
-		AdjustParalysis(-1)
-
-	adjustEarDamage((ear_damage < 25 ? -0.05 : 0), -1)
+	if(health < 1)
+		death()
+	else
+		handle_regular_status_updates()
 
 	//Movement
 	if(!client && !stop_automated_movement && wander)
@@ -392,22 +382,14 @@
 	if(statpanel("Status"))
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
-/mob/living/simple_animal/proc/Die()
+/mob/living/simple_animal/death(gibbed)
 	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them
-	dead_mob_list += src
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
-	return
-
-/mob/living/simple_animal/death(gibbed)
-	if(stat == DEAD)
-		return
-
 	if(!gibbed)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
-
-	Die()
+	..()
 
 /mob/living/simple_animal/ex_act(severity, target)
 	..()
@@ -426,7 +408,7 @@
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health = Clamp(health - damage, 0, maxHealth)
 	if(health < 1 && stat != DEAD)
-		Die()
+		death()
 
 /mob/living/simple_animal/proc/CanAttack(var/atom/the_target)
 	if(see_invisible < the_target.invisibility)

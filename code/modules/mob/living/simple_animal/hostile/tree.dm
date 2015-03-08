@@ -50,8 +50,8 @@
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")
 
-/mob/living/simple_animal/hostile/tree/Die()
-	..()
+/mob/living/simple_animal/hostile/tree/death(gibbed)
+	..(gibbed)
 	visible_message("<span class='danger'><b>[src]</b> is hacked into pieces!</span>")
 	new /obj/item/stack/sheet/mineral/wood(loc)
 	qdel(src)
@@ -64,8 +64,8 @@
 	icon_dead = "festivus_pole"
 	icon_gib = "festivus_pole"
 
-/mob/living/simple_animal/hostile/tree/festivus/Die()
-	..()
+/mob/living/simple_animal/hostile/tree/festivus/death(gibbed)
+	..(gibbed)
 	visible_message("<span class='danger'><b>[src]</b> is hacked into pieces!</span>")
 	new /obj/item/stack/rods(loc)
 	qdel(src)

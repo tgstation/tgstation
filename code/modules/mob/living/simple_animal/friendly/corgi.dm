@@ -29,8 +29,8 @@
 	..()
 	regenerate_icons()
 
-/mob/living/simple_animal/corgi/Die()
-	..()
+/mob/living/simple_animal/corgi/death(gibbed)
+	..(gibbed)
 	regenerate_icons()
 
 /mob/living/simple_animal/corgi/revive()

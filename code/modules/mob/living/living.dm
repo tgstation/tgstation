@@ -8,7 +8,6 @@ Sorry Giacom. Please don't be mad :(
 		push_mob_back(src, A.push_dir)
 */
 
-
 /mob/living/New()
 	. = ..()
 	generateStaticOverlay()

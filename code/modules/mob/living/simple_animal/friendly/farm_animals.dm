@@ -223,8 +223,8 @@ var/global/chicken_count = 0
 	pixel_y = rand(0, 10)
 	chicken_count += 1
 
-/mob/living/simple_animal/chicken/Die()
-	..()
+/mob/living/simple_animal/chicken/death(gibbed)
+	..(gibbed)
 	chicken_count -= 1
 
 /mob/living/simple_animal/chicken/attackby(var/obj/item/O as obj, var/mob/user as mob, params)

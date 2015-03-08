@@ -29,6 +29,6 @@
 	if(.)
 		emote("me", 1, "glares at [.]")
 
-/mob/living/simple_animal/hostile/carp/eyeball/Die()
+/mob/living/simple_animal/hostile/carp/eyeball/death()
 	qdel(src)
 	return

@@ -92,7 +92,7 @@
 	H.loc = src
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
 
-/mob/living/simple_animal/hostile/blob/blobspore/Die()
+/mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
 	// On death, create a small smoke of harmful gas (s-Acid)
 	var/datum/effect/effect/system/chem_smoke_spread/S = new
 	var/turf/location = get_turf(src)
@@ -165,6 +165,6 @@
 /mob/living/simple_animal/hostile/blob/blobbernaut/blob_act()
 	return
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Die()
-	..()
+/mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
+	..(gibbed)
 	flick("blobbernaut_death", src)
