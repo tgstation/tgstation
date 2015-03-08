@@ -208,7 +208,7 @@
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
-	O.Namepick()
+	spawn() O.Namepick()
 
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
@@ -255,7 +255,7 @@
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
-	O.Namepick()
+	spawn() O.Namepick()
 
 
 	spawn(0)//To prevent the proc from returning null.
