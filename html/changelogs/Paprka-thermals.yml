@@ -1,6 +1,0 @@
-author: Paprika
-
-delete-after: True
-
-changes:
-  - tweak: "Rebalanced the flash protection of thermal scanners. Syndicate thermals have the same flash weakness as the meson scanners they come disguised as."
