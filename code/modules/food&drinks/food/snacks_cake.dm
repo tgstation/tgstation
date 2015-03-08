@@ -167,7 +167,7 @@
 	desc = "A cake made of slimes. Probably not electrified."
 	icon_state = "slimecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/slimecake
-	slice_num = 5
+	slices_num = 5
 	list_reagents = list("nutriment" = 1, "vitamin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/slimecake
