@@ -29,6 +29,7 @@
 		ammo_type[i] = shot
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
+	fire_delay = shot.delay
 	update_icon()
 	return
 
@@ -63,6 +64,7 @@
 		select = 1
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
+	fire_delay = shot.delay
 	if (shot.select_name)
 		user << "<span class='danger'>[src] is now set to [shot.select_name].</span>"
 	update_icon()
