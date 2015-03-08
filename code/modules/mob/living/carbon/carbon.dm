@@ -156,7 +156,7 @@
 
 
 /mob/living/carbon/proc/eyecheck()
-	return 0
+	return locate(/obj/item/organ/cybernetic_implant/eyes/thermals,internal_organs) ? -1 : 0
 
 /mob/living/carbon/proc/tintcheck()
 	return 0

@@ -179,7 +179,7 @@
 
 /datum/mutation/human/x_ray/on_losing(mob/living/carbon/human/owner)
 	if(..())	return
-	if(locate(SEE_MOBS|SEE_OBJS|SEE_TURFS,owner.permanent_sight_flags))
+	if(locate(SEE_MOBS,owner.permanent_sight_flags) && locate(SEE_OBJS,owner.permanent_sight_flags) && locate(SEE_TURFS,owner.permanent_sight_flags)) //Xray flag combo
 		return
 	owner.see_in_dark = initial(owner.see_in_dark)
 	owner.sight = initial(owner.sight)
