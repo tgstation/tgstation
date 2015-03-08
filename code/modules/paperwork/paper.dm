@@ -325,16 +325,16 @@
 
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-		burn(showmsg = 0, burntime = 100)
+		burn(0, 100)
 
 
 
 	add_fingerprint(user)
 
 /obj/item/weapon/paper/fire_act()
-	burn(showmsg = 1, burntime = 50)
+	burn(1, 50)
 
-/obj/item/weapon/paper/proc/burn(var/burntime, var/showmsg)
+/obj/item/weapon/paper/proc/burn(var/showmsg, var/burntime)
 	if(showmsg)
 		src.visible_message("<span class='warning'>[src] catches on fire!</span>")
 	burning = 1
