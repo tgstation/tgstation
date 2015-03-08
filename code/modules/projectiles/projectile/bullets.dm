@@ -13,10 +13,8 @@
 	stamina = 80
 
 /obj/item/projectile/bullet/weakbullet1  //used in gatling guns, low damage, low stamina - people will almost never be hit by less than 5 of these, and people who don't move might get 20 at once
-	damage = 4  //fucks over people with 20-burst, but even landing every shot won't crit an unarmored person
+	damage = 7
 
-/obj/item/projectile/bullet/weakbullet1/wiz
-	damage = 3  //it might not seem like much of a change, but it's 40 damage instead of about 70 when fired at the wiz full burst
 
 /obj/item/projectile/bullet/weakbullet2 //detective revolver instastuns, but multiple shots are better for keeping punks down
 	damage = 15

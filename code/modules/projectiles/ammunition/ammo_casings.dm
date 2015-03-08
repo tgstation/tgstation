@@ -180,7 +180,6 @@
 	projectile_type = /obj/item/projectile/bullet/weakbullet1
 	caliber = "minigun"
 
-/obj/item/ammo_casing/caseless/gatling/wiz //for the wizard variant
-	projectile_type = /obj/item/projectile/bullet/weakbullet1/wiz
+
 
 

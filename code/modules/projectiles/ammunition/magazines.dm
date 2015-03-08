@@ -111,9 +111,6 @@
 	caliber = "gatling"
 	max_ammo = 400
 
-obj/item/ammo_box/magazine/internal/gatling/wiz   //balanced so that the wizard doesn't get his magical ass torn a new one
-	ammo_type = /obj/item/ammo_casing/caseless/gatling/wiz
-	max_ammo = 300   //fun = removed
 
 ///////////EXTERNAL MAGAZINES////////////////
 

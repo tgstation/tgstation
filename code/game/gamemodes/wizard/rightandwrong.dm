@@ -66,42 +66,40 @@
 					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.
 					new gat(get_turf(H))
 				if("crossbow")
-					var/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large/gat
+					var/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large/gat = new(get_turf(H))
 					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+
 				if("nuclear")
-					var/obj/item/weapon/gun/energy/gun/nuclear/gat
+					var/obj/item/weapon/gun/energy/gun/nuclear/gat = new(get_turf(H))
 					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed. PRAISE THE CODERBUS
 
-					new gat(get_turf(H))
 				if("sabr")
-					var/obj/item/weapon/gun/projectile/automatic/gat
+					var/obj/item/weapon/gun/projectile/automatic/gat = new(get_turf(H))
 					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+
 				if("bulldog")
-					var/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/gat
+					var/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/gat = new(get_turf(H))
 					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+
 				if("c20r")
-					var/obj/item/weapon/gun/projectile/automatic/c20r/gat
+					var/obj/item/weapon/gun/projectile/automatic/c20r/gat = new(get_turf(H))
 					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+
 				if("saw")
-					var/obj/item/weapon/gun/projectile/automatic/l6_saw/gat
+					var/obj/item/weapon/gun/projectile/automatic/l6_saw/gat = new(get_turf(H))
 					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+
 				if("car")
-					var/obj/item/weapon/gun/projectile/automatic/m90/gat
+					var/obj/item/weapon/gun/projectile/automatic/m90/gat = new(get_turf(H))
 					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+
 				if("boltaction")
 					new /obj/item/weapon/gun/projectile/shotgun/boltaction(get_turf(H))
 				if("speargun")
 					new /obj/item/weapon/gun/projectile/automatic/speargun(get_turf(H))
 				if("minigun")
-					var/obj/item/weapon/gun/projectile/automatic/gatling/gat     // This looks like fun addition but it's secretly fun removal
-					gat.mag_type = /obj/item/ammo_box/magazine/internal/gatling/wiz  //nerfed ammo, nerfed damage.
-					new gat(get_turf(H))
+					new /obj/item/weapon/gun/projectile/automatic/gatling(get_turf(H))
+
 
 		else
 			switch (randomizemagic)
