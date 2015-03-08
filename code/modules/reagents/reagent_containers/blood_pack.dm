@@ -17,6 +17,20 @@
 	on_reagent_change()
 		update_icon()
 
+		if(volume == 0 && name != "Empty Bloodback")
+			name = "Empty Bloodpack"
+			desc = "Empty bloodpacks are good in vampire movies, but bad in hospitals."
+		else if (reagents.reagent_list.len > 0)
+			var/target_type = null
+			var/the_volume = 0
+			for(var/datum/reagent/A in reagents.reagent_list)
+				if(A.volume > the_volume && ("blood_type" in A.data))
+					the_volume = A.volume
+					target_type = A.data["blood_type"]
+			name = "[target_type] Bloodpack"
+			desc = "A bloodpack filled with [target_type] blood."
+			blood_type = target_type
+
 	update_icon()
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -24,6 +38,22 @@
 			if(10 to 50) 		icon_state = "half"
 			if(51 to INFINITY)	icon_state = "full"
 
+/obj/item/weapon/reagent_containers/blood/examine(mob/user)
+	//I don't want this to be an open container.
+	..()
+	if(reagents)
+		user << "It contains:"
+		if(reagents.reagent_list.len)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				if (R.id == "Blood")
+					var/type = R.data["blood_type"]
+					user << "<span class='info'>[R.volume] units of [R.name], of type [type]</span>"
+				else
+					user << "<span class='info'>[R.volume] units of [R.name]</span>"
+		else
+			user << "<span class='info'>Nothing.</span>"
+
+//These should be kept for legacy purposes, probably. At least until they disappear from maps.
 /obj/item/weapon/reagent_containers/blood/APlus
 	blood_type = "A+"
 
