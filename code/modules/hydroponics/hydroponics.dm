@@ -402,7 +402,10 @@ obj/machinery/hydroponics/proc/mutatepest()
 
 obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 
+	if(!myseed)
+		return
 	myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
+
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
 	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))

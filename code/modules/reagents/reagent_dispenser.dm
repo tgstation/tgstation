@@ -138,13 +138,9 @@
 
 /obj/structure/reagent_dispensers/compostbin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	var/load = 1
-	var/addAmt = 0
-	if(is_type_in_list(W, validCompostTypepaths))
-		if(istype(W,/obj/item/seeds))
-			addAmt = 2
-		else
-			var/obj/item/weapon/reagent_containers/food/snacks/grown/G = W
-			addAmt = G.compost_value
+	var/obj/item/weapon/reagent_containers/food/snacks/grown/G = W
+	if(G.compost_value > 0)
+		reagents.add_reagent("compost",G.compost_value)
 	else
 		load = 0
 
@@ -152,8 +148,6 @@
 		user << "<span class='notice'>[src] mulches up [W].</span>"
 		playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1)
 		user.unEquip(W)
-		if(addAmt)
-			reagents.add_reagent("compost",addAmt)
 		qdel(W)
 		return
 	else ..()
