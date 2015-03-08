@@ -2753,7 +2753,7 @@ k
 	id = "conveyor"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "sacid" = 20)
+	materials = list("$glass" = 200, "sacid" = 5)
 	build_path = /obj/item/weapon/circuitboard/conveyor
 
 /datum/design/bhangmeter
