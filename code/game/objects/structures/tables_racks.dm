@@ -27,6 +27,7 @@
 	var/busy = 0
 	var/buildstackamount = 1
 	var/framestackamount = 2
+	var/mob/tableclimber
 
 /obj/structure/table/New()
 	..()
@@ -219,6 +220,10 @@
 
 /obj/structure/table/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(tableclimber)
+		tableclimber.Weaken(2)
+		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You've been knocked off the table", "You see [tableclimber.name] get knocked off the table</span>")
+
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -324,8 +329,11 @@
 			I.Move(loc)
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
-			I.pixel_x = (text2num(click_params["icon-x"]) - 16)
-			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+				return
+			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+			I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 
 
 /*
@@ -380,6 +388,7 @@
 	var/climb_time = 20
 	if(user.restrained()) //Table climbing takes twice as long when restrained.
 		climb_time *= 2
+	tableclimber = user
 	if(do_mob(user, user, climb_time))
 		if(src.loc) //Checking if table has been destroyed
 			user.pass_flags += PASSTABLE
@@ -389,7 +398,9 @@
 									"<span class='notice'>You climb onto [src].</span>")
 			add_logs(user, src, "climbed onto")
 			user.Stun(2)
+			tableclimber = null
 			return 1
+	tableclimber = null
 	return 0
 
 

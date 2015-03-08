@@ -214,6 +214,17 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_path = /obj/item/device/gps
 	category = list("Bluespace Designs")
 
+/datum/design/miningsatchel_holding
+	name = "Mining Satchel of Holding"
+	desc = "A mining satchel that can hold an infinite amount of ores."
+	id = "minerbag_holding"
+	req_tech = list("bluespace" = 3, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list("$gold" = 250, "$uranium" = 500) //quite cheap, for more convenience
+	reliability = 100
+	build_path = /obj/item/weapon/storage/bag/ore/holding
+	category = list("Bluespace Designs")
+
 
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
@@ -305,6 +316,16 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
 	build_path = /obj/item/clothing/glasses/meson
+	category = list("Equipement")
+
+/datum/design/engine_goggles
+	name = "Engineering Scanner Goggles"
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
+	id = "engine_goggles"
+	req_tech = list("materials" = 4, "magnets" = 3, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
+	build_path = /obj/item/clothing/glasses/meson/engine
 	category = list("Equipement")
 
 /datum/design/nvgmesons

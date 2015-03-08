@@ -183,6 +183,7 @@
 	var/ex_heavy = round(created_volume / 42)
 	var/ex_light = round(created_volume / 21)
 	var/ex_flash = round(created_volume / 8)
+<<<<<<< HEAD
 	explosion(T,ex_severe,ex_heavy,ex_light,ex_flash, 1)
 	return
 

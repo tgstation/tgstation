@@ -328,8 +328,8 @@
 			R.delete()
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
-			visible_message("<span class='notice'>[src]'s chemical chamber has sprung a leak!.</span>")
-			chosenchem = pick("mutationtoxin","nanomachines","xenomicrobes")
+			visible_message("<span class='danger'>[src]'s chemical chamber has sprung a leak!</span>")
+			chosenchem = pick("mutationtoxin","nanomachines","sacid")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)

@@ -32,7 +32,7 @@
 				var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
 				I.dir = src.holder.dir
 				flick("ion_fade", I)
-				I.icon_state = "blank"
+				I.icon_state = "ion_trails"
 				spawn( 20 )
 					if(I)
 						I.delete()

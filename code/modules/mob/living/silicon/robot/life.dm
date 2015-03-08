@@ -190,45 +190,28 @@
 				src.mind.special_role = "traitor"
 				ticker.mode.traitors += src.mind
 
-	if (src.cells)
-		if (src.cell)
-			var/cellcharge = src.cell.charge/src.cell.maxcharge
-			switch(cellcharge)
-				if(0.75 to INFINITY)
-					src.cells.icon_state = "charge4"
-				if(0.5 to 0.75)
-					src.cells.icon_state = "charge3"
-				if(0.25 to 0.5)
-					src.cells.icon_state = "charge2"
-				if(0 to 0.25)
-					src.cells.icon_state = "charge1"
-				else
-					src.cells.icon_state = "charge0"
+	if (src.cell)
+		var/cellcharge = src.cell.charge/src.cell.maxcharge
+		switch(cellcharge)
+			if(0.75 to INFINITY)
+				clear_alert("charge")
+			if(0.5 to 0.75)
+				throw_alert("charge","lowcell",1)
+			if(0.25 to 0.5)
+				throw_alert("charge","lowcell",2)
+			if(0.01 to 0.25)
+				throw_alert("charge","lowcell",3)
+			else
+				throw_alert("charge","emptycell")
+	else
+		throw_alert("charge","nocell")
+
+
+	if(pullin)
+		if(pulling)
+			pullin.icon_state = "pull"
 		else
-			src.cells.icon_state = "charge-empty"
-
-	if(bodytemp)
-		switch(bodytemperature) //310.055 optimal body temp
-			if(335 to INFINITY)
-				bodytemp.icon_state = "temp2"
-			if(320 to 335)
-				bodytemp.icon_state = "temp1"
-			if(300 to 320)
-				bodytemp.icon_state = "temp0"
-			if(260 to 300)
-				bodytemp.icon_state = "temp-1"
-			else
-				bodytemp.icon_state = "temp-2"
-
-		if(pullin)
-			if(pulling)
-				pullin.icon_state = "pull"
-			else
-				pullin.icon_state = "pull0"
-
-//Oxygen and fire does nothing yet!!
-//	if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
-//	if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
+			pullin.icon_state = "pull0"
 
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 

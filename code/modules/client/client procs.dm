@@ -149,7 +149,7 @@ var/next_external_rsc = 0
 		if (config.notify_new_player_age >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (config.irc_first_connection_alert)
-				send2irc_adminless_only("New user", "[key_name(src)] is connecting for the first time!")
+				send2irc_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
 
 		player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
 
@@ -167,8 +167,11 @@ var/next_external_rsc = 0
 	send_resources()
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
-		winset(src, "rpane.changelog", "background-color=#eaeaea;font-style=bold")
-
+		src << "<span class='info'>You have unread updates in the changelog.</span>"
+		if(config.aggressive_changelog)
+			src.changes()
+		else
+			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
 
 	//////////////
 	//DISCONNECT//

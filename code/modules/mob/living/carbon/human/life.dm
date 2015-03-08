@@ -6,8 +6,6 @@
 #define TINT_IMPAIR 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
 
-#define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
@@ -26,31 +24,20 @@
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
 /mob/living/carbon/human
-	var/oxygen_alert = 0
-	var/toxins_alert = 0
-	var/fire_alert = 0
-	var/pressure_alert = 0
-	var/temperature_alert = 0
 	var/tinttotal = 0				// Total level of visualy impairing items
 
 
 
 /mob/living/carbon/human/Life()
+	set invisibility = 0
+	set background = BACKGROUND_ENABLED
 
-	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
+	if (notransform)
+		return
+
 	tinttotal = tintcheck() //here as both hud updates and status updates call it
 
 	if(..())
-		if(dna)
-			for(var/datum/mutation/human/HM in dna.mutations)
-				HM.on_life(src)
-		if(SSmob.times_fired%4==2 || failed_last_breath) 	//First, resolve location and get a breath
-			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
-		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
-
 
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
@@ -79,7 +66,19 @@
 
 
 /mob/living/carbon/human/handle_disabilities()
-	if (getBrainLoss() >= 60 && stat != 2)
+	..()
+	//Eyes
+	if(!(disabilities & BLIND))
+		if(tinttotal >= TINT_BLIND)		//covering your eyes heals blurry eyes faster
+			eye_blurry = max(eye_blurry-2, 0)
+
+	//Ears
+	if(!(disabilities & DEAF))
+		if(istype(ears, /obj/item/clothing/ears/earmuffs)) // earmuffs rest your ears, healing ear_deaf faster and ear_damage, but keeping you deaf.
+			setEarDamage(max(ear_damage-0.10, 0), max(ear_deaf - 1, 1))
+
+
+	if (getBrainLoss() >= 60 && stat != DEAD)
 		if (prob(3))
 			switch(pick(1,2,3))
 				if(1)
@@ -92,9 +91,10 @@
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(dna)
-		dna.species.handle_mutations_and_radiation(src)
+		if(dna.species.handle_mutations_and_radiation(src))
+			..()
 
-/mob/living/carbon/human/proc/breathe()
+/mob/living/carbon/human/breathe()
 	if(dna)
 		dna.species.breathe(src)
 
@@ -140,27 +140,8 @@
 		dna.species.ExtinguishMob(src)
 	else
 		..()
-
 //END FIRE CODE
 
-	/*
-/mob/living/carbon/human/proc/adjust_body_temperature(current, loc_temp, boost)
-	var/temperature = current
-	var/difference = abs(current-loc_temp)	//get difference
-	var/increments// = difference/10			//find how many increments apart they are
-	if(difference > 50)
-		increments = difference/5
-	else
-		increments = difference/10
-	var/change = increments*boost	// Get the amount to change by (x per increment)
-	var/temp_change
-	if(current < loc_temp)
-		temperature = min(loc_temp, temperature+change)
-	else if(current > loc_temp)
-		temperature = max(loc_temp, temperature-change)
-	temp_change = (temperature - current)
-	return temp_change
-*/
 
 /mob/living/carbon/human/proc/stabilize_temperature_from_calories()
 	switch(bodytemperature)
@@ -297,65 +278,9 @@
 
 	return min(1,thermal_protection)
 
-/*
-/mob/living/carbon/human/proc/add_fire_protection(var/temp)
-	var/fire_prot = 0
-	if(head)
-		if(head.protective_temperature > temp)
-			fire_prot += (head.protective_temperature/10)
-	if(wear_mask)
-		if(wear_mask.protective_temperature > temp)
-			fire_prot += (wear_mask.protective_temperature/10)
-	if(glasses)
-		if(glasses.protective_temperature > temp)
-			fire_prot += (glasses.protective_temperature/10)
-	if(ears)
-		if(ears.protective_temperature > temp)
-			fire_prot += (ears.protective_temperature/10)
-	if(wear_suit)
-		if(wear_suit.protective_temperature > temp)
-			fire_prot += (wear_suit.protective_temperature/10)
-	if(w_uniform)
-		if(w_uniform.protective_temperature > temp)
-			fire_prot += (w_uniform.protective_temperature/10)
-	if(gloves)
-		if(gloves.protective_temperature > temp)
-			fire_prot += (gloves.protective_temperature/10)
-	if(shoes)
-		if(shoes.protective_temperature > temp)
-			fire_prot += (shoes.protective_temperature/10)
-
-	return fire_prot
-
-/mob/living/carbon/human/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-	if(nodamage)
-		return
-	//world <<"body_part = [body_part], exposed_temperature = [exposed_temperature], exposed_intensity = [exposed_intensity]"
-	var/discomfort = min(abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-
-	if(exposed_temperature > bodytemperature)
-		discomfort *= 4
-
-	if(mutantrace == "plant")
-		discomfort *= TEMPERATURE_DAMAGE_COEFFICIENT * 2 //I don't like magic numbers. I'll make mutantraces a datum with vars sometime later. -- Urist
-	else
-		discomfort *= TEMPERATURE_DAMAGE_COEFFICIENT //Dangercon 2011 - now with less magic numbers!
-	//world <<"[discomfort]"
-
-	switch(body_part)
-		if(HEAD)
-			apply_damage(2.5*discomfort, BURN, "head")
-		if(CHEST)
-			apply_damage(2.5*discomfort, BURN, "chest")
-		if(LEGS)
-			apply_damage(0.6*discomfort, BURN, "l_leg")
-			apply_damage(0.6*discomfort, BURN, "r_leg")
-		if(ARMS)
-			apply_damage(0.4*discomfort, BURN, "l_arm")
-			apply_damage(0.4*discomfort, BURN, "r_arm")
-*/
 
 /mob/living/carbon/human/handle_chemicals_in_body()
+	..()
 	if(dna)
 		dna.species.handle_chemicals_in_body(src)
 
@@ -478,103 +403,19 @@
 			druggy = max(druggy-1, 0)
 
 		CheckStamina()
+/mob/living/carbon/human/handle_vision()
+	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
+	if(machine)
+		if(!machine.check_eye(src))		reset_view(null)
+	else
+		if(!client.adminobs)			reset_view(null)
 
 	if(dna)
 		dna.species.handle_vision(src)
 
-	return 1
-
-/mob/living/carbon/human/handle_regular_hud_updates()
-	if(!client)	return 0
-
-	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
-
-	update_action_buttons()
-
-	if(damageoverlay.overlays)
-		damageoverlay.overlays = list()
-
-	if(stat == UNCONSCIOUS)
-		//Critical damage passage overlay
-		if(health <= config.health_threshold_crit)
-			var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "passage0")
-			I.blend_mode = BLEND_OVERLAY //damageoverlay is BLEND_MULTIPLY
-			switch(health)
-				if(-20 to -10)
-					I.icon_state = "passage1"
-				if(-30 to -20)
-					I.icon_state = "passage2"
-				if(-40 to -30)
-					I.icon_state = "passage3"
-				if(-50 to -40)
-					I.icon_state = "passage4"
-				if(-60 to -50)
-					I.icon_state = "passage5"
-				if(-70 to -60)
-					I.icon_state = "passage6"
-				if(-80 to -70)
-					I.icon_state = "passage7"
-				if(-90 to -80)
-					I.icon_state = "passage8"
-				if(-95 to -90)
-					I.icon_state = "passage9"
-				if(-INFINITY to -95)
-					I.icon_state = "passage10"
-			damageoverlay.overlays += I
-	else
-		//Oxygen damage overlay
-		if(oxyloss)
-			var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "oxydamageoverlay0")
-			switch(oxyloss)
-				if(10 to 20)
-					I.icon_state = "oxydamageoverlay1"
-				if(20 to 25)
-					I.icon_state = "oxydamageoverlay2"
-				if(25 to 30)
-					I.icon_state = "oxydamageoverlay3"
-				if(30 to 35)
-					I.icon_state = "oxydamageoverlay4"
-				if(35 to 40)
-					I.icon_state = "oxydamageoverlay5"
-				if(40 to 45)
-					I.icon_state = "oxydamageoverlay6"
-				if(45 to INFINITY)
-					I.icon_state = "oxydamageoverlay7"
-			damageoverlay.overlays += I
-
-		//Fire and Brute damage overlay (BSSR)
-		var/hurtdamage = src.getBruteLoss() + src.getFireLoss() + damageoverlaytemp
-		damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
-		if(hurtdamage)
-			var/image/I = image("icon" = 'icons/mob/screen_full.dmi', "icon_state" = "brutedamageoverlay0")
-			I.blend_mode = BLEND_ADD
-			switch(hurtdamage)
-				if(5 to 15)
-					I.icon_state = "brutedamageoverlay1"
-				if(15 to 30)
-					I.icon_state = "brutedamageoverlay2"
-				if(30 to 45)
-					I.icon_state = "brutedamageoverlay3"
-				if(45 to 70)
-					I.icon_state = "brutedamageoverlay4"
-				if(70 to 85)
-					I.icon_state = "brutedamageoverlay5"
-				if(85 to INFINITY)
-					I.icon_state = "brutedamageoverlay6"
-			var/image/black = image(I.icon, I.icon_state) //BLEND_ADD doesn't let us darken, so this is just to blacken the edge of the screen
-			black.color = "#170000"
-			damageoverlay.overlays += I
-			damageoverlay.overlays += black
-
-		if(machine)
-			if(!machine.check_eye(src))		reset_view(null)
-		else
-			if(!client.adminobs)			reset_view(null)
-
+/mob/living/carbon/human/handle_hud_icons()
 	if(dna)
 		dna.species.handle_hud_icons(src)
-
-	return 1
 
 /mob/living/carbon/human/handle_random_events()
 	// Puke if toxloss is too high
@@ -600,10 +441,25 @@
 
 
 /mob/living/carbon/human/handle_changeling()
-	if(mind && mind.changeling)
-		mind.changeling.regenerate()
+	if(mind)
+		if(mind.changeling)
+			mind.changeling.regenerate()
+			hud_used.lingchemdisplay.invisibility = 0
+			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
+		else
+			hud_used.lingchemdisplay.invisibility = 101
 
-
+/mob/living/carbon/human/has_smoke_protection()
+	if(wear_mask)
+		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
+			. = 1
+	if(glasses)
+		if(glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
+			. = 1
+	if(head)
+		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
+			. = 1
+	return .
 /mob/living/carbon/human/proc/handle_embedded_objects()
 	for(var/obj/item/organ/limb/L in organs)
 		for(var/obj/item/I in L.embedded_objects)

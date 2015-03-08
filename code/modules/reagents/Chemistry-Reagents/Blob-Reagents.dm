@@ -67,6 +67,7 @@ datum/reagent/blob/lung_destroying_toxin
 datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume,var/show_message = 1)
 	if(method == TOUCH)
 		M.apply_damage(20, OXY)
+		M.losebreath += 15
 		M.apply_damage(20, TOX)
 		if(show_message)
 			M << "<span class = 'userdanger'>The blob strikes you, and your lungs feel heavy and weak!</span>"
@@ -95,13 +96,11 @@ datum/reagent/blob/radioactive_liquid/reaction_mob(var/mob/living/M as mob, var/
 	if(method == TOUCH)
 		if(istype(M, /mob/living/carbon/human))
 			M.apply_damage(10, BRUTE)
-			M.apply_effect(10,IRRADIATE,0)
+			M.apply_effect(40,IRRADIATE,0) // irradiate the shit out of these fuckers
 			if(prob(33))
 				randmuti(M)
 				if(prob(98))
 					randmutb(M)
-				else
-					randmutg(M)
 				domutcheck(M, null)
 				updateappearance(M)
 			if(show_message)

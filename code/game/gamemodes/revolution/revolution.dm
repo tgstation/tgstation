@@ -18,6 +18,7 @@
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 3
+	enemy_minimum_age = 14
 
 	var/finished = 0
 	var/check_counter = 0

@@ -42,6 +42,7 @@
 	buckled_mob = M
 	M.update_canmove()
 	post_buckle_mob(M)
+	M.throw_alert("buckled", new_master = src)
 	return 1
 
 /obj/proc/unbuckle_mob()
@@ -50,6 +51,7 @@
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_canmove()
+		buckled_mob.clear_alert("buckled")
 		buckled_mob = null
 
 		post_buckle_mob(.)

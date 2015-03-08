@@ -127,12 +127,8 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	..()
 	return
 /datum/reagent/krokodil/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
-	if(!istype(M.dna.species, /datum/species/cosmetic_zombie))
-		M << "<span class='userdanger'>Your skin falls off easily!</span>"
-		M.adjustBruteLoss(rand(50,80)*REM) // holy shit your skin just FELL THE FUCK OFF
-		hardset_dna(M, null, null, null, null, /datum/species/cosmetic_zombie)
-	else
-		M.adjustBruteLoss(5*REM)
+	M << "<span class='userdanger'>Your skin sloughs off!</span>"
+	M.adjustBruteLoss(rand(50,80)*REM)
 	..()
 	return
 
@@ -228,7 +224,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	name = "methamphetamine"
 	id = "methamphetamine"
 	result = "methamphetamine"
-	required_reagents = list("ephedrine" = 1, "iodine" = 1, "phosphorous" = 1, "hydrogen" = 1)
+	required_reagents = list("ephedrine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1)
 	result_amount = 4
 	required_temp = 374
 

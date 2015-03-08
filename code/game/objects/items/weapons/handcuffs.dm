@@ -44,6 +44,7 @@
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user)
 	if(!target.handcuffed)
 		user.drop_item()
+		//target.throw_alert("handcuffed", src) // Can't do this because escaping cuffs isn't standardized. Also zipties.
 		if(trashtype)
 			target.handcuffed = new trashtype(target)
 			qdel(src)

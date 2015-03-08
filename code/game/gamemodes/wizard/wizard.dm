@@ -9,6 +9,7 @@
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
+	enemy_minimum_age = 14
 	var/use_huds = 0
 	var/finished = 0
 
@@ -170,7 +171,7 @@
 
 /datum/game_mode/wizard/check_finished()
 
-	if(config.continuous_round_wiz)
+	if(round_converted)
 		return ..()
 
 	var/wizards_alive = 0
@@ -192,11 +193,17 @@
 
 	if (wizards_alive || traitors_alive)
 		return ..()
-	else
-		finished = 1
-		return 1
 
+	if(config.continuous_round_wiz)
+		round_converted = convert_roundtype()
+		if(!round_converted)
+			finished = 1
+			return 1
+		else
+			return ..()
 
+	finished = 1
+	return 1
 
 /datum/game_mode/wizard/declare_completion()
 	if(finished)

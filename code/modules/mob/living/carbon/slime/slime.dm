@@ -161,48 +161,19 @@
 /mob/living/carbon/slime/ex_act(severity, target)
 	..()
 
-	var/b_loss = null
-	var/f_loss = null
 	switch (severity)
 		if (1.0)
-			qdel(src)
+			gib()
 			return
 
 		if (2.0)
-
-			b_loss += 60
-			f_loss += 60
-
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
 
 		if(3.0)
-			b_loss += 30
-
-	adjustBruteLoss(b_loss)
-	adjustFireLoss(f_loss)
+			adjustBruteLoss(30)
 
 	updatehealth()
-
-
-/mob/living/carbon/slime/blob_act()
-	if (stat == 2)
-		return
-	var/shielded = 0
-
-	var/damage = null
-	if (stat != 2)
-		damage = rand(10,30)
-
-	if(shielded)
-		damage /= 4
-
-		//paralysis += 1
-
-	show_message("<span class='userdanger'> The blob attacks you!</span>")
-
-	adjustFireLoss(damage)
-
-	updatehealth()
-	return
 
 /mob/living/carbon/slime/MouseDrop(var/atom/movable/A as mob|obj)
 	if(isliving(A) && A != src && usr == src)
@@ -495,9 +466,6 @@
 
 /mob/living/carbon/slime/restrained()
 	return 0
-
-mob/living/carbon/slime/var/co2overloadtime = null
-mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/slime/show_inv(mob/user)
 	return

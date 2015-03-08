@@ -385,3 +385,10 @@ var/const/GALOSHES_DONT_HELP = 8
 	heart_attack = 0
 	..()
 	return
+
+/mob/living/carbon/blob_act()
+	if (stat == DEAD)
+		return
+	else
+		show_message("<span class='userdanger'>The blob attacks!</span>")
+		adjustBruteLoss(10)
