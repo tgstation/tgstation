@@ -425,6 +425,7 @@
 	var/area/A = get_area_master(mob)
 	if(A)
 		A.Entered(mob)
+	loc.Entered(mob)
 	return 1
 
 
