@@ -93,6 +93,12 @@ LINEN BINS
 	icon_state = "sheetrd"
 	item_color = "director"
 
+/obj/item/weapon/bedsheet/patriot
+	name = "patriotic bedsheet"
+	desc = "You've never felt more free than when wearing this."
+	icon_state = "sheetUSA"
+	item_color = "sheetUSA"
+
 /obj/item/weapon/bedsheet/medical
 	name = "medical blanket"
 	desc = "It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station."

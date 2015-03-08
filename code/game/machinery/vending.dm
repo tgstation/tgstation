@@ -940,7 +940,7 @@
 					/obj/item/weapon/gun/projectile/shotgun = 2)
 	premium = list(/obj/item/ammo_box/magazine/smgm9mm = 2,/obj/item/ammo_box/magazine/m50 = 4,/obj/item/ammo_box/magazine/m45 = 2,/obj/item/ammo_box/magazine/m75 = 2)
 
-	contraband = list(/obj/item/clothing/under/patriotsuit = 1)
+	contraband = list(/obj/item/clothing/under/patriotsuit = 1,/obj/item/weapon/bedsheet/patriot = 3)
 
 //This one's from bay12
 /obj/machinery/vending/engineering
