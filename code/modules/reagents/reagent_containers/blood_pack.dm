@@ -32,8 +32,8 @@
 				desc = "A bloodpack filled with [target_type] blood."
 				blood_type = target_type
 			else
-    				name = "Murky Bloodpack"
-    				desc = "A bloodpack filled with mysterious liquid."
+				name = "Murky Bloodpack"
+				desc = "A bloodpack filled with mysterious liquid."
 
 	update_icon()
 		var/percent = round((reagents.total_volume / volume) * 100)
