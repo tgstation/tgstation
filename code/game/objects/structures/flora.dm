@@ -91,6 +91,7 @@
 		user << "There is already something in the pot."
 	else
 		full = I
+		user.drop_item(src)
 		full.loc = src
 		user.visible_message("<span class='notice'>[user] stuffs something into the pot.</span>","You stuff \the [full] into the [src].")
 
@@ -98,6 +99,7 @@
 	if(full)
 		user.visible_message("<span class='notice'>[user] retrieves something from the pot.</span>","You retrieve the [full] from the [src].")
 		full.loc = src.loc
+		user.put_in_active_hand(full)
 		full = null
 	else
 		user << "You root around in the roots."
