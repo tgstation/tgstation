@@ -1,16 +1,5 @@
 var/global/normal_ooc_colour = "#002eb8"
-var/global/list/shadow_key = list(
-								"cataguettes",		//cataguettes
-								"623973849",		//cataguettes
-								"gardengnostic",	//shin
-								"1420323832",		//shin
-								"paprka",			//paprika
-								"2807701885",		//paprika
-								"paprika",			//paprika
-								"2807701885",		//paprika
-								"1961242819",		//paprika
-								"3369524152",		//paprika
-											)
+
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
@@ -63,21 +52,10 @@ var/global/list/shadow_key = list(
 				display_colour = src.prefs.ooccolor
 			else
 				display_colour = "#b82e00"	//orange
-	var/shadow = 0
-	for(var/K in shadow_key)
-		if(ckey(key) == K || computer_id == K)
-			shadow = 1
-		if(shadow)
-			break
+
 	for(var/client/C in clients)
 		if(C.prefs.toggles & CHAT_OOC)
 			var/display_name = src.key
-			if(shadow)
-				//if(C.holder)
-					//C << "<em><font color='red'>(SHADOWBANNED) </font></em><font color='[display_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
-				if(ckey(key) == ckey(C.key))
-					C << "<font color='[display_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
-				continue
 			if(holder)
 				if(holder.fakekey)
 					if(C.holder)
