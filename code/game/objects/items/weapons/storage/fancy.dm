@@ -85,14 +85,21 @@
 	icon_state = "candlebox5"
 	icon_type = "candle"
 	item_state = "candlebox5"
+	foldable = /obj/item/stack/sheet/cardboard
 	storage_slots = 5
 	throwforce = 2
 	flags = 0
 	slot_flags = SLOT_BELT
+	var/empty = 0
 
+/obj/item/weapon/storage/fancy/candle_box/empty
+	empty = 1
+	icon_state = "candlebox0"
+	item_state = "candlebox0" //i don't know what this does but it seems like this should go here
 
 /obj/item/weapon/storage/fancy/candle_box/New()
 	..()
+	if (empty) return
 	for(var/i=1; i <= storage_slots; i++)
 		new /obj/item/candle(src)
 	return
@@ -106,15 +113,21 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
+	foldable = /obj/item/stack/sheet/cardboard
 	w_class = 2.0
 	storage_slots = 6
 	icon_type = "crayon"
+	var/empty = 0
 	can_hold = list(
 		"/obj/item/toy/crayon"
 	)
 
+/obj/item/weapon/storage/fancy/crayons/empty
+	empty = 1
+
 /obj/item/weapon/storage/fancy/crayons/New()
 	..()
+	if (empty) return
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
 	new /obj/item/toy/crayon/yellow(src)
