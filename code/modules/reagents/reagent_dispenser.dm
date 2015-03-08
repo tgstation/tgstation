@@ -85,7 +85,7 @@
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity watertank"
-	desc = "A  high-capacity watertank"
+	desc = "A high-capacity watertank"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "hightank"
 	amount_per_transfer_from_this = 10
@@ -143,7 +143,7 @@
 		if(istype(W,/obj/item/seeds))
 			addAmt = 2
 		else
-			var/obj/item/reagent_containers/food/snacks/grown/G = W
+			var/obj/item/weapon/reagent_containers/food/snacks/grown/G = W
 			addAmt = G.compost_value
 	else
 		load = 0
@@ -175,7 +175,7 @@
 			if(istype(P,/obj/item/seeds))
 				addAmt = 2
 			else
-				var/obj/item/reagent_containers/food/snacks/grown/G = P
+				var/obj/item/weapon/reagent_containers/food/snacks/grown/G = P
 				addAmt = G.compost_value
 			if(addAmt)
 				reagents.add_reagent("compost",addAmt)
