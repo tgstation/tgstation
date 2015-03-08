@@ -6,6 +6,15 @@
 
 //these recipes can also be done with attackby.
 
+/datum/table_recipe/wheatdough
+	name = "Whole Wheat Dough"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/water = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/dough
+
 /datum/table_recipe/cakebatter
 	name = "Cake Batter"
 	reqs = list(
