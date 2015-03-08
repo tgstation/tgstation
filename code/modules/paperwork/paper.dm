@@ -334,14 +334,13 @@
 /obj/item/weapon/paper/fire_act()
 	burn(showmsg = 1)
 
-/obj/item/weapon/paper/proc/burn(var/burntime, var/showmsg = 1)
-	burntime = 70 //7 seconds, can be changed
+/obj/item/weapon/paper/proc/burn(var/burntime, var/showmsg)
 	if(showmsg)
 		src.visible_message("<span class='warning'>[src] catches on fire!</span>")
 	burning = 1
 	icon_state = "paper_onfire"
 	info = "[stars(info)]"
-	sleep(burntime)
+	sleep(70) //7 seconds
 	src.visible_message("<span class='danger'>[src] burns away, leaving behind a pile of ashes.</span>")
 	new /obj/effect/decal/cleanable/ash(src.loc)
 	qdel(src)
