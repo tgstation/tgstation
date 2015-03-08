@@ -44,7 +44,7 @@
 	var/obj/item/mecha_parts/chassis/const_holder = holder
 	const_holder.construct = new /datum/construction/reversible/mecha/firefighter(const_holder)
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
-	const_holder.icon_state = "fireripley0"
+	const_holder.icon_state = "firefighter0"
 	const_holder.density = 1
 	spawn()
 		del src
