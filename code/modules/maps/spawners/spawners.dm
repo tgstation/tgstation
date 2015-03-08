@@ -238,6 +238,7 @@
 		/obj/item/device/t_scanner,
 		/obj/item/device/taperecorder,
 		/obj/item/device/toner,
+		/obj/item/device/label_roll,
 		/obj/item/toy/snappop,
 		/obj/item/toy/crayon/blue,
 		/obj/item/toy/crayon/orange,
