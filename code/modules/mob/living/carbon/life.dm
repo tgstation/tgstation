@@ -343,12 +343,12 @@
 			silent = 0
 			return 1
 
-		if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
+		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
 			Paralyse(3)
+			stat = UNCONSCIOUS
 
 		if(paralysis)
 			AdjustParalysis(-1)
-			stat = UNCONSCIOUS
 		else if(sleeping)
 			handle_dreams()
 			adjustStaminaLoss(-10)
