@@ -56,18 +56,26 @@ Mime
 
 	default_pda = /obj/item/device/pda/mime
 	default_backpack = /obj/item/weapon/storage/backpack/mime
+	default_satchel = /obj/item/weapon/storage/backpack/satchel_mime
 
 	access = list(access_theatre)
 	minimal_access = list(access_theatre)
 
 /datum/job/mime/equip_backpack(var/mob/living/carbon/human/H)
-	var/obj/item/weapon/storage/backpack/BPK = new default_backpack(H)
+	switch(H.backbag)
+		if(1) //No backpack or satchel
+			var/obj/item/weapon/storage/box/box = new default_storagebox(H)
+			new /obj/item/toy/crayon/mime(box)
+			H.equip_to_slot_or_del(box, slot_r_hand)
 
-	new default_storagebox(BPK)
-	new /obj/item/toy/crayon/mime(BPK)
-	new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(BPK)
-
-	H.equip_to_slot_or_del(BPK, slot_back)
+		if(2) // Backpack
+			var/obj/item/weapon/storage/backpack/BPK = new default_backpack(H)
+			new default_storagebox(BPK)
+			H.equip_to_slot_or_del(BPK, slot_back,1)
+		if(3) //Satchel
+			var/obj/item/weapon/storage/backpack/BPK = new default_satchel(H)
+			new default_storagebox(BPK)
+			H.equip_to_slot_or_del(BPK, slot_back,1)
 
 /datum/job/mime/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/mime(H), slot_w_uniform)
@@ -76,6 +84,10 @@ Mime
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(H), slot_wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(H), slot_wear_suit)
+
+	if(H.backbag != 1)
+		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
 
 	if(H.mind)
 		H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null)
