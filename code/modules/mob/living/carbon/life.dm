@@ -39,9 +39,6 @@
 		//Heart Attacks, etc.
 		handle_heart()
 
-		//Critical condition handling
-		handle_crit()
-
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment
@@ -314,9 +311,6 @@
 	return
 
 /mob/living/carbon/proc/handle_heart()
-	return
-
-/mob/living/carbon/proc/handle_crit()
 	return
 
 /mob/living/carbon/proc/handle_random_events()

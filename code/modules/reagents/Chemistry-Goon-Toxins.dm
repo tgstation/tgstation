@@ -4,22 +4,22 @@
 
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
-datum/reagent/polonium
+datum/reagent/goonchem/polonium
 	name = "Polonium"
 	id = "polonium"
-	description = "+8 RAD."
+	description = "Cause significant Radiation damage over time."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.1
 
-datum/reagent/polonium/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/polonium/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.radiation += 8
 	..()
 	return
 
 
-datum/reagent/histamine
+datum/reagent/goonchem/histamine
 	name = "Histamine"
 	id = "histamine"
 	description = "A dose-dependent toxin, ranges from annoying to incredibly lethal."
@@ -28,7 +28,7 @@ datum/reagent/histamine
 	metabolization_rate = 0.2
 	overdose_threshold = 30
 
-datum/reagent/histamine/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/histamine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	switch(pick(1, 2, 3, 4))
 		if(1)
@@ -44,21 +44,21 @@ datum/reagent/histamine/on_mob_life(var/mob/living/M as mob)
 				M.adjustBruteLoss(2*REM)
 	..()
 	return
-datum/reagent/histamine/overdose_process(var/mob/living/M as mob)
+datum/reagent/goonchem/histamine/overdose_process(var/mob/living/M as mob)
 	M.adjustOxyLoss(pick(1,3)*REM)
 	M.adjustBruteLoss(pick(1,3)*REM)
 	M.adjustToxLoss(pick(1,3)*REM)
 	..()
 	return
 
-datum/reagent/formaldehyde
+datum/reagent/goonchem/formaldehyde
 	name = "Formaldehyde"
 	id = "formaldehyde"
-	description = "+1 TOX, 10% chance to decay into 5-15 units of histamine."
+	description = "Deals a moderate amount of Toxin damage over time. 10% chance to decay into 10-15 histamine."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 
-datum/reagent/formaldehyde/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/formaldehyde/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(1*REM)
 	if(prob(10))
@@ -75,14 +75,14 @@ datum/reagent/formaldehyde/on_mob_life(var/mob/living/M as mob)
 	result_amount = 3
 	required_temp = 420
 
-datum/reagent/venom
+datum/reagent/goonchem/venom
 	name = "Venom"
 	id = "venom"
-	description = "Scaling TOX and BRUTE damage with dose. 25% chance to decay into 5-10 histamine."
+	description = "Will deal scaling amounts of Toxin and Brute damage over time. 25% chance to decay into 5-10 histamine."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.2
-datum/reagent/venom/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/venom/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss((0.1*volume)*REM)
 	M.adjustBruteLoss((0.1*volume)*REM)
@@ -92,16 +92,16 @@ datum/reagent/venom/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/neurotoxin2
+datum/reagent/goonchem/neurotoxin2
 	name = "Neurotoxin"
 	id = "neurotoxin2"
-	description = "+1 TOX, +1 BRAIN up to 60 before it slows down, confusion, knockout after 17 elapsed cycles."
+	description = "Deals toxin and brain damage up to 60 before it slows down, causing confusion and a knockout after 17 elapsed cycles."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	var/cycle_count = 0
 	metabolization_rate = 1
 
-datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	cycle_count++
 	if(M.brainloss + M.toxloss <= 60)
 		M.adjustBrainLoss(1*REM)
@@ -119,15 +119,15 @@ datum/reagent/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	result_amount = 1
 	required_temp = 674
 
-datum/reagent/cyanide
+datum/reagent/goonchem/cyanide
 	name = "Cyanide"
 	id = "cyanide"
-	description = "+1.5 TOX, 10% chance of +1 LOSEBREATH, 8% chance of stun and extra +2 TOX."
+	description = "Deals toxin damage, alongside some oxygen loss. 8% chance of stun and some extra toxin damage."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.1
 
-datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/cyanide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(1.5*REM)
 	if(prob(10))
@@ -147,7 +147,7 @@ datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
 	result_amount = 3
 	required_temp = 380
 
-/datum/reagent/questionmark // food poisoning
+/datum/reagent/goonchem/questionmark // food poisoning
 	name = "Bad Food"
 	id = "????"
 	description = "????"
@@ -155,26 +155,26 @@ datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.2
 
-datum/reagent/questionmark/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/questionmark/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(1*REM)
 	..()
 	return
 
-datum/reagent/itching_powder
+datum/reagent/goonchem/itching_powder
 	name = "Itching Powder"
 	id = "itching_powder"
-	description = "Lots of annoying random effects, chances to do BRUTE damage from scratching. 6% chance to decay into 1-3 units of histamine."
+	description = "Lots of annoying random effects, chances to do some brute damage from scratching. 6% chance to decay into 1-3 units of histamine."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.3
 
-/datum/reagent/itching_powder/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+/datum/reagent/goonchem/itching_powder/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		M.reagents.add_reagent("itching_powder", volume)
 		return
 
-datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/itching_powder/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(prob(rand(5,50)))
 		M << "You scratch at your head."
@@ -206,15 +206,15 @@ datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
 	result_amount = 4
 	required_temp = 380
 
-datum/reagent/initropidril
+datum/reagent/goonchem/initropidril
 	name = "Initropidril"
 	id = "initropidril"
-	description = "Major stamina regeneration buff. 33% chance to hit with 5-25 TOX. 5-10% chances to stun and cause suffocation or immediate heart failure."
+	description = "Major stamina regeneration buff. 33% chance to hit with a random amount of toxin damage, 5-10% chances to cause stunning, suffocation, or immediate heart failure."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.4
 
-datum/reagent/initropidril/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/initropidril/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustStaminaLoss(-5)
 	if(prob(33))
@@ -239,15 +239,15 @@ datum/reagent/initropidril/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/pancuronium
+datum/reagent/goonchem/pancuronium
 	name = "Pancuronium"
 	id = "pancuronium"
-	description = "10 cycles to paralysis, 7% chance to cause 3-5 LOSEBREATH."
+	description = "Knocks you out after 10 cycles, 7% chance to cause some oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.2
 
-datum/reagent/pancuronium/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/pancuronium/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(current_cycle >= 10)
 		M.SetParalysis(3)
@@ -256,15 +256,15 @@ datum/reagent/pancuronium/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/sodium_thiopental
+datum/reagent/goonchem/sodium_thiopental
 	name = "Sodium Thiopental"
 	id = "sodium_thiopental"
-	description = "KOs in ten cycles. Major total stamina penalty."
+	description = "Puts you to sleep after 10 cycles, along with some major stamina loss."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.7
 
-datum/reagent/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(current_cycle >= 10)
 		M.sleeping += 3
@@ -272,10 +272,10 @@ datum/reagent/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/sulfonal
+datum/reagent/goonchem/sulfonal
 	name = "Sulfonal"
 	id = "sulfonal"
-	description = "+1 TOX, KOs in 22 cycles."
+	description = "Deals some toxin damage, and puts you to sleep after 22 cycles."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.1
@@ -287,7 +287,7 @@ datum/reagent/sulfonal
 	required_reagents = list("acetone" = 1, "diethylamine" = 1, "sulfur" = 1)
 	result_amount = 3
 
-datum/reagent/sulfonal/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/sulfonal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(current_cycle >= 22)
 		M.sleeping += 3
@@ -295,28 +295,28 @@ datum/reagent/sulfonal/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/amanitin
+datum/reagent/goonchem/amanitin
 	name = "Amanitin"
 	id = "amanitin"
-	description = "On the last cycle that it's in you, it hits you with a stack of TOX damage based on elapsed cycles * rand(2,4). The more you use, the longer it takes before anything happens, but the harder it hits when it does."
+	description = "On the last cycle that it's in you, it hits you with a stack of toxin damage based on the cycles elapsed. The more you use, the longer it takes before anything happens, but the harder it hits when it does."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 
-datum/reagent/amanitin/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/amanitin/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	..()
 	return
 
-datum/reagent/amanitin/reagent_deleted(var/mob/living/M as mob)
+datum/reagent/goonchem/amanitin/reagent_deleted(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(current_cycle*rand(2,4))
 	..()
 	return
 
-datum/reagent/lipolicide
+datum/reagent/goonchem/lipolicide
 	name = "Lipolicide"
 	id = "lipolicide"
-	description = "+1 TOX unless they keep eating food."
+	description = "Deals some toxin damage unless they keep eating food. Will reduce nutrition values."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 
@@ -327,7 +327,7 @@ datum/reagent/lipolicide
 	required_reagents = list("mercury" = 1, "diethylamine" = 1, "ephedrine" = 1)
 	result_amount = 3
 
-datum/reagent/lipolicide/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/lipolicide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(!holder.has_reagent("nutriment"))
 		M.adjustToxLoss(1)
@@ -338,30 +338,30 @@ datum/reagent/lipolicide/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/coniine
+datum/reagent/goonchem/coniine
 	name = "Coniine"
 	id = "coniine"
-	description = "+2 TOX, +5 LOSEBREATH."
+	description = "Does moderate toxin damage and oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.05
 
-datum/reagent/coniine/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/coniine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.losebreath += 5
 	M.adjustToxLoss(2)
 	..()
 	return
 
-datum/reagent/curare
+datum/reagent/goonchem/curare
 	name = "Curare"
 	id = "curare"
-	description = "+1 TOX, +1 OXY, paralyzes after 11 cycles."
+	description = "Does some oxygen and toxin damage, weakens you after 11 cycles.."
 	reagent_state = LIQUID
 	color = "#CF3600" // rgb: 207, 54, 0
 	metabolization_rate = 0.1
 
-datum/reagent/curare/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/curare/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(current_cycle >= 11)
 		M.Weaken(3)

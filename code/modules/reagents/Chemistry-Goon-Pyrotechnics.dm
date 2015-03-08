@@ -4,7 +4,7 @@
 
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
-/datum/reagent/stabilizing_agent
+/datum/reagent/goonchem/stabilizing_agent
 	name = "Stabilizing Agent"
 	id = "stabilizing_agent"
 	description = "Keeps unstable chemicals stable. This does not work on everything."
@@ -18,7 +18,7 @@
 	required_reagents = list("iron" = 1, "oxygen" = 1, "hydrogen" = 1)
 	result_amount = 3
 
-/datum/reagent/clf3
+/datum/reagent/goonchem/clf3
 	name = "Chlorine Trifluoride"
 	id = "clf3"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
@@ -34,7 +34,7 @@
 	result_amount = 4
 	required_temp = 424
 
-/datum/reagent/clf3/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/goonchem/clf3/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjust_fire_stacks(4)
 	M.adjustFireLoss(0.35*M.fire_stacks)
@@ -50,7 +50,7 @@
 	holder.chem_temp = 1000 // hot as shit
 	return
 
-/datum/reagent/clf3/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/goonchem/clf3/reaction_turf(var/turf/simulated/T, var/volume)
 	if(istype(T, /turf/simulated/floor/plating))
 		var/turf/simulated/floor/plating/F = T
 		if(prob(1))
@@ -67,14 +67,14 @@
 			W.ChangeTurf(/turf/simulated/floor)
 	return
 
-/datum/reagent/clf3/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+/datum/reagent/goonchem/clf3/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(method == TOUCH && ishuman(M))
 		M.adjust_fire_stacks(5)
 		M.IgniteMob()
 		new /obj/effect/hotspot(M.loc)
 		return
 
-/datum/reagent/sorium
+/datum/reagent/goonchem/sorium
 	name = "Sorium"
 	id = "sorium"
 	description = "Sends everything flying from the detonation point."
@@ -106,7 +106,7 @@
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	goonchem_vortex(T, 1, 5, 6)
 
-/datum/reagent/liquid_dark_matter
+/datum/reagent/goonchem/liquid_dark_matter
 	name = "Liquid Dark Matter"
 	id = "liquid_dark_matter"
 	description = "Sucks everything into the detonation point."
@@ -152,7 +152,7 @@
 					for(var/i = 0, i < pull_times, i++)
 						step_towards(X,T)
 
-/datum/reagent/blackpowder
+/datum/reagent/goonchem/blackpowder
 	name = "Black Powder"
 	id = "blackpowder"
 	description = "Explodes. Violently."
@@ -183,11 +183,10 @@
 	var/ex_heavy = round(created_volume / 42)
 	var/ex_light = round(created_volume / 21)
 	var/ex_flash = round(created_volume / 8)
-<<<<<<< HEAD
 	explosion(T,ex_severe,ex_heavy,ex_light,ex_flash, 1)
 	return
 
-/datum/reagent/flash_powder
+/datum/reagent/goonchem/flash_powder
 	name = "Flash Powder"
 	id = "flash_powder"
 	description = "Makes a very bright flash."
@@ -239,7 +238,7 @@
 		C.Stun(5)
 	holder.remove_reagent("flash_powder", created_volume)
 
-/datum/reagent/smoke_powder
+/datum/reagent/goonchem/smoke_powder
 	name = "Smoke Powder"
 	id = "smoke_powder"
 	description = "Makes a large cloud of smoke that can carry reagents."
@@ -296,7 +295,7 @@
 			holder.clear_reagents()
 	return
 
-/datum/reagent/sonic_powder
+/datum/reagent/goonchem/sonic_powder
 	name = "Sonic Powder"
 	id = "sonic_powder"
 	description = "Makes a deafening noise."
@@ -355,7 +354,7 @@
 		else if(C.ear_damage >= 5)
 			C << "<span class='warning'>Your ears start to ring!</span>"
 
-/datum/reagent/phlogiston
+/datum/reagent/goonchem/phlogiston
 	name = "Phlogiston"
 	id = "phlogiston"
 	description = "+1 BURN, +1 BURNING and sets you alight. Don't be deceived by that meager +1, having phlogiston in the bloodstream can be very dangerous without a fire extinguisher or firebot. Even then, they can't prevent you from spontaneously igniting every cycle."
@@ -369,7 +368,7 @@
 	required_reagents = list("phosphorus" = 1, "sacid" = 1, "stable_plasma" = 1)
 	result_amount = 3
 
-/datum/reagent/phlogiston/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/goonchem/phlogiston/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjust_fire_stacks(1)
 	M.IgniteMob()
@@ -377,7 +376,7 @@
 	..()
 	return
 
-datum/reagent/cryostylane
+datum/reagent/goonchem/cryostylane
 	name = "Cryostylane"
 	id = "cryostylane"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the mob down to 0K."
@@ -395,19 +394,19 @@ datum/reagent/cryostylane
 	return
 
 
-datum/reagent/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code freezing into an ice cube
+datum/reagent/goonchem/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 1)
 		M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
 	..()
 	return
 
-datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
+datum/reagent/goonchem/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
 	if(volume >= 5)
 		for(var/mob/living/carbon/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 
-datum/reagent/pyrosium
+datum/reagent/goonchem/pyrosium
 	name = "Pyrosium"
 	id = "pyrosium"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly cools all other reagents in the mob down to 0K."
@@ -424,14 +423,14 @@ datum/reagent/pyrosium
 	holder.chem_temp = 20 // also cools the fuck down
 	return
 
-datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/pyrosium/on_mob_life(var/mob/living/M as mob)
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 1)
 		M.bodytemperature += 30 * TEMPERATURE_DAMAGE_COEFFICIENT
 	..()
 	return
 
-/datum/reagent/argine
+/datum/reagent/goonchem/argine
 	name = "Argine"
 	id = "argine"
 	description = "Explodes when lowered to freezing temperatures."

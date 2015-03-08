@@ -295,7 +295,9 @@
 			death()
 			silent = 0
 			return 1
-
+		//UNCONSCIOUS. NO-ONE IS HOME
+		if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
+			Paralyse(3)
 		if(hallucination)
 			spawn handle_hallucinations()
 
@@ -307,7 +309,6 @@
 		else
 			for(var/atom/a in hallucinations)
 				qdel(a)
-
 		if(paralysis)
 			AdjustParalysis(-1)
 			stat = UNCONSCIOUS
@@ -480,92 +481,6 @@
 		losebreath += 5
 		adjustOxyLoss(5)
 		adjustBrainLoss(10)
-	return
-
-/mob/living/carbon/human/handle_crit()
-	if(!is_incrit(src))
-		return
-	else
-		var/paralyse_amount = 1
-		var/losebreath_amount = 1
-		var/cardiac_arrest_chance = 0
-		var/brain_damage_from_crit = 5
-		switch(health)
-			if(config.health_threshold_crit to -9)
-				paralyse_amount = 1
-				losebreath_amount = 1
-				cardiac_arrest_chance = 0
-				brain_damage_from_crit = 1
-			if(-20 to -10)
-				paralyse_amount = 1
-				losebreath_amount = 2
-				cardiac_arrest_chance = 0
-				brain_damage_from_crit = 5
-			if(-30 to -20)
-				paralyse_amount = 1
-				losebreath_amount = 5
-				cardiac_arrest_chance = 1
-				brain_damage_from_crit = 5
-			if(-40 to -30)
-				paralyse_amount = 2
-				losebreath_amount = 8
-				cardiac_arrest_chance = 2
-				brain_damage_from_crit = 5
-			if(-50 to -40)
-				paralyse_amount = 2
-				losebreath_amount = 8
-				cardiac_arrest_chance = 3
-				brain_damage_from_crit = 8
-			if(-60 to -50)
-				paralyse_amount = 2
-				losebreath_amount = 8
-				cardiac_arrest_chance = 4
-				brain_damage_from_crit = 8
-			if(-70 to -60)
-				paralyse_amount = 3
-				losebreath_amount = 8
-				cardiac_arrest_chance = 5
-				brain_damage_from_crit = 8
-			if(-80 to -70)
-				paralyse_amount = 3
-				losebreath_amount = 8
-				cardiac_arrest_chance = 6
-				brain_damage_from_crit = 8
-			if(-90 to -80)
-				paralyse_amount = 3
-				losebreath_amount = 8
-				cardiac_arrest_chance = 7
-				brain_damage_from_crit = 10
-			if(-95 to -90)
-				paralyse_amount = 4
-				losebreath_amount = 8
-				cardiac_arrest_chance = 8
-				brain_damage_from_crit = 10
-			if(-INFINITY to -95)
-				paralyse_amount = 4
-				losebreath_amount = 8
-				cardiac_arrest_chance = 9
-				brain_damage_from_crit = 10
-		var/picked_effect = rand(1,4)
-		switch(picked_effect)
-			if(1)
-				Paralyse(paralyse_amount)
-			if(2)
-				if(!reagents.has_reagent("epinephrine"))
-					losebreath += losebreath_amount
-			if(3)
-				if(prob(cardiac_arrest_chance))
-					if(!heart_attack)
-						heart_attack = 1
-					else
-						if(!reagents.has_reagent("epinephrine"))
-							losebreath += losebreath_amount
-			if(4)
-				Paralyse(paralyse_amount)
-		adjustBrainLoss(brain_damage_from_crit)
-		stuttering += 5
-		if(!reagents.has_reagent("epinephrine"))
-			adjustOxyLoss(1)
 	return
 
 #undef HUMAN_MAX_OXYLOSS

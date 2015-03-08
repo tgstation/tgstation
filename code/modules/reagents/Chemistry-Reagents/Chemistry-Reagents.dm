@@ -30,7 +30,7 @@ datum/reagent
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
-
+	var/three_tick = 0 // set to 1 if you want this reagent to process every 3 ticks instead of every tick
 datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
 		return 0

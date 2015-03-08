@@ -4,16 +4,16 @@
 
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
-datum/reagent/nicotine
+datum/reagent/goonchem/nicotine
 	name = "Nicotine"
 	id = "nicotine"
-	description = "Stun reduction per cycle, slight stamina regeneration buff. Overdoses become rapidly deadly."
+	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 35
 	addiction_threshold = 30
 
-datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/nicotine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/smoke_message = pick("You can just feel your lungs dying!", "You feel relaxed.", "You feel calmed.", "You feel the lung cancer forming.", "You feel the money you wasted.", "You feel like a space cowboy.", "You feel rugged.")
 	if(prob(5))
@@ -23,7 +23,7 @@ datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/nicotine/overdose_process(var/mob/living/M as mob)
+datum/reagent/goonchem/nicotine/overdose_process(var/mob/living/M as mob)
 	if(prob(20))
 		M << "You feel like you smoked too much."
 	M.adjustToxLoss(1*REM)
@@ -31,16 +31,16 @@ datum/reagent/nicotine/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/crank
+datum/reagent/goonchem/crank
 	name = "Crank"
 	id = "crank"
-	description = "2x stun reduction per cycle. Warms you up, makes you jittery as hell."
+	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 20
 	addiction_threshold = 10
 
-datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
+datum/reagent/goonchem/crank/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 	if(prob(5))
@@ -50,26 +50,26 @@ datum/reagent/crank/on_mob_life(var/mob/living/M as mob)
 	M.AdjustWeakened(-2)
 	..()
 	return
-datum/reagent/crank/overdose_process(var/mob/living/M as mob)
+datum/reagent/goonchem/crank/overdose_process(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,10)*REM)
 	M.adjustToxLoss(rand(1,10)*REM)
 	M.adjustBruteLoss(rand(1,10)*REM)
 	..()
 	return
 
-datum/reagent/crank/addiction_act_stage1(var/mob/living/M as mob)
+datum/reagent/goonchem/crank/addiction_act_stage1(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,10)*REM)
 	..()
 	return
-datum/reagent/crank/addiction_act_stage2(var/mob/living/M as mob)
+datum/reagent/goonchem/crank/addiction_act_stage2(var/mob/living/M as mob)
 	M.adjustToxLoss(rand(1,10)*REM)
 	..()
 	return
-datum/reagent/crank/addiction_act_stage3(var/mob/living/M as mob)
+datum/reagent/goonchem/crank/addiction_act_stage3(var/mob/living/M as mob)
 	M.adjustBruteLoss(rand(1,10)*REM)
 	..()
 	return
-datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
+datum/reagent/goonchem/crank/addiction_act_stage4(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,10)*REM)
 	M.adjustToxLoss(rand(1,10)*REM)
 	M.adjustBruteLoss(rand(1,10)*REM)
@@ -84,17 +84,17 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
 	required_temp = 390
 
-/datum/reagent/krokodil
+/datum/reagent/goonchem/krokodil
 	name = "Krokodil"
 	id = "krokodil"
-	description = "Cools and calms you down, occasional BRAIN and TOX damage."
+	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage. If addicted it will begin to deal fatal amounts of Brute damage as the subject's skin falls off."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 20
 	addiction_threshold = 15
 
 
-/datum/reagent/krokodil/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/goonchem/krokodil/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
 	if(prob(5))
@@ -102,7 +102,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	..()
 	return
 
-/datum/reagent/krokodil/overdose_process(var/mob/living/M as mob)
+/datum/reagent/goonchem/krokodil/overdose_process(var/mob/living/M as mob)
 	if(prob(10))
 		M.adjustBrainLoss(rand(1,5)*REM)
 		M.adjustToxLoss(rand(1,5)*REM)
@@ -110,23 +110,23 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	return
 
 
-/datum/reagent/krokodil/addiction_act_stage1(var/mob/living/M as mob)
+/datum/reagent/goonchem/krokodil/addiction_act_stage1(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,5)*REM)
 	M.adjustToxLoss(rand(1,5)*REM)
 	..()
 	return
-/datum/reagent/krokodil/addiction_act_stage2(var/mob/living/M as mob)
+/datum/reagent/goonchem/krokodil/addiction_act_stage2(var/mob/living/M as mob)
 	if(prob(25))
 		M << "<span class='danger'>Your skin feels loose...</span>"
 	..()
 	return
-/datum/reagent/krokodil/addiction_act_stage3(var/mob/living/M as mob)
+/datum/reagent/goonchem/krokodil/addiction_act_stage3(var/mob/living/M as mob)
 	if(prob(25))
 		M << "<span class='danger'>Your skin starts to peel away...</span>"
 	M.adjustBruteLoss(3*REM)
 	..()
 	return
-/datum/reagent/krokodil/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
+/datum/reagent/goonchem/krokodil/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
 	M << "<span class='userdanger'>Your skin sloughs off!</span>"
 	M.adjustBruteLoss(rand(50,80)*REM)
 	..()
@@ -141,17 +141,17 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	mix_message = "The mixture dries into a pale blue powder."
 	required_temp = 380
 
-/datum/reagent/methamphetamine
+/datum/reagent/goonchem/methamphetamine
 	name = "Methamphetamine"
 	id = "methamphetamine"
-	description = "3x stun reduction per cycle, significant stamina regeneration buff, makes you really jittery, dramatically increases movement speed."
+	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.6
 
-/datum/reagent/methamphetamine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/goonchem/methamphetamine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(prob(5))
@@ -168,7 +168,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	..()
 	return
 
-/datum/reagent/methamphetamine/overdose_process(var/mob/living/M as mob)
+/datum/reagent/goonchem/methamphetamine/overdose_process(var/mob/living/M as mob)
 	if(M.canmove && !istype(M.loc, /turf/space))
 		for(var/i = 0, i < 4, i++)
 			step(M, pick(cardinal))
@@ -185,20 +185,20 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	M.adjustBrainLoss(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
 	return
 
-/datum/reagent/methamphetamine/addiction_act_stage1(var/mob/living/M as mob)
+/datum/reagent/goonchem/methamphetamine/addiction_act_stage1(var/mob/living/M as mob)
 	M.Jitter(5)
 	if(prob(20))
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	return
-/datum/reagent/methamphetamine/addiction_act_stage2(var/mob/living/M as mob)
+/datum/reagent/goonchem/methamphetamine/addiction_act_stage2(var/mob/living/M as mob)
 	M.Jitter(10)
 	M.Dizzy(10)
 	if(prob(30))
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	return
-/datum/reagent/methamphetamine/addiction_act_stage3(var/mob/living/M as mob)
+/datum/reagent/goonchem/methamphetamine/addiction_act_stage3(var/mob/living/M as mob)
 	if(M.canmove && !istype(M.loc, /turf/space))
 		for(var/i = 0, i < 4, i++)
 			step(M, pick(cardinal))
@@ -208,7 +208,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	return
-/datum/reagent/methamphetamine/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
+/datum/reagent/goonchem/methamphetamine/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
 	if(M.canmove && !istype(M.loc, /turf/space))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(cardinal))
@@ -228,59 +228,6 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	result_amount = 4
 	required_temp = 374
 
-/datum/chemical_reaction/methamphetamine_two
-	name = "methamphetamine_two"
-	id = "methamphetamine_two"
-	result = "methamphetamine"
-	required_reagents = list("muriatic_acid" = 1, "caustic_soda" = 1, "hydrogen_chloride" = 1)
-	result_amount = 3
-	required_temp = 374
-
-/datum/reagent/muriatic_acid
-	name = "Muriatic Acid"
-	id = "muriatic_acid"
-	description = "A chemical compound."
-	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
-
-/datum/reagent/caustic_soda
-	name = "Caustic Soda"
-	id = "caustic_soda"
-	description = "A chemical compound."
-	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
-
-/datum/reagent/hydrogen_chloride
-	name = "Hydrogen Chloride"
-	id = "hydrogen_chloride"
-	description = "A chemical compound."
-	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
-
-/datum/chemical_reaction/muriatic_acid
-	name = "muriatic_acid"
-	id = "muriatic_acid"
-	result = "muriatic_acid"
-	required_reagents = list("mutadone" = 1, "sacid" = 1)
-	result_amount = 2
-	required_temp = 500
-
-/datum/chemical_reaction/caustic_soda
-	name = "caustic_soda"
-	id = "caustic_soda"
-	result = "caustic_soda"
-	required_reagents = list("sacid" = 1, "cola" = 1)
-	result_amount = 2
-	required_temp = 500
-
-/datum/chemical_reaction/hydrogen_chloride
-	name = "hydrogen_chloride"
-	id = "hydrogen_chloride"
-	result = "hydrogen_chloride"
-	required_reagents = list("hydrogen" = 1, "chlorine" = 1)
-	result_amount = 2
-	required_temp = 500
-
 /datum/chemical_reaction/saltpetre
 	name = "saltpetre"
 	id = "saltpetre"
@@ -288,14 +235,14 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	required_reagents = list("potassium" = 1, "nitrogen" = 1, "oxygen" = 3)
 	result_amount = 3
 
-/datum/reagent/saltpetre
+/datum/reagent/goonchem/saltpetre
 	name = "Saltpetre"
 	id = "saltpetre"
 	description = "Volatile."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
-/datum/reagent/bath_salts
+/datum/reagent/goonchem/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"
 	description = "Makes you nearly impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
@@ -305,7 +252,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	addiction_threshold = 10
 
 
-/datum/reagent/bath_salts/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/goonchem/bath_salts/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
@@ -331,7 +278,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	result_amount = 7
 	required_temp = 374
 
-/datum/reagent/bath_salts/overdose_process(var/mob/living/M as mob)
+/datum/reagent/goonchem/bath_salts/overdose_process(var/mob/living/M as mob)
 	M.hallucination += 10
 	if(M.canmove && !istype(M.loc, /turf/space))
 		for(var/i = 0, i < 8, i++)
@@ -345,7 +292,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	..()
 	return
 
-/datum/reagent/bath_salts/addiction_act_stage1(var/mob/living/M as mob)
+/datum/reagent/goonchem/bath_salts/addiction_act_stage1(var/mob/living/M as mob)
 	M.hallucination += 10
 	if(M.canmove && !istype(M.loc, /turf/space))
 		for(var/i = 0, i < 8, i++)
@@ -356,7 +303,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	return
-/datum/reagent/bath_salts/addiction_act_stage2(var/mob/living/M as mob)
+/datum/reagent/goonchem/bath_salts/addiction_act_stage2(var/mob/living/M as mob)
 	M.hallucination += 20
 	if(M.canmove && !istype(M.loc, /turf/space))
 		for(var/i = 0, i < 8, i++)
@@ -368,7 +315,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	return
-/datum/reagent/bath_salts/addiction_act_stage3(var/mob/living/M as mob)
+/datum/reagent/goonchem/bath_salts/addiction_act_stage3(var/mob/living/M as mob)
 	M.hallucination += 30
 	if(M.canmove && !istype(M.loc, /turf/space))
 		for(var/i = 0, i < 12, i++)
@@ -380,7 +327,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	return
-/datum/reagent/bath_salts/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
+/datum/reagent/goonchem/bath_salts/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
 	M.hallucination += 40
 	if(M.canmove && !istype(M.loc, /turf/space))
 		for(var/i = 0, i < 16, i++)
@@ -401,14 +348,14 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
 	result_amount = 3
 
-/datum/reagent/aranesp
+/datum/reagent/goonchem/aranesp
 	name = "Aranesp"
 	id = "aranesp"
-	description = "Volatile."
+	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage.."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
-/datum/reagent/aranesp/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/goonchem/aranesp/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
@@ -418,89 +365,5 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 	if(prob(rand(1,100)))
 		M.losebreath++
 		M.adjustOxyLoss(20)
-	..()
-	return
-
-/obj/item/weapon/reagent_containers/food/drinks/muriatic_acid
-	name = "jug of muriatic acid"
-	desc = "We needed those cooks."
-	icon_state = "chem_jug"
-	item_state = "carton"
-	list_reagents = list("muriatic_acid" = 50)
-
-/obj/item/weapon/reagent_containers/food/drinks/caustic_soda
-	name = "jug of caustic soda"
-	desc = "We needed those cooks."
-	icon_state = "chem_jug"
-	item_state = "carton"
-	list_reagents = list("caustic_soda" = 50)
-
-/obj/item/weapon/reagent_containers/food/drinks/hydrogen_chloride
-	name = "jug of hydrogen chloride"
-	desc = "We needed those cooks."
-	icon_state = "chem_jug"
-	item_state = "carton"
-	list_reagents = list("hydrogen_chloride" = 50)
-
-datum/reagent/hotline
-	name = "Hotline"
-	id = "hotline"
-	description = "It isn't just wrong. It's dead wrong."
-	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
-	overdose_threshold = 15
-	addiction_threshold = 10
-
-datum/reagent/hotline/on_mob_life(var/mob/living/M as mob)
-	if(!M) M = holder.my_atom
-	var/high_message = pick("You feel alert.", "You feel like you can see everything more clearly.", "You feel like you need to relax and examine your surroundings.")
-	if(prob(5))
-		M << "<span class='notice'>[high_message]</span>"
-	M.druggy = max(M.druggy, 15)
-	M.hallucination += 10
-	M.adjustBrainLoss(0.2)
-	M.adjustBruteLoss(-0.2)
-	M.adjustFireLoss(-0.2)
-	M.status_flags |= GOTTAGOFAST
-	M.adjustStaminaLoss(-3)
-	..()
-	return
-datum/reagent/hotline/overdose_process(var/mob/living/M as mob)
-	M.adjustBrainLoss(rand(1,20)*REM)
-	M.adjustToxLoss(rand(1,20)*REM)
-	M.adjustBruteLoss(rand(1,20)*REM)
-	M.druggy = max(M.druggy, 30)
-	M.hallucination += 30
-	if(prob(5))
-		M << pick("<span class = 'userdanger'>Your head feels like it's ripping apart!</span>","<span class = 'userdanger'>You wonder why the fuck did you decide to take [src.name].</span>","<span class = 'userdanger'>It hurts so bad!</span>","<span class = 'userdanger'>Please, end it now!</span>","<span class = 'userdanger'>Dear [ticker.Bible_deity_name] please no it hurts!</span>")
-	..()
-	return
-
-datum/reagent/hotline/addiction_act_stage1(var/mob/living/M as mob)
-	M.adjustBrainLoss(rand(1,10))
-	M.hallucination += 30
-	M.druggy = max(M.druggy, 30)
-	..()
-	return
-datum/reagent/hotline/addiction_act_stage2(var/mob/living/M as mob)
-	M.adjustBrainLoss(rand(1,20))
-	M.hallucination += 30
-	M.druggy = max(M.druggy, 30)
-	..()
-	return
-datum/reagent/hotline/addiction_act_stage3(var/mob/living/M as mob)
-	M.adjustBrainLoss(rand(1,30))
-	M.hallucination += 30
-	M.druggy = max(M.druggy, 30)
-	..()
-	return
-datum/reagent/hotline/addiction_act_stage4(var/mob/living/M as mob)
-	M.adjustBrainLoss(rand(1,30))
-	M.hallucination += 30
-	M.druggy = max(M.druggy, 30)
-	var/mob/living/carbon/human/H = M
-	if(prob(1) && !H.heart_attack)
-		H.visible_message("<span class = 'userdanger'>[H] clutches at their chest! It looks like they're having a heart attack!</span>")
-		H.heart_attack = 1 // don't do drugs kids
 	..()
 	return

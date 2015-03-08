@@ -6,7 +6,7 @@
 /datum/table_recipe/chaosdonut
 	name = "Chaos donut"
 	reqs = list(
-		/datum/reagent/cryostylane = 5,
+		/datum/reagent/goonchem/cryostylane = 5,
 		/datum/reagent/consumable/capsaicin = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
