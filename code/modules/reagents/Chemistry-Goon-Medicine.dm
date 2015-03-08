@@ -13,7 +13,7 @@ datum/reagent/silver_sulfadiazine
 	metabolization_rate = 2
 
 datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
-	if(ishuman(M))
+	if(iscarbon(M))
 		if(method == TOUCH)
 			M.adjustFireLoss(-volume)
 			if(show_message)
@@ -41,7 +41,7 @@ datum/reagent/styptic_powder
 	metabolization_rate = 2
 
 datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
-	if(ishuman(M))
+	if(iscarbon(M))
 		if(method == TOUCH)
 			M.adjustBruteLoss(-volume)
 			if(show_message)
@@ -85,7 +85,7 @@ datum/reagent/synthflesh
 
 datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume,var/show_message = 1)
 	if(!M) M = holder.my_atom
-	if(ishuman(M))
+	if(iscarbon(M))
 		if(method == TOUCH)
 			M.adjustBruteLoss(-1.5*volume)
 			M.adjustFireLoss(-1.5*volume)
