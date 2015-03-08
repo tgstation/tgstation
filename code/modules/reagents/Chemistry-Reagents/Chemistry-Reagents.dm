@@ -894,6 +894,11 @@ datum/reagent/plantnutriment/robustharvestnutriment
 	color = "#9D9D00" // RBG: 157, 157, 0
 	tox_prob = 15
 
+datum/reagent/compost
+	name = "compost"
+	id = "compost"
+	description = "Raw nutriment derived from decaying seeds and plants. Gross."
+	color = "#A0522D" // RBG: 160, 82, 45
 
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER

@@ -83,6 +83,16 @@
 		new /obj/effect/effect/water(src.loc)
 		qdel(src)
 
+/obj/structure/reagent_dispensers/watertank/high
+	name = "high-capacity watertank"
+	desc = "A  high-capacity watertank"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "hightank"
+	amount_per_transfer_from_this = 10
+	New()
+		..()
+		reagents.add_reagent("water",2000)
+
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
 	desc = "A fueltank"
@@ -118,6 +128,56 @@
 /obj/structure/reagent_dispensers/fueltank/fire_act()
 	blob_act() //saving a few lines of copypasta
 
+/obj/structure/reagent_dispensers/compostbin
+	name = "compost tank"
+	desc = "A device that mulches up unwanted produce into usable fertiliser."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "comptank"
+	amount_per_transfer_from_this = 30
+	var/list/validCompostTypepaths = list(/obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom)
+
+	/obj/structure/reagent_dispensers/compostbin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+		var/load = 1
+		if(is_type_in_list(O, validCompostTypepaths))
+			var/addAmt = 0
+				if(istype(P,/obj/item/seeds))
+					addAmt = 2
+				else
+					addAmt = P.compost_value
+		else
+			load = 0
+
+		if(load)
+			user << "<span class='notice'>[src] mulches up [W].</span>"
+			playsound(src.loc, '/sounds/effects/blobattack.ogg', 50, 1)
+			user.unEquip(W)
+			qdel(W)
+			if(addAmt)
+				reagents.add_reagent("compost",addAmt)
+			return
+		else ..()
+
+	/obj/structure/reagent_dispensers/compostbin/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		if(is_type_in_list(O, validCompostTypepaths))
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing items into [src]!</span>")
+			var/staystill = get_turf(user)
+			for(var/obj/item/weapon/P in staystill)
+				sleep(3)
+				playsound(src.loc, '/sounds/effects/blobattack.ogg', 50, 1)
+				qdel(P)
+				if(src.reagents.total_volume >= reagents.maximum_volume)
+					user << "<span class='danger'>[src] is full!</span>"
+					break
+				if(get_turf(user) != staystill) break
+				var/addAmt = 0
+				if(istype(P,/obj/item/seeds))
+					addAmt = 2
+				else
+					addAmt = P.compost_value
+				if(addAmt)
+					reagents.add_reagent("compost",addAmt)
+			user << "<span class='notice'>You finish stuffing items into [src]!</span>"
+		else ..()
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"

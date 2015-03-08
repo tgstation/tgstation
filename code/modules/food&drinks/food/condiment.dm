@@ -171,6 +171,15 @@
 	list_reagents = list("soymilk" = 50)
 	possible_states = list()
 
+/obj/item/weapon/reagent_containers/food/condiment/compost
+	name = "compost bag"
+	desc = "A big bag of compost."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "compost"
+	amount_per_transfer_from_this = 10
+	list_reagents = list("compost" = 30)
+	volume = 30
+	possible_states = list()
 
 
 

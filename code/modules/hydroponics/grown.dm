@@ -17,6 +17,7 @@
 	var/production = 0
 	var/yield = 0
 	var/plant_type = 0
+	var/compost_value = 20
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	potency = -1
 	dried_type = -1 //bit different. saves us from having to define each stupid grown's dried_type as itself. If you don't want a plant to be driable (watermelons) set this to null in the time definition.
@@ -1024,6 +1025,10 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 		reagents.add_reagent("oculine", 3+round(potency / 5, 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
+	name = "generic mushroom"
+	desc = "You shouldn't have this!"
+	compost_value = 25
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishimycelium
