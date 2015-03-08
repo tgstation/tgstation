@@ -147,8 +147,21 @@ nanoui is used to open and update nano browser uis
 		else
 			set_status(STATUS_DISABLED, push_update) // no updates, completely disabled (red visibility)
 	else
+
 		var/dist = 0
 		if(istype(src_object, /atom))
+			var/atom/A = src_object
+			if(isobserver(user))
+				var/mob/dead/observer/O = user
+				var/ghost_flags = 0
+				if(A.ghost_write)
+					ghost_flags |= PERMIT_ALL
+				if(canGhostWrite(O,A,"",ghost_flags) || isAdminGhost(O))
+					set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
+					return
+				else if(canGhostRead(O,A,ghost_flags))
+					set_status(STATUS_UPDATE, push_update)
+					return
 			dist = get_dist(src_object, user)
 
 		if (dist > 4)
