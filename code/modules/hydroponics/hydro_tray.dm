@@ -808,23 +808,24 @@
 
 			usr << "The tray's sensor suite is reporting a light level of [light_available] lumens and a temperature of [environment.temperature]K."
 
-/obj/machinery/portable/atmospherics/hydroponics/examine(mob/usr)
+/obj/machinery/portable/atmospherics/hydroponics/examine(mob/user)
+	..()
 	if(seed && !dead)
-		usr << "[src] has \blue [seed.display_name] \black planted."
+		user << "[src] has \blue [seed.display_name] \black planted."
 		if(health <= (seed.endurance / 2))
-			usr << "The plant looks \red unhealthy."
+			user << "The plant looks \red unhealthy."
 		else
-			usr << "[src] is empty."
-		usr << "Water: [round(waterlevel,0.1)]/100"
-		usr << "Nutrient: [round(nutrilevel,0.1)]/10"
+			user << "[src] is empty."
+		user << "Water: [round(waterlevel,0.1)]/100"
+		user << "Nutrient: [round(nutrilevel,0.1)]/10"
 		if(weedlevel >= 5)
-			usr << "[src] is \red filled with weeds!"
+			user << "[src] is \red filled with weeds!"
 		if(pestlevel >= 5)
-			usr << "[src] is \red filled with tiny worms!"
+			user << "[src] is \red filled with tiny worms!"
 	else if(seed && dead)
-		usr << "[src] is full of dead plant matter."
+		user << "[src] is full of dead plant matter."
 	else
-		usr << "[src] has nothing planted!"
+		user << "[src] has nothing planted!"
 
 /obj/machinery/portable_atmospherics/hydroponics/verb/close_lid()
 	set name = "Toggle Tray Lid"
