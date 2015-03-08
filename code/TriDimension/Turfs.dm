@@ -26,7 +26,7 @@ atom/movable/Move() //Hackish
 	name = "open space"
 	intact = 0
 	density = 0
-	icon_state = "black"
+	icon_state = "fullblack"
 	pathweight = 100000 //Seriously, don't try and path over this one numbnuts
 	var/icon/darkoverlays = null
 	var/turf/floorbelow

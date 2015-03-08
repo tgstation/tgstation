@@ -80,6 +80,7 @@ var/global/list/paint_variants = list(
 
 		// Atmos lettering
 		new /datum/paint_info/decal(DIR_ORTHO, "oxygen"),
+		new /datum/paint_info/decal(DIR_ORTHO, "nitrogen"),
 		new /datum/paint_info/decal(DIR_ORTHO, "carbon_dioxide"),
 		new /datum/paint_info/decal(DIR_ORTHO, "nitrous_oxide"),
 		new /datum/paint_info/decal(DIR_ORTHO, "air"),
@@ -245,38 +246,38 @@ var/global/list/paint_variants = list(
 	"Chapel" = list(new /datum/paint_info(DIR_ALL,"chapel")),
 
 	"SS13 logo" = list(new /datum/paint_info(DIR_ONE,"L1"),
-	new /datum/paint_info(DIR_ONE,"L2"),
 	new /datum/paint_info(DIR_ONE,"L3"),
-	new /datum/paint_info(DIR_ONE,"L4"),
 	new /datum/paint_info(DIR_ONE,"L5"),
-	new /datum/paint_info(DIR_ONE,"L6"),
 	new /datum/paint_info(DIR_ONE,"L7"),
-	new /datum/paint_info(DIR_ONE,"L8"),
 	new /datum/paint_info(DIR_ONE,"L9"),
-	new /datum/paint_info(DIR_ONE,"L10"),
 	new /datum/paint_info(DIR_ONE,"L11"),
-	new /datum/paint_info(DIR_ONE,"L12"),
 	new /datum/paint_info(DIR_ONE,"L13"),
-	new /datum/paint_info(DIR_ONE,"L14"),
 	new /datum/paint_info(DIR_ONE,"L15"),
+	new /datum/paint_info(DIR_ONE,"L2"),
+	new /datum/paint_info(DIR_ONE,"L4"),
+	new /datum/paint_info(DIR_ONE,"L6"),
+	new /datum/paint_info(DIR_ONE,"L8"),
+	new /datum/paint_info(DIR_ONE,"L10"),
+	new /datum/paint_info(DIR_ONE,"L12"),
+	new /datum/paint_info(DIR_ONE,"L14"),
 	new /datum/paint_info(DIR_ONE,"L16")),
 
-	"Derelict logo" = list(new /datum/paint_info(DIR_ONE,"derelict1"),
-	new /datum/paint_info(DIR_ONE,"derelict2"),
-	new /datum/paint_info(DIR_ONE,"derelict3"),
-	new /datum/paint_info(DIR_ONE,"derelict4"),
-	new /datum/paint_info(DIR_ONE,"derelict5"),
-	new /datum/paint_info(DIR_ONE,"derelict6"),
-	new /datum/paint_info(DIR_ONE,"derelict7"),
-	new /datum/paint_info(DIR_ONE,"derelict8"),
-	new /datum/paint_info(DIR_ONE,"derelict9"),
+	"Derelict logo" = list(new /datum/paint_info(DIR_ONE,"derelict9"),
 	new /datum/paint_info(DIR_ONE,"derelict10"),
 	new /datum/paint_info(DIR_ONE,"derelict11"),
 	new /datum/paint_info(DIR_ONE,"derelict12"),
 	new /datum/paint_info(DIR_ONE,"derelict13"),
 	new /datum/paint_info(DIR_ONE,"derelict14"),
 	new /datum/paint_info(DIR_ONE,"derelict15"),
-	new /datum/paint_info(DIR_ONE,"derelict16")),
+	new /datum/paint_info(DIR_ONE,"derelict16"),
+	new /datum/paint_info(DIR_ONE,"derelict1"),
+	new /datum/paint_info(DIR_ONE,"derelict2"),
+	new /datum/paint_info(DIR_ONE,"derelict3"),
+	new /datum/paint_info(DIR_ONE,"derelict4"),
+	new /datum/paint_info(DIR_ONE,"derelict5"),
+	new /datum/paint_info(DIR_ONE,"derelict6"),
+	new /datum/paint_info(DIR_ONE,"derelict7"),
+	new /datum/paint_info(DIR_ONE,"derelict8")),
 
 	"Other" = list(new /datum/paint_info(DIR_ONE,"dark"),
 	new /datum/paint_info(DIR_ONE,"bar"),
@@ -402,6 +403,8 @@ var/global/list/paint_variants = list(
 		data += "<p><b>[category]</b></p>"
 		data += "<p>"
 		for(var/i = 1; i <= tiles.len; i++)
+			if((category == "SS13 logo" || category == "Derelict logo") && i == 9)
+				data += "<br>"
 			var/datum/paint_info/I = tiles[i]
 			data += populate_selection(user, I)
 
