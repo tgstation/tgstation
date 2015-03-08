@@ -897,7 +897,7 @@ datum/reagent/plantnutriment/robustharvestnutriment
 datum/reagent/compost
 	name = "compost"
 	id = "compost"
-	description = "Raw nutriment derived from decaying seeds and plants. Gross."
+	description = "Raw fertilizer used for gardening."
 	color = "#A0522D" // RBG: 160, 82, 45
 
 
