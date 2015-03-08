@@ -325,14 +325,14 @@
 
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-		burn(showmsg = 0)
+		burn(showmsg = 0, burntime = 100)
 
 
 
 	add_fingerprint(user)
 
 /obj/item/weapon/paper/fire_act()
-	burn(showmsg = 1)
+	burn(showmsg = 1, burntime = 50)
 
 /obj/item/weapon/paper/proc/burn(var/burntime, var/showmsg)
 	if(showmsg)
@@ -340,7 +340,7 @@
 	burning = 1
 	icon_state = "paper_onfire"
 	info = "[stars(info)]"
-	sleep(70) //7 seconds
+	sleep(burntime) //7 seconds
 	src.visible_message("<span class='danger'>[src] burns away, leaving behind a pile of ashes.</span>")
 	new /obj/effect/decal/cleanable/ash(src.loc)
 	qdel(src)
