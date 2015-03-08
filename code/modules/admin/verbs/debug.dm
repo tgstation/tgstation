@@ -163,8 +163,7 @@ Pressure: [env.return_pressure()]"}
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has robotized [M.key].")
-		spawn(10)
-			return M:Robotize()
+		. = M:Robotize()
 
 	else
 		alert("Invalid mob")
@@ -178,8 +177,7 @@ Pressure: [env.return_pressure()]"}
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has MoMMIfied [M.key].")
-		spawn(10)
-			return M:MoMMIfy()
+		. = M:MoMMIfy()
 
 	else
 		alert("Invalid mob")
@@ -201,8 +199,7 @@ Pressure: [env.return_pressure()]"}
 		return
 
 	log_admin("[key_name(src)] has animalized [M.key].")
-	spawn(10)
-		return M.Animalize()
+	. = M.Animalize()
 
 
 /client/proc/makepAI(var/turf/T in mob_list)

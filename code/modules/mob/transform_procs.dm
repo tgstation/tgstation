@@ -184,7 +184,7 @@
 		del(t)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(src))
-
+	. = O
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
 	O.cell.maxcharge = 7500
@@ -212,7 +212,7 @@
 
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
-	return O
+
 
 //human -> mommi
 /mob/living/carbon/human/proc/MoMMIfy(round_start = 0)
@@ -229,7 +229,7 @@
 		del(t)
 
 	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi(get_turf(src))
-
+	. = O
 	// MoMMIs produced by Robotize get an automatic power cell
 	O.cell = new(O)
 	O.cell.maxcharge = (round_start ? 10000 : 15000)
@@ -260,7 +260,6 @@
 
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
-	return O
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
