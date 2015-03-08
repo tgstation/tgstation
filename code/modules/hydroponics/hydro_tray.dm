@@ -810,9 +810,9 @@
 
 /obj/machinery/portable/atmospherics/hydroponics/examine(mob/usr)
 	if(seed && !dead)
-			usr << "[src] has \blue [seed.display_name] \black planted."
-			if(health <= (seed.endurance / 2))
-				usr << "The plant looks \red unhealthy."
+		usr << "[src] has \blue [seed.display_name] \black planted."
+		if(health <= (seed.endurance / 2))
+			usr << "The plant looks \red unhealthy."
 		else
 			usr << "[src] is empty."
 		usr << "Water: [round(waterlevel,0.1)]/100"
