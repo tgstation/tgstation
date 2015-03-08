@@ -481,6 +481,5 @@ var/global/list/paint_variants = list(
 		return 1
 	return 0
 
-
 /obj/item/weapon/tile_painter/proc/activate()
 	playsound(get_turf(src), 'sound/effects/extinguish.ogg', 50, 1)	//pssshtt
