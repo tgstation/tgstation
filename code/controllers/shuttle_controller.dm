@@ -249,7 +249,7 @@ datum/shuttle_controller
 									return
 								*/
 
-							if(istype(T, /turf/simulated) || T.is_catwalk())
+							if(istype(T, /turf/simulated))
 								del(T)
 
 						start_location.move_contents_to(end_location)
