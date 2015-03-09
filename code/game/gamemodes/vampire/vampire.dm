@@ -222,11 +222,11 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	gender = gend
 
 /mob/living/proc/make_vampire()
-	if(!mind)				return
+	if(!mind) return
 	if(!mind.vampire)
 		mind.vampire = new /datum/vampire(gender)
 		mind.vampire.owner = src
-	callOnLife += list("\ref[src]" = "OnLife()")
+	callOnLife += list("\ref[mind.vampire]" = "OnLife")
 	verbs += /client/proc/vampire_rejuvinate
 	verbs += /client/proc/vampire_hypnotise
 	verbs += /client/proc/vampire_glare
@@ -274,14 +274,13 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			verbs -= handler
 
 /datum/vampire/proc/OnLife()
-	var/datum/mind/M = usr.mind
-	if(!M) return
+	if(!owner) return
 	if(VAMP_MATURE in powers)
-		M.current.sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-		M.current.see_in_dark = 8
+		owner.sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		owner.see_in_dark = 8
 	else if(VAMP_VISION in powers)
-		M.current.sight |= SEE_MOBS
-	if(!M.current.druggy) M.current.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		owner.sight |= SEE_MOBS
+	if(!owner.druggy) owner.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 /mob/proc/handle_bloodsucking(mob/living/carbon/human/H)
 	src.mind.vampire.draining = H
@@ -536,7 +535,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 /mob/living/carbon/human/proc/handle_vampire_smite()
 	var/smitetemp = 0
 	var/vampcoat = istype(wear_suit, /obj/item/clothing/suit/storage/draculacoat) //coat reduces smiting
-	if(check_holy()) //if you're on a holy tile get ready for pain
+	if(check_holy(src)) //if you're on a holy tile get ready for pain
 		smitetemp += (vampcoat ? 1 : 5)
 		if(prob(35))
 			src << "<span class='danger'>This ground is blessed. Get away, or splatter it with blood to make it safe for you.</span>"
@@ -559,7 +558,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	if(smitetemp <= 0) //if you weren't smote by the tile you're on, remove a little holy
 		smitetemp = -1
 
-	mind.vampire.smitecounter = max(0, mind.vampire.smitecounter + smitetemp)
+	mind.vampire.smitecounter = max(0, (mind.vampire.smitecounter + smitetemp))
 
 	switch(mind.vampire.smitecounter)
 		if(1 to 30) //just dizziness

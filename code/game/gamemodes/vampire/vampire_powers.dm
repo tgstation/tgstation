@@ -33,12 +33,11 @@
 		if(!fullpower)
 			src << "<span class='warning'>Your powers are useless on this holy ground.</span>"
 			return 0
-	if(check_holy())
-		if(!fullpower)
-			var/turf/simulated/T = get_turf(src)
-			if(T.lighting_lumcount > 2)
-				src << "<span class='warning'>This ground has been blessed and illuminated, suppressing your abilities.</span>"
-				return 0
+	if(check_holy(src) && !fullpower)
+		var/turf/simulated/T = get_turf(src)
+		if(T.lighting_lumcount > 2)
+			src << "<span class='warning'>This ground has been blessed and illuminated, suppressing your abilities.</span>"
+			return 0
 	return 1
 
 /mob/proc/vampire_affected(datum/mind/M)
@@ -297,7 +296,7 @@
 	var/mob/living/carbon/C = M.current.vampire_active(300, 0, 1)
 	if(!C) return
 	M.current.visible_message("<span class='warning'>[M.current.name] bites [C.name]'s neck!</span>", "<span class='warning'>You bite [C.name]'s neck and begin the flow of power.</span>")
-	C << "<span class='sinister'>You feel the tendrils of evil[VAMP_CHARISMA in M.vampire.powers ? "aggressively" :] invade your mind.</span>"
+	C << "<span class='sinister'>You feel the tendrils of evil [VAMP_CHARISMA in M.vampire.powers ? "aggressively" : "slowly"] invade your mind.</span>"
 	if(!ishuman(C))
 		M.current << "<span class='warning'>You can only enthrall humans.</span>"
 		return
