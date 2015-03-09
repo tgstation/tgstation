@@ -128,7 +128,7 @@
 	var/range_add = 0
 	var/overheat_time = 20
 	upgrades = list("diamond" = 0, "screwdriver" = 0, "plasma" = 0)
-
+	unique_rename = 1
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/newshot()
 	..()
@@ -161,6 +161,8 @@
 				power_supply.rigged = 1 // This is dangerous!
 			S.use(1)
 
+	..()
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1
 	spawn(overheat_time)
@@ -192,6 +194,7 @@
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
+	unique_rename = 0
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
