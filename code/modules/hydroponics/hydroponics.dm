@@ -242,19 +242,22 @@ obj/machinery/hydroponics/update_icon()
 	UpdateDescription()
 
 	if(planted)
+		var/image/I
 		if(dead)
-			overlays += image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-dead")
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-dead")
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				overlays += image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
+				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
 			else
-				overlays += image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-harvest")
+				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-harvest")
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages ) // Make sure it won't crap out due to HERPDERP 6 stages only
-			overlays += image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
 			lastproduce = age //Cheating by putting this here, it means that it isn't instantly ready to harvest
 		else
-			overlays += image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
+		I.layer = MOB_LAYER + 0.1
+		overlays += I
 
 		if(waterlevel <= 10)
 			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3")
