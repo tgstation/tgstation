@@ -83,6 +83,7 @@
 	..()
 	modules += new /obj/item/device/flashlight(src)
 	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/weapon/borg_defib(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo(src)
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper(src)

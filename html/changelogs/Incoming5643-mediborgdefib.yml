@@ -1,0 +1,6 @@
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - rscadd: "Medical borgs now have access to an onboard defibrillator, please be sure to keep all borgs up to date on laws and firmware"
