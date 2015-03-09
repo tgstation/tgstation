@@ -156,7 +156,10 @@ obj/item/clothing/head/helmet/bluetaghelm
 
 	icon_state = state
 
-	usr.update_inv_head(0)
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_head(0)
+
 	return
 
 /obj/item/clothing/head/helmet/ui_action_click()
