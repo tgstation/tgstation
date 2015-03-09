@@ -1,22 +1,4 @@
 author: Velard Amakar
 delete-after: true
-changes: 
-  - rscadd: large slew of vampire-related additions, tweaks, and refactors
-  - tweak: Enthrall can be used for free, but you need at least 300 blood in your system to use it
-  - tweak: Full power(now "Maturity" is activated at 450 instead of 500
-  - rscadd: Blood can be used to unholy tiles outside of the chapel.
-  - tweak: Coffins now heal faster and cure Nullify and Smite
-  - tweak: Nullrod completely ruins the vampire's day if the chaplain is using it, don't even try to take him on hand to hand
-  - rscadd: Being burned when dead reduces your corpse to ashes
-  - tweak: Holywater fucks you up almost as bad as the sun, but slower
-  - tweak: Chapel kills a weak vampire almost as fast as the sun
-  - tweak: Sunlight is even more lethal
-  - tweak: Picking up a bible or a nullrod will smite you(but not enough to hurt you, trying to use them does that)
-  - rscadd: NEW POWER: Charisma, activates at 450 blood, increases Hypnotise & Glare stun time, and greatly decreases Enthrall time/cooldown.
-  - rscadd: NEW POWER: Shadowy Menace, activates at 450 blood, buffs Shadow Cloak, grants immunity to blessed tiles(but not in the chapel) and gives a chance to terrify anyone who sees you.
-  - rscadd: NEW POWER: Undying Lord of the Night, unlocks after 666 blood, grants the ability to revive after death(but not if you've been smote or gibbed) and spawn a free vampire cloak that can hold a few items, and has moderately decent defense against bullets, fire, and holy effects.
-  - bugfix: Various typos and poor grammar in shit fixed, also replacing "warning"(italic red text) with the "sinister"(spooky purple text) in vamp power text blurbs
-  - rscadd: Added check_holy() to mob_helpers.dm, which checks if a mob is on a holy tile
-  - tweak: Moved vampire-related code out of life.dm through use of the new callOnLife hook
-  - bugfix: Moved coffin healing vampires to vampire.dm where it belongs
-  - rscadd: Adds new smite debuff that is increased by holy things, but decreased by vampire powers and sleeping in coffins.
+changes:
+  - tweak: Fixed bugs with the vampire update
