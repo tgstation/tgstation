@@ -15,7 +15,8 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
-	var/emergencyNoEscape
+	var/emergencyAlwaysFakeRecall
+	var/emergencyFakeRecall
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -103,9 +104,6 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(SHUTTLE_ESCAPE)
 			user << "The emergency shuttle is moving away to a safe distance."
 			return
-		if(SHUTTLE_STRANDED)
-			user << "The emergency shuttle has been disabled by Centcom."
-			return
 
 	call_reason = strip_html_properly(trim(call_reason))
 
@@ -157,7 +155,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				continue
 
 		var/turf/T = get_turf(thing)
-		if(T && T.z == ZLEVEL_STATION)
+		if(T && T.z == 1)
 			callShuttle = 0
 			break
 
@@ -256,7 +254,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	slip.ordernumber = ordernum
 
 	var/stationName = (errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
-	var/packagesAmt = SSshuttle.shoppinglist.len + ((errors & MANIFEST_ERROR_COUNT) ? rand(1,2) : 0)
+	var/packagesAmt = SSshuttle.shoppinglist.len + ((errors & MANIFEST_ERROR_COUNT) ? 0 : rand(1,2))
 
 	slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
 	slip.info +="Order #[ordernum]<br>"
@@ -313,7 +311,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	O.orderedbyRank = _orderedbyRank
 	O.comment = _comment
 
-	requestlist += O
+	shoppinglist += O
 
 	return O
 

@@ -36,7 +36,7 @@
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0
 	if(reagents)
-		if(reagents.has_reagent("morphine")) return -1
+		if(reagents.has_reagent("hyperzine")) return -1
 
 		if(reagents.has_reagent("nuka_cola")) return -1
 
@@ -174,10 +174,11 @@
 
 /mob/living/carbon/monkey/Stat()
 	..()
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
-		if(client && mind)
+	statpanel("Status")
+	stat(null, "Intent: [a_intent]")
+	stat(null, "Move Mode: [m_intent]")
+	if(client && mind)
+		if (client.statpanel == "Status")
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
@@ -190,6 +191,9 @@
 	internal = null
 	return
 
+/mob/living/carbon/monkey/var/co2overloadtime = null
+/mob/living/carbon/monkey/var/temperature_resistance = T0C+75
+
 /mob/living/carbon/monkey/ex_act(severity, target)
 	..()
 	switch(severity)
@@ -199,15 +203,27 @@
 		if(2.0)
 			adjustBruteLoss(60)
 			adjustFireLoss(60)
-			adjustEarDamage(30,120)
 		if(3.0)
 			adjustBruteLoss(30)
 			if (prob(50))
 				Paralyse(10)
-			adjustEarDamage(15,60)
-
-	updatehealth()
 	return
+
+/mob/living/carbon/monkey/blob_act()
+	if (stat != 2)
+		show_message("<span class='userdanger'>The blob attacks you!</span>")
+		adjustFireLoss(60)
+		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+	if (prob(50))
+		Paralyse(10)
+	if (stat == DEAD && client)
+		gib()
+		return
+	if (stat == DEAD && !client)
+		gibs(loc, viruses)
+		qdel(src)
+		return
+
 
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
 	return 0

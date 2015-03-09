@@ -31,7 +31,7 @@
 	..()
 	user << text("The service panel is [src.open ? "open" : "closed"].")
 
-/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(locked)
 		if (istype(W, /obj/item/weapon/melee/energy/blade) && !emagged)
 			emagged = 1
@@ -168,9 +168,9 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/storage/secure/briefcase/New()
+	..()
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
-	return ..()
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user as mob)
 	if ((src.loc == user) && (src.locked == 1))
@@ -188,16 +188,6 @@
 		src.orient2hud(user)
 	src.add_fingerprint(user)
 	return
-
-//Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
-/obj/item/weapon/storage/secure/briefcase/syndie
-	force = 15.0
-
-/obj/item/weapon/storage/secure/briefcase/syndie/New()
-	for(var/i = 0, i < storage_slots - 2, i++)
-		new /obj/item/weapon/spacecash/c1000(src)
-	return ..()
-
 
 // -----------------------------
 //        Secure Safe

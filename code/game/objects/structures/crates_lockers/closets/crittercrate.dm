@@ -6,7 +6,6 @@
 	icon_closed = "critter"
 	var/already_opened = 0
 	var/content_mob = null
-	var/amount = 1
 
 /obj/structure/closet/critter/can_open()
 	if(locked || welded)
@@ -22,7 +21,20 @@
 		return ..()
 
 	if(content_mob != null && already_opened == 0)
-		for(var/i = 1, i <= amount, i++)
+		if(content_mob == /mob/living/simple_animal/chick)
+			var/num = rand(1, 3)
+			for(var/i = 0, i < num, i++)
+				new content_mob(loc)
+		else if(content_mob == /mob/living/simple_animal/corgi)
+			var/num = rand(0, 1)
+			if(num) //No more matriarchy for cargo
+				content_mob = /mob/living/simple_animal/corgi/Lisa
+			new content_mob(loc)
+		else if(content_mob == /mob/living/simple_animal/cat)
+			if(prob(50))
+				content_mob = /mob/living/simple_animal/cat/Proc
+			new content_mob(loc)
+		else
 			new content_mob(loc)
 		already_opened = 1
 	..()
@@ -44,12 +56,7 @@
 
 /obj/structure/closet/critter/corgi
 	name = "corgi crate"
-	content_mob = /mob/living/simple_animal/corgi
-
-/obj/structure/closet/critter/corgi/New()
-	if(prob(50))
-		content_mob = /mob/living/simple_animal/corgi/Lisa
-	..()
+	content_mob = /mob/living/simple_animal/corgi //This statement is (not) false. See above.
 
 /obj/structure/closet/critter/cow
 	name = "cow crate"
@@ -63,28 +70,10 @@
 	name = "chicken crate"
 	content_mob = /mob/living/simple_animal/chick
 
-/obj/structure/closet/critter/chick/New()
-	amount = rand(1, 3)
-	..()
-
 /obj/structure/closet/critter/cat
 	name = "cat crate"
 	content_mob = /mob/living/simple_animal/cat
 
-/obj/structure/closet/critter/cat/New()
-	if(prob(50))
-		content_mob = /mob/living/simple_animal/cat/Proc
-	..()
-
 /obj/structure/closet/critter/pug
 	name = "pug crate"
 	content_mob = /mob/living/simple_animal/pug
-
-/obj/structure/closet/critter/fox
-	name = "fox crate"
-	content_mob = /mob/living/simple_animal/fox
-
-/obj/structure/closet/critter/butterfly
-	name = "butterflies crate"
-	content_mob = /mob/living/simple_animal/butterfly
-	amount = 50

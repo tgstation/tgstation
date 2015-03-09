@@ -8,11 +8,15 @@
 	flag = "laser"
 	eyeblur = 2
 
-/obj/item/projectile/beam/practice
-	name = "practice laser"
+/obj/item/projectile/practice
+	name = "laser"
+	icon_state = "laser"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
 	hitsound = null
-	nodamage = 1
+	damage_type = BURN
+	flag = "laser"
+	eyeblur = 2
 
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
@@ -37,7 +41,6 @@
 	icon_state = "omnilaser"
 	damage = 36
 	damage_type = STAMINA
-	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 

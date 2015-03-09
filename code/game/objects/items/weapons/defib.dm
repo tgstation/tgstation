@@ -18,7 +18,6 @@
 	var/powered = 0 //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/weapon/twohanded/shockpaddles/paddles
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
-	var/combat = 0 //can we revive through space suits?
 
 /obj/item/weapon/defibrillator/New() //starts without a cell for rnd
 	..()
@@ -50,20 +49,20 @@
 /obj/item/weapon/defibrillator/proc/update_overlays()
 	overlays.Cut()
 	if(!on)
-		overlays += "[initial(icon_state)]-paddles"
+		overlays += "defibunit-paddles"
 	if(powered)
-		overlays += "[initial(icon_state)]-powered"
+		overlays += "defibunit-powered"
 	if(!bcell)
-		overlays += "[initial(icon_state)]-nocell"
+		overlays += "defibunit-nocell"
 	if(!safety)
-		overlays += "[initial(icon_state)]-emagged"
+		overlays += "defibunit-emagged"
 
 /obj/item/weapon/defibrillator/proc/update_charge()
 	if(powered) //so it doesn't show charge if it's unpowered
 		if(bcell)
 			var/ratio = bcell.charge / bcell.maxcharge
 			ratio = Ceiling(ratio*4) * 25
-			overlays += "[initial(icon_state)]-charge[ratio]"
+			overlays += "defibunit-charge[ratio]"
 
 /obj/item/weapon/defibrillator/CheckParts()
 	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
@@ -100,10 +99,11 @@
 				H.put_in_l_hand(src)
 	return
 
-/obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user)
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()
+		return
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
@@ -221,49 +221,6 @@
 		paddles.update_icon()
 		update_icon()
 
-/obj/item/weapon/defibrillator/compact
-	name = "compact defibrillator"
-	desc = "A belt-equipped defibrillator that can be rapidly deployed."
-	icon_state = "defibcompact"
-	item_state = "defibcompact"
-	w_class = 3
-	slot_flags = SLOT_BELT
-	origin_tech = "biotech=4"
-
-/obj/item/weapon/defibrillator/compact/ui_action_click()
-	if(usr.get_item_by_slot(slot_belt) == src)
-		toggle_paddles()
-	else
-		usr << "<span class='warning'>Strap the defibrillator's belt on first!</span>"
-	return
-
-/obj/item/weapon/defibrillator/compact/loaded/New()
-	..()
-	paddles = make_paddles()
-	bcell = new(src)
-	update_icon()
-	return
-
-/obj/item/weapon/defibrillator/compact/combat
-	name = "combat defibrillator"
-	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through space suits."
-	combat = 1
-	safety = 0
-
-/obj/item/weapon/defibrillator/compact/combat/loaded/New()
-	..()
-	paddles = make_paddles()
-	bcell = new /obj/item/weapon/stock_parts/cell/infinite(src)
-	update_icon()
-	return
-
-/obj/item/weapon/defibrillator/compact/combat/attackby(obj/item/weapon/W, mob/user, params)
-	if(W == paddles)
-		paddles.unwield()
-		toggle_paddles()
-		update_icon()
-		return
-
 //paddles
 
 /obj/item/weapon/twohanded/shockpaddles
@@ -322,7 +279,7 @@
 	else
 		return 1
 
-/obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/user)
+/obj/item/weapon/twohanded/shockpaddles/attack(mob/M as mob, mob/user as mob)
 	var/tobehealed
 	var/threshold = -config.health_threshold_dead
 	var/mob/living/carbon/human/H = M
@@ -368,19 +325,18 @@
 				playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 				var/mob/dead/observer/ghost = H.get_ghost()
 				var/tplus = world.time - H.timeofdeath
-				var/tlimit = 6000 //past this much time the patient is unrecoverable (in deciseconds)
-				var/tloss = 3000 //brain damage starts setting in on the patient after some time left rotting
+				var/tlimit = 3000 //past this much time the patient is unrecoverable (in deciseconds)
+				var/tloss = 900 //brain damage starts setting in on the patient after some time left rotting
 				var/total_burn	= 0
 				var/total_brute	= 0
 				if(do_after(user, 20)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 					for(var/obj/item/carried_item in H.contents)
-						if(istype(carried_item, /obj/item/clothing/suit/space))
-							if(!defib.combat)
-								user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
-								playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
-								busy = 0
-								update_icon()
-								return
+						if((istype(carried_item, /obj/item/clothing/suit/armor)) || (istype(carried_item, /obj/item/clothing/suit/space)))
+							user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
+							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
+							busy = 0
+							update_icon()
+							return
 					if(H.stat == 2)
 						var/health = H.health
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")

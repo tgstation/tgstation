@@ -14,28 +14,22 @@
 	var/quality
 	var/get_chance = 100
 	var/lowest_value = 256 * 8
-	var/text_gain_indication = ""
-	var/text_lose_indication = ""
+	var/text_indication = ""
 	var/list/visual_indicators = list()
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	set_block(owner)
-	. = on_acquiring(owner)
+	on_acquiring(owner)
 
-/datum/mutation/human/proc/force_lose(mob/living/carbon/human/owner)
-	set_block(owner, 0)
-	. = on_losing(owner)
-
-/datum/mutation/human/proc/set_se(se_string, on = 1)
+/datum/mutation/human/proc/set_se(se_string)
 	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)	return
-	var/before = copytext(se_string, 1, ((dna_block - 1) * DNA_BLOCK_SIZE) + 1)
-	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
-	var/after = copytext(se_string, (dna_block * DNA_BLOCK_SIZE) + 1, 0)
+	var/before = copytext(se_string, 1, (dna_block * DNA_BLOCK_SIZE) + 1)
+	var/injection = num2hex(lowest_value + rand(1, 256 * 6))
+	var/after = copytext(se_string, (dna_block * DNA_BLOCK_SIZE) + DNA_BLOCK_SIZE + 1)
 	return before + injection + after
 
-/datum/mutation/human/proc/set_block(mob/living/carbon/owner, on = 1)
-	if(owner && istype(owner) && owner.dna)
-		owner.dna.struc_enzymes = set_se(owner.dna.struc_enzymes, on)
+/datum/mutation/human/proc/set_block(mob/living/carbon/human/owner)
+	owner.dna.struc_enzymes = set_se(owner.dna.struc_enzymes)
 
 /datum/mutation/human/proc/check_block_string(se_string)
 	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)	return 0
@@ -54,7 +48,7 @@
 		return 1
 	owner.dna.mutations.Add(src)
 	gain_indication(owner)
-	owner << text_gain_indication
+	owner << text_indication
 
 /datum/mutation/human/proc/gain_indication(mob/living/carbon/human/owner)
 	owner.overlays.Add(visual_indicators)
@@ -80,13 +74,8 @@
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner.dna.mutations.Remove(src))
 		lose_indication(owner)
-		owner << text_lose_indication
 		return 0
 	return 1
-
-/datum/mutation/human/proc/say_mod(var/message)
-	if(message)
-		return message
 
 /datum/mutation/human/hulk
 
@@ -94,7 +83,7 @@
 	quality = POSITIVE
 	get_chance = 5
 	lowest_value = 256 * 14
-	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	text_indication = "<span class='notice'>Your muscles hurt!</span>"
 
 /datum/mutation/human/hulk/New()
 	..()
@@ -124,18 +113,13 @@
 	..()
 	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 
-/datum/mutation/human/hulk/say_mod(var/message)
-	if(message)
-		message = "[uppertext(replacetext(message, ".", "!"))]!!"
-	return message
-
 /datum/mutation/human/telekinesis
 
 	name = "Telekinesis"
 	quality = POSITIVE
 	get_chance = 10
 	lowest_value = 256 * 14
-	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
+	text_indication = "<span class='notice'>You feel smarter!</span>"
 
 /datum/mutation/human/telekinesis/New()
 	..()
@@ -150,7 +134,7 @@
 	quality = POSITIVE
 	get_chance = 10
 	lowest_value = 256 * 12
-	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
+	text_indication = "<span class='notice'>Your body feels warm!</span>"
 
 /datum/mutation/human/cold_resistance/New()
 	..()
@@ -167,7 +151,7 @@
 	quality = POSITIVE
 	get_chance = 10
 	lowest_value = 256 * 15
-	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
+	text_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 
 /datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -176,17 +160,19 @@
 /datum/mutation/human/x_ray/on_life(mob/living/carbon/human/owner)
 	owner.sight |= SEE_MOBS|SEE_OBJS|SEE_TURFS
 	owner.see_in_dark = 8
+	owner.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 /datum/mutation/human/x_ray/on_losing(mob/living/carbon/human/owner)
 	if(..())	return
 	owner.see_in_dark = initial(owner.see_in_dark)
+	owner.see_invisible = initial(owner.see_invisible)
 	owner.sight = initial(owner.sight)
 
 /datum/mutation/human/nearsight
 
 	name = "Near Sightness"
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='danger'>You can't see very well.</span>"
+	text_indication = "<span class='danger'>You can't see very well.</span>"
 
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -200,11 +186,13 @@
 
 	name = "Epilepsy"
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You get a headache.</span>"
+	text_indication = "<span class='danger'>You get a headache.</span>"
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
 	if ((prob(1) && owner.paralysis < 1))
-		owner.visible_message("<span class='userdanger'>[owner] starts having a seizure!</span>", "<span class='danger'>You have a seizure!</span>")
+		owner << "<span class='danger'>You have a seizure!</span>"
+		for(var/mob/O in viewers(owner, null) - owner)
+			O.show_message(text("<span class='userdanger'>[src] starts having a seizure!</span>"), 1)
 		owner.Paralyse(10)
 		owner.Jitter(1000)
 
@@ -212,27 +200,23 @@
 
 	name = "Unstable DNA"
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You feel strange.</span>"
+	text_indication = "<span class='danger'>You feel strange.</span>"
 
-/datum/mutation/human/bad_dna/on_acquiring(var/mob/living/carbon/human/owner)
-	var/mob/new_mob
+/datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
 	if(prob(95))
 		if(prob(50))
-			new_mob = randmutb(owner)
+			randmutb(owner)
 		else
-			new_mob = randmuti(owner)
+			randmuti(owner)
 	else
-		new_mob = randmutg(owner)
-	if(new_mob && ismob(new_mob))
-		owner = new_mob
-	. = owner
+		randmutg(owner)
 	on_losing(owner)
 
 /datum/mutation/human/cough
 
 	name = "Cough"
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='danger'>You start coughing.</span>"
+	text_indication = "<span class='danger'>You start coughing.</span>"
 
 /datum/mutation/human/cough/on_life(mob/living/carbon/human/owner)
 	if((prob(5) && owner.paralysis <= 1))
@@ -243,7 +227,7 @@
 
 	name = "Clumsiness"
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
+	text_indication = "<span class='danger'>You feel lightheaded.</span>"
 
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -257,7 +241,7 @@
 
 	name = "Tourettes Syndrome"
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You twitch.</span>"
+	text_indication = "<span class='danger'>You twitch.</span>"
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
 	if((prob(10) && owner.paralysis <= 1))
@@ -278,7 +262,7 @@
 
 	name = "Nervousness"
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
+	text_indication = "<span class='danger'>You feel nervous.</span>"
 
 /datum/mutation/human/nervousness/on_life(mob/living/carbon/human/owner)
 	if(prob(10))
@@ -288,7 +272,7 @@
 
 	name = "Deafness"
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
+	text_indication = "<span class='danger'>You can't seem to hear anything.</span>"
 
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -302,7 +286,7 @@
 
 	name = "Blindness"
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You can't seem to see anything.</span>"
+	text_indication = "<span class='danger'>You can't seem to see anything.</span>"
 
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -336,7 +320,7 @@
 	name = "Laser Eyes"
 	quality = POSITIVE
 	dna_block = NON_SCANNABLE
-	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
+	text_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	if(owner.a_intent == "harm")

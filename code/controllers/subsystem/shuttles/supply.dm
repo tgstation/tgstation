@@ -80,14 +80,12 @@
 	var/pointsEarned
 
 	for(var/atom/movable/MA in areaInstance)
-		if(MA.anchored)	continue
 		SSshuttle.sold_atoms += " [MA.name]"
+		if(MA.anchored)	continue
 
 		// Must be in a crate (or a critter crate)!
 		if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
 			SSshuttle.sold_atoms += ":"
-			if(!MA.contents.len)
-				SSshuttle.sold_atoms += " (empty)"
 			++crate_count
 
 			var/find_slip = 1
@@ -181,24 +179,28 @@
 
 
 /proc/forbidden_atoms_check(atom/A)
-	var/list/blacklist = list(
-		/mob/living,
-		/obj/effect/blob,
-		/obj/effect/spider/spiderling,
-		/obj/item/weapon/disk/nuclear,
-		/obj/machinery/nuclearbomb,
-		/obj/item/device/radio/beacon,
-		/obj/machinery/the_singularitygen,
-		/obj/singularity,
-	)
 	if(A)
-		if(is_type_in_list(A, blacklist))
+		if(istype(A,/mob/living))
 			return 1
+		if(istype(A,/obj))
+			if(istype(A,/obj/effect/blob))
+				return 1
+			if(istype(A,/obj/effect/spider/spiderling))
+				return 1
+			if(istype(A,/obj/item/weapon/disk/nuclear))
+				return 1
+			if(istype(A,/obj/machinery/nuclearbomb))
+				return 1
+			if(istype(A,/obj/item/device/radio/beacon))
+				return 1
+
 		for(var/thing in A)
 			if(.(thing))
 				return 1
 
 	return 0
+
+
 
 
 /obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
@@ -261,7 +263,7 @@
 			return
 
 		//Find the correct supply_pack datum
-		if(!SSshuttle.supply_packs["[href_list["doorder"]]"])	return
+		if(!SSshuttle.supply_packs[href_list["doorder"]])	return
 
 		var/timeout = world.time + 600
 		var/reason = stripped_input(usr,"Reason:","Why do you require this item?","")
@@ -290,11 +292,13 @@
 		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current approved orders: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 			temp += "[SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]<BR>"
+		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["viewrequests"])
-		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current requests: <BR><BR>"
+		temp = "Current requests: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.requestlist)
 			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]<BR>"
+		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["mainmenu"])
 		temp = null
@@ -371,7 +375,7 @@
 			else
 				temp = "The supply shuttle has departed.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				SSshuttle.toggleShuttle("supply", "supply_home", "supply_away", 1)
-				investigate_log("[usr.key] has sent the supply shuttle away. Remaining points: [SSshuttle.points]. Shuttle contents:[SSshuttle.sold_atoms]", "cargo")
+				investigate_log("[usr.key] has sent the supply shuttle away. Remaining points: [SSshuttle.points]. Shuttle contents:[SSshuttle.sold_atoms].", "cargo")
 		else
 			if(href_list["loan"] && SSshuttle.shuttle_loan)
 				if(!SSshuttle.shuttle_loan.dispatched)
@@ -489,11 +493,12 @@
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 */
 	else if (href_list["viewrequests"])
-		temp = "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><BR><BR>Current requests: <BR><BR>"
+		temp = "Current requests: <BR><BR>"
 		for(var/datum/supply_order/SO in SSshuttle.requestlist)
-			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]  [SSshuttle.supply.getDockedId() == "supply_away" ? "<A href='?src=\ref[src];confirmorder=[SO.ordernum]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.ordernum]'>Remove</A>" : ""]<BR>"
+			temp += "#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]  [SSshuttle.supply.mode != SHUTTLE_IDLE ? "":SSshuttle.supply.getDockedId() == "supply_away" ? "":"<A href='?src=\ref[src];confirmorder=[SO.ordernum]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.ordernum]'>Remove</A>"]<BR>"
 
 		temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
+		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["rreq"])
 		var/ordernum = text2num(href_list["rreq"])

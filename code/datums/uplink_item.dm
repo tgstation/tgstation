@@ -62,7 +62,7 @@ var/list/uplink_items = list()
 	if(!istype(U))
 		return 0
 
-	if (!user || user.incapacitated())
+	if (!user || user.stat || user.restrained())
 		return 0
 
 	// If the uplink's holder is in the user's contents
@@ -120,10 +120,10 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 40
 
-/datum/uplink_item/dangerous/carbine
-	name = "M-90gl Carbine"
-	desc = "A fully-loaded three-round burst carbine that uses 30-round 5.56mm magazines with a togglable underslung 40mm grenade launcher."
-	item = /obj/item/weapon/gun/projectile/automatic/m90
+/datum/uplink_item/dangerous/car
+	name = "C-90gl Compact Assault Rifle"
+	desc = "A fully-loaded Zashchita Industriya toploading bullpup assault rifle that uses 30-round 5.45x39mm magazines with a togglable underslung 40mm grenade launcher."
+	item = /obj/item/weapon/gun/projectile/automatic/c90gl
 	cost = 18
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 50
@@ -139,8 +139,8 @@ var/list/uplink_items = list()
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with a paralyzing toxin collected from a rare organism. \
-	The bow generates bolts using an internal power source but must be manually charged between shots."
-	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
+	Its bolts stun enemies for short periods, and replenish automatically."
+	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 12
 	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 50
@@ -226,7 +226,7 @@ var/list/uplink_items = list()
 	surplus = 40
 
 /datum/uplink_item/ammo/pistol
-	name = "Handgun Magazine - 10mm"
+	name = "Magazine - 10mm"
 	desc = "An additional 8-round 10mm magazine for use in the syndicate pistol. These subsonic rounds are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
@@ -238,24 +238,24 @@ var/list/uplink_items = list()
 	cost = 4
 
 /datum/uplink_item/ammo/smg
-	name = "SMG Magazine - .45"
+	name = "Magazine - .45"
 	desc = "An additional 20-round .45 magazine for use in the C-20r submachine gun. These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
 	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/bullbuck
-	name = "Drum Magazine - 12g Buckshot"
-	desc = "An additional 8-round buckshot magazine for use in the Bulldog shotgun. Front towards enemy."
+/datum/uplink_item/ammo/bullstun
+	name = "Drum Magazine - 12g Stun Slug"
+	desc = "An additional 8-round stun slug magazine for use in the Bulldog shotgun. Saying that they're completely non-lethal would be lying."
 	item = /obj/item/ammo_box/magazine/m12g
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/bullstun
-	name = "Drum Magazine - 12g Stun Slug"
-	desc = "An alternative 8-round stun slug magazine for use in the Bulldog shotgun. Saying that they're completely non-lethal would be lying."
-	item = /obj/item/ammo_box/magazine/m12g/stun
-	cost = 3
+/datum/uplink_item/ammo/bullbuck
+	name = "Drum Magazine - 12g Buckshot"
+	desc = "An alternative 8-round buckshot magazine for use in the Bulldog shotgun. Front towards enemy."
+	item = /obj/item/ammo_box/magazine/m12g/buckshot
+	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bulldragon
@@ -265,22 +265,22 @@ var/list/uplink_items = list()
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/carbine
-	name = "Toploader Magazine - 5.56"
-	desc = "An additional 30-round 5.56 magazine for use in the M-90gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
-	item = /obj/item/ammo_box/magazine/m556
+/datum/uplink_item/ammo/car
+	name = "Box Magazine - 5.45x39mm"
+	desc = "An additional 30-round 5.45x39mm magazine for use in the C-90gl assault rifle. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
+	item = /obj/item/ammo_box/magazine/m545
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/a40mm
 	name = "Ammo Box - 40mm grenades"
-	desc = "A box of 4 additional 40mm HE grenades for use the M-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
+	desc = "A box of 4 additional 40mm HE grenades for use the C-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
 	item = /obj/item/ammo_box/a40mm
 	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
-	name = "Box Magazine - 7.62x51mm"
+	name = "Box Magazine - 7.62×51mm"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 12
@@ -291,14 +291,6 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
-
-
-/datum/uplink_item/stealthy_weapons/throwingstars
-	name = "Box of Throwing Stars"
-	desc = "A box of throwing stars with a high chance of embedding themselves in people's limbs."
-	item = /obj/item/weapon/storage/box/throwing_stars
-	cost = 6
-	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/sleepy_pen
 	name = "Sleepy Pen"
@@ -313,13 +305,6 @@ var/list/uplink_items = list()
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
-	surplus = 50
-
-/datum/uplink_item/stealthy_weapons/traitor_chem_bottle
-	name = "Poison Kit"
-	desc = "An assortment of nasty chemicals."
-	item = /obj/item/weapon/storage/box/syndie_kit/chemical
-	cost = 6
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/detomatix
@@ -393,13 +378,6 @@ var/list/uplink_items = list()
 	cost = 2
 	surplus = 30
 
-/datum/uplink_item/stealthy_tools/stimpack
-	name = "Stimpack"
-	desc = "Stimpacks, a tool of many great heroes, make you immune to stuns and knockdowns for about 5 minutes after injection."
-	item = /obj/item/weapon/reagent_containers/syringe/stimulants
-	cost = 8
-	surplus = 90
-
 // DEVICE AND TOOLS
 
 /datum/uplink_item/device_tools
@@ -418,7 +396,7 @@ var/list/uplink_items = list()
 	cost = 1
 
 /datum/uplink_item/device_tools/medkit
-	name = "Syndicate Combat Medic Kit"
+	name = "Syndicate Medical Supply Kit"
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
 	and other medical supplies helpful for a medical field operative."
 	item = /obj/item/weapon/storage/firstaid/tactical
@@ -566,12 +544,6 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	cost = 8
 
-/datum/uplink_item/implants/explosive
-	name = "Explosive Implant"
-	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Creates a moderately-sized fiery explosion. For those agents who know there is no going back."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_explosive
-	cost = 6
-
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass
@@ -593,13 +565,6 @@ var/list/uplink_items = list()
 	cost = 1
 	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 40
-
-/datum/uplink_item/badass/syndiecash
-	name = "Syndicate Briefcase Full of Cash"
-	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods and services at lucrative prices. \
-	The briefcase also feels a little heavier to hold; it has been manufactured to pack a little bit more of a punch if your client needs some convincing."
-	item = /obj/item/weapon/storage/secure/briefcase/syndie
-	cost = 1
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that you are The Boss"

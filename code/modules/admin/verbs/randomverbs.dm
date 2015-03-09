@@ -33,7 +33,7 @@
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				M << "<b>You hear [ticker.Bible_deity_name ? "the voice of " + ticker.Bible_deity_name : "a voice"] in your head... <i>[msg]</i></b>"
+				M << "\bold You hear a voice in your head... \italic [msg]"
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>")
@@ -681,6 +681,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm != "Yes") return
 
+	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
+		var/choice = input("The shuttle will just return if you call it. Call anyway?") in list("Confirm", "Cancel")
+		if(choice == "Confirm")
+			SSshuttle.emergencyFakeRecall = rand(0.5,0.9)
+		else
+			return
+
 	SSshuttle.emergency.request()
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
@@ -767,10 +774,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		usr << "Admin only."
 		return
-
-	var/confirm = alert(src, "You sure you want to blank all NTSL scripts?", "Confirm", "Yes", "No")
-	if(confirm !="Yes") return
-
 	for(var/obj/machinery/telecomms/server/S in telecomms_list)
 		var/datum/TCS_Compiler/C = S.Compiler
 		S.rawcode = ""

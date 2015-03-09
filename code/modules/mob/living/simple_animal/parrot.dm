@@ -122,9 +122,8 @@
 
 /mob/living/simple_animal/parrot/Stat()
 	..()
-	if(statpanel("Status"))
-		stat("Held Item", held_item)
-		stat("Mode",a_intent)
+	stat("Held Item", held_item)
+	stat("Mode",a_intent)
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(speaker != src && prob(20)) //Dont imitate ourselves
@@ -303,7 +302,7 @@
 		icon_state = "parrot_fly"
 
 //Mobs with objects
-/mob/living/simple_animal/parrot/attackby(var/obj/item/O as obj, var/mob/living/user as mob, params)
+/mob/living/simple_animal/parrot/attackby(var/obj/item/O as obj, var/mob/living/user as mob)
 	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O,/obj/item/weapon/reagent_containers/food/snacks/cracker))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)

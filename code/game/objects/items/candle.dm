@@ -23,7 +23,7 @@
 	icon_state = "candle[i][lit ? "_lit" : ""]"
 
 
-/obj/item/candle/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/candle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -54,7 +54,7 @@
 		for(var/mob/O in viewers(usr, null))
 			O.show_message(flavor_text, 1)
 		SetLuminosity(CANDLE_LUMINOSITY)
-		SSobj.processing |= src
+		SSobj.processing.Add(src)
 
 
 /obj/item/candle/process()

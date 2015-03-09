@@ -32,7 +32,8 @@
 		if(player.stat != DEAD)
 			++survivors
 
-			if(player.onCentcom())
+			var/turf/T = get_turf(player)
+			if(T && T.z == ZLEVEL_CENTCOM)
 				text += "<br><b><font size=2>[player.real_name] escaped to the safety of Centcom.</font></b>"
 			else
 				text += "<br><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"

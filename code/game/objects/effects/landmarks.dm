@@ -59,10 +59,6 @@
 			deathsquadspawn += loc
 			qdel(src)
 			return
-		if("Emergencyresponseteam")
-			emergencyresponseteamspawn += loc
-			qdel(src)
-			return
 		if("xeno_spawn")
 			xeno_spawn += loc
 			qdel(src)
@@ -84,7 +80,6 @@
 	..()
 	tag = "start*[name]"
 	invisibility = 101
-	start_landmarks_list += src
 
 	return 1
 
@@ -165,16 +160,8 @@
 	qdel(src)
 
 /obj/effect/landmark/costume/nightowl/New()
-	new /obj/item/clothing/suit/toggle/owlwings(src.loc)
 	new /obj/item/clothing/under/owl(src.loc)
 	new /obj/item/clothing/mask/gas/owl_mask(src.loc)
-	qdel(src)
-
-/obj/effect/landmark/costume/thegriffin/New()
-	new /obj/item/clothing/suit/toggle/owlwings/griffinwings(src.loc)
-	new /obj/item/clothing/shoes/griffin(src.loc)
-	new /obj/item/clothing/under/griffin(src.loc)
-	new /obj/item/clothing/head/griffin(src.loc)
 	qdel(src)
 
 /obj/effect/landmark/costume/waiter/New()

@@ -22,8 +22,6 @@
 /obj/structure/closet/wardrobe/red/New()
 	new /obj/item/weapon/storage/backpack/security(src)
 	new /obj/item/weapon/storage/backpack/satchel_sec(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
@@ -36,8 +34,9 @@
 	new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/head/santa(src)
+	new /obj/item/clothing/head/santa(src)
+	new /obj/item/clothing/head/santa(src)
 	return
 
 /obj/structure/closet/wardrobe/pink
@@ -74,10 +73,6 @@
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/head/soft/black(src)
-	new /obj/item/clothing/mask/bandana/black(src)
-	new /obj/item/clothing/mask/bandana/black(src)
-	if(prob(40))
-		new /obj/item/clothing/mask/bandana/skull(src)
 	return
 
 
@@ -92,7 +87,7 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/suit/nun(src)
 	new /obj/item/clothing/head/nun_hood(src)
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/toggle/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
 	new /obj/item/weapon/storage/backpack/cultpack (src)
 	new /obj/item/weapon/storage/fancy/candle_box(src)
@@ -112,8 +107,6 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/mask/bandana/green(src)
-	new /obj/item/clothing/mask/bandana/green(src)
 	return
 
 
@@ -145,8 +138,6 @@
 	new /obj/item/clothing/shoes/sneakers/orange(src)
 	new /obj/item/clothing/shoes/sneakers/orange(src)
 	new /obj/item/clothing/shoes/sneakers/orange(src)
-	new /obj/item/clothing/mask/bandana/gold(src)
-	new /obj/item/clothing/mask/bandana/gold(src)
 	return
 
 
@@ -196,9 +187,6 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
-	new /obj/item/clothing/head/soft/mime(src)
-	new /obj/item/clothing/head/soft/mime(src)
-	new /obj/item/clothing/head/soft/mime(src)
 	return
 
 /obj/structure/closet/wardrobe/white/medical
@@ -272,10 +260,7 @@
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/head/soft/black(src)
-	if(prob(40))
-		new /obj/item/clothing/mask/bandana/skull(src)
-	if(prob(40))
-		new /obj/item/clothing/mask/bandana/skull(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/science(src)
 	return
 
 
@@ -291,10 +276,7 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/suit/toggle/labcoat/chemist(src)
 	new /obj/item/clothing/suit/toggle/labcoat/chemist(src)
-	new /obj/item/weapon/storage/backpack/chemistry(src)
-	new /obj/item/weapon/storage/backpack/chemistry(src)
-	new /obj/item/weapon/storage/backpack/satchel_chem(src)
-	new /obj/item/weapon/storage/backpack/satchel_chem(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
 	return
 
 
@@ -310,10 +292,7 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/clothing/suit/toggle/labcoat/genetics(src)
 	new /obj/item/clothing/suit/toggle/labcoat/genetics(src)
-	new /obj/item/weapon/storage/backpack/genetics(src)
-	new /obj/item/weapon/storage/backpack/genetics(src)
-	new /obj/item/weapon/storage/backpack/satchel_gen(src)
-	new /obj/item/weapon/storage/backpack/satchel_gen(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
 	return
 
 
@@ -331,10 +310,7 @@
 	new /obj/item/clothing/suit/toggle/labcoat/virologist(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
-	new /obj/item/weapon/storage/backpack/virology(src)
-	new /obj/item/weapon/storage/backpack/virology(src)
-	new /obj/item/weapon/storage/backpack/satchel_vir(src)
-	new /obj/item/weapon/storage/backpack/satchel_vir(src)
+	new /obj/item/clothing/suit/toggle/wintercoat/medical(src)
 	return
 
 
@@ -353,18 +329,14 @@
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
+	if(prob(40))
+		new /obj/item/clothing/under/assistantformal(src)
+	if(prob(40))
+		new /obj/item/clothing/under/assistantformal(src)
 	if(prob(50))
-		new /obj/item/weapon/storage/backpack/dufflebag(src)
-	if(prob(40))
-		new /obj/item/clothing/mask/bandana/black(src)
-		new /obj/item/clothing/mask/bandana/black(src)
-	if(prob(40))
-		new /obj/item/clothing/under/assistantformal(src)
-	if(prob(40))
-		new /obj/item/clothing/under/assistantformal(src)
-	if(prob(30))
-		new /obj/item/clothing/suit/hooded/wintercoat(src)
+		new /obj/item/clothing/suit/toggle/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 	return
 
 
@@ -384,25 +356,11 @@
 	new /obj/item/clothing/under/color/green(src)
 	new /obj/item/clothing/under/color/orange(src)
 	new /obj/item/clothing/under/color/pink(src)
-	new /obj/item/clothing/under/color/red(src)
-	new /obj/item/clothing/under/color/lightblue(src)
-	new /obj/item/clothing/under/color/aqua(src)
-	new /obj/item/clothing/under/color/purple(src)
-	new /obj/item/clothing/under/color/lightpurple(src)
-	new /obj/item/clothing/under/color/lightgreen(src)
-	new /obj/item/clothing/under/color/darkblue(src)
-	new /obj/item/clothing/under/color/darkred(src)
-	new /obj/item/clothing/under/color/lightred(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/mask/bandana/blue(src)
-	new /obj/item/clothing/mask/bandana/blue(src)
-	new /obj/item/clothing/mask/bandana/gold(src)
-	new /obj/item/clothing/mask/bandana/gold(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
-	if(prob(30))
-		new /obj/item/clothing/suit/hooded/wintercoat(src)
+	if(prob(50))
+		new /obj/item/clothing/suit/toggle/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 	return

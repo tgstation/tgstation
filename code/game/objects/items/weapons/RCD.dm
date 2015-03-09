@@ -100,16 +100,15 @@ RCD
 	return
 
 
-/obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/rcd_ammo))
-		var/obj/item/weapon/rcd_ammo/R = W
-		if((matter + R.ammoamt) > max_matter)
+		if((matter + 20) > max_matter)
 			user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
 			return
 		user.drop_item()
 		qdel(W)
-		matter += R.ammoamt
+		matter += 20
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
@@ -181,7 +180,7 @@ RCD
 						if(!D.sub_door)
 							door_check = 0
 							break
-
+		
 					if(door_check)
 						user << "Building Airlock..."
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -266,15 +265,6 @@ RCD
 	desc = "A device used to rapidly build walls/floor."
 	canRwall = 1
 
-/obj/item/weapon/rcd/loaded
-	matter = 100
-
-/obj/item/weapon/rcd/combat
-	name = "combat RCD"
-	max_matter = 500
-	matter = 500
-	canRwall = 1
-
 /obj/item/weapon/rcd_ammo
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD."
@@ -287,7 +277,3 @@ RCD
 	origin_tech = "materials=2"
 	m_amt = 16000
 	g_amt = 8000
-	var/ammoamt = 20
-
-/obj/item/weapon/rcd_ammo/large
-	ammoamt = 100

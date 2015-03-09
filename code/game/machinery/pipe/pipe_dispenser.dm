@@ -71,7 +71,7 @@
 				wait = 0
 	return
 
-/obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob, params)
+/obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		usr << "<span class='notice'>You put [W] back into [src].</span>"
@@ -145,19 +145,21 @@ Nah
 		return 1
 
 	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=[DISP_PIPE_STRAIGHT]'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_PIPE_BENT]'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_JUNCTION]'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_YJUNCTION]'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_TRUNK]'>Trunk</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_BIN]'>Bin</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_OUTLET]'>Outlet</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_CHUTE]'>Chute</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_SORTJUNCTION]'>Sort Junction</A><BR>
+<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
+<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
+<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
+<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
+<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
+<A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
+<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
+<A href='?src=\ref[src];dmake=8'>Sort Junction</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	return
+
+// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
 
 
 /obj/machinery/pipedispenser/disposal/Topic(href, href_list)
@@ -168,13 +170,29 @@ Nah
 	if(href_list["dmake"])
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
-			var/obj/structure/disposalconstruct/C = new (src.loc,p_type)
-
-			if(!C.can_place())
-				usr << "<span class='warning'>There's not enough room to build that here!</span>"
-				qdel(C)
-				return
-
+			var/obj/structure/disposalconstruct/C = new (src.loc)
+			switch(p_type)
+				if(0)
+					C.ptype = 0
+				if(1)
+					C.ptype = 1
+				if(2)
+					C.ptype = 2
+				if(3)
+					C.ptype = 4
+				if(4)
+					C.ptype = 5
+				if(5)
+					C.ptype = 6
+					C.density = 1
+				if(6)
+					C.ptype = 7
+					C.density = 1
+				if(7)
+					C.ptype = 8
+					C.density = 1
+				if(8)
+					C.ptype = 9
 			C.add_fingerprint(usr)
 			C.update()
 			wait = 1

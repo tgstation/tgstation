@@ -29,7 +29,6 @@
 	required_players = 20
 	required_enemies = 6
 	recommended_enemies = 6
-	enemy_minimum_age = 14
 
 
 	var/finished = 0
@@ -276,8 +275,9 @@
 /datum/game_mode/cult/proc/check_survive()
 	acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat != DEAD)
-			if(cult_mind.current.onCentcom())
+		if (cult_mind.current && cult_mind.current.stat!=2)
+			var/area/A = get_area(cult_mind.current )
+			if ( is_type_in_list(A, centcom_areas))
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0

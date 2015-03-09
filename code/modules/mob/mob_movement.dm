@@ -69,10 +69,10 @@
 
 
 /client/Center()
-	if(isobj(mob.loc))
+	if (isobj(mob.loc))
 		var/obj/O = mob.loc
-		if(mob.canmove)
-			return O.relaymove(mob, 0)
+		if (mob.canmove)
+			return O.relaymove(mob, 16)
 	return
 
 
@@ -116,9 +116,6 @@
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
-	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
-		return mob.remote_control.relaymove(mob, direct)
-
 	if(!mob.canmove)
 		return 0
 
@@ -135,17 +132,16 @@
 
 	if(isturf(mob.loc))
 
-		move_delay = world.time//set move delay
-
 		if(mob.restrained())	//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
-					if(!M.incapacitated() && mob.Adjacent(M))
+					if(!M.restrained() && M.stat == 0 && M.canmove && mob.Adjacent(M))
 						src << "<span class='notice'>You're restrained! You can't move!</span>"
-						move_delay += 10
 						return 0
 					else
 						M.stop_pulling()
+
+		move_delay = world.time//set move delay
 
 		switch(mob.m_intent)
 			if("run")
@@ -200,7 +196,6 @@
 			step(mob, pick(cardinal))
 		else
 			. = ..()
-		mob.last_movement=world.time
 
 		moving = 0
 		if(mob && .)

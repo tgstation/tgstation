@@ -11,7 +11,6 @@
 
 
 /obj/structure/bigDelivery/attack_hand(mob/user as mob)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 
 /obj/structure/bigDelivery/Destroy()
@@ -25,7 +24,7 @@
 		AM.loc = T
 	..()
 
-/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -75,11 +74,11 @@
 			user.put_in_hands(wrapped)
 		else
 			wrapped.loc = get_turf(src)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+
 	qdel(src)
 
 
-/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -238,18 +237,12 @@
 	var/start_flush = 0
 	var/c_mode = 0
 
-/obj/machinery/disposal/deliveryChute/New(loc,var/obj/structure/disposalconstruct/make_from)
+/obj/machinery/disposal/deliveryChute/New()
 	..()
-	stored.ptype = DISP_END_CHUTE
 	spawn(5)
 		trunk = locate() in loc
 		if(trunk)
 			trunk.linked = src	// link the pipe trunk to self
-
-/obj/machinery/disposal/deliveryChute/Destroy()
-	if(trunk)
-		trunk.linked = null
-	..()
 
 /obj/machinery/disposal/deliveryChute/interact()
 	return
@@ -322,7 +315,7 @@
 	update()
 	return
 
-/obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user, params)
+/obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user)
 	if(!I || !user)
 		return
 
@@ -339,14 +332,18 @@
 			return
 	else if(istype(I,/obj/item/weapon/weldingtool) && c_mode==1)
 		var/obj/item/weapon/weldingtool/W = I
-
 		if(W.remove_fuel(0,user))
 			playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start slicing the floorweld off the delivery chute.</span>"
 			if(do_after(user,20))
 				if(!src || !W.isOn()) return
-				Deconstruct()
 				user << "<span class='notice'>You sliced the floorweld off the delivery chute.</span>"
+				var/obj/structure/disposalconstruct/C = new (loc)
+				C.ptype = 8 // 8 =  Delivery chute
+				C.update()
+				C.anchored = 1
+				C.density = 1
+				qdel(src)
 			return
 		else
 			return

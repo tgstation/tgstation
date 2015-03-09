@@ -486,7 +486,7 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob, params)
+/obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 

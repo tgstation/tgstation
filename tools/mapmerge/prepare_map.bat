@@ -1,12 +1,6 @@
-@echo off
-cd ../../_maps/map_files/
+set MAPFILE=tgstation.2.1.3.dmm
 
-for /R %%f in (*.dmm) do copy %%f "%%f.backup"
+cd ../../_maps/map_files/TgStation/
+copy %MAPFILE% %MAPFILE%.backup
 
-cls
-echo All dmm files in map_files directories have been backed up
-echo Now you can make your changes...
-echo ---
-echo Remember to run clean_map.bat just before you commit your changes!
-echo ---
 pause

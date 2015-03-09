@@ -16,6 +16,14 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/armor/vest/alt
+	name = "armor"
+	desc = "An armored vest that protects against most types of damage. This is a civilian variant."
+	icon_state = "armoralt"
+	item_state = "armoralt"
+	blood_overlay_type = "armor"
+	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enchanced with a special alloy for some protection and style for those with a commanding presence."
@@ -38,7 +46,7 @@
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
-	desc = "A red jacket with silver rank pips and body armor strapped on top."
+	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -48,7 +56,7 @@
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
-	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
+	desc = "A red jacket with silver rank pips and body armor strapped on top."
 	icon_state = "warden_alt"
 
 /obj/item/clothing/suit/armor/vest/capcarapace
@@ -104,7 +112,7 @@
 	name = "armor"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
-	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 
 
 
@@ -157,7 +165,7 @@
 	item_state = "centcom"
 	w_class = 4//bulky item
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	flags = THICKMATERIAL
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS

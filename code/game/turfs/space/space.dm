@@ -15,24 +15,11 @@
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
-	if(config)
-		if(config.starlight)
-			update_starlight()
-
-/turf/space/proc/update_starlight()
-	if(config)
-		if(config.starlight)
-			for(var/turf/T in orange(src,1))
-				if(istype(T,/turf/simulated))
-					SetLuminosity(3)
-					return
-			SetLuminosity(0)
 
 /turf/space/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/turf/space/attackby(obj/item/C, mob/user, params)
-	..()
+/turf/space/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -41,7 +28,7 @@
 			user << "<span class='warning'>There is already a catwalk here.</span>"
 			return
 		if(L)
-			if(R.use(1))
+			if(R.use(2))
 				user << "<span class='notice'>Constructing catwalk...</span>"
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				qdel(L)
@@ -69,6 +56,13 @@
 				user << "<span class='warning'>You need one floor tile to build a floor.</span>"
 		else
 			user << "<span class='danger'>The plating is going to need some support. Place metal rods first.</span>"
+	if(istype(C, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = C
+		for(var/obj/structure/cable/LC in src)
+			if((LC.d1==0)||(LC.d2==0))
+				LC.attackby(C,user)
+				return
+		coil.place_turf(src, user)
 
 /turf/space/Entered(atom/movable/A)
 	..()
@@ -183,7 +177,7 @@ proc/setup_map_transitions() //listamania
 		set background = 1
 
 	while(free_zones.len != 0) //Assign the sides of the cube
-		if(!unplaced_z_levels || !unplaced_z_levels.len) //if we're somehow unable to fill the cube, pad with deep space
+		if(!unplaced_z_levels) //if we're somehow unable to fill the cube, pad with deep space
 			z_level =  6
 		else
 			z_level = pick(unplaced_z_levels)

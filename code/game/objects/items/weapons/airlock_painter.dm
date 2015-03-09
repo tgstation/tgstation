@@ -57,7 +57,7 @@
 	user << "<span class='notice'>Its ink levels look [ink_level].</span>"
 
 
-/obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/device/toner))
 		if(ink)

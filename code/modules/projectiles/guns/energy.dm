@@ -2,7 +2,6 @@
 	icon_state = "energy"
 	name = "energy gun"
 	desc = "A basic energy-based gun."
-	icon = 'icons/obj/guns/energy.dmi'
 
 	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
 	var/cell_type = /obj/item/weapon/stock_parts/cell
@@ -29,7 +28,6 @@
 		ammo_type[i] = shot
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
-	fire_delay = shot.delay
 	update_icon()
 	return
 
@@ -37,7 +35,6 @@
 /obj/item/weapon/gun/energy/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
 	newshot() //prepare a new shot
 	..()
-
 /obj/item/weapon/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	return power_supply.charge >= shot.e_cost
@@ -64,7 +61,6 @@
 		select = 1
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
-	fire_delay = shot.delay
 	if (shot.select_name)
 		user << "<span class='danger'>[src] is now set to [shot.select_name].</span>"
 	update_icon()
@@ -83,32 +79,4 @@
 			icon_state = "[initial(icon_state)][shot.mod_name][ratio]"
 		if (2)
 			icon_state = "[initial(icon_state)][shot.select_name][ratio]"
-	overlays.Cut()
-	if(F)
-		if(F.on)
-			overlays += "flight-[initial(icon_state)]-on"
-		else
-			overlays += "flight-[initial(icon_state)]"
 	return
-
-/obj/item/weapon/gun/energy/ui_action_click()
-	toggle_gunlight()
-
-/obj/item/weapon/gun/energy/suicide_act(mob/user)
-	if (src.can_shoot())
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of the [src.name] in \his mouth.  It looks like \he's trying to commit suicide.</span>")
-		sleep(25)
-		if(user.l_hand == src || user.r_hand == src)
-			user.visible_message("<span class='suicide'>[user] melts \his face off with the [src.name]!</span>")
-			playsound(loc, fire_sound, 50, 1, -1)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-			power_supply.use(shot.e_cost)
-			update_icon()
-			return(FIRELOSS)
-		else
-			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
-			return(OXYLOSS)
-	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b></span>")
-		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
-		return (OXYLOSS)

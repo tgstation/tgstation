@@ -276,7 +276,7 @@
 
 		add_fingerprint(usr)
 
-		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow))
+		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
 			for(var/mob/M in viewers(usr, null))
 				if(M == usr)
 					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
@@ -321,7 +321,7 @@
 
 
 //This proc is called when you want to place an item into the storage item.
-/obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
+/obj/item/weapon/storage/attackby(obj/item/W, mob/user)
 	..()
 
 	if(isrobot(user))

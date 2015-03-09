@@ -15,26 +15,26 @@
 	real_name = name
 	..()
 
-/mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()
+/mob/living/carbon/alien/humanoid/hunter/handle_regular_hud_updates()
+	..() //-Yvarov
+
 	if (healths)
 		if (stat != 2)
 			switch(health)
 				if(150 to INFINITY)
 					healths.icon_state = "health0"
-				if(120 to 150)
+				if(100 to 150)
 					healths.icon_state = "health1"
-				if(90 to 120)
+				if(50 to 100)
 					healths.icon_state = "health2"
-				if(60 to 90)
+				if(25 to 50)
 					healths.icon_state = "health3"
-				if(30 to 60)
+				if(0 to 25)
 					healths.icon_state = "health4"
-				if(0 to 30)
-					healths.icon_state = "health5"
 				else
-					healths.icon_state = "health6"
+					healths.icon_state = "health5"
 		else
-			healths.icon_state = "health7"
+			healths.icon_state = "health6"
 
 
 /mob/living/carbon/alien/humanoid/hunter/handle_environment()
@@ -93,14 +93,12 @@
 		update_icons()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(A)
-
-	if(!leaping)
-		return ..()
+	var/msg = ""
 
 	if(A)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
-			L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
+			msg = "<span class ='alertalien'>[src] pounces on [A]!</span>"
 			L.Weaken(5)
 			sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src,L)
@@ -110,13 +108,13 @@
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
 		else
-			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
+			msg = "<span class ='alertalien'>[src] smashes into [A]!</span>"
 			weakened = 2
 
 		if(leaping)
 			leaping = 0
 			update_canmove()
-
+			visible_message(msg)
 
 
 /mob/living/carbon/alien/humanoid/float(on)
@@ -164,5 +162,7 @@
 
 
 	src.throwing = 0
+	if(isobj(src))
+		src.throw_impact(get_turf(src))
 
 	return 1

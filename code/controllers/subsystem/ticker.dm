@@ -9,7 +9,6 @@ var/datum/subsystem/ticker/ticker
 
 	var/restart_timeout = 250				//delay when restarting server
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
-	var/force_ending = 0					//Round was ended by admin intervention
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -92,7 +91,7 @@ var/datum/subsystem/ticker/ticker
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
+			if(!mode.explosion_in_progress && mode.check_finished())
 				current_state = GAME_STATE_FINISHED
 				auto_toggle_ooc(1) // Turn it on
 				declare_completion()
@@ -178,7 +177,6 @@ var/datum/subsystem/ticker/ticker
 	auto_toggle_ooc(0) // Turn it off
 	round_start_time = world.time
 
-	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -349,7 +347,8 @@ var/datum/subsystem/ticker/ticker
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
-					if(!Player.onCentcom())
+					var/turf/playerTurf = get_turf(Player)
+					if(!playerTurf || playerTurf.z != ZLEVEL_CENTCOM)
 						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
 					else
 						num_escapees++

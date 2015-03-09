@@ -776,7 +776,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		sleep(timefraction)
 		if(!user || !target)
 			return 0
-		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.stat || ( user.stunned || user.weakened || user.paralysis || user.lying ) )
 			return 0
 
 	return 1
@@ -798,7 +798,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		sleep(delayfraction)
 
 
-		if(!user || user.incapacitated() || !(user.loc == T))
+		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T))
 			return 0
 
 		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
@@ -816,19 +816,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
-//Returns sortedAreas list if populated
-//else populates the list first before returning it
-/proc/SortAreas()
+//Returns: all the areas in the world
+/proc/return_areas()
+	. = list()
 	for(var/area/A in world)
-		if(A.lighting_subarea)
-			continue
-		sortedAreas.Add(A)
+		. += A
 
-	sortTim(sortedAreas, /proc/cmp_name_asc)
-
-/area/proc/addSorted()
-	sortedAreas.Add(src)
-	sortTim(sortedAreas, /proc/cmp_name_asc)
+//Returns: all the areas in the world, sorted.
+/proc/return_sorted_areas()
+	return sortNames(return_areas())
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -1306,7 +1302,7 @@ var/global/list/common_tools = list(
 			return 0
 	if(istype(W, /obj/item/weapon/match))
 		var/obj/item/weapon/match/O = W
-		if(O.lit == 1)
+		if(O.lit)
 			return 1000
 		else
 			return 0
@@ -1343,62 +1339,27 @@ var/global/list/common_tools = list(
 
 //Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
 /proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	var/list/sharp_things_1 = list(\
-	/obj/item/weapon/circular_saw,\
-	/obj/item/weapon/shovel,\
-	/obj/item/weapon/shard,\
-	/obj/item/weapon/broken_bottle,\
-	/obj/item/weapon/twohanded/fireaxe,\
-	/obj/item/weapon/hatchet,\
-	/obj/item/weapon/throwing_star,\
-	/obj/item/weapon/twohanded/spear)
-
-	//Because is_sharp is used for food or something.
-	var/list/sharp_things_2 = list(\
-	/obj/item/weapon/kitchenknife,\
-	/obj/item/weapon/scalpel,\
-	/obj/item/weapon/kitchen/utensil/knife)
-
-	if(is_type_in_list(W,sharp_things_1))
-		return 1
-
-	if(is_type_in_list(W,sharp_things_2))
-		return 2 //cutting food
-
-	if(istype(W, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/E = W
-		if(E.active)
-			return 1
-		else
-			return 0
-
-/proc/is_pointed(obj/item/W as obj)
-	if(istype(W, /obj/item/weapon/pen))
-		return 1
-	if(istype(W, /obj/item/weapon/screwdriver))
-		return 1
-	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
-		return 1
-	if(istype(W, /obj/item/weapon/kitchen/utensil/fork))
-		return 1
-	else
-		return 0
-
-//For objects that should embed, but make no sense being is_sharp or is_pointed()
-//e.g: rods
-/proc/can_embed(obj/item/W)
-	if(is_sharp(W))
-		return 1
-	if(is_pointed(W))
-		return 1
-
-	var/list/embed_items = list(\
-	/obj/item/stack/rods,\
+	return ( \
+		istype(W, /obj/item/weapon/screwdriver)                   || \
+		istype(W, /obj/item/weapon/pen)                           || \
+		istype(W, /obj/item/weapon/weldingtool)					  || \
+		istype(W, /obj/item/weapon/lighter/zippo)				  || \
+		istype(W, /obj/item/weapon/match)            		      || \
+		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
+		istype(W, /obj/item/weapon/wirecutters)                   || \
+		istype(W, /obj/item/weapon/circular_saw)                  || \
+		istype(W, /obj/item/weapon/melee/energy/sword)            || \
+		istype(W, /obj/item/weapon/melee/energy/blade)            || \
+		istype(W, /obj/item/weapon/shovel)                        || \
+		istype(W, /obj/item/weapon/kitchenknife)                  || \
+		istype(W, /obj/item/weapon/scalpel)                       || \
+		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
+		istype(W, /obj/item/weapon/shard)                         || \
+		istype(W, /obj/item/weapon/broken_bottle)				  || \
+		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
+		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
+		istype(W, /obj/item/weapon/twohanded/fireaxe) \
 	)
-
-	if(is_type_in_list(W, embed_items))
-		return 1
-
 
 /*
 Checks if that loc and dir has a item on the wall
@@ -1484,20 +1445,3 @@ var/list/WALLITEMS = list(
 		chance = max(chance - (initial_chance / steps), 0)
 		steps--
 
-/proc/living_player_count()
-	var/living_player_count = 0
-	for(var/mob in player_list)
-		if(mob in living_mob_list)
-			living_player_count += 1
-	return living_player_count
-
-/proc/randomColor(var/mode = 0)	//if 1 it doesn't pick white, black or gray
-	switch(mode)
-		if(0)
-			return pick("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
-						"crimson","lime","darkgreen","cyan","navy","teal","purple","indigo")
-		if(1)
-			return pick("red","green","blue","brown","yellow","orange","darkred","crimson",
-						"lime","darkgreen","cyan","navy","teal","purple","indigo")
-		else
-			return "white"

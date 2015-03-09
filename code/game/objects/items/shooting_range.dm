@@ -32,7 +32,7 @@
 
 
 
-/obj/item/target/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/target/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -113,7 +113,7 @@
 			bmark.pixel_x--
 			bmark.pixel_y--
 
-			if(Proj.damage >= 20 || istype(Proj, /obj/item/projectile/beam/practice))
+			if(Proj.damage >= 20 || istype(Proj, /obj/item/projectile/practice))
 				bmark.icon_state = "scorch"
 				bmark.dir = pick(NORTH,SOUTH,EAST,WEST) // random scorch design
 

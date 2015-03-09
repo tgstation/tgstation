@@ -55,33 +55,30 @@ Please contact me on #coderbus IRC. ~Carnie x
 */
 
 //Human Overlays Indexes/////////
-#define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
-#define BODY_BEHIND_LAYER		25
-#define BODY_LAYER				24		//underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_ADJ_LAYER			23
-#define MUTATIONS_LAYER			22		//Tk headglows etc.
-#define AUGMENTS_LAYER			21
-#define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			19
-#define ID_LAYER				18
-#define SHOES_LAYER				17
-#define GLOVES_LAYER			16
-#define EARS_LAYER				15
-#define SUIT_LAYER				14
-#define GLASSES_LAYER			13
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		11
-#define BACK_LAYER				10
-#define HAIR_LAYER				9		//TODO: make part of head layer?
-#define FACEMASK_LAYER			8
-#define HEAD_LAYER				7
-#define HANDCUFF_LAYER			6
-#define LEGCUFF_LAYER			5
-#define L_HAND_LAYER			4
-#define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
-#define BODY_FRONT_LAYER		2
+#define SPECIES_LAYER			23		// mutantrace colors... these are on a seperate layer in order to prvent
+#define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
+#define MUTATIONS_LAYER			21		//Tk headglows etc.
+#define AUGMENTS_LAYER			20
+#define DAMAGE_LAYER			19		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			18
+#define ID_LAYER				17
+#define SHOES_LAYER				16
+#define GLOVES_LAYER			15
+#define EARS_LAYER				14
+#define SUIT_LAYER				13
+#define GLASSES_LAYER			12
+#define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		10
+#define BACK_LAYER				9
+#define HAIR_LAYER				8		//TODO: make part of head layer?
+#define FACEMASK_LAYER			7
+#define HEAD_LAYER				6
+#define HANDCUFF_LAYER			5
+#define LEGCUFF_LAYER			4
+#define L_HAND_LAYER			3
+#define R_HAND_LAYER			2		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			23		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -160,11 +157,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/proc/update_mutcolor()
 	if(dna && !(disabilities & HUSK))
 		dna.species.update_color(src)
-
-/mob/living/carbon/human/proc/update_mutant_bodyparts()
-	if(dna)
-		dna.species.handle_mutant_bodyparts(src)
-
 
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
@@ -270,8 +262,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
-			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				standing	= wear_female_version(t_color, 'icons/mob/uniform.dmi', UNIFORM_LAYER, U.fitted)
+			if(G == "f" && U.fitted == 1)
+				standing	= wear_female_version(t_color, 'icons/mob/uniform.dmi', UNIFORM_LAYER)
 				overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(w_uniform.blood_DNA)
@@ -446,9 +438,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
 
 	src.update_hair()
-	src.update_mutant_bodyparts()
-
 	apply_overlay(SUIT_LAYER)
+
 
 /mob/living/carbon/human/update_inv_pockets()
 	if(l_store)
@@ -476,9 +467,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(wear_mask.blood_DNA && !istype(wear_mask, /obj/item/clothing/mask/cigarette))
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 
-	update_mutant_bodyparts()
-
 	apply_overlay(FACEMASK_LAYER)
+
+
 
 /mob/living/carbon/human/update_inv_back()
 	remove_overlay(BACK_LAYER)
@@ -548,7 +539,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
 
-		overlays_standing[R_HAND_LAYER] = image("icon" = r_hand.righthand_file, "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
+		overlays_standing[R_HAND_LAYER] = image("icon"='icons/mob/items_righthand.dmi', "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
 
 	apply_overlay(R_HAND_LAYER)
 
@@ -567,15 +558,15 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/t_state = l_hand.item_state
 		if(!t_state)	t_state = l_hand.icon_state
 
-		overlays_standing[L_HAND_LAYER] = image("icon" = l_hand.lefthand_file, "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
+		overlays_standing[L_HAND_LAYER] = image("icon"='icons/mob/items_lefthand.dmi', "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
 
 	apply_overlay(L_HAND_LAYER)
 
-/mob/living/carbon/human/proc/wear_female_version(t_color, icon, layer, type)
+/mob/living/carbon/human/proc/wear_female_version(t_color, icon, layer)
 	var/index = "[t_color]_s"
 	var/icon/female_clothing_icon = female_clothing_icons[index]
 	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
-		generate_female_clothing(index,t_color,icon,type)
+		generate_female_clothing(index,t_color,icon)
 	var/standing	= image("icon"=female_clothing_icons["[t_color]_s"], "layer"=-layer)
 	return(standing)
 

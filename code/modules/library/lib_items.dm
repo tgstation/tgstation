@@ -31,7 +31,7 @@
 	update_icon()
 
 
-/obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
+/obj/structure/bookcase/attackby(obj/item/I, mob/user)
 	switch(state)
 		if(0)
 			if(istype(I, /obj/item/weapon/wrench))
@@ -186,7 +186,7 @@
 		user << "<span class='notice'>This book is completely blank!</span>"
 
 
-/obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/book/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/pen))
 		if(is_blind(user))
 			return
@@ -281,7 +281,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 1.0
-	var/obj/machinery/computer/libraryconsole/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
+	var/obj/machinery/librarycomp/computer	//Associated computer - Modes 1 to 3 use this
 	var/obj/item/weapon/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 

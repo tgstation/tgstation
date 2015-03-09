@@ -99,9 +99,3 @@
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-alien"
 	origin_tech = "biotech=7"
-
-/obj/item/organ/brain/Destroy() //copypasted from MMIs.
-	if(brainmob)
-		qdel(brainmob)
-		brainmob = null
-	..()

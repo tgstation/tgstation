@@ -21,23 +21,6 @@
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
 
-/atom/proc/onCentcom()
-	var/turf/T = get_turf(src)
-	if(!T)
-		return 0
-
-	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
-		return 0
-
-	//check for centcomm shuttles
-	for(var/centcom_shuttle in list("emergency", "pod1", "pod2", "pod3", "pod4", "ferry"))
-		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(centcom_shuttle)
-		if(T in M.areaInstance)
-			return 1
-
-	//finally check for centcom itself
-	return istype(T.loc,/area/centcom)
-
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
@@ -329,13 +312,11 @@ var/list/blood_splatter_icons = list()
 	bloody_hands_mob = M
 	return 1
 
-/turf/simulated/add_blood(mob/living/carbon/human/M)
+/turf/simulated/add_blood(mob/living/carbon/M)
 	if(..() == 0)	return 0
 
 	var/obj/effect/decal/cleanable/blood/B = locate() in contents	//check for existing blood splatter
-	if(!B)
-		blood_splatter(src,M.get_blood(M.vessel),1)
-		B = locate(/obj/effect/decal/cleanable/blood) in contents
+	if(!B)	B = new /obj/effect/decal/cleanable/blood(src)			//make a bloood splatter if we couldn't find one
 	B.add_blood_list(M)
 	return 1 //we bloodied the floor
 
@@ -368,9 +349,7 @@ var/list/blood_splatter_icons = list()
 	if(istype(src, /turf/simulated))
 		if(check_dna_integrity(M))	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
-			if(!B)
-				blood_splatter(src,M,1)
-				B = locate(/obj/effect/decal/cleanable/blood) in contents
+			if(!B)	B = new(src)
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
 			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents

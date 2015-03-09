@@ -25,6 +25,10 @@
 	var/heal_rate = 5
 	var/plasma_rate = 5
 
+	var/oxygen_alert = 0
+	var/toxins_alert = 0
+	var/fire_alert = 0
+
 	var/heat_protection = 0.5
 	var/leaping = 0
 
@@ -56,7 +60,7 @@
 /mob/living/carbon/alien/getToxLoss()
 	return 0
 
-/mob/living/carbon/alien/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
 	if(locate(/obj/structure/alien/weeds) in loc)
@@ -90,42 +94,48 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360.15)
 		//Body temperature is too hot.
-		throw_alert("alien_fire")
+		fire_alert = max(fire_alert, 1)
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
+				fire_alert = max(fire_alert, 2)
 			if(400 to 460)
 				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+				fire_alert = max(fire_alert, 2)
 			if(460 to INFINITY)
 				if(on_fire)
 					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+					fire_alert = max(fire_alert, 2)
 				else
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-	else
-		clear_alert("alien_fire")
+					fire_alert = max(fire_alert, 2)
+	return
 
+/mob/living/carbon/alien/proc/handle_mutations_and_radiation()
 
-/mob/living/carbon/alien/ex_act(severity, target)
-	..()
+	// Aliens love radiation nom nom nom
+	if (radiation)
+		if (radiation > 100)
+			radiation = 100
 
-	switch (severity)
-		if (1.0)
-			gib()
-			return
+		if (radiation < 0)
+			radiation = 0
 
-		if (2.0)
-			adjustBruteLoss(60)
-			adjustFireLoss(60)
-			adjustEarDamage(30,120)
+		switch(radiation)
+			if(0 to 50)
+				radiation--
+				if(prob(25))
+					adjustToxLoss(1)
 
-		if(3.0)
-			adjustBruteLoss(30)
-			if (prob(50))
-				Paralyse(1)
-			adjustEarDamage(15,60)
+			if(50 to 75)
+				radiation -= 2
+				adjustToxLoss(1)
+				if(prob(5))
+					radiation -= 5
 
-	updatehealth()
-
+			if(75 to 100)
+				radiation -= 3
+				adjustToxLoss(3)
 
 /mob/living/carbon/alien/handle_fire()//Aliens on fire code
 	if(..())
@@ -140,13 +150,25 @@
 	return 1 // Aliens can eat, and they can be fed food/drink
 
 /mob/living/carbon/alien/Stat()
+
+	statpanel("Status")
+	stat(null, "Intent: [a_intent]")
+	stat(null, "Move Mode: [m_intent]")
+
 	..()
 
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
+	if (client.statpanel == "Status")
 		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
 
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun

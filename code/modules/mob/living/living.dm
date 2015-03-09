@@ -8,48 +8,11 @@ Sorry Giacom. Please don't be mad :(
 		push_mob_back(src, A.push_dir)
 */
 
-
-/mob/living/New()
-	. = ..()
-	generateStaticOverlay()
-	if(staticOverlays.len)
-		for(var/mob/living/simple_animal/drone/D in player_list)
-			if(D && D.seeStatic)
-				if(D.staticChoice in staticOverlays)
-					D.staticOverlays |= staticOverlays[D.staticChoice]
-					D.client.images |= staticOverlays[D.staticChoice]
-				else //no choice? force static
-					D.staticOverlays |= staticOverlays["static"]
-					D.client.images |= staticOverlays["static"]
-
-
 /mob/living/Destroy()
-	. = ..()
-
-	for(var/mob/living/simple_animal/drone/D in player_list)
-		for(var/image/I in staticOverlays)
-			D.staticOverlays.Remove(I)
-			D.client.images.Remove(I)
-			del(I)
-	staticOverlays.len = 0
-
+//	if(mind)
+//		mind.current = null
+	..()
 	del(src)
-
-
-/mob/living/proc/generateStaticOverlay()
-	staticOverlays.Add(list("static", "blank", "letter"))
-	var/image/staticOverlay = image(getStaticIcon(new/icon(icon,icon_state)), loc = src)
-	staticOverlay.override = 1
-	staticOverlays["static"] = staticOverlay
-
-	staticOverlay = image(getBlankIcon(new/icon(icon, icon_state)), loc = src)
-	staticOverlay.override = 1
-	staticOverlays["blank"] = staticOverlay
-
-	staticOverlay = getLetterImage(src)
-	staticOverlay.override = 1
-	staticOverlays["letter"] = staticOverlay
-
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
@@ -111,7 +74,7 @@ Sorry Giacom. Please don't be mad :(
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
-	if(!(M.status_flags & CANPUSH))
+	if(!(M.status_flags & CANPUSH) )
 		return 1
 	//anti-riot equipment is also anti-push
 	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
@@ -314,6 +277,9 @@ Sorry Giacom. Please don't be mad :(
 
 // MOB PROCS //END
 
+
+/mob/proc/get_contents()
+
 /mob/living/proc/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
@@ -325,7 +291,6 @@ Sorry Giacom. Please don't be mad :(
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			usr.sleeping = 20 //Short nap
 
-/mob/proc/get_contents()
 
 /mob/living/proc/lay_down()
 	set name = "Rest"
@@ -378,17 +343,6 @@ Sorry Giacom. Please don't be mad :(
 	var/obj/item/organ/limb/def_zone = ran_zone(t)
 	return def_zone
 
-//damage/heal the mob ears and adjust the deaf amount
-/mob/living/adjustEarDamage(var/damage, var/deaf)
-	ear_damage = max(0, ear_damage + damage)
-	ear_deaf = max(0, ear_deaf + deaf)
-
-//pass a negative argument to skip one of the variable
-/mob/living/setEarDamage(var/damage, var/deaf)
-	if(damage >= 0)
-		ear_damage = damage
-	if(deaf >= 0)
-		ear_deaf = deaf
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/heal_organ_damage(var/brute, var/burn)
@@ -447,11 +401,6 @@ Sorry Giacom. Please don't be mad :(
 		dead_mob_list -= src
 		living_mob_list += src
 	if(!isanimal(src))	stat = CONSCIOUS
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_mob = src
-		human_mob.restore_blood()
-		human_mob.remove_all_embedded_objects()
-
 	update_fire()
 	regenerate_icons()
 	..()
@@ -534,8 +483,30 @@ Sorry Giacom. Please don't be mad :(
 						M.stop_pulling()
 
 						//this is the gay blood on floor shit -- Added back -- Skie
-						if(M.lying && !M.buckled && (prob(M.getBruteLoss() / 2)))
-							makeTrail(T, M)
+						if (M.lying && (prob(M.getBruteLoss() / 2)))
+							var/blood_exists = 0
+							var/trail_type = M.getTrail()
+							for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
+								blood_exists = 1
+							if (istype(M.loc, /turf/simulated) && trail_type != null)
+								var/newdir = get_dir(T, M.loc)
+								if(newdir != M.dir)
+									newdir = newdir | M.dir
+									if(newdir == 3) //N + S
+										newdir = NORTH
+									else if(newdir == 12) //E + W
+										newdir = EAST
+								if((newdir in list(1, 2, 4, 8)) && (prob(50)))
+									newdir = turn(get_dir(T, M.loc), 180)
+								if(!blood_exists)
+									new /obj/effect/decal/cleanable/trail_holder(M.loc)
+								for(var/obj/effect/decal/cleanable/trail_holder/H in M.loc)
+									if((!(newdir in H.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+										H.existing_dirs += newdir
+										H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+										if(check_dna_integrity(M)) //blood DNA
+											var/mob/living/carbon/DNA_helper = pulling
+											H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 						pulling.Move(T, get_dir(pulling, T))
 						if(M)
 							M.start_pulling(t)
@@ -551,35 +522,6 @@ Sorry Giacom. Please don't be mad :(
 	if(update_slimes)
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
-
-/mob/living/proc/makeTrail(var/turf/T, var/mob/living/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if((NOBLOOD in H.dna.species.specflags) || (!H.blood_max) || (H.bleedsuppress))
-			return
-	var/blood_exists = 0
-	var/trail_type = M.getTrail()
-	for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
-		blood_exists = 1
-	if (istype(M.loc, /turf/simulated) && trail_type != null)
-		var/newdir = get_dir(T, M.loc)
-		if(newdir != M.dir)
-			newdir = newdir | M.dir
-			if(newdir == 3) //N + S
-				newdir = NORTH
-			else if(newdir == 12) //E + W
-				newdir = EAST
-		if((newdir in list(1, 2, 4, 8)) && (prob(50)))
-			newdir = turn(get_dir(T, M.loc), 180)
-		if(!blood_exists)
-			new /obj/effect/decal/cleanable/trail_holder(M.loc)
-		for(var/obj/effect/decal/cleanable/trail_holder/H in M.loc)
-			if((!(newdir in H.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-				H.existing_dirs += newdir
-				H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
-				if(check_dna_integrity(M)) //blood DNA
-					var/mob/living/carbon/DNA_helper = pulling
-					H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
     return null
@@ -637,8 +579,6 @@ Sorry Giacom. Please don't be mad :(
 				if(C.handcuffed)
 					C.handcuffed.loc = C.loc
 					C.handcuffed = null
-					if(C.buckled && C.buckled.buckle_requires_restraints)
-						C.buckled.unbuckle_mob()
 					C.update_inv_handcuffed(0)
 					return
 				if(C.legcuffed)
@@ -697,13 +637,13 @@ Sorry Giacom. Please don't be mad :(
 							return
 						C.visible_message("<span class='danger'>[C] manages to unbuckle themself!</span>", \
 											"<span class='notice'>You successfully unbuckle yourself.</span>")
-						C.buckled.user_unbuckle_mob(C,C)
+						C.buckled.manual_unbuckle(C)
 					else
 						C << "<span class='warning'>You fail to unbuckle yourself!</span>"
 			else
-				L.buckled.user_unbuckle_mob(L,L)
+				L.buckled.manual_unbuckle(L)
 		else
-			L.buckled.user_unbuckle_mob(L,L)
+			L.buckled.manual_unbuckle(L)
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(loc && istype(loc, /obj) && !isturf(loc))
@@ -716,7 +656,7 @@ Sorry Giacom. Please don't be mad :(
 		var/mob/living/carbon/CM = L
 		if(CM.on_fire && CM.canmove)
 			CM.fire_stacks -= 5
-			CM.Weaken(3,1)
+			CM.Weaken(3)
 			CM.spin(32,2)
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
 				"<span class='notice'>You stop, drop, and roll!</span>")
@@ -776,7 +716,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/float(on)
 	if(on && !floating)
-		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
+		animate(src, pixel_y = 2, time = 10, loop = -1)
 		floating = 1
 	else if(!on && floating)
 		animate(src, pixel_y = initial(pixel_y), time = 10)
@@ -813,7 +753,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/singularity_act()
 	var/gain = 20
-	investigate_log("([key_name(src)]) has been consumed by the singularity.","singulo") //Oh that's where the clown ended up!
+	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 
@@ -859,13 +799,4 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/do_attack_animation(atom/A)
 	..()
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
-
-/mob/living/proc/do_jitter_animation(jitteriness)
-	var/amplitude = min(4, (jitteriness/100) + 1)
-	var/pixel_x_diff = rand(-amplitude, amplitude)
-	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
-	animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y) , time = 2)
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
-
+	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

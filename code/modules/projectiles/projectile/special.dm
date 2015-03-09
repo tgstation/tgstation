@@ -28,6 +28,7 @@
 	icon_state= "bolter"
 	damage = 60
 	flag = "bullet"
+	range = 7
 
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
@@ -114,30 +115,21 @@ obj/item/projectile/kinetic/New()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
 		name = "full strength kinetic force"
-		damage *= 2
+		damage = 30
 	..()
 
 /obj/item/projectile/kinetic/Range()
 	range--
 	if(range <= 0)
 		new /obj/item/effect/kinetic_blast(src.loc)
-		for(var/turf/T in range(1, src.loc))
-			if(istype(T, /turf/simulated/mineral))
-				var/turf/simulated/mineral/M = T
-				M.gets_drilled(firer)
 		qdel(src)
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
 	var/turf/target_turf= get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
-		M.gets_drilled(firer)
+		M.gets_drilled()
 	new /obj/item/effect/kinetic_blast(target_turf)
-	if(isturf(target))
-		for(var/turf/T in range(1, target_turf))
-			if(istype(T, /turf/simulated/mineral))
-				var/turf/simulated/mineral/M = T
-				M.gets_drilled(firer)
 	..()
 
 /obj/item/effect/kinetic_blast
@@ -187,20 +179,3 @@ obj/item/projectile/kinetic/New()
 	name ="explosive slug"
 	damage = 25
 	weaken = 5
-
-/obj/item/projectile/bullet/magspear
-	name = "magnetic spear"
-	desc = "WHITE WHALE, HOLY GRAIL"
-	damage = 30 //takes 3 spears to kill a mega carp, one to kill a normal carp
-	icon_state = "magspear"
-
-/obj/item/projectile/bullet/magspear/on_hit(var/atom/target, var/blocked = 0)
-	if(!proj_hit)
-		proj_hit = 1
-		new /obj/item/ammo_casing/caseless/magspear(src.loc)
-	..()
-
-/obj/item/projectile/bullet/magspear/on_range()
-	if(!proj_hit)
-		new /obj/item/ammo_casing/caseless/magspear(src.loc)
-		..()

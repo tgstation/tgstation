@@ -6,7 +6,7 @@
 	var/list/authorized = list()
 
 
-/obj/machinery/computer/emergency_shuttle/attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob, params)
+/obj/machinery/computer/emergency_shuttle/attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))	return
 	if(!istype(W, /obj/item/weapon/card))
 		return
@@ -36,33 +36,29 @@
 		var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
 		if(SSshuttle.emergency.mode != SHUTTLE_DOCKED || user.get_active_hand() != W)
 			return 0
-
-		var/seconds = SSshuttle.emergency.timeLeft()
-		if(seconds <= 10)
-			return 0
-
 		switch(choice)
 			if("Authorize")
-				if(!authorized.Find(W:registered_name))
-					authorized += W:registered_name
-					if(auth_need - authorized.len > 0)
-						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has authorized early shuttle launch in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-						log_game("[user.ckey]([user]) has authorized early shuttle launch in ([x],[y],[z])")
-						minor_announce("[auth_need - authorized.len] more authorization(s) needed until shuttle is launched early",null,1)
-					else
-						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has launched the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) [seconds] seconds before launch.",0,1)
-						log_game("[user.ckey]([user]) has launched the emergency shuttle in ([x],[y],[z]) [seconds] seconds before launch.")
-						minor_announce("The emergency shuttle will launch in 10 seconds",null,1)
-						SSshuttle.emergency.setTimer(100)
+				src.authorized |= W:registered_name
+				if (src.auth_need - src.authorized.len > 0)
+					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has authorized early shuttle launch in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+					log_game("[user.ckey]([user]) has authorized early shuttle launch in ([x],[y],[z])")
+					minor_announce("[src.auth_need - src.authorized.len] more authorization(s) needed until shuttle is launched early",null,1)
+				else
+					var/time = SSshuttle.emergency.timeLeft()
+					message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has launched the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) [time] seconds before launch.",0,1)
+					log_game("[user.ckey]([user]) has launched the emergency shuttle in ([x],[y],[z]) [time] seconds before launch.")
+					minor_announce("The emergency shuttle will launch in 10 seconds",null,1)
+					SSshuttle.emergency.setTimer(100)
+					authorized.Cut()
 
 			if("Repeal")
-				if(authorized.Remove(W:registered_name))
-					minor_announce("[auth_need - authorized.len] authorizations needed until shuttle is launched early")
+				src.authorized -= W:registered_name
+				minor_announce("[src.auth_need - src.authorized.len] authorizations needed until shuttle is launched early")
 
 			if("Abort")
-				if(authorized.len)
-					minor_announce("All authorizations to launch the shuttle early have been revoked.")
-					authorized.Cut()
+				minor_announce("All authorizations to launch the shuttle early have been revoked.")
+				src.authorized.len = 0
+				src.authorized = list(  )
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user as mob)
 	if(!emagged && SSshuttle.emergency.mode == SHUTTLE_DOCKED)
@@ -138,11 +134,6 @@
 	var/can_order_contraband = 0
 	var/last_viewed_group = "categories"
 
-/obj/machinery/computer/supplycomp/New()
-	..()
-
-	var/obj/item/weapon/circuitboard/supplycomp/board = circuit
-	can_order_contraband = board.contraband_enabled
 
 /obj/machinery/computer/ordercomp
 	name = "supply ordering console"

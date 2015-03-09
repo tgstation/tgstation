@@ -21,7 +21,7 @@
 	var/obj/machinery/light/newlight = null
 	var/sheets_refunded = 2
 
-/obj/item/light_fixture_frame/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/light_fixture_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 		qdel(src)
@@ -94,7 +94,7 @@
 		if(3)
 			user << "The casing is closed."
 
-/obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	src.add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
@@ -328,7 +328,7 @@
 
 // attack with item - insert light (if right type), otherwise try to break the light
 
-/obj/machinery/light/attackby(obj/item/W, mob/living/user, params)
+/obj/machinery/light/attackby(obj/item/W, mob/living/user)
 
 	//Light replacer code
 	if(istype(W, /obj/item/device/lightreplacer))
@@ -676,7 +676,7 @@
 
 // attack bulb/tube with object
 // if a syringe, can inject plasma to make it explode
-/obj/item/weapon/light/attackby(var/obj/item/I, var/mob/user, params)
+/obj/item/weapon/light/attackby(var/obj/item/I, var/mob/user)
 	..()
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I

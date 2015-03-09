@@ -45,7 +45,7 @@
 		return 0
 	return 1
 
-/obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
@@ -132,26 +132,10 @@
 		boolets += magazine.ammo_count()
 	return boolets
 
-/obj/item/weapon/gun/projectile/suicide_act(mob/user)
-	if (src.chambered)
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of the [src.name] in \his mouth.  It looks like \he's trying to commit suicide.</span>")
-		sleep(25)
-		if(user.l_hand == src || user.r_hand == src)
-			process_fire(user, user, 0)
-			user.visible_message("<span class='suicide'>[user] blows \his brains out with the [src.name]!</span>")
-			return(BRUTELOSS)
-		else
-			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
-			return(OXYLOSS)
-	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b></span>")
-		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
-		return (OXYLOSS)
-
 /obj/item/weapon/suppressor
 	name = "suppressor"
 	desc = "A universal syndicate small-arms suppressor for maximum espionage."
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "suppressor"
 	w_class = 2
 	var/oldsound = null

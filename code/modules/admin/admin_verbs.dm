@@ -49,7 +49,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
 //	/client/proc/sendmob,				/*sends a mob somewhere*/ -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage
-	/client/proc/jumptoarea,
+	/client/proc/Jump,
 	/client/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
 	/client/proc/jumptomob,				/*allows us to jump to a specific mob*/
 	/client/proc/jumptoturf,			/*allows us to jump to a specific turf*/
@@ -100,8 +100,7 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/toggleAI,
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
-	/client/proc/toggle_random_events,
-	/client/proc/panicbunker
+	/client/proc/toggle_random_events
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
@@ -115,11 +114,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
 	/client/proc/callproc,
-	/client/proc/callproc_datum,
-	/client/proc/SDQL2_query,
-	/client/proc/test_movable_UI,
-	/client/proc/test_snap_UI,
-	/client/proc/debugNatureMapGenerator
+	/client/proc/SDQL2_query
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -180,7 +175,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/callproc,
-	/client/proc/callproc_datum,
 	/client/proc/Debug2,
 	/client/proc/reload_admins,
 	/client/proc/cmd_debug_make_powernets,
@@ -192,8 +186,7 @@ var/list/admin_verbs_hideable = list(
 	/proc/possess,
 	/proc/release,
 	/client/proc/reload_admins,
-	/client/proc/reset_all_tcs,
-	/client/proc/panicbunker
+	/client/proc/reset_all_tcs
 	)
 
 /client/proc/add_admin_verbs()
@@ -497,7 +490,6 @@ var/list/admin_verbs_hideable = list(
 		message_admins("[src] deadmined themself.")
 		deadmin()
 		verbs += /client/proc/readmin
-		deadmins += ckey
 		src << "<span class='interface'>You are now a normal player.</span>"
 	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -561,11 +553,10 @@ var/list/admin_verbs_hideable = list(
 		D.associate(C)
 		message_admins("[src] re-adminned themselves.")
 		log_admin("[src] re-adminned themselves.")
-		deadmins -= ckey
 		feedback_add_details("admin_verb","RAS")
+		verbs -= /client/proc/readmin
 		return
 	else
 		src << "You are already an admin."
 		verbs -= /client/proc/readmin
-		deadmins -= ckey
 		return

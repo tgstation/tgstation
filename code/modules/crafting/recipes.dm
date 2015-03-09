@@ -3,7 +3,7 @@
 	var/reqs[] = list() //type paths of items consumed associated with how many are needed
 	var/result //type path of item resulting from this craft
 	var/tools[] = list() //type paths of items needed but not consumed
-	var/time = 30 //time in deciseconds
+	var/time = 0 //time in deciseconds
 	var/parts[] = list() //type paths of items that will be placed in the result
 	var/chem_catalists[] = list() //like tools but for reagents
 
@@ -123,7 +123,7 @@
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/datum/reagent/glycerol = 5,
 				/datum/reagent/toxin/acid = 5,
-				/datum/reagent/toxin/acid/fluacid = 5,)
+				/datum/reagent/toxin/acid/polyacid = 5,)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 

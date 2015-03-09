@@ -1,17 +1,14 @@
 // This code handles different species in the game.
 
-#define SPECIES_LAYER			26
-#define BODY_BEHIND_LAYER		25
-#define BODY_LAYER				24
-#define BODY_ADJ_LAYER			23
-#define HAIR_LAYER				9
-#define BODY_FRONT_LAYER		2
+#define SPECIES_LAYER			23
+#define BODY_LAYER				22
+#define HAIR_LAYER				8
 
 #define TINT_IMPAIR 2
 #define TINT_BLIND 3
 
 #define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30)
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/3)
 
 #define HEAT_DAMAGE_LEVEL_1 2
 #define HEAT_DAMAGE_LEVEL_2 3
@@ -40,14 +37,11 @@
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
-	var/exotic_blood = null	// If your race wants to bleed something other than bog standard blood, change this.
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 
 	var/say_mod = "says"	// affects the speech message
-
-	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
 
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
@@ -92,24 +86,19 @@
 
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 
-	if(!config.mutant_colors)
-		H.dna.mutant_color = default_color
-
 	if(MUTCOLORS in specflags)
 		var/image/spec_base
-		var/icon_state_string = "[id]_"
 		if(sexes)
-			icon_state_string += "[g]_s"
+			spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = "[id]_[g]_s", "layer" = -SPECIES_LAYER)
 		else
-			icon_state_string += "_s"
-
-		spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = icon_state_string, "layer" = -SPECIES_LAYER)
-
+			spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = "[id]_s", "layer" = -SPECIES_LAYER)
+		if(!config.mutant_colors)
+			H.dna.mutant_color = default_color
 		spec_base.color = "#[H.dna.mutant_color]"
 		standing = spec_base
 
 	if(standing)
-		H.overlays_standing[SPECIES_LAYER]	+= standing
+		H.overlays_standing[SPECIES_LAYER]	= standing
 
 	H.apply_overlay(SPECIES_LAYER)
 
@@ -182,8 +171,6 @@
 
 	var/list/standing	= list()
 
-	handle_mutant_bodyparts(H)
-
 	// lipstick
 	if(H.lip_style && LIPS in specflags)
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]_s", "layer" = -BODY_LAYER)
@@ -219,53 +206,6 @@
 	H.apply_overlay(BODY_LAYER)
 
 	return
-
-/datum/species/proc/handle_mutant_bodyparts(var/mob/living/carbon/human/H)
-	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
-	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
-	var/list/standing	= list()
-
-	H.remove_overlay(BODY_BEHIND_LAYER)
-	H.remove_overlay(BODY_ADJ_LAYER)
-	H.remove_overlay(BODY_FRONT_LAYER)
-
-	if(!mutant_bodyparts)
-		return
-
-	if("tail" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "tail"
-
-	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
-		if(H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE))
-			bodyparts_to_add -= "snout"
-
-	if(!bodyparts_to_add)
-		return
-
-	var/icon_state_string = "[id]_"
-	var/g = (H.gender == FEMALE) ? "f" : "m"
-	var/image/I
-
-	if(sexes)
-		icon_state_string += "[g]_s"
-	else
-		icon_state_string += "_s"
-
-	if(!config.mutant_colors)
-		H.dna.mutant_color = default_color
-
-	for(var/layer in relevent_layers)
-		for(var/bodypart in bodyparts_to_add)
-			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[icon_state_string]_[bodypart]_[layer]", "layer" =- layer)
-			I.color = "#[H.dna.mutant_color]"
-			standing += I
-		H.overlays_standing[layer] = standing.Copy()
-		standing = list()
-
-	H.apply_overlay(BODY_BEHIND_LAYER)
-	H.apply_overlay(BODY_ADJ_LAYER)
-	H.apply_overlay(BODY_FRONT_LAYER)
 
 /datum/species/proc/spec_life(var/mob/living/carbon/human/H)
 	return
@@ -449,6 +389,7 @@
 	////////
 
 /datum/species/proc/handle_chemicals_in_body(var/mob/living/carbon/human/H)
+	if(H.reagents) H.reagents.metabolize(H)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.disabilities & FAT)
@@ -460,7 +401,7 @@
 	else
 		if(H.overeatduration > 500)
 			H << "<span class='danger'>You suddenly feel blubbery!</span>"
-			H.disabilities |= FAT
+			H.mutations |= FAT
 			H.update_inv_w_uniform(0)
 			H.update_inv_wear_suit()
 
@@ -473,7 +414,7 @@
 			H.satiety++
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
-			hunger_rate = 3 * HUNGER_FACTOR
+			hunger_rate = 5 * HUNGER_FACTOR
 		H.nutrition = max (0, H.nutrition - hunger_rate)
 
 
@@ -500,6 +441,22 @@
 			H << "<span class='notice'>You no longer feel vigorous.</span>"
 		H.metabolism_efficiency = 1
 
+	if (H.drowsyness)
+		H.drowsyness--
+		H.eye_blurry = max(2, H.eye_blurry)
+		if (prob(5))
+			H.sleeping += 1
+			H.Paralyse(5)
+
+	H.confused = max(0, H.confused - 1)
+	// decrement dizziness counter, clamped to 0
+	if(H.resting)
+		H.dizziness = max(0, H.dizziness - 15)
+		H.jitteriness = max(0, H.jitteriness - 15)
+	else
+		H.dizziness = max(0, H.dizziness - 3)
+		H.jitteriness = max(0, H.jitteriness - 3)
+
 	H.updatehealth()
 
 	return
@@ -518,6 +475,12 @@
 		if(H.seer)
 			H.see_invisible = SEE_INVISIBLE_OBSERVER
 
+		if(H.mind && H.mind.changeling)
+			H.hud_used.lingchemdisplay.invisibility = 0
+			H.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[H.mind.changeling.chem_charges]</font></div>"
+		else
+			H.hud_used.lingchemdisplay.invisibility = 101
+
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses))
 				var/obj/item/clothing/glasses/G = H.glasses
@@ -534,16 +497,14 @@
 		if(H.tinttotal >= TINT_IMPAIR)
 			if(tinted_weldhelh)
 				if(H.tinttotal >= TINT_BLIND)
-					H.eye_blind = max(H.eye_blind, 1)
-				if(H.client)
+					H.eye_blind = max(H.eye_blind, 1)								// You get the sudden urge to learn to play keyboard
+					H.client.screen += global_hud.darkMask
+				else
 					H.client.screen += global_hud.darkMask
 
 		if(H.blind)
 			if(H.eye_blind)		H.blind.layer = 18
 			else			H.blind.layer = 0
-
-		if(!H.client)//no client, no screen to update
-			return 1
 
 		if( H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 			H.client.screen += global_hud.vimpaired
@@ -598,15 +559,23 @@
 				if(icon_num)
 					H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
 
-	switch(H.nutrition)
-		if(NUTRITION_LEVEL_FULL to INFINITY)
-			H.throw_alert("nutrition","fat")
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-			H.clear_alert("nutrition")
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			H.throw_alert("nutrition","hungry")
-		else
-			H.throw_alert("nutrition","starving")
+	if(H.nutrition_icon)
+		switch(H.nutrition)
+			if(NUTRITION_LEVEL_FULL to INFINITY)
+				H.nutrition_icon.icon_state = "nutritionFAT"
+			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+				H.nutrition_icon.icon_state = "nutrition0"
+			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+				H.nutrition_icon.icon_state = "nutrition1"
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+				H.nutrition_icon.icon_state = "nutrition2"
+			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+				H.nutrition_icon.icon_state = "nutrition3"
+			else
+				H.nutrition_icon.icon_state = "nutrition4"
+
+	if(H.pressure)
+		H.pressure.icon_state = "pressure[H.pressure_alert]"
 
 	if(H.pullin)
 		if(H.pulling)								H.pullin.icon_state = "pull"
@@ -614,23 +583,59 @@
 //			if(rest)	//Not used with new UI
 //				if(resting || lying || sleeping)		rest.icon_state = "rest1"
 //				else									rest.icon_state = "rest0"
+	if(H.toxin)
+		if(H.hal_screwyhud == 4 || H.toxins_alert)	H.toxin.icon_state = "tox1"
+		else									H.toxin.icon_state = "tox0"
+	if(H.oxygen)
+		if(H.hal_screwyhud == 3 || H.oxygen_alert)	H.oxygen.icon_state = "oxy1"
+		else									H.oxygen.icon_state = "oxy0"
+	if(H.fire)
+		if(H.fire_alert)					H.fire.icon_state = "fire[H.fire_alert]" //fire_alert is either 0 if no alert, 1 for cold and 2 for heat.
+		else									H.fire.icon_state = "fire0"
 
+	if(H.bodytemp)
+		if(!(HEATRES in specflags))
+			switch(H.bodytemperature) //310.055 optimal body temp
+				if(370 to INFINITY)		H.bodytemp.icon_state = "temp4"
+				if(350 to 370)			H.bodytemp.icon_state = "temp3"
+				if(335 to 350)			H.bodytemp.icon_state = "temp2"
+		switch(H.bodytemperature)
+			if(320 to 335)			H.bodytemp.icon_state = "temp1"
+			if(300 to 320)			H.bodytemp.icon_state = "temp0"
+			if(295 to 300)			H.bodytemp.icon_state = "temp-1"
+		if(!(COLDRES in specflags))
+			switch(H.bodytemperature)
+				if(280 to 295)			H.bodytemp.icon_state = "temp-2"
+				if(260 to 280)			H.bodytemp.icon_state = "temp-3"
+				if(-INFINITY to 260)	H.bodytemp.icon_state = "temp-4"
 
 	return 1
 
 /datum/species/proc/handle_mutations_and_radiation(var/mob/living/carbon/human/H)
 
-	if(!(RADIMMUNE in specflags))
-		if(H.radiation)
-			if (H.radiation > 100)
-				H.Weaken(10)
-				H << "<span class='danger'>You feel weak.</span>"
-				H.emote("collapse")
+	if (H.radiation && !(RADIMMUNE in specflags))
+		if (H.radiation > 100)
+			H.radiation = 100
+			H.Weaken(10)
+			H << "<span class='danger'>You feel weak.</span>"
+			H.emote("collapse")
 
+		if (H.radiation < 0)
+			H.radiation = 0
+
+		else
 			switch(H.radiation)
+				if(0 to 50)
+					H.radiation--
+					if(prob(25))
+						H.adjustToxLoss(1)
+						H.updatehealth()
 
 				if(50 to 75)
+					H.radiation -= 2
+					H.adjustToxLoss(1)
 					if(prob(5))
+						H.radiation -= 5
 						H.Weaken(3)
 						H << "<span class='danger'>You feel weak.</span>"
 						H.emote("collapse")
@@ -641,14 +646,17 @@
 								H.facial_hair_style = "Shaved"
 								H.hair_style = "Bald"
 								H.update_hair()
+					H.updatehealth()
 
 				if(75 to 100)
+					H.radiation -= 3
+					H.adjustToxLoss(3)
 					if(prob(1))
 						H << "<span class='danger'>You mutate!</span>"
 						randmutb(H)
 						domutcheck(H,null)
 						H.emote("gasp")
-		return 1
+					H.updatehealth()
 
 ////////////////
 // MOVE SPEED //
@@ -656,6 +664,8 @@
 
 /datum/species/proc/movement_delay(var/mob/living/carbon/human/H)
 	var/mspeed = 0
+	if(H.status_flags & GOTTAGOFAST)
+		mspeed -= 1
 
 	var/hasjetpack = 0
 	if(istype(H.back, /obj/item/weapon/tank/jetpack))
@@ -684,20 +694,10 @@
 
 	if((H.disabilities & FAT) && grav)
 		mspeed += 1.5
-	if(H.bodytemperature < 283.222)
-		mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
+	if(H.bodytemperature < 283.222 && grav)
+		mspeed += (283.222 - H.bodytemperature) / 10 * 1.75
 
 	mspeed += speedmod
-
-	if(H.status_flags & IGNORESLOWDOWN)
-		mspeed = 0
-
-	if(H.status_flags & GOTTAGOFAST)
-		mspeed -= 1
-
-	if(H.status_flags & GOTTAGOREALLYFAST)
-		mspeed -= 2
-
 
 	return mspeed
 
@@ -728,7 +728,7 @@
 				return 0
 
 			if(H.cpr_time < world.time + 30)
-				add_logs(M, H, "CPRed")
+				add_logs(H, M, "CPRed")
 				M.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>", \
 								"<span class='notice'>You try to perform CPR on [H]. Hold still!</span>")
 				if(!do_mob(M, H))
@@ -893,14 +893,13 @@
 
 		switch(hit_area)
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer
-				if(H.stat == CONSCIOUS && armor < 50)
-					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
-										"<span class='userdanger'>[H] has been knocked unconscious!</span>")
-						H.apply_effect(20, PARALYZE, armor)
-					if(prob(I.force + ((100 - H.health)/2)) && H != user && I.damtype == BRUTE)
+				if(H.stat == CONSCIOUS && prob(I.force) && armor < 50)
+					H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
+									"<span class='userdanger'>[H] has been knocked unconscious!</span>")
+					H.apply_effect(20, PARALYZE, armor)
+					if(H != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(H.mind)
-						ticker.mode.remove_gangster(H.mind, exclude_bosses=1)
+						ticker.mode.remove_gangster(H.mind)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
@@ -1038,9 +1037,20 @@
 				breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
 				breath = H.loc.remove_air(breath_moles)
-
 				// Handle chem smoke effect  -- Doohl
-				if(!H.has_smoke_protection())
+				var/block = 0
+				if(H.wear_mask)
+					if(H.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
+						block = 1
+				if(H.glasses)
+					if(H.glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
+						block = 1
+				if(H.head)
+					if(H.head.flags & BLOCK_GAS_SMOKE_EFFECT)
+						block = 1
+
+				if(!block)
+
 					for(var/obj/effect/effect/chem_smoke/smoke in view(1, H))
 						if(smoke.reagents.total_volume)
 							smoke.reagents.reaction(H, INGEST)
@@ -1054,17 +1064,17 @@
 				var/obj/location_as_object = H.loc
 				location_as_object.handle_internal_lifeform(H, 0)
 
-	check_breath(breath, H)
+	handle_breath(breath, H)
 
 	if(breath)
 		H.loc.assume_air(breath)
 
-/datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
+/datum/species/proc/handle_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
 		return
 
 	if(!breath || (breath.total_moles() == 0))
-		if(H.reagents.has_reagent("epinephrine"))
+		if(H.reagents.has_reagent("inaprovaline"))
 			return
 		if(H.health >= config.health_threshold_crit)
 			if(NOBREATH in specflags)	return 1
@@ -1074,7 +1084,7 @@
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 			H.failed_last_breath = 1
 
-		H.throw_alert("oxy")
+		H.oxygen_alert = max(H.oxygen_alert, 1)
 
 		return 0
 
@@ -1107,12 +1117,18 @@
 			else
 				H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				H.failed_last_breath = 1
-			H.throw_alert("oxy")
+			H.oxygen_alert = max(H.oxygen_alert, 1)
+		/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
+			spawn(0) emote("cough")
+			var/ratio = O2_pp/safe_oxygen_max
+			oxyloss += 5*ratio
+			oxygen_used = breath.oxygen*ratio/6
+			oxygen_alert = max(oxygen_alert, 1)*/
 	else								// We're in safe limits
 		H.failed_last_breath = 0
 		H.adjustOxyLoss(-5)
 		oxygen_used = breath.oxygen/6
-		H.clear_alert("oxy")
+		H.oxygen_alert = 0
 
 	breath.oxygen -= oxygen_used
 	breath.carbon_dioxide += oxygen_used
@@ -1137,9 +1153,9 @@
 		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(H.reagents)
 			H.reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		H.throw_alert("tox_in_air")
+		H.toxins_alert = max(H.toxins_alert, 1)
 	else
-		H.clear_alert("tox_in_air")
+		H.toxins_alert = 0
 
 	if(breath.trace_gases.len && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
 		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
@@ -1152,30 +1168,45 @@
 				if(prob(20))
 					spawn(0) H.emote(pick("giggle", "laugh"))
 
-	handle_breath_temperature(breath, H)
+	handle_temperature(breath, H)
 
 	return 1
 
-/datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
+/datum/species/proc/handle_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
 	if( (abs(310.15 - breath.temperature) > 50) && !(mutations_list[COLDRES] in H.dna.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
+		if(breath.temperature < 260.15)
+			if(prob(20))
+				H << "<span class='danger'>You feel your face freezing and an icicle forming in your lungs!</span>"
+		else if(breath.temperature > 360.15 && !(HEATRES in specflags))
+			if(prob(20))
+				H << "<span class='danger'>You feel your face burning and a searing heat in your lungs!</span>"
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					H.fire_alert = max(H.fire_alert, 1)
 				if(120 to 200)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					H.fire_alert = max(H.fire_alert, 1)
 				if(200 to 260)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					H.fire_alert = max(H.fire_alert, 1)
 
 		if(!(HEATRES in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
 				if(360 to 400)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					H.fire_alert = max(H.fire_alert, 2)
 				if(400 to 1000)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					H.fire_alert = max(H.fire_alert, 2)
 				if(1000 to INFINITY)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					H.fire_alert = max(H.fire_alert, 2)
+
+	return
+
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, var/mob/living/carbon/human/H)
 	if(!environment)
 		return
@@ -1203,37 +1234,35 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(HEATRES in specflags))
 		//Body temperature is too hot.
+		H.fire_alert = max(H.fire_alert, 1)
 		switch(H.bodytemperature)
 			if(360 to 400)
-				H.throw_alert("temp","hot",1)
 				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
+				H.fire_alert = max(H.fire_alert, 2)
 			if(400 to 460)
-				H.throw_alert("temp","hot",2)
 				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+				H.fire_alert = max(H.fire_alert, 2)
 			if(460 to INFINITY)
-				H.throw_alert("temp","hot",3)
 				if(H.on_fire)
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
+					H.fire_alert = max(H.fire_alert, 2)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+					H.fire_alert = max(H.fire_alert, 2)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
+		H.fire_alert = max(H.fire_alert, 1)
 		if(!istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			switch(H.bodytemperature)
 				if(200 to 260)
-					H.throw_alert("temp","cold",1)
 					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+					H.fire_alert = max(H.fire_alert, 1)
 				if(120 to 200)
-					H.throw_alert("temp","cold",2)
 					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+					H.fire_alert = max(H.fire_alert, 1)
 				if(-INFINITY to 120)
-					H.throw_alert("temp","cold",3)
 					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-		else
-			H.clear_alert("temp")
-
-	else
-		H.clear_alert("temp")
+					H.fire_alert = max(H.fire_alert, 1)
 
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
@@ -1244,21 +1273,23 @@
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!(HEATRES in specflags))
 				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-				H.throw_alert("pressure","highpressure",2)
+				H.pressure_alert = 2
 			else
-				H.clear_alert("pressure")
+				H.pressure_alert = 1
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.throw_alert("pressure","highpressure",1)
+			H.pressure_alert = 1
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			H.clear_alert("pressure")
+			H.pressure_alert = 0
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			H.throw_alert("pressure","lowpressure",1)
+			H.pressure_alert = -1
 		else
 			if(H.dna.check_mutation(COLDRES) || (COLDRES in specflags))
-				H.clear_alert("pressure")
+				H.pressure_alert = -1
 			else
 				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				H.throw_alert("pressure","lowpressure",2)
+				H.pressure_alert = -2
+
+	return
 
 //////////
 // FIRE //
@@ -1293,11 +1324,8 @@
 		H.update_fire()
 
 #undef SPECIES_LAYER
-#undef BODY_BEHIND_LAYER
 #undef BODY_LAYER
-#undef BODY_ADJ_LAYER
 #undef HAIR_LAYER
-#undef BODY_FRONT_LAYER
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

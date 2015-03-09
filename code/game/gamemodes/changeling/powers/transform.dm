@@ -20,7 +20,7 @@
 	user.dna.species = new chosen_dna.species.type(user)
 	user.dna.mutant_color = chosen_dna.mutant_color
 	updateappearance(user)
-	domutcheck(user)
+	domutcheck(user, null)
 
 	feedback_add_details("changeling_powers","TR")
 	return 1

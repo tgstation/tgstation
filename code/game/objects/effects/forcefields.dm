@@ -24,7 +24,7 @@
 /obj/effect/forcefield/mime/New()
 	..()
 	last_process = world.time
-	SSobj.processing |= src
+	SSobj.processing.Add(src)
 
 /obj/effect/forcefield/mime/process()
 	timeleft -= (world.time - last_process)

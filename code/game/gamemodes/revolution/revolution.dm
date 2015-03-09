@@ -18,7 +18,6 @@
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 3
-	enemy_minimum_age = 14
 
 	var/finished = 0
 	var/check_counter = 0
@@ -91,7 +90,7 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
 	modePlayer += head_revolutionaries
-	SSshuttle.emergencyNoEscape = 1
+	SSshuttle.emergencyAlwaysFakeRecall = 1
 	..()
 
 
@@ -208,7 +207,7 @@
 /datum/game_mode/revolution/check_finished()
 	if(config.continuous_round_rev)
 		if(finished != 0)
-			SSshuttle.emergencyNoEscape = 0
+			SSshuttle.emergencyAlwaysFakeRecall = 0
 		return ..()
 	if(finished != 0)
 		return 1
@@ -289,7 +288,7 @@
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
-		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && rev_mind.current.client && T && (T.z == ZLEVEL_STATION))
+		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && rev_mind.current.client && T && (T.z == 1))
 			if(ishuman(rev_mind.current))
 				return 0
 	return 1
@@ -330,7 +329,7 @@
 			if(headrev.current)
 				if(headrev.current.stat == DEAD)
 					text += "died"
-				else if(headrev.current.z != ZLEVEL_STATION)
+				else if(headrev.current.z != 1)
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -354,7 +353,7 @@
 			if(rev.current)
 				if(rev.current.stat == DEAD || isbrain(rev.current))
 					text += "died"
-				else if(rev.current.z != ZLEVEL_STATION)
+				else if(rev.current.z != 1)
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -380,7 +379,7 @@
 			if(head.current)
 				if(head.current.stat == DEAD || isbrain(head.current))
 					text += "died"
-				else if(head.current.z != ZLEVEL_STATION)
+				else if(head.current.z != 1)
 					text += "fled the station"
 				else
 					text += "survived the revolution"

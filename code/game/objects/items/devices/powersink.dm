@@ -47,14 +47,14 @@
 		if(OPERATING)
 			if(!attached)
 				return
-			SSobj.processing |= src
+			SSobj.processing.Add(src)
 			anchored = 1
 
 	mode = value
 	update_icon()
 	SetLuminosity(0)
 
-/obj/item/device/powersink/attackby(var/obj/item/I, var/mob/user, params)
+/obj/item/device/powersink/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(mode == DISCONNECTED)
 			var/turf/T = loc

@@ -4,6 +4,7 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1.0
+	interact_offline = 1
 	layer = 4
 
 	var/on = 0
@@ -47,11 +48,6 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
-	if(occupant)
-		if(occupant.health >= 100)
-			on = 0
-			open_machine()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	if(!node || !is_operational())
 		return
 	if(!on)
@@ -64,7 +60,9 @@
 		expel_gas()
 
 		if(occupant)
-			process_occupant()
+			if(occupant.stat != 2)
+				process_occupant()
+
 	if(abs(temperature_archived-air_contents.temperature) > 1)
 		parent.update = 1
 
@@ -84,25 +82,11 @@
 	open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/container_resist()
+	if(stat & DEAD)
+		return
+	sleep(usr.stat * 1200)
 	open_machine()
 	return
-
-/obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()
-	set name = "Eject Cryo Cell"
-	set desc = "Begin the release sequence inside the cryo tube."
-	set category = "Object"
-	set src in oview(1)
-	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
-		if(usr.stat == DEAD)	//and he's not dead....
-			return
-		usr << "<span class='notice'>Release sequence activated. This will take about a minute.</span>"
-		sleep(600)
-		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
-			return
-		open_machine()
-		add_fingerprint(usr)
-	else
-		open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
@@ -119,7 +103,16 @@
 	if(..())
 		return
 
-	ui_interact(user)
+	//powerless interaction
+	if(!is_operational())
+		user.unset_machine()//essential to prevent infinite loops of opening/closing the machine
+		if(state_open)
+			close_machine()
+		else
+			open_machine()
+
+	else
+		ui_interact(user)
 
 
  /**
@@ -227,7 +220,7 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
-/obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "<span class='notice'>A beaker is already loaded into [src].</span>"
@@ -247,9 +240,6 @@
 		return
 
 	if(exchange_parts(user, I))
-		return
-
-	if(default_pry_open(I))
 		return
 
 	default_deconstruction_crowbar(I)
@@ -299,8 +289,8 @@
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 		if(occupant.bodytemperature < T0C)
-//			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
-//			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
+			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
+			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
 			if(air_contents.oxygen > 2)
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else

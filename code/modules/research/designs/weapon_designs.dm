@@ -2,45 +2,27 @@
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
 
-/datum/design/pin_testing
-	name = "test-range firing pin"
-	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
-	id = "pin_testing"
-	req_tech = list("combat" = 1, "materials" = 2)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 500, "$glass" = 300)
-	build_path = /obj/item/device/firing_pin/test_range
-	category = list("Firing Pins")
-
-/datum/design/pin_loyalty
-	name = "loyalty firing pin"
-	desc = "This is a security firing pin which only authorizes users who are loyalty-implanted."
-	id = "pin_loyalty"
-	req_tech = list("combat" = 10, "materials" = 3, "powerstorage" = 3)
-	build_type = PROTOLATHE
-	materials = list("$silver" = 600, "$diamond" = 600, "$uranium" = 200)
-	build_path = /obj/item/device/firing_pin/implant/loyalty
-	category = list("Firing Pins")
-
-/datum/design/stunrevolver
-	name = "Stun Revolver"
-	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	id = "stunrevolver"
-	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 2)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 4000, "$glass" = 1000)
-	build_path = /obj/item/weapon/gun/energy/stunrevolver
-	category = list("Weapons")
-
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
 	desc = "An energy gun with an experimental miniaturized reactor."
 	id = "nuclear_gun"
-	req_tech = list("combat" = 4, "materials" = 5, "powerstorage" = 3)
+	req_tech = list("combat" = 3, "materials" = 5, "powerstorage" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 2000)
 	reliability = 76
 	build_path = /obj/item/weapon/gun/energy/gun/nuclear
+	locked = 1
+	category = list("Weapons")
+
+/datum/design/stunrevolver
+	name = "Stun Revolver"
+	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder. The stun cartridges can be recharged using a conventional energy weapon recharger."
+	id = "stunrevolver"
+	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000)
+	build_path = /obj/item/weapon/gun/energy/stunrevolver
+	locked = 1
 	category = list("Weapons")
 
 /datum/design/tele_shield
@@ -51,6 +33,7 @@
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4000, "$glass" = 5000, "$silver" = 300)
 	build_path = /obj/item/weapon/shield/riot/tele
+	locked = 1
 	category = list("Weapons")
 
 /datum/design/lasercannon
@@ -61,6 +44,7 @@
 	build_type = PROTOLATHE
 	materials = list("$metal" = 10000, "$glass" = 2000, "$diamond" = 2000)
 	build_path = /obj/item/weapon/gun/energy/lasercannon
+	locked = 1
 	category = list("Weapons")
 
 /datum/design/decloner
@@ -71,6 +55,7 @@
 	build_type = PROTOLATHE
 	materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
 	build_path = /obj/item/weapon/gun/energy/decloner
+	locked = 1
 	category = list("Weapons")
 
 /datum/design/rapidsyringe
@@ -90,9 +75,9 @@
 	req_tech = list("combat" = 5, "materials" = 5, "engineering" = 3, "biotech" = 4, "syndicate" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1500, "$uranium" = 1500, "$silver" = 1500)
-	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
+	build_path = /obj/item/weapon/gun/energy/crossbow/largecrossbow
+	locked = 1
 	category = list("Weapons")
-	reliability = 76
 
 /datum/design/temp_gun
 	name = "Temperature Gun"
@@ -102,6 +87,7 @@
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 500, "$silver" = 3000)
 	build_path = /obj/item/weapon/gun/energy/temperature
+	locked = 1
 	category = list("Weapons")
 
 /datum/design/flora_gun
@@ -132,7 +118,8 @@
 	req_tech = list("combat" = 4, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 8000, "$silver" = 2000, "$diamond" = 1000)
-	build_path = /obj/item/weapon/gun/projectile/automatic/proto
+	build_path = /obj/item/weapon/gun/projectile/automatic
+	locked = 1
 	category = list("Weapons")
 
 /datum/design/xray
@@ -143,16 +130,18 @@
 	build_type = PROTOLATHE
 	materials = list("$gold" = 5000,"$uranium" = 10000, "$metal" = 4000)
 	build_path = /obj/item/weapon/gun/energy/xray
+	locked = 1
 	category = list("Weapons")
 
-/datum/design/ioncarbine
-	name = "Ion Carbine"
+/datum/design/ionrifle
+	name = "Ion Rifle"
 	desc = "How to dismantle a cyborg : The gun."
-	id = "ioncarbine"
+	id = "ionrifle"
 	req_tech = list("combat" = 5, "materials" = 4, "magnets" = 4)
 	build_type = PROTOLATHE
 	materials = list("$silver" = 4000, "$metal" = 6000, "$uranium" = 1000)
-	build_path = /obj/item/weapon/gun/energy/ionrifle/carbine
+	build_path = /obj/item/weapon/gun/energy/ionrifle
+	locked = 1
 	category = list("Weapons")
 
 /datum/design/wormhole_projector
@@ -163,6 +152,7 @@
 	build_type = PROTOLATHE
 	materials = list("$silver" = 1000, "$metal" = 5000, "$diamond" = 3000)
 	build_path = /obj/item/weapon/gun/energy/wormhole_projector
+	locked = 1
 	category = list("Weapons")
 
 /datum/design/reciever

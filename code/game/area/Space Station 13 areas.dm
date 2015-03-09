@@ -62,7 +62,7 @@ proc/process_teleport_locs()
 		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == ZLEVEL_STATION)
+		if (picked.z == 1)
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
@@ -77,7 +77,7 @@ proc/process_ghost_teleport_locs()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = safepick(get_area_turfs(AR.type))
-		if (picked && (picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_MINING || picked.z == ZLEVEL_ABANDONNEDTSAT))
+		if (picked && (picked.z == 1 || picked.z == 5 || picked.z == 3))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 
@@ -976,9 +976,9 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Server Room"
 	icon_state = "server"
 
-/area/toxins/explab
-	name = "\improper Experimentation Lab"
-	icon_state = "toxmisc"
+/area/toxins/telesci
+	name = "\improper Telescience Lab"
+	icon_state = "toxtest"
 
 //Storage
 
@@ -1087,10 +1087,6 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Derelict Solar Control"
 	icon_state = "engine"
 
-/area/derelict/se_solar
-	name = "South East Solars"
-	icon_state = "engine"
-
 /area/derelict/crew_quarters
 	name = "\improper Derelict Crew Quarters"
 	icon_state = "fitness"
@@ -1125,19 +1121,11 @@ proc/process_ghost_teleport_locs()
 
 /area/solar/derelict_aft
 	name = "\improper Derelict Aft Solar Array"
-	icon_state = "yellow"
+	icon_state = "aft"
 
 /area/derelict/singularity_engine
 	name = "\improper Derelict Singularity Engine"
 	icon_state = "engine"
-
-/area/derelict/gravity_generator
-	name = "\improper Derelict Gravity Generator Room"
-	icon_state = "red"
-
-/area/derelict/atmospherics
-	name = "Derelict Atmospherics"
-	icon_state = "red"
 
 //Construction
 
@@ -1322,6 +1310,126 @@ proc/process_ghost_teleport_locs()
 /area/tcommsat/lounge
 	name = "\improper Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
+
+
+
+
+//Hallways
+/area/hallway/primary/fore
+	name = "Fore Hallway"
+
+/area/hallway/primary/forecentral
+	name = "Fore Central Hallway"
+	icon_state = "hallfc"
+
+/area/hallway/primary/starboard
+	name = "Starboard Hallway"
+
+/area/hallway/primary/aft
+	name = "Aft Hallway"
+
+/area/hallway/primary/aftcentral
+	name = "Aft Central Hallway"
+	icon_state = "hallac"
+
+/area/hallway/primary/port
+	name = "Port Hallway"
+
+/area/hallway/primary/portcentral
+	name = "Port Central Hallway"
+	icon_state = "hallpc"
+
+
+
+
+//Maintenance
+/area/maintenance/brig
+	name = "Brig Maintenance"
+	icon_state = "brigmaint"
+
+/area/maintenance/eva
+	name = "EVA Maintenance"
+	icon_state = "evamaint"
+
+/area/maintenance/rd
+	name = "Research Division Maintenance"
+	icon_state = "rdmaint"
+
+/area/maintenance/cargo
+	name = "Cargo Bay Maintenance"
+	icon_state = "cargomaint"
+
+/area/maintenance/medbay
+	name = "Medbay Maintenance"
+	icon_state = "medmaint"
+
+/area/maintenance/bridge
+	name = "Bridge Maintenance"
+	icon_state = "bridgemaint"
+
+/area/maintenance/telecomm
+	name = "Telecommunications Maintenance"
+	icon_state = "tcommaint"
+
+/area/maintenance/bar
+	name = "Bar Maintenance"
+	icon_state = "barmaint"
+
+/area/maintenance/port_interior
+	name = "Port Interior Maintenance"
+	icon_state = "pimaint"
+
+/area/maintenance/aft_interior
+	name = "Aft Interior Maintenance"
+	icon_state = "aimaint"
+
+/area/maintenance/fore_interior
+	name = "Fore Interior Maintenance"
+	icon_state = "fimaint"
+
+/area/maintenance/recycler
+	name = "Recycler"
+	icon_state = "recycler"
+
+/area/maintenance/transit
+	icon_state = "transit"
+
+/area/maintenance/transit/fore_port
+	name = "Fore Port Transit Station"
+
+/area/maintenance/transit/fore_starboard
+	name = "Fore Starboard Transit Station"
+
+/area/maintenance/transit/aft_port
+	name = "Aft Port Transit Station"
+
+/area/maintenance/transit/aft_starboard
+	name = "Aft Starboard Transit Station"
+
+
+
+
+//Head Quarters
+/area/crew_quarters/cmo
+	name = "Chief Medical Officer's Quarters"
+	icon_state = "cmo"
+
+/area/crew_quarters/ce
+	name = "Chief Engineer's Quarters"
+	icon_state = "ce"
+
+/area/crew_quarters/rd
+	name = "Research Director's Quarters"
+	icon_state = "rd"
+
+/area/crew_quarters/hos
+	name = "Head of Security's Quarters"
+	icon_state = "hos"
+
+/area/crew_quarters/hop
+	name = "Head of Personnel's Quarters"
+	icon_state = "hop"
+
 
 
 
@@ -1551,6 +1659,11 @@ proc/process_ghost_teleport_locs()
  Lists of areas to be used with is_type_in_list.
  Used in gamemodes code at the moment. --rastaf0
 */
+
+// CENTCOM
+var/list/centcom_areas = list (
+	/area/centcom
+)
 
 //SPACE STATION 13
 var/list/the_station_areas = list (

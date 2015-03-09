@@ -50,7 +50,7 @@
 	user.update_inv_r_hand()
 	qdel(src)
 
-/obj/item/weapon/storage/box/attackby(obj/item/W, mob/user, params)
+/obj/item/weapon/storage/box/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/packageWrap))
 		return 0
 	..()
@@ -62,7 +62,7 @@
 	..()
 	contents = list()
 	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
+	new /obj/item/weapon/tank/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
@@ -72,7 +72,7 @@
 	..()
 	contents = list()
 	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
@@ -124,7 +124,7 @@
 
 /obj/item/weapon/storage/box/medipens
 	name = "box of medipens"
-	desc = "A box full of epinephrine MediPens."
+	desc = "A box full of inaprovaline MediPens."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/medipens/New()
@@ -138,17 +138,17 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
 
 /obj/item/weapon/storage/box/medipens/utility
-	name = "stimpack value kit"
-	desc = "A box with several stimpack medipens for the economical miner."
+	name = "medipens kit"
+	desc = "A box with several utility medipens for the economical miner."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/medipens/utility/New()
 	..()
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
 
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
@@ -433,21 +433,6 @@
 	new /obj/item/weapon/cartridge/security(src)
 	new /obj/item/weapon/cartridge/security(src)
 
-/obj/item/weapon/storage/box/firingpins
-	name = "box of standard firing pins"
-	desc = "A box full of standard firing pins, to allow newly-developed firearms to operate."
-	icon_state = "id"
-
-/obj/item/weapon/storage/box/firingpins/New()
-	..()
-	new /obj/item/device/firing_pin(src)
-	new /obj/item/device/firing_pin(src)
-	new /obj/item/device/firing_pin(src)
-	new /obj/item/device/firing_pin(src)
-	new /obj/item/device/firing_pin(src)
-	new /obj/item/device/firing_pin(src)
-	new /obj/item/device/firing_pin(src)
-
 /obj/item/weapon/storage/box/handcuffs
 	name = "box of spare handcuffs"
 	desc = "A box full of handcuffs."
@@ -546,7 +531,7 @@
 	for(var/i=1; i <= storage_slots; i++)
 		new /obj/item/weapon/match(src)
 
-/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/match))
 		W.matchignite()
 	return
@@ -602,18 +587,3 @@
 	new /obj/item/clothing/tie/armband/deputy(src)
 	new /obj/item/clothing/tie/armband/deputy(src)
 	new /obj/item/clothing/tie/armband/deputy(src)
-
-/obj/item/weapon/storage/box/metalfoam
-	name = "box of metal foam grenades"
-	desc = "To be used to rapidly seal hull breaches"
-	icon_state = "flashbang"
-
-/obj/item/weapon/storage/box/metalfoam/New()
-	..()
-	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
-	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
-	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
-	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
-	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
-	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
-	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)

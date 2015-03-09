@@ -26,14 +26,12 @@ Buildable meters
 #define DISP_PIPE_STRAIGHT		0
 #define DISP_PIPE_BENT			1
 #define DISP_JUNCTION			2
-#define DISP_JUNCTION_FLIP		3
-#define DISP_YJUNCTION			4
-#define DISP_END_TRUNK			5
-#define DISP_END_BIN			6
-#define DISP_END_OUTLET			7
-#define DISP_END_CHUTE			8
-#define DISP_SORTJUNCTION		9
-#define DISP_SORTJUNCTION_FLIP	10
+#define DISP_YJUNCTION			3
+#define DISP_END_TRUNK			4
+#define DISP_END_BIN			5
+#define DISP_END_OUTLET			6
+#define DISP_END_CHUTE			7
+#define DISP_SORTJUNCTION		8
 
 /obj/item/pipe
 	name = "pipe"
@@ -296,7 +294,7 @@ var/global/list/pipeID2State = list(
 /obj/item/pipe/attack_self(mob/user as mob)
 	return rotate()
 
-/obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 
 	//*
 	if (!istype(W, /obj/item/weapon/wrench))
@@ -425,7 +423,7 @@ var/global/list/pipeID2State = list(
 	item_state = "buildpipe"
 	w_class = 4
 
-/obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	..()
 
 	if (!istype(W, /obj/item/weapon/wrench))

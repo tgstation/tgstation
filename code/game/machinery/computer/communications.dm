@@ -19,6 +19,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/aistate = STATE_DEFAULT
 	var/message_cooldown = 0
 	var/ai_message_cooldown = 0
+	var/centcom_message_cooldown = 0
 	var/tmp_alertlevel = 0
 	var/const/STATE_DEFAULT = 1
 	var/const/STATE_CALLSHUTTLE = 2
@@ -49,7 +50,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if (src.z > ZLEVEL_STATION)
+	if (src.z > 1)
 		usr << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	usr.set_machine(src)
@@ -112,8 +113,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("announce")
 			if(src.authenticated==2 && !message_cooldown)
 				make_announcement(usr)
-			else if (src.authenticated==2 && message_cooldown)
-				usr << "Intercomms recharging. Please stand by."
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -204,7 +203,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(CM.cooldownLeft())
 					usr << "Arrays recycling.  Please stand by."
 					return
-				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
+				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
@@ -219,33 +218,18 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(CM.cooldownLeft())
 					usr << "Arrays recycling.  Please stand by."
 					return
-				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
+				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
-				CM.lastTimeUsed = world.time
 
 		if("RestoreBackup")
 			usr << "Backup routing data restored!"
 			src.emagged = 0
 			src.updateDialog()
 
-		if("nukerequest") //When there's no other way
-			if(src.authenticated==2)
-				if(CM.cooldownLeft())
-					usr << "Arrays recycling. Please stand by."
-					return
-				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
-				if(!input || !(usr in view(1,src)))
-					return
-				Nuke_request(input, usr)
-				usr << "Request sent."
-				log_say("[key_name(usr)] has requested the nuclear codes from Centcomm")
-				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/AI/commandreport.ogg')
-
-				CM.lastTimeUsed = world.time
 
 
 		// AI interface
@@ -321,7 +305,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob, params)
+/obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob)
 	if(istype(I, /obj/item/weapon/card/id))
 		attack_hand(user)
 	else
@@ -387,7 +371,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
 					if(src.emagged == 0)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentcomm'>Send Message to Centcom</A> \]"
 					else

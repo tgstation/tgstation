@@ -6,7 +6,6 @@
 	g_amt = 50
 	origin_tech = "magnets=1"
 	flags = HEAR
-	attachable = 1
 	var/listening = 0
 	var/recorded = "" //the activation message
 

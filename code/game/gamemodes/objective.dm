@@ -82,7 +82,7 @@ datum/objective/mutiny/check_completion()
 		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey || !target.current.client)
 			return 1
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
+		if(T && (T.z != 1))			//If they leave the station they count as dead for this
 			return 2
 		return 0
 	return 1
@@ -109,7 +109,9 @@ datum/objective/maroon/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
-		if(target.current.onCentcom())
+
+		var/turf/T = get_turf(target.current)
+		if(T.z == ZLEVEL_CENTCOM)
 			return 0
 	return 1
 
@@ -250,7 +252,7 @@ datum/objective/escape/check_completion()
 	if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
-	if(location.onCentcom())
+	if(location.z == ZLEVEL_CENTCOM)
 		return 1
 
 	return 0
@@ -345,7 +347,7 @@ datum/objective/steal/proc/select_target() //For admins setting objectives manua
 		var/tmp_obj = new custom_target
 		var/custom_name = tmp_obj:name
 		qdel(tmp_obj)
-		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
+		custom_name = copytext(sanitize(input("Enter target name:", "Objective target", custom_name) as text|null),1,MAX_MESSAGE_LEN)
 		if (!custom_name) return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."

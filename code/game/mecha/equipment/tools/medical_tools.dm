@@ -232,8 +232,8 @@
 	M.AdjustStunned(-4)
 	M.AdjustWeakened(-4)
 	M.AdjustStunned(-4)
-	if(M.reagents.get_reagent_amount("epinephrine") < 5)
-		M.reagents.add_reagent("epinephrine", 5)
+	if(M.reagents.get_reagent_amount("inaprovaline") < 5)
+		M.reagents.add_reagent("inaprovaline", 5)
 	S.chassis.use_power(S.energy_drain)
 	S.update_equip_info()
 	return
@@ -241,7 +241,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
 	name = "exosuit syringe gun"
 	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
 	var/list/syringes
 	var/list/known_reagents
@@ -260,7 +260,7 @@
 	..()
 	flags |= NOREACT
 	syringes = new
-	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
+	known_reagents = list("inaprovaline"="Inaprovaline","anti_toxin"="Anti-Toxin (Dylovene)")
 	processed_reagents = new
 	create_reagents(max_volume)
 	synth = new (list(src),0)
@@ -481,7 +481,7 @@
 		return 0
 	occupant_message("Analyzing reagents...")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
-		if(R.can_synth && add_known_reagent(R.id,R.name))
+		if(R.reagent_state == 2 && add_known_reagent(R.id,R.name))
 			occupant_message("Reagent analyzed, identified as [R.name] and added to database.")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 	occupant_message("Analyzis complete.")

@@ -57,13 +57,14 @@
 		close()
 	add_fingerprint(user)
 
-/obj/structure/bodycontainer/attackby(P as obj, mob/user as mob, params)
+/obj/structure/bodycontainer/attackby(P as obj, mob/user as mob)
 	if (istype(P, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "What would you like the label to be?", text("[]", name), null)
+		var/t = input(user, "What would you like the label to be?", text("[]", name), null)  as text
 		if (user.get_active_hand() != P)
 			return
 		if ((!in_range(src, usr) && src.loc != user))
 			return
+		t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 		if (t)
 			name = text("[]- '[]'", initial(name), t)
 		else
@@ -208,7 +209,7 @@ Crematorium Switch
 		usr << "<span class='danger'>Access denied.</span>"
 	return
 
-/obj/machinery/crema_switch/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/machinery/crema_switch/attackby(obj/item/W as obj, mob/user as mob)
 	if(W.GetID())
 		attack_hand(user)
 	else
@@ -246,20 +247,17 @@ Crematorium Switch
 		user << "That's not connected to anything."
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if(!istype(O, /atom/movable) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
+	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
 		return
-	if(!ismob(O))
-		if(!istype(O, /obj/structure/closet/body_bag))
-			return
-	else
-		var/mob/M = O
-		if(M.buckled)
-			return
-	if(!ismob(user) || user.lying || user.incapacitated())
+	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
+		return
+	if (!ismob(user) || user.stat || user.lying || user.stunned)
 		return
 	O.loc = src.loc
 	if (user != O)
-		visible_message("<span class='warning'>[user] stuffs [O] into [src]!</span>")
+		for(var/mob/B in viewers(user, 3))
+			B.show_message("<span class='danger'>[user] stuffs [O] into [src]!</span>", 1)
+			//Foreach goto(99)
 	return
 
 /*

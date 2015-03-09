@@ -1,6 +1,0 @@
-author: Paprka
-
-delete-after: True
-
-changes: 
-  - tweak: "Reworked reskinning and renaming guns, and added the ability to reskin the bartender's shotgun. Click it with an empty active hand to reskin. Warning, you can only do this once! Rename by hitting it with a pen. This also works with miner shotguns now."

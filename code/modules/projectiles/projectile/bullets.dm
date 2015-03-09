@@ -7,15 +7,14 @@
 	flag = "bullet"
 
 
-/obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
+/obj/item/projectile/bullet/weakbullet
 	damage = 5
-	stamina = 80
+	stamina = 33
 
 
-/obj/item/projectile/bullet/weakbullet2 //detective revolver instastuns, but multiple shots are better for keeping punks down
+/obj/item/projectile/bullet/weakbullet2
 	damage = 15
-	weaken = 3
-	stamina = 50
+	stamina = 75 //the detective can't shoot in bursts and will get yelled at if he sinks 50 rounds into perps to stun 'em
 
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
@@ -29,8 +28,7 @@
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
-	stamina = 65 //two round bursts from the c20r knocks people down
-
+	stamina = 50 //two round bursts from the c20r
 
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
@@ -42,16 +40,10 @@
 	damage = 35
 
 
-/obj/item/projectile/bullet/stunshot //taser slugs for shotguns, nothing special
+/obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5
-	stun = 5
-	weaken = 5
-	stutter = 5
-	jitter = 20
-	range = 7
-	icon_state = "spark"
-	color = "#FFFF00"
+	stamina = 50 //two round bursts from the bulldog
 
 /obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
 	..()
@@ -134,7 +126,7 @@
 		..()
 		reagents.add_reagent("aluminium", 15)
 		reagents.add_reagent("foaming_agent", 5)
-		reagents.add_reagent("facid", 5)
+		reagents.add_reagent("pacid", 5)
 
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe

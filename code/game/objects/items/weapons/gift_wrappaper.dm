@@ -34,7 +34,7 @@
 		/obj/item/weapon/storage/backpack/holding,
 		/obj/item/weapon/storage/belt/champion,
 		/obj/item/weapon/soap/deluxe,
-		/obj/item/weapon/pickaxe/diamond,
+		/obj/item/weapon/pickaxe/silver,
 		/obj/item/weapon/pen/invisible,
 		/obj/item/weapon/lipstick/random,
 		/obj/item/weapon/grenade/smokebomb,
@@ -57,10 +57,10 @@
 		/obj/item/clothing/suit/poncho,
 		/obj/item/clothing/suit/poncho/green,
 		/obj/item/clothing/suit/poncho/red)
-
+	
 	gift_type_list += typesof(/obj/item/clothing/head/collectable) - /obj/item/clothing/head/collectable
 	gift_type_list += typesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/ammo) + /obj/item/toy) //All toys, except for abstract types and syndicate cards.
-
+	
 	var/gift_type = pick(gift_type_list)
 
 	if(!ispath(gift_type,/obj/item))	return

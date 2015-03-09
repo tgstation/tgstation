@@ -83,17 +83,12 @@
 				var/line1
 				var/line2 = get_shuttle_timer()
 				switch(SSshuttle.emergency.mode)
-					if(SHUTTLE_RECALL)
-						line1 = "-RCL-"
-					if(SHUTTLE_CALL)
-						line1 = "-ETA-"
 					if(SHUTTLE_DOCKED)
 						line1 = "-ETD-"
 					if(SHUTTLE_ESCAPE)
-						line1 = "-ESC-"
-					if(SHUTTLE_STRANDED)
-						line1 = "-ERR-"
-						line2 = "??:??"
+						line1 = "-----"
+					else
+						line1 = "-ETA-"
 				if(length(line2) > CHARS_PER_LINE)
 					line2 = "Error!"
 				update_display(line1, line2)

@@ -74,8 +74,8 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
-			O.unwield(user)
-	return	unwield(user)
+			O.unwield()
+	return	unwield()
 
 /obj/item/weapon/twohanded/update_icon()
 	return
@@ -258,7 +258,7 @@ obj/item/weapon/twohanded/
 	New()
 		item_color = "red"
 
-/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
@@ -279,10 +279,9 @@ obj/item/weapon/twohanded/
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
-	force_wielded = 18
+	force_wielded = 18 // Was 13, Buffed - RR
 	throwforce = 20
-	throw_speed = 4
-	embedded_impact_pain_multiplier = 3
+	throw_speed = 3
 	flags = NOSHIELD
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")

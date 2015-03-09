@@ -1,3 +1,8 @@
+/mob/living/carbon/UnarmedAttack(var/atom/A, var/proximity_flag)
+	..()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		. += HM.on_attack_hand(A, src)
+
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -82,13 +87,12 @@
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
 	src.visible_message(
-		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+		"<span class='danger'>[src] was shocked by the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='danger'>You hear a heavy electrical crack.</span>" \
 	)
-	jitteriness += 1000 //High numbers for violent convulsions
-	do_jitter_animation(jitteriness)
-	stuttering += 2
+	src.jitteriness += 1000 //High numbers for violent convulsions
+	src.stuttering += 2
 	Stun(2)
 	spawn(20)
 		src.jitteriness -= 990 //Still jittery, but vastly less
@@ -133,26 +137,72 @@
 	else
 		mode() // Activate held item
 
-
-
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(health >= 0)
+		if(src == M && istype(src, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = src
+			visible_message( \
+				"<span class='notice'>[src] examines \himself.", \
+				"<span class='notice'>You check yourself for injuries.</span>")
 
-		if(lying)
-			sleeping = max(0, sleeping - 5)
-			if(sleeping == 0)
-				resting = 0
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
-							"<span class='notice'>You shake [src] trying to get \him up!</span>")
+			for(var/obj/item/organ/limb/org in H.organs)
+				var/status = ""
+				var/brutedamage = org.brute_dam
+				var/burndamage = org.burn_dam
+				if(hallucination)
+					if(prob(30))
+						brutedamage += rand(30,40)
+					if(prob(30))
+						burndamage += rand(30,40)
+
+				if(brutedamage > 0)
+					status = "bruised"
+				if(brutedamage > 20)
+					status = "bleeding"
+				if(brutedamage > 40)
+					status = "mangled"
+				if(brutedamage > 0 && burndamage > 0)
+					status += " and "
+				if(burndamage > 40)
+					status += "peeling away"
+
+				else if(burndamage > 10)
+					status += "blistered"
+				else if(burndamage > 0)
+					status += "numb"
+				if(status == "")
+					status = "OK"
+				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
+			if(staminaloss)
+				if(staminaloss > 30)
+					src << "<span class='info'>You're completely exhausted.</span>"
+				else
+					src << "<span class='info'>You feel fatigued.</span>"
+			if(dna && dna.species.id && dna.species.id == "skeleton" && !H.w_uniform && !H.wear_suit)
+				H.play_xylophone()
 		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
-						"<span class='notice'>You hug [src] to make \him feel better!</span>")
+			if(ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if(H.wear_suit)
+					H.wear_suit.add_fingerprint(M)
+				else if(H.w_uniform)
+					H.w_uniform.add_fingerprint(M)
 
-		AdjustParalysis(-3)
-		AdjustStunned(-3)
-		AdjustWeakened(-3)
+			if(lying)
+				sleeping = max(0, sleeping - 5)
+				if(sleeping == 0)
+					resting = 0
+				M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
+								"<span class='notice'>You shake [src] trying to get \him up!</span>")
+			else
+				M.visible_message("<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
+								"<span class='notice'>You hug [src] to make \him feel better!</span>")
 
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			AdjustParalysis(-3)
+			AdjustStunned(-3)
+			AdjustWeakened(-3)
+
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 
 /mob/living/carbon/proc/eyecheck()
@@ -269,8 +319,6 @@
 		update_inv_wear_mask(0)
 	else if(I == handcuffed)
 		handcuffed = null
-		if(buckled && buckled.buckle_requires_restraints)
-			buckled.unbuckle_mob()
 		update_inv_handcuffed(0)
 	else if(I == legcuffed)
 		legcuffed = null
@@ -377,10 +425,3 @@ var/const/GALOSHES_DONT_HELP = 8
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
-
-/mob/living/carbon/blob_act()
-	if (stat == DEAD)
-		return
-	else
-		show_message("<span class='userdanger'>The blob attacks!</span>")
-		adjustBruteLoss(10)

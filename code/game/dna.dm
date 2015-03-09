@@ -30,15 +30,6 @@
 	if(new_holder && istype(new_holder))
 		holder = new_holder
 
-/datum/dna/proc/transfer_identity(mob/living/carbon/destination)
-	if(check_dna_integrity(destination))
-		destination.dna.unique_enzymes = unique_enzymes
-		destination.dna.uni_identity = uni_identity
-		destination.dna.blood_type = blood_type
-		destination.dna.species = species
-		destination.dna.real_name = real_name
-		destination.dna.mutations = mutations
-
 /datum/dna/proc/add_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
 	HM.on_acquiring(holder)
@@ -52,12 +43,8 @@
 	return mutations.Find(HM)
 
 /datum/dna/proc/remove_all_mutations()
-	remove_mutation_group(mutations)
-
-/datum/dna/proc/remove_mutation_group(list/group)
-	if(!group)	return
-	for(var/datum/mutation/human/HM in group)
-		HM.force_lose(holder)
+	for(var/datum/mutation/human/HM in mutations)
+		HM.on_losing(holder)
 
 /datum/dna/proc/generate_uni_identity(mob/living/carbon/character)
 	. = ""
@@ -86,12 +73,13 @@
 
 /datum/dna/proc/generate_struc_enzymes(mob/living/carbon/character)
 	var/list/L = list("0","1","2","3","4","5","6")
-	var/list/sorting = new /list(DNA_STRUC_ENZYMES_BLOCKS)
-	var/result = ""
+	var/list/sorting = list()
+	sorting.len = 14
+	var/result
 	for(var/datum/mutation/human/A in good_mutations + bad_mutations + not_good_mutations)
 		if(A.name == RACEMUT && istype(character,/mob/living/carbon/monkey))
 			sorting[A.dna_block] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
-			character.dna.mutations.Add(A)
+			character.dna.mutations.Add(mutations_list[RACEMUT])
 		else
 			sorting[A.dna_block] = random_string(DNA_BLOCK_SIZE, L)
 
@@ -107,12 +95,6 @@
 	else
 		. += repeat_string(DNA_UNIQUE_ENZYMES_LEN, "0")
 	return .
-
-/datum/dna/proc/mutations_say_mods(var/message)
-	if(message)
-		for(var/datum/mutation/human/M in mutations)
-			message = M.say_mod(message)
-		return message
 
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor)
 	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
@@ -147,7 +129,7 @@
 	return
 
 /proc/check_dna_integrity(mob/living/carbon/character)
-	if(!character || !(istype(character, /mob/living/carbon/human) || istype(character, /mob/living/carbon/monkey))) //Evict xenos from carbon 2012
+	if(!(istype(character, /mob/living/carbon/human) || istype(character, /mob/living/carbon/monkey))) //Evict xenos from carbon 2012
 		return
 	if(!character.dna)
 		if(ready_dna(character))
@@ -177,7 +159,6 @@
 
 /proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
 	C.dna = new /datum/dna(C)
-	C.dna.holder = C
 	if(S)	C.dna.species = new S()	// do not remove; this is here to prevent runtimes
 
 /////////////////////////// DNA DATUM
@@ -212,21 +193,20 @@
 /proc/randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
 	if(!check_dna_integrity(M))
 		return
-	var/datum/mutation/human/num = pick(candidates)
-	. = num.force_give(M)
+	var/num = pick(candidates)
+	var/newdna = setblock(M.dna.struc_enzymes, num, construct_block(difficulty,difficulty))
+	M.dna.struc_enzymes = newdna
 	return
 
 /proc/randmutb(mob/living/carbon/M)
-	if(!check_dna_integrity(M))
-		return
-	var/datum/mutation/human/HM = pick((bad_mutations | not_good_mutations) - mutations_list[RACEMUT])
-	. = HM.force_give(M)
+	var/datum/mutation/human/HM = pick(bad_mutations | not_good_mutations)
+	HM.on_acquiring(M)
+	return randmut(M, bad_se_blocks)
 
 /proc/randmutg(mob/living/carbon/M)
-	if(!check_dna_integrity(M))
-		return
 	var/datum/mutation/human/HM = pick(good_mutations)
-	. = HM.force_give(M)
+	HM.on_acquiring(M)
+	return randmut(M, good_se_blocks | op_se_blocks)
 
 /proc/randmuti(mob/living/carbon/M)
 	if(!check_dna_integrity(M))	return
@@ -238,7 +218,7 @@
 /proc/clean_dna(mob/living/carbon/M)
 	if(!check_dna_integrity(M))
 		return
-	M.dna.remove_all_mutations()
+	M.dna.struc_enzymes = M.dna.generate_struc_enzymes(M) // Give clean DNA.
 
 /proc/clean_randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
 	clean_dna(M)
@@ -251,7 +231,7 @@
 		for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 			if(prob(probability))
 				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, random_string(DNA_BLOCK_SIZE, hex_characters))
-		domutcheck(M)
+		domutcheck(M, null)
 	if(ui)
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 			if(prob(probability))
@@ -281,15 +261,16 @@
 		H.update_hair()
 	return 1
 
-/proc/domutcheck(mob/living/carbon/M)
+/proc/domutcheck(mob/living/carbon/M, connected, inj)
 	if(!check_dna_integrity(M))
 		return 0
 
 	var/mob/living/carbon/C = M
 	var/mob/living/carbon/temp
 
-	for(var/datum/mutation/human/A in good_mutations | bad_mutations | not_good_mutations)
-		temp = A.check_block(C)
+	for(var/A in mutations_list)
+		var/datum/mutation/human/HM = mutations_list[A]
+		temp = HM.check_block(C)
 		if(ismob(temp))
 			C = temp
 
@@ -308,7 +289,9 @@
 	icon_state = "scanner"
 	density = 1
 	var/locked = 0
+	var/open = 0
 	anchored = 1
+	interact_offline = 1
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -344,11 +327,11 @@
 
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
-		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"
+		icon_state = initial(icon_state)+ (open ? "_open" : "") + "_unpowered"
 		return
 
 	if((stat & MAINT) || panel_open)
-		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_maintenance"
+		icon_state = initial(icon_state)+ (open ? "_open" : "") + "_maintenance"
 		return
 
 	//running and someone in there
@@ -357,32 +340,23 @@
 		return
 
 	//running
-	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
+	icon_state = initial(icon_state)+ (open ? "_open" : "")
 
 /obj/machinery/dna_scannernew/power_change()
 	..()
 	update_icon()
 
-/obj/machinery/dna_scannernew/proc/toggle_open(var/mob/user)
-	if(panel_open)
-		user << "<span class='notice'>Close the maintenance panel first.</span>"
+/obj/machinery/dna_scannernew/proc/toggle_open(mob/user=usr)
+	if(!user)
 		return
-
-	if(state_open)
-		close_machine()
-		return
-
-	else if(locked)
-		user << "<span class='notice'>The bolts are locked down, securing the door shut.</span>"
-		return
-
-	open_machine()
+	if(open)	return close(user)
+	else		return open(user)
 
 /obj/machinery/dna_scannernew/container_resist()
 	var/mob/living/user = usr
 	var/breakout_time = 2
-	if(state_open || !locked)	//Open and unlocked, no need to escape
-		state_open = 1
+	if(open || !locked)	//Open and unlocked, no need to escape
+		open = 1
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -390,83 +364,104 @@
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
+		if(!user || user.stat != CONSCIOUS || user.loc != src || open || !locked)
 			return
 
 		locked = 0
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
 
-		open_machine()
+		open(user)
 
-/obj/machinery/dna_scannernew/close_machine()
-	if(!state_open)
-		return 0
+/obj/machinery/dna_scannernew/proc/close(mob/user)
+	if(open)
+		if(panel_open)
+			user << "<span class='notice'>Close the maintenance panel first.</span>"
+			return 0
+		open = 0
+		density = 1
+		for(var/mob/living/carbon/C in loc)
+			if(C.buckled)	continue
+			if(C.client)
+				C.client.perspective = EYE_PERSPECTIVE
+				C.client.eye = src
+			occupant = C
+			C.loc = src
+			C.stop_pulling()
+			break
+		update_icon()
 
-	..()
+		// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
+		if(occupant)
+			if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
+				|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
+				|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
+				|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
 
-	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	if(occupant)
-		if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
+				var/mob/dead/observer/ghost = occupant.get_ghost()
+				if(ghost)
+					ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Return to your body if you want to be cloned!</span> (Verbs -> Ghost -> Re-enter corpse)"
+					ghost << sound('sound/effects/genetics.ogg')
+		return 1
 
-			var/mob/dead/observer/ghost = occupant.get_ghost()
-			if(ghost)
-				ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Return to your body if you want to be cloned!</span> (Verbs -> Ghost -> Re-enter corpse)"
-				ghost << sound('sound/effects/genetics.ogg')
-	return 1
-
-/obj/machinery/dna_scannernew/open_machine()
-	if(state_open)
-		return 0
-
-	..()
-
-	return 1
+/obj/machinery/dna_scannernew/proc/open(mob/user)
+	if(!open)
+		if(panel_open)
+			user << "<span class='notice'>Close the maintenance panel first.</span>"
+			return
+		if(locked)
+			user << "<span class='notice'>The bolts are locked down, securing the door shut.</span>"
+			return
+		var/turf/T = get_turf(src)
+		if(T)
+			open = 1
+			density = 0
+			T.contents += contents
+			if(occupant)
+				if(occupant.client)
+					occupant.client.eye = occupant
+					occupant.client.perspective = MOB_PERSPECTIVE
+				occupant = null
+			update_icon()
+		return 1
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
-	if(user.stat || locked)
+	if(user.stat)
 		return
-
-	open_machine()
+	open(user)
 	return
 
-/obj/machinery/dna_scannernew/attackby(var/obj/item/I, mob/user, params)
+/obj/machinery/dna_scannernew/attackby(obj/item/weapon/grab/G, mob/user)
 
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, G))//sent icon_state is irrelevant...
 		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(exchange_parts(user, I))
+	if(exchange_parts(user, G))
 		return
 
-	if(default_pry_open(I))
+	if(istype(G, /obj/item/weapon/crowbar))
+		if(panel_open)
+			for(var/obj/I in contents) // in case there is something in the scanner
+				I.loc = src.loc
+			default_deconstruction_crowbar(G)
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(!istype(G, /obj/item/weapon/grab) || !ismob(G.affecting))
 		return
-
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if(!ismob(G.affecting))
-			return
-
-		if(!state_open)
-			user << "<span class='notice'>Open the scanner first.</span>"
-			return
-
-		var/mob/M = G.affecting
-		M.loc = loc
-		user.stop_pulling()
-		qdel(G)
+	if(!open)
+		user << "<span class='notice'>Open the scanner first.</span>"
+		return
+	var/mob/M = G.affecting
+	M.loc = loc
+	user.stop_pulling()
+	qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
-	if(..(user,1,0)) //don't set the machine, since there's no dialog
+	if(..())
 		return
-
 	toggle_open(user)
+	add_fingerprint(user)
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))
@@ -495,7 +490,7 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 
-/obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			user.drop_item()
@@ -550,7 +545,7 @@
 				occupant_status += "</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health]%</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation]%</div></div>"
-				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("epinephrine")
+				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("inaprovaline")
 				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div><div class='statusValue'>[last_change ? last_change : "----"]</div></div>"
@@ -560,7 +555,7 @@
 		else
 			occupant_status += "<span class='bad'>No subject detected</span></div></div>"
 
-		if(connected.state_open)
+		if(connected.open)
 			scanner_status = "Open"
 		else
 			scanner_status = "Closed"
@@ -598,8 +593,8 @@
 	status += "</div>" // Close statusDisplay div
 	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
 	if(connected)
-		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
-		if (connected.state_open)
+		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.open ? "Close" : "Open"] Scanner</a> "
+		if (connected.open)
 			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span> "
 		else
 			buttons += "<a href='?src=\ref[src];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a> "
@@ -759,9 +754,9 @@
 			current_screen = href_list["text"]
 		if("rejuv")
 			if(viable_occupant && viable_occupant.reagents)
-				var/epinephrine_amount = viable_occupant.reagents.get_reagent_amount("epinephrine")
-				var/can_add = max(min(REJUVENATORS_MAX - epinephrine_amount, REJUVENATORS_INJECT), 0)
-				viable_occupant.reagents.add_reagent("epinephrine", can_add)
+				var/inaprovaline_amount = viable_occupant.reagents.get_reagent_amount("inaprovaline")
+				var/can_add = max(min(REJUVENATORS_MAX - inaprovaline_amount, REJUVENATORS_INJECT), 0)
+				viable_occupant.reagents.add_reagent("inaprovaline", can_add)
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
 			if(num && text)
@@ -796,7 +791,7 @@
 						if("se")
 							if(buffer_slot["SE"])
 								viable_occupant.dna.struc_enzymes = buffer_slot["SE"]
-								domutcheck(viable_occupant)
+								domutcheck(viable_occupant, connected)
 						if("ui")
 							if(buffer_slot["UI"])
 								viable_occupant.dna.uni_identity = buffer_slot["UI"]
@@ -902,7 +897,7 @@
 							last_change += "->[hex]"
 
 							viable_occupant.dna.struc_enzymes = copytext(viable_occupant.dna.struc_enzymes, 1, num) + hex + copytext(viable_occupant.dna.struc_enzymes, num+1, 0)
-							domutcheck(viable_occupant)
+							domutcheck(viable_occupant, connected)
 				else
 					current_screen = "mainmenu"
 

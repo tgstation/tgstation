@@ -133,13 +133,12 @@
 
 /obj/item/ammo_casing/a762
 	desc = "A 7.62mm bullet casing."
-	icon_state = "762-casing"
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet
 
-/obj/item/ammo_casing/a556
-	desc = "A 5.56mm bullet casing."
-	caliber = "a556"
+/obj/item/ammo_casing/a545
+	desc = "A 5.45mm bullet casing."
+	caliber = "a545"
 	projectile_type = /obj/item/projectile/bullet/heavybullet
 
 /obj/item/ammo_casing/caseless
@@ -165,12 +164,3 @@
 	caliber = "40mm"
 	icon_state = "40mmHE"
 	projectile_type = /obj/item/projectile/bullet/a40mm
-
-/obj/item/ammo_casing/caseless/magspear
-	name = "magnetic spear"
-	desc = "A reusable spear that is typically loaded into kinetic spearguns."
-	projectile_type = /obj/item/projectile/bullet/magspear
-	caliber = "speargun"
-	icon_state = "magspear"
-	throwforce = 15 //still deadly when thrown
-	throw_speed = 3

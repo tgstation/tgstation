@@ -132,13 +132,11 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 				// Attach
 				else
-					if(istype(I, /obj/item/device/assembly))
-						var/obj/item/device/assembly/A = I;
-						if(A.attachable)
-							L.drop_item()
-							Attach(colour, A)
-						else
-							L << "<span class='error'>You need a attachable assembly!</span>"
+					if(istype(I, /obj/item/device/assembly/signaler))
+						L.drop_item()
+						Attach(colour, I)
+					else
+						L << "<span class='error'>You need a remote signaller!</span>"
 
 
 
@@ -231,8 +229,8 @@ var/const/POWER = 8
 		return signallers[colour]
 	return null
 
-/datum/wires/proc/Attach(var/colour, var/obj/item/device/assembly/S)
-	if(colour && S && S.attachable)
+/datum/wires/proc/Attach(var/colour, var/obj/item/device/assembly/signaler/S)
+	if(colour && S)
 		if(!IsAttached(colour))
 			signallers[colour] = S
 			S.loc = holder
@@ -241,7 +239,7 @@ var/const/POWER = 8
 
 /datum/wires/proc/Detach(var/colour)
 	if(colour)
-		var/obj/item/device/assembly/S = GetAttached(colour)
+		var/obj/item/device/assembly/signaler/S = GetAttached(colour)
 		if(S)
 			signallers -= colour
 			S.connected = null
@@ -249,7 +247,7 @@ var/const/POWER = 8
 			return S
 
 
-/datum/wires/proc/Pulse(var/obj/item/device/assembly/S)
+/datum/wires/proc/Pulse(var/obj/item/device/assembly/signaler/S)
 
 	for(var/colour in signallers)
 		if(S == signallers[colour])

@@ -4,15 +4,14 @@
 	return
 
 // No comment
-/atom/proc/attackby(obj/item/W, mob/user, params)
+/atom/proc/attackby(obj/item/W, mob/user)
 	return
-
-/atom/movable/attackby(obj/item/W, mob/living/user, params)
+/atom/movable/attackby(obj/item/W, mob/living/user)
 	user.do_attack_animation(src)
 	if(W && !(W.flags&NOBLUDGEON))
 		visible_message("<span class='danger'>[user] has hit [src] with [W].</span>")
 
-/mob/living/attackby(obj/item/I, mob/user, params)
+/mob/living/attackby(obj/item/I, mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	I.attack(src, user)
 

@@ -36,7 +36,7 @@
 	return
 
 
-/obj/structure/janitorialcart/attackby(obj/item/I, mob/user, params)
+/obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
 	var/fail_msg = "<span class='notice'>There is already one of those in [src].</span>"
 
 	if(istype(I, /obj/item/weapon/mop))
@@ -144,7 +144,7 @@
 
 
 /obj/structure/janitorialcart/update_icon()
-	overlays.Cut()
+	overlays = null
 	if(mybag)
 		overlays += "cart_garbage"
 	if(mymop)
@@ -157,113 +157,97 @@
 		overlays += "cart_sign[signs]"
 
 
-//old style PIMP-CART
+//old style retardo-cart
 /obj/structure/stool/bed/chair/janicart
 	name = "janicart"
-	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "pussywagon"
 	anchored = 0
 	density = 1
-	var/obj/item/weapon/storage/bag/trash/mybag = null
+	flags = OPENCONTAINER
+	//copypaste sorry
+	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
+	var/obj/item/weapon/storage/bag/trash/mybag	= null
 	var/callme = "pimpin' ride"	//how do people refer to it?
-	var/move_delay = 0
-	var/floorbuffer = 0
-	var/keytype = /obj/item/key/janitor
+
 
 /obj/structure/stool/bed/chair/janicart/New()
 	handle_rotation()
+	create_reagents(100)
 
-/obj/structure/stool/bed/chair/janicart/Move(a, b, flag)
-	..()
-	if(floorbuffer)
-		var/turf/tile = loc
-		if(isturf(tile))
-			tile.clean_blood()
-			if (istype(tile, /turf/simulated/floor))
-				var/turf/simulated/floor/F = tile
-				F.dirt = 0
-			for(var/A in tile)
-				if(istype(A, /obj/effect))
-					if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
-						qdel(A)
 
 /obj/structure/stool/bed/chair/janicart/examine(mob/user)
 	..()
-	if(floorbuffer)
-		user << "It has been upgraded with a floor buffer."
+	if(mybag)
+		user << "\A [mybag] is hanging on \the [callme]."
 
 
-/obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user, params)
-	if(istype(I, keytype))
+/obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/mop))
+		if(reagents.total_volume > 1)
+			reagents.trans_to(I, 2)
+			user << "<span class='notice'>You wet [I] in the [callme].</span>"
+			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		else
+			user << "<span class='notice'>This [callme] is out of water!</span>"
+	else if(istype(I, /obj/item/key))
 		user << "Hold [I] in one of your hands while you drive this [callme]."
 	else if(istype(I, /obj/item/weapon/storage/bag/trash))
-		if(keytype == /obj/item/key/janitor)
-			user << "<span class='notice'>You hook the trashbag onto the [callme].</span>"
-			user.drop_item()
-			I.loc = src
-			mybag = I
-	else if(istype(I, /obj/item/janiupgrade))
-		if(keytype == /obj/item/key/janitor)
-			floorbuffer = 1
-			qdel(I)
-			user << "<span class='notice'>You upgrade the [callme] with the floor buffer.</span>"
-	update_icon()
+		user << "<span class='notice'>You hook the trashbag onto the [callme].</span>"
+		user.drop_item()
+		I.loc = src
+		mybag = I
 
-/obj/structure/stool/bed/chair/janicart/update_icon()
-	overlays.Cut()
-	if(mybag)
-		overlays += "cart_garbage"
-	if(floorbuffer)
-		overlays += "cart_buffer"
 
 /obj/structure/stool/bed/chair/janicart/attack_hand(mob/user)
 	if(mybag)
 		mybag.loc = get_turf(user)
 		user.put_in_hands(mybag)
 		mybag = null
-		update_icon()
 	else
 		..()
 
 
 /obj/structure/stool/bed/chair/janicart/relaymove(mob/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis)
-		unbuckle_mob()
-	if(istype(user.l_hand, keytype) || istype(user.r_hand, keytype))
-		if(!Process_Spacemove(direction) || !has_gravity(src.loc) || move_delay)
+		unbuckle()
+	if(istype(user.l_hand, /obj/item/key) || istype(user.r_hand, /obj/item/key))
+		if(!Process_Spacemove(direction))
 			return
 		step(src, direction)
 		update_mob()
 		handle_rotation()
-		if(istype(src.loc, /turf/simulated))
-			var/turf/simulated/T = src.loc
-			if(T.wet == 2)	//Lube! Fall off!
-				playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
-				buckled_mob.Stun(7)
-				buckled_mob.Weaken(7)
-				unbuckle_mob()
-				step(src, dir)
-		move_delay = 1
-		spawn(2)
-			move_delay = 0
 	else
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>"
 
 
-/obj/structure/stool/bed/chair/janicart/user_buckle_mob(mob/living/M, mob/user)
-	M.loc = loc
-	..()
-	update_mob()
+/obj/structure/stool/bed/chair/janicart/buckle_mob(mob/M, mob/user)
+	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon))
+		return
 
-/obj/structure/stool/bed/chair/janicart/unbuckle_mob()
+	unbuckle()
+
+	M.visible_message(\
+		"<span class='notice'>[M] climbs onto the [callme]!</span>",\
+		"<span class='notice'>You climb onto the [callme]!</span>")
+	M.buckled = src
+	M.loc = loc
+	M.dir = dir
+	M.update_canmove()
+	buckled_mob = M
+	update_mob()
+	add_fingerprint(user)
+
+
+/obj/structure/stool/bed/chair/janicart/unbuckle()
 	if(buckled_mob)
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 	..()
 
+
 /obj/structure/stool/bed/chair/janicart/handle_rotation()
-	if((dir == SOUTH) || (dir == WEST) || (dir == EAST))
+	if(dir == SOUTH)
 		layer = FLY_LAYER
 	else
 		layer = OBJ_LAYER
@@ -284,50 +268,26 @@
 				buckled_mob.pixel_x = 0
 				buckled_mob.pixel_y = 7
 			if(WEST)
-				buckled_mob.pixel_x = 12
+				buckled_mob.pixel_x = 13
 				buckled_mob.pixel_y = 7
 			if(NORTH)
 				buckled_mob.pixel_x = 0
 				buckled_mob.pixel_y = 4
 			if(EAST)
-				buckled_mob.pixel_x = -12
+				buckled_mob.pixel_x = -13
 				buckled_mob.pixel_y = 7
 
 
 /obj/structure/stool/bed/chair/janicart/bullet_act(var/obj/item/projectile/Proj)
 	if(buckled_mob)
-		buckled_mob.bullet_act(Proj)
+		if(prob(85))
+			return buckled_mob.bullet_act(Proj)
+	visible_message("<span class='warning'>[Proj] ricochets off the [callme]!</span>")
+
 
 /obj/item/key
 	name = "key"
-	desc = "A small grey key."
-	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "key"
-	w_class = 1
-
-/obj/item/key/janitor
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
-	icon_state = "keyjanitor"
-
-/obj/item/key/security
-	desc = "A keyring with a small steel key, and a rubber stun baton accessory."
-	icon_state = "keysec"
-
-/obj/item/janiupgrade
-	name = "floor buffer upgrade"
-	desc = "An upgrade for mobile janicarts."
 	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "upgrade"
-
-/obj/structure/stool/bed/chair/janicart/secway
-	name = "secway"
-	desc = "A brave security cyborg gave its life to help you look like a complete tool."
-	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "secway"
-	callme = "secway"
-	keytype = /obj/item/key/security
-
-/obj/structure/stool/bed/chair/janicart/secway/update_mob()
-	if(buckled_mob)
-		buckled_mob.dir = dir
-		buckled_mob.pixel_y = 4
+	icon_state = "keys"
+	w_class = 1

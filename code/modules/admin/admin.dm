@@ -50,8 +50,7 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> "
 
 	if(M.client)
-		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
-		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
+		body += "| <A HREF='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
 		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
 		body += "\[<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
@@ -579,8 +578,10 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
+	if(!ticker)
+		alert("Unable to start the game as it is not set up.")
+		return
 	if(ticker.current_state == GAME_STATE_PREGAME)
-		ticker.can_fire = 1
 		ticker.current_state = GAME_STATE_SETTING_UP
 		log_admin("[usr.key] has started the game.")
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
@@ -667,7 +668,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (M.z == ZLEVEL_CENTCOM)
+	if (M.z == 2)
 		M.loc = pick(latejoin)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
@@ -815,29 +816,22 @@ var/global/floorIsLava = 0
 			var/J_title = html_encode(job.title)
 			var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
 			var/J_totPos = html_encode(job.total_positions)
-			if(job.total_positions < 0)
-				dat += "[J_title]: [J_opPos]   (unlimited)"
+			if(job.total_positions <= 0)
+				dat += "[J_title]: [J_opPos]"
 			else
 				dat += "[J_title]: [J_opPos]/[J_totPos]"
-
-			if(job.title == "AI" || job.title == "Cyborg")
-				dat += "   (Cannot Late Join)<br>"
-				continue
-			if(job.total_positions >= 0)
+			if(initial(job.total_positions) > 0)
 				dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
 				if(job.total_positions > job.current_positions)
-					dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>  |  "
+					dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>"
 				else
-					dat += "Remove  |  "
-				dat += "<A href='?src=\ref[src];unlimitjobslot=[job.title]'>Unlimit</A>"
-			else
-				dat += "   <A href='?src=\ref[src];limitjobslot=[job.title]'>Limit</A>"
+					dat += "Remove"
 			dat += "<br>"
 
 	dat += "</body>"
 	var/winheight = 100 + (count * 20)
 	winheight = min(winheight, 690)
-	usr << browse(dat, "window=players;size=375x[winheight]")
+	usr << browse(dat, "window=players;size=316x[winheight]")
 
 //
 //

@@ -15,7 +15,6 @@
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
-	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
 	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
@@ -79,7 +78,17 @@
 
 /mob/living/silicon/pai/Stat()
 	..()
-	if(statpanel("Status"))
+	statpanel("Status")
+	if (src.client.statpanel == "Status")
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 		if(src.silence_time)
 			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
 			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
@@ -178,13 +187,6 @@
 
 /mob/living/silicon/pai/UnarmedAttack(var/atom/A)//Stops runtimes due to attack_animal being the default
 	return
-
-/mob/living/silicon/pai/on_forcemove(var/atom/newloc)
-	if(card)
-		card.loc = newloc
-	else //something went very wrong.
-		CRASH("pAI without card")
-	loc = card
 
 //Addition by Mord_Sith to define AI's network change ability
 /*

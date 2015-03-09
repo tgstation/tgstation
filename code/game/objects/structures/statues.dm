@@ -16,7 +16,7 @@
 	density = 0
 	..()
 
-/obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user as mob, params)
+/obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user as mob)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -25,12 +25,12 @@
 			user.visible_message("<span class='notice'>[user] is loosening the [name]'s bolts...</span>", \
 								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
 			if(do_after(user,40))
-				if(!src.loc || !anchored)
-					return
+				if(!src) return
+				if(!anchored) return
 				user.visible_message("<span class='notice'>[user] loosened the [name]'s bolts!</span>", \
 									 "<span class='notice'>You loosened the [name]'s bolts!</span>")
 				anchored = 0
-		else
+		else if(!anchored)
 			if (!istype(src.loc, /turf/simulated/floor))
 				user.visible_message("<span class='danger'>A floor must be present to secure the [name]!</span>")
 				return
@@ -38,8 +38,8 @@
 			user.visible_message("<span class='notice'>[user] is securing the [name]'s bolts...</span>", \
 								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
 			if(do_after(user, 40))
-				if(!src.loc || anchored)
-					return
+				if(!src) return
+				if(anchored) return
 				user.visible_message("<span class='notice'>[user] has secured the [name]'s bolts!</span>", \
 									 "<span class='notice'>You have secured the [name]'s bolts!</span>")
 				anchored = 1
@@ -48,36 +48,29 @@
 		user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user,30))
-			if(!src.loc)
-				return
+			if(!src.loc) return
 			user.visible_message("<span class='notice'>[user] slices apart the [name]!</span>", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			Dismantle(1)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
-		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(D.drillcost))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return
-		D.update_icon()
-		if(!src.loc)
-			return
-		user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \
-							 "<span class='notice'>You destroy the [name]!</span>")
-		D.playDigSound()
-		qdel(src)
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
+		user.visible_message("<span class='notice'>[user] begins to drill apart the [name]!</span>", \
+							 "<span class='notice'>You begin to drill apart the [name]!</span>")
+		if(do_after(user,5))
+			if(!src.loc) return
+			user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \
+								 "<span class='notice'>You destroy the [name]!</span>")
+			qdel(src)
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored)
-		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-		user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
-							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user, 40))
-			if(!src.loc)
-				return
-			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-			user.visible_message("<span class='notice'>[user] slices apart the [name]!</span>", \
-								 "<span class='notice'>You slice apart the [name]!</span>")
-			Dismantle(1)
+	else if(istype(W, /obj/item/weapon/weldingtool))
+		if(!anchored)
+			user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
+								 "<span class='notice'>You are slicing apart the [name]...</span>")
+			if(do_after(user, 40))
+				if(!src.loc) return
+				user.visible_message("<span class='notice'>[user] slices apart the [name]!</span>", \
+									 "<span class='notice'>You slice apart the [name]!</span>")
+				Dismantle(1)
 
 	else
 		hardness -= W.force/100
@@ -159,7 +152,7 @@
 	desc = "This statue has a sickening green colour."
 	icon_state = "eng"
 
-/obj/structure/statue/uranium/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/statue/uranium/attackby(obj/item/weapon/W, mob/user)
 	radiate()
 	..()
 
@@ -209,7 +202,7 @@
 		PlasmaBurn(500)
 	..()
 
-/obj/structure/statue/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/statue/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma statue ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma statue ignited by [user.ckey]([user]) in ([x],[y],[z])")
@@ -315,7 +308,7 @@
 	honk()
 	..()
 
-/obj/structure/statue/bananium/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/statue/bananium/attackby(obj/item/weapon/W, mob/user)
 	honk()
 	..()
 

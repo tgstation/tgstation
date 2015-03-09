@@ -47,9 +47,8 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
-	var/minimal_access_threshold = 0	//If the number of players is larger than this threshold, minimal access will be turned on.
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
-	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above.
+	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above
 	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
 	var/server
@@ -67,14 +66,6 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
-	//Population cap vars
-	var/soft_popcap				= 0
-	var/hard_popcap				= 0
-	var/extreme_popcap			= 0
-	var/soft_popcap_message		= "Be warned that the server is currently serving a high number of users, consider using alternative game servers."
-	var/hard_popcap_message		= "The server is currently serving a high number of users, You cannot currently join. You may wait for the number of living crew to decline, observe, or find alternative servers."
-	var/extreme_popcap_message	= "The server is currently serving a high number of users, find alternative servers."
-
 	//game_options.txt configs
 	var/force_random_names = 0
 	var/list/mode_names = list()
@@ -85,9 +76,6 @@
 	var/humans_need_surnames = 0
 	var/allow_random_events = 0			// enables random events mid-round when set to 1
 	var/allow_ai = 0					// allow ai job
-	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
-	var/notify_new_player_age = 0		// how long do we notify admins of a new player
-	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
@@ -99,12 +87,8 @@
 	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
 	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
 	var/continuous_round_rev = 0		// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
-	var/continuous_round_gang = 0
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
-	var/continuous_round_blob = 0
-	var/midround_antag_time_check = 60  // How late (in minutes) you want the midround antag system to stay on, setting this to 0 will disable the system
-	var/midround_antag_life_check = 0.7 // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
@@ -151,13 +135,6 @@
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
-
-	var/assistant_cap = -1
-
-	var/starlight = 0
-	var/grey_assistants = 0
-
-	var/aggressive_changelog = 0
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -314,26 +291,6 @@
 						global.comms_allowed = 1
 				if("see_own_notes")
 					config.see_own_notes = 1
-				if("soft_popcap")
-					config.soft_popcap = text2num(value)
-				if("hard_popcap")
-					config.hard_popcap = text2num(value)
-				if("extreme_popcap")
-					config.extreme_popcap = text2num(value)
-				if("soft_popcap_message")
-					config.soft_popcap_message = value
-				if("hard_popcap_message")
-					config.hard_popcap_message = value
-				if("extreme_popcap_message")
-					config.extreme_popcap_message = value
-				if("panic_bunker")
-					config.panic_bunker = 1
-				if("notify_new_player_age")
-					config.notify_new_player_age = text2num(value)
-				if("irc_first_connection_alert")
-					config.irc_first_connection_alert = 1
-				if("aggressive_changelog")
-					config.aggressive_changelog = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -395,18 +352,10 @@
 					config.gateway_delay			= text2num(value)
 				if("continuous_round_rev")
 					config.continuous_round_rev		= 1
-				if("continuous_round_gang")
-					config.continuous_round_gang	= 1
 				if("continuous_round_wiz")
 					config.continuous_round_wiz		= 1
 				if("continuous_round_malf")
 					config.continuous_round_malf	= 1
-				if("continuous_round_blob")
-					config.continuous_round_blob	= 1
-				if("midround_antag_time_check")
-					config.midround_antag_time_check = text2num(value)
-				if("midround_antag_life_check")
-					config.midround_antag_life_check = text2num(value)
 				if("shuttle_refuel_delay")
 					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -446,8 +395,6 @@
 					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")
 					config.allow_random_events		= 1
-				if("minimal_access_threshold")
-					config.minimal_access_threshold	= text2num(value)
 				if("jobs_have_minimal_access")
 					config.jobs_have_minimal_access	= 1
 				if("humans_need_surnames")
@@ -470,12 +417,6 @@
 					config.mutant_races				= 1
 				if("mutant_colors")
 					config.mutant_colors			= 1
-				if("assistant_cap")
-					config.assistant_cap			= text2num(value)
-				if("starlight")
-					config.starlight			= 1
-				if("grey_assistants")
-					config.grey_assistants			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

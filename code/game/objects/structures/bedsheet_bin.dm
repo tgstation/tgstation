@@ -32,12 +32,6 @@ LINEN BINS
 	add_fingerprint(user)
 	return
 
-/obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/weapon/shard))
-		new /obj/item/stack/medical/gauze/improvised(src.loc)
-		qdel(src)
-		user << "<span class='notice'>You tear [src] up.</span>"
-	..()
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
@@ -157,6 +151,11 @@ LINEN BINS
 	icon_state = "sheetwiz"
 	item_color = "wiz"
 
+/obj/item/weapon/bedsheet/patriot
+	name = "patriotic bedsheet"
+	desc = "You've never felt more free than when sleeping on this."
+	icon_state = "sheetUSA"
+	item_color = "sheetUSA"
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
@@ -186,7 +185,7 @@ LINEN BINS
 		else		icon_state = "linenbin-full"
 
 
-/obj/structure/bedsheetbin/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/structure/bedsheetbin/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/bedsheet))
 		user.drop_item()
 		I.loc = src

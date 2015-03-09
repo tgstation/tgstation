@@ -112,7 +112,6 @@
 	update_nearby_icons()
 
 /obj/structure/window/attack_tk(mob/user as mob)
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
@@ -180,7 +179,7 @@
 	attack_generic(user, rand(10, 15))
 	update_nearby_icons()
 
-/obj/structure/window/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/window/attackby(obj/item/I, mob/living/user)
 	if(!can_be_reached(user))
 		return 1 //skip the afterattack
 

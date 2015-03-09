@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/grenadelauncher
 	name = "grenade launcher"
 	desc = "a terrible, terrible thing. it's really awful!"
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "riotgun"
 	item_state = "riotgun"
 	w_class = 4.0
@@ -16,7 +16,7 @@
 	..()
 	user << "[grenades] / [max_grenades] grenades loaded."
 
-/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I as obj, mob/user as mob)
 
 	if((istype(I, /obj/item/weapon/grenade)))
 		if(grenades.len < max_grenades)

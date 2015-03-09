@@ -1,10 +1,10 @@
-#define EMPTY 1
-#define WIRED 2
-#define READY 3
+#define EMPTY 0
+#define WIRED 1
+#define READY 2
 
 /obj/item/weapon/grenade/chem_grenade
 	name = "grenade"
-	desc = "A custom made grenade."
+	desc = "A do it yourself grenade casing!"
 	icon_state = "chemg"
 	item_state = "flashbang"
 	w_class = 2
@@ -18,7 +18,7 @@
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
-	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
+	name = "[initial(name)] casing" // By adding the " casing" part here we can use initial(name) to get the final name, making it nice to say "large grenade" when it is a large grenade.
 
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
@@ -36,7 +36,6 @@
 			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
 			user << "<span class='warning'>You prime the [name]! [det_time / 10] second\s!</span>"
-			playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1)
 			active = 1
 			icon_state = initial(icon_state) + "_active"
 			if(iscarbon(user))
@@ -47,7 +46,7 @@
 				prime()
 
 
-/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(stage == WIRED)
 			if(beakers.len)
@@ -121,19 +120,18 @@
 
 
 /obj/item/weapon/grenade/chem_grenade/proc/stage_change(var/N)
-	if(N)
-		stage = N
-	if(stage == EMPTY)
+	stage = N
+	if (stage == EMPTY)
 		name = "[initial(name)] casing"
-		desc = "A do it yourself [initial(name)] casing!"
+		desc = initial(desc)
 		icon_state = initial(icon_state)
-	else if(stage == WIRED)
+	else if (stage == WIRED)
 		name = "unsecured [initial(name)]"
 		desc = "An unsecured [initial(name)] assembly."
 		icon_state = "[initial(icon_state)]_ass"
-	else if(stage == READY)
+	else if (stage == READY)
 		name = initial(name)
-		desc = initial(desc)
+		desc = "A custom made [initial(name)]."
 		icon_state = "[initial(icon_state)]_locked"
 
 
@@ -204,11 +202,8 @@
 		qdel(src)	   //correctly before deleting the grenade.
 
 /obj/item/weapon/grenade/chem_grenade/proc/mix_reagents()
-	var/total_temp
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		G.reagents.trans_to(src, G.reagents.total_volume)
-		total_temp += G.reagents.chem_temp
-	reagents.chem_temp = total_temp
 
 /obj/item/weapon/grenade/chem_grenade/proc/can_flood_from(myloc, maxrange)
 	var/list/reachable = list(myloc)
@@ -226,7 +221,7 @@
 //Large chem grenades accept slime cores and use the appropriately.
 /obj/item/weapon/grenade/chem_grenade/large
 	name = "large grenade"
-	desc = "A custom made large grenade."
+	desc = "An oversized grenade casing."
 	icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/weapon/reagent_containers/glass,/obj/item/weapon/reagent_containers/food/condiment,
 								/obj/item/weapon/reagent_containers/food/drinks)
@@ -250,7 +245,7 @@
 	//I tried to just put it in the allowed_containers list but
 	//if you do that it must have reagents.  If you're going to
 	//make a special case you might as well do it explicitly. -Sayu
-/obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/slime_extract) && stage == WIRED)
 		user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
 		user.drop_item()
@@ -272,10 +267,11 @@
 
 	B1.reagents.add_reagent("aluminium", 30)
 	B2.reagents.add_reagent("foaming_agent", 10)
-	B2.reagents.add_reagent("facid", 10)
+	B2.reagents.add_reagent("pacid", 10)
 
 	beakers += B1
 	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/incendiary
@@ -294,6 +290,7 @@
 
 	beakers += B1
 	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/antiweed
@@ -313,6 +310,7 @@
 
 	beakers += B1
 	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/cleaner
@@ -331,6 +329,7 @@
 
 	beakers += B1
 	beakers += B2
+	icon_state = "grenade"
 
 
 /obj/item/weapon/grenade/chem_grenade/teargas
@@ -350,43 +349,27 @@
 
 	beakers += B1
 	beakers += B2
+	icon_state = "grenade"
 
 
-/obj/item/weapon/grenade/chem_grenade/facid
+/obj/item/weapon/grenade/chem_grenade/pacid
 	name = "acid grenade"
 	desc = "Used for melting armoured opponents."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/facid/New()
+/obj/item/weapon/grenade/chem_grenade/pacid/New()
 	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("facid", 25)
+	B1.reagents.add_reagent("pacid", 100)
 	B1.reagents.add_reagent("potassium", 25)
 	B2.reagents.add_reagent("phosphorus", 25)
 	B2.reagents.add_reagent("sugar", 25)
 
 	beakers += B1
 	beakers += B2
-
-/obj/item/weapon/grenade/chem_grenade/colorful
-	name = "colorful grenade"
-	desc = "Used for wide scale painting projects."
-	stage = READY
-
-/obj/item/weapon/grenade/chem_grenade/colorful/New()
-	..()
-	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
-
-	B1.reagents.add_reagent("colorful_reagent", 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
-
-	beakers += B1
-	beakers += B2
+	icon_state = "grenade"
 
 #undef EMPTY
 #undef WIRED

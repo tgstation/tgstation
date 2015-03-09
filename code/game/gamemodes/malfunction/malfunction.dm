@@ -9,7 +9,6 @@
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
-	enemy_minimum_age = 30 //Same as AI minimum age
 
 
 	var/AI_win_timeleft = 5400 //started at 5400, in case I change this for testing round end.
@@ -78,14 +77,13 @@
 		AI_mind.special_role = "malfunction"
 
 		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/takeover
-		AI_mind.current.verbs += /mob/living/silicon/ai/proc/ai_cancel_call
 
 /*		AI_mind.current.icon_state = "ai-malf"
 		spawn(10)
 			if(alert(AI_mind.current,"Do you want to use an alternative sprite for your real core?",,"Yes","No")=="Yes")
 				AI_mind.current.icon_state = "ai-malf2"
 */
-	SSshuttle.emergencyNoEscape = 1
+	SSshuttle.emergencyAlwaysFakeRecall = 1
 	..()
 
 
@@ -148,13 +146,8 @@
 		return 1
 	if (is_malf_ai_dead())
 		if(config.continuous_round_malf)
-			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-				SSshuttle.emergency.mode = SHUTTLE_DOCKED
-				SSshuttle.emergency.timer = world.time
-				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-			SSshuttle.emergencyNoEscape = 0
+			SSshuttle.emergencyAlwaysFakeRecall = 0
 			malf_mode_declared = 0
-			round_converted = convert_roundtype()
 		else
 			return 1
 	return ..() //check for shuttle and nuke

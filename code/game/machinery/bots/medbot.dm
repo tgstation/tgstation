@@ -32,10 +32,10 @@
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	radio_frequency = MED_FREQ //Medical frequency
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute = "salglu_solution"
-	var/treatment_oxy = "salbutamol"
-	var/treatment_fire = "salglu_solution"
-	var/treatment_tox = "charcoal"
+	var/treatment_brute = "tricordrazine"
+	var/treatment_oxy = "tricordrazine"
+	var/treatment_fire = "tricordrazine"
+	var/treatment_tox = "tricordrazine"
 	var/treatment_virus = "spaceacillin"
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
@@ -46,10 +46,10 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_oxy = "omnizine"
-	treatment_brute = "omnizine"
-	treatment_fire = "omnizine"
-	treatment_tox = "omnizine"
+	treatment_oxy = "dexalinp"
+	treatment_brute = "bicaridine"
+	treatment_fire = "kelotane"
+	treatment_tox = "anti_toxin"
 
 /obj/item/weapon/firstaid_arm_assembly
 	name = "incomplete medibot assembly."
@@ -209,7 +209,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/bot/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/bot/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (allowed(user) && !open && !emagged)
 			locked = !locked
@@ -535,7 +535,7 @@
  *	Medbot Assembly -- Can be made out of all three medkits.
  */
 
-/obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob, params)
+/obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob)
 
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		..()
@@ -553,8 +553,6 @@
 		A.skin = "tox"
 	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
 		A.skin = "o2"
-	else if(istype(src,/obj/item/weapon/storage/firstaid/brute))
-		A.skin = "brute"
 
 	qdel(S)
 	user.put_in_hands(A)
@@ -563,7 +561,7 @@
 	qdel(src)
 
 
-/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)

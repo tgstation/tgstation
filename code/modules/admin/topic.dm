@@ -66,11 +66,7 @@
 				log_admin("[key_name(usr)] started a gang war.")
 				if(!src.makeGangsters())
 					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
-			if("13")
-				message_admins("[key_name(usr)] created a emergency response team.")
-				log_admin("[key_name(usr)] created a emergency response team.")
-				if(!src.makeEmergencyresponseteam())
-					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
+
 
 	else if(href_list["forceevent"])
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevent.control
@@ -225,21 +221,6 @@
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("<span class='adminnotice'>[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
 		href_list["secretsadmin"] = "check_antagonist"
-
-	else if(href_list["end_round"])
-		if(!check_rights(R_ADMIN))	return
-
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] is considering ending the round.</span>")
-		if(alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
-			spawn(200) //I wish you would step back from that ledge my friend
-			if(alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", "Yes", "No") == "Yes")
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has ended the round.</span>")
-				ticker.force_ending = 1 //Yeah there we go APC destroyed mission accomplished
-				return
-			else
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] decided against ending the round.</span>")
-		else
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] decided against ending the round.</span>")
 
 	else if(href_list["simplemake"])
 		if(!check_rights(R_SPAWN))	return
@@ -522,27 +503,6 @@
 				counter = 0
 		jobs += "</tr></table>"
 
-	//Supply (Brown)
-		counter = 0
-		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='DDAA55'><th colspan='[length(supply_positions)]'><a href='?src=\ref[src];jobban3=supplydept;jobban4=\ref[M]'>Supply Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in supply_positions)
-			if(!jobPos)	continue
-			var/datum/job/job = SSjob.GetJob(jobPos)
-			if(!job) continue
-
-			if(jobban_isbanned(M, job.title))
-				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[replacetext(job.title, " ", "&nbsp")]</font></a></td>"
-				counter++
-			else
-				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
-				counter++
-
-			if(counter >= 5) //So things dont get COPYPASTE!
-				jobs += "</tr><tr align='center'>"
-				counter = 0
-		jobs += "</tr></table>"
-
 	//Civilian (Grey)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
@@ -708,12 +668,6 @@
 					joblist += temp.title
 			if("sciencedept")
 				for(var/jobPos in science_positions)
-					if(!jobPos)	continue
-					var/datum/job/temp = SSjob.GetJob(jobPos)
-					if(!temp) continue
-					joblist += temp.title
-			if("supplydept")
-				for(var/jobPos in supply_positions)
 					if(!jobPos)	continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
@@ -1065,31 +1019,6 @@
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!")
-
-	else if(href_list["sendbacktolobby"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["sendbacktolobby"])
-
-		if(!isobserver(M))
-			usr << "<span class='notice'>You can only send ghost players back to the Lobby.</span>"
-			return
-
-		if(!M.client)
-			usr << "<span class='warning'>[M] doesn't seem to have an active client.</span>"
-			return
-
-		if(alert(usr, "Send [key_name(M)] back to Lobby?", "Message", "Yes", "No") != "Yes")
-			return
-
-		log_admin("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
-		message_admins("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
-
-		var/mob/new_player/NP = new()
-		NP.ckey = M.ckey
-		qdel(M)
-
 	else if(href_list["tdome1"])
 		if(!check_rights(R_FUN))	return
 
@@ -1379,7 +1308,7 @@
 				if (1) status = "<font color='orange'><b>Unconscious</b></font>"
 				if (2) status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status = [status]"
-			health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()] - Stamina: [L.getStaminaLoss()]"
+			health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()]"
 		else
 			health_description = "This mob type has no health to speak of."
 
@@ -1418,31 +1347,6 @@
 				break
 
 		src.manage_free_slots()
-
-	else if(href_list["unlimitjobslot"])
-		if(!check_rights(R_ADMIN))	return
-
-		var/Unlimit = href_list["unlimitjobslot"]
-
-		for(var/datum/job/job in SSjob.occupations)
-			if(job.title == Unlimit)
-				job.total_positions = -1
-				break
-
-		src.manage_free_slots()
-
-	else if(href_list["limitjobslot"])
-		if(!check_rights(R_ADMIN))	return
-
-		var/Limit = href_list["limitjobslot"]
-
-		for(var/datum/job/job in SSjob.occupations)
-			if(job.title == Limit)
-				job.total_positions = job.current_positions
-				break
-
-		src.manage_free_slots()
-
 
 	else if(href_list["adminspawncookie"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
@@ -1620,7 +1524,7 @@
 			else if(!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 				removed_paths += dirty_path
 				continue
-			else if(ispath(path, /obj/item/weapon/gun/energy/pulse))
+			else if(ispath(path, /obj/item/weapon/gun/energy/pulse_rifle))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
@@ -1903,7 +1807,7 @@
 				message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.")
 
 				for(var/turf/simulated/floor/F in world)
-					if(F.z == ZLEVEL_STATION)
+					if(F.z == 1)
 						F.name = "lava"
 						F.desc = "The floor is LAVA!"
 						F.overlays += "lava"
@@ -1928,7 +1832,7 @@
 						sleep(10)
 
 					for(var/turf/simulated/floor/F in world) // Reset everything.
-						if(F.z == ZLEVEL_STATION)
+						if(F.z == 1)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
 							F.overlays.Cut()
@@ -1960,7 +1864,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
 				for(var/obj/machinery/door/airlock/W in world)
-					if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
+					if(W.z == 1 && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 				priority_announce("Centcom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/AI/commandreport.ogg')

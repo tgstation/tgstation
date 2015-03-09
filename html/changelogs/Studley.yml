@@ -1,0 +1,5 @@
+author: Studley
+delete-after: True
+changes:
+  - bugfix: "Fixed NTSL division."
+  - rscadd: "Added new NTSL math functions, including 'sin,' 'cos,' 'asin,' 'acos,' and 'log.'"

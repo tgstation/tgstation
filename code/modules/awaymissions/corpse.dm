@@ -148,7 +148,7 @@
 	corpsemask = /obj/item/clothing/mask/gas/syndicate
 	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	corpseback = /obj/item/weapon/tank/jetpack/oxygen
-	corpsepocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	corpsepocket1 = /obj/item/weapon/tank/emergency_oxygen
 	corpseid = 1
 	corpseidjob = "Operative"
 	corpseidaccess = "Syndicate"
@@ -198,6 +198,7 @@
 /obj/effect/landmark/corpse/engineer/rig
 	corpsesuit = /obj/item/clothing/suit/space/hardsuit
 	corpsemask = /obj/item/clothing/mask/breath
+	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit
 
 /obj/effect/landmark/corpse/clown
 	name = "Clown"
@@ -235,6 +236,7 @@
 /obj/effect/landmark/corpse/miner/rig
 	corpsesuit = /obj/item/clothing/suit/space/hardsuit/mining
 	corpsemask = /obj/item/clothing/mask/breath
+	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit/mining
 
 
 /////////////////Officers//////////////////////

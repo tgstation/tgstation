@@ -17,7 +17,7 @@
 	var/icon_broken = "lockbox+b"
 
 
-/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (W.GetID())
 		if(src.broken)
 			user << "<span class='danger'>It appears to be broken.</span>"
@@ -93,7 +93,7 @@
 
 /obj/item/weapon/storage/lockbox/clusterbang/New()
 	..()
-	new /obj/item/weapon/grenade/clusterbuster(src)
+	new /obj/item/weapon/grenade/flashbang/clusterbang(src)
 
 /obj/item/weapon/storage/lockbox/medal
 	name = "medal box"

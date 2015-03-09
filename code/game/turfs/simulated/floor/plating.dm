@@ -26,8 +26,8 @@
 	if(!broken && !burnt)
 		icon_state = icon_plating //Because asteroids are 'platings' too.
 
-/turf/simulated/floor/plating/attackby(obj/item/C as obj, mob/user as mob, params)
-	if(..())
+/turf/simulated/floor/plating/attackby(obj/item/C as obj, mob/user as mob)
+	if(!C || !user)
 		return
 	if(istype(C, /obj/item/stack/rods))
 		if(broken || burnt)
@@ -58,6 +58,13 @@
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		else
 			user << "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
+	else if(istype(C, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = C
+		for(var/obj/structure/cable/LC in src)
+			if((LC.d1==0)||(LC.d2==0))
+				LC.attackby(C,user)
+				return
+		coil.place_turf(src, user)
 	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )
@@ -79,7 +86,6 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
-	floor_tile = /obj/item/stack/rods
 
 /turf/simulated/floor/engine/break_tile()
 	return //unbreakable
@@ -87,12 +93,10 @@
 /turf/simulated/floor/engine/burn_tile()
 	return //unburnable
 
-/turf/simulated/floor/engine/make_plating(var/force = 0)
-	if(force)
-		..()
+/turf/simulated/floor/engine/make_plating()
 	return //unplateable
 
-/turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob, params)
+/turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob)
 	if(!C || !user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))

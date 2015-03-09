@@ -23,7 +23,7 @@
 /obj/item/device/assembly/infra/toggle_secure()
 	secured = !secured
 	if(secured)
-		SSobj.processing |= src
+		SSobj.processing.Add(src)
 	else
 		on = 0
 		if(first)	qdel(first)
@@ -88,7 +88,8 @@
 	if((!secured)||(!on)||(cooldown > 0))
 		return 0
 	pulse(0)
-	audible_message("\icon[src] *beep* *beep*", null, 3)
+	if(src.loc)
+		src.loc.audible_message("\icon[src] *beep* *beep*", null, 3)
 	cooldown = 2
 	spawn(10)
 		process_cooldown()

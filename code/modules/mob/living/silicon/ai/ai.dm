@@ -34,6 +34,7 @@ var/list/ai_list = list()
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
+	var/obj/item/device/camera/siliconcam/aicamera = null
 	var/obj/machinery/bot/Bot
 
 	//MALFUNCTION
@@ -145,7 +146,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -168,53 +169,24 @@ var/list/ai_list = list()
 		icon_state = "ai-house"
 	else if(icontype == "Heartline")
 		icon_state = "ai-heartline"
-	else if(icontype == "Hades")
-		icon_state = "ai-hades"
-	else if(icontype == "Helios")
-		icon_state = "ai-helios"
-	else if(icontype == "President")
-		icon_state = "ai-pres"
-	else if(icontype == "Syndicat Meow")
-		icon_state = "ai-syndicatmeow"
-	else if(icontype == "Alien")
-		icon_state = "ai-alien"
-	else if(icontype == "Too Deep")
-		icon_state = "ai-toodeep"
-	else if(icontype == "Triumvirate")
-		icon_state = "ai-triumvirate"
-	else if(icontype == "Triumvirate-M")
-		icon_state = "ai-triumvirate-malf"
-	else if(icontype == "Text")
-		icon_state = "ai-text"
-	else if(icontype == "Matrix")
-		icon_state = "ai-matrix"
-	else if(icontype == "Dorf")
-		icon_state = "ai-dorf"
-	else if(icontype == "Bliss")
-		icon_state = "ai-bliss"
-	else if(icontype == "Not Malf")
-		icon_state = "ai-notmalf"
-	else if(icontype == "Fuzzy")
-		icon_state = "ai-fuzz"
-	else if(icontype == "Goon")
-		icon_state = "ai-goon"
-	else if(icontype == "Database")
-		icon_state = "ai-database"
-	else if(icontype == "Glitchman")
-		icon_state = "ai-glitchman"
-	else if(icontype == "Murica")
-		icon_state = "ai-murica"
-	else if(icontype == "Nanotrasen")
-		icon_state = "ai-nanotrasen"
-	else if(icontype == "Gentoo")
-		icon_state = "ai-gentoo"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
 
 /mob/living/silicon/ai/Stat()
 	..()
-	if(statpanel("Status"))
+	statpanel("Status")
+	if (client.statpanel == "Status")
+		var/ETA
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_CALL)
+				ETA = "ETA"
+			if(SHUTTLE_DOCKED)
+				ETA = "ETD"
+		if(ETA)
+			var/timeleft = SSshuttle.emergency.timeLeft()
+			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
@@ -223,14 +195,6 @@ var/list/ai_list = list()
 
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
-			stat(null, "Station Time: [worldtime2text()]")
-			stat(null, text("Connected cyborgs: [connected_robots.len]"))
-			var/area/borg_area
-			for(var/mob/living/silicon/robot/R in connected_robots)
-				borg_area = get_area(R)
-				//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
-				stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
- Module: [R.designation] | Loc: [borg_area.name] | Status: [R.stat || !R.client ? "OFFLINE" : "Normal"]"))
 		else
 			stat(null, text("Systems nonfunctional"))
 
@@ -317,7 +281,7 @@ var/list/ai_list = list()
 	return 0
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
-	set category = "Malfunction"
+	set category = "AI Commands"
 	if(src.stat == 2)
 		src << "You can't send the shuttle back because you are dead!"
 		return
@@ -784,5 +748,8 @@ var/list/ai_list = list()
 	set_autosay()
 
 /mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
+	return
+
+/mob/living/silicon/ai/grabbedby(mob/living/user)
 	return
 

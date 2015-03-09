@@ -4,10 +4,9 @@ var/datum/subsystem/job/SSjob
 	name = "Jobs"
 	priority = 5
 
-	var/list/occupations = list()		//List of all jobs
-	var/list/unassigned = list()		//Players who need jobs
-	var/list/job_debug = list()			//Debug info
-	var/initial_players_to_assign = 0 	//used for checking against population caps
+	var/list/occupations = list()	//List of all jobs
+	var/list/unassigned = list()	//Players who need jobs
+	var/list/job_debug = list()		//Debug info
 
 /datum/subsystem/job/New()
 	NEW_SS_GLOBAL(SSjob)
@@ -59,11 +58,12 @@ var/datum/subsystem/job/SSjob
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
-		Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
-		player.mind.assigned_role = rank
-		unassigned -= player
-		job.current_positions++
-		return 1
+		if((job.current_positions < position_limit) || position_limit == -1)
+			Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
+			player.mind.assigned_role = rank
+			unassigned -= player
+			job.current_positions++
+			return 1
 	Debug("AR has failed, Player: [player], Rank: [rank]")
 	return 0
 
@@ -140,7 +140,6 @@ var/datum/subsystem/job/SSjob
 		for(var/command_position in command_positions)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)	continue
-			if((job.current_positions >= job.total_positions) && job.total_positions != -1)	continue
 			var/list/candidates = FindOccupationCandidates(job, level)
 			if(!candidates.len)	continue
 			var/mob/new_player/candidate = pick(candidates)
@@ -155,7 +154,6 @@ var/datum/subsystem/job/SSjob
 	for(var/command_position in command_positions)
 		var/datum/job/job = GetJob(command_position)
 		if(!job)	continue
-		if((job.current_positions >= job.total_positions) && job.total_positions != -1)	continue
 		var/list/candidates = FindOccupationCandidates(job, level)
 		if(!candidates.len)	continue
 		var/mob/new_player/candidate = pick(candidates)
@@ -207,20 +205,11 @@ var/datum/subsystem/job/SSjob
 		if(player.ready && player.mind && !player.mind.assigned_role)
 			unassigned += player
 
-	initial_players_to_assign = unassigned.len
-
 	Debug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)	return 0
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
-
-	//Jobs will have fewer access permissions if the number of players exceeds the threshold defined in game_options.txt
-	if(config.minimal_access_threshold)
-		if(config.minimal_access_threshold > unassigned.len)
-			config.jobs_have_minimal_access = 0
-		else
-			config.jobs_have_minimal_access = 1
 
 	//Shuffle players and jobs
 	unassigned = shuffle(unassigned)
@@ -264,8 +253,6 @@ var/datum/subsystem/job/SSjob
 
 		// Loop through all unassigned players
 		for(var/mob/new_player/player in unassigned)
-			if(PopcapReached())
-				RejectPlayer(player)
 
 			// Loop through all jobs
 			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
@@ -298,15 +285,11 @@ var/datum/subsystem/job/SSjob
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
 	for(var/mob/new_player/player in unassigned)
-		if(PopcapReached())
-			RejectPlayer(player)
-		else if(jobban_isbanned(player, "Assistant"))
+		if(jobban_isbanned(player, "Assistant"))
 			GiveRandomJob(player) //you get to roll for random before everyone else just to be sure you don't get assistant. you're so speshul
 
 	for(var/mob/new_player/player in unassigned)
-		if(PopcapReached())
-			RejectPlayer(player)
-		else if(player.client.prefs.userandomjob)
+		if(player.client.prefs.userandomjob)
 			GiveRandomJob(player)
 
 	Debug("DO, Standard Check end")
@@ -315,8 +298,6 @@ var/datum/subsystem/job/SSjob
 
 	// For those who wanted to be assistant if their preferences were filled, here you go.
 	for(var/mob/new_player/player in unassigned)
-		if(PopcapReached())
-			RejectPlayer(player)
 		Debug("AC2 Assistant located, Player: [player]")
 		AssignRole(player, "Assistant")
 	return 1
@@ -330,7 +311,7 @@ var/datum/subsystem/job/SSjob
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in start_landmarks_list)
+		for(var/obj/effect/landmark/start/sloc in landmarks_list)
 			if(sloc.name != rank)	continue
 			if(locate(/mob/living) in sloc.loc)	continue
 			S = sloc
@@ -354,8 +335,6 @@ var/datum/subsystem/job/SSjob
 	H << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
 	if(job.req_admin_notify)
 		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
-	if(config.minimal_access_threshold)
-		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
 
 	H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
 	return 1
@@ -443,16 +422,3 @@ var/datum/subsystem/job/SSjob
 
 		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
 		feedback_add_details("job_preferences",tmp_str)
-
-/datum/subsystem/job/proc/PopcapReached()
-	if(config.hard_popcap || config.extreme_popcap)
-		var/relevent_cap = max(config.hard_popcap, config.extreme_popcap)
-		if((initial_players_to_assign - unassigned.len) >= relevent_cap)
-			return 1
-	return 0
-
-/datum/subsystem/job/proc/RejectPlayer(var/mob/new_player/player)
-	Debug("Popcap overflow Check observer located, Player: [player]")
-	player << "<b>You have failed to qualify for any job you desired.</b>"
-	unassigned -= player
-	player.ready = 0

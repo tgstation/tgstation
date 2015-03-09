@@ -9,7 +9,6 @@
 	var/list/alarms_to_clear = list()
 	var/designation = ""
 	var/radiomod = "" //Radio character used before state laws/arrivals announce to allow department transmissions, default, or none at all.
-	var/obj/item/device/camera/siliconcam/aicamera = null //photography
 
 	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
 
@@ -409,16 +408,3 @@
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
 						"<span class='userdanger'>[M] punches [src], but doesn't leave a dent.!</span>")
 	return 0
-
-/mob/living/silicon/adjustEarDamage()
-	return
-
-/mob/living/silicon/setEarDamage()
-	return
-
-/mob/living/silicon/proc/GetPhoto()
-	if (aicamera)
-		return aicamera.selectpicture(aicamera)
-
-/mob/living/silicon/grabbedby(mob/living/user)
-	return

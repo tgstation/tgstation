@@ -29,7 +29,7 @@
 			output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Ready</a> | <b>Not Ready</b> \]</p>"
 
 	else
-		output += "<p><a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A></p>"
+		output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
@@ -56,7 +56,7 @@
 	output += "</center>"
 
 	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
-	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 220, 265)
+	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 220, 250)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
 	popup.open(0)
@@ -88,7 +88,7 @@
 
 	if(href_list["ready"])
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
-			ready = text2num(href_list["ready"])
+			ready = !ready
 		else
 			ready = 0
 
@@ -125,14 +125,6 @@
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
-			return
-		var/relevant_cap
-		if(config.hard_popcap && config.extreme_popcap)
-			relevant_cap = min(config.hard_popcap, config.extreme_popcap)
-		else
-			relevant_cap = max(config.hard_popcap, config.extreme_popcap)
-		if(relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums))
-			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
 			return
 		LateChoices()
 
@@ -250,14 +242,7 @@
 	if(!job)
 		return 0
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
-		if(job.title == "Assistant")
-			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
-				return 1
-			for(var/datum/job/J in SSjob.occupations)
-				if(J && J.current_positions < J.total_positions && J.title != job.title)
-					return 0
-		else
-			return 0
+		return 0
 	if(jobban_isbanned(src,rank))
 		return 0
 	if(!job.player_old_enough(src.client))
@@ -340,11 +325,6 @@
 			if (job.title in command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-	if(!job_count) //if there's nowhere to go, assistant opens up.
-		for(var/datum/job/job in SSjob.occupations)
-			if(job.title != "Assistant") continue
-			dat += "<a class='otherPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-			break
 	dat += "</div></div>"
 
 	// Removing the old window method but leaving it here for reference
@@ -390,7 +370,7 @@
 	dat += "<h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest(OOC = 1)
 
-	src << browse(dat, "window=manifest;size=387x420;can_close=1")
+	src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 /mob/new_player/Move()
 	return 0

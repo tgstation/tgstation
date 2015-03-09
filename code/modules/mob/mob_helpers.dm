@@ -163,14 +163,14 @@ proc/isorgan(A)
 	if(prob(probability))
 		return zone
 
-	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
+	var/t = rand(1, 17) // randomly pick a different zone, or maybe the same one
 	switch(t)
 		if(1)		 return "head"
 		if(2)		 return "chest"
 		if(3 to 6)	 return "l_arm"
 		if(7 to 10)	 return "r_arm"
-		if(11 to 14) return "l_leg"
-		if(15 to 18) return "r_leg"
+		if(10 to 13) return "l_leg"
+		if(14 to 17) return "r_leg"
 
 	return zone
 
@@ -203,29 +203,6 @@ proc/isorgan(A)
 		p++
 	return sanitize(t)
 
-proc/slur(n)
-	var/phrase = html_decode(n)
-	var/leng = lentext(phrase)
-	var/counter=lentext(phrase)
-	var/newphrase=""
-	var/newletter=""
-	while(counter>=1)
-		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")	newletter="u"
-			if(lowertext(newletter)=="s")	newletter="ch"
-			if(lowertext(newletter)=="a")	newletter="ah"
-			if(lowertext(newletter)=="u")	newletter="oo"
-			if(lowertext(newletter)=="c")	newletter="k"
-		if(rand(1,20)==20)
-			if(newletter==" ")	newletter="...huuuhhh..."
-			if(newletter==".")	newletter=" *BURP*."
-		switch(rand(1,20))
-			if(1)	newletter+="'"
-			if(10)	newletter+="[newletter]"
-			if(20)	newletter+="[newletter][newletter]"
-		newphrase+="[newletter]";counter-=1
-	return newphrase
 
 /proc/stutter(n)
 	var/te = html_decode(n)

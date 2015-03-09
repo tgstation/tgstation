@@ -20,7 +20,7 @@
 	while(!notesfile.eof)
 		var/note
 		notesfile >> note
-		dat += note + "<br>"
+		dat += note
 	var/datum/browser/popup = new(usr, "player_notes", "Player Notes", 700, 400)
 	popup.set_content(dat)
 	popup.open()

@@ -117,7 +117,7 @@
 /obj/item/weapon/melee/energy/sword/saber/red
 	item_color = "red"
 
-/obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
+/obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user)
 	..()
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
 		if(W == src)

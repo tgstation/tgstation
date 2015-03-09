@@ -11,7 +11,7 @@ var/list/sacrificed = list()
 	for(var/obj/effect/rune/R in world)
 		if(R == src)
 			continue
-		if(R.word1 == wordtravel && R.word2 == wordself && R.word3 == key && R.z != ZLEVEL_CENTCOM)
+		if(R.word1 == wordtravel && R.word2 == wordself && R.word3 == key && R.z != 2)
 			index++
 			allrunesloc.len = index
 			allrunesloc[index] = R.loc
@@ -159,25 +159,17 @@ var/list/sacrificed = list()
 			cultist_count += M
 	if(cultist_count.len >= 9)
 		if(ticker.mode.name == "cult")
-			var/datum/game_mode/cult/cultmode = ticker.mode
-			if(!("eldergod" in cultmode.cult_objectives))
+			if("eldergod" in ticker.mode.cult_objectives)
+				ticker.mode:eldergod = 0
+			else
 				message_admins("[usr.real_name]([usr.ckey]) tried to summon a god when she didn't want to come out to play.")	// Admin alert because you *KNOW* dickbutts are going to abuse this.
 				for(var/mob/M in cultist_count)
 					M.reagents.add_reagent("hell_water", 10)
 					M << "<span class='h2.userdanger'>YOUR SOUL BURNS WITH YOUR ARROGANCE!!!</span>"
 				return
-			else
-				for(var/obj_count=1, obj_count <= cultmode.cult_objectives.len, obj_count++)
-					if(cultmode.cult_objectives[obj_count] == "sacrifice")
-						if(cultmode.sacrifice_target)
-							if(!(cultmode.sacrifice_target in sacrificed))
-								for(var/mob/M in cultist_count)
-									M << "<span class='h2.userdanger'>Nar-sie refuses to be summoned while the sacrifice isn't complete.</span>"
-								return
-				cultmode.eldergod = 0
 		var/narsie_type = /obj/singularity/narsie/large
 		// Moves narsie if she was already summoned.
-		var/obj/her = locate(narsie_type, SSobj.processing)
+		var/obj/her = locate(narsie_type, SSmachine.processing)
 		if(her)
 			her.loc = get_turf(src)
 			return
@@ -823,8 +815,7 @@ var/list/sacrificed = list()
 		))
 			user << "<span class='danger'>The [cultist] is already free.</span>"
 			return
-		if(cultist.buckled)
-			cultist.buckled.unbuckle_mob()
+		cultist.buckled = null
 		if (cultist.handcuffed)
 			cultist.handcuffed.loc = cultist.loc
 			cultist.handcuffed = null
@@ -892,7 +883,7 @@ var/list/sacrificed = list()
 			var/obj/item/weapon/nullrod/N = locate() in C
 			if(N)
 				continue
-			C.adjustEarDamage(0, 50)
+			C.ear_deaf += 50
 			C.show_message("<span class='danger'>The world around you suddenly becomes quiet.</span>", 3)
 			affected++
 			if(prob(1) && ishuman(C))
@@ -911,7 +902,7 @@ var/list/sacrificed = list()
 			var/obj/item/weapon/nullrod/N = locate() in C
 			if(N)
 				continue
-			C.adjustEarDamage(0, 30)
+			C.ear_deaf += 30
 			//talismans is weaker.
 			C.show_message("<span class='danger'>The world around you suddenly becomes quiet.</span>", 3)
 			affected++

@@ -184,7 +184,6 @@
 			OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
 			CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
 			BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
-			STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
 			</font>
 
 
@@ -467,7 +466,7 @@ body
 				usr << "This can only be used on instances of type /mob"
 				return
 
-			var/new_name = stripped_input(usr,"What would you like to name this mob?","Input a name",M.real_name,MAX_NAME_LEN)
+			var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null),1,MAX_NAME_LEN)
 			if( !new_name || !M )	return
 
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")
@@ -814,7 +813,6 @@ body
 				if("oxygen")L.adjustOxyLoss(amount)
 				if("brain")	L.adjustBrainLoss(amount)
 				if("clone")	L.adjustCloneLoss(amount)
-				if("stamina") L.adjustStaminaLoss(amount)
 				else
 					usr << "You caused an error. DEBUG: Text:[Text] Mob:[L]"
 					return

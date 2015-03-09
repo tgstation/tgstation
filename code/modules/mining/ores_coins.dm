@@ -7,7 +7,7 @@
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 
-/obj/item/weapon/ore/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/ore/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(15))
@@ -59,7 +59,7 @@
 	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
-/obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding)
@@ -114,7 +114,7 @@
 	var/det_time = 100
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
 
-/obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator))
 		GibtoniteReaction(user)
 		return
@@ -132,7 +132,7 @@
 	..()
 
 /obj/item/weapon/twohanded/required/gibtonite/ex_act()
-	GibtoniteReaction(null, 1)
+	GibtoniteReaction(triggered_by_explosive = 1)
 
 /obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by_explosive = 0)
 	if(!primed)
@@ -148,12 +148,12 @@
 			if(triggered_by_explosive)
 				message_admins("An explosion has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			else
-				message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 		if(triggered_by_explosive)
 			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		else
 			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>")
-			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		spawn(det_time)
 		if(primed)
 			if(quality == 3)
@@ -248,7 +248,7 @@
 	value = 20
 
 
-/obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)

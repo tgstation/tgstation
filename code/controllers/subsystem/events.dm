@@ -70,9 +70,6 @@ var/datum/subsystem/events/SSevent
 			if(E.runEvent() == PROCESS_KILL)
 				E.max_occurrences = 0
 				continue
-			if (E.alertadmins)
-				message_admins("Random Event triggering: [E.name] ([E.typepath])")
-			log_game("Random Event triggering: [E.name] ([E.typepath])")
 			return
 		sum_of_weights += E.weight
 
@@ -89,9 +86,6 @@ var/datum/subsystem/events/SSevent
 			if(E.runEvent() == PROCESS_KILL)//we couldn't run this event for some reason, set its max_occurrences to 0
 				E.max_occurrences = 0
 				continue
-			if (E.alertadmins)
-				message_admins("Random Event triggering: [E.name] ([E.typepath])")
-			log_game("Random Event triggering: [E.name] ([E.typepath])")
 			return
 
 

@@ -54,7 +54,7 @@
 
 			var/loc_display = "Unknown"
 			var/mob/living/carbon/M = T.imp_in
-			if(Tr.z == ZLEVEL_STATION && !istype(M.loc, /turf/space))
+			if(Tr.z == 1 && !istype(M.loc, /turf/space))
 				var/turf/mob_loc = get_turf(M)
 				loc_display = mob_loc.loc
 
@@ -71,7 +71,7 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/prisoner/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/computer/prisoner/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/card/id))
 		return attack_hand(user)
 	..()

@@ -1,5 +1,3 @@
-#define TABLECRAFT_MAX_ITEMS 30
-
 /obj/structure/table
 	var/list/table_contents = list()
 
@@ -30,10 +28,9 @@
 			table_contents[I.type] += S.amount
 		else
 			if(istype(I, /obj/item/weapon/reagent_containers))
-				var/obj/item/weapon/reagent_containers/RC = I
-				if(RC.flags & OPENCONTAINER)
-					for(var/datum/reagent/A in RC.reagents.reagent_list)
-						table_contents[A.type] += A.volume
+				for(var/datum/reagent/R in I.reagents.reagent_list)
+					table_contents[R.type] += R.volume
+
 			table_contents[I.type] += 1
 
 /obj/structure/table/proc/check_tools(mob/user, datum/table_recipe/R)
@@ -64,8 +61,8 @@
 		if(do_after(user, R.time))
 			if(!check_contents(R) || !check_tools(user, R))
 				return 0
+			var/list/parts = del_reqs(R)
 			var/atom/movable/I = new R.result (loc)
-			var/list/parts = del_reqs(R, I)
 			for(var/A in parts)
 				if(istype(A, /obj/item))
 					var/atom/movable/B = A
@@ -78,12 +75,9 @@
 			return 1
 	return 0
 
-/obj/structure/table/proc/del_reqs(datum/table_recipe/R, atom/movable/resultobject)
+/obj/structure/table/proc/del_reqs(datum/table_recipe/R)
 	var/list/Deletion = list()
 	var/amt
-	var/reagenttransfer = 0
-	if(istype(resultobject,/obj/item/weapon/reagent_containers))
-		reagenttransfer = 1
 	for(var/A in R.reqs)
 		amt = R.reqs[A]
 		if(ispath(A, /obj/item/stack))
@@ -109,9 +103,6 @@
 							Deletion.Add(I)
 							I.loc = null //remove it from the table loc so that we don't locate the same item every time (will be relocated inside the crafted item in construct_item())
 							amt--
-							if(reagenttransfer && istype(I,/obj/item/weapon/reagent_containers))
-								var/obj/item/weapon/reagent_containers/RC = I
-								RC.reagents.trans_to(resultobject, RC.reagents.total_volume)
 						break item_loop
 		else
 			var/datum/reagent/RG = new A
@@ -120,10 +111,7 @@
 					if(ispath(B, /obj/item/weapon/reagent_containers))
 						var/obj/item/RC = locate(B) in loc
 						if(RC.reagents.has_reagent(RG.id, amt))
-							if(reagenttransfer)
-								RC.reagents.trans_id_to(resultobject,RG.id, amt)
-							else
-								RC.reagents.remove_reagent(RG.id, amt)
+							RC.reagents.remove_reagent(RG.id, amt)
 							RG.volume = amt
 							Deletion.Add(RG)
 							break reagent_loop
@@ -131,23 +119,13 @@
 							Deletion.Add(RG)
 							RG.volume += RC.reagents.get_reagent_amount(RG.id)
 							amt -= RC.reagents.get_reagent_amount(RG.id)
-							if(reagenttransfer)
-								RC.reagents.trans_id_to(resultobject,RG.id, RG.volume)
-							else
-								RC.reagents.del_reagent(RG.id)
+							RC.reagents.del_reagent(RG.id)
 
-	var/list/partlist = list(R.parts.len)
-	for(var/M in R.parts)
-		partlist[M] = R.parts[M]
-	deletion_loop:
+	for(var/A in R.parts)
 		for(var/B in Deletion)
-			for(var/A in R.parts)
-				if(istype(B, A))
-					if(partlist[A] > 0) //do we still need a part like that?
-						partlist[A] -= 1
-						continue deletion_loop
-			Deletion.Remove(B)
-			qdel(B)
+			if(!istype(B, A))
+				Deletion.Remove(B)
+				qdel(B)
 
 	return Deletion
 
@@ -158,10 +136,10 @@
 	if(!table_contents.len)
 		return
 	user.face_atom(src)
-	var/dat = "<h3>Crafting menu</h3>"
+	var/dat = "<h3>Construction menu</h3>"
 	dat += "<div class='statusDisplay'>"
 	if(busy)
-		dat += "Crafting in progress...</div>"
+		dat += "Construction in progress...</div>"
 	else
 		for(var/datum/table_recipe/R in table_recipes)
 			if(check_contents(R))
@@ -177,9 +155,6 @@
 	if(usr.stat || !Adjacent(usr) || usr.lying)
 		return
 	if(href_list["make"])
-		if(!check_table_space())
-			usr << "<span class ='warning'>The table is too crowded.</span>"
-			return
 		var/datum/table_recipe/TR = locate(href_list["make"])
 		busy = 1
 		interact(usr)
@@ -189,12 +164,3 @@
 			usr << "<span class ='warning'>Construction failed.</span>"
 		busy = 0
 		interact(usr)
-
-/obj/structure/table/proc/check_table_space()
-	var/Item_amount = 0
-	for(var/obj/item/I in loc)
-		Item_amount++
-	if(Item_amount <= TABLECRAFT_MAX_ITEMS) //is the table crowded?
-		return 1
-
- #undef TABLECRAFT_MAX_ITEMS

@@ -166,11 +166,6 @@ datum/reagent/consumable/coffee
 	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
-	overdose_threshold = 80
-
-datum/reagent/consumable/coffee/overdose_process(var/mob/living/M as mob)
-	M.Jitter(5)
-	..()
 
 datum/reagent/consumable/coffee/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = max(0,M.dizziness-5)
@@ -178,9 +173,11 @@ datum/reagent/consumable/coffee/on_mob_life(var/mob/living/M as mob)
 	M.sleeping = max(0,M.sleeping - 2)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.Jitter(5)
 	if(holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 5)
 	..()
+	return
 
 datum/reagent/consumable/tea
 	name = "Tea"
@@ -402,6 +399,22 @@ datum/reagent/consumable/doctor_delight
 	description = "A gulp a day keeps the MediBot away. That's probably for the best."
 	color = "#FF8CFF" // rgb: 255, 140, 255
 
+datum/reagent/consumable/doctor_delight/on_mob_life(var/mob/living/M as mob)
+	if(M.getOxyLoss() && prob(80))
+		M.adjustOxyLoss(-2)
+	if(M.getBruteLoss() && prob(80))
+		M.heal_organ_damage(2,0)
+	if(M.getFireLoss() && prob(80))
+		M.heal_organ_damage(0,2)
+	if(M.getToxLoss() && prob(80))
+		M.adjustToxLoss(-2)
+	if(M.dizziness !=0)
+		M.dizziness = max(0,M.dizziness-15)
+	if(M.confused !=0)
+		M.confused = max(0,M.confused - 5)
+	holder.remove_reagent(id, metabolization_rate/M.metabolism_efficiency)
+	return
+
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
@@ -415,9 +428,9 @@ datum/reagent/consumable/atomicbomb/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 50)
 	M.confused = max(M.confused+2,0)
 	M.Dizzy(10)
-	if (!M.slurring)
-		M.slurring = 1
-	M.slurring += 3
+	if (!M.stuttering)
+		M.stuttering = 1
+	M.stuttering += 3
 	if(!data)
 		data = 1
 	data++
@@ -442,9 +455,9 @@ datum/reagent/consumable/gargle_blaster/on_mob_life(var/mob/living/M as mob)
 	data++
 	M.dizziness +=6
 	if(data >= 15 && data <45)
-		if (!M.slurring)
-			M.slurring = 1
-		M.slurring += 3
+		if (!M.stuttering)
+			M.stuttering = 1
+		M.stuttering += 3
 	else if(data >= 45 && prob(50) && data <55)
 		M.confused = max(M.confused+3,0)
 	else if(data >=55)
@@ -467,9 +480,9 @@ datum/reagent/consumable/neurotoxin/on_mob_life(var/mob/living/carbon/M as mob)
 	data++
 	M.dizziness +=6
 	if(data >= 15 && data <45)
-		if (!M.slurring)
-			M.slurring = 1
-		M.slurring += 3
+		if (!M.stuttering)
+			M.stuttering = 1
+		M.stuttering += 3
 	else if(data >= 45 && prob(50) && data <55)
 		M.confused = max(M.confused+3,0)
 	else if(data >=55)
@@ -494,23 +507,23 @@ datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 	data++
 	switch(data)
 		if(1 to 5)
-			if (!M.slurring) M.slurring = 1
+			if (!M.stuttering) M.stuttering = 1
 			M.Dizzy(10)
 			if(prob(10)) M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if (!M.slurring) M.slurring = 1
+			if (!M.stuttering) M.stuttering = 1
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.druggy = max(M.druggy, 45)
 			if(prob(20)) M.emote(pick("twitch","giggle"))
 		if (10 to 200)
-			if (!M.slurring) M.slurring = 1
+			if (!M.stuttering) M.stuttering = 1
 			M.Jitter(40)
 			M.Dizzy(40)
 			M.druggy = max(M.druggy, 60)
 			if(prob(30)) M.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
-			if (!M.slurring) M.slurring = 1
+			if (!M.stuttering) M.stuttering = 1
 			M.Jitter(60)
 			M.Dizzy(60)
 			M.druggy = max(M.druggy, 75)

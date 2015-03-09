@@ -323,13 +323,7 @@
 	..()
 
 /obj/structure/piano/attack_hand(mob/user as mob)
-	if(!user.IsAdvancedToolUser())
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
-		return 1
 	interact(user)
-
-/obj/structure/piano/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
 
 /obj/structure/piano/interact(mob/user as mob)
 	if(!user || !anchored)
@@ -338,7 +332,7 @@
 	user.set_machine(src)
 	song.interact(user)
 
-/obj/structure/piano/attackby(obj/item/O as obj, mob/user as mob, params)
+/obj/structure/piano/attackby(obj/item/O as obj, mob/user as mob)
 	if (istype(O, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)

@@ -19,7 +19,7 @@
 	max_w_class = 3
 	max_combined_w_class = 21
 
-/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)
 	..()
 
@@ -124,37 +124,6 @@
 	icon_state = "engiepack"
 	item_state = "engiepack"
 
-/obj/item/weapon/storage/backpack/botany
-	name = "botany backpack"
-	desc = "It's a backpack made of all-natural fibers."
-	icon_state = "botpack"
-	item_state = "botpack"
-
-/obj/item/weapon/storage/backpack/chemistry
-	name = "chemistry backpack"
-	desc = "A backpack specially designed to repel stains and hazardous liquids."
-	icon_state = "chempack"
-	item_state = "chempack"
-
-/obj/item/weapon/storage/backpack/genetics
-	name = "genetics backpack"
-	desc = "A bag designed to be super tough, just in case someone hulks out on you."
-	icon_state = "genepack"
-	item_state = "genepack"
-
-/obj/item/weapon/storage/backpack/science
-	name = "science backpack"
-	desc = "A specially designed backpack. It's fire resistant and smells vaguely of plasma."
-	icon_state = "toxpack"
-	item_state = "toxpack"
-
-/obj/item/weapon/storage/backpack/virology
-	name = "virology backpack"
-	desc = "A backpack made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey."
-	icon_state = "viropack"
-	item_state = "viropack"
-
-
 /*
  * Satchel Types
  */
@@ -189,37 +158,32 @@
 	name = "virologist satchel"
 	desc = "A sterile satchel with virologist colours."
 	icon_state = "satchel-vir"
-	item_state = "satchel-vir"
 
 /obj/item/weapon/storage/backpack/satchel_chem
 	name = "chemist satchel"
 	desc = "A sterile satchel with chemist colours."
 	icon_state = "satchel-chem"
-	item_state = "satchel-chem"
 
 /obj/item/weapon/storage/backpack/satchel_gen
 	name = "geneticist satchel"
 	desc = "A sterile satchel with geneticist colours."
 	icon_state = "satchel-gen"
-	item_state = "satchel-gen"
 
 /obj/item/weapon/storage/backpack/satchel_tox
 	name = "scientist satchel"
 	desc = "Useful for holding research materials."
 	icon_state = "satchel-tox"
-	item_state = "satchel-tox"
-
-/obj/item/weapon/storage/backpack/satchel_hyd
-	name = "botanist satchel"
-	desc = "A satchel made of all natural fibers."
-	icon_state = "satchel-hyd"
-	item_state = "satchel-hyd"
 
 /obj/item/weapon/storage/backpack/satchel_sec
 	name = "security satchel"
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
+
+/obj/item/weapon/storage/backpack/satchel_hyd
+	name = "hydroponics satchel"
+	desc = "A green satchel for plant related work."
+	icon_state = "satchel_hyd"
 
 /obj/item/weapon/storage/backpack/satchel_cap
 	name = "captain's satchel"
@@ -251,56 +215,3 @@
 	..()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
-
-/obj/item/weapon/storage/backpack/dufflebag
-	name = "dufflebag"
-	desc = "A large dufflebag for holding extra things"
-	icon_state = "duffle"
-	item_state = "duffle"
-	storage_slots = 9
-	slowdown = 1
-	max_combined_w_class = 27
-
-/obj/item/weapon/storage/backpack/dufflebag/syndiemed
-	name = "medical dufflebag"
-	desc = "A large dufflebag for holding extra tactical medical supplies."
-	icon_state = "duffle-syndiemed"
-	item_state = "duffle-syndiemed"
-	slowdown = 0
-
-/obj/item/weapon/storage/backpack/dufflebag/syndieammo
-	name = "ammunition dufflebag"
-	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
-	icon_state = "duffle-syndieammo"
-	item_state = "duffle-syndieammo"
-	slowdown = 0
-
-/obj/item/weapon/storage/backpack/dufflebag/captain
-	name = "captain's dufflebag"
-	desc = "A large dufflebag for holding extra captainly goods."
-	icon_state = "duffle-captain"
-	item_state = "duffle-captain"
-
-/obj/item/weapon/storage/backpack/dufflebag/med
-	name = "medical dufflebag"
-	desc = "A large dufflebag for holding extra medical supplies."
-	icon_state = "duffle-med"
-	item_state = "duffle-med"
-
-/obj/item/weapon/storage/backpack/dufflebag/sec
-	name = "security dufflebag"
-	desc = "A large dufflebag for holding extra security supplies and ammunition."
-	icon_state = "duffle-sec"
-	item_state = "duffle-sec"
-
-/obj/item/weapon/storage/backpack/dufflebag/engineering
-	name = "engineering dufflebag"
-	desc = "A large dufflebag for holding extra tools and supplies."
-	icon_state = "duffle-eng"
-	item_state = "duffle-eng"
-
-/obj/item/weapon/storage/backpack/dufflebag/clown
-	name = "clown's dufflebag"
-	desc = "A large dufflebag for holding lots of funny gags!"
-	icon_state = "duffle-clown"
-	item_state = "duffle-clown"

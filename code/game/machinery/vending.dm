@@ -570,7 +570,6 @@
  */
 
 /*
-
 /obj/machinery/vending/[vendors name here]   // --vending machine template   :)
 	name = ""
 	desc = ""
@@ -580,7 +579,6 @@
 	products = list()
 	contraband = list()
 	premium = list()
-
 */
 
 /*
@@ -616,8 +614,6 @@
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access_txt = "25"
 	refill_canister = /obj/item/weapon/vending_refill/boozeomat
-
-
 /obj/machinery/vending/boozeomat/New()
 	..()
 	component_parts = list()
@@ -627,14 +623,11 @@
 	component_parts += new /obj/item/weapon/vending_refill/boozeomat(0)
 	component_parts += new /obj/item/weapon/vending_refill/boozeomat(0)
 	component_parts += new /obj/item/weapon/vending_refill/boozeomat(0)
-
-
 /obj/machinery/vending/assist
 	products = list(	/obj/item/device/assembly/prox_sensor = 5,/obj/item/device/assembly/igniter = 3,/obj/item/device/assembly/signaler = 4,
 						/obj/item/weapon/wirecutters = 1, /obj/item/weapon/cartridge/signal = 4)
 	contraband = list(/obj/item/device/flashlight = 5,/obj/item/device/assembly/timer = 2, /obj/item/device/assembly/voice = 2)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
-
 /obj/machinery/vending/coffee
 	name = "\improper Solar's Best Hot Drinks"
 	desc = "A vending machine which dispenses hot drinks."
@@ -645,8 +638,6 @@
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
 	refill_canister = /obj/item/weapon/vending_refill/coffee
-
-
 /obj/machinery/vending/coffee/New()
 	..()
 	component_parts = list()
@@ -656,7 +647,6 @@
 	component_parts += new /obj/item/weapon/vending_refill/coffee(0)
 	component_parts += new /obj/item/weapon/vending_refill/coffee(0)
 	component_parts += new /obj/item/weapon/vending_refill/coffee(0)
-
 /obj/machinery/vending/snack
 	name = "\improper Getmore Chocolate Corp"
 	desc = "A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars"
@@ -669,7 +659,6 @@
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/weapon/vending_refill/snack
 	var/chef_compartment_access = "28"
-
 /obj/machinery/vending/snack/New()
 	..()
 	component_parts = list()
@@ -679,7 +668,6 @@
 	component_parts += new /obj/item/weapon/vending_refill/snack(0)
 	component_parts += new /obj/item/weapon/vending_refill/snack(0)
 	component_parts += new /obj/item/weapon/vending_refill/snack(0)
-
 /obj/machinery/vending/sustenance
 	name = "\improper Sustenance Vendor"
 	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement."
@@ -690,8 +678,6 @@
 					/obj/item/weapon/reagent_containers/food/drinks/ice = 12,
 					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6)
 	contraband = list(/obj/item/weapon/kitchen/utensil/knife = 6)
-
-
 /obj/machinery/vending/cola
 	name = "\improper Robust Softdrinks"
 	desc = "A softdrink vendor provided by Robust Industries, LLC."
@@ -704,8 +690,6 @@
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 5)
 	refill_canister = /obj/item/weapon/vending_refill/cola
-
-
 /obj/machinery/vending/cola/New()
 	..()
 	component_parts = list()
@@ -715,7 +699,6 @@
 	component_parts += new /obj/item/weapon/vending_refill/cola(0)
 	component_parts += new /obj/item/weapon/vending_refill/cola(0)
 	component_parts += new /obj/item/weapon/vending_refill/cola(0)
-
 //This one's from bay12
 /obj/machinery/vending/cart
 	name = "\improper PTech"
@@ -741,7 +724,7 @@
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_carp = 3,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori = 1,
 					/obj/item/weapon/storage/box/matches = 10,
-					/obj/item/weapon/lighter/grayscale = 4,
+					/obj/item/weapon/lighter/random = 4,
 					/obj/item/weapon/storage/fancy/rollingpapers = 5)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2, /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold = 1)
@@ -923,9 +906,24 @@
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson/engine = 2,/obj/item/device/multitool = 4,/obj/item/weapon/airlock_electronics = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/airalarm_electronics = 10,/obj/item/weapon/stock_parts/cell/high = 10)
+	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/airlock_electronics = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/airalarm_electronics = 10,/obj/item/weapon/stock_parts/cell/high = 10)
 	contraband = list(/obj/item/weapon/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
+
+/obj/machinery/vending/liberationstation
+	name = "\improper Liberation Station"
+	desc = "An overwhelming amount of <b>ancient patriotism</b> washes over you just by looking at the machine."
+	icon_state = "liberationstation"
+	req_access_txt = "1"
+	product_slogans = "Liberation Station: Your one-stop shop for all things second ammendment!;Be a patriot today, pick up a gun!;Quality weapons for cheap prices!;Better dead than red!"
+	product_ads = "Float like an astronaut, sting like a bullet!;Express your second ammendment today!;Guns don't kill people, but you can!;Who needs responsibilities when you have guns?"
+	vend_reply = "Remember the name: Liberation Station!"
+	products = list(/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold = 2,/obj/item/weapon/gun/projectile/automatic/pistol/deagle/camo = 2,
+					/obj/item/weapon/gun/projectile/automatic/pistol/m1911 = 2,/obj/item/weapon/gun/projectile/automatic/proto = 2,
+					/obj/item/weapon/gun/projectile/shotgun/combat = 2,/obj/item/weapon/gun/projectile/automatic/gyropistol = 1,
+					/obj/item/weapon/gun/projectile/shotgun = 2)
+	premium = list(/obj/item/ammo_box/magazine/smgm9mm = 2,/obj/item/ammo_box/magazine/m50 = 4,/obj/item/ammo_box/magazine/m45 = 2,/obj/item/ammo_box/magazine/m75 = 2)
+	contraband = list(/obj/item/clothing/under/patriotsuit = 1,/obj/item/weapon/bedsheet/patriot = 3)
 
 //This one's from bay12
 /obj/machinery/vending/engineering
@@ -935,7 +933,7 @@
 	icon_deny = "engi-deny"
 	req_access_txt = "11"
 	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/sneakers/orange = 4,/obj/item/clothing/head/hardhat = 4,
-					/obj/item/weapon/storage/belt/utility = 4,/obj/item/clothing/glasses/meson/engine = 4,/obj/item/clothing/gloves/color/yellow = 4, /obj/item/weapon/screwdriver = 12,
+					/obj/item/weapon/storage/belt/utility = 4,/obj/item/clothing/glasses/meson = 4,/obj/item/clothing/gloves/color/yellow = 4, /obj/item/weapon/screwdriver = 12,
 					/obj/item/weapon/crowbar = 12,/obj/item/weapon/wirecutters = 12,/obj/item/device/multitool = 12,/obj/item/weapon/wrench = 12,/obj/item/device/t_scanner = 12,
 					/obj/item/weapon/stock_parts/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,
 					/obj/item/weapon/light/tube = 10,/obj/item/clothing/suit/fire = 4, /obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,

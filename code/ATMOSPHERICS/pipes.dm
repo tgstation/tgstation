@@ -8,11 +8,6 @@
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
 
-	//Buckling
-	can_buckle = 1
-	buckle_requires_restraints = 1
-	buckle_lying = -1
-
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return null
 
@@ -35,10 +30,9 @@
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)
 
-/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
-		return
 
 	if(istype(W,/obj/item/device/pipe_painter) || istype(W,/obj/item/weapon/pipe_dispenser))
 		return

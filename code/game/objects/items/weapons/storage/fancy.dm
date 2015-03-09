@@ -49,7 +49,7 @@
 /obj/item/weapon/storage/fancy/donut_box/New()
 	..()
 	for(var/i=1; i <= storage_slots; i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/donut(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(src)
 	return
 
 /*
@@ -124,7 +124,7 @@
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
-/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/toy/crayon))
 		switch(W:colourName)
 			if("mime")

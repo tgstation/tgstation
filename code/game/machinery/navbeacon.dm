@@ -104,7 +104,7 @@
 	frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
 
 
-/obj/machinery/navbeacon/attackby(var/obj/item/I, var/mob/user, params)
+/obj/machinery/navbeacon/attackby(var/obj/item/I, var/mob/user)
 	var/turf/T = loc
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed
@@ -204,12 +204,12 @@ Transponder Codes:<UL>"}
 		else if(href_list["edit"])
 			var/codekey = href_list["code"]
 
-			var/newkey = stripped_input(usr, "Enter Transponder Code Key", "Navigation Beacon", codekey)
+			var/newkey = input("Enter Transponder Code Key", "Navigation Beacon", codekey) as text|null
 			if(!newkey)
 				return
 
 			var/codeval = codes[codekey]
-			var/newval = stripped_input(usr, "Enter Transponder Code Value", "Navigation Beacon", codeval)
+			var/newval = input("Enter Transponder Code Value", "Navigation Beacon", codeval) as text|null
 			if(!newval)
 				newval = codekey
 				return
@@ -226,11 +226,11 @@ Transponder Codes:<UL>"}
 
 		else if(href_list["add"])
 
-			var/newkey = stripped_input(usr, "Enter New Transponder Code Key", "Navigation Beacon")
+			var/newkey = input("Enter New Transponder Code Key", "Navigation Beacon") as text|null
 			if(!newkey)
 				return
 
-			var/newval = stripped_input(usr, "Enter New Transponder Code Value", "Navigation Beacon")
+			var/newval = input("Enter New Transponder Code Value", "Navigation Beacon") as text|null
 			if(!newval)
 				newval = "1"
 				return

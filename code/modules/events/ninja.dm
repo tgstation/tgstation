@@ -375,7 +375,7 @@ ________________________________________________________________________________
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_belt)
 	equip_to_slot_or_del(new /obj/item/weapon/c4(src), slot_r_store)
 	equip_to_slot_or_del(new /obj/item/weapon/c4(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen(src), slot_s_store)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(src), slot_back)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
@@ -1555,7 +1555,7 @@ ________________________________________________________________________________
 			P.tnote += "<i><b>&larr; From [!s_control?(A):"an unknown source"]:</b></i><br>[t]<br>"
 			if (!P.silent)
 				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				P.audible_message("\icon[P] *[P.ttone]*", null, 3)
+				P.loc.audible_message("\icon[P] *[P.ttone]*", null, 3)
 			P.overlays.Cut()
 			P.overlays += image('icons/obj/pda.dmi', "pda-r")
 
@@ -1815,7 +1815,7 @@ ________________________________________________________________________________
 
 //=======//GENERAL SUIT PROCS//=======//
 
-/obj/item/clothing/suit/space/space_ninja/attackby(obj/item/I, mob/U, params)
+/obj/item/clothing/suit/space/space_ninja/attackby(obj/item/I, mob/U)
 	if(U==affecting)//Safety, in case you try doing this without wearing the suit/being the person with the suit.
 		if(istype(I, /obj/item/device/aicard))//If it's an AI card.
 			if(s_control)
@@ -2421,7 +2421,7 @@ It is possible to destroy the net by the occupant or someone else.
 	healthcheck()
 	return
 
-/obj/effect/energy_net/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/effect/energy_net/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	healthcheck()

@@ -22,14 +22,12 @@
 /mob/living/silicon/ai/say_quote(var/text)
 	var/ending = copytext(text, length(text))
 
-	if(ending == "?")
-		return "queries, \"<span class = 'robot'>[text]</span>\"";
-	else if(copytext(text, length(text) - 1) == "!!")
-		return "alarms, \"<span class = 'robot'><span class = 'yell'>[text]</span></span>\"";
-	else if(ending == "!")
+	if (ending == "?")
+		return "queries, \"[text]\"";
+	else if (ending == "!")
 		return "declares, \"[text]\"";
 
-	return "states, \"<span class = 'robot'>[text]</span>\"";
+	return "states, \"[text]\"";
 
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai
@@ -172,7 +170,7 @@ var/const/VOX_DELAY = 600
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in player_list)
-				if(M.client && !M.ear_deaf)
+				if(M.client)
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
 						M << voice

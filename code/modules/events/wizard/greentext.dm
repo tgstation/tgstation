@@ -39,7 +39,7 @@
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
 	user.color = "#00FF00"
-	SSobj.processing |= src
+	SSobj.processing.Add(src)
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
@@ -52,7 +52,7 @@
 	..()
 
 /obj/item/weapon/greentext/process()
-	if(new_holder && new_holder.z == ZLEVEL_CENTCOM)//you're winner!
+	if(new_holder && new_holder.z == 2)//you're winner!
 		new_holder << "<font color='green'>At last it feels like victory is assured!</font>"
 		if(!(new_holder in ticker.mode.traitors))
 			ticker.mode.traitors += new_holder.mind

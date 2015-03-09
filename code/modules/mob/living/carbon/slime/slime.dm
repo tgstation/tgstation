@@ -6,7 +6,6 @@
 	say_message = "hums"
 	ventcrawler = 2
 	var/is_adult = 0
-	var/docile = 0
 	languages = SLIME | HUMAN
 	faction = list("slime")
 
@@ -88,7 +87,7 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
 	if(reagents)
-		if(reagents.has_reagent("morphine")) // morphine slows slimes down
+		if(reagents.has_reagent("hyperzine")) // Hyperzine slows slimes down
 			tally *= 2
 
 		if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
@@ -131,13 +130,14 @@
 /mob/living/carbon/slime/Stat()
 	..()
 
-	if(statpanel("Status"))
-		if(is_adult)
-			stat(null, "Health: [round((health / 200) * 100)]%")
-		else
-			stat(null, "Health: [round((health / 150) * 100)]%")
-		if(!docile)
-			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
+	statpanel("Status")
+	if(is_adult)
+		stat(null, "Health: [round((health / 200) * 100)]%")
+	else
+		stat(null, "Health: [round((health / 150) * 100)]%")
+
+	if (client.statpanel == "Status")
+		stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
 		if(amount_grown >= 10)
 			if(is_adult)
 				stat(null, "You can reproduce!")
@@ -162,26 +162,49 @@
 /mob/living/carbon/slime/ex_act(severity, target)
 	..()
 
+	var/b_loss = null
+	var/f_loss = null
 	switch (severity)
 		if (1.0)
-			gib()
+			qdel(src)
 			return
 
 		if (2.0)
-			adjustBruteLoss(60)
-			adjustFireLoss(60)
+
+			b_loss += 60
+			f_loss += 60
+
 
 		if(3.0)
-			adjustBruteLoss(30)
+			b_loss += 30
+
+	adjustBruteLoss(b_loss)
+	adjustFireLoss(f_loss)
 
 	updatehealth()
 
-/mob/living/carbon/slime/MouseDrop(var/atom/movable/A as mob|obj)
-	if(isliving(A) && A != src && usr == src)
-		var/mob/living/Food = A
-		if(Food.Adjacent(src) && !stat && Food.stat != DEAD) //messy
-			Feedon(Food)
-	..()
+
+/mob/living/carbon/slime/blob_act()
+	if (stat == 2)
+		return
+	var/shielded = 0
+
+	var/damage = null
+	if (stat != 2)
+		damage = rand(10,30)
+
+	if(shielded)
+		damage /= 4
+
+		//paralysis += 1
+
+	show_message("<span class='userdanger'> The blob attacks you!</span>")
+
+	adjustFireLoss(damage)
+
+	updatehealth()
+	return
+
 
 /mob/living/carbon/slime/unEquip(obj/item/W as obj)
 	return
@@ -194,19 +217,14 @@
 
 /mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M as mob)
 	..()
-	if(src.Victim)
-		src.Victim = null
-		visible_message("<span class='danger'>[M] pulls [src] off!</span>")
-		return
+	var/damage = rand(1, 3)
 	attacked += 5
-	if(src.nutrition >= 100) //steal some nutrition. negval handled in life()
-		src.nutrition -= (50 + (5 * M.amount_grown))
-		M.add_nutrition(50 + (5 * M.amount_grown))
-	if(src.health > 0)
-		src.adjustBruteLoss(4 + (2 * M.amount_grown)) //amt_grown isn't very linear but it works
-		src.updatehealth()
-		M.adjustBruteLoss(-4 + (-2 * M.amount_grown))
-		M.updatehealth()
+	if(M.is_adult)
+		damage = rand(1, 6)
+	else
+		damage = rand(1, 3)
+	adjustBruteLoss(damage)
+	updatehealth()
 	return
 
 /mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M as mob)
@@ -394,7 +412,7 @@
 			updatehealth()
 	return
 
-/mob/living/carbon/slime/attackby(obj/item/W, mob/living/user, params)
+/mob/living/carbon/slime/attackby(obj/item/W, mob/living/user)
 	if(istype(W,/obj/item/stack/sheet/mineral/plasma)) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]
@@ -467,6 +485,9 @@
 
 /mob/living/carbon/slime/restrained()
 	return 0
+
+mob/living/carbon/slime/var/co2overloadtime = null
+mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/slime/show_inv(mob/user)
 	return
@@ -603,60 +624,71 @@
 
 ////Pet Slime Creation///
 
-/obj/item/slimepotion
+/obj/item/weapon/slimepotion
 	name = "docility potion"
-	desc = "A potent chemical mix that nullifies a slime's hunger, causing it to become docile and tame."
+	desc = "A potent chemical mix that will nullify a slime's powers, causing it to become docile and tame."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-/obj/item/slimepotion/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-	if(!isslime(M))
-		user << "<span class='warning'>The potion only works on slimes!</span>"
+	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+			user << "<span class='warning'> The potion only works on baby slimes!</span>"
+			return ..()
+		if(M.is_adult) //Can't tame adults
+			user << "<span class='warning'> Only baby slimes can be tamed!</span>"
+			return..()
+		if(M.stat)
+			user << "<span class='warning'> The slime is dead!</span>"
+			return..()
+		if(M.mind)
+			user << "<span class='warning'> The slime resists!</span>"
+			return ..()
+		var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
+		pet.icon_state = "[M.colour] baby slime"
+		pet.icon_living = "[M.colour] baby slime"
+		pet.icon_dead = "[M.colour] baby slime dead"
+		pet.colour = "[M.colour]"
+		user <<"You feed the slime the potion, removing it's powers and calming it."
+		qdel(M)
+		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+
+		if (!newname)
+			newname = "pet slime"
+		pet.name = newname
+		pet.real_name = newname
+		qdel(src)
+
+/obj/item/weapon/slimepotion2
+	name = "advanced docility potion"
+	desc = "A potent chemical mix that will nullify a slime's powers, causing it to become docile and tame. This one is meant for adult slimes"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle19"
+
+/obj/item/weapon/slimepotion2/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+	if(!istype(M, /mob/living/carbon/slime/))//If target is not a slime.
+		user << "<span class='warning'> The potion only works on slimes!</span>"
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'>The slime is dead!</span>"
+		user << "<span class='warning'> The slime is dead!</span>"
 		return..()
-
-	M.docile = 1
-	M.nutrition = 700
-	M <<"<span class='warning'> You absorb the potion and feel your intense desire to feed melt away.</span>"
-	user <<"<span class='notice'> You feed the slime the potion, removing it's hunger and calming it.</span>"
+	if(M.mind)
+		user << "<span class='warning'> The slime resists!</span>"
+		return ..()
+	var/mob/living/simple_animal/slime/adult/pet = new /mob/living/simple_animal/slime/adult(M.loc)
+	pet.icon_state = "[M.colour] adult slime"
+	pet.icon_living = "[M.colour] adult slime"
+	pet.icon_dead = "[M.colour] baby slime dead"
+	pet.colour = "[M.colour]"
+	user <<"You feed the slime the potion, removing it's powers and calming it."
+	qdel(M)
 	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 	if (!newname)
 		newname = "pet slime"
-	M.name = newname
-	M.real_name = newname
+	pet.name = newname
+	pet.real_name = newname
 	qdel(src)
 
-/obj/item/slimepotion2
-	name = "sentience potion"
-	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle19"
-
-/obj/item/slimepotion2/afterattack(mob/living/M as mob, mob/user as mob)
-	if(!(isslime(M) || isanimal(M) || ismonkey(M) || !M.ckey)) //I'm sorry for this line
-		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
-		return ..()
-	if(M.stat)
-		user << "<span class='warning'>[M] is dead!</span>"
-		return..()
-
-	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
-	var/client/C = null
-
-	if(candidates.len)
-		C = pick(candidates)
-		M.key = C.key
-		M.languages |= HUMAN
-		M << "<span class='warning'>All at once it makes sense, you know what you are and who you are! Self awareness is yours!</span>"
-		M << "You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost."
-		user << "<span class='warning'>[M] is suddenly attentive and aware. It worked!</span>"
-		qdel(src)
-	else
-		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down. Maybe you should try again later...</span>"
-		..()
 
 /obj/item/weapon/slimesteroid
 	name = "slime steroid"
@@ -773,7 +805,7 @@
 
 	New()
 		..()
-		SSobj.processing |= src
+		SSobj.processing.Add(src)
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost

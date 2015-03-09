@@ -86,20 +86,16 @@ var/list/science_positions = list(
 )
 
 
-var/list/supply_positions = list(
-	"Head of Personnel",
-	"Quartermaster",
-	"Cargo Technician",
-	"Shaft Miner",
-)
-
-
 var/list/civilian_positions = list(
+	"Head of Personnel",
 	"Bartender",
 	"Botanist",
 	"Cook",
 	"Janitor",
 	"Librarian",
+	"Quartermaster",
+	"Cargo Technician",
+	"Shaft Miner",
 	"Lawyer",
 	"Chaplain",
 	"Clown",

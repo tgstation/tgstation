@@ -95,7 +95,7 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
 		user << "<span class='warning'>You must wait until the door has stopped moving.</span>"
 		return
@@ -118,16 +118,7 @@
 	else
 		user << "<span class='warning'>You can't reach, close it first!</span>"
 
-	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter) || istype(W, /obj/item/weapon/melee/energy/blade))
-		dismantle(user)
-
-	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
-		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(300))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return
-		D.update_icon()
-		D.playDigSound()
+	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter) || istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill) || istype(W, /obj/item/weapon/melee/energy/blade))
 		dismantle(user)
 
 /obj/structure/falsewall/proc/dismantle(mob/user)
@@ -208,7 +199,7 @@
 	var/active = null
 	var/last_event = 0
 
-/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user)
 	radiate()
 	..()
 
@@ -260,7 +251,7 @@
 	mineral = "plasma"
 	walltype = "plasma"
 
-/obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user)
 	if(is_hot(W) > 300)
 		message_admins("Plasma falsewall ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma falsewall ignited by [user.ckey]([user]) in ([x],[y],[z])")

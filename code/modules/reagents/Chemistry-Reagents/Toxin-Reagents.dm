@@ -57,12 +57,12 @@ datum/reagent/toxin/plasma
 	name = "Plasma"
 	id = "plasma"
 	description = "Plasma in its liquid form."
-	color = "#500064" // rgb: 80, 0, 100
+	color = "#DB2D08" // rgb: 219, 45, 8
 	toxpwr = 3
 
 datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)
-	if(holder.has_reagent("epinephrine"))
-		holder.remove_reagent("epinephrine", 2*REM)
+	if(holder.has_reagent("inaprovaline"))
+		holder.remove_reagent("inaprovaline", 2*REM)
 	..()
 	return
 
@@ -118,6 +118,19 @@ datum/reagent/toxin/slimejelly/on_mob_life(var/mob/living/M as mob)
 		M.adjustToxLoss(rand(20,60)*REM)
 	else if(prob(40))
 		M.heal_organ_damage(5*REM,0)
+	..()
+	return
+
+datum/reagent/toxin/cyanide
+	name = "Cyanide"
+	id = "cyanide"
+	description = "A highly toxic chemical."
+	color = "#CF3600" // rgb: 207, 54, 0
+	toxpwr = 3
+
+datum/reagent/toxin/cyanide/on_mob_life(var/mob/living/M as mob)
+	M.adjustOxyLoss(3*REM)
+	M.sleeping += 1
 	..()
 	return
 
@@ -222,6 +235,30 @@ datum/reagent/toxin/pestkiller/reaction_mob(var/mob/living/M, var/method=TOUCH, 
 		if(!C.wear_mask) // If not wearing a mask
 			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
 
+datum/reagent/toxin/stoxin
+	name = "Sleep Toxin"
+	id = "stoxin"
+	description = "An effective hypnotic used to treat insomnia."
+	color = "#E895CC" // rgb: 232, 149, 204
+	toxpwr = 0
+
+datum/reagent/toxin/stoxin/on_mob_life(var/mob/living/M as mob)
+	if(!data) data = 1
+	switch(data)
+		if(1 to 12)
+			if(prob(5))	M.emote("yawn")
+		if(12 to 15)
+			M.eye_blurry = max(M.eye_blurry, 10)
+		if(15 to 25)
+			M.drowsyness  = max(M.drowsyness, 20)
+		if(25 to INFINITY)
+			M.Paralyse(20)
+			M.drowsyness  = max(M.drowsyness, 30)
+	data++
+	..()
+	return
+
+
 datum/reagent/toxin/spore
 	name = "Spore Toxin"
 	id = "spore"
@@ -255,7 +292,7 @@ datum/reagent/toxin/chloralhydrate
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
 	if(!data)
@@ -278,7 +315,7 @@ datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	id = "beer2"
 	description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
 	color = "#664300" // rgb: 102, 67, 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/beer2/on_mob_life(var/mob/living/M as mob)
 	if(!data)
@@ -321,10 +358,10 @@ datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
 		return
 	O.acid_act(acidpwr, toxpwr, volume)
 
-datum/reagent/toxin/acid/fluacid
-	name = "Fluorosulfuric acid"
-	id = "facid"
-	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
+datum/reagent/toxin/acid/polyacid
+	name = "Polytrinic acid"
+	id = "pacid"
+	description = "Polytrinic acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
 	acidpwr = 20

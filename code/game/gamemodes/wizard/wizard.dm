@@ -9,8 +9,7 @@
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
-	enemy_minimum_age = 14
-	var/use_huds = 0
+
 	var/finished = 0
 
 /datum/game_mode/wizard/announce()
@@ -41,8 +40,6 @@
 		equip_wizard(wizard.current)
 		name_wizard(wizard.current)
 		greet_wizard(wizard)
-		if(use_huds)
-			update_wiz_icons_added(wizard)
 	..()
 	return
 
@@ -157,12 +154,9 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(wizard_mob), slot_in_backpack)
 //	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/scrying_gem(wizard_mob), slot_l_store) For scrying gem.
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
-	var/obj/item/weapon/spellbook/spellbook = new /obj/item/weapon/spellbook(wizard_mob)
-	spellbook.owner = wizard_mob
-	wizard_mob.equip_to_slot_or_del(spellbook, slot_r_hand)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
 
 	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
-	wizard_mob << "The spellbook is bound to you, and others cannot use it."
 	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
 	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
 	wizard_mob.update_icons()
@@ -171,7 +165,7 @@
 
 /datum/game_mode/wizard/check_finished()
 
-	if(round_converted)
+	if(config.continuous_round_wiz)
 		return ..()
 
 	var/wizards_alive = 0
@@ -193,17 +187,11 @@
 
 	if (wizards_alive || traitors_alive)
 		return ..()
+	else
+		finished = 1
+		return 1
 
-	if(config.continuous_round_wiz)
-		round_converted = convert_roundtype()
-		if(!round_converted)
-			finished = 1
-			return 1
-		else
-			return ..()
 
-	finished = 1
-	return 1
 
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
@@ -287,19 +275,3 @@ Made a proc so this is not repeated 14 (or more) times.*/
 		return 0
 	else
 		return 1
-
-
-/proc/iswizard(mob/living/M as mob)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)
-
-
-/datum/game_mode/proc/update_wiz_icons_added(datum/mind/wiz_mind)
-	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
-	wizhud.join_hud(wiz_mind.current)
-	set_antag_hud(wiz_mind.current, ((wiz_mind in wizards) ? "wizard" : "apprentice"))
-
-
-/datum/game_mode/proc/update_wiz_icons_removed(datum/mind/wiz_mind)
-	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
-	wizhud.leave_hud(wiz_mind.current)
-	set_antag_hud(wiz_mind.current, null)

@@ -35,8 +35,8 @@ Bonus
 			if(5)
 				if(!(M.ear_deaf))
 					M << "<span class='danger'>Your ears pop and begin ringing loudly!</span>"
-					M.setEarDamage(-1,INFINITY) //Shall be enough
+					M.ear_deaf = INFINITY //Shall be enough
 					spawn(200)
 						if(M)
-							M.setEarDamage(-1,0)
+							M.ear_deaf = 0
 	return

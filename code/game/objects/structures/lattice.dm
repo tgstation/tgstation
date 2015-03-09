@@ -50,7 +50,7 @@
 		else
 	return
 
-/obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob, params)
+/obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
 	var/turf/T = get_turf(src)
 	if (istype(C, /obj/item/stack/tile/plasteel))
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead (for building plating)
@@ -100,13 +100,6 @@
 	T.cancable = 1
 	..()
 
-/obj/structure/lattice/catwalk/Move()
-	var/turf/T = loc
-	T.cancable = 0
-	for(var/obj/structure/cable/C in T)
-		C.Deconstruct()
-	..()
-
 /obj/structure/lattice/catwalk/Destroy()
 	var/turf/T = loc
 	T.cancable = 0
@@ -121,7 +114,7 @@
 		C.Deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob, params)
+/obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob)
 	..()
 	if(istype(C, /obj/item/stack/cable_coil))
 		var/turf/T = get_turf(src)
@@ -134,8 +127,11 @@
 	var/dir_sum = 0
 
 	for (var/direction in cardinal)
-		if(locate(/obj/structure/lattice/catwalk, get_step(src, direction))) //so we only blend with other catwalks
+		if(locate(/obj/structure/lattice/catwalk, get_step(src, direction)))
 			dir_sum += direction
+		else
+			if(!(istype(get_step(src, direction), /turf/space)))
+				dir_sum += direction
 
 	icon_state = "[name][dir_sum]"
 	return

@@ -10,8 +10,7 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/xeno
-	skin_type = /obj/item/stack/sheet/animalhide/xeno
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	meat_amount = 3
 	maxHealth = 100
 	health = 100
@@ -43,17 +42,6 @@
 	health = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	var/plant_cooldown = 30
-	var/plants_off = 0
-
-/mob/living/simple_animal/hostile/alien/drone/Life()
-	..()
-	if(!stat)
-		plant_cooldown--
-		if(stance==HOSTILE_STANCE_IDLE)
-			if(!plants_off && prob(10) && plant_cooldown<=0)
-				plant_cooldown = initial(plant_cooldown)
-				SpreadPlants()
 
 /mob/living/simple_animal/hostile/alien/sentinel
 	name = "alien sentinel"
@@ -86,39 +74,6 @@
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
-	var/sterile = 1
-	var/plants_off = 0
-	var/egg_cooldown = 30
-	var/plant_cooldown = 30
-
-/mob/living/simple_animal/hostile/alien/queen/Life()
-	..()
-	if(!stat)
-		egg_cooldown--
-		plant_cooldown--
-		if(stance==HOSTILE_STANCE_IDLE)
-			if(!plants_off && prob(10) && plant_cooldown<=0)
-				plant_cooldown = initial(plant_cooldown)
-				SpreadPlants()
-			if(!sterile && prob(10) && egg_cooldown<=0)
-				egg_cooldown = initial(egg_cooldown)
-				LayEggs()
-
-/mob/living/simple_animal/hostile/alien/proc/SpreadPlants()
-	if(!isturf(loc) || istype(loc, /turf/space))
-		return
-	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
-		return
-	visible_message("<span class='alertalien'>[src] has planted some alien weeds!</span>")
-	new /obj/structure/alien/weeds/node(loc)
-
-/mob/living/simple_animal/hostile/alien/proc/LayEggs()
-	if(!isturf(loc) || istype(loc, /turf/space))
-		return
-	if(locate(/obj/structure/alien/egg) in get_turf(src))
-		return
-	visible_message("<span class='alertalien'>[src] has laid an egg!</span>")
-	new /obj/structure/alien/egg(loc)
 
 /mob/living/simple_animal/hostile/alien/queen/large
 	name = "alien empress"

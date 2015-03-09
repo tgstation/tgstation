@@ -13,7 +13,7 @@
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return 1
 
-/obj/item/device/transfer_valve/attackby(obj/item/item, mob/user, params)
+/obj/item/device/transfer_valve/attackby(obj/item/item, mob/user)
 	if(istype(item, /obj/item/weapon/tank))
 		if(tank_one && tank_two)
 			user << "<span class='warning'>There are already two tanks attached, remove one first.</span>"
@@ -158,7 +158,7 @@
 	*/
 
 /obj/item/device/transfer_valve/proc/toggle_valve()
-	if(!valve_open && tank_one && tank_two)
+	if(valve_open==0 && (tank_one && tank_two))
 		valve_open = 1
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
@@ -203,7 +203,7 @@
 				sleep(10)
 			src.update_icon()
 
-	else if(valve_open && tank_one && tank_two)
+	else if(valve_open==1 && (tank_one && tank_two))
 		split_gases()
 		valve_open = 0
 		src.update_icon()

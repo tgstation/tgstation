@@ -33,7 +33,7 @@
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/spider
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/spidermeat
 	meat_amount = 2
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -65,7 +65,7 @@
 	melee_damage_upper = 10
 	poison_per_bite = 10
 	var/atom/cocoon_target
-	poison_type = "morphine"
+	poison_type = "stoxin"
 	var/fed = 0
 
 //hunters have the most poison and move the fastest, so they can find prey

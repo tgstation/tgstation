@@ -24,7 +24,7 @@
 	src.air_contents.volume = volume //liters
 	src.air_contents.temperature = T20C
 
-	SSobj.processing |= src
+	SSobj.processing.Add(src)
 
 	return
 
@@ -74,7 +74,7 @@
 
 		qdel(src)
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 
 	src.add_fingerprint(user)

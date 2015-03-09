@@ -40,11 +40,10 @@
 		O.real_name = newname
 
 	//handle DNA and other attributes
-	if(dna)
-		dna.transfer_identity(O)
-		if(tr_flags & TR_KEEPSE)
-			O.dna.struc_enzymes = dna.struc_enzymes
-
+	O.dna = dna
+	dna = null
+	if (!(tr_flags & TR_KEEPSE))
+		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(BAD_MUTATION_DIFFICULTY,BAD_MUTATION_DIFFICULTY))
 	if(suiciding)
 		O.suiciding = suiciding
 	O.loc = loc
@@ -136,13 +135,7 @@
 	qdel(animation)
 
 	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
-
-	if(dna)
-		dna.transfer_identity(O)
-		O.update_icons()
-		if(tr_flags & TR_KEEPSE)
-			O.dna.struc_enzymes = dna.struc_enzymes
-			domutcheck(O)
+	O.dna = dna
 
 	if(!dna.species)
 		O.dna.species = new /datum/species/human()
@@ -150,13 +143,17 @@
 		O.dna.species = new dna.species.type()
 
 	dna = null
-	if(newname) //if there's a name as an argument, always take that one over the current name
+	if (newname) //if there's a name as an argument, always take that one over the current name
 		O.real_name = newname
 	else
-		if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
-			O.dna.real_name = random_name(O.gender)
-		O.real_name = O.dna.real_name
-		O.name = O.real_name
+		if ( !(cmptext 	("monkey",copytext(O.dna.real_name,1,7))  ) )
+			O.real_name = O.dna.real_name
+		else
+			O.real_name = random_name(O.gender)
+	O.name = O.real_name
+
+	if (!(tr_flags & TR_KEEPSE))
+		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(1,BAD_MUTATION_DIFFICULTY))
 
 	if(suiciding)
 		O.suiciding = suiciding

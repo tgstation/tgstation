@@ -48,10 +48,9 @@
 	set category = "Malfunction"
 	set name = "Upgrade Turrets"
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
-	for(var/obj/machinery/porta_turret/turret in machines)
-		if(turret.ai) //Make sure only the AI's turrets are affected.
-			turret.health += 30
-			turret.shot_delay = 10 //Standard portable turret delay is 15.
+	for(var/obj/machinery/turret/turret in machines)
+		turret.health += 30
+		turret.shot_delay = 20
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
 /datum/AI_Module/large/lockdown
@@ -76,8 +75,6 @@
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
-		if(D.z != ZLEVEL_STATION && D.z != ZLEVEL_MINING)
-			continue
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
@@ -151,50 +148,6 @@
 			src << "<span class='warning>RCD-disabling pulse emitted.</span>"
 		else src << "<span class='notice'>Out of uses.</span>"
 
-/datum/AI_Module/large/break_fire_alarms
-	module_name = "Thermal Sensor Override"
-	mod_pick_name = "burnpigs"
-	description = "Gives you the ability to override the thermal sensors on all fire alarms. This will remove their ability to scan for fire and thus their ability to alert. \
-	Anyone can check the fire alarm's interface and may be tipped off by its status."
-	one_time = 1
-	cost = 25
-
-	power_type = /mob/living/silicon/ai/proc/break_fire_alarms
-
-/mob/living/silicon/ai/proc/break_fire_alarms()
-	set name = "Override Thermal Sensors"
-	set category = "Malfunction"
-
-	for(var/obj/machinery/firealarm/F in world)
-		if(F.z != ZLEVEL_STATION)
-			continue
-		F.emagged = 1
-	src << "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>"
-	src.verbs -= /mob/living/silicon/ai/proc/break_fire_alarms
-
-/datum/AI_Module/large/break_air_alarms
-	module_name = "Air Alarm Safety Override"
-	mod_pick_name = "allow_flooding"
-	description = "Gives you the ability to disable safeties on all air alarms. This will allow you to use the environmental mode Flood, which disables scrubbers as well as pressure checks on vents. \
-	Anyone can check the air alarm's interface and may be tipped off by their nonfunctionality."
-	one_time = 1
-	cost = 50
-
-	power_type = /mob/living/silicon/ai/proc/break_air_alarms
-
-/mob/living/silicon/ai/proc/break_air_alarms()
-	set name = "Disable Air Alarm Safeties"
-	set category = "Malfunction"
-
-	for(var/obj/machinery/alarm/A in world)
-		if(A.z != ZLEVEL_STATION)
-			continue
-		A.emagged = 1
-	src << "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode."
-	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
-
-
-
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine overload"
 	mod_pick_name = "overload"
@@ -240,7 +193,7 @@
 				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
-					if(M && !M.gc_destroyed)
+					if(M)
 						new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, src, 1)
 			else src << "<span class='notice'>Out of uses.</span>"
 	else src << "<span class='notice'>That's not a machine.</span>"
@@ -396,6 +349,7 @@
 						src << "<span class='notice'>This camera is already upgraded!</span>"
 			else
 				src << "<span class='notice'>Out of uses.</span>"
+
 
 /datum/module_picker
 	var/temp = null

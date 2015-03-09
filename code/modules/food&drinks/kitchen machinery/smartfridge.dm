@@ -34,7 +34,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(default_unfasten_wrench(user, O))
 		power_change()
 		return
@@ -186,7 +186,7 @@
 // ----------------------------
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "drying_rack_on"
 	use_power = 1
 	idle_power_usage = 5
@@ -310,8 +310,8 @@ obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 /obj/machinery/smartfridge/chemistry
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
-	var/list/spawn_meds = list(/obj/item/weapon/reagent_containers/pill/epinephrine = 12,/obj/item/weapon/reagent_containers/pill/charcoal = 1,
-								/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 1, /obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
+	var/list/spawn_meds = list(/obj/item/weapon/reagent_containers/pill/inaprovaline = 12,/obj/item/weapon/reagent_containers/pill/antitox = 1,
+								/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 1, /obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 1)
 
 /obj/machinery/smartfridge/chemistry/New()
 	..()

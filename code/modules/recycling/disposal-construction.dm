@@ -12,68 +12,61 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	level = 2
 	var/ptype = 0
+	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet
 
 	var/dpdir = 0	// directions as disposalpipe
 	var/base_state = "pipe-s"
 
-/obj/structure/disposalconstruct/New(var/loc, var/pipe_type, var/direction = 1)
-	..(loc)
-	if(pipe_type)
-		ptype = pipe_type
-		if(!is_pipe())    // bins/chutes/outlets are dense
-			density = 1
-	dir = direction
-
-// update iconstate and dpdir due to dir and type
+	// update iconstate and dpdir due to dir and type
 /obj/structure/disposalconstruct/proc/update()
 	var/flip = turn(dir, 180)
 	var/left = turn(dir, 90)
 	var/right = turn(dir, -90)
 
 	switch(ptype)
-		if(DISP_PIPE_STRAIGHT)
+		if(0)
 			base_state = "pipe-s"
 			dpdir = dir | flip
-		if(DISP_PIPE_BENT)
+		if(1)
 			base_state = "pipe-c"
 			dpdir = dir | right
-		if(DISP_JUNCTION)
+		if(2)
 			base_state = "pipe-j1"
 			dpdir = dir | right | flip
-		if(DISP_JUNCTION_FLIP)
+		if(3)
 			base_state = "pipe-j2"
 			dpdir = dir | left | flip
-		if(DISP_YJUNCTION)
+		if(4)
 			base_state = "pipe-y"
 			dpdir = dir | left | right
-		if(DISP_END_TRUNK)
+		if(5)
 			base_state = "pipe-t"
 			dpdir = dir
 		 // disposal bin has only one dir, thus we don't need to care about setting it
-		if(DISP_END_BIN)
+		if(6)
 			if(anchored)
 				base_state = "disposal"
 			else
 				base_state = "condisposal"
 
-		if(DISP_END_OUTLET)
+		if(7)
 			base_state = "outlet"
 			dpdir = dir
 
-		if(DISP_END_CHUTE)
+		if(8)
 			base_state = "intake"
 			dpdir = dir
 
-		if(DISP_SORTJUNCTION)
+		if(9)
 			base_state = "pipe-j1s"
 			dpdir = dir | right | flip
 
-		if(DISP_SORTJUNCTION_FLIP)
+		if(10)
 			base_state = "pipe-j2s"
 			dpdir = dir | left | flip
 
 
-	if(is_pipe())
+	if(ptype<6 || ptype>8)
 		icon_state = "con[base_state]"
 	else
 		icon_state = base_state
@@ -117,33 +110,33 @@
 
 	dir = turn(dir, 180)
 	switch(ptype)
-		if(DISP_JUNCTION)
-			ptype = DISP_JUNCTION_FLIP
-		if(DISP_JUNCTION_FLIP)
-			ptype = DISP_JUNCTION
-		if(DISP_SORTJUNCTION)
-			ptype = DISP_SORTJUNCTION_FLIP
-		if(DISP_SORTJUNCTION_FLIP)
-			ptype = DISP_SORTJUNCTION
+		if(2)
+			ptype = 3
+		if(3)
+			ptype = 2
+		if(9)
+			ptype = 10
+		if(10)
+			ptype = 9
 
 	update()
 
 // returns the type path of disposalpipe corresponding to this item dtype
 /obj/structure/disposalconstruct/proc/dpipetype()
 	switch(ptype)
-		if(DISP_PIPE_STRAIGHT,DISP_PIPE_BENT)
+		if(0,1)
 			return /obj/structure/disposalpipe/segment
-		if(DISP_JUNCTION, DISP_JUNCTION_FLIP, DISP_YJUNCTION)
+		if(2,3,4)
 			return /obj/structure/disposalpipe/junction
-		if(DISP_END_TRUNK)
+		if(5)
 			return /obj/structure/disposalpipe/trunk
-		if(DISP_END_BIN)
+		if(6)
 			return /obj/machinery/disposal
-		if(DISP_END_OUTLET)
+		if(7)
 			return /obj/structure/disposaloutlet
-		if(DISP_END_CHUTE)
+		if(8)
 			return /obj/machinery/disposal/deliveryChute
-		if(DISP_SORTJUNCTION, DISP_SORTJUNCTION_FLIP)
+		if(9,10)
 			return /obj/structure/disposalpipe/sortjunction
 	return
 
@@ -153,23 +146,25 @@
 // wrench: (un)anchor
 // weldingtool: convert to real pipe
 
-/obj/structure/disposalconstruct/attackby(var/obj/item/I, var/mob/user, params)
+/obj/structure/disposalconstruct/attackby(var/obj/item/I, var/mob/user)
 	var/nicetype = "pipe"
-	var/ispipe = is_pipe() // Indicates if we should change the level of this pipe
-	add_fingerprint(user)
+	var/ispipe = 0 // Indicates if we should change the level of this pipe
+	src.add_fingerprint(user)
 	switch(ptype)
-		if(DISP_END_BIN)
+		if(6)
 			nicetype = "disposal bin"
-		if(DISP_END_OUTLET)
+		if(7)
 			nicetype = "disposal outlet"
-		if(DISP_END_CHUTE)
+		if(8)
 			nicetype = "delivery chute"
-		if(DISP_SORTJUNCTION, DISP_SORTJUNCTION_FLIP)
+		if(9, 10)
 			nicetype = "sorting pipe"
+			ispipe = 1
 		else
 			nicetype = "pipe"
+			ispipe = 1
 
-	var/turf/T = loc
+	var/turf/T = src.loc
 	if(T.intact)
 		user << "You can only attach the [nicetype] if the floor plating is removed."
 		return
@@ -186,7 +181,7 @@
 				density = 1
 			user << "You detach the [nicetype] from the underfloor."
 		else
-			if(!is_pipe()) // Disposal or outlet
+			if(ptype>=6 && ptype <= 8) // Disposal or outlet
 				if(CP) // There's something there
 					if(!istype(CP,/obj/structure/disposalpipe/trunk))
 						user << "The [nicetype] requires a trunk underneath it in order to work."
@@ -210,62 +205,56 @@
 			else
 				density = 1 // We don't want disposal bins or outlets to go density 0
 			user << "You attach the [nicetype] to the underfloor."
-		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		update()
 
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		if(anchored)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
-				playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "Welding the [nicetype] in place."
 				if(do_after(user, 20))
-					if(!loc || !W.isOn())
+					if(!src.loc || !W.isOn())
 						return
 					user << "The [nicetype] has been welded in place!"
 					update() // TODO: Make this neat
+					if(ispipe) // Pipe
 
-					if(ispipe)
 						var/pipetype = dpipetype()
-						var/obj/structure/disposalpipe/P = new pipetype(loc, src)
+						var/obj/structure/disposalpipe/P = new pipetype(src.loc)
+						src.transfer_fingerprints_to(P)
+						P.base_icon_state = base_state
+						P.dir = dir
+						P.dpdir = dpdir
 						P.updateicon()
-						transfer_fingerprints_to(P)
 
-						if(ptype == DISP_SORTJUNCTION || ptype == DISP_SORTJUNCTION_FLIP)
+						//Needs some special treatment ;)
+						if(ptype==9 || ptype==10)
 							var/obj/structure/disposalpipe/sortjunction/SortP = P
 							SortP.updatedir()
 
-					else if(ptype == DISP_END_BIN)
-						var/obj/machinery/disposal/P = new /obj/machinery/disposal(loc,src)
+					else if(ptype==6) // Disposal bin
+						var/obj/machinery/disposal/P = new /obj/machinery/disposal(src.loc)
+						src.transfer_fingerprints_to(P)
 						P.mode = 0 // start with pump off
-						transfer_fingerprints_to(P)
 
-					else if(ptype == DISP_END_OUTLET)
-						var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(loc,src)
-						transfer_fingerprints_to(P)
+					else if(ptype==7) // Disposal outlet
 
-					else if(ptype == DISP_END_CHUTE)
-						var/obj/machinery/disposal/deliveryChute/P = new /obj/machinery/disposal/deliveryChute(loc,src)
-						transfer_fingerprints_to(P)
+						var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(src.loc)
+						src.transfer_fingerprints_to(P)
+						P.dir = dir
+						var/obj/structure/disposalpipe/trunk/Trunk = CP
+						Trunk.linked = P
 
+					else if(ptype==8) // Disposal outlet
+
+						var/obj/machinery/disposal/deliveryChute/P = new /obj/machinery/disposal/deliveryChute(src.loc)
+						src.transfer_fingerprints_to(P)
+						P.dir = dir
+
+					qdel(src)
 					return
 		else
 			user << "You need to attach it to the plating first!"
 			return
-
-/obj/structure/disposalconstruct/proc/is_pipe()
-	return !(ptype >=DISP_END_BIN && ptype <= DISP_END_CHUTE)
-
-//helper proc that makes sure you can place the construct (i.e no dense objects stacking)
-/obj/structure/disposalconstruct/proc/can_place()
-	if(is_pipe())
-		return 1
-
-	for(var/obj/structure/disposalconstruct/DC in get_turf(src))
-		if(DC == src)
-			continue
-
-		if(!DC.is_pipe()) //there's already a chute/outlet/bin there
-			return 0
-
-	return 1

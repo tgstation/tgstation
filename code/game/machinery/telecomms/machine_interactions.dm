@@ -15,7 +15,7 @@
 	var/construct_op = 0
 
 
-/obj/machinery/telecomms/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/machinery/telecomms/attackby(obj/item/P as obj, mob/user as mob)
 
 	// Using a multitool lets you access the receiver's interface
 	if(istype(P, /obj/item/device/multitool))
@@ -308,7 +308,7 @@
 					temp = "<font color = #666633>-% New ID assigned: \"[id]\" %-</font color>"
 
 			if("network")
-				var/newnet = stripped_input(usr, "Specify the new network for this machine. This will break all current links.", src, network)
+				var/newnet = input(usr, "Specify the new network for this machine. This will break all current links.", src, network) as null|text
 				if(newnet && canAccess(usr))
 
 					if(length(newnet) > 15)

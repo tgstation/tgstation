@@ -274,7 +274,7 @@
 	icon_state = "hair_reversemohawk"
 
 /datum/sprite_accessory/hair/jensen
-	name = "Jensen Hair"
+	name = "Adam Jensen Hair"
 	icon_state = "hair_jensen"
 
 /datum/sprite_accessory/hair/gelled
@@ -542,7 +542,7 @@
 	icon_state = "facial_gt"
 
 /datum/sprite_accessory/facial_hair/jensen
-	name = "Jensen Beard"
+	name = "Adam Jensen Beard"
 	icon_state = "facial_jensen"
 
 /datum/sprite_accessory/facial_hair/dwarf

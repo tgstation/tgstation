@@ -344,8 +344,6 @@ obj/mecha/proc/can_use(mob/user)
 	return ..()
 
 /obj/mecha/relaymove(mob/user,direction)
-	if(!direction)
-		return
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		user << "You climb out from [src]"
@@ -662,7 +660,7 @@ obj/mecha/proc/can_use(mob/user)
 ////// AttackBy //////
 //////////////////////
 
-/obj/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/mecha/attackby(obj/item/W as obj, mob/user as mob)
 
 	if(istype(W, /obj/item/device/mmi))
 		if(mmi_move_inside(W,user))
@@ -1457,7 +1455,7 @@ var/year_integer = text2num(year) // = 2013???
 		return
 	if (href_list["change_name"])
 		if(usr != src.occupant)	return
-		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
+		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit",initial(name), MAX_NAME_LEN)
 		if(newname && trim(newname))
 			name = newname
 		else

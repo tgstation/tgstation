@@ -5,9 +5,6 @@
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
 	var/visor_flags = 0			// flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
-	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
-	var/alt_desc = null
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -88,7 +85,6 @@ BLIND     // can't see anything
 	put_on_delay = 40
 	var/mask_adjusted = 0
 	var/ignore_maskadjust = 1
-	var/adjusted_flags = null
 
 //Override this to modify speech like luchador masks.
 /obj/item/clothing/mask/proc/speechModification(message)
@@ -107,7 +103,6 @@ BLIND     // can't see anything
 			flags_inv |= visor_flags_inv
 			user << "You push \the [src] back into place."
 			src.mask_adjusted = 0
-			slot_flags = initial(slot_flags)
 		else
 			src.icon_state += "_up"
 			user << "You push \the [src] out of the way."
@@ -116,8 +111,6 @@ BLIND     // can't see anything
 			flags &= ~visor_flags
 			flags_inv &= ~visor_flags_inv
 			src.mask_adjusted = 1
-			if(adjusted_flags)
-				slot_flags = adjusted_flags
 		usr.update_inv_wear_mask()
 
 
@@ -144,7 +137,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/suits.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
-	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen)
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
@@ -155,10 +148,10 @@ BLIND     // can't see anything
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
-	icon_state = "spaceold"
-	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
+	icon_state = "space"
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
 	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
-	item_state = "spaceold"
+	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -173,14 +166,14 @@ BLIND     // can't see anything
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
-	icon_state = "spaceold"
+	icon_state = "space"
 	item_state = "s_suit"
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 2
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -191,6 +184,7 @@ BLIND     // can't see anything
 	strip_delay = 80
 	put_on_delay = 80
 
+
 //Under clothing
 /obj/item/clothing/under
 	icon = 'icons/obj/clothing/uniforms.dmi'
@@ -199,7 +193,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
+	var/fitted = 1// For use in alternate clothing styles for women, if clothes vary from a jumpsuit in shape, set this to 0
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 	var/can_adjust = 1
@@ -213,7 +207,7 @@ BLIND     // can't see anything
 		*/
 	var/obj/item/clothing/tie/hastie = null
 
-/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	attachTie(I, user)
 	..()
 
@@ -258,9 +252,9 @@ BLIND     // can't see anything
 	if(hastie)
 		user << "\A [hastie] is attached to it."
 
-atom/proc/generate_female_clothing(index,t_color,icon,type)
+atom/proc/generate_female_clothing(index,t_color,icon)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"="[t_color]_s")
-	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
+	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="female_s")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
 	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
 	female_clothing_icons[index] = female_clothing_icon
@@ -298,50 +292,28 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 				usr << "Your suit will now only report your exact vital lifesigns."
 			if(3)
 				usr << "Your suit will now report your exact vital lifesigns as well as your coordinate position."
-
-	if(istype(loc,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = loc
-		if(H.w_uniform == src)
-			H.update_suit_sensors()
-
 	..()
 
-/obj/item/clothing/under/AltClick()
-	..()
-	rolldown()
-
-/obj/item/clothing/under/verb/jumpsuit_adjust()
+/obj/item/clothing/under/verb/rolldown()
 	set name = "Adjust Jumpsuit Style"
-	set category = null
+	set category = "Object"
 	set src in usr
-	rolldown()
-
-/obj/item/clothing/under/proc/rolldown()
 	if(!can_use(usr))
 		return
 	if(!can_adjust)
 		usr << "You cannot wear this suit any differently."
 		return
 	if(src.adjusted == 1)
-		src.fitted = initial(fitted)
 		src.item_color = initial(item_color)
 		src.item_color = src.suit_color //colored jumpsuits are shit and break without this
 		usr << "You adjust the suit back to normal."
 		src.adjusted = 0
 	else
-		src.fitted = NO_FEMALE_UNIFORM
 		src.item_color += "_d"
 		usr << "You adjust the suit to wear it more casually."
 		src.adjusted = 1
 	usr.update_inv_w_uniform()
 	..()
-
-/obj/item/clothing/under/examine(mob/user)
-	..()
-	if(src.adjusted)
-		user << "Alt-click on [src] to wear it normally."
-	else
-		user << "Alt-click on [src] to wear it casually."
 
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"

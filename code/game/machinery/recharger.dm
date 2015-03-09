@@ -9,10 +9,10 @@
 	var/obj/item/weapon/charging = null
 
 
-/obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user, params)
+/obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/weapon/pickaxe/drill))
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
 		if(charging)
 			return
 
@@ -22,7 +22,7 @@
 			user << "<span class='notice'>[src] blinks red as you try to insert [G].</span>"
 			return
 
-		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear))
+		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
 			user << "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>"
 			return
 		user.drop_item()
@@ -71,7 +71,7 @@
 		if(istype(charging, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/E = charging
 			if(E.power_supply.charge < E.power_supply.maxcharge)
-				E.power_supply.give(E.power_supply.chargerate)
+				E.power_supply.give(100)
 				icon_state = "recharger1"
 				use_power(250)
 			else
@@ -80,17 +80,7 @@
 		if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
 			if(B.bcell)
-				if(B.bcell.give(B.bcell.chargerate))
-					icon_state = "recharger1"
-					use_power(200)
-				else
-					icon_state = "recharger2"
-			else
-				icon_state = "recharger3"
-		if(istype(charging, /obj/item/weapon/pickaxe/drill))
-			var/obj/item/weapon/pickaxe/drill/D = charging
-			if(D.bcell)
-				if(D.bcell.give(D.bcell.chargerate))
+				if(B.bcell.give(1500)) //Because otherwise it takes two minutes to fully charge due to 15k cells. - Neerti
 					icon_state = "recharger1"
 					use_power(200)
 				else

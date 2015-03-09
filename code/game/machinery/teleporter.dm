@@ -29,7 +29,7 @@
 			break
 	return power_station
 
-/obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob, params)
+/obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob)
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
@@ -164,7 +164,7 @@
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
-			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
+			if(T.z == 2 || T.z > 7)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -183,7 +183,7 @@
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)	continue
-				if(T.z == ZLEVEL_CENTCOM)	continue
+				if(T.z == 2)	continue
 				var/tmpname = M.real_name
 				if(areaindex[tmpname])
 					tmpname = "[tmpname] ([++areaindex[tmpname]])"
@@ -205,7 +205,7 @@
 			var/turf/T = get_turf(R)
 			if (!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
-			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
+			if(T.z == 2 || T.z > 7)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -279,7 +279,7 @@
 		use_power(5000)
 	return
 
-/obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
+/obj/machinery/teleport/hub/attackby(obj/item/W, mob/user)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
 		return
 
@@ -375,7 +375,7 @@
 		teleporter_hub.update_icon()
 	..()
 
-/obj/machinery/teleport/station/attackby(var/obj/item/weapon/W, mob/user, params)
+/obj/machinery/teleport/station/attackby(var/obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/multitool) && !panel_open)
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)

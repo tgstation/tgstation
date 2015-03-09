@@ -1,7 +1,5 @@
-@echo off
-cd ../../_maps/map_files/
-set /P MAPFILE=Please enter mapfile (relative to map_files folder):
+set MAPFILE=tgstation.2.1.3.dmm
 
-java -jar ../../tools/mapmerge/MapPatcher.jar -clean "%MAPFILE%.backup" "%MAPFILE%" "%MAPFILE%"
+java -jar MapPatcher.jar -clean ../../_maps/map_files/TgStation/%MAPFILE%.backup ../../_maps/map_files/TgStation/%MAPFILE% ../../_maps/map_files/TgStation/%MAPFILE%
 
 pause

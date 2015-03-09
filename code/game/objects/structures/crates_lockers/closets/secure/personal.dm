@@ -7,8 +7,6 @@
 /obj/structure/closet/secure_closet/personal/New()
 	..()
 	if(prob(50))
-		new /obj/item/weapon/storage/backpack/dufflebag(src)
-	if(prob(50))
 		new /obj/item/weapon/storage/backpack(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_norm(src)
@@ -53,9 +51,11 @@
 	contents = list()
 	new /obj/item/weapon/storage/backpack/satchel/withwallet( src )
 	new /obj/item/device/radio/headset( src )
+	new /obj/item/clothing/suit/toggle/wintercoat(src)
+	new /obj/item/clothing/head/santa(src)
 	return
 
-/obj/structure/closet/secure_closet/personal/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/closet/secure_closet/personal/attackby(obj/item/W as obj, mob/user as mob)
 
 	if(istype(W))
 		var/obj/item/weapon/card/id/I = W.GetID()

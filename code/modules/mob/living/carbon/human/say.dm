@@ -4,17 +4,13 @@
 	var/ending = copytext(text, length(text))
 	if (src.stuttering)
 		return "stammers, \"[text]\"";
-	if(src.slurring)
-		return "slurs, \"[text]\"";
 	if(isliving(src))
 		var/mob/living/L = src
 		if (L.getBrainLoss() >= 60)
 			return "gibbers, \"[text]\"";
-	if(ending == "?")
+	if (ending == "?")
 		return "asks, \"[text]\"";
-	if(copytext(text, length(text) - 1) == "!!")
-		return "yells, \"<span class = 'yell'>[text]</span>\"";
-	if(ending == "!")
+	if (ending == "!")
 		return "exclaims, \"[text]\"";
 
 	if(dna)
@@ -25,6 +21,10 @@
 /mob/living/carbon/human/treat_message(message)
 	if(dna)
 		message = dna.species.handle_speech(message,src)
+
+	if (dna.check_mutation(HULK))
+		message = "[uppertext(replacetext(message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
+
 	if(viruses.len)
 		for(var/datum/disease/pierrot_throat/D in viruses)
 			var/list/temp_message = text2list(message, " ") //List each word in the message
@@ -38,9 +38,9 @@
 					temp_message[H] = "HONK"
 					pick_list -= H //Make sure that you dont HONK the same word twice
 				message = list2text(temp_message, " ")
+
 	message = ..(message)
-	if(dna)
-		message = dna.mutations_say_mods(message)
+
 	return message
 
 /mob/living/carbon/human/GetVoice()

@@ -22,7 +22,7 @@
 /obj/machinery/icecream_vat/proc/get_ingredient_list(var/type)
 	switch(type)
 		if(ICECREAM_CHOCOLATE)
-			return list("milk", "ice", "cocoa")
+			return list("milk", "ice", "coco")
 		if(ICECREAM_STRAWBERRY)
 			return list("milk", "ice", "berryjuice")
 		if(ICECREAM_BLUE)
@@ -30,7 +30,7 @@
 		if(CONE_WAFFLE)
 			return list("flour", "sugar")
 		if(CONE_CHOC)
-			return list("flour", "sugar", "cocoa")
+			return list("flour", "sugar", "coco")
 		else
 			return list("milk", "ice")
 
@@ -87,7 +87,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/icecream_vat/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/icecream_vat/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/icecream))
 		var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = O
 		if(!I.ice_creamed)
@@ -188,8 +188,8 @@
 	ice_creamed = 1
 
 #undef ICECREAM_VANILLA
-#undef ICECREAM_CHOCOLATE
-#undef ICECREAM_STRAWBERRY
-#undef ICECREAM_BLUE
+#undef FLAVOUR_CHOCOLATE
+#undef FLAVOUR_STRAWBERRY
+#undef FLAVOUR_BLUE
 #undef CONE_WAFFLE
 #undef CONE_CHOC

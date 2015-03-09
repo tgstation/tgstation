@@ -113,7 +113,7 @@
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src,params)
+				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
@@ -126,7 +126,7 @@
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
-	last_movement=world.time
+
 	return
 
 /mob/proc/changeNext_move(num)

@@ -42,18 +42,6 @@
 /turf/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
 
-/turf/attackby(obj/item/C, mob/user, params)
-	if(cancable && istype(C, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
-			if((LC.d1==0)||(LC.d2==0))
-				LC.attackby(C,user)
-				return
-		coil.place_turf(src, user)
-		return 1
-
-	return 0
-
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
 		return 1
@@ -92,7 +80,7 @@
 		var/mob/O = M
 		if(!O.lastarea)
 			O.lastarea = get_area(O.loc)
-//		O.update_gravity(O.mob_has_gravity())
+		O.update_gravity(O.mob_has_gravity())
 
 	var/loopsanity = 100
 	for(var/atom/A in range(1))
@@ -145,9 +133,6 @@
 	if(old_opacity != W.opacity)			//opacity has changed. Need to update surrounding lights
 		if(W.lighting_lumcount)				//unless we're being illuminated, don't bother (may be buggy, hard to test)
 			W.UpdateAffectingLights()
-
-	for(var/turf/space/S in range(W,1))
-		S.update_starlight()
 
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
