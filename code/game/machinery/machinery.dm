@@ -155,12 +155,12 @@ Class Procs:
 		machines -= src
 	if(src in power_machines)
 		power_machines -= src
-
+/*
 	if(component_parts)
 		for(var/atom/movable/AM in component_parts)
 			AM.loc = loc
 			component_parts -= AM
-
+*/
 		component_parts = null
 
 	..()
