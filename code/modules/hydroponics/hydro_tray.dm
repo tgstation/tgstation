@@ -7,7 +7,8 @@
 	density = 1
 	anchored = 1
 	flags = OPENCONTAINER
-	volume = 100
+	volume = 100byond://ss13.nexisonline.net:1336
+
 
 	var/draw_warnings = 1 //Set to 0 to stop it from drawing the alert lights.
 
@@ -810,19 +811,19 @@
 
 /obj/machinery/portable/atmospherics/hydroponics/examine(mob/user)
 	..()
-	if(seed && !dead)
-		user << "[src] has \blue [seed.display_name] \black planted."
-		if(health <= (seed.endurance / 2))
+	if(src.seed && !src.dead)
+		user << "[src] has \blue [src.seed.display_name] \black planted."
+		if(src.health <= (src.seed.endurance / 2))
 			user << "The plant looks \red unhealthy."
 		else
 			user << "[src] is empty."
-		user << "Water: [round(waterlevel,0.1)]/100"
-		user << "Nutrient: [round(nutrilevel,0.1)]/10"
-		if(weedlevel >= 5)
+		user << "Water: [round(src.waterlevel,0.1)]/100"
+		user << "Nutrient: [round(src.nutrilevel,0.1)]/10"
+		if(src.weedlevel >= 5)
 			user << "[src] is \red filled with weeds!"
-		if(pestlevel >= 5)
+		if(src.pestlevel >= 5)
 			user << "[src] is \red filled with tiny worms!"
-	else if(seed && dead)
+	else if(src.seed && src.dead)
 		user << "[src] is full of dead plant matter."
 	else
 		user << "[src] has nothing planted!"
