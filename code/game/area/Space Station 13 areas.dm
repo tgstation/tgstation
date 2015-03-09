@@ -43,6 +43,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/used_equip = 0
 	var/used_light = 0
 	var/used_environ = 0
+	var/static_equip
+	var/static_light = 0
+	var/static_environ
 
 	var/has_gravity = 1
 
@@ -61,6 +64,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	// /vg/: No teleporting for you. 2 = SUPER JAMMED, inaccessible even to telecrystals.
 	var/jammed = 0
 
+	// /vg/: Prevents entities using incorporeal move from entering the area (ghosts, jaunting wizards/ninjas...)
+	var/anti_ethereal = 0
+
+	var/general_area = /area/station	// the highest parent bellow /area,
+	var/general_area_name = "Station"
+
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
@@ -69,21 +79,12 @@ proc/process_teleport_locs()
 	for(var/area/AR in world)
 		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
-		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == 1)
+		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (picked && picked.z == 1)
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
-	var/not_in_order = 0
-	do
-		not_in_order = 0
-		if(teleportlocs.len <= 1)
-			break
-		for(var/i = 1, i <= (teleportlocs.len - 1), i++)
-			if(sorttext(teleportlocs[i], teleportlocs[i+1]) == -1)
-				teleportlocs.Swap(i, i+1)
-				not_in_order = 1
-	while(not_in_order)
+	sortTim(teleportlocs, /proc/cmp_text_asc)
 
 var/list/ghostteleportlocs = list()
 
@@ -93,24 +94,30 @@ proc/process_ghost_teleport_locs()
 		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
-		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == 1 || picked.z == 5 || picked.z == 3)
+		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (picked && (picked.z == 1 || picked.z == 5 || picked.z == 3))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 
-	var/not_in_order = 0
-	do
-		not_in_order = 0
-		if(ghostteleportlocs.len <= 1)
-			break
-		for(var/i = 1, i <= (ghostteleportlocs.len - 1), i++)
-			if(sorttext(ghostteleportlocs[i], ghostteleportlocs[i+1]) == -1)
-				ghostteleportlocs.Swap(i, i+1)
-				not_in_order = 1
-	while(not_in_order)
+	sortTim(ghostteleportlocs, /proc/cmp_text_asc)
+
+var/global/list/adminbusteleportlocs = list()
+
+proc/process_adminbus_teleport_locs()
+	for(var/area/AR in world)
+		if(adminbusteleportlocs.Find(AR.name)) continue
+		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (picked)
+			adminbusteleportlocs += AR.name
+			adminbusteleportlocs[AR.name] = AR
+
+	sortTim(adminbusteleportlocs, /proc/cmp_text_dsc)
 
 
 /*-----------------------------------------------------------------------------*/
+
+/area/station//TODO: make every area in the MAIN station inherit from this.
+	name = "Station"
 
 /area/engineering/
 
@@ -126,6 +133,9 @@ proc/process_ghost_teleport_locs()
 /area/admin
 	name = "\improper Admin room"
 	icon_state = "start"
+
+/area/no_ethereal
+	anti_ethereal = 1
 
 
 
@@ -804,6 +814,48 @@ proc/process_ghost_teleport_locs()
 	name = "Ghetto Bar"
 	icon_state = "ghettobar"
 
+//Defficiency
+
+/area/maintenance/vault
+	name = "Vault Maintenance"
+	icon_state = "vaultmaint"
+
+/area/derelictparts/fsderelict
+	name = "Fore Starboard Derelict"
+	icon_state = "fsderelict"
+
+/area/derelictparts/asderelict
+	name = "Aft Starboard Derelict"
+	icon_state = "asderelict"
+
+/area/derelictparts/apderelict
+	name = "Aft Port Derelict"
+	icon_state = "apderelict"
+
+/area/derelictparts/fore
+	name = "Fore Derelict"
+	icon_state = "fderelict"
+
+/area/derelictparts/port
+	name = "Port Derelict"
+	icon_state = "pderelict"
+
+/area/derelictparts/aft
+	name = "Aft Derelict"
+	icon_state = "aderelict"
+
+/area/derelictparts/library
+	name = "Abandoned Library"
+	icon_state = "libraryderelict"
+
+/area/derelictparts/stripclub
+	name = "Abandoned Strip Club"
+	icon_state = "stripclubderelict"
+
+/area/derelictparts/diner
+	name = "Abandoned Diner"
+	icon_state = "dinerderelict"
+
 //Hallway
 
 /area/hallway/primary/fore
@@ -977,6 +1029,10 @@ proc/process_ghost_teleport_locs()
 /area/lawoffice
 	name = "\improper Law Office"
 	icon_state = "law"
+
+/area/crew_quarters/casino
+	name = "Casino"
+	icon_state = "casino"
 
 
 
@@ -1485,6 +1541,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Custodial Closet"
 	icon_state = "janitor"
 
+/area/janitor2/
+	name = "\improper Custodial Closet"
+	icon_state = "janitor"
+
 /area/hydroponics
 	name = "Hydroponics"
 	icon_state = "hydro"
@@ -1642,6 +1702,9 @@ proc/process_ghost_teleport_locs()
 /area/derelict
 	name = "\improper Derelict Station"
 	icon_state = "storage"
+
+	general_area = /area/derelict
+	general_area_name = "Derelict Station"
 
 /area/derelict/hallway/primary
 	name = "\improper Derelict Primary Hallway"
@@ -1870,6 +1933,14 @@ proc/process_ghost_teleport_locs()
 //////////////////////////////
 // VOX TRADING POST
 //////////////////////////////
+
+/area/vox_trading_post
+	name = "\improper Vox Trade Outpost"
+	icon_state = "yellow"
+
+	general_area = /area/vox_trading_post
+	general_area_name = "Vox Trade Outpost"
+
 /area/vox_trading_post/trading_floor
 	name = "\improper Vox Trading Floor"
 	icon_state = "yellow"
@@ -1909,6 +1980,11 @@ proc/process_ghost_teleport_locs()
 
 
 // Telecommunications Satellite
+/area/tcommsat
+	name = "Telecommunications Satellite"
+
+	general_area = /area/tcommsat
+	general_area_name = "Telecommunications Satellite"
 
 /area/tcommsat/entrance
 	name = "\improper Satellite Teleporter"
@@ -1959,6 +2035,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Goonecode Containment"
 	icon_state = "ai_upload"
 	jammed=2
+	anti_ethereal=1
 
 
 
@@ -2097,9 +2174,9 @@ proc/process_ghost_teleport_locs()
 		sound_delay = rand(0, 50)
 
 	for(var/mob/living/carbon/human/H in src)
-		if(H.s_tone > -55)
+	/*	if(H.s_tone > -55)
 			H.s_tone--
-			H.update_body()
+			H.update_body()*/
 		if(H.client)
 			mysound.status = SOUND_UPDATE
 			H << mysound
@@ -2172,6 +2249,7 @@ var/list/the_station_areas = list (
 	/area/turret_protected/tcomms_control_room,
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,
+	/area/derelictparts,
 )
 
 
@@ -2185,6 +2263,7 @@ var/list/the_station_areas = list (
 	requires_power = 0
 	var/sound/mysound = null
 
+/* We have a jukebox now, fuck that
 /area/beach/New()
 	..()
 	var/sound/S = new/sound()
@@ -2205,6 +2284,7 @@ var/list/the_station_areas = list (
 			Obj << mysound
 	return
 
+//This only works when using Move() to exit the area
 /area/beach/Exited(atom/movable/Obj)
 	if(ismob(Obj))
 		if(Obj:client)
@@ -2233,3 +2313,4 @@ var/list/the_station_areas = list (
 
 	spawn(60) .()
 
+*/

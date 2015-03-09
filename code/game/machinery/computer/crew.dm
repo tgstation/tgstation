@@ -54,10 +54,7 @@
 		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 		return 0
 	if( href_list["close"] )
-		var/mob/user = usr
-		var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
-		usr.unset_machine()
-		ui.close()
+		if(usr.machine == src) usr.unset_machine()
 		return 0
 	if(href_list["update"])
 		src.updateDialog()
@@ -109,15 +106,15 @@
 				crewmemberData["x"] = pos.x
 				crewmemberData["y"] = pos.y
 				crewmemberData["z"] = pos.z
-				crewmemberData["xoffset"] = pos.x+WORLD_X_OFFSET
-				crewmemberData["yoffset"] = pos.y+WORLD_X_OFFSET
+				crewmemberData["xoffset"] = pos.x-WORLD_X_OFFSET
+				crewmemberData["yoffset"] = pos.y-WORLD_Y_OFFSET
 
 				crewmembers += list(crewmemberData)
 				// Works around list += list2 merging lists; it's not pretty but it works
 				//crewmembers += "temporary item"
 				//crewmembers[crewmembers.len] = crewmemberData
 
-	crewmembers = sortByKey(crewmembers, "name")
+	crewmembers = sortList(crewmembers)
 
 	data["crewmembers"] = crewmembers
 
@@ -152,7 +149,7 @@
 	if(isnull(track_special_role))
 		return C.has_sensor
 
-	return H.mind.special_role == track_special_role
+	return (H.mind ? H.mind.special_role == track_special_role : 1)
 
 /obj/machinery/computer/crew/proc/scan()
 	for(var/mob/living/carbon/human/H in mob_list)

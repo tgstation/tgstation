@@ -11,7 +11,7 @@
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT  | OPENCONTAINER
 	slot_flags = SLOT_BELT
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user as mob)
@@ -88,9 +88,9 @@
 	else
 		icon_state = "[initial(icon_state)]0"
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/examine()
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/examine(mob/user)
 	..()
 	if(reagents && reagents.reagent_list.len)
-		usr << "\blue It is currently loaded."
+		user << "<span class='info'>It ready for injection.</span>"
 	else
-		usr << "\blue It is spent."
+		user << "<span class='info'>The autoinjector has been spent.</span>"

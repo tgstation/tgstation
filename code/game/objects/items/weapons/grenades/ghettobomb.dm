@@ -2,16 +2,16 @@
 
 //iedcasing assembly crafting//
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attackby(var/obj/item/I, mob/user as mob)
-        if(istype(I, /obj/item/device/assembly/igniter))
-                var/obj/item/device/assembly/igniter/G = I
-                var/obj/item/weapon/grenade/iedcasing/W = new /obj/item/weapon/grenade/iedcasing
-                user.before_take_item(G)
-                user.before_take_item(src)
-                user.put_in_hands(W)
-                user << "<span  class='notice'>You stuff the [I] in the [src], emptying the contents beforehand.</span>"
-                W.underlays += image(src.icon, icon_state = src.icon_state)
-                del(I)
-                del(src)
+    if(istype(I, /obj/item/device/assembly/igniter))
+        var/obj/item/device/assembly/igniter/G = I
+        var/obj/item/weapon/grenade/iedcasing/W = new /obj/item/weapon/grenade/iedcasing
+        user.before_take_item(G)
+        user.before_take_item(src)
+        user.put_in_hands(W)
+        user << "<span  class='notice'>You stuff the [I] in the [src], emptying the contents beforehand.</span>"
+        W.underlays += image(src.icon, icon_state = src.icon_state)
+        del(I)
+        del(src)
 
 
 /obj/item/weapon/grenade/iedcasing
@@ -23,7 +23,8 @@
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	var/assembled = 0
 	active = 1
@@ -48,9 +49,9 @@
 
 
 /obj/item/weapon/grenade/iedcasing/attackby(var/obj/item/I, mob/user as mob) //Wiring the can for ignition
-	if(istype(I, /obj/item/weapon/cable_coil))
+	if(istype(I, /obj/item/stack/cable_coil))
 		if(assembled == 1)
-			var/obj/item/weapon/cable_coil/C = I
+			var/obj/item/stack/cable_coil/C = I
 			C.use(1)
 			assembled = 2
 			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
@@ -85,9 +86,7 @@
 	explosion(src.loc,-1,0,2)
 	del(src)
 
-/obj/item/weapon/grenade/iedcasing/examine()
-	set src in usr
-	usr << desc
+/obj/item/weapon/grenade/iedcasing/examine(mob/user)
+	..()
 	if(assembled == 3)
-		usr << "You can't tell when it will explode!" //Stops you from checking the time to detonation unlike regular grenades
-		return
+		user << "<span class='info'>You can't tell when it will explode!</span>" //Stops you from checking the time to detonation unlike regular grenades

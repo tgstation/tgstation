@@ -112,6 +112,8 @@
 				stuttering = max(10, stuttering)
 
 	proc/handle_mutations_and_radiation()
+		if(flags & INVULNERABLE)
+			return
 
 		if(getFireLoss())
 			if((M_RESIST_HEAT in mutations) || prob(50))
@@ -221,8 +223,10 @@
 		return
 
 	proc/breathe()
-		if(reagents)
+		if(flags & INVULNERABLE)
+			return
 
+		if(reagents)
 			if(reagents.has_reagent("lexorin")) return
 
 		if(!loc) return //probably ought to make a proper fix for this, but :effort: --NeoFite
@@ -294,7 +298,7 @@
 		return null
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if(status_flags & GODMODE)
+		if((status_flags & GODMODE) || (flags & INVULNERABLE))
 			return
 
 		if(!breath || (breath.total_moles == 0))
@@ -399,7 +403,7 @@
 		return 1
 
 	proc/handle_environment(datum/gas_mixture/environment)
-		if(!environment)
+		if(!environment || (flags & INVULNERABLE))
 			return
 		var/environment_heat_capacity = environment.heat_capacity()
 		if(istype(get_turf(src), /turf/space))

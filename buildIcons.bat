@@ -1,3 +1,3 @@
-cd icons\mob\in-hand
-call ss13_makeinhands
+cd %~dp0
+call dmi_compile
 pause

@@ -22,7 +22,8 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
 
@@ -42,12 +43,11 @@
 	attack_verb = list("attacked", "poked")
 	melt_temperature = MELTPOINT_STEEL
 
-/obj/item/weapon/kitchen/utensil/pspoon
+/obj/item/weapon/kitchen/utensil/spoon/plastic
 	name = "plastic spoon"
 	desc = "Super dull action!"
 	icon_state = "pspoon"
-	attack_verb = list("attacked", "poked")
-	melt_temperature = MELTPOINT_STEEL
+	melt_temperature = MELTPOINT_PLASTIC
 
 /*
  * Forks
@@ -56,59 +56,79 @@
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
+	sharpness = 0.6
+	var/loaded_food_name
+	var/image/loaded_food
 	melt_temperature = MELTPOINT_STEEL
 
+/obj/item/weapon/kitchen/utensil/fork/New()
+	..()
+	reagents = new(10)
+	reagents.my_atom = src
+
 /obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M))
+	if(!istype(M) || !istype(user))
 		return ..()
 
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head" && M != user && !loaded_food)
 		return ..()
 
-	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
+	if (src.loaded_food)
+		reagents.update_total()
 		if(M == user)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] eats a delicious forkful of omelette!", user), 1)
-				M.reagents.add_reagent("nutriment", 1)
+			user.visible_message("\blue [user] eats a delicious forkful of [loaded_food_name]!")
 		else
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] feeds [] a delicious forkful of omelette!", user, M), 1)
-				M.reagents.add_reagent("nutriment", 1)
-		src.icon_state = "fork"
+			user.visible_message("\blue [user] feeds [M] a delicious forkful of [loaded_food_name]!")
+		reagents.reaction(M, INGEST)
+		reagents.trans_to(M.reagents, reagents.total_volume)
+		overlays -= loaded_food
+		del(loaded_food)
+		loaded_food_name = null
 		return
 	else
 		if((M_CLUMSY in user.mutations) && prob(50))
-			M = user
-		return eyestab(M,user)
+			return eyestab(user,user)
+		else
+			return eyestab(M, user)
 
-/obj/item/weapon/kitchen/utensil/pfork
+/obj/item/weapon/kitchen/utensil/fork/examine(mob/user)
+	..()
+	if(loaded_food)
+		user.show_message("It has a forkful of [loaded_food_name] on it.")
+
+/obj/item/weapon/kitchen/utensil/fork/proc/load_food(obj/item/weapon/reagent_containers/food/snacks/snack, mob/user)
+	if(!snack || !user || !istype(snack) || !istype(user))
+		return
+
+	if(loaded_food)
+		user << "<span class='notice'>You already have food on \the [src].</span>"
+		return
+
+	if(snack.wrapped)
+		user << "<span class='notice'>You can't eat packaging!</span>"
+		return
+
+	if(snack.reagents.total_volume)
+		loaded_food_name = snack.name
+		var/icon/food_to_load = getFlatIcon(snack)
+		food_to_load.Scale(16,16)
+		loaded_food = image(food_to_load)
+		loaded_food.pixel_x = 8 + src.pixel_x
+		loaded_food.pixel_y = 15 + src.pixel_y
+		src.overlays += loaded_food
+		if(snack.reagents.total_volume > snack.bitesize)
+			snack.reagents.trans_to(src, snack.bitesize)
+		else
+			snack.reagents.trans_to(src, snack.reagents.total_volume)
+			snack.bitecount++
+			snack.On_Consume(user)
+	return 1
+
+/obj/item/weapon/kitchen/utensil/fork/plastic
 	name = "plastic fork"
 	desc = "Yay, no washing up to do."
 	icon_state = "pfork"
 	melt_temperature = MELTPOINT_PLASTIC
-
-/obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M))
-		return ..()
-
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
-		return ..()
-
-	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
-		if(M == user)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] eats a delicious forkful of omelette!", user), 1)
-				M.reagents.add_reagent("nutriment", 1)
-		else
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] feeds [] a delicious forkful of omelette!", user, M), 1)
-				M.reagents.add_reagent("nutriment", 1)
-		src.icon_state = "fork"
-		return
-	else
-		if((M_CLUMSY in user.mutations) && prob(50))
-			M = user
-		return eyestab(M,user)
 
 /*
  * Knives
@@ -119,13 +139,14 @@
 	icon_state = "knife"
 	force = 10.0
 	throwforce = 10.0
+	sharpness = 1.2
 	melt_temperature = MELTPOINT_STEEL
 
-	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
-		return (BRUTELOSS)
+/obj/item/weapon/kitchen/utensil/knife/suicide_act(mob/user)
+	viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+						"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+						"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+	return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
 	if ((M_CLUMSY in user.mutations) && prob(50))
@@ -135,31 +156,26 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
-/obj/item/weapon/kitchen/utensil/pknife
+/obj/item/weapon/kitchen/utensil/knife/plastic
 	name = "plastic knife"
 	desc = "The bluntest of blades."
 	icon_state = "pknife"
-	force = 10.0
-	throwforce = 10.0
+	force = 2
+	throwforce = 1
+	sharpness = 0.8
 	melt_temperature = MELTPOINT_PLASTIC
-
-/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
-	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "\red You somehow managed to cut yourself with the [src]."
-		user.take_organ_damage(20)
-		return
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return ..()
 
 /*
  * Kitchen knives
  */
-/obj/item/weapon/kitchenknife
+/obj/item/weapon/kitchen/utensil/knife/large
 	name = "kitchen knife"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
+	sharpness = 1.5
 	force = 10.0
 	w_class = 3.0
 	throwforce = 6.0
@@ -171,28 +187,30 @@
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
-		return (BRUTELOSS)
+/obj/item/weapon/kitchen/utensil/knife/large/suicide_act(mob/user)
+	viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+						"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+						"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+	return (BRUTELOSS)
 
-/obj/item/weapon/kitchenknife/ritual
+/obj/item/weapon/kitchen/utensil/knife/large/ritual
 	name = "ritual knife"
 	desc = "The unearthly energies that once powered this blade are now dormant."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 
 /*
- * Bucher's cleaver
+ * Butcher's cleaver
  */
-/obj/item/weapon/butch
-	name = "Butcher's Cleaver"
+/obj/item/weapon/kitchen/utensil/knife/large/butch
+	name = "butcher's cleaver"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
 	hitsound = "sound/weapons/rapidslice.ogg"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
+	sharpness = 1.2
 	force = 15.0
 	w_class = 2.0
 	throwforce = 8.0
@@ -204,24 +222,18 @@
 	origin_tech = "materials=1"
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/weapon/butch/meatcleaver
-	name = "Meat Cleaver"
+/obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver
+	name = "meat cleaver"
 	icon_state = "mcleaver"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	force = 25.0
 	throwforce = 15.0
 
-	throw_impact(atom/hit_atom)
-		if(istype(hit_atom, /mob/living) && prob(85))
-			var/mob/living/L = hit_atom
-			L.Stun(5)
-			L.Weaken(5)
-		return ..()
-
-
-
-/obj/item/weapon/butch/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+/obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver/throw_impact(atom/hit_atom)
+	if(istype(hit_atom, /mob/living) && prob(85))
+		var/mob/living/L = hit_atom
+		L.Stun(5)
+		L.Weaken(5)
 	return ..()
 
 /*
@@ -291,7 +303,8 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	m_amt = 3000
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
@@ -303,7 +316,7 @@
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	// Drop all the things. All of them.
-	overlays.Cut()
+	overlays.len = 0
 	for(var/obj/item/I in carrying)
 		I.loc = M.loc
 		carrying.Remove(I)
@@ -364,8 +377,8 @@
 
 
 
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-		M << "\red You get slammed in the face with the tray, against your mask!"
+	if(istype(M, /mob/living/carbon/human) && H.check_body_part_coverage(EYES))
+		H << "\red You get slammed in the face with the tray, against your mask!"
 		if(prob(33))
 			src.add_blood(H)
 			if (H.wear_mask)
@@ -485,7 +498,7 @@
 		foundtable = 1
 		break
 
-	overlays.Cut()
+	overlays.len = 0
 
 	for(var/obj/item/I in carrying)
 		I.loc = loc

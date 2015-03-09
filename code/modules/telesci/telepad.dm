@@ -25,7 +25,7 @@
 			opened = 1
 	if(istype(W, /obj/item/bluespace_crystal) && opened)
 		if(amplifier)
-			user << "\red There's something in the booster coil already."
+			user << "<span class='warning'>There's something in the booster coil already.</span>"
 			return
 		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		user << "<span class = 'caution'> You jam \the [W] into \the [src]'s booster coil.</span>"
@@ -34,7 +34,7 @@
 		amplifier=W
 		return
 	if(istype(W, /obj/item/weapon/crowbar) && opened && amplifier)
-		user << "\blue You carefully pry \the [amplifier] from \the [src]."
+		user << "<span class='notice'>You carefully pry \the [amplifier] from \the [src].</span>"
 		var/obj/item/bluespace_crystal/C=amplifier
 		C.loc=get_turf(src)
 		amplifier=null
@@ -74,8 +74,9 @@
 	if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)
 		user << "<span class = 'caution'> You disassemble the telepad.</span>"
-		new /obj/item/stack/sheet/metal(get_turf(src))
-		new /obj/item/stack/sheet/glass(get_turf(src))
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = 1
+		new /obj/item/stack/sheet/glass/glass(get_turf(src))
 		del(src)
 
 ///TELEPAD CALLER///
@@ -101,7 +102,8 @@
 	desc = "Use this to send crates and closets to cargo telepads."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "rcs"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -118,9 +120,10 @@
 /obj/item/weapon/rcs/New()
 	..()
 	processing_objects.Add(src)
-/obj/item/weapon/rcs/examine()
-	desc = "Use this to send crates and closets to cargo telepads. There are [rcharges] charges left."
+
+/obj/item/weapon/rcs/examine(mob/user)
 	..()
+	user << "<span class='info'>There are [rcharges] charges left.</span>"
 
 /obj/item/weapon/rcs/Destroy()
 	processing_objects.Remove(src)

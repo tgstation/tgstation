@@ -7,7 +7,8 @@
 	opacity = 0
 	anchored = 1
 	unacidable = 1
-
+	ghost_read = 0
+	ghost_write = 0
 	var/const/max_health = 200
 	var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
@@ -152,6 +153,8 @@
 		var/malfunction = 0 //Malfunction causes parts of the shield to slowly dissapate
 		var/list/deployed_shields = list()
 		var/locked = 0
+		ghost_read = 0
+		ghost_write = 0
 
 		machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK | SCREWTOGGLE
 
@@ -233,7 +236,7 @@
 /obj/machinery/shieldgen/attack_ghost(mob/user)
 	if(isAdminGhost(user)) src.attack_hand(user)
 	return
-	
+
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
 	if(locked)
 		user << "The machine is locked, you are unable to use it."
@@ -279,8 +282,8 @@
 	if(..())
 		return 1
 
-	if(istype(W, /obj/item/weapon/cable_coil) && malfunction && panel_open)
-		var/obj/item/weapon/cable_coil/coil = W
+	if(istype(W, /obj/item/stack/cable_coil) && malfunction && panel_open)
+		var/obj/item/stack/cable_coil/coil = W
 		user << "\blue You begin to replace the wires."
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, 30))
@@ -326,11 +329,11 @@
 		var/recalc = 0
 		var/locked = 1
 		var/destroyed = 0
-		var/directwired = 1
 //		var/maxshieldload = 200
 		var/obj/structure/cable/attached		// the attached cable
 		var/storedpower = 0
-		flags = FPRINT | CONDUCT
+		flags = FPRINT
+		siemens_coefficient = 1
 		use_power = 0
 
 		machine_flags = WRENCHMOVE | FIXED2WORK
@@ -358,7 +361,7 @@
 		power = 1	// IVE GOT THE POWER!
 		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
 			storedpower += shieldload
-			PN.newload += shieldload //uses powernet power.
+			PN.load += shieldload //uses powernet power.
 //		message_admins("[PN.load]", 1)
 //		use_power(250) //uses APC power
 

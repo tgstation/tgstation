@@ -21,13 +21,15 @@
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 /client/Topic(href, href_list, hsrc)
+	//var/timestart = world.timeofday
+	//testing("topic call for [usr] [href]")
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 
 	//Reduces spamming of links by dropping calls that happen during the delay period
-	if(next_allowed_topic_time > world.time)
-		return
-	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
+//	if(next_allowed_topic_time > world.time)
+//		return
+	//next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
 
 	//search the href for script injection
 	if( findtext(href,"<script",1,0) )
@@ -46,8 +48,9 @@
 		return
 
 	//Logs all hrefs
-	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	if(config && config.log_hrefs && investigations[I_HREFS])
+		var/datum/log_controller/I = investigations[I_HREFS]
+		I.write("<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br />")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -56,16 +59,17 @@
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
 
 	..()	//redirect to hsrc.Topic()
+	//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."
+			src << "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
 			cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "\red You are nearing the spam filter limit for identical messages."
+			src << "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>"
 			return 0
 	else
 		last_message = message
@@ -91,10 +95,24 @@
 	//CONNECT//
 	///////////
 /client/New(TopicData)
+	if(config)
+		winset(src, null, "outputwindow.output.style=[config.world_style_config];")
+		winset(src, null, "window1.msay_output.style=[config.world_style_config];") // it isn't possible to set two window elements in the same winset so we need to call it for each element we're assigning a stylesheet.
+	else
+		src << "<span class='warning'>The stylesheet wasn't properly setup call an administrator to reload the stylesheet or relog.</span>"
 	TopicData = null							//Prevent calls to client.Topic from connect
 
+	//Admin Authorisation
+	holder = admin_datums[ckey]
+	if(holder)
+		admins += src
+		holder.owner = src
+
 	if(connection != "seeker")					//Invalid connection type.
-		return null
+		if(holder)
+			src << "<span class='warning'> You connected to the server with a web client please notify a coder about any issues.</span>"
+		else
+			return null
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
@@ -108,17 +126,11 @@
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
-
+	src << "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>"
 
 	clients += src
 	directory[ckey] = src
 
-	//Admin Authorisation
-	holder = admin_datums[ckey]
-	if(holder)
-		admins += src
-		holder.owner = src
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
@@ -150,7 +162,17 @@
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		winset(src, "rpane.changelog", "background-color=#eaeaea;font-style=bold")
+		prefs.SetChangelog(ckey,changelog_hash)
+		src << "<span class='info'>Changelog has changed since your last visit.</span>"
 
+	//Set map label to correct map name
+	winset(src, "rpane.map", "text=\"[map.nameLong]\"")
+
+	// Notify scanners.
+	INVOKE_EVENT(on_login,list(
+		"client"=src,
+		"admin"=(holder!=null)
+	))
 
 	//////////////
 	//DISCONNECT//
@@ -162,8 +184,6 @@
 	directory -= ckey
 	clients -= src
 	return ..()
-
-
 
 /client/proc/log_client_to_db()
 	if(IsGuestKey(key))
@@ -191,7 +211,6 @@
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
 		related_accounts_ip += "[query_ip.item[1]], "
-		break
 
 	var/sql_computerid = sanitizeSQL(computer_id)
 
@@ -200,7 +219,6 @@
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
 		related_accounts_cid += "[query_cid.item[1]], "
-		break
 
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
@@ -255,8 +273,16 @@
 /client/proc/send_resources()
 //	preload_vox() //Causes long delays with initial start window and subsequent windows when first logged in.
 
+	spawn
+		// Preload the HTML interface. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244 (hidden issue)
+		// "browse_rsc() sometimes failed when an attempt was made to check on the status of a the file before it had finished downloading. This problem appeared only in threaded mode."
+		var/datum/html_interface/hi
+		for (var/type in typesof(/datum/html_interface))
+			hi = new type(null)
+			hi.sendResources(src)
+
 	// Send NanoUI resources to this client
-	nanomanager.send_resources(src)
+	spawn nanomanager.send_resources(src)
 
 	getFiles(
 		'html/search.js',
@@ -279,6 +305,7 @@
 		'icons/pda_icons/pda_mule.png',
 		'icons/pda_icons/pda_notes.png',
 		'icons/pda_icons/pda_power.png',
+		'icons/pda_icons/pda_alert.png',
 		'icons/pda_icons/pda_rdoor.png',
 		'icons/pda_icons/pda_reagent.png',
 		'icons/pda_icons/pda_refresh.png',
@@ -286,6 +313,13 @@
 		'icons/pda_icons/pda_signaler.png',
 		'icons/pda_icons/pda_status.png',
 		'icons/pda_icons/pda_clock.png',
+		'icons/pda_icons/pda_minimap_box.png',
+		'icons/pda_icons/pda_minimap_bg_notfound.png',
+		'icons/pda_icons/pda_minimap_deff.png',
+		'icons/pda_icons/pda_minimap_taxi.png',
+		'icons/pda_icons/pda_minimap_meta.png',
+		'icons/pda_icons/pda_minimap_loc.gif',
+		'icons/pda_icons/pda_minimap_mkr.gif',
 		'icons/spideros_icons/sos_1.png',
 		'icons/spideros_icons/sos_2.png',
 		'icons/spideros_icons/sos_3.png',
@@ -324,7 +358,7 @@
 	if(display_to_user && !(role_desired & ROLEPREF_PERSIST))
 		if(!(role_desired & ROLEPREF_POLLED))
 			spawn
-				var/answer = alert(src,"[display_to_user]\n\nNOTE:  You will only be polled about this role once per round. To change your choice, use Preferences > Setup Special Roles.  The change will take place AFTER this recruiting period.","Role Recruitment", "Yes","No","Never")
+				var/answer = alert(src,"[role_desired]\n\nNOTE:  You will only be polled about this role once per round. To change your choice, use Preferences > Setup Special Roles.  The change will take place AFTER this recruiting period.","Role Recruitment", "Yes","No","Never")
 				switch(answer)
 					if("Never")
 						prefs.roles[role_id] = ROLEPREF_NEVER

@@ -55,10 +55,6 @@
 
 		..()
 
-	MouseDrop_T(var/obj/item/target, mob/user)
-		src.attackby(target,user)
-
-
 	ex_act(var/severity,var/child=null)
 		var/child_severity=severity
 		if(!child)
@@ -118,7 +114,7 @@
 						C.anchored = 1
 						C.density = 1
 						C.update()
-						del(src)
+						qdel(src)
 					return
 				else
 					user << "You need more welding fuel to complete this task."
@@ -176,48 +172,6 @@
 			M.show_message("[user.name] places \the [I] into the [src].", 3)
 
 		update()
-
-	// mouse drop another mob or self
-	//
-	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
-			return
-		if(isanimal(user) && target != user) return //animals cannot put mobs other than themselves into disposal
-		src.add_fingerprint(user)
-		var/target_loc = target.loc
-		var/msg
-		for (var/mob/V in viewers(usr))
-			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-				V.show_message("[usr] starts climbing into the disposal.", 3)
-			if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-				if(target.anchored) return
-				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
-		if(!do_after(usr, 20))
-			return
-		if(target_loc != target.loc)
-			return
-		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
-												// must be awake, not stunned or whatever
-			msg = "[user.name] climbs into the [src]."
-			user << "You climb into the [src]."
-		else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			msg = "[user.name] stuffs [target.name] into the [src]!"
-			user << "You stuff [target.name] into the [src]!"
-			log_attack("<font color='red'>[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.</font>")
-		else
-			return
-		if (target.client)
-			target.client.perspective = EYE_PERSPECTIVE
-			target.client.eye = src
-		target.loc = src
-
-		for (var/mob/C in viewers(src))
-			if(C == user)
-				continue
-			C.show_message(msg, 3)
-
-		update()
-		return
 
 	// can breath normally in the disposal
 	alter_health()
@@ -354,7 +308,7 @@
 
 	// update the icon & overlays to reflect mode & status
 	proc/update()
-		overlays.Cut()
+		overlays.len = 0
 		if(stat & BROKEN)
 			icon_state = "disposal-broken"
 			mode = 0
@@ -484,6 +438,7 @@
 		var/turf/target
 		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
+			H.active = 0 // Stop disposalholder's move() processing so we don't call the trunk's expel() too
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -511,6 +466,68 @@
 			return 0
 		else
 			return ..(mover, target, height, air_group)
+
+/obj/machinery/disposal/MouseDrop_T(atom/dropping, mob/user)
+	if(istype(user, /mob/living/silicon/ai))
+		return
+
+	if(!ismob(dropping))
+		if(istype(dropping, /obj/item))
+			if(!user.restrained() && user.canmove)
+				attackby(dropping, user)
+
+		return
+
+	var/locHolder = dropping.loc
+	var/mob/target = dropping
+
+	if(target == user)
+		if(!user.restrained() && user.canmove)
+			target.visible_message("[target] starts climbing into the [src].", "You start climbing into the [src].")
+		else
+			return
+	else
+		if(isanimal(user))
+			return // animals cannot put mobs other than themselves into disposal
+
+		if(!user.restrained() && user.canmove)
+			if(target.buckled)
+				return
+
+			user.visible_message("[user] starts stuffing [target] into the [src].", "You start stuffing [target] into the [src].")
+		else
+			return
+
+	if(!do_after(user, 20))
+		return
+
+	if(locHolder != target.loc)
+		return
+
+	if(target == user)
+		if(!user.restrained() && user.canmove)
+			target.visible_message("[target] climbed into the [src].", "You climbed into the [src].")
+		else
+			return
+	else
+		if(!user.restrained() && user.canmove)
+			if(target.buckled)
+				return
+
+			user.visible_message("[user] stuffed [target] into the [src]!", "You stuffed [target] into the [src]!")
+			log_attack("<SPAN CLASS='warning'>[key_name(user)] placed [key_name(target)] in a disposals unit/([src]).</SPAN>")
+		else
+			return
+
+	add_fingerprint(user)
+
+	if(target.client)
+		target.client.perspective = EYE_PERSPECTIVE
+		target.client.eye = src
+
+	target.loc = src
+
+	update()
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
@@ -553,7 +570,7 @@
 			AM.loc = src
 			if(istype(AM, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = AM
-				if(M_FAT in H.mutations)		// is a human and fat?
+				if((M_FAT in H.mutations) && (H.species && H.species.flags & CAN_BE_FAT))		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
 			if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 				var/obj/structure/bigDelivery/T = AM
@@ -595,6 +612,8 @@
 
 				break
 			sleep(1)		// was 1
+			if(!loc || isnull(loc))
+				del(src)
 			var/obj/structure/disposalpipe/curr = loc
 			last = curr
 			curr = curr.transfer(src)
@@ -760,10 +779,11 @@
 	proc/expel(var/obj/structure/disposalholder/H, var/turf/T, var/direction)
 
 		var/turf/target
-
+		if(!T || isnull(T))
+			T = loc
 		if(T.density)		// dense ouput turf, so stop holder
 			H.active = 0
-			H.loc = src
+			H.loc = src.
 			return
 		if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
@@ -841,7 +861,7 @@
 				expel(H, T, 0)
 
 		spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
-			del(src)
+			qdel(src)
 
 
 	// pipe affected by explosion
@@ -924,7 +944,7 @@
 		C.anchored = 1
 		C.update()
 
-		del(src)
+		qdel(src)
 
 // *** TEST verb
 //client/verb/dispstop()
@@ -1286,7 +1306,7 @@
 	welded()
 //		var/obj/item/scrap/S = new(src.loc)
 //		S.set_components(200,0,0)
-		del(src)
+		qdel(src)
 
 // the disposal outlet machine
 
@@ -1343,7 +1363,8 @@
 				AM.loc = src.loc
 				AM.pipe_eject(dir)
 				spawn(5)
-					AM.throw_at(target, 3, 1)
+					if(AM)
+						AM.throw_at(target, 3, 1)
 			H.vent_gas(src.loc)
 			qdel(H)
 

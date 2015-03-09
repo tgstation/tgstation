@@ -2,7 +2,7 @@
 	New()
 		..()
 		new/obj/item/weapon/reagent_containers/food/drinks/bottle/rum(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/deus(src)
 		new/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
 		new/obj/item/weapon/lighter/zippo(src)
 
@@ -51,7 +51,7 @@
 		..()
 		new/obj/item/clothing/under/chameleon(src)
 		for(var/i = 0, i < 7, i++)
-			new/obj/item/clothing/tie/horrible(src)
+			new/obj/item/clothing/accessory/tie/horrible(src)
 
 /obj/structure/closet/crate/secure/loot/bay_10
 	New()

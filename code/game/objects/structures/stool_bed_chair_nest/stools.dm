@@ -29,14 +29,16 @@
 
 /obj/structure/stool/blob_act()
 	if(prob(75))
-		new /obj/item/stack/sheet/metal(src.loc)
-		del(src)
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = 1
+		qdel(src)
 
 /obj/structure/stool/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/metal(src.loc)
-		del(src)
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = 1
+		qdel(src)
 	return
 
 /obj/structure/stool/hologram/blob_act()
@@ -67,7 +69,8 @@
 
 /obj/item/weapon/stool/attack_self(mob/user as mob)
 	..()
-	origin.loc = get_turf(src)
+	if(origin)
+		origin.loc = get_turf(src)
 	user.u_equip(src)
 	user.visible_message("\blue [user] puts [src] down.", "\blue You put [src] down.")
 	del src
@@ -77,9 +80,9 @@
 		user.visible_message("\red [user] breaks [src] over [M]'s back!.")
 		user.u_equip(src)
 		if(!istype(origin,/obj/structure/stool/hologram))
-			var/obj/item/stack/sheet/metal/m = new/obj/item/stack/sheet/metal
-			m.loc = get_turf(src)
-			del src
+			var/obj/item/stack/sheet/metal/MM = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			MM.amount = 1
+			qdel(src)
 		var/mob/living/T = M
 		T.Weaken(10)
 		T.apply_damage(20)

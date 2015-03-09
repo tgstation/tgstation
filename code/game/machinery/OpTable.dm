@@ -10,6 +10,7 @@
 	active_power_usage = 5
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
+	throwpass = 1 //so Adjacent passes.
 
 	var/obj/machinery/computer/operating/computer = null
 
@@ -74,7 +75,7 @@
 		return 0
 
 
-/obj/machinery/optable/MouseDrop_T(obj/O as obj, mob/user as mob)
+/obj/machinery/optable/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 
 	if ((( istype(O, /obj/item/weapon) ) || user.get_active_hand() == O))
 
@@ -83,25 +84,19 @@
 			step(O, get_dir(O, src))
 		return
 	else
-		if(O.loc == user) //no you can't pull things out of your ass
+		if(!ismob(O)) //humans only
+			return
+		if(O.loc == user || !isturf(O.loc) || !isturf(user.loc)) //no you can't pull things out of your ass
 			return
 		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
 			return
-		if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
-			return
-		if(!ismob(O)) //humans only
+		if(O.anchored || !Adjacent(user) || !user.Adjacent(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 			return
 		if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
 			return
 		if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
 			return
 		if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
-			return
-		if(isrobot(user))
-			if(!istype(user:module, /obj/item/weapon/robot_module/medical))
-				user << "<span class='warning'>You do not have the means to do this!</span>"
-				return
-		if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
 			return
 		var/mob/living/L = O
 		if(!istype(L) || L.buckled || L == user)
@@ -121,7 +116,7 @@
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.resting)
+		if(M.lying)
 			src.victim = M
 			icon_state = "table2-active"
 			return 1
@@ -133,6 +128,8 @@
 	check_victim()
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
+	if(C.buckled)
+		C.buckled.unbuckle()
 	if (C == user)
 		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
 	else
@@ -173,7 +170,5 @@
 			del(W)
 			return
 	if(isrobot(user)) return
-	user.drop_item()
-	if(W && W.loc)
-		W.loc = src.loc
+	user.drop_item(src)
 	return

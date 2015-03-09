@@ -99,7 +99,7 @@ client/proc/Test_ZAS_Connection(var/turf/simulated/T as turf)
 		for(var/turf/T in contents)
 			current_zone_images += image('icons/misc/debug_group.dmi', T, null, TURF_LAYER)
 
-		for(var/turf/space/S in unsimulated_tiles)
+		for(var/turf/S in unsimulated_tiles)
 			current_zone_images += image('icons/misc/debug_space.dmi', S, null, TURF_LAYER)
 
 		client << "<u>Zone Air Contents</u>"
@@ -111,7 +111,7 @@ client/proc/Test_ZAS_Connection(var/turf/simulated/T as turf)
 		client << "Heat Energy: [air.temperature * air.heat_capacity()] J"
 		client << "Pressure: [air.return_pressure()] KPa"
 		client << ""
-		client << "Space Tiles: [length(unsimulated_tiles)]"
+		client << "Unsimulated Zone(space/catwalk) Tiles: [length(unsimulated_tiles)]"
 		client << "Movable Objects: [length(movables())]"
 		client << "<u>Connections: [length(connections)]</u>"
 

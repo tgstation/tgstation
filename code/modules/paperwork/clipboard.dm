@@ -9,7 +9,7 @@
 	throw_range = 10
 	var/obj/item/weapon/pen/haspen		//The stored pen.
 	var/obj/item/weapon/toppaper	//The topmost piece of paper.
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 
 /obj/item/weapon/clipboard/New()
@@ -35,7 +35,7 @@
 			return
 
 /obj/item/weapon/clipboard/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	if(toppaper)
 		overlays += toppaper.icon_state
 		overlays += toppaper.overlays

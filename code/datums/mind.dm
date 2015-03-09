@@ -616,7 +616,7 @@ datum/mind
 					var/obj/item/device/flash/flash = locate() in L
 					if (!flash)
 						usr << "\red Deleting flash failed!"
-					del(flash)
+					qdel(flash)
 
 				if("repairflash")
 					var/list/L = current.get_contents()
@@ -629,7 +629,7 @@ datum/mind
 				if("reequip")
 					var/list/L = current.get_contents()
 					var/obj/item/device/flash/flash = locate() in L
-					del(flash)
+					qdel(flash)
 					take_uplink()
 					var/fail = 0
 					fail |= !ticker.mode.equip_traitor(current, 1)
@@ -677,7 +677,7 @@ datum/mind
 						if (!where)
 							usr << "\red Spawning tome failed!"
 						else
-							H << "A tome, a message from your new master, appears in your [where]."
+							H << "<span class='sinister'>A tome, a message from your new master, appears in your [where].</span>"
 
 				if("amulet")
 					if (!ticker.mode.equip_cultist(current))
@@ -748,7 +748,7 @@ datum/mind
 						usr << "\red No changeling!"
 						return
 					var/new_g = input(usr,"Number of genomes","Changeling",changeling.geneticpoints) as num
-					changeling.geneticpoints = between(0,new_g,100)
+					changeling.geneticpoints = Clamp(new_g, 0, 100)
 					log_admin("[key_name_admin(usr)] has set changeling [current] to [changeling.geneticpoints] genomes.")
 
 		else if (href_list["vampire"])
@@ -800,15 +800,15 @@ datum/mind
 					current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 				if("dressup")
 					var/mob/living/carbon/human/H = current
-					del(H.belt)
-					del(H.back)
-					del(H.ears)
-					del(H.gloves)
-					del(H.head)
-					del(H.shoes)
-					del(H.wear_id)
-					del(H.wear_suit)
-					del(H.w_uniform)
+					qdel(H.belt)
+					qdel(H.back)
+					qdel(H.ears)
+					qdel(H.gloves)
+					qdel(H.head)
+					qdel(H.shoes)
+					qdel(H.wear_id)
+					qdel(H.wear_suit)
+					qdel(H.w_uniform)
 
 					if (!ticker.mode.equip_syndicate(current))
 						usr << "\red Equipping a syndicate failed!"
@@ -1027,19 +1027,22 @@ datum/mind
 		var/list/L = current.get_contents()
 		for (var/t in L)
 			if (istype(t, /obj/item/device/pda))
-				if (t:uplink) del(t:uplink)
-				t:uplink = null
+				var/obj/item/device/pda/P = t
+				if (P.uplink) del(P.uplink)
+				P.uplink = null
 			else if (istype(t, /obj/item/device/radio))
-				if (t:traitorradio) del(t:traitorradio)
-				t:traitorradio = null
-				t:traitor_frequency = 0.0
+				var/obj/item/device/radio/R = t
+				if (R.traitorradio) del(R.traitorradio)
+				R.traitorradio = null
+				R.traitor_frequency = 0.0
 			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
-				if (t:origradio)
+				var/obj/item/weapon/W = t
+				if (W.origradio)
 					var/obj/item/device/radio/R = t:origradio
 					R.loc = current.loc
 					R.traitorradio = null
 					R.traitor_frequency = 0.0
-				del(t)
+				del(W)
 
 		// remove wizards spells
 		//If there are more special powers that need removal, they can be procced into here./N
@@ -1061,22 +1064,24 @@ datum/mind
 	proc/take_uplink()
 		var/obj/item/device/uplink/hidden/H = find_syndicate_uplink()
 		if(H)
-			del(H)
+			qdel(H)
 
 
 	proc/make_AI_Malf()
+		if(!isAI(current))
+			return
 		if(!(src in ticker.mode.malf_ai))
 			ticker.mode.malf_ai += src
-
-			current.verbs += /mob/living/silicon/ai/proc/choose_modules
-			current.verbs += /datum/game_mode/malfunction/proc/takeover
-			current:malf_picker = new /datum/module_picker
-			var/datum/ai_laws/laws = current:laws
+			var/mob/living/silicon/ai/A = current
+			A.verbs += /mob/living/silicon/ai/proc/choose_modules
+			A.verbs += /datum/game_mode/malfunction/proc/takeover
+			A.malf_picker = new /datum/module_picker
+			var/datum/ai_laws/laws = A.laws
 			laws.malfunction()
-			current:show_laws()
-			current << "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"
+			A.show_laws()
+			A << "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"
 			special_role = "malfunction"
-			current.icon_state = "ai-malf"
+			A.icon_state = "ai-malf"
 
 	proc/make_Tratior()
 		if(!(src in ticker.mode.traitors))
@@ -1103,15 +1108,15 @@ datum/mind
 			current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 
 			var/mob/living/carbon/human/H = current
-			del(H.belt)
-			del(H.back)
-			del(H.ears)
-			del(H.gloves)
-			del(H.head)
-			del(H.shoes)
-			del(H.wear_id)
-			del(H.wear_suit)
-			del(H.w_uniform)
+			qdel(H.belt)
+			qdel(H.back)
+			qdel(H.ears)
+			qdel(H.gloves)
+			qdel(H.head)
+			qdel(H.shoes)
+			qdel(H.wear_id)
+			qdel(H.wear_suit)
+			qdel(H.w_uniform)
 
 			ticker.mode.equip_syndicate(current)
 
@@ -1202,7 +1207,7 @@ datum/mind
 
 		var/list/L = current.get_contents()
 		var/obj/item/device/flash/flash = locate() in L
-		del(flash)
+		qdel(flash)
 		take_uplink()
 		var/fail = 0
 	//	fail |= !ticker.mode.equip_traitor(current, 1)

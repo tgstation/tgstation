@@ -110,7 +110,6 @@
 	return 0
 
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
-
 	if(istype(A, /obj/item/gun_part/silencer) && src.gun_flags &SILENCECOMP)
 		if(user.l_hand != src && user.r_hand != src)	//if we're not in his hands
 			user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
@@ -154,7 +153,7 @@
 				num_loaded++
 
 	if(num_loaded)
-		user << "\blue You load [num_loaded] shell\s into \the [src]!"
+		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 	A.update_icon()
 	update_icon()
 	return
@@ -167,7 +166,7 @@
 			var/obj/item/ammo_casing/AC = loaded[1]
 			loaded -= AC
 			AC.loc = get_turf(src) //Eject casing onto ground.
-			user << "\blue You unload \the [AC] from \the [src]!"
+			user << "<span class='notice'>You unload \the [AC] from \the [src]!</span>"
 			update_icon()
 			return
 		if (load_method == MAGAZINE && stored_magazine)
@@ -177,7 +176,7 @@
 			var/obj/item/ammo_casing/AC = chambered
 			AC.loc = get_turf(src) //Eject casing onto ground.
 			chambered = null
-			user << "\blue You unload \the [AC] from \the [src]!"
+			user << "<span class='notice'>You unload \the [AC] from \the [src]!</span>"
 			update_icon()
 			return
 		if(silenced)
@@ -191,9 +190,9 @@
 			update_icon()
 			return
 	else
-		user << "\red Nothing loaded in \the [src]!"
+		user << "<span class='warning'>Nothing loaded in \the [src]!</span>"
 
-/obj/item/weapon/gun/projectile/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, struggle = 0)
 	..()
 	if(!chambered && stored_magazine && !stored_magazine.ammo_count() && gun_flags &AUTOMAGDROP) //auto_mag_drop decides whether or not the mag is dropped once it empties
 		RemoveMag()
@@ -202,14 +201,13 @@
 
 /obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
-	usr << "Has [getAmmo()] round\s remaining."
+	user << "<span class='info'>Has [getAmmo()] round\s remaining.</span>"
 //		if(in_chamber && !loaded.len)
 //			usr << "However, it has a chambered round."
 //		if(in_chamber && loaded.len)
 //			usr << "It also has a chambered round." {R}
 	if(istype(silenced, /obj/item/gun_part/silencer))
-		usr <<"It has a supressor attached to the barrel."
-	return
+		user << "<span class='warning'>It has a supressor attached to the barrel.</span>"
 
 /obj/item/weapon/gun/projectile/proc/getAmmo()
 	var/bullets = 0

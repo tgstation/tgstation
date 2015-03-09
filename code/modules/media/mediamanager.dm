@@ -38,8 +38,23 @@ function SetMusic(url, time, volume) {
 	</script>
 "}
 
-/* OLD, DO NOT USE.  CONTROLS.CURRENTPOSITION IS BROKEN.
-var/const/PLAYER_HTML={"
+/* OLD, DO NOT USE.  CONTROLS.CURRENTPOSITION IS BROKEN.*/
+/*var/const/PLAYER_OLD_HTML={"
+	<OBJECT id='playerwmp' CLASSID='CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6' type='application/x-oleobject'></OBJECT>
+	<script>
+function noErrorMessages () { return true; }
+window.onerror = noErrorMessages;
+function SetMusic(url, time, volume) {
+	var player = document.getElementById('playerwmp');
+	player.URL = url;
+	player.controls.currentPosition = time;
+	player.settings.volume = volume;
+}
+	</script>"}
+
+*/
+
+var/const/PLAYER_OLD_HTML={"
 	<OBJECT id='player' CLASSID='CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6' type='application/x-oleobject'></OBJECT>
 	<script>
 function noErrorMessages () { return true; }
@@ -51,7 +66,6 @@ function SetMusic(url, time, volume) {
 	player.Settings.volume = volume;
 }
 	</script>"}
-*/
 
 // Hook into the events we desire.
 /hook_handler/soundmanager
@@ -126,16 +140,23 @@ function SetMusic(url, time, volume) {
 
 	var/const/window = "rpane.hosttracker"
 	//var/const/window = "mediaplayer" // For debugging.
+	var/playerstyle
 
 	New(var/mob/holder)
 		src.mob=holder
 		owner=src.mob.client
-		if(owner.prefs && !isnull(owner.prefs.volume))
-			volume = owner.prefs.volume
+		if(owner.prefs)
+			if(!isnull(owner.prefs.volume))
+				volume = owner.prefs.volume
+			if(owner.prefs.usewmp)
+				playerstyle = PLAYER_OLD_HTML
+			else
+				playerstyle = PLAYER_HTML
 
 	// Actually pop open the player in the background.
 	proc/open()
-		owner << browse(PLAYER_HTML, "window=[window]")
+		owner << browse(null, "window=[window]")
+		owner << browse(playerstyle, "window=[window]")
 		send_update()
 
 	// Tell the player to play something via JS.
@@ -149,7 +170,7 @@ function SetMusic(url, time, volume) {
 		if (url != targetURL || abs(targetStartTime - start_time) > 1 || abs(targetVolume - source_volume) > 0.1 /* 10% */)
 			url = targetURL
 			start_time = targetStartTime
-			source_volume = between(0,targetVolume,1)
+			source_volume = Clamp(targetVolume, 0, 1)
 			send_update()
 
 	proc/stop_music()

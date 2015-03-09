@@ -61,36 +61,40 @@
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	*/
 
-/client/proc/fix_next_move()
-	set category = "Debug"
-	set name = "Unfreeze Everyone"
-	var/largest_move_time = 0
-	var/largest_click_time = 0
-	var/mob/largest_move_mob = null
-	var/mob/largest_click_mob = null
+/client/proc/_fix_delayers(var/dtype)
+	var/largest_delay = 0
+	var/mob/most_delayed_mob = null
+	var/delay=0
 	for(var/mob/M in world)
 		if(!M.client)
 			continue
-		if(M.next_move >= largest_move_time)
-			largest_move_mob = M
-			if(M.next_move > world.time)
-				largest_move_time = M.next_move - world.time
-			else
-				largest_move_time = 1
-		if(M.next_click >= largest_click_time)
-			largest_click_mob = M
-			if(M.next_click > world.time)
-				largest_click_time = M.next_click - world.time
-			else
-				largest_click_time = 0
-		log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  next_click = [M.next_click]  world.time = [world.time]")
-		M.next_move = 1
-		M.next_click = 0
-	message_admins("[key_name_admin(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [largest_move_time/10] seconds!", 1)
-	message_admins("[key_name_admin(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!", 1)
+		// Get stats
+		var/datum/delay_controller/delayer = M.vars["[dtype]_delayer"]
+		if(delayer.blocked())
+			delay = delayer.next_allowed - world.time
+			if(delay > largest_delay)
+				most_delayed_mob=M
+				largest_delay=delay
+
+		// Unfreeze
+		delayer.next_allowed = 0
+	message_admins("[key_name_admin(most_delayed_mob)] had the largest [dtype] delay with [largest_delay] frames / [largest_delay/10] seconds!", 1)
+
+/client/proc/fix_next_move()
+	set category = "Debug"
+	set name = "Unfreeze Everyone"
+	if(!usr.client.holder) return
+
+	_fix_delayers("move")
+	_fix_delayers("click")
+	_fix_delayers("attack")
+	_fix_delayers("special")
+
 	message_admins("world.time = [world.time]", 1)
 	feedback_add_details("admin_verb","UFE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
+
+#undef GATHER_DELAYER_LOCKUPS
 
 /client/proc/radio_report()
 	set category = "Debug"
@@ -206,3 +210,36 @@
 	for(var/t in jobban_keylist)
 		if(findtext(t, filter))
 			usr << "[t]"
+
+// For /vg/ Wiki docs
+/client/proc/dump_chemreactions()
+	set category = "Debug"
+	set name = "Dump Chemical Reactions"
+
+	var/paths = typesof(/datum/chemical_reaction) - /datum/chemical_reaction
+
+	var/str = {"
+{| class="wikitable"
+|-
+! Name
+! Reactants
+! Result"}
+	for(var/path in paths)
+		var/datum/chemical_reaction/R = new path()
+		str += {"
+|-
+! [R.name]"}
+		if(R.required_reagents)
+			str += "\n|<ul>"
+			for(var/r_id in R.required_reagents)
+				str += "<li>{{reagent|[R.required_reagents[r_id]]|[r_id]}}</li>"
+			for(var/r_id in R.required_catalysts)
+				str += "<li>{{reagent|[R.required_catalysts[r_id]]|[r_id]}}</li>"
+			str += "</ul>"
+		else
+			str += "\n|''None!''"
+		if(R.result)
+			str += "\n|{{reagent|[R.result_amount]|[R.result]}}"
+		else
+			str += "\n|''(Check [R.type]/on_reaction()!)''"
+	text2file(str+"\n|}","chemistry-recipes.wiki")

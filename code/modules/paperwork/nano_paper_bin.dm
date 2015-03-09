@@ -1,6 +1,7 @@
 /obj/item/weapon/paper_bin/nano
 	name = "Nano paper dispenser"
 	icon = 'icons/obj/bureaucracy.dmi'
+	desc = "This machine dispenses nano paper"
 	icon_state = "np_dispenser"
 	item_state = "sheet-metal"
 	throwforce = 1
@@ -60,17 +61,12 @@
 	update_icon()
 
 
-/obj/item/weapon/paper_bin/nano/examine()
-	set src in oview(1)
-	var/desc = "This machine dispenses nano paper"
-	usr << desc
-
-	if(in_range(usr, src))
-		if(ressources)
-			usr << "There is [ressources] nano paper left in the dispenser!"
-		else
-			usr << "<span class='warning'>The nano paper dispenser is empty! add more plasteel to refil!</span>"
-		return
+/obj/item/weapon/paper_bin/nano/examine(mob/user)
+	..()
+	if(ressources)
+		user << "<span class='info'>There is [ressources] nano paper left in the dispenser!</span>"
+	else
+		user << "<span class='warning'>The nano paper dispenser is empty! add more plasteel to refil!</span>"
 
 
 /obj/item/weapon/paper_bin/nano/update_icon()

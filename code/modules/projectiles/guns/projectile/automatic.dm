@@ -2,6 +2,8 @@
 	name = "submachine gun"
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
 	icon_state = "saber"	//ugly
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	w_class = 3.0
 	max_shells = 18
 	caliber = list("9mm" = 1)
@@ -28,7 +30,7 @@
 	icon_state = "[initial(icon_state)][stored_magazine ? "-[stored_magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/Fire()
+/obj/item/weapon/gun/projectile/automatic/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0)
 	if(burstfire == 1)
 		if(ready_to_fire())
 			fire_delay = 0
@@ -49,6 +51,8 @@
 	name = "Uzi"
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses .45 rounds."
 	icon_state = "mini-uzi"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	w_class = 3.0
 	max_shells = 10
 	burst_count = 3
@@ -64,6 +68,7 @@
 	name = "\improper C-20r SMG"
 	desc = "A lightweight, fast firing gun, for when you REALLY need someone dead. Uses 12mm rounds. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp"
 	icon_state = "c20r"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns.dmi', "right_hand" = 'icons/mob/in-hand/right/guns.dmi')
 	item_state = "c20r"
 	w_class = 3.0
 	max_shells = 20
@@ -89,8 +94,9 @@
 	name = "\improper Assault Rifle"
 	desc = "A lightweight, fast firing gun, issued to shadow organization members."
 	icon_state = "xcomassaultrifle"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	origin_tech = "combat=5;materials=2"
-	item_state = "c20r"
 	w_class = 3.0
 	max_shells = 20
 	burst_count = 4
@@ -106,6 +112,7 @@
 	name = "\improper L6 SAW"
 	desc = "A rather traditionally made light machine gun with a pleasantly lacquered wooden pistol grip. Has 'Aussec Armoury- 2531' engraved on the reciever"
 	icon_state = "l6closed100"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns.dmi', "right_hand" = 'icons/mob/in-hand/right/guns.dmi')
 	item_state = "l6closedmag"
 	w_class = 4
 	slot_flags = 0

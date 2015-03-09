@@ -46,8 +46,8 @@
 
 	flash_weak_pain()
 
-	if(istype(equipped(),/obj/item/device/assembly/signaler))
-		var/obj/item/device/assembly/signaler/signaler = equipped()
+	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
+		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
 			src.visible_message("\red [src] triggers their deadman's switch!")
 			signaler.signal()
@@ -65,6 +65,8 @@
 	return absorb
 
 /mob/living/hitby(atom/movable/AM as mob|obj,var/speed = 5)//Standardization and logging -Sieve
+	if(flags & INVULNERABLE)
+		return
 	if(istype(AM,/obj/))
 		var/obj/O = AM
 		var/zone = ran_zone("chest",75)//Hits a random part of the body, geared towards the chest
@@ -75,7 +77,7 @@
 		src.visible_message("\red [src] has been hit by [O].")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [zone].", "Your armor has softened hit to your [zone].")
 		if(armor < 2)
-			apply_damage(O.throwforce*(speed/5), dtype, zone, armor, O.sharp, O)
+			apply_damage(O.throwforce*(speed/5), dtype, zone, armor, O.is_sharp(), O)
 
 		if(!O.fingerprintslast)
 			return
@@ -102,7 +104,7 @@
 				visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
 				src.throw_at(get_edge_target_turf(src,dir),1,momentum)
 
-				if(istype(W.loc,/mob/living) && W.sharp) //Projectile is embedded and suitable for pinning.
+				if(istype(W.loc,/mob/living) && W.is_sharp()) //Projectile is embedded and suitable for pinning.
 
 					if(!istype(src,/mob/living/carbon/human)) //Handles embedding for non-humans and simple_animals.
 						O.loc = src
@@ -153,6 +155,8 @@
     fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
 
 /mob/living/proc/handle_fire()
+	if((flags & INVULNERABLE) && on_fire)
+		extinguish()
 	if(fire_stacks < 0)
 		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
 		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
@@ -170,6 +174,11 @@
 		return 1
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1,surfaces=1)
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.mind && H.mind.vampire && H.stat == DEAD)
+			dust()
 
 /mob/living/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	adjust_fire_stacks(0.5)

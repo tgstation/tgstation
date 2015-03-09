@@ -146,28 +146,3 @@
 		var/obj/mecha/M = target
 		M.attack_animal(src)
 		return M
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

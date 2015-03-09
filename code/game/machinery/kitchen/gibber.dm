@@ -71,7 +71,7 @@ obj/machinery/gibber/New()
 				if(input_obj)
 					if(isturf(input_obj.loc))
 						input_plate = input_obj.loc
-						del(input_obj)
+						qdel(input_obj)
 						break
 
 			if(!input_plate)
@@ -105,7 +105,7 @@ obj/machinery/gibber/New()
 	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
 
 /obj/machinery/gibber/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	if (dirty)
 		src.overlays += image('icons/obj/kitchen.dmi', "grbloody")
 	if(stat & (NOPOWER|BROKEN))
@@ -183,7 +183,7 @@ obj/machinery/gibber/New()
 	src.add_fingerprint(user)
 	user.visible_message("\red [user.name] starts climbing into the [src].", "\red You start climbing into the [src].")
 
-	if(do_after(user, 30) && user && !occupant)
+	if(do_after(user, 30) && user && !occupant && !isnull(src.loc))
 		user.visible_message("\red [user] climbs into the [src]", "\red You climb into the [src].")
 		if(user.client)
 			user.client.perspective = EYE_PERSPECTIVE
@@ -263,7 +263,8 @@ obj/machinery/gibber/New()
 			meatslab.loc = src.loc
 			meatslab.throw_at(Tx,i,3)
 			if (!Tx.density)
-				new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
+				var/obj/effect/decal/cleanable/blood/gibs/O = getFromPool(/obj/effect/decal/cleanable/blood/gibs, Tx)
+				O.New(Tx,i)
 		src.operating = 0
 		update_icon()
 
@@ -315,9 +316,11 @@ obj/machinery/gibber/New()
 		B.loc = src.loc
 		B.throw_at(Tx,2,3)
 		if(isalien(victim))
-			new /obj/effect/decal/cleanable/blood/gibs/xeno(Tx,2)
+			var/obj/effect/decal/cleanable/blood/gibs/xeno/O = getFromPool(/obj/effect/decal/cleanable/blood/gibs/xeno, Tx)
+			O.New(Tx,2)
 		else
-			new /obj/effect/decal/cleanable/blood/gibs(Tx,2)
+			var/obj/effect/decal/cleanable/blood/gibs/O = getFromPool(/obj/effect/decal/cleanable/blood/gibs, Tx)
+			O.New(Tx,2)
 	del(victim)
 	spawn(src.gibtime)
 		playsound(get_turf(src), 'sound/effects/gib2.ogg', 50, 1)
@@ -328,7 +331,8 @@ obj/machinery/gibber/New()
 			meatslab.loc = src.loc
 			meatslab.throw_at(Tx,i,3)
 			if (!Tx.density)
-				new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
+				var/obj/effect/decal/cleanable/blood/gibs/O = getFromPool(/obj/effect/decal/cleanable/blood/gibs, Tx)
+				O.New(Tx,i)
 		src.operating = 0
 		update_icon()
 

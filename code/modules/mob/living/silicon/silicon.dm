@@ -1,12 +1,15 @@
 /mob/living/silicon
 	gender = NEUTER
-	robot_talk_understand = 1
 	voice_name = "synthesized voice"
+	languages = ROBOT | HUMAN | MONKEY | ALIEN
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
 	immune_to_ssd = 1
+
+	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
+
 
 	var/sensor_mode = 0 //Determines the current HUD.
 	#define SEC_HUD 1 //Security HUD mode
@@ -104,6 +107,9 @@
 	return
 
 /mob/living/silicon/emp_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	switch(severity)
 		if(1)
 			src.take_organ_damage(20)
@@ -186,8 +192,7 @@
 // This adds the basic clock, shuttle recall timer, and malf_ai info to all silicon lifeforms
 /mob/living/silicon/Stat()
 	..()
-	statpanel("Status")
-	if (src.client.statpanel == "Status")
+	if(statpanel("Status"))
 		show_station_time()
 		show_emergency_shuttle_eta()
 		show_system_integrity()

@@ -8,14 +8,12 @@ var/global/list/rad_collectors = list()
 	icon_state = "ca"
 	anchored = 0
 	density = 1
-	directwired = 1
 	req_access = list(access_engine_equip)
-//	use_power = 0
 	var/obj/item/weapon/tank/plasma/P = null
 	var/last_power = 0
 	var/active = 0
 	var/locked = 0
-	var/drainratio = 1
+	var/drain_ratio = 3.5 //3.5 times faster than original.
 	ghost_read=0
 	ghost_write=0
 
@@ -33,37 +31,43 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/process()
 	if (P)
 		if (P.air_contents.toxins <= 0)
-			investigate_log("<font color='red'>out of fuel</font>.", "singulo")
+			investigation_log(I_SINGULO,"<font color='red'>out of fuel</font>.")
 			P.air_contents.toxins = 0
 			eject()
+		else if(!active)
+			return
 		else
-			P.air_contents.toxins -= (0.001 * drainratio)
+			P.air_contents.toxins -= (0.001 * drain_ratio)
+			P.air_contents.update_values()
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user as mob)
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
-			"You turn the [src.name] [active? "on":"off"].")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			user.visible_message("<span class='notice'>[user] turns the [src] [active? "on":"off"].</span>", \
+			"<span class='notice'>You turn the [src] [active? "on":"off"].</span>")
+			investigation_log(I_SINGULO,"turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].")
 			return
 		else
-			user << "\red The controls are locked!"
+			user << "<span class='warning'>The controls are locked!</span>"
 			return
 ..()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
 	if(..())
 		return 1
-	else if(istype(W, /obj/item/device/analyzer))
-		user << "\blue The [W.name] detects that [last_power]W were recently produced."
+	else if(istype(W, /obj/item/device/analyzer) || istype(W, /obj/item/device/multitool))
+		if(active)
+			user << "<span class='notice'>\The [W] registers that [format_watts(last_power)] is being produced every cycle.</span>"
+		else
+			user << "<span class='notice'>\The [W] registers that the unit is currently not producing power.</span>"
 		return 1
 	else if(istype(W, /obj/item/weapon/tank/plasma))
 		if(!src.anchored)
-			user << "\red The [src] needs to be secured to the floor first."
+			user << "<span class='warning'>\The [src] needs to be secured to the floor first.</span>"
 			return 1
 		if(src.P)
-			user << "\red There's already a plasma tank loaded."
+			user << "<span class='warning'>A plasma tank is already loaded.</span>"
 			return 1
 		user.drop_item()
 		src.P = W
@@ -77,19 +81,19 @@ var/global/list/rad_collectors = list()
 		if (src.allowed(user))
 			if(active)
 				src.locked = !src.locked
-				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+				user << "<span class='notice'>The controls are now [src.locked ? "locked." : "unlocked."]</span>"
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "\red The controls can only be locked when the [src] is active"
+				user << "<span class='warning'>The controls can only be locked when \the [src] is active</span>"
 		else
-			user << "\red Access denied!"
+			user << "<span class='warning'>Access denied!</span>"
 			return 1
 	else
 		return
 
 /obj/machinery/power/rad_collector/wrenchAnchor(mob/user)
 	if(P)
-		user << "\blue Remove the plasma tank first."
+		user << "<span class='notice'>Remove the plasma tank first.</span>"
 		return
 	if(..() == 1)
 		if(anchored)
@@ -123,12 +127,12 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/receive_pulse(const/pulse_strength)
 	if (P && active)
-		var/power_produced = P.air_contents.toxins * pulse_strength * 20
+		var/power_produced = P.air_contents.toxins * pulse_strength * 3.5 // original was 20, nerfed to 2 now 3.5 should get you about 500kw
 		add_avail(power_produced)
 		last_power = power_produced
 
 /obj/machinery/power/rad_collector/proc/update_icons()
-	overlays.Cut()
+	overlays.len = 0
 	if(P)
 		overlays += image('icons/obj/singularity.dmi', "ptank")
 	if(stat & (NOPOWER|BROKEN))

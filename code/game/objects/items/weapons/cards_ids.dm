@@ -145,18 +145,26 @@
 
 	return 0
 
-/obj/item/weapon/card/emag/examine()
+/obj/item/weapon/card/emag/examine(mob/user)
 	..()
 	if(energy==-1)
-		usr << "<span class=\"info\">\The [name] has a tiny fusion generator for power.</span>"
+		user << "<span class=\"info\">\The [name] has a tiny fusion generator for power.</span>"
 	else
 		var/class="info"
 		if(energy/max_energy < 0.1 /* 10% energy left */)
 			class="warning"
-		usr << "<span class=\"[class]\">This [name] has [energy]MJ left in its capacitor ([max_energy]MJ capacity).</span>"
+		user << "<span class=\"[class]\">This [name] has [energy]MJ left in its capacitor ([max_energy]MJ capacity).</span>"
 	if(recharge_rate && recharge_ticks)
-		usr << "<span class=\"info\">A small label on a thermocouple notes that it recharges at a rate of [recharge_rate]MJ for every [recharge_ticks<=1?"":"[recharge_ticks] "]oscillator tick[recharge_ticks>1?"s":""].</span>"
+		user << "<span class=\"info\">A small label on a thermocouple notes that it recharges at a rate of [recharge_rate]MJ for every [recharge_ticks<=1?"":"[recharge_ticks] "]oscillator tick[recharge_ticks>1?"s":""].</span>"
 
+/obj/item/weapon/card/emag/attack()
+	return
+	
+/obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
+	var/atom/A = target
+	if(!proximity) return
+	A.emag_act(user)
+		
 /obj/item/weapon/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
@@ -203,6 +211,19 @@
 	if(format)
 		amt = "$[num2septext(amt)]"
 	return amt
+
+/obj/item/weapon/card/id/GetJobName()
+	var/jobName = src.assignment //what the card's job is called
+	var/alt_jobName = src.rank   //what the card's job ACTUALLY IS: determines access, etc.
+
+	if(jobName in get_all_job_icons()) //Check if the job name has a hud icon
+		return jobName
+	if(alt_jobName in get_all_job_icons()) //Check if the base job has a hud icon
+		return alt_jobName
+	if(jobName in get_all_centcom_jobs() || alt_jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
+		return "Centcom"
+	return "Unknown" //Return unknown if none of the above apply
+
 // vgedit: We have different wallets.
 /*
 /obj/item/weapon/card/id/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -261,7 +282,7 @@
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
-				usr << "\blue The card's microscanners activate as you pass it over the ID, copying its access."
+				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered_name)
@@ -279,7 +300,7 @@
 			return
 		src.assignment = u
 		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-		user << "\blue You successfully forge the ID card."
+		user << "<span class='notice'>You successfully forge the ID card.</span>"
 		registered_user = user
 	else if(!registered_user || registered_user == user)
 
@@ -299,7 +320,7 @@
 					return
 				src.assignment = u
 				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-				user << "\blue You successfully forge the ID card."
+				user << "<span class='notice'>You successfully forge the ID card.</span>"
 				return
 			if("Show")
 				..()
@@ -321,10 +342,22 @@
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
-	New()
-		var/datum/job/captain/J = new/datum/job/captain
-		access = J.get_access()
-		..()
+
+/obj/item/weapon/card/id/captains_spare/New()
+	var/datum/job/captain/J = new/datum/job/captain
+	access = J.get_access()
+	..()
+
+/obj/item/weapon/card/id/admin
+	name = "Admin ID"
+	icon_state = "admin"
+	item_state = "gold_id"
+	registered_name = "Admin"
+	assignment = "Testing Shit"
+
+/obj/item/weapon/card/id/admin/New()
+	access = get_absolutely_all_accesses()
+	..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"
@@ -332,9 +365,10 @@
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
-	New()
-		access = get_all_centcom_access()
-		..()
+
+/obj/item/weapon/card/id/centcom/New()
+	access = get_all_centcom_access()
+	..()
 
 /obj/item/weapon/card/id/salvage_captain
 	name = "Captain's ID"
@@ -343,15 +377,12 @@
 	desc = "Finders, keepers."
 	access = list(access_salvage_captain)
 
-
-
 /obj/item/weapon/card/id/medical
 	name = "Medical ID"
 	registered_name = "Medic"
 	icon_state = "medical"
 	desc = "A card covered in the blood stains of the wild ride."
 	access = list(access_medical, access_genetics, access_morgue, access_chemistry, access_paramedic, access_virology, access_surgery, access_cmo)
-
 
 /obj/item/weapon/card/id/security
 	name = "Security ID"
@@ -416,10 +447,23 @@
 	desc = "Even looking at the card strikes you with deep fear."
 	access = list(access_clown, access_theatre, access_maint_tunnels)
 
-
 /obj/item/weapon/card/id/mime
 	name = "Black and White ID"
 	registered_name = "..."
 	icon_state = "mime"
 	desc = "..."
 	access = list(access_clown, access_theatre, access_maint_tunnels)
+
+/obj/item/weapon/card/id/thunderdome/red
+	name = "Thunderdome Red ID"
+	registered_name = "Red Team Fighter"
+	assignment = "Red Team Fighter"
+	icon_state = "TDred"
+	desc = "This ID card is given to those who fought inside the thunderdome for the Red Team. Not many have lived to see one of those, even fewer lived to keep it."
+
+/obj/item/weapon/card/id/thunderdome/green
+	name = "Thunderdome Green ID"
+	registered_name = "Green Team Fighter"
+	assignment = "Green Team Fighter"
+	icon_state = "TDgreen"
+	desc = "This ID card is given to those who fought inside the thunderdome for the Green Team. Not many have lived to see one of those, even fewer lived to keep it."

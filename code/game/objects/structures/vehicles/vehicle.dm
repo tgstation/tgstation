@@ -37,6 +37,7 @@
 	var/vin=null
 
 /obj/structure/stool/bed/chair/vehicle/New()
+	..()
 	processing_objects |= src
 	handle_rotation()
 
@@ -57,9 +58,9 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0))
 			if(destroyed)
-				user << "\red \The [src.name] is destroyed beyond repair."
+				user << "<span class='warning'>\The [src.name] is destroyed beyond repair.</span>"
 			add_fingerprint(user)
-			user.visible_message("\blue [user] has fixed some of the dents on \the [src].", "\blue You fix some of the dents on \the [src]")
+			user.visible_message("<span class='notice'>[user] has fixed some of the dents on \the [src].</span>", "<span class='notice'>You fix some of the dents on \the [src]</span>")
 			health += 20
 			HealthCheck()
 		else
@@ -87,7 +88,7 @@
 		return
 	if(empstun > 0)
 		if(user)
-			user << "\red \the [src] is unresponsive."
+			user << "<span class='warning'>\the [src] is unresponsive.</span>"
 		return
 	if(istype(src.loc, /turf/space))
 		if(!src.Process_Spacemove(0))	return
@@ -199,11 +200,7 @@
 			buckled_mob.loc = loc
 
 /obj/structure/stool/bed/chair/vehicle/buckle_mob(mob/M, mob/user)
-	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon) || destroyed)
-		return
-
-	if(!check_key(M))
-		M << "\red You don't have the key for this."
+	if(M != user || !ishuman(user) || !Adjacent(user) || user.restrained() || user.lying || user.stat || user.buckled || destroyed)
 		return
 
 	unbuckle()
@@ -262,7 +259,7 @@
 			src.empstun = (rand(5,10))
 		if(2)
 			src.empstun = (rand(1,5))
-	src.visible_message("\red The [src.name]'s motor short circuits!")
+	src.visible_message("<span class='danger'>The [src.name]'s motor short circuits!</span>")
 	spark_system.attach(src)
 	spark_system.set_up(5, 0, src)
 	spark_system.start()
@@ -283,13 +280,14 @@
 			return
 		if(istype(Proj, /obj/item/projectile/energy/electrode))
 			if(prob(25))
-				unbuckle()
 				visible_message("<span class='warning'>\The [src.name] absorbs the [Proj]")
 				if(!istype(buckled_mob, /mob/living/carbon/human))
-					return buckled_mob.bullet_act(Proj)
+					buckled_mob.bullet_act(Proj)
 				else
 					var/mob/living/carbon/human/H = buckled_mob
-					return H.electrocute_act(0, src, 1, 0)
+					H.electrocute_act(0, src, 1, 0)
+				unbuckle()
+				return
 	if(!hitrider)
 		visible_message("<span class='warning'>[Proj] hits \the [nick]!</span>")
 		if(!Proj.nodamage && Proj.damage_type == BRUTE || Proj.damage_type == BURN)

@@ -107,7 +107,7 @@
 	return
 
 /obj/effect/alien/resin/attack_hand()
-	usr.changeNext_move(10)
+	usr.delayNextAttack(10)
 	if (M_HULK in usr.mutations)
 		usr << "\blue You easily destroy the [name]."
 		for(var/mob/O in oviewers(src))
@@ -160,7 +160,7 @@
 			else
 				user << "\red This wall is already occupied."
 		return */
-	user.changeNext_move(10)
+	user.delayNextAttack(10)
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
@@ -286,8 +286,8 @@ Alien plants should do something if theres a lot of poison
 	return
 
 /obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
-	user.changeNext_move(10)
-	if(W.attack_verb.len)
+	user.delayNextAttack(10)
+	if(W.attack_verb && W.attack_verb.len)
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
 		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
@@ -354,7 +354,7 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/acid/proc/tick()
 	if(!target)
-		del(src)
+		qdel(src)
 
 	ticks += 1
 
@@ -367,8 +367,8 @@ Alien plants should do something if theres a lot of poison
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
 		else
-			del(target)
-		del(src)
+			qdel(target)
+		qdel(src)
 		return
 
 	switch(target_strength - ticks)
@@ -410,14 +410,14 @@ Alien plants should do something if theres a lot of poison
 			spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
 				Grow()
 		else
-			del(src)
+			qdel(src)
 
 	attack_paw(user as mob)
 		if(isalien(user))
 			switch(status)
 				if(BURST)
 					user << "\red You clear the hatched egg."
-					del(src)
+					qdel(src)
 					return
 				if(GROWING)
 					user << "\red The child is not developed yet."
@@ -454,6 +454,8 @@ Alien plants should do something if theres a lot of poison
 					src.visible_message("\red The egg bursts apart revealing nothing")
 					status = "GROWN"
 					new /obj/effect/decal/cleanable/blood/xeno(src)
+					var/obj/effect/decal/cleanable/blood/xeno/O = getFromPool(/obj/effect/decal/cleanable/blood/xeno, src)
+					O.New(src)
 				loc.contents += child//need to write the code for giving it to the alien later
 				if(kill && istype(child))
 					child.Die()
@@ -474,8 +476,8 @@ Alien plants should do something if theres a lot of poison
 /obj/effect/alien/egg/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(health <= 0)
 		return
-	user.changeNext_move(10)
-	if(W.attack_verb.len)
+	user.delayNextAttack(10)
+	if(W.attack_verb && W.attack_verb.len)
 		src.visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
 		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")

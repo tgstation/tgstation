@@ -14,9 +14,10 @@
 /obj/item/weapon/table_parts/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( user.loc )
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = 1
 		//SN src = null
-		del(src)
+		qdel(src)
 	if (istype(W, /obj/item/stack/rods))
 		if (W:amount >= 4)
 			new /obj/item/weapon/table_parts/reinforced( user.loc )
@@ -38,7 +39,8 @@
  */
 /obj/item/weapon/table_parts/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( user.loc )
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = 1
 		new /obj/item/stack/rods( user.loc )
 		del(src)
 
@@ -62,8 +64,8 @@
 			Grass.amount -= 1
 		else
 			del(Grass)
-		new /obj/item/weapon/table_parts/wood/poker( src.loc )
-		visible_message("<span class='notice'>[user] adds grass to the wooden table parts</span>")
+		new /obj/item/weapon/table_parts/wood/poker( get_turf(src) )
+		visible_message("<span class='notice'>[user] adds grass to the wooden table parts.</span>")
 		del(src)
 
 /obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)
@@ -96,8 +98,9 @@
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( user.loc )
-		del(src)
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = 1
+		qdel(src)
 		return
 	return
 

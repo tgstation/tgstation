@@ -7,16 +7,11 @@
 	anchored = 0
 	var/lockedby = ""
 	pressure_resistance = 5
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT  | OPENCONTAINER
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 
 /obj/structure/mopbucket/New()
 	create_reagents(100)
-
-/obj/structure/mopbucket/examine()
-	..()
-	usr << "<span class='notice'>[src] contains [reagents.total_volume] units of reagents!"
-	usr << "<span class='notice'>[src]'s wheels are [anchored? "locked" : "unlocked"]!"
 
 /obj/structure/mopbucket/attack_hand(mob/user as mob)
 	..()

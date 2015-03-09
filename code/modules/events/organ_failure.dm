@@ -20,7 +20,8 @@ datum/event/organ_failure/start()
 		var/mob/living/carbon/human/C = candidates[1]
 		if(!C) continue
 		// Bruise one of their organs
-		var/datum/organ/internal/I = C.internal_organs_by_name[rand(1,C.internal_organs_by_name.len)]
+		var/organ_name = pick(C.internal_organs_by_name)
+		var/datum/organ/internal/I = C.internal_organs_by_name[organ_name]
 		if(!I)
 			candidates.Remove(C) // Bad candidate.
 			severity--

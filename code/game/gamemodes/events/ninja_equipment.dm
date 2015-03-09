@@ -59,7 +59,7 @@ ________________________________________________________________________________
 
 /obj/item/clothing/suit/space/space_ninja/proc/killai(mob/living/silicon/ai/A = AI)
 	if(A.client)
-		A << "\red Self-erase protocol dete-- *bzzzzz*"
+		A << "<span class='warning'>Self-erase protocol dete-- *bzzzzz*</span>"
 		A << browse(null, "window=hack spideros")
 	AI = null
 	A.death(1)//Kill, deleting mob.
@@ -85,7 +85,7 @@ ________________________________________________________________________________
 	if(s_control&&!s_busy)
 		deinitialize()
 	else
-		affecting << "\red The function did not trigger!"
+		affecting << "<span class='warning'>The function did not trigger!</span>"
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/spideros()
@@ -96,7 +96,7 @@ ________________________________________________________________________________
 	if(s_control&&!s_busy&&!kamikaze)
 		display_spideros()
 	else
-		affecting << "\red The interface is locked!"
+		affecting << "<span class='warning'>The interface is locked!</span>"
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/stealth()
@@ -107,7 +107,7 @@ ________________________________________________________________________________
 	if(s_control&&!s_busy)
 		toggle_stealth()
 	else
-		affecting << "\red Stealth does not appear to work!"
+		affecting << "<span class='warning'>Stealth does not appear to work!</span>"
 	return
 
 //=======//PROCESS PROCS//=======//
@@ -157,27 +157,27 @@ ________________________________________________________________________________
 		for(var/i,i<7,i++)
 			switch(i)
 				if(0)
-					U << "\blue Now initializing..."
+					U << "<span class='notice'>Now initializing...</span>"
 				if(1)
 					if(!lock_suit(U))//To lock the suit onto wearer.
 						break
-					U << "\blue Securing external locking mechanism...\nNeural-net established."
+					U << "<span class='notice'>Securing external locking mechanism...\nNeural-net established.</span>"
 				if(2)
-					U << "\blue Extending neural-net interface...\nNow monitoring brain wave pattern..."
+					U << "\<span class='notice'>Extending neural-net interface...\nNow monitoring brain wave pattern...</span>"
 				if(3)
 					if(U.stat==2||U.health<=0)
-						U << "\red <B>FĆAL �Rr�R</B>: 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG..."
+						U << "<span class='danger'>FĆAL �Rr�R:</span> 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG..."
 						unlock_suit()
 						break
 					lock_suit(U,1)//Check for icons.
 					U.regenerate_icons()
-					U << "\blue Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation."
+					U << "<span class='notice'>Linking neural-net interface...\nPattern </span><span class='confirm'>GREEN</span><span class='notice'>, continuing operation."
 				if(4)
-					U << "\blue VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>."
+					U << "<span class='notice'>VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>.</span>"
 				if(5)
-					U << "\blue Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[cell.charge]</B>."
+					U << "<span class='notice'>Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[cell.charge]</B>.</span>"
 				if(6)
-					U << "\blue All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name]."
+					U << "<span class='notice'>All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name].</span>"
 					grant_ninja_verbs()
 					grant_equip_verbs()
 					ntick()
@@ -187,9 +187,9 @@ ________________________________________________________________________________
 		if(!U.mind||U.mind.assigned_role!="MODE")//Your run of the mill persons shouldn't know what it is. Or how to turn it on.
 			U << "You do not understand how this suit functions. Where the heck did it even come from?"
 		else if(s_initialized)
-			U << "\red The suit is already functioning. \black <b>Please report this bug.</b>"
+			U << "<span class='warning'>The suit is already functioning. </span> <b>Please report this bug.</b>"
 		else
-			U << "\red <B>ERROR</B>: \black You cannot use this function at this time."
+			U << "<span class='danger'>ERROR:</span> You cannot use this function at this time."
 	return
 
 //=======//DEINITIALIZE//=======//
@@ -198,34 +198,34 @@ ________________________________________________________________________________
 	if(affecting==loc&&!s_busy)
 		var/mob/living/carbon/human/U = affecting
 		if(!s_initialized)
-			U << "\red The suit is not initialized. \black <b>Please report this bug.</b>"
+			U << "<span class='warning'>The suit is not initialized. </span> <b>Please report this bug.</b>"
 			return
 		if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
 			return
 		if(s_busy||flush)
-			U << "\red <B>ERROR</B>: \black You cannot use this function at this time."
+			U << "<span class='danger'>ERROR:</span> You cannot use this function at this time."
 			return
 		s_busy = 1
 		for(var/i = 0,i<7,i++)
 			switch(i)
 				if(0)
-					U << "\blue Now de-initializing..."
+					U << "<span class='notice'>Now de-initializing...</span>"
 					remove_kamikaze(U)//Shutdowns kamikaze.
 					spideros = 0//Spideros resets.
 				if(1)
-					U << "\blue Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>."
+					U << "<span class='notice'>Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>.</span>"
 					remove_ninja_verbs()
 				if(2)
-					U << "\blue Primary system status: <B>OFFLINE</B>.\nBackup system status: <B>OFFLINE</B>."
+					U << "<span class='notice'>Primary system status: <B>OFFLINE</B>.\nBackup system status: <B>OFFLINE</B>.</span>"
 				if(3)
-					U << "\blue VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>."
+					U << "<span class='notice'>VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>.</span>"
 					cancel_stealth()//Shutdowns stealth.
 				if(4)
-					U << "\blue Disconnecting neural-net interface...\green<B>Success</B>\blue."
+					U << "<span class='notice'>Disconnecting neural-net interface...</span><span class='confirm'>Success.</span>"
 				if(5)
-					U << "\blue Disengaging neural-net interface...\green<B>Success</B>\blue."
+					U << "<span class='notice'>Disengaging neural-net interface...</span><span class='confirm'>Success.</span>"
 				if(6)
-					U << "\blue Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>."
+					U << "<span class='notice'>Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.</span>"
 					blade_check(U,2)
 					remove_equip_verbs()
 					unlock_suit()
@@ -307,7 +307,7 @@ ________________________________________________________________________________
 			dat += "</ul>"
 		if(1)
 			dat += "<h4><img src=sos_5.png> Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
-			var/turf/T = get_turf_or_move(U.loc)
+			var/turf/T = get_turf(U.loc)
 			if (isnull(T))
 				dat += "Unable to obtain a reading."
 			else
@@ -498,7 +498,7 @@ ________________________________________________________________________________
 
 	if(s_control)
 		if(!affecting||U.stat||!s_initialized)//Check to make sure the guy is wearing the suit after clicking and it's on.
-			U << "\red Your suit must be worn and active to use this function."
+			U << "<span class='warning'>Your suit must be worn and active to use this function.</span>"
 			U << browse(null, "window=spideros")//Closes the window.
 			return
 
@@ -510,7 +510,7 @@ ________________________________________________________________________________
 				U << "Anonymous Messenger blinks."
 	else
 		if(!affecting||A.stat||!s_initialized||A.loc!=src)
-			A << "\red This function is not available at this time."
+			A << "<span class='warning'>This function is not available at this time.</span>"
 			A << browse(null, "window=spideros")//Closes the window.
 			return
 
@@ -532,7 +532,7 @@ ________________________________________________________________________________
 				U.electrocute_act(damage, src,0.1,1)//The last argument is a safety for the human proc that checks for gloves.
 				cell.charge -= damage
 			else
-				A << "\red <b>ERROR</b>: \black Not enough energy remaining."
+				A << "<span class='danger'>ERROR:</span> Not enough energy remaining."
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
@@ -542,7 +542,7 @@ ________________________________________________________________________________
 				display_to << browse(null, "window=spideros")
 				return
 			if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
-				display_to << "\red Error: unable to deliver message."
+				display_to << "<span class='warning'>Error: unable to deliver message.</span>"
 				display_spideros()
 				return
 			P.tnote += "<i><b>&larr; From [!s_control?(A):"an unknown source"]:</b></i><br>[t]<br>"
@@ -550,12 +550,12 @@ ________________________________________________________________________________
 				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, P.loc))
 					O.show_message(text("\icon[P] *[P.ttone]*"))
-			P.overlays.Cut()
+			P.overlays.len = 0
 			P.overlays += image('icons/obj/pda.dmi', "pda-r")
 
 		if("Inject")
 			if( (href_list["tag"]=="radium"? (reagents.get_reagent_amount("radium"))<=(a_boost*a_transfer) : !reagents.get_reagent_amount(href_list["tag"])) )//Special case for radium. If there are only a_boost*a_transfer radium units left.
-				display_to << "\red Error: the suit cannot perform this function. Out of [href_list["name"]]."
+				display_to << "<span class='warning'>Error: the suit cannot perform this function. Out of [href_list["name"]].</span>"
 			else
 				reagents.reaction(U, 2)
 				reagents.trans_id_to(U, href_list["tag"], href_list["tag"]=="nutriment"?5:a_transfer)//Nutriment is a special case since it's very potent. Shouldn't influence actual refill amounts or anything.
@@ -594,27 +594,27 @@ ________________________________________________________________________________
 						for(var/i, i<4, i++)
 							switch(i)
 								if(0)
-									U << "\blue Engaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
+									U << "<span class='notice'>Engaging mode...\n\</span><b>CODE NAME</b>: <span class='danger'>KAMIKAZE</span>"
 								if(1)
-									U << "\blue Re-routing power nodes... \nUnlocking limiter..."
+									U << "<span class='notice'>Re-routing power nodes... \nUnlocking limiter...</span>"
 								if(2)
-									U << "\blue Power nodes re-routed. \nLimiter unlocked."
+									U << "<span class='notice'>Power nodes re-routed. \nLimiter unlocked.</span>"
 								if(3)
 									grant_kamikaze(U)//Give them verbs and change variables as necessary.
 									U.regenerate_icons()//Update their clothing.
 									ninjablade()//Summon two energy blades.
-									message_admins("\blue [key_name_admin(U)] used KAMIKAZE mode.")//Let the admins know.
+									message_admins("<span class='notice'>[key_name_admin(U)] used KAMIKAZE mode.</span>")//Let the admins know.
 									s_busy = 0
 									return
 							sleep(s_delay)
 					else
-						U << "\red <b>ERROR<b>: \black Unable to initiate mode."
+						U << "<span class='danger'>ERROR:</span> Unable to initiate mode."
 				else
 					U << browse(null, "window=spideros")
 					s_busy = 0
 					return
 			else
-				U << "\red ERROR: WRONG PASSWORD!"
+				U << "<span class='warning'>ERROR: WRONG PASSWORD!</span>"
 				k_unlock = 0
 				spideros = 0
 			s_busy = 0
@@ -630,7 +630,7 @@ ________________________________________________________________________________
 					t_disk.loc = T
 					t_disk = null
 				else
-					U << "\red <b>ERROR<b>: \black Could not eject disk."
+					U << "<span class='danger'>ERROR:</span> Could not eject disk."
 
 		if("Copy to Disk")
 			var/datum/tech/current_data = locate(href_list["target"])
@@ -651,14 +651,14 @@ ________________________________________________________________________________
 					pai.loc = T
 					pai = null
 				else
-					U << "\red <b>ERROR<b>: \black Could not eject pAI card."
+					U << "<span class='danger'>ERROR:</span> Could not eject pAI card."
 
 		if("Override AI Laws")
 			var/law_zero = A.laws.zeroth//Remembers law zero, if there is one.
 			A.laws = new /datum/ai_laws/ninja_override
 			A.set_zeroth_law(law_zero)//Adds back law zero if there was one.
 			A.show_laws()
-			U << "\blue Law Override: <b>SUCCESS</b>."
+			U << "<span class='notice'>Law Override: <b>SUCCESS</b>.</span>"
 
 		if("Purge AI")
 			var/confirm = alert("Are you sure you want to purge the AI? This cannot be undone once started.", "Confirm purge", "Yes", "No")
@@ -672,31 +672,31 @@ ________________________________________________________________________________
 						if(AI==A)
 							switch(i)
 								if(0)
-									A << "\red <b>WARNING</b>: \black purge procedure detected. \nNow hacking host..."
-									U << "\red <b>WARNING</b>: HACKING AT��TEMP� IN PR0GRESs!"
+									A << "<span class='danger'>WARNING</span>: purge procedure detected. \nNow hacking host..."
+									U << "<span class='danger'>WARNING</span>: HACKING AT��TEMP� IN PR0GRESs!"
 									spideros = 0
 									k_unlock = 0
 									U << browse(null, "window=spideros")
 								if(1)
 									A << "Disconnecting neural interface..."
-									U << "\red <b>WAR�NING</b>: �R�O0�Gr�--S 2&3%"
+									U << "<span class='danger'>WAR�NING</span>: �R�O0�Gr�--S 2&3%"
 								if(2)
 									A << "Shutting down external protocol..."
-									U << "\red <b>WARNING</b>: P����RֆGr�5S 677^%"
+									U << "<span class='danger'>WARNING</span>: P����RֆGr�5S 677^%"
 									cancel_stealth()
 								if(3)
 									A << "Connecting to kernel..."
-									U << "\red <b>WARNING</b>: �R�r�R_404"
+									U << "<span class='danger'>WARNING</span>: �R�r�R_404"
 									A.control_disabled = 0
 								if(4)
 									A << "Connection established and secured. Menu updated."
-									U << "\red <b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%.."
+									U << "<span class='danger'>W�r#nING</span>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%.."
 									grant_AI_verbs()
 									return
 							sleep(s_delay)
 						else	break
 					s_busy = 0
-					U << "\blue Hacking attempt disconnected. Resuming normal operation."
+					U << "<span class='notice'>Hacking attempt disconnected. Resuming normal operation.</span>"
 				else
 					flush = 1
 					A.suiciding = 1
@@ -744,9 +744,9 @@ ________________________________________________________________________________
 
 			ai_holo_process()//Move to initialize
 		else
-			AI << "\red ERROR: \black Image feed in progress."
+			AI << "<span class='warning'>ERROR:</span> Image feed in progress."
 	else
-		AI << "\red ERROR: \black Unable to project image."
+		AI << "<span class='warning'>ERROR:</span> Unable to project image."
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
@@ -811,13 +811,13 @@ ________________________________________________________________________________
 			if(s_control)
 				I:transfer_ai("NINJASUIT","AICARD",src,U)
 			else
-				U << "\red <b>ERROR</b>: \black Remote access channel disabled."
+				U << "<span class='warning'>ERROR:</span> Remote access channel disabled."
 			return//Return individually so that ..() can run properly at the end of the proc.
 		else if(istype(I, /obj/item/device/paicard) && !pai)//If it's a pai card.
 			U:drop_item()
 			I.loc = src
 			pai = I
-			U << "\blue You slot \the [I] into \the [src]."
+			U << "<span class='notice'>You slot \the [I] into \the [src].</span>"
 			updateUsrDialog()
 			return
 		else if(istype(I, /obj/item/weapon/reagent_containers/glass))//If it's a glass beaker.
@@ -838,7 +838,7 @@ ________________________________________________________________________________
 			return
 		else if(istype(I, /obj/item/weapon/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
-				U << "\blue Higher maximum capacity detected.\nUpgrading..."
+				U << "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>"
 				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay))
 					U.drop_item()
 					I.loc = src
@@ -850,9 +850,9 @@ ________________________________________________________________________________
 					old_cell.corrupt()
 					old_cell.updateicon()
 					cell = I
-					U << "\blue Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%"
+					U << "<span class='notice'>Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%</span>"
 				else
-					U << "\red Procedure interrupted. Protocol terminated."
+					U << "<span class='warning'>Procedure interrupted. Protocol terminated.</span>"
 			return
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
 			var/obj/item/weapon/disk/tech_disk/TD = I
@@ -865,13 +865,13 @@ ________________________________________________________________________________
 								current_data.level=TD.stored.level
 							break
 					TD.stored = null
-					U << "\blue Data analyzed and updated. Disk erased."
+					U << "<span class='notice'>Data analyzed and updated. Disk erased.</span>"
 				else
-					U << "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated."
+					U << "<span class='danger'>ERROR:</span> Procedure interrupted. Process terminated."
 			else
 				I.loc = src
 				t_disk = I
-				U << "\blue You slot \the [I] into \the [src]."
+				U << "<span class='notice'>You slot \the [I] into \the [src].</span>"
 			return
 	..()
 
@@ -885,7 +885,7 @@ ________________________________________________________________________________
 		s_active=!s_active
 		icon_state = U.gender==FEMALE ? "s-ninjasf" : "s-ninjas"
 		U.regenerate_icons()	//update their icons
-		U << "\blue You are now invisible to normal detection."
+		U << "<span class='notice'>You are now invisible to normal detection.</span>"
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
 		U.invisibility = INVISIBILITY_OBSERVER
@@ -897,7 +897,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
-		U << "\blue You are now visible."
+		U << "<span class='notice'>You are now visible.</span>"
 		U.invisibility = 0
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
@@ -926,21 +926,19 @@ ________________________________________________________________________________
 				U.drop_item()
 	return 0
 
-/obj/item/clothing/suit/space/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/suit/space/space_ninja/examine(mob/user)
 	..()
 	if(s_initialized)
-		var/mob/living/carbon/human/U = affecting
-		if(s_control)
-			U << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
+		if(s_control && (user == affecting))
+			user << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
 			if(!kamikaze)
-				U << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
+				user << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
 			else
-				U << "\red KAMIKAZE MODE ENGAGED!"
-			U << "There are <B>[s_bombs]</B> smoke bombs remaining."
-			U << "There are <B>[a_boost]</B> adrenaline boosters remaining."
+				user << "<span class='danger'>KAMIKAZE MODE ENGAGED!</span>"
+			user << "There are <B>[s_bombs]</B> smoke bombs remaining."
+			user << "There are <B>[a_boost]</B> adrenaline boosters remaining."
 		else
-			U <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
+			user <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
 
 /*
 ===================================================================================
@@ -963,7 +961,7 @@ ________________________________________________________________________________
 	G.draining = 1
 
 	if(target_type!="RESEARCH")//I lumped research downloading here for ease of use.
-		U << "\blue Now charging battery..."
+		U << "<span class='notice'>Now charging battery...</span>"
 
 	switch(target_type)
 
@@ -986,14 +984,14 @@ ________________________________________________________________________________
 						S.cell.charge+=drain
 						totaldrain+=drain
 					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from the APC."
+				U << "<span class='notice'>Gained <B>[totaldrain]</B> energy from the APC.</span>"
 				if(!A.emagged)
 					flick("apc-spark", src)
 					A.emagged = 1
 					A.locked = 0
 					A.update_icon()
 			else
-				U << "\red This APC has run dry of power. You must find another source."
+				U << "<span class='warning'>This APC has run dry of power. You must find another source.</span>"
 
 		if("SMES")
 			var/obj/machinery/power/smes/A = target
@@ -1014,15 +1012,15 @@ ________________________________________________________________________________
 						S.cell.charge+=drain
 						totaldrain+=drain
 					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from the SMES cell."
+				U << "<span class='notice'>Gained <B>[totaldrain]</B> energy from the SMES cell.</span>"
 			else
-				U << "\red This SMES cell has run dry of power. You must find another source."
+				U << "<span class='warning'>This SMES cell has run dry of power. You must find another source.</span>"
 
 		if("CELL")
 			var/obj/item/weapon/cell/A = target
 			if(A.charge)
 				if (G.candrain&&do_after(U,30))
-					U << "\blue Gained <B>[A.charge]</B> energy from the cell."
+					U << "<span class='notice'>Gained <B>[A.charge]</B> energy from the cell.</span>"
 					if(S.cell.charge+A.charge>S.cell.maxcharge)
 						S.cell.charge=S.cell.maxcharge
 					else
@@ -1032,9 +1030,9 @@ ________________________________________________________________________________
 					A.corrupt()
 					A.updateicon()
 				else
-					U << "\red Procedure interrupted. Protocol terminated."
+					U << "<span class='warning'>Procedure interrupted. Protocol terminated.</span>"
 			else
-				U << "\red This cell is empty and of no use."
+				U << "<span class='warning'>This cell is empty and of no use.</span>"
 
 		if("MACHINERY")//Can be applied to generically to all powered machinery. I'm leaving this alone for now.
 			var/obj/machinery/A = target
@@ -1051,7 +1049,7 @@ ________________________________________________________________________________
 						var/drained = 0
 						if(PN&&do_after(U,10))
 							drained = min(drain, PN.avail)
-							PN.newload += drained
+							PN.load += drained
 							if(drained < drain)//if no power on net, drain apcs
 								for(var/obj/machinery/power/terminal/T in PN.nodes)
 									if(istype(T.master, /obj/machinery/power/apc))
@@ -1069,31 +1067,31 @@ ________________________________________________________________________________
 							totaldrain += drained
 						spark_system.start()
 						if(drained==0)	break
-					U << "\blue Gained <B>[totaldrain]</B> energy from the power network."
+					U << "<span class='notice'>Gained <B>[totaldrain]</B> energy from the power network.</span>"
 				else
-					U << "\red Power network could not be found. Aborting."
+					U << "<span class='warning'>Power network could not be found. Aborting.</span>"
 			else
-				U << "\red This recharger is not providing energy. You must find another source."
+				U << "<span class='warning'>This recharger is not providing energy. You must find another source.</span>"
 
 		if("RESEARCH")
 			var/obj/machinery/A = target
-			U << "\blue Hacking \the [A]..."
+			U << "<span class='notice'>Hacking \the [A]...</span>"
 			spawn(0)
 				var/turf/location = get_turf(U)
 				for(var/mob/living/silicon/ai/AI in player_list)
-					AI << "\red <b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>."
+					AI << "<span class='danger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
 			if(A:files&&A:files.known_tech.len)
 				for(var/datum/tech/current_data in S.stored_research)
-					U << "\blue Checking \the [current_data.name] database."
+					U << "<span class='notice'>Checking \the [current_data.name] database.</span>"
 					if(do_after(U, S.s_delay)&&G.candrain&&!isnull(A))
 						for(var/datum/tech/analyzing_data in A:files.known_tech)
 							if(current_data.id==analyzing_data.id)
 								if(analyzing_data.level>current_data.level)
-									U << "\blue Database: \black <b>UPDATED</b>."
+									U << "<span class='notice'>Database:<span> <b>UPDATED</b>."
 									current_data.level = analyzing_data.level
 								break//Move on to next.
 					else	break//Otherwise, quit processing.
-			U << "\blue Data analyzed. Process finished."
+			U << "<span class='notice'>Data analyzed. Process finished.</span>"
 
 		if("WIRE")
 			var/obj/structure/cable/A = target
@@ -1103,7 +1101,7 @@ ________________________________________________________________________________
 				var/drained = 0
 				if(PN&&do_after(U,10))
 					drained = min(drain, PN.avail)
-					PN.newload += drained
+					PN.load += drained
 					if(drained < drain)//if no power on net, drain apcs
 						for(var/obj/machinery/power/terminal/T in PN.nodes)
 							if(istype(T.master, /obj/machinery/power/apc))
@@ -1121,11 +1119,11 @@ ________________________________________________________________________________
 					totaldrain += drained
 				S.spark_system.start()
 				if(drained==0)	break
-			U << "\blue Gained <B>[totaldrain]</B> energy from the power network."
+			U << "<span class='notice'>Gained <B>[totaldrain]</B> energy from the power network.</span>"
 
 		if("MECHA")
 			var/obj/mecha/A = target
-			A.occupant_message("\red Warning: Unauthorized access through sub-route 4, block H, detected.")
+			A.occupant_message("<span class='warning'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
 			if(A.get_charge())
 				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
 					drain = rand(G.mindrain,G.maxdrain)
@@ -1141,13 +1139,13 @@ ________________________________________________________________________________
 						S.cell.charge+=drain
 						totaldrain+=drain
 					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from [src]."
+				U << "<span class='notice'>Gained <B>[totaldrain]</B> energy from [src].</span>"
 			else
-				U << "\red The exosuit's battery has run dry. You must find another source of power."
+				U << "<span class='warning'>The exosuit's battery has run dry. You must find another source of power.</span>"
 
 		if("CYBORG")
 			var/mob/living/silicon/robot/A = target
-			A << "\red Warning: Unauthorized access through sub-route 12, block C, detected."
+			A << "<span class='warning'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>"
 			G.draining = 1
 			if(A.cell&&A.cell.charge)
 				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
@@ -1164,9 +1162,9 @@ ________________________________________________________________________________
 						S.cell.charge+=drain
 						totaldrain+=drain
 					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from [A]."
+				U << "<span class='notice'>Gained <B>[totaldrain]</B> energy from [A].</span>"
 			else
-				U << "\red Their battery has run dry of power. You must find another source."
+				U << "<span class='warning'>Their battery has run dry of power. You must find another source.</span>"
 
 		else//Else nothing :<
 
@@ -1185,12 +1183,10 @@ ________________________________________________________________________________
 	U << "You <b>[candrain?"disable":"enable"]</b> special interaction."
 	candrain=!candrain
 
-/obj/item/clothing/gloves/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
 	if(!canremove)
-		var/mob/living/carbon/human/U = loc
-		U << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
+		user << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
 
 /*
 ===================================================================================
@@ -1290,10 +1286,8 @@ ________________________________________________________________________________
 			U.sight &= ~SEE_TURFS
 			U << "Switching mode to <B>Scouter</B>."
 
-/obj/item/clothing/mask/gas/voice/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/mask/gas/voice/space_ninja/examine(mob/user)
 	..()
-
 	var/mode
 	switch(mode)
 		if(0)
@@ -1304,8 +1298,8 @@ ________________________________________________________________________________
 			mode = "Thermal Scanner"
 		if(3)
 			mode = "Meson Scanner"
-	usr << "<B>[mode]</B> is active."//Leaving usr here since it may be on the floor or on a person.
-	usr << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
+	user << "<B>[mode]</B> is active."//Leaving usr here since it may be on the floor or on a person.
+	user << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
 
 /*
 ===================================================================================
@@ -1343,7 +1337,7 @@ It is possible to destroy the net by the occupant or someone else.
 					for(var/mob/O in viewers(src, 3))
 						O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
 					if(!isnull(master))//As long as they still exist.
-						master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
+						master << "<span class='danger'>ERROR:</span> unable to initiate transport protocol. Procedure terminated."
 				del(src)
 			return
 
@@ -1357,7 +1351,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 			if(!isnull(master))//As long as they still exist.
-				master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
+				master << "<span class='danger'>ERROR:</span> unable to locate \the [mob_name]. Procedure terminated."
 			del(src)//Get rid of the net.
 			return
 
@@ -1378,7 +1372,7 @@ It is possible to destroy the net by the occupant or someone else.
 				anim(M.loc,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
 
 			M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
-			M << "\red You appear in a strange place!"
+			M << "<span class='warning'>You appear in a strange place!</span>"
 
 			spawn(0)
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -1393,12 +1387,12 @@ It is possible to destroy the net by the occupant or someone else.
 				O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
 
 			if(!isnull(master))//As long as they still exist.
-				master << "\blue <b>SUCCESS</b>: \black transport procedure of \the [affecting] complete."
+				master << "<span class='bnotice'>SUCCESS</span>:</span> transport procedure of \the [affecting] complete."
 
 			M.anchored = 0//Important.
 
 		else//And they are free.
-			M << "\blue You are free of the net!"
+			M << "<span class='notice'>You are free of the net!</span>"
 		return
 
 	bullet_act(var/obj/item/projectile/Proj)
@@ -1430,7 +1424,7 @@ It is possible to destroy the net by the occupant or someone else.
 	hitby(AM as mob|obj)
 		..()
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
+			O.show_message(text("<span class='danger'>[src] was hit by [AM].</span>"), 1)
 		var/tforce = 0
 		if(ismob(AM))
 			tforce = 10
@@ -1444,9 +1438,9 @@ It is possible to destroy the net by the occupant or someone else.
 
 	attack_hand()
 		if (M_HULK in usr.mutations)
-			usr << text("\blue You easily destroy the energy net.")
+			usr << text("<span class='notice'>You easily destroy the energy net.</span>")
 			for(var/mob/O in oviewers(src))
-				O.show_message(text("\red [] rips the energy net apart!", usr), 1)
+				O.show_message(text("<span class='attack'>[] rips the energy net apart!</span>", usr), 1)
 			health-=50
 		healthcheck()
 		return
@@ -1457,15 +1451,15 @@ It is possible to destroy the net by the occupant or someone else.
 	attack_alien()
 		if (islarva(usr))
 			return
-		usr << text("\green You claw at the net.")
+		usr << text("</span><span class='attack'>You claw at the net.</span>")
 		for(var/mob/O in oviewers(src))
-			O.show_message(text("\red [] claws at the energy net!", usr), 1)
+			O.show_message(text("<span class='attack'>[] claws at the energy net!</span>", usr), 1)
 		playsound(get_turf(src), 'sound/weapons/slash.ogg', 80, 1)
 		health -= rand(10, 20)
 		if(health <= 0)
-			usr << text("\green You slice the energy net to pieces.")
+			usr << text("\</span><span class='attack'>You slice the energy net to pieces.</span>")
 			for(var/mob/O in oviewers(src))
-				O.show_message(text("\red [] slices the energy net apart!", usr), 1)
+				O.show_message(text("<span class='attack'>[] slices the energy net apart!</span>", usr), 1)
 		healthcheck()
 		return
 

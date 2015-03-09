@@ -61,6 +61,7 @@ var/global/mulebot_count = 0
 	var/list/wire_order	// order of wire indices
 	*/
 
+	var/list/can_load = list()
 
 	var/bloodiness = 0		// count of bloodiness
 	var/currentBloodColor = "#A10808"
@@ -87,9 +88,17 @@ var/global/mulebot_count = 0
 		name = "\improper Mulebot ([suffix])"
 
 
-	verbs -= /atom/movable/verb/pull
+	can_load = list(
+		/obj/structure/closet/crate,
+		/obj/structure/vendomatpack,
+		/obj/structure/stackopacks,
+		/obj/item/weapon/gift/large,
+		)
 
 /obj/machinery/bot/mulebot/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, control_freq)
+		radio_controller.remove_object(src, beacon_freq)
 	if(wires)
 		wires.Destroy()
 		wires = null
@@ -401,7 +410,7 @@ var/global/mulebot_count = 0
 
 // called to load a crate
 /obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
-	if(wires.LoadCheck() && !istype(C,/obj/structure/closet/crate) && !istype(C,/obj/structure/vendomatpack) && !istype(C,/obj/structure/stackopacks))
+	if(wires.LoadCheck() && !is_type_in_list(C,can_load))
 		src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return		// if not emagged, only allow crates to be loaded
@@ -454,7 +463,7 @@ var/global/mulebot_count = 0
 		return
 
 	mode = 1
-	overlays.Cut()
+	overlays.len = 0
 
 	load.loc = src.loc
 	load.pixel_y -= 9
@@ -695,17 +704,13 @@ var/global/mulebot_count = 0
 							AM = A
 							break
 				else			// otherwise, look for crates only
-					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
-					if(AM)
-						load(AM)
-					else
-						AM = locate(/obj/structure/vendomatpack) in get_step(loc,loaddir)
+					for(var/i=1,i<=can_load.len,i++)
+						var/loadin_type = can_load[i]
+						AM = locate(loadin_type) in get_step(loc,loaddir)
 						if(AM)
 							load(AM)
-						else
-							AM = locate(/obj/structure/stackopacks) in get_step(loc,loaddir)
-							if(AM)
-								load(AM)
+							break
+
 		// whatever happened, check to see if we return home
 
 		if(auto_return && destination != home_destination)
@@ -775,7 +780,7 @@ var/global/mulebot_count = 0
 
 /obj/machinery/bot/mulebot/receive_signal(datum/signal/signal)
 
-	if(!on)
+	if(!on || !wires)
 		return
 
 	/*
@@ -907,7 +912,7 @@ var/global/mulebot_count = 0
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
-	new /obj/item/weapon/cable_coil/cut(Tsec)
+	new /obj/item/stack/cable_coil/cut(Tsec)
 	if (cell)
 		cell.loc = Tsec
 		cell.update_icon()
@@ -917,6 +922,7 @@ var/global/mulebot_count = 0
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effect/decal/cleanable/blood/oil(src.loc)
+	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, src.loc)
+	O.New(O.loc)
 	unload(0)
-	del(src)
+	qdel(src)

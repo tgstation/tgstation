@@ -33,6 +33,7 @@
 		gasGraphics = overlayGraphics.Copy()
 
 /turf/proc/update_air_properties()
+	if(iscatwalk(src)) return
 	var/block = c_airblock(src)
 	if(block & AIR_BLOCKED)
 		//dbg(blocked)
@@ -60,7 +61,7 @@
 		if(r_block & AIR_BLOCKED)
 			continue
 
-		if(istype(unsim, /turf/simulated))
+		if(istype(unsim, /turf/simulated) && !iscatwalk(unsim))
 
 			var/turf/simulated/sim = unsim
 			if(air_master.has_valid_zone(sim))
@@ -68,6 +69,7 @@
 				air_master.connect(sim, src)
 
 /turf/simulated/update_air_properties()
+	if(iscatwalk(src)) return
 	if(zone && zone.invalid)
 		c_copy_air()
 		zone = null //Easier than iterating through the list at the zone.
@@ -122,7 +124,7 @@
 
 			//Check that our zone hasn't been cut off recently.
 			//This happens when windows move or are constructed. We need to rebuild.
-			if((previously_open & d) && istype(unsim, /turf/simulated))
+			if((previously_open & d) && istype(unsim, /turf/simulated) && !iscatwalk(unsim))
 				var/turf/simulated/sim = unsim
 				if(sim.zone == zone)
 					zone.rebuild()
@@ -132,7 +134,7 @@
 
 		open_directions |= d
 
-		if(istype(unsim, /turf/simulated))
+		if(istype(unsim, /turf/simulated) && !iscatwalk(unsim))
 
 			var/turf/simulated/sim = unsim
 			if(air_master.has_valid_zone(sim))
@@ -265,3 +267,7 @@
 	if(!air) air = new/datum/gas_mixture
 	air.copy_from(zone.air)
 	air.group_multiplier = 1
+
+
+/turf/attack_hand(mob/user as mob)
+	user.Move_Pulled(src)

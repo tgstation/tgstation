@@ -40,6 +40,7 @@
 	var/datum/artifact_find/artifact_find
 
 /obj/structure/boulder/New()
+	..()
 	icon_state = "boulder[rand(1,4)]"
 	excavation_level = rand(5,50)
 
@@ -59,31 +60,32 @@
 
 	if (istype(W, /obj/item/device/measuring_tape))
 		var/obj/item/device/measuring_tape/P = W
-		user.visible_message("\blue[user] extends [P] towards [src].","\blue You extend [P] towards [src].")
+		user.visible_message("<span class='notice>[user] extends [P] towards [src].","\blue You extend [P] towards [src].</span>")
 		if(do_after(user,40))
-			user << "\blue \icon[P] [src] has been excavated to a depth of [2*src.excavation_level]cm."
+			user << "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*src.excavation_level]cm.</span>"
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
 
-		user << "\red You start [P.drill_verb] [src]."
+		user << "<span class='rose'>You start [P.drill_verb] [src].</span>"
 
 		if(!do_after(user,P.digspeed))
 			return
 
-		user << "\blue You finish [P.drill_verb] [src]."
+		user << "<span class='notice'>You finish [P.drill_verb] [src].</span>"
 		excavation_level += P.excavation_amount
 
 		if(excavation_level > 100)
 			//failure
-			user.visible_message("<font color='red'><b>[src] suddenly crumbles away.</b></font>",\
-			"\red [src] has disintegrated under your onslaught, any secrets it was holding are long gone.")
+			src.visible_message("<span class='danger'>\The [src] suddenly crumbles away.</span>")
+			user << "<span class='rose'>\The [src] has disintegrated under your onslaught, any secrets it was holding are long gone.</span>"
 			del(src)
 			return
 
 		if(prob(excavation_level))
 			//success
+			src.visible_message("<span class='danger'>[src] suddenly crumbles away.</span>")
 			if(artifact_find)
 				var/spawn_type = artifact_find.artifact_find_type
 				var/obj/O = new spawn_type(get_turf(src))
@@ -91,25 +93,21 @@
 					var/obj/machinery/artifact/X = O
 					if(X.my_effect)
 						X.my_effect.artifact_id = artifact_find.artifact_id
-				src.visible_message("<font color='red'><b>[src] suddenly crumbles away.</b></font>")
 			else
-				user.visible_message("<font color='red'><b>[src] suddenly crumbles away.</b></font>",\
-				"\blue [src] has been whittled away under your careful excavation, but there was nothing of interest inside.")
+				user << "<span class='notice'>[src] has been whittled away under your careful excavation, but there was nothing of interest inside.</span>"
 			del(src)
 
 /obj/structure/boulder/Bumped(AM)
 	. = ..()
 	if(istype(AM,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
-		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
-			attackby(H.l_hand,H)
-		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
-			attackby(H.r_hand,H)
+		if(istype(H.get_active_hand(), /obj/item/weapon/pickaxe))
+			attackby(H.get_active_hand(), H)
 
 	else if(istype(AM,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active,/obj/item/weapon/pickaxe))
-			attackby(R.module_active,R)
+			attackby(R.module_active, R)
 
 	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM

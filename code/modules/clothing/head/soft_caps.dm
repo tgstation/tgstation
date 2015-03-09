@@ -2,11 +2,12 @@
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteless yellow colour."
 	icon_state = "cargosoft"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	flags = FPRINT
 	item_state = "helmet"
 	_color = "cargo"
 	var/flipped = 0
 	siemens_coefficient = 0.9
+	body_parts_covered = HEAD|EYES
 
 	proc/flip(var/mob/user as mob)
 		if(user.canmove && !user.stat && !user.restrained())
@@ -29,7 +30,7 @@
 		flip(usr)
 
 	dropped()
-		src.icon_state = "[_color]soft"
+		src.icon_state = "[_color]soft" //because of this line and 15 and 18, the icon_state will end up blank if you were to try allowing heads to dye caps with their stamps
 		src.flipped=0
 		..()
 

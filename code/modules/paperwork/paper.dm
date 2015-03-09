@@ -5,7 +5,7 @@
 
 /obj/item/weapon/paper
 	name = "paper"
-	gender = PLURAL
+	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
@@ -47,26 +47,21 @@
 	if(info)
 		icon_state += "_words"
 
-/obj/item/weapon/paper/examine()
-	set src in oview(1)
-
-//	..()	//We don't want them to see the dumb "this is a paper" thing every time.
-// I didn't like the idea that people can read tiny pieces of paper from across the room.
-// Now you need to be next to the paper in order to read it.
-	if(in_range(usr, src))
+/obj/item/weapon/paper/examine(mob/user)
+	if(in_range(user, src))
 		var/info_2 = ""
 		if(img)
-			usr << browse_rsc(img.img, "tmp_photo.png")
+			user << browse_rsc(img.img, "tmp_photo.png")
 			info_2 = "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' /><br><a href='?src=\ref[src];picture=1'>Remove</a><br>"
-		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_2][stars(info)][stamps]</BODY></HTML>", "window=[name]")
-			onclose(usr, "[name]")
+		if(!(istype(user, /mob/living/carbon/human) || istype(user, /mob/dead/observer) || istype(user, /mob/living/silicon)))
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_2][stars(info)][stamps]</BODY></HTML>", "window=[name]")
+			onclose(user, "[name]")
 		else
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_2][info][stamps]</BODY></HTML>", "window=[name]")
-			onclose(usr, "[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_2][info][stamps]</BODY></HTML>", "window=[name]")
+			onclose(user, "[name]")
 	else
-		usr << "<span class='notice'>It is too far away.</span>"
-	return
+		..() //Only show a regular description if it is too far away to read.
+		user << "<span class='notice'>It is too far away.</span>"
 
 /obj/item/weapon/paper/verb/rename()
 	set name = "Rename paper"
@@ -83,7 +78,7 @@
 	return
 
 /obj/item/weapon/paper/attack_self(mob/living/user as mob)
-	examine()
+	user.examination(src)
 	if(rigged && (Holiday == "April Fool's Day"))
 		if(spam_flag == 0)
 			spam_flag = 1
@@ -156,7 +151,7 @@
 	info = null
 	stamps = null
 	stamped = list()
-	overlays.Cut()
+	overlays.len = 0
 	updateinfolinks()
 	update_icon()
 
@@ -219,8 +214,7 @@
 			usr << "<span class='warning'>Please ensure your pen is in your active hand and that you're holding the paper.</span>"
 			return
 
-		// if paper is not in usr, then it must be in a clipboard or folder, which must be in or near usr
-		if(src.loc != usr && !((istype(src.loc, /obj/item/weapon/clipboard) || istype(src.loc, /obj/item/weapon/folder)) && (src.loc.loc == usr || src.loc.Adjacent(usr)) ) )
+		if(!Adjacent(usr, 1)) //the 1 means that the paper can be in one other item and be written on
 			return
 
 		log += "<br />\[[time_stamp()]] [key_name(usr)] added: [t]"

@@ -6,6 +6,7 @@
 	desc = "Light (people on fire), now at a distance."
 	fire_sound = 'sound/weapons/shotgun.ogg'
 	icon_state = "flaregun"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns.dmi', "right_hand" = 'icons/mob/in-hand/right/guns.dmi')
 	item_state = "flaregun"
 	max_shells = 1
 	w_class = 3.0
@@ -15,7 +16,8 @@
 	force = 4
 	recoil = 1
 	fire_delay = 10
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	caliber = list("flare" = 1)
 	origin_tech = "combat=2;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun/flare"

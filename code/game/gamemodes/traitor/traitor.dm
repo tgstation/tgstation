@@ -163,6 +163,7 @@
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
 	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
+	traitor.current << sound('sound/voice/syndicate intro.ogg')
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)
 		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -363,7 +364,8 @@
 					for(var/image/I in t_mind.current.client.images)
 						if((I.icon_state == "greytide" || I.icon_state == "greytide_head") && I.loc == traitor_mind.current)
 							//world.log << "deleting [traitor_mind] overlay"
-							del(I)
+							//del(I)
+							t_mind.current.client.images -= I
 		if(head)
 			//world.log << "found [head.name]"
 			if(head.current)
@@ -371,12 +373,14 @@
 					for(var/image/I in head.current.client.images)
 						if((I.icon_state == "greytide" || I.icon_state == "greytide_head") && I.loc == traitor_mind.current)
 							//world.log << "deleting [traitor_mind] overlay"
-							del(I)
+							//del(I)
+							head.current.client.images -= I
 	if(traitor_mind.current)
 		if(traitor_mind.current.client)
 			for(var/image/I in traitor_mind.current.client.images)
 				if(I.icon_state == "greytide" || I.icon_state == "greytide_head")
-					del(I)
+					//del(I)
+					traitor_mind.current.client.images -= I
 
 /datum/game_mode/proc/remove_traitor_mind(datum/mind/traitor_mind, datum/mind/head)
 	//var/list/removal

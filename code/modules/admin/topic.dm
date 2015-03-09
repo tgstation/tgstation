@@ -6,6 +6,7 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		return
 
+	var/client/CLIENT = usr.client
 	if(href_list["makeAntag"])
 		switch(href_list["makeAntag"])
 			if("1")
@@ -65,6 +66,9 @@
 		else
 			S << "<b>Your laws are null.</b> Contact a coder immediately."
 		S << "____________________________________"
+		if(isAI(S))
+			var/mob/living/silicon/ai/AI=S
+			AI.notify_slaved(force_sync=1)
 
 	else if("add_law" in href_list)
 		var/mob/living/silicon/S = locate(href_list["mob"])
@@ -89,6 +93,30 @@
 
 		log_admin("[key_name(usr)] has added a law to [key_name(S)]: \"[newlaw]\"")
 		message_admins("[usr.key] has added a law to [key_name(S)]: \"[newlaw]\"")
+		lawchanges.Add("[key_name(usr)] has added a law to [key_name(S)]: \"[newlaw]\"")
+
+	else if("reset_laws" in href_list)
+		var/mob/living/silicon/S = locate(href_list["mob"])
+		var/lawtypes = typesof(/datum/ai_laws) - /datum/ai_laws
+		var/lawtype = input("Select a lawset.","Law Type",1) as null|anything in lawtypes
+		if(lawtype == null)
+			return
+		testing("Lawtype: [lawtype]")
+
+		var/law_zeroth=null
+		var/law_zeroth_borg=null
+		if(S.laws.zeroth || S.laws.zeroth_borg)
+			if(alert(src,"Do you also wish to clear law zero?","Yes","No") == "No")
+				law_zeroth=S.laws.zeroth
+				law_zeroth_borg=S.laws.zeroth
+
+		S.laws = new lawtype
+		S.laws.zeroth=law_zeroth
+		S.laws.zeroth_borg=law_zeroth_borg
+
+		log_admin("[key_name(usr)] has reset [key_name(S)]: [lawtype]")
+		message_admins("[usr.key] has reset [key_name(S)]: [lawtype]")
+		lawchanges.Add("[key_name(usr)] has reset [key_name(S)]: [lawtype]")
 
 	else if("clear_laws" in href_list)
 		var/mob/living/silicon/S = locate(href_list["mob"])
@@ -102,6 +130,7 @@
 
 		log_admin("[key_name(usr)] has purged [key_name(S)]")
 		message_admins("[usr.key] has purged [key_name(S)]")
+		lawchanges.Add("[key_name(usr)] has purged [key_name(S)]")
 
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
@@ -326,31 +355,38 @@
 
 		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
 		message_admins("\blue [key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]", 1)
-
+		var/mob/new_mob
 		switch(href_list["simplemake"])
-			if("observer")			M.change_mob_type( /mob/dead/observer , null, null, delmob )
-			if("drone")				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
-			if("hunter")			M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
-			if("queen")				M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob )
-			if("sentinel")			M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
-			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
-			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
-			if("slime")			M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
-			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
-			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
-			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
-			if("cat")				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
-			if("runtime")			M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob )
-			if("corgi")				M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob )
-			if("ian")				M.change_mob_type( /mob/living/simple_animal/corgi/Ian , null, null, delmob )
-			if("crab")				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
-			if("coffee")			M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
-			if("parrot")			M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
-			if("polyparrot")		M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
-			if("constructarmoured")	M.change_mob_type( /mob/living/simple_animal/construct/armoured , null, null, delmob )
-			if("constructbuilder")	M.change_mob_type( /mob/living/simple_animal/construct/builder , null, null, delmob )
-			if("constructwraith")	M.change_mob_type( /mob/living/simple_animal/construct/wraith , null, null, delmob )
-			if("shade")				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
+			if("observer")			new_mob = M.change_mob_type( /mob/dead/observer , null, null, delmob )
+			if("drone")				new_mob = M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
+			if("hunter")			new_mob = M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
+			if("queen")				new_mob = M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob )
+			if("sentinel")			new_mob = M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
+			if("larva")				new_mob = M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
+			if("human")				new_mob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
+			if("slime")				new_mob = M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
+			if("adultslime")		new_mob = M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
+			if("monkey")			new_mob = M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
+			if("robot")				new_mob = M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
+			if("cat")				new_mob = M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
+			if("runtime")			new_mob = M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob )
+			if("corgi")				new_mob = M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob )
+			if("ian")				new_mob = M.change_mob_type( /mob/living/simple_animal/corgi/Ian , null, null, delmob )
+			if("crab")				new_mob = M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
+			if("coffee")			new_mob = M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
+			if("parrot")			new_mob = M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
+			if("polyparrot")		new_mob = M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
+			if("constructarmoured")	new_mob = M.change_mob_type( /mob/living/simple_animal/construct/armoured , null, null, delmob )
+			if("constructbuilder")	new_mob = M.change_mob_type( /mob/living/simple_animal/construct/builder , null, null, delmob )
+			if("constructwraith")	new_mob = M.change_mob_type( /mob/living/simple_animal/construct/wraith , null, null, delmob )
+			if("shade")				new_mob = M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
+		//world << "Made a [new_mob] [usr ? "usr still exists" : "usr does not exist"]"
+		if(new_mob && new_mob != M)
+			//world << "[new_mob.client] vs [CLIENT] they [new_mob.client == CLIENT ? "match" : "don't match"]"
+			if(new_mob.client == CLIENT)
+				//world << "setting usr to new_mob"
+				usr = new_mob //We probably transformed ourselves
+			show_player_panel(new_mob)
 
 
 	/////////////////////////////////////new ban stuff
@@ -1109,7 +1145,10 @@
 
 		log_admin("[key_name(usr)] attempting to monkeyize [key_name(H)]")
 		message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(H)]", 1)
-		H.monkeyize()
+		var/mob/M = H.monkeyize()
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["corgione"])
 		if(!check_rights(R_SPAWN))	return
@@ -1121,7 +1160,10 @@
 
 		log_admin("[key_name(usr)] attempting to corgize [key_name(H)]")
 		message_admins("\blue [key_name_admin(usr)] attempting to corgize [key_name_admin(H)]", 1)
-		H.corgize()
+		var/mob/M = H.corgize()
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["forcespeech"])
 		if(!check_rights(R_FUN))	return
@@ -1202,13 +1244,22 @@
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
 		message_admins("\blue [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.", 1)
 
-	else if(href_list["tdome1"])
+	else if(href_list["tdome1"] || href_list["tdome2"])
 		if(!check_rights(R_FUN))	return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
 			return
 
-		var/mob/M = locate(href_list["tdome1"])
+		var/mob/M = null
+		var/team = ""
+
+		if(href_list["tdome1"])
+			team = "Green"
+			M = locate(href_list["tdome1"])
+		else if (href_list["tdome2"])
+			team = "Red"
+			M = locate(href_list["tdome2"])
+
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob"
 			return
@@ -1216,49 +1267,122 @@
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
 			return
 
+		var/obj/item/packobelongings/pack = null
+
+		switch(team)
+			if("Green")
+				pack = new /obj/item/packobelongings/green(M.loc)
+				pack.x = map.tDomeX+2
+			if("Red")
+				pack = new /obj/item/packobelongings/red(M.loc)
+				pack.x = map.tDomeX-2
+
+		pack.z = map.tDomeZ //the players' belongings are stored there, in the Thunderdome Admin lodge.
+		pack.y = map.tDomeY
+
+		pack.name = "[M.real_name]'s belongings"
+
 		for(var/obj/item/I in M)
+			if(istype(I,/obj/item/clothing/glasses))
+				var/obj/item/clothing/glasses/G = I
+				if(G.prescription)
+					continue
 			M.u_equip(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
 				I.dropped(M)
+				I.loc = pack
 
-		M.Paralyse(5)
-		sleep(5)
-		M.loc = pick(tdome1)
-		spawn(50)
-			M << "\blue You have been sent to the Thunderdome."
-		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 1)")
-		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 1)", 1)
+		var/obj/item/weapon/card/id/thunderdome/ident = null
 
-	else if(href_list["tdome2"])
-		if(!check_rights(R_FUN))	return
+		switch(team)
+			if("Green")
+				ident = new /obj/item/weapon/card/id/thunderdome/green(M)
+				ident.name = "[M.real_name]'s Thunderdome Green ID"
+			if("Red")
+				ident = new /obj/item/weapon/card/id/thunderdome/red(M)
+				ident.name = "[M.real_name]'s Thunderdome Red ID"
 
-		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
-			return
+		if(!iscarbon(M))
+			qdel(ident)
 
-		var/mob/M = locate(href_list["tdome2"])
-		if(!ismob(M))
-			usr << "This can only be used on instances of type /mob"
-			return
-		if(istype(M, /mob/living/silicon/ai))
-			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
-			return
+		switch(team)
+			if("Green")
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+					H.equip_to_slot_or_del(ident, slot_wear_id)
+					H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/green(H), slot_belt)
+					H.regenerate_icons()
+				else if(ismonkey(M))
+					var/mob/living/carbon/monkey/K = M
+					var/obj/item/clothing/monkeyclothes/jumpsuit_green/JS = new /obj/item/clothing/monkeyclothes/jumpsuit_green(K)
+					var/obj/item/clothing/monkeyclothes/olduniform = null
+					var/obj/item/clothing/monkeyclothes/oldhat = null
+					if(K.uniform)
+						olduniform = K.uniform
+						K.uniform = null
+						olduniform.loc = pack
+					K.uniform = JS
+					K.uniform.loc = K
+					if(K.hat)
+						oldhat = K.hat
+						K.hat = null
+						oldhat.loc = pack
+					K.equip_to_slot_or_del(ident, slot_r_hand)
+					K.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/green(K), slot_l_hand)
+					K.regenerate_icons()
 
-		for(var/obj/item/I in M)
-			M.u_equip(I)
-			if(I)
-				I.loc = M.loc
-				I.layer = initial(I.layer)
-				I.dropped(M)
+			if("Red")
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+					H.equip_to_slot_or_del(ident, slot_wear_id)
+					H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/red(H), slot_belt)
+					H.regenerate_icons()
+				else if(ismonkey(M))
+					var/mob/living/carbon/monkey/K = M
+					var/obj/item/clothing/monkeyclothes/jumpsuit_red/JS = new /obj/item/clothing/monkeyclothes/jumpsuit_red(K)
+					var/obj/item/clothing/monkeyclothes/olduniform = null
+					var/obj/item/clothing/monkeyclothes/oldhat = null
+					if(K.uniform)
+						olduniform = K.uniform
+						K.uniform = null
+						olduniform.loc = pack
+					K.uniform = JS
+					K.uniform.loc = K
+					if(K.hat)
+						oldhat = K.hat
+						K.hat = null
+						oldhat.loc = pack
+					K.equip_to_slot_or_del(ident, slot_r_hand)
+					K.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/red(K), slot_l_hand)
+					K.regenerate_icons()
 
-		M.Paralyse(5)
-		sleep(5)
-		M.loc = pick(tdome2)
-		spawn(50)
-			M << "\blue You have been sent to the Thunderdome."
-		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 2)")
-		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 2)", 1)
+		if(pack.contents.len == 0)
+			qdel(pack)
+
+		switch(team)
+			if("Green")
+				log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team Green)")
+				message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team Green)", 1)
+				M.loc = pick(tdome1)
+			if("Red")
+				log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team Red)")
+				message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team Red)", 1)
+				M.loc = pick(tdome2)
+
+		M << "<span class='danger'>You have been chosen to fight for the [team] Team. [pick(\
+		"The wheel of fate is turning!",\
+		"Heaven or Hell!",\
+		"Set Spell Card!",\
+		"Hologram Summer Again!",\
+		"Get ready for the next battle!",\
+		"Fight for your life!",\
+		)]</span>"
 
 	else if(href_list["tdomeadmin"])
 		if(!check_rights(R_FUN))	return
@@ -1324,7 +1448,7 @@
 			return
 
 		if(config.allow_admin_rev)
-			L.revive()
+			L.revive(0)
 			message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!", 1)
 			log_admin("[key_name(usr)] healed / Rrvived [key_name(L)]")
 		else
@@ -1340,7 +1464,10 @@
 
 		message_admins("\red Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!", 1)
 		log_admin("[key_name(usr)] AIized [key_name(H)]")
-		H.AIize()
+		var/mob/M = H.AIize()
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makealien"])
 		if(!check_rights(R_SPAWN))	return
@@ -1350,7 +1477,10 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_alienize(H)
+		var/mob/M = usr.client.cmd_admin_alienize(H)
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makeslime"])
 		if(!check_rights(R_SPAWN))	return
@@ -1360,7 +1490,10 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_slimeize(H)
+		var/mob/M = usr.client.cmd_admin_slimeize(H)
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makecluwne"])
 		if(!check_rights(R_SPAWN))	return
@@ -1370,7 +1503,10 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_cluwneize(H)
+		var/mob/M = usr.client.cmd_admin_cluwneize(H)
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))	return
@@ -1380,7 +1516,10 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_robotize(H)
+		var/mob/M = usr.client.cmd_admin_robotize(H)
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makemommi"])
 		if(!check_rights(R_SPAWN))	return
@@ -1390,7 +1529,10 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_mommify(H)
+		var/mob/M = usr.client.cmd_admin_mommify(H)
+		if(M)
+			if(M.client == CLIENT) usr = M //We probably transformed ourselves
+			show_player_panel(M)
 
 	else if(href_list["makeanimal"])
 		if(!check_rights(R_SPAWN))	return
@@ -1400,7 +1542,10 @@
 			usr << "This cannot be used on instances of type /mob/new_player"
 			return
 
-		usr.client.cmd_admin_animalize(M)
+		var/mob/new_mob = usr.client.cmd_admin_animalize(M)
+		if(new_mob && new_mob != M)
+			if(new_mob.client == CLIENT) usr = new_mob //We probably transformed ourselves
+			show_player_panel(new_mob)
 
 	else if(href_list["togmutate"])
 		if(!check_rights(R_SPAWN))	return
@@ -1465,10 +1610,33 @@
 		var/client/C = usr.client
 		if(!isobserver(usr))	C.admin_ghost()
 		sleep(2)
-		C.jumptomob(M)
+		if(C) C.jumptomob(M)
 
 	else if(href_list["check_antagonist"])
 		check_antagonists()
+
+	else if(href_list["cult_nextobj"])
+		if(alert(usr, "Validate the current Cult objective and unlock the next one?", "Cult Cheat Code", "Yes", "No") != "Yes")
+			return
+
+		var/datum/game_mode/cult/mode_ticker = ticker.mode
+		mode_ticker.bypass_phase()
+		message_admins("Admin [key_name_admin(usr)] has unlocked the Cult's next objective.")
+		check_antagonists()
+
+	else if(href_list["cult_mindspeak"])
+		var/input = stripped_input(usr, "Communicate to all the cultists with the voice of Nar-Sie", "Voice of Nar-Sie", "")
+		if(!input)
+			return
+
+		for(var/datum/mind/H in ticker.mode.cult)
+			if (H.current)
+				H.current << "<span class='game say'><span class='danger'>Nar-Sie</span> murmurs, <span class='sinister'>[input]</span></span>"
+
+		for(var/mob/dead/observer/O in player_list)
+			O << "<span class='game say'><span class='danger'>Nar-Sie</span> murmurs, <span class='sinister'>[input]</span></span>"
+
+		message_admins("Admin [key_name_admin(usr)] has talked with the Voice of Nar-Sie.")
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!check_rights(R_ADMIN))	return
@@ -1651,7 +1819,7 @@
 
 		var/customname = input(src.owner, "Pick a title for the report", "Title") as text|null
 
-		for(var/obj/machinery/faxmachine/F in machines)
+		for(var/obj/machinery/faxmachine/F in allfaxes)
 			if(! (F.stat & (BROKEN|NOPOWER) ) )
 
 				// animate! it's alive!
@@ -1759,6 +1927,7 @@
 		usr << "\blue New [subject] will spawn with the [selected_law] lawset."
 		log_admin("[key_name(src.owner)] set the default laws of [subject] to: [selected_law]")
 		message_admins("[key_name_admin(src.owner)] set the default laws of [subject] to: [selected_law]", 1)
+		lawchanges.Add("[key_name_admin(src.owner)] set the default laws of [subject] to: [selected_law]")
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
@@ -1832,7 +2001,7 @@
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
 		var/tmp_dir = href_list["object_dir"]
 		var/obj_dir = tmp_dir ? text2num(tmp_dir) : 2
-		if(!obj_dir || !(obj_dir in list(1,2,4,8,5,6,9,10)))
+		if(!obj_dir || !(obj_dir in alldirs))
 			obj_dir = 2
 		var/obj_name = sanitize(href_list["object_name"])
 		var/where = href_list["object_where"]
@@ -2076,7 +2245,7 @@
 								W.layer = initial(W.layer)
 						//teleport person to cell
 						H.loc = pick(prisonwarp)
-						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), slot_w_uniform)
+						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/prisoner(H), slot_w_uniform)
 						H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), slot_shoes)
 					else
 						//teleport security person
@@ -2282,6 +2451,12 @@
 				else
 					communications_blackout(1)
 				message_admins("[key_name_admin(usr)] triggered a communications blackout.", 1)
+
+			if("pda_spam")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","PDA")
+				new /datum/event/pda_spam
+
 			if("spaceninja")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SN")
@@ -2388,7 +2563,7 @@
 						if(F.z == 1)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
-							F.overlays.Cut()
+							F.overlays.len = 0
 							F.lava = 0
 							F.update_icon()
 					floorIsLava = 0
@@ -2480,7 +2655,6 @@
 				var/choice = input("You sure you want to end the round and summon narsie at your location? Misuse of this could result in removal of flags or halarity.") in list("PRAISE SATAN", "Cancel")
 				if(choice == "PRAISE SATAN")
 					new /obj/machinery/singularity/narsie/large(get_turf(usr))
-					SetUniversalState(/datum/universal_state/hell)
 					message_admins("[key_name_admin(usr)] has summoned narsie and brought about a new realm of suffering.")
 			if("supermattercascade")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2491,15 +2665,106 @@
 					new /turf/unsimulated/wall/supermatter(get_turf(usr))
 					SetUniversalState(/datum/universal_state/supermatter_cascade)
 					message_admins("[key_name_admin(usr)] has managed to destroy the universe with a supermatter cascade. Good job, [key_name_admin(usr)]")
-
-
+			if("spawnadminbus")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","AB")
+				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = new /obj/structure/stool/bed/chair/vehicle/adminbus(get_turf(usr))
+				A.dir = EAST
+				A.update_lightsource()
+				A.busjuke.dir = EAST
+				message_admins("[key_name_admin(usr)] has spawned an Adminbus. Who gave him the keys?")
+			if("spawnselfdummy")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","TD")
+				message_admins("[key_name_admin(usr)] spawned himself as a Test Dummy.")
+				var/turf/T = get_turf(usr)
+				var/mob/living/carbon/human/dummy/D = new /mob/living/carbon/human/dummy(T)
+				usr.client.cmd_assume_direct_control(D)
+				D.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(D), slot_w_uniform)
+				D.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(D), slot_shoes)
+				D.equip_to_slot_or_del(new /obj/item/weapon/card/id/admin(D), slot_wear_id)
+				D.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(D), slot_ears)
+				D.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(D), slot_back)
+				D.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(D.back), slot_in_backpack)
+				T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/misc/adminspawn.ogg')
+				D.name = "Admin"
+				D.real_name = "Admin"
+				var/newname = ""
+				newname = copytext(sanitize(input(D, "Before you step out as an embodied god, what name do you wish for?", "Choose your name.", "Admin") as null|text),1,MAX_NAME_LEN)
+				if (!newname)
+					newname = "Admin"
+				D.name = newname
+				D.real_name = newname
+			//False flags and bait below. May cause mild hilarity or extreme pain. Now in one button
+			if("fakealerts")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKEA")
+				var/choice = input("Choose the type of fake alert you wish to trigger","False Flag and Bait Panel") in list("Biohazard", "Lifesigns", "Malfunction", "Ion", "Meteor Wave", "Carp Migration", "Return")
+				//Big fat lists of effects, not very modular but at least there's less buttons
+				if(choice == "Return") //Actually fuck this
+					return //Duh
+				if(choice == "Biohazard") //GUISE WE HAVE A BLOB
+					var/levelchoice = input("Set the level of the biohazard alert, or leave at 0 to have a random level (1 to 7 supported only)", "Space FEMA Readiness Program", 0) as num
+					if(!levelchoice || levelchoice > 7 || levelchoice < 0)
+						usr << "<span class='warning'>Invalid input range (0 to 7 only)</span>"
+						return
+					biohazard_alert(level = levelchoice)
+					message_admins("[key_name_admin(usr)] triggered a FAKE Biohzard Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Biohzard Alert.")
+					return
+				if(choice == "Lifesigns") //MUH ALIUMS
+					command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
+					world << sound('sound/AI/aliens.ogg')
+					message_admins("[key_name_admin(usr)] triggered a FAKE Lifesign Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Lifesign Alert.")
+					return
+				if(choice == "Malfunction") //BLOW EVERYTHING
+					var/salertchoice = input("Do you wish to include the Hostile Runtimes warning to have an authentic Malfunction Takeover Alert ?", "Nanotrasen Alert Level Monitor") in list("Yes", "No")
+					if(salertchoice == "Yes")
+						command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert")
+					world << "<font size=4 color='red'>Attention! Delta security level reached!</font>" //Don't ACTUALLY set station alert to Delta to avoid fucking shit up for real
+					world << "<font color='red'>[config.alert_desc_delta]</font>"
+					world << sound('sound/AI/aimalf.ogg') //AI got valid
+					message_admins("[key_name_admin(usr)] triggered a FAKE Malfunction Takeover Alert (Hostile Runtimes alert [salertchoice == "Yes" ? "included":"excluded"])")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Malfunction Takeover Alert (Hostile Runtimes alert [salertchoice == "Yes" ? "included":"excluded"])")
+					return
+				if(choice == "Ion")
+					command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
+					world << sound('sound/AI/ionstorm.ogg')
+					message_admins("[key_name_admin(usr)] triggered a FAKE Ion Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Ion Alert.")
+					return
+				if(choice == "Meteor Wave")
+					command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
+					world << sound('sound/AI/meteors.ogg')
+					message_admins("[key_name_admin(usr)] triggered a FAKE Meteor Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Meteor Alert.")
+					return
+				if(choice == "Carp Migration")
+					command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
+					message_admins("[key_name_admin(usr)] triggered a FAKE Carp Migration Alert.")
+					log_admin("[key_name_admin(usr)] triggered a FAKE Carp Migration Alert.")
+					return
+			if("fakebooms") //Micheal Bay is in the house !
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FAKEE")
+				var/choice = input("How much high-budget explosions do you want ?", "Micheal Bay SFX Systems", 1) as num
+				if(choice < 1) //No negative or null explosion amounts here math genius
+					usr << "<span class='warning'>Invalid input range (null or negative)</span>"
+					return
+				message_admins("[key_name_admin(usr)] improvised himself as Micheal Bay and triggered [round(choice)] fake explosions.")
+				log_admin("[key_name_admin(usr)] improvised himself as Micheal Bay and triggered [round(choice)] fake explosions.")
+				for(var/i = 1 to choice)
+					world << sound('sound/effects/explosionfar.ogg')
+					sleep(rand(2, 10)) //Sleep 0.2 to 1 second
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
-			if (ok)
-				world << text("<B>A secret has been activated by []!</B>", usr.key)
+			if(ok)
+				world << text("<B>A secret has been activated by [usr.key]!</B>")
 
 	else if(href_list["secretsadmin"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/ok = 0
 		switch(href_list["secretsadmin"])

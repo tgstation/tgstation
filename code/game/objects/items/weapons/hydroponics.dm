@@ -20,7 +20,7 @@
 	desc = "A small satchel made for organizing seeds."
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 500; //the number of seeds it can carry.
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = 1
 	var/list/item_quants = list()
@@ -116,7 +116,7 @@
 				break
 
 	else if ( href_list["unload"] )
-		item_quants.Cut()
+		item_quants.len = 0
 		for(var/obj/O in contents )
 			O.loc = get_turf(src)
 
@@ -144,7 +144,7 @@
 	icon_state = "novaflower"
 	damtype = "fire"
 	force = 0
-	flags = TABLEPASS
+	flags = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 1
 	w_class = 1.0
@@ -177,14 +177,6 @@
 				user.UpdateDamageIcon()
 		else
 			user.take_organ_damage(0,force)
-
-/obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob)
-	if(force > 0)
-		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	else
-		usr << "All the leaves have fallen off the nettle from violent whacking."
-		del(src)
 
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
 	potency = newValue
@@ -228,13 +220,6 @@
 			M.Weaken(force/15)
 		M.drop_item()
 
-/obj/item/weapon/grown/deathnettle/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (force > 0)
-		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
-
-	else
-		usr << "All the leaves have fallen off the deathnettle from violent whacking."
-		del(src)
 
 /obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
 	potency = newValue
@@ -246,7 +231,7 @@
  */
 /obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/kitchenknife/ritual))
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large/ritual))
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		del(src)

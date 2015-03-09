@@ -16,11 +16,13 @@
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
+	item_state = "retractor"
 	m_amt = 10000
 	g_amt = 5000 // OH COME ON, WHERE THE FUCK IS THERE ANY GLASS IN A GODDAMN RETRACTOR
 	melt_temperature = MELTPOINT_STEEL
 	w_type = RECYK_METAL
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 
@@ -137,10 +139,12 @@ LOOK FOR SURGERY.DM*/
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
+	item_state = "hemostat"
 	m_amt = 5000
 	g_amt = 2500
 	w_type = RECYK_METAL
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
@@ -278,10 +282,12 @@ LOOK FOR SURGERY.DM*/
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
+	item_state = "cautery"
 	m_amt = 5000
 	g_amt = 2500
 	w_type = RECYK_ELECTRONIC
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
@@ -373,11 +379,13 @@ LOOK FOR SURGERY.DM*/
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
+	item_state = "surgicaldrill"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	m_amt = 15000
 	g_amt = 10000
 	w_type = RECYK_ELECTRONIC
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 15.0
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
@@ -397,7 +405,9 @@ LOOK FOR SURGERY.DM*/
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
 	hitsound = "sound/weapons/bladeslice.ogg"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
+	sharpness = 1.5
 	force = 10.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -648,29 +658,49 @@ LOOK FOR SURGERY.DM*/
 */
 /obj/item/weapon/scalpel/laser1
 	name = "laser scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field. This one looks basic and could be improved."
-	icon_state = "scalpel_laser1_on"
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions. This one looks basic and could be improved."
+	icon_state = "scalpel_laser1"
+	item_state = "laserscalpel1"
 	damtype = "fire"
+
+/obj/item/weapon/scalpel/laser1/New()
+	..()
+	icon_state = "scalpel_laser1_off"
 
 /obj/item/weapon/scalpel/laser2
 	name = "laser scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field. This one looks somewhat advanced."
-	icon_state = "scalpel_laser2_on"
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions. This one looks somewhat advanced."
+	icon_state = "scalpel_laser2"
+	item_state = "laserscalpel2"
 	damtype = "fire"
 	force = 12.0
 
+/obj/item/weapon/scalpel/laser2/New()
+	..()
+	icon_state = "scalpel_laser2_off"
+
 /obj/item/weapon/scalpel/laser3
 	name = "laser scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field. This one looks to be the pinnacle of precision energy cutlery!"
-	icon_state = "scalpel_laser3_on"
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions. This one looks to be the pinnacle of precision energy cutlery!"
+	icon_state = "scalpel_laser3"
+	item_state = "laserscalpel3"
 	damtype = "fire"
 	force = 15.0
 
+/obj/item/weapon/scalpel/laser3/New()
+	..()
+	icon_state = "scalpel_laser3_off"
+
 /obj/item/weapon/scalpel/manager
 	name = "incision management system"
-	desc = "A true extension of the surgeon's body, this marvel instantly and completely prepares an incision allowing for the immediate commencement of therapeutic steps."
-	icon_state = "scalpel_manager_on"
+	desc = "A true extension of the surgeon's body, this marvel instantly cuts the organ, clamp any bleeding, and retract the skin, allowing for the immediate commencement of therapeutic steps."
+	icon_state = "scalpel_manager"
+	item_state = "incisionmanager"
 	force = 7.5
+
+/obj/item/weapon/scalpel/manager/New()
+	..()
+	icon_state = "scalpel_manager_off"
 
 /*
  * Circular Saw
@@ -681,7 +711,9 @@ LOOK FOR SURGERY.DM*/
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw3"
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
+	sharpness = 1
 	force = 15.0
 	w_class = 1.0
 	throwforce = 9.0
@@ -854,6 +886,7 @@ LOOK FOR SURGERY.DM*/
 	name = "bone gel"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bone-gel"
+	item_state = "bonegel"
 	force = 0
 	throwforce = 1.0
 
@@ -866,6 +899,7 @@ LOOK FOR SURGERY.DM*/
 	name = "FixOVein"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fixovein"
+	item_state = "fixovein"
 	force = 0
 	throwforce = 1.0
 	origin_tech = "materials=1;biotech=3"
@@ -875,6 +909,7 @@ LOOK FOR SURGERY.DM*/
 	name = "bone setter"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bone setter"
+	item_state = "bonesetter"
 	force = 8.0
 	throwforce = 9.0
 	throw_speed = 3

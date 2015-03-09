@@ -92,7 +92,7 @@
 	for(var/t in organs)
 		var/datum/organ/external/affecting = organs["[t]"]
 		if (affecting.take_damage(0, b.power/400,0,0))
-			UpdateDamageIcon()
+			UpdateDamageIcon(1)
 		else
 			UpdateDamage()
 

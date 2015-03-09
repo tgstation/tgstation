@@ -41,7 +41,7 @@
 
 /datum/recipe/plainburger
 	reagents = list("flour" = 5)
-	items = list(/obj/item/weapon/reagent_containers/food/snacks/meat)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey)
 	result = /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 
 /datum/recipe/appendixburger
@@ -78,6 +78,11 @@
 	reagents = list("flour" = 5)
 	items = list(/obj/item/weapon/reagent_containers/food/snacks/tofu)
 	result = /obj/item/weapon/reagent_containers/food/snacks/tofuburger
+
+/datum/recipe/chickenburger
+	reagents = list("flour" = 5)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/rawchicken)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chickenburger
 
 /datum/recipe/ghostburger
 	reagents = list("flour" = 5)
@@ -262,6 +267,11 @@
 		/obj/item/weapon/ectoplasm
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
+
+/datum/recipe/dindumuffin
+	reagents = list("nothing" = 5, "milk" = 5, "flour" = 5)
+	items = list(/obj/item/weapon/handcuffs)
+	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/dindumuffin
 
 // Donk Pockets ////////////////////////////////////////////////
 
@@ -640,6 +650,18 @@
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/chocolatecake
 
+/datum/recipe/buchedenoel
+	reagents = list("milk" = 5, "flour" = 15, "cream" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/berries,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/berries,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/buchedenoel
+
 // Pies ////////////////////////////////////////////////////////
 
 /datum/recipe/pie
@@ -1016,9 +1038,9 @@
 
 // Coder Snacks ///////////////////////////////////////////////////////
 
-/datum/recipe/spagetti
+/datum/recipe/spaghetti
 	reagents = list("flour" = 5)
-	result= /obj/item/weapon/reagent_containers/food/snacks/spagetti
+	result= /obj/item/weapon/reagent_containers/food/snacks/spaghetti
 
 /datum/recipe/copypasta
 	items = list(
@@ -1029,35 +1051,35 @@
 
 // Pasta ///////////////////////////////////////////////////////
 
-/datum/recipe/boiledspagetti
+/datum/recipe/boiledspaghetti
 	reagents = list("water" = 5)
-	items = list(/obj/item/weapon/reagent_containers/food/snacks/spagetti)
-	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/spaghetti)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 
 /datum/recipe/pastatomato
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 
-/datum/recipe/meatballspagetti
+/datum/recipe/meatballspaghetti
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		)
-	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
 
 // Salad ///////////////////////////////////////////////////////
 
 /datum/recipe/spesslaw
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/spaghetti,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
@@ -1081,9 +1103,9 @@
 
 /datum/recipe/aesirsalad
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/deus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/deus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/deus,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/aesirsalad
@@ -1102,6 +1124,51 @@
 	var/obj/item/weapon/reagent_containers/food/snacks/validsalad/being_cooked = ..(container)
 	being_cooked.reagents.del_reagent("toxin")
 	return being_cooked
+// Curry ///////////////////////////////////////////////////////
+
+/datum/recipe/curry
+	reagents = list ("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/curry
+
+/datum/recipe/vindaloo
+	reagents = list ("water" = 10, "capsaicin" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/curry/vindaloo
+
+/datum/recipe/lemoncurry
+	reagents = list ("water" = 10, "lemonjuice" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/curry/lemon
+
+/datum/recipe/xenocurry
+	reagents = list ("sacid" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/xenomeat,
+		/obj/item/weapon/reagent_containers/food/snacks/xenomeat,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/curry/xeno
 
 // Misc ////////////////////////////////////////////////////////
 
@@ -1173,6 +1240,33 @@
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/fishfingers
+
+/datum/recipe/turkey
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1, "cornoil" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/orange,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
+
+/datum/recipe/chicken_nuggets
+	reagents = list("ketchup" = 5)
+	items = list(
+		/obj/item/stack/sheet/cardboard,
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets
+
+/datum/recipe/chicken_drumsticks
+	items = list(
+		/obj/item/stack/sheet/cardboard,
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
+		)
+	result = /obj/item/weapon/storage/fancy/chicken_bucket
 
 // Currently Disabled //////////////////////////////////////////
 

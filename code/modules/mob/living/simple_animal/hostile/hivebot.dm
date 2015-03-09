@@ -51,7 +51,8 @@
 /mob/living/simple_animal/hostile/hivebot/Die()
 	..()
 	visible_message("<b>[src]</b> blows apart!")
-	new /obj/effect/decal/cleanable/blood/gibs/robot(src.loc)
+	var/obj/effect/decal/cleanable/blood/gibs/robot/R = getFromPool(/obj/effect/decal/cleanable/blood/gibs/robot, get_turf(src))
+	R.New(R.loc)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -99,7 +100,7 @@
 				if("rapid")
 					new /mob/living/simple_animal/hostile/hivebot/rapid(get_turf(src))
 		spawn(100)
-			del(src)
+			qdel(src)
 		return
 
 

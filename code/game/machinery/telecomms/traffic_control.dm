@@ -55,6 +55,8 @@
 		return
 
 	// For the typer, the input is enabled. Buffer the typed text
+	if(!istype(editingcode))
+		return
 	storedcode = "[winget(editingcode, "tcscode", "text")]"
 	winset(editingcode, "tcscode", "is-disabled=false")
 

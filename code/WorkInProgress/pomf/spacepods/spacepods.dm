@@ -17,7 +17,7 @@
 	var/obj/item/weapon/cell/high/battery
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
-	var/datum/effect/effect/system/ion_trail_follow/space_trail/ion_trail
+	var/datum/effect/effect/system/trail/space_trail/ion_trail
 	var/use_internal_tank = 0
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
@@ -39,7 +39,7 @@
 	battery = new()
 	add_cabin()
 	add_airtank()
-	src.ion_trail = new /datum/effect/effect/system/ion_trail_follow/space_trail()
+	src.ion_trail = new /datum/effect/effect/system/trail/space_trail()
 	src.ion_trail.set_up(src)
 	src.ion_trail.start()
 	src.use_internal_tank = 1
@@ -141,9 +141,7 @@
 				W.loc = equipment_system
 				equipment_system.weapon_system = W
 				equipment_system.weapon_system.my_atom = src
-				var/path = text2path("[W.type]/proc/fire_weapon_system")
-				if(path)
-					verbs += path//obj/spacepod/proc/fire_weapons
+				new/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapon_system(src, equipment_system.weapon_system.verb_name, equipment_system.weapon_system.verb_desc) //Yes, it has to be referenced like that. W.verb_name/desc doesn't compile.
 				return
 
 
@@ -151,7 +149,7 @@
 	if(!hatch_open)
 		return ..()
 	if(!equipment_system || !istype(equipment_system))
-		user << "<span class='warning'>The pod has no equpment datum, or is the wrong type, yell at pomf.</span>"
+		user << "<span class='warning'>The pod has no equipment datum, or is the wrong type, yell at pomf.</span>"
 		return
 	var/list/possible = list()
 	if(battery)
@@ -176,6 +174,7 @@
 				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
 				SPE.my_atom = null
 				equipment_system.weapon_system = null
+				verbs -= typesof(/obj/item/device/spacepod_equipment/weaponry/proc)
 			else
 				user << "<span class='warning'>You need an open hand to do that.</span>"
 		/*
@@ -227,7 +226,7 @@
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
-	use_internal_tank = !use_internal_tank
+	src.use_internal_tank = !src.use_internal_tank
 	src.occupant << "<span class='notice'>Now taking air from [use_internal_tank?"internal airtank":"environment"].</span>"
 	return
 
@@ -347,7 +346,7 @@
 
 	if(usr != src.occupant)
 		return
-	inertia_dir = 0 // engage reverse thruster and power down pod
+	src.inertia_dir = 0 // engage reverse thruster and power down pod
 	src.occupant.loc = src.loc
 	src.occupant = null
 	usr << "<span class='notice'>You climb out of the pod</span>"
@@ -408,9 +407,10 @@
 		return
 
 /obj/spacepod/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	..()
-	if(dir == 1 || dir == 4)
-		src.loc.Entered(src)
+	var/oldloc = src.loc
+	. = ..()
+	if(dir && (oldloc != NewLoc))
+		src.loc.Entered(src, oldloc)
 /obj/spacepod/proc/Process_Spacemove(var/check_drift = 0, mob/user)
 	var/dense_object = 0
 	if(!user)
@@ -447,7 +447,7 @@
 					inertia_dir = 0
 					moveship = 0
 		if(moveship)
-			step(src, direction)
+			Move(get_step(src,direction), direction)
 			if(istype(src.loc, /turf/space))
 				inertia_dir = direction
 	else

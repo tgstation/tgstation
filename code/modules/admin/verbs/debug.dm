@@ -19,7 +19,7 @@
 /* 21st Sept 2010
 Updated by Skie -- Still not perfect but better!
 Stuff you can't do:
-Call proc /mob/proc/make_dizzy() for some player
+Call proc /mob/proc/Dizzy() for some player
 Because if you select a player mob as owner it tries to do the proc for
 /mob/living/carbon/human/ instead. And that gives a run-time error.
 But you can call procs that are of type /mob/living/carbon/human/proc/ for that player.
@@ -163,8 +163,7 @@ Pressure: [env.return_pressure()]"}
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has robotized [M.key].")
-		spawn(10)
-			M:Robotize()
+		. = M:Robotize()
 
 	else
 		alert("Invalid mob")
@@ -178,8 +177,7 @@ Pressure: [env.return_pressure()]"}
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has MoMMIfied [M.key].")
-		spawn(10)
-			M:MoMMIfy()
+		. = M:MoMMIfy()
 
 	else
 		alert("Invalid mob")
@@ -201,8 +199,7 @@ Pressure: [env.return_pressure()]"}
 		return
 
 	log_admin("[key_name(src)] has animalized [M.key].")
-	spawn(10)
-		M.Animalize()
+	. = M.Animalize()
 
 
 /client/proc/makepAI(var/turf/T in mob_list)
@@ -242,8 +239,9 @@ Pressure: [env.return_pressure()]"}
 	if(ishuman(M))
 		log_admin("[key_name(src)] has alienized [M.key].")
 		spawn(10)
-			M:Alienize()
 			feedback_add_details("admin_verb","MKAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			return M:Alienize()
+
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
 		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into an alien.", 1)
 	else
@@ -259,8 +257,8 @@ Pressure: [env.return_pressure()]"}
 	if(ishuman(M))
 		log_admin("[key_name(src)] has slimeized [M.key].")
 		spawn(10)
-			M:slimeize()
 			feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			return M:slimeize()
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
 		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a slime.", 1)
 	else
@@ -440,16 +438,6 @@ Pressure: [env.return_pressure()]"}
 	if( isobserver(adminmob) )
 		del(adminmob)
 	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/cmd_switch_radio()
-	set category = "Debug"
-	set name = "Switch Radio Mode"
-	set desc = "Toggle between normal radios and experimental radios. Have a coder present if you do this."
-
-	GLOBAL_RADIO_TYPE = !GLOBAL_RADIO_TYPE // toggle
-	log_admin("[key_name(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].")
-	message_admins("[key_name_admin(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].", 0)
-	feedback_add_details("admin_verb","SRM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_areatest()
 	set category = "Mapping"
@@ -643,7 +631,7 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/thunderdome(M), slot_head)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_l_hand)
+			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_l_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/smokebomb(M), slot_r_store)
 
 
@@ -667,9 +655,9 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(M), slot_head)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/rollingpin(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_l_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_r_store)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_s_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_l_hand)
+			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_s_store)
 
 		if ("tournament janitor")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(M), slot_w_uniform)
@@ -734,7 +722,7 @@ Pressure: [env.return_pressure()]"}
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
-			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
+			var/obj/item/weapon/fire_axe = new(M)
 			M.equip_to_slot_or_del(fire_axe, slot_r_hand)
 
 		if("masked killer")
@@ -746,10 +734,10 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/monocle(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/apron(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/scalpel(M), slot_r_store)
 
-			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
+			var/obj/item/weapon/fire_axe = new(M)
 			M.equip_to_slot_or_del(fire_axe, slot_r_hand)
 
 			for(var/obj/item/carried_item in M.contents)
@@ -897,7 +885,7 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/havana(M), slot_wear_mask)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad/beret(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/centcom(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/M1911(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
@@ -1014,7 +1002,7 @@ Pressure: [env.return_pressure()]"}
 			if(!Rad.P)
 				var/obj/item/weapon/tank/plasma/Plasma = new/obj/item/weapon/tank/plasma(Rad)
 				Plasma.air_contents.toxins = 70
-				Rad.drainratio = 0
+				Rad.drain_ratio = 0
 				Rad.P = Plasma
 				Plasma.loc = Rad
 
@@ -1116,29 +1104,105 @@ Pressure: [env.return_pressure()]"}
 	set category = "Debug"
 	set name = "Dump Instance Counts"
 	set desc = "MEMORY PROFILING IS TOO HIGH TECH"
-
-	var/F=file("instances.csv")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F=file("data/logs/profiling/[date_string]_instances.csv")
 	fdel(F)
 	F << "Types,Number of Instances"
 	for(var/key in type_instances)
 		F << "[key],[type_instances[key]]"
 
-	usr << "\blue Dumped to instances.csv."
+	usr << "\blue Dumped to [F]"
 
 #ifdef PROFILE_MACHINES
 /client/proc/cmd_admin_dump_macprofile()
 	set category = "Debug"
-	set name = "Dump Machine Profiling"
+	set name = "Dump Machine and Object Profiling"
 
-	var/F = file("machine_profiling.csv")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F =file("data/logs/profiling/[date_string]_machine_profiling.csv")
 	fdel(F)
 	F << "type,nanoseconds"
 	for(var/typepath in machine_profiling)
 		var/ns = machine_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to machine_profiling.csv."
+	usr << "\blue Dumped to [F]"
+	var/FF = file("data/logs/profiling/[date_string]_object_profiling.csv")
+	fdel(FF)
+	FF << "type,nanoseconds"
+	for(var/typepath in object_profiling)
+		var/ns = object_profiling[typepath]
+		FF << "[typepath],[ns]"
+
+	usr << "\blue Dumped to [FF]."
+
+
+/client/proc/cmd_admin_dump_machine_type_list()
+	set category = "Debug"
+	set name = "Dump Machine type list"
+
+	if(!machines.len && !power_machines.len)
+		usr << "Machines has no length!"
+		return
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F =file("data/logs/profiling/[date_string]_machine_instances.csv")
+	fdel(F)
+	F << "type,count"
+	var/list/machineinstances = list()
+	for(var/atom/typepath in machines)
+		if(!typepath.type in machineinstances)
+			machineinstances["[typepath.type]"] = 0
+		machineinstances["[typepath.type]"] += 1
+	for(var/T in machineinstances)
+		var/count = machineinstances[T]
+		F << "[T],[count]"
+
+	usr << "\blue Dumped to [F]."
+	F =file("data/logs/profiling/[date_string]_power_machine_instances.csv")
+	fdel(F)
+	F << "type,count"
+	machineinstances.len = 0
+	for(var/atom/typepath in power_machines)
+		if(!typepath.type in machineinstances)
+			machineinstances["[typepath.type]"] = 0
+		machineinstances["[typepath.type]"] += 1
+	for(var/T in machineinstances)
+		var/count = machineinstances[T]
+		F << "[T],[count]"
+
+	usr << "\blue Dumped to [F]."
 #endif
+
+/client/proc/cmd_admin_dump_delprofile()
+	set category = "Debug"
+	set name = "Dump Del Profiling"
+
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F =file("data/logs/profiling/[date_string]_del_profiling.csv")
+	fdel(F)
+	F << "type,deletes"
+	for(var/typepath in del_profiling)
+		var/ns = del_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to [F]."
+	F =file("data/logs/profiling/[date_string]_gdel_profiling.csv")
+	fdel(F)
+	F << "type,soft deletes"
+	for(var/typepath in gdel_profiling)
+		var/ns = gdel_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to [F]."
+
+	F =file("data/logs/profiling/[date_string]_ghdel_profiling.csv")
+	fdel(F)
+	F << "type,hard deletes"
+	for(var/typepath in ghdel_profiling)
+		var/ns = ghdel_profiling[typepath]
+		F << "[typepath],[ns]"
+
+	usr << "\blue Dumped to [F]."
 
 /client/proc/gib_money()
 	set category = "Fun"
@@ -1162,6 +1226,25 @@ var/global/blood_virus_spreading_disabled = 0
 	else
 		message_admins("[src.ckey] enabled findAirborneVirii.")
 
+/client/proc/reload_style_sheet()
+	set category = "Server"
+	set name = "Reload Style Sheet"
+	set desc = "Reload the Style Sheet (be careful)."
+
+	for(var/client/C in clients)
+		winset(C, null, "outputwindow.output.style=[config.world_style_config];")
+	message_admins("The style sheet has been reloaded by [src.ckey]")
+
+/client/proc/reset_style_sheet()
+	set category = "Server"
+	set name = "Reset Style Sheet"
+	set desc = "Reset the Style Sheet (restore to default)."
+
+	for(var/client/C in clients)
+		winset(C, null, "outputwindow.output.style=[world_style];")
+	config.world_style_config = world_style
+	message_admins("The style sheet has been reset by [src.ckey]")
+
 /client/proc/cmd_admin_cluwneize(var/mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Cluwne"
@@ -1169,9 +1252,98 @@ var/global/blood_virus_spreading_disabled = 0
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		M:Cluwneize()
+		return M:Cluwneize()
 		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a cluwne.", 1)
 		feedback_add_details("admin_verb","MKCLU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(src)] has cluwne-ified [M.key].")
 	else
 		alert("Invalid mob, needs to be a human.")
+
+client/proc/make_invulnerable(var/mob/M in mob_list)
+	set name = "Toggle Invulnerability"
+	set desc = "Make the target atom invulnerable to all form of damage."
+	set category = "Fun"
+
+	var/isinvuln = 0
+	if(M.flags & INVULNERABLE)
+		isinvuln = 1
+
+	switch(isinvuln)
+		if(0)
+			if(alert(usr, "Make the target atom invulnerable to all form of damage?", "Toggle Invulnerability", "Yes", "No") != "Yes")
+				return
+
+			M.flags |= INVULNERABLE
+		if(1)
+			if(alert(usr, "Make the target atom vulnerable again?", "Toggle Invulnerability", "Yes", "No") != "Yes")
+				return
+
+			M.flags &= ~INVULNERABLE
+	log_admin("[ckey(key)]/([mob]) has toggled [M]'s invulnerability [(M.flags & INVULNERABLE) ? "on" : "off"]")
+	message_admins("[ckey(key)]/([mob]) has toggled [M]'s invulnerability [(M.flags & INVULNERABLE) ? "on" : "off"]")
+
+client/proc/delete_all_adminbus()
+	set name = "Delete every Adminbus"
+	set desc = "When the world cannot handle them anymore."
+	set category = "Fun"
+
+	if(alert(usr, "Delete every single Adminbus in the game world?", "Delete Adminbus", "Yes", "No") != "Yes")
+		return
+
+	for(var/obj/structure/stool/bed/chair/vehicle/adminbus/AB in world)
+		AB.Adminbus_Deletion()
+
+client/proc/mob_list()
+	set name = "show mob list"
+	set category = "Debug"
+	if(!holder) return
+	usr << "mob list length is [mob_list.len]"
+	var/foundnull = 0
+	for(var/mob/V in mob_list)
+		var/msg = "mob ([V]) is in slot [mob_list.Find(V)]"
+		if(!ismob(V))
+			if(isnull(V))
+				foundnull++
+			msg = "<span class='danger'><font size=3>Non mob found in mob list [isnull(V) ? "null entry found at mob_list.Find(V)" : "[V]'s type is [V.type]"]</span></font>"
+		usr << msg
+	if(foundnull)
+		usr << "Found [foundnull] null entries in the mob list, running null clearer."
+		listclearnulls(mob_list)
+
+client/proc/cure_disease()
+	set name = "Cure Disease"
+	set category = "Debug"
+	if(!holder) return
+
+	var/list/disease_by_name = list("-Cure All-" = null) + disease2_list + active_diseases
+
+	var/disease_name = input(src, "Disease to cure?") as null|anything in sortTim(disease_by_name, /proc/cmp_text_asc)
+	if(!disease_name) return
+	var/count = 0
+	if(disease_name == "-Cure All-")
+		for(var/mob/living/carbon/C in mob_list)
+			for(var/ID in C.virus2)
+				if(ID && C.virus2[ID])
+					var/datum/disease2/disease/DD = C.virus2[ID]
+					DD.cure(C)
+					count++
+			for(var/datum/disease/D in C.viruses)
+				if(D)
+					D.cure(1)
+					count++
+					active_diseases -= D
+	else
+		for(var/mob/living/carbon/C in mob_list)
+			for(var/ID in C.virus2)
+				if(ID == disease_name)
+					var/datum/disease2/disease/DD = C.virus2[ID]
+					DD.cure(C)
+					count++
+			for(var/datum/disease/D in C.viruses)
+				if(D && D.name == disease_name)
+					D.cure(1)
+					count++
+					active_diseases -= D
+	src << "<span class='notice'>Cured [count] mob\s of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]</span>"
+	log_admin("[src]/([ckey(src.key)] Cured all mobs of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]")
+	message_admins("[src]/([ckey(src.key)] Cured all mobs of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]")

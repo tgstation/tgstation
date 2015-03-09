@@ -82,6 +82,7 @@
 /datum/robot_component/cell/destroy()
 	..()
 	owner.cell = null
+	owner.updateicon()
 
 /datum/robot_component/radio
 	name = "radio"
@@ -163,7 +164,8 @@
 	icon_state = "robotanalyzer"
 	item_state = "analyzer"
 	desc = "A hand-held scanner able to diagnose robotic injuries."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1.0

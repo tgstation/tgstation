@@ -129,6 +129,18 @@
 	create_reagents(200)
 	connect()
 	update_icon()
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/hydroponics,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
+	RefreshParts()
 	if(closed_system)
 		flags &= ~OPENCONTAINER
 
@@ -231,7 +243,11 @@
 		if(istype(T))
 			environment = T.return_air()
 
-	if(!environment) return
+	if(!environment)
+		if(istype(T, /turf/space))
+			environment = space_gas
+		else
+			return
 
 	// Handle gas consumption.
 	if(seed.consume_gasses && seed.consume_gasses.len)
@@ -362,7 +378,7 @@
 			if(weedkiller_reagents[R.id])
 				weedlevel -= weedkiller_reagents[R.id] * reagent_total
 			if(pestkiller_reagents[R.id])
-				pestlevel += pestkiller_reagents[R.id] * reagent_total
+				pestlevel -= pestkiller_reagents[R.id] * reagent_total
 
 			// Beneficial reagents have a few impacts along with health buffs.
 			if(beneficial_reagents[R.id])
@@ -445,7 +461,7 @@
 //Refreshes the icon and sets the luminosity
 /obj/machinery/portable_atmospherics/hydroponics/update_icon()
 
-	overlays.Cut()
+	overlays.len = 0
 
 	// Updates the plant overlay.
 	if(!isnull(seed))
@@ -704,7 +720,7 @@
 	else if(istype(O, /obj/item/weapon/wrench))
 
 		//If there's a connector here, the portable_atmospherics setup can handle it.
-		if(locate(/obj/machinery/atmospherics/portables_connector/) in loc)
+		if(locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc)
 			return ..()
 
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -723,6 +739,10 @@
 			A.icon = src.icon
 			A.icon_state = src.icon_state
 			A.hydrotray_type = src.type
+			A.component_parts = component_parts.Copy()
+			A.contents = contents.Copy()
+			contents.len = 0
+			component_parts.len = 0
 			qdel(src)
 	return
 
@@ -772,8 +792,11 @@
 				if(istype(T))
 					environment = T.return_air()
 
-			if(!environment) //We're in a crate or nullspace, bail out.
-				return
+			if(!environment)
+				if(istype(T, /turf/space))
+					environment = space_gas
+				else //Somewhere we shouldn't be, panic
+					return
 
 			var/area/A = get_area(T)
 			var/light_available
@@ -811,10 +834,10 @@
 	draw_warnings = 0
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/shovel))
+	if(istype(O, /obj/item/weapon/pickaxe/shovel))
 		user << "You clear up [src]!"
 		qdel(src)
-	else if(istype(O,/obj/item/weapon/shovel) || istype(O,/obj/item/weapon/tank))
+	else if(istype(O,/obj/item/weapon/pickaxe/shovel) || istype(O,/obj/item/weapon/tank))
 		return
 	else
 		..()

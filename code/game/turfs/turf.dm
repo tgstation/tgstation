@@ -27,11 +27,14 @@
 	// Decal shit.
 	var/list/decals
 
-	// cultification animation
+	// Flick animation shit
 	var/atom/movable/overlay/c_animation = null
 
 	// holy water
 	var/holy = 0
+
+	// For building on the asteroid.
+	var/under_turf = /turf/space
 
 /turf/New()
 	..()
@@ -68,51 +71,79 @@
 	..()
 	return 0
 
-/turf/Enter(atom/movable/O, atom/oldloc)
-	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+/*
+ * IF YOU HAVE BYOND VERSION BELOW 507.1248 OR ARE ABLE TO WALK THROUGH WINDOORS/BORDER WINDOWS COMMENT OUT
+ * #define BORDER_USE_TURF_EXIT
+ * FOR MORE INFORMATION SEE: http://www.byond.com/forum/?post=1666940
+ */
+#ifdef BORDER_USE_TURF_EXIT
+/turf/Exit(atom/movable/mover, atom/target)
+	if(!mover)
+		return 1
+	// First, make sure it can leave its square
+	if(mover.loc == src)
+		// Nothing but border objects stop you from leaving a tile, only one loop is needed
+		for(var/obj/obstacle in src)
+			/*if(ismob(mover) && mover:client)
+				world << "<span class='danger'>EXIT</span>origin: checking exit of mob [obstacle]"*/
+			if(!obstacle.CheckExit(mover, target) && obstacle != mover && obstacle != target)
+				/*if(ismob(mover) && mover:client)
+					world << "<span class='danger'>EXIT</span>Origin: We are bumping into [obstacle]"*/
+				mover.Bump(obstacle, 1)
+				return 0
+	return 1
+#if DM_VERSION < 507
+	#warn This compiler is too far out of date! You will experience issues with windows and windoors unles you update to atleast 507.1248 or comment out BORDER_USE_TURF_EXIT in global.dm!
+
+#endif
+/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+	if (!mover)
+		return 1
+
+#ifndef BORDER_USE_TURF_EXIT
+#warn BORDER_USE_TURF_EXIT is not defined, using possibly buggy turf/Enter code.
+	// First, make sure it can leave its square
+	if(isturf(mover.loc))
+		// Nothing but border objects stop you from leaving a tile, only one loop is needed
+		for(var/obj/obstacle in mover.loc)
+			if(!obstacle.CheckExit(mover, src) && obstacle != mover && obstacle != forget)
+				mover.Bump(obstacle, 1)
+				return 0
+#endif
+	var/list/large_dense = list()
+	//Next, check objects to block entry that are on the border
+	for(var/atom/movable/border_obstacle in src)
+		if(border_obstacle.flags&ON_BORDER)
+			/*if(ismob(mover) && mover:client)
+				world << "<span class='danger'>ENTER</span>Target(border): checking CanPass of [border_obstacle]"*/
+			if(!border_obstacle.CanPass(mover, mover.loc) && (forget != border_obstacle) && mover != border_obstacle)
+				/*if(ismob(mover) && mover:client)
+					world << "<span class='danger'>ENTER</span>Target(border): We are bumping into [border_obstacle]"*/
+				mover.Bump(border_obstacle, 1)
+				return 0
+		else
+			large_dense += border_obstacle
+
+	//Then, check the turf itself
+	if (!src.CanPass(mover, src))
+		mover.Bump(src, 1)
 		return 0
 
-	// first, check objects to block exit that are not on the border
-	for(var/atom/movable/obstacle in oldloc)
-		if((obstacle.flags & ~ON_BORDER) && (obstacle != O))
-			if(!obstacle.CheckExit(O, src))
-				O.Bump(obstacle, 1)
-				return 0
-
-	// now, check objects to block exit that are on the border
-	for(var/atom/movable/border_obstacle in oldloc)
-		if((border_obstacle.flags & ON_BORDER) && (border_obstacle != O))
-			if(!border_obstacle.CheckExit(O, src))
-				O.Bump(border_obstacle, 1)
-				return 0
-
-	// next, check objects to block entry that are on the border
-	for(var/atom/movable/border_obstacle in contents)
-		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CanPass(O, oldloc))
-				O.Bump(border_obstacle, 1)
-				return 0
-
-	// then, check the turf itself
-	if (!CanPass(O, src))
-		O.Bump(src, 1)
-		return 0
-
-	// finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle in contents)
-		if(obstacle.flags & ~ON_BORDER)
-			if(!obstacle.CanPass(O, oldloc))
-				O.Bump(obstacle, 1)
-				return 0
-
-	return 1 // nothing found to block so return success!
+	//Finally, check objects/mobs to block entry that are not on the border
+	for(var/atom/movable/obstacle in large_dense)
+		/*if(ismob(mover) && mover:client)
+			world << "<span class='danger'>ENTER</span>target(large_dense): [mover] checking CanPass of [obstacle]"*/
+		if(!obstacle.CanPass(mover, mover.loc) && (forget != obstacle) && mover != obstacle)
+			/*if(ismob(mover) && mover:client)
+				world << "<span class='danger'>ENTER</span>target(large_dense): checking: We are bumping into [obstacle]"*/
+			mover.Bump(obstacle, 1)
+			return 0
+	return 1 //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
 	if(ismob(Obj))
-		if(!Obj:lastarea)
-			Obj:lastarea = get_area(Obj.loc)
+		Obj:lastarea = get_area(Obj.loc)
 		if(Obj:lastarea.has_gravity == 0)
 			inertial_drift(Obj)
 
@@ -163,7 +194,7 @@
 		spawn(5)
 			if((SP && (SP.loc == src)))
 				if(SP.inertia_dir)
-					step(SP, SP.inertia_dir)
+					SP.Move(get_step(SP, SP.inertia_dir), SP.inertia_dir)
 					return
 	if(istype(A, /obj/structure/stool/bed/chair/vehicle/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
 		var/obj/structure/stool/bed/chair/vehicle/JC = A //A bomb!
@@ -186,9 +217,11 @@
 			if((M && !(M.anchored) && !(M.pulledby) && (M.loc == src)))
 				if(M.inertia_dir)
 					step(M, M.inertia_dir)
+					call(/datum/pda_app/station_map/proc/minimap_update)(M)
 					return
 				M.inertia_dir = M.last_move
 				step(M, M.inertia_dir)
+				call(/datum/pda_app/station_map/proc/minimap_update)(M)
 	return
 
 /turf/proc/levelupdate()
@@ -209,10 +242,11 @@
 		del L
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1)
+/turf/proc/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_lighting_update = 0)
 	if (!N)
 		return
 
+	var/initialOpacity = opacity
 #ifdef ENABLE_TRI_LEVEL
 // Fuck this, for now - N3X
 ///// Z-Level Stuff ///// This makes sure that turfs are not changed to space when one side is part of a zone
@@ -226,23 +260,34 @@
 					var/list/temp = list()
 					temp += W
 					c.add(temp,3,1) // report the new open space to the zcontroller
+
+					if(opacity != initialOpacity)
+						UpdateAffectingLights()
+
 					return W
 ///// Z-Level Stuff
 #endif
 
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
+	var/datum/gas_mixture/env
 
 	//world << "Replacing [src.type] with [N]"
 
 	if(connections) connections.erase_all()
 
-	if(istype(src,/turf/simulated))
+	if(istype(src,/turf/simulated) && !iscatwalk(src))
 		//Yeah, we're just going to rebuild the whole thing.
 		//Despite this being called a bunch during explosions,
 		//the zone will only really do heavy lifting once.
 		var/turf/simulated/S = src
+		env = S.air //Get the air before the change
 		if(S.zone) S.zone.rebuild()
-
+	if(istype(src,/turf/simulated/floor) && !iscatwalk(src))
+		var/turf/simulated/floor/F = src
+		if(F.floor_tile)
+			returnToPool(F.floor_tile)
+			F.floor_tile = null
+		F = null
 	if(ispath(N, /turf/simulated/floor))
 		//if the old turf had a zone, connect the new turf to it as well - Cael
 		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.
@@ -252,10 +297,11 @@
 		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
-		//W.Assimilate_Air()
+		if(env)
+			W.air = env //Copy the old environment data over if both turfs were simulated
 
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
+		if((old_lumcount != W.lighting_lumcount) || (loc.name != "Space" && force_lighting_update))
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
@@ -269,6 +315,10 @@
 			air_master.mark_for_update(src)
 
 		W.levelupdate()
+
+		if((opacity != initialOpacity) && W.lighting_lumcount)
+			UpdateAffectingLights()
+
 		return W
 
 	else
@@ -279,7 +329,7 @@
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
+		if((old_lumcount != W.lighting_lumcount) || (loc.name != "Space" && force_lighting_update))
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
@@ -290,6 +340,10 @@
 			air_master.mark_for_update(src)
 
 		W.levelupdate()
+
+		if((opacity != initialOpacity) && W.lighting_lumcount)
+			UpdateAffectingLights()
+
 		return W
 
 /turf/proc/AddDecal(const/image/decal)
@@ -408,56 +462,28 @@
 				L.Add(t)
 	return L
 
-/turf/proc/cultification()
-	c_animation = new /atom/movable/overlay(src)
-	c_animation.name = "cultification"
-	c_animation.density = 0
-	c_animation.anchored = 1
-	c_animation.icon = 'icons/effects/effects.dmi'
-	c_animation.layer = 3
-	c_animation.master = src
-	if(density)
-		c_animation.icon_state = "cultwall"
-	else
-		c_animation.icon_state = "cultfloor"
-	c_animation.pixel_x = 0
-	c_animation.pixel_y = 0
-	flick("cultification",c_animation)
-	spawn(10)
-		del(c_animation)
-
-/turf/proc/invocanimation(var/animation_type)
-	c_animation = new /atom/movable/overlay(src)
-	c_animation.name = "invocanimation"
-	c_animation.density = 0
-	c_animation.anchored = 1
-	c_animation.icon = 'icons/effects/effects.dmi'
-	c_animation.layer = 5
-	c_animation.master = src
-	c_animation.icon_state = "[animation_type]"
-	c_animation.pixel_x = 0
-	c_animation.pixel_y = 0
-	flick("invocanimation",c_animation)
-	spawn(10)
-		del(c_animation)
-
-/turf/proc/nullding()
-	playsound(src, 'sound/piano/Ab7.ogg', 50, 1)
-	spawn()
-		c_animation = new /atom/movable/overlay(src)
-		c_animation.name = "nullding"
-		c_animation.density = 0
-		c_animation.anchored = 1
-		c_animation.icon = 'icons/effects/96x96.dmi'
-		c_animation.layer = 5
-		c_animation.master = src
-		c_animation.icon_state = "nullding"
-		c_animation.pixel_x = -32
-		c_animation.pixel_y = -32
-		flick("nullding",c_animation)
-		spawn(10)
-			del(c_animation)
-
 /turf/proc/cultify()
 	ChangeTurf(/turf/space)
 	return
+
+/turf/singularity_act()
+	if(intact)
+		for(var/obj/O in contents)
+			if(O.level != 1)
+				continue
+			if(O.invisibility == 101)
+				O.singularity_act()
+	ChangeTurf(/turf/space)
+	return(2)
+
+//Return a lattice to allow catwalk building
+/turf/proc/canBuildCatwalk()
+	return BUILD_FAILURE
+
+//Return true to allow lattice building
+/turf/proc/canBuildLattice()
+	return BUILD_FAILURE
+
+//Return a lattice to allow plating building, return 0 for error message, return -1 for silent fail.
+/turf/proc/canBuildPlating()
+	return BUILD_SILENT_FAILURE

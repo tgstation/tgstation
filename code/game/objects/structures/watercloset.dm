@@ -177,7 +177,7 @@
 			add_fingerprint(user)
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
+	overlays.len = 0					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		del(mymist)
 

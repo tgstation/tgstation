@@ -30,6 +30,7 @@ var/list/admin_datums = list()
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
 		admins |= C
+		owner.verbs -= /client/proc/readmin
 
 /datum/admins/proc/disassociate()
 	if(owner)
@@ -114,10 +115,10 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 	sessKey=0
 	while(query.NextRow())
 		sessKey = query.item[1]
-		query=dbcon.NewQuery("UPDATE admin_sessions SET expires=DATE_ADD(NOW(), INTERVAL 2 HOUR), IP='[owner.address]' WHERE sessID='[sessKey]'")
+		query=dbcon.NewQuery("UPDATE admin_sessions SET expires=DATE_ADD(NOW(), INTERVAL 24 HOUR), IP='[owner.address]' WHERE ckey = '[owner.ckey]")
 		query.Execute()
 		return sessKey
 
-	query=dbcon.NewQuery("INSERT INTO admin_sessions (sessID,ckey,expires, IP) VALUES (UUID(), '[owner.ckey]', DATE_ADD(NOW(), INTERVAL 2 HOUR), '[owner.address]')")
+	query=dbcon.NewQuery("INSERT INTO admin_sessions (sessID,ckey,expires, IP) VALUES (UUID(), '[owner.ckey]', DATE_ADD(NOW(), INTERVAL 24 HOUR), '[owner.address]')")
 	query.Execute()
 	return checkSessionKey(recurse)

@@ -41,7 +41,7 @@
 		del(target)
 
 //Compute how to fire.....
-/obj/item/weapon/gun/proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params)
+/obj/item/weapon/gun/proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params, struggle = 0)
 	//Lets not spam it.
 	if(lock_time > world.time - 2) return
 	.
@@ -52,7 +52,7 @@
 		if(M && isliving(M) && M in view(user) && !(M in target))
 			Aim(M) //Aha!  Aim at them!
 		else if(!ismob(M) || (ismob(M) && !(M in view(user)))) //Nope!  They weren't there!
-			Fire(A,user,params)  //Fire like normal, then.
+			Fire(A,user,params, "struggle" = struggle)  //Fire like normal, then.
 	usr.dir = get_cardinal_dir(src, A)
 
 //Aiming at the target mob.
@@ -74,7 +74,7 @@
 	var/mob/living/M = loc
 	if(M == T) return
 	if(!istype(M)) return
-	if(src != M.equipped())
+	if(src != M.get_active_hand())
 		stop_aim()
 		return
 	M.last_move_intent = world.time
@@ -170,7 +170,7 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 	if(targeted_by.len == 1)
 		spawn(0)
 			target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locking")
-			overlays += target_locked
+			update_targeted()
 			spawn(0)
 				sleep(20)
 				if(target_locked)
@@ -226,18 +226,6 @@ mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
 		del target_locked //Remove the overlay
 		del targeted_by
 	spawn(1) update_targeted()
-
-mob/living/Move()
-	. = ..()
-	for(var/obj/item/weapon/gun/G in targeted_by) //Handle moving out of the gunner's view.
-		var/mob/living/M = G.loc
-		if(!(M in view(src)))
-			NotTargeted(G)
-	for(var/obj/item/weapon/gun/G in src) //Handle the gunner loosing sight of their target/s
-		if(G.target)
-			for(var/mob/living/M in G.target)
-				if(M && !(M in view(src)))
-					M.NotTargeted(G)
 
 //If you move out of range, it isn't going to still stay locked on you any more.
 client/var

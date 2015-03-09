@@ -99,13 +99,13 @@ Once done, you will be able to interface with all systems, notably the onboard n
 
 
 /datum/game_mode/malfunction/process()
-	if (apcs >= 3 && malf_mode_declared)
-		AI_win_timeleft -= ((apcs/6)*last_tick_duration) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
-	..()
-	if (AI_win_timeleft<=0)
-		check_win()
-	return
+	if(apcs >= 3 && malf_mode_declared)
+		AI_win_timeleft -= ((apcs / 6) * tickerProcess.getLastTickerTimeDuration()) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
 
+	..()
+
+	if(AI_win_timeleft <= 0)
+		check_win()
 
 /datum/game_mode/malfunction/check_win()
 	if (AI_win_timeleft <= 0 && !station_captured)
@@ -183,7 +183,7 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
 	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
+		if(!istype(M,/mob/new_player) && M.client)
 			M << sound('sound/AI/aimalf.ogg')
 
 
@@ -210,7 +210,7 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
-		M << 'sound/machines/Alarm.ogg'
+		if(M.client) M << 'sound/machines/Alarm.ogg'
 	world << "<span class='danger'>Self-destruction signal received. Self-destructing in 10...</span>"
 	for (var/i=9 to 1 step -1)
 		sleep(10)

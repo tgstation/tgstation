@@ -83,7 +83,7 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(26 to 40)
 				//Flashes of danger
 				//src << "Danger Flash"
-				if(!halimage)
+				if(!halimage && client)
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
@@ -111,41 +111,42 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(41 to 65)
 				//Strange audio
 				//src << "Strange Audio"
-				switch(rand(1,12))
-					if(1) src << 'sound/machines/airlock.ogg'
-					if(2)
-						if(prob(50))src << 'sound/effects/Explosion1.ogg'
-						else src << 'sound/effects/Explosion2.ogg'
-					if(3) src << 'sound/effects/explosionfar.ogg'
-					if(4) src << 'sound/effects/Glassbr1.ogg'
-					if(5) src << 'sound/effects/Glassbr2.ogg'
-					if(6) src << 'sound/effects/Glassbr3.ogg'
-					if(7) src << 'sound/machines/twobeep.ogg'
-					if(8) src << 'sound/machines/windowdoor.ogg'
-					if(9)
-						//To make it more realistic, I added two gunshots (enough to kill)
-						src << 'sound/weapons/Gunshot.ogg'
-						spawn(rand(10,30))
+				if(client)
+					switch(rand(1,12))
+						if(1) src << 'sound/machines/airlock.ogg'
+						if(2)
+							if(prob(50))src << 'sound/effects/Explosion1.ogg'
+							else src << 'sound/effects/Explosion2.ogg'
+						if(3) src << 'sound/effects/explosionfar.ogg'
+						if(4) src << 'sound/effects/Glassbr1.ogg'
+						if(5) src << 'sound/effects/Glassbr2.ogg'
+						if(6) src << 'sound/effects/Glassbr3.ogg'
+						if(7) src << 'sound/machines/twobeep.ogg'
+						if(8) src << 'sound/machines/windowdoor.ogg'
+						if(9)
+							//To make it more realistic, I added two gunshots (enough to kill)
 							src << 'sound/weapons/Gunshot.ogg'
-					if(10) src << 'sound/weapons/smash.ogg'
-					if(11)
-						//Same as above, but with tasers.
-						src << 'sound/weapons/Taser.ogg'
-						spawn(rand(10,30))
+							spawn(rand(10,30))
+								src << 'sound/weapons/Gunshot.ogg'
+						if(10) src << 'sound/weapons/smash.ogg'
+						if(11)
+							//Same as above, but with tasers.
 							src << 'sound/weapons/Taser.ogg'
-				//Rare audio
-					if(12)
-//These sounds are (mostly) taken from Hidden: Source
-						var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
-							'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
-							'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
-							'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
-							'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
-						src << pick(creepyasssounds)
+							spawn(rand(10,30))
+								src << 'sound/weapons/Taser.ogg'
+					//Rare audio
+						if(12)
+	//These sounds are (mostly) taken from Hidden: Source
+							var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
+								'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
+								'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
+								'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
+								'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
+							src << pick(creepyasssounds)
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
-				if(!halbody)
+				if(!halbody && client)
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F

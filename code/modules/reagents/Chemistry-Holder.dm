@@ -94,12 +94,18 @@ datum
 
 				return the_id
 
-			trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-				if (!target )
+			trans_to(var/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+				if (!target)
 					return
-				if (!target.reagents || src.total_volume<=0)
-					return
-				var/datum/reagents/R = target.reagents
+				var/datum/reagents/R
+				if (istype(target, /datum/reagents))
+					R = target
+				else
+					var/atom/movable/AM = target
+					if (!AM.reagents || src.total_volume<=0)
+						return
+					else
+						R = AM.reagents
 				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 				var/part = amount / src.total_volume
 				var/trans_data = null
@@ -255,11 +261,11 @@ datum
 				return total_transfered
 */
 
-			metabolize(var/mob/M)
+			metabolize(var/mob/M, var/alien)
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
 					if(M && R)
-						R.on_mob_life(M)
+						R.on_mob_life(M, alien)
 				update_total()
 
 			update_aerosol(var/mob/M)
@@ -399,6 +405,7 @@ datum
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
 					if (R.id == reagent)
+						R.reagent_deleted()
 						reagent_list -= A
 						R.holder = null
 						total_dirty=1
@@ -411,7 +418,7 @@ datum
 
 			update_total()
 				total_volume = 0
-				amount_cache.Cut()
+				amount_cache.len = 0
 				for(var/datum/reagent/R in reagent_list)
 					if(R.volume < 0.1)
 						del_reagent(R.id,update_totals=0)
@@ -421,12 +428,13 @@ datum
 				return 0
 
 			clear_reagents()
-				amount_cache.Cut()
+				amount_cache.len = 0
 				for(var/datum/reagent/R in reagent_list)
 					del_reagent(R.id,update_totals=0)
 				// Only call ONCE. -- N3X
 				update_total()
-				my_atom.on_reagent_change()
+				if(my_atom)
+					my_atom.on_reagent_change()
 				return 0
 
 			reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0)
@@ -463,6 +471,8 @@ datum
 				return
 
 			add_reagent(var/reagent, var/amount, var/list/data=null)
+				if(!my_atom)
+					return 0
 				if(!isnum(amount)) return 1
 				update_total()
 				if(total_volume + amount > maximum_volume)

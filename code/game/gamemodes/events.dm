@@ -32,7 +32,7 @@
 		if(1)
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!istype(M,/mob/new_player) && M.client)
 					M << sound('sound/AI/meteors.ogg')
 			spawn(100)
 				meteor_wave()
@@ -44,7 +44,7 @@
 		if(2)
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!istype(M,/mob/new_player) && M.client)
 					M << sound('sound/AI/granomalies.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
@@ -207,7 +207,7 @@
 	spawn(rand(5000, 6000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 		for(var/mob/M in player_list)
-			M << sound('sound/AI/aliens.ogg')
+			if(M.client) M << sound('sound/AI/aliens.ogg')
 
 /proc/high_radiation_event()
 
@@ -245,7 +245,7 @@
 	sleep(100)
 	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
 	for(var/mob/M in player_list)
-		M << sound('sound/AI/radiation.ogg')
+		if(M.client) M << sound('sound/AI/radiation.ogg')
 
 
 
@@ -296,7 +296,7 @@
 	spawn(rand(300, 600)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 		for(var/mob/M in player_list)
-			M << sound('sound/AI/commandreport.ogg')
+			if(M.client) M << sound('sound/AI/commandreport.ogg')
 
 /proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) //leave lightsoutAmount as 0 to break ALL lights
 	if(isEvent)
@@ -323,7 +323,7 @@
 				apc.overload_lighting()
 
 	else
-		for(var/obj/machinery/power/apc/apc in machines)
+		for(var/obj/machinery/power/apc/apc in power_machines)
 			apc.overload_lighting()
 
 	return
@@ -449,7 +449,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 
 	spawn(0)
 		world << "Started processing APCs"
-		for (var/obj/machinery/power/apc/APC in world)
+		for (var/obj/machinery/power/apc/APC in power_machines)
 			if(APC.z == 1)
 				APC.ion_act()
 				apcnum++

@@ -3,7 +3,8 @@
 	desc = "Should anything ever go wrong..."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 3.0
 	throwforce = 2.0
 	throw_speed = 1
@@ -16,6 +17,25 @@
 		viewers(user) << "\red <b>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
 		return(OXYLOSS)
 
+/*/obj/item/weapon/syndicate_uplink
+	name = "station bounced radio"
+	desc = "Remain silent about this..."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "radio"
+	var/temp = null
+	var/uses = 10.0
+	var/selfdestruct = 0.0
+	var/traitor_frequency = 0.0
+	var/mob/currentUser = null
+	var/obj/item/device/radio/origradio = null
+	flags = FPRINT  | CONDUCT | ONBELT
+	w_class = 2.0
+	item_state = "radio"
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 100
+	origin_tech = "magnets=2;syndicate=3"*/
+
 /obj/item/weapon/rsp
 	name = "\improper Rapid-Seed-Producer (RSP)"
 	desc = "A device used to rapidly deploy seeds."
@@ -26,7 +46,6 @@
 	anchored = 0.0
 	var/matter = 0
 	var/mode = 1
-	flags = TABLEPASS
 	w_class = 3.0
 
 /obj/item/weapon/bananapeel
@@ -108,7 +127,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	item_state = "stick"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
@@ -133,7 +153,7 @@
 	name = "dummy"
 	invisibility = 101.0
 	anchored = 1.0
-	flags = TABLEPASS
+	flags = 0
 
 /obj/item/weapon/dummy/ex_act()
 	return
@@ -155,23 +175,14 @@
 	w_class = 5.0
 */
 
-/obj/item/weapon/gift
-	name = "gift"
-	desc = "A wrapped item."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "gift3"
-	var/size = 3.0
-	var/obj/item/gift = null
-	item_state = "gift"
-	w_class = 4.0
-
 /obj/item/weapon/legcuffs
 	name = "legcuffs"
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	throwforce = 0
 	w_class = 3.0
 	origin_tech = "materials=1"
@@ -183,7 +194,8 @@
 	gender = NEUTER
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolas"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 2
 	w_class = 2
@@ -267,7 +279,7 @@
 			return
 
 /obj/item/weapon/legcuffs/bolas/proc/throw_failed() //called when the throw doesn't entangle
-	log_admin("Logged as [thrown_from]")
+	//log_admin("Logged as [thrown_from]")
 	if(!thrown_from || !istype(thrown_from, /mob/living)) //in essence, if we don't know whether a person threw it
 		qdel(src) //destroy it, to stop infinite bolases
 
@@ -302,12 +314,12 @@
 /obj/item/weapon/legcuffs/bolas/cable/update_icon()
 	if (!weight1 && !weight2)
 		icon_state = "cbolas_[cable_color]"
-		overlays.Cut()
+		overlays.len = 0
 		desc = desc_empty
 		trip_prob = 0
 		return
 	else
-		overlays.Cut()
+		overlays.len = 0
 		if (weight1)
 			trip_prob = 10
 			overlays += icon("icons/obj/weapons.dmi", "cbolas_weight1")
@@ -318,8 +330,7 @@
 
 /obj/item/weapon/legcuffs/bolas/cable/throw_failed()
 	if(prob(20))
-		for (var/mob/V in viewers(src, null))
-			V << "\red \The [src] falls to pieces on impact!"
+		src.visible_message("<span class='rose'>\The [src] falls to pieces on impact!</span>")
 		if(weight1)
 			weight1.loc = src.loc
 			weight1 = null
@@ -328,15 +339,17 @@
 			weight2 = null
 		update_icon(src)
 
-/obj/item/weapon/legcuffs/bolas/cable/attackby(var/obj/O)
+/obj/item/weapon/legcuffs/bolas/cable/attackby(var/obj/O, mob/user)
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
+		if(istype(O, /obj/item/weapon/legcuffs/bolas)) //don't stack into infinity
+			return
 		if(istype(I, /obj/item/weapon/wirecutters)) //allows you to convert the wire back to a cable coil
 			if(!weight1 && !weight2) //if there's nothing attached
-				usr << "\blue You cut the knot in the [src]."
+				user.show_message("<span class='notice'>You cut the knot in the [src].</span>")
 				playsound(usr, 'sound/items/Wirecutter.ogg', 50, 1)
-				var /obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(usr.loc) //we get back the wire lengths we put in
-				var /obj/item/weapon/cable_coil/S = new /obj/item/weapon/screwdriver(src.loc)
+				var /obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(user.loc) //we get back the wire lengths we put in
+				var /obj/item/stack/cable_coil/S = new /obj/item/weapon/screwdriver(user.loc)
 				C.amount = 10
 				C._color = cable_color
 				C.icon_state = "coil_[C._color]"
@@ -344,46 +357,47 @@
 				S.item_state = screw_state
 				S.icon_state = screw_istate
 				S.update_icon()
+				user.put_in_hands(S)
 				qdel(src)
 				return
 			else
-				usr << "\blue You cut off [weight1] [weight2 ? "and [weight2]" : ""]." //you remove the items currently attached
+				user.show_message("<span class='notice'>You cut off [weight1] [weight2 ? "and [weight2]" : ""].</span>") //you remove the items currently attached
 				if(weight1)
 					weight1.loc = get_turf(usr)
 					weight1 = null
 				if(weight2)
 					weight2.loc = get_turf(usr)
 					weight2 = null
-				playsound(usr, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(user, 'sound/items/Wirecutter.ogg', 50, 1)
 				update_icon()
 				return
 		if(I.w_class) //if it has a defined weight
 			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
 				if(weight1 == null)
-					usr.drop_item(I)
+					user.drop_item()
 					weight1 = I
 					I.forceMove(src)
-					usr << "\blue You tie [weight1] to the [src]."
+					user.show_message("<span class='notice'>You tie [weight1] to the [src].</span>")
 					update_icon()
 					//del(I)
 					return
 				if(weight2 == null) //just in case
-					usr.drop_item(I)
+					user.drop_item()
 					weight2 = I
 					I.forceMove(src)
-					usr << "\blue You tie [weight2] to the [src]."
+					user.show_message("<span class='notice'>You tie [weight2] to the [src].</span>")
 					update_icon()
 					//del(I)
 					return
 				else
-					usr << "\red There are already two weights on this [src]!"
+					user.show_message("<span class='rose'>There are already two weights on this [src]!</span>")
 					return
 			else if (I.w_class < 2.0)
-				usr << "\red \The [I] is too small to be used as a weight."
+				user.show_message("<span class='rose'>\The [I] is too small to be used as a weight.</span>")
 			else if (I.w_class > 3.0)
-				usr << "\red \The [I] is [I.w_class > 4.0 ? "far " : ""] too big to be used a weight."
+				user.show_message("<span class='rose'>\The [I] is [I.w_class > 4.0 ? "far " : ""] too big to be used a weight.</span>")
 			else
-				usr << "\red There are already two weights on this [src]!"
+				user.show_message("<span class='rose'>There are already two weights on this [src]!</span>")
 
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
@@ -438,58 +452,58 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	attack_verb = list("warned", "cautioned", "smashed")
 
-	proximity_sign
-		var/timing = 0
-		var/armed = 0
-		var/timepassed = 0
+/obj/item/weapon/caution/proximity_sign
+	var/timing = 0
+	var/armed = 0
+	var/timepassed = 0
 
-		attack_self(mob/user as mob)
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if(H.mind.assigned_role != "Janitor")
-					return
-				if(armed)
-					armed = 0
-					user << "\blue You disarm \the [src]."
-					return
-				timing = !timing
-				if(timing)
-					processing_objects.Add(src)
-				else
-					armed = 0
-					timepassed = 0
-				H << "\blue You [timing ? "activate \the [src]'s timer, you have 15 seconds." : "de-activate \the [src]'s timer."]"
+/obj/item/weapon/caution/proximity_sign/attack_self(mob/user as mob)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.mind.assigned_role != "Janitor")
+			return
+		if(armed)
+			armed = 0
+			user << "<span class='notice'>You disarm \the [src].</span>"
+			return
+		timing = !timing
+		if(timing)
+			processing_objects.Add(src)
+		else
+			armed = 0
+			timepassed = 0
+		H << "<span class='notice'>You [timing ? "activate \the [src]'s timer, you have 15 seconds." : "de-activate \the [src]'s timer."]</span>"
 
-		process()
-			if(!timing)
-				processing_objects.Remove(src)
-			timepassed++
-			if(timepassed >= 15 && !armed)
-				armed = 1
-				timing = 0
+/obj/item/weapon/caution/proximity_sign/process()
+	if(!timing)
+		processing_objects.Remove(src)
+	timepassed++
+	if(timepassed >= 15 && !armed)
+		armed = 1
+		timing = 0
 
-		HasProximity(atom/movable/AM as mob|obj)
-			if(armed)
-				if(istype(AM, /mob/living/carbon) && !istype(AM, /mob/living/carbon/brain))
-					var/mob/living/carbon/C = AM
-					if(C.m_intent != "walk")
-						src.visible_message("The [src.name] beeps, \"Running on wet floors is hazardous to your health.\"")
-						explosion(src.loc,-1,2,0)
-						if(ishuman(C))
-							dead_legs(C)
-						if(src)
-							del(src)
+/obj/item/weapon/caution/proximity_sign/HasProximity(atom/movable/AM as mob|obj)
+	if(armed)
+		if(istype(AM, /mob/living/carbon) && !istype(AM, /mob/living/carbon/brain))
+			var/mob/living/carbon/C = AM
+			if(C.m_intent != "walk")
+				src.visible_message("The [src.name] beeps, \"Running on wet floors is hazardous to your health.\"")
+				explosion(src.loc,-1,2,0)
+				if(ishuman(C))
+					dead_legs(C)
+				if(src)
+					qdel(src)
 
-		proc/dead_legs(mob/living/carbon/human/H as mob)
-			var/datum/organ/external/l = H.get_organ("l_leg")
-			var/datum/organ/external/r = H.get_organ("r_leg")
-			if(l && !(l.status & ORGAN_DESTROYED))
-				l.status |= ORGAN_DESTROYED
-			if(r && !(r.status & ORGAN_DESTROYED))
-				r.status |= ORGAN_DESTROYED
+/obj/item/weapon/caution/proximity_sign/proc/dead_legs(mob/living/carbon/human/H as mob)
+	var/datum/organ/external/l = H.organs_by_name["l_leg"]
+	var/datum/organ/external/r = H.organs_by_name["r_leg"]
+	if(l && !(l.status & ORGAN_DESTROYED))
+		l.status |= ORGAN_DESTROYED
+	if(r && !(r.status & ORGAN_DESTROYED))
+		r.status |= ORGAN_DESTROYED
 
 /obj/item/weapon/caution/cone
 	desc = "This cone is trying to warn you of something!"
@@ -501,78 +515,11 @@
 	desc = "Parts of a rack."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rack_parts"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	m_amt = 3750
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
-
-/obj/item/weapon/shard
-	name = "shard"
-	icon = 'icons/obj/shards.dmi'
-	icon_state = "large"
-	sharp = 1
-	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = 1.0
-	force = 5.0
-	throwforce = 15.0
-	item_state = "shard-glassnew"
-	g_amt = 3750
-	w_type = RECYK_GLASS
-	melt_temperature = MELTPOINT_GLASS
-	attack_verb = list("stabbed", "slashed", "sliced", "cut")
-
-	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS)
-
-/obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return ..()
-
-/*/obj/item/weapon/syndicate_uplink
-	name = "station bounced radio"
-	desc = "Remain silent about this..."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "radio"
-	var/temp = null
-	var/uses = 10.0
-	var/selfdestruct = 0.0
-	var/traitor_frequency = 0.0
-	var/mob/currentUser = null
-	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	w_class = 2.0
-	item_state = "radio"
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 100
-	origin_tech = "magnets=2;syndicate=3"*/
-
-/obj/item/weapon/shard/shrapnel
-	name = "shrapnel"
-	icon = 'icons/obj/shards.dmi'
-	icon_state = "shrapnellarge"
-	desc = "A bunch of tiny bits of shattered metal."
-	m_amt=5
-	w_type=RECYK_METAL
-	melt_temperature=MELTPOINT_STEEL
-
-/obj/item/weapon/shard/shrapnel/New()
-
-	src.icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
-	switch(src.icon_state)
-		if("shrapnelsmall")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
-		if("shrapnelmedium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
-		if("shrapnellarge")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
-		else
-	return
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
@@ -584,7 +531,8 @@
 	var/selfdestruct = 0.0
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	item_state = "radio"
 	throwforce = 5
@@ -606,7 +554,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
 /obj/item/weapon/staff/broom
@@ -626,7 +574,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 
 /obj/item/weapon/table_parts
 	name = "table parts"
@@ -637,7 +585,8 @@
 	m_amt = 3750
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/table_parts/cultify()
@@ -652,13 +601,14 @@
 	m_amt = 7500
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
-	flags = null
+	flags = 0
 
 /obj/item/weapon/table_parts/wood/cultify()
 	return
@@ -685,7 +635,8 @@
 	icon_state = "std_module"
 	w_class = 2.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS|CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	var/mtype = 1						// 1=electronic 2=hardware
 
 /obj/item/weapon/module/card_reader
@@ -713,49 +664,13 @@
 	icon_state = "power_mod"
 	desc = "Charging circuits for power cells."
 
-
-/obj/item/device/camera_bug
-	name = "camera bug"
-	desc = "Tiny electronic device meant to bug cameras for viewing later."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "implant_evil"
-	w_class = 1.0
-	item_state = ""
-	throw_speed = 4
-	throw_range = 20
-/*unused
-/obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
-	var/list/cameras = new/list()
-	for (var/obj/machinery/camera/C in cameranet.cameras)
-		if (C.bugged && C.status)
-			cameras.Add(C)
-	if (length(cameras) == 0)
-		usr << "\red No bugged functioning cameras found."
-		return
-
-	var/list/friendly_cameras = new/list()
-
-	for (var/obj/machinery/camera/C in cameras)
-		friendly_cameras.Add(C.c_tag)
-
-	var/target = input("Select the camera to observe", null) as null|anything in friendly_cameras
-	if (!target)
-		return
-	for (var/obj/machinery/camera/C in cameras)
-		if (C.c_tag == target)
-			target = C
-			break
-	if (usr.stat == 2) return
-
-	usr.client.eye = target
-*/
-
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
 	desc = "Meat that appears...strange..."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "meat"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "biotech=2"
 
@@ -764,7 +679,8 @@
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 12.0
 	w_class = 2.0
 	throwforce = 15.0
@@ -798,7 +714,7 @@
 	w_class = 4.0
 	m_amt = 15000
 	w_type = RECYK_METAL
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
@@ -820,7 +736,7 @@
 	w_class = 1
 	throwforce = 2
 	var/cigarcount = 6
-	flags = ONBELT | TABLEPASS */
+	flags = ONBELT  */
 
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
@@ -1068,7 +984,7 @@
 	icon = 'icons/obj/lightning.dmi'
 	icon_state = "lightning"
 	desc = "test lightning"
-	flags = USEDELAY
+	flags = 0
 
 	New()
 		icon = midicon

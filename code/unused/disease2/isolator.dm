@@ -132,8 +132,8 @@
 			infect_virus2(user,virus2)
 		del src
 
-/obj/item/weapon/virusdish/examine()
-	usr << "This is a virus containment dish"
+/obj/item/weapon/virusdish/examine(mob/user)
+	..()
 	if(src.info)
-		usr << "It has the following information about its contents"
-		usr << src.info
+		user << "<span class='info'>It has the following information about its contents</span>"
+		user << src.info

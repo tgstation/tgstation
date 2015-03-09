@@ -132,7 +132,7 @@
 					if (player.stat == 2) score["deadcommand"]++
 
 	// Check station's power levels
-	for (var/obj/machinery/power/apc/A in machines)
+	for (var/obj/machinery/power/apc/A in power_machines)
 		if (A.z != 1) continue
 		for (var/obj/item/weapon/cell/C in A.contents)
 			if (C.charge < 2300) score["powerloss"] += 1 // 200 charge leeway
@@ -337,7 +337,9 @@
 		if(-499 to -250) score["rating"] = "A Wretched Heap of Scum and Incompetence"
 		if(-249 to -100) score["rating"] = "Outclassed by Lab Monkeys"
 		if(-99 to -21) score["rating"] = "The Undesirables"
-		if(-20 to 20) score["rating"] = "Ambivalently Average"
+		if(-20 to -1) score["rating"] = "Not So Good"
+		if(0) score["rating"] = "Nothing of Value"
+		if(1 to 20) score["rating"] = "Ambivalently Average"
 		if(21 to 99) score["rating"] = "Not Bad, but Not Good"
 		if(100 to 249) score["rating"] = "Skillful Servants of Science"
 		if(250 to 499) score["rating"] = "Best of a Good Bunch"

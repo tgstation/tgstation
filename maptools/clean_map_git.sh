@@ -4,10 +4,10 @@
 MAPROOT="../maps/"
 MAPFILES=(
 	$MAPROOT"tgstation.dmm"
-	$MAPROOT"tgstation.2.1.0.0.1.dmm"
 	$MAPROOT"vgstation.dmm"
-	$MAPROOT"efficiency.dmm"
+	$MAPROOT"defficiency.dmm"
 	$MAPROOT"taxistation.dmm"
+	$MAPROOT"metaclub.dmm"
 )
 for MAPFILE in "${MAPFILES[@]}"
 do

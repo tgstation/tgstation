@@ -106,7 +106,7 @@
 	spawntypes = list(
 		/obj/mecha/working/ripley/mining=1,
 		/obj/item/weapon/pickaxe/jackhammer=2,
-		/obj/item/weapon/pickaxe/diamonddrill=2
+		/obj/item/weapon/pickaxe/drill/diamond=2
 	)
 	fluffitems = list(
 		/obj/effect/decal/cleanable/blood=3,

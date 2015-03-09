@@ -37,6 +37,7 @@
 	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/mask/bandana/red(src)
+	AddToProfiler()
 	return
 
 
@@ -52,6 +53,7 @@
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/brown(src)
+	AddToProfiler()
 	return
 
 /obj/structure/closet/wardrobe/black
@@ -69,6 +71,7 @@
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/clothing/head/that(src)
+	AddToProfiler()
 	return
 
 
@@ -90,6 +93,7 @@
 	new /obj/item/weapon/storage/backpack/cultpack (src)
 	new /obj/item/weapon/storage/fancy/candle_box(src)
 	new /obj/item/weapon/storage/fancy/candle_box(src)
+	AddToProfiler()
 	return
 
 
@@ -105,6 +109,7 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
+	AddToProfiler()
 	return
 
 /obj/structure/closet/wardrobe/xenos
@@ -118,6 +123,7 @@
 	new /obj/item/clothing/shoes/sandal(src)
 	new /obj/item/clothing/shoes/sandal(src)
 	new /obj/item/clothing/shoes/sandal(src)
+	AddToProfiler()
 	return
 
 
@@ -128,12 +134,13 @@
 	icon_closed = "orange"
 
 /obj/structure/closet/wardrobe/orange/New()
-	new /obj/item/clothing/under/color/orange(src)
-	new /obj/item/clothing/under/color/orange(src)
-	new /obj/item/clothing/under/color/orange(src)
+	new /obj/item/clothing/under/color/prisoner(src)
+	new /obj/item/clothing/under/color/prisoner(src)
+	new /obj/item/clothing/under/color/prisoner(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
+	AddToProfiler()
 	return
 
 
@@ -149,6 +156,7 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
+	AddToProfiler()
 	return
 
 
@@ -164,6 +172,7 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
+	AddToProfiler()
 	return
 
 
@@ -185,6 +194,7 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
+	AddToProfiler()
 	return
 
 
@@ -200,6 +210,7 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/shoes/white(src)
+	AddToProfiler()
 	return
 
 
@@ -217,6 +228,7 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/shoes/slippers(src)
 	new /obj/item/clothing/shoes/slippers(src)
+	AddToProfiler()
 	return
 
 
@@ -241,6 +253,7 @@
 	new /obj/item/clothing/shoes/slippers
 	new /obj/item/clothing/shoes/slippers
 	new /obj/item/clothing/shoes/slippers
+	AddToProfiler()
 	return
 
 
@@ -262,6 +275,7 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/gloves/black(src)
+	AddToProfiler()
 	return
 
 
@@ -279,6 +293,7 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/suit/storage/labcoat/chemist(src)
 	new /obj/item/clothing/suit/storage/labcoat/chemist(src)
+	AddToProfiler()
 	return
 
 
@@ -294,6 +309,7 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/suit/storage/labcoat/oncologist(src)
 	new /obj/item/clothing/suit/storage/labcoat/oncologist(src)
+	AddToProfiler()
 	return
 
 /obj/structure/closet/wardrobe/genetics_white
@@ -308,6 +324,7 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/suit/storage/labcoat/genetics(src)
 	new /obj/item/clothing/suit/storage/labcoat/genetics(src)
+	AddToProfiler()
 	return
 
 
@@ -325,6 +342,7 @@
 	new /obj/item/clothing/suit/storage/labcoat/virologist(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
+	AddToProfiler()
 	return
 
 
@@ -345,6 +363,7 @@
 	new /obj/item/clothing/suit/storage/labcoat(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
+	AddToProfiler()
 	return
 
 
@@ -363,6 +382,7 @@
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
+	AddToProfiler()
 	return
 
 
@@ -386,4 +406,5 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/purple(src)
 	new /obj/item/clothing/shoes/leather(src)
+	AddToProfiler()
 	return

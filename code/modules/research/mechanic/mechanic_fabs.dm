@@ -1,7 +1,7 @@
 #define GEN_FAB_WIDTH 		1000	//Gen fab stands for General Fabricator
 #define GEN_FAB_HEIGHT		600
 
-#define GEN_FAB_BASETIME 	100
+#define GEN_FAB_BASETIME 	5
 
 #define GEN_FAB_BASESTORAGE 150000
 
@@ -10,18 +10,23 @@
 	desc = "A machine used to produce items from blueprint designs."
 	icon = 'icons/obj/machines/mechanic.dmi'
 	icon_state = "genfab"
-	max_material_storage = 150000
+	max_material_storage = GEN_FAB_BASESTORAGE
 	nano_file = "genfab.tmpl"
 	var/list/design_types = list("machine" = 0, "item" = 1)
 	var/list/uses_list = list()
 
+	build_time = GEN_FAB_BASETIME
+
 	idle_power_usage = 20
 	active_power_usage = 5000
 
-	research_flags = NANOTOUCH | TAKESMATIN | HASOUTPUT
+	research_flags = NANOTOUCH | TAKESMATIN | HASOUTPUT | IGNORE_CHEMS //we don't need chems to make boards
 
 	part_sets = list("Items" = list())
 
+/obj/machinery/r_n_d/fabricator/mechanic_fab/setup_part_sets()
+	return
+	
 /obj/machinery/r_n_d/fabricator/mechanic_fab/New()
 	..()
 
@@ -101,7 +106,9 @@
 
 	if(..()) // critical exploit prevention, do not remove unless you replace it -walter0o
 		return 1
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(href_list["remove_design"])
 		var/datum/design/part = getTopicDesign(href_list["remove_design"])
 		remove_part_from_set(copytext(href_list["remove_design"], 2), part)
@@ -131,8 +138,10 @@
 	if(istype(design))
 		if(!design.materials.len)
 			return 0
-		add_part_to_set(design.category, design)
-		return 1
+		if(add_part_to_set(design.category, design))
+			return 1
+		else
+			return 0
 	return 0
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/attackby(var/obj/item/O as obj, var/mob/user as mob)

@@ -21,7 +21,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		runewords-=cultwords[word]
 
 /obj/effect/rune
-	desc = ""
+	desc = "A strange collection of symbols drawn in blood."
 	anchored = 1
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
@@ -29,10 +29,21 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	unacidable = 1
 	layer = TURF_LAYER
 
+	var/dead=0 // For cascade and whatnot.
+
 
 	var/word1
 	var/word2
 	var/word3
+	var/image/blood_image
+
+	var/atom/movable/overlay/c_animation = null
+	var/nullblock = 0
+	var/mob/living/ajourn
+
+	var/summoning = 0
+	var/list/summonturfs = list()
+
 // Places these combos are mentioned: this file - twice in the rune code, once in imbued tome, once in tome's HTML runes.dm - in the imbue rune code. If you change a combination - dont forget to change it everywhere.
 
 // travel self [word] - Teleport to random [rune with word destination matching]
@@ -64,36 +75,29 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 // join hide technology - stun rune. Rune color: bright pink.
 /obj/effect/rune/New()
 	..()
-	var/image/blood = image(loc = src)
-	blood.override = 1
+	blood_image = image(loc = src)
+	blood_image.override = 1
 	for(var/mob/living/silicon/ai/AI in player_list)
-		AI.client.images += blood
+		if(AI.client)
+			AI.client.images += blood_image
 	rune_list.Add(src)
 
 /obj/effect/rune/Destroy()
+	if(istype(ajourn))
+		ajourn.ajourn = null
+	ajourn = null
+	for(var/mob/living/silicon/ai/AI in player_list)
+		if(AI.client)
+			AI.client.images -= blood_image
+	qdel(blood_image)
+	blood_image = null
 	rune_list.Remove(src)
 	..()
 
-/obj/effect/rune/examine()
-	set src in view(2)
-
-	if(!iscultist(usr))
-		usr << "A strange collection of symbols drawn in blood."
-		return
-		/* Explosions... really?
-		if(desc && !usr.stat)
-			usr << "It reads: <i>[desc]</i>."
-			sleep(30)
-			explosion(src.loc, 0, 2, 5, 5)
-			if(src)
-				del(src)
-		*/
-	if(!desc)
-		usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
-	else
-		usr << "Explosive Runes inscription in blood. It reads: <i>[desc]</i>."
-
-	return
+/obj/effect/rune/examine(mob/user)
+	..()
+	if(iscultist(user))
+		user << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
 
 
 /obj/effect/rune/attackby(I as obj, user as mob)
@@ -192,11 +196,12 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 
 /obj/item/weapon/tome
 	name = "arcane tome"
+	desc = "An old, dusty tome with frayed edges and a sinister looking cover."
 	icon_state ="tome"
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	var/notedat = ""
 	var/tomedat = ""
 	var/list/words = list("ire" = "ire", "ego" = "ego", "nahlizet" = "nahlizet", "certum" = "certum", "veri" = "veri", "jatkaa" = "jatkaa", "balaq" = "balaq", "mgar" = "mgar", "karazet" = "karazet", "geeri" = "geeri")
@@ -445,7 +450,6 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 
 		if(usr.get_active_hand() != src)
 			return
-
 		for (var/mob/V in viewers(src))
 			V.show_message("<span class='warning'>[user] slices open a finger and begins to chant and paint symbols on the floor.</span>", 3, "<span class='warning'>You hear chanting.</span>", 2)
 		user << "<span class='warning'>You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.</span>"
@@ -482,12 +486,10 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		user << "You copy the translation notes from your tome."
 
 
-/obj/item/weapon/tome/examine()
-	set src in usr
-	if(!iscultist(usr))
-		usr << "An old, dusty tome with frayed edges and a sinister looking cover."
-	else
-		usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
+/obj/item/weapon/tome/examine(mob/user)
+	..()
+	if(iscultist(user))
+		user << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
 
 /obj/item/weapon/tome/cultify()
 	return

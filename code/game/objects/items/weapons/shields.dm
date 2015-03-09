@@ -6,7 +6,8 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	force = 5.0
 	throwforce = 5.0
@@ -45,7 +46,7 @@
 		return 1
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/twohanded/spear))
+		if(istype(W, /obj/item/weapon/spear))
 			if(cooldown < world.time - 25)
 				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
@@ -60,7 +61,8 @@
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "eshield0" // eshield1 for expanded
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 3.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -81,7 +83,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
 	var/active = 0.0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	item_state = "electronic"
 	throwforce = 10.0
 	throw_speed = 2

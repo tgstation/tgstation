@@ -199,6 +199,9 @@
 	if(!mob)
 		return // Moved here to avoid nullrefs below. - N3X
 
+	// USE /event
+	call(/datum/pda_app/station_map/proc/minimap_update)(mob)
+
 	// /vg/ - Deny clients from moving certain mobs. (Like cluwnes :^)
 	if(mob.deny_client_move)
 		src << "<span class='warning'>You cannot move this mob.</span>"
@@ -212,7 +215,7 @@
 
 	if(moving)	return 0
 
-	if(world.time < move_delay)	return
+	if(move_delayer.blocked()) return
 
 	if(locate(/obj/effect/stop/, mob.loc))
 		for(var/obj/effect/stop/S in mob.loc)
@@ -239,9 +242,9 @@
 
 	if(!mob.lastarea)
 		mob.lastarea = get_area(mob.loc)
-
-	if((istype(mob.loc, /turf/space)) || ((mob.lastarea.has_gravity == 0) && (!istype(mob.loc, /obj/spacepod))))  // last section of if statement prevents spacepods being unable to move when the gravity goes down
-		if(!mob.Process_Spacemove(0))	return 0
+	if(mob.lastarea)
+		if((istype(mob.loc, /turf/space)) || ((mob.lastarea.has_gravity == 0) && (!istype(mob.loc, /obj/spacepod))))  // last section of if statement prevents spacepods being unable to move when the gravity goes down
+			if(!mob.Process_Spacemove(0))	return 0
 
 
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
@@ -263,7 +266,9 @@
 			src << "<span class='notice'> You're pinned to a wall by [mob.pinned[1]]!</span>"
 			return 0
 
-		move_delay = world.time//set move delay
+		// COMPLEX MOVE DELAY SHIT
+		////////////////////////////
+		var/move_delay=0 // set move delay
 		mob.last_move_intent = world.time + 10
 		switch(mob.m_intent)
 			if("run")
@@ -275,25 +280,21 @@
 		move_delay += mob.movement_delay()
 
 		if(config.Tickcomp)
-			move_delay -= 1.3
-			var/tickcomp = ((1/(world.tick_lag))*1.3)
-			move_delay = move_delay + tickcomp
-
-
-
+			move_delay += ((1/(world.tick_lag))*1.3) - 1.3
 
 		//We are now going to move
 		moving = 1
+		mob.delayNextMove(move_delay)
 		//Something with pulling things
 		if(locate(/obj/item/weapon/grab, mob))
-			move_delay = max(move_delay, world.time + 7)
+			mob.delayNextMove(7)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
 					L -= mob
 					var/mob/M = L[1]
 					if(M)
-						if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
+						if ((mob.Adjacent(M) || M.loc == mob.loc))
 							var/turf/T = mob.loc
 							. = ..()
 							if (isturf(M.loc))
@@ -344,14 +345,14 @@
 			var/obj/item/weapon/grab/G = mob.r_hand
 			grabbing += G.affecting
 		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
-			if((G.state == 1)&&(!grabbing.Find(G.assailant)))	del(G)
-			if(G.state == 2)
-				move_delay = world.time + 10
+			if((G.state == GRAB_PASSIVE)&&(!grabbing.Find(G.assailant)))	del(G)
+			if(G.state == GRAB_AGGRESSIVE)
+				mob.delayNextMove(10)
 				if(!prob(25))	return 1
 				mob.visible_message("<span class='warning'> [mob] has broken free of [G.assailant]'s grip!</span>")
 				del(G)
-			if(G.state == 3)
-				move_delay = world.time + 10
+			if(G.state == GRAB_NECK)
+				mob.delayNextMove(10)
 				if(!prob(5))	return 1
 				mob.visible_message("<span class='warning'> [mob] has broken free of [G.assailant]'s headlock!</span>")
 				del(G)
@@ -367,11 +368,15 @@
 	switch(mob.incorporeal_move)
 		if(1)
 			var/turf/T = get_step(mob, direct)
-			if(T.holy && isobserver(mob) && ((mob.invisibility == 0) || (mob.mind in ticker.mode.cult)))
-				mob << "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>"
+			var/area/A = get_area(T)
+			if(A && A.anti_ethereal && !isAdminGhost(mob))
+				mob << "<span class='sinister'>A dark forcefield prevents you from entering the area.</span>"
 			else
-				mob.loc = get_step(mob, direct)
-				mob.dir = direct
+				if((T && T.holy) && isobserver(mob) && ((mob.invisibility == 0) || (ticker.mode && (mob.mind in ticker.mode.cult))))
+					mob << "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>"
+				else
+					mob.loc = get_step(mob, direct)
+					mob.dir = direct
 		if(2)
 			if(prob(50))
 				var/locx
@@ -412,12 +417,17 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,mob.dir)
 				mob.loc = get_step(mob, direct)
 			mob.dir = direct
-	for(var/obj/effect/step_trigger/S in mob.loc)
-		S.Crossed(src)
+	// Crossed is always a bit iffy
+	for(var/obj/S in mob.loc)
+		if(istype(S,/obj/effect/step_trigger) || istype(S,/obj/effect/beam))
+			S.Crossed(mob)
 
 	var/area/A = get_area_master(mob)
 	if(A)
 		A.Entered(mob)
+	if(isturf(mob.loc))
+		var/turf/T = mob.loc
+		T.Entered(mob)
 	return 1
 
 
@@ -442,8 +452,9 @@
 			continue
 
 		if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-			if((istype(turf,/turf/simulated/floor)) && (src.lastarea.has_gravity == 0) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
-				continue
+			if(lastarea)
+				if((istype(turf,/turf/simulated/floor)) && (src.lastarea.has_gravity == 0) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
+					continue
 
 
 		else
@@ -498,3 +509,26 @@
 
 	prob_slip = round(prob_slip)
 	return(prob_slip)
+
+
+/mob/proc/Move_Pulled(var/atom/A)
+	if (!canmove || restrained() || !pulling)
+		return
+	if (pulling.anchored)
+		return
+	if (!pulling.Adjacent(src))
+		return
+	if (A == loc && pulling.density)
+		return
+	if (!Process_Spacemove(get_dir(pulling.loc, A)))
+		return
+	if (ismob(pulling))
+		var/mob/M = pulling
+		var/atom/movable/t = M.pulling
+		M.stop_pulling()
+		step(pulling, get_dir(pulling.loc, A))
+		if(M)
+			M.start_pulling(t)
+	else
+		step(pulling, get_dir(pulling.loc, A))
+	return

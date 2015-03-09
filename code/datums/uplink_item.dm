@@ -90,6 +90,14 @@ var/list/uplink_items = list()
 /datum/uplink_item/jobspecific
 	category = "Job Specific Tools"
 
+//Librarian
+/datum/uplink_item/jobspecific/etwenty
+	name = "The E20"
+	desc = "A seemingly innocent dice, those who are not afraid to roll for attack will find it's effects quite explosive. Has a four second timer."
+	item = /obj/item/weapon/dice/d20/e20
+	cost = 3
+	job = list("Librarian")
+
 //Shaft Miner
 /datum/uplink_item/jobspecific/mastertrainer
 	name = "Master Trainer's Belt"
@@ -140,7 +148,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/jobspecific/meatcleaver
 	name = "Meat Cleaver"
 	desc = "A mean looking meat cleaver that does damage comparable to an Energy Sword but with the added benefit of chopping your victim into hunks of meat after they've died and the chance to stun when thrown."
-	item = /obj/item/weapon/butch/meatcleaver
+	item = /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver
 	cost = 5
 	job = list("Chef")
 
@@ -215,6 +223,14 @@ var/list/uplink_items = list()
 	item = /obj/item/device/device_analyser/syndicate
 	cost = 4
 	job = list("Mechanic")
+
+//IAA - Internal Affairs Agent
+/datum/uplink_item/jobspecific/briefcase_smg
+	name = "Concealed SMG"
+	desc = "A modified briefcase capable of storing and firing a gun under a false bottom. Starts with an internal SMG and 18 rounds. Use a screwdriver to pry away the false bottom and make modifications."
+	item = /obj/item/weapon/storage/briefcase/false_bottomed/smg
+	cost = 6
+	job = list("Internal Affairs Agent")
 
 // DANGEROUS WEAPONS
 
@@ -320,7 +336,7 @@ var/list/uplink_items = list()
 	name = "Chameleon-Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and projectiles pass over them."
 	item = /obj/item/device/chameleon
-	cost = 4
+	cost = 3
 
 
 // DEVICE AND TOOLS
@@ -473,6 +489,12 @@ var/list/uplink_items = list()
  	desc = "A belt for holding the heads you've collected."
  	item = /obj/item/weapon/storage/belt/skull
  	cost = 2
+
+/datum/uplink_item/badass/raincoat
+ 	name = "Raincoat"
+ 	desc = "It's hip to be square!"
+ 	item = /obj/item/clothing/suit/raincoat
+ 	cost = 1
 
 /datum/uplink_item/badass/random
 	name = "Random Item"

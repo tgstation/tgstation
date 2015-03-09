@@ -118,33 +118,6 @@ obj/machinery/door/airlock/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
-
-/obj/item/airlock_sensor_frame
-	name = "Airlock Sensor frame"
-	desc = "Used for repairing or building airlock sensors"
-	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "airlock_sensor_off"
-	flags = FPRINT | TABLEPASS | CONDUCT
-
-/obj/item/airlock_sensor_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 1 )
-		del(src)
-
-/obj/item/airlock_sensor_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf(usr)
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red [src] cannot be placed on this spot."
-		return
-	new /obj/machinery/airlock_sensor(loc, ndir, 1)
-	del(src)
-
 obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_sensor_off"
@@ -281,34 +254,8 @@ obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
 		user << "You begin to pry \the [src] off the wall..."
 		if(do_after(user, 50))
 			user << "You successfully pry \the [src] off the wall."
-			new /obj/item/airlock_sensor_frame(get_turf(src))
-			del(src)
-
-/obj/item/access_button_frame
-	name = "access button frame"
-	desc = "Used for repairing or building airlock access buttons"
-	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "access_button_build"
-	flags = FPRINT | TABLEPASS| CONDUCT
-
-/obj/item/access_button_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 1 )
-		del(src)
-
-/obj/item/access_button_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf(usr)
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red [src] cannot be placed on this spot."
-		return
-	new /obj/machinery/access_button(loc, ndir, 1)
-	del(src)
+			new /obj/item/mounted/frame/airlock_sensor(get_turf(src))
+			qdel(src)
 
 obj/machinery/access_button
 	icon = 'icons/obj/airlock_machines.dmi'
@@ -377,8 +324,8 @@ obj/machinery/access_button/attackby(var/obj/item/W, var/mob/user)
 		user << "You begin to pry \the [src] off the wall..."
 		if(do_after(user, 50))
 			user << "You successfully pry \the [src] off the wall."
-			new /obj/item/access_button_frame(get_turf(src))
-			del(src)
+			new /obj/item/mounted/frame/access_button(get_turf(src))
+			qdel(src)
 
 obj/machinery/access_button/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)

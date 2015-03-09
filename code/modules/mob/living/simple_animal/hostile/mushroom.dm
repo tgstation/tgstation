@@ -29,12 +29,12 @@
 	var/image/cap_living = null //Where we store our cap icons so we dont generate them constantly to update our icon
 	var/image/cap_dead = null
 
-/mob/living/simple_animal/hostile/mushroom/examine()
+/mob/living/simple_animal/hostile/mushroom/examine(mob/user)
 	..()
 	if(health >= maxHealth)
-		usr << "<span class='info'>It looks healthy.</span>"
+		user << "<span class='info'>It looks healthy.</span>"
 	else
-		usr << "<span class='info'>It looks like it's been roughed up.</span>"
+		user << "<span class='info'>It looks like it's been roughed up.</span>"
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
@@ -90,7 +90,7 @@
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
-	overlays.Cut()
+	overlays.len = 0
 	if(health == 0)
 		overlays += cap_dead
 	else
@@ -135,7 +135,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M as mob)
 	..()
-	if(M.a_intent == "hurt")
+	if(M.a_intent == I_HURT)
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM)

@@ -76,11 +76,8 @@
 	var/mineral = "metal"
 	var/opening = 0
 
-	canSmoothWith = list(
-		/turf/simulated/wall,
-		/obj/structure/falsewall,
-		/obj/structure/falserwall // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
-	)
+	// WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	canSmoothWith = "/turf/simulated/wall=0&/obj/structure/falsewall=0&/obj/structure/falserwall=0"
 
 /obj/structure/falsewall/New()
 	..()
@@ -179,7 +176,10 @@
 	else
 		user << "\blue You can't reach, close it first!"
 
-	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+	if( istype(W, /obj/item/weapon/pickaxe) )
+		var/obj/item/weapon/pickaxe/used_pick = W
+		if(!(used_pick.diggables & DIG_WALLS))
+			return
 		var/turf/T = get_turf(src)
 		if(!mineral)
 			T.ChangeTurf(/turf/simulated/wall)
@@ -188,17 +188,6 @@
 		if(mineral != "plasma")
 			T = get_turf(src)
 			T.attackby(W,user)
-		del(src)
-
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
-		var/turf/T = get_turf(src)
-		if(!mineral)
-			T.ChangeTurf(/turf/simulated/wall)
-		else
-			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		T = get_turf(src)
-		T.attackby(W,user)
 		del(src)
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
@@ -234,11 +223,9 @@
 	anchored = 1
 	var/mineral = "metal"
 	var/opening = 0
-	canSmoothWith = list(
-		/turf/simulated/wall,
-		/obj/structure/falsewall,
-		/obj/structure/falserwall // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
-	)
+
+	// WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	canSmoothWith = "/turf/simulated/wall=0&/obj/structure/falsewall=0&/obj/structure/falserwall=0"
 
 /obj/structure/falserwall/New()
 	relativewall_neighbours()
@@ -301,15 +288,10 @@
 			T.attackby(W,user)
 			del(src)
 
-	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/simulated/wall)
-		T = get_turf(src)
-		T.attackby(W,user)
-		del(src)
-
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if( istype(W, /obj/item/weapon/pickaxe) )
+		var/obj/item/weapon/pickaxe/used_pick = W
+		if(!(used_pick.diggables & DIG_WALLS))
+			return
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(/turf/simulated/wall)
 		T = get_turf(src)

@@ -79,7 +79,7 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/binary_communication_device
-	category = "Robot"
+	category = "Robot_Part"
 	materials = list("$iron"=5000)
 
 /datum/design/robot/radio
@@ -89,7 +89,7 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/radio
-	category = "Robot"
+	category = "Robot_Part"
 	materials = list("$iron"=5000)
 
 /datum/design/robot/actuator
@@ -99,7 +99,7 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/actuator
-	category = "Robot"
+	category = "Robot_Part"
 	materials = list("$iron"=5000)
 
 /datum/design/robot/diagnosis_unit
@@ -109,7 +109,7 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/diagnosis_unit
-	category = "Robot"
+	category = "Robot_Part"
 	materials = list("$iron"=5000)
 
 /datum/design/robot/camera
@@ -119,7 +119,7 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/camera
-	category = "Robot"
+	category = "Robot_Part"
 	materials = list("$iron"=5000)
 
 /datum/design/robot/armour
@@ -129,5 +129,5 @@
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/armour
-	category = "Robot"
+	category = "Robot_Part"
 	materials = list("$iron"=5000)

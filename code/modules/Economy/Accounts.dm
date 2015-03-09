@@ -22,7 +22,7 @@ var/global/list/all_money_accounts = list()
 		T.target_name = station_account.owner_name
 		T.purpose = "Account creation"
 		T.amount = 75000
-		T.date = "2nd April, 2555"
+		T.date = "2nd April, [game_year]"
 		T.time = "11:24"
 		T.source_terminal = "Biesel GalaxyNet Terminal #277"
 
@@ -44,7 +44,7 @@ var/global/list/all_money_accounts = list()
 	T.target_name = department_account.owner_name
 	T.purpose = "Account creation"
 	T.amount = department_account.money
-	T.date = "2nd April, 2555"
+	T.date = "2nd April, [game_year]"
 	T.time = "11:24"
 	T.source_terminal = "Biesel GalaxyNet Terminal #277"
 
@@ -72,9 +72,10 @@ var/global/list/all_money_accounts = list()
 	T.amount = starting_funds
 	if(!source_db)
 		//set a random date, time and location some time over the past few decades
-		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], 25[rand(10,56)]"
-		T.time = "[rand(0,24)]:[rand(11,59)]"
-		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"
+		var/DD = text2num(time2text(world.timeofday, "DD"))											//For muh lore we'll pretend that Nanotrasen changed its account policy
+		T.date = "[(DD == 1) ? "31" : "[DD-1]"] [time2text(world.timeofday, "Month")], [game_year]"	//shortly before the events of the round,
+		T.time = "[rand(0,24)]:[rand(11,59)]"														//prompting everyone to get a new account one day prior.
+		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"								//The point being to partly to justify the transaction history being empty at the beginning of the round.
 
 		M.account_number = rand(111111, 999999)
 	else
@@ -158,8 +159,9 @@ var/global/list/all_money_accounts = list()
 	ghost_read=0
 	ghost_write=0
 
-/obj/machinery/account_database/New()
-	..()
+/obj/machinery/account_database/New(loc)
+	..(loc)
+
 	if(!station_account)
 		create_station_account()
 
@@ -171,9 +173,26 @@ var/global/list/all_money_accounts = list()
 		vendor_account = department_accounts["Vendor"]
 
 	if(!current_date_string)
-		current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], 2557"
+		current_date_string = "[time2text(world.timeofday, "DD")] [time2text(world.timeofday, "Month")], [game_year]"
 
 	machine_id = "[station_name()] Acc. DB #[num_financial_terminals++]"
+
+	account_DBs += src
+
+	if(ticker)
+		initialize()
+
+/obj/machinery/account_database/initialize()
+	..()
+
+	if(z == CENTCOMM_Z && isnull(centcomm_account_db))
+		centcomm_account_db = src
+
+/obj/machinery/account_database/Destroy()
+	if(centcomm_account_db == src)
+		centcomm_account_db = null
+
+	..()
 
 /obj/machinery/account_database/attack_hand(mob/user as mob)
 	if(ishuman(user) && !user.stat && get_dist(src,user) <= 1)
@@ -267,6 +286,11 @@ var/global/list/all_money_accounts = list()
 /obj/machinery/account_database/attackby(O as obj, user as mob)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card))
 		var/obj/item/weapon/card/id/idcard = O
+		if(access_level == 3)
+			return attack_hand(user)
+		if(istype(idcard, /obj/item/weapon/card/emag))
+			emag(user)
+			return
 		if(!held_card)
 			usr.drop_item()
 			idcard.loc = src
@@ -278,6 +302,24 @@ var/global/list/all_money_accounts = list()
 				access_level = 1
 	else
 		..()
+
+/obj/machinery/account_database/emag(mob/user)
+	if(emagged)
+		emagged = 0
+		access_level = 0
+		if(held_card)
+			var/obj/item/weapon/card/id/C = held_card
+			if(access_cent_captain in C.access)
+				access_level = 2
+			else if(access_hop in C.access || access_captain in C.access)
+				access_level = 1
+		attack_hand(user)
+		user << "<span class='notice'>You re-enable the security checks of [src].</span>"
+	else
+		emagged = 1
+		access_level = 3
+		user << "<span class='warning'>You disable the security checks of [src].</span>"
+	return
 
 /obj/machinery/account_database/Topic(var/href, var/href_list)
 	..()
@@ -314,20 +356,24 @@ var/global/list/all_money_accounts = list()
 					if(ishuman(usr) && !usr.get_active_hand())
 						usr.put_in_hands(held_card)
 					held_card = null
-					access_level = 0
+					if(access_level < 3)
+						access_level = 0
 
 				else
 					var/obj/item/I = usr.get_active_hand()
+					if(isEmag(I))
+						emag(usr)
+						return
 					if (istype(I, /obj/item/weapon/card/id))
 						var/obj/item/weapon/card/id/C = I
 						usr.drop_item()
 						C.loc = src
 						held_card = C
-
-						if(access_cent_captain in C.access)
-							access_level = 2
-						else if(access_hop in C.access || access_captain in C.access)
-							access_level = 1
+						if(access_level < 3)
+							if(access_cent_captain in C.access)
+								access_level = 2
+							else if(access_hop in C.access || access_captain in C.access)
+								access_level = 1
 			if("view_account_detail")
 				var/index = text2num(href_list["account_index"])
 				if(index && index <= all_money_accounts.len)

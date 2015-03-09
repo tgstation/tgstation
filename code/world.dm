@@ -13,6 +13,12 @@
 	WORLD_X_OFFSET=rand(-50,50)
 	WORLD_Y_OFFSET=rand(-50,50)
 
+	// Initialize world events as early as possible.
+	on_login = new ()
+	on_ban   = new ()
+	on_unban = new ()
+
+
 	/*Runtimes, not sure if i need it still so commenting out for now
 	starticon = rotate_icon('icons/obj/lightning.dmi', "lightningstart")
 	midicon = rotate_icon('icons/obj/lightning.dmi', "lightning")
@@ -22,7 +28,8 @@
 	// logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 
-	href_logfile = file("data/logs/[date_string] hrefs.htm")
+	investigations["hrefs"] = new /datum/log_controller("hrefs", filename="data/logs/[date_string] hrefs.htm", persist=TRUE)
+
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	admin_diary = file("data/logs/[date_string] admin only.log")
@@ -34,13 +41,18 @@
 	admin_diary << log_start
 
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
-
+/*
+ * IF YOU HAVE BYOND VERSION BELOW 507.1248 OR ARE ABLE TO WALK THROUGH WINDOORS/BORDER WINDOWS COMMENT OUT
+ * #define BORDER_USE_TURF_EXIT
+ * FOR MORE INFORMATION SEE: http://www.byond.com/forum/?post=1666940
+ */
+#ifdef BORDER_USE_TURF_EXIT
+	if(byond_version < 507)
+		warning("Your server's byond version does not meet the recommended requirements for this code. Please update BYOND to atleast 507.1248 or comment BORDER_USE_TURF_EXIT in global.dm")
+#elif
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this code. Please update BYOND"
-
-	if(config && config.log_runtimes)
-		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
-
+#endif
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	load_configuration()
@@ -59,20 +71,22 @@
 	LoadBans()
 	SetupHooks() // /vg/
 
-	copy_logs() // Just copy the logs.
+	library_catalog.initialize()
 
+	copy_logs() // Just copy the logs.
+	if(config && config.log_runtimes)
+		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD")]-runtime.log")
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
 
-	investigate_reset()
 	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
 
 	src.update_status()
 
 	makepowernets()
 
-	sun = new /datum/sun()
+	//sun = new /datum/sun()
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
@@ -81,6 +95,7 @@
 		world.log << "Your server failed to establish a connection with the feedback database."
 	else
 		world.log << "Feedback database connection established."
+		migration_controller = new
 
 	if(!setup_old_database_connection())
 		world.log << "Your server failed to establish a connection with the tgstation database."
@@ -105,20 +120,32 @@
 
 	send2mainirc("Server starting up on [config.server? "byond://[config.server]" : "byond://[world.address]:[world.port]"]")
 
+	processScheduler = new
 	master_controller = new /datum/controller/game_controller()
+
 	spawn(1)
+		processScheduler.deferSetupFor(/datum/controller/process/ticker)
+		processScheduler.setup()
+
 		master_controller.setup()
 
 		setup_species()
 
-	process_teleport_locs()			//Sets up the wizard teleport locations
-	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
+	for(var/plugin_type in typesof(/plugin))
+		var/plugin/P = new plugin_type()
+		plugins[P.name] = P
+		P.on_world_loaded()
+
+	process_teleport_locs()				//Sets up the wizard teleport locations
+	process_ghost_teleport_locs()		//Sets up ghost teleport locations.
+	process_adminbus_teleport_locs()	//Sets up adminbus teleport locations.
+	SortAreas()							//Build the list of all existing areas and sort it alphabetically
 
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
 			ToRban_autoupdate()
-		if(config.kick_inactive)
-			KickInactiveClients()
+		/*if(config.kick_inactive)
+			KickInactiveClients()*/
 
 #undef RECOMMENDED_VERSION
 
@@ -200,6 +227,10 @@
 				//testing("Fcopy failed, deleting and copying")
 				fdel(filename)
 				fcopy(vote.chosen_map, filename)
+			sleep(60)
+
+	processScheduler.stop()
+
 	spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
 
@@ -224,7 +255,7 @@
 						log_access("AFK: [key_name(C)]")
 						C << "<span class='warning'>You have been inactive for more than 10 minutes and have been disconnected.</span>"
 						del(C)
-#undef INACTIVITY_KICK
+//#undef INACTIVITY_KICK
 
 
 /world/proc/load_mode()
@@ -399,7 +430,7 @@ proc/setup_old_database_connection()
 		failed_old_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
 		failed_old_db_connections++		//If it failed, increase the failed connections counter.
-		world.log << dbcon.ErrorMsg()
+		world.log << dbcon_old.ErrorMsg()
 
 	return .
 

@@ -179,7 +179,7 @@ obj/machinery/hydroponics/process()
 
 obj/machinery/hydroponics/proc/updateicon()
 	//Refreshes the icon and sets the luminosity
-	overlays.Cut()
+	overlays.len = 0
 	if(planted)
 		if(dead)
 			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-dead")
@@ -822,14 +822,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			A.icon = src.icon
 			A.icon_state = src.icon_state
 			A.hydrotray_type = src.type
-			A.component_parts = list()
-			for(var/obj/I in component_parts)
-				I.loc = A
-				component_parts -= I
-				A.component_parts += I
-			for(var/obj/I in contents)
-				I.loc = A
-				contents -= I
+			A.component_parts = component_parts.Copy()
+			A.contents = contents.Copy()
+			contents.len = 0
+			component_parts.len = 0
 			del(src)
 	return
 
@@ -993,7 +989,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	use_power = 0
 
 	updateicon() // Same as normal but with the overlays removed - Cheridan.
-		overlays.Cut()
+		overlays.len = 0
 		if(planted)
 			if(dead)
 				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-dead")

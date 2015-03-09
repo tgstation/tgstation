@@ -1,17 +1,23 @@
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
-	return
+	if(flags & TWOHANDABLE)
+		if(!(flags & MUSTTWOHAND))
+			if(wielded)
+				. = src.unwield(user)
+			else
+				. = src.wield(user)
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user)
 	return
+
 /atom/movable/attackby(obj/item/W, mob/user)
 	if(W && !(W.flags&NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user)
-	user.changeNext_move(10)
+	user.delayNextAttack(10)
 	if(istype(I) && ismob(user))
 		I.attack(src, user)
 

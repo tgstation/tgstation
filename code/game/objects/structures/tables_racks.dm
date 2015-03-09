@@ -24,9 +24,9 @@
 	var/health = 100
 
 /obj/structure/table/proc/update_adjacent()
-	for(var/direction in list(1,2,4,8,5,6,9,10))
-		if(locate(/obj/structure/table,get_step(src,direction)))
-			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
+	for(var/direction in alldirs)
+		if(locate(/obj/structure/table, get_step(src, direction)))
+			var/obj/structure/table/T = locate(/obj/structure/table, get_step(src, direction))
 			T.update_icon()
 
 /obj/structure/table/cultify()
@@ -81,7 +81,7 @@
 			return 1
 
 		var/dir_sum = 0
-		for(var/direction in list(1,2,4,8,5,6,9,10))
+		for(var/direction in alldirs)
 			var/skip_sum = 0
 			for(var/obj/structure/window/W in src.loc)
 				if(W.dir == direction) //So smooth tables don't go smooth through windows
@@ -210,7 +210,7 @@
 				icon_state = "[initial(icon_state)]_dir2"
 			if(6)
 				icon_state = "[initial(icon_state)]_dir3"
-		if (dir_sum in list(1,2,4,8,5,6,9,10))
+		if (dir_sum in alldirs)
 			dir = dir_sum
 		else
 			dir = 2
@@ -239,7 +239,7 @@
 	if(M_HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
-		user.changeNext_move(8)
+		user.delayNextAttack(8)
 		destroy()
 
 
@@ -331,7 +331,7 @@
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			if (G.state < 2)
-				if(user.a_intent == "hurt")
+				if(user.a_intent == I_HURT)
 					if (prob(15))	M.Weaken(5)
 					M.apply_damage(8,def_zone = "head")
 					visible_message("\red [G.assailant] slams [G.affecting]'s face against \the [src]!")
@@ -523,6 +523,9 @@
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
+		if(!(WT.welding))
+			user.drop_item(src)
+			return
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
 				user << "\blue Now weakening the reinforced table"
@@ -543,6 +546,7 @@
 
 	if (istype(W, /obj/item/weapon/wrench))
 		if(src.status == 2)
+			user.drop_item(src)
 			return
 
 	..()
@@ -610,8 +614,7 @@
 		return
 	if(isrobot(user))
 		return
-	user.drop_item()
-	if(W && W.loc)	W.loc = src.loc
+	user.drop_item(src)
 	return 1
 
 /obj/structure/rack/meteorhit(obj/O as obj)

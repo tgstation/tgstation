@@ -4,6 +4,7 @@
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
 	speak_emote = list("hums")
+	languages = SLIME | HUMAN
 
 	layer = 5
 
@@ -38,6 +39,8 @@
 
 	var/list/Friends = list() // A list of potential friends
 	var/list/FriendsWeight = list() // A list containing values respective to Friends. This determines how many times a slime "likes" something. If the slime likes it more than 2 times, it becomes a friend
+
+	var/list/speech_buffer = list()
 
 	// slimes pass on genetic data, so all their offspring have the same "Friends",
 
@@ -160,18 +163,6 @@
 
 	now_pushing = 0
 	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!( now_pushing ))
-		now_pushing = 1
-		if (!( AM.anchored ))
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window/full))
-				for(var/obj/structure/window/win in get_step(AM,t))
-					now_pushing = 0
-					return
-			step(AM, t)
-		now_pushing = null
 
 /mob/living/carbon/slime/Process_Spacemove()
 	return 2
@@ -180,14 +171,14 @@
 /mob/living/carbon/slime/Stat()
 	..()
 
-	statpanel("Status")
-	if(istype(src, /mob/living/carbon/slime/adult))
-		stat(null, "Health: [round((health / 200) * 100)]%")
-	else
-		stat(null, "Health: [round((health / 150) * 100)]%")
+	if(statpanel("Status"))
+		if(istype(src, /mob/living/carbon/slime/adult))
+			stat(null, "Health: [round((health / 200) * 100)]%")
+		else
+			stat(null, "Health: [round((health / 150) * 100)]%")
 
 
-	if (client.statpanel == "Status")
+
 		if(istype(src,/mob/living/carbon/slime/adult))
 			stat(null, "Nutrition: [nutrition]/1200")
 			if(amount_grown >= 10)
@@ -211,10 +202,16 @@
 
 
 /mob/living/carbon/slime/emp_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	powerlevel = 0 // oh no, the power!
 	..()
 
 /mob/living/carbon/slime/ex_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 
 	if (stat == 2 && client)
 		return
@@ -246,6 +243,8 @@
 
 
 /mob/living/carbon/slime/blob_act()
+	if(flags & INVULNERABLE)
+		return
 	if (stat == 2)
 		return
 	var/shielded = 0
@@ -275,6 +274,8 @@
 	return
 
 /mob/living/carbon/slime/meteorhit(O as obj)
+	if(flags & INVULNERABLE)
+		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
@@ -343,7 +344,7 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (I_HELP)
 			help_shake_act(M)
 		else
 			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
@@ -437,7 +438,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == I_HURT)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					for(var/mob/O in viewers(src, null))
@@ -450,10 +451,10 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (I_HELP)
 			help_shake_act(M)
 
-		if ("grab")
+		if (I_GRAB)
 			if (M == src)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
@@ -516,12 +517,12 @@
 		return
 
 	switch(M.a_intent)
-		if ("help")
+		if (I_HELP)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 
-		if ("hurt")
+		if (I_HURT)
 
 			if ((prob(95) && health > 0))
 				attacked += 10
@@ -544,7 +545,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
 
-		if ("grab")
+		if (I_GRAB)
 			if (M == src)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
@@ -560,7 +561,7 @@
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
 
-		if ("disarm")
+		if (I_DISARM)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			attacked += 10
@@ -716,7 +717,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
-	flags = TABLEPASS | FPRINT
+	flags = FPRINT
 	force = 1.0
 	w_class = 1.0
 	throwforce = 1.0
@@ -970,11 +971,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS|HEAD
 	slowdown = 1.0
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | STOPSPRESSUREDMAGE
+	flags = FPRINT  | ONESIZEFITSALL
+	pressure_resistance = 200 * ONE_ATMOSPHERE
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS | HEAD
-	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS | HEAD
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	canremove = 0
 	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
 
@@ -1024,9 +1026,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	desc = "a golem's head"
 	canremove = 0
 	unacidable = 1
-	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
+	flags = FPRINT
+	pressure_resistance = 200 * ONE_ATMOSPHERE
 	heat_protection = HEAD
-	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 /obj/effect/golem_rune
@@ -1145,7 +1148,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "slime extract"
-	flags = TABLEPASS
+	flags = 0
 	force = 1.0
 	w_class = 1.0
 	throwforce = 1.0

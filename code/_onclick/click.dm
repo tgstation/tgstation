@@ -3,9 +3,6 @@
 	~Sayu
 */
 
-// 1 decisecond click delay (above and beyond mob/next_move)
-/mob/var/next_click	= 0
-
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
@@ -33,10 +30,13 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
+
+#define MAX_ITEM_DEPTH	3 //how far we can recurse before we can't get an item
+
 /mob/proc/ClickOn( var/atom/A, var/params )
-	if(world.time <= next_click)
+	if(click_delayer.blocked())
 		return
-	next_click = world.time + 1
+	click_delayer.setDelay(1)
 
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
@@ -61,9 +61,9 @@
 
 	face_atom(A) // change direction to face what you clicked on
 
-	if(next_move > world.time) // in the year 2000...
+	if(attack_delayer.blocked()) // This was next_move.  next_attack makes more sense.
 		return
-	//world << "next_move is [next_move] and world.time is [world.time]"
+	//world << "next_attack is [next_attack] and world.time is [world.time]"
 	if(istype(loc,/obj/mecha))
 		if(!locate(/turf) in list(A,A.loc)) // Prevents inventory from being drilled
 			return
@@ -92,73 +92,37 @@
 
 		return
 
-	// operate two levels deep here (item in backpack in src; NOT item in box in backpack in src)
-	if(A == loc || (A in loc) || (A in contents) || (A.loc in contents))
-
-		/*/ faster access to objects already on you
-		if(A in contents)
-			next_move = world.time + 6 // on your person
-		else
-			next_move = world.time + 8 // in a box/bag or in your square
-		*/
-		// No adjacency needed
-		if(W)
-			/*
-			if(W.flags&USEDELAY)
-				next_move += 5
-			*/
-
-			var/resolved = A.attackby(W,src)
-			if(ismob(A) || istype(A, /obj/mecha) || isturf(A) || istype(W, /obj/item/weapon/grab))
-				changeNext_move(10)
-			if(!resolved && A && W)
-				W.afterattack(A,src,1,params) // 1 indicates adjacency
-			else
-				changeNext_move(10)
-		else
-			if(ismob(A) || istype(W, /obj/item/weapon/grab))
-				changeNext_move(10)
-			UnarmedAttack(A)
-		return
-
 	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
 		return
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
-	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		//next_move = world.time + 10
-		if(A.Adjacent(src)) // see adjacent.dm
-			if(W)
-				/*if(W.flags&USEDELAY)
-					next_move += 5
-				*/
-				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				if(ismob(A) || istype(A, /obj/mecha) || isturf(A) || istype(W, /obj/item/weapon/grab))
-					changeNext_move(10)
-				var/resolved = A.attackby(W,src)
+	if(A.Adjacent(src, MAX_ITEM_DEPTH)) // see adjacent.dm
+		if(W)
+
+			var/resolved = W.preattack(A, src, 1, params)
+			if(!resolved)
+				resolved = A.attackby(W,src)
+				if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
+					delayNextAttack(10)
 				if(!resolved && A && W)
-					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
+					W.afterattack(A,src,1,params) // 1 indicates adjacency
 				else
-					changeNext_move(10)
-			else
-				if(ismob(A) || istype(W, /obj/item/weapon/grab))
-					changeNext_move(10)
-				UnarmedAttack(A, 1)
-			return
-		else // non-adjacent click
-			if(W)
-				if(ismob(A))
-					changeNext_move(10)
-				W.afterattack(A,src,0,params) // 0: not Adjacent
-			else
-				if(ismob(A))
-					changeNext_move(10)
-				RangedAttack(A, params)
-
+					delayNextAttack(10)
+		else
+			if(ismob(A) || istype(W, /obj/item/weapon/grab))
+				delayNextAttack(10)
+			UnarmedAttack(A, 1)
+		return
+	else // non-adjacent click
+		if(W)
+			if(ismob(A))
+				delayNextAttack(10)
+			W.afterattack(A,src,0,params) // 0: not Adjacent
+		else
+			if(ismob(A))
+				delayNextAttack(10)
+			RangedAttack(A, params)
 	return
-
-/mob/proc/changeNext_move(num)
-	next_move = world.time + num
 
 // Default behavior: ignore double clicks, consider them normal clicks instead
 /mob/proc/DblClickOn(var/atom/A, var/params)
@@ -178,7 +142,7 @@
 */
 /mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
 	if(ismob(A))
-		changeNext_move(10)
+		delayNextAttack(10)
 	return
 
 /*
@@ -190,8 +154,8 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(var/atom/A, var/params)
-	if(!mutations.len) return
-	if((M_LASER in mutations) && a_intent == "hurt")
+	if(!mutations || !mutations.len) return
+	if((M_LASER in mutations) && a_intent == I_HURT)
 		LaserEyes(A) // moved into a proc below
 	else if(M_TK in mutations)
 		/*switch(get_dist(src,A))
@@ -241,7 +205,7 @@
 	return
 /atom/proc/ShiftClick(var/mob/user)
 	if(user.client && user.client.eye == user)
-		examine()
+		user.examination(src)
 	return
 
 /*
@@ -252,11 +216,13 @@
 	A.CtrlClick(src)
 	return
 /atom/proc/CtrlClick(var/mob/user)
+	user.stop_pulling()
 	return
 
 /atom/movable/CtrlClick(var/mob/user)
 	if(Adjacent(user))
 		user.start_pulling(src)
+
 
 /*
 	Alt click
@@ -290,7 +256,7 @@
 
 /mob/living/LaserEyes(atom/A)
 	//next_move = world.time + 6
-	changeNext_move(4)
+	delayNextAttack(4)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(A)
 
@@ -315,71 +281,6 @@
 		handle_regular_hud_updates()
 	else
 		src << "\red You're out of energy!  You need food!"
-
-/mob/proc/PowerGlove(atom/A)
-	return
-
-/mob/living/carbon/human/PowerGlove(atom/A)
-	var/obj/item/clothing/gloves/yellow/power/G = src:gloves
-	var/time = 100
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
-	var/obj/structure/cable/cable = locate() in T
-	if(!cable || !istype(cable))
-		return
-	if(world.time < G.next_shock)
-		src << "<span class='warning'>[G] aren't ready to shock again!</span>"
-		return
-	src.visible_message("<span class='warning'>[name] fires an arc of electricity!</span>", \
-	"<span class='warning'>You fire an arc of electricity!</span>", \
-	"You hear the loud crackle of electricity!")
-	var/datum/powernet/PN = cable.get_powernet()
-	var/available = 0
-	var/obj/item/projectile/beam/lightning/L = getFromPool(/obj/item/projectile/beam/lightning, loc)
-	if(PN)
-		available = PN.avail
-		L.damage = PN.get_electrocute_damage()
-		if(available >= 5000000)
-			L.damage = 205
-		if(L.damage >= 200)
-			apply_damage(15, BURN, (hand ? "l_hand" : "r_hand"))
-			//usr:Stun(15)
-			//usr:Weaken(15)
-			//if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
-			//	usr:stuttering += 20
-			time = 200
-			src << "<span class='warning'>[G] overload from the massive current shocking you in the process!"
-		else if(L.damage >= 100)
-			apply_damage(5, BURN, (hand ? "l_hand" : "r_hand"))
-			//usr:Stun(10)
-			//usr:Weaken(10)
-			//if(usr:status_flags & CANSTUN) // stun is usually associated with stutter
-			//	usr:stuttering += 10
-			time = 150
-			src << "<span class='warning'>[G] overload from the massive current shocking you in the process!"
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-	if(L.damage <= 0)
-		returnToPool(L)
-		//del(L)
-	if(L)
-		playsound(get_turf(src), 'sound/effects/eleczap.ogg', 75, 1)
-		L.tang = L.adjustAngle(get_angle(U,T))
-		L.icon = midicon
-		L.icon_state = "[L.tang]"
-		L.firer = usr
-		L.def_zone = get_organ_target()
-		L.original = src
-		L.current = U
-		L.starting = U
-		L.yo = U.y - T.y
-		L.xo = U.x - T.x
-		spawn( 1 )
-			L.process()
-
-	next_move = world.time + 12
-	G.next_shock = world.time + time
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)

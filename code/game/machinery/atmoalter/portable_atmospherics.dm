@@ -3,7 +3,7 @@
 	use_power = 0
 	var/datum/gas_mixture/air_contents = new
 
-	var/obj/machinery/atmospherics/portables_connector/connected_port
+	var/obj/machinery/atmospherics/unary/portables_connector/connected_port
 	var/obj/item/weapon/tank/holding
 
 	var/volume = 0
@@ -22,7 +22,7 @@
 	initialize()
 		. = ..()
 		spawn()
-			var/obj/machinery/atmospherics/portables_connector/port = locate() in loc
+			var/obj/machinery/atmospherics/unary/portables_connector/port = locate() in loc
 			if(port)
 				connect(port)
 				update_icon()
@@ -44,7 +44,7 @@
 
 	proc
 
-		connect(obj/machinery/atmospherics/portables_connector/new_port)
+		connect(obj/machinery/atmospherics/unary/portables_connector/new_port)
 			//Make sure not already connected to something else
 			if(connected_port || !new_port || new_port.connected_device)
 				return 0
@@ -101,7 +101,7 @@
 			update_icon()
 			return
 		else
-			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+			var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc
 			if(possible_port)
 				if(connect(possible_port))
 					user << "\blue You connect [name] to the port."
@@ -118,32 +118,9 @@
 				return
 
 	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		visible_message("\red [user] has used [W] on \icon[icon]")
-		if(air_contents)
-			var/pressure = air_contents.return_pressure()
-			var/total_moles = air_contents.total_moles()
-
-			user << "\blue Results of analysis of \icon[icon]"
-			if (total_moles>0)
-				var/o2_concentration = air_contents.oxygen/total_moles
-				var/n2_concentration = air_contents.nitrogen/total_moles
-				var/co2_concentration = air_contents.carbon_dioxide/total_moles
-				var/plasma_concentration = air_contents.toxins/total_moles
-
-				var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
-				user << "\blue Pressure: [round(pressure,0.1)] kPa"
-				user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-				user << "\blue Oxygen: [round(o2_concentration*100)]%"
-				user << "\blue CO2: [round(co2_concentration*100)]%"
-				user << "\blue Plasma: [round(plasma_concentration*100)]%"
-				if(unknown_concentration>0.01)
-					user << "\red Unknown: [round(unknown_concentration*100)]%"
-				user << "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C"
-			else
-				user << "\blue Tank is empty!"
-		else
-			user << "\blue Tank is empty!"
+		user.visible_message("<span class='attack'>[user] has used [W] on \icon[icon] [src]</span>", "<span class='attack'>You use \the [W] on \icon[icon] [src]</span>")
+		var/obj/item/device/analyzer/analyzer = W
+		user.show_message(analyzer.output_gas_scan(src.air_contents, src, 0), 1)
+		src.add_fingerprint(user)
 		return
-
 	return

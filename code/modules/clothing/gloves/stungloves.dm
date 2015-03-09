@@ -3,8 +3,8 @@
 		user << "<span class='notice'>That won't work.</span>"	//i'm not putting my lips on that!
 		..()
 		return
-	if(istype(W, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = W
+	if(istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = W
 		if(!wired)
 			if(C.amount >= 2)
 				C.use(2)
@@ -47,7 +47,7 @@
 
 /obj/item/clothing/gloves/update_icon()
 	..()
-	overlays.Cut()
+	overlays.len = 0
 	if(wired)
 		overlays += "gloves_wire"
 	if(cell)

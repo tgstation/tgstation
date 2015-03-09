@@ -27,9 +27,7 @@
 				possible_traitors -= player
 
 
-	for(var/mob/new_player/P in world)
-		if(P.client && P.ready)
-			num_players++
+	num_players = num_players()
 
 	//var/r = rand(5)
 	var/num_traitors = 1

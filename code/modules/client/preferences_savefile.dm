@@ -39,6 +39,15 @@
 	savefile_version = SAVEFILE_VERSION_MAX
 
 
+/datum/preferences/proc/SetChangelog(ckey,hash)
+	lastchangelog=hash
+	var/database/query/q = new
+	q.Add("UPDATE client SET lastchangelog=? WHERE ckey=?",lastchangelog,ckey)
+	if(!q.Execute(db))
+		message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
+		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
+		return 0
+
 /datum/preferences/proc/load_preferences_sqlite(var/ckey)
 	var/list/preference_list_client = new
 	var/database/query/check = new
@@ -72,6 +81,7 @@
 	warns			=	text2num(preference_list_client["warns"])
 	warnbans		=	text2num(preference_list_client["warnsbans"])
 	volume			=	text2num(preference_list_client["volume"])
+	usewmp			=	text2num(preference_list_client["usewmp"])
 	special_popup	=	text2num(preference_list_client["special"])
 	randomslot		=	text2num(preference_list_client["randomslot"])
 
@@ -85,6 +95,7 @@
 	UI_style_alpha	= 	sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
 	randomslot		= 	sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	volume			= 	sanitize_integer(volume, 0, 100, initial(volume))
+	usewmp			=	sanitize_integer(usewmp, 0, 1, initial(usewmp))
 	special_popup	= 	sanitize_integer(special_popup, 0, 1, initial(special_popup))
 
 	return 1
@@ -145,15 +156,15 @@
 	check.Add("SELECT ckey FROM client WHERE ckey = ?", ckey)
 	if(check.Execute(db))
 		if(!check.NextRow())
-			q.Add("INSERT into client (ckey, ooc_color, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, special) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",\
-			ckey, ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, special_popup)
+			q.Add("INSERT into client (ckey, ooc_color, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",\
+			ckey, ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special_popup)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 		else
-			q.Add("UPDATE client SET ooc_color=?,lastchangelog=?,UI_style=?,default_slot=?,toggles=?,UI_style_color=?,UI_style_alpha=?,warns=?,warnbans=?,randomslot=?,volume=?,special=? WHERE ckey = ?",\
-			ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, special_popup, ckey)
+			q.Add("UPDATE client SET ooc_color=?,lastchangelog=?,UI_style=?,default_slot=?,toggles=?,UI_style_color=?,UI_style_alpha=?,warns=?,warnbans=?,randomslot=?,volume=?,usewmp=?,special=? WHERE ckey = ?",\
+			ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special_popup, ckey)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
@@ -228,6 +239,9 @@ SELECT
     limbs.r_hand,
     limbs.heart,
     limbs.eyes,
+    limbs.lungs,
+    limbs.liver,
+    limbs.kidneys,
     players.player_ckey,
     players.player_slot,
     players.ooc_notes,
@@ -365,6 +379,9 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	organ_data["r_hand"]= preference_list["r_hand"]
 	organ_data["heart"] = preference_list["heart"]
 	organ_data["eyes"] 	= preference_list["eyes"]
+	organ_data["lungs"] = preference_list["lungs"]
+	organ_data["kidneys"]=preference_list["kidneys"]
+	organ_data["liver"] = preference_list["liver"]
 
 	alternate_option	= text2num(preference_list["alternate_option"])
 	job_civilian_high	= text2num(preference_list["job_civilian_high"])

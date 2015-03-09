@@ -44,6 +44,17 @@
 			index = findtext(t, char)
 	return t
 
+/proc/strip_html_properly(var/input)
+	var/opentag = 1 //These store the position of < and > respectively.
+	var/closetag = 1
+	while(1)
+		opentag = findtext(input, "<")
+		closetag = findtext(input, ">")
+		if(!closetag || !opentag)
+			break
+		input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
+	return input
+
 //Removes a few problematic characters
 /proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","�"="�"))
 	for(var/char in repl_chars)
@@ -67,6 +78,11 @@
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
+/proc/reverse_text(txt)
+  var/i = length(txt)+1
+  . = ""
+  while(--i)
+    . += copytext(txt,i,i+1)
 
 /*
  * returns null if there is any bad text in the string
@@ -322,8 +338,32 @@ proc/checkhtml(var/t)
 			count++
 	return count
 
-/proc/reverse_text(var/text = "")
-	var/new_text = ""
-	for(var/i = length(text); i > 0; i--)
-		new_text += copytext(text, i, i+1)
-	return new_text
+/**
+ * Format number with thousands seperators.
+ * @param number Number to format.
+ * @param sep Seperator to use
+ */
+/proc/format_num(var/number, var/sep=",")
+	var/c="" // Current char
+	var/list/parts = text2list("[number]",".")
+	var/origtext = "[parts[1]]"
+	var/len      = length(origtext)
+	var/offset   = len % 3
+	for(var/i=1;i<=len;i++)
+		c = copytext(origtext,i,i+1)
+		. += c
+		if((i%3)==offset && i!=len)
+			. += sep
+	if(parts.len==2)
+		. += ".[parts[2]]"
+
+var/global/list/watt_suffixes = list("W", "KW", "MW", "GW", "TW", "PW", "EW", "ZW", "YW")
+/proc/format_watts(var/number)
+	if(number<0) return "-[format_watts(number)]"
+	if(number==0) return "0 W"
+
+	var/i=1
+	while (round(number/1000) >= 1)
+		number/=1000
+		i++
+	return "[format_num(number)] [watt_suffixes[i]]"

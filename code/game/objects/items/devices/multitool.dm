@@ -1,18 +1,19 @@
 // Multitool -- A multitool is used for hacking electronic devices.
- 
+
 #define DETECT_TICKER_PERIOD	10 //in deciseconds
 #define DETECT_AI				1
 #define DETECT_PAI				2
 #define DETECT_RECORDER			4
 #define DETECT_ANALYZER			8
- 
+
  //////////////////////////////////////////////////////////
- 
+
 /obj/item/device/multitool
 	name = "multitool"
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
 	icon_state = "multitool"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 5.0
 	w_class = 2.0
 	throwforce = 5.0
@@ -35,10 +36,10 @@
 
 /obj/item/device/multitool/ai_detect
 	var/detected = 0 //bitflags
-	
+
 /obj/item/device/multitool/ai_detect/New()
 	spawn() src.ticker()
-	
+
 /obj/item/device/multitool/ai_detect/proc/ticker()
 	var/mob/M
 	var/range
@@ -48,7 +49,7 @@
 		detected = 0
 		our_turf = get_turf(src)
 		range = range(8,our_turf)
-		
+
 		//Search for AIs and people looking through sec cams
 		if(cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
 			var/datum/camerachunk/chunk = cameranet.getCameraChunk(our_turf.x, our_turf.y, our_turf.z)
@@ -57,32 +58,32 @@
 					if(get_dist(src,M) < 8)
 						src.detected |= DETECT_AI
 						break
-			
+
 		for(T in range) //Search for pAIs
 			if(src.findItem(/mob/living/silicon/pai,T))
 				src.detected |= DETECT_PAI
 				break
-		
+
 		for(T in range) //Search for recorders
 			if(src.findItem(/obj/item/device/taperecorder,T))
 				src.detected |= DETECT_RECORDER
 				break
-	
+
 		for(T in range) //Search for analyzers
 			if(src.findComponent(/obj/item/device/assembly/voice,T))
 				src.detected |= DETECT_ANALYZER
 				break
-				
+
 		src.update_icon()
 		sleep(DETECT_TICKER_PERIOD)
 	return
-	
+
 /obj/item/device/multitool/ai_detect/proc/findItem(pathToFind,atom/thingToSearch)
 	if(locate(pathToFind) in thingToSearch.contents) return 1
-	for(var/mob/living/carbon/mob in thingToSearch) 
+	for(var/mob/living/carbon/mob in thingToSearch)
 		if(.(pathToFind,mob)) return 1
 	return 0
-	
+
 /obj/item/device/multitool/ai_detect/proc/findComponent(pathToFind,atom/thingToSearch)
 	if(locate(pathToFind) in thingToSearch.contents) return 1
 	for(var/obj/item/device/assembly_holder/assembly in thingToSearch)
@@ -92,28 +93,29 @@
 	for(var/mob/living/carbon/mob in thingToSearch)
 		if(.(pathToFind,mob)) return 1
 	return 0
-	
+
 obj/item/device/multitool/ai_detect/update_icon()
 	if(src.detected)
-		if(src.detected & DETECT_AI) 
+		if(src.detected & DETECT_AI)
 			src.icon_state = "[initial(src.icon_state)]_red"
-		else if(src.detected & DETECT_PAI) 
+		else if(src.detected & DETECT_PAI)
 			src.icon_state = "[initial(src.icon_state)]_orange"
-		else if(src.detected & DETECT_RECORDER) 
+		else if(src.detected & DETECT_RECORDER)
 			src.icon_state = "[initial(src.icon_state)]_yellow"
-		else if(src.detected & DETECT_ANALYZER) 
+		else if(src.detected & DETECT_ANALYZER)
 			src.icon_state = "[initial(src.icon_state)]_blue"
 	else src.icon_state = initial(src.icon_state)
 	return
-	
-obj/item/device/multitool/ai_detect/examine()
+
+obj/item/device/multitool/ai_detect/examine(mob/user)
 	..()
-	if(src.detected) usr << "The screen displays:"
-	if(src.detected & DETECT_AI) usr << "AI detected"
-	if(src.detected & DETECT_PAI) usr << "pAI detected"
-	if(src.detected & DETECT_RECORDER) usr << "Tape recorder detected"
-	if(src.detected & DETECT_ANALYZER) usr << "Voice analyzer detected"
-	
+	if(src.detected)
+		user << "<span class='info'>The screen displays:</span>"
+		if(DETECT_AI) 		user << "<span class='info'>AI detected</span>"
+		if(DETECT_PAI)  	user << "<span class='info'>pAI detected></span>"
+		if(DETECT_RECORDER)	user << "<span class='info'>Tape recorder detected</span>"
+		if(DETECT_ANALYZER)	user << "<span class='info'>Voice analyzer detected</span>"
+
 ////////////////////////////////////////////////////////////////////////
 #undef DETECT_TICKER_PERIOD
 #undef DETECT_AI

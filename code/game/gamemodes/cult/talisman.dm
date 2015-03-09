@@ -8,18 +8,12 @@
 	if(istype(target,/obj/item/weapon/nullrod))
 		var/turf/T = get_turf(target)
 		nullblock = 1
-		T.nullding()
+		T.turf_animation('icons/effects/96x96.dmi',"nullding",-32,-32,MOB_LAYER+1,'sound/piano/Ab7.ogg')
 		return 1
 	else if(target.contents)
 		for(var/atom/A in target.contents)
 			findNullRod(A)
 	return 0
-
-
-/obj/item/weapon/paper/talisman/examine()
-	set src in view(2)
-	..()
-	return
 
 /obj/item/weapon/paper/talisman/New()
 	..()
@@ -46,16 +40,16 @@
 				call(/obj/effect/rune/proc/teleport)(imbue)
 				var/turf/T2 = get_turf(user)
 				if(T1!=T2)
-					T1.invocanimation("rune_teleport")
+					T1.turf_animation('icons/effects/effects.dmi',"rune_teleport")
 			if("communicate")
 				//If the user cancels the talisman this var will be set to 0
 				delete = call(/obj/effect/rune/proc/communicate)()
 			if("deafen")
 				deafen()
-				del(src)
+				qdel(src)
 			if("blind")
 				blind()
-				del(src)
+				qdel(src)
 			if("runestun")
 				user << "\red To use this talisman, attack your target directly."
 				return
@@ -64,7 +58,7 @@
 		user.take_organ_damage(5, 0)
 		if(src && src.imbue!="supply" && src.imbue!="runestun")
 			if(delete)
-				del(src)
+				qdel(src)
 		return
 	else
 		user << "You see strange symbols on the paper. Are they supposed to mean something?"
@@ -76,7 +70,7 @@
 		if(imbue == "runestun")
 			user.take_organ_damage(5, 0)
 			runestun(T)
-			del(src)
+			qdel(src)
 		else
 			..()   ///If its some other talisman, use the generic attack code, is this supposed to work this way?
 	else
@@ -88,7 +82,7 @@
 
 /obj/item/weapon/paper/talisman/proc/supply(var/key)
 	if (!src.uses)
-		del(src)
+		qdel(src)
 		return
 
 	var/dat = {"<B>There are [src.uses] bloody runes on the parchment.</B>

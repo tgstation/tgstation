@@ -1,4 +1,3 @@
-
 //**************************************************************
 // Defibrillator
 //**************************************************************
@@ -20,8 +19,8 @@
 	var/emagged = 0
 
 /obj/item/weapon/melee/defibrillator/New()
-	src.sparks.set_up(5,0,src)
-	src.sparks.attach(src)
+	sparks.set_up(5,0,src)
+	sparks.attach(src)
 	return ..()
 
 /obj/item/weapon/melee/defibrillator/suicide_act(mob/user)
@@ -30,64 +29,85 @@
 	return (FIRELOSS)
 
 /obj/item/weapon/melee/defibrillator/update_icon()
-	src.icon_state = "defib"
-	if(src.charges)
-		if(src.ready)	src.icon_state += "paddleout"
-		else			src.icon_state += "paddlein"
-		switch(src.charges)
-			if(7 to INFINITY)	src.icon_state += "_full"
-			if(4 to 6)			src.icon_state += "_half"
-			else				src.icon_state += "_low"
-	else src.icon_state += "empty"
+	icon_state = "defib"
+	if(ready)
+		icon_state += "paddleout"
+	else
+		icon_state += "paddlein"
+	switch(charges/initial(charges))
+		if(0.7 to INFINITY) //Just in case the defib somehow gets more charges than initial
+			icon_state += "_full"
+		if(0.4 to 0.6)
+			icon_state += "_half"
+		if(0.01 to 0.3) //Make sure it's really empty dawg
+			icon_state += "_low"
+		else
+			icon_state += "_empty"
 	return
 
 /obj/item/weapon/melee/defibrillator/attack_self(mob/user)
-	if(src.charges)
-		if((M_CLUMSY in user.mutations) && prob(50))
+	if(charges || ready)
+		if((M_CLUMSY in user.mutations) && prob(50) && charges)
 			user << "<span class='warning'>You touch the paddles together, shorting the device.</span>"
-			src.sparks.start()
-			playsound(get_turf(src),"sparks",75,1,-1)
+			sparks.start()
+			playsound(get_turf(src),'sound/items/defib.ogg',50,1)
 			user.Weaken(5)
 			var/mob/living/carbon/human/H = user
 			if(ishuman(user)) H.apply_damage(20, BURN)
-			src.charges--
-			src.update_icon()
+			charges--
+			update_icon()
 		else
-			src.ready = !src.ready
+			ready = !ready
 			user << "<span class='notice'>You turn [src] [ready? "on and take the paddles out" : "off and put the paddles back in"].</span>"
 			playsound(get_turf(src),"sparks",75,1,-1)
-			src.update_icon()
-	else user << "<span class='warning'>[src] is out of charges.</span>"
+			update_icon()
+	else
+		user << "<span class='warning'>[src] is out of charges.</span>"
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/melee/defibrillator/update_wield(mob/user)
+	..()
+	item_state = "fireaxe[wielded ? 1 : 0]"
+	force = wielded ? 40 : 10
+	if(user)
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
+
 /obj/item/weapon/melee/defibrillator/attackby(obj/item/weapon/W,mob/user)
 	if(istype(W,/obj/item/weapon/card/emag))
-		src.emagged = !src.emagged
-		if(src.emagged)
+		emagged = !src.emagged
+		if(emagged)
 			user << "<span class='warning'>You short out [src]'s safety protocols.</span>"
-			src.overlays += "defib_emag"
+			overlays += "defib_emag"
 		else
 			user << "<span class='notice'>You reset [src]'s safety protocols.</span>"
-			src.overlays.Cut()
-	else . = ..()
+			overlays.len = 0
+	else
+		. = ..()
 	return
 
 /obj/item/weapon/melee/defibrillator/attack(mob/M,mob/user)
-	if(!ishuman(M)) user << "<span class='warning'>You can't defibrilate [M]. You don't even know where to put the paddles!</span>"
-	else if(!src.charges) user << "<span class='warning'>[src] is out of charges.</span>"
-	else if(!src.ready) user << "<span class='notice'>Take the paddles out first.</span>"
+	if(!ishuman(M))
+		user << "<span class='warning'>You can't defibrilate [M]. You don't even know where to put the paddles!</span>"
+	else if(!charges)
+		user << "<span class='warning'>[src] is out of charges.</span>"
+	else if(!ready)
+		user << "<span class='warning'>Take the paddles out first.</span>"
 	else
 		var/mob/living/carbon/human/target = M
 		if(!(target.stat == 2 || target.stat == DEAD))
-			if(src.emagged) src.shockAttack(target,user)
-			else user << "<span class='notice'>[src] buzzes: Cardiac rhythm normal.</span>"
-		else src.attemptDefib(target,user)
+			if(emagged)
+				shockAttack(target,user)
+			else
+				user << "<span class='warning'>[src] buzzes: Vital signs detected.</span>"
+		else
+			attemptDefib(target,user)
 	return
 
 /obj/item/weapon/melee/defibrillator/proc/shockAttack(mob/living/carbon/human/target,mob/user)
 	var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
-	target.visible_message("<span class='danger'>[target.name] has been shocked in the chest with the [src] by [user]!</span>")
+	target.visible_message("<span class='danger'>[target] has been shocked in the chest with the [src] by [user]!</span>")
 	target.Weaken(rand(6,12))
 	target.apply_damage(rand(30,60),BURN,"chest")
 	heart.damage += rand(5,60)
@@ -97,31 +117,34 @@
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Shocked [target.name] ([target.ckey]) with an emagged [src.name]</font>"
 		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Shocked by [user.name] ([user.ckey]) with an emagged [src.name]</font>"
 		log_attack("<font color='red'>[user.name] ([user.ckey]) shocked [target.name] ([target.ckey]) with an emagged [src.name]</font>" )
-		if(!iscarbon(user)) target.LAssailant = null
-		else target.LAssailant = user
-	src.sparks.start()
+		if(!iscarbon(user))
+			target.LAssailant = null
+		else
+			target.LAssailant = user
+	sparks.start()
 	playsound(get_turf(src),'sound/items/defib.ogg',50,1)
-	src.charges--
-	src.update_icon()
+	charges--
+	update_icon()
 	return
 
 /obj/item/weapon/melee/defibrillator/proc/attemptDefib(mob/living/carbon/human/target,mob/user)
-	user.visible_message("[user] starts setting up the paddles on [target]'s chest","You start setting up the paddles on [target]'s chest")
+	user.visible_message("<span class='notice'>[user] starts setting up the paddles on [target]'s chest</span>", \
+	"<span class='notice'>You start setting up the paddles on [target]'s chest</span>")
 	if(do_after(user,30))
-		src.sparks.start()
+		sparks.start()
 		playsound(get_turf(src),'sound/items/defib.ogg',50,1)
-		src.charges--
-		src.update_icon()
+		charges--
+		update_icon()
 		user << "<span class='notice'>You shock [target] with the paddles.</span>"
 		if(target.mind && !target.client)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == target.mind && ghost.can_reenter_corpse)
 					ghost << 'sound/effects/adminhelp.ogg'
 					ghost << "<span class='danger'>Someone is trying to revive your body. Return to it if you want to be resurrected!</span>"
-					user << "<span class='warning'>[src] buzzes: Defibrillation failed. Vital signs too weak, please try again.</span>"
+					user << "<span class='warning'>[src] buzzes: Defibrillation failed. Vital signs are too weak, please try again in five seconds.</span>"
 					break
 		if(!target.client || !target.mind) //Let's call up the ghost and then still revive the corspe ! Also, bodies with clients only, thank you
-			user << "<span class='warning'>[src] buzzes: Defibrillation failed. Patient shows no vital signs.</span>"
+			user << "<span class='warning'>[src] buzzes: Vital signs are too weak, please try again in five seconds.</span>"
 			return
 		if(target.wear_suit && istype(target.wear_suit,/obj/item/clothing/suit/armor) && prob(95)) //75 ? Let's stay realistic here
 			user << "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>"
@@ -132,7 +155,7 @@
 			if(prob(25)) heart.damage += 5 //Allow the defibrilator to possibly worsen heart damage. Still rare enough to just be the "clone damage" of the defib
 			target.apply_damage(-target.getOxyLoss(),OXY)
 			target.updatehealth()
-			target.visible_message("<span class='warning'>[target]'s body convulses a bit.</span>")
+			target.visible_message("<span class='danger'>[target]'s body convulses a bit.</span>")
 			var/datum/organ/external/head/head = target.get_organ("head")
 			if((target.health > config.health_threshold_dead)\
 			&&(!(head.status & ORGAN_DESTROYED))\

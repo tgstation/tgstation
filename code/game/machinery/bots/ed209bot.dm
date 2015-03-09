@@ -827,8 +827,9 @@ Auto Patrol: []"},
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	del(src)
+	var/obj/effect/decal/cleanable/blood/oil/gib = getFromPool(/obj/effect/decal/cleanable/blood/oil, src.loc)
+	gib.New(gib.loc)
+	qdel(src)
 
 
 /obj/machinery/bot/ed209/proc/shootAt(var/mob/target)
@@ -934,7 +935,7 @@ Auto Patrol: []"},
 		if(0,1)
 			if( istype(W, /obj/item/robot_parts/l_leg) || istype(W, /obj/item/robot_parts/r_leg) )
 				user.drop_item()
-				del(W)
+				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the robot leg to [src].</span>"
 				name = "legs/frame assembly"
@@ -952,7 +953,7 @@ Auto Patrol: []"},
 				lasercolor = "b"
 			if( lasercolor || istype(W, /obj/item/clothing/suit/armor/vest) )
 				user.drop_item()
-				del(W)
+				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the armor to [src].</span>"
 				name = "vest/legs/frame assembly"
@@ -969,7 +970,7 @@ Auto Patrol: []"},
 		if(4)
 			if( istype(W, /obj/item/clothing/head/helmet) )
 				user.drop_item()
-				del(W)
+				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the helmet to [src].</span>"
 				name = "covered and shielded frame assembly"
@@ -979,7 +980,7 @@ Auto Patrol: []"},
 		if(5)
 			if( isprox(W) )
 				user.drop_item()
-				del(W)
+				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the prox sensor to [src].</span>"
 				name = "covered, shielded and sensored frame assembly"
@@ -987,8 +988,8 @@ Auto Patrol: []"},
 				icon_state = "[lasercolor]ed209_prox"
 
 		if(6)
-			if( istype(W, /obj/item/weapon/cable_coil) )
-				var/obj/item/weapon/cable_coil/coil = W
+			if( istype(W, /obj/item/stack/cable_coil) )
+				var/obj/item/stack/cable_coil/coil = W
 				var/turf/T = get_turf(user)
 				user << "<span class='notice'>You start to wire [src]...</span>"
 				sleep(40)
@@ -1019,7 +1020,7 @@ Auto Patrol: []"},
 			src.item_state = "[lasercolor]ed209_taser"
 			src.icon_state = "[lasercolor]ed209_taser"
 			user.drop_item()
-			del(W)
+			qdel(W)
 
 		if(8)
 			if( istype(W, /obj/item/weapon/screwdriver) )
@@ -1039,9 +1040,9 @@ Auto Patrol: []"},
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/ed209(T,created_name,lasercolor)
 				user.drop_item()
-				del(W)
+				qdel(W)
 				user.drop_from_inventory(src)
-				del(src)
+				qdel(src)
 
 
 /obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
@@ -1068,12 +1069,12 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/bluetag/New()//If desired, you spawn red and bluetag bots easily
 	new /obj/machinery/bot/ed209(get_turf(src),null,"b")
-	del(src)
+	qdel(src)
 
 
 /obj/machinery/bot/ed209/redtag/New()
 	new /obj/machinery/bot/ed209(get_turf(src),null,"r")
-	del(src)
+	qdel(src)
 
 /obj/machinery/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
 	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))

@@ -6,7 +6,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT  | OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
@@ -46,7 +46,7 @@
 	var/fillevel = gulp_size
 
 	//smashing on someone
-	if(user.a_intent == "hurt" && isGlass && molotov != 1)  //to smash on someone, must be harm intent, breakable glass, and have no rag inside
+	if(user.a_intent == I_HURT && isGlass && molotov != 1)  //to smash on someone, must be harm intent, breakable glass, and have no rag inside
 		if(!M)
 			return
 
@@ -94,8 +94,8 @@
 
 			//Display an attack message.
 			for(var/mob/O in viewers(user, null))
-				if(M != user) O.show_message(text("\red <B>[M] has been hit over the head with a [smashtext][src.name], by [user]!</B>"), 1)
-				else O.show_message(text("\red <B>[M] hit himself with a [smashtext][src.name] on the head!</B>"), 1)
+				if(M != user) O.show_message(text("<span class='danger'>[M] has been hit over the head with a [smashtext][src.name], by [user]!</span>"), 1)
+				else O.show_message(text("<span class='danger'>[M] hit himself with a [smashtext][src.name] on the head!</span>"), 1)
 			//Weaken the target for the duration that we calculated and divide it by 5.
 			if(armor_duration)
 				M.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
@@ -103,8 +103,8 @@
 		else
 			//Default attack message and don't weaken the target.
 			for(var/mob/O in viewers(user, null))
-				if(M != user) O.show_message(text("\red <B>[M] has been attacked with a [smashtext][src.name], by [user]!</B>"), 1)
-				else O.show_message(text("\red <B>[M] has attacked himself with a [smashtext][src.name]!</B>"), 1)
+				if(M != user) O.show_message(text("<span class='danger'>[M] has been attacked with a [smashtext][src.name], by [user]!</span>"), 1)
+				else O.show_message(text("<span class='danger'>[M] has attacked himself with a [smashtext][src.name]!</span>"), 1)
 
 		//Attack logs
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [M.name] ([M.ckey]) with a bottle!</font>")
@@ -118,7 +118,7 @@
 		//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 		if(src.reagents)
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\blue <B>The contents of \the [smashtext][src] splashes all over [M]!</B>"), 1)
+				O.show_message(text("<span class='bnotice'>The contents of \the [smashtext][src] splashes all over [M]!</span>"), 1)
 			src.reagents.reaction(M, TOUCH)
 
 		//Finally, smash the bottle. This kills (del) the bottle.
@@ -218,6 +218,8 @@
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
+			if(!istype(bro.module, /obj/item/weapon/robot_module/butler))
+				return
 			var/chargeAmount = max(30,4*trans)
 			bro.cell.use(chargeAmount)
 			user << "Now synthesizing [trans] units of [refillName]..."
@@ -229,29 +231,31 @@
 
 	return
 
-/obj/item/weapon/reagent_containers/food/drinks/examine()
-	set src in view()
+/obj/item/weapon/reagent_containers/food/drinks/examine(mob/user)
 	..()
-	if (!(usr in range(0)) && usr!=src.loc) return
 	if(!reagents || reagents.total_volume==0)
-		usr << "<span  class='notice'>\The [src] is empty!</span>"
+		user << "<span  class='info'>\The [src] is empty!</span>"
 	else if (reagents.total_volume<=src.volume/4)
-		usr << "<span  class='notice'>\The [src] is almost empty!</span>"
+		user << "<span  class='info'>\The [src] is almost empty!</span>"
 	else if (reagents.total_volume<=src.volume*0.66)
-		usr << "<span  class='notice'>\The [src] is half full!</span>"
+		user << "<span  class='info'>\The [src] is half full!</span>"
 	else if (reagents.total_volume<=src.volume*0.90)
-		usr << "<span  class='notice'>\The [src] is almost full!</span>"
+		user << "<span  class='info'>\The [src] is almost full!</span>"
 	else
-		usr << "<span  class='notice'>\The [src] is full!</span>"
+		user << "<span  class='info'>\The [src] is full!</span>"
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //drink the liquid within
 	user << "<span  class='notice'>You swallow a gulp of [src].</span>"
+	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+
+	if(isrobot(user))
+		reagents.remove_any(gulp_size)
+		return 1
 	if(reagents.total_volume)
 		reagents.reaction(user, INGEST)
 		spawn(5)
 			reagents.trans_to(user, gulp_size)
 
-	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
 
@@ -275,7 +279,8 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = null
 	volume = 150
-	flags = FPRINT | CONDUCT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT  | OPENCONTAINER
+	siemens_coefficient = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/golden_cup/tournament_26_06_2011
 	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."
@@ -459,7 +464,7 @@
 				reagents.add_reagent("space_drugs", 20)
 			if(4)
 				name = "Grifeo: Rich"
-				reagents.add_reagent("tequilla", 10)
+				reagents.add_reagent("tequila", 10)
 				reagents.add_reagent("chemical_waste", 10)
 			if(5)
 				name = "Grifeo: Pure"
@@ -747,6 +752,8 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
+	sharpness = 0.8 //same as glass shards
+	w_class = 1
 	item_state = "beer"
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
@@ -790,15 +797,15 @@
 		..()
 		reagents.add_reagent("vodka", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla
-	name = "Caccavo Guaranteed Quality Tequilla"
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila
+	name = "Caccavo Guaranteed Quality Tequila"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
-	icon_state = "tequillabottle"
+	icon_state = "tequilabottle"
 	isGlass = 1
 	molotov = -1
 	New()
 		..()
-		reagents.add_reagent("tequilla", 100)
+		reagents.add_reagent("tequila", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing
 	name = "Bottle of Nothing"
@@ -813,7 +820,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
-	desc = "Silver laced tequilla, served in space night clubs across the galaxy."
+	desc = "Silver laced tequila, served in space night clubs across the galaxy."
 	icon_state = "patronbottle"
 	bottleheight = 26 //has a cork but for now it goes on top of the cork
 	molotov = -1
@@ -853,7 +860,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/afterattack(obj/target, mob/user , flag)//copied from glass.dm, only way to have it only dispense 5u of its content
 	..()
 	if(ismob(target) && target.reagents && reagents.total_volume)
-		user << "\blue You splash some the flask's content onto [target]."
+		user << "<span class='notice'>You splash some the flask's content onto [target].</span>"
 
 		var/mob/living/M = target
 		var/list/injected = list()
@@ -899,13 +906,13 @@
 		user << "<span class='notice'>You transfer [trans] units of the solution to [target].</span>"
 
 		// /vg/: Logging transfers of bad things
-		if(target.reagents_to_log.len)
+		if(istype(target.reagents_to_log) && target.reagents_to_log.len)
 			var/list/badshit=list()
 			for(var/bad_reagent in target.reagents_to_log)
 				if(reagents.has_reagent(bad_reagent))
 					badshit += reagents_to_log[bad_reagent]
 			if(badshit.len)
-				var/hl="\red <b>([english_list(badshit)])</b> \black"
+				var/hl="<span class='warning'>([english_list(badshit)])</span>"
 				message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 				log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
 
@@ -1171,25 +1178,25 @@
 		update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/update_brightness(var/mob/user = null)
-	if(lit)
+	if(lit && molotov)
 		if(loc == user)
 			user.SetLuminosity(user.luminosity + brightness_lit)
 		else if(isturf(loc))
 			SetLuminosity(src.brightness_lit)
-	else
+	else if(molotov)
 		if(loc == user)
 			user.SetLuminosity(user.luminosity - brightness_lit)
 		else if(isturf(loc))
 			SetLuminosity(0)
 
 /obj/item/weapon/reagent_containers/food/drinks/pickup(mob/user)
-	if(lit)
+	if(lit && molotov)
 		user.SetLuminosity(user.luminosity + brightness_lit)
 		SetLuminosity(0)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/dropped(mob/user)
-	if(src)
+	if(src && lit && molotov)
 		user.SetLuminosity(user.luminosity - brightness_lit)
 		SetLuminosity(brightness_lit)
 

@@ -248,7 +248,7 @@ proc/AirflowSpace(zone/A)
 /atom/movable/proc/GotoAirflowDest(n)
 	last_airflow = world.time
 	if(airflow_dest == loc)
-		step_away(src,loc)
+		return
 	if(ismob(src))
 		if(src:status_flags & GODMODE)
 			return
@@ -259,12 +259,12 @@ proc/AirflowSpace(zone/A)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes:magpulse)
 						return
-		src << "\red You are sucked away by airflow!"
+		src << "<SPAN CLASS='warning'>You are sucked away by airflow!</SPAN>"
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
 		return
-	airflow_speed = min(max(n * (9/airflow_falloff),1),9)
+	airflow_speed = Clamp(n * (9 / airflow_falloff), 1, 9)
 	var
 		xo = airflow_dest.x - src.x
 		yo = airflow_dest.y - src.y
@@ -296,7 +296,8 @@ proc/AirflowSpace(zone/A)
 				break
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client)
-				src:client:move_delay = world.time + zas_settings.Get(/datum/ZAS_Setting/airflow_mob_slowdown)
+				var/mob/M = src
+				M.delayNextMove(zas_settings.Get(/datum/ZAS_Setting/airflow_mob_slowdown))
 		airflow_dest = null
 		airflow_speed = 0
 		airflow_time = 0
@@ -317,13 +318,13 @@ proc/AirflowSpace(zone/A)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes.flags & NOSLIP)
 						return
-		src << "\red You are pushed away by airflow!"
+		src << "<SPAN CLASS='warning'>You are pushed away by airflow!</SPAN>"
 		last_airflow = world.time
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
 		return
-	airflow_speed = min(max(n * (9/airflow_falloff),1),9)
+	airflow_speed = Clamp(n * (9 / airflow_falloff), 1, 9)
 	var
 		xo = -(airflow_dest.x - src.x)
 		yo = -(airflow_dest.y - src.y)
@@ -345,11 +346,12 @@ proc/AirflowSpace(zone/A)
 				airflow_dest = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 			if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 				return
-			if(!istype(loc, /turf))
+			if (!isturf(loc))
 				return
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client)
-				src:client:move_delay = world.time + zas_settings.Get(/datum/ZAS_Setting/airflow_mob_slowdown)
+				var/mob/M = src
+				M.delayNextMove(zas_settings.Get(/datum/ZAS_Setting/airflow_mob_slowdown))
 		airflow_dest = null
 		airflow_speed = 0
 		airflow_time = 0
@@ -363,21 +365,24 @@ proc/AirflowSpace(zone/A)
 		airflow_speed = 0
 		airflow_time = 0
 		. = ..()
+	sound_override = 0
 
 atom/movable/proc/airflow_hit(atom/A)
 	airflow_speed = 0
 	airflow_dest = null
 
 mob/airflow_hit(atom/A)
-	for(var/mob/M in hearers(src))
-		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
+	if(!sound_override)
+		for(var/mob/M in hearers(src))
+			M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
 	//playsound(get_turf(src), "smash.ogg", 25, 1, -1)
 	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
 obj/airflow_hit(atom/A)
-	for(var/mob/M in hearers(src))
-		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
+	if(!sound_override)
+		for(var/mob/M in hearers(src))
+			M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
 	//playsound(get_turf(src), "smash.ogg", 25, 1, -1)
 	. = ..()
 

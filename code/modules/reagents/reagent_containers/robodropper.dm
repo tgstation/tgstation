@@ -34,7 +34,7 @@
 
 			if(isobj(target))
 				// /vg/: Logging transfers of bad things
-				if(target.reagents_to_log.len)
+				if(istype(target.reagents_to_log) && target.reagents_to_log.len)
 					var/list/badshit=list()
 					for(var/bad_reagent in target.reagents_to_log)
 						if(reagents.has_reagent(bad_reagent))
@@ -48,16 +48,7 @@
 				if(istype(target , /mob/living/carbon/human))
 					var/mob/living/carbon/human/victim = target
 
-					var/obj/item/safe_thing = null
-					if( victim.wear_mask )
-						if ( victim.wear_mask.flags & MASKCOVERSEYES )
-							safe_thing = victim.wear_mask
-					if( victim.head )
-						if ( victim.head.flags & MASKCOVERSEYES )
-							safe_thing = victim.head
-					if(victim.glasses)
-						if ( !safe_thing )
-							safe_thing = victim.glasses
+					var/obj/item/safe_thing = victim.get_body_part_coverage(EYES)
 
 					if(safe_thing)
 						if(!safe_thing.reagents)

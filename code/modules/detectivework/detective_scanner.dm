@@ -9,7 +9,8 @@
 	var/list/stored = list()
 	w_class = 3.0
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 
 	attackby(obj/item/weapon/f_card/W as obj, mob/user as mob)

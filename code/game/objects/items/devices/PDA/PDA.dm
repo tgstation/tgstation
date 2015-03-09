@@ -7,12 +7,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda
 	name = "\improper PDA"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge. Can download additional applications from PDA terminals."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_ID | SLOT_BELT
 
 	//Main variables
@@ -45,10 +45,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/ownjob = null //related to above
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
+	var/obj/item/device/analyzer/atmos_analys = new
 	var/obj/item/device/device_analyser/dev_analys = null
 
 	var/MM = null
 	var/DD = null
+
+	var/list/applications = list()
 
 	var/list/currentevents1 = list("The Prime Minister of Space Australia has announced today a new policy to hand out fake dollar bills to the poor.",
 		"The President of Space America issued a press release today stating that he is not in fact, a Tajaran in disguise.",
@@ -147,7 +150,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		"The word 'nerd' was first coined by Dr. Seuss in 'If I Ran the Zoo.'",
 		"Revolvers cannot be silenced because of all the noisy gasses which escape the cylinder gap at the rear of the barrel.",
 		"Every human spent about half an hour as a single cell.",
-		"7.5 million toothpicks can be created from a cord of wood."
+		"7.5 million toothpicks can be created from a cord of wood.",
+		"If the Earth's sun were just inch in diameter, the nearest star would be 445 miles away.",
+		"There is no word in the English language that rhymes with month, orange, silver or purple.",
+		"Starfish have no brains.",
+		"2 and 5 are the only prime numbers that end in 2 or 5.",
+		"'Pronunciation' is the word which is mispronounced the most in the English language.",
+		"Women blink nearly twice as much as men.",
+		"Owls are the only birds who can see the color blue.",
+		"A pizza that has radius 'z' and height 'a' has volume Pi × z × z × a.",
+		"Months that begin on a Sunday will always have a 'Friday the 13th.'",
+		"Zero is an even number.",
+		"The longest English word that can be spelled without repeating any letters is 'uncopyrightable'.",
+		"10! (Ten factorial) seconds equals exactly six Earth weeks.",
+		"Moths don't have a stomach or mouth. They never eat again after undergoing metamorphosis.",
+		"'J' is the only letter that doesn't appear in the Periodic Table of Elements.",
+		"Want to remember the first digits of Pi easily? You can do it by counting each word's letters in 'May I have a large container of plasma?'"
 		)
 	var/currentevent1 = null
 	var/currentevent2 = null
@@ -156,15 +174,34 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/didyouknow = null
 
 
+/obj/item/device/pda/GetJobName() //Used in secHUD icon generation
+	if(!src.id)
+		return "Unknown"
+
+	return src.id.GetJobName() //isn't it beautiful?
+
+
 /obj/item/device/pda/medical
 	name = "Medical PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-m"
 
+/obj/item/device/pda/medical/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_medbay
+
 /obj/item/device/pda/viro
 	name = "Virology PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-v"
+
+/obj/item/device/pda/viro/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_medbay
 
 /obj/item/device/pda/engineering
 	name = "Engineering PDA"
@@ -176,15 +213,34 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-s"
 
+/obj/item/device/pda/security/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_brig
+
 /obj/item/device/pda/detective
 	name = "Detective PDA"
 	default_cartridge = /obj/item/weapon/cartridge/detective
 	icon_state = "pda-det"
 
+/obj/item/device/pda/detective/New()
+	..()
+	var/datum/pda_app/light_upgrade/app1 = new /datum/pda_app/light_upgrade()
+	app1.onInstall(src)
+	var/datum/pda_app/balance_check/app2 = new /datum/pda_app/balance_check()
+	app2.onInstall(src)
+
 /obj/item/device/pda/warden
 	name = "Warden PDA"
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-warden"
+
+/obj/item/device/pda/warden/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_brig
 
 /obj/item/device/pda/janitor
 	name = "Janitor PDA"
@@ -197,6 +253,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/signal/toxins
 	icon_state = "pda-tox"
 	ttone = "boom"
+
+/obj/item/device/pda/toxins/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_rnd
 
 /obj/item/device/pda/clown
 	name = "Clown PDA"
@@ -222,10 +284,24 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/hop
 	icon_state = "pda-hop"
 
+/obj/item/device/pda/heads/hop/New()
+	..()
+	var/datum/pda_app/ringer/app1 = new /datum/pda_app/ringer()
+	app1.onInstall(src)
+	app1.frequency = deskbell_freq_hop
+	var/datum/pda_app/balance_check/app2 = new /datum/pda_app/balance_check()
+	app2.onInstall(src)
+
 /obj/item/device/pda/heads/hos
 	name = "Head of Security PDA"
 	default_cartridge = /obj/item/weapon/cartridge/hos
 	icon_state = "pda-hos"
+
+/obj/item/device/pda/heads/hos/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_brig
 
 /obj/item/device/pda/heads/ce
 	name = "Chief Engineer PDA"
@@ -237,10 +313,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/cmo
 	icon_state = "pda-cmo"
 
+/obj/item/device/pda/heads/cmo/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_medbay
+
 /obj/item/device/pda/heads/rd
 	name = "Research Director PDA"
 	default_cartridge = /obj/item/weapon/cartridge/rd
 	icon_state = "pda-rd"
+
+/obj/item/device/pda/heads/rd/New()
+	..()
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_rnd
 
 /obj/item/device/pda/captain
 	name = "Captain PDA"
@@ -248,6 +336,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-c"
 	detonate = 0
 	//toff = 1
+
+/obj/item/device/pda/captain/New()
+	..()
+	for(var/app_type in (typesof(/datum/pda_app) - /datum/pda_app))	//yes, the captain is such a baller that his PDA has all the apps by default.
+		var/datum/pda_app/app = new app_type()						//will have to edit that when emagged/hidden apps get added.
+		app.onInstall(src)
 
 /obj/item/device/pda/cargo
 	name = "Cargo PDA"
@@ -337,6 +431,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "NONE"
 	ttone = "data"
 	detonate = 0
+
+/obj/item/device/pda/ai/New()
+	..()
+	var/datum/pda_app/spam_filter/app = new /datum/pda_app/spam_filter()
+	app.onInstall(src)
 
 
 /obj/item/device/pda/ai/proc/set_name_and_job(newname as text, newjob as text)
@@ -480,7 +579,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	onthisday = pick(history)
 	didyouknow = pick(facts)
 
-
 /obj/item/device/pda/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(user.stat || user.restrained() || user.paralysis || user.stunned || user.weakened)
@@ -540,8 +638,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (0)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:331: dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
-				dat += {"<h2>PERSONAL DATA ASSISTANT v.1.2</h2>
+				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:331: dat += "<h2>PERSONAL DATA ASSISTANT v.1.3</h2>"
+				dat += {"<h2>PERSONAL DATA ASSISTANT v.1.3</h2>
 					Owner: [owner], [ownjob]<br>"}
 				// END AUTOFIX
 				dat += text("ID: <A href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
@@ -567,15 +665,28 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png> Honk Synthesizer</a></li>"
 					if(cartridge.access_status_display)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
-					dat += "</ul>"
-					if (cartridge.access_engine)
-						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:355: dat += "<h4>Engineering Functions</h4>"
+
+				dat += "</ul>"
+				dat += {"<h4>Applications</h4>"}
+
+				if(applications.len == 0)
+					dat += {"<i>No application currently installed.</i>"}
+				else
+					dat += {"<ul>"}
+					for(var/datum/pda_app/app in applications)
+						if(app.menu)
+							dat += {"<li><a href='byond://?src=\ref[src];choice=[app.menu]'>[app.name]</a></li>"}
+						else
+							dat += {"<li>[app.name]</li>"}
+					dat += {"</ul>"}
+
+				if (cartridge)
+					if (cartridge.access_engine || cartridge.access_atmos)
 						dat += {"<h4>Engineering Functions</h4>
 							<ul>
 							<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>
+							<li><a href='byond://?src=\ref[src];choice=53'><img src=pda_alert.png> Alert Monitor</a></li>
 							</ul>"}
-						// END AUTOFIX
 
 					if (cartridge.access_mechanic)
 						dat += {"<h4>Mechanic Functions</h4>
@@ -779,7 +890,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (50) //Current events.
 				dat += {"<h4><img src=pda_clock.png> Current Events</h4>
 					Station Time: <b>[worldtime2text()]</b>.<br>
-					Empire Date: <b>[MM]/[DD]/2525</b>.<br><br>
+					Empire Date: <b>[MM]/[DD]/[game_year]</b>.<br><br>
 					<b>Current Events,</b><br>
 					<li>[currentevent1]</li<br>
 					<li>[currentevent2]</li><br>
@@ -788,6 +899,134 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					<li>[onthisday]</li><br><br>
 					<b>Did you know...</b><br>
 					<li>[didyouknow]</li><br>"}
+
+			if (101)//Ringer app
+				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
+				dat += {"<h4>Ringer Application</h4>"}
+				if(app)
+					dat += {"
+					Status: <a href='byond://?src=\ref[src];choice=toggleDeskRinger'>[app.status ? "On" : "Off"]</a><br>
+					Frequency:
+						<a href='byond://?src=\ref[src];choice=ringerFrequency;rfreq=-10'>-</a>
+						<a href='byond://?src=\ref[src];choice=ringerFrequency;rfreq=-2'>-</a>
+						[format_frequency(app.frequency)]
+						<a href='byond://?src=\ref[src];choice=ringerFrequency;rfreq=2'>+</a>
+						<a href='byond://?src=\ref[src];choice=ringerFrequency;rfreq=10'>+</a><br>
+						<br>
+					"}
+
+			if (102)//Spam filter app
+				var/datum/pda_app/spam_filter/app = locate(/datum/pda_app/spam_filter) in applications
+				dat += {"<h4>Spam Filtering Application</h4>"}
+				if(app)
+					dat += {"
+					<ul>
+					<li>[(app.function == 2) ? "<b>Block the spam.</b>" : "<a href='byond://?src=\ref[src];choice=setFilter;filter=2'>Block the spam.</a>"]</li>
+					<li>[(app.function == 1) ? "<b>Conceal the spam.</b>" : "<a href='byond://?src=\ref[src];choice=setFilter;filter=1'>Conceal the spam.</a>"]</li>
+					<li>[(app.function == 0) ? "<b>Do nothing.</b>" : "<a href='byond://?src=\ref[src];choice=setFilter;filter=0'>Do nothing.</a>"]</li>
+					</ul>
+					"}
+
+			if (103)//Balance check app
+				var/datum/pda_app/balance_check/app = locate(/datum/pda_app/balance_check) in applications
+				dat += {"<h4>Balance Check Application</h4>"}
+				if(app)
+					if(!id)
+						dat += {"<i>Insert an ID card linked to the account to check.</i>"}
+					else
+						if(!(app.linked_db))
+							app.reconnect_database()
+						if(app.linked_db)
+							if(app.linked_db.activated)
+								var/datum/money_account/D = app.linked_db.attempt_account_access(id.associated_account_number, 0, 2, 0)
+								if(D)
+									dat += {"Owner: <b>[D.owner_name]</b><br>
+										Current Balance: <b>[D.money]</b>$
+										<h5>Transaction History</h5>
+										On [MM]/[DD]/[game_year]:
+										<ul>"}
+									var/list/t_log = list()
+									for(var/e in D.transaction_log)
+										t_log += e
+									for(var/datum/transaction/T in reverseRange(t_log))
+										if(T.purpose == "Account creation")//always the last element of the reverse transaction_log
+											dat += {"</ul>
+												On [(DD == 1) ? "[((MM-2)%12)+1]" : "[MM]"]/[((DD-2)%30)+1]/[(DD == MM == 1) ? "[game_year - 1]" : "[game_year]"]:
+												<ul>
+												<li>\[[T.time]\] [T.amount]$, [T.purpose] at [T.source_terminal]</li>
+												</ul>"}
+										else
+											dat += {"<li>\[[T.time]\] [T.amount]$, [T.purpose] at [T.source_terminal]</li>"}
+									if(!D.transaction_log.len)
+										dat += {"</ul>"}
+								else
+									dat += {"<i>Unable to access account. Either its security settings don't allow remote checking or the account is nonexistent.</i>"}
+							else
+								dat += {"<i>Unfortunately your station's Accounts Database doesn't allow remote access. Negociate with your HoP or Captain to solve this issue.</i>"}
+						else
+							dat += {"<i>Unable to connect to accounts database. The database is either nonexistent, inoperative, or too far away.</i>"}
+
+			if (104)//Station map app
+				var/datum/pda_app/station_map/app = locate(/datum/pda_app/station_map) in applications
+				dat += {"<h4>Station Map Application</h4>"}
+				if(app)
+					var/turf/T = get_turf(src.loc)
+
+					if(!fexists("icons/pda_icons/pda_minimap_[map.nameShort].png"))
+						dat += {"<span class='warning'>It appears that our services have yet to produce a minimap of this station. We apologize for the inconvenience.</span>"}
+
+					if(T.z == map.zMainStation)
+						dat += {"Current Location: <b>[T.loc.name] ([T.x-WORLD_X_OFFSET],[T.y-WORLD_Y_OFFSET],1)</b><br>"}	//it's a "Station Map" app, so it only gives information reguarding
+					else																									//the station's z-level
+						dat += {"Current Location: <b>Unknown</b><br>"}
+
+					if(fexists("icons/pda_icons/pda_minimap_[map.nameShort].png"))
+						dat += {"
+						<div style="position: relative; left: 0; top: 0;">
+						<img src="pda_minimap_[map.nameShort].png" style="position: relative; top: 0; left: 0;"/>
+						"}
+						if(T.z == map.zMainStation)
+							dat += {"<img src="pda_minimap_loc.gif" style="position: absolute; top: [(T.y * -1) + 247]px; left: [T.x-8]px;"/>"}
+						for(var/datum/minimap_marker/mkr in app.markers)
+							dat += {"<img src="pda_minimap_mkr.gif" style="position: absolute; top: [((mkr.y+WORLD_Y_OFFSET) * -1) + 247]px; left: [mkr.x+WORLD_X_OFFSET-8]px;"/>"}
+						dat += {"</div>"}
+
+					else
+						dat += {"
+						<div style="position: relative; left: 0; top: 0;">
+						<img src="pda_minimap_bg_notfound.png" style="position: relative; top: 0; left: 0;"/>
+						"}
+						if(T.z == map.zMainStation)
+							dat += {"<img src="pda_minimap_loc.gif" style="position: absolute; top: [(T.y * -1) + 247]px; left: [T.x-8]px;"/>"}
+						for(var/datum/minimap_marker/mkr in app.markers)
+							dat += {"<img src="pda_minimap_mkr.gif" style="position: absolute; top: [((mkr.y+WORLD_Y_OFFSET) * -1) + 247]px; left: [mkr.x+WORLD_X_OFFSET-8]px;"/>"}
+						dat += {"</div>"}
+
+/*
+					dat += {"
+					<div style="position: relative; left: 0; top: 0;">
+					<img src="pda_minimap_bg.png" style="position: relative; top: 0; left: 0;"/>
+					"}
+					if(T.z == map.zMainStation)
+						dat += {"<img src="pda_minimap_loc.gif" style="position: absolute; top: [(T.y * -1) + 247]px; left: [T.x-8]px;"/>"}
+					for(var/datum/minimap_marker/mkr in app.markers)
+						dat += {"<img src="pda_minimap_mkr.gif" style="position: absolute; top: [((mkr.y+WORLD_Y_OFFSET) * -1) + 247]px; left: [mkr.x+WORLD_X_OFFSET-8]px;"/>"}
+
+					dat += {"</div>"}
+*/
+					dat += {"<h5>Markers</h5>
+					<a href='byond://?src=\ref[src];choice=minimapMarker;mMark=x'>X=[app.markx]</a>;
+					<a href='byond://?src=\ref[src];choice=minimapMarker;mMark=y'>Y=[app.marky]</a>;
+					<a href='byond://?src=\ref[src];choice=minimapMarker;mMark=add'>Add New Marker</a>
+					"}
+
+					if(!(app.markers.len))
+						dat += {"<br><span class='warning'>no markers</span>"}
+					else
+						dat +={"<ul>"}
+						for(var/datum/minimap_marker/mkr in app.markers)
+							dat += {"<li>[mkr.name] ([mkr.x]/[mkr.y]) <a href='byond://?src=\ref[src];choice=removeMarker;rMark=[mkr.num]'>remove</a></li>"}
+						dat += {"</ul>"}
 
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
@@ -816,13 +1055,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				return
 			if("Refresh")//Refresh, goes to the end of the proc.
 			if("Return")//Return
-				if(mode<=9)
+				if((mode<=9) || (locate(mode) in pda_app_menus))
 					mode = 0
 				else
-					mode = round(mode/10)
-					if(mode==4)//Fix for cartridges. Redirects to hub.
+					mode = round(mode/10)//TODO: fix this shit up
+					if((mode==4) || (mode==5))//Fix for cartridges. Redirects to hub.
 						mode = 0
-					else if(mode >= 40 && mode <= 49)//Fix for cartridges. Redirects to refresh the menu.
+					else if(mode >= 40 && mode <= 53)//Fix for cartridges. Redirects to refresh the menu.
 						cartridge.mode = mode
 						cartridge.unlock()
 			if ("Authenticate")//Checks for ID
@@ -860,6 +1099,66 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("chatroom") // chatroom hub
 				mode = 5
 
+//APPLICATIONS FUNCTIONS===========================
+
+			if("101")
+				mode = 101
+			if("toggleDeskRinger")
+				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
+				if(app)
+					app.status = !(app.status)
+			if("ringerFrequency")
+				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
+				if(app)
+					var/i = app.frequency + text2num(href_list["rfreq"])
+					if(i < MINIMUM_FREQUENCY)
+						i = 1201
+					if(i > MAXIMUM_FREQUENCY)
+						i = 1599
+					app.frequency = i
+			if("102")
+				mode = 102
+			if("setFilter")
+				var/datum/pda_app/spam_filter/app = locate(/datum/pda_app/spam_filter) in applications
+				if(app)
+					app.function = text2num(href_list["filter"])
+			if("103")
+				mode = 103
+
+			if("104")
+				mode = 104
+
+			if("minimapMarker")
+				var/datum/pda_app/station_map/app = locate(/datum/pda_app/station_map) in applications
+				switch(href_list["mMark"])
+					if("x")
+						var/new_x = input("Please input desired X coordinate.", "Station Map App", app.markx) as num
+						var/x_validate=new_x+WORLD_X_OFFSET
+						if(x_validate < 1 || x_validate > 255)
+							usr << "<span class='caution'>Error: Invalid X coordinate.</span>"
+						else
+							app.markx = new_x
+					if("y")
+						var/new_y = input("Please input desired Y coordinate.", "Station Map App", app.marky) as num
+						var/y_validate=new_y+WORLD_Y_OFFSET
+						if(y_validate < 1 || y_validate > 255)
+							usr << "<span class='caution'>Error: Invalid Y coordinate.</span>"
+						else
+							app.marky = new_y
+					if("add")
+						var/marker_name = copytext(sanitize(input("Give a name to your marker", "Station Map App", "default marker") as null|text),1,MAX_NAME_LEN)
+						var/datum/minimap_marker/mkr = new/datum/minimap_marker()
+						mkr.x = app.markx
+						mkr.y = app.marky
+						mkr.name = marker_name
+						app.markers += mkr
+						mkr.num = app.markers.len
+
+			if("removeMarker")
+				var/datum/pda_app/station_map/app = locate(/datum/pda_app/station_map) in applications
+				var/to_remove = text2num(href_list["rMark"])
+				var/datum/minimap_marker/mkr = app.markers[to_remove]
+				del(mkr)
 
 //MAIN FUNCTIONS===================================
 
@@ -901,7 +1200,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					scanmode = 0
 				else if((!isnull(cartridge)) && (cartridge.access_mechanic))
 					if(!dev_analys)
-						dev_analys = new //let's create that device analyser
+						dev_analys = new(src) //let's create that device analyser
+						dev_analys.max_designs = 5
 					scanmode = 6
 
 //MESSENGER/NOTE FUNCTIONS===================================
@@ -1043,7 +1343,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //EXTRA FUNCTIONS===================================
 
 	if (mode == 2||mode == 21)//To clear message overlays.
-		overlays.Cut()
+		overlays.len = 0
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
@@ -1143,10 +1443,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			L = get(P, /mob/living/silicon)
 
 		if(L)
-			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+			L.show_message("\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)", 2)
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		P.overlays.Cut()
+		P.overlays.len = 0
 		P.overlays += image('icons/obj/pda.dmi', "pda-r")
 	else
 		U << "<span class='notice'>ERROR: Messaging server is not responding.</span>"
@@ -1263,30 +1563,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		switch(scanmode)
 
 			if(1)
-
-				for (var/mob/O in viewers(C, null))
-					O.show_message("\red [user] has analyzed [C]'s vitals!", 1)
-
-				user.show_message("\blue Analyzing Results for [C]:")
-				user.show_message("\blue \t Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]", 1)
-				user.show_message("\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
-				user.show_message("\blue \t Key: Suffocation/Toxin/Burns/Brute", 1)
-				user.show_message("\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
-				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					user.show_message("\blue \t Time of Death: [C.tod]")
-				if(istype(C, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = C
-					var/list/damaged = H.get_damaged_organs(1,1)
-					user.show_message("\blue Localized Damage, Brute/Burn:",1)
-					if(length(damaged)>0)
-						for(var/datum/organ/external/org in damaged)
-							user.show_message(text("\blue \t []: []\blue-[]",capitalize(org.display_name),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
-					else
-						user.show_message("\blue \t Limbs are OK.",1)
-
-				for(var/datum/disease/D in C.viruses)
-					if(!D.hidden[SCANNER])
-						user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
+				healthanalyze(C,user,0)
 
 			if(2)
 				if (!istype(C:dna, /datum/dna))
@@ -1332,67 +1609,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				user << "\blue No significant chemical agents found in [A]."
 
 		if(5)
-			if((istype(A, /obj/item/weapon/tank)) || (istype(A, /obj/machinery/portable_atmospherics)))
-				var/obj/icon = A
-				for (var/mob/O in viewers(user, null))
-					O << "\red [user] has used [src] on \icon[icon] [A]"
-				var/pressure = A:air_contents.return_pressure()
-
-				var/total_moles = A:air_contents.total_moles()
-
-				user << "\blue Results of analysis of \icon[icon]"
-				if (total_moles>0)
-					var/o2_concentration = A:air_contents.oxygen/total_moles
-					var/n2_concentration = A:air_contents.nitrogen/total_moles
-					var/co2_concentration = A:air_contents.carbon_dioxide/total_moles
-					var/plasma_concentration = A:air_contents.toxins/total_moles
-
-					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
-					user << "\blue Pressure: [round(pressure,0.1)] kPa"
-					user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-					user << "\blue Oxygen: [round(o2_concentration*100)]%"
-					user << "\blue CO2: [round(co2_concentration*100)]%"
-					user << "\blue Plasma: [round(plasma_concentration*100)]%"
-					if(unknown_concentration>0.01)
-						user << "\red Unknown: [round(unknown_concentration*100)]%"
-					user << "\blue Temperature: [round(A:air_contents.temperature-T0C)]&deg;C"
-				else
-					user << "\blue Tank is empty!"
-
-			if (istype(A, /obj/machinery/atmospherics/pipe/tank))
-				var/obj/icon = A
-				for (var/mob/O in viewers(user, null))
-					O << "\red [user] has used [src] on \icon[icon] [A]"
-
-				var/obj/machinery/atmospherics/pipe/tank/T = A
-				var/pressure = T.parent.air.return_pressure()
-				var/total_moles = T.parent.air.total_moles()
-
-				user << "\blue Results of analysis of \icon[icon]"
-				if (total_moles>0)
-					var/o2_concentration = T.parent.air.oxygen/total_moles
-					var/n2_concentration = T.parent.air.nitrogen/total_moles
-					var/co2_concentration = T.parent.air.carbon_dioxide/total_moles
-					var/plasma_concentration = T.parent.air.toxins/total_moles
-
-					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
-					user << "\blue Pressure: [round(pressure,0.1)] kPa"
-					user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-					user << "\blue Oxygen: [round(o2_concentration*100)]%"
-					user << "\blue CO2: [round(co2_concentration*100)]%"
-					user << "\blue Plasma: [round(plasma_concentration*100)]%"
-					if(unknown_concentration>0.01)
-						user << "\red Unknown: [round(unknown_concentration*100)]%"
-					user << "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C"
-				else
-					user << "\blue Tank is empty!"
-
+			if(atmos_analys)
+				if(A.Adjacent(user))
+					if(!A.attackby(atmos_analys))
+						atmos_analys.afterattack(A, user, 1)
 		if (6)
 			if(dev_analys) //let's use this instead. Much neater
-				dev_analys.afterattack(A, user)
-				A.attackby(src, user)
+				if(A.Adjacent(user))
+					dev_analys.afterattack(A, user, 1)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info
@@ -1421,6 +1645,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		src.id.loc = get_turf(src.loc)
 	if(src.pai)
 		src.pai.loc = get_turf(src.loc)
+	..()
+
+/obj/item/device/pda/Del()
+	var/loop_count = 0
+	while(null in PDAs)
+		PDAs.Remove(null)
+		if(loop_count > 10) break
+		loop_count++
+	PDAs -= src
 	..()
 
 /obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.

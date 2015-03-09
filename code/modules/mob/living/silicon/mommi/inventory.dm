@@ -5,6 +5,12 @@
 /mob/living/silicon/robot/mommi/get_active_hand()
 	return module_active
 
+/mob/living/silicon/robot/mommi/get_all_slots()
+	return list(tool_state, sight_state, head_state)
+
+/mob/living/silicon/robot/mommi/get_equipped_items()
+	return list(sight_state, head_state)
+
 /mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W, var/permit_sheets=0)
 	if(istype(W, src.module.emag.type))
 		return src.module.emag
@@ -23,9 +29,9 @@
 		return 0
 	// Make sure we're not picking up something that's in our factory-supplied toolbox.
 	//if(is_type_in_list(W,src.module.modules))
-	if(is_in_modules(W))
-		src << "\red Picking up something that's built-in to you seems a bit silly."
-		return 0
+	//if(is_in_modules(W))
+		//src << "\red Picking up something that's built-in to you seems a bit silly."
+		//return 0
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		var/obj/item/TS = tool_state
@@ -71,6 +77,8 @@
 	else if (W == head_state)
 		unequip_head()
 
+
+
 // Override the default /mob version since we only have one hand slot.
 /mob/living/silicon/robot/mommi/put_in_active_hand(var/obj/item/W)
 	// If we have anything active, deactivate it.
@@ -96,8 +104,9 @@
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		if(is_in_modules(tool_state))
-			src << "\red This item cannot be dropped."
-			return 0
+			if((tool_state in contents) && (tool_state in src.module.modules))
+				src << "<span class='warning'>This item cannot be dropped.</span>"
+				return 0
 		if(client)
 			client.screen -= tool_state
 		contents -= tool_state
@@ -127,6 +136,11 @@
 	var/obj/item/TS
 	if(isnull(module_active))
 		return
+	if((module_active in src.contents) && !(module_active in src.module.modules) && (module_active != src.module.emag))
+		TS = tool_state
+		drop_item()
+		if(TS && TS.loc)
+			TS.loc = get_turf(src)
 	if(sight_state == module_active)
 		TS = sight_state
 		if(istype(sight_state,/obj/item/borg/sight))
@@ -154,6 +168,7 @@
 		inv_tool.icon_state = "inv1"
 	if(is_in_modules(TS))
 		TS.loc = src.module
+	hud_used.update_robot_modules_display()
 
 /mob/living/silicon/robot/mommi/uneq_all()
 	module_active = null
@@ -213,6 +228,7 @@
 		inv_tool.icon_state = "inv1"
 		if(is_in_modules(TS))
 			TS.loc = src.module
+		hud_used.update_robot_modules_display()
 
 
 /mob/living/silicon/robot/mommi/activated(obj/item/O)

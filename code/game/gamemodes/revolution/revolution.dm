@@ -241,14 +241,16 @@
 				if(head_rev_mind.current.client)
 					for(var/image/I in head_rev_mind.current.client.images)
 						if(I.icon_state == "rev" || I.icon_state == "rev_head")
-							del(I)
+							//del(I)
+							head_rev_mind.current.client.images -= I
 
 		for(var/datum/mind/rev_mind in revolutionaries)
 			if(rev_mind.current)
 				if(rev_mind.current.client)
 					for(var/image/I in rev_mind.current.client.images)
 						if(I.icon_state == "rev" || I.icon_state == "rev_head")
-							del(I)
+							//del(I)
+							rev_mind.current.client.images -= I
 
 		for(var/datum/mind/head_rev in head_revolutionaries)
 			if(head_rev.current)
@@ -310,20 +312,23 @@
 				if(head_rev_mind.current.client)
 					for(var/image/I in head_rev_mind.current.client.images)
 						if((I.icon_state == "rev" || I.icon_state == "rev_head") && I.loc == rev_mind.current)
-							del(I)
+							//del(I)
+							head_rev_mind.current.client.images -= I
 
 		for(var/datum/mind/rev_mind_1 in revolutionaries)
 			if(rev_mind_1.current)
 				if(rev_mind_1.current.client)
 					for(var/image/I in rev_mind_1.current.client.images)
 						if((I.icon_state == "rev" || I.icon_state == "rev_head") && I.loc == rev_mind.current)
-							del(I)
+							//del(I)
+							rev_mind_1.current.client.images -= I
 
 		if(rev_mind.current)
 			if(rev_mind.current.client)
 				for(var/image/I in rev_mind.current.client.images)
 					if(I.icon_state == "rev" || I.icon_state == "rev_head")
-						del(I)
+						//del(I)
+						rev_mind.current.client.images -= I
 
 //////////////////////////
 //Checks for rev victory//

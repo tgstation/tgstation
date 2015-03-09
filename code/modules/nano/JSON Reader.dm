@@ -102,6 +102,13 @@ json_reader
 
 
 		// parser
+		ReadArray(list/tokens)
+			src.tokens = tokens
+			i = 1
+			return read_array()
+
+
+		// parser
 		ReadObject(list/tokens)
 			src.tokens = tokens
 			. = new/list()
@@ -117,6 +124,9 @@ json_reader
 
 				var/json_token/S = get_token()
 				check_type(/json_token/symbol)
+				if(!S)
+					die()
+					return
 				switch(S.value)
 					if(",")
 						next_token()
@@ -131,7 +141,9 @@ json_reader
 			return tokens[i]
 
 		next_token()
-			return tokens[++i]
+			if(++i <= tokens.len)
+				return tokens[i]
+			return
 
 		read_token(val, type)
 			var/json_token/T = get_token()
@@ -158,25 +170,26 @@ json_reader
 
 		read_value()
 			var/json_token/T = get_token()
-			switch(T.type)
-				if(/json_token/text, /json_token/number)
-					next_token()
-					return T.value
-				if(/json_token/word)
-					next_token()
-					switch(T.value)
-						if("true")
-							return TRUE
-						if("false")
-							return FALSE
-						if("null")
-							return null
-				if(/json_token/symbol)
-					switch(T.value)
-						if("\[")
-							return read_array()
-						if("{")
-							return ReadObject(tokens.Copy(i))
+			if(T)
+				switch(T.type)
+					if(/json_token/text, /json_token/number)
+						next_token()
+						return T.value
+					if(/json_token/word)
+						next_token()
+						switch(T.value)
+							if("true")
+								return TRUE
+							if("false")
+								return FALSE
+							if("null")
+								return null
+					if(/json_token/symbol)
+						switch(T.value)
+							if("\[")
+								return read_array()
+							if("{")
+								return ReadObject(tokens.Copy(i))
 			die()
 
 		read_array()

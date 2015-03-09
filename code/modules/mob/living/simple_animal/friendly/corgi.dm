@@ -74,7 +74,15 @@
 	return
 
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(inventory_head && inventory_back)
+	if(istype(O, /obj/item/weapon/newspaper))
+		if(!stat)
+			user.visible_message("\blue [user] baps [name] on the nose with the rolled up [O]")
+			spawn(0)
+				emote("whines")
+				for(var/i in list(1,2,4,8,4,2,1,2))
+					dir = i
+					sleep(1)
+	else if(inventory_head && inventory_back)
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
@@ -424,49 +432,7 @@
 	name = "Corgi meat"
 	desc = "Tastes like the tears of the station. Gives off the faint aroma of a valid salad. Just like mom used to make. This revalation horrifies you greatly."
 
-/mob/living/simple_animal/corgi/Ian/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 1
-	if(ismob(AM))
-		var/mob/tmob = AM
-		if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
-			if(prob(70))
-				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-				now_pushing = 0
-				return
-		if(!(tmob.status_flags & CANPUSH))
-			now_pushing = 0
-			return
-
-		tmob.LAssailant = src
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!( now_pushing ))
-		now_pushing = 1
-		if (!( AM.anchored ))
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window/full))
-				for(var/obj/structure/window/win in get_step(AM,t))
-					now_pushing = 0
-					return
-			step(AM, t)
-		now_pushing = null
 //PC stuff-Sieve
-
-/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
-	if(istype(O, /obj/item/weapon/newspaper))
-		if(!stat)
-			user.visible_message("\blue [user] baps [name] on the nose with the rolled up [O]")
-			spawn(0)
-				if (ckey == null)
-					for(var/i in list(1,2,4,8,4,2,1,2))
-						dir = i
-						sleep(1)
-	else
-		..()
 
 /mob/living/simple_animal/corgi/regenerate_icons()
 	overlays = list()
@@ -554,8 +520,8 @@
 /mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	switch(M.a_intent)
-		if("help")	wuv(1,M)
-		if("hurt")	wuv(-1,M)
+		if(I_HELP)	wuv(1,M)
+		if(I_HURT)	wuv(-1,M)
 
 /mob/living/simple_animal/corgi/proc/wuv(change, mob/M)
 	if(change)

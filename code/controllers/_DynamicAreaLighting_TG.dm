@@ -85,14 +85,14 @@ datum/light_source
 		// before we apply the effect we remove the light's current effect.
 		for(var/turf/T in effect)	// negate the effect of this light source
 			T.update_lumcount(-effect[T], col_r, col_g, col_b, 1)
-		effect.Cut()					// clear the effect list
+		effect.len = 0					// clear the effect list
 
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map
 		if(owner.loc && owner.luminosity > 0)
 			readrgb(owner.l_color)
 			effect = list()
-			for(var/turf/T in view(owner.get_light_range(),owner))
+			for(var/turf/T in view(owner.get_light_range(), get_turf(owner)))
 				var/delta_lumen = lum(T)
 				if(delta_lumen > 0)
 					effect[T] = delta_lumen
@@ -158,15 +158,6 @@ atom/movable/New()
 		if(light)	WARNING("[type] - Don't set lights up manually during New(), We do it automatically.")
 		trueLuminosity = luminosity * luminosity
 		light = new(src)
-
-//Objects with opacity will trigger nearby lights to update at next lighting process.
-atom/movable/Destroy()
-	if(opacity)
-		if(isturf(loc))
-			if(loc:lighting_lumcount > 1)
-				UpdateAffectingLights()
-
-	..()
 
 //Sets our luminosity.
 //If we have no light it will create one.
@@ -236,7 +227,7 @@ turf
 	var/light_col_sources = 0
 
 turf/space
-	lighting_lumcount = 4		//starlight
+	lighting_lumcount = 4
 
 turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
 	lighting_lumcount += amount
@@ -254,9 +245,9 @@ turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
 			lumcount_b += col_b
 
 		if(light_col_sources)
-			var/r_avg = max(0, min(255, round(lumcount_r / light_col_sources, 16) + 15))
-			var/g_avg = max(0, min(255, round(lumcount_g / light_col_sources, 16) + 15))
-			var/b_avg = max(0, min(255, round(lumcount_b / light_col_sources, 16) + 15))
+			var/r_avg = Clamp(round(lumcount_r / light_col_sources, 16) + 15, 0, 255)
+			var/g_avg = Clamp(round(lumcount_g / light_col_sources, 16) + 15, 0, 255)
+			var/b_avg = Clamp(round(lumcount_b / light_col_sources, 16) + 15, 0, 255)
 			l_color = rgb(r_avg, g_avg, b_avg)
 		else
 			l_color = null
@@ -298,12 +289,9 @@ turf/proc/build_lighting_area(const/tag, const/level, const/color_light)
 turf/proc/shift_to_subarea()
 	lighting_changed = 0
 	var/area/Area = loc
-
 	if(!istype(Area) || !Area.lighting_use_dynamic) return
-
 	var/level = Clamp(round(lighting_lumcount, 1), 0, lighting_controller.lighting_states)
 	var/new_tag = lighting_tag(level)
-
 	// pomf - If we have a lighting color that is not null, apply the new tag to seperate the areas.
 	if (l_color)
 		// pomf - We append the (rounded!) color lighting lumcount so we can have colored lights.

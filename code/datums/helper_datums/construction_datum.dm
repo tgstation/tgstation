@@ -60,8 +60,8 @@
 		else if(istype(used_atom, /obj/item/weapon/wirecutters))
 			playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
 
-		else if(istype(used_atom, /obj/item/weapon/cable_coil))
-			var/obj/item/weapon/cable_coil/C = used_atom
+		else if(istype(used_atom, /obj/item/stack/cable_coil))
+			var/obj/item/stack/cable_coil/C = used_atom
 			if(C.amount<4)
 				user << ("There's not enough cable to finish the task.")
 				return 0
@@ -114,8 +114,8 @@
 					return 0
 				stack.use(amount)
 			// CABLES
-			if(istype(used_atom,/obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/coil=used_atom
+			if(istype(used_atom,/obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil=used_atom
 				if(coil.amount < amount)
 					user << "\red You don't have enough cable! You need at least [amount] coils."
 					return 0
@@ -234,13 +234,13 @@
 		user.visible_message(fixText(state["vis_msg"],user),fixText(state["self_msg"],user))
 
 		if("delete" in state)
-			del(used_atom)
+			qdel(used_atom)
 		else if("spawn" in state)
 			var/spawntype=state["spawn"]
 			var/atom/A = new spawntype(holder.loc)
 			if("amount" in state)
-				if(istype(A,/obj/item/weapon/cable_coil))
-					var/obj/item/weapon/cable_coil/C=A
+				if(istype(A,/obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/C=A
 					C.amount=state["amount"]
 				if(istype(A,/obj/item/stack))
 					var/obj/item/stack/S=A

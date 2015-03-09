@@ -1,4 +1,5 @@
 /mob/living/carbon/human
+	languages = HUMAN
 	//Hair colour and style
 	var/r_hair = 0
 	var/g_hair = 0
@@ -19,6 +20,10 @@
 	var/s_tone = 0	//Skin tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
+
+	mob_bump_flag = HUMAN
+	mob_push_flags = ALLMOBS
+	mob_swap_flags = ALLMOBS
 
 	var/age = 30		//Player's age (pure fluff)
 	var/b_type = "A+"	//Player's bloodtype

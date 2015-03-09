@@ -13,6 +13,7 @@
 	var/obj/machinery/apiary/parent
 	pass_flags = PASSTABLE
 	turns_per_move = 6
+	density = 0
 	var/obj/machinery/portable_atmospherics/hydroponics/my_hydrotray
 
 	// Allow final solutions.
@@ -30,7 +31,9 @@
 /mob/living/simple_animal/bee/New(loc, var/obj/machinery/apiary/new_parent)
 	..()
 	parent = new_parent
-	verbs -= /atom/movable/verb/pull
+
+/mob/living/simple_animal/bee/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	return 1
 
 /mob/living/simple_animal/bee/Destroy()
 	if(parent)
@@ -39,19 +42,42 @@
 
 /mob/living/simple_animal/bee/Life()
 	..()
+	if(stat != DEAD) //If we're alive, see if we can be calmed down.
+		//smoke, water and steam calms us down
+		var/calming = 0
+		var/list/calmers = list(/obj/effect/effect/smoke/chem, \
+		/obj/effect/effect/water, \
+		/obj/effect/effect/foam, \
+		/obj/effect/effect/steam, \
+		/obj/effect/mist)
 
+		for(var/this_type in calmers)
+			var/check_effect = locate(this_type) in src.loc
+			if(check_effect && check_effect == this_type)
+				calming = 1
+				break
+
+		if(calming)
+			var/oldferal = feral
+			feral = -10
+			if(oldferal > 0 && feral <= 0)
+				src.visible_message("\blue The bees calm down!")
+				target = null
+				target_turf = null
+				wander = 1
 	if(stat == CONSCIOUS)
 		//if we're strong enough, sting some people
 		var/mob/living/carbon/human/M = target
 		var/sting_prob = 100 // Bees will always try to sting.
 		if(M in view(src,1)) // Can I see my target?
 			if(prob(max(feral * 10, 0)))	// Am I mad enough to want to sting? And yes, when I initially appear, I AM mad enough
-				var/obj/item/clothing/worn_suit = M.wear_suit
-				var/obj/item/clothing/worn_helmet = M.head
-				if(worn_suit) // Are you wearing clothes?
-					sting_prob -= min(worn_suit.armor["bio"],70) // Is it sealed? I can't get to 70% of your body.
-				if(worn_helmet)
-					sting_prob -= min(worn_helmet.armor["bio"],30) // Is your helmet sealed? I can't get to 30% of your body.
+				if(istype(M))
+					var/obj/item/clothing/worn_suit = M.wear_suit
+					var/obj/item/clothing/worn_helmet = M.head
+					if(worn_suit) // Are you wearing clothes?
+						sting_prob -= min(worn_suit.armor["bio"],70) // Is it sealed? I can't get to 70% of your body.
+					if(worn_helmet)
+						sting_prob -= min(worn_helmet.armor["bio"],30) // Is your helmet sealed? I can't get to 30% of your body.
 				if( prob(sting_prob) && (M.stat == CONSCIOUS || (M.stat == UNCONSCIOUS && prob(25))) ) // Try to sting! If you're not moving, think about stinging.
 					M.apply_damage(min(strength,2)+mut, BRUTE) // Stinging. The more mutated I am, the harder I sting.
 					M.apply_damage((round(feral/5,1)*(max((round(strength/10,1)),1)))+toxic, TOX) // Bee venom based on how angry I am and how many there are of me!
@@ -90,28 +116,6 @@
 		if(prob(0.5))
 			src.visible_message("\blue [pick("Buzzzz.","Hmmmmm.","Bzzz.")]")
 
-		//smoke, water and steam calms us down
-		var/calming = 0
-		var/list/calmers = list(/obj/effect/effect/smoke/chem, \
-		/obj/effect/effect/water, \
-		/obj/effect/effect/foam, \
-		/obj/effect/effect/steam, \
-		/obj/effect/mist)
-
-		for(var/this_type in calmers)
-			var/mob/living/simple_animal/check_effect = locate() in src.loc
-			if(check_effect.type == this_type)
-				calming = 1
-				break
-
-		if(calming)
-			if(feral > 0)
-				src.visible_message("\blue The bees calm down!")
-			feral = -10
-			target = null
-			target_turf = null
-			wander = 1
-
 		for(var/mob/living/simple_animal/bee/B in src.loc)
 			if(B == src)
 				continue
@@ -135,10 +139,8 @@
 						return
 					src.icon_state = "bees[B.strength]"
 					var/turf/simulated/floor/T = get_turf(get_step(src, pick(1,2,4,8)))
-					density = 1
 					if(T.Enter(src, get_turf(src)))
 						src.loc = T
-					density = 0
 				break
 
 		if(target)

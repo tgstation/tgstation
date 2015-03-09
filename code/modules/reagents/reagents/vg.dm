@@ -3,6 +3,9 @@ var/global/list/charcoal_doesnt_remove=list(
 	"blood"
 )
 
+/datum/reagent/proc/reagent_deleted()
+	return
+
 /datum/reagent/charcoal
 	//data must contain virus type
 	name = "Activated Charcoal"

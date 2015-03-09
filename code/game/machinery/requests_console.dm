@@ -160,7 +160,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.icon_state = "req_comp0"
-						Console.luminosity = 1
+						Console.SetLuminosity(1)
 				newmessagepriority = 0
 				icon_state = "req_comp0"
 				for(var/msg in messages)
@@ -247,7 +247,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)	return
 		for(var/mob/M in player_list)
-			if(!istype(M,/mob/new_player))
+			if(!istype(M,/mob/new_player) && M.client)
 				M << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
 		announceAuth = 0
 		message = ""
@@ -277,14 +277,13 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (ckey(Console.department) == ckey(href_list["department"]))
 
 						switch(priority)
-							if("2")		//High priority
+							if(2)		//High priority
 								if(Console.newmessagepriority < 2)
 									Console.newmessagepriority = 2
-									Console.icon_state = "req_comp2"
+									Console.icon_state = "req_comp3"
 								if(!Console.silent)
-									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-									for (var/mob/O in hearers(5, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
+									playsound(Console.loc, 'sound/machines/request_urgent.ogg', 50, 1)
+									say(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
 								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
 
 		//					if("3")		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
@@ -300,19 +299,17 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 							else		// Normal priority
 								if(Console.newmessagepriority < 1)
 									Console.newmessagepriority = 1
-									Console.icon_state = "req_comp1"
+									Console.icon_state = "req_comp2"
 								if(!Console.silent)
-									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
-									for (var/mob/O in hearers(4, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
+									playsound(Console.loc, 'sound/machines/request.ogg', 50, 1)
+									say(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
 								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
 
 						screen = 6
-						Console.luminosity = 2
+						Console.SetLuminosity(2)
 				messages += "<B>Message sent to [dpt]</B><BR>[message]"
 			else
-				for (var/mob/O in hearers(4, src.loc))
-					O.show_message(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
+				say(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
 
 
 	//Handle screen switching
@@ -356,6 +353,13 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 
+/obj/machinery/say_quote(var/text)
+	var/ending = copytext(text, length(text) - 2)
+	if(ending == "!!!")
+		return "blares, \"[text]\""
+
+	return "beeps, \"[text]\""
+
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	/*
@@ -380,14 +384,14 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		else
 			user << "You can't do much with that."*/
 
-	if (istype(O, /obj/item/weapon/card/id))
+	if (istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
 		if(screen == 9)
-			var/obj/item/weapon/card/id/T = O
-			msgVerified = text("<font color='green'><b>Verified by [T.registered_name] ([T.assignment])</b></font>")
+			var/obj/item/weapon/card/id/ID = O.GetID()
+			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == 10)
-			var/obj/item/weapon/card/id/ID = O
-			if (access_RC_announce in ID.GetAccess())
+			var/obj/item/weapon/card/id/ID = O.GetID()
+			if (access_RC_announce in ID.access)
 				announceAuth = 1
 			else
 				announceAuth = 0

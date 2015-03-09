@@ -1,36 +1,25 @@
 
 //frame assembly
 
-/obj/item/rust_fuel_assembly_port_frame
+/obj/item/mounted/frame/rust_fuel_assembly_port
 	name = "Fuel Assembly Port frame"
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "port2"
 	w_class = 4
-	flags = FPRINT | TABLEPASS| CONDUCT
+	mount_reqs = list("simfloor", "nospace")
+	flags = FPRINT
+	siemens_coefficient = 1
 
-/obj/item/rust_fuel_assembly_port_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/mounted/frame/rust_fuel_assembly_port/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/plasteel( get_turf(src.loc), 12 )
 		del(src)
 		return
 	..()
 
-/obj/item/rust_fuel_assembly_port_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf(usr)
-	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red Port cannot be placed on this spot."
-		return
-	if (A.requires_power == 0 || A.name == "Space")
-		usr << "\red Port cannot be placed in this area."
-		return
-	new /obj/machinery/rust_fuel_assembly_port(loc, ndir, 1)
-	del(src)
+/obj/item/mounted/frame/rust_fuel_assembly_port/do_build(turf/on_wall, mob/user)
+	new /obj/machinery/rust_fuel_assembly_port(get_turf(user), get_dir(user, on_wall), 1)
+	qdel(src)
 
 //construction steps
 /obj/machinery/rust_fuel_assembly_port/New(turf/loc, var/ndir, var/building=0)
@@ -78,8 +67,8 @@
 				icon_state = "port2"
 		return
 
-	else if (istype(W, /obj/item/weapon/cable_coil) && opened && !(has_electronics & 2))
-		var/obj/item/weapon/cable_coil/C = W
+	else if (istype(W, /obj/item/stack/cable_coil) && opened && !(has_electronics & 2))
+		var/obj/item/stack/cable_coil/C = W
 		if(C.amount < 10)
 			user << "\red You need more wires."
 			return
@@ -97,7 +86,7 @@
 		user << "You begin to cut the cables..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 50))
-			new /obj/item/weapon/cable_coil(loc,10)
+			new /obj/item/stack/cable_coil(loc,10)
 			user.visible_message(\
 				"\red [user.name] cut the cabling inside the port.",\
 				"You cut the cabling inside the port.")
@@ -122,7 +111,7 @@
 		playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 		if(do_after(user, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
-			new /obj/item/rust_fuel_assembly_port_frame(loc)
+			new /obj/item/mounted/frame/rust_fuel_assembly_port(loc)
 			user.visible_message(\
 				"\red [src] has been cut away from the wall by [user.name].",\
 				"You detached the port frame.",\

@@ -22,7 +22,7 @@
 	return
 
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
-	user.changeNext_move(10)
+	user.delayNextAttack(8)
 	if(W.attack_verb && W.attack_verb.len)
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
@@ -47,7 +47,7 @@
 
 /obj/effect/spider/proc/healthcheck()
 	if(health <= 0)
-		del(src)
+		qdel(src)
 
 /obj/effect/spider/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -81,9 +81,13 @@
 	icon_state = "eggs"
 	var/amount_grown = 0
 	New()
+		..()
 		pixel_x = rand(3,-3)
 		pixel_y = rand(3,-3)
 		processing_objects.Add(src)
+	Destroy()
+		processing_objects.Remove(src)
+		..()
 
 /obj/effect/spider/eggcluster/process()
 	amount_grown += rand(0,2)
@@ -92,7 +96,7 @@
 		for(var/i=0, i<num, i++)
 			//new /obj/effect/spider/spiderling(src.loc)
 			new /mob/living/simple_animal/hostile/giant_spider/spiderling(src.loc)
-		del(src)
+		qdel(src)
 /*s
 /obj/effect/spider/spiderling
 	name = "spiderling"
@@ -105,6 +109,7 @@
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	New()
+		..()
 		pixel_x = rand(6,-6)
 		pixel_y = rand(6,-6)
 		processing_objects.Add(src)
@@ -140,6 +145,7 @@
 	health = 60
 
 	New()
+		..()
 		icon_state = pick("cocoon1","cocoon2","cocoon3")
 
 /obj/effect/spider/cocoon/Destroy()

@@ -23,8 +23,9 @@
 	desc = "A wooden truncheon for beating criminal scum."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/misc_tools.dmi', "right_hand" = 'icons/mob/in-hand/right/misc_tools.dmi')
 	item_state = "classic_baton"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	force = 10
 
@@ -45,7 +46,7 @@
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 */
-	if (user.a_intent == "hurt")
+	if (user.a_intent == I_HURT)
 		if(!..()) return
 		playsound(get_turf(src), "swing_hit", 50, 1, -1)
 		if (M.stuttering < 8 && (!(M_HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
@@ -77,7 +78,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "telebaton_0"
 	item_state = "telebaton_0"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = 2
 	force = 3
@@ -108,12 +109,13 @@
 	add_fingerprint(user)
 
 	if(blood_overlay)							//updates blood overlay, if any
-		overlays.Cut()//this might delete other item overlays as well but eeeeeeeh
+		overlays.len = 0//this might delete other item overlays as well but eeeeeeeh
 
 		var/icon/I = new /icon(src.icon, src.icon_state)
 		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD)
 		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY)
-		blood_overlay = I
+		blood_overlay = image(I)
+		blood_overlay.color = blood_color
 
 		overlays += blood_overlay
 
@@ -130,7 +132,7 @@
 			else
 				user.take_organ_damage(2*force)
 			return
-		if (user.a_intent == "hurt")
+		if (user.a_intent == I_HURT)
 			if(!..()) return
 			if(!isrobot(target))
 				playsound(get_turf(src), "swing_hit", 50, 1, -1)

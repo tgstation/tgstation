@@ -4,7 +4,8 @@
 	icon = 'icons/obj/storage.dmi'
 	name = "Money bag"
 	icon_state = "moneybag"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 10.0
 	throwforce = 2.0
 	w_class = 4.0
@@ -55,7 +56,9 @@
 		var/obj/item/weapon/coin/COIN=locate(typepath, src.contents)
 		if(!COIN)
 			return
-		COIN.loc = src.loc
+		COIN.loc = get_turf(src)
+		if(!usr.get_active_hand())
+			usr.put_in_hands(COIN)
 	return
 
 /obj/item/weapon/moneybag/MouseDrop(obj/over_object as obj)

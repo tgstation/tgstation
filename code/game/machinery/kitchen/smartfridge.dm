@@ -15,8 +15,9 @@
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
 	var/item_quants = list()
-	var/ispowered = 1 //starts powered
-	var/isbroken = 0
+	//var/ispowered = 1 //starts powered
+	//var/isbroken = 0
+	//OBSOLETE: That's what the BROKEN and NOPOWER stat bitflags are for
 	var/opened = 0.0
 
 	var/list/accepted_types = list(	/obj/item/weapon/reagent_containers/food/snacks/grown,
@@ -199,15 +200,13 @@
 
 /obj/machinery/smartfridge/power_change()
 	if( powered() )
-		src.ispowered = 1
 		stat &= ~NOPOWER
-		if(!isbroken)
+		if(!(stat & BROKEN))
 			icon_state = icon_on
 	else
 		spawn(rand(0, 15))
-		src.ispowered = 0
 		stat |= NOPOWER
-		if(!isbroken)
+		if(!(stat & BROKEN))
 			icon_state = icon_off
 
 
@@ -216,7 +215,7 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(!src.ispowered)
+	if(stat & NOPOWER)
 		user << "<span class='notice'>\The [src] is unpowered and useless.</span>"
 		return
 
@@ -230,10 +229,12 @@
 		else
 			user.before_take_item(O)
 			O.loc = src
-			if(item_quants[O.name])
-				item_quants[O.name]++
+			var/sanitized_name = sanitize(O.name, list("\"" = "", "'" = "", "+" = "plus", ";" = "", "^" = "", "&" = "", "<" = "", ">" = ""))
+			O.name = sanitized_name
+			if(item_quants[sanitized_name])
+				item_quants[sanitized_name]++
 			else
-				item_quants[O.name] = 1
+				item_quants[sanitized_name] = 1
 			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
 								 "<span class='notice'>You add \the [O] to \the [src].")
 
@@ -247,10 +248,12 @@
 					return 1
 				else
 					bag.remove_from_storage(G,src)
-					if(item_quants[G.name])
-						item_quants[G.name]++
+					var/sanitized_name = sanitize(G.name, list("\"" = "", "'" = "", "+" = "plus", ";" = "", "^" = "", "&" = "", "<" = "", ">" = ""))
+					G.name = sanitized_name
+					if(item_quants[sanitized_name])
+						item_quants[sanitized_name]++
 					else
-						item_quants[G.name] = 1
+						item_quants[sanitized_name] = 1
 					objects_loaded++
 		if(objects_loaded)
 
@@ -262,7 +265,7 @@
 	else
 		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
 		return 1
-
+	sortList(item_quants)
 	updateUsrDialog()
 
 /obj/machinery/smartfridge/attack_paw(mob/user as mob)
@@ -280,7 +283,7 @@
 ********************/
 
 /obj/machinery/smartfridge/interact(mob/user as mob)
-	if(!src.ispowered)
+	if(stat & NOPOWER)
 		return
 
 	var/dat = "<TT><b>Select an item:</b><br>"

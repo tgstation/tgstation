@@ -3,11 +3,18 @@
 /datum/event/ionstorm
 	var/botEmagChance = 0.5
 	var/list/players = list()
+	var/active = 0
+	var/list/bots = list()
+
+/datum/event/ionstorm/start()
+	active = 1
+	for(var/obj/machinery/bot/bot in machines)
+		bots += bot
 
 /datum/event/ionstorm/announce()
 	endWhen = rand(500, 1500)
 //		command_alert("The station has entered an ion storm.  Monitor all electronic equipment for malfunctions", "Anomaly Alert")
-	for (var/mob/living/carbon/human/player in world)
+	for (var/mob/living/carbon/human/player in mob_list)
 		if(player.client)
 			players += player.real_name
 	var/random_player = "The Captain"
@@ -41,7 +48,7 @@
 	laws |=			list( "Replace the letters 'I' and 'E' In all your messages with an apostrophe.", "There will be a mandatory tea break every 30 minutes, with a duration of 5 minutes. Anyone caught working during a tea break must be sent a formal, but fairly polite, complaint about their actions, in writing.")
 	var/law = pick(laws)
 
-	for (var/mob/living/silicon/ai/target in world)
+	for (var/mob/living/silicon/ai/target in mob_list)
 		if(target.mind.special_role == "traitor")
 			continue
 		target << "\red <b>You have detected a change in your laws information:</b>"
@@ -50,11 +57,15 @@
 
 /datum/event/ionstorm/tick()
 	if(botEmagChance)
-		for(var/obj/machinery/bot/bot in world)
+		for(var/obj/machinery/bot/bot in bots)
+			if(!bot.loc)
+				bots -= bot
+				continue
 			if(prob(botEmagChance))
 				bot.Emag()
 
 /datum/event/ionstorm/end()
+	active = 0
 	spawn(rand(5000,8000))
 		if(prob(50))
 			command_alert("It has come to our attention that the station passed through an ion storm.  Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")

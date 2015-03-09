@@ -1,10 +1,10 @@
 /obj/machinery/computer/merch
 	name = "Merch Computer"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "comm_logs"
+	icon_state = "store"
 	circuit = "/obj/item/weapon/circuitboard/merch"
 
-	l_color = "#50AB00"
+	l_color = "#993300"
 
 /obj/item/weapon/circuitboard/merch
 	name = "\improper Merchandise Computer Circuitboard"

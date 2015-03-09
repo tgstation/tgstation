@@ -22,8 +22,9 @@
 	var/isopen = 0
 	var/islocked = 0
 	var/isUV = 0
-	var/ispowered = 1 //starts powered
-	var/isbroken = 0
+	//var/ispowered = 1 //starts powered
+	//var/isbroken = 0
+	//OBSOLETE: That's what the NOPOWER and BROKEN stat bitflags are for
 	var/issuperUV = 0
 	var/panelopen = 0
 	var/safetieson = 1
@@ -44,7 +45,7 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	BOOT_TYPE = /obj/item/clothing/shoes/magboots
+	BOOT_TYPE = /obj/item/clothing/shoes/magboots/atmos
 
 /obj/machinery/suit_storage_unit/engie
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig
@@ -76,6 +77,12 @@
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	BOOT_TYPE = /obj/item/clothing/shoes/magboots
 
+/obj/machinery/suit_storage_unit/medical
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	BOOT_TYPE = /obj/item/clothing/shoes/magboots
+
 /obj/machinery/suit_storage_unit/meteor_eod //Used for meteor rounds
 	SUIT_TYPE = /obj/item/clothing/suit/bomb_suit
 	HELMET_TYPE = /obj/item/clothing/head/bomb_hood
@@ -98,27 +105,35 @@
 	var/hashelmet = 0
 	var/hassuit = 0
 	var/hashuman = 0
-	if(HELMET)
+	var/full = 0
+	if(HELMET && (!stat & NOPOWER))
 		hashelmet = 1
-	if(SUIT)
+	if(SUIT && (!stat & NOPOWER))
 		hassuit = 1
-	if(OCCUPANT)
+	if(OCCUPANT && (!stat & NOPOWER))
 		hashuman = 1
-	icon_state = text("suitstorage[][][][][][][][][]",hashelmet,hassuit,hashuman,src.isopen,src.islocked,src.isUV,src.ispowered,src.isbroken,src.issuperUV)
-
+	if((HELMET || SUIT || OCCUPANT) && (stat & NOPOWER))
+		full = 1
+	icon_state = text("suitstorage[][][][][][][][][]",
+					hashelmet,
+					hassuit,
+					hashuman,
+					src.isopen,
+					src.islocked,
+					src.isUV,
+					(full||!(stat & NOPOWER)),
+					stat & BROKEN,
+					src.issuperUV)
 
 /obj/machinery/suit_storage_unit/power_change()
 	if( powered() )
-		src.ispowered = 1
 		stat &= ~NOPOWER
 		src.update_icon()
 	else
 		spawn(rand(0, 15))
-			src.ispowered = 0
 			stat |= NOPOWER
 			src.islocked = 0
 			src.isopen = 1
-			src.dump_everything()
 			src.update_icon()
 
 
@@ -170,7 +185,7 @@
 		//onclose(user, "ssu_cycling_panel")
 
 	else
-		if(!src.isbroken)
+		if(!(stat & BROKEN))
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\suit_storage_unit.dm:117: dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
@@ -446,7 +461,7 @@
 				if(src.BOOTS)
 					src.BOOTS = null
 				visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 3)
-				src.isbroken = 1
+				stat |= BROKEN
 				src.isopen = 1
 				src.islocked = 0
 				src.eject_occupant(OCCUPANT) //Mixing up these two lines causes bug. DO NOT DO IT.
@@ -534,7 +549,7 @@
 	if (!src.isopen)
 		usr << "<font color='red'>The unit's doors are shut.</font>"
 		return
-	if (!src.ispowered || src.isbroken)
+	if ((stat & NOPOWER) || (stat & BROKEN))
 		usr << "<font color='red'>The unit is not operational.</font>"
 		return
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) || BOOTS )
@@ -566,7 +581,13 @@
 	src.updateUsrDialog()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
-	if(!src.ispowered)
+	if((stat & NOPOWER) && iscrowbar(I) && !islocked)
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+		user << "<span class='notice'>You begin prying the equipment out of the suit storage unit</span>"
+		if(do_after(user,20))
+			dump_everything()
+			update_icon()
+	if(stat & NOPOWER)
 		return
 	if(..())
 		return 1
@@ -577,7 +598,7 @@
 		if (!src.isopen)
 			usr << "<font color='red'>The unit's doors are shut.</font>"
 			return
-		if (!src.ispowered || src.isbroken)
+		if ((stat & NOPOWER) || (stat & BROKEN))
 			usr << "<font color='red'>The unit is not operational.</font>"
 			return
 		if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) || BOOTS) //Unit needs to be absolutely empty

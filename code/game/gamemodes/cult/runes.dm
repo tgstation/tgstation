@@ -1,9 +1,3 @@
-var/list/sacrificed = list()
-
-/obj/effect/rune
-	var/atom/movable/overlay/c_animation = null
-	var/nullblock = 0
-
 /obj/effect/rune/cultify()
 	return
 
@@ -11,7 +5,7 @@ var/list/sacrificed = list()
 	if(istype(target,/obj/item/weapon/nullrod))
 		var/turf/T = get_turf(target)
 		nullblock = 1
-		T.nullding()
+		T.turf_animation('icons/effects/96x96.dmi',"nullding",-32,-32,MOB_LAYER+1,'sound/piano/Ab7.ogg')
 		return 1
 	else if(target.contents)
 		for(var/atom/A in target.contents)
@@ -29,7 +23,10 @@ var/list/sacrificed = list()
 	c_animation.icon_state = "[animation_icon]"
 	flick("cultification",c_animation)
 	spawn(10)
-		del(c_animation)
+		if(c_animation)
+			c_animation.master = null
+			qdel(c_animation)
+			c_animation = null
 
 /////////////////////////////////////////FIRST RUNE
 /obj/effect/rune/proc/teleport(var/key)
@@ -160,11 +157,12 @@ var/list/sacrificed = list()
 	qdel(src)
 	return
 
-
-
 /////////////////////////////////////////THIRD RUNE
 
 /obj/effect/rune/proc/convert()
+
+	var/datum/game_mode/cult/mode_ticker = ticker.mode
+
 	for(var/mob/living/carbon/M in src.loc)
 		if(iscultist(M))
 			usr << "<span class='warning'>You cannot convert what is already a follower of Nar-Sie.</span>"
@@ -175,7 +173,7 @@ var/list/sacrificed = list()
 		if(!M.mind)
 			usr << "<span class='warning'>You cannot convert that which has no soul</span>"
 			return 0
-		if((ticker.mode.name == "cult") && (M.mind == ticker.mode:sacrifice_target))
+		if(istype(mode_ticker) && (M.mind == mode_ticker.sacrifice_target))
 			usr << "<span class='warning'>The Geometer of blood wants this mortal for himself.</span>"
 			return 0
 		usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
@@ -205,28 +203,117 @@ var/list/sacrificed = list()
 	usr.show_message("\red The markings pulse with a small burst of light, then fall dark.", 3, "\red You hear a faint fizzle.", 2)
 	usr << "<span class='notice'> You remembered the words correctly, but the rune isn't working. Maybe your ritual is missing something important.</span>"
 
-
-
 /////////////////////////////////////////FOURTH RUNE
 
 /obj/effect/rune/proc/tearreality()
-	var/cultist_count = 0
+	if(summoning)
+		return
+
+	var/list/active_cultists=list()
+	var/ghostcount = 0
+
+	for(var/mob/M in range(1,src))
+		if(iscultist(M) && !M.stat)
+			active_cultists.Add(M)
+			if (istype(M, /mob/living/carbon/human/manifested))
+				ghostcount++
+
 	if(universe.name == "Hell Rising")
-		for(var/mob/N in range(1,src))
-			if(iscultist(N))
-				N << "<span class='warning'>This plane of reality has already been torn into Nar-Sie's realm.</span>"
-	else
-		for(var/mob/M in range(1,src))
-			if(iscultist(M) && !M.stat)
-				M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
-				cultist_count += 1
-		if(cultist_count >= 9)
-			new /obj/machinery/singularity/narsie/large(src.loc,cultspawn=1)
-			if(ticker.mode.name == "cult")
-				ticker.mode:eldergod = 0
-			return
+		for(var/mob/M in active_cultists)
+			M << "<span class='warning'>This plane of reality has already been torn into Nar-Sie's realm.</span>"
+		return
+
+	var/datum/game_mode/cult/mode_ticker = ticker.mode
+
+	if(mode_ticker.eldergod)
+		// Sanity checks
+		// Are we permitted to spawn Nar-Sie?
+
+		if((ticker.mode.name != "cult") || mode_ticker.narsie_condition_cleared)//if the game mode wasn't cult to begin with, there won't be need to complete a first objective to prepare the summoning.
+			if(active_cultists.len >= 9)
+				summoning = 1
+				log_admin("NAR-SIE SUMMONING: [active_cultists.len] are summoning Nar-Sie at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>). [6 + (ghostcount * 5)] seconds remaining.")
+				message_admins("NAR-SIE SUMMONING: [active_cultists.len] are summoning Nar-Sie at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>). [6 + (ghostcount * 5)] seconds remaining.")
+				updatetear(6 + (ghostcount * 5))	//the summoning takes 6 seconds by default , but for each manifested ghost around it takes 5 more seconds.
+				return								//with 8 manifested ghosts summoned by a single human, it'd take 46 seconds, which would cause 46*8 = 368 brute damage over time to the human.
+													//no more lone human summoning nar-sie all by himself (as all the ghosts would die as soon as he goes uncounscious)
 		else
-			return fizzle()
+			for(var/mob/M in active_cultists)
+				M << "<span class='sinister'>The Geometer of Blood has required of you to perform a certain task. This place cannot welcome him until this task has been cleared.</span>"
+			return
+
+	else
+		for(var/mob/M in active_cultists)
+			M << "<span class='danger'>Nar-Sie has lost interest in this world.</span>"//narsie won't appear if a supermatter cascade has started
+		return
+
+	return fizzle()
+
+
+/obj/effect/rune/proc/updatetear(var/currentCountdown)
+	if(!summoning)
+		summonturfs = list()
+		return
+	summonturfs = list()
+	var/list/active_cultists=list()
+	for(var/mob/M in range(1,src))
+		if(iscultist(M) && !M.stat)
+			active_cultists.Add(M)
+			var/turf/T = get_turf(M)
+			summonturfs += T
+			if(!(locate(/obj/effect/summoning) in T))
+				var/obj/effect/summoning/S = new(T)
+				S.init(src)
+
+
+	if(active_cultists.len < 9)
+		summoning = 0
+		summonturfs = list()
+		for(var/mob/M in active_cultists)
+			M << "<span class='warning'>The ritual has been disturbed. All summoners need to stay by the rune.</span>"
+		return
+
+	if(currentCountdown <= 0)
+		for(var/mob/M in active_cultists)
+			// Only chant when Nar-Sie spawns
+			M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
+		ticker.mode.eldergod = 0
+		summonturfs = list()
+		summoning = 0
+		new /obj/machinery/singularity/narsie/large(src.loc)
+		return
+
+	currentCountdown--
+
+	sleep(10)
+
+	updatetear(currentCountdown)
+	return
+
+/obj/effect/summoning
+	name = "summoning"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "summoning"
+	mouse_opacity = 0
+	density = 0
+	flags = 0
+	var/obj/effect/rune/summon_target = null
+
+/obj/effect/summoning/New()
+	..()
+	spawn(10)
+		update()
+
+/obj/effect/summoning/proc/update()
+	if(summon_target && (locate(get_turf(src)) in summon_target.summonturfs))
+		sleep(10)
+		update()
+		return
+	else
+		qdel(src)
+
+/obj/effect/summoning/proc/init(var/obj/effect/rune/S)
+	summon_target = S
 
 /////////////////////////////////////////FIFTH RUNE
 
@@ -437,18 +524,17 @@ var/list/sacrificed = list()
 		"<span class='warning'>The shadow that is your spirit separates itself from your body. You are now in the realm beyond. While this is a great sight, being here strains your mind and body. Hurry...</span>", \
 		"<span class='warning'>You hear only complete silence for a moment.</span>")
 		usr.ghostize(1)
-		L.ajourn = 1
+		L.ajourn = src
+		ajourn = L
 		while(L)
 			if(L.key)
-				L.ajourn=0
+				L.ajourn=null
+				ajourn = null
 				return
 			else
 				L.take_organ_damage(10, 0)
 			sleep(100)
 	return fizzle()
-
-
-
 
 /////////////////////////////////////////ELEVENTH RUNE
 
@@ -499,7 +585,6 @@ var/list/sacrificed = list()
 			break
 	if(!chose_name)
 		D.real_name = "[pick(first_names_male)] [pick(last_names)]"
-	D.universal_speak = 1
 	D.status_flags &= ~GODMODE
 
 
@@ -509,7 +594,8 @@ var/list/sacrificed = list()
 		ticker.mode.cult+=D.mind
 	ticker.mode.update_cult_icons_added(D.mind)
 	D.canmove = 1
-	del(animation)
+	animation.master = null
+	qdel(animation)
 
 	D.mind.special_role = "Cultist"
 	D << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
@@ -526,10 +612,6 @@ var/list/sacrificed = list()
 		"<span class='warning'>You hear faint rustle.</span>")
 		D.dust()
 	return
-
-
-
-
 
 /////////////////////////////////////////TWELFTH RUNE
 
@@ -683,6 +765,13 @@ var/list/sacrificed = list()
 		usr << "<span class='warning'>The presence of a null rod is perturbing the ritual.</span>"
 		return
 
+	var/cult_game = 0
+
+	if(ticker.mode.name == "cult")
+		cult_game = 1
+
+	var/datum/game_mode/cult/mode_ticker = ticker.mode
+
 	for(var/atom/A in loc)
 		if(iscultist(A))
 			continue
@@ -690,13 +779,15 @@ var/list/sacrificed = list()
 //Humans and Animals
 		if(istype(A,/mob/living/carbon) || istype(A,/mob/living/simple_animal))//carbon mobs and simple animals
 			var/mob/living/M = A
-			if ((ticker.mode.name == "cult") && (M.mind == ticker.mode:sacrifice_target))
+			if (cult_game && (M.mind == mode_ticker.sacrifice_target))
 				if(cultsinrange.len >= 3)
-					sacrificed += M.mind
+					mode_ticker.sacrificed += M.mind
 					M.gib()
 					sacrificedone = 1
 					invocation("rune_sac")
 					ritualresponse += "The Geometer of Blood gladly accepts this sacrifice, your objective is now complete."
+					spawn(10)	//so the messages for the new phase get received after the feedback for the sacrifice
+						mode_ticker.additional_phase()
 				else
 					ritualresponse += "You need more cultists to perform the ritual and complete your objective."
 			else
@@ -728,12 +819,15 @@ var/list/sacrificed = list()
 			var/mob/living/silicon/robot/B = A
 			var/obj/item/device/mmi/O = locate() in B
 			if(O)
-				if((ticker.mode.name == "cult") && (O.brainmob.mind == ticker.mode:sacrifice_target))
+				if(cult_game && (O.brainmob.mind == mode_ticker.sacrifice_target))
 					if(cultsinrange.len >= 3)
+						mode_ticker.sacrificed += O.brainmob.mind
 						ritualresponse += "The Geometer of Blood accepts this sacrifice, your objective is now complete."
 						sacrificedone = 1
 						invocation("rune_sac")
 						B.dust()
+						spawn(10)	//so the messages for the new phase get received after the feedback for the sacrifice
+							mode_ticker.additional_phase()
 					else
 						ritualresponse += "You need more cultists to perform the ritual and complete your objective."
 				else
@@ -781,9 +875,11 @@ var/list/sacrificed = list()
 			var/obj/item/device/aicard/D = A
 			var/mob/living/silicon/ai/T = locate() in D
 			if(T)//there is an AI on the card
-				if((ticker.mode.name == "cult") && (T.mind == ticker.mode:sacrifice_target))//what are the odds this ever happens?
-					sacrificed += T.mind
+				if(cult_game && (T.mind == ticker.mode:sacrifice_target))//what are the odds this ever happens?
+					mode_ticker.sacrificed += T.mind
 					ritualresponse += "With a sigh, the Geometer of Blood accepts this sacrifice, your objective is now complete."//since you cannot debrain an AI.
+					spawn(10)	//so the messages for the new phase get received after the feedback for the sacrifice
+						mode_ticker.additional_phase()
 				else
 					ritualresponse += "The Geometer of Blood accepts to destroy that piece of technological garbage."
 				sacrificedone = 1
@@ -934,7 +1030,7 @@ var/list/sacrificed = list()
 			user << "<span class='warning'>You cannot summon the [cultist], for his shackles of blood are strong</span>"
 			return fizzle()
 		var/turf/T = get_turf(cultist)
-		T.invocanimation("rune_teleport")
+		T.turf_animation('icons/effects/effects.dmi',"rune_teleport")
 		cultist.loc = src.loc
 		cultist.lying = 1
 		cultist.regenerate_icons()
@@ -1062,7 +1158,7 @@ var/list/sacrificed = list()
 					M << "<span class='warning'>The blood suddenly ignites, burning you!</span>"
 					var/turf/T = get_turf(B)
 					T.hotspot_expose(700,125,surfaces=1)
-					del(B)
+					qdel(B)
 		qdel(src)
 
 //////////             Rune 24 (counting burningblood, which kinda doesnt work yet.)
@@ -1194,7 +1290,7 @@ var/list/sacrificed = list()
 								del(M)
 								C << "<B>You are now an Artificer. You are incredibly weak and fragile, but you are able to construct new floors and walls, to break some walls apart, to repair allied constructs (by clicking on them), </B><I>and most important of all create new constructs</I><B> (Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
 								ticker.mode.update_cult_icons_added(C.mind)
-				del(src)
+				qdel(src)
 				return
 			else
 				usr << "<span class='warning'>Only the followers of Nar-Sie may be given their armor.</span>"

@@ -16,7 +16,6 @@
 
 	var/turns_per_move = 1
 	var/turns_since_move = 0
-	universal_speak = 1
 	var/meat_amount = 0
 	var/meat_type
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
@@ -38,6 +37,8 @@
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
 
+	var/show_stat_health = 1	//does the percentage health show in the stat panel for the mob
+
 	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	var/min_oxy = 5
 	var/max_oxy = 0					//Leaving something at 0 means it's off - has no maximum
@@ -49,6 +50,10 @@
 	var/max_n2 = 0
 	var/unsuitable_atoms_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
 
+
+	mob_bump_flag = SIMPLE_ANIMAL
+	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL
+	mob_push_flags = MONKEY|SLIME|SIMPLE_ANIMAL
 
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
@@ -69,6 +74,13 @@
 	var/supernatural = 0
 	var/purge = 0
 
+	languages = ALL
+
+/mob/living/simple_animal/rejuvenate(animation = 0)
+	var/turf/T = get_turf(src)
+	if(animation) T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
+	src.health = src.maxHealth
+	return 1
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -81,6 +93,12 @@
 	..()
 
 /mob/living/simple_animal/updatehealth()
+	return
+
+/mob/living/simple_animal/airflow_stun()
+	return
+
+/mob/living/simple_animal/airflow_hit(atom/A)
 	return
 
 /mob/living/simple_animal/Life()
@@ -114,7 +132,7 @@
 		purge -= 1
 
 	//Movement
-	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored && (ckey == null))
+	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored && (ckey == null) && !(flags & INVULNERABLE))
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
@@ -158,6 +176,9 @@
 
 
 	//Atmos
+	if(flags & INVULNERABLE)
+		return 1
+
 	var/atmos_suitable = 1
 
 	var/atom/A = loc
@@ -222,20 +243,6 @@
 		adjustBruteLoss(unsuitable_atoms_damage)
 	return 1
 
-/mob/living/simple_animal/Bumped(AM as mob|obj)
-	if(!AM) return
-
-	if(resting || buckled)
-		return
-
-	if(isturf(src.loc))
-		if(ismob(AM))
-			var/newamloc = src.loc
-			src.loc = AM:loc
-			AM:loc = newamloc
-		else
-			..()
-
 /mob/living/simple_animal/gib(var/animation = 0)
 	if(icon_gib)
 		flick(icon_gib, src)
@@ -259,9 +266,10 @@
 /mob/living/simple_animal/emote(var/act, var/type, var/desc)
 	if(stat)
 		return
-	if(act)
-		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
-		..(act, type, desc)
+	if(act == "scream")
+		desc = "makes a loud and pained whimper"  //ugly hack to stop animals screaming when crushed :P
+		act = "me"
+	..(act, type, desc)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
@@ -294,13 +302,13 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(I_HELP)
 			if (health > 0)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message("\blue [M] [response_help] [src].")
 
-		if("grab")
+		if(I_GRAB)
 			if (M == src || anchored)
 				return
 			if (!(status_flags & CANPUSH))
@@ -319,7 +327,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if("hurt", "disarm")
+		if(I_HURT, I_DISARM)
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
@@ -331,12 +339,12 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (I_HELP)
 
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
-		if ("grab")
+		if (I_GRAB)
 			if(M == src || anchored)
 				return
 			if(!(status_flags & CANPUSH))
@@ -356,7 +364,7 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if("hurt", "disarm")
+		if(I_HURT, I_DISARM)
 			var/damage = rand(15, 30)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 			adjustBruteLoss(damage)
@@ -366,7 +374,7 @@
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L as mob)
 
 	switch(L.a_intent)
-		if("help")
+		if(I_HELP)
 			visible_message("\blue [L] rubs it's head against [src]")
 
 
@@ -404,7 +412,7 @@
 
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
-		user.changeNext_move(4)
+		user.delayNextAttack(4)
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
@@ -419,10 +427,10 @@
 		else
 			user << "\blue this [src] is dead, medical items won't bring it back to life."
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
+		if(istype(O, /obj/item/weapon/kitchen/utensil/knife/large) || istype(O, /obj/item/weapon/kitchen/utensil/knife/large/butch))
 			harvest()
 	else
-		user.changeNext_move(8)
+		user.delayNextAttack(8)
 		if(O.force)
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
@@ -455,8 +463,8 @@
 /mob/living/simple_animal/Stat()
 	..()
 
-	statpanel("Status")
-	stat(null, "Health: [round((health / maxHealth) * 100)]%")
+	if(statpanel("Status") && show_stat_health)
+		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
 	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them
@@ -477,6 +485,9 @@
 	Die()
 
 /mob/living/simple_animal/ex_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	..()
 	switch (severity)
 		if (1.0)

@@ -171,7 +171,6 @@ a.notsmelting {
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if(src.output) break
 
-		processing_objects.Add(src)
 
 		ore = new
 
@@ -212,7 +211,8 @@ a.notsmelting {
 						for(var/ore_id in recipe.ingredients)
 							ore.removeAmount(ore_id,1)
 						// Spawn yield
-						new recipe.yieldtype(output.loc)
+						//new recipe.yieldtype(output.loc)
+						getFromPool(recipe.yieldtype,output.loc)
 
 						located=1
 						break
@@ -240,9 +240,10 @@ a.notsmelting {
 		for (i = 0; i < 10; i++)
 			var/obj/item/I = locate(/obj/item, input.loc)
 			if(istype(I,/obj/item/weapon/ore))
-				var/obj/item/weapon/ore/O=I
-				var/datum/material/po=ore.getMaterial(O.material)
-				if (po.oretype && istype(O,po.oretype))
+				var/obj/item/weapon/ore/O = I
+				var/datum/material/po = ore.getMaterial(O.material)
+
+				if(po && po.oretype && istype(O, po.oretype))
 					po.stored++
 					qdel(O)
 					continue
@@ -283,7 +284,7 @@ a.notsmelting {
 							ore.removeAmount(ore_id,1)
 
 						// Spawn yield
-						new recipe.yieldtype(output.loc)
+						getFromPool(recipe.yieldtype,output.loc)
 
 						located=1
 						break

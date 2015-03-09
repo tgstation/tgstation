@@ -38,7 +38,7 @@
 					if(do_after(user, 50))
 						usr << "\blue You unscrew \the [src] from the wall."
 						playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-						new /obj/item/airlock_controller_frame(get_turf(src))
+						new /obj/item/mounted/frame/airlock_controller(get_turf(src))
 						del(src)
 					return 1
 				if(istype(W, /obj/item/weapon/circuitboard))
@@ -74,8 +74,8 @@
 							"\red [user.name] has removed \the [C]!",\
 							"You remove \the [C].")
 					return 1
-				if(istype(W, /obj/item/weapon/cable_coil))
-					var/obj/item/weapon/cable_coil/C=W
+				if(istype(W, /obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/C=W
 					user << "You start adding cables to \the [src]..."
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20) && C.amount >= 10)
@@ -89,7 +89,7 @@
 				if(istype(W, /obj/item/weapon/wirecutters))
 					usr << "You begin to remove the wiring from \the [src]."
 					if(do_after(user, 50))
-						new /obj/item/weapon/cable_coil(loc,5)
+						new /obj/item/stack/cable_coil(loc,5)
 						user.visible_message(\
 							"\red [user.name] cut the cables.",\
 							"You cut the cables.")

@@ -163,7 +163,7 @@ var/const/POS_HEADER = {"<html>
 	line_items.Cut(order_id,order_id+1)
 
 /obj/machinery/pos/proc/NewOrder()
-	line_items.Cut()
+	line_items.len = 0
 
 /obj/machinery/pos/proc/PrintReceipt(var/order_id)
 	var/receipt = {"[RECEIPT_HEADER]<div>POINT OF SALE #[id]<br />
@@ -394,9 +394,6 @@ var/const/POS_HEADER = {"<html>
 	onclose(user, "pos")
 	return
 
-/obj/machinery/pos/proc/say(var/text)
-	src.visible_message("\icon[src] <span class=\"notice\"><b>[name]</b> states, \"[text]\"</span>")
-
 /obj/machinery/pos/Topic(var/href, var/list/href_list)
 	if(..(href,href_list)) return
 	if("logout" in href_list)
@@ -407,7 +404,8 @@ var/const/POS_HEADER = {"<html>
 		src.attack_hand(usr)
 		return
 	if(usr != logged_in)
-		usr << "\red [logged_in.name] is already logged in.  You cannot use this machine until they log out."
+		if(logged_in)
+			usr << "\red [logged_in.name] is already logged in.  You cannot use this machine until they log out."
 		return
 	if("act" in href_list)
 		switch(href_list["act"])
@@ -471,8 +469,9 @@ var/const/POS_HEADER = {"<html>
 		if(!newtext) return
 		var/pid = href_list["setpname"]
 		var/line_item/LI = products[pid]
-		LI.name = newtext
-		products[pid]=LI
+		if(LI)
+			LI.name = newtext
+			products[pid]=LI
 	else if("setprice" in href_list)
 		var/newprice = input(usr,"Enter the product's price.") as num
 		if(!newprice) return

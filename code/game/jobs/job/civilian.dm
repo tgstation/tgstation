@@ -231,6 +231,7 @@
 	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre, access_maint_tunnels)
 	minimal_access = list(access_clown, access_theatre)
+	alt_titles = list("Jester")
 
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/clown
@@ -239,8 +240,6 @@
 		if(!H)	return 0
 		H.equip_or_collect(new /obj/item/weapon/storage/backpack/clown(H), slot_back)
 		H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
-		H.equip_or_collect(new /obj/item/clothing/under/rank/clown(H), slot_w_uniform)
-		H.equip_or_collect(new /obj/item/clothing/shoes/clown_shoes(H), slot_shoes)
 		//H.equip_or_collect(new /obj/item/device/pda/clown(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
 		H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), slot_in_backpack)
@@ -250,6 +249,15 @@
 		H.equip_or_collect(new /obj/item/weapon/storage/fancy/crayons(H), slot_in_backpack)
 		H.equip_or_collect(new /obj/item/toy/waterflower(H), slot_in_backpack)
 		H.mutations.Add(M_CLUMSY)
+		if (H.mind.role_alt_title)
+			switch(H.mind.role_alt_title)
+				if("Jester")
+					H.equip_or_collect(new /obj/item/clothing/under/jester(H), slot_w_uniform)
+					H.equip_or_collect(new /obj/item/clothing/shoes/jestershoes(H), slot_shoes)
+					H.equip_or_collect(new /obj/item/clothing/head/jesterhat(H), slot_head)
+				else
+					H.equip_or_collect(new /obj/item/clothing/under/rank/clown(H), slot_w_uniform)
+					H.equip_or_collect(new /obj/item/clothing/shoes/clown_shoes(H), slot_shoes)
 		return 1
 
 
@@ -275,7 +283,7 @@
 		if(H.backbag == 2) H.equip_or_collect(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(H.backbag == 3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
 		H.equip_or_collect(new /obj/item/clothing/under/mime(H), slot_w_uniform)
-		H.equip_or_collect(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		H.equip_or_collect(new /obj/item/clothing/shoes/mime(H), slot_shoes)
 		//H.equip_or_collect(new /obj/item/device/pda/mime(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/gloves/white(H), slot_gloves)
 		H.equip_or_collect(new /obj/item/clothing/mask/gas/mime(H), slot_wear_mask)
@@ -289,7 +297,7 @@
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 			H.equip_or_collect(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
 			H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
-		H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(H)
+		H.spell_list += new /spell/aoe_turf/conjure/forcewall/mime(H)
 		H.miming = 1
 		return 1
 
@@ -336,7 +344,7 @@
 	selection_color = "#dddddd"
 	access = list(access_library, access_maint_tunnels)
 	minimal_access = list(access_library)
-	alt_titles = list("Journalist")
+	alt_titles = list("Journalist", "Game Master")
 
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/librarian

@@ -38,7 +38,7 @@
 	/obj/item/weapon/autopsy_scanner,\
 	/obj/item/weapon/bikehorn,\
 	/obj/item/weapon/bonesetter,\
-	/obj/item/weapon/butch,\
+	/obj/item/weapon/kitchen/utensil/knife/large/butch,\
 	/obj/item/weapon/caution,\
 	/obj/item/weapon/caution/cone,\
 	/obj/item/weapon/crowbar,\
@@ -48,13 +48,13 @@
 	/obj/item/weapon/hatchet,\
 	/obj/item/weapon/handcuffs,\
 	/obj/item/weapon/hemostat,\
-	/obj/item/weapon/kitchenknife,\
+	/obj/item/weapon/kitchen/utensil/knife/large,\
 	/obj/item/weapon/lighter,\
 	/obj/item/weapon/lighter,\
 	/obj/item/weapon/light/bulb,\
 	/obj/item/weapon/light/tube,\
 	/obj/item/weapon/pickaxe,\
-	/obj/item/weapon/shovel,\
+	/obj/item/weapon/pickaxe/shovel,\
 	/obj/item/weapon/table_parts,\
 	/obj/item/weapon/weldingtool,\
 	/obj/item/weapon/wirecutters,\

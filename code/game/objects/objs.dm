@@ -5,8 +5,10 @@
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
 	var/throwforce = 1
-	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
-	var/sharp = 0 // whether this object cuts
+	var/siemens_coefficient = 0 // for electrical admittance/conductance (electrocution checks and shit) - 0 is not conductive, 1 is conductive - this is a range, not binary
+	var/sharpness = 0 //not a binary - rough guide is 0.8 cutting, 1 cutting well, 1.2 specifically sharp (knives, etc) 1.5 really sharp (scalpels, e-weapons)
+	var/heat_production = 0
+
 	var/edge = 0
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
@@ -28,18 +30,11 @@
 	var/mech_flags=0
 
 /obj/Destroy()
-	if(_using)
-		for(var/mob/mob in _using)
-			mob.unset_machine()
+	for(var/mob/user in _using)
+		user.unset_machine()
 
 	if(src in processing_objects)
 		processing_objects -= src
-
-	if(attack_verb)
-		for(var/text in attack_verb)
-			attack_verb -= text
-
-		attack_verb = null
 
 	..()
 
@@ -52,11 +47,24 @@
 	rec.addAmount("glass",src.g_amt/CC_PER_SHEET_GLASS)
 	return w_type
 
+/*
 /obj/melt()
 	var/obj/effect/decal/slag/slag=locate(/obj/effect/decal/slag) in get_turf(src)
 	if(!slag)
 		slag = new(get_turf(src))
 	slag.slaggify(src)
+*/
+
+/obj/proc/is_conductor(var/siemens_min = 0.5)
+	if(src.siemens_coefficient >= siemens_min)
+		return 1
+	return
+
+/obj/proc/is_sharp()
+	return sharpness
+
+/obj/proc/is_hot()
+	return heat_production
 
 /obj/proc/process()
 	processing_objects.Remove(src)
@@ -142,6 +150,19 @@
 
 /obj/proc/interact(mob/user)
 	return
+
+/obj/singularity_act()
+	ex_act(1)
+	if(src)
+		qdel(src)
+	return 2
+
+/obj/singularity_pull(S, current_size)
+	if(anchored)
+		if(current_size >= STAGE_FIVE)
+			anchored = 0
+			step_towards(src, S)
+	else step_towards(src, S)
 
 /obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return "<b>NO MULTITOOL_MENU!</b>"
@@ -259,15 +280,11 @@ a {
 /obj/proc/hide(h)
 	return
 
-
-/obj/proc/hear_talk(mob/M as mob, text)
-/*
-	var/mob/mo = locate(/mob) in src
-	if(mo)
-		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
-		mo.show_message(rendered, 2)
-		*/
-	return
-
 /obj/proc/container_resist()
 	return
+
+/obj/proc/can_pickup(mob/living/user)
+	return 0
+
+/obj/proc/verb_pickup(mob/living/user)
+	return 0

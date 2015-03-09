@@ -67,6 +67,9 @@ var/global/ingredientLimit = 10
 	var/obj/item/ingredient	=	null //Current ingredient
 	var/list/foodChoices	=	list() //Null if not offered
 
+	var/cooks_in_reagents = 0 //are we able to add stuff to the machine so that reagents are added to food?
+	var/cks_max_volume = 50
+
 /obj/machinery/cooking/cultify()
 	new /obj/structure/cult/talisman(loc)
 	..()
@@ -80,32 +83,42 @@ var/global/ingredientLimit = 10
 			foodPath = .
 			L[initial(foodPath.name)] = foodPath
 		src.foodChoices = L
+	if(src.cooks_in_reagents) //if we can cook in something
+		del(src.reagents) //get rid of that
+		reagents = new (cks_max_volume) //maximum volume is set by the machine var
+		reagents.my_atom = src
 	return ..()
 
 /obj/machinery/cooking/proc/getFoodChoices()
 	return (typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/cook)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/cook))
 
+/obj/machinery/cooking/is_open_container()
+	if(cooks_in_reagents)
+		return 1
+
 // Interactions ////////////////////////////////////////////////
 
-/obj/machinery/cooking/examine()
+/obj/machinery/cooking/examine(mob/user)
 	. = ..()
-	if(src.active) usr << "It's currently processing [src.ingredient ? src.ingredient.name : ""]."
-	return
+	if(src.active) user << "<span class='info'>It's currently processing [src.ingredient ? src.ingredient.name : ""].</span>"
+	if(src.cooks_in_reagents) user << "<span class='info'>It seems to have [reagents.total_volume] units left.</span>"
 
 /obj/machinery/cooking/attack_hand(mob/user)
-	if(istype(user,/mob/dead/observer))	user << "Your ghostly hand goes straight through."
-	else if(istype(user,/mob/living/silicon)) user << "This is old analog equipment. You can't interface with it."
+	if(isobserver(user))	user << "Your ghostly hand goes straight through."
+	else if(issilicon(user)) user << "This is old analog equipment. You can't interface with it."
 	else if(src.active)
-		if(src.ingredient && (get_turf(src.ingredient)==get_turf(src)))
-			if(alert(user,"Remove the [src.ingredient.name]?",,"Yes","No") == "Yes")
-				src.active = 0
-				src.icon_state = initial(src.icon_state)
-				src.ingredient.mouse_opacity = 1
-				user.put_in_hands(src.ingredient)
-				user << "<span class='notice'>You remove the [src.ingredient.name] from the [src.name].</span>"
-				src.ingredient = null
-			else user << "You leave the [src.name] alone."
-		else src.active = 0
+		if(alert(user,"Remove the [src.ingredient.name]?",,"Yes","No") == "Yes")
+			if(src.ingredient && (get_turf(src.ingredient)==get_turf(src)))
+				if(get_dist(src, user) <= 1)
+					src.active = 0
+					src.icon_state = initial(src.icon_state)
+					src.ingredient.mouse_opacity = 1
+					user.put_in_hands(src.ingredient)
+					user << "<span class='notice'>You remove the [src.ingredient.name] from the [src.name].</span>"
+					src.ingredient = null
+				else user << "You are too far away from [src.name]."
+			else src.active = 0
+		else user << "You leave the [src.name] alone."
 	else . = ..()
 	return
 
@@ -123,6 +136,18 @@ var/global/ingredientLimit = 10
 		src.takeIngredient(I,user)
 	return
 
+/obj/machinery/cooking/verb/flush_reagents()
+
+	set name = "Remove ingredients"
+	set category = "Object"
+	set src in oview(1)
+
+	if(cooks_in_reagents)
+		if(do_after(usr, src.reagents.total_volume / 10))
+			src.reagents.clear_reagents()
+			if(usr)
+				usr << "You clean \the [src] of any ingredients."
+
 // Food Processing /////////////////////////////////////////////
 
 //Returns "valid" or the reason for denial.
@@ -130,6 +155,7 @@ var/global/ingredientLimit = 10
 	if(istype(I,/obj/item/weapon/grab) || istype(I,/obj/item/tk_grab)) . = "It won't fit."
 	else if(istype(I,/obj/item/weapon/disk/nuclear)) . = "It's the fucking nuke disk!"
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks) || deepFriedEverything) . = "valid"
+	else if(istype(I,/obj/item/weapon/reagent_containers)) . = "transto"
 	else if(istype(I,/obj/item/organ))
 		var/obj/item/organ/organ = I
 		if(organ.robotic) . = "That's a prosthetic. It wouldn't taste very good."
@@ -139,6 +165,8 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/proc/takeIngredient(var/obj/item/I,mob/user)
 	. = src.validateIngredient(I)
+	if(. == "transto")
+		return
 	if(. == "valid")
 		if(src.foodChoices) . = src.foodChoices[(input("Select production.") in src.foodChoices)]
 		user.drop_item()
@@ -149,6 +177,21 @@ var/global/ingredientLimit = 10
 		return 1
 	else user << "<span class='warning'>You can't put that in the [src.name]. \n[.]</span>"
 	return 0
+
+/obj/machinery/cooking/proc/transfer_reagents_to_food(var/obj/item/I)
+	var/obj/item/target_food
+	if(I)
+		target_food = I
+	else if (src.ingredient)
+		target_food = ingredient
+
+	if(!target_food || !src.reagents || !src.reagents.total_volume) //we have nothing to transfer to or nothing to transfer from
+		return
+
+	if(istype(target_food,/obj/item/weapon/reagent_containers))
+		for(var/datum/reagent/reagent in reagents.reagent_list)
+			src.reagents.trans_id_to(target_food, reagent.id, max(5, target_food.w_class * 5) / reagents.reagent_list.len)
+	return
 
 /obj/machinery/cooking/proc/cook(var/foodType)
 	src.active = 1
@@ -162,10 +205,12 @@ var/global/ingredientLimit = 10
 	return
 
 /obj/machinery/cooking/proc/makeFood(var/foodType)
-	new foodType(src.loc,src.ingredient)
+	var/obj/item/weapon/reagent_containers/food/new_food = new foodType(src.loc,src.ingredient)
+	if(cooks_in_reagents)
+		transfer_reagents_to_food(new_food)
 	qdel(src.ingredient)
 	src.ingredient = null
-	return
+	return new_food
 
 // Candy Machine ///////////////////////////////////////////////
 
@@ -175,6 +220,7 @@ var/global/ingredientLimit = 10
 	icon_state = "mixer_off"
 	icon_state_on = "mixer_on"
 	cookSound = 'sound/machines/juicer.ogg'
+
 
 /obj/machinery/cooking/candy/validateIngredient(var/obj/item/I)
 	. = ..()
@@ -186,14 +232,14 @@ var/global/ingredientLimit = 10
 	return
 
 /obj/machinery/cooking/candy/makeFood(var/foodType)
-	var/obj/item/I = new foodType(src.loc,src.ingredient)
-	I.name = "[src.ingredient.name] [I.name]"
-	qdel(src.ingredient)
-	src.ingredient = null
-	return
+	var/old_food = src.ingredient.name
+	var/obj/item/weapon/reagent_containers/food/new_food = ..()
+	new_food.name = "[old_food] [new_food.name]"
+	return new_food
 
 /obj/machinery/cooking/candy/getFoodChoices()
 	return (typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy))
+
 
 // Still ///////////////////////////////////////////////////////
 
@@ -232,6 +278,8 @@ var/global/ingredientLimit = 10
 	var/obj/item/weapon/reagent_containers/food/snacks/cereal/C = new(src.loc)
 	if(istype(src.ingredient,/obj/item/weapon/reagent_containers))
 		src.ingredient.reagents.trans_to(C,src.ingredient.reagents.total_volume)
+	if(cooks_in_reagents)
+		src.transfer_reagents_to_food(C) //add the stuff from the machine
 	C.name = "[src.ingredient.name] cereal"
 	var/image/I = image(src.ingredient.icon,,src.ingredient.icon_state)
 	I.transform *= 0.7
@@ -242,6 +290,8 @@ var/global/ingredientLimit = 10
 
 // Deep Fryer //////////////////////////////////////////////////
 
+#define DEEPFRY_MINOIL	50
+
 /obj/machinery/cooking/deepfryer
 	name = "deep fryer"
 	desc = "Deep fried <i>everything</i>."
@@ -250,6 +300,33 @@ var/global/ingredientLimit = 10
 	foodChoices = null
 	cookTime = 200
 
+	cks_max_volume = 400
+	cooks_in_reagents = 1
+
+/obj/machinery/cooking/deepfryer/New()
+	..()
+	reagents.add_reagent("cornoil", 300)
+
+/obj/machinery/cooking/deepfryer/proc/empty_icon() //sees if the value is empty, and changes the icon if it is
+	reagents.update_total() //make the values refresh
+	if(ingredient)
+		icon_state = "fryer_on"
+	else if(reagents.total_volume < DEEPFRY_MINOIL)
+		icon_state = "fryer_empty"
+	else
+		icon_state = initial(icon_state)
+
+/obj/machinery/cooking/deepfryer/attackby()
+	. = ..()
+	empty_icon()
+
+/obj/machinery/cooking/deepfryer/takeIngredient(var/obj/item/I, mob/user)
+	if(reagents.total_volume < DEEPFRY_MINOIL)
+		user << "\The [src] doesn't have enough oil to fry in."
+		return
+	else
+		return ..()
+
 /obj/machinery/cooking/deepfryer/validateIngredient(var/obj/item/I)
 	. = ..()
 	if((. == "valid") && (!foodNesting))
@@ -257,29 +334,44 @@ var/global/ingredientLimit = 10
 		else if(findtext(I.name,"grilled")) . = "It's already grilled."
 	return
 
+/obj/machinery/cooking/deepfryer/flush_reagents()
+	..()
+	empty_icon()
+
 /obj/machinery/cooking/deepfryer/makeFood(var/item/I)
 	var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/D = new(src.loc)
-	if(istype(src.ingredient,/obj/item/weapon/reagent_containers))
-		src.ingredient.reagents.trans_to(D,src.ingredient.reagents.total_volume)
+	if(cooks_in_reagents)
+		src.transfer_reagents_to_food(D)
 	D.name = "deep fried [src.ingredient.name]"
 	D.icon = src.ingredient.icon
 	D.icon_state = src.ingredient.icon_state
 	D.overlays = src.ingredient.overlays
 	D.color = "#FFAD33"
 	src.ingredient = null
+	empty_icon() //see if the icon needs updating from the loss of oil
 	qdel(src.ingredient)
 	return
 
 // Grill ///////////////////////////////////////////////////////
 
-/obj/machinery/cooking/deepfryer/grill
+/obj/machinery/cooking/grill
 	name = "grill"
 	desc = "Backyard grilling, IN SPACE."
 	icon_state = "grill_off"
 	icon_state_on = "grill_on"
+	foodChoices = null
 	cookTime = 450
 
-/obj/machinery/cooking/deepfryer/grill/cook()
+	cooks_in_reagents = 1
+
+/obj/machinery/cooking/grill/validateIngredient(var/obj/item/I)
+	. = ..()
+	if((. == "valid") && (!foodNesting))
+		if(findtext(I.name,"fried")) . = "It's already deep-fried."
+		else if(findtext(I.name,"grilled")) . = "It's already grilled."
+	return
+
+/obj/machinery/cooking/grill/cook()
 	src.active = 1
 	src.icon_state = src.icon_state_on
 	src.ingredient.pixel_y += 5
@@ -288,7 +380,7 @@ var/global/ingredientLimit = 10
 	sleep(src.cookTime/3)
 	if(src.ingredient) src.ingredient.color = "#C28566"
 	sleep(src.cookTime/3)
-	src.ingredient.color = "#A34719"
+	if(src.ingredient) src.ingredient.color = "#A34719"
 	sleep(src.cookTime/3)
 	src.icon_state = initial(src.icon_state)
 	src.active = 0
@@ -297,7 +389,9 @@ var/global/ingredientLimit = 10
 		src.makeFood()
 	return
 
-/obj/machinery/cooking/deepfryer/grill/makeFood()
+/obj/machinery/cooking/grill/makeFood()
+	if(cooks_in_reagents)
+		src.transfer_reagents_to_food()
 	if(istype(src.ingredient,/obj/item/weapon/reagent_containers/food))
 		var/obj/item/weapon/reagent_containers/food/F = src.ingredient
 		F.reagents.add_reagent("nutriment",10)

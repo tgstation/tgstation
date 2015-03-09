@@ -61,12 +61,10 @@
 		new/obj/item/weapon/ribbon(get_turf(src))
 		qdel(src)
 
-/obj/item/weapon/paper_pack/examine()
+/obj/item/weapon/paper_pack/examine(mob/user)
+	..()
 	if(amount)
-		..()
-		usr << "There are [amount] sheets in the pack."
-	else
-		..()
+		user << "<span class='info'>There are [amount] sheets in the pack.</span>"
 
 /obj/item/weapon/paper_pack/verb/ribbontie()
 	set name = "Untie Paper Pack"

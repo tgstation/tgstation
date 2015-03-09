@@ -3,6 +3,7 @@
 #define COMM_SCREEN_STAT		2
 #define COMM_SCREEN_MESSAGES	3
 #define COMM_SCREEN_SECLEVEL	4
+#define COMM_SCREEN_ERT			5
 
 var/shuttle_call/shuttle_calls[0]
 
@@ -61,6 +62,10 @@ var/shuttle_call/shuttle_calls[0]
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..(href, href_list))
 		return
+
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 
 	if (!(src.z in list(STATION_Z,CENTCOMM_Z)))
 		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
@@ -133,17 +138,71 @@ var/shuttle_call/shuttle_calls[0]
 				if(!input || !(usr in view(1,src)))
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
-				log_say("[key_name(usr)] has made a captain announcement: [input]")
+				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
 				message_cooldown = 1
 				spawn(600)//One minute cooldown
 					message_cooldown = 0
 
+		if("emergency_screen")
+			var/mob/M = usr
+			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			if (istype(I, /obj/item/device/pda))
+				var/obj/item/device/pda/pda = I
+				I = pda.id
+			if (I && istype(I))
+				if(access_captain in I.access)
+					authenticated = 2
+			if(authenticated != 2)
+				usr << "<span class='warning'>You do not have clearance to use this function.</span>"
+				return
+			setMenuState(usr,COMM_SCREEN_ERT)
+			return
+		if("request_emergency_team")
+			if(menu_state != COMM_SCREEN_ERT) return //Not on the right screen.
+			if ((!(ticker) || emergency_shuttle.location))
+				usr << "<span class='warning'>Warning: The evac shuttle has already arrived.</span>"
+				return
+
+			if(!universe.OnShuttleCall(usr))
+				usr << "<span class='notice'>\The [src.name] cannot establish a bluespace connection.</span>"
+				return
+
+			if(sent_strike_team)
+				usr << "<span class='warning'>PKI AUTH ERROR: SERVER REPORTS BLACKLISTED COMMUNICATION KEY PLEASE CONTACT SERVICE TECHNICIAN</span>"
+				return
+
+			if(world.time < 6000)
+				usr << "<span class='notice'>The emergency response team is away on another mission, Please wait another [round((6000-world.time)/600)] minute\s before trying again.</span>"
+				return
+			if(emergency_shuttle.online)
+				usr << "The emergency shuttle is already on its way."
+				return
+			if(!(get_security_level() in list("red", "delta")))
+				usr << "<span class='notice'>The station must be in an emergency to request a Response Team.</span>"
+				return
+			if(authenticated != 2 || issilicon(usr))
+				usr << "<span class='warning'>\The [src.name]'s screen flashes, \"Access Denied\".</span>"
+				return
+			if(send_emergency_team)
+				usr << "<span class='notice'>Central Command has already dispatched a Response Team to [station_name()]</span>"
+				return
+
+			var/response = alert(usr,"Are you sure you want to request a response team?", "ERT Request", "Yes", "No")
+			if(response != "Yes")
+				return
+			trigger_armed_response_team(1)
+			setMenuState(usr,COMM_SCREEN_MAIN)
+			return
+
 		if("callshuttle")
 			if(src.authenticated)
 				var/response = alert("Are you sure you wish to call the shuttle?", "Confirm", "Yes", "No")
 				if(response == "Yes")
-					call_shuttle_proc(usr)
+					var/justification = stripped_input(usr, "Please input a concise justification for the shuttle call. Note that failure to properly justify a shuttle call may lead to recall or termination", "Nanotrasen Anti-Comdom Systems")
+					if(!justification || !(usr in view(1,src)))
+						return
+					call_shuttle_proc(usr, justification)
 					if(emergency_shuttle.online)
 						post_status("shuttle")
 			setMenuState(usr,COMM_SCREEN_MAIN)
@@ -210,7 +269,7 @@ var/shuttle_call/shuttle_calls[0]
 					return
 				Centcomm_announce(input, usr)
 				usr << "\blue Message transmitted."
-				log_say("[key_name(usr)] has made an IA Centcomm announcement: [input]")
+				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has sent a bluespace message to Centcomm: [input]")
 				centcomm_message_cooldown = 1
 				spawn(300)//10 minute cooldown
 					centcomm_message_cooldown = 0
@@ -228,7 +287,7 @@ var/shuttle_call/shuttle_calls[0]
 					return
 				Syndicate_announce(input, usr)
 				usr << "\blue Message transmitted."
-				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
+				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has sent a bluespace message to the syndicate: [input]")
 				centcomm_message_cooldown = 1
 				spawn(300)//10 minute cooldown
 					centcomm_message_cooldown = 0
@@ -240,10 +299,6 @@ var/shuttle_call/shuttle_calls[0]
 			setMenuState(usr,COMM_SCREEN_MAIN)
 
 	return 1
-
-/obj/machinery/computer/communcations/emag(mob/user as mob)
-	src.emagged = 1
-	user << "You scramble the communication routing circuits!"
 
 /obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)
@@ -300,6 +355,7 @@ var/shuttle_call/shuttle_calls[0]
 		list("id"=SEC_LEVEL_BLUE,  "name"="Blue"),
 		//SEC_LEVEL_RED = list("name"="Red"),
 	)
+	data["ert_sent"] = send_emergency_team
 
 	var/msg_data[0]
 	for(var/i=1;i<=src.messagetext.len;i++)
@@ -362,8 +418,8 @@ var/shuttle_call/shuttle_calls[0]
 	for(var/obj/machinery/computer/prison_shuttle/PS in world)
 		PS.allowedtocall = !(PS.allowedtocall)
 
-/proc/call_shuttle_proc(var/mob/user)
-	if ((!( ticker ) || emergency_shuttle.location))
+/proc/call_shuttle_proc(var/mob/user, var/justification)
+	if ((!(ticker) || emergency_shuttle.location))
 		return
 
 	if(!universe.OnShuttleCall(user))
@@ -374,7 +430,7 @@ var/shuttle_call/shuttle_calls[0]
 		return
 
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
-		user << "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minutes before trying again."
+		user << "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minute\s before trying again."
 		return
 
 	if(emergency_shuttle.direction == -1)
@@ -390,9 +446,11 @@ var/shuttle_call/shuttle_calls[0]
 		return
 
 	emergency_shuttle.incall()
-	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
+	if(!justification)
+		justification = "#??!7E/_1$*/ARR-CON²FAIL!!*$^?" //Can happen for reasons, let's deal with it IC
+	log_game("[key_name(user)] has called the shuttle. Justification given : '[justification]'")
+	message_admins("[key_name_admin(user)] has called the shuttle. Justification given : '[justification]'. You are encouraged to act if that justification is shit", 1)
+	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes. Justification : '[justification]'")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
 	return

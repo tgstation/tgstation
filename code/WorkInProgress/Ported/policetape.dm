@@ -139,6 +139,9 @@
 /obj/item/tape/Bumped(M as mob)
 	if(src.allowed(M))
 		var/turf/T = get_turf(src)
+		for(var/atom/A in T) //Check to see if there's anything solid on the tape's turf (it's possible to build on it)
+			if(A.density)
+				return
 		M:loc = T
 
 /obj/item/tape/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
@@ -154,7 +157,7 @@
 	breaktape(W, user)
 
 /obj/item/tape/attack_hand(mob/user as mob)
-	if (user.a_intent == "help" && src.allowed(user))
+	if (user.a_intent == I_HELP && src.allowed(user))
 		if(density == 0)
 			user.visible_message("<span class='notice'>[user] pulls [src] back down.</span>")
 			src.density = 1
@@ -170,7 +173,7 @@
 	breaktape(/obj/item/weapon/wirecutters,user)
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W as obj, mob/user as mob)
-	if(user.a_intent == "help" && ((!is_sharp(W) && src.allowed(user))))
+	if(user.a_intent == I_HELP && ((!is_sharp(W) && src.allowed(user))))
 		user << "<span class='notice'>You can't break [src] with that!</span>"
 		return
 	user.visible_message("<span class='warning'>[user] breaks [src]!</span>")

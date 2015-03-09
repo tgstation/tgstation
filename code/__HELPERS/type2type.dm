@@ -69,7 +69,7 @@
 		. = "[ls[++i]]" // Make sure the initial element is converted to text.
 
 		if(l-1 & 0x01) // 'i' will always be 1 here.
-			. += S1 // Append 1 element if the remaining elements are not a multiple of 2.
+			. += "[S1]" // Append 1 element if the remaining elements are not a multiple of 2.
 		if(l-i & 0x02)
 			. = text("[][][]", ., S1, S1) // Append 2 elements if the remaining elements are not a multiple of 4.
 		if(l-i & 0x04)
@@ -257,6 +257,7 @@ proc/tg_list2text(list/list, glue=",")
 	if(rights & R_SOUNDS)		. += "[seperator]+SOUND"
 	if(rights & R_SPAWN)		. += "[seperator]+SPAWN"
 	if(rights & R_MOD)			. += "[seperator]+MODERATOR"
+	if(rights & R_ADMINBUS)		. += "[seperator]+ADMINBUS"
 	return .
 
 /proc/ui_style2icon(ui_style)

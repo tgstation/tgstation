@@ -84,9 +84,9 @@ var/global/list/datum/mind/raiders = list()  //Antags.
 		vox.dna.mutantrace = "vox"
 		vox.set_species("Vox")
 		vox.generate_name()
-		vox.languages = list() // Removing language from chargen.
+		vox.languages = HUMAN // Removing language from chargen.
 		vox.flavor_text = ""
-		vox.add_language("Vox-pidgin")
+		//vox.add_language("Vox-pidgin")
 		vox.h_style = "Short Vox Quills"
 		vox.f_style = "Shaved"
 		for(var/datum/organ/external/limb in vox.organs)

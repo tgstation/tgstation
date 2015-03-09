@@ -13,6 +13,17 @@
 	var/turf/x2y2 = locate(((Center.x+Dist)>world.maxx ? world.maxx : Center.x+Dist),((Center.y+Dist)>world.maxy ? world.maxy : Center.y+Dist),Center.z)
 	return block(x1y1, x2y2)
 
+/**
+ * Make boom
+ *
+ * @param epicenter          Where explosion is centered
+ * @param devastation_range
+ * @param heavy_impact_range
+ * @param light_impact_range
+ * @param flash_range        Unused
+ * @param adminlog           Log to admins
+ * @param squelch            Do not notify explosion listeners
+ */
 /proc/explosion(turf/epicenter, const/devastation_range, const/heavy_impact_range, const/light_impact_range, const/flash_range, adminlog = 1, squelch = 0)
 	src = null	//so we don't abort once src is deleted
 
@@ -68,8 +79,10 @@
 			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</A>)")
 			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
 
-		var/lighting_controller_was_processing = lighting_controller.processing	//Pause the lighting updates for a bit
-		lighting_controller.processing = 0
+		// Pause the lighting updates for a bit.
+		var/datum/controller/process/lighting = processScheduler.getProcess("lighting")
+		lighting.disable()
+
 		var/powernet_rebuild_was_deferred_already = defer_powernet_rebuild
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 1
@@ -112,7 +125,8 @@
 
 		sleep(8)
 
-		if(!lighting_controller.processing)	lighting_controller.processing = lighting_controller_was_processing
+		lighting.enable()
+
 		if(!powernet_rebuild_was_deferred_already)
 			if(defer_powernet_rebuild != 2)
 				defer_powernet_rebuild = 0

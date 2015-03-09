@@ -25,10 +25,10 @@
 	update_nearby_tiles()
 	update_nearby_icons()
 
-/obj/structure/window/examine()
+/obj/structure/window/examine(mob/user)
 	..()
 	if(!anchored)
-		usr << "<span class='notice'>\the [src] appears to be loose.</span>"
+		user << "<span class='info'>\the [src] appears to be loose.</span>"
 
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
@@ -77,9 +77,11 @@
 		return !density
 	return 1
 
-/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
+	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+		return 0	//full tile window, you can't move into it!
 	if(get_dir(loc, target) == dir)
 		return !density
 	else
@@ -131,16 +133,16 @@
 		if(pdiff>0)
 			message_admins("Window destroyed by hulk [user.real_name] ([formatPlayerPanel(user,user.ckey)]) with pdiff [pdiff] at [formatJumpTo(loc)]!")
 			log_admin("Window destroyed by hulk [user.real_name] ([user.ckey]) with pdiff [pdiff] at [loc]!")
-		user.changeNext_move(8)
+		user.delayNextAttack(8)
 		destroy()
-	else if (usr.a_intent == "hurt")
-		user.changeNext_move(8) // not so polite
+	else if (usr.a_intent == I_HURT)
+		user.delayNextAttack(8) // not so polite
 		playsound(get_turf(src), 'sound/effects/glassknock.ogg', 80, 1)
-		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
-							"\red You bang against the [src.name]!", \
+		usr.visible_message("<span class='warning'>[usr.name] bangs against the [src.name]!</span>", \
+							"<span class='warning'>You bang against the [src.name]!</span>", \
 							"You hear a banging sound.")
 	else
-		user.changeNext_move(10)
+		user.delayNextAttack(10)
 		playsound(get_turf(src), 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("[usr.name] knocks on the [src.name].", \
 							"You knock on the [src.name].", \
@@ -152,9 +154,9 @@
 	return attack_hand(user)
 
 /obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
-	user.changeNext_move(10)
+	user.delayNextAttack(10)
 	health -= damage
-	user.changeNext_move(8)
+	user.delayNextAttack(8)
 	if(health <= 0)
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		var/pdiff=performWallPressureCheck(src.loc)
@@ -185,32 +187,32 @@
 /obj/structure/window/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!istype(W)) return//I really wish I did not need this
 
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if (istype(W, /obj/item/weapon/grab) && Adjacent(user))
 		var/obj/item/weapon/grab/G = W
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/state = G.state
-			del(W)	//gotta delete it here because if window breaks, it won't get deleted
+			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
 			var/damage
 			switch (state)
-				if(1)
+				if(GRAB_PASSIVE)
+					M.apply_damage(4)
+					damage = 4
+					hit(5)
+					visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
+				if(GRAB_AGGRESSIVE)
+					if (prob(50))
+						M.Weaken(1)
 					M.apply_damage(7)
 					damage = 7
 					hit(10)
-					visible_message("\red [user] slams [M] against \the [src]!")
-				if(2)
-					if (prob(50))
-						M.Weaken(1)
-					M.apply_damage(10)
-					damage = 10
+					visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
+				if(GRAB_NECK to GRAB_KILL)
+					M.Weaken(3)
+					M.apply_damage(15)
+					damage = 15
 					hit(25)
-					visible_message("\red <b>[user] bashes [M] against \the [src]!</b>")
-				if(3)
-					M.Weaken(5)
-					M.apply_damage(20)
-					damage = 20
-					hit(50)
-					visible_message("\red <big><b>[user] crushes [M] against \the [src]!</b></big>")
+					visible_message("<big><span class='danger'>[user] crushes [M] against \the [src]!</span></big>")
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been window slammed by [user.name] ([user.ckey]) for [damage] damage.</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Window slammed [M.name] for [damage] damage.</font>")
 			msg_admin_attack("[user.name] ([user.ckey]) window slammed [M.name] ([M.ckey]) for [damage] damage (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -245,9 +247,23 @@
 		state = 1 - state
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored && (!state || !reinf))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
+		user << "<span class='notice'>Now disassembling the window...</span>"
+		var/obj/item/weapon/weldingtool/WT = W
+		if (WT.remove_fuel(0))
+			if(do_after(user,40))
+				if(!user || !src) return
+				visible_message("<span class='notice'>[user] dismantles \the [src].</span>")
+				new /obj/item/stack/sheet/glass/glass(get_turf(src))
+				qdel(src)
+		else
+			user << "Need more welding fuel!"
+			return
+
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
-			user.changeNext_move(10)
+			user.delayNextAttack(10)
 			hit(W.force)
 			if(health <= 7)
 				anchored = 0

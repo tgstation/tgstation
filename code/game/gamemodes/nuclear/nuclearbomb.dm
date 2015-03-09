@@ -79,7 +79,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						user << "\red You need more fuel to complete this task."
+						user << "<span class='notice'>You need more fuel to complete this task.</span>"
 						return
 
 					user.visible_message("[user] starts cutting apart the anchoring system sealant on [src].", "You start cutting apart the anchoring system's sealant with [O]...")
@@ -115,7 +115,12 @@ var/bomb_set
 	..()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
+	return attack_hand(user)
+
+/obj/machinery/nuclearbomb/attack_ghost(mob/user as mob) //prevents ghosts from deploying the nuke
+	if (src.extended) //if the nuke is set
+		return attack_hand(user) //continue as normal
+	return 0 //otherwise nothing
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user as mob)
 	if (src.extended)
@@ -142,9 +147,9 @@ var/bomb_set
 	else if (src.deployable)
 		if(removal_stage < 5)
 			src.anchored = 1
-			visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring!")
+			visible_message("<span class='notice'>With a steely snap, bolts slide out of [src] and anchor it to the flooring!</span>")
 		else
-			visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
+			visible_message("<span class='notice'>\The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
 		flick("nuclearbombc", src)
 		src.icon_state = "nuclearbomb1"
 		src.extended = 1
@@ -155,11 +160,16 @@ var/bomb_set
 	set name = "Make Deployable"
 	set src in oview(1)
 
+	if (!usr || usr.stat || usr.lying) return
+	if (!ishuman(usr))
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+
 	if (src.deployable)
-		usr << "\red You close several panels to make [src] undeployable."
+		usr << "<span class='notice'>You close several panels to make [src] undeployable.</span>"
 		src.deployable = 0
 	else
-		usr << "\red You adjust some panels to make [src] deployable."
+		usr << "<span class='notice'>You adjust some panels to make [src] deployable.</span>"
 		src.deployable = 1
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)
@@ -207,7 +217,7 @@ var/bomb_set
 					if (src.timing == -1.0)
 						return
 					if (src.safety)
-						usr << "\red The safety is still on."
+						usr << "<span class='warning'>The safety is still on.</span>"
 						return
 					src.timing = !( src.timing )
 					if (src.timing)
@@ -228,15 +238,15 @@ var/bomb_set
 
 					if(removal_stage == 5)
 						src.anchored = 0
-						visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
+						visible_message("<span class='warning'>\The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
 						return
 
 					src.anchored = !( src.anchored )
 					if(src.anchored)
-						visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring.")
+						visible_message("<span class='warning'>With a steely snap, bolts slide out of [src] and anchor it to the flooring.</span>")
 						playsound(src,'sound/effects/bolt.ogg', 70, 1)
 					else
-						visible_message("\red The anchoring bolts slide back into the depths of [src].")
+						visible_message("<span class='warning'>The anchoring bolts slide back into the depths of [src].</span>")
 
 		src.add_fingerprint(usr)
 		for(var/mob/M in viewers(1, src))

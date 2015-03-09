@@ -10,7 +10,7 @@
 	using.name = "act_intent"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
+	using.icon_state = (mymob.a_intent == I_HURT ? "harm" : mymob.a_intent)
 	using.screen_loc = ui_acti
 	using.layer = 20
 	src.adding += using
@@ -232,7 +232,7 @@
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = 'icons/mob/screen1_alien.dmi'
-	mymob.zone_sel.overlays.Cut()
+	mymob.zone_sel.overlays.len = 0
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
 	mymob.client.screen = null

@@ -251,7 +251,7 @@ var/list/beam_master = list()
 	var/reference = "\ref[src]" // So we do not have to recalculate it a ton.
 
 	spawn(0)
-		var/target_dir = src.dir // TODO: remove dir arg.
+		var/target_dir = dir ? dir : src.dir// TODO: remove dir arg. Or don't because the way this was set up without it broke spacepods.
 
 		while(loc) // Move until we hit something.
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
@@ -304,7 +304,7 @@ var/list/beam_master = list()
 			for(var/turf/T in turfs)
 				T.overlays.Remove(beam_master[laser_state])
 
-			turfs.Cut()
+			turfs.len = 0
 
 /obj/item/projectile/beam/practice
 	name = "laser"
@@ -342,6 +342,8 @@ var/list/beam_master = list()
 	icon_state = "emitter"
 	damage = 30
 
+/obj/item/projectile/beam/emitter/singularity_pull()
+	return
 
 /obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"

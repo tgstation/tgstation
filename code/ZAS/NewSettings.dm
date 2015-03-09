@@ -237,7 +237,7 @@ var/global/ZAS_Settings/zas_settings = new
 /ZAS_Settings/New()
 	.=..()
 	for(var/S in typesof(/datum/ZAS_Setting) - /datum/ZAS_Setting)
-		var/id=idfrompath("[S]")
+		var/id= "[S]"// dfrompath("[S]")
 		//testing("Creating zas_settings\[[id]\] = new [S]")
 		src.settings[id]=new S
 
@@ -287,7 +287,7 @@ var/global/ZAS_Settings/zas_settings = new
 
 // INTERNAL USE ONLY
 /ZAS_Settings/proc/ChangeSetting(var/user,var/id)
-	var/datum/ZAS_Setting/setting = src.settings[id]
+	var/datum/ZAS_Setting/setting = src.settings["[id]"]
 	var/displayedValue=""
 	switch(setting.valtype)
 		if(ZAS_TYPE_NUMERIC)
@@ -326,12 +326,12 @@ var/global/ZAS_Settings/zas_settings = new
 * @param value The value that the setting should be set to.
 */
 /ZAS_Settings/proc/Set(var/id, var/value)
-	var/datum/ZAS_Setting/setting = src.settings[idfrompath(id)]
+	var/datum/ZAS_Setting/setting = src.settings["[id]"]
 	setting.value=value
 
 // INTERNAL USE ONLY
 /ZAS_Settings/proc/SetFromConfig(var/id, var/value)
-	var/datum/ZAS_Setting/setting = src.settings[id]
+	var/datum/ZAS_Setting/setting = src.settings["[id]"]
 	switch(setting.valtype)
 		if(ZAS_TYPE_NUMERIC)
 			setting.value = text2num(value)
@@ -363,9 +363,9 @@ var/global/ZAS_Settings/zas_settings = new
 /ZAS_Settings/proc/Get(var/id)
 	if(ispath(id))
 		id="[id]"
-	var/datum/ZAS_Setting/setting = src.settings[idfrompath(id)]
+	var/datum/ZAS_Setting/setting = src.settings[id]
 	if(!setting || !istype(setting))
-		world.log << "ZAS_SETTING DEBUG: [id] | [idfrompath(id)]"
+		world.log << "ZAS_SETTING DEBUG: [id] | [id]"
 	return setting.value
 
 /ZAS_Settings/proc/ChangeSettingsDialog(mob/user)
@@ -420,98 +420,98 @@ a { color: white; }
 		return
 	switch(def)
 		if("Plasma - Standard")
-			Set("CLOTH_CONTAMINATION",  1)   //If this is on, plasma does damage by getting into cloth.
-			Set("PLASMAGUARD_ONLY",     0)
-			Set("GENETIC_CORRUPTION",   0)   //Chance of genetic corruption as well as toxic damage, X in 1000.
-			Set("SKIN_BURNS",           0)   //Plasma has an effect similar to mustard gas on the un-suited.
-			Set("EYE_BURNS",            1)   //Plasma burns the eyes of anyone not wearing eye protection.
-			Set("PLASMA_HALLUCINATION", 0)
-			Set("CONTAMINATION_LOSS",   0.02)
+			Set("/datum/ZAS_Setting/CLOTH_CONTAMINATION",  1)   //If this is on, plasma does damage by getting into cloth.
+			Set("/datum/ZAS_Setting/PLASMAGUARD_ONLY",     0)
+			Set("/datum/ZAS_Setting/GENETIC_CORRUPTION",   0)   //Chance of genetic corruption as well as toxic damage, X in 1000.
+			Set("/datum/ZAS_Setting/SKIN_BURNS",           0)   //Plasma has an effect similar to mustard gas on the un-suited.
+			Set("/datum/ZAS_Setting/EYE_BURNS",            1)   //Plasma burns the eyes of anyone not wearing eye protection.
+			Set("/datum/ZAS_Setting/PLASMA_HALLUCINATION", 0)
+			Set("/datum/ZAS_Setting/CONTAMINATION_LOSS",   0.02)
 
 		if("Plasma - Low Hazard")
-			Set("CLOTH_CONTAMINATION",  0) //If this is on, plasma does damage by getting into cloth.
-			Set("PLASMAGUARD_ONLY",     0)
-			Set("GENETIC_CORRUPTION",   0) //Chance of genetic corruption as well as toxic damage, X in 1000
-			Set("SKIN_BURNS",           0) //Plasma has an effect similar to mustard gas on the un-suited.
-			Set("EYE_BURNS",            1) //Plasma burns the eyes of anyone not wearing eye protection.
-			Set("PLASMA_HALLUCINATION", 0)
-			Set("CONTAMINATION_LOSS",   0.01)
+			Set("/datum/ZAS_Setting/CLOTH_CONTAMINATION",  0) //If this is on, plasma does damage by getting into cloth.
+			Set("/datum/ZAS_Setting/PLASMAGUARD_ONLY",     0)
+			Set("/datum/ZAS_Setting/GENETIC_CORRUPTION",   0) //Chance of genetic corruption as well as toxic damage, X in 1000
+			Set("/datum/ZAS_Setting/SKIN_BURNS",           0) //Plasma has an effect similar to mustard gas on the un-suited.
+			Set("/datum/ZAS_Setting/EYE_BURNS",            1) //Plasma burns the eyes of anyone not wearing eye protection.
+			Set("/datum/ZAS_Setting/PLASMA_HALLUCINATION", 0)
+			Set("/datum/ZAS_Setting/CONTAMINATION_LOSS",   0.01)
 
 		if("Plasma - High Hazard")
-			Set("CLOTH_CONTAMINATION",  1) //If this is on, plasma does damage by getting into cloth.
-			Set("PLASMAGUARD_ONLY",     0)
-			Set("GENETIC_CORRUPTION",   0) //Chance of genetic corruption as well as toxic damage, X in 1000.
-			Set("SKIN_BURNS",           1) //Plasma has an effect similar to mustard gas on the un-suited.
-			Set("EYE_BURNS",            1) //Plasma burns the eyes of anyone not wearing eye protection.
-			Set("PLASMA_HALLUCINATION", 1)
-			Set("CONTAMINATION_LOSS",   0.05)
+			Set("/datum/ZAS_Setting/CLOTH_CONTAMINATION",  1) //If this is on, plasma does damage by getting into cloth.
+			Set("/datum/ZAS_Setting/PLASMAGUARD_ONLY",     0)
+			Set("/datum/ZAS_Setting/GENETIC_CORRUPTION",   0) //Chance of genetic corruption as well as toxic damage, X in 1000.
+			Set("/datum/ZAS_Setting/SKIN_BURNS",           1) //Plasma has an effect similar to mustard gas on the un-suited.
+			Set("/datum/ZAS_Setting/EYE_BURNS",            1) //Plasma burns the eyes of anyone not wearing eye protection.
+			Set("/datum/ZAS_Setting/PLASMA_HALLUCINATION", 1)
+			Set("/datum/ZAS_Setting/CONTAMINATION_LOSS",   0.05)
 
 		if("Plasma - Oh Shit!")
-			Set("CLOTH_CONTAMINATION",  1) //If this is on, plasma does damage by getting into cloth.
-			Set("PLASMAGUARD_ONLY",     1)
-			Set("GENETIC_CORRUPTION",   5) //Chance of genetic corruption as well as toxic damage, X in 1000.
-			Set("SKIN_BURNS",           1) //Plasma has an effect similar to mustard gas on the un-suited.
-			Set("EYE_BURNS",            1) //Plasma burns the eyes of anyone not wearing eye protection.
-			Set("PLASMA_HALLUCINATION", 1)
-			Set("CONTAMINATION_LOSS",   0.075)
+			Set("/datum/ZAS_Setting/CLOTH_CONTAMINATION",  1) //If this is on, plasma does damage by getting into cloth.
+			Set("/datum/ZAS_Setting/PLASMAGUARD_ONLY",     1)
+			Set("/datum/ZAS_Setting/GENETIC_CORRUPTION",   5) //Chance of genetic corruption as well as toxic damage, X in 1000.
+			Set("/datum/ZAS_Setting/SKIN_BURNS",           1) //Plasma has an effect similar to mustard gas on the un-suited.
+			Set("/datum/ZAS_Setting/EYE_BURNS",            1) //Plasma burns the eyes of anyone not wearing eye protection.
+			Set("/datum/ZAS_Setting/PLASMA_HALLUCINATION", 1)
+			Set("/datum/ZAS_Setting/CONTAMINATION_LOSS",   0.075)
 
 		if("ZAS - Normal")
-			Set("airflow_push",              0)
-			Set("airflow_lightest_pressure", 20)
-			Set("airflow_light_pressure",    35)
-			Set("airflow_medium_pressure",   50)
-			Set("airflow_heavy_pressure",    65)
-			Set("airflow_dense_pressure",    85)
-			Set("airflow_stun_pressure",     60)
-			Set("airflow_stun_cooldown",     60)
-			Set("airflow_stun",              1)
-			Set("airflow_damage",            2)
-			Set("airflow_speed_decay",       1.5)
-			Set("airflow_delay",             30)
-			Set("airflow_mob_slowdown",      1)
+			Set("/datum/ZAS_Setting/airflow_push",              0)
+			Set("/datum/ZAS_Setting/airflow_lightest_pressure", 20)
+			Set("/datum/ZAS_Setting/airflow_light_pressure",    35)
+			Set("/datum/ZAS_Setting/airflow_medium_pressure",   50)
+			Set("/datum/ZAS_Setting/airflow_heavy_pressure",    65)
+			Set("/datum/ZAS_Setting/airflow_dense_pressure",    85)
+			Set("/datum/ZAS_Setting/airflow_stun_pressure",     60)
+			Set("/datum/ZAS_Setting/airflow_stun_cooldown",     60)
+			Set("/datum/ZAS_Setting/airflow_stun",              1)
+			Set("/datum/ZAS_Setting/airflow_damage",            2)
+			Set("/datum/ZAS_Setting/airflow_speed_decay",       1.5)
+			Set("/datum/ZAS_Setting/airflow_delay",             30)
+			Set("/datum/ZAS_Setting/airflow_mob_slowdown",      1)
 
 		if("ZAS - Forgiving")
-			Set("airflow_push",              0)
-			Set("airflow_lightest_pressure", 45)
-			Set("airflow_light_pressure",    60)
-			Set("airflow_medium_pressure",   120)
-			Set("airflow_heavy_pressure",    110)
-			Set("airflow_dense_pressure",    200)
-			Set("airflow_stun_pressure",     150)
-			Set("airflow_stun_cooldown",     90)
-			Set("airflow_stun",              0.15)
-			Set("airflow_damage",            0.15)
-			Set("airflow_speed_decay",       1.5)
-			Set("airflow_delay",             50)
-			Set("airflow_mob_slowdown",      0)
+			Set("/datum/ZAS_Setting/airflow_push",              0)
+			Set("/datum/ZAS_Setting/airflow_lightest_pressure", 45)
+			Set("/datum/ZAS_Setting/airflow_light_pressure",    60)
+			Set("/datum/ZAS_Setting/airflow_medium_pressure",   120)
+			Set("/datum/ZAS_Setting/airflow_heavy_pressure",    110)
+			Set("/datum/ZAS_Setting/airflow_dense_pressure",    200)
+			Set("/datum/ZAS_Setting/airflow_stun_pressure",     150)
+			Set("/datum/ZAS_Setting/airflow_stun_cooldown",     90)
+			Set("/datum/ZAS_Setting/airflow_stun",              0.15)
+			Set("/datum/ZAS_Setting/airflow_damage",            0.15)
+			Set("/datum/ZAS_Setting/airflow_speed_decay",       1.5)
+			Set("/datum/ZAS_Setting/airflow_delay",             50)
+			Set("/datum/ZAS_Setting/airflow_mob_slowdown",      0)
 
 		if("ZAS - Dangerous")
-			Set("airflow_push",              1)
-			Set("airflow_lightest_pressure", 15)
-			Set("airflow_light_pressure",    30)
-			Set("airflow_medium_pressure",   45)
-			Set("airflow_heavy_pressure",    55)
-			Set("airflow_dense_pressure",    70)
-			Set("airflow_stun_pressure",     50)
-			Set("airflow_stun_cooldown",     50)
-			Set("airflow_stun",              2)
-			Set("airflow_damage",            3)
-			Set("airflow_speed_decay",       1.2)
-			Set("airflow_delay",             25)
-			Set("airflow_mob_slowdown",      2)
+			Set("/datum/ZAS_Setting/airflow_push",              1)
+			Set("/datum/ZAS_Setting/airflow_lightest_pressure", 15)
+			Set("/datum/ZAS_Setting/airflow_light_pressure",    30)
+			Set("/datum/ZAS_Setting/airflow_medium_pressure",   45)
+			Set("/datum/ZAS_Setting/airflow_heavy_pressure",    55)
+			Set("/datum/ZAS_Setting/airflow_dense_pressure",    70)
+			Set("/datum/ZAS_Setting/airflow_stun_pressure",     50)
+			Set("/datum/ZAS_Setting/airflow_stun_cooldown",     50)
+			Set("/datum/ZAS_Setting/airflow_stun",              2)
+			Set("/datum/ZAS_Setting/airflow_damage",            3)
+			Set("/datum/ZAS_Setting/airflow_speed_decay",       1.2)
+			Set("/datum/ZAS_Setting/airflow_delay",             25)
+			Set("/datum/ZAS_Setting/airflow_mob_slowdown",      2)
 
 		if("ZAS - Hellish")
-			Set("airflow_push",              1)
-			Set("airflow_lightest_pressure", 20)
-			Set("airflow_light_pressure",    30)
-			Set("airflow_medium_pressure",   40)
-			Set("airflow_heavy_pressure",    50)
-			Set("airflow_dense_pressure",    60)
-			Set("airflow_stun_pressure",     40)
-			Set("airflow_stun_cooldown",     40)
-			Set("airflow_stun",              3)
-			Set("airflow_damage",            4)
-			Set("airflow_speed_decay",       1)
-			Set("airflow_delay",             20)
-			Set("airflow_mob_slowdown",      3)
+			Set("/datum/ZAS_Setting/airflow_push",              1)
+			Set("/datum/ZAS_Setting/airflow_lightest_pressure", 20)
+			Set("/datum/ZAS_Setting/airflow_light_pressure",    30)
+			Set("/datum/ZAS_Setting/airflow_medium_pressure",   40)
+			Set("/datum/ZAS_Setting/airflow_heavy_pressure",    50)
+			Set("/datum/ZAS_Setting/airflow_dense_pressure",    60)
+			Set("/datum/ZAS_Setting/airflow_stun_pressure",     40)
+			Set("/datum/ZAS_Setting/airflow_stun_cooldown",     40)
+			Set("/datum/ZAS_Setting/airflow_stun",              3)
+			Set("/datum/ZAS_Setting/airflow_damage",            4)
+			Set("/datum/ZAS_Setting/airflow_speed_decay",       1)
+			Set("/datum/ZAS_Setting/airflow_delay",             20)
+			Set("/datum/ZAS_Setting/airflow_mob_slowdown",      3)
 	world << "\blue <b>[key_name(usr)] loaded ZAS preset <i>[def]</i></b>"

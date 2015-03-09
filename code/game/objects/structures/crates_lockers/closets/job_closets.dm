@@ -16,7 +16,6 @@
 
 /obj/structure/closet/gmcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/clothing/head/hairflower
@@ -43,7 +42,6 @@
 
 /obj/structure/closet/jcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/under/rank/janitor(src)
 	new /obj/item/weapon/cartridge/janitor(src)
 	new /obj/item/device/flashlight(src)
@@ -69,6 +67,7 @@
 	icon_closed = "blue"
 
 /obj/structure/closet/lawcloset/New()
+	..()
 	new /obj/item/clothing/under/lawyer/female(src)
 	new /obj/item/clothing/under/lawyer/black(src)
 	new /obj/item/clothing/under/lawyer/red(src)
@@ -89,6 +88,7 @@
 
 
 /obj/structure/closet/paramedic/New()
+	..()
 	new /obj/item/clothing/under/rank/medical/paramedic(src)
 	new /obj/item/clothing/under/rank/medical/paramedic(src)
 	new /obj/item/device/radio/headset/headset_med(src)

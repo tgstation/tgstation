@@ -18,12 +18,12 @@
 /turf/simulated/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir,var/bloodcolor="#A10808")
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
-		tracks = new typepath(src)
+		tracks = getFromPool(typepath, src)
 	tracks.AddTracks(bloodDNA,comingdir,goingdir,bloodcolor)
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		usr << "<span class='warning'>Movement is admin-disabled.</span>" //This is to identify lag problems
 		return
 
 	if (istype(A,/mob/living/carbon))
@@ -31,16 +31,6 @@
 		if(M.lying)	return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
-				var/obj/item/clothing/shoes/clown_shoes/O = H.shoes
-				if(H.m_intent == "run")
-					if(O.footstep >= 2)
-						O.footstep = 0
-						playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
-					else
-						O.footstep++
-				else
-					playsound(src, "clownstep", 20, 1)
 
 			// Tracking blood
 			var/list/bloodDNA = null
@@ -58,34 +48,30 @@
 					H.track_blood--
 
 			if (bloodDNA)
-				src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0,bloodcolor) // Coming
+				if(istype(M,/mob/living/carbon/human/vox))
+					src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints/vox,bloodDNA,H.dir,0,bloodcolor) // Coming
+				else
+					src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0,bloodcolor) // Coming
 				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
 				if(istype(from) && from)
-					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir,bloodcolor) // Going
+					if(istype(M,/mob/living/carbon/human/vox))
+						from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints/vox,bloodDNA,0,H.dir,bloodcolor) // Going
+					else
+						from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir,bloodcolor) // Going
 
 			bloodDNA = null
 
 			// Floorlength braids?  Enjoy your tripping.
-			if((H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR))))
+			if(H.h_style && !H.check_hidden_head_flags(HIDEHEADHAIR))
 				var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
 				if(hair_style && (hair_style.flags & HAIRSTYLE_CANTRIP))
 					if(H.m_intent == "run" && prob(5))
 						H.stop_pulling()
 						step(H, H.dir)
-						H << "\blue You tripped over your hair!"
+						H << "<span class='notice'>You tripped over your hair!</span>"
 						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 						H.Stun(4)
 						H.Weaken(5)
-		else if(iscluwne(M))
-			var/mob/living/simple_animal/hostile/retaliate/cluwne/C=M
-			if(C.m_intent == "run")
-				if(C.footstep >= 2)
-					C.footstep = 0
-					playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
-				else
-					C.footstep++
-			else
-				playsound(src, "clownstep", 20, 1)
 
 		switch (src.wet)
 			if(1)
@@ -93,7 +79,7 @@
 					if ((M.m_intent == "run") && !(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP))
 						M.stop_pulling()
 						step(M, M.dir)
-						M << "\blue You slipped on the wet floor!"
+						M << "<span class='notice'>You slipped on the wet floor!</span>"
 						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(5)
 						M.Weaken(3)
@@ -104,7 +90,7 @@
 					if (M.m_intent == "run")
 						M.stop_pulling()
 						step(M, M.dir)
-						M << "\blue You slipped on the wet floor!"
+						M << "<span class='notice'>You slipped on the wet floor!</span>"
 						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(5)
 						M.Weaken(3)
@@ -121,7 +107,7 @@
 					spawn(3) step(M, M.dir)
 					spawn(4) step(M, M.dir)
 					M.take_organ_damage(2) // Was 5 -- TLE
-					M << "\blue You slipped on the floor!"
+					M << "<span class='notice'>You slipped on the floor!</span>"
 					playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 					M.Weaken(10)
 			if(3) // Ice
@@ -129,7 +115,7 @@
 					if ((M.m_intent == "run") && !(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) && prob(30))
 						M.stop_pulling()
 						step(M, M.dir)
-						M << "\blue You slipped on the icy floor!"
+						M << "<span class='notice'>You slipped on the icy floor!</span>"
 						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(4)
 						M.Weaken(3)
@@ -140,7 +126,7 @@
 					if (M.m_intent == "run" && prob(30))
 						M.stop_pulling()
 						step(M, M.dir)
-						M << "\blue You slipped on the icy floor!"
+						M << "<span class='notice'>You slipped on the icy floor!</span>"
 						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(4)
 						M.Weaken(3)
@@ -161,7 +147,7 @@
 			B.virus2 = virus_copylist(M.virus2)
 		return 1 //we bloodied the floor
 
-	blood_splatter(src,M.get_blood(M.vessel),1)
+	blood_splatter(src,M,1)
 	return 1 //we bloodied the floor
 
 
@@ -170,7 +156,9 @@
 	if(istype(M, /mob/living/carbon/monkey))
 		blood_splatter(src,M,1)
 	else if( istype(M, /mob/living/carbon/alien ))
-		var/obj/effect/decal/cleanable/blood/xeno/this = new /obj/effect/decal/cleanable/blood/xeno(src)
+		var/obj/effect/decal/cleanable/blood/xeno/this = getFromPool(/obj/effect/decal/cleanable/blood/xeno, src)
+		this.New(src)
 		this.blood_DNA["UNKNOWN BLOOD"] = "X*"
 	else if( istype(M, /mob/living/silicon/robot ))
-		new /obj/effect/decal/cleanable/blood/oil(src)
+		var/obj/effect/decal/cleanable/blood/oil/B = getFromPool(/obj/effect/decal/cleanable/blood/oil,src)
+		B.New(src)

@@ -3,11 +3,13 @@
 	desc = "Useful for sweeping alleys."
 	fire_sound = 'sound/weapons/shotgun.ogg'
 	icon_state = "shotgun"
-	item_state = "shotgun"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	max_shells = 4
 	w_class = 4.0
 	force = 10
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	caliber = list("shotgun" = 1, "flare" = 1) //flare shells are still shells
 	origin_tech = "combat=4;materials=2"
@@ -60,6 +62,8 @@
 /obj/item/weapon/gun/projectile/shotgun/pump/combat
 	name = "combat shotgun"
 	icon_state = "cshotgun"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	max_shells = 8
 	origin_tech = "combat=5;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun"
@@ -73,7 +77,8 @@
 	max_shells = 2
 	w_class = 4.0
 	force = 10
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	caliber = list("shotgun" = 1, "flare" = 1)
 	origin_tech = "combat=3;materials=1"

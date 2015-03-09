@@ -47,12 +47,12 @@
 
 		if(locate(/obj/effect/plantsegment) in loc)
 			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
-			del(SV)
+			qdel(SV)
 			if(prob(10))
 				say("Nom")
 
 		if(!pulledby)
-			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
+			for(var/direction in shuffle(alldirs))
 				var/step = get_step(src, direction)
 				if(step)
 					if(locate(/obj/effect/plantsegment) in step)
@@ -67,7 +67,7 @@
 	if(!stat)
 		if(locate(/obj/effect/plantsegment) in loc)
 			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
-			del(SV)
+			qdel(SV)
 			if(prob(10))
 				say("Nom")
 
@@ -130,7 +130,7 @@
 			udder.add_reagent("milk", rand(5, 10))
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
-	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
+	if(!stat && M.a_intent == I_DISARM && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
 		Weaken(30)
 		icon_state = icon_dead
@@ -158,7 +158,7 @@
 	emote_see = list("pecks at the ground","flaps its tiny wings")
 	speak_chance = 2
 	turns_per_move = 2
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/rawchicken
 	meat_amount = 1
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -182,7 +182,7 @@
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
-			del(src)
+			qdel(src)
 
 var/const/MAX_CHICKENS = 50
 var/global/chicken_count = 0
@@ -199,7 +199,7 @@ var/global/chicken_count = 0
 	emote_see = list("pecks at the ground","flaps its wings viciously")
 	speak_chance = 2
 	turns_per_move = 3
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/rawchicken
 	meat_amount = 2
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -213,6 +213,10 @@ var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken/New()
 	..()
+	if(prob(5))
+		name = "Pomf chicken"
+		body_color = "white"
+
 	if(!body_color)
 		body_color = pick( list("brown","black","white") )
 	icon_state = "chicken_[body_color]"
@@ -231,11 +235,14 @@ var/global/chicken_count = 0
 		if(!stat && eggsleft < 8)
 			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
 			user.drop_item()
-			del(O)
+			qdel(O)
 			eggsleft += rand(1, 4)
 			//world << eggsleft
 		else
 			user << "\blue [name] doesn't seem hungry!"
+	else if(istype(O, /obj/item/weapon/dnainjector))
+		var/obj/item/weapon/dnainjector/I = O
+		I.inject(src, user)
 	else
 		..()
 
@@ -260,6 +267,6 @@ var/global/chicken_count = 0
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))
 			processing_objects.Remove(src)
-			del(src)
+			qdel(src)
 	else
 		processing_objects.Remove(src)

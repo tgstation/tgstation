@@ -4,7 +4,7 @@
 #define SUPPLY_STATION_AREATYPE "/area/supply/station" //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE "/area/supply/dock"	//Type of the supply shuttle area for dock
 #define SUPPLY_TAX 10 // Credits to charge per order.
-var/datum/controller/supply_shuttle/supply_shuttle = new()
+var/datum/controller/supply_shuttle/supply_shuttle = new
 
 var/list/mechtoys = list(
 	/obj/item/toy/prize/ripley,
@@ -138,7 +138,7 @@ var/list/mechtoys = list(
 	//supply points have been replaced with MONEY MONEY MONEY - N3X
 	var/credits_per_slip = 2
 	var/credits_per_crate = 5
-	var/credits_per_plasma = 0.5 // 2 plasma for 1 point
+	//var/credits_per_plasma = 0.5 // 2 plasma for 1 point
 	//control
 	var/ordernum
 	var/list/centcomm_orders = list()
@@ -151,7 +151,7 @@ var/list/mechtoys = list(
 	var/moving = 0
 	var/eta_timeofday
 	var/eta
-
+	var/datum/materials/materials_list = new
 	New()
 		ordernum = rand(1,9000)
 
@@ -266,12 +266,24 @@ var/list/mechtoys = list(
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
 
+			if(istype(MA, /obj/item/stack/sheet/mineral/plasma))
+				var/obj/item/stack/sheet/mineral/plasma/P = MA
+				if(P.redeemed) continue
+				var/datum/material/mat = materials_list.getMaterial(P.sheettype)
+				cargo_acct.money += (mat.value * 2) * P.amount // Central Command pays double for plasma they receive that hasn't been redeemed already.
+
 			// Must be in a crate!
-			if(istype(MA,/obj/structure/closet/crate))
+			else if(istype(MA,/obj/structure/closet/crate))
 				cargo_acct.money += credits_per_crate
 				var/find_slip = 1
 
 				for(var/atom/A in MA)
+					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
+						var/obj/item/stack/sheet/mineral/plasma/P = A
+						if(P.redeemed) continue
+						var/datum/material/mat = materials_list.getMaterial(P.sheettype)
+						cargo_acct.money += (mat.value * 2) * P.amount // Central Command pays double for plasma they receive that hasn't been redeemed already.
+						continue
 					if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
 						var/obj/item/weapon/paper/slip = A
 						if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
@@ -365,7 +377,7 @@ var/list/mechtoys = list(
 			// END AUTOFIX
 			if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
 
-		supply_shuttle.shoppinglist.Cut()
+		supply_shuttle.shoppinglist.len = 0
 		return
 
 /obj/item/weapon/paper/manifest
@@ -397,7 +409,7 @@ var/list/mechtoys = list(
 	else
 		dat += {"<BR><B>Supply shuttle</B><HR>
 		Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>
-		<HR>Supply points: [current_acct.fmtBalance()]<BR>
+		<HR>Supply points: [current_acct ? current_acct.fmtBalance() : "PANIC"]<BR>
 		<BR>\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>
 		<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR><BR>
@@ -422,7 +434,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:383: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Supply points: [current_acct.fmtBalance()]</b><BR>
+			temp = {"<b>Supply points: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>
 				<b>Select a category</b><BR><BR>"}
 			// END AUTOFIX
@@ -433,7 +445,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:390: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Supply points: [current_acct.fmtBalance()]</b><BR>
+			temp = {"<b>Supply points: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>
 				<b>Request from: [last_viewed_group]</b><BR><BR>"}
 			// END AUTOFIX
@@ -638,7 +650,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:567: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Available credits: [current_acct.fmtBalance()]</b><BR>
+			temp = {"<b>Available credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>
 				<b>Select a category</b><BR><BR>"}
 			// END AUTOFIX
@@ -649,7 +661,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:574: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Available credits: [current_acct.fmtBalance()]</b><BR>
+			temp = {"<b>Available credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>
 				<b>Request from: [last_viewed_group]</b><BR><BR>"}
 			// END AUTOFIX
@@ -814,7 +826,7 @@ var/list/mechtoys = list(
 		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["clearreq"])
-		supply_shuttle.requestlist.Cut()
+		supply_shuttle.requestlist.len = 0
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\supplyshuttle.dm:705: temp = "List cleared.<BR>"

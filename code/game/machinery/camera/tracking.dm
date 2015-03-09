@@ -1,6 +1,6 @@
 /mob/living/silicon/ai/proc/get_camera_list()
 
-	track.cameras.Cut()
+	track.cameras.len = 0
 
 	if(src.stat == 2)
 		return
@@ -23,11 +23,6 @@
 
 
 /mob/living/silicon/ai/proc/ai_camera_list(var/camera)
-
-	if(src.stat == 2)
-		src << "You can't list the cameras because you are dead!"
-		return
-
 	if (!camera)
 		return 0
 
@@ -46,10 +41,10 @@
 
 /mob/living/silicon/ai/proc/trackable_mobs()
 
-	track.names.Cut()
-	track.namecounts.Cut()
-	track.humans.Cut()
-	track.others.Cut()
+	track.names.len = 0
+	track.namecounts.len = 0
+	track.humans.len = 0
+	track.others.len = 0
 
 	if(usr.stat == 2)
 		return list()
@@ -105,13 +100,12 @@
 	var/list/targets = sortList(track.humans) + sortList(track.others)
 	return targets
 
-/mob/living/silicon/ai/proc/ai_camera_track(var/target_name)
+/mob/living/silicon/ai/verb/ai_camera_track(var/target_name as null|anything in trackable_mobs())
+	set name = "track"
+	set hidden = 1 //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
-	if(src.stat == 2)
-		src << "You can't track with camera because you are dead!"
-		return
 	if(!target_name)
-		src.cameraFollow = null
+		return
 
 	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
 

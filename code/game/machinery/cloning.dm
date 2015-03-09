@@ -136,11 +136,9 @@
 	src.read_only = !src.read_only
 	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
 
-/obj/item/weapon/disk/data/examine()
-	set src in oview(5)
+/obj/item/weapon/disk/data/examine(mob/user)
 	..()
-	usr << text("The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
-	return
+	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 //Health Tracker Implant
 
@@ -203,7 +201,7 @@
 	spawn(30)
 		src.eject_wait = 0
 
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, delay_ready_dna=1)
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, R.dna.species, delay_ready_dna=1)
 	occupant = H
 
 	src.icon_state = "pod_1"
@@ -219,6 +217,7 @@
 	H.updatehealth()
 
 	clonemind.transfer_to(H)
+
 	H.ckey = R.ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
@@ -320,26 +319,26 @@
 
 /obj/machinery/clonepod/crowbarDestroy(mob/user)
 	if (occupant)
-		user << "\red You cannot disassemble this [src], it's occupado."
+		user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
 		return
-	..()
+	return..()
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
-			user << "\red Access Denied."
+			user << "<span class='warning'>Access Denied.</span>"
 			return
 		if ((!src.locked) || (isnull(src.occupant)))
 			return
 		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "\red Access Refused."
+			user << "<span class='warning'>Access Refused.</span>"
 			return
 		else
 			src.locked = 0
 			user << "System unlocked."
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		user << "\blue \The [src] processes \the [W]."
+		user << "<span class='notice'>\The [src] processes \the [W].</span>"
 		biomass += 50
 		user.drop_item()
 		del(W)
@@ -401,8 +400,10 @@
 	domutcheck(src.occupant) //Waiting until they're out before possible monkeyizing.
 	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
-
-	src.biomass -= CLONE_BIOMASS/resource_efficiency //Improve parts to use less biomass
+	if(biomass > 0)
+		src.biomass -= CLONE_BIOMASS/resource_efficiency //Improve parts to use less biomass
+	else
+		biomass = 0
 
 	return
 

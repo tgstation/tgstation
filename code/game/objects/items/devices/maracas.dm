@@ -5,7 +5,8 @@
 	icon_state = "maracas"
 	item_state = "maracas"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 
 	var/emagged = 0//our maracas are different - Deity Link

@@ -118,7 +118,7 @@
 /obj/structure/vendomatpack/discount
 	name = "Discount Dan's recharge pack"
 	targetvendomat = /obj/machinery/vending/discount
-	icon_state = "discout"
+	icon_state = "discount"
 
 /obj/structure/vendomatpack/groans
 	name = "Groans Soda recharge pack"
@@ -150,7 +150,7 @@
 	icon_state = "generic"
 	item_state = "syringe_kit"
 	w_class = 4.0
-	flags = FPRINT|TABLEPASS
+	flags = FPRINT
 
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/foldable_amount = 4
@@ -179,7 +179,7 @@
 	return
 
 /obj/structure/stackopacks/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/wirecutters) || istype(W,/obj/item/weapon/shard) || istype(W,/obj/item/weapon/kitchenknife) || istype(W,/obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife))
+	if(istype(W,/obj/item/weapon/wirecutters) || istype(W,/obj/item/weapon/shard) || istype(W,/obj/item/weapon/kitchen/utensil/knife/large) || istype(W,/obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife))
 		var/turf/T = get_turf(src)
 		for(var/obj/O in contents)
 			O.loc = T

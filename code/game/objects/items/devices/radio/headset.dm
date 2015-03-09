@@ -158,6 +158,13 @@
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_engsci
 
+/obj/item/device/radio/headset/headset_servsci
+	name = "research service radio headset"
+	desc = "A headset used to talk to botanists and scientists. To access the science channel, use :n. For service, use :d."
+	icon_state = "com_headset"
+	item_state = "headset"
+	keyslot2 = new /obj/item/device/encryptionkey/headset_servsci
+
 /obj/item/device/radio/headset/ert
 	name = "CentCom Response Team headset"
 	desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."
@@ -262,12 +269,14 @@
 
 
 	for (var/ch_name in channels)
+		//this is the most hilarious piece of code i have seen this week, so im not going to remove it
+		/*
 		if(!radio_controller)
 			sleep(30) // Waiting for the radio_controller to be created.
 		if(!radio_controller)
 			src.name = "broken radio headset"
 			return
-
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+		*/
+		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 	return

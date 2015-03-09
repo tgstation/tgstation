@@ -300,11 +300,10 @@
 	onclose(user, "violin")
 
 /obj/item/device/violin/Topic(href, href_list)
-
-	if(!in_range(src, usr) || issilicon(usr) || !isliving(usr) || !usr.canmove || usr.restrained())
-		usr << browse(null, "window=violin;size=700x300")
-		onclose(usr, "violin")
+	if(..())
 		return
+
+	usr.set_machine(src)
 
 	if(href_list["newsong"])
 		song = new()
@@ -399,7 +398,8 @@
 				song.tempo = tempo
 
 	add_fingerprint(usr)
-	for(var/mob/M in viewers(1, loc))
-		if((M.client && M.machine == src))
-			attack_self(M)
+	src.updateUsrDialog()
+	//for(var/mob/M in viewers(1, loc))
+	//	if((M.client && M.machine == src))
+	//		attack_self(M)
 	return

@@ -5,6 +5,29 @@
  *		Carpet
  */
 
+/obj/item/stack/tile/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			returnToPool(src)
+			return
+		if(2.0)
+			if (prob(50))
+				returnToPool(src)
+				return
+		if(3.0)
+			if (prob(5))
+				returnToPool(src)
+				return
+		else
+	return
+
+/obj/item/stack/tile/blob_act()
+	returnToPool(src)
+
+/obj/item/stack/tile/singularity_act()
+	returnToPool(src)
+	return 2
+
 /*
  * Grass
  */
@@ -18,7 +41,8 @@
 	throwforce = 1.0
 	throw_speed = 5
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	max_amount = 60
 	origin_tech = "biotech=1"
 
@@ -35,7 +59,8 @@
 	throwforce = 1.0
 	throw_speed = 5
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	max_amount = 60
 
 /*
@@ -51,5 +76,6 @@
 	throwforce = 1.0
 	throw_speed = 5
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	max_amount = 60

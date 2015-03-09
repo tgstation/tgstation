@@ -24,6 +24,7 @@
 	return
 
 /obj/effect/portal/New()
+	..()
 	spawn(300)
 		qdel(src)
 		return
@@ -40,9 +41,14 @@
 		del(src)
 		return
 	if (istype(M, /atom/movable))
-		if(prob(failchance)) //oh dear a problem, put em in deep space
-			src.icon_state = "portal1"
-			do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0)
+		var/area/A = get_area(target)
+		if(A && A.anti_ethereal)
+			visible_message("<span class='sinister'>A dark form vaguely ressembling a hand reaches through the portal and tears it apart before anything can go through.</span>")
+			del(src)
 		else
-			do_teleport(M, target, 1) ///You will appear adjacent to the beacon
+			if(prob(failchance)) //oh dear a problem, put em in deep space
+				src.icon_state = "portal1"
+				do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0)
+			else
+				do_teleport(M, target, 1) ///You will appear adjacent to the beacon
 

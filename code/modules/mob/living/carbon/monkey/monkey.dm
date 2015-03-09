@@ -1,12 +1,18 @@
 /mob/living/carbon/monkey
 	name = "monkey"
 	voice_name = "monkey"
-	speak_emote = list("chimpers")
+	//speak_emote = list("chimpers")
+	languages = MONKEY
 	icon_state = "monkey1"
 	icon = 'icons/mob/monkey.dmi'
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
+
+
+	mob_bump_flag = MONKEY
+	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL
+	mob_push_flags = MONKEY|SLIME|SIMPLE_ANIMAL|ALIEN
 
 	var/canWearClothes = 1
 	var/canWearHats = 1
@@ -89,21 +95,21 @@
 	..()
 	dna.mutantrace = "lizard"
 	greaterform = "Unathi"
-	add_language("Sinta'unathi")
+	//add_language("Sinta'unathi")
 
 /mob/living/carbon/monkey/skrell/New()
 
 	..()
 	dna.mutantrace = "skrell"
 	greaterform = "Skrell"
-	add_language("Skrellian")
+	//add_language("Skrellian")
 
 /mob/living/carbon/monkey/tajara/New()
 
 	..()
 	dna.mutantrace = "tajaran"
 	greaterform = "Tajaran"
-	add_language("Siik'tajr")
+	//add_language("Siik'tajr")
 
 /mob/living/carbon/monkey/diona/New()
 
@@ -112,7 +118,7 @@
 	gender = NEUTER
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
-	add_language("Rootspeak")
+	//add_language("Rootspeak")
 
 /mob/living/carbon/monkey/show_inv(mob/living/carbon/user as mob)
 	user.set_machine(src)
@@ -170,53 +176,20 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally+config.monkey_delay
 
-/mob/living/carbon/monkey/Bump(atom/movable/AM as mob|obj, yes)
-
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (M_HULK in tmob.mutations))
-				if(prob(70))
-					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-					now_pushing = 0
-					return
-			if(!(tmob.status_flags & CANPUSH))
-				now_pushing = 0
-				return
-
-			tmob.LAssailant = src
-		now_pushing = 0
-		..()
-		if (!( istype(AM, /atom/movable) ))
-			return
-		if (!( now_pushing ))
-			now_pushing = 1
-			if (!( AM.anchored ))
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window/full))
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-				step(AM, t)
-			now_pushing = null
-		return
-	return
 
 /mob/living/carbon/monkey/proc/wearhat(var/obj/item/clothing/head/H as obj)
 	if(H)
-		var/obj/item/clothing/head/oldhat = null
-		if(hat)
-			oldhat = hat
-			hat = null
-		hat = H
-		usr.drop_item()
-		hat.loc = src
-		regenerate_icons()
-		if (hat)
-			usr.put_in_hands(oldhat)
+		if(istype(H))
+			var/obj/item/clothing/head/oldhat = null
+			if(hat)
+				oldhat = hat
+				hat = null
+			hat = H
+			usr.drop_item()
+			hat.loc = src
+			regenerate_icons()
+			if (hat)
+				usr.put_in_hands(oldhat)
 	else
 		if(hat)
 			usr.put_in_hands(hat)
@@ -225,16 +198,17 @@
 
 /mob/living/carbon/monkey/proc/wearclothes(var/obj/item/clothing/monkeyclothes/C as obj)
 	if(C)
-		var/obj/item/clothing/monkeyclothes/olduniform = null
-		if(uniform)
-			olduniform = uniform
-			uniform = null
-		uniform = C
-		usr.drop_item()
-		uniform.loc = src
-		regenerate_icons()
-		if (olduniform)
-			usr.put_in_hands(olduniform)
+		if(istype(C))
+			var/obj/item/clothing/monkeyclothes/olduniform = null
+			if(uniform)
+				olduniform = uniform
+				uniform = null
+			uniform = C
+			usr.drop_item()
+			uniform.loc = src
+			regenerate_icons()
+			if (olduniform)
+				usr.put_in_hands(olduniform)
 	else
 		if(uniform)
 			usr.put_in_hands(uniform)
@@ -307,6 +281,8 @@
 	return
 
 /mob/living/carbon/monkey/meteorhit(obj/O as obj)
+	if(flags & INVULNERABLE)
+		return
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
@@ -323,10 +299,10 @@
 /mob/living/carbon/monkey/attack_paw(mob/M as mob)
 	..()
 
-	if (M.a_intent == "help")
+	if (M.a_intent == I_HELP)
 		help_shake_act(M)
 	else
-		if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
+		if ((M.a_intent == I_HURT && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
@@ -354,7 +330,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == I_HURT)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					Weaken(5)
@@ -370,10 +346,10 @@
 					M << "\red Not enough charge! "
 					return
 
-	if (M.a_intent == "help")
+	if (M.a_intent == I_HELP)
 		help_shake_act(M)
 	else
-		if (M.a_intent == "hurt")
+		if (M.a_intent == I_HURT)
 			if ((prob(75) && health > 0))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -398,7 +374,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
 		else
-			if (M.a_intent == "grab")
+			if (M.a_intent == I_GRAB)
 				if (M == src || anchored)
 					return
 
@@ -440,12 +416,12 @@
 		return
 
 	switch(M.a_intent)
-		if ("help")
+		if (I_HELP)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 
-		if ("hurt")
+		if (I_HURT)
 			if ((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
@@ -468,7 +444,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
 
-		if ("grab")
+		if (I_GRAB)
 			if (M == src)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
@@ -484,7 +460,7 @@
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
 
-		if ("disarm")
+		if (I_DISARM)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			if(prob(95))
@@ -578,14 +554,14 @@
 
 /mob/living/carbon/monkey/Stat()
 	..()
-	statpanel("Status")
-	stat(null, text("Intent: []", a_intent))
-	stat(null, text("Move Mode: []", m_intent))
-	if(client && mind)
-		if (client.statpanel == "Status")
-			if(mind.changeling)
-				stat("Chemical Storage", mind.changeling.chem_charges)
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
+	if(statpanel("Status"))
+		stat(null, text("Intent: []", a_intent))
+		stat(null, text("Move Mode: []", m_intent))
+		if(client && mind)
+			if (client.statpanel == "Status")
+				if(mind.changeling)
+					stat("Chemical Storage", mind.changeling.chem_charges)
+					stat("Genetic Damage Time", mind.changeling.geneticdamage)
 	return
 
 
@@ -599,10 +575,16 @@
 /mob/living/carbon/monkey/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/monkey/emp_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	if(wear_id) wear_id.emp_act(severity)
 	..()
 
 /mob/living/carbon/monkey/ex_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	if(!blinded)
 		flick("flash", flash)
 
@@ -626,6 +608,8 @@
 	return
 
 /mob/living/carbon/monkey/blob_act()
+	if(flags & INVULNERABLE)
+		return
 	if (stat != 2)
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()

@@ -80,7 +80,8 @@
 	// Powers
 	SOBERBLOCK     = getAssignedBlock("SOBER",      numsToAssign, good=1)
 	PSYRESISTBLOCK = getAssignedBlock("PSYRESIST",  numsToAssign, DNA_HARD_BOUNDS, good=1)
-	SHADOWBLOCK    = getAssignedBlock("SHADOW",     numsToAssign, DNA_HARDER_BOUNDS, good=1)
+	//SHADOWBLOCK  = getAssignedBlock("SHADOW",     numsToAssign, DNA_HARDER_BOUNDS, good=1)
+	FARSIGHTBLOCK  = getAssignedBlock("FARSIGHT",   numsToAssign, DNA_HARDER_BOUNDS, good=1)
 	CHAMELEONBLOCK = getAssignedBlock("CHAMELEON",  numsToAssign, DNA_HARDER_BOUNDS, good=1)
 	CRYOBLOCK      = getAssignedBlock("CRYO",       numsToAssign, DNA_HARD_BOUNDS, good=1)
 	EATBLOCK       = getAssignedBlock("EAT",        numsToAssign, DNA_HARD_BOUNDS, good=1)
@@ -142,7 +143,7 @@
 		var/datum/species/species = all_species[name]
 		if(species.default_block_names.len>0)
 			testing("Setting up genetics for [species.name] (needs [english_list(species.default_block_names)])")
-			species.default_blocks.Cut()
+			species.default_blocks.len = 0
 			for(var/block=1;block<DNA_SE_LENGTH;block++)
 				if(assigned_blocks[block] in species.default_block_names)
 					testing("  Found [assigned_blocks[block]] ([block])")

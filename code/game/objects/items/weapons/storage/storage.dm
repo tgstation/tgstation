@@ -14,7 +14,7 @@
 	//  = - Strict type matching.  Will NOT check for subtypes.
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
-
+	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
 	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	var/storage_slots = 7 //The number of storage slots in this container.
@@ -27,6 +27,7 @@
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 	var/foldable_amount = 1 // Number of foldables to produce, if any - N3X
+	var/internal_store = 0
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
@@ -83,6 +84,7 @@
 	user.client.screen += src.closer
 	user.client.screen += src.contents
 	user.s_active = src
+	is_seeing |= user
 	return
 
 /obj/item/weapon/storage/proc/hide_from(mob/user as mob)
@@ -94,6 +96,7 @@
 	user.client.screen -= src.contents
 	if(user.s_active == src)
 		user.s_active = null
+	is_seeing -= user
 	return
 
 /obj/item/weapon/storage/proc/close(mob/user as mob)
@@ -196,6 +199,14 @@
 			usr << "<span class='notice'>[src] is full, make some space.</span>"
 		return 0 //Storage item is full
 
+	if(W.wielded || istype(W, /obj/item/offhand))
+		var/obj/item/offhand/offhand = W
+		var/obj/item/ref_name = W
+		if(istype(offhand))
+			ref_name = offhand.wielding
+		usr << "<span class='notice'>Unwield \the [ref_name] first.</span>"
+		return
+
 	if(can_hold.len)
 		var/ok = 0
 		for(var/A in can_hold)
@@ -292,19 +303,22 @@
 		var/obj/item/weapon/storage/fancy/F = src
 		F.update_icon(1)
 
-	for(var/mob/M in range(1, src.loc))
+	for(var/mob/M in range(1, get_turf(src)))
 		if (M.s_active == src)
 			if (M.client)
 				M.client.screen -= W
 
 	if(new_location)
+		var/mob/M
 		if(ismob(loc))
-			W.dropped(usr)
+			M = loc
+			W.dropped(M)
 		if(ismob(new_location))
-			W.layer = 20
+			M = new_location
+			W.pickup(M)
+			M.put_in_active_hand(W)
 		else
-			W.layer = initial(W.layer)
-		W.loc = new_location
+			W.loc = new_location
 	else
 		W.loc = get_turf(src)
 
@@ -326,9 +340,16 @@
 	/*if(istype(W,/obj/item/weapon/implanter/compressed))
 		return*/
 
-	if(isrobot(user) && !isMoMMI(user))
-		user << "\blue You're a robot. No."
-		return //Robots can't interact with storage items.
+	if(isrobot(user))
+		if(isMoMMI(user))
+			var/mob/living/silicon/robot/mommi/M = user
+			if(M.is_in_modules(W))
+				user << "<span class='notice'>You can't throw away something built into you.</span>"
+				return //Mommis cant give away their modules but can place other items
+		else
+			user << "<span class='notice'> You're a robot. No.</span>"
+			return //Robots can't interact with storage items.
+
 
 	if(!can_be_inserted(W))
 		return
@@ -337,20 +358,20 @@
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				user << "\red The tray won't fit in [src]."
+				user << "<span class='warning'> The tray won't fit in [src].</span>"
 				return
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
 				W.dropped(user)
-				user << "\red God damnit!"
+				user << "<span class='warning'> God damnit!</span>"
 
 	handle_item_insertion(W)
 	return
 
 /obj/item/weapon/storage/dropped(mob/user as mob)
-	return
+	..()
 
 /obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
 	..()
@@ -366,17 +387,18 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.l_store == src && !H.get_active_hand())	//Prevents opening if it's in a pocket.
-			H.put_in_hands(src)
-			H.l_store = null
-			return
-		if(H.r_store == src && !H.get_active_hand())
-			H.put_in_hands(src)
-			H.r_store = null
-			return
+		if((H.l_store == src || H.r_store == src) && !H.get_active_hand())	//Prevents opening if it's in a pocket.
+			return ..()
 
 	src.orient2hud(user)
-	if (src.loc == user)
+	var/atom/maxloc = src.loc
+	if(src.internal_store)
+		for(var/i = 1; i++ <= internal_store)
+			if(maxloc == user)
+				break
+			if(maxloc.loc)
+				maxloc = maxloc.loc
+	if (maxloc == user)
 		if (user.s_active)
 			user.s_active.close(user)
 		src.show_to(user)
@@ -387,6 +409,9 @@
 				src.close(M)
 	src.add_fingerprint(user)
 	return
+
+/obj/item/weapon/storage/attack_paw(mob/user as mob)
+	return attack_hand(user)
 
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
@@ -478,7 +503,22 @@
 	new src.foldable(get_turf(src),foldable_amount)
 	del(src)
 //BubbleWrap END
+/obj/item/weapon/storage/proc/can_see_contents()
+	var/list/cansee = list()
+	for(var/mob/M in is_seeing)
+		if(M.s_active == src && M.client)
+			cansee |= M
+		else
+			is_seeing -= M
+	return cansee
 
+/obj/item/weapon/storage/proc/close_all()
+	for(var/mob/M in can_see_contents())
+		close(M)
+		. = 1 //returns 1 if any mobs actually got a close(M) call
 
-
-
+/obj/item/weapon/storage/Destroy()
+	close_all()
+	qdel(boxes)
+	qdel(closer)
+	..()

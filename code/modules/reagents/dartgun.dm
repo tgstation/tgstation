@@ -24,7 +24,8 @@
 	name = "dart gun"
 	desc = "A small gas-powered dartgun, capable of delivering chemical cocktails swiftly across short distances."
 	icon_state = "dartgun-empty"
-
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	var/list/beakers = list() //All containers inside the gun.
 	var/list/mixing = list() //Containers being used for mixing.
 	var/obj/item/weapon/dart_cartridge/cartridge = null //Container of darts.
@@ -58,18 +59,14 @@
 	cartridge = new /obj/item/weapon/dart_cartridge(src)
 	update_icon()
 
-/obj/item/weapon/gun/dartgun/examine()
-	set src in view()
-	update_icon()
+/obj/item/weapon/gun/dartgun/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc)
-		return
 	if (beakers.len)
-		usr << "\blue [src] contains:"
+		user << "<span class='info'>[src] contains:</span>"
 		for(var/obj/item/weapon/reagent_containers/glass/beaker/B in beakers)
 			if(B.reagents && B.reagents.reagent_list.len)
 				for(var/datum/reagent/R in B.reagents.reagent_list)
-					usr << "\blue [R.volume] units of [R.name]"
+					user << "<span class='info'>[R.volume] units of [R.name]</span>"
 
 /obj/item/weapon/gun/dartgun/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/dart_cartridge))
@@ -77,34 +74,34 @@
 		var/obj/item/weapon/dart_cartridge/D = I
 
 		if(!D.darts)
-			user << "\blue [D] is empty."
+			user << "<span class='notice'>[D] is empty.</span>"
 			return 0
 
 		if(cartridge)
 			if(cartridge.darts <= 0)
 				src.remove_cartridge()
 			else
-				user << "\blue There's already a cartridge in [src]."
+				user << "<span class='notice'>There's already a cartridge in [src].</span>"
 				return 0
 
 		user.drop_item()
 		cartridge = D
 		D.loc = src
-		user << "\blue You slot [D] into [src]."
+		user << "<span class='notice'>You slot [D] into [src].</span>"
 		update_icon()
 		return
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(!istype(I, container_type))
-			user << "\blue [I] doesn't seem to fit into [src]."
+			user << "<span class='notice'>[I] doesn't seem to fit into [src].</span>"
 			return
 		if(beakers.len >= max_beakers)
-			user << "\blue [src] already has [max_beakers] vials in it - another one isn't going to fit!"
+			user << "<span class='warning'>[src] already has [max_beakers] vials in it - another one isn't going to fit!</span>"
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/B = I
 		user.drop_item()
 		B.loc = src
 		beakers += B
-		user << "\blue You slot [B] into [src]."
+		user << "<span class='notice'>You slot [B] into [src].</span>"
 		src.updateUsrDialog()
 
 /obj/item/weapon/gun/dartgun/can_fire()
@@ -118,7 +115,7 @@
 
 /obj/item/weapon/gun/dartgun/proc/remove_cartridge()
 	if(cartridge)
-		usr << "\blue You pop the cartridge out of [src]."
+		usr << "<span class='notice'>You pop the cartridge out of [src].</span>"
 		var/obj/item/weapon/dart_cartridge/C = cartridge
 		C.loc = get_turf(src)
 		C.update_icon()
@@ -148,10 +145,10 @@
 		var/obj/effect/syringe_gun_dummy/D = new/obj/effect/syringe_gun_dummy(get_turf(src))
 		var/obj/item/weapon/reagent_containers/syringe/S = get_mixed_syringe()
 		if(!S)
-			user << "\red There are no darts in [src]!"
+			user << "<span class='warning'>There are no darts in [src]!</span>"
 			return
 		if(!S.reagents)
-			user << "\red There are no reagents available!"
+			user << "<span class='warning'>There are no reagents available!</span>"
 			return
 		cartridge.darts--
 		src.update_icon()
@@ -300,11 +297,11 @@
 	src.updateUsrDialog()
 	return
 
-/obj/item/weapon/gun/dartgun/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/gun/dartgun/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0)
 	if(cartridge)
 		spawn(0) fire_dart(target,user)
 	else
-		usr << "\red [src] is empty."
+		usr << "<span class='warning'>[src] is empty.</span>"
 
 
 /obj/item/weapon/gun/dartgun/vox

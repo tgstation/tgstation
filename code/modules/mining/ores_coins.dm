@@ -206,7 +206,7 @@
 	desc = "A large unprocessed telecrystal, a gemstone with space-warping properties."
 	icon_state = "telecrystal"
 	material="telecrystal"
-/obj/item/weapon/twohanded/required/gibtonite
+/obj/item/weapon/gibtonite
 	name = "Gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
 	icon = 'icons/obj/mining.dmi'
@@ -215,11 +215,12 @@
 	w_class = 4
 	throw_range = 0
 	anchored = 1 //Forces people to carry it by hand, no pulling!
+	flags = FPRINT | TWOHANDABLE | MUSTTWOHAND
 	var/primed = 0
 	var/det_time = 100
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher shipping_value = better
 
-/obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gibtonite/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator))
 		GibtoniteReaction(user)
 		return
@@ -231,15 +232,15 @@
 		return
 	..()
 
-/obj/item/weapon/twohanded/required/gibtonite/bullet_act(var/obj/item/projectile/P)
+/obj/item/weapon/gibtonite/bullet_act(var/obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/bullet))
 		GibtoniteReaction(P.firer)
 	..()
 
-/obj/item/weapon/twohanded/required/gibtonite/ex_act()
+/obj/item/weapon/gibtonite/ex_act()
 	GibtoniteReaction(triggered_by_explosive = 1)
 
-/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by_explosive = 0)
+/obj/item/weapon/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by_explosive = 0)
 	if(!primed)
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		primed = 1
@@ -291,7 +292,8 @@
 	icon = 'icons/obj/items.dmi'
 	name = "Coin"
 	icon_state = "coin"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 0.0
 	throwforce = 0.0
 	w_class = 1.0
@@ -376,8 +378,8 @@
 	icon_state = "coin_mythril"
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/cable_coil) )
-		var/obj/item/weapon/cable_coil/CC = W
+	if(istype(W,/obj/item/stack/cable_coil) )
+		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
 			user << "\blue There already is a string attached to this coin."
 			return
@@ -396,9 +398,9 @@
 			..()
 			return
 
-		var/obj/item/weapon/cable_coil/CC = new/obj/item/weapon/cable_coil(user.loc)
+		var/obj/item/stack/cable_coil/CC = new(user.loc)
 		CC.amount = 1
-		CC.updateicon()
+		CC.update_icon()
 		overlays = list()
 		string_attached = null
 		user << "\blue You detach the string from the coin."

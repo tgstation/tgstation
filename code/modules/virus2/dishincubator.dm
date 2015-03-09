@@ -1,9 +1,14 @@
-/obj/machinery/disease2/incubator/
+#define FED_PING_DELAY 40
+
+/obj/machinery/disease2/incubator
 	name = "Pathogenic incubator"
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "incubator"
+
+	machine_flags = SCREWTOGGLE | CROWDESTROY
+
 	var/obj/item/weapon/virusdish/dish
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/radiation = 0
@@ -16,7 +21,25 @@
 
 	var/virusing
 
+	var/last_notice
+
+/obj/machinery/disease2/incubator/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/incubator,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+	)
+
+	RefreshParts()
+
 /obj/machinery/disease2/incubator/attackby(var/obj/B as obj, var/mob/user as mob)
+	..()
 	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B,/obj/item/weapon/reagent_containers/syringe))
 
 		if(src.beaker)
@@ -80,11 +103,11 @@
 
 	if(href_list["virus"])
 		if (!dish)
-			state("\The [src.name] buzzes, \"No viral culture sample detected.\"", "blue")
+			say("No viral culture sample detected.")
 		else
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in beaker.reagents.reagent_list
 			if (!B)
-				state("\The [src.name] buzzes, \"No suitable breeding environment detected.\"", "blue")
+				say("No suitable breeding environment detected.")
 			else
 				if (!B.data["virus2"])
 					B.data["virus2"] = list()
@@ -93,7 +116,7 @@
 				var/list/virus = list("[dish.virus2.uniqueID]" = D)
 				B.data["virus2"] = virus
 
-				state("\The [src.name] pings, \"Injection complete.\"", "blue")
+				say("Injection complete.")
 
 
 	src.add_fingerprint(usr)
@@ -143,7 +166,11 @@
 			foodsupply -= 1
 			dish.growth += 3
 			if(dish.growth >= 100)
-				state("The [src.name] pings", "blue")
+				if(icon_state != "incubator_fed")
+					icon_state = "incubator_fed"
+				if(last_notice + FED_PING_DELAY < world.time)
+					last_notice = world.time
+					alert_noise("ping")
 		if(radiation)
 			if(radiation > 50 & prob(5))
 				dish.virus2.log += "<br />[timestamp()] MAJORMUTATE (incubator rads)"
@@ -151,7 +178,8 @@
 				if(dish.info)
 					dish.info = "OUTDATED : [dish.info]"
 					dish.analysed = 0
-				state("The [src.name] beeps", "blue")
+				alert_noise("beep")
+				flick("incubator_mut", src)
 
 			else if(prob(5))
 				dish.virus2.minormutate()

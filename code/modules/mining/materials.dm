@@ -108,7 +108,7 @@
 	value=1
 	cc_per_sheet=CC_PER_SHEET_GLASS
 	oretype=/obj/item/weapon/ore/glass
-	sheettype=/obj/item/stack/sheet/glass
+	sheettype=/obj/item/stack/sheet/glass/glass
 
 /datum/material/diamond
 	name="Diamond"
@@ -174,6 +174,7 @@
 	sheettype=/obj/item/stack/sheet/mineral/plastic
 	cointype=null
 
+/* //Commented out to save save space in menus listing materials until they are used
 /datum/material/pharosium
 	name="Pharosium"
 	id="pharosium"
@@ -288,3 +289,4 @@
 	oretype=/obj/item/weapon/ore/molitz
 	sheettype=/obj/item/stack/sheet/mineral/molitz
 	cointype=null
+*/

@@ -39,10 +39,11 @@
 		category = "Items"
 		design_type = "item"
 		if(found_design)
-			var/datum/design/D = new found_design
+			var/datum/design/D = found_design
 			//message_admins("Found the [D]")
 			req_tech = D.req_tech //our tech is simply the item requirement
 			materials = D.materials
+			materials["$plastic"] += round(0.1 * src.MatTotal()) //plastic reqs
 			del(D)
 		else
 			req_tech = ConvertReqString2List(I.origin_tech)
@@ -58,12 +59,13 @@
 	var/techtotal = src.TechTotal() / 2
 	materials["$iron"] += techtotal * round(rand(300, 1500), 100) * modifier
 	materials["$glass"] += techtotal * round(rand(150, 300), 50) * modifier
-	if(prob(techtotal * 15)) //let's add an extra cost of some medium-rare material - sure a lot of items
-		materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
-	if(prob(techtotal * 8))//and another cost, because we can - can proc for some items
-		materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
-	if(techtotal >= 7) //let's add something REALLY rare - bananium and phazon removed for now
-		materials[/*pick(*/"$diamond"/*, "$clown", "$phazon")*/] += techtotal * round(rand(10, 150), 10) * modifier
+	if(src.design_type == "item")
+		if(prob(techtotal * 15)) //let's add an extra cost of some medium-rare material - sure a lot of items
+			materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
+		if(prob(techtotal * 8))//and another cost, because we can - can proc for some items
+			materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
+		if(techtotal >= 7) //let's add something REALLY rare - bananium and phazon removed for now
+			materials[/*pick(*/"$diamond"/*, "$clown", "$phazon")*/] += techtotal * round(rand(10, 150), 10) * modifier
 
 	for(var/matID in materials)
 		materials[matID] -= (materials[matID] % 10) //clean up the numbers
@@ -104,7 +106,7 @@
 				materials["$glass"] += round(rand(20, 300), 10)
 				continue
 			//message_admins("We found the design!")
-			part_design = new part_design
+			part_design = part_design
 			var/list/fetched_materials = part_design.materials
 			for(var/matID in fetched_materials)
 				if(copytext(matID,1,2) == "$")

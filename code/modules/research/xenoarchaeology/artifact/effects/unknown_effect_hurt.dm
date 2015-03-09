@@ -1,6 +1,6 @@
 
 /datum/artifact_effect/hurt
-	effecttype = "hurt"
+	effecttype = I_HURT
 	effect_type = 5
 
 /datum/artifact_effect/hurt/DoEffectTouch(var/mob/toucher)
@@ -16,7 +16,7 @@
 			C.adjustBrainLoss(rand(5,25) * weakness)
 			C.radiation += 25 * weakness
 			C.nutrition -= min(50 * weakness, C.nutrition)
-			C.make_dizzy(6 * weakness)
+			C.Dizzy(6 * weakness)
 			C.weakened += 6 * weakness
 
 /datum/artifact_effect/hurt/DoEffectAura()

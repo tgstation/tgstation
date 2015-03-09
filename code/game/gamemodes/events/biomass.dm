@@ -34,12 +34,13 @@
 			qdel(src)
 		if(/obj/item/weapon/scalpel)
 			qdel(src)
-		if(/obj/item/weapon/twohanded/fireaxe)
+		if(/obj/item/weapon/fireaxe)
 			qdel(src)
 		if(/obj/item/weapon/hatchet)
 			qdel(src)
 		if(/obj/item/weapon/melee/energy)
 			qdel(src)
+		if(/obj/item/weapon/pickaxe/plasmacutter) qdel(src)
 
 		// less effective weapons
 		if(/obj/item/weapon/wirecutters)

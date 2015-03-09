@@ -36,7 +36,7 @@
 		if (istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
-				overlays.Cut()
+				overlays.len = 0
 				usr << "You slice off [src]'s uneven chunks of aluminum and scorch marks."
 				return
 
@@ -61,7 +61,7 @@
 						user.put_in_hands(src)
 						user << "You take the target out of the stake."
 				else
-					src.loc = get_turf_loc(user)
+					src.loc = get_turf(user)
 					user << "You take the target out of the stake."
 
 				stake.pinned_target = null

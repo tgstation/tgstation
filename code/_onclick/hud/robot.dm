@@ -55,7 +55,7 @@
 	using.name = "act_intent"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
+	using.icon_state = (mymob.a_intent == I_HURT ? "harm" : mymob.a_intent)
 	using.screen_loc = ui_acti
 	using.layer = 20
 	src.adding += using
@@ -139,7 +139,7 @@
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = 'icons/mob/screen1_robot.dmi'
-	mymob.zone_sel.overlays.Cut()
+	mymob.zone_sel.overlays.len = 0
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
 	//Handle the gun settings buttons
@@ -168,3 +168,62 @@
 	mymob.client.screen += src.adding + src.other
 
 	return
+
+/datum/hud/proc/toggle_show_robot_modules()
+	if(!isrobot(mymob)) return
+
+	var/mob/living/silicon/robot/r = mymob
+
+	r.shown_robot_modules = !r.shown_robot_modules
+	update_robot_modules_display()
+
+/datum/hud/proc/update_robot_modules_display()
+	if(!isrobot(mymob) || !mymob.client) return
+
+	var/mob/living/silicon/robot/r = mymob
+
+	if(r.shown_robot_modules)
+		//Modules display is shown
+
+		if(!r.module)
+			usr << "<span class='danger'>No module selected</span>"
+			return
+
+		if(!r.module.modules)
+			usr << "<span class='danger'>Selected module has no modules to select</span>"
+			return
+
+		if(!r.robot_modules_background)
+			return
+
+		var/display_rows = round((r.module.modules.len) / 8) +1 //+1 because round() returns floor of number
+		r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
+		r.client.screen += r.robot_modules_background
+
+		var/x = -4	//Start at CENTER-4,SOUTH+1
+		var/y = 1
+
+		for(var/atom/movable/A in r.module.modules)
+			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+				//Module is not currently active
+				r.client.screen += A
+				if(x < 0)
+					A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
+				else
+					A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+				A.layer = 20
+
+				x++
+				if(x == 4)
+					x = -4
+					y++
+
+	else
+		//Modules display is hidden
+		if(r.module)
+			for(var/atom/A in r.module.modules)
+				if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+					//Module is not currently active
+					r.client.screen -= A
+			r.shown_robot_modules = 0
+			r.client.screen -= r.robot_modules_background

@@ -35,7 +35,7 @@
 	if(istype(W,/obj/item/weapon/card/id))
 		// N3X - Fixes people's IDs getting eaten when a new card is inserted
 		if(istype(inserted_id))
-			user << "\red There is already an ID card within the machine."
+			user << "<span class='warning'>There is already an ID card within the machine.</span>"
 			return
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
@@ -77,6 +77,7 @@
 	if(O.material)
 		var/datum/material/mat = materials.getMaterial(O.material)
 		var/obj/item/stack/sheet/M = new mat.sheettype(src)
+		M.redeemed = 1
 		//credits += mat.value // Old behavior
 		return M
 	return
@@ -134,9 +135,9 @@
 				var/datum/money_account/acct = get_card_account(inserted_id)
 				if(acct.charge(-credits,null,"Claimed mining credits.",dest_name = "Ore Redemption"))
 					credits = 0
-					usr << "\blue Credits transferred."
+					usr << "<span class='notice'>Credits transferred.</span>"
 				else
-					usr << "\red Failed to claim credits."
+					usr << "<span class='warning'>Failed to claim credits.</span>"
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
@@ -144,20 +145,21 @@
 				I.loc = src
 				inserted_id = I
 			else
-				usr << "\red No valid ID."
+				usr << "<span class='warning'>No valid ID.</span>"
 				return 1
 	else if(href_list["release"] && istype(inserted_id))
 		if(check_access(inserted_id))
 			var/release=href_list["release"]
 			var/datum/material/mat = materials.getMaterial(release)
 			if(!mat)
-				usr << "\red Unable to find material [release]!"
+				usr << "<span class='warning'>Unable to find material [release]!</span>"
 				return 1
 			var/desired = input("How much?","How much [mat.processed_name] to eject?",mat.stored) as num
 			if(desired==0)
 				return 1
 			var/obj/item/stack/sheet/out = new mat.sheettype(output.loc)
-			out.amount = between(0,desired,min(mat.stored,out.max_amount))
+			out.redeemed = 1 //Central command will not pay for this mineral stack.
+			out.amount = Clamp(desired, 0, min(mat.stored, out.max_amount))
 			mat.stored -= out.amount
 	updateUsrDialog()
 	return
@@ -262,7 +264,7 @@
 				usr.drop_item()
 				I.loc = src
 				inserted_id = I
-			else usr << "\red No valid ID."
+			else usr << "<span class='warning'>No valid ID.</span>"
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
@@ -350,9 +352,9 @@
 			user << "<span class='info'>There's no points left on [src].</span>"
 	..()
 
-/obj/item/weapon/card/mining_point_card/examine()
+/obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
-	usr << "There's [points] credits on the card."
+	user << "<span class='info'>There's [points] credits on the card.</span>"
 
 /**********************Jaunter**********************/
 
@@ -483,6 +485,7 @@
 	var/creator = null
 
 /obj/effect/resonance/New()
+	..()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
@@ -519,10 +522,6 @@
 	sterile = 1
 	//tint = 3 //Makes it feel more authentic when it latches on
 
-/obj/item/clothing/mask/facehugger/toy/examine()//So that giant red text about probisci doesn't show up.
-	if(desc)
-		usr << desc
-
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
 
@@ -537,7 +536,7 @@
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	mouse_opacity = 1
 	faction = "neutral"
-	a_intent = "hurt"
+	a_intent = I_HURT
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -598,7 +597,7 @@
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
+	if(M.a_intent == I_HELP)
 		switch(search_objects)
 			if(0)
 				SetCollectBehavior()
@@ -697,10 +696,10 @@
 			user << "<span class='info'>[src] is only effective on lesser beings.</span>"
 			return
 
-/obj/item/weapon/lazarus_injector/examine()
+/obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()
 	if(!loaded)
-		usr << "<span class='info'>[src] is empty.</span>"
+		user << "<span class='info'>[src] is empty.</span>"
 
 
 /*********************Mob Capsule*************************/
@@ -805,6 +804,7 @@
 		if(istype(AM))
 			var/mob/living/simple_animal/M = AM
 			var/mob/living/simple_animal/hostile/H = M
+			if(!istype(H)) continue
 			for(var/things in H.friends)
 				if(capsuleowner in H.friends)
 					if(insert(AM, user) == -1) // limit reached
@@ -819,7 +819,8 @@
 	icon_state = "mining"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = CONDUCT
+	flags = 0
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
 

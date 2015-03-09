@@ -251,6 +251,9 @@ legend {
 			for(var/obj/machinery/air_sensor/G in machines)
 				if(!isnull(G.id_tag) && G.frequency == frequency)
 					sensor_list|=G.id_tag
+			for(var/obj/machinery/meter/G in machines)
+				if(!isnull(G.id_tag) && G.frequency == frequency)
+					sensor_list|=G.id_tag
 			if(!sensor_list.len)
 				user << "<span class=\"warning\">No sensors on this frequency.</span>"
 				return MT_ERROR
@@ -272,6 +275,9 @@ legend {
 			for(var/obj/machinery/air_sensor/G in machines)
 				if(!isnull(G.id_tag) && G.frequency == frequency)
 					sensor_list|=G.id_tag
+			for(var/obj/machinery/meter/G in machines)
+				if(!isnull(G.id_tag) && G.frequency == frequency)
+					sensor_list|=G.id_tag
 			if(!sensor_list.len)
 				user << "<span class=\"warning\">No sensors on this frequency.</span>"
 				return MT_ERROR
@@ -285,24 +291,28 @@ legend {
 
 	unlinkFrom(var/mob/user, var/obj/O)
 		..()
-		if("id_tag" in O.vars && istype(O,/obj/machinery/air_sensor))
+		if("id_tag" in O.vars && (istype(O,/obj/machinery/air_sensor) || istype(O, /obj/machinery/meter)))
 			sensors.Remove(O:id_tag)
 			return 1
 		return 0
 
 	linkMenu(var/obj/O)
 		var/dat=""
-		if(istype(O,/obj/machinery/air_sensor) && !isLinkedWith(O))
+		if((istype(O,/obj/machinery/air_sensor) || istype(O, /obj/machinery/meter)) && !isLinkedWith(O))
 			dat += " <a href='?src=\ref[src];link=1'>\[New Sensor\]</a> "
 		return dat
 
 	canLink(var/obj/O, var/list/context)
-		if(istype(O,/obj/machinery/air_sensor))
+		if(istype(O,/obj/machinery/air_sensor) || istype(O, /obj/machinery/meter))
 			return O:id_tag
 
 	isLinkedWith(var/obj/O)
-		if(istype(O,/obj/machinery/air_sensor))
+		if(istype(O,/obj/machinery/air_sensor) || istype(O, /obj/machinery/meter))
 			return O:id_tag in sensors
+
+	linkWith(var/mob/user, var/obj/O, var/link/context)
+		sensors[O:id_tag] = reject_bad_name(input(user, "Choose a sensor label:", "Sensor Label") as text|null, allow_numbers=1)
+		return 1
 
 	large_tank_control
 		icon = 'icons/obj/computer.dmi'
@@ -347,18 +357,20 @@ legend {
 				input_tag = O:id_tag
 				input_info = null
 				if(istype(O,/obj/machinery/atmospherics/unary/vent_pump))
-					send_signal("tag"=input_tag,
+					send_signal(list("tag"=input_tag,
 						"direction"=1, // Release
 						"checks"   =0  // No pressure checks.
-						)
+						))
+				return 1
 			if(context["slot"]=="output" && is_type_in_list(O,output_linkable))
 				output_tag = O:id_tag
 				output_info = null
 				if(istype(O,/obj/machinery/atmospherics/unary/vent_pump))
-					send_signal("tag"=output_tag,
+					send_signal(list("tag"=output_tag,
 						"direction"=0, // Siphon
 						"checks"   =2  // Internal pressure checks.
-						)
+						))
+				return 1
 
 		unlinkFrom(var/mob/user, var/obj/O)
 			if("id_tag" in O.vars)
@@ -375,9 +387,9 @@ legend {
 		linkMenu(var/obj/O)
 			var/dat=""
 			if(canLink(O,list("slot"="input")))
-				dat += " <a href='?src=\ref[src];link=1'>\[Link @ Input\]</a> "
+				dat += " <a href='?src=\ref[src];link=1;slot=input'>\[Link @ Input\]</a> "
 			if(canLink(O,list("slot"="output")))
-				dat += " <a href='?src=\ref[src];link=1'>\[Link @ Output\]</a> "
+				dat += " <a href='?src=\ref[src];link=1;slot=output'>\[Link @ Output\]</a> "
 			return dat
 
 		canLink(var/obj/O, var/list/context)
@@ -484,7 +496,7 @@ legend {
 			if(href_list["out_set_pressure"])
 				var/response=input(usr,"Set new pressure, in kPa. \[0-[50*ONE_ATMOSPHERE]\]") as num
 				pressure_setting = text2num(response)
-				pressure_setting = between(0, pressure_setting, 50*ONE_ATMOSPHERE)
+				pressure_setting = Clamp(pressure_setting, 0, 50*ONE_ATMOSPHERE)
 
 			if(!radio_connection)
 				return 0
@@ -503,7 +515,7 @@ legend {
 				input_info = null
 				var/new_rate=input("Enter the new volume rate of the injector:","Injector Rate") as num
 				new_rate = text2num(new_rate)
-				new_rate = between(0, new_rate, 300)
+				new_rate = Clamp(new_rate, 0, new_rate)
 				signal.data = list ("tag" = input_tag, "set_volume_rate"=new_rate)
 
 			else if(href_list["out_refresh_status"])
@@ -518,9 +530,9 @@ legend {
 			else if(href_list["out_set_pressure"])
 				output_info = null
 				signal.data = list ("tag" = output_tag, "set_internal_pressure" = "[pressure_setting]")
-			else
+			/*else
 				testing("Bad Topic() to large_tank_control \"[src.name]\": [href]")
-				return // NOPE.
+				return */// NOPE. // disabling because it spams when multitool menus are used
 
 			signal.data["sigtype"]="command"
 			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)

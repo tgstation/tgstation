@@ -8,7 +8,8 @@
 	throwforce = 5.0
 	throw_speed = 5
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	max_amount = 60
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	var/on = 1
@@ -26,11 +27,13 @@
 		state = 0 //fine
 
 /obj/item/stack/tile/light/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	..()
 	if(istype(O,/obj/item/weapon/crowbar))
-		new/obj/item/stack/sheet/metal(user.loc)
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = 1
 		amount--
 		new/obj/item/stack/light_w(user.loc)
 		if(amount <= 0)
 			user.drop_from_inventory(src)
 			del(src)
+		return 1
+	return ..()

@@ -5,10 +5,10 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolt"
 	item_state = "bolt"
-	flags =  FPRINT | TABLEPASS
+	flags = FPRINT
 	throwforce = 8
 	w_class = 3.0
-	sharp = 1
+	sharpness = 1
 
 /obj/item/weapon/arrow/proc/removed() //Helper for metal rods falling apart.
 	return
@@ -43,7 +43,8 @@
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
 	w_class = 5.0
-	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT | SLOT_BACK
 
 	w_class = 3.0

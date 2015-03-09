@@ -7,7 +7,8 @@
 
 	m_amt = 120
 
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 
 	var/use_name
 
@@ -40,33 +41,31 @@
 			var/engraving = sanitize(input(usr, "Enter the details of your engraving.","Engraving"))
 
 			user.visible_message("\blue [user.name] starts engraving something on the [W.name].", "\blue You start engraving an image of [engraving_name] on the [W.name].")
-			var/turf/T = user.loc
-			sleep(60)
-			if( !(user.loc == T && user.get_active_hand() == src) ) return
-			if( !istype(W, /turf/simulated/wall) || !user || !src || !W ) return
-			if( W.rotting )
-				user.visible_message("\red The [W.name] crumbles under [user.name]'s touch!", "\red The [W.name] crumbles under your touch!")
-				W.dismantle_wall()
-				return
+			if(do_after(user, 60))
+				if( !istype(W, /turf/simulated/wall) || !user || !src || !W ) return
+				if( W.rotting )
+					user.visible_message("\red The [W.name] crumbles under [user.name]'s touch!", "\red The [W.name] crumbles under your touch!")
+					W.dismantle_wall()
+					return
 
-			var/quality = rand(1,10)
-			if(blessed) quality = rand(8,10)
-			switch(quality)
-				if(1 to 4)
-					W.engraving_quality = "an" //depicted on the wall is [quality] image of ...
-				if(5 to 7)
-					W.engraving_quality = "a finely-designed"
-				if(8 to 9)
-					W.engraving_quality = "an exceptionally designed"
-				if(10)
-					W.engraving_quality = "a masterfully designed"
-					user << "\red It's a masterpiece!"
+				var/quality = rand(1,10)
+				if(blessed) quality = rand(8,10)
+				switch(quality)
+					if(1 to 4)
+						W.engraving_quality = "an" //depicted on the wall is [quality] image of ...
+					if(5 to 7)
+						W.engraving_quality = "a finely-designed"
+					if(8 to 9)
+						W.engraving_quality = "an exceptionally designed"
+					if(10)
+						W.engraving_quality = "a masterfully designed"
+						user << "\red It's a masterpiece!"
 
-			engraving = {"Depicted on the wall is [W.engraving_quality] image of [engraving_name][(use_name ? " by [user.real_name]" : "")]. [engraving]"}
+				engraving = {"Depicted on the wall is [W.engraving_quality] image of [engraving_name][(use_name ? " by [user.real_name]" : "")]. [engraving]"}
 
-			var/icon/overlay_type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
-			var/icon/engraving_overlay = new/icon('icons/effects/crayondecal.dmi',"[overlay_type]",2.1)
+				var/icon/overlay_type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
+				var/icon/engraving_overlay = new/icon('icons/effects/crayondecal.dmi',"[overlay_type]",2.1)
 
-			W.overlays += engraving_overlay
-			W.engraving = engraving
-			user.visible_message("\blue [user.name] finishes engraving [W.engraving_quality] image of [engraving_name].", "\blue You finish engraving on the [W.name].")
+				W.overlays += engraving_overlay
+				W.engraving = engraving
+				user.visible_message("\blue [user.name] finishes engraving [W.engraving_quality] image of [engraving_name].", "\blue You finish engraving on the [W.name].")

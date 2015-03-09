@@ -9,7 +9,7 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	w_class = 4.0
-	flags = FPRINT|TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
 	max_combined_w_class = 21
@@ -22,6 +22,9 @@
  * Backpack Types
  */
 
+
+
+
 /obj/item/weapon/storage/backpack/holding
 	name = "Bag of Holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
@@ -31,49 +34,54 @@
 	max_w_class = 4
 	max_combined_w_class = 28
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] puts the [src.name] on \his head and stretches the bag around \himself. With a sudden snapping sound, the bag shrinks to it's original size, leaving no trace of [user] </b>"
+/obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
+		viewers(user) << "<span class = 'danger'><b>[user] puts the [src.name] on \his head and stretches the bag around \himself. With a sudden snapping sound, the bag shrinks to it's original size, leaving no trace of [user] </b></span>"
 		loc = get_turf(user)
 		qdel(user)
 
-	New()
-		..()
+/obj/item/weapon/storage/backpack/holding/New()
+	..()
+	return
+
+/obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(W == src)
+		return // HOLY FUCKING SHIT WHY STORAGE CODE, WHY - pomf
+	if(crit_fail)
+		user << "<span class = 'warning'>The Bluespace generator isn't working.</span>"
 		return
+	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
+		user << "<span class = 'warning'>The Bluespace interfaces of the two devices conflict and malfunction.</span>"
+		del(W)
+		return
+	//BoH+BoH=Singularity, WAS commented out
+	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
+		investigation_log(I_SINGULO,"has become a singularity. Caused by [user.key]")
+		message_admins("[src] has become a singularity. Caused by [user.key]")
+		user << "<span class = 'danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
+		del(W)
+		var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
+		singulo.energy = 300 //should make it a bit bigger~
+		message_admins("[key_name_admin(user)] detonated a bag of holding")
+		log_game("[key_name(user)] detonated a bag of holding")
+		del(src)
+		return
+	..()
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(W == src)
-			return // HOLY FUCKING SHIT WHY STORAGE CODE, WHY - pomf
-		if(crit_fail)
-			user << "\red The Bluespace generator isn't working."
-			return
-		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
-			user << "\red The Bluespace interfaces of the two devices conflict and malfunction."
-			del(W)
-			return
-		//BoH+BoH=Singularity, WAS commented out
-		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
-			investigate_log("has become a singularity. Caused by [user.key]","singulo")
-			message_admins("[src] has become a singularity. Caused by [user.key]")
-			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
-			del(W)
-			var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
-			singulo.energy = 300 //should make it a bit bigger~
-			message_admins("[key_name_admin(user)] detonated a bag of holding")
-			log_game("[key_name(user)] detonated a bag of holding")
-			del(src)
-			return
-		..()
+/obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user as mob)
+	if (prob(src.reliability)) return 1 //No failure
+	if (prob(src.reliability))
+		user << "<span class = 'warning'>The Bluespace portal resists your attempt to add another item.</span>" //light failure
+	else
+		user << "<span class = 'danger'>The Bluespace generator malfunctions!</span>"
+		for (var/obj/O in src.contents) //it broke, delete what was in it
+			del(O)
+		crit_fail = 1
+		icon_state = "brokenpack"
 
-	proc/failcheck(mob/user as mob)
-		if (prob(src.reliability)) return 1 //No failure
-		if (prob(src.reliability))
-			user << "\red The Bluespace portal resists your attempt to add another item." //light failure
-		else
-			user << "\red The Bluespace generator malfunctions!"
-			for (var/obj/O in src.contents) //it broke, delete what was in it
-				del(O)
-			crit_fail = 1
-			icon_state = "brokenpack"
+/obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
+	var/dist = max((current_size - 2), 1)
+	explosion(src.loc,(dist),(dist*2),(dist*4))
+	return
 
 
 /obj/item/weapon/storage/backpack/santabag

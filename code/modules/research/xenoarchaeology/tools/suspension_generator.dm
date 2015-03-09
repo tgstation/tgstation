@@ -15,6 +15,9 @@
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
 
+/obj/machinery/suspension_gen/power_change()
+	return
+
 /obj/machinery/suspension_gen/New()
 	src.cell = new/obj/item/weapon/cell/high(src)
 	..()
@@ -88,7 +91,7 @@
 		dat += "[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>"
 		dat += "[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>"
 		dat += "[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>"
-		dat += "[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>"
+		dat += "[field_type=="chlorine"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>"
 		dat += "[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=plasma'>Plasma saturated field</A></b><br>"
 	else
 		dat += "<br>"
@@ -111,7 +114,7 @@
 	onclose(user, "suspension")
 
 /obj/machinery/suspension_gen/Topic(href, href_list)
-	..()
+	if(..()) return
 	usr.set_machine(src)
 
 	if(href_list["toggle_field"])
@@ -326,7 +329,7 @@
 /obj/machinery/suspension_gen/verb/toggle()
 	set src in view(1)
 	set name = "Rotate suspension gen (clockwise)"
-	set category = "IC"
+	set category = "Object"
 
 	if(anchored)
 		usr << "\red You cannot rotate [src], it has been firmly fixed to the floor."

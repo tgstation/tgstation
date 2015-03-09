@@ -9,7 +9,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
-	flags = TABLEPASS
+	flags = 0
 	var/created_name = "Floorbot"
 
 /obj/item/weapon/toolbox_tiles_sensor
@@ -22,7 +22,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
-	flags = TABLEPASS
+	flags = 0
 	var/created_name = "Floorbot"
 
 // Tell other floorbots what we're fucking with so two floorbots don't dick with the same tile.
@@ -462,7 +462,7 @@ var/global/list/floorbot_targets=list()
 			T.amount -= i
 		else
 			src.amount += T.amount
-			del(T)
+			returnToPool(T)
 		src.updateicon()
 		floorbot_targets -= src.target
 		src.target = null
@@ -471,20 +471,20 @@ var/global/list/floorbot_targets=list()
 /obj/machinery/bot/floorbot/proc/maketile(var/obj/item/stack/sheet/metal/M)
 	if(!istype(M, /obj/item/stack/sheet/metal))
 		return
-	if(M.amount > 1)
+	if(M.amount < 1)
 		return
 	visible_message("\red [src] begins to create tiles.")
 	src.repairing = 1
 	spawn(20)
-		if(isnull(M))
+		if(!M || !get_turf(M))
 			src.target = null
 			src.repairing = 0
 			return
-		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
+		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel(get_turf(M))
 		T.amount = 4
-		T.loc = M.loc
 		if(M.amount==1)
-			del(M)
+			returnToPool(M)
+			//del(M)
 		else
 			M.amount--
 		floorbot_targets -= src.target

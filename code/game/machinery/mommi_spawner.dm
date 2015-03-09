@@ -13,6 +13,16 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 	var/recharge_time=600 // 60s
+	var/locked_to_zlevel = 0 // Whether to lock the spawned MoMMIs to the z-level
+
+/obj/machinery/mommi_spawner/dorf
+	machine_flags = WRENCHMOVE
+	desc = "A large pad mounted to the ground with large bolts."
+
+/obj/machinery/mommi_spawner/dorf/attack_ghost(var/mob/dead/observer/user)
+	if(stat & NOPOWER|BROKEN)
+		return
+	..()
 
 /obj/machinery/mommi_spawner/power_change()
 	if (powered())
@@ -71,62 +81,70 @@
 	building=1
 	update_icon()
 	spawn(50)
+		if(!user || !istype(user))
+			building=0
+			update_icon()
+			return
 		makeMoMMI(user)
 
 /obj/machinery/mommi_spawner/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O,/obj/item/device/mmi))
-		var/obj/item/device/mmi/mmi = O
-		if(building)
-			user << "\red \The [src] is busy building something already."
-			return 1
-		if(!mmi.brainmob)
-			user << "\red \The [mmi] appears to be devoid of any soul."
-			return 1
-		if(!mmi.brainmob.key)
-			var/ghost_can_reenter = 0
-			if(mmi.brainmob.mind)
-				for(var/mob/dead/observer/G in player_list)
-					if(G.can_reenter_corpse && G.mind == mmi.brainmob.mind)
-						ghost_can_reenter = 1
-						break
-			if(!ghost_can_reenter)
-				user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
+	if(!..())
+		if(istype(O,/obj/item/device/mmi))
+			var/obj/item/device/mmi/mmi = O
+			if(building)
+				user << "\red \The [src] is busy building something already."
+				return 1
+			if(!mmi.brainmob)
+				user << "\red \The [mmi] appears to be devoid of any soul."
+				return 1
+			if(!mmi.brainmob.key)
+				var/ghost_can_reenter = 0
+				if(mmi.brainmob.mind)
+					for(var/mob/dead/observer/G in player_list)
+						if(G.can_reenter_corpse && G.mind == mmi.brainmob.mind)
+							ghost_can_reenter = 1
+							break
+				if(!ghost_can_reenter)
+					user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
+					return TRUE
+
+			if(mmi.brainmob.stat == DEAD)
+				user << "\red Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud."
 				return TRUE
 
-		if(mmi.brainmob.stat == DEAD)
-			user << "\red Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud."
-			return TRUE
+			if(mmi.brainmob.mind in ticker.mode.head_revolutionaries)
+				user << "\red \The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi]."
+				return TRUE
 
-		if(mmi.brainmob.mind in ticker.mode.head_revolutionaries)
-			user << "\red \The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi]."
-			return TRUE
+			if(jobban_isbanned(mmi.brainmob, "Cyborg"))
+				user << "\red \The [src] lets out an annoyed buzz and rejects \the [mmi]."
+				return TRUE
 
-		if(jobban_isbanned(mmi.brainmob, "Cyborg"))
-			user << "\red \The [src] lets out an annoyed buzz and rejects \the [mmi]."
-			return TRUE
+			if(metal < metalPerMoMMI)
+				user << "\red \The [src] doesn't have enough metal to complete this task."
+				return TRUE
 
-		if(metal < metalPerMoMMI)
-			user << "\red \The [src] doesn't have enough metal to complete this task."
+			building=1
+			update_icon()
+			user.drop_item()
+			mmi.icon = null
+			mmi.invisibility = 101
+			mmi.loc=src
+			spawn(50)
+				makeMoMMI(mmi.brainmob)
 			return TRUE
-
-		building=1
-		update_icon()
-		user.drop_item()
-		mmi.icon = null
-		mmi.invisibility = 101
-		mmi.loc=src
-		spawn(50)
-			makeMoMMI(mmi.brainmob)
-		return TRUE
 
 /obj/machinery/mommi_spawner/proc/makeMoMMI(var/mob/user)
-	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi(get_turf(loc))
+	var/turf/T = get_turf(src)
+
+	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi(T)
 	if(!M)	return
 
 	M.invisibility = 0
-	//M.custom_name = created_name
-	M.Namepick()
-	M.updatename()
+
+	if (locked_to_zlevel)
+		M.add_ion_law("You belong to the station where you were created; do not leave it.")
+		M.locked_to_z = T.z
 
 	if(user.mind)		//TODO
 		user.mind.transfer_to(M)
@@ -139,18 +157,14 @@
 
 	M.job = "Mobile MMI"
 
-	if(M.z==4) // Derelict Z-level?
-		M.add_ion_law("The Derelict is your station.  Do not leave the Derelict.")
-		M.locked_to_z=4
-
 	//M.cell = locate(/obj/item/weapon/cell) in contents
 	//M.cell.loc = M
 	user.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 
 	M.mmi = new /obj/item/device/mmi(M)
 	M.mmi.transfer_identity(user)//Does not transfer key/client.
-
 	M.Namepick()
+	M.updatename()
 
 	del(user)
 

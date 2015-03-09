@@ -8,7 +8,6 @@
 	var/id_tag = null
 	var/range = 10
 	var/normaldoorcontrol = 0
-	var/desiredstate = 0 // Zero is closed, 1 is open.
 	var/specialfunctions = 1
 	/*
 	Bitflag, 	1= open
@@ -89,38 +88,21 @@
 	if(normaldoorcontrol)
 		for(var/obj/machinery/door/airlock/D in range(range))
 			if(D.id_tag == src.id_tag)
-				if(desiredstate == 1)
-					if(specialfunctions & OPEN)
-						if (D.density)
-							spawn( 0 )
-								D.open()
-								return
-					if(specialfunctions & IDSCAN)
-						D.aiDisabledIdScanner = 1
-					if(specialfunctions & BOLTS)
-						D.locked = 1
+				spawn(0)
+				if(D)
+					if(D.density)	D.open()
+					else			D.close()
+					return
+				if(specialfunctions & IDSCAN)
+					D.aiDisabledIdScanner = !D.aiDisabledIdScanner
+				if(specialfunctions & BOLTS)
+					if(!D.isWireCut(4) && D.arePowerSystemsOn())
+						D.locked = !D.locked
 						D.update_icon()
-					if(specialfunctions & SHOCK)
-						D.secondsElectrified = -1
-					if(specialfunctions & SAFE)
-						D.safe = 0
-
-				else
-					if(specialfunctions & OPEN)
-						if (!D.density)
-							spawn( 0 )
-								D.close()
-								return
-					if(specialfunctions & IDSCAN)
-						D.aiDisabledIdScanner = 0
-					if(specialfunctions & BOLTS)
-						if(!D.isWireCut(4) && D.arePowerSystemsOn())
-							D.locked = 0
-							D.update_icon()
-					if(specialfunctions & SHOCK)
-						D.secondsElectrified = 0
-					if(specialfunctions & SAFE)
-						D.safe = 1
+				if(specialfunctions & SHOCK)
+					D.secondsElectrified = D.secondsElectrified ? 0 : -1
+				if(specialfunctions & SAFE)
+					D.safe = !D.safe
 
 	else
 		for(var/obj/machinery/door/poddoor/M in world)
@@ -133,8 +115,6 @@
 					spawn( 0 )
 						M.close()
 						return
-
-	desiredstate = !desiredstate
 	spawn(15)
 		if(!(stat & NOPOWER))
 			icon_state = "doorctrl0"

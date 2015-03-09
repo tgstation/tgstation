@@ -1,7 +1,7 @@
 /obj/structure/closet/secure_closet/freezer
 
 /obj/structure/closet/secure_closet/freezer/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	if(broken)
 		icon_state = icon_broken
 	else

@@ -48,13 +48,13 @@
 	..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(!ismob(O)) //humans only
+		return
 	if(O.loc == user) //no you can't pull things out of your ass
 		return
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
 		return
 	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
-		return
-	if(!ismob(O)) //humans only
 		return
 	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
 		return
@@ -65,7 +65,7 @@
 	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
 		return
 	if(occupant)
-		user << "\blue <B>The cryo cell is already occupied!</B>"
+		user << "<span class='bnotice'>The cryo cell is already occupied!</span>"
 		return
 	if(isrobot(user))
 		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
@@ -75,7 +75,7 @@
 	if(!istype(L) || L.buckled)
 		return
 	if(L.abiotic())
-		user << "\red <B>Subject cannot have abiotic items on.</B>"
+		user << "<span class='danger'>Subject cannot have abiotic items on.</span>"
 		return
 	for(var/mob/living/carbon/slime/M in range(1,L))
 		if(M.Victim == L)
@@ -123,19 +123,21 @@
 	go_out()
 	return
 
-/obj/machinery/atmospherics/unary/cryo_cell/examine()
+/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
-
-	if(in_range(usr, src))
-		usr << "You can just about make out some loose objects floating in the murk:"
-		for(var/obj/O in src)
-			if(O != beaker)
-				usr << O.name
-		for(var/mob/M in src)
-			if(M != occupant)
-				usr << M.name
+	if(in_range(user,src))
+		if(contents)
+			user << "You can just about make out some properties of the cryo's murky depths:"
+			for(var/atom/movable/floater in (contents - beaker))
+				user << "A figure floats in the depths, they appear to be [floater.name]"
+			if(beaker)
+				user << "A beaker, releasing the following chemicals into the fluids:"
+				for(var/datum/reagent/R in beaker.reagents.reagent_list)
+					user << "<span class='info'>[R.volume] units of [R.name]</span>"
+		else
+			user << "<span class='info'>The chamber appears devoid of anything but its biotic fluids.</span>"
 	else
-		usr << "<span class='notice'>Too far away to view contents.</span>"
+		user << "<span class='notice'>Too far away to view contents.</span>"
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
@@ -218,6 +220,10 @@
 	if(..())
 		return 0 // don't update UIs attached to this object
 
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
+
 	if(href_list["switchOn"])
 		on = 1
 		update_icon()
@@ -244,7 +250,7 @@
 		user << "[src] is on."
 		return
 	if(occupant)
-		user << "\red [occupant.name] is inside the [src]!"
+		user << "<span class='warning'>[occupant.name] is inside the [src]!</span>"
 		return
 	if(beaker) //special check to avoid destroying this
 		beaker.loc = src.loc
@@ -253,7 +259,7 @@
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "\red A beaker is already loaded into the machine."
+			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
 			return
 		beaker =  G
 		user.drop_item()
@@ -354,24 +360,28 @@
 	return
 /obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
 	if (!istype(M))
-		usr << "\red <B>The cryo cell cannot handle such a lifeform!</B>"
+		usr << "<span class='danger'>The cryo cell cannot handle such a lifeform!</span>"
 		return
 	if (occupant)
-		usr << "\red <B>The cryo cell is already occupied!</B>"
+		usr << "<span class='danger'>The cryo cell is already occupied!</span>"
 		return
 	if (M.abiotic())
-		usr << "\red Subject may not have abiotic items on."
+		usr << "<span class='warning'>Subject may not have abiotic items on.</span>"
 		return
+	if(M.buckled)
+		M.buckled.unbuckle()
 	if(!node)
-		usr << "\red The cell is not correctly connected to its pipe network!"
+		usr << "<span class='warning'>The cell is not correctly connected to its pipe network!</span>"
 		return
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
+	if(usr.pulling == M)
+		usr.stop_pulling()
 	M.stop_pulling()
 	M.loc = src
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
-		M << "\blue <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>"
+		M << "<span class='bnotice'>You feel a cold liquid surround you. Your skin starts to freeze up.</span>"
 	occupant = M
 	//M.metabslow = 1
 	add_fingerprint(usr)
@@ -386,7 +396,7 @@
 	if(usr == occupant)//If the user is inside the tube...
 		if (usr.stat == 2)//and he's not dead....
 			return
-		usr << "\blue Release sequence activated. This will take two minutes."
+		usr << "<span class='notice'>Release sequence activated. This will take two minutes.</span>"
 		sleep(1200)
 		if(!src || !usr || !occupant || (occupant != usr)) //Check if someone's released/replaced/bombed him already
 			return
@@ -402,7 +412,7 @@
 	set name = "Move Inside"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || usr.buckled) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)

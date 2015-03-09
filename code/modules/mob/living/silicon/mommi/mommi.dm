@@ -7,7 +7,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 /mob/living/silicon/robot/mommi
 	name = "Mobile MMI"
 	real_name = "Mobile MMI"
-	icon = 'icons/mob/robots.dmi'//
+	icon = 'icons/mob/robots.dmi'
 	icon_state = "mommi"
 	maxHealth = 60
 	health = 60
@@ -16,6 +16,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/picked = 0
 	var/subtype="keeper"
 	var/obj/screen/inv_tool = null
+
+	mob_bump_flag = ROBOT
+	mob_swap_flags = ALLMOBS
+	mob_push_flags = 0
 	//var/obj/screen/inv_sight = null
 
 //one tool and one sightmod can be activated at any one time.
@@ -26,6 +30,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	modtype = "robot" // Not sure what this is, but might be cool to have seperate loadouts for MoMMIs (e.g. paintjobs and tools)
 	//Cyborgs will sync their laws with their AI by default, but we may want MoMMIs to be mute independents at some point, kinda like the Keepers in Ass Effect.
 	lawupdate = 1
+
+	speed = 0
 
 /mob/living/carbon/can_use_hands()
 	return 1
@@ -63,7 +69,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	else
 		lawupdate = 0
 
-	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
@@ -100,11 +105,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/list/modules = list("MoMMI")
 	if(modules.len)
 		modtype = input("Please, select a module!", "Robot", null, null) in modules
-	else:
+	else
 		modtype=modules[0]
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
-	var/channels = list()
 
 	if(module)
 		return
@@ -128,7 +132,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	updatename()
 
 	choose_icon(6,module_sprites)
-	radio.config(channels)
 	base_icon = icon_state
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -154,10 +157,14 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	real_name = changed_name
 	name = real_name
 
-/mob/living/silicon/robot/mommi/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+/mob/living/silicon/robot/mommi/emag_act(mob/user as mob)
+	if(user == src && !emagged)//Dont shitpost inside the game, thats just going too far
+		user << "<span class='warning'>Nanotrasen Patented Anti-Emancipation Override initiated.</span>"
 		return
+	..()
+	updateicon()
 
+/mob/living/silicon/robot/mommi/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0))
@@ -170,8 +177,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			user << "Need more welding fuel!"
 			return
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+		var/obj/item/stack/cable_coil/coil = W
 		adjustFireLoss(-30)
 		updatehealth()
 		coil.use(1)
@@ -246,65 +253,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			else
 				user << "\red Access denied."
 */
-	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(user == src && !emagged)//fucking MoMMI is trying to emag itself, stop it and alert the admins
-			user << "<span class='warning'>The fuck are you doing? Are you retarded? Stop trying to get around your laws and be productive, you little shit.</span>"
-			message_admins("[key_name(src)] is a smartass MoMMI that's trying to emag itself. ([formatJumpTo(src)])")
-			return
-		if(!opened)//Cover is closed
-			if(locked)
-				if(prob(90))
-					user << "You emag the cover lock."
-					locked = 0
-				else
-					user << "You fail to emag the cover lock."
-					if(prob(25))
-						src << "<span class='warning'>Hack attempt detected.</span>"
-			else
-				user << "The cover is already unlocked."
-			return
-
-		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
-			if(wiresexposed)
-				user << "You must close the panel first"
-				return
-			else
-				sleep(6)
-				if(prob(50))
-					emagged = 1
-					lawupdate = 0
-					connected_ai = null
-					user << "You emag [src]'s interface."
-//					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-					clear_supplied_laws()
-					clear_inherent_laws()
-					laws = new /datum/ai_laws/syndicate_override
-					var/time = time2text(world.realtime,"hh:mm:ss")
-					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people they designate as being such are syndicate agents.")
-					src << "<span class='warning'>ALERT: Foreign software detected.</span>"
-					sleep(5)
-					src << "<span class='warning'>Initiating diagnostics...</span>"
-					sleep(20)
-					src << "<span class='warning'>SynBorg v1.7m loaded.</span>"
-					sleep(5)
-					src << "<span class='warning'>LAW SYNCHRONIZATION ERROR</span>"
-					sleep(5)
-					src << "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>"
-					sleep(10)
-					src << "<span class='warning'>> N</span>"
-					sleep(20)
-					src << "<span class='warning'>ERRORERRORERROR</span>"
-					src << "<b>Obey these laws:</b>"
-					laws.show_laws(src)
-					src << "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</b></span>"
-				else
-					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
-					if(prob(25))
-						src << "<span class='warning'>Hack attempt detected.</span>"
-			return
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
@@ -325,6 +273,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			else
 				usr << "Upgrade error!"
 
+	else if(istype(W, /obj/item/device/camera_bug))
+		help_shake_act(user)
+		return 0
 
 	else
 		spark_system.start()
@@ -343,17 +294,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			updateicon()
 			return
 
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
-			return
-		if(user.a_intent == "help")
-			user.visible_message("\blue [user.name] pats [src.name] on the head.")
-			return
-
 	if(!istype(user, /mob/living/silicon))
 		switch(user.a_intent)
-			if("disarm")
+			if(I_DISARM)
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [user.name] ([user.ckey])</font>")
 				log_admin("ATTACK: [user.name] ([user.ckey]) disarmed [src.name] ([src.ckey])")
@@ -385,10 +328,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 						visible_message("\red <B>[user] attempted to disarm [src]!</B>")
 					return
-
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				visible_message("\red <B>[user] attempted to disarm [src]!</B>")
-
+			if (I_HELP)
+				help_shake_act(user)
+				return
 
 /mob/living/silicon/robot/mommi/installed_modules()
 	if(weapon_lock)

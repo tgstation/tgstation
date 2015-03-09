@@ -428,10 +428,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		switch(href_list["device"])
 			if("protolathe")
 				if(linked_lathe)
-					linked_lathe.queue.Cut()
+					linked_lathe.queue.len = 0
 			if("imprinter")
 				if(linked_imprinter)
-					linked_imprinter.queue.Cut()
+					linked_imprinter.queue.len = 0
 
 	else if(href_list["setProtolatheStopped"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
 		linked_lathe.stopped=(href_list["setProtolatheStopped"]=="1")
@@ -668,7 +668,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:644: dat += "Name: [d_disk.blueprint.name]<BR>"
 				dat += {"Name: [d_disk.blueprint.name]<BR>
-					Level: [between(0, (d_disk.blueprint.reliability + rand(-15,15)), 100)]<BR>"}
+					Level: [Clamp(d_disk.blueprint.reliability + rand(-15,15), 0, 100)]<BR>"}
 				// END AUTOFIX
 				switch(d_disk.blueprint.build_type)
 					if(IMPRINTER) dat += "Lathe Type: Circuit Imprinter<BR>"
@@ -1002,5 +1002,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	id = 1
 	req_access = list(access_tox)
 	circuit = "/obj/item/weapon/circuitboard/rdconsole"
+
+	l_color = "#CD00CD"
+
+/obj/machinery/computer/rdconsole/pod
+	name = "Pod Bay R&D Console"
+	id = 5
+	req_access=list()
+	circuit = "/obj/item/weapon/circuitboard/rdconsole/pod"
 
 	l_color = "#CD00CD"

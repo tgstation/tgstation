@@ -20,4 +20,4 @@
 			return S
 
 		Clear()
-			contents.Cut()
+			contents.len = 0

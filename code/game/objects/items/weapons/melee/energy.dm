@@ -1,10 +1,22 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
+	sharpness = 1.5 //very very sharp
+	heat_production = 3500
 
-	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
-							"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS|FIRELOSS)
+/obj/item/weapon/melee/energy/suicide_act(mob/user)
+	viewers(user) << pick("\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>", \
+						"\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	return (BRUTELOSS|FIRELOSS)
+
+/obj/item/weapon/melee/energy/is_hot()
+	if(active)
+		return heat_production
+	return 0
+
+/obj/item/weapon/melee/energy/is_sharp()
+	if(active)
+		return sharpness
+	return 0
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
@@ -15,7 +27,8 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS
+	flags = FPRINT
+	siemens_coefficient = 1
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
@@ -35,7 +48,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -96,7 +109,7 @@
 				user.adjustBrainLoss(10)
 		else
 			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			new /obj/item/weapon/twohanded/dualsaber(user.loc)
+			new /obj/item/weapon/dualsaber(user.loc)
 			del(W)
 			del(src)
 
@@ -120,6 +133,6 @@
 	throw_speed = 1
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

@@ -117,7 +117,7 @@
 
 		if (!src.anchored)
 			user.show_message(text("\red [src] can now be moved."))
-			src.overlays.Cut()
+			src.overlays.len = 0
 
 		else if (src.anchored)
 			user.show_message(text("\red [src] is now secured."))

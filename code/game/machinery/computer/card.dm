@@ -67,6 +67,10 @@
 
 	if(!usr || usr.stat || usr.lying)	return
 
+	if (!ishuman(usr))
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+
 	if(scan)
 		usr << "You remove \the [scan] from \the [src]."
 		scan.loc = get_turf(src)
@@ -176,7 +180,9 @@
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return 1
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)

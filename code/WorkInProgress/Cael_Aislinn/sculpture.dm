@@ -182,8 +182,8 @@
 			else if(istype(thisturf, /turf/unsimulated/wall))
 				continue
 			turfs += thisturf
-		var/turf/target_turf = pick(turfs)
-
+		var/turf/target_turf = safepick(turfs)
+		if(!target_turf) return
 		//MUH 6 QUADRILLION WINDOWS
 		//rampage along a path to get to it, in the blink of an eye
 		var/turf/next_turf = get_step_towards(src, target_turf)
@@ -254,6 +254,7 @@
 /mob/living/simple_animal/sculpture/Bump(atom/movable/AM as mob, yes)
 	if(!G && !observed)
 		GrabMob(AM)
+	..()
 
 /mob/living/simple_animal/sculpture/Bumped(atom/movable/AM as mob, yes)
 	if(!G && !observed)

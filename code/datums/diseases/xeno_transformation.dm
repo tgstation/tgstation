@@ -55,7 +55,6 @@
 				if(gibbed != 0) return 0
 				var/turf/T = find_loc(affected_mob)
 				gibs(T)
-				src.cure(0)
 				gibbed = 1
 				affected_mob:Alienize()
 

@@ -24,8 +24,8 @@ var/list
 		sandbox.owner = src.ckey
 		if(src.client.holder)
 			sandbox.admin = 1
-		verbs += new /mob/proc/sandbox_panel
-		verbs += new /mob/proc/sandbox_spawn_atom
+		verbs += /mob/proc/sandbox_panel
+		verbs += /mob/proc/sandbox_spawn_atom
 
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
@@ -82,7 +82,7 @@ proc/is_banned_type(typepath)
 		if(!chosen)
 			return
 	if(is_banned_type(chosen))
-		src << "\red Denied."
+		src << "<span class='warning'>Denied.</span>"
 		return
 	new chosen(usr.loc)
 
@@ -156,11 +156,11 @@ datum/hSB
 					P.back.layer = 20
 					P.internal = P.back
 				if("hsbmetal")
-					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/metal
+					var/obj/item/stack/sheet/hsb = getFromPool(/obj/item/stack/sheet/metal,get_turf(usr))
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbglass")
-					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass/glass
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbplasma")
@@ -184,7 +184,7 @@ datum/hSB
 				if("hsbtoolbox")
 					var/obj/item/weapon/storage/hsb = new/obj/item/weapon/storage/toolbox/mechanical
 					for(var/obj/item/device/radio/T in hsb)
-						del(T)
+						qdel(T)
 					new/obj/item/weapon/crowbar (hsb)
 					hsb.loc = usr.loc
 				if("hsbmedkit")

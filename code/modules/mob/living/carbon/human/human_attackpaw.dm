@@ -1,7 +1,7 @@
 /mob/living/carbon/human/attack_paw(mob/M as mob)
 	..()
-	//M.changeNext_move(10)
-	if (M.a_intent == "help")
+	//M.delayNextAttack(10)
+	if (M.a_intent == I_HELP)
 		help_shake_act(M)
 	else
 		if (istype(wear_mask, /obj/item/clothing/mask/muzzle))

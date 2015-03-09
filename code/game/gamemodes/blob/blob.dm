@@ -7,8 +7,8 @@ var/list/blob_nodes = list()
 
 
 /datum/game_mode/blob
-	name = "blob"
-	config_tag = "blob"
+	name = "Blob"
+	config_tag = "Blob"
 
 	required_players = 15
 	required_players_secret = 25
@@ -18,14 +18,17 @@ var/list/blob_nodes = list()
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/declared = 0
+	var/outbreak = 0
 
-	var/cores_to_spawn = 1
+	var/cores_to_spawn = 15
 	var/players_per_core = 30
 	var/blob_point_rate = 3
 
-	var/blobwincount = 500 // WAS: 350
+	var/blobwincount = 750 // WAS: 500
+	var/blobnukeposs = 650 // At this point the nuke has a chance of being authorized by Centcomm
 
 	var/list/infected_crew = list()
+	var/list/pre_escapees = list()
 
 /datum/game_mode/blob/pre_setup()
 
@@ -64,9 +67,9 @@ You must kill it all while minimizing the damage to the station."}
 /datum/game_mode/blob/proc/greet_blob(var/datum/mind/blob)
 	blob.current << {"<B>\red You are infected by the Blob!</B>
 <b>Your body is ready to give spawn to a new blob core which will eat this station.</b>
-<b>Find a good location to spawn the core and then take control and overwhelm the station!</b>
+<b>Find a good location to spawn the core and then take control and overwhelm the station! Make sure you are ON the station when you burst!</b>
 <b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b>
-<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"}
+<b>If you go outside of the station level, or in space, then you will die; make sure your location has plenty of space to expand.</b>"}
 	return
 
 /datum/game_mode/blob/proc/show_message(var/message)
@@ -138,11 +141,11 @@ You must kill it all while minimizing the damage to the station."}
 		burst_blobs()
 
 		// Stage 0
-		sleep(40)
+		sleep(rand(600,1200))
 		stage(0)
 
 		// Stage 1
-		sleep(2000)
+		sleep(rand(2000,2400))
 		stage(1)
 	..()
 
@@ -156,9 +159,21 @@ You must kill it all while minimizing the damage to the station."}
 
 		if (1)
 			command_alert("Biohazard outbreak alert status upgraded to level 9.  [station_name()] is now locked down, under Directive 7-10, until further notice.", "Directive 7-10 Initiated")
+			for (var/mob/living/silicon/ai/aiPlayer in player_list)
+				if (aiPlayer)
+					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
+					aiPlayer.set_zeroth_law(law)
+					aiPlayer << "Laws Updated: [law]"
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!istype(M,/mob/new_player) && M.client)
 					M << sound('sound/AI/blob_confirmed.ogg')
-
+				var/T = M.loc
+				if((istype(T, /turf/space)) || ((istype(T, /turf)) && (M.z!=1)))
+					pre_escapees += M
+			outbreak = 1
+		if (2)
+			command_alert("Biohazard outbreak containment status reaching critical mass, total quarantine failure is now possibility. As such, Directive 7-12 has now been authorized for [station_name()].", "Directive 7-12 Authorized")
+			send_intercept(2)
+			for(var/mob/camera/blob/B in player_list)
+				B << " <span class='blob'>The beings intend to eliminate you with some kind of weapon of mass destruction, you must stop them or consume the station before this occurs!</span>"
 	return
-

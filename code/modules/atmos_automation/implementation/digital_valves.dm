@@ -5,6 +5,17 @@
 	var/valve=null
 	var/state=0
 
+	Export()
+		var/list/json = ..()
+		json["valve"]=valve
+		json["state"]=state
+		return json
+
+	Import(var/list/json)
+		..(json)
+		valve = json["valve"]
+		state = text2num(json["state"])
+
 	process()
 		if(valve)
 			parent.send_signal(list ("tag" = valve, "command"="valve_set","state"=state))
@@ -20,9 +31,12 @@
 			return 1
 		if(href_list["set_subject"])
 			var/list/valves=list()
-			for(var/obj/machinery/atmospherics/valve/digital/V in machines)
+			for(var/obj/machinery/atmospherics/binary/valve/digital/V in machines)
 				if(!isnull(V.id_tag) && V.frequency == parent.frequency)
 					valves|=V.id_tag
+			if(valves.len==0)
+				usr << "<span class='warning'>Unable to find any digital valves on this frequency.</span>"
+				return
 			valve = input("Select a valve:", "Sensor Data", valve) as null|anything in valves
 			parent.updateUsrDialog()
 			return 1

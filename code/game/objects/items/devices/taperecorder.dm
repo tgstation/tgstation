@@ -16,29 +16,16 @@
 	var/list/storedinfo = new/list()
 	var/list/timestamp = new/list()
 	var/canprint = 1
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | HEAR
+	siemens_coefficient = 1
 	throwforce = 2
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/device/taperecorder/hear_talk(mob/living/M as mob, msg)
+/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(recording)
-		var/ending = copytext(msg, length(msg))
-		timestamp+= timerecorded
-		if(M.stuttering)
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] stammers, \"[msg]\""
-			return
-		if(M.getBrainLoss() >= 60)
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] gibbers, \"[msg]\""
-			return
-		if(ending == "?")
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] asks, \"[msg]\""
-			return
-		else if(ending == "!")
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] exclaims, \"[msg]\""
-			return
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] says, \"[msg]\""
-		return
+		timestamp += timerecorded
+		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [strip_html_properly(html_decode(raw_message))]"
 
 /obj/item/device/taperecorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

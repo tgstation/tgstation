@@ -82,6 +82,7 @@
 
 // /vg/
 /obj/structure/flora/pottedplant/random/New()
+	..()
 	icon_state = "plant-[rand(1,26)]"
 
 //newbushes

@@ -28,10 +28,10 @@
 	if(!istype(L, /list)) return
 	if(isnum(pos))
 		if(!value)
-			if(L.len >= pos)
+			if(L.len >= pos && !(pos > L.len))
 				return L[pos]
 		else
-			if(L.len >= pos)
+			if(L.len >= pos && !(pos > L.len))
 				L[pos] = value
 	else if(istext(pos))
 		if(!value)
@@ -72,7 +72,7 @@
 			if(chosenlist)
 				chosenlist.Remove(e)
 
-// Clone of list.Cut()
+// Clone of list.len = 0
 /proc/n_listcut(var/list/L, var/start, var/end)
 	if(!istype(L, /list)) return
 	return L.Cut(start, end)

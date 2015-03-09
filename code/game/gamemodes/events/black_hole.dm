@@ -23,7 +23,7 @@
 		for(var/mob/living/M in orange(1,src))
 			del(M)
 		for(var/obj/O in orange(1,src))
-			del(O)
+			qdel(O)
 		for(var/turf/simulated/ST in orange(1,src))
 			ST.ChangeTurf(/turf/space)
 

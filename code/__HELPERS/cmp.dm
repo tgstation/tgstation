@@ -18,7 +18,7 @@
 
 var/cmp_field = "name"
 /proc/cmp_records_asc(datum/data/record/a, datum/data/record/b)
-	return sorttext(b.fields[cmp_field], a.fields[cmp_field])
+	return sorttext((b ? b.fields[cmp_field] : ""), (a ? a.fields[cmp_field] : a))
 
 /proc/cmp_records_dsc(datum/data/record/a, datum/data/record/b)
 	return sorttext(a.fields[cmp_field], b.fields[cmp_field])

@@ -5,7 +5,8 @@
 	icon_state = "pneumatic"
 	item_state = "pneumatic"
 	w_class = 5.0
-	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	max_w_class = 3
 	max_combined_w_class = 20
@@ -60,15 +61,13 @@
 	else
 		..()
 
-/obj/item/weapon/storage/pneumatic/examine()
-	set src in view()
+/obj/item/weapon/storage/pneumatic/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "The valve is dialed to [pressure_setting]%."
+	user << "<span class='info'>The valve is dialed to [pressure_setting]%.</span>"
 	if(tank)
-		usr << "The tank dial reads [tank.air_contents.return_pressure()] kPa."
+		user << "<span class='info'>The tank dial reads [tank.air_contents.return_pressure()] kPa.</span>"
 	else
-		usr << "Nothing is attached to the tank valve!"
+		user << "<span class='warning'>Nothing is attached to the tank valve!</span>"
 
 /obj/item/weapon/storage/pneumatic/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 	if (istype(target, /obj/item/weapon/storage/backpack ))
@@ -91,8 +90,8 @@
 
 /obj/item/weapon/storage/pneumatic/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	if (length(contents) > 0)
-		if(user.a_intent == "hurt")
-			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
+		if(user.a_intent == I_HURT)
+			user.visible_message("<span class='danger'>\The [user] fires \the [src] point blank at [M]!</span>")
 			Fire(M,user)
 			return
 		else

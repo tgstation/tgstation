@@ -348,6 +348,8 @@
 		mode = 0
 		frustration = 0
 		src.path = new()
+	if(!src.path)
+		src.path = new()
 	if(src.target && (src.path.len) && (get_dist(src.target,src.path[src.path.len]) > 2))
 		src.path = new()
 	if(src.target && src.path.len == 0 && (get_dist(src,src.target) > 1))
@@ -355,7 +357,7 @@
 			var/turf/dest = get_step_towards(target,src)  //Can't pathfind to a tray, as it is dense, so pathfind to the spot next to the tray
 
 			src.path = AStar(src.loc, dest, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30,id=botcard)
-			if(src.path.len == 0)
+			if(path && src.path.len == 0)
 				for ( var/turf/spot in orange(1,target) ) //The closest one is unpathable, try  the other spots
 					if ( spot == dest ) //We already tried this spot
 						continue
@@ -403,7 +405,7 @@
 	else // feed them plants~
 		var/obj/machinery/portable_atmospherics/hydroponics/tray = target
 		tray.nutrilevel = 10
-		fert.reagents.trans_to(tray.reagents, fert.reagents.total_volume)
+		fert.reagents.trans_to(tray, fert.reagents.total_volume)
 		del fert
 		//tray.updateicon()
 		icon_state = "farmbot_fertile"

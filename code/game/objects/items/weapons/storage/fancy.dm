@@ -24,19 +24,14 @@
 	src.icon_state = "[src.icon_type]box[total_contents]"
 	return
 
-/obj/item/weapon/storage/fancy/examine()
-	set src in oview(1)
-
+/obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
 	if(contents.len <= 0)
-		usr << "There are no [src.icon_type]s left in the box."
+		user << "<span class='info'>There are no [src.icon_type]s left in the box.</span>"
 	else if(contents.len == 1)
-		usr << "There is one [src.icon_type] left in the box."
+		user << "<span class='info'>There is one [src.icon_type] left in the box.</span>"
 	else
-		usr << "There are [src.contents.len] [src.icon_type]s in the box."
-
-	return
-
+		user << "<span class='info'>There are [src.contents.len] [src.icon_type]s in the box.</span>"
 
 
 /*
@@ -51,6 +46,7 @@
 	storage_slots = 6
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/donut")
 
+	foldable = /obj/item/stack/sheet/cardboard
 
 /obj/item/weapon/storage/fancy/donut_box/New()
 	..()
@@ -70,6 +66,8 @@
 	storage_slots = 12
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
 
+	foldable = /obj/item/stack/sheet/cardboard
+
 /obj/item/weapon/storage/fancy/egg_box/New()
 	..()
 	for(var/i=1; i <= storage_slots; i++)
@@ -87,14 +85,21 @@
 	icon_state = "candlebox5"
 	icon_type = "candle"
 	item_state = "candlebox5"
+	foldable = /obj/item/stack/sheet/cardboard
 	storage_slots = 5
 	throwforce = 2
-	flags = TABLEPASS
+	flags = 0
 	slot_flags = SLOT_BELT
+	var/empty = 0
 
+/obj/item/weapon/storage/fancy/candle_box/empty
+	empty = 1
+	icon_state = "candlebox0"
+	item_state = "candlebox0" //i don't know what this does but it seems like this should go here
 
 /obj/item/weapon/storage/fancy/candle_box/New()
 	..()
+	if (empty) return
 	for(var/i=1; i <= storage_slots; i++)
 		new /obj/item/candle(src)
 	return
@@ -108,15 +113,21 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
+	foldable = /obj/item/stack/sheet/cardboard
 	w_class = 2.0
 	storage_slots = 6
 	icon_type = "crayon"
+	var/empty = 0
 	can_hold = list(
 		"/obj/item/toy/crayon"
 	)
 
+/obj/item/weapon/storage/fancy/crayons/empty
+	empty = 1
+
 /obj/item/weapon/storage/fancy/crayons/New()
 	..()
+	if (empty) return
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
 	new /obj/item/toy/crayon/yellow(src)
@@ -153,10 +164,10 @@
 	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 2
-	flags = TABLEPASS
+	flags = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list("=/obj/item/clothing/mask/cigarette") // Strict type check.
+	can_hold = list("=/obj/item/clothing/mask/cigarette", "/obj/item/weapon/lighter", "/obj/item/weapon/storage/box/matches") // Strict type check.
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/New()
@@ -177,10 +188,10 @@
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W as obj, atom/new_location)
-		var/obj/item/clothing/mask/cigarette/C = W
-		if(!istype(C)) return // what
-		reagents.trans_to(C, (reagents.total_volume/contents.len))
-		..()
+	var/obj/item/clothing/mask/cigarette/C = W
+	if(!istype(C)) return // what
+	reagents.trans_to(C, (reagents.total_volume/contents.len))
+	..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
@@ -242,7 +253,7 @@
 /obj/item/weapon/storage/lockbox/vials/update_icon(var/itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "vialbox[total_contents]"
-	src.overlays.Cut()
+	src.overlays.len = 0
 	if (!broken)
 		overlays += image(icon, src, "led[locked]")
 		if(locked)
@@ -268,6 +279,8 @@
 	m_amt = 15000
 	can_hold = list("/obj/item/device/flashlight/flare")
 
+	foldable = /obj/item/stack/sheet/cardboard
+
 /obj/item/weapon/storage/fancy/flares/New()
 	..()
 	for(var/i=1; i <= storage_slots; i++)
@@ -288,3 +301,31 @@
 /obj/item/weapon/storage/fancy/flares/update_icon()
 	..()
 	m_amt = contents.len * 2500
+
+/obj/item/weapon/storage/fancy/chicken_bucket
+	name = "chicken bucket"
+	desc = "Now we're doing it!"
+	icon = 'icons/obj/food.dmi'
+	icon_state = "kfc_drumsticks"
+	item_state = "kfc_bucket"
+	icon_type = "drumsticks"
+	storage_slots = 6
+	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick")
+
+/obj/item/weapon/storage/fancy/chicken_bucket/New()
+	..()
+	for(var/i=1; i <= storage_slots; i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick(src)
+	return
+
+/obj/item/weapon/storage/fancy/chicken_bucket/remove_from_storage(obj/item/W as obj, atom/new_location)
+	..()
+	if(!contents.len)
+		new/obj/item/trash/chicken_bucket(get_turf(src.loc))
+		if(istype(src.loc,/mob/living/carbon))
+			var/mob/living/carbon/C = src.loc
+			C.u_equip(src)
+		qdel(src)
+
+/obj/item/weapon/storage/fancy/chicken_bucket/update_icon(var/itemremoved = 0)
+	return

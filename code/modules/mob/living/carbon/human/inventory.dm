@@ -16,26 +16,93 @@
 		else
 			H << "\red You are unable to equip that."
 
-/mob/living/carbon/human/proc/get_all_slots()
+/mob/living/carbon/human/get_all_slots()
+	return (get_head_slots() || get_body_slots()) //the || is list unification
+
+/mob/living/carbon/human/proc/get_body_slots()
 	return list(
-		back,
-		wear_mask,
-		handcuffed,
-		legcuffed,
+//ordered body items by which would appear on top
 		l_hand,
 		r_hand,
+		back,
+		s_store,
+		handcuffed,
+		legcuffed,
+		wear_suit,
+		gloves,
+		shoes,
 		belt,
 		wear_id,
-		ears,
-		glasses,
-		gloves,
-		head,
-		shoes,
-		wear_suit,
-		w_uniform,
 		l_store,
 		r_store,
-		s_store)
+		w_uniform)
+
+/mob/living/carbon/human/proc/get_head_slots()
+	return list(
+//also head ordered
+		head,
+		wear_mask,
+		glasses,
+		ears
+		)
+
+//everything on the mob that is not in its pockets, hands and belt.
+/mob/living/carbon/human/get_clothing_items(var/list/filter)
+	if(!filter || !istype(filter))
+		filter = get_all_slots()
+	filter -= list(back,
+				handcuffed,
+				legcuffed,
+				belt,
+				wear_id,
+				l_hand,
+				r_hand,
+				l_store,
+				r_store,
+				s_store)
+	return filter
+
+/mob/living/carbon/human/proc/check_obscured_slots()
+	var/list/obscured = list()
+
+	if(wear_suit)
+		if(wear_suit.flags_inv & HIDEGLOVES)
+			obscured |= slot_gloves
+		if(wear_suit.flags_inv & HIDEJUMPSUIT)
+			obscured |= slot_w_uniform
+		if(wear_suit.flags_inv & HIDESHOES)
+			obscured |= slot_shoes
+
+	if(head)
+		if(head.flags_inv & HIDEMASK)
+			obscured |= slot_wear_mask
+		if(head.flags_inv & HIDEEYES)
+			obscured |= slot_glasses
+		if(head.flags_inv & HIDEEARS)
+			obscured |= slot_ears
+
+	if(obscured.len > 0)
+		return obscured
+	else
+		return null
+
+//The args for check_hidden_flags are the list of equipment, and then the flags
+//The arg for get_clothing items is the list of equipment - this filters stuff like hands, pockets, suit_storage, etc
+//get_head_slots and get_body_slots do exactly what you think they do
+/mob/living/carbon/human/proc/check_hidden_head_flags(var/hidden_flags = 0)
+	return check_hidden_flags(get_clothing_items(get_head_slots()), hidden_flags)
+
+/mob/living/carbon/human/proc/check_hidden_body_flags(var/hidden_flags = 0)
+	return check_hidden_flags(get_clothing_items(get_body_slots()), hidden_flags)
+
+/mob/living/carbon/human/proc/check_hidden_flags(var/list/items, var/hidden_flags = 0)
+	if(!items || !istype(items))
+		items = get_clothing_items() //no argument returns all clothing
+	for(var/obj/item/equipped in items)
+		if(!equipped)
+			continue
+		if(equipped.flags_inv & hidden_flags)
+			return 1
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
 	for (var/slot in slots)
@@ -154,8 +221,7 @@
 	if (W == wear_suit)
 		if(s_store)
 			u_equip(s_store)
-		if(W)
-			success = 1
+		success = 1
 		wear_suit = null
 		update_inv_wear_suit()
 	else if (W == w_uniform)
@@ -180,8 +246,6 @@
 		update_inv_glasses()
 	else if (W == head)
 		head = null
-		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
-			update_hair(0)	//rebuild hair
 		success = 1
 		update_inv_head()
 	else if(W == ears)
@@ -199,8 +263,6 @@
 	else if (W == wear_mask)
 		wear_mask = null
 		success = 1
-		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
-			update_hair(0)	//rebuild hair
 		if(internal)
 			if(internals)
 				internals.icon_state = "internal0"
@@ -246,13 +308,15 @@
 		return 0
 
 	if(success)
+		update_hidden_item_icons(W)
+
+	if(success)
 		if (W)
 			if (client)
 				client.screen -= W
 			W.loc = loc
-			W.dropped(src)
-			//if(W)
-				//W.layer = initial(W.layer)
+			if(W)
+				W.layer = initial(W.layer)
 	update_action_buttons()
 	return 1
 
@@ -278,8 +342,6 @@
 			update_inv_back(redraw_mob)
 		if(slot_wear_mask)
 			src.wear_mask = W
-			if((wear_mask.flags & BLOCKHAIR) || (wear_mask.flags & BLOCKHEADHAIR))
-				update_hair(redraw_mob)	//rebuild hair
 			update_inv_wear_mask(redraw_mob)
 		if(slot_handcuffed)
 			src.handcuffed = W
@@ -310,8 +372,9 @@
 			update_inv_gloves(redraw_mob)
 		if(slot_head)
 			src.head = W
-			if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR))
-				update_hair(redraw_mob)	//rebuild hair
+			//if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR)) //Makes people bald when switching to one with no Blocking flags
+			//	update_hair(redraw_mob)	//rebuild hair
+			update_hair(redraw_mob)
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
 			update_inv_head(redraw_mob)
@@ -342,6 +405,8 @@
 			src << "\red You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"
 			return
 
+	update_hidden_item_icons(W)
+
 	W.layer = 20
 	W.equipped(src, slot)
 	W.loc = src
@@ -363,6 +428,7 @@
 /obj/effect/equip_e/human/Destroy()
 	if(target)
 		target.requests -= src
+	..()
 
 /obj/effect/equip_e/monkey
 	name = "monkey"
@@ -371,6 +437,7 @@
 /obj/effect/equip_e/monkey/Destroy()
 	if(target)
 		target.requests -= src
+	..()
 
 /obj/effect/equip_e/process()
 	return
@@ -832,9 +899,9 @@ It can still be worn/put on as normal.
 			if(item && target.has_organ_for_slot(slot_to_process)) //Placing an item on the mob
 				if(item.mob_can_equip(target, slot_to_process, 0))
 					source.u_equip(item)
-					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)
 					if(item)
 						item.dropped(source)
+					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)
 					source.update_icons()
 					target.update_icons()
 

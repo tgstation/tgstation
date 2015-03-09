@@ -4,7 +4,8 @@
 /obj/item/weapon/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 
 	pressure_resistance = ONE_ATMOSPHERE*5
@@ -38,12 +39,13 @@
 
 	..()
 
-/obj/item/weapon/tank/examine()
+/obj/item/weapon/tank/examine(mob/user)
+	..()
 	var/obj/icon = src
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
-	if (!in_range(src, usr))
-		if (icon == src) usr << "\blue It's \a \icon[icon][src]! If you want any more information you'll need to get closer."
+	if (!in_range(src, user))
+		if (icon == src) user << "<span class='notice'>It's \a \icon[icon][src]! If you want any more information you'll need to get closer.</span>"
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
@@ -62,9 +64,11 @@
 	else
 		descriptive = "furiously hot"
 
-	usr << "\blue \The \icon[icon][src] feels [descriptive]"
+	user << "<span class='info'>\The \icon[icon][src] feels [descriptive]</span>"
 
-	return
+	if(air_contents.volume * 10 < volume)
+		user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of gas!</span>"
+		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))
@@ -85,32 +89,9 @@
 		icon = src.loc
 
 	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		for (var/mob/O in viewers(user, null))
-			O << "\red [user] has used [W] on \icon[icon] [src]"
-
-		var/pressure = air_contents.return_pressure()
-		manipulated_by = user.real_name			//This person is aware of the contents of the tank.
-		var/total_moles = air_contents.total_moles()
-
-		user << "\blue Results of analysis of \icon[icon]"
-		if (total_moles>0)
-			var/o2_concentration = air_contents.oxygen/total_moles
-			var/n2_concentration = air_contents.nitrogen/total_moles
-			var/co2_concentration = air_contents.carbon_dioxide/total_moles
-			var/plasma_concentration = air_contents.toxins/total_moles
-
-			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
-			user << "\blue Pressure: [round(pressure,0.1)] kPa"
-			user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-			user << "\blue Oxygen: [round(o2_concentration*100)]%"
-			user << "\blue CO2: [round(co2_concentration*100)]%"
-			user << "\blue Plasma: [round(plasma_concentration*100)]%"
-			if(unknown_concentration>0.01)
-				user << "\red Unknown: [round(unknown_concentration*100)]%"
-			user << "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C"
-		else
-			user << "\blue Tank is empty!"
+		user.visible_message("<span class='attack'>[user] has used [W] on \icon[icon] [src]</span>", "<span class='attack'>You use \the [W] on \icon[icon] [src]</span>")
+		var/obj/item/device/analyzer/analyzer = W
+		user.show_message(analyzer.output_gas_scan(src.air_contents, src, 0), 1)
 		src.add_fingerprint(user)
 	else if (istype(W,/obj/item/latexballon))
 		var/obj/item/latexballon/LB = W
@@ -163,6 +144,9 @@
 
 /obj/item/weapon/tank/Topic(href, href_list)
 	..()
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if (usr.stat|| usr.restrained())
 		return 0
 	if (src.loc != usr)
@@ -183,17 +167,17 @@
 			if(location.internal == src)
 				location.internal = null
 				location.internals.icon_state = "internal0"
-				usr << "\blue You close the tank release valve."
+				usr << "<span class='notice'>You close the tank release valve.</span>"
 				if (location.internals)
 					location.internals.icon_state = "internal0"
 			else
 				if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 					location.internal = src
-					usr << "\blue You open \the [src] valve."
+					usr << "<span class='notice'>You open \the [src] valve.</span>"
 					if (location.internals)
 						location.internals.icon_state = "internal1"
 				else
-					usr << "\blue You need something to connect to \the [src]."
+					usr << "<span class='notice'>You need something to connect to \the [src].</span>"
 
 	src.add_fingerprint(usr)
 	return 1
@@ -225,7 +209,8 @@
 
 /obj/item/weapon/tank/process()
 	//Allow for reactions
-	air_contents.react()
+	if(air_contents)
+		air_contents.react()
 	check_status()
 
 

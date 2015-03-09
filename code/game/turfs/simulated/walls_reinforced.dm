@@ -10,6 +10,7 @@
 	var/d_state = 0
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
+	user.delayNextAttack(8)
 	if (M_HULK in user.mutations)
 		if (prob(10) || rotting)
 			usr << text("\blue You smash through the wall.")
@@ -21,10 +22,10 @@
 			return
 
 	if(rotting)
-		user << "\blue This wall feels rather unstable."
+		user << "<span class='notice'>This wall feels rather unstable.</span>"
 		return
 
-	user << "\blue You push the wall but nothing happens!"
+	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	return
@@ -49,7 +50,7 @@
 					del E
 				rotting = 0
 				return
-		else if(!is_sharp(W) && W.force >= 10 || W.force >= 20)
+		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			user << "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>"
 			src.dismantle_wall()
 			return
@@ -236,15 +237,20 @@
 //vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
 
 	//DRILLING
-	if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	if (istype(W, /obj/item/weapon/pickaxe))
 
-		user << "<span class='notice'>You begin to drill though the wall.</span>"
+		var/obj/item/weapon/pickaxe/PK = W
+		if(!(PK.diggables & DIG_RWALLS))
+			return
 
-		sleep(200)
-		if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )	return
+		user << "<span class='notice'>You begin [PK.drill_verb] through the outer plating.</span>"
+		playsound(src, PK.drill_sound, 100, 1)
+		sleep(PK.digspeed * 50)
 
-		if( user.loc == T && user.get_active_hand() == W )
-			user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
+		if( !istype(src, /turf/simulated/wall/r_wall) || !user || !PK || !T )	return
+
+		if( user.loc == T && user.get_active_hand() == PK )
+			user << "<span class='notice'>Your [src] tears though the last of the reinforced plating.</span>"
 			dismantle_wall()
 
 	//REPAIRING
@@ -264,58 +270,17 @@
 			if (MS.amount > 1)
 				MS.amount--
 			else
-				del(MS)
+				returnToPool(MS)
 
-	//APC
-	else if( istype(W,/obj/item/apc_frame) )
-		var/obj/item/apc_frame/AH = W
-		AH.try_build(src)
-
-	else if(istype(W,/obj/item/airlock_controller_frame))
-		var/obj/item/airlock_controller_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/access_button_frame))
-		var/obj/item/access_button_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/airlock_sensor_frame))
-		var/obj/item/airlock_sensor_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if( istype(W,/obj/item/alarm_frame) )
-		var/obj/item/alarm_frame/AH = W
-		AH.try_build(src)
-
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/wallmed_frame))
-		var/obj/item/wallmed_frame/AH = W
-		AH.try_build(src)
-		return
-
-	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
-		place_poster(W,user)
+	else if(istype(W, /obj/item/mounted))
 		return
 
 	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged
 	else if(!d_state)
 		return attack_hand(user)
 	return
+
+/turf/simulated/wall/r_wall/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		if(prob(30))
+			dismantle_wall()

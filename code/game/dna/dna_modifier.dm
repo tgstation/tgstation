@@ -97,7 +97,7 @@
 	for(var/obj/O in src)
 		if(!istype(O,/obj/item/weapon/circuitboard/clonescanner) && \
 		   !istype(O,/obj/item/weapon/stock_parts) && \
-		   !istype(O,/obj/item/weapon/cable_coil) && \
+		   !istype(O,/obj/item/stack/cable_coil) && \
 		   O != beaker)
 			O.loc = get_turf(src)//Ejects items that manage to get in there (exluding the components and beaker)
 	if(!occupant)
@@ -135,28 +135,24 @@
 	return
 
 /obj/machinery/dna_scannernew/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if(!istype(O) || isturf(O)) // Cant drag the floor man
+	if(!ismob(O)) //mobs only
 		return
-	if(O.loc == user) //no you can't pull things out of your ass
+	if(O.loc == user || !isturf(O.loc) || !isturf(user.loc)) //no you can't pull things out of your ass
 		return
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
 		return
-	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
-		return
-	if(!ismob(O)) //humans only
+	if(O.anchored || !Adjacent(user) || !user.Adjacent(src) || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 		return
 	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
 		return
-	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
+	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the scanner
 		return
 	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
 		return
-	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
-		return
 	if(occupant)
-		user << "\blue <B>The DNA Scanner is already occupied!</B>"
+		user << "<span class='notice'>\The [src] is already occupied!</span>"
 		return
-	if (istype(O, /mob/living/carbon/human/manifested))
+	if(istype(O, /mob/living/carbon/human/manifested))
 		usr << "<span class='notice'> For some reason, the scanner is unable to read that person's genes.</span>"//to prevent a loophole that allows cultist to turn manifested ghosts into normal humans
 		return
 	if(isrobot(user))
@@ -176,6 +172,8 @@
 	if(L == user)
 		return
 	visible_message("[user] puts [L.name] into the DNA Scanner.", 3)
+	if(user.pulling == L)
+		user.stop_pulling()
 	put_in(L)
 	if(user.pulling == L)
 		user.pulling = null
@@ -198,13 +196,14 @@
 		if (opened)
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
+			M.state = 1
+			M.build_state = 2
 			M.icon_state = "box_1"
 			for(var/obj/I in component_parts)
 				if(I.reliability != 100 && crit_fail)
 					I.crit_fail = 1
 				I.loc = src.loc
-			del(src)
+			qdel(src)
 			return 1
 	else if(istype(item, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
@@ -226,9 +225,11 @@
 		if (G.affecting.abiotic())
 			user << "\blue <B>Subject cannot have abiotic items on.</B>"
 			return
+		if(G.affecting.buckled)
+			return
 		put_in(G.affecting)
 		src.add_fingerprint(user)
-		del(G)
+		qdel(G)
 		return 1
 	return
 
@@ -246,8 +247,11 @@
 			if(!M.client && M.mind)
 				for(var/mob/dead/observer/ghost in player_list)
 					if(ghost.mind == M.mind)
-						ghost << 'sound/effects/adminhelp.ogg'
-						ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+						if(ghost.client)
+							ghost << 'sound/effects/adminhelp.ogg'
+							ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+						else
+							ghost.canclone = M
 						break
 			break
 	return
@@ -365,7 +369,7 @@
 /obj/machinery/computer/scan_consolenew/blob_act()
 
 	if(prob(75))
-		del(src)
+		qdel(src)
 
 /obj/machinery/computer/scan_consolenew/power_change()
 	if(stat & BROKEN)
@@ -551,6 +555,9 @@
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
 		return 0 // don't update uis
+	if(href_list["close"])
+		if(usr.machine == src)
+			usr.unset_machine()
 	if(!istype(usr.loc, /turf))
 		return 0 // don't update uis
 	if(!src || !src.connected)
@@ -848,7 +855,7 @@
 
 		if (bufferOption == "changeLabel")
 			var/datum/dna2/record/buf = src.buffers[bufferId]
-			var/text = sanitize(input(usr, "New Label:", "Edit Label", buf.name) as text|null)
+			var/text = copytext(sanitize(input(usr, "New Label:", "Edit Label", buf.name) as text|null),1,MAX_NAME_LEN)
 			buf.name = text
 			src.buffers[bufferId] = buf
 			return 1

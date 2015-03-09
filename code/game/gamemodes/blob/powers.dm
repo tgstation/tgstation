@@ -267,7 +267,7 @@
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 	return
-	
+
 /mob/camera/blob/verb/telepathy(message as text)
 	set category = "Blob"
 	set name = "Psionic Message (15)"

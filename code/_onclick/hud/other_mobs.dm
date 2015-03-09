@@ -9,11 +9,18 @@
 	mymob.visible.name = "visible"
 	mymob.visible.screen_loc = ui_health
 
+	mymob.flash = new /obj/screen()
+	mymob.flash.icon = 'icons/mob/screen1.dmi'
+	mymob.flash.icon_state = "blank"
+	mymob.flash.name = "flash"
+	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.layer = 17
+
 	mymob.client.screen = null
 
-	mymob.client.screen += list(mymob.visible)
+	mymob.client.screen += list(mymob.visible, mymob.flash)
 
-/datum/hud/proc/corgi_hud(u)
+/datum/hud/proc/corgi_hud()
 	mymob.fire = new /obj/screen()
 	mymob.fire.icon = 'icons/mob/screen1_corgi.dmi'
 	mymob.fire.icon_state = "fire0"
@@ -44,9 +51,16 @@
 	mymob.toxin.name = "toxin"
 	mymob.toxin.screen_loc = ui_toxin
 
+	mymob.flash = new /obj/screen()
+	mymob.flash.icon = 'icons/mob/screen1.dmi'
+	mymob.flash.icon_state = "blank"
+	mymob.flash.name = "flash"
+	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.layer = 17
+
 	mymob.client.screen = null
 
-	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin, mymob.oxygen, mymob.toxin)
+	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin, mymob.oxygen, mymob.toxin, mymob.flash)
 
 /datum/hud/proc/brain_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
 	mymob.blind = new /obj/screen()
@@ -96,12 +110,19 @@
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = 'icons/mob/screen1_shade.dmi'
-	mymob.zone_sel.overlays.Cut()
+	mymob.zone_sel.overlays.len = 0
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+
+	mymob.flash = new /obj/screen()
+	mymob.flash.icon = 'icons/mob/screen1.dmi'
+	mymob.flash.icon_state = "blank"
+	mymob.flash.name = "flash"
+	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.layer = 17
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list(mymob.healths, mymob.pullin, mymob.zone_sel, mymob.purged)
+	mymob.client.screen += list(mymob.healths, mymob.pullin, mymob.zone_sel, mymob.purged, mymob.flash)
 
 /datum/hud/proc/construct_hud()
 	var/constructtype
@@ -114,6 +135,13 @@
 		constructtype = "wraith"
 	else if(istype(mymob,/mob/living/simple_animal/construct/harvester))
 		constructtype = "harvester"
+
+	mymob.flash = new /obj/screen()
+	mymob.flash.icon = 'icons/mob/screen1.dmi'
+	mymob.flash.icon_state = "blank"
+	mymob.flash.name = "flash"
+	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.layer = 17
 
 	if(constructtype)
 		mymob.fire = new /obj/screen()
@@ -136,7 +164,7 @@
 
 		mymob.zone_sel = new /obj/screen/zone_sel()
 		mymob.zone_sel.icon = 'icons/mob/screen1_construct.dmi'
-		mymob.zone_sel.overlays.Cut()
+		mymob.zone_sel.overlays.len = 0
 		mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
 		mymob.purged = new /obj/screen()
@@ -147,7 +175,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin, mymob.zone_sel, mymob.purged)
+	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin, mymob.zone_sel, mymob.purged, mymob.flash)
 
 	switch(constructtype)
 		if("artificer")
@@ -181,7 +209,7 @@
 			mymob.construct_spell5.name = "pylon"
 			mymob.construct_spell5.screen_loc = ui_construct_spell5
 
-			mymob.client.screen += list(mymob.construct_spell1, mymob.construct_spell2, mymob.construct_spell3, mymob.construct_spell4, mymob.construct_spell5)
+			mymob.client.screen += list(mymob.construct_spell1, mymob.construct_spell2, mymob.construct_spell3, mymob.construct_spell4, mymob.construct_spell5, mymob.flash)
 
 		if("wraith")
 			mymob.construct_spell1 = new /obj/screen()
@@ -190,7 +218,7 @@
 			mymob.construct_spell1.name = "shift"
 			mymob.construct_spell1.screen_loc = ui_construct_spell1
 
-			mymob.client.screen += mymob.construct_spell1
+			mymob.client.screen += list(mymob.construct_spell1, mymob.flash)
 
 		if("juggernaut")
 			mymob.construct_spell1 = new /obj/screen()
@@ -199,7 +227,7 @@
 			mymob.construct_spell1.name = "juggerwall"
 			mymob.construct_spell1.screen_loc = ui_construct_spell1
 
-			mymob.client.screen += mymob.construct_spell1
+			mymob.client.screen += list(mymob.construct_spell1, mymob.flash)
 
 		if("harvester")
 			mymob.construct_spell1 = new /obj/screen()
@@ -220,5 +248,5 @@
 			mymob.construct_spell3.name = "harvest"
 			mymob.construct_spell3.screen_loc = ui_construct_spell3
 
-			mymob.client.screen += list(mymob.construct_spell1, mymob.construct_spell2, mymob.construct_spell3)
+			mymob.client.screen += list(mymob.construct_spell1, mymob.construct_spell2, mymob.construct_spell3, mymob.flash)
 

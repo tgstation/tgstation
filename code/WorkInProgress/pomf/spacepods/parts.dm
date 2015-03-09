@@ -5,13 +5,15 @@
 /obj/item/pod_parts/core
 	name="Space Pod Core"
 	icon_state = "core"
-	flags = FPRINT | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	origin_tech = "materials=4;plasma=3;bluespace=2;engineering=3"
 
 /obj/item/pod_parts/pod_frame
 	name = "Space Pod Frame"
 	icon_state = ""
-	flags = CONDUCT
+	flags = 0
+	siemens_coefficient = 1
 	density = 0
 	anchored = 0
 	var/link_to = null
@@ -30,7 +32,7 @@
 	var/turf/T
 	var/obj/item/pod_parts/pod_frame/linked
 	var/obj/item/pod_parts/pod_frame/pointer
-	var/connectedparts =  list()
+	var/list/connectedparts =  list()
 	neededparts -= src
 	//log_admin("Starting with [src]")
 	linked = src
@@ -46,6 +48,8 @@
 			pointer = null
 	//log_admin("Parts left: [neededparts.len]") //len not working
 	for(var/i = 1; i <=4; i++)
+		if(i > connectedparts.len)
+			return 0
 		var/obj/item/pod_parts/pod_frame/F = connectedparts[i]
 		if(F.type in neededparts) //if one of the items can be founded in neededparts
 			neededparts -= F.type

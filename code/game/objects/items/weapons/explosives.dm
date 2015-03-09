@@ -7,7 +7,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = FPRINT
 	w_class = 2.0
 	origin_tech = "syndicate=2"
 	var/datum/wires/explosive/plastic/wires = null
@@ -101,6 +101,10 @@
 		explosion(location, -1, -1, 2, 3)
 
 	if(target)
+		if(!(target.singuloCanEat()))//mostly adminbus objects. It'd make sense though that C4 can't destroy what even a singulo can't eat.
+			target.overlays -= image('icons/obj/assemblies.dmi', "plastic-explosive2")
+			del(src)
+			return
 		if (istype(target, /turf/simulated/wall))
 			target:dismantle_wall(1)
 		else

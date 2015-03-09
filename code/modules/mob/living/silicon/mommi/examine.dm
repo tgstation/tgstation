@@ -1,10 +1,4 @@
-/mob/living/silicon/robot/mommi/examine()
-	set src in oview()
-
-	if(!usr || !src)	return
-	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
+/mob/living/silicon/robot/mommi/examine(mob/user)
 
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 
@@ -40,5 +34,4 @@
 		if(DEAD)			msg += "<span class='deadsay'>It looks completely unsalvageable.</span>\n"
 	msg += "*---------*</span>"
 
-	usr << msg
-	return
+	user << msg

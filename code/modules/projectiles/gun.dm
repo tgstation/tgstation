@@ -4,7 +4,8 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "detective"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	m_amt = 2000
 	w_type = RECYK_METAL
@@ -52,18 +53,18 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
-/obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
 	if(flag)	return //we're placing gun on a table or in backpack
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
-		PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
+		PreFire(A,user,params, "struggle" = struggle) //They're using the new gun system, locate what they're aiming at.
 	else
-		Fire(A,user,params) //Otherwise, fire normally.
+		Fire(A,user,params, "struggle" = struggle) //Otherwise, fire normally.
 
 /obj/item/weapon/gun/proc/isHandgun()
 	return 1
 
-/obj/item/weapon/gun/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)//TODO: go over this
+/obj/item/weapon/gun/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0)//TODO: go over this
 	//Exclude lasertag guns from the M_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user, /mob/living))
@@ -114,7 +115,7 @@
 	if(!in_chamber)
 		return
 	if(!istype(src, /obj/item/weapon/gun/energy/laser/redtag) && !istype(src, /obj/item/weapon/gun/energy/laser/redtag))
-		log_attack("[user.name] ([user.ckey]) fired \the [src] (proj:[in_chamber.name]) at [target] [ismob(target) ? "([target:ckey])" : ""] ([target.x],[target.y],[target.z])" )
+		log_attack("[user.name] ([user.ckey]) fired \the [src] (proj:[in_chamber.name]) at [target] [ismob(target) ? "([target:ckey])" : ""] ([target.x],[target.y],[target.z])[struggle ? " due to being disarmed." :""]" )
 	in_chamber.firer = user
 	in_chamber.def_zone = user.zone_sel.selecting
 	if(targloc == curloc)
@@ -139,7 +140,7 @@
 	in_chamber.loc = get_turf(user)
 	in_chamber.starting = get_turf(user)
 	in_chamber.shot_from = src
-	user.next_move = world.time + 4
+	user.delayNextAttack(4) // TODO: Should be delayed per-gun.
 	in_chamber.silenced = silenced
 	in_chamber.current = curloc
 	in_chamber.OnFired()
@@ -216,7 +217,7 @@
 
 	if (src.process_chambered())
 		//Point blank shooting if on harm intent or target we were targeting.
-		if(user.a_intent == "hurt")
+		if(user.a_intent == I_HURT)
 			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
 			in_chamber.damage *= 1.3
 			src.Fire(M,user,0,0,1)

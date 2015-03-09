@@ -3,17 +3,20 @@
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
 /mob/living/carbon/alien
-	name = "alien"
+	name = "alien" //The alien, not Alien
 	voice_name = "alien"
-	speak_emote = list("hisses")
+	//speak_emote = list("hisses")
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
+	languages = ALIEN
+
+	mob_bump_flag = ALIEN
+	mob_swap_flags = ALLMOBS
+	mob_push_flags = ALLMOBS ^ ROBOT
 
 	var/storedPlasma = 250
 	var/max_plasma = 500
-
-	alien_talk_understand = 1
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
@@ -61,7 +64,8 @@
 		apply_damage(0.5*damage, BRUTE, "l_arm")
 		apply_damage(0.5*damage, BRUTE, "r_arm")
 
-		new /obj/effect/decal/cleanable/blood/xeno(src.loc)
+		var/obj/effect/decal/cleanable/blood/xeno/X = getFromPool(/obj/effect/decal/cleanable/blood/xeno, src.loc) //new /obj/effect/decal/cleanable/blood/xeno(src.loc)
+		X.New(src.loc)
 
 /mob/living/carbon/alien/updatehealth()
 	if(status_flags & GODMODE)
@@ -76,14 +80,13 @@
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
 	if(locate(/obj/effect/alien/weeds) in loc)
-		if(health >= maxHealth - getCloneLoss())
-			adjustToxLoss(plasma_rate)
-		else
+		if(health < maxHealth - getCloneLoss())
 			adjustBruteLoss(-heal_rate)
 			adjustFireLoss(-heal_rate)
 			adjustOxyLoss(-heal_rate)
+		adjustToxLoss(plasma_rate)
 
-	if(!environment)
+	if(!environment || (flags & INVULNERABLE))
 		return
 	var/loc_temp = T0C
 	if(istype(loc, /obj/mecha))
@@ -176,20 +179,20 @@
 
 /mob/living/carbon/alien/Stat()
 
-	statpanel("Status")
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
 
 	..()
 
-	if (client.statpanel == "Status")
+	if(statpanel("Status"))
 		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
 
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+		if(emergency_shuttle)
+			if(emergency_shuttle.online && emergency_shuttle.location < 2)
+				var/timeleft = emergency_shuttle.timeleft()
+				if (timeleft)
+					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
@@ -227,7 +230,8 @@ Des: Removes all infected images from the alien.
 	if (client)
 		for(var/image/I in client.images)
 			if(dd_hasprefix_case(I.icon_state, "infected"))
-				del(I)
+				//del(I)
+				client.images -= I
 	return
 
 /mob/living/carbon/alien/has_eyes()

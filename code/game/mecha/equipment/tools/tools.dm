@@ -53,7 +53,7 @@
 		else if(istype(target,/mob/living))
 			var/mob/living/M = target
 			if(M.stat>1) return
-			if(chassis.occupant.a_intent == "hurt")
+			if(chassis.occupant.a_intent == I_HURT)
 				M.take_overall_damage(dam_force)
 				M.adjustOxyLoss(round(dam_force/2))
 				M.updatehealth()
@@ -313,7 +313,7 @@
 					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
-						target:ChangeTurf(/turf/space)
+						target:ChangeTurf(target:under_turf)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.use_power(energy_drain)
 				else if (istype(target, /obj/machinery/door/airlock))
@@ -331,7 +331,7 @@
 					set_ready_state(0)
 					if(do_after_cooldown(target))
 						if(disabled) return
-						target:ChangeTurf(/turf/simulated/floor/plating)
+						target:ChangeTurf(/turf/simulated/floor/plating/airless)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
 						chassis.use_power(energy_drain*2)
@@ -1070,10 +1070,10 @@
 		else if(istype(target,/mob/living))
 			var/mob/living/M = target
 			if(M.stat>1) return
-			if(chassis.occupant.a_intent == "hurt")
+			if(chassis.occupant.a_intent == I_HURT)
 				chassis.occupant_message("\red You obliterate [target] with [src.name], leaving blood and guts everywhere.")
 				chassis.visible_message("\red [chassis] destroys [target] in an unholy fury.")
-			if(chassis.occupant.a_intent == "disarm")
+			if(chassis.occupant.a_intent == I_DISARM)
 				chassis.occupant_message("\red You tear [target]'s limbs off with [src.name].")
 				chassis.visible_message("\red [chassis] rips [target]'s arms off.")
 			else

@@ -9,7 +9,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 
 /obj/item/clothing/monkeyclothes/attack(mob/living/carbon/C as mob, mob/user as mob)	//I thought I'd give people a fast way to put clothes on monkey.
 	if(ismonkey(C))																	//They can do it by opening the monkey's "show inventory" like you'd do for an human as well.
@@ -27,3 +27,15 @@
 	desc = "Adorably crazy."
 	icon_state = "cult_icon"
 	item_state = "cult_item"
+
+/obj/item/clothing/monkeyclothes/jumpsuit_red
+	name = "monkey-sized red jumpsuit"
+	desc = "They wear these at the thunderdome."
+	icon_state = "redsuit_icon"
+	item_state = "redsuit_item"
+
+/obj/item/clothing/monkeyclothes/jumpsuit_green
+	name = "monkey-sized green jumpsuit"
+	desc = "They wear these at the thunderdome."
+	icon_state = "greensuit_icon"
+	item_state = "greensuit_item"

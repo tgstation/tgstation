@@ -53,7 +53,7 @@ var/global/vox_shuttle_location
 	return attack_hand(user)
 
 /obj/machinery/computer/vox_station/attack_hand(mob/user as mob)
-	if(!allowed(user))
+	if(!allowed(user) || issilicon(user))
 		user << "<span class=\"warning\">Access denied</span>"
 		return
 

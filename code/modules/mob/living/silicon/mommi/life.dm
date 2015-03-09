@@ -20,6 +20,7 @@
 		process_killswitch()
 		process_locks()
 	update_canmove()
+	handle_beams()
 
 
 

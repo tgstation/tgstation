@@ -36,6 +36,8 @@ var/const/HOLOPAD_MODE = 0
 	var/mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
+	flags = HEAR
+	languages = ROBOT | HUMAN
 
 /obj/machinery/hologram/holopad/attack_hand(var/mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
@@ -78,15 +80,15 @@ var/const/HOLOPAD_MODE = 0
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/hologram/holopad/hear_talk(mob/living/M, text)
-	if(M&&hologram&&master)//Master is mostly a safety in case lag hits or something.
-		if(!master.say_understands(M))//The AI will be able to understand most mobs talking through the holopad.
-			text = stars(text)
-		var/name_used = M.GetVoice()
-		//This communication is imperfect because the holopad "filters" voices and is only designed to connect to the master only.
-		var/rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> <span class='message'>[M.say_quote(text)]</span></span></i>"
+/obj/machinery/hologram/holopad/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+	if(speaker && hologram && master && !radio_freq && speaker != master)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
+		if(!master.languages & speaker.languages)//The AI will be able to understand most mobs talking through the holopad.
+			raw_message = master.lang_treat(speaker, message_langs, raw_message)
+		var/name_used = speaker.GetVoice()
+		var/rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> <span class='message'>[speaker.say_quote(raw_message)]</span></span></i>"
 		master.show_message(rendered, 2)
 	return
+
 
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
 	hologram = new(T)//Spawn a blank effect at the location.

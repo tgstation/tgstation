@@ -3,7 +3,7 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	w_class = 1.0
 	var/colour = "red"
 	var/open = 0
@@ -28,6 +28,7 @@
 /obj/item/weapon/lipstick/random/New()
 	colour = pick("red","purple","jade","black")
 	name = "[colour] lipstick"
+	..()
 
 
 /obj/item/weapon/lipstick/attack_self(mob/user as mob)

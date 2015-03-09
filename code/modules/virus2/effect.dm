@@ -224,6 +224,7 @@
 	stage = 4
 /datum/disease2/effect/scc/activate(var/mob/living/carbon/mob,var/multiplier)
 	//
+	if(!ishuman(mob)) return 0
 	var/mob/living/carbon/human/H = mob
 	mob.reagents.add_reagent("pacid", 10)
 	mob << "<span class = 'warning'> Your body burns as your cells break down.</span>"
@@ -275,7 +276,9 @@
 					meatslab.loc = mob.loc
 					meatslab.throw_at(Tx,i,3)
 					if (!Tx.density)
-						new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
+
+						var/obj/effect/decal/cleanable/blood/gibs/D = getFromPool(/obj/effect/decal/cleanable/blood/gibs, Tx)
+						D.New(Tx,i)
 
 
 		if(2)
@@ -631,9 +634,10 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 		mob.reagents.add_reagent("dermaline", 4)
 	mob.emote("me",1,"exhales slowly.")
 
-	var/datum/organ/external/chest/chest = H.get_organ("chest")
-	for(var/datum/organ/internal/I in chest.internal_organs)
-		I.damage = 0
+	if(ishuman(H))
+		var/datum/organ/external/chest/chest = H.get_organ("chest")
+		for(var/datum/organ/internal/I in chest.internal_organs)
+			I.damage = 0
 
 
 ////////////////////////STAGE 2/////////////////////////////////
@@ -747,7 +751,8 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	if (prob(30))
 		var/obj/effect/decal/cleanable/blood/D= locate(/obj/effect/decal/cleanable/blood) in get_turf(mob)
 		if(D==null)
-			D = new(get_turf(mob))
+			D = getFromPool(/obj/effect/decal/cleanable/blood, get_turf(mob))
+			D.New(D.loc)
 
 		D.virus2 |= virus_copylist(mob.virus2)
 
@@ -765,8 +770,9 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	if (prob(30))
 		mob.say("*cough")
 		var/obj/effect/decal/cleanable/blood/viralsputum/D= locate(/obj/effect/decal/cleanable/blood/viralsputum) in get_turf(mob)
-		if(D==null)
-			D = new(get_turf(mob))
+		if(!D)
+			D = getFromPool(/obj/effect/decal/cleanable/blood/viralsputum, get_turf(mob))
+			D.New(D.loc)
 
 		D.virus2 |= virus_copylist(mob.virus2)
 

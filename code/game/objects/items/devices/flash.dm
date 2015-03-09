@@ -7,7 +7,8 @@
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	origin_tech = "magnets=2;combat=1"
 
 	var/times_used = 0 //Number of times it's been used.
@@ -82,7 +83,7 @@
 			Subject.Weaken(10)
 			flick("e_flash", Subject.flash)
 
-			if(ishuman(user) && user.mind && user.mind in ticker.mode.head_revolutionaries) // alien revhead when?
+			if(user.mind && isrevhead(user)) // alien revhead when?
 				if(ishuman(Subject))
 					if(Subject.stat != DEAD)
 						Subject.mind_initialize() // give them a mind datum if they don't have one

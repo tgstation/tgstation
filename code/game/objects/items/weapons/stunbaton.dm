@@ -3,7 +3,7 @@
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stun baton"
 	item_state = "baton"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
@@ -17,7 +17,7 @@
 	var/mob/foundmob = "" //Used in throwing proc.
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='danger'>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</span>"
 		return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/New()
@@ -52,13 +52,12 @@
 	else
 		icon_state = "[initial(name)]"
 
-/obj/item/weapon/melee/baton/examine()
-	set src in view(1)
+/obj/item/weapon/melee/baton/examine(mob/user)
 	..()
 	if(bcell)
-		usr <<"<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>"
+		user <<"<span class='info'>The baton is [round(bcell.percent())]% charged.</span>"
 	if(!bcell)
-		usr <<"<span class='warning'>The baton does not have a power source installed.</span>"
+		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/cell))
@@ -85,7 +84,7 @@
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (M_CLUMSY in user.mutations) && prob(50))
-		user << "\red You grab the [src] on the wrong side."
+		user << "<span class='warning'>You grab the [src] on the wrong side.</span>"
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
@@ -117,12 +116,12 @@
 
 	var/mob/living/L = M
 
-	if(user.a_intent == "hurt")
+	if(user.a_intent == I_HURT)
 		..()
 		playsound(loc, "swing_hit", 50, 1, -1)
 
 	else if(!status)
-		L.visible_message("<span class='warning'>[L] has been prodded with the [src] by [user]. Luckily it was off.</span>")
+		L.visible_message("<span class='attack'>[L] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
 
 	if(status)
@@ -156,18 +155,20 @@
 			M.LAssailant = user
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
+	foundmob = directory[ckey(fingerprintslast)]
 	if (prob(50))
 		if(istype(hit_atom, /mob/living))
 			var/mob/living/L = hit_atom
 			if(status)
-				foundmob.lastattacked = L
-				L.lastattacker = foundmob
+				if(foundmob)
+					foundmob.lastattacked = L
+					L.lastattacker = foundmob
 
 				L.Stun(stunforce)
 				L.Weaken(stunforce)
 				L.apply_effect(STUTTER, stunforce)
 
-				L.visible_message("<span class='danger'>[L] has been stunned with [src] by [foundmob]!</span>")
+				L.visible_message("<span class='danger'>[L] has been stunned with [src] by [foundmob ? foundmob : "Unknown"]!</span>")
 				playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 				if(isrobot(loc))
@@ -182,8 +183,8 @@
 					H.forcesay(hit_appends)
 
 				foundmob.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [L.name] ([L.ckey]) with [name]</font>"
-				L.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src] by [foundmob.name] ([foundmob.ckey])</font>"
-				log_attack("<font color='red'>Flying [src.name], thrown by [foundmob.name] ([foundmob.ckey]) stunned [L.name] ([L.ckey])</font>" )
+				L.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src] by [istype(foundmob) ? foundmob.name : ""] ([istype(foundmob) ? foundmob.ckey : ""])</font>"
+				log_attack("<font color='red'>Flying [src.name], thrown by [istype(foundmob) ? foundmob.name : ""] ([istype(foundmob) ? foundmob.ckey : ""]) stunned [L.name] ([L.ckey])</font>" )
 				if(!iscarbon(foundmob))
 					L.LAssailant = null
 				else

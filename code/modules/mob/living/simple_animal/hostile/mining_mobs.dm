@@ -17,7 +17,7 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
-	a_intent = "hurt"
+	a_intent = I_HURT
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 
@@ -71,7 +71,7 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	attacktext = "bites into"
-	a_intent = "hurt"
+	a_intent = I_HURT
 	attack_sound = 'sound/weapons/spiderlunge.ogg'
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
@@ -99,6 +99,9 @@
 	return
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	switch(severity)
 		if(1.0)
 			gib()
@@ -134,7 +137,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "barrels into"
-	a_intent = "help"
+	a_intent = I_HELP
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
 	search_objects = 1
@@ -195,7 +198,7 @@
 	for(var/R in ore_types_eaten)
 		for(counter=0, counter < ore_eaten, counter++)
 			new R(src.loc)
-	ore_types_eaten.Cut()
+	ore_types_eaten.len = 0
 	ore_eaten = 0
 
 
@@ -360,6 +363,7 @@
 	icon_state = "Goliath_tentacle"
 
 /obj/effect/goliath_tentacle/New()
+	..()
 	var/turftype = get_turf(src)
 	if(istype(turftype, /turf/unsimulated/mineral))
 		var/turf/unsimulated/mineral/M = turftype

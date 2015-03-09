@@ -27,10 +27,10 @@
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		usr << "\red The [src] will not function on a deceased robot."
+		usr << "<span class='warning'>The [src] will not function on a deceased robot.</span>"
 		return 1
 	if(isMoMMI(R))
-		usr << "\red The [src] only functions on Nanotrasen Cyborgs."
+		usr << "<span class='warning'>The [src] only functions on Nanotrasen Cyborgs.</span>"
 	return 0
 
 
@@ -59,7 +59,7 @@
 		R.module.modules += new/obj/item/weapon/cautery
 		R.module.modules += new/obj/item/weapon/hemostat
 		R.module.modules += new/obj/item/weapon/retractor*/
-		R.module.modules += new/obj/item/weapon/melee/defibrillator
+		R.module.modules += new /obj/item/weapon/melee/defibrillator(src)
 		R.module.modules += new /obj/item/weapon/reagent_containers/borghypo/upgraded(src)
 
 		return 1
@@ -185,7 +185,7 @@
 	if(..()) return 0
 
 	if(istype(R.module, /obj/item/weapon/robot_module/miner) || istype(R.module, /obj/item/weapon/robot_module/engineering) || isMoMMI(R))
-		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide
+		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide(src)
 		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
 			R.internals = src
 		//R.icon_state="Miner+j"
@@ -198,7 +198,7 @@
 
 /obj/item/borg/upgrade/syndicate/
 	name = "Illegal Equipment Module"
-	desc = "Unlocks the hidden, deadlier functions of a robot"
+	desc = "Unlocks the hidden, deadlier functions of a robot."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
@@ -208,5 +208,31 @@
 	if(R.emagged == 1)
 		return 0
 
-	R.emagged = 1
+	R.SetEmagged(2)
+	return 1
+
+/obj/item/borg/upgrade/engineering/
+	name = "Engineering Equipment Module"
+	desc = "Adds several tools and materials for the robot to use."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+
+/obj/item/borg/upgrade/engineering/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+
+	if(!istype(R.module, /obj/item/weapon/robot_module/engineering))
+		return 0
+
+	var/obj/item/device/material_synth/S = locate(/obj/item/device/material_synth) in R.module.modules
+	if(!S) return 0
+
+	S.materials_scanned |= list("plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
+								"reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
+								"carpet tiles" = /obj/item/stack/tile/carpet)
+
+	var/obj/item/weapon/wrench/socket/W = locate(/obj/item/weapon/wrench/socket) in R.module.modules
+	if(W) return 0
+
+	R.module.modules += new/obj/item/weapon/wrench/socket(src)
+
 	return 1

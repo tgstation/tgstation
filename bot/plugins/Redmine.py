@@ -16,6 +16,20 @@ class RedminePlugin(IPlugin):
     def __init__(self, bot):
         IPlugin.__init__(self, bot)
         
+        self.data=None
+        self.config=None
+        self.url=None
+        self.ignored=[]
+        self.auth=None
+        self.project_id=None
+        self.resource=None
+        self.lastCheck=0
+        
+        self.config = globalConfig.get('plugins.redmine')
+        if self.config is None:
+            logging.error('Redmine: Disabled.') 
+            return
+        
         self.data = {
             'last-bug-created': 0,
             'ignored-names': [
@@ -28,6 +42,7 @@ class RedminePlugin(IPlugin):
         self.url = globalConfig.get('plugins.redmine.url', None)
         if self.url is None:
             logging.error('Redmine: Disabled.') 
+            
             return
         self.ignored = []
         for ignoretok in self.data.get('ignored-names',['/^Not\-[0-9]/']):
@@ -54,7 +69,8 @@ class RedminePlugin(IPlugin):
         return False
         
     def OnChannelMessage(self, connection, event):
-        if self.url is None: return
+        if self.data is None:
+            return
         channel = event.target
         if self.checkIgnore(event.source.nick): return
         matches = self.bug_regex.finditer(event.arguments[0])
@@ -67,7 +83,8 @@ class RedminePlugin(IPlugin):
             self.bot.privmsg(channel, s)
         
     def OnPing(self):
-        if self.project_id is None: return
+        if self.data is None:
+            return
         if not self.bot.welcomeReceived:
             logging.info('Received PING, but no welcome yet.')
             return
@@ -93,7 +110,8 @@ class RedminePlugin(IPlugin):
             self.SavePluginData()
             
     def getBugs(self, ids, fmt):
-        if self.url is None: return
+        if self.data is None:
+            return
         strings = []
         for id in ids:
             # Getting response
@@ -126,7 +144,8 @@ class RedminePlugin(IPlugin):
         return strings
             
     def getAllBugs(self, **kwargs):
-        if self.url is None: return
+        if self.data is None:
+            return
         # Getting response
         try:
             response = self.resource.get('/issues.json', **kwargs)

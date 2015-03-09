@@ -321,7 +321,7 @@ Auto Patrol: []"},
 				mode = SECBOT_HUNT
 				return
 
-			if(istype(src.target,/mob/living/carbon))
+			if(istype(src.target,/mob/living/carbon) && !isalien(target))
 				var/mob/living/carbon/C = target
 				if(!C.handcuffed && !src.arrest_type)
 					playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -2)
@@ -329,11 +329,11 @@ Auto Patrol: []"},
 					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
 					spawn(60)
-						if(get_dist(src, src.target) <= 1)
+						if(Adjacent(target))
 							/*if(src.target.handcuffed)
 								return*/
 
-							if(istype(src.target,/mob/living/carbon))
+							if(istype(src.target,/mob/living/carbon) && !isalien(target))
 								C = target
 								if(!C.handcuffed)
 									C.handcuffed = new /obj/item/weapon/handcuffs(target)
@@ -644,7 +644,10 @@ Auto Patrol: []"},
 				src.threatlevel = src.assess_perp(C)
 			else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
 				src.threatlevel = 4
-
+			else
+				continue
+		else
+			continue
 		/*
 		else if(istype(M, /mob/living/simple_animal/hostile))
 			if(M.stat == DEAD)
@@ -773,8 +776,9 @@ Auto Patrol: []"},
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	del(src)
+	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, src.loc)
+	O.New(O.loc)
+	qdel(src)
 
 /obj/machinery/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
@@ -794,12 +798,12 @@ Auto Patrol: []"},
 		return
 
 	if(S.secured)
-		del(S)
+		qdel(S)
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		user.put_in_hands(A)
 		user << "You add the signaler to the helmet."
 		user.drop_from_inventory(src)
-		del(src)
+		qdel(src)
 	else
 		return
 
@@ -818,7 +822,7 @@ Auto Patrol: []"},
 		user << "You add the prox sensor to [src]!"
 		src.overlays += image('icons/obj/aibots.dmi', "hs_eye")
 		src.name = "helmet/signaler/prox sensor assembly"
-		del(W)
+		qdel(W)
 
 	else if(((istype(W, /obj/item/robot_parts/l_arm)) || (istype(W, /obj/item/robot_parts/r_arm))) && (src.build_step == 2))
 		user.drop_item()
@@ -826,7 +830,7 @@ Auto Patrol: []"},
 		user << "You add the robot arm to [src]!"
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
 		src.overlays += image('icons/obj/aibots.dmi', "hs_arm")
-		del(W)
+		qdel(W)
 
 	else if((istype(W, /obj/item/weapon/melee/baton)) && (src.build_step >= 3))
 		user.drop_item()
@@ -835,8 +839,8 @@ Auto Patrol: []"},
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
 		S.loc = get_turf(src)
 		S.name = src.created_name
-		del(W)
-		del(src)
+		qdel(W)
+		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)

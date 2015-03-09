@@ -473,7 +473,7 @@
 					dat += {"<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>
 						<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"}
 					// END AUTOFIX
-					var/turf/mob_loc = get_turf_loc(M)
+					var/turf/mob_loc = get_turf(M)
 					dat += "<td>[mob_loc.loc]</td></tr>"
 				else
 					dat += "<tr><td><i>Head not found!</i></td></tr>"
@@ -557,6 +557,47 @@
 						<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"}
 					// END AUTOFIX
 			dat += "</table>"
+
+			var/living_crew = 0
+			var/living_cultists = 0
+			for(var/mob/living/L in player_list)
+				if(L.stat != DEAD)
+					if(L.mind in ticker.mode.cult)
+						living_cultists++
+					else
+						if(istype(L, /mob/living/carbon))
+							living_crew++
+
+			dat += "<br>[living_cultists] living cultists. (use <a href='?src=\ref[src];cult_mindspeak=\ref[src]'>Voice of Nar-Sie</a>)"
+			dat += "<br>[living_crew] living non-cultists."
+			dat += "<br>"
+
+			if(istype(ticker.mode, /datum/game_mode/cult))
+				dat += "<br><B>Cult Objectives:</B>"
+				var/datum/game_mode/cult/mode_ticker = ticker.mode
+
+				for(var/obj_count=1, obj_count <= mode_ticker.objectives.len, obj_count++)
+					var/explanation
+					switch(mode_ticker.objectives[obj_count])
+						if("convert")
+							explanation = "Reach a total of [mode_ticker.convert_target] cultists.[(obj_count < mode_ticker.objectives.len) ? "<font color='green'><B>Success!</B></font>" : "(currently [mode_ticker.cult.len] cultists)"]"
+						if("bloodspill")
+							explanation = "Cover [mode_ticker.spilltarget] tiles in blood.[(obj_count < mode_ticker.objectives.len) ? "<font color='green'><B>Success!</B></font>" : "(currently [mode_ticker.bloody_floors.len] bloody floors)"]"
+						if("sacrifice")
+							explanation = "Sacrifice [mode_ticker.sacrifice_target.name], the [mode_ticker.sacrifice_target.assigned_role].[(obj_count < mode_ticker.objectives.len) ? "<font color='green'><B>Success!</B></font>" : ""]"
+						if("eldergod")
+							explanation = "Summon Nar-Sie.[(obj_count < mode_ticker.objectives.len) ? "<font color='green'><B>Success!</B></font>" : ""]"
+						if("harvest")
+							explanation = "Bring [mode_ticker.harvest_target] humans directly to Nar-Sie.[mode_ticker.bonus ? "<font color='green'><B>Success!</B></font>" : "(currently [mode_ticker.harvested] sacrifices)"]"
+						if("hijack")
+							explanation = "Don't let any non-cultist escape on the Shuttle alive.[mode_ticker.bonus ? "<font color='green'><B>Success!</B></font>" : ""]"
+						if("massacre")
+							explanation = "Massacre the crew until there are less than [mode_ticker.massacre_target] people left on the station.[mode_ticker.bonus ? "<font color='green'><B>Success!</B></font>" : ""]"
+
+					dat += "<br><B>Objective #[obj_count]</B>: [explanation]"
+
+				if(!mode_ticker.narsie_condition_cleared)
+					dat += "<br><a href='?src=\ref[src];cult_nextobj=\ref[src]'>complete objective (debug)</a>"
 
 		/*if(istype(ticker.mode, /datum/game_mode/anti_revolution) && ticker.mode:heads.len)	//comment out anti-revolution
 			dat += "<br><table cellspacing=5><tr><td><B>Corrupt Heads</B></td><td></td></tr>"

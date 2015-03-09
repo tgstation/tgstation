@@ -2,6 +2,8 @@
 	name = "silenced pistol"
 	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
 	icon_state = "silenced_pistol"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	w_class = 3.0
 	max_shells = 10
 	caliber = list(".45"  = 1)
@@ -16,6 +18,8 @@
 	name = "desert eagle"
 	desc = "A robust handgun that uses .50 AE ammo"
 	icon_state = "deagle"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	force = 14.0
 	max_shells = 7
 	caliber = list(".50" = 1)
@@ -31,7 +35,6 @@
 	item_state = "deagleg"
 
 
-
 /obj/item/weapon/gun/projectile/deagle/camo
 	desc = "A Deagle brand Deagle for operators operating operationally. Uses .50 AE ammo."
 	icon_state = "deaglecamo"
@@ -43,6 +46,8 @@
 	name = "gyrojet pistol"
 	desc = "A bulky pistol designed to fire self propelled rounds"
 	icon_state = "gyropistol"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	max_shells = 8
 	caliber = list("75" = 1)
 	fire_sound = 'sound/weapons/elecfire.ogg'

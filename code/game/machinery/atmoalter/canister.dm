@@ -4,7 +4,8 @@
 	icon_state = "yellow"
 	density = 1
 	var/health = 100.0
-	flags = FPRINT | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
@@ -22,31 +23,38 @@
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 
+	var/log="" // Bad boys, bad boys.
+
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
 	canister_color = "redws"
 	can_label = 0
+
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
 	canister_color = "red"
 	can_label = 0
+
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
 	canister_color = "blue"
 	can_label = 0
+
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Toxin (Bio)\]"
 	icon_state = "orange"
 	canister_color = "orange"
 	can_label = 0
+
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
 	icon_state = "black"
 	canister_color = "black"
 	can_label = 0
+
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
 	icon_state = "grey"
@@ -99,6 +107,7 @@
 		playsound(get_turf(src), 'sound/effects/spray.ogg', 10, 1, -3)
 		src.density = 0
 		update_icon()
+		investigation_log(I_ATMOS, "was destoyed by heat/gunfire.")
 
 		if (src.holding)
 			src.holding.loc = src.loc
@@ -182,13 +191,14 @@
 	if(iswelder(W) && src.destroyed)
 		if(weld(W, user))
 			user << "\blue You salvage whats left of \the [src]"
-			var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src.loc)
+			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))//new /obj/item/stack/sheet/metal(src.loc)
 			M.amount = 3
 			del src
 		return
 
 	if(!istype(W, /obj/item/weapon/wrench) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
 		visible_message("\red [user] hits the [src] with a [W]!")
+		investigation_log(I_ATMOS, "<span style='danger'>was smacked with \a [W] by [key_name(user)]</span>")
 		src.health -= W.force
 		src.add_fingerprint(user)
 		healthcheck()
@@ -223,7 +233,10 @@
 	return src.ui_interact(user)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
-	if (src.destroyed)
+	if (src.destroyed || gcDestroyed || !get_turf(src))
+		if(!ui)
+			ui = nanomanager.get_open_ui(user, src, ui_key)
+		if(ui) ui.close()
 		return
 
 	// this is the data which will be sent to the ui
@@ -255,7 +268,10 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
-
+	if(href_list["close"])
+		if(usr.machine == src)
+			usr.unset_machine()
+		return 1
 	//Do not use "if(..()) return" here, canisters will stop working in unpowered areas like space or on the derelict. // yeah but without SOME sort of Topic check any dick can mess with them via exploits as he pleases -walter0o
 	if (!istype(src.loc, /turf))
 		return 0
@@ -270,17 +286,26 @@
 
 		if (valve_open)
 			if (holding)
-				release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the [holding]<br>"
+				investigation_log(I_ATMOS, "had its valve <b>closed</b> by [key_name(usr)], stopping transfer into \the [holding].")
 			else
-				release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the <font color='red'><b>air</b></font><br>"
+				investigation_log(I_ATMOS, "had its valve <b>closed</b> by [key_name(usr)], stopping transfer into the <font color='red'><b>air</b></font>")
 		else
 			if (holding)
-				release_log += "Valve was <b>opened</b> by [usr] ([usr.ckey]), starting the transfer into the [holding]<br>"
+				investigation_log(I_ATMOS, "had its valve <b>OPENED</b> by [key_name(usr)], starting transfer into \the [holding]")
 			else
-				if(src.air_contents.toxins > 0 || (istype(S)))
-					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [formatJumpTo(loc)]!")
-					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [loc.x], [loc.y], [loc.z]")
-				release_log += "Valve was <b>opened</b> by [usr] ([usr.ckey]), starting the transfer into the <font color='red'><b>air</b></font><br>"
+				var/list/contents_l=list()
+				if(src.air_contents.toxins > 0)
+					contents_l += "<b><font color='red'>Plasma</font></b>"
+				if(src.air_contents.carbon_dioxide > 0)
+					contents_l += "<b><font color='red'>CO<sub>2</sub></font></b>"
+				if(istype(S))
+					contents_l += "N<sub>2</sub>O</font>"
+				var/contents_str = english_list(contents_l)
+				investigation_log(I_ATMOS, "had its valve <b>OPENED</b> by [key_name(usr)], starting transfer into the <font color='red'><b>air</b></font> ([contents_str])")
+				if(contents_l.len>0)
+					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains [contents_str] at [formatJumpTo(loc)]!")
+					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains [contents] at [loc.x], [loc.y], [loc.z]")
+
 		valve_open = !valve_open
 
 	if (href_list["remove_tank"])

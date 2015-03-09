@@ -36,7 +36,7 @@
 
 
 /obj/item/weapon/photo/attack_self(mob/user)
-	examine()
+	user.examination(src)
 
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
@@ -48,15 +48,12 @@
 	..()
 
 
-/obj/item/weapon/photo/examine()
-	set src in oview(1)
-	if(is_blind(usr))	return
-
-	if(in_range(usr, src))
-		show(usr)
-		usr << desc
+/obj/item/weapon/photo/examine(mob/user)
+	..()
+	if(in_range(user, src))
+		show(user)
 	else
-		usr << "<span class='notice'>It is too far away.</span>"
+		user << "<span class='notice'>You can't make out the picture from here.</span>"
 
 
 /obj/item/weapon/photo/proc/show(mob/user)
@@ -102,7 +99,8 @@
 	icon_state = "polaroid"
 	item_state = "polaroid"
 	w_class = 2.0
-	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	m_amt = 2000
 	w_type = RECYK_ELECTRONIC
@@ -122,10 +120,9 @@
 	icon_on = "sepia-camera"
 	icon_off = "sepia-camera_off"
 
-/obj/item/device/camera/examine()
-	set src in view(1)
+/obj/item/device/camera/examine(mob/user)
 	..()
-	usr <<"<span class='notice'>It has [pictures_left] photos left.</span>"
+	user <<"<span class='info'>It has [pictures_left] photos left.</span>"
 
 
 /obj/item/device/camera/ai_camera //camera AI can take pictures with
@@ -329,11 +326,11 @@
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
-			seen = hear(world.view, user.client.eye) //To make shooting through security cameras possible
+			seen = get_hear(world.view, user.client.eye) //To make shooting through security cameras possible
 		else
-			seen = hear(world.view, user)
+			seen = get_hear(world.view, user)
 	else
-		seen = hear(world.view, target)
+		seen = get_hear(world.view, target)
 
 	var/list/turfs = list()
 	for(var/turf/T in range(1, target))

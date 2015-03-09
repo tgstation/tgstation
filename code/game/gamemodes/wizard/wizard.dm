@@ -1,5 +1,5 @@
-/proc/iswizard(mob/living/M as mob)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)
+/*/proc/iswizard(mob/living/M as mob)
+	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)*/ //See _macros.dm
 
 /datum/game_mode
 	var/list/datum/mind/wizards = list()
@@ -171,12 +171,12 @@
 		return
 
 	//So zards properly get their items when they are admin-made.
-	del(wizard_mob.wear_suit)
-	del(wizard_mob.head)
-	del(wizard_mob.shoes)
-	del(wizard_mob.r_hand)
-	del(wizard_mob.r_store)
-	del(wizard_mob.l_store)
+	qdel(wizard_mob.wear_suit)
+	qdel(wizard_mob.head)
+	qdel(wizard_mob.shoes)
+	qdel(wizard_mob.r_hand)
+	qdel(wizard_mob.r_store)
+	qdel(wizard_mob.l_store)
 
 	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), slot_ears)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(wizard_mob), slot_w_uniform)
@@ -190,6 +190,9 @@
 //	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/scrying_gem(wizard_mob), slot_l_store) For scrying gem.
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
+
+	// For Vox and plasmadudes.
+	wizard_mob.species.handle_post_spawn(wizard_mob)
 
 	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
 	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
@@ -276,7 +279,7 @@
 			if(wizard.current && wizard.current.spell_list)
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1
-				for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
+				for(var/spell/S in wizard.current.spell_list)
 					text += "[S.name]"
 					if(wizard.current.spell_list.len > i)
 						text += ", "
@@ -290,7 +293,7 @@
 
 //To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(var/mob/M as mob)
-	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
+	for(var/spell/spell_to_remove in src.spell_list)
 		del(spell_to_remove)
 
 // Does this clothing slot count as wizard garb? (Combines a few checks)
@@ -362,10 +365,12 @@ Made a proc so this is not repeated 14 (or more) times.*/
 				if(wizard.current.client)
 					for(var/image/I in wizard.current.client.images)
 						if(I.icon_state == "wizard" && I.loc == wizard_mind.current)
-							del(I)
+							//del(I)
+							wizard.current.client.images -= I
 
 		if(wizard_mind.current)
 			if(wizard_mind.current.client)
 				for(var/image/I in wizard_mind.current.client.images)
 					if(I.icon_state == "wizard")
-						del(I)
+						//del(I)
+						wizard_mind.current.client.images -= I

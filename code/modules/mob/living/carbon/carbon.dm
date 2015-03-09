@@ -1,7 +1,20 @@
+
+// Vent crawling whitelisted items, whoo
+/mob/living
+	var/canEnterVentWith = "/obj/item/weapon/implant=0&/obj/item/clothing/mask/facehugger=0&/obj/item/device/radio/borg=0&/obj/machinery/camera=0"
+
 /mob/living/carbon/Login()
 	..()
 	update_hud()
 	return
+
+/mob/living/carbon/Bump(var/atom/movable/AM, yes)
+	if(now_pushing || !yes)
+		return
+	..()
+	if(istype(AM, /mob/living/carbon) && prob(10))
+		src.spread_disease_to(AM, "Contact")
+
 
 /mob/living/carbon/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
@@ -116,12 +129,6 @@
 	return damage
 
 /mob/living/carbon/proc/swap_hand()
-	var/obj/item/item_in_hand = src.get_active_hand()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand,/obj/item/weapon/twohanded))
-			if(item_in_hand:wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
-				return
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
@@ -222,11 +229,8 @@
 				"\blue [M] gives [src] a [pick("hug","warm embrace")].", \
 				"\blue You hug [src].", \
 				)
-			if(prob(10))
-				src.emote("fart")
-			/* VG-EDIT Killing people through hugs, one overdose at a time.
 			reagents.add_reagent("paracetamol", 1)
-			*/
+
 			share_contact_diseases(M)
 
 
@@ -290,9 +294,9 @@
 
 					if(loc==startloc)
 						if(contents.len && !isrobot(src))
-							for(var/obj/item/carried_item in contents)//If the monkey got on objects.
-								if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
-									src << "\red You can't be carrying items or have items equipped when vent crawling!"
+							for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
+								if(!(isInTypes(carried_item, canEnterVentWith)))
+									src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
 									return
 						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
 						if(target_vent)
@@ -300,7 +304,7 @@
 								O.show_message(text("<B>[src] scrambles into the ventilation ducts!</B>"), 1)
 							loc = target_vent
 
-							var/travel_time = round(get_dist(loc, target_vent.loc) / 2)
+							var/travel_time = round(get_dist(loc, target_vent.loc) / 4)
 
 							spawn(travel_time)
 
@@ -364,6 +368,7 @@
 	src.throw_icon.icon_state = "act_throw_off"
 
 /mob/living/carbon/proc/throw_mode_on()
+	if(gcDestroyed) return
 	src.in_throw_mode = 1
 	src.throw_icon.icon_state = "act_throw_on"
 
@@ -663,3 +668,6 @@
 	else
 		src << "You do not have enough chemicals stored to reproduce."
 		return
+
+/mob/living/carbon/is_muzzled()
+	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))

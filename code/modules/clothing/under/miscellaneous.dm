@@ -31,7 +31,7 @@
 	name = "amish suit"
 	icon_state = "sl_suit"
 	_color = "sl_suit"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT  | ONESIZEFITSALL
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -39,7 +39,7 @@
 	icon_state = "waiter"
 	item_state = "waiter"
 	_color = "waiter"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -85,10 +85,10 @@
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -98,11 +98,11 @@
 	desc = "it's a cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
 
 /obj/item/clothing/under/owl
@@ -110,7 +110,7 @@
 	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
 	icon_state = "owl"
 	_color = "owl"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT  | ONESIZEFITSALL
 
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"
@@ -424,3 +424,32 @@
 	icon_state = "russobluecamo"
 	item_state = "russobluecamo"
 	_color = "russobluecamo"
+
+/obj/item/clothing/under/jester
+	name = "Jester Suit"
+	desc = "Only a fool would wear such a suit."
+	icon_state = "jester"
+	item_state = "jester"
+	_color = "jester"
+
+/obj/item/clothing/under/stilsuit
+	name = "Stilsuit"
+	desc = "Designed to preserve bodymoisture."
+	icon_state = "stilsuit"
+	item_state = "stilsuit"
+	_color = "stilsuit"
+
+/obj/item/clothing/under/aviatoruniform
+	name = "Aviator Uniform"
+	desc = "Now you can look absolutely dashing!"
+	icon_state = "aviator_uniform"
+	item_state = "aviator_uniform"
+	_color = "aviator_uniform"
+	species_restricted = list("exclude","Vox")
+
+/obj/item/clothing/under/libertyshirt
+	name = "Liberty Shirt"
+	desc = "For any freedom loving patriot out there"
+	icon_state = "libertyshirt"
+	item_state = "libertyshirt"
+	_color = "libertyshirt"

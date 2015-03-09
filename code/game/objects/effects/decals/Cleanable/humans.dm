@@ -26,11 +26,37 @@ var/global/list/image/splatter_cache=list()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 		D.holder = null
+
+	if(ticker.mode && ticker.mode.name == "cult")
+		var/datum/game_mode/cult/mode_ticker = ticker.mode
+		var/turf/T = get_turf(src)
+		if(T)
+			if(locate(T) in mode_ticker.bloody_floors)
+				mode_ticker.bloody_floors -= T
+				mode_ticker.blood_check()
 	..()
 
+/obj/effect/decal/cleanable/blood/resetVariables()
+	Destroy()
+	viruses = list()
+	virus2 = list()
+	blood_DNA = list()
+	..("viruses","virus2", "blood_DNA", args)
 /obj/effect/decal/cleanable/blood/New()
 	..()
 	update_icon()
+
+	if(ticker && ticker.mode && ticker.mode.name == "cult")
+		var/datum/game_mode/cult/mode_ticker = ticker.mode
+		if((mode_ticker.objectives[mode_ticker.current_objective] == "bloodspill") && !mode_ticker.narsie_condition_cleared)
+			var/turf/T = get_turf(src)
+			if(T && (T.z == map.zMainStation))
+				if(locate("\ref[T]") in mode_ticker.bloody_floors)
+				else
+					mode_ticker.bloody_floors += T
+					mode_ticker.bloody_floors[T] = T
+					mode_ticker.blood_check()
+
 	if(istype(src, /obj/effect/decal/cleanable/blood/gibs))
 		return
 	if(istype(src, /obj/effect/decal/cleanable/blood/tracks))
@@ -41,11 +67,16 @@ var/global/list/image/splatter_cache=list()
 				if(B != src)
 					if (B.blood_DNA)
 						blood_DNA |= B.blood_DNA.Copy()
-					del(B)
+					returnToPool(B)
 
 /obj/effect/decal/cleanable/blood/update_icon()
 	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 	color = basecolor
+
+	var/icon/blood = icon(base_icon,icon_state,dir)
+	blood.Blend(basecolor,ICON_MULTIPLY)
+
+	icon = blood
 
 /obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/human/perp)
 	if (!istype(perp))
@@ -59,11 +90,13 @@ var/global/list/image/splatter_cache=list()
 			perp.shoes.generate_blood_overlay()
 		if(!perp.shoes.blood_DNA)
 			perp.shoes.blood_DNA = list()
-			perp.shoes.blood_overlay.color = basecolor
-			perp.shoes.overlays += perp.shoes.blood_overlay
-			perp.update_inv_shoes(1)
-		perp.shoes.blood_DNA |= blood_DNA.Copy()
+		perp.shoes.overlays -= perp.shoes.blood_overlay
+		perp.shoes.blood_overlay.color = basecolor
+		perp.shoes.overlays += perp.shoes.blood_overlay
+		if(blood_DNA)
+			perp.shoes.blood_DNA |= blood_DNA.Copy()
 		perp.shoes.blood_color=basecolor
+		perp.update_inv_shoes(1)
 	else
 		perp.track_blood = max(amount,perp.track_blood)                                //Or feet
 		if(!perp.feet_blood_DNA)
@@ -109,6 +142,8 @@ var/global/list/image/splatter_cache=list()
 	random_icon_states = list("1","2","3","4","5")
 	amount = 0
 
+	base_icon = 'icons/effects/drip.dmi'
+
 /obj/effect/decal/cleanable/blood/writing
 	icon_state = "tracks"
 	desc = "It looks like a writing in blood."
@@ -126,9 +161,9 @@ var/global/list/image/splatter_cache=list()
 	else
 		icon_state = "writing1"
 
-/obj/effect/decal/cleanable/blood/writing/examine()
+/obj/effect/decal/cleanable/blood/writing/examine(mob/user)
 	..()
-	usr << "It reads: <font color='[basecolor]'>\"[message]\"<font>"
+	user << "It reads: <font color='[basecolor]'>\"[message]\"<font>"
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
@@ -154,7 +189,7 @@ var/global/list/image/splatter_cache=list()
 	blood.Blend(basecolor,ICON_MULTIPLY)
 
 	icon = blood
-	overlays.Cut()
+	overlays.len = 0
 	overlays += giblets
 
 /obj/effect/decal/cleanable/blood/gibs/up
@@ -172,7 +207,9 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/gibs/core
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
 
-
+/obj/effect/decal/cleanable/blood/gibs/core/New()
+	..()
+	playsound(src, get_sfx("gib"),50,1)
 
 
 
@@ -185,10 +222,10 @@ var/global/list/image/splatter_cache=list()
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 
-	Del()
-		for(var/datum/disease/D in viruses)
-			D.cure(0)
-		..()
+/obj/effect/decal/cleanable/blood/viralsputum/Destroy()
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
+	..()
 
 
 
@@ -200,7 +237,8 @@ var/global/list/image/splatter_cache=list()
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 			sleep(3)
 			if (i > 0)
-				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
+				var/obj/effect/decal/cleanable/blood/b = getFromPool(/obj/effect/decal/cleanable/blood/splatter, src.loc)
+				b.New(src.loc)
 				b.basecolor = src.basecolor
 				b.update_icon()
 				for(var/datum/disease/D in src.viruses)

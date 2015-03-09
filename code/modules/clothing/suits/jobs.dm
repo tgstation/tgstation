@@ -70,7 +70,7 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
+	allowed = list (/obj/item/weapon/kitchen/utensil/knife/large,/obj/item/weapon/kitchen/utensil/knife/large/butch)
 	species_fit = list("Vox")
 
 //Chef

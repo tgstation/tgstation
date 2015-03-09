@@ -91,17 +91,12 @@
 
 	user << "<span class='notice'>Synthesizer is now producing '[reagent_ids[mode]]'.</span>"
 
-/obj/item/weapon/reagent_containers/borghypo/examine()
-	set src in view()
+/obj/item/weapon/reagent_containers/borghypo/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-
 	var/contents_count = 0
-
 	for(var/datum/reagents/reagents in reagent_list)
-		usr << "<span class='notice'>It's currently has [reagents.total_volume] units of [reagent_ids[++contents_count]] stored.</span>"
-
-	usr << "<span class='notice'>It's currently producing '[reagent_ids[mode]]'.</span>"
+		user << "<span class='info'>It's currently has [reagents.total_volume] units of [reagent_ids[++contents_count]] stored.</span>"
+	user << "<span class='info'>It's currently producing '[reagent_ids[mode]]'.</span>"
 
 /obj/item/weapon/reagent_containers/borghypo/upgraded
 	name = "Upgraded Cyborg Hypospray"

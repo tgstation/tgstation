@@ -29,7 +29,7 @@
 
 /obj/item/weapon/reagent_containers/glass/rag/attack(atom/target as obj|turf|area, mob/user as mob , flag)
 	if(ismob(target) && target.reagents && reagents.total_volume)
-		user.visible_message("\red \The [target] has been smothered with \the [src] by \the [user]!", "\red You smother \the [target] with \the [src]!", "You hear some struggling and muffled cries of surprise")
+		user.visible_message("<span class='warning'>\The [target] has been smothered with \the [src] by \the [user]!</span>", "<span class='warning'>You smother \the [target] with \the [src]!</span>", "You hear some struggling and muffled cries of surprise")
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		return
@@ -42,11 +42,4 @@
 		if(do_after(user,30))
 			user.visible_message("[user] finishes wiping off the [A]!")
 			A.clean_blood()
-	return
-
-/obj/item/weapon/reagent_containers/glass/rag/examine()
-	if (!usr)
-		return
-	usr << "That's \a [src]."
-	usr << desc
 	return

@@ -15,7 +15,7 @@
 	var/y_co = 1	// Y coordinate
 	var/z_co = 1	// Z coordinate
 
-	use_power = 0
+	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 300
 	power_channel = EQUIP
@@ -58,11 +58,8 @@
 			user << "\red There is already a cell in \the [name]."
 			return
 		else
-			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
-			if(!isarea(a))
-				return
-			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "\red \The [name] blinks red as you try to insert the cell!"
+			if(areaMaster.power_equip == 0) // There's no APC in this area, don't try to cheat power!
+				user << "<span class='warning'>\The [name] blinks red as you try to insert the cell!</span>"
 				return
 
 			user.drop_item()
@@ -204,7 +201,7 @@
 				M.Stun(10)
 				M.Paralyse(4)
 			else
-				M.make_jittery(500)
+				M.Jitter(500)
 			sparks()
 		return
 	if(prob(1))
@@ -227,7 +224,13 @@
 			return
 		return
 	return
-
+var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
+										/obj/machinery/the_singularitygen,
+										/obj/item/weapon/grenade,
+										/obj/item/device/transfer_valve,
+										/obj/item/device/fuse_bomb,
+										/obj/item/device/onetankbomb,
+										/obj/machinery/portable_atmospherics/canister)
 /obj/machinery/computer/telescience/proc/doteleport(mob/user)
 	var/trueX = x_co + x_off - x_player_off + WORLD_X_OFFSET
 	var/trueY = y_co + y_off - y_player_off + WORLD_Y_OFFSET
@@ -260,6 +263,9 @@
 		var/things=0
 		for(var/atom/movable/ROI in source)
 			if(ROI.anchored || things>=10) continue
+			if(is_type_in_list(ROI,telesci_warnings))
+				message_admins("[user.real_name]/([formatPlayerPanel(user,user.ckey)]) teleported a [ROI] to [formatJumpTo(dest)] from [formatJumpTo(source)]")
+			log_admin("[user.real_name]/([formatPlayerPanel(user,user.ckey)]) teleported a [ROI] to [formatJumpTo(dest)] from [formatJumpTo(source)]")
 			do_teleport(ROI, dest, 0)
 			things++
 		return
@@ -285,7 +291,9 @@
 /obj/machinery/computer/telescience/Topic(href, href_list)
 	if(stat & (NOPOWER|BROKEN))
 		return 0
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(href_list["setPOffsetX"])
 		var/new_x = input("Please input desired X offset.", name, x_player_off) as num
 		if(new_x < -10 || new_x > 10)

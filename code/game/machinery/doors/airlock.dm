@@ -50,6 +50,7 @@
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	autoclose = 1
 	var/busy = 0
+	soundeffect = 'sound/machines/airlock.ogg'
 
 	emag_cost = 1 // in MJ
 
@@ -91,7 +92,7 @@
 	assembly_type = /obj/structure/door_assembly/door_assembly_ext
 
 /obj/machinery/door/airlock/external/cultify()
-	new /obj/structure/mineral_door/wood(loc)
+	new /obj/machinery/door/mineral/wood(loc)
 	..()
 
 /obj/machinery/door/airlock/glass
@@ -267,6 +268,7 @@
 	name = "Bananium Airlock"
 	icon = 'icons/obj/doors/Doorbananium.dmi'
 	mineral = "clown"
+	soundeffect = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/door/airlock/sandstone
 	name = "Sandstone Airlock"
@@ -308,6 +310,7 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/bump_open(mob/living/user as mob) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
+	if(!istype(user)) return
 	if(!issilicon(usr))
 		if(src.isElectrified())
 			if(!src.justzap)
@@ -343,6 +346,8 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/proc/isWireCut(var/wireIndex)
 	// You can find the wires in the datum folder.
+	if(!wires)
+		return 1
 	return wires.IsIndexCut(wireIndex)
 
 /obj/machinery/door/airlock/proc/canAIControl()
@@ -450,14 +455,14 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/door_animate(var/animation)
 	switch(animation)
 		if("opening")
-			if(overlays) overlays.Cut()
+			if(overlays) overlays.len = 0
 			if(panel_open)
 				spawn(2) // The only work around that works. Downside is that the door will be gone for a millisecond.
 					flick("o_door_opening", src)  //can not use flick due to BYOND bug updating overlays right before flicking
 			else
 				flick("door_opening", src)
 		if("closing")
-			if(overlays) overlays.Cut()
+			if(overlays) overlays.len = 0
 			if(panel_open)
 				flick("o_door_closing", src)
 			else
@@ -960,10 +965,9 @@ About the new airlock wires panel:
 
 	return
 
-// huehue you cannot screwdrive an operating door
-// neither closed door ;)
+//You can ALWAYS screwdriver a door. Period. Well, at least you can even if it's open
 /obj/machinery/door/airlock/togglePanelOpen(var/obj/toggleitem, mob/user)
-	if (density && !operating)
+	if(!operating)
 		panel_open = !panel_open
 		update_icon()
 		return 1
@@ -1005,7 +1009,7 @@ About the new airlock wires panel:
 			var/obj/item/weapon/pai_cable/PC = I
 			PC.plugin(src, user)
 			PC = null
-	else if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) )
+	else if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/fireaxe) )
 		if(src.busy) return
 		src.busy = 1
 		var/beingcrowbarred = null
@@ -1065,8 +1069,8 @@ About the new airlock wires panel:
 		else if( !welded && !operating )
 			if(density)
 				if(beingcrowbarred == 0) //being fireaxe'd
-					var/obj/item/weapon/twohanded/fireaxe/F = I
-					if(F:wielded)
+					var/obj/item/weapon/fireaxe/F = I
+					if(F.wielded)
 						spawn(0)	open(1)
 					else
 						user << "\red You need to be wielding the Fire axe to do that."
@@ -1074,8 +1078,8 @@ About the new airlock wires panel:
 					spawn(0)	open(1)
 			else
 				if(beingcrowbarred == 0)
-					var/obj/item/weapon/twohanded/fireaxe/F = I
-					if(F:wielded)
+					var/obj/item/weapon/fireaxe/F = I
+					if(F.wielded)
 						spawn(0)	close(1)
 					else
 						user << "\red You need to be wielding the Fire axe to do that."
@@ -1105,12 +1109,7 @@ About the new airlock wires panel:
 		if( !arePowerSystemsOn() || (stat & NOPOWER) || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
 			return 0
 	use_power(50)
-	if(istype(src, /obj/machinery/door/airlock/glass))
-		playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 100, 1)
-	if(istype(src, /obj/machinery/door/airlock/clown))
-		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 30, 1)
-	else
-		playsound(get_turf(src), 'sound/machines/airlock.ogg', 30, 1)
+	playsound(get_turf(src), soundeffect, 30, 1)
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close()
 	// This worries me - N3X
@@ -1171,12 +1170,7 @@ About the new airlock wires panel:
 				if (istype(loc, /turf/simulated))
 					T.add_blood(L)
 
-	if (istype(type, /obj/machinery/door/airlock/glass))
-		playsound(get_turf(src), 'sound/machines/windowdoor.ogg', 30, 1)
-	else if (istype(type, /obj/machinery/door/airlock/clown))
-		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 30, 1)
-	else
-		playsound(get_turf(src), 'sound/machines/airlock.ogg', 30, 1)
+	playsound(get_turf(src),soundeffect, 30, 1)
 
 	for(var/turf/T in loc)
 		var/obj/structure/window/W = locate(/obj/structure/window) in T

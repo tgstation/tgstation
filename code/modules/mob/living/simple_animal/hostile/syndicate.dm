@@ -18,7 +18,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "punches"
-	a_intent = "hurt"
+	a_intent = I_HURT
 	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
 	var/weapon1
 	var/weapon2
@@ -58,6 +58,7 @@
 	status_flags = 0
 
 /mob/living/simple_animal/hostile/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	user.delayNextAttack(8)
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force

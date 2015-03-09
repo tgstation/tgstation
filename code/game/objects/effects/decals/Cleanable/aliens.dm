@@ -31,5 +31,9 @@
 /obj/effect/decal/cleanable/blood/gibs/xeno/core
 	random_icon_states = list("xgibmid1", "xgibmid2", "xgibmid3")
 
+/obj/effect/decal/cleanable/blood/gibs/xeno/core/New()
+	..()
+	playsound(src, get_sfx("gib"),50,1)
+
 /obj/effect/decal/cleanable/blood/xtracks
 	basecolor = "#05EE05"

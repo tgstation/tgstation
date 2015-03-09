@@ -331,10 +331,10 @@
 /obj/structure/closet/crate/secure/New()
 	..()
 	if(locked)
-		overlays.Cut()
+		overlays.len = 0
 		overlays += redlight
 	else
-		overlays.Cut()
+		overlays.len = 0
 		overlays += greenlight
 
 /obj/structure/closet/crate/rcd/New()
@@ -420,7 +420,7 @@
 		if (allowed(user))
 			user << "<span class='notice'>You unlock [src].</span>"
 			src.locked = 0
-			overlays.Cut()
+			overlays.len = 0
 			overlays += greenlight
 			return
 		else
@@ -433,11 +433,11 @@
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
 		user << "<span class='notice'>You lock \the [src].</span>"
 		src.locked = 1
-		overlays.Cut()
+		overlays.len = 0
 		overlays += redlight
 		return
 	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
-		overlays.Cut()
+		overlays.len = 0
 		overlays += emag
 		overlays += sparks
 		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
@@ -446,7 +446,6 @@
 		src.broken = 1
 		user << "<span class='notice'>You unlock \the [src].</span>"
 		return
-
 	return ..()
 
 /obj/structure/closet/crate/attack_paw(mob/user as mob)
@@ -454,14 +453,10 @@
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opened)
-		if(isrobot(user))
-			return
-		user.drop_item()
-		if(W)
-			W.loc = src.loc
+		return ..()
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
 			user << "<span class='notice'>[src] is already rigged!</span>"
 			return
@@ -473,8 +468,7 @@
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)
 			user  << "<span class='notice'>You attach [W] to [src].</span>"
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			return
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(rigged)
@@ -491,10 +485,10 @@
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1
-			overlays.Cut()
+			overlays.len = 0
 			overlays += redlight
 		else
-			overlays.Cut()
+			overlays.len = 0
 			overlays += emag
 			overlays += sparks
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*

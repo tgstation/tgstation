@@ -47,12 +47,14 @@
 				GiveTarget(new_target)
 
 			if(HOSTILE_STANCE_ATTACK)
-				MoveToTarget()
-				DestroySurroundings()
+				if(!(flags & INVULNERABLE))
+					MoveToTarget()
+					DestroySurroundings()
 
 			if(HOSTILE_STANCE_ATTACKING)
-				AttackTarget()
-				DestroySurroundings()
+				if(!(flags & INVULNERABLE))
+					AttackTarget()
+					DestroySurroundings()
 
 		if(ranged)
 			ranged_cooldown--
@@ -115,11 +117,15 @@
 		var/mob/living/L = the_target
 		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
 			return 0
+		if(L.flags & INVULNERABLE)
+			return 0
 		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
 			return 0
 		if(iscultist(L) && (faction == "cult"))
 			return 0
 		if(isslime(L) && (faction == "slimesummon"))
+			return 0
+		if((istype(L,/mob/living/simple_animal/corgi/Ian) || istype(L,/mob/living/carbon/human/dummy)) && (faction == "adminbus mob"))
 			return 0
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
@@ -157,15 +163,12 @@
 		if(ranged)//We ranged? Shoot at em
 			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
-		if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
-			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
-				walk_away(src,target,retreat_distance,move_to_delay)
-			else
-				Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
-		else
-			Goto(target,move_to_delay,minimum_distance)
 		if(isturf(loc) && target.Adjacent(src))	//If they're next to us, attack
 			AttackingTarget()
+		if(retreat_distance != null && target_distance <= retreat_distance) //If we have a retreat distance, check if we need to run from our target
+			walk_away(src,target,retreat_distance,move_to_delay)
+		else
+			Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
 		return
 	if(target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
 		if(FindHidden(target) && environment_smash)//Check if he tried to hide in something to lose us
@@ -238,27 +241,28 @@
 	..()
 	walk(src, 0)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(var/the_target)
-
-	var/target = the_target
-	visible_message("\red <b>[src]</b> [ranged_message] at [target]!", 1)
+/mob/living/simple_animal/hostile/proc/OpenFire(var/target)
 
 	var/tturf = get_turf(target)
 	if(rapid)
 		spawn(1)
 			Shoot(tturf, src.loc, src)
+			visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
 			if(casingtype)
 				new casingtype(get_turf(src))
 		spawn(4)
 			Shoot(tturf, src.loc, src)
+			visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
 			if(casingtype)
 				new casingtype(get_turf(src))
 		spawn(6)
 			Shoot(tturf, src.loc, src)
+			visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
 			if(casingtype)
 				new casingtype(get_turf(src))
 	else
 		Shoot(tturf, src.loc, src)
+		visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
 		if(casingtype)
 			new casingtype
 	ranged_cooldown = ranged_cooldown_cap

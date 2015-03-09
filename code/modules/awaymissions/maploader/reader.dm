@@ -2,6 +2,9 @@
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
 
+//global datum that will preload variables on atoms instanciation
+var/global/dmm_suite/preloader/_preloader = null
+
 
 /**
  * Construct the model map and control the loading process
@@ -156,55 +159,44 @@
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 
-	//first instance the /area and remove it from the members list
-	var/length = members.len
-	var/atom/instance
-	var/dmm_suite/preloader/_preloader = new(members_attributes[length])//preloader for assigning  set variables on atom creation
+	//in case of multiples turfs on one tile,
+	//will contains the images of all underlying turfs, to simulate the DMM multiple tiles piling
+	var/list/turfs_underlays = list()
 
-	instance = locate(members[length])
+	//first instance the /area and remove it from the members list
+	index = members.len
+	var/atom/instance
+	_preloader = new(members_attributes[index])//preloader for assigning  set variables on atom creation
+
+	instance = locate(members[index])
 	instance.contents.Add(locate(xcrd,ycrd,zcrd))
 
 	if(_preloader && instance)
 		_preloader.load(instance)
 
-	members.Remove(members[length])
+	members.Remove(members[index])
 
-	//then instance the /turf and remove it from the members list
-	length = members.len
+	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
 
-	instance_atom(members[length],members_attributes[length],xcrd,ycrd,zcrd)
-	members.Remove(members[length])
+	var/first_turf_index = 1
+	while(!ispath(members[first_turf_index],/turf)) //find first /turf object in members
+		first_turf_index++
 
-	//Replace the previous part of the code with this if it's unsafe to assume tiles have ALWAYS an /area AND a /turf
-	/*while(members.len > 0)
-		var/length = members.len
-		var/member = members[length]
+	//instanciate the first /turf
+	var/turf/T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
 
-		if(ispath(member,/area))
-			var/atom/instance
-			var/dmm_suite/preloader/_preloader = new(members_attributes[length])
-
-			instance = locate(member)
-			instance.contents.Add(locate(xcrd,ycrd,zcrd))
-
-			if(_preloader && instance)
-				_preloader.load(instance)
-
-			members.Remove(member)
-			continue
-
-		else if(ispath(member,/turf))
-			instance_atom(member,members_attributes[length],xcrd,ycrd,zcrd)
-			members.Remove(member)
-			continue
-
-		else
-			break
-		*/
+	//if others /turf are presents, simulates the underlays piling effect
+	index = first_turf_index + 1
+	while(index <= members.len)
+		turfs_underlays.Insert(1,image(T.icon,null,T.icon_state,T.layer,T.dir))//add the current turf image to the underlays list
+		var/turf/UT = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
+		add_underlying_turf(UT,T,turfs_underlays)//simulates the DMM piling effect
+		T = UT
+		index++
 
 	//finally instance all remainings objects/mobs
-	for(var/k=1,k<=members.len,k++)
-		instance_atom(members[k],members_attributes[k],xcrd,ycrd,zcrd)
+	for(index=1,index < first_turf_index,index++)
+		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
 
 ////////////////
 //Helpers procs
@@ -213,19 +205,21 @@
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /dmm_suite/proc/instance_atom(var/path,var/list/attributes, var/x, var/y, var/z)
 	var/atom/instance
-	var/dmm_suite/preloader/_preloader = new(attributes)
+	_preloader = new(attributes, path)
 
-	instance = new path (locate(x,y,z), _preloader)//first preloader pass
+	instance = new path (locate(x,y,z))//first preloader pass
 
-	if(_preloader && instance)//second preloader pass, as some variables may have been reset/changed by New()
+	if(_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 		_preloader.load(instance)
+
+	return instance
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
 /dmm_suite/proc/trim_text(var/what as text,var/trim_quotes=0)
-	while(length(what) && (findtext(what," ",1,2)))// || findtext(what,quote,1,2)))
+	while(length(what) && (findtext(what," ",1,2)))
 		what=copytext(what,2,0)
-	while(length(what) && (findtext(what," ",length(what),0)))// || findtext(what,quote,length(what),0)))
+	while(length(what) && (findtext(what," ",length(what),0)))
 		what=copytext(what,1,length(what))
 	if(trim_quotes)
 		while(length(what) && (findtext(what,quote,1,2)))
@@ -279,13 +273,17 @@
 			else if(isnum(text2num(trim_right)))
 				trim_right = text2num(trim_right)
 
-			//Check for file
-			else if(copytext(trim_right,1,2) == "'")
-				trim_right = file(copytext(trim_right,2,length(trim_right)))
+			//Check for null
+			else if(trim_right == "null")
+				trim_right = null
 
 			//Check for list
 			else if(copytext(trim_right,1,5) == "list")
 				trim_right = text2list(copytext(trim_right,6,length(trim_right)))
+
+			//Check for file
+			else if(copytext(trim_right,1,2) == "'")
+				trim_right = file(copytext(trim_right,2,length(trim_right)))
 
 			to_return[trim_left] = trim_right
 
@@ -296,10 +294,19 @@
 
 	return to_return
 
-//atom creation method that preloads variables before creation
-atom/New(atom/loc, dmm_suite/preloader/_dmm_preloader)
-	if(istype(_dmm_preloader, /dmm_suite/preloader))
-		_dmm_preloader.load(src)
+//simulates the DM multiple turfs on one tile underlaying
+/dmm_suite/proc/add_underlying_turf(var/turf/placed,var/turf/underturf, var/list/turfs_underlays)
+	if(underturf.density)
+		placed.density = 1
+	if(underturf.opacity)
+		placed.opacity = 1
+	placed.underlays += turfs_underlays
+
+//atom creation method that preloads variables at creation
+/atom/New()
+	if(_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+		_preloader.load(src)
+
 	. = ..()
 
 //////////////////
@@ -309,12 +316,15 @@ atom/New(atom/loc, dmm_suite/preloader/_dmm_preloader)
 /dmm_suite/preloader
 	parent_type = /datum
 	var/list/attributes
+	var/target_path
 
-/dmm_suite/preloader/New(list/the_attributes)
+/dmm_suite/preloader/New(var/list/the_attributes, var/path)
 	.=..()
 	if(!the_attributes.len)
 		Del()
+		return
 	attributes = the_attributes
+	target_path = path
 
 /dmm_suite/preloader/proc/load(atom/what)
 	for(var/attribute in attributes)

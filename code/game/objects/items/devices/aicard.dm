@@ -4,7 +4,7 @@
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	var/flush = null
 	origin_tech = "programming=4;materials=4"
@@ -23,13 +23,6 @@
 
 		playsound(get_turf(src), 'sound/machines/paistartup.ogg', 50, 1)
 		return
-
-	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
-		if (!istype (M, /mob/living/silicon/decoy))
-			return ..()
-		else
-			M.death()
-			user << "<b>ERROR ERROR ERROR</b>"
 
 	attack_self(mob/user)
 		if (!in_range(src, user))

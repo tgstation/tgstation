@@ -411,7 +411,7 @@ var/global/datum/controller/occupations/job_master
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 
 		spawnId(H, rank, alt_title)
-		H.equip_or_collect(new /obj/item/device/radio/headset(H), slot_ears)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
 
 		//Gives glasses to the vision impaired
 		if(H.disabilities & DISABILITY_FLAG_NEARSIGHTED)
@@ -459,7 +459,8 @@ var/global/datum/controller/occupations/job_master
 			pda.owner = H.real_name
 			pda.ownjob = C.assignment
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
-
+		H.update_inv_belt()
+		H.update_inv_wear_id()
 		return 1
 
 

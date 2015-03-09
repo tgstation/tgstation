@@ -127,7 +127,7 @@
 	build_path = "/obj/machinery/computer/turbine_computer"
 /obj/item/weapon/circuitboard/solar_control
 	name = "Circuit board (Solar Control)"  //name fixed 250810
-	build_path = "/obj/machinery/power/solar_control"
+	build_path = "/obj/machinery/power/solar/control"
 	origin_tech = "programming=2;powerstorage=2"
 /obj/item/weapon/circuitboard/powermonitor
 	name = "Circuit board (Power Monitor)"  //name fixed 250810
@@ -157,6 +157,9 @@
 /obj/item/weapon/circuitboard/rdconsole/mechanic
 	name = "Circuit Board (Mechanic R&D Console)"
 	build_path = "/obj/machinery/computer/rdconsole/mechanic"
+/obj/item/weapon/circuitboard/rdconsole/pod
+	name = "Circuit Board (Pod Bay R&D Console)"
+	build_path = "/obj/machinery/computer/rdconsole/pod"
 
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
@@ -212,6 +215,11 @@
 /obj/item/weapon/circuitboard/splicer
 	name = "Circuit board (Disease Splicer)"
 	build_path = "/obj/machinery/computer/diseasesplicer"
+	origin_tech = "programming=3;biotech=4"
+/obj/item/weapon/circuitboard/centrifuge
+	name = "Circuit board (Disease Splicer)"
+	build_path = "/obj/machinery/computer/centrifuge"
+	origin_tech = "programming=3;biotech=3"
 
 /obj/item/weapon/circuitboard/mining_shuttle
 	name = "Circuit board (Mining Shuttle)"
@@ -240,6 +248,10 @@
 /obj/item/weapon/circuitboard/bhangmeter
 	name = "Circuit board (Bhangmeter)"
 	build_path = "/obj/machinery/computer/bhangmeter"
+	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/pda_terminal
+	name = "Circuit board (PDA Terminal)"
+	build_path = "/obj/machinery/computer/pda_terminal"
 	origin_tech = "programming=2"
 
 
@@ -270,8 +282,8 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
-					user << "\blue You wrench the frame into place."
+				if(do_after(user, 5))
+					user << "<span class='notice'>You wrench the frame into place.</span>"
 					src.anchored = 1
 					src.state = 1
 				return 1
@@ -281,17 +293,19 @@
 					user << "The welding tool must be on to complete this task."
 					return 1
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 10))
 					if(!src || !WT.isOn()) return
-					user << "\blue You deconstruct the frame."
-					new /obj/item/stack/sheet/metal( src.loc, 5 )
-					del(src)
+					user << "<span class='notice'>You deconstruct the frame.</span>"
+					//new /obj/item/stack/sheet/metal( src.loc, 5 )
+					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, src.loc)
+					M.amount = 5
+					qdel(src)
 				return 1
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
-					user << "\blue You unfasten the frame."
+					user << "<span class='notice'>You unfasten the frame.</span>"
 					src.anchored = 0
 					src.state = 0
 				return 1
@@ -299,23 +313,23 @@
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "\blue You place the circuit board inside the frame."
+					user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 					src.icon_state = "1"
 					src.circuit = P
 					user.drop_item()
 					P.loc = src
 				else
-					user << "\red This frame does not accept circuit boards of this type!"
+					user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
 				return 1
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You screw the circuit board into place."
+				user << "<span class='notice'>You screw the circuit board into place.</span>"
 				src.state = 2
 				src.icon_state = "2"
 				return 1
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the circuit board."
+				user << "<span class='notice'>You remove the circuit board.</span>"
 				src.state = 1
 				src.icon_state = "0"
 				circuit.loc = src.loc
@@ -324,52 +338,52 @@
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You unfasten the circuit board."
+				user << "<span class='notice'>You unfasten the circuit board.</span>"
 				src.state = 1
 				src.icon_state = "1"
 				return 1
-			if(istype(P, /obj/item/weapon/cable_coil))
+			if(istype(P, /obj/item/stack/cable_coil))
 				if(P:amount >= 5)
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(P)
 							P:amount -= 5
 							if(!P:amount) del(P)
-							user << "\blue You add cables to the frame."
+							user << "<span class='notice'>You add cables to the frame.</span>"
 							src.state = 3
 							src.icon_state = "3"
 				return 1
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "\blue You remove the cables."
+				user << "<span class='notice'>You remove the cables.</span>"
 				src.state = 2
 				src.icon_state = "2"
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
+				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
 				A.amount = 5
 				return 1
 
-			if(istype(P, /obj/item/stack/sheet/glass))
+			if(istype(P, /obj/item/stack/sheet/glass/glass))
 				if(P:amount >= 2)
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(P)
 							P:use(2)
-							user << "\blue You put in the glass panel."
+							user << "<span class='notice'>You put in the glass panel.</span>"
 							src.state = 4
 							src.icon_state = "4"
 				return 1
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the glass panel."
+				user << "<span class='notice'>You remove the glass panel.</span>"
 				src.state = 3
 				src.icon_state = "3"
-				new /obj/item/stack/sheet/glass( src.loc, 2 )
+				new /obj/item/stack/sheet/glass/glass( src.loc, 2 )
 				return 1
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You connect the monitor."
+				user << "<span class='notice'>You connect the monitor.</span>"
 				var/B = new src.circuit.build_path ( src.loc )
 				if(circuit.powernet) B:powernet = circuit.powernet
 				if(circuit.id_tag) B:id_tag = circuit.id_tag

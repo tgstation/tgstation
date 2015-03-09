@@ -12,7 +12,9 @@ var/list/gib_sound = list('sound/effects/gib1.ogg', 'sound/effects/gib2.ogg', 's
 var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voice/mommi_comment2.ogg', 'sound/voice/mommi_comment3.ogg', 'sound/voice/mommi_comment5.ogg', 'sound/voice/mommi_comment6.ogg', 'sound/voice/mommi_comment7.ogg', 'sound/voice/mommi_comment8.ogg')
 //var/list/gun_sound = list('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
 
-/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff)
+//gas_modified controls if a sound is affected by how much gas there is in the atmosphere of the source
+//space sounds have no gas modification, for example. Though >space sounds
+/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff, var/gas_modified = 1)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -23,6 +25,36 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 	var/frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
+
+/* What's going on in this block?
+	If the proc isn't set to not be modified by air, the following steps occur:
+	- The atmospheric pressure of the turf where the sound is played is determined
+	- A calculation is made as to the fraction of one atmosphere that the pressure is at, in tenths e.g. 0.1, 0.3, 0.7, never exceeding 1
+	- If the proc has extrarange, the fraction of this extrarange that applies is equal to that of the pressure of the tile
+	- If the proc has NO extrarange, the fraction of the 7 range is used, so a sound only trasmits to those in the screen at regular pressure
+	- This means that at low or 0 pressure, sound doesn't trasmit from the tile at all! How cool is that?
+*/
+	if(!extrarange)
+		extrarange = 0
+	if(!vol) //don't do that
+		return
+
+	if(gas_modified && turf_source && !turf_source.c_airblock(turf_source)) //if the sound is modified by air, and we are on an airflowing tile
+		var/atmosphere = 0
+		var/datum/gas_mixture/current_air = turf_source.return_air()
+		if(current_air)
+			atmosphere = current_air.return_pressure()
+		else
+			atmosphere = 0 //no air
+
+		//message_admins("We're starting off with [atmosphere], [extrarange], and [vol]")
+		var/atmos_modifier = round(atmosphere/ONE_ATMOSPHERE, 0.1)
+		var/total_range = world.view + extrarange //this must be positive.
+		total_range = min ( round( (total_range) * sqrt(atmos_modifier), 1 ), (total_range * 2)  ) //upper range of twice the original range. Range technically falls off with the root of pressure (see Newtonian sound)
+		extrarange = total_range - world.view
+		vol = min( round( (vol) * atmos_modifier, 1 ), vol * 2) //upper range of twice the volume. Trust me, otherwise you get 10000 volume in a plasmafire
+		//message_admins("We've adjusted the sound of [source] at [turf_source.loc] to have a range of [7 + extrarange] and a volume of [vol]")
+
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
 		var/mob/M = P
@@ -31,13 +63,33 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 		if(get_dist(M, turf_source) <= world.view + extrarange)
 			var/turf/T = get_turf(M)
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, gas_modified)
 
 var/const/FALLOFF_SOUNDS = 1
 var/const/SURROUND_CAP = 7
 
-/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff)
-	if(!src.client || ear_deaf > 0)	return
+#define MIN_SOUND_PRESSURE	2 //2 kPa of pressure required to at least hear sound
+/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, gas_modified)
+	if(!src.client || ear_deaf > 0)
+		return
+
+	if(gas_modified)
+		var/turf/current_turf = get_turf(src)
+		if(!current_turf)
+			return
+
+		var/datum/gas_mixture/environment = current_turf.return_air()
+		var/atmosphere = 0
+		if(environment)
+			atmosphere = environment.return_pressure()
+
+		/// Local sound modifications ///
+		if(atmosphere < MIN_SOUND_PRESSURE) //no sound reception in space, boyos
+			vol = 0
+		else
+			vol = min( vol * atmosphere / ONE_ATMOSPHERE, vol) //sound can't be amplified from low to high pressure, but can be reduced
+		/// end ///
+
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)

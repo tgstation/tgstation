@@ -10,7 +10,7 @@
 
 /datum/dna/gene/monkey/activate(var/mob/living/M, var/connected, var/flags)
 	if(!istype(M,/mob/living/carbon/human))
-		testing("Cannot monkey-ify [M], type is [M.type].")
+		//testing("Cannot monkey-ify [M], type is [M.type].")
 		return
 	var/mob/living/carbon/human/H = M
 	H.monkeyizing = 1
@@ -34,7 +34,8 @@
 		animation.master = src
 		flick("h2monkey", animation)
 		sleep(48)
-		del(animation)
+		animation.master = null
+		qdel(animation)
 
 
 	var/mob/living/carbon/monkey/O = null
@@ -61,7 +62,7 @@
 
 
 	for(var/obj/T in (M.contents-implants))
-		del(T)
+		qdel(T)
 
 	O.loc = M.loc
 
@@ -73,12 +74,17 @@
 		O.loc = C
 		C.occupant = O
 		connected = null
-	O.real_name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
-	O.take_overall_damage(M.getBruteLoss() + 40, M.getFireLoss())
-	O.adjustToxLoss(M.getToxLoss() + 20)
-	O.adjustOxyLoss(M.getOxyLoss())
+
+	if(istype(O))//so chicken don't instantly die, or get named as "monkey"
+		O.real_name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
+		O.take_overall_damage(M.getBruteLoss() + 40, M.getFireLoss())
+		O.adjustToxLoss(M.getToxLoss() + 20)
+		O.adjustOxyLoss(M.getOxyLoss())
+	else
+		O.a_intent = "help"
+
 	O.stat = M.stat
-	O.a_intent = "hurt"
+	O.a_intent = I_HURT
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
@@ -109,7 +115,8 @@
 		animation.master = src
 		flick("monkey2h", animation)
 		sleep(48)
-		del(animation)
+		animation.master = null
+		qdel(animation)
 
 	var/mob/living/carbon/human/O = new( src )
 	if(Mo.greaterform)

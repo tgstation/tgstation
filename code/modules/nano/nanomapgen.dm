@@ -23,6 +23,10 @@
 	if(!src.client.holder)
 		src << "Only administrators may use this command."
 		return
+	if(alert("Sure you want to do this? It will cause a lot of lag", "generate maps", "Yes", "No") == "No")
+		return
+	message_admins("[ckey]/[src] started nanoui map generation")
+	log_admin("[ckey]/[src] started nanoui map generation")
 	var/turf/T = get_turf(src)
 	nanomapgen_DumpTile(1,1, T.z)
 
@@ -33,11 +37,22 @@
 	if(!src.client.holder)
 		src << "Only administrators may use this command."
 		return
+	if(alert("Sure you want to do this? It will cause a lot of lag", "generate maps", "Yes", "No") == "No")
+		return
+	message_admins("[ckey]/[src] started nanoui map generation")
+	log_admin("[ckey]/[src] started nanoui map generation")
 	//var/turf/T = get_turf(src)
 	nanomapgen_DumpTile(allz = 1)
 
 /mob/proc/nanomapgen_DumpTile(var/startX = 1, var/startY = 1, var/currentZ = 1, var/endX = -1, var/endY = -1, var/allz = 0)
 
+	if(currentZ == 2)
+		if(allz)
+			if(currentZ < world.maxz)
+				var/newz = currentZ+1
+				.(1,1,newz,-1,-1,1)
+		else
+			return 0
 	if (endX < 0 || endX > world.maxx)
 		endX = world.maxx
 

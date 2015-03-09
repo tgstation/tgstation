@@ -68,7 +68,7 @@
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] takes [I] out of [src]", "You take [I] out of [src].",\
 		"You hear someone rustle around in a plastic bag, and remove something.")
-		overlays.Cut()	//remove the overlays
+		overlays.len = 0	//remove the overlays
 		user.put_in_hands(I)
 		w_class = 1
 		icon_state = "evidenceobj"
@@ -78,6 +78,15 @@
 		user << "[src] is empty."
 		icon_state = "evidenceobj"
 	return
+
+obj/item/weapon/evidencebag/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
+	if(istype(W, /obj/item/weapon/pen))
+		var/new_label = sanitize(trim(input("What should the new label be", "") as null|text))
+		if(new_label)
+			name = "bag ([new_label])"
+			user << "\blue You write on the label of the bag."
+	else
+		..(W, user)
 
 /obj/item/weapon/storage/box/evidence
 	name = "evidence bag box"

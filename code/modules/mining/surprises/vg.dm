@@ -73,7 +73,7 @@
 		/obj/item/weapon/pickaxe/drill					=4,
 		/obj/item/weapon/pickaxe/jackhammer				=4,
 		/obj/item/weapon/pickaxe/diamond				=3,
-		/obj/item/weapon/pickaxe/diamonddrill			=3,
+		/obj/item/weapon/pickaxe/drill/diamond			=3,
 		/obj/item/weapon/pickaxe/gold					=3,
 		/obj/item/weapon/pickaxe/plasmacutter			=2,
 		/obj/structure/closet/syndicate/resources		=2,

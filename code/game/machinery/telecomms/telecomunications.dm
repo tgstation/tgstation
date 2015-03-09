@@ -43,7 +43,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 	if(!on)
 		return
-	//world << "[src] ([src.id]) - [signal.debug_print()]"
 	var/send_count = 0
 
 	signal.data["slow"] += rand(0, round((100-integrity))) // apply some lag based on integrity
@@ -79,12 +78,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"name" = signal.data["name"],
 			"job" = signal.data["job"],
 			"key" = signal.data["key"],
-			"vmessage" = signal.data["vmessage"],
-			"vname" = signal.data["vname"],
 			"vmask" = signal.data["vmask"],
 			"compression" = signal.data["compression"],
 			"message" = signal.data["message"],
-			"connection" = signal.data["connection"],
 			"radio" = signal.data["radio"],
 			"slow" = signal.data["slow"],
 			"traffic" = signal.data["traffic"],
@@ -215,7 +211,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
 		if(T0C to (T20C + 20))
-			integrity = between(0, integrity, 100)
+			integrity = Clamp(integrity, 0, 100)
 		if((T20C + 20) to (T0C + 70))
 			integrity = max(0, integrity - 1)
 	if(delay)
@@ -552,22 +548,17 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				update_logs()
 
 				var/datum/comm_log_entry/log = new
-				var/mob/M = signal.data["mob"]
 
 				// Copy the signal.data entries we want
 				log.parameters["mobtype"] = signal.data["mobtype"]
 				log.parameters["job"] = signal.data["job"]
 				log.parameters["key"] = signal.data["key"]
-				log.parameters["vmessage"] = signal.data["message"]
-				log.parameters["vname"] = signal.data["vname"]
 				log.parameters["message"] = signal.data["message"]
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 
-				if(!istype(M, /mob/new_player) && M)
-					log.parameters["uspeech"] = M.universal_speak
-				else
-					log.parameters["uspeech"] = 0
+				log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)
@@ -575,7 +566,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 					log.parameters["job"] = Gibberish(signal.data["job"], signal.data["compression"] + 50)
 					log.parameters["name"] = Gibberish(signal.data["name"], signal.data["compression"] + 50)
 					log.parameters["realname"] = Gibberish(signal.data["realname"], signal.data["compression"] + 50)
-					log.parameters["vname"] = Gibberish(signal.data["vname"], signal.data["compression"] + 50)
 					log.input_type = "Corrupt File"
 
 				// Log and store everything that needs to be logged
@@ -603,13 +593,15 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			rawcode = t
 
 /obj/machinery/telecomms/server/proc/admin_log(var/mob/mob)
+	var/msg = "[key_name(mob)] has compiled a script to [src.id]"
 
-	var/msg="[mob.name] has compiled a script to server [src]:"
 	diary << msg
 	diary << rawcode
-	src.investigate_log("[msg]<br>[rawcode]", "ntsl")
-	if(length(rawcode)) // Let's not bother the admins for empty code.
-		message_admins("[mob.real_name] ([mob.key]) has compiled and uploaded a NTLS script to [src.id] ([mob.x],[mob.y],[mob.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[mob.x];Y=[mob.y];Z=[mob.z]'>JMP</a>)",0,1)
+
+	investigation_log("ntsl", "[msg]<br /><pre>[rawcode]</pre>")
+
+	if (length(rawcode)) // Let's not bother the admins for empty code.
+		message_admins("[msg] ([formatJumpTo(mob)])", 0, 1)
 
 /obj/machinery/telecomms/server/proc/compile(var/mob/user)
 
@@ -635,9 +627,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	log.parameters["message"] = content
 	log_entries.Add(log)
 	update_logs()
-
-
-
 
 // Simple log entry datum
 

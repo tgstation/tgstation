@@ -32,8 +32,10 @@
 	client.screen = null				//remove hud items just in case
 	if(hud_used)	del(hud_used)		//remove the hud objects
 	hud_used = new /datum/hud(src)
+	gui_icons = new /datum/ui_icons(src)
 
-	next_move = 1
+	delayNextMove(0)
+
 	sight |= SEE_SELF
 	..()
 
@@ -54,5 +56,10 @@
 		var/mob/living/carbon/human/H = src
 		if(H.species && H.species.abilities)
 			H.verbs |= H.species.abilities
+	if(ckey in deadmins)
+		verbs += /client/proc/readmin
 
+	if(client)
+		if(M_FARSIGHT in mutations)
+			client.view = max(client.view, world.view+2)
 	CallHook("Login", list("client" = src.client, "mob" = src))

@@ -30,8 +30,8 @@ var/syndicate_elite_shuttle_timeleft = 0
 	var/message = "THE SYNDICATE ELITE SHUTTLE IS PREPARING FOR LAUNCH"//Initial message shown.
 	if(announcer)
 		announcer.say(message)
-	//	message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
-	//	announcer.say(message)
+		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
+		announcer.say(message)
 
 	while(syndicate_elite_shuttle_time - world.timeofday > 0)
 		var/ticksleft = syndicate_elite_shuttle_time - world.timeofday

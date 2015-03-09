@@ -1,13 +1,4 @@
-/obj/item/clothing/glasses
-	name = "glasses"
-	icon = 'icons/obj/clothing/glasses.dmi'
-	//w_class = 2.0
-	//flags = GLASSESCOVERSEYES
-	//slot_flags = SLOT_EYES
-	//var/vision_flags = 0
-	//var/darkness_view = 0//Base human is 2
-	//var/invisa_view = 0
-	var/prescription = 0
+//the basic glasses can be found in clothing.dm
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
@@ -16,6 +7,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2;engineering=2"
 	vision_flags = SEE_TURFS
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/meson/prescription
@@ -36,8 +28,8 @@
 	icon_state = "night"
 	item_state = "glasses"
 	origin_tech = "magnets=2"
-	vision_flags = SEE_TURFS
-	darkness_view = 3
+	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	see_in_dark = 8
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/eyepatch
@@ -60,6 +52,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 	vision_flags = SEE_OBJS
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/regular
@@ -117,22 +110,26 @@
 	set category = "Object"
 	set name = "Adjust welding goggles"
 	set src in usr
-
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	var/mob/C = usr
+	if(!usr)
+		if(!ismob(loc))
+			return
+		C = loc
+	if(C.canmove && !C.stat && !C.restrained())
 		if(src.up)
 			src.up = !src.up
-			src.flags |= GLASSESCOVERSEYES
+			body_parts_covered |= EYES
 			flags_inv |= HIDEEYES
 			icon_state = initial(icon_state)
-			usr << "You flip the [src] down to protect your eyes."
+			C << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
-			src.flags &= ~HEADCOVERSEYES
+			src.body_parts_covered &= ~EYES
 			flags_inv &= ~HIDEEYES
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push the [src] up out of your face."
+			C << "You push the [src] up out of your face."
 
-		usr.update_inv_glasses()
+		C.update_inv_glasses()
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"
@@ -148,6 +145,7 @@
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
+	see_invisible = SEE_INVISIBLE_LIVING
 	vision_flags = BLIND
 	species_fit = list("Vox")
 
@@ -181,6 +179,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	invisa_view = 2
 
 	emp_act(severity)
@@ -206,7 +205,7 @@
 	name = "Thermonocle"
 	desc = "A monocle thermal."
 	icon_state = "thermoncle"
-	flags = null //doesn't protect eyes because it's a monocle, duh
+	flags = 0 //doesn't protect eyes because it's a monocle, duh
 
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "Optical Thermal Eyepatch"

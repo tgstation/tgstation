@@ -41,16 +41,12 @@
 
 /mob/living/silicon/hivebot/Stat()
 	..()
-	statpanel("Status")
-	if (src.client.statpanel == "Status")
+
+	if(statpanel("Status"))
 		if(emergency_shuttle.online && emergency_shuttle.location < 2)
 			var/timeleft = emergency_shuttle.timeleft()
 			if (timeleft)
 				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-/*
-		if(ticker.mode.name == "AI malfunction")
-			stat(null, "Points left until the AI takes over: [AI_points]/[AI_points_win]")
-*/
 
 		stat(null, text("Charge Left: [src.energy]/[src.energy_max]"))
 
@@ -278,7 +274,7 @@
 
 /mob/living/silicon/hivebot/proc/updateicon()
 
-	src.overlays.Cut()
+	src.overlays.len = 0
 
 	if(src.stat == 0)
 		src.overlays += "eyes"

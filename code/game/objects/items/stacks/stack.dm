@@ -13,7 +13,9 @@
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
+	var/perunit = 3750
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/redeemed = 0 // For selling minerals to central command via supply shuttle.
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
@@ -22,20 +24,20 @@
 	return
 
 /obj/item/stack/Destroy()
-	if (src && usr && usr.machine==src)
+	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
+	src.loc = null
 	..()
 
-/obj/item/stack/examine()
-	set src in view(1)
+/obj/item/stack/examine(mob/user)
 	..()
-	usr << "There are [src.amount] [src.singular_name]\s in the stack."
-	return
+	user << "<span class='info'>There are [src.amount] [src.singular_name]\s in the stack.</span>"
 
 /obj/item/stack/attack_self(mob/user as mob)
 	list_recipes(user)
 
 /obj/item/stack/proc/list_recipes(mob/user as mob, recipes_sublist)
+	ASSERT(isnum(amount))
 	if (!recipes)
 		return
 	if (!src || amount<=0)
@@ -108,7 +110,7 @@
 		list_recipes(usr, text2num(href_list["sublist"]))
 
 	if (href_list["make"])
-		if (src.amount < 1) del(src) //Never should happen
+		if (src.amount < 1) returnToPool(src) //Never should happen
 
 		var/list/recipes_list = recipes
 		if (href_list["sublist"])
@@ -119,18 +121,18 @@
 		if (!multiplier) multiplier = 1
 		if (src.amount < R.req_amount*multiplier)
 			if (R.req_amount*multiplier>1)
-				usr << "\red You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!"
+				usr << "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
 			else
-				usr << "\red You haven't got enough [src] to build \the [R.title]!"
+				usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
 			return
 		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			usr << "\red There is another [R.title] here!"
+			usr << "<span class='warning'>There is another [R.title] here!</span>"
 			return
 		if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
-			usr << "\red \The [R.title] must be constructed on the floor!"
+			usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 			return
 		if (R.time)
-			usr << "\blue Building [R.title] ..."
+			usr << "<span class='notice'>Building [R.title] ...</span>"
 			if (!do_after(usr, R.time))
 				return
 		if (src.amount < R.req_amount*multiplier)
@@ -144,17 +146,21 @@
 		src.amount-=R.req_amount*multiplier
 		if (src.amount<=0)
 			var/oldsrc = src
-			src = null //dont kill proc after del()
+			//src = null //dont kill proc after del()
 			usr.before_take_item(oldsrc)
-			del(oldsrc)
+			returnToPool(oldsrc)
 			if (istype(O,/obj/item))
 				usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
-				del(I)
+				qdel(I)
 		//BubbleWrap END
+		if(istype(O, /obj/item/weapon/handcuffs/cable))
+			var/obj/item/weapon/handcuffs/cable/C = O
+			C._color = _color
+			C.update_icon()
 	if (src && usr.machine==src) //do not reopen closed window
 		spawn( 0 )
 			src.interact(usr)
@@ -162,29 +168,27 @@
 	return
 
 /obj/item/stack/proc/use(var/amount)
-	src.amount-=amount
+	ASSERT(isnum(src.amount))
+	if(src.amount>=amount)
+		src.amount-=amount
+	else
+		return 0
+	. = 1
 	if (src.amount<=0)
-		var/oldsrc = src
-		src = null //dont kill proc after del()
 		if(usr)
-			usr.before_take_item(oldsrc)
-		qdel(oldsrc)
-	return
+			usr.before_take_item(src)
+		spawn returnToPool(src)
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
-	var/obj/item/stack/oldsrc = src
-	src = null
 	for (var/obj/item/stack/item in usr.loc)
-		if (item==oldsrc)
+		if (src == item)
 			continue
-		if(oldsrc.type != item.type)
+		if(src.type != item.type)
 			continue
 		if (item.amount>=item.max_amount)
 			continue
-		oldsrc.attackby(item, usr)
-		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
-		if(!oldsrc)
-			break
+		src.preattack(item, usr)
+		break
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
@@ -200,24 +204,28 @@
 		..()
 	return
 
-/obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
-	..()
-	if (istype(W, src.type))
-		var/obj/item/stack/S = W
-		if (S.amount >= max_amount)
+/obj/item/stack/preattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if (istype(target, src.type) && src.type==target.type)
+		var/obj/item/stack/S = target
+		if (amount >= max_amount)
+			user << "\The [src] cannot hold anymore [singular_name]."
 			return 1
 		var/to_transfer as num
-		if (user.get_inactive_hand()==src)
+		if (user.get_inactive_hand()==S)
 			to_transfer = 1
 		else
-			to_transfer = min(src.amount, S.max_amount-S.amount)
-		S.amount+=to_transfer
-		if (S && usr.machine==S)
-			spawn(0) S.interact(usr)
-		src.use(to_transfer)
-		if (src && usr.machine==src)
-			spawn(0) src.interact(usr)
-	else return ..()
+			to_transfer = min(S.amount, max_amount-amount)
+		amount+=to_transfer
+		user << "You add [to_transfer] [singular_name] to \the [src]. It now contains [amount] [singular_name]\s."
+		if (S && user.machine==S)
+			spawn(0) interact(user)
+		S.use(to_transfer)
+		if (src && user.machine==src)
+			spawn(0) src.interact(user)
+		update_icon()
+		S.update_icon()
+		return 1
+	return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
 	src.blood_DNA = from.blood_DNA
@@ -259,3 +267,10 @@
 		src.title = title
 		src.recipes = recipes
 		src.req_amount = req_amount
+
+/obj/item/stack/verb_pickup(mob/living/user)
+	var/obj/item/I = user.get_active_hand()
+	if(I && I.type == src.type)
+		src.attackby(I, user)
+		return
+	return ..()

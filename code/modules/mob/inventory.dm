@@ -3,13 +3,8 @@
 
 //Returns the thing in our active hand
 /mob/proc/get_active_hand()
-	if(issilicon(src))
-		if(isrobot(src))
-			if(src:module_active)
-				return src:module_active
-	else
-		if(hand)	return l_hand
-		else		return r_hand
+	if(hand)	return l_hand
+	else		return r_hand
 
 // Get the organ of the active hand
 /mob/proc/get_active_hand_organ()
@@ -69,6 +64,11 @@
 
 	if(!isitem(W))
 		return 0
+
+	if(W.flags & MUSTTWOHAND)
+		if(!W.wield(src, 1))
+			src << "You need both hands to pick up \the [W]."
+			return 0
 
 	return 1
 
@@ -141,7 +141,9 @@
 			T.Entered(l_hand)
 
 		l_hand.dropped(src)
-		l_hand = null
+		if(l_hand)
+			l_hand.layer = initial(l_hand.layer)
+			l_hand = null
 		update_inv_l_hand()
 		return 1
 	return 0
@@ -160,7 +162,9 @@
 			T.Entered(r_hand)
 
 		r_hand.dropped(src)
-		r_hand = null
+		if(r_hand)
+			r_hand.layer = initial(r_hand.layer)
+			r_hand = null
 		update_inv_r_hand()
 		return 1
 	return 0
@@ -212,41 +216,20 @@
 	O.screen_loc = null
 	return 1
 
+/mob/proc/get_all_slots()
+	return list(wear_mask, back, l_hand, r_hand)
 
-//Outdated but still in use apparently. This should at least be a human proc.
+//everything on the mob that it isn't holding
 /mob/proc/get_equipped_items()
-	var/list/items = new/list()
+	var/list/equipped = get_all_slots()
+	equipped -= list(get_active_hand(), get_inactive_hand())
+	return equipped
 
-	if(hasvar(src,"back")) if(src:back) items += src:back
-	if(hasvar(src,"belt")) if(src:belt) items += src:belt
-	if(hasvar(src,"ears")) if(src:ears) items += src:ears
-	if(hasvar(src,"glasses")) if(src:glasses) items += src:glasses
-	if(hasvar(src,"gloves")) if(src:gloves) items += src:gloves
-	if(hasvar(src,"head")) if(src:head) items += src:head
-	if(hasvar(src,"shoes")) if(src:shoes) items += src:shoes
-	if(hasvar(src,"wear_id")) if(src:wear_id) items += src:wear_id
-	if(hasvar(src,"wear_mask")) if(src:wear_mask) items += src:wear_mask
-	if(hasvar(src,"wear_suit")) if(src:wear_suit) items += src:wear_suit
-//	if(hasvar(src,"w_radio")) if(src:w_radio) items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN
-	if(hasvar(src,"w_uniform")) if(src:w_uniform) items += src:w_uniform
-
-	//if(hasvar(src,"l_hand")) if(src:l_hand) items += src:l_hand
-	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
-
-	return items
-
-/** BS12's proc to get the item in the active hand. Couldn't find the /tg/ equivalent. **/
-/mob/proc/equipped()
-	if(issilicon(src))
-		if(isrobot(src))
-			if(src:module_active)
-				return src:module_active
-	else
-		if (hand)
-			return l_hand
-		else
-			return r_hand
-		return
+//everything on the mob that is not in its pockets, hands and belt.
+/mob/proc/get_clothing_items()
+	var/list/equipped = get_all_slots()
+	equipped -= list(get_active_hand(), get_inactive_hand())
+	return equipped
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, act_on_fail = EQUIP_FAILACTION_DELETE) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
 	//warning: icky code

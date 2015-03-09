@@ -55,11 +55,11 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 				B.volume += 0.1 // regenerate blood VERY slowly
 				if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
-					B.volume += 0.4
-					reagents.remove_reagent("nutriment", 0.1)
+					B.volume += 0.6
+					reagents.remove_reagent("nutriment", 0.5)
 				if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
-					B.volume += 0.8
-					reagents.remove_reagent("iron", 0.1)
+					B.volume += 1.2
+					reagents.remove_reagent("iron", 0.5)
 
 		// Damaged heart virtually reduces the blood volume, as the blood isn't
 		// being pumped properly anymore.
@@ -80,49 +80,60 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(BLOOD_VOLUME_SAFE to 10000)
 				if(pale)
 					pale = 0
-					update_body()
+					//update_body()
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(!pale)
 					pale = 1
-					update_body()
+					//update_body()
 					var/word = pick("dizzy","woosey","faint")
 					src << "\red You feel [word]"
 				if(prob(1))
 					var/word = pick("dizzy","woosey","faint")
 					src << "\red You feel [word]"
 				if(oxyloss < 20)
-					oxyloss += 3
+					oxyloss += 2
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
-					update_body()
+					//update_body()
 				eye_blurry += 6
 				if(oxyloss < 50)
-					oxyloss += 10
-				oxyloss += 1
+					oxyloss += 5
+				oxyloss += 3
 				if(prob(15))
 					Paralyse(rand(1,3))
 					var/word = pick("dizzy","woosey","faint")
 					src << "\red You feel extremely [word]"
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+				if(!pale)
+					pale = 1
+					//update_body()
 				oxyloss += 5
-				toxloss += 3
+				toxloss += 1
 				if(prob(15))
 					var/word = pick("dizzy","woosey","faint")
 					src << "\red You feel extremely [word]"
 			if(0 to BLOOD_VOLUME_SURVIVE)
-				// There currently is a strange bug here. If the mob is not below -100 health
-				// when death() is called, apparently they will be just fine, and this way it'll
-				// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
-				toxloss += 300 // just to be safe!
-				death()
+				// Kill then pretty fast, but don't overdo it
+				// I SAID DON'T OVERDO IT
+				if(!pale) //Somehow
+					pale = 1
+					//update_body()
+				oxyloss += 8
+				toxloss += 2
+				//cloneloss += 1
+				Paralyse(5) //Keep them on the ground, that'll teach them
 
 		// Without enough blood you slowly go hungry.
+		// This is supposed to synergize with nutrients being used up to boost blood regeneration
+		// No need to drain it manually, just increase the nutrient drain on regen
+		/*
 		if(blood_volume < BLOOD_VOLUME_SAFE)
 			if(nutrition >= 300)
-				nutrition -= 10
+				nutrition -= 5
 			else if(nutrition >= 200)
-				nutrition -= 3
+				nutrition -= 2
+		*/
 
 		//Bleeding out
 		var/blood_max = 0
@@ -267,15 +278,26 @@ proc/blood_incompatible(donor,receiver)
 	return 0
 
 proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
-
 	var/obj/effect/decal/cleanable/blood/B
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
 	var/turf/T = get_turf(target)
+	var/list/drip_icons = list("1","2","3","4","5")
 
 	if(istype(source,/mob/living/carbon/human))
 		var/mob/living/carbon/human/M = source
-		source = M.get_blood(M.vessel)
-	else if(istype(source,/mob/living/carbon/monkey))
+		var/datum/reagent/blood/is_there_blood = M.get_blood(M.vessel)
+		if(!is_there_blood && M.dna && M.species)
+			is_there_blood = new /datum/reagent/blood()
+			is_there_blood.data["blood_DNA"] = M.dna.unique_enzymes
+			is_there_blood.data["blood_type"] = M.dna.b_type
+			is_there_blood.data["blood_colour"] = M.species.blood_color
+			if (!is_there_blood.data["virus2"])
+				is_there_blood.data["virus2"] = list()
+			is_there_blood.data["virus2"] |= virus_copylist(M.virus2)
+
+		source = is_there_blood
+
+	if(istype(source,/mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/donor = source
 		if(donor.dna)
 			source = new()
@@ -287,24 +309,26 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 
 		// Only a certain number of drips can be on a given turf.
 		var/list/drips = list()
-		var/list/drip_icons = list("1","2","3","4","5")
 
 		for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
 			drips += drop
-			drip_icons.Remove(drop.icon_state)
+			drip_icons -= drop.icon_state
 
 		// If we have too many drips, remove them and spawn a proper blood splatter.
 		if(drips.len >= 5)
 			//TODO: copy all virus data from drips to new splatter?
 			for(var/obj/effect/decal/cleanable/blood/drip/drop in drips)
-				del drop
+				returnToPool(drop)
 		else
 			decal_type = /obj/effect/decal/cleanable/blood/drip
 
 	// Find a blood decal or create a new one.
 	B = locate(decal_type) in T
-	if(!B)
-		B = new decal_type(T)
+	if(!B || (decal_type == /obj/effect/decal/cleanable/blood/drip))
+		B = getFromPool(decal_type,T)
+		B.New(T)
+		if(decal_type == /obj/effect/decal/cleanable/blood/drip)
+			B.icon_state = pick(drip_icons)
 
 	// If there's no data to copy, call it quits here.
 	if(!source)

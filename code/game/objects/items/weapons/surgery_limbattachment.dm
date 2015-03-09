@@ -52,19 +52,25 @@
 				S.take_damage(15)
 
 			S.status &= ~ORGAN_BROKEN
+			S.status &= ~ORGAN_BLEEDING
 			S.status &= ~ORGAN_SPLINTED
+			S.status &= ~ORGAN_CUT_AWAY
 			S.status &= ~ORGAN_ATTACHABLE
 			S.status &= ~ORGAN_DESTROYED
 			S.status |= ORGAN_ROBOT
+			S.wounds.len = 0
 			var/datum/organ/external/T = H.organs["[limbloc]"]
 			T.status &= ~ORGAN_BROKEN
+			T.status &= ~ORGAN_BLEEDING
 			T.status &= ~ORGAN_SPLINTED
+			T.status &= ~ORGAN_CUT_AWAY
 			T.status &= ~ORGAN_ATTACHABLE
 			T.status &= ~ORGAN_DESTROYED
 			T.status |= ORGAN_ROBOT
+			T.wounds.len = 0
 			H.update_body()
 			M.updatehealth()
-			M.UpdateDamageIcon()
+			M.UpdateDamageIcon(1)
 			del(src)
 
 			return 1

@@ -91,6 +91,7 @@ Class Procs:
 #endif
 	c_invalidate()
 	for(var/turf/simulated/T in contents)
+		if(iscatwalk(T)) continue
 		into.add(T)
 		#ifdef ZASDBG
 		T.dbg(merged)

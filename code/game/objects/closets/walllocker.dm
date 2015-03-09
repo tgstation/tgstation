@@ -50,54 +50,58 @@
 	pixel_x = 32
 	dir = EAST
 
-/obj/structure/closet/walllocker/defiblocker/
+/obj/structure/closet/walllocker/defiblocker
 	name = "emergency defibrillator locker"
 	desc = "A wall mounted locker with a handheld defibrillator"
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "medical_wall"
 	icon_opened = "medical_wall_open"
 	icon_closed = "medical_wall"
-	var/amount = 1
+	var/obj/item/weapon/melee/defibrillator/defib
+
+/obj/structure/closet/walllocker/defiblocker/New()
+	..()
+	defib = new /obj/item/weapon/melee/defibrillator(src)
 
 /obj/structure/closet/walllocker/defiblocker/attack_hand(mob/user as mob)
 	if(istype(user, /mob/living/silicon/ai)) return
 	if(istype(user, /mob/living/silicon/robot))
-		if(!amount)
-			usr << "<spawn class='notice'>It's empty."
+		if(!defib)
+			usr << "<span class='notice'>It's empty.</span>"
 			return
 		else
-			usr << "<spawn class='notice'>You pull out an emergency defibrillator from \the [src]."
-			new /obj/item/weapon/melee/defibrillator(src.loc)
-			amount = 0
+			usr << "<span class='notice'>You pull out an emergency defibrillator from \the [src].</span>"
+			defib.loc = get_turf(src)
+			defib = null
 			update_icon()
-	if(!amount)
-		usr << "<spawn class='notice'>It's empty."
+	if(!defib)
+		usr << "<span class='notice'>It's empty.</span>"
 		return
-	if(amount)
-		usr << "<spawn class='notice'>You take out an emergency defibrillator from \the [src]."
+	if(defib)
+		usr << "<span class='notice'>You take out an emergency defibrillator from \the [src].</san>"
 		//new /obj/item/weapon/melee/defibrillator(src.loc)
-		usr.put_in_hands(new /obj/item/weapon/melee/defibrillator())
-		amount = 0
+		usr.put_in_hands(defib)
+		defib = null
 		update_icon()
 	return
 
 /obj/structure/closet/walllocker/defiblocker/attackby(obj/item/weapon/G as obj, mob/user as mob)
 	if(istype(G, /obj/item/weapon/melee/defibrillator))
-		if(amount)
+		if(defib)
 			usr << "<spawn class='notice'>The locker is full."
 			return
 		else
-			usr << "<spawn class='notice'>You put \the [G] in \the [src]."
-			amount = 1
+			usr << "<span class='notice'>You put \the [G] in \the [src].</span>"
+			defib = G
 			update_icon()
 			user.drop_item()
-			del(G)
+			G.loc = src
 			return
 	return
 
 
 /obj/structure/closet/walllocker/defiblocker/update_icon()
-	if(amount)
+	if(defib)
 		icon_state = icon_closed
 	else
 		icon_state = icon_opened

@@ -41,11 +41,16 @@
 	return 0 //not in range and not telekinetic
 
 // Like view but bypasses luminosity check
-/proc/hear(var/range, var/atom/source)
+/proc/get_hear(var/range, var/atom/source)
+
 	var/lum = source.luminosity
 	source.luminosity = 6
-	. = view(range, source)
+
+	var/list/heard = view(range, source)
 	source.luminosity = lum
+
+	return heard
+
 
 /proc/alone_in_area(var/area/the_area, var/mob/must_be_alone, var/check_type = /mob/living/carbon)
 	var/area/our_area = get_area_master(the_area)
@@ -123,6 +128,27 @@
 	return turfs
 
 
+//This is the new version of recursive_mob_check, used for say().
+//The other proc was left intact because morgue trays use it.
+/proc/recursive_hear_check(var/atom/O)
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/list/found_atoms = list()
+
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
+
+		if(A.flags & HEAR)
+			found_atoms |= A
+
+		for(var/atom/B in A)
+			if(!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_atoms
 
 //var/debug_mob = 0
 
@@ -130,56 +156,59 @@
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
 
-/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
+/proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
 
-	//debug_mob += O.contents.len
-	if(!recursion_limit)
-		return L
-	for(var/atom/movable/A in O.contents)
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/list/found_mobs = list()
+
+	while(processing_list.len)
+
+		var/atom/A = processing_list[1]
+		var/passed = 0
 
 		if(ismob(A))
-			var/mob/M = A
-			if(client_check && !M.client)
-				L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
-				continue
-			if(sight_check && !isInSight(A, O))
-				continue
-			L |= M
-			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+			var/mob/A_tmp = A
+			passed=1
+
+			if(client_check && !A_tmp.client)
+				passed=0
+
+			if(sight_check && !isInSight(A_tmp, O))
+				passed=0
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
+			passed=1
+
 			if(sight_check && !isInSight(A, O))
-				continue
-			L |= A
+				passed=0
 
-		L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
+		if(passed)
+			found_mobs |= A
 
-	return L
+		for(var/atom/B in A)
+			if(!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_mobs
 
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
 // This new system will loop at around 1000 in an empty server.
 
-/proc/get_mobs_in_view(var/R, var/atom/source)
-	// Returns a list of mobs in range of R from source. Used in radio and say code.
-
+/proc/get_hearers_in_view(var/R, var/atom/source)
+	// Returns a list of hearers in range of R from source. Used in saycode.
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
 
 	if(!T)
 		return hear
 
-	var/list/range = hear(R, T)
-
+	var/list/range = get_hear(R, T)
 	for(var/atom/movable/A in range)
-		if(ismob(A))
-			var/mob/M = A
-			if(M.client)
-				hear.Add(M)
-			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
-		else if(istype(A, /obj/item/device/radio))
-			hear.Add(A)
-
-		hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
+		hear |= recursive_hear_check(A)
 
 	return hear
 
@@ -195,7 +224,7 @@
 		if(R)
 			var/turf/speaker = get_turf(R)
 			if(speaker)
-				for(var/turf/T in hear(R.canhear_range,speaker))
+				for(var/turf/T in get_hear(R.canhear_range,speaker))
 					speaker_coverage[T] = T
 
 
@@ -305,7 +334,6 @@ var/list/DummyCache = list()
 	D.flags=initial(D.flags)
 	D.pass_flags=initial(D.pass_flags)
 	if(pass_flags&PASSTABLE)
-		D.flags      |= TABLEPASS
 		D.pass_flags |= PASSTABLE
 
 	if(targetturf.density && targetturf != get_turf(target))
@@ -348,7 +376,7 @@ var/list/DummyCache = list()
 	while(candidates.len <= 0 && i < 5)
 		roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Player list is [player_list.len] items long.")
 		for(var/mob/dead/observer/G in player_list)
-			if(!G.mind || (G.mind.current && G.mind.current.stat != DEAD))
+			if(G.mind && G.mind.current && G.mind.current.stat != DEAD)
 				roleselect_debug("get_active_candidates(role_id=[role_id], buffer=[buffer], poll=[poll]): Skipping [G]  - Shitty candidate.")
 				continue
 

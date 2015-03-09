@@ -92,7 +92,6 @@
 		for (var/dir in cardinal)
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if(src.output) break
-		processing_objects.Add(src)
 		return
 	return
 

@@ -90,33 +90,14 @@
 	areas = list(/area/shuttle/vox/station)
 
 /datum/theft_objective/number/heist/check_completion()
-	var/found_amount = 0
-
-	var/list/all_contents = new
-
-	for(var/datum/mind/raider in raiders)
-		if(raider && raider.current && isliving(raider.current))
-			var/mob/living/body = raider.current
-
-			var/list/body_contents = body.get_contents()
-
-			if(body_contents && body_contents.len > 0)
-				all_contents |= body_contents
-
-	for(var/area_type in areas)
-		for(var/obj/o in area_contents(locate(area_type)))
-			all_contents |= get_contents(o)
-			all_contents |= o
-
-	for(var/obj/content in all_contents)
-		if(istype(content, typepath))
-			if(areas && areas.len > 0)
-				if(!is_type_in_list(get_area_master(content), areas))
-					continue
-
-				found_amount++
-
-	return found_amount >= required_amount
+	var/list/search
+	var/found = 0
+	for(var/A in areas)
+		var/area/B = locate(A)
+		search += B.search_contents_for(/atom, typepath)
+	for(var/C in search)
+		found++
+	return (found >= required_amount)
 
 /datum/theft_objective/number/heist/particle_accelerator
 	name = "complete particle accelerator"
@@ -125,60 +106,20 @@
 	max = 1
 
 /datum/theft_objective/number/heist/particle_accelerator/check_completion()
-	var/found_end_cap = 0
-	var/found_fuel_chamber = 0
-	var/found_particle_emitter_center = 0
-	var/found_particle_emitter_left = 0
-	var/found_particle_emitter_right = 0
-	var/found_power_box = 0
-
-	var/list/all_contents = new
-
-	for(var/datum/mind/raider in raiders)
-		if(raider && raider.current && isliving(raider.current))
-			var/mob/living/body = raider.current
-
-			var/list/body_contents = body.get_contents()
-
-			if(body_contents && body_contents.len > 0)
-				all_contents |= body_contents
-
-	for(var/area_type in areas)
-		for(var/obj/o in area_contents(locate(area_type)))
-			all_contents |= get_contents(o)
-			all_contents |= o
-
-	for(var/obj/content in all_contents)
-		if(istype(content, typepath))
-			if(areas && areas.len > 0)
-				if(!is_type_in_list(get_area_master(content), areas))
-					continue
-
-				switch(content.type)
-					if(/obj/structure/particle_accelerator/end_cap)
-						found_end_cap++
-					if(/obj/structure/particle_accelerator/fuel_chamber)
-						found_fuel_chamber++
-					if(/obj/structure/particle_accelerator/particle_emitter/center)
-						found_particle_emitter_center++
-					if(/obj/structure/particle_accelerator/particle_emitter/left)
-						found_particle_emitter_left++
-					if(/obj/structure/particle_accelerator/particle_emitter/right)
-						found_particle_emitter_right++
-					if(/obj/structure/particle_accelerator/power_box)
-						found_power_box++
-
-	if( \
-		--found_end_cap >= 0 && \
-		--found_fuel_chamber >= 0  && \
-		--found_particle_emitter_center >= 0 && \
-		--found_particle_emitter_left >= 0 && \
-		--found_particle_emitter_right >= 0 && \
-		--found_power_box >= 0 \
-	)
-		return TRUE
-
-	return FALSE
+	var/list/contents = list(/obj/structure/particle_accelerator/end_cap, \
+							/obj/structure/particle_accelerator/fuel_chamber, \
+							/obj/structure/particle_accelerator/particle_emitter/center, \
+							/obj/structure/particle_accelerator/particle_emitter/left, \
+							/obj/structure/particle_accelerator/particle_emitter/right, \
+							/obj/structure/particle_accelerator/power_box,)
+	var/list/search
+	for(var/A in areas)
+		var/area/B = locate(A)
+		search += B.search_contents_for(/atom, contents)
+	for(var/C in contents)
+		if(!is_type_in_list(C, search))
+			return FALSE
+	return TRUE
 
 /datum/theft_objective/number/heist/singulogen
 	name = "gravitational generator"
@@ -225,31 +166,13 @@
 
 /datum/theft_objective/number/salvage/check_completion()
 	var/found_amount = 0
-	var/list/all_contents
-
-	for(var/datum/mind/raider in raiders)
-		if(raider && raider.current && isliving(raider.current))
-			var/mob/living/body = raider.current
-
-			var/list/body_contents = body.get_contents()
-
-			if(body_contents && body_contents.len > 0)
-				all_contents |= body_contents
-
-	for(var/area_type in areas)
-		for(var/obj/o in area_contents(locate(area_type)))
-			all_contents |= get_contents(o)
-			all_contents |= o
-
-	for(var/obj/content in all_contents)
-		if(istype(content, typepath))
-			if(areas && areas.len > 0)
-				if(!is_type_in_list(get_area_master(content), areas))
-					continue
-
-				found_amount += getAmountStolen(content)
-
-	return found_amount >= required_amount
+	var/list/search
+	for(var/A in areas)
+		var/area/B = locate(A)
+		search += B.search_contents_for(typepath)
+	for(var/obj/item/stack/A in search)
+		found_amount += A.amount
+	return (found_amount >= required_amount)
 
 /datum/theft_objective/number/salvage/metal
 	name = "metal"
@@ -259,7 +182,7 @@
 
 /datum/theft_objective/number/salvage/glass
 	name = "glass"
-	typepath = /obj/item/stack/sheet/glass
+	typepath = /obj/item/stack/sheet/glass/glass
 	min = 200
 	max = 200
 

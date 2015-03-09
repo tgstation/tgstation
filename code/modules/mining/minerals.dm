@@ -164,7 +164,7 @@ mineral/gibtonite
 	name = "Gibtonite"
 	result_amount = 1
 	spread = 1
-	ore = /obj/item/weapon/twohanded/required/gibtonite
+	ore = /obj/item/weapon/gibtonite
 	UpdateTurf(var/turf/T)
 		if(!istype(T,/turf/unsimulated/mineral/gibtonite))
 			T.ChangeTurf(/turf/unsimulated/mineral/gibtonite)

@@ -110,6 +110,7 @@
 			message += " CL[pick("A","I")]CK"
 	return message+"!"
 
+/*
 // Language handling.
 /mob/proc/add_language(var/language)
 
@@ -120,13 +121,16 @@
 
 	languages.Add(new_language)
 	return 1
-
+*/
+/*
 /mob/proc/remove_language(var/rem_language)
 
 	languages.Remove(all_languages[rem_language])
 
 	return 0
+*/
 
+/*
 //TBD
 /mob/verb/check_languages()
 	set name = "Check Known Languages"
@@ -140,3 +144,4 @@
 
 	src << browse(dat, "window=checklanguage")
 	return
+*/

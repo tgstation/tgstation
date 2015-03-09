@@ -125,7 +125,16 @@ var/list/valid_secondary_effect_types = list(\
 		secondary_effect.process()
 
 	if(pulledby)
-		Bumped(pulledby)
+		if(!Adjacent(pulledby)) //Not actually next to them
+			if(pulledby.pulling == src)
+				pulledby.stop_pulling()
+			pulledby = null
+		else if(pulledby.stat || pulledby.sleeping || pulledby.lying || pulledby.weakened || pulledby.stunned) //To prevent getting stuck stunned forever due to not being able to break the pull.
+			if(pulledby.pulling == src)
+				pulledby.stop_pulling()
+			pulledby = null
+		else
+			Bumped(pulledby)
 
 	//if either of our effects rely on environmental factors, work that out
 	var/trigger_cold = 0
@@ -225,8 +234,11 @@ var/list/valid_secondary_effect_types = list(\
 			secondary_effect.ToggleActivate(0)
 
 /obj/machinery/artifact/attack_hand(var/mob/user as mob)
+	if(isobserver(user))
+		user << "<span class='rose'>Your ghostly hand goes right through!</span>"
+		return
 	if (get_dist(user, src) > 1)
-		user << "\red You can't reach [src] from here."
+		user << "<span class='warning'>You can't reach [src] from here.</span>"
 		return
 	if(ishuman(user) && user:gloves)
 		user << "<b>You touch [src]</b> with your gloved hands, [pick("but nothing of note happens","but nothing happens","but nothing interesting happens","but you notice nothing different","but nothing seems to have happened")]."

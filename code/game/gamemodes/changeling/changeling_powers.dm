@@ -49,6 +49,9 @@
 	invisibility = 101
 
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
+	H.visible_message("<span class = 'warning'>[src] emits a putrid odor as their torso splits open!</span>")
+	world << sound('sound/effects/greaterling.ogg')
+	world << "<span class = 'sinister'>A roar pierces the air and makes your blood curdle. Uh oh.</span>"
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
@@ -61,7 +64,8 @@
 	stunned = 0
 	icon = null
 	invisibility = initial(invisibility)
-
+	H.maxHealth = 800 /* Gonna need more than one egun to kill one of these bad boys*/
+	H.health = 800
 	H.set_species("Horror")
 	H.client.verbs |= H.species.abilities // Force ability equip.
 	H.update_icons()
@@ -98,7 +102,7 @@
 		return
 
 	if(changeling.geneticdamage > max_genetic_damage)
-		src << "<span class='warning'>Our geneomes are still reassembling. We need time to recover first.</span>"
+		src << "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>"
 		return
 
 	var/mob/living/carbon/human/H = src
@@ -156,7 +160,7 @@
 				playsound(get_turf(src), 'sound/effects/lingstabs.ogg', 50, 1)
 				var/datum/organ/external/affecting = T.get_organ(src.zone_sel.selecting)
 				if(affecting.take_damage(39,0,1,"large organic needle"))
-					T:UpdateDamageIcon()
+					T:UpdateDamageIcon(1)
 					continue
 
 		feedback_add_details("changeling_powers","A[stage]")
@@ -273,7 +277,7 @@
 	C.monkeyizing = 1
 	C.canmove = 0
 	C.icon = null
-	C.overlays.Cut()
+	C.overlays.len = 0
 	C.invisibility = 101
 
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( C.loc )
@@ -282,7 +286,8 @@
 	animation.master = src
 	flick("h2monkey", animation)
 	sleep(48)
-	del(animation)
+	animation.master = null
+	qdel(animation)
 
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(src)
 	O.dna = C.dna.Clone()
@@ -291,7 +296,7 @@
 	for(var/obj/item/W in C)
 		C.drop_from_inventory(W)
 	for(var/obj/T in C)
-		del(T)
+		qdel(T)
 
 	O.loc = C.loc
 	O.name = "monkey ([copytext(md5(C.real_name), 2, 6)])"
@@ -300,7 +305,7 @@
 	O.setOxyLoss(C.getOxyLoss())
 	O.adjustFireLoss(C.getFireLoss())
 	O.stat = C.stat
-	O.a_intent = "hurt"
+	O.a_intent = I_HURT
 	for(var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
@@ -347,7 +352,7 @@
 	C.monkeyizing = 1
 	C.canmove = 0
 	C.icon = null
-	C.overlays.Cut()
+	C.overlays.len = 0
 	C.invisibility = 101
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( C.loc )
 	animation.icon_state = "blank"
@@ -376,7 +381,7 @@
 	O.real_name = chosen_dna.real_name
 
 	for(var/obj/T in C)
-		del(T)
+		qdel(T)
 
 	O.loc = C.loc
 
@@ -460,7 +465,7 @@
 					if(istype(s))
 						O.implants -= s
 						H.contents -= s
-						del(s)
+						qdel(s)
 				O.amputated = 0
 				O.brute_dam = 0
 				O.burn_dam = 0
@@ -488,6 +493,7 @@
 		C.status_flags &= ~(FAKEDEATH)
 		C.update_canmove()
 		C.make_changeling()
+	regenerate_icons()
 	src.verbs -= /mob/proc/changeling_returntolife
 	feedback_add_details("changeling_powers","RJ")
 
@@ -694,6 +700,9 @@ var/list/datum/dna/hivemind_bank = list()
 	set desc = "Shape our vocal glands to form a voice of someone we choose. We cannot regenerate chemicals when mimicing."
 
 
+	if(!usr)
+		return
+	var/mob/user = usr
 	var/datum/changeling/changeling = changeling_power()
 	if(!changeling)	return
 
@@ -702,7 +711,7 @@ var/list/datum/dna/hivemind_bank = list()
 		src << "<span class='notice'>We return our vocal glands to their original location.</span>"
 		return
 
-	var/mimic_voice = input("Enter a name to mimic.", "Mimic Voice", null) as text
+	var/mimic_voice = stripped_input(user, "Enter a name to mimic.", "Mimic Voice", null, MAX_NAME_LEN)
 	if(!mimic_voice)
 		return
 
@@ -726,6 +735,8 @@ var/list/datum/dna/hivemind_bank = list()
 /mob/proc/sting_can_reach(mob/M as mob, sting_range = 1)
 	if(M.loc == src.loc) return 1 //target and source are in the same thing
 	if(!isturf(src.loc) || !isturf(M.loc)) return 0 //One is inside, the other is outside something.
+	if(sting_range < 2)
+		return Adjacent(M)
 	if(AStar(src.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, sting_range)) //If a path exists, good!
 		return 1
 	return 0
@@ -877,7 +888,7 @@ var/list/datum/dna/hivemind_bank = list()
 	T << "<span class='danger'>You feel a small prick and your chest becomes tight.</span>"
 	T.silent = 10
 	T.Paralyse(10)
-	T.make_jittery(1000)
+	T.Jitter(1000)
 	if(T.reagents)	T.reagents.add_reagent("lexorin", 40)
 	feedback_add_details("changeling_powers","DTHS")
 	return 1

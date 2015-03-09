@@ -1352,7 +1352,7 @@ window "outputwindow"
 		on-size = ""
 		link-color = #0000ff
 		visited-color = #ff00ff
-		style = ".system {color:#ff0000;}"
+		style = ""
 		enable-http-images = false
 		max-lines = 1000
 		image = ""
@@ -1379,11 +1379,11 @@ window "rpane"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = ""
 		title = ""
-		titlebar = true
-		statusbar = true
-		can-close = true
-		can-minimize = true
-		can-resize = true
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
 		is-pane = true
 		is-minimized = false
 		is-maximized = false
@@ -1400,7 +1400,7 @@ window "rpane"
 	elem "rpanewindow"
 		type = CHILD
 		pos = 0,0
-		size = 640x499
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
@@ -1423,6 +1423,62 @@ window "rpane"
 		splitter = 50
 		show-splitter = true
 		lock = none
+	elem "special_button"
+		type = BUTTON
+		pos = 456,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Special"
+		image = ""
+		command = ".winset \"rpanewindow.left=window1\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbox
+	elem "map"
+		type = BUTTON
+		pos = 386,0
+		size = 67x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "MapName"
+		image = ""
+		command = "MapRender"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
 	elem "hosttracker"
 		type = BROWSER
 		pos = 392,25
@@ -1451,7 +1507,7 @@ window "rpane"
 		on-hide = ""
 	elem "rulesb"
 		type = BUTTON
-		pos = 278,0
+		pos = 253,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1479,7 +1535,7 @@ window "rpane"
 		button-type = pushbutton
 	elem "changelog"
 		type = BUTTON
-		pos = 341,0
+		pos = 316,0
 		size = 67x16
 		anchor1 = none
 		anchor2 = none
@@ -1507,7 +1563,7 @@ window "rpane"
 		button-type = pushbutton
 	elem "forumb"
 		type = BUTTON
-		pos = 215,0
+		pos = 190,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1535,7 +1591,7 @@ window "rpane"
 		button-type = pushbutton
 	elem "wikib"
 		type = BUTTON
-		pos = 152,0
+		pos = 127,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1591,7 +1647,7 @@ window "rpane"
 		button-type = pushbox
 	elem "browseb"
 		type = BUTTON
-		pos = 464,0
+		pos = 570,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1756,7 +1812,7 @@ window "infowindow"
 	elem "info"
 		type = INFO
 		pos = 0,0
-		size = 638x475
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
@@ -1791,7 +1847,7 @@ window "window1"
 	elem "window1"
 		type = MAIN
 		pos = 281,0
-		size = 634x480
+		size = 640x480
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1803,18 +1859,18 @@ window "window1"
 		is-disabled = false
 		is-transparent = false
 		is-default = false
-		border = none
+		border = sunken
 		drop-zone = false
 		right-click = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = ""
 		title = ""
-		titlebar = true
-		statusbar = true
-		can-close = true
-		can-minimize = true
-		can-resize = true
-		is-pane = false
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
+		is-pane = true
 		is-minimized = false
 		is-maximized = false
 		can-scroll = none
@@ -1827,36 +1883,12 @@ window "window1"
 		macro = ""
 		menu = ""
 		on-close = ""
-	elem "input2"
-		type = INPUT
-		pos = 0,456
-		size = 634x20
-		anchor1 = 0,100
-		anchor2 = 100,100
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = #d3b5b5
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = sunken
-		drop-zone = false
-		right-click = false
-		saved-params = "command"
-		on-size = ""
-		command = "msay"
-		multi-line = false
-		is-password = false
-		no-command = false
 	elem "msay_output"
 		type = OUTPUT
 		pos = 0,0
-		size = 634x456
-		anchor1 = none
-		anchor2 = none
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
 		font-family = ""
 		font-size = 0
 		font-style = ""
@@ -1866,7 +1898,7 @@ window "window1"
 		is-disabled = false
 		is-transparent = false
 		is-default = false
-		border = line
+		border = sunken
 		drop-zone = false
 		right-click = false
 		saved-params = "max-lines"

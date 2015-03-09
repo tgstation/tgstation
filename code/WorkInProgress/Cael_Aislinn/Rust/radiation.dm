@@ -25,9 +25,11 @@
 	proc/RadiateParticle(var/energy, var/ionizing, var/dir = 0)
 		if(!dir)
 			RadiateParticleRand(energy, ionizing)
-		var/obj/effect/accelerated_particle/particle = new
-		particle.dir = dir
+		var/obj/effect/accelerated_particle/particle = getFromPool(/obj/effect/accelerated_particle/particle, get_turf(src))
+		particle.target = target
 		particle.ionizing = ionizing
+		particle.dir = dir
+		particle.startMove(1)
 		if(energy)
 			particle.energy = energy
 			//particle.invisibility = 2
@@ -59,9 +61,11 @@
 					break
 			if(!target)
 				target = pick(view(particle_range))
-		var/obj/effect/accelerated_particle/particle = new
+		var/obj/effect/accelerated_particle/particle = getFromPool(/obj/effect/accelerated_particle/particle, get_turf(src))
 		particle.target = target
 		particle.ionizing = ionizing
+		particle.dir = dir
+		particle.startMove(1)
 		if(energy)
 			particle.energy = energy
 			//particle.invisibility = 2

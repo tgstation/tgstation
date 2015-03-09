@@ -98,7 +98,7 @@
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(var/mob/M)
 	set_up_access()
-	if(!M)
+	if(!M || !istype(M))
 		return 0 // I guess?  This seems to happen when AIs use something.
 	if(M.hasFullAccess()) // AI, robots, adminghosts, etc.
 		return 1
@@ -219,6 +219,9 @@
 	            access_theatre, access_research, access_mining, access_mailsorting,access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway, /*vg paramedic*/, access_paramedic, access_mechanic, access_taxi)
+
+/proc/get_absolutely_all_accesses()
+	return ((get_all_accesses() | get_all_centcom_access() | get_all_syndicate_access()) + access_salvage_captain)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
@@ -520,20 +523,5 @@ proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
-	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
-		return
-
-	var/jobName
-
-	if(istype(src, /obj/item/device/pda))
-		if(src:id)
-			jobName = src:id:assignment
-	if(istype(src, /obj/item/weapon/card/id))
-		jobName = src:assignment
-
-	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
-		return jobName
-	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
-		return "Centcom"
-	return "Unknown" //Return unknown if none of the above apply
+	return
 

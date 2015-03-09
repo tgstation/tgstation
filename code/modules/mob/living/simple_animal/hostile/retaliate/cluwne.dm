@@ -19,7 +19,7 @@
 	speak_emote = list("squeals", "cries","sobs")
 	emote_see = list("honks sadly")
 	speak_chance = 1
-	a_intent = "help"
+	a_intent = I_HELP
 	var/footstep=0 // For clownshoe noises
 	//deny_client_move=1 // HONK // Doesn't work right yet
 
@@ -172,6 +172,7 @@
 	return 0
 
 
+/*
 /mob/living/simple_animal/hostile/retaliate/cluwne/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
 	hostile = 1
@@ -180,6 +181,7 @@
 			var/mob/living/simple_animal/hostile/retaliate/cluwne/C = Z
 			C.hostile = 1
 	return 0
+*/
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	..()
@@ -238,7 +240,6 @@
 /mob/living/simple_animal/hostile/retaliate/cluwne/AttackingTarget()
 	if(isliving(target))
 		var/mob/living/L = target
-		L.attack_animal(src)
 		if(prob(10))
 			L.Weaken(5)
 			L.visible_message("<span class='danger'>\The [src.name] slips \the [L.name]!</span>")
@@ -246,10 +247,11 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	//only knowledge can kill a cluwne
 	if(istype(O,/obj/item/weapon/book))
 		gib()
 		return
-	if(O.force)
+	/*if(O.force)
 		Retaliate() //alertMode()
 		var/damage = O.force
 		if (O.damtype == HALLOSS)
@@ -257,37 +259,18 @@
 		health -= damage
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
-	else
-		user << "\red This weapon is ineffective, it does no damage."
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with the [O]. ")
+				M.show_message("<span class='warning'><B>[src] has been attacked with the [O] by [user].</B></span>")
+	*/
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/Bump(atom/movable/AM as mob|obj, yes)
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		if(ismob(AM))
-			src << "\red <B>You are too depressed to push [AM] out of the way.</B>"
-			AM:LAssailant = src
-			return
-		..()
-		if (!( istype(AM, /atom/movable) ))
-			return
-		if (!( now_pushing ))
-			now_pushing = 1
-			if (!( AM.anchored ))
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
+	if ((!( yes ) || now_pushing))
 		return
-	return
+	if(ismob(AM))
+		var/mob/M = AM
+		src << "<span class='danger'>You are too depressed to push [M] out of \the way.</span>"
+		M.LAssailant = src
+		return
+	..()
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/say(var/message)
 	message = filter.FilterSpeech(lowertext(message))
@@ -305,10 +288,23 @@
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/proc/handle_disabilities()
 	if ((prob(5) && paralysis < 10))
-		src << "\red You have a seizure!"
+		src << "<span class='warning'>You have a seizure!</span>"
 		Paralyse(10)
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/emote(var/act)
 	var/message=pick("quietly sobs into a dirty handkerchief","cries into [gender==MALE?"his":"her"] hands","bawls like a cow")
 	message = "<B>[src]</B> [message]"
 	return ..(message)
+
+/mob/living/simple_animal/hostile/retaliate/cluwne/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..(NewLoc, Dir, step_x, step_y)
+
+	if(.)
+		if(m_intent == "run")
+			if(footstep > 1)
+				footstep = 0
+				playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
+			else
+				footstep++
+		else
+			playsound(src, "clownstep", 20, 1)

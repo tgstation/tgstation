@@ -15,11 +15,12 @@
 	name = "captain's gloves"
 	icon_state = "captain"
 	item_state = "egloves"
+	siemens_coefficient = 0
 	_color = "captain"
 	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/cyborg
@@ -39,9 +40,9 @@
 	permeability_coefficient = 0.05
 
 	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/combat //Combined effect of SWAT gloves and insulated gloves
@@ -52,9 +53,9 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/latex
@@ -64,11 +65,8 @@
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
-	_color="white"
+	_color="medical"				//matches cmo stamp
 	species_fit = list("Vox")
-
-	cmo
-		_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."

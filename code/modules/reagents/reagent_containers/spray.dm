@@ -4,7 +4,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = OPENCONTAINER|FPRINT
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
@@ -20,10 +20,7 @@
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink))
 		return
 
-	if(istype(A, /obj/effect/proc_holder/spell))
-		return
-
-	user.changeNext_move(8)
+	user.delayNextAttack(8)
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
@@ -72,31 +69,23 @@
 	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)
 
 	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from a spray bottle.")
-		log_game("[key_name(user)] fired sulphuric acid from a spray bottle.")
+		message_admins("[key_name_admin(user)] fired sulphuric acid from a spray bottle at [formatJumpTo(get_turf(src))]")
+		log_game("[key_name(user)] fired sulphuric acid from a spray bottle at [formatJumpTo(get_turf(src))].")
 	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from a spray bottle.")
-		log_game("[key_name(user)] fired Polyacid from a spray bottle.")
+		message_admins("[key_name_admin(user)] fired Polyacid from a spray bottle at [formatJumpTo(get_turf(src))].")
+		log_game("[key_name(user)] fired Polyacid from a spray bottle at [formatJumpTo(get_turf(src))].")
 	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from a spray bottle.")
-		log_game("[key_name(user)] fired Space lube from a spray bottle.")
+		message_admins("[key_name_admin(user)] fired Space lube from a spray bottle at [formatJumpTo(get_turf(src))].")
+		log_game("[key_name(user)] fired Space lube from a spray bottle at [formatJumpTo(get_turf(src))].")
 	if(reagents.has_reagent("fuel"))
-		message_admins("[key_name_admin(user)] fired Welder fuel from a spray bottle.")
-		log_game("[key_name(user)] fired Welder fuel from a spray bottle.")
+		message_admins("[key_name_admin(user)] fired Welder fuel from a spray bottle at [formatJumpTo(get_turf(src))].")
+		log_game("[key_name(user)] fired Welder fuel from a spray bottle at [formatJumpTo(get_turf(src))].")
 	return
 
 /obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
 
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
 	user << "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
-
-
-/obj/item/weapon/reagent_containers/spray/examine()
-	set src in usr
-	..()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		usr << "[round(R.volume)] units of [R.name] left."
-	return
 
 /obj/item/weapon/reagent_containers/spray/verb/empty()
 
@@ -152,9 +141,6 @@
 /obj/item/weapon/reagent_containers/spray/chemsprayer/afterattack(atom/A as mob|obj, mob/user as mob)
 	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink))
-		return
-
-	if(istype(A, /obj/effect/proc_holder/spell))
 		return
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution

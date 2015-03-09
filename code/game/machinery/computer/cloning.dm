@@ -150,7 +150,7 @@
 				<a href='byond://?src=\ref[src];menu=1'>Back</a><br><ul>"}
 			// END AUTOFIX
 			for(var/datum/dna2/record/R in src.records)
-				dat += "<li><a href='byond://?src=\ref[src];view_rec=\ref[R]'>[R.dna.real_name]</a><li>"
+				dat += "<li><a href='byond://?src=\ref[src];view_rec=\ref[R]'>[R.dna.real_name && R.dna.real_name != "" ? R.dna.real_name : "Unknown"]</a><li>"
 
 		if(3)
 
@@ -165,7 +165,7 @@
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:229: dat += "<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>"
 				dat += {"<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>
-					<b>Name:</b> [src.active_record.dna.real_name]<br>"}
+					<b>Name:</b> [src.active_record.dna.real_name && src.active_record.dna.real_name != "" ? src.active_record.dna.real_name : "Unknown"]<br>"}
 				// END AUTOFIX
 				var/obj/item/weapon/implant/health/H = null
 				if(src.active_record.implant)
@@ -306,7 +306,7 @@
 				src.diskette.buf.types=DNA2_BUF_UI|DNA2_BUF_UE
 			if("se")
 				src.diskette.buf.types=DNA2_BUF_SE
-		src.diskette.name = "data disk - '[src.active_record.dna.real_name]'"
+		src.diskette.name = "data disk - '[src.active_record.dna.real_name && src.active_record.dna.real_name != "" ? src.active_record.dna.real_name : "Unknown"]'"
 		src.temp = "Save \[[href_list["save_disk"]]\] successful."
 
 	else if (href_list["refresh"])
@@ -377,6 +377,12 @@
 		return
 
 	subject.dna.check_integrity()
+
+	// Borer sanity checks.
+	var/mob/living/simple_animal/borer/B=subject.has_brain_worms()
+	if(B && B.controlling)
+		// This shouldn't happen, but lolsanity.
+		subject.do_release_control(1)
 
 	var/datum/dna2/record/R = new /datum/dna2/record()
 	R.dna=subject.dna

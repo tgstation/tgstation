@@ -1,0 +1,79 @@
+<!--
+Title: Vote UI
+Used in File(s): \code\controllers\voting.dm
+--> 
+<style type='text/css'>
+	p {
+		white-space: normal;
+		word-wrap: break-word;
+	}
+	.fixedLeftWidest {
+		white-space: normal;
+		word-wrap: break-word;
+		height:100%;
+		width: 100%;
+	}
+</style>
+
+{{if data.mode != null}}
+	<div class="item">
+		<div class="itemLabel">
+			Time Left
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.time_left, 0, 60, (data.time_left >= 50) ? 'good' : (data.time_left >= 25) ? 'average' : 'bad', '<center>' + data.time_left + '</center>')}}
+		</div>
+	<div class = "item">
+		<div class="itemLabel">
+			Question
+		</div>
+		<div class="itemContentMedium">
+			<div class="statusDisplay">
+				{{:data.question}}
+			</div>
+		</div>
+	</div>
+	{{for data.choices}}
+		<div class="item">
+			<div class="itemContent">
+				{{:helper.link(value.choice + ' (' + value.votes +' votes)','circle-arrow-s',{ 'vote' : value.ID }, (data.selected_vote == value.ID) ? 'linkOn':'', 'fixedLeftWidest')}}
+			</div>
+		</div>
+	{{/for}}
+	{{if data.admin == 1}}
+		<div class = "item">
+			<div class="itemContent">
+				<center style='color:#CCCCCC;'>{{:data.admin_commands}}</center>
+			</div>
+		</div>
+	{{/if}}
+{{else}}
+	{{if data.trialmin == 1}}
+		<div class="item">
+			<div class="itemContent">
+				{{:data.restart_command}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemContent">
+				{{:data.crew_transfer}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemContent">
+				{{:data.mode_vote}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemContent">
+				{{:data.custom_vote}}
+			</div>
+		</div>
+	{{else}}
+		<div class="item">
+			<div class="itemContent">
+				Nothing for you to see here, Honk!
+			</div>
+		</div>
+	{{/if}}
+{{/if}}

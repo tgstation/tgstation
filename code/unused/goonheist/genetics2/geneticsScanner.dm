@@ -96,18 +96,16 @@ var/list/genescanner_addresses = list()
 	allow_drop()
 		return 0
 
-	examine()
-		set src in oview(7)
-
+	examine(mob/user)
 		..()
 		if (src.occupant)
-			usr << "[src.occupant.name] is inside the scanner."
+			user << "<span class='info'>[src.occupant.name] is inside the scanner.</span>"
 		else
-			usr << "There is nobody currently inside the scanner."
+			user << "<span class='info'>There is nobody currently inside the scanner.</span>"
 		if (src.locked)
-			usr << "The scanner is currently locked."
+			user << "<span class='info'>The scanner is currently locked.</span>"
 		else
-			usr << "The scanner is not currently locked."
+			user << "<span class='info'>The scanner is not currently locked.</span>"
 
 	verb/move_inside()
 		set name = "Enter"

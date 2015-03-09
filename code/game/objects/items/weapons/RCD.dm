@@ -12,7 +12,8 @@ RCD
 	opacity = 0
 	density = 0
 	anchored = 0.0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -24,155 +25,217 @@ RCD
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
+	var/max_matter = 30
 	var/working = 0
 	var/mode = 1
 	var/canRwall = 0
 	var/disabled = 0
+	var/airlock_type = /obj/machinery/door/airlock
+	var/floor_cost = 1
+	var/wall_cost = 3
+	var/airlock_cost = 3
+	var/decon_cost = 5
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is using the deconstruct function on the [src.name] on \himself! It looks like \he's  trying to commit suicide!</b>"
-		return (user.death(1))
+/obj/item/weapon/rcd/verb/change_airlock_setting()
+	set name = "Change Airlock Setting"
+	set category = "Object"
+	set src in usr
 
-	New()
-		desc = "A RCD. It currently holds [matter]/30 matter-units."
-		src.spark_system = new /datum/effect/effect/system/spark_spread
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
+	var airlockcat = input(usr, "Select the type of the airlock.") in list("Solid", "Glass")
+	switch(airlockcat)
+		if("Solid")
+			var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+			switch(airlockpaint)
+				if("Default")
+					airlock_type = /obj/machinery/door/airlock
+				if("Engineering")
+					airlock_type = /obj/machinery/door/airlock/engineering
+				if("Atmospherics")
+					airlock_type = /obj/machinery/door/airlock/atmos
+				if("Security")
+					airlock_type = /obj/machinery/door/airlock/security
+				if("Command")
+					airlock_type = /obj/machinery/door/airlock/command
+				if("Medical")
+					airlock_type = /obj/machinery/door/airlock/medical
+				if("Research")
+					airlock_type = /obj/machinery/door/airlock/research
+				if("Mining")
+					airlock_type = /obj/machinery/door/airlock/mining
+				if("Maintenance")
+					airlock_type = /obj/machinery/door/airlock/maintenance
+				if("External")
+					airlock_type = /obj/machinery/door/airlock/external
+				if("High Security")
+					airlock_type = /obj/machinery/door/airlock/highsecurity
+
+		if("Glass")
+			var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+			switch(airlockpaint)
+				if("Default")
+					airlock_type = /obj/machinery/door/airlock/glass
+				if("Engineering")
+					airlock_type = /obj/machinery/door/airlock/glass_engineering
+				if("Atmospherics")
+					airlock_type = /obj/machinery/door/airlock/glass_atmos
+				if("Security")
+					airlock_type = /obj/machinery/door/airlock/glass_security
+				if("Command")
+					airlock_type = /obj/machinery/door/airlock/glass_command
+				if("Medical")
+					airlock_type = /obj/machinery/door/airlock/glass_medical
+				if("Research")
+					airlock_type = /obj/machinery/door/airlock/glass_research
+				if("Mining")
+					airlock_type = /obj/machinery/door/airlock/glass_mining
+		else
+			airlock_type = /obj/machinery/door/airlock
+
+/obj/item/weapon/rcd/suicide_act(mob/user)
+	viewers(user) << "\red <b>[user] is using the deconstruct function on the [src.name] on \himself! It looks like \he's  trying to commit suicide!</b>"
+	return (user.death(1))
+
+/obj/item/weapon/rcd/New()
+	..()
+	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+	src.spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+	return
+
+
+/obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/weapon/rcd_ammo))
+		if((matter + 10) > max_matter)
+			user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
+			return
+		user.drop_item()
+		del(W)
+		matter += 10
+		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
+		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 		return
 
 
-	attackby(obj/item/weapon/W, mob/user)
-		..()
-		if(istype(W, /obj/item/weapon/rcd_ammo))
-			if((matter + 10) > 30)
-				user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
-				return
-			user.drop_item()
-			del(W)
-			matter += 10
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
-			desc = "A RCD. It currently holds [matter]/30 matter-units."
+/obj/item/weapon/rcd/attack_self(mob/user)
+	//Change the mode
+	playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+	switch(mode)
+		if(1)
+			mode = 2
+			user << "<span class='notice'>Changed mode to 'Airlock'</span>"
+			if(prob(20))
+				src.spark_system.start()
+			return
+		if(2)
+			mode = 3
+			user << "<span class='notice'>Changed mode to 'Deconstruct'</span>"
+			if(prob(20))
+				src.spark_system.start()
+			return
+		if(3)
+			mode = 1
+			user << "<span class='notice'>Changed mode to 'Floor & Walls'</span>"
+			if(prob(20))
+				src.spark_system.start()
 			return
 
-
-	attack_self(mob/user)
-		//Change the mode
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-		switch(mode)
-			if(1)
-				mode = 2
-				user << "<span class='notice'>Changed mode to 'Airlock'</span>"
-				if(prob(20))
-					src.spark_system.start()
-				return
-			if(2)
-				mode = 3
-				user << "<span class='notice'>Changed mode to 'Deconstruct'</span>"
-				if(prob(20))
-					src.spark_system.start()
-				return
-			if(3)
-				mode = 1
-				user << "<span class='notice'>Changed mode to 'Floor & Walls'</span>"
-				if(prob(20))
-					src.spark_system.start()
-				return
-
-	proc/activate()
-		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+/obj/item/weapon/rcd/proc/activate()
+	playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 
 
-	afterattack(atom/A, mob/user)
-		if(disabled && !isrobot(user))
+/obj/item/weapon/rcd/afterattack(atom/A, mob/user)
+	if(disabled && !isrobot(user))
+		return 0
+	if(get_dist(user,A)>1)
+		return 0
+	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
+		return 0
+	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
+		return 0
+
+	switch(mode)
+		if(1)
+			if(istype(A, /turf/space))
+				if(useResource(floor_cost, user))
+					user << "Building Floor..."
+					activate()
+					A:ChangeTurf(/turf/simulated/floor/plating/airless)
+					return 1
+				return 0
+
+			if(istype(A, /turf/simulated/floor))
+				if(checkResource(wall_cost, user))
+					user << "Building Wall ..."
+					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 20))
+						if(!useResource(wall_cost, user)) return 0
+						activate()
+						A:ChangeTurf(/turf/simulated/wall)
+						return 1
+				return 0
+
+		if(2)
+			if(checkResource(airlock_cost, user))
+				user << "Building Airlock..."
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+				if(do_after(user, 50))
+					if(!useResource(airlock_cost, user)) return 0
+					if(locate(/obj/machinery/door/airlock) in A) return 0
+					activate()
+					var/obj/machinery/door/airlock/T = new airlock_type( A )
+					T.autoclose = 1
+					return 1
+				return 0
 			return 0
-		if(get_dist(user,A)>1)
-			return 0
-		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
-			return 0
-		if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
-			return 0
 
-		switch(mode)
-			if(1)
-				if(istype(A, /turf/space))
-					if(useResource(1, user))
-						user << "Building Floor..."
+		if(3)
+			if(istype(A, /turf/simulated/wall))
+				if(istype(A, /turf/simulated/wall/r_wall) && !canRwall)
+					return 0
+				if(checkResource(decon_cost, user))
+					user << "Deconstructing Wall..."
+					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 40))
+						if(!useResource(decon_cost, user)) return 0
 						activate()
 						A:ChangeTurf(/turf/simulated/floor/plating)
 						return 1
-					return 0
-
-				if(istype(A, /turf/simulated/floor))
-					if(checkResource(3, user))
-						user << "Building Wall ..."
-						playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-						if(do_after(user, 20))
-							if(!useResource(3, user)) return 0
-							activate()
-							A:ChangeTurf(/turf/simulated/wall)
-							return 1
-					return 0
-
-			if(2)
-				if(istype(A, /turf/simulated/floor))
-					if(checkResource(10, user))
-						user << "Building Airlock..."
-						playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-						if(do_after(user, 50))
-							if(!useResource(10, user)) return 0
-							activate()
-							var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock( A )
-							T.autoclose = 1
-							return 1
-						return 0
-					return 0
-
-			if(3)
-				if(istype(A, /turf/simulated/wall))
-					if(istype(A, /turf/simulated/wall/r_wall) && !canRwall)
-						return 0
-					if(checkResource(5, user))
-						user << "Deconstructing Wall..."
-						playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-						if(do_after(user, 40))
-							if(!useResource(5, user)) return 0
-							activate()
-							A:ChangeTurf(/turf/simulated/floor/plating)
-							return 1
-					return 0
-
-				if(istype(A, /turf/simulated/floor))
-					if(checkResource(5, user))
-						user << "Deconstructing Floor..."
-						playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-						if(do_after(user, 50))
-							if(!useResource(5, user)) return 0
-							activate()
-							A:ChangeTurf(/turf/space)
-							return 1
-					return 0
-
-				if(istype(A, /obj/machinery/door/airlock))
-					if(checkResource(10, user))
-						user << "Deconstructing Airlock..."
-						playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-						if(do_after(user, 50))
-							if(!useResource(10, user)) return 0
-							activate()
-							del(A)
-							return 1
-					return	0
 				return 0
-			else
-				user << "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
+
+			if(istype(A, /turf/simulated/floor))
+				if(checkResource(decon_cost, user))
+					user << "Deconstructing Floor..."
+					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 50))
+						if(!useResource(decon_cost, user)) return 0
+						activate()
+						A:ChangeTurf(A:under_turf)
+						return 1
 				return 0
+
+			if(istype(A, /obj/machinery/door/airlock))
+				if(checkResource((decon_cost * 2), user))
+					user << "Deconstructing Airlock..."
+					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 50))
+						if(!useResource((decon_cost * 2), user)) return 0
+						activate()
+						del(A)
+						return 1
+				return	0
+			return 0
+		else
+			user << "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
+			return 0
 
 /obj/item/weapon/rcd/proc/useResource(var/amount, var/mob/user)
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "An RCD. It currently holds [matter]/30 matter-units."
+	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
@@ -202,6 +265,7 @@ RCD
 	density = 0
 	anchored = 0.0
 	origin_tech = "materials=2"
+	w_class = 2.0
 	m_amt = 30000
 	g_amt = 15000
 	w_type = RECYK_ELECTRONIC

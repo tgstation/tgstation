@@ -95,13 +95,15 @@
 				if(synd.current.client)
 					for(var/image/I in synd.current.client.images)
 						if(I.icon_state == "synd" && I.loc == synd_mind.current)
-							del(I)
+							//del(I)
+							synd.current.client.images -= I
 
 		if(synd_mind.current)
 			if(synd_mind.current.client)
 				for(var/image/I in synd_mind.current.client.images)
 					if(I.icon_state == "synd")
-						del(I)
+						//del(I)
+						synd_mind.current.client.images -= I
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -210,10 +212,21 @@
 
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), slot_shoes)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/bulletproof(synd_mob), slot_wear_suit)
+	if(!istype(synd_mob.species, /datum/species/plasmaman))
+		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/bulletproof(synd_mob), slot_wear_suit)
+	else
+		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/space/plasmaman/nuclear(synd_mob), slot_wear_suit)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/tank/plasma/plasmaman(synd_mob), slot_s_store)
+		synd_mob.equip_or_collect(new /obj/item/clothing/mask/breath/(synd_mob), slot_wear_mask)
+		synd_mob.internal = synd_mob.get_item_by_slot(slot_s_store) 
+		if (synd_mob.internals)
+			synd_mob.internals.icon_state = "internal1"
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(synd_mob), slot_glasses)
+	if(!istype(synd_mob.species, /datum/species/plasmaman))
+		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
+	else
+		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/plasmaman/nuclear(synd_mob), slot_head)
+	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/prescription(synd_mob), slot_glasses)//changed to prescription sunglasses so near-sighted players aren't screwed if there aren't any admins online
 	if(istype(synd_mob.species, /datum/species/vox))
 		synd_mob.equip_or_collect(new /obj/item/clothing/mask/breath/vox(synd_mob), slot_wear_mask)
 		synd_mob.equip_to_slot_or_del(new/obj/item/weapon/tank/nitrogen(synd_mob), slot_r_hand)

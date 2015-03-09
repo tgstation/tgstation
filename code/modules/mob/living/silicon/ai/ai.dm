@@ -19,6 +19,7 @@ var/list/ai_list = list()
 	anchored = 1 // -- TLE
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE
+	force_compose = 1
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -84,6 +85,7 @@ var/list/ai_list = list()
 	else src.laws = getLawset(src)
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
+	verbs -= /mob/living/silicon/verb/sensor_mode
 
 	aiPDA = new/obj/item/device/pda/ai(src)
 	aiPDA.owner = name
@@ -96,8 +98,7 @@ var/list/ai_list = list()
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, \
-		/mob/living/silicon/ai/proc/ai_hologram_change, \
-		/mob/living/silicon/ai/proc/toggle_camera_light)
+		/mob/living/silicon/ai/proc/ai_hologram_change)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -121,10 +122,6 @@ var/list/ai_list = list()
 	ai_list += src
 	..()
 	return
-
-/mob/living/silicon/ai/Destroy()
-	ai_list -= src
-	..()
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -153,7 +150,7 @@ var/list/ai_list = list()
 	var/icontype = ""
 	/* Nuked your hidden shit.*/
 	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
-	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Broken Output", "Triumvirate", "Triumvirate Static", "Searif", "Ravensdale", "Serithi", "Static", "Wasp", "Robert House", "Red October", "Fabulous", "Girl", "Girl Malf", "Boy", "Boy Malf", "Four-Leaf")
+	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Broken Output", "Triumvirate", "Triumvirate Static", "Searif", "Ravensdale", "Serithi", "Static", "Wasp", "Robert House", "Red October", "Fabulous", "Girl", "Girl Malf", "Boy", "Boy Malf", "Four-Leaf", "Yes Man")
 	switch(icontype)
 		if("Custom") icon_state = "[src.ckey]-ai"
 		if("Clown") icon_state = "ai-clown2"
@@ -184,6 +181,7 @@ var/list/ai_list = list()
 		if("Boy Malf") icon_state = "ai-boy-malf"
 		if("Fabulous") icon_state = "ai-fabulous"
 		if("Four-Leaf") icon_state = "ai-4chan"
+		if("Yes Man") icon_state = "yes-man"
 		else icon_state = "ai"
 	//else
 			//usr <<"You can only change your display once!"
@@ -254,7 +252,8 @@ var/list/ai_list = list()
 	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
 
 	if(confirm == "Yes")
-		call_shuttle_proc(src)
+		var/justification = stripped_input(usr, "Please input a concise justification for the shuttle call. Note that failure to properly justify a shuttle call may lead to recall or termination", "Nanotrasen Anti-Comdom Systems")
+		call_shuttle_proc(src, justification)
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)
@@ -284,6 +283,8 @@ var/list/ai_list = list()
 	return 1
 
 /mob/living/silicon/ai/blob_act()
+	if(flags & INVULNERABLE)
+		return
 	if (stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()
@@ -294,6 +295,9 @@ var/list/ai_list = list()
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	if (prob(30))
 		switch(pick(1,2))
 			if(1)
@@ -303,6 +307,9 @@ var/list/ai_list = list()
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	if(!blinded)
 		flick("flash", flash)
 
@@ -399,6 +406,8 @@ var/list/ai_list = list()
 	return
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
+	if(flags & INVULNERABLE)
+		return
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 		//Foreach goto(19)
@@ -425,7 +434,7 @@ var/list/ai_list = list()
 
 	switch(M.a_intent)
 
-		if ("help")
+		if (I_HELP)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
@@ -459,6 +468,8 @@ var/list/ai_list = list()
 
 
 /mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M as mob)
+	if(!istype(M))
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -704,7 +715,10 @@ var/list/ai_list = list()
 	apc.malfvacate()
 
 //Toggles the luminosity and applies it by re-entereing the camera.
-/mob/living/silicon/ai/proc/toggle_camera_light()
+/mob/living/silicon/ai/verb/toggle_camera_light()
+	set name = "Toggle Camera Light"
+	set desc = "Toggle internal infrared camera light"
+	set category = "AI Commands"
 	if(stat != CONSCIOUS)
 		return
 

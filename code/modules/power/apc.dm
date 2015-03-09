@@ -33,7 +33,7 @@
 
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
-// one per area, needs wire conection to power network
+// one per area, needs wire conection to power network through a terminal
 
 // controls power to devices in that area
 // may be opened to change power cell
@@ -93,13 +93,10 @@
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ
 
-/obj/machinery/power/apc/updateDialog()
-	if (stat & (BROKEN|MAINT))
-		return
-	..()
+	var/is_critical = 0 // Endgame scenarios will not destroy this APC.
 
-/obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
-	..()
+/obj/machinery/power/apc/New(loc, var/ndir, var/building=0)
+	..(loc)
 	wires = new(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
@@ -115,28 +112,15 @@
 		pixel_x = (src.tdir == 4 ? 24 : -24)
 		pixel_y = 0
 
-	switch (isnull(areaMaster))
-		if (0)
-			name = "[areaMaster.name] APC"
-		if (1) // Mapping issue.
-			log_admin("APC tried to spawn in a location without an area. [formatJumpTo(get_turf(src))]")
-
 	if (building==0)
 		init()
 	else
 		opened = 1
 		operating = 0
 		stat |= MAINT
-		src.update_icon()
-		spawn(5)
-			src.update()
 
-/obj/machinery/power/apc/proc/make_terminal()
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(src.loc)
-	terminal.dir = tdir
-	terminal.master = src
+	if(ticker)
+		initialize()
 
 /obj/machinery/power/apc/proc/init()
 	has_electronics = 2 //installed and secured
@@ -146,39 +130,46 @@
 		cell.maxcharge = cell_type	// cell_type is maximum charge (old default was 1000 or 2500 (values one and two respectively)
 		cell.charge = start_charge * cell.maxcharge / 100.0 		// (convert percentage to actual value)
 
-	name = "[areaMaster.name] APC"
-	update_icon()
-
 	make_terminal()
 
+/obj/machinery/power/apc/proc/make_terminal()
+	// create a terminal object at the same position as original turf loc
+	// wires will attach to this
+	terminal = new/obj/machinery/power/terminal(src.loc)
+	terminal.dir = tdir
+	terminal.master = src
+
+/obj/machinery/power/apc/initialize()
+	..()
+
+	name = "[areaMaster.name] APC"
+
+	update_icon()
+
 	spawn(5)
-		src.update()
+		update()
 
-/obj/machinery/power/apc/examine()
-	set src in oview(1)
-
-	if(usr /*&& !usr.stat*/)
-		..()
-		if(stat & BROKEN)
-			usr << "Looks broken."
-			return
-		if(opened)
-			if(has_electronics && terminal)
-				usr << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
-			else if (!has_electronics && terminal)
-				usr << "There are some wires but no any electronics."
-			else if (has_electronics && !terminal)
-				usr << "Electronics installed but not wired."
-			else /* if (!has_electronics && !terminal) */
-				usr << "There is no electronics nor connected wires."
-
+/obj/machinery/power/apc/examine(mob/user)
+	..()
+	if(stat & BROKEN)
+		user << "Looks broken."
+		return
+	if(opened)
+		if(has_electronics && terminal)
+			user << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
+		else if (!has_electronics && terminal)
+			user << "There are some wires but no any electronics."
+		else if (has_electronics && !terminal)
+			user << "Electronics installed but not wired."
+		else /* if (!has_electronics && !terminal) */
+			user << "There is no electronics nor connected wires."
+	else
+		if (stat & MAINT)
+			user << "The cover is closed. Something wrong with it: it doesn't work."
+		else if (malfhack)
+			user << "The cover is broken. It may be hard to force it open."
 		else
-			if (stat & MAINT)
-				usr << "The cover is closed. Something wrong with it: it doesn't work."
-			else if (malfhack)
-				usr << "The cover is broken. It may be hard to force it open."
-			else
-				usr << "The cover is closed."
+			user << "The cover is closed."
 
 /obj/machinery/power/apc/update_icon()
 	if (!status_overlays)
@@ -467,18 +458,18 @@
 					update_icon()
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
-	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
+	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
 			user << "\red You must remove the floor plating in front of the APC first."
 			return
-		var/obj/item/weapon/cable_coil/C = W
+		var/obj/item/stack/cable_coil/C = W
 		if(C.amount < 10)
 			user << "\red You need more wires."
 			return
 		user << "You start adding cables to the APC frame..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20) && C.amount >= 10)
-			var/turf/T = get_turf_loc(src)
+			var/turf/T = get_turf(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -503,7 +494,7 @@
 				s.set_up(5, 1, src)
 				s.start()
 				return
-			new /obj/item/weapon/cable_coil(loc,10)
+			new /obj/item/stack/cable_coil(loc,10)
 			user.visible_message(\
 				"\red [user.name] cut the cables and dismantled the power terminal.",\
 				"You cut the cables and dismantle the power terminal.")
@@ -528,20 +519,21 @@
 		if(do_after(user, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
-				new /obj/item/stack/sheet/metal(loc)
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+				M.amount = 1
 				user.visible_message(\
 					"\red [src] has been cut apart by [user.name] with the weldingtool.",\
 					"You disassembled the broken APC frame.",\
 					"\red You hear welding.")
 			else
-				new /obj/item/apc_frame(loc)
+				new /obj/item/mounted/frame/apc_frame(loc)
 				user.visible_message(\
 					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
 					"You cut the APC frame from the wall.",\
 					"\red You hear welding.")
-			del(src)
+			qdel(src)
 			return
-	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
+	else if (istype(W, /obj/item/mounted/frame/apc_frame) && opened && emagged)
 		emagged = 0
 		if (opened==2)
 			opened = 1
@@ -550,7 +542,7 @@
 			"You replace the damaged APC frontal panel with a new one.")
 		del(W)
 		update_icon()
-	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
+	else if (istype(W, /obj/item/mounted/frame/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
 			user << "You cannot repair this APC until you remove the electronics still inside."
 			return
@@ -602,7 +594,7 @@
 	if(!isobserver(user))
 		src.add_fingerprint(user)
 		if(usr == user && opened)
-			if(cell)
+			if(cell && get_dist(src,user)<=1)
 				if(issilicon(user) && !isMoMMI(user)) // MoMMIs can hold one item in their tool slot.
 					cell.loc=src.loc // Drop it, whoops.
 				else
@@ -625,13 +617,12 @@
 				call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
 				return
 	// do APC interaction
-	user.set_machine(src)
 	src.interact(user)
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(!user)
 		return
-	user.changeNext_move(8)
+	user.delayNextAttack(8)
 	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
 	playsound(get_turf(src), 'sound/weapons/slash.ogg', 100, 1)
 
@@ -652,14 +643,16 @@
 
 
 /obj/machinery/power/apc/interact(mob/user)
-	if(!user)
+	if (!user)
 		return
 
-	if(wiresexposed)
+	if (wiresexposed)
 		wires.Interact(user)
 
-	return ui_interact(user)
+	if (stat & (BROKEN | MAINT | EMPED))
+		return
 
+	ui_interact(user)
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
@@ -823,10 +816,15 @@
 /obj/machinery/power/apc/Topic(href, href_list)
 	if(..())
 		return 0
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(!can_use(usr, 1))
 		return 0
-
+	if(!istype(usr, /mob/living/silicon) && locked)
+	// Shouldn't happen, this is here to prevent href exploits
+		usr << "You must unlock the panel to use this!"
+		return 1
 	if (href_list["lock"])
 		coverlocked = !coverlocked
 
@@ -871,7 +869,7 @@
 			malfai.malfhack = src
 			malfai.malfhacking = 1
 			sleep(600)
-			if(src)
+			if(src && malfai)
 				if (!src.aidisabled)
 					malfai.malfhack = null
 					malfai.malfhacking = 0
@@ -1001,7 +999,7 @@
 
 /obj/machinery/power/apc/add_load(var/amount)
 	if(terminal && terminal.powernet)
-		terminal.powernet.newload += amount
+		terminal.powernet.load += amount
 
 /obj/machinery/power/apc/avail()
 	if(terminal)
@@ -1027,8 +1025,11 @@
 	area.calc_lighting() */
 
 	lastused_light = areaMaster.usage(LIGHT)
+	lastused_light += areaMaster.usage(STATIC_LIGHT)
 	lastused_equip = areaMaster.usage(EQUIP)
+	lastused_light += areaMaster.usage(STATIC_EQUIP)
 	lastused_environ = areaMaster.usage(ENVIRON)
+	lastused_light += areaMaster.usage(STATIC_ENVIRON)
 	areaMaster.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
@@ -1048,32 +1049,26 @@
 	else
 		main_status = 2
 
-	var/perapc = 0
-	if(terminal && terminal.powernet)
-		perapc = terminal.powernet.perapc
-
 	//if(debug)
 	//	world.log << "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]"
 
 	if(cell && !shorted)
 
-		// draw power from cell as before
-
+		// draw power from cell as before to power the area
 		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
-		if(excess > 0 || perapc > lastused_total)		// if power excess, or enough anyway, recharge the cell
-														// by the same amount just used
+		if(excess > lastused_total) // if power excess recharge the cell
+									// by the same amount just used
 			cell.give(cellused)
 			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
 
 
 		else		// no excess, and not enough per-apc
 
-			if( (cell.charge/CELLRATE+perapc) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-
-				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * perapc)	//recharge with what we can
-				add_load(perapc)		// so draw what we can from the grid
+			if((cell.charge / CELLRATE + excess) >= lastused_total)					// can we draw enough from cell+grid to cover last usage?
+				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * excess)	//recharge with what we can
+				add_load(excess)		// so draw what we can from the grid
 				charging = 0
 
 			else	// not enough power available to run the last tick!
@@ -1093,39 +1088,38 @@
 		else if(longtermpower > -10)
 			longtermpower -= 2
 
+
 		if(cell.charge <= 0)					// zero charge, turn all off
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
-			areaMaster.poweralert(0, src)
+			if(areaMaster.poweralm)
+				areaMaster.poweralert(0, src)
 		else if(cell.percent() < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
-			areaMaster.poweralert(0, src)
+			if(areaMaster.poweralm)
+				areaMaster.poweralert(0, src)
 		else if(cell.percent() < 30 && longtermpower < 0)			// <30%, turn off equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			areaMaster.poweralert(0, src)
+			if(areaMaster.poweralm)
+				areaMaster.poweralert(0, src)
 		else									// otherwise all can be on
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			areaMaster.poweralert(1, src)
-			if(cell.percent() > 75)
+			if(cell.percent() > 75 && !areaMaster.poweralm)
 				areaMaster.poweralert(1, src)
 
 		// now trickle-charge the cell
 
 		if(chargemode && charging == 1 && operating)
 			if(excess > 0)		// check to make sure we have enough to charge
-				// Max charge is perapc share, capped to cell capacity, or % per second constant (Whichever is smallest)
-/*				var/ch = min(perapc, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
-				add_load(ch) // Removes the power we're taking from the grid
-				cell.give(ch) // actually recharge the cell
-*/
-				var/ch = min(perapc*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*CHARGELEVEL))
+				// Max charge is capped to % per second constant
+				var/ch = min(excess * CELLRATE, cell.maxcharge * CHARGELEVEL)
 				add_load(ch/CELLRATE) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
@@ -1134,8 +1128,8 @@
 				chargecount = 0
 
 		// show cell as fully charged if so
-
 		if(cell.charge >= cell.maxcharge)
+			cell.charge = cell.maxcharge
 			charging = 2
 
 		if(chargemode)

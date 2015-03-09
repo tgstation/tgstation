@@ -16,8 +16,11 @@
 		return
 
 	var/prints=""
+
 	if (fingerprintshidden)
-		prints=", all touchers: "+fingerprintshidden
+		prints=", all touchers: "
+		for(var/line in fingerprintshidden)
+			prints += ",[line] "
 
 	log_admin("New singularity made[prints]. Last touched by [fingerprintslast].")
 	message_admins("New singularity made[prints]. Last touched by [fingerprintslast].")

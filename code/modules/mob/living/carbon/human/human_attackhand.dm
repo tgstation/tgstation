@@ -1,5 +1,5 @@
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M as mob)
-	//M.changeNext_move(10)
+	//M.delayNextAttack(10)
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
@@ -21,7 +21,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == I_HURT)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
@@ -71,17 +71,17 @@
 
 
 	switch(M.a_intent)
-		if("help")
+		if(I_HELP)
 			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
 				return 1
 //			if(M.health < -75)	return 0
 
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "\blue <B>Remove your mask!</B>"
+			if(M.check_body_part_coverage(MOUTH))
+				M << "<span class='notice'><B>Remove your [M.get_body_part_coverage(MOUTH)]!</B></span>"
 				return 0
-			if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "\blue <B>Remove his mask!</B>"
+			if(src.check_body_part_coverage(MOUTH))
+				M << "<span class='notice'><B>Remove his [src.get_body_part_coverage(MOUTH)]!</B></span>"
 				return 0
 
 			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
@@ -95,7 +95,7 @@
 				O.process()
 			return 1
 
-		if("grab")
+		if(I_GRAB)
 			if(M == src || anchored)
 				return 0
 			if(w_uniform)
@@ -115,18 +115,18 @@
 			visible_message("\red [M] has grabbed [src] passively!")
 			return 1
 
-		if("hurt")
+		if(I_HURT)
 			//Vampire code
 			if(M.zone_sel && M.zone_sel.selecting == "head" && src != M)
 				if(M.mind && M.mind.vampire && (M.mind in ticker.mode.vampires) && !M.mind.vampire.draining)
-					if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-						M << "\red Remove their mask!"
+					if(src.check_body_part_coverage(MOUTH))
+						M << "<span class='warning'>Remove their mask!</span>"
 						return 0
-					if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-						M << "\red Remove your mask!"
+					if(M.check_body_part_coverage(MOUTH))
+						M << "<span class='warning'>Remove your mask!</span>"
 						return 0
 					if(mind && mind.vampire && (mind in ticker.mode.vampires))
-						M << "\red Your fangs fail to pierce [src.name]'s cold flesh"
+						M << "<span class='warning'>Your fangs fail to pierce [src.name]'s cold flesh.</span>"
 						return 0
 					//we're good to suck the blood, blaah
 					M.handle_bloodsucking(src)
@@ -213,7 +213,7 @@
 				src.throw_at(target,100,M.species.punch_throw_speed)
 
 
-		if("disarm")
+		if(I_DISARM)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 
@@ -241,7 +241,7 @@
 					for(var/turf/T in view())
 						turfs += T
 					var/turf/target = pick(turfs)
-					return W.afterattack(target,src)
+					return W.afterattack(target,src, "struggle" = 1)
 
 			var/randn = rand(1, 100)
 			if (randn <= 25)

@@ -293,7 +293,7 @@
 	if(!silent)
 		var/obj/oldobj = obj
 		visible_message("The [oldobj.name] fades away!")
-	del(obj)
+	qdel(obj)
 
 /obj/machinery/computer/HolodeckControl/proc/checkInteg(var/area/A)
 	for(var/turf/T in A)
@@ -346,7 +346,7 @@
 		derez(item)
 
 	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
-		del(B)
+		returnToPool(B)
 
 	for(var/mob/living/simple_animal/hostile/carp/holocarp/holocarp in linkedholodeck)
 		del(holocarp)
@@ -452,13 +452,13 @@
 /obj/structure/table/holotable/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
+		if(G.state<GRAB_AGGRESSIVE)
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
 		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
-		del(W)
+		qdel(W)
 		return
 
 	if (istype(W, /obj/item/weapon/wrench))
@@ -507,15 +507,17 @@
 	throw_range = 5
 	throwforce = 0
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 	var/active = 0
 
 /obj/item/weapon/holo/esword/green
 	New()
+		..()
 		_color = "green"
 
 /obj/item/weapon/holo/esword/red
 	New()
+		..()
 		_color = "red"
 
 /obj/item/weapon/holo/esword/IsShield()
@@ -527,6 +529,7 @@
 	..()
 
 /obj/item/weapon/holo/esword/New()
+	AddToProfiler()
 	_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
@@ -568,13 +571,13 @@
 /obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
+		if(G.state<GRAB_AGGRESSIVE)
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
 		visible_message("\red [G.assailant] dunks [G.affecting] into the [src]!", 3)
-		del(W)
+		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
 		user.drop_item(src)
@@ -633,7 +636,7 @@
 
 	currentarea = get_area(src.loc)
 	if(!currentarea)
-		del(src)
+		qdel(src)
 
 	if(eventstarted)
 		usr << "The event has already begun!"
@@ -664,7 +667,7 @@
 	eventstarted = 1
 
 	for(var/obj/structure/holowindow/W in currentarea)
-		del(W)
+		qdel(W)
 
 	for(var/mob/M in currentarea)
 		M << "FIGHT!"

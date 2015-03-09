@@ -1,7 +1,4 @@
 //Machinery that gets deleted by Nar-Sie and isn't replaced with cult structures
-/obj/machinery/bot/cultify()
-	qdel(src)
-
 /obj/machinery/camera/cultify()
 	qdel(src)
 
@@ -21,9 +18,6 @@
 	qdel(src)
 
 /obj/machinery/hologram/cultify()
-	qdel(src)
-
-/obj/machinery/atmospherics/cultify()
 	qdel(src)
 
 /obj/machinery/status_display/cultify()

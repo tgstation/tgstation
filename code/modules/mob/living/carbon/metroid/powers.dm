@@ -178,12 +178,12 @@
 			var/mob/living/carbon/slime/adult/new_slime = new adulttype(loc)
 			new_slime.nutrition = nutrition
 			new_slime.powerlevel = max(0, powerlevel-1)
-			new_slime.a_intent = "hurt"
+			new_slime.a_intent = I_HURT
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else
 				new_slime.key = src.key
-			new_slime.universal_speak = universal_speak
+			new_slime.languages = languages
 			new_slime << "<B>You are now an adult slime.</B>"
 			del(src)
 		else
@@ -224,9 +224,8 @@
 				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
-			new_slime.a_intent = "hurt"
-			new_slime.universal_speak = universal_speak
-			new_slime.universal_understand = universal_understand
+			new_slime.a_intent = I_HURT
+			new_slime.languages = languages
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else

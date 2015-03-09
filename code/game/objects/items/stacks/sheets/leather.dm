@@ -91,9 +91,9 @@
 //Step one - dehairing.
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(	istype(W, /obj/item/weapon/kitchenknife) || \
+	if(	istype(W, /obj/item/weapon/kitchen/utensil/knife/large) || \
 		istype(W, /obj/item/weapon/kitchen/utensil/knife) || \
-		istype(W, /obj/item/weapon/twohanded/fireaxe) || \
+		istype(W, /obj/item/weapon/fireaxe) || \
 		istype(W, /obj/item/weapon/hatchet) )
 
 		//visible message on mobs is defined as visible_message(var/message, var/self_message, var/blind_message)

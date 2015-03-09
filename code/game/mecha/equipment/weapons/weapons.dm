@@ -135,7 +135,7 @@
 			M.Stun(10)
 			M.Paralyse(4)
 		else
-			M.make_jittery(500)
+			M.Jitter(500)
 		/* //else the mousetraps are useless
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M

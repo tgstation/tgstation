@@ -8,10 +8,11 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = 0
+	use_power = 1
 	idle_power_usage = 40
-	var/energy = 100
-	var/max_energy = 100
+	var/energy = 0
+	var/max_energy = 50
+	var/rechargerate = 2
 	var/amount = 30
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/recharged = 0
@@ -21,6 +22,15 @@
 	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+
+
+/*
+USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
+*/
+
+/obj/machinery/chem_dispenser/mapping
+	max_energy = 100
+	energy = 100
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -41,12 +51,29 @@
 	)
 
 	RefreshParts()
+	dispensable_reagents = sortList(dispensable_reagents)
+
+/obj/machinery/chem_dispenser/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		T += M.rating-1
+	max_energy = initial(max_energy)+(T * 50 / 4)
+
+	T = 0
+	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
+		T += Ma.rating-1
+	rechargerate = initial(rechargerate) + (T / 2)
+
+/*
+	for(var/obj/item/weapon/stock_parts/scanning_module/Ml in component_parts)
+		T += Ml.rating
+	//Who even knows what to use the scanning module for
+*/
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
-	var/addenergy = 2
 	var/oldenergy = energy
-	energy = min(energy + addenergy, max_energy)
+	energy = min(energy + rechargerate, max_energy)
 	if(energy != oldenergy)
 		use_power(3000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 		nanomanager.update_uis(src) // update all UIs attached to src
@@ -104,7 +131,7 @@
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER)) return
 	if((user.stat && !isobserver(user)) || user.restrained()) return
-
+	if(!chemical_reagents_list || !chemical_reagents_list.len) return
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["amount"] = amount
@@ -134,19 +161,23 @@
 		if(temp)
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
-
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 370, 605)
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 400, 610)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
 		ui.open()
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
+	if(..())
+		return
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(stat & (NOPOWER|BROKEN))
 		return 0 // don't update UIs attached to this object
 
@@ -168,6 +199,13 @@
 		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
 			var/obj/item/weapon/reagent_containers/glass/B = src.beaker
 			var/datum/reagents/R = B.reagents
+			if(!R)
+				if(!B.gcDestroyed)
+					B.reagents = new/datum/reagents(B.volume)
+					R = B.reagents
+				else
+					del(B)
+					return
 			var/space = R.maximum_volume - R.total_volume
 
 			R.add_reagent(href_list["dispense"], min(amount, energy * 10, space))
@@ -341,6 +379,8 @@
 		return 1
 
 /obj/machinery/chem_master/Topic(href, href_list)
+	if(..())
+		return
 	if(stat & (BROKEN|NOPOWER)) 		return
 	if(usr.stat || usr.restrained())	return
 	if(!in_range(src, usr)) 			return
@@ -433,7 +473,8 @@
 			if (!count) return
 			var/amount_per_pill = reagents.total_volume/count
 			if (amount_per_pill > 50) amount_per_pill = 50
-			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([amount_per_pill] units)"))
+			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([amount_per_pill] units)") as null|text)
+			if(!name) return
 			while (count--)
 				var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 				if(!name) name = "[reagents.get_master_reagent_name()] ([amount_per_pill] units)"
@@ -454,7 +495,8 @@
 				if (href_list["createbottle_multiple"])
 					count = isgoodnumber(input("Select the number of bottles to make.", 10, count) as num)
 				if (count > 4) count = 4
-				var/amount_per_bottle = reagents.total_volume/count
+				if (count < 1) count = 1
+				var/amount_per_bottle = reagents.total_volume > 0 ? reagents.total_volume/count : 0
 				if (amount_per_bottle > 30) amount_per_bottle = 30
 				while (count--)
 					var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
@@ -613,7 +655,7 @@
 	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
 	if(reagents.total_volume)
 		overlay.icon += mix_color_from_reagents(reagents.reagent_list)
-	overlays.Cut()
+	overlays.len = 0
 	overlays += overlay
 
 /obj/machinery/chem_master/on_reagent_change()
@@ -916,9 +958,12 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK | EJECTNOTDEL
+	pass_flags = PASSTABLE
 	var/inuse = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/limit = 10
+	var/speed_multiplier = 1
 	var/list/blend_items = list (
 
 		//Sheets
@@ -940,9 +985,11 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = list("plasticide" = 5),
 
+		/obj/item/seeds = list("blackpepper" = 5),
+
 
 		//archaeology!
-		/obj/item/weapon/rocksliver = list("ground_rock" = 50),
+		/obj/item/weapon/rocksliver = list("ground_rock" = 30),
 
 		//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 		/obj/item/weapon/reagent_containers/pill = list(),
@@ -967,8 +1014,6 @@
 
 	var/list/holdingitems = list()
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY
-
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
@@ -988,6 +1033,17 @@
 	RefreshParts()
 
 	return
+
+/obj/machinery/reagentgrinder/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		T += M.rating-1
+	limit = initial(limit)+(T * 5)
+
+	T = 0
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		T += M.rating-1
+	speed_multiplier = initial(speed_multiplier)+(T * 0.50)
 
 /obj/machinery/reagentgrinder/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))
@@ -1033,10 +1089,9 @@
 
 	//Fill machine with the plantbag!
 	if(istype(O, /obj/item/weapon/storage/bag/plants))
-
+		var/obj/item/weapon/storage/bag/B = O
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-			O.contents -= G
-			G.loc = src
+			B.remove_from_storage(G,src)
 			holdingitems += G
 			if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
 				user << "You fill the All-In-One grinder to the brim."
@@ -1067,6 +1122,9 @@
 /obj/machinery/reagentgrinder/attack_hand(mob/user as mob)
 	user.set_machine(src)
 	interact(user)
+
+/obj/machinery/reagentgrinder/attack_robot(mob/user as mob)
+	return attack_hand(user)
 
 /obj/machinery/reagentgrinder/interact(mob/user as mob) // The microwave Menu
 	var/is_chamber_empty = 0
@@ -1203,9 +1261,9 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(get_turf(src), 'sound/machines/juicer.ogg', 20, 1)
+	playsound(get_turf(src), speed_multiplier < 2 ? 'sound/machines/juicer.ogg' : 'sound/machines/juicerfast.ogg', 30, 1)
 	inuse = 1
-	spawn(50)
+	spawn(50/speed_multiplier)
 		inuse = 0
 		interact(usr)
 	//Snacks
@@ -1236,9 +1294,9 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(get_turf(src), 'sound/machines/blender.ogg', 50, 1)
+	playsound(get_turf(src), speed_multiplier < 2 ? 'sound/machines/blender.ogg' : 'sound/machines/blenderfast.ogg', 50, 1)
 	inuse = 1
-	spawn(60)
+	spawn(60/speed_multiplier)
 		inuse = 0
 		interact(usr)
 	//Snacks and Plants

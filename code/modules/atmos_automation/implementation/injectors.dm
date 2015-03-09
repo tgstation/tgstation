@@ -7,6 +7,17 @@
 	var/injector=null
 	var/state=0
 
+	Export()
+		var/list/json = ..()
+		json["injector"]=injector
+		json["state"]=state
+		return json
+
+	Import(var/list/json)
+		..(json)
+		injector = json["injector"]
+		state = text2num(json["state"])
+
 	process()
 		if(injector)
 			parent.send_signal(list ("tag" = injector, "power"=state))
@@ -33,6 +44,17 @@
 	name = "Injector: Rate"
 	var/injector=null
 	var/rate=0
+
+	Export()
+		var/list/json = ..()
+		json["injector"]=injector
+		json["rate"]=rate
+		return json
+
+	Import(var/list/json)
+		..(json)
+		injector = json["injector"]
+		rate = text2num(json["rate"])
 
 	process()
 		if(injector)

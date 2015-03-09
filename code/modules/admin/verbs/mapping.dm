@@ -214,6 +214,7 @@ var/intercom_range_display_status = 0
 	feedback_add_details("admin_verb","mOBJZ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_all()
+	set background = 1
 	set category = "Mapping"
 	set name = "Count Objects All"
 
@@ -237,7 +238,7 @@ var/intercom_range_display_status = 0
 				line += " no.[i+10+j]@\[[temp_atom.x], [temp_atom.y], [temp_atom.z]\]; "
 		world << line*/
 
-	world << "There are [count] objects of type [type_path] in the game world"
+	usr << "There are [count] objects of type [type_path] in the game world"
 	feedback_add_details("admin_verb","mOBJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/check_sim_unsim()

@@ -180,7 +180,7 @@
 
 	Destroy()
 		// deletes its own cover with it
-		del(cover)
+		qdel(cover)
 		..()
 
 
@@ -311,11 +311,13 @@ Status: []<BR>"},
 					Gun.power_supply.charge=gun_charge
 					Gun.update_icon()
 					lasercolor = null
-				if(prob(50)) new /obj/item/stack/sheet/metal( loc, rand(1,4))
+				if(prob(50))
+					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal,loc)
+					M.amount = rand(1,4)
 				if(prob(50)) new /obj/item/device/assembly/prox_sensor(locate(x,y,z))
 			else
 				user << "You remove the turret but did not manage to salvage anything."
-			del(src)
+			qdel(src)
 		return
 
 	..()
@@ -336,7 +338,7 @@ Status: []<BR>"},
 			user << "You unsecure the exterior bolts on the turret."
 			icon_state = "turretCover"
 			invisibility = 0
-			del(cover) // deletes the cover, and the turret instance itself becomes its own cover.
+			qdel(cover) // deletes the cover, and the turret instance itself becomes its own cover.
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		// Behavior lock/unlock mangement
@@ -347,7 +349,7 @@ Status: []<BR>"},
 			user << "\red Access denied."
 
 	else
-		user.changeNext_move(10)
+		user.delayNextAttack(10)
 		// if the turret was attacked with the intention of harming it:
 		src.health -= W.force * 0.5
 		if (src.health <= 0)
@@ -429,7 +431,7 @@ Status: []<BR>"},
 
 	if(src.cover==null && anchored) // if it has no cover and is anchored
 		if (stat & BROKEN) // if the turret is borked
-			del(cover) // delete its cover, assuming it has one. Workaround for a pesky little bug
+			qdel(cover) // delete its cover, assuming it has one. Workaround for a pesky little bug
 		else
 
 			src.cover = new /obj/machinery/porta_turret_cover(src.loc) // if the turret has no cover and is anchored, give it a cover
@@ -705,8 +707,10 @@ Status: []<BR>"},
 			else if(istype(W, /obj/item/weapon/crowbar) && !anchored)
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 75, 1)
 				user << "You dismantle the turret construction."
-				new /obj/item/stack/sheet/metal( loc, 5)
-				del(src)
+				//new /obj/item/stack/sheet/metal( loc, 5)
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, loc)
+				M.amount = 5
+				qdel(src)
 				return
 
 		if(1)
@@ -717,7 +721,7 @@ Status: []<BR>"},
 					W:amount -= 2
 					icon_state = "turret_frame2"
 					if(W:amount <= 0)
-						del(W)
+						returnToPool(W)
 					return
 
 			else if(istype(W, /obj/item/weapon/wrench))
@@ -747,7 +751,9 @@ Status: []<BR>"},
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 1
 					user << "You remove the turret's interior metal armor."
-					new /obj/item/stack/sheet/metal( loc, 2)
+					//new /obj/item/stack/sheet/metal( loc, 2)
+					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal,loc)
+					M.amount = 2
 					return
 
 
@@ -759,7 +765,7 @@ Status: []<BR>"},
 				gun_charge = E.power_supply.charge // the gun's charge is stored in src.gun_charge
 				user << "\blue You add \the [W] to the turret."
 				build_step = 4
-				del(W) // delete the gun :(
+				qdel(W) // delete the gun :(
 				return
 
 			else if(istype(W, /obj/item/weapon/wrench))
@@ -772,7 +778,7 @@ Status: []<BR>"},
 			if(isprox(W))
 				build_step = 5
 				user << "\blue You add the prox sensor to the turret."
-				del(W)
+				qdel(W)
 				return
 
 			// attack_hand() removes the gun
@@ -793,7 +799,7 @@ Status: []<BR>"},
 					build_step = 7
 					W:amount -= 2
 					if(W:amount <= 0)
-						del(W)
+						qdel(W)
 					return
 
 			else if(istype(W, /obj/item/weapon/screwdriver))
@@ -825,12 +831,14 @@ Status: []<BR>"},
 //					Turret.cover.Parent_Turret=Turret
 //					Turret.cover.name = finish_name
 					Turret.New()
-					del(src)
+					qdel(src)
 
 			else if(istype(W, /obj/item/weapon/crowbar))
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 75, 1)
 				user << "You pry off the turret's exterior armor."
-				new /obj/item/stack/sheet/metal( loc, 2)
+				//new /obj/item/stack/sheet/metal( loc, 2)
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal,loc)
+				M.amount = 2
 				build_step = 6
 				return
 
@@ -1032,7 +1040,7 @@ Status: []<BR>"},
 			user << "You unsecure the exterior bolts on the turret."
 			Parent_Turret.icon_state = "turretCover"
 			Parent_Turret.invisibility = 0
-			del(src)
+			qdel(src)
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (Parent_Turret.allowed(user))

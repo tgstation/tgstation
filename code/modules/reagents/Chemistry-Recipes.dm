@@ -170,11 +170,20 @@ datum
 		//	required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1)
 		//	result_amount = 1
 
-		water //I can't believe we never had this.
+/* You attempt to make water by mixing the ingredients for Hydroperoxyl, but you get a big, whopping sum of nothing!
+		water //Keeping this commented out for posterity.
 			name = "Water"
 			id = "water"
-			result = null
-			required_reagents = list("oxygen" = 2, "hydrogen" = 1)
+			result = null //I can't believe it's not water!
+			required_reagents = list("oxygen" = 2, "hydrogen" = 1) //And there goes the atmosphere, thanks greenhouse gases!
+			result_amount = 1
+*/
+
+		water
+			name = "Water"
+			id = "water"
+			result = "water"
+			required_reagents = list("hydrogen" = 2, "oxygen" = 1)
 			result_amount = 1
 
 		thermite
@@ -427,7 +436,7 @@ datum
 
 				var/eye_safety = 0
 
-				for(var/mob/living/carbon/M in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/living/carbon/M in viewers(get_turf(holder.my_atom), null))
 					if(iscarbon(M))
 						eye_safety = M.eyecheck()
 
@@ -1044,7 +1053,7 @@ datum
 				else
 					holder.my_atom.visible_message("<span class='rose'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
 				var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
-				S.loc = get_turf_loc(holder.my_atom)
+				S.loc = get_turf(holder.my_atom)
 
 		slimemonkey
 			name = "Slime Monkey"
@@ -1057,7 +1066,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				for(var/i = 1, i <= 3, i++)
 					var /obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
-					M.loc = get_turf_loc(holder.my_atom)
+					M.loc = get_turf(holder.my_atom)
 
 //Green
 		slimemutate
@@ -1079,12 +1088,11 @@ datum
 			required_container = /obj/item/slime_extract/metal
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
-				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(holder.my_atom))
 				M.amount = 15
-				M.loc = get_turf_loc(holder.my_atom)
 				var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
 				P.amount = 5
-				P.loc = get_turf_loc(holder.my_atom)
+				P.loc = get_turf(holder.my_atom)
 
 //Gold
 		slimecrit
@@ -1138,9 +1146,9 @@ datum
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
 
-				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
@@ -1155,7 +1163,7 @@ datum
 					var/chosen = pick(critters)
 					var/mob/living/simple_animal/hostile/C = new chosen
 					C.faction = "slimesummon"
-					C.loc = get_turf_loc(holder.my_atom)
+					C.loc = get_turf(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)
 							step(C, pick(NORTH,SOUTH,EAST,WEST))
@@ -1212,7 +1220,7 @@ datum
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
@@ -1250,7 +1258,7 @@ datum
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
@@ -1303,7 +1311,7 @@ datum
 
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 					if (istype(O, /mob/living/carbon/human/))
 						var /mob/living/carbon/human/H = O
 						if((H.eyecheck() <= 0)&&(!istype(H.glasses, /obj/item/clothing/glasses/science)))
@@ -1877,7 +1885,7 @@ datum
 			name = "Patron"
 			id = "patron"
 			result = "patron"
-			required_reagents = list("tequilla" = 10, "silver" = 1)
+			required_reagents = list("tequila" = 10, "silver" = 1)
 			result_amount = 10
 
 		bilk
@@ -2022,14 +2030,14 @@ datum
 			name = "Brave Bull"
 			id = "bravebull"
 			result = "bravebull"
-			required_reagents = list("tequilla" = 2, "kahlua" = 1)
+			required_reagents = list("tequila" = 2, "kahlua" = 1)
 			result_amount = 3
 
-		tequilla_sunrise
-			name = "Tequilla Sunrise"
-			id = "tequillasunrise"
-			result = "tequillasunrise"
-			required_reagents = list("tequilla" = 2, "orangejuice" = 1)
+		tequila_sunrise
+			name = "Tequila Sunrise"
+			id = "tequilasunrise"
+			result = "tequilasunrise"
+			required_reagents = list("tequila" = 2, "orangejuice" = 1)
 			result_amount = 3
 
 		toxins_special
@@ -2099,14 +2107,14 @@ datum
 			name = "Margarita"
 			id = "margarita"
 			result = "margarita"
-			required_reagents = list("tequilla" = 2, "limejuice" = 1)
+			required_reagents = list("tequila" = 2, "limejuice" = 1)
 			result_amount = 3
 
 		longislandicedtea
 			name = "Long Island Iced Tea"
 			id = "longislandicedtea"
 			result = "longislandicedtea"
-			required_reagents = list("vodka" = 1, "gin" = 1, "tequilla" = 1, "cubalibre" = 1)
+			required_reagents = list("vodka" = 1, "gin" = 1, "tequila" = 1, "cubalibre" = 1)
 			result_amount = 4
 
 		threemileisland

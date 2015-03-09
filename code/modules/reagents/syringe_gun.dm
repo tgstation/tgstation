@@ -6,7 +6,8 @@
 	desc = "A spring loaded rifle designed to fit syringes, designed to incapacitate unruly patients from a distance."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
-	item_state = "syringegun"
+	item_state = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	w_class = 3.0
 	throw_speed = 2
 	throw_range = 10
@@ -16,11 +17,9 @@
 	m_amt = 2000
 	w_type = RECYK_METAL
 
-/obj/item/weapon/gun/syringe/examine()
-	set src in view()
+/obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "\blue [syringes.len] / [max_syringes] syringes."
+	user << "<span class='info'>[syringes.len] / [max_syringes] syringes.</span>"
 
 /obj/item/weapon/gun/syringe/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
@@ -30,12 +29,12 @@
 				user.drop_item()
 				I.loc = src
 				syringes += I
-				user << "\blue You put the syringe in [src]."
-				user << "\blue [syringes.len] / [max_syringes] syringes."
+				user << "<span class='notice'>You put the syringe in [src].</span>"
+				user << "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>"
 			else
-				usr << "\red [src] cannot hold more syringes."
+				usr << "<span class='warning'>[src] cannot hold more syringes.</span>"
 		else
-			usr << "\red This syringe is broken!"
+			usr << "<span class='warning'>This syringe is broken!</span>"
 
 
 /obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
@@ -48,11 +47,11 @@
 /obj/item/weapon/gun/syringe/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)
 	return 1		//SHOOT AND LET THE GOD GUIDE IT (probably will hit a wall anyway)
 
-/obj/item/weapon/gun/syringe/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/gun/syringe/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0)
 	if(syringes.len)
 		spawn(0) fire_syringe(target,user)
 	else
-		usr << "\red [src] is empty."
+		usr << "<span class='warning'>[src] is empty.</span>"
 
 /obj/item/weapon/gun/syringe/proc/fire_syringe(atom/target, mob/user)
 	if (locate (/obj/structure/table, src.loc))

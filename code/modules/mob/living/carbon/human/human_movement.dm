@@ -97,3 +97,11 @@
 
 	prob_slip = round(prob_slip)
 	return(prob_slip)
+
+/mob/living/carbon/human/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..(NewLoc, Dir, step_x, step_y)
+
+	if(.)
+		if(shoes && istype(shoes, /obj/item/clothing/shoes))
+			var/obj/item/clothing/shoes/S = shoes
+			S.step_action()

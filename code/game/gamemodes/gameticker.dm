@@ -7,6 +7,7 @@ var/global/datum/controller/gameticker/ticker
 
 
 /datum/controller/gameticker
+	var/remaining_time = 0
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_PREGAME
 
@@ -39,6 +40,8 @@ var/global/datum/controller/gameticker/ticker
 	// Hack
 	var/obj/machinery/media/jukebox/superjuke/thematic/theme = null
 
+#define LOBBY_TICKING 1
+#define LOBBY_TICKING_RESTARTED 2
 /datum/controller/gameticker/proc/pregame()
 	login_music = pick(\
 	'sound/music/space.ogg',\
@@ -54,25 +57,33 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/moonbaseoddity.ogg',\
 	'sound/music/whatisthissong.ogg')
 	do
-		pregame_timeleft = 300
+		var/delay_timetotal = 3000 //actually 5 minutes or incase this is changed from 3000, (time_in_seconds * 10)
+		pregame_timeleft = world.timeofday + delay_timetotal
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
-		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
+		world << "Please, setup your character and select ready. Game will start in [(pregame_timeleft - world.timeofday) / 10] seconds"
 		while(current_state == GAME_STATE_PREGAME)
 			for(var/i=0, i<10, i++)
 				sleep(1)
 				vote.process()
 				watchdog.check_for_update()
-				if(watchdog.waiting)
-					world << "<span class='notice'>Server update detected, restarting momentarily.</span>"
-					watchdog.signal_ready()
-					return
-			if(going)
-				pregame_timeleft--
+				//if(watchdog.waiting)
+					//world << "<span class='notice'>Server update detected, restarting momentarily.</span>"
+					//watchdog.signal_ready()
+					//return
+			if (world.timeofday < (863800 -  delay_timetotal) &&  pregame_timeleft > 863950) // having a remaining time > the max of time of day is bad....
+				pregame_timeleft -= 864000
+			if(!going && !remaining_time)
+				remaining_time = pregame_timeleft - world.timeofday
+			if(going == LOBBY_TICKING_RESTARTED)
+				pregame_timeleft = world.timeofday + remaining_time
+				going = LOBBY_TICKING
+				remaining_time = 0
 
-			if(pregame_timeleft <= 0)
+			if(going && world.timeofday >= pregame_timeleft)
 				current_state = GAME_STATE_SETTING_UP
 	while (!setup())
-
+#undef LOBBY_TICKING
+#undef LOBBY_TICKING_RESTARTED
 /datum/controller/gameticker/proc/StartThematic(var/playlist)
 	if(!theme)
 		theme = new(locate(1,1,CENTCOMM_Z))
@@ -137,13 +148,6 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode.announce()
 
-	//setup the money accounts
-	if(!centcomm_account_db)
-		for(var/obj/machinery/account_database/check_db in machines)
-			if(check_db.z == 2)
-				centcomm_account_db = check_db
-				break
-
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -186,6 +190,7 @@ var/global/datum/controller/gameticker/ticker
 			play_vox_sound(sound,STATION_Z,null)
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
+		mode.Clean_Antags()
 
 	//start_events() //handles random events and space dust.
 	//new random event system is handled from the MC.
@@ -193,9 +198,12 @@ var/global/datum/controller/gameticker/ticker
 	if(0 == admins.len)
 		send2adminirc("Round has started with no admins online.")
 
+	/*
 	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
 	master_controller.process()		//Start master_controller.process()
 	lighting_controller.process()	//Start processing DynamicAreaLighting updates
+	*/
+	processScheduler.start()
 
 	if(config.sql_enabled)
 		spawn(3000)
@@ -325,7 +333,6 @@ var/global/datum/controller/gameticker/ticker
 		if(player.mind)
 			ticker.minds += player.mind
 
-
 /datum/controller/gameticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
@@ -340,6 +347,9 @@ var/global/datum/controller/gameticker/ticker
 			if(!istype(M,/mob/new_player))
 				M << "Captainship not forced on anyone."
 
+	for(var/mob/M in player_list)
+		if(!istype(M,/mob/new_player))
+			M.store_position()//updates the players' origin_ vars so they retain their location when the round starts.
 
 /datum/controller/gameticker/proc/process()
 	if(current_state != GAME_STATE_PLAYING)
@@ -347,7 +357,7 @@ var/global/datum/controller/gameticker/ticker
 
 	mode.process()
 
-	emergency_shuttle.process()
+	/*emergency_shuttle.process()*/
 	watchdog.check_for_update()
 
 	var/force_round_end=0
@@ -363,7 +373,7 @@ var/global/datum/controller/gameticker/ticker
 		spawn
 			declare_completion()
 			if(config.map_voting)
-				vote.initiate_vote("map","The Server")
+				vote.initiate_vote("map","The Server", popup = 1)
 
 		spawn(50)
 			if (mode.station_was_nuked)
@@ -379,8 +389,14 @@ var/global/datum/controller/gameticker/ticker
 				blackbox.save_all_data_to_sql()
 
 			if (watchdog.waiting)
-				world << "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>"
-				watchdog.signal_ready()
+				world << "<span class='notice'><B>Server will shut down for an automatic update [config.map_voting ? "[(restart_timeout/10)] seconds." : "in a few seconds."]</B></span>"
+				if(config.map_voting)
+					sleep(restart_timeout) //waiting for a mapvote to end
+				if(!delay_end)
+					watchdog.signal_ready()
+				else
+					world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
+					delay_end = 2
 			else if(!delay_end)
 				sleep(restart_timeout)
 				if(!delay_end)
@@ -388,8 +404,10 @@ var/global/datum/controller/gameticker/ticker
 					world.Reboot()
 				else
 					world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
+					delay_end = 2
 			else
 				world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
+				delay_end = 2
 
 	return 1
 

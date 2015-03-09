@@ -88,9 +88,9 @@
 	if(is_type_in_list(W, acceptable_upgradeables))
 		if(!(locate(W.type) in upgrade_holder))
 			if(!isMoMMI(user))
-				user:drop_item(W)
+				user:drop_item_v(W)
 			else
-				user:drop_item_v()
+				user:drop_item()
 			W.loc = src
 			upgrade_holder.Add(W)
 			user << "<span class='notice'>You add \the [W] to \the [src].</span>"
@@ -103,44 +103,34 @@
 		return
 	return
 
+/obj/machinery/recharge_station/attack_ghost(var/mob/user) //why would they
+	return 0
+
 /obj/machinery/recharge_station/attack_ai(var/mob/user)
 	attack_hand(user)
 
 /obj/machinery/recharge_station/attack_hand(var/mob/user)
-	if(!Adjacent(user))
-		if(user == occupant)
-			if(upgrading)
-				user << "<span class='notice'>You interrupt the upgrade process.</span>"
-				upgrading = 0
-				upgrade_finished = -1
-				return 0
-			else if(upgrade_holder.len)
-				upgrading = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
-				if(!upgrading)
-					upgrading = 0
-					return
-				if(alert(user, "You have chosen [upgrading], is this correct?", , "Yes", "No") == "Yes")
-					upgrade_finished = world.timeofday + 600
-					user << "The upgrade should complete in approximately 60 seconds, you will be unable to exit \the [src] during this unless you cancel the process."
-					return
-		return
-	else
-		if(user == occupant)
-			if(upgrading)
-				user << "<span class='notice'>You interrupt the upgrade process.</span>"
-				upgrading = 0
-				upgrade_finished = -1
-				return 0
-			else if(upgrade_holder.len)
-				upgrading = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
-				if(!upgrading)
-					upgrading = 0
-					return
-				if(alert(user, "You have chosen [upgrading], is this correct?", , "Yes", "No") == "Yes")
-					upgrade_finished = world.timeofday + 600
-					user << "The upgrade should complete in approximately 60 seconds, you will be unable to exit \the [src] during this unless you cancel the process."
-					return
+	if(user == occupant)
+		if(upgrading)
+			user << "<span class='notice'>You interrupt the upgrade process.</span>"
+			upgrading = 0
+			upgrade_finished = -1
+			return 0
 		else if(upgrade_holder.len)
+			upgrading = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
+			if(!upgrading)
+				upgrading = 0
+				return
+			if(alert(user, "You have chosen [upgrading], is this correct?", , "Yes", "No") == "Yes")
+				upgrade_finished = world.timeofday + 600
+				user << "The upgrade should complete in approximately 60 seconds, you will be unable to exit \the [src] during this unless you cancel the process."
+				return
+			else
+				upgrading = 0
+				user << "You decide not to apply the upgrade"
+				return
+	else if(Adjacent(user))
+		if(upgrade_holder.len)
 			var/obj/removed = input(user, "Choose an item to remove.",upgrade_holder[1]) as null|anything in upgrade_holder
 			if(!removed)
 				return
@@ -208,6 +198,10 @@
 	src.occupant = null
 	build_icon()
 	src.use_power = 1
+	// Removes dropped items/magically appearing mobs from the charger too
+	for (var/atom/movable/x in src.contents)
+		if(!(x in upgrade_holder))
+			x.setLoc(src.loc)
 	return
 
 /obj/machinery/recharge_station/proc/restock_modules()
@@ -219,11 +213,7 @@
 				// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
 				for(var/obj/O in um)
 					// Engineering
-					if(istype(O,/obj/item/stack/sheet/metal)\
-					|| istype(O,/obj/item/stack/sheet/rglass)\
-					|| istype(O,/obj/item/stack/sheet/glass)\
-					|| istype(O,/obj/item/weapon/cable_coil)\
-					|| istype(O,/obj/item/stack/tile/plasteel))
+					if(istype(O,/obj/item/stack/cable_coil))
 						if(O:amount < 50)
 							O:amount += 2
 						if(O:amount > 50)
@@ -313,41 +303,38 @@
 /obj/machinery/recharge_station/verb/move_inside()
 	set category = "Object"
 	set src in oview(1)
-	// Broken or unanchored?  Fuck off.
+
+	mob_enter(usr)
+	return
+
+/obj/machinery/recharge_station/proc/mob_enter(mob/living/silicon/robot/R)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
-	if (usr.stat == 2)
+	if (R.stat == 2)
 		//Whoever had it so that a borg with a dead cell can't enter this thing should be shot. --NEO
 		return
-	if (!(istype(usr, /mob/living/silicon/)))
-		usr << "\blue <B>Only non-organics may enter the recharger!</B>"
+	if (!(istype(R, /mob/living/silicon/)))
+		R << "<span class='notice'><B>Only non-organics may enter the recharger!</B></span>"
 		return
 	if (src.occupant)
-		usr << "\blue <B>The cell is already occupied!</B>"
+		R << "<span class='notice'><B>The cell is already occupied!</B></span>"
 		return
-	/*if (!usr:cell)
-		usr<<"\blue Without a powercell, you can't be recharged."
-		//Make sure they actually HAVE a cell, now that they can get in while powerless. --NEO
-		return*/
-	usr.stop_pulling()
-	if(usr && usr.client)
-		usr.client.perspective = EYE_PERSPECTIVE
-		usr.client.eye = src
-	usr.loc = src
-	src.occupant = usr
-	/*for(var/obj/O in src)
-		O.loc = src.loc*/
-	src.add_fingerprint(usr)
+	R.stop_pulling()
+	if(R && R.client)
+		R.client.perspective = EYE_PERSPECTIVE
+		R.client.eye = src
+	R.loc = src
+	src.occupant = R
+	src.add_fingerprint(R)
 	build_icon()
 	src.use_power = 2
 	for(var/obj/O in upgrade_holder)
 		if(istype(O, /obj/item/weapon/cell))
-			if(!usr:cell)
+			if(!R.cell)
 				usr << "<big><span class='notice'>Power Cell replacement available.</span></big>"
 			else
-				if(O:maxcharge > usr:cell:maxcharge)
+				if(O:maxcharge > R.cell.maxcharge)
 					usr << "<span class='notice'>Power Cell upgrade available.</span></big>"
-	return
 
 /obj/machinery/recharge_station/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(occupant)
@@ -363,3 +350,9 @@
 
 
 
+/obj/machinery/recharge_station/Bumped(atom/AM as mob|obj)
+	if(!issilicon(AM) || isAI(AM))
+		return
+	var/mob/living/silicon/robot/R = AM
+	mob_enter(R)
+	return

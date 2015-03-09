@@ -1,6 +1,5 @@
 //You use this to scan items and machines to recreate them in a fabricator or the flatpacker
 //You can scan syndicate items, but only with the syndicate version (might be overpowered, so I'll make it expensive)
-/datum
 
 /obj/item/device/device_analyser
 	name = "device analyzer"
@@ -11,12 +10,14 @@
 	var/list/loaded_designs = list() //the stored designs
 	var/max_designs = 10
 	var/syndi_filter = 1 //whether the scanner should filter traitor tech items. 1 is filtered, 0 is not filtered
+	var/access_avoidance = 0 //whether the scanner can ignore access requirements for machines. 1 is ignore, 0 is not
 	var/loadone = 0 //whether or not it should load just one at a time. 0 is all at once, 1 is one at a time
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
-	m_amt = 300
+	m_amt = 0 //so the autolathe doesn't try to eat it
+	g_amt = 0
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=3;engineering=4;materials=4;programming=3"
 
@@ -26,6 +27,8 @@
 	usr <<"<span class='notice'> You set the Device Analyzer to [loadone ? "transfer one design" : "transfer all designs"] on use.</span>"
 
 /obj/item/device/device_analyser/afterattack(var/atom/A, mob/user, proximity_flag) //Hurrah for after-attack
+	if(get_turf(src) != get_turf(user)) //we aren't in the same place as our holder, so we have been moved and can ignore scanning
+		return
 	if(proximity_flag != 1)
 		return
 	if(istype(A, /obj)) //don't want to scan mobs or anything like that
@@ -36,7 +39,7 @@
 				return
 
 		if(O.origin_tech || istype(O, /obj/machinery)) //two requirements: items have origin_tech, machines are checked in...
-			switch(CanCreateDesign(O)) //this proc. Checks to see if there's anything illegal or bad in the thing before scanning it
+			switch(CanCreateDesign(O, user)) //this proc. Checks to see if there's anything illegal or bad in the thing before scanning it
 				if(1)
 					if(max_designs && !(max_designs <= loaded_designs.len))
 						loaded_designs += new /datum/design/mechanic_design(O)
@@ -45,7 +48,9 @@
 					else
 						user << "\icon [src] \The [src] flashes a message on-screen: \"Too many designs loaded.\""
 				if(-1)
-					user <<"<span class='rose'>\icon [src] \The [src]'s safety features prevent you from scanning that item.</span>"
+					user <<"<span class='rose'>\icon [src] \The [src]'s safety features prevent you from scanning that object.</span>"
+				if(-2)
+					user <<"<span class='rose'>\icon [src] \The [src]'s access requirements prevent you from scanning that object.</span>"
 				else //no origin_tech, no scans.
 					user <<"<span class='rose'>\The [src] can't seem to scan \the [O]!</span>"
 		else //no origin_tech, no scans.
@@ -56,9 +61,16 @@
 /obj/item/device/device_analyser/syndicate
 	desc = "A suspicious-looking device anaylzer. A thorough examination reveals that it lacks the required Nanotrasen logo, and that the safety features have been disabled."
 	syndi_filter = 0
+	access_avoidance = 1 //we aren't forced to have the access for a machine - perfect for traitors
 	origin_tech = "magnets=3;engineering=4;materials=4;programming=3;syndicate=3"
 
-/obj/item/device/device_analyser/proc/CanCreateDesign(var/obj/O)
+/obj/item/device/device_analyser/advanced
+	name = "advanced device analyzer"
+	desc = "An electromagnetic scanner used by mechanics. This version can skip machine access, as well as having a higher storage capacity."
+	access_avoidance = 1
+	max_designs = 20
+
+/obj/item/device/device_analyser/proc/CanCreateDesign(var/obj/O, mob/user)
 	if(!istype(O))
 		return 0
 
@@ -69,6 +81,8 @@
 	var/list/techlist
 	if(istype(O, /obj/machinery))
 		var/obj/machinery/M = O
+		if(user && (!M.allowed(user) && M.mech_flags & MECH_SCAN_ACCESS) && !src.access_avoidance) //if we require access, and don't have it, and the scanner can't bypass it
+			return -2
 		if(M.component_parts)
 			for(var/obj/item/weapon/circuitboard/CB in M.component_parts) //fetching the circuit by looking in the parts
 				if(istype(CB))

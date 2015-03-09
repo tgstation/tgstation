@@ -99,6 +99,7 @@
 	origin_tech = "combat=2;materials=2"
 
 /obj/item/weapon/gun/projectile/russian/New()
+	..()
 	Spin()
 	update_icon()
 

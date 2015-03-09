@@ -72,6 +72,8 @@
 	name = "Desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
 	icon_state = "tomealtar"
+	luminosity = 2
+	l_color = "#3e0000"
 //	luminosity = 5
 
 //sprites for this no longer exist	-Pete
@@ -149,7 +151,7 @@
 		M.monkeyizing = 1
 		M.canmove = 0
 		M.icon = null
-		M.overlays.Cut()
+		M.overlays.len = 0
 		M.invisibility = 101
 
 		if(istype(M, /mob/living/silicon/robot))
@@ -159,14 +161,13 @@
 		else
 			for(var/obj/item/W in M)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-					del(W)
+					qdel(W)
 					continue
 				W.layer = initial(W.layer)
 				W.loc = M.loc
 				W.dropped(M)
 
 		var/mob/living/new_mob = new /mob/living/simple_animal/hostile/retaliate/cluwne(A.loc)
-		new_mob.universal_speak = 1
 		new_mob.gender=src.gender
 		new_mob.name = pick(clown_names)
 		new_mob.real_name = new_mob.name
@@ -175,7 +176,7 @@
 		new_mob.setBrainLoss(100)
 
 
-		new_mob.a_intent = "hurt"
+		new_mob.a_intent = I_HURT
 		if(M.mind)
 			M.mind.transfer_to(new_mob)
 		else

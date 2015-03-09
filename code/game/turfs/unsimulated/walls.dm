@@ -17,7 +17,12 @@ turf/unsimulated/wall/splashscreen
 	layer = FLY_LAYER
 
 	New()
-		icon = file("icons/splashworks/title[rand(1,12)].gif")
+		var/path = "icons/splashworks/"
+		var/list/filenames = flist(path)
+		for(var/filename in filenames)
+			if(copytext(filename, length(filename)) == "/")
+				filenames -= filename
+		icon = file("[path][pick(filenames)]")
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
@@ -31,7 +36,7 @@ turf/unsimulated/wall/splashscreen
 
 /turf/unsimulated/wall/cultify()
 	ChangeTurf(/turf/unsimulated/wall/cult)
-	cultification()
+	turf_animation('icons/effects/effects.dmi',"cultwall",0,0,MOB_LAYER-1)
 	return
 
 /turf/unsimulated/wall/cult/cultify()

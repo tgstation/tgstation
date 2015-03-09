@@ -44,10 +44,10 @@
 
 
 
-/obj/effect/decal/slag/examine()
+/obj/effect/decal/slag/examine(mob/user)
 	..()
 	if(molten)
-		usr << "<span class=\"warning\">Jesus, it's hot!</span>"
+		user << "<span class=\"warning\">Jesus, it's hot!</span>"
 
 	var/list/bits=list()
 	for(var/mat_id in mats.storage)
@@ -56,9 +56,9 @@
 			bits.Add(mat.processed_name)
 
 	if(bits.len>0)
-		usr << "<span class=\"info\">It appears to contain bits of [english_list(bits)].</span>"
+		user << "<span class=\"info\">It appears to contain bits of [english_list(bits)].</span>"
 	else
-		usr << "<span class=\"warning\">It appears to be completely worthless.</span>"
+		user << "<span class=\"warning\">It appears to be completely worthless.</span>"
 
 /obj/effect/decal/slag/solidify()
 	icon_state="slagcold"
@@ -97,6 +97,6 @@
 		slag.mats = src.mats
 		qdel(src)
 	else
-		user.visible_message("<span class=\"warning\">[user.name] hits \the [src] with his [W.name].</span>", \
-			"<span class=\"warning\">You fail to damage \the [src] with your [W.name]!</span>", \
+		user.visible_message("<span class=\"attack\">[user.name] hits \the [src] with his [W.name].</span>", \
+			"<span class=\"attack\">You fail to damage \the [src] with your [W.name]!</span>", \
 			"You hear someone hitting something.")

@@ -94,6 +94,7 @@
 
 						if(mobtype in humans)
 							race = "Human"
+							language = race
 
 						else if(mobtype in monkeys)
 							race = "Monkey"
@@ -104,6 +105,10 @@
 
 						else if(mobtype in slimes) // NT knows a lot about slimes, but not aliens. Can identify slimes
 							race = "slime"
+							language = race
+
+						else if(istype(mobtype, /obj))
+							race = "Machinery"
 							language = race
 
 						else if(mobtype in animals)

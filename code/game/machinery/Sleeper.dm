@@ -152,13 +152,13 @@
 	return
 
 /obj/machinery/sleeper/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if(O.loc == user) //no you can't pull things out of your ass
+	if(!ismob(O)) //mobs only
+		return
+	if(O.loc == user || !isturf(O.loc) || !isturf(user.loc)) //no you can't pull things out of your ass
 		return
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
 		return
-	if(O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
-		return
-	if(!ismob(O)) //humans only
+	if(O.anchored || !Adjacent(user) || !user.Adjacent(src) || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
 		return
 	if(istype(O, /mob/living/simple_animal) || istype(O, /mob/living/silicon)) //animals and robutts dont fit
 		return
@@ -166,10 +166,8 @@
 		return
 	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
 		return
-	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
-		return
 	if(occupant)
-		user << "\blue <B>The sleeper is already occupied!</B>"
+		user << "<span class='notice'>\The [src] is already occupied!</span>"
 		return
 	if(isrobot(user))
 		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
@@ -194,7 +192,7 @@
 		if(src.occupant)
 			user << "\blue <B>The sleeper is already occupied!</B>"
 			return
-		if(!L) return
+		if(!L || L.buckled) return
 
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE
@@ -209,7 +207,7 @@
 			OO.loc = src.loc
 		src.add_fingerprint(user)
 		if(user.pulling == L)
-			user.pulling = null
+			user.stop_pulling()
 		return
 	return
 
@@ -234,6 +232,7 @@
 /obj/machinery/sleeper/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
 	if((!( istype(G, /obj/item/weapon/grab)) || !( ismob(G.affecting))))
 		return
+	if(G.affecting.buckled) return
 	if(src.occupant)
 		user << "\blue <B>The sleeper is already occupied!</B>"
 		return
@@ -251,6 +250,8 @@
 			return
 		if(!G || !G.affecting) return
 		var/mob/M = G.affecting
+		if(!isliving(M) || M.buckled)
+			return
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
 			M.client.eye = src
@@ -399,10 +400,14 @@
 		if(M.Victim == usr)
 			usr << "You're too busy getting your life sucked out of you."
 			return
+	if(usr.buckled)
+		return
 	visible_message("[usr] starts climbing into the sleeper.", 3)
 	if(do_after(usr, 20))
 		if(src.occupant)
 			usr << "\blue <B>The sleeper is already occupied!</B>"
+			return
+		if(usr.buckled)
 			return
 		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE

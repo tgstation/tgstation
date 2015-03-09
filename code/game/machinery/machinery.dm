@@ -129,6 +129,8 @@ Class Procs:
 
 	var/inMachineList = 1 // For debugging.
 
+	languages = ALL
+
 /obj/machinery/cultify()
 	var/list/random_structure = list(
 		/obj/structure/cult/talisman,
@@ -146,11 +148,13 @@ Class Procs:
 /obj/machinery/examine(mob/user)
 	..()
 	if(panel_open)
-		user << "Its maintenance panel is open."
+		user << "<span class='info'>Its maintenance panel is open.</span>"
 
 /obj/machinery/Destroy()
 	if(src in machines)
 		machines -= src
+	if(src in power_machines)
+		power_machines -= src
 
 	if(component_parts)
 		for(var/atom/movable/AM in component_parts)
@@ -243,7 +247,7 @@ Class Procs:
 		var/re_init=0
 		if("set_tag" in href_list)
 			if(!(href_list["set_tag"] in vars))
-				usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
+				usr << "<span class='warning'>Something went wrong: Unable to find [href_list["set_tag"]] in vars!</span>"
 				return 1
 			var/current_tag = src.vars[href_list["set_tag"]]
 			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
@@ -260,13 +264,13 @@ Class Procs:
 			if(!O)
 				return 1
 			if(!canLink(O))
-				usr << "\red You can't link with that device."
+				usr << "<span class='warning'>You can't link with that device.</span>"
 				return 1
 
 			if(unlinkFrom(usr, O))
-				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
+				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link was removed.</span>"
 			else
-				usr << "\red A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices."
+				usr << "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices.</span>"
 			update_mt_menu=1
 
 		if("link" in href_list)
@@ -274,25 +278,25 @@ Class Procs:
 			if(!O)
 				return 1
 			if(!canLink(O,href_list))
-				usr << "\red You can't link with that device."
+				usr << "<span class='warning'>You can't link with that device.</span>"
 				return 1
 			if (isLinkedWith(O))
-				usr << "\red A red light flashes on \the [P]. The two devices are already linked."
+				usr << "<span class='attack'>A red light flashes on \the [P]. The two devices are already linked.</span>"
 				return 1
 
 			if(linkWith(usr, O, href_list))
-				usr << "\blue A green light flashes on \the [P], confirming the link was removed."
+				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link has been created.</span>"
 			else
-				usr << "\red A red light flashes on \the [P].  It appears something went wrong when linking the two devices."
+				usr << "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when linking the two devices.</span>"
 			update_mt_menu=1
 
 		if("buffer" in href_list)
 			P.buffer = src
-			usr << "\blue A green light flashes, and the device appears in the multitool buffer."
+			usr << "<span class='confirm'>A green light flashes, and the device appears in the multitool buffer.</span>"
 			update_mt_menu=1
 
 		if("flush" in href_list)
-			usr << "\blue A green light flashes, and the device disappears from the multitool buffer."
+			usr << "<span class='confirm'>A green light flashes, and the device disappears from the multitool buffer.</span>"
 			P.buffer = null
 			update_mt_menu=1
 
@@ -315,6 +319,8 @@ Class Procs:
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 1
+	if(href_list["close"])
+		return
 	var/ghost_flags=0
 	if(ghost_write)
 		ghost_flags |= PERMIT_ALL
@@ -324,7 +330,7 @@ Class Procs:
 		if ( ! (istype(usr, /mob/living/carbon/human) || \
 				istype(usr, /mob/living/silicon) || \
 				istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-			usr << "\red You don't have the dexterity to do this!"
+			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return 1
 
 		var/norange = 0
@@ -380,7 +386,7 @@ Class Procs:
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
@@ -390,10 +396,10 @@ Class Procs:
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			visible_message("\red [H] stares cluelessly at [src] and drools.")
+			visible_message("<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
+			user << "<span class='warning'>You momentarily forget how to use [src].</span>"
 			return 1
 
 	src.add_fingerprint(user)
@@ -407,14 +413,18 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
+/obj/machinery/proc/dropFrame()
+	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+	M.build_state = 2
+	M.state = 1
+	M.icon_state = "box_1"
+
 /obj/machinery/proc/crowbarDestroy(mob/user)
 	user.visible_message(	"[user] begins to pry out the circuitboard from \the [src].",
 							"You begin to pry out the circuitboard from \the [src]...")
 	if(do_after(user, 40))
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-		M.state = 2
-		M.icon_state = "box_1"
+		dropFrame()
 		for(var/obj/I in component_parts)
 			if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) && src:reagents && src:reagents.total_volume)
 				reagents.trans_to(I, reagents.total_volume)
@@ -551,4 +561,28 @@ Class Procs:
 	if (electrocute_mob(user, get_area(src), src, siemenspassed))
 		return 1
 	else
-		return -1
+		return 0
+
+// Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
+/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient)
+	if (hclient.client.mob && hclient.client.mob.stat == 0)
+		if (isAI(hclient.client.mob)) return TRUE
+		else                          return hclient.client.mob.machine == src && src.Adjacent(hclient.client.mob)
+	else
+		return FALSE
+
+// Hook for html_interface module to unset the active machine when the window is closed by the player.
+/obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
+	if (hclient.client.mob && hclient.client.mob.machine == src) hclient.client.mob.unset_machine()
+
+/obj/machinery/proc/alert_noise(var/notice_state = "ping")
+	switch(notice_state)
+		if("ping")
+			src.visible_message("<span class='notice'>\icon[src] \The [src] pings.</span>")
+			playsound(get_turf(src), 'sound/machines/notify.ogg', 50, 0)
+		if("beep")
+			src.visible_message("<span class='notice'>\icon[src] \The [src] beeps.</span>")
+			playsound(get_turf(src), 'sound/machines/twobeep.ogg', 50, 0)
+		if("buzz")
+			src.visible_message("<span class='notice'>\icon[src] \The [src] buzzes.</span>")
+			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)
