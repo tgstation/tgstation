@@ -133,7 +133,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/attackby(obj/item/W, mob/user)
 	var/turf/T = src.loc
 
-	if(isturf(T) && T.intact) //Exception for catwalks
+	if(T.intact)
 		return
 
 	if(istype(W, /obj/item/weapon/wirecutters))
