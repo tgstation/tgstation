@@ -205,3 +205,17 @@ datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
 	required_reagents = list("sacid" = 1, "fluorine" = 1, "hydrogen" = 1, "potassium" = 1)
 	result_amount = 4
 	required_temp = 380
+
+datum/reagent/paprika
+	name = "Paprika"
+	id = "paprika"
+	description = "A spice made from chili peppers."
+	reagent_state = LIQUID
+	color = "#CF3600" // rgb: 207, 54, 0
+
+datum/reagent/paprika/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	if(prob(50))
+		M.adjustFireLoss(1)
+	..()
+	return

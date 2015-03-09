@@ -285,3 +285,125 @@ datum/reagent/concentrated_barbers_aid/reaction_mob(var/mob/living/M, var/volume
 		H.update_hair()
 	..()
 	return
+
+
+datum/reagent/liquid_drama
+	name = "Liquid Drama"
+	id = "liquid_drama"
+	description = "All the hatred of the galaxy, compacted into 1 liquid."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	var/list/ramble_phrases = list("Goddamn fucking workers! They always shit stuff up!", "Stop misusing the bullshit we give you!", "Our department isn't being serious enough about their jobs!", "This bullshit isn't good enough for me!", "I need more interaction with my coworkers!", "I fucking hate all this random violence!")
+	var/list/possible_actions = list("starts typing into an invisible keyboard!", "rants and raves!", "glares angrily at an invisible screen!", "screams and pulls at their hair!")
+	var/list/idedplsnerf = list("toolboxes", "cyborgs", "the AI", "clowns", "security officers", "heads", "nuke ops", "assistants", "guns", "stuns", "stamps", "paperwork", "forums", "spacemen", "space", "air", "breathing", "existing", "moving", "chemistry", "science", "mining", "the bar")
+	var/list/gonna_add_this_shit = list("off-station locations", "space anomalies", "spatial disruptions", "chemical based toolboxes", "an automated assistant smasher", "mafia chemistry", "space mafia", "currency", "the cybernet", "the metaverse", "modular systems")
+
+/datum/chemical_reaction/liquid_drama
+	name = "liquid_drama"
+	id = "liquid_drama"
+	result = "liquid_drama"
+	required_reagents = list("stardust" = 1, "eye_of_toad" = 1,  "solid_errors" = 1, "liquid_rage" = 1, "paprika" = 1, "singulo" = 1)
+	result_amount = 6
+datum/reagent/liquid_drama/on_mob_life(var/mob/living/M as mob)
+	if(M && ishuman(M))
+		if(prob(5))
+			M.visible_message("<span class = 'userdanger'>[M] [pick(possible_actions)]</span>")
+		if(prob(5))
+			M << "You feel like you've caused a lot of drama!"
+			M.adjustToxLoss(3)
+		if(prob(5))
+			M.say(";[pick(ramble_phrases)])")
+		if(prob(5))
+			M.say(";Fuck this shit, I'm [pick("nerfing","buffing")] [pick(idedplsnerf)]!")
+		if(prob(5))
+			M.say(";Fuck it, I'm [pick("adding", "removing")] [pick(gonna_add_this_shit)] next shift!")
+	..()
+	return
+
+datum/reagent/stardust
+	name = "Stardust"
+	id = "stardust"
+	description = "Powdered stardust."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	var/list/effect_text = list("glitters.", "shines.", "sparkles.")
+
+datum/reagent/stardust/on_mob_life(var/mob/living/M as mob)
+	if(M && ishuman(M))
+		if(prob(10))
+			M.visible_message("[M] [pick(effect_text)]")
+	..()
+	return
+
+datum/reagent/eye_of_toad
+	name = "Eye Of Toad"
+	id = "eye_of_toad"
+	description = "A liquified eye of a toad."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	var/list/effect_text = list("ribbits.", "croaks.", "burps.")
+
+datum/reagent/eye_of_toad/on_mob_life(var/mob/living/M as mob)
+	if(M && ishuman(M))
+		if(prob(10))
+			M.visible_message("[M] [pick(effect_text)]")
+	..()
+	return
+
+datum/reagent/solid_errors
+	name = "Solid Errors"
+	id = "solid_errors"
+	description = "A bunch of solid text. How does this even work?"
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	var/list/effect_text = list("runtimes!", "errors out!", "breaks!")
+
+datum/reagent/solid_errors/on_mob_life(var/mob/living/M as mob)
+	if(M && ishuman(M))
+		if(prob(10))
+			M.visible_message("<span class = 'userdanger'>[M] [pick(effect_text)]")
+			if(!M.color)
+				M.color = "#ff5555"
+	..()
+	return
+
+datum/reagent/liquid_rage
+	name = "Liquid Rage"
+	id = "liquid_rage"
+	description = "Looks like the tears of an assistant."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	var/list/effect_text = list("FUCKING FUCK SHIT ASS FUCK!!", "GODDAMN PIECES OF SHIT FUCKING EVERYTHING UP EVERY 5 MOTHERFUCKING SECONDS!", "YOU FUCKING PIECES OF SHIT RUINED EVERYTHING GOOD AND HOLY IN THIS FUCKING STATION!")
+
+datum/reagent/liquid_rage/on_mob_life(var/mob/living/M as mob)
+	if(M && ishuman(M))
+		if(prob(10))
+			var/should_radio = ""
+			if(prob(25))
+				should_radio = ";"
+			M.say("[should_radio][pick(effect_text)]")
+	..()
+	return
+
+/datum/chemical_reaction/solid_errors
+	name = "solid_errors"
+	id = "solid_errors"
+	result = "solid_errors"
+	required_reagents = list("liquid_rage" = 1, "paprika" = 1)
+	result_amount = 2
+	required_temp = 50 // gotta supercool that shit
+
+/datum/chemical_reaction/liquid_rage
+	name = "liquid_rage"
+	id = "liquid_rage"
+	result = "liquid_rage"
+	required_reagents = list("clf3" = 1, "liquid_dark_matter" = 1, "sorium" = 1, "blackpowder" = 1)
+	result_amount = 4
+
+/datum/chemical_reaction/eye_of_toad
+	name = "eye_of_toad"
+	id = "eye_of_toad"
+	result = "eye_of_toad"
+	required_reagents = list("stardust" = 1)
+	result_amount = 1
+	required_temp = 800
