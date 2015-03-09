@@ -22,7 +22,6 @@
 	..()
 
 /obj/item/weapon/c4/suicide_act(var/mob/user)
-	. = BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above his head! It looks like \he's going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
@@ -42,7 +41,6 @@
 	sleep(10)
 	explode(get_turf(user))
 	user.gib()
-	return .
 
 /obj/item/weapon/c4/attackby(var/obj/item/I, var/mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
