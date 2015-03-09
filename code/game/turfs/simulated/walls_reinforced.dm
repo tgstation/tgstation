@@ -34,20 +34,17 @@
 		return 1
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.powered)
+		if(!D.bcell.use(800))
+			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
 			return 1
-		user << "<span class='notice'>You begin to smash though the reinforced wall.</span>"
+		user << "<span class='notice'>You begin to smash though the [name].</span>"
 		if(do_after(user, 50))
 			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 				return 1
 			if( user.loc == T && user.get_active_hand() == W )
-				if(!D.bcell.use(800))
-					user << "<span class='notice'>Your jackhammer doesn't have enough power to break through that wall.</span>"
-					D.update_charge()
-					return 1
-				D.update_charge()
+				D.update_icon()
 				D.playDigSound()
-				user << "<span class='notice'>Your jackhammer smashes though the last of the reinforced plating.</span>"
+				visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
 				dismantle_wall()
 				return 1
 	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)
