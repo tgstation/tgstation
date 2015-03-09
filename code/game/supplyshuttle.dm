@@ -56,14 +56,20 @@ var/list/mechtoys = list(
 		if(anchored == 1)
 			user.visible_message("[user] pops loose the flaps.", "You pop loose the flaps.")
 			anchored = 0
+			var/turf/T = get_turf(loc)
+			if(T)
+				T.blocks_air = 0
 		else
 			user.visible_message("[user] pops in the flaps.", "You pop in the flaps.")
 			anchored = 1
+			var/turf/T = get_turf(loc)
+			if(T)
+				T.blocks_air = 1
 	else if (iswelder(I) && anchored = 0)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/plastic/new_item = new plastic(user.loc)
-			new_item.amount = 10
+			var/obj/item/stack/sheet/mineral/plastic/P = new plastic(user.loc)
+			P.amount = 10
 			qdel(src)
 			return
 	return ..()
