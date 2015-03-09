@@ -474,6 +474,8 @@
 
 	if(!dense_object && (locate(/obj/structure/lattice) in oview(1, src)))
 		dense_object++
+	if(!dense_object && (locate(/obj/structure/catwalk) in oview(1, src)))
+		dense_object++
 
 	//Lastly attempt to locate any dense objects we could push off of
 	//TODO: If we implement objects drifing in space this needs to really push them
