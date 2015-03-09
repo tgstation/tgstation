@@ -347,11 +347,11 @@
 	for(var/obj/item/organ/limb/L in organs)
 		for(var/obj/item/I in L.embedded_objects)
 			if(prob(I.embedded_pain_chance))
-				L.take_damage(I.w_class*2)
+				L.take_damage(I.w_class*I.embedded_pain_multiplier)
 				src << "<span class='userdanger'>\the [I] embedded in your [L.getDisplayName()] hurts!</span>"
 
 			if(prob(I.embedded_fall_chance))
-				L.take_damage(I.w_class*5)
+				L.take_damage(I.w_class*I.embedded_fall_pain_multiplier)
 				L.embedded_objects -= I
 				I.loc = get_turf(src)
 				visible_message("<span class='danger'>\the [I] falls out of [name]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I] falls out of your [L.getDisplayName()]!</span>")
