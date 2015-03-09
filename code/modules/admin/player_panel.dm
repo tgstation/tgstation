@@ -368,6 +368,8 @@
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 		dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
+		if(ticker.mode.replacementmode)
+			dat += "Replacement Game Mode: <B>[ticker.mode.replacementmode.name]</B><BR>"
 		dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
 		dat += "<B>Emergency shuttle</B><BR>"
 		if(SSshuttle.emergency.mode < SHUTTLE_CALL)
@@ -379,6 +381,7 @@
 				dat += "<a href='?_src_=holder;call_shuttle=2'>Send Back</a><br>"
 			else
 				dat += "ETA: <a href='?_src_=holder;edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+		dat += "<a href='?_src_=holder;end_round=\ref[usr]'>End Round Now</a><br>"
 		dat += "<a href='?_src_=holder;delay_round_end=1'>[ticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
 		if(ticker.mode.syndicates.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"

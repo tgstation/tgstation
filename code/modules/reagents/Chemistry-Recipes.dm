@@ -870,7 +870,7 @@ datum/chemical_reaction/pestkiller
 	required_other = 1
 /datum/chemical_reaction/slimeppotion/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	var/obj/item/weapon/slimepotion/P = new /obj/item/weapon/slimepotion
+	var/obj/item/slimepotion/P = new /obj/item/slimepotion
 	P.loc = get_turf(holder.my_atom)
 
 
@@ -913,7 +913,7 @@ datum/chemical_reaction/pestkiller
 	required_other = 1
 /datum/chemical_reaction/slimepotion2/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	var/obj/item/weapon/slimepotion2/P = new /obj/item/weapon/slimepotion2
+	var/obj/item/slimepotion2/P = new /obj/item/slimepotion2
 	P.loc = get_turf(holder.my_atom)
 //Adamantine
 /datum/chemical_reaction/slimegolem
