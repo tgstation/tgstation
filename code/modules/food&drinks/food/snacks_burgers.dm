@@ -1,11 +1,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger
 	filling_color = "#CD853F"
+	icon_state = "hburger"
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/plain
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
-	icon_state = "hburger"
 	list_reagents = list("vitamin" = 1)
 	bitesize = 3
 
@@ -14,13 +14,13 @@
 	var/job = null
 	name = "-burger"
 	desc = "A bloody burger."
-	icon_state = "hburger"
 	list_reagents = list("vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/appendix
 	name = "appendix burger"
 	desc = "Tastes like appendicitis."
 	list_reagents = list("nutriment" = 6, "vitamin" = 6)
+	icon_state = "appendixburger"
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/fish
 	name = "fillet -o- carp sandwich"
