@@ -166,6 +166,11 @@ datum/reagent/consumable/coffee
 	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
+	overdose_threshold = 80
+
+datum/reagent/consumable/coffee/overdose_process(var/mob/living/M as mob)
+	M.Jitter(5)
+	..()
 
 datum/reagent/consumable/coffee/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = max(0,M.dizziness-5)
@@ -173,11 +178,9 @@ datum/reagent/consumable/coffee/on_mob_life(var/mob/living/M as mob)
 	M.sleeping = max(0,M.sleeping - 2)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	M.Jitter(5)
 	if(holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 5)
 	..()
-	return
 
 datum/reagent/consumable/tea
 	name = "Tea"

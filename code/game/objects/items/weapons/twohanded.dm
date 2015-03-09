@@ -279,9 +279,10 @@ obj/item/weapon/twohanded/
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
-	force_wielded = 18 // Was 13, Buffed - RR
+	force_wielded = 18
 	throwforce = 20
-	throw_speed = 3
+	throw_speed = 4
+	embedded_impact_pain_multiplier = 3
 	flags = NOSHIELD
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")

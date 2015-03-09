@@ -45,9 +45,9 @@
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if(!D.bcell.use(D.drillcost))
-			D.update_charge()
+			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
 			return
-		D.update_charge()
+		D.update_icon()
 		user << "<span class='notice'>You smash through the girder!</span>"
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		D.playDigSound()
@@ -292,9 +292,8 @@
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if(!D.bcell.use(D.drillcost))
-			D.update_charge()
 			return
-		D.update_charge()
+		D.update_icon()
 		user << "<span class='notice'>Your jackhammer smashes through the girder!</span>"
 		var/obj/effect/decal/remains/human/R = new (get_turf(src))
 		transfer_fingerprints_to(R)
