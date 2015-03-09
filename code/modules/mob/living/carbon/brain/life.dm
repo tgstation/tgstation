@@ -128,7 +128,7 @@
 			blinded = 1
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
-			if( !container && (health < config.health_threshold_dead || ((world.time - timeofhostdeath) > config.revival_brain_life)) )
+			if( !container && (health < config.health_threshold_dead || ((world.time - timeofhostdeath) > config.revival_brain_life)) && !istype(src, /obj/item/organ/brain/mami/))
 				death()
 				blinded = 1
 				silent = 0
@@ -136,7 +136,7 @@
 
 			//Handling EMP effect in the Life(), it's made VERY simply, and has some additional effects handled elsewhere
 			if(emp_damage)			//This is pretty much a damage type only used by MMIs, dished out by the emp_act
-				if(!(container && (istype(container, /obj/item/device/mmi) || istype(container, /obj/item/organ/brain/mami/))))
+				if(!(container && (istype(container, /obj/item/device/mmi) || istype(src, /obj/item/organ/brain/mami/))))
 					emp_damage = 0
 				else
 					emp_damage = round(emp_damage,1)//Let's have some nice numbers to work with
