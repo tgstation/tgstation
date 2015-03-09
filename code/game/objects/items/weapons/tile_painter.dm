@@ -448,8 +448,7 @@ var/global/list/paint_variants = list(
 		return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
-
-	if(!(istype(A, /turf/simulated/floor)) || istype(A, /turf/simulated/floor/plating/airless/catwalk)) //fuck catwalks
+	if(!(istype(A, /turf/simulated/floor)))
 		return 0
 
 	var/turf/simulated/floor/test = get_turf(A) //it should be the simulated floor type

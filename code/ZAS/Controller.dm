@@ -104,7 +104,6 @@ Class Procs:
 	var/simulated_turf_count = 0
 
 	for(var/turf/simulated/S in world)
-		if(iscatwalk(S)) continue
 		simulated_turf_count++
 		S.update_air_properties()
 
@@ -246,7 +245,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	if(block & AIR_BLOCKED) return
 
 	var/direct = !(block & ZONE_BLOCKED)
-	var/space = (!istype(B) || iscatwalk(B))
+	var/space = (!istype(B))
 
 	if(direct && !space)
 		if(equivalent_pressure(A.zone,B.zone) || current_cycle == 0)
