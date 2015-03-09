@@ -21,6 +21,7 @@
 	return RECYK_METAL
 
 /obj/item/stack/rods/afterattack(atom/Target, mob/user, adjacent, params)
+	var/busy = 0
 	if(adjacent)
 		if(isturf(Target) || istype(Target, /obj/structure/lattice))
 			var/turf/T = get_turf(Target)
@@ -30,8 +31,12 @@
 				if(R.amount < 2)
 					user << "<span class='warning'>You need atleast 2 rods to build a catwalk!</span>"
 					return
+				if(busy) //We are already building a catwalk, avoids stacking catwalks
+					return
 				user << "<span class='notice'>You begin to build a catwalk.</span>"
-				if(do_after(user,30))
+				busy = 1
+				if(do_after(user, 30))
+					busy = 0
 					if(R.amount < 2)
 						user << "<span class='warning'>You ran out of rods!</span>"
 						return
