@@ -45,6 +45,13 @@
 	if(building)
 		user << "\red \The [src] is busy building something already."
 		return 1
+
+	var/timedifference = world.time - user.client.time_died_as_mouse
+	if(user.client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
+		var/timedifference_text
+		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
+		user << "<span class='warning'>You may only spawn again as a mouse or MoMMI more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
+		return
 	/*
 	if(!mmi.brainmob)
 		user << "\red \The [mmi] appears to be devoid of any soul."
@@ -76,7 +83,7 @@
 		user << "\red \The [src] doesn't have enough metal to complete this task."
 		return 1
 
-	if(alert(src, "Do you wish to be turned into a MoMMI at this position?", "Confirm", "Yes", "No") != "Yes") return
+	if(alert(user, "Do you wish to be turned into a MoMMI at this position?", "Confirm", "Yes", "No") != "Yes") return
 
 	building=1
 	update_icon()
@@ -141,20 +148,17 @@
 	if(!M)	return
 
 	M.invisibility = 0
-
 	if (locked_to_zlevel)
 		M.add_ion_law("You belong to the station where you were created; do not leave it.")
 		M.locked_to_z = T.z
 
-	if(user.mind)		//TODO
+	if(user.mind)
 		user.mind.transfer_to(M)
 		if(M.mind.assigned_role == "MoMMI")
 			M.mind.original = M
 		else if(user.mind.special_role)
 			M.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
-	else
-		M.key = user.key
-
+	M.key = user.key
 	M.job = "Mobile MMI"
 
 	//M.cell = locate(/obj/item/weapon/cell) in contents
@@ -162,7 +166,7 @@
 	user.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 
 	M.mmi = new /obj/item/device/mmi(M)
-	M.mmi.transfer_identity(user)//Does not transfer key/client.
+	M.mmi.transfer_identity(user)
 	M.Namepick()
 	M.updatename()
 

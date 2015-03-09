@@ -126,7 +126,7 @@
 		if(M in player_list)
 			M << msg
 
-	log_admin("DirectNarrate: [key_name(usr)] at [formatJumpTo(get_turf(usr))]: [msg]")
+	log_admin("LocalNarrate: [key_name(usr)] at [formatJumpTo(get_turf(usr))]: [msg]")
 	message_admins("\blue \bold DirectNarrate: [key_name(usr)] at [formatJumpTo(get_turf(usr))]: [msg]<BR>", 1)
 	feedback_add_details("admin_verb","LIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
