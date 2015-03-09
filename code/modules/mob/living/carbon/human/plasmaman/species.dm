@@ -38,21 +38,45 @@
 	var/tank_slot_name = "suit storage"
 
 	switch(H.mind.assigned_role)
-		if("Research Director","Scientist","Geneticist","Roboticist")
+		if("Scientist","Geneticist","Roboticist")
 			suit=/obj/item/clothing/suit/space/plasmaman/science
 			helm=/obj/item/clothing/head/helmet/space/plasmaman/science
-		if("Chief Engineer","Station Engineer", "Mechanic")
-			suit=/obj/item/clothing/suit/space/plasmaman/engineer
-			helm=/obj/item/clothing/head/helmet/space/plasmaman/engineer
+		if("Research Director")
+			suit=/obj/item/clothing/suit/space/plasmaman/science/rd
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/science/rd
+		if("Station Engineer", "Mechanic")
+			suit=/obj/item/clothing/suit/space/plasmaman/engineer/
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/engineer/
+		if("Chief Engineer")
+			suit=/obj/item/clothing/suit/space/plasmaman/engineer/ce
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/engineer/ce
 		if("Atmospheric Technician")
 			suit=/obj/item/clothing/suit/space/plasmaman/atmostech
 			helm=/obj/item/clothing/head/helmet/space/plasmaman/atmostech
-		if("Head of Security","Warden","Detective","Security Officer")
-			suit=/obj/item/clothing/suit/space/plasmaman/security
-			helm=/obj/item/clothing/head/helmet/space/plasmaman/security
-		if("Chief Medical Officer","Medical Doctor","Paramedic","Chemist")
+		if("Warden","Detective","Security Officer")
+			suit=/obj/item/clothing/suit/space/plasmaman/security/
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/security/
+		if("Head of Security")
+			suit=/obj/item/clothing/suit/space/plasmaman/security/hos
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/security/hos
+		if("Captain")
+			suit=/obj/item/clothing/suit/space/plasmaman/security/captain
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/security/captain
+		if("Head of Personnel")
+			suit=/obj/item/clothing/suit/space/plasmaman/security/hop
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/security/hop
+		if("Medical Doctor")
 			suit=/obj/item/clothing/suit/space/plasmaman/medical
 			helm=/obj/item/clothing/head/helmet/space/plasmaman/medical
+		if("Paramedic")
+			suit=/obj/item/clothing/suit/space/plasmaman/medical/paramedic
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/medical/paramedic
+		if("Chemist")
+			suit=/obj/item/clothing/suit/space/plasmaman/medical/chemist
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/medical/chemist
+		if("Chief Medical Officer")
+			suit=/obj/item/clothing/suit/space/plasmaman/medical/cmo
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/medical/cmo
 		if("Bartender", "Chef")
 			suit=/obj/item/clothing/suit/space/plasmaman/service
 			helm=/obj/item/clothing/head/helmet/space/plasmaman/service
@@ -74,9 +98,12 @@
 		if("Assistant")
 			suit=/obj/item/clothing/suit/space/plasmaman/assistant
 			helm=/obj/item/clothing/head/helmet/space/plasmaman/assistant
-		if("Clown","Mime")
-			tank_slot=slot_r_hand
-			tank_slot_name = "hand"
+		if("Clown")
+			suit=/obj/item/clothing/suit/space/plasmaman/clown
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/clown
+		if("Mime")
+			suit=/obj/item/clothing/suit/space/plasmaman/mime
+			helm=/obj/item/clothing/head/helmet/space/plasmaman/mime
 	H.equip_or_collect(new suit(H), slot_wear_suit)
 	H.equip_or_collect(new helm(H), slot_head)
 	H.equip_or_collect(new/obj/item/weapon/tank/plasma/plasmaman(H), tank_slot) // Bigger plasma tank from Raggy.
