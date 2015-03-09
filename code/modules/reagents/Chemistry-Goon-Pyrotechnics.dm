@@ -368,6 +368,14 @@
 	required_reagents = list("phosphorus" = 1, "sacid" = 1, "stable_plasma" = 1)
 	result_amount = 3
 
+/datum/chemical_reaction/phlogiston/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(holder.has_reagent("stabilizing_agent"))
+		return
+	var/turf/simulated/T = get_turf(holder.my_atom)
+	if(istype(T))
+		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, created_volume)
+	return
+
 /datum/reagent/goonchem/phlogiston/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjust_fire_stacks(1)
@@ -375,6 +383,31 @@
 	M.adjustFireLoss(0.2*M.fire_stacks)
 	..()
 	return
+
+/datum/reagent/goonchem/napalm
+	name = "Napalm"
+	id = "napalm"
+	description = "Very flammable."
+	reagent_state = LIQUID
+	color = "#FF9999" // rgb: 96, 165, 132
+
+/datum/reagent/goonchem/napalm/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+	M.adjust_fire_stacks(1)
+	..()
+	return
+
+/datum/reagent/goonchem/napalm/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+	if(method == TOUCH && ishuman(M))
+		M.adjust_fire_stacks(7)
+		return
+
+/datum/chemical_reaction/napalm
+	name = "Napalm"
+	id = "napalm"
+	result = null
+	required_reagents = list("aluminium" = 1, "plasma" = 1, "sacid" = 1 )
+	result_amount = 1
 
 datum/reagent/goonchem/cryostylane
 	name = "Cryostylane"

@@ -106,7 +106,6 @@
 	var/obj/chemholder
 	var/obj/effect/effect/foam/foamtype = /obj/effect/effect/foam
 	var/metal = 0
-	var/foam_color
 
 
 /datum/effect/effect/system/foam_spread/metal
@@ -129,7 +128,6 @@
 
 	amount = round(sqrt(amt / 2), 1)
 	carry.copy_to(chemholder, carry.total_volume)
-	foam_color = mix_color_from_reagents(carry.reagent_list)
 
 
 /datum/effect/effect/system/foam_spread/metal/set_up(amt=5, loca, var/datum/reagents/carry = null, var/metaltype)
@@ -142,8 +140,9 @@
 		foundfoam.amount += amount
 	else
 		var/obj/effect/effect/foam/F = new foamtype(src.location)
+		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume)
-		F.color = foam_color
+		F.color = foamcolor
 		F.amount = amount
 		F.metal = metal
 

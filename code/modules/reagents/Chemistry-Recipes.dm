@@ -186,19 +186,6 @@ silicate
 	required_reagents = list("water" = 1, "sodium" = 1, "chlorine" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/napalm
-	name = "Napalm"
-	id = "napalm"
-	result = null
-	required_reagents = list("aluminium" = 1, "plasma" = 1, "sacid" = 1 )
-	result_amount = 1
-/datum/chemical_reaction/napalm/on_reaction(var/datum/reagents/holder, var/created_volume)
-	var/turf/simulated/T = get_turf(holder.my_atom)
-	if(istype(T))
-		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, created_volume)
-	holder.del_reagent(id)
-	return
-
 /datum/chemical_reaction/chloralhydrate
 	name = "Chloral Hydrate"
 	id = "chloralhydrate"

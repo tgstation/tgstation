@@ -271,7 +271,8 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 
 datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
-	O.color = initial(O.color)
+	if(!istype(O, /obj/effect))
+		O.color = initial(O.color)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
@@ -681,7 +682,8 @@ datum/reagent/space_cleaner/reaction_obj(var/obj/O, var/volume)
 	else
 		if(O)
 			O.clean_blood()
-			O.color = initial(O.color)
+			if(!istype(O, /obj/effect))
+				O.color = initial(O.color)
 
 datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 	if(volume >= 1)
