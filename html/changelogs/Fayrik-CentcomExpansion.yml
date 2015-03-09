@@ -1,0 +1,6 @@
+author: Fayrik
+
+delete-after: True
+
+changes: 
+  - rscadd: "Expanded the Centcom area for better station-Centcom interaction."
