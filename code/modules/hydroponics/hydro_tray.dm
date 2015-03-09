@@ -798,11 +798,11 @@
 
 			usr << "The tray's sensor suite is reporting a light level of [light_available] lumens and a temperature of [environment.temperature]K."
 
-/obj/machinery/portable/atmospherics/hydroponics/examine(mob/user)
+/obj/machinery/portable_atmospherics/hydroponics/examine(mob/user)
 	..()
 	viewcontents(user)
 
-/obj/machinery/portable/atmospherics/hydroponics/proc/view_contents(mob/user)
+/obj/machinery/portable_atmospherics/hydroponics/proc/view_contents(mob/user)
 	if(src.seed && !src.dead)
 		user << "[src] has \blue [src.seed.display_name] \black planted."
 		if(src.health <= (src.seed.endurance / 2))
