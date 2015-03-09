@@ -149,6 +149,7 @@ var/list/camera_names=list()
 
 	// OTHER
 	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+		user.delayNextAttack(10)
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null

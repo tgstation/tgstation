@@ -88,7 +88,6 @@
 	return
 
 /obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
-	user.delayNextAttack(10)
 	var/dist
 	if(istype(user) && user.current) //is AI
 		dist = get_dist(src, user.current)
