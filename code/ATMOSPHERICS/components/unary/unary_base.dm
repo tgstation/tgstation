@@ -23,6 +23,7 @@
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
 	initialize()
+	broadcast_status()
 	build_network()
 	if (node)
 		node.initialize()
