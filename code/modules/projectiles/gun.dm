@@ -213,6 +213,7 @@
 		spawn(fire_delay)
 			semicd = 0
 
+
 	if(user.hand)
 		user.update_inv_l_hand(0)
 	else
