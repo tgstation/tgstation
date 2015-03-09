@@ -561,11 +561,11 @@
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
-		if(!locate(SEE_TURFS,permanent_sight_flags))
+		if(!(SEE_TURFS in permanent_sight_flags))
 			sight &= ~SEE_TURFS
-		if(!locate(SEE_MOBS,permanent_sight_flags))
+		if(!(SEE_MOBS in permanent_sight_flags))
 			sight &= ~SEE_MOBS
-		if(!locate(SEE_OBJS,permanent_sight_flags))
+		if(!(SEE_OBJS in permanent_sight_flags))
 			sight &= ~SEE_OBJS
 
 		see_in_dark = (sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : 2  //Xray flag combo

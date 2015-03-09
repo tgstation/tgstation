@@ -156,7 +156,11 @@
 
 
 /mob/living/carbon/proc/eyecheck()
-	return locate(/obj/item/organ/cybernetic_implant/eyes/thermals,internal_organs) ? -1 : 0
+	for(var/obj/item/I in contents)
+		if(istype(I,/obj/item/cybernetic_implant/eyes))
+			var/obj/item/cybernetic_implant/eyes/EFP = I
+			return EFP.flash_protect
+	return 0
 
 /mob/living/carbon/proc/tintcheck()
 	return 0

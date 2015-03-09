@@ -284,7 +284,7 @@
 					if(R)
 						msg += "<a href='?src=\ref[src];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
 
-				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || locate(H.internal_organs,/obj/item/organ/cybernetic_implant/eyes/security_hud))
+				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || locate(/obj/item/cybernetic_implant/eyes/security_hud,H.internal_organs))
 					if(!user.stat && user != src) //|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 						var/criminal = "None"
 

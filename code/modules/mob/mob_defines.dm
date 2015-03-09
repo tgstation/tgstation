@@ -157,5 +157,5 @@
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 	var/last_movement = 0 // Last world.time the mob actually moved of its own accord.
-	var/permanent_huds = new /list() //any HUDs in this list will be ignored by HUD removing procs
-	var/permanent_sight_flags = new /list() //any sight flags in this list will be ignored by removing procs
+	var/permanent_huds = list() //any HUDs in this list will be ignored by HUD removing procs
+	var/permanent_sight_flags = list() //any sight flags in this list will be ignored by removing procs

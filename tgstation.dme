@@ -1390,7 +1390,7 @@
 #include "code\modules\surgery\brain_removal.dm"
 #include "code\modules\surgery\cavity_implant.dm"
 #include "code\modules\surgery\core_removal.dm"
-#include "code\modules\surgery\eye_cybernetic_implant.dm"
+#include "code\modules\surgery\cybernetic_implants.dm"
 #include "code\modules\surgery\eye_surgery.dm"
 #include "code\modules\surgery\gender_reassignment.dm"
 #include "code\modules\surgery\generic_steps.dm"
