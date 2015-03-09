@@ -424,8 +424,8 @@ datum/reagent/goonchem/morphine
 datum/reagent/goonchem/morphine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.status_flags |= IGNORESLOWDOWN
-	if(cycle_count == 36)
-		M.drowsyness += 1
+	if(cycle_count >= 36)
+		M.sleeping += 3
 	cycle_count++
 	..()
 	return
