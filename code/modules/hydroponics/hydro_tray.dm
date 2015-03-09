@@ -768,18 +768,7 @@
 		remove_dead(user)
 
 	else
-		if(seed && !dead)
-			usr << "[src] has \blue [seed.display_name] \black planted."
-			if(health <= (seed.endurance / 2))
-				usr << "The plant looks \red unhealthy."
-		else
-			usr << "[src] is empty."
-		usr << "Water: [round(waterlevel,0.1)]/100"
-		usr << "Nutrient: [round(nutrilevel,0.1)]/10"
-		if(weedlevel >= 5)
-			usr << "[src] is \red filled with weeds!"
-		if(pestlevel >= 5)
-			usr << "[src] is \red filled with tiny worms!"
+		view_contents(user)
 
 		if(!istype(src,/obj/machinery/portable_atmospherics/hydroponics/soil))
 
@@ -811,6 +800,9 @@
 
 /obj/machinery/portable/atmospherics/hydroponics/examine(mob/user)
 	..()
+	viewcontents(user)
+
+/obj/machinery/portable/atmospherics/hydroponics/proc/view_contents(mob/user)
 	if(src.seed && !src.dead)
 		user << "[src] has \blue [src.seed.display_name] \black planted."
 		if(src.health <= (src.seed.endurance / 2))
