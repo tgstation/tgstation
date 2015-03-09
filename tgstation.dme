@@ -1235,6 +1235,7 @@
 #include "code\modules\ninja\suit\gloves.dm"
 #include "code\modules\ninja\suit\head.dm"
 #include "code\modules\ninja\suit\mask.dm"
+#include "code\modules\ninja\suit\shoes.dm"
 #include "code\modules\ninja\suit\SpiderOS.dm"
 #include "code\modules\ninja\suit\suit.dm"
 #include "code\modules\ninja\suit\suit_attackby.dm"
