@@ -105,6 +105,7 @@
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
+	icon_state = "magic_mirror"
 
 
 /obj/structure/mirror/magic/attack_hand(mob/user as mob)
