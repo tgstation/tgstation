@@ -687,7 +687,7 @@
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("<span class='notice'>[]'s eyes blink and become clearer.</span>", M), 1) // So observers know it worked.
 		// Vamps react to this like acid
-		if(isvampire(M) && prob(10))
+		if(M.mind.vampire && prob(10))
 			if(!M) M = holder.my_atom
 			if(!(VAMP_MATURE in M.mind.vampire.powers))
 				M.adjustToxLoss(1)
@@ -701,7 +701,7 @@
 /datum/reagent/holywater/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	// Vamps react to this like acid
 	if(ishuman(M))
-		if(isvampire(M))
+		if(M.mind.vampire)
 			var/mob/living/carbon/human/H=M
 			if(!(VAMP_UNDYING in M.mind.vampire.powers))
 				if(method == TOUCH)

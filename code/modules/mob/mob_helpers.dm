@@ -29,8 +29,8 @@
 			return 1
 	return 0
 
-/proc/check_holy() //checks to see if the tile the mob stands on is holy
-	var/turf/T = get_turf(src)
+/proc/check_holy(var/mob/A) //checks to see if the tile the mob stands on is holy
+	var/turf/T = get_turf(A)
 	if(!T) return 0
 	if(!T.holy) return 0
 	return 1  //The tile is holy. Beware!

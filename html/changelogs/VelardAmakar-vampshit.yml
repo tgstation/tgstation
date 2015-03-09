@@ -1,0 +1,4 @@
+author: Velard Amakar
+delete-after: true
+changes:
+  - tweak: Fixed bugs with the vampire update

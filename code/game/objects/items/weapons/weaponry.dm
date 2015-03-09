@@ -52,7 +52,7 @@
 		user.take_organ_damage(10)
 		user.Paralyse(20)
 		return
-	if(M.mind && M.mind.vampire &&ishuman(M))
+	if(M.mind && M.mind.vampire && ishuman(M))
 		if(!(VAMP_MATURE in M.mind.vampire.powers))
 			M << "<span class='warning'>The nullrod's power interferes with your own!</span>"
 			M.mind.vampire.nullified = max(5, M.mind.vampire.nullified + 2)
