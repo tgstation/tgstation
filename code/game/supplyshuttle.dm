@@ -65,7 +65,7 @@ var/list/mechtoys = list(
 			var/turf/T = get_turf(loc)
 			if(T)
 				T.blocks_air = 1
-	else if (iswelder(I) && anchored = 0)
+	else if (iswelder(I) && anchored == 0)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
 			var/obj/item/stack/sheet/mineral/plastic/P = new /obj/item/stack/sheet/mineral/plastic (user.loc)
