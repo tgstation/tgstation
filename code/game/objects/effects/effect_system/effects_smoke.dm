@@ -209,7 +209,7 @@
 	..()
 	for(var/mob/living/carbon/human/A in view(1, src))
 		if(reagents.total_volume >= 1)
-			reagents.reaction(A, INGEST)
+			reagents.reaction(A, TOUCH)
 			reagents.trans_to(A.reagents, 10)
 	return
 
@@ -217,7 +217,7 @@
 /obj/effect/effect/chem_smoke/Crossed(mob/living/carbon/M as mob )
 	..()
 	if(reagents.total_volume >= 1)
-		reagents.reaction(M, INGEST)
+		reagents.reaction(M, TOUCH)
 		reagents.trans_to(M.reagents, 10)
 
 /datum/effect/effect/system/chem_smoke_spread
