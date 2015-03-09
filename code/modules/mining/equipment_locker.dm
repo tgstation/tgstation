@@ -39,8 +39,7 @@
 			return
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
-			usr.drop_item()
-			I.loc = src
+			usr.drop_item(src)
 			inserted_id = I
 
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(var/obj/item/weapon/ore/O)
@@ -141,8 +140,7 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
-				usr.drop_item()
-				I.loc = src
+				usr.drop_item(src)
 				inserted_id = I
 			else
 				usr << "<span class='warning'>No valid ID.</span>"
@@ -261,8 +259,7 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
-				usr.drop_item()
-				I.loc = src
+				usr.drop_item(src)
 				inserted_id = I
 			else usr << "<span class='warning'>No valid ID.</span>"
 	if(href_list["purchase"])
@@ -294,8 +291,7 @@
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
-			usr.drop_item()
-			I.loc = src
+			usr.drop_item(src)
 			inserted_id = I
 		return
 	..()

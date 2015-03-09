@@ -366,7 +366,7 @@
 			O.show_message("\blue The [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
 		destroy()
 
-	user.drop_item(src)
+	user.drop_item(src.loc)
 	return
 
 /obj/structure/table/proc/straight_table_check(var/direction)
@@ -524,7 +524,7 @@
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!(WT.welding))
-			user.drop_item(src)
+			user.drop_item(src.loc)
 			return
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
@@ -546,7 +546,7 @@
 
 	if (istype(W, /obj/item/weapon/wrench))
 		if(src.status == 2)
-			user.drop_item(src)
+			user.drop_item(src.loc)
 			return
 
 	..()
@@ -614,7 +614,7 @@
 		return
 	if(isrobot(user))
 		return
-	user.drop_item(src)
+	user.drop_item(src.loc)
 	return 1
 
 /obj/structure/rack/meteorhit(obj/O as obj)

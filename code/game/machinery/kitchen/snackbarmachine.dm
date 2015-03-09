@@ -76,8 +76,7 @@
 			user << "A beaker is already loaded into the machine."
 			return
 		src.beaker = B
-		user.drop_item()
-		B.loc = src
+		user.drop_item(src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		update_icon()

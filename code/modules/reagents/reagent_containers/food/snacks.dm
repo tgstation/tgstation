@@ -154,7 +154,7 @@
 		if(!iscarbon(user))
 			return 0
 		user << "<span class='notice'>You slip [W] inside [src].</span>"
-		user.drop_item(W)
+		user.drop_item(src)
 		add_fingerprint(user)
 		contents += W
 		return 1 // no afterattack here
@@ -2692,9 +2692,8 @@
 				boxestoadd += i
 
 			if( (boxes.len+1) + boxestoadd.len <= 5 )
-				user.drop_item()
+				user.drop_item(src)
 
-				box.loc = src
 				box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
 				src.boxes.Add( boxestoadd )
 
@@ -2712,8 +2711,7 @@
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/)) // Long ass fucking object name
 		if(src.pizza) user << "<span class='warning'>[src] already has a pizza in it.</span>"
 		else if(src.open)
-			user.drop_item()
-			I.loc = src
+			user.drop_item(src)
 			src.pizza = I
 			src.update_icon()
 			user << "<span class='notice'>You put [I] in [src].</span>"

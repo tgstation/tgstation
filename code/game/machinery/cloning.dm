@@ -341,7 +341,7 @@
 		user << "<span class='notice'>\The [src] processes \the [W].</span>"
 		biomass += 50
 		user.drop_item()
-		del(W)
+		qdel(W)
 		return
 	else
 		..()

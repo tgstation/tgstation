@@ -137,9 +137,8 @@ obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 			user << "\red You must remove the [held_container] first."
 		else
 			user << "\blue You put the [W] into the [src]."
-			user.drop_item(W)
+			user.drop_item(src)
 			held_container = W
-			held_container.loc = src
 			updateDialog()
 
 	/*else if(istype(W, /obj/item/weapon/tank))

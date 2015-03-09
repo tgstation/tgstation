@@ -133,11 +133,11 @@
 		if(client)	client.screen -= l_hand
 		l_hand.layer = initial(l_hand.layer)
 
-		if(Target)	l_hand.loc = Target.loc
+		if(Target)	l_hand.loc = Target
 		else		l_hand.loc = loc
 
-		var/turf/T = get_turf(loc)
-		if(isturf(T))
+		var/turf/T = get_turf(l_hand)
+		if(isturf(T) && l_hand.loc == T)
 			T.Entered(l_hand)
 
 		l_hand.dropped(src)
@@ -154,11 +154,11 @@
 		if(client)	client.screen -= r_hand
 		r_hand.layer = initial(r_hand.layer)
 
-		if(Target)	r_hand.loc = Target.loc
+		if(Target)	r_hand.loc = Target
 		else		r_hand.loc = loc
 
-		var/turf/T = get_turf(Target)
-		if(istype(T))
+		var/turf/T = get_turf(r_hand)
+		if(istype(T) && r_hand.loc == T)
 			T.Entered(r_hand)
 
 		r_hand.dropped(src)

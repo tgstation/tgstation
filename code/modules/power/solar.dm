@@ -89,7 +89,7 @@ var/list/solars_list = list()
 		if(istype(W, /obj/item/weapon/tracker_electronics))
 			tracker = 1
 			user.drop_item()
-			del(W)
+			qdel(W)
 			user.visible_message("<span class='notice'>[user] inserts the electronics into [src].</span>", \
 			"<span class='notice'>You insert the electronics into [src].</span>")
 			return 1

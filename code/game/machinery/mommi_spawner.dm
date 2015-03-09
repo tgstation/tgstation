@@ -133,10 +133,9 @@
 
 			building=1
 			update_icon()
-			user.drop_item()
+			user.drop_item(src)
 			mmi.icon = null
 			mmi.invisibility = 101
-			mmi.loc=src
 			spawn(50)
 				makeMoMMI(mmi.brainmob)
 			return TRUE

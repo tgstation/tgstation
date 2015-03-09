@@ -243,8 +243,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 		else if(!panel_open)
 			src.beaker =  D
-			user.drop_item()
-			D.loc = src
+			user.drop_item(src)
 			user << "You add the beaker to the machine!"
 			nanomanager.update_uis(src) // update all UIs attached to src
 			return 1
@@ -358,8 +357,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			user << "A beaker is already loaded into the machine."
 			return
 		src.beaker = B
-		user.drop_item()
-		B.loc = src
+		user.drop_item(src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		update_icon()
@@ -372,8 +370,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 
 		src.loaded_pill_bottle = B
-		user.drop_item()
-		B.loc = src
+		user.drop_item(src)
 		user << "You add the pill bottle into the dispenser slot!"
 		src.updateUsrDialog()
 		return 1
@@ -936,8 +933,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 
 		src.beaker =  I
-		user.drop_item()
-		I.loc = src
+		user.drop_item(src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
@@ -1077,8 +1073,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return 0
 		else
 			src.beaker =  O
-			user.drop_item()
-			O.loc = src
+			user.drop_item(src)
 			update_icon()
 			src.updateUsrDialog()
 			return 1

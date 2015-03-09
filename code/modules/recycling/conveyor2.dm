@@ -193,7 +193,7 @@
 		return 1
 	if(istype(W, /obj/item/device/device_analyser))
 		return 0
-	user.drop_item(src)
+	user.drop_item(src.loc)
 	return 0
 
 /obj/machinery/conveyor/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)

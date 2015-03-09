@@ -61,8 +61,7 @@
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			src.diskette = W
 			user << "You insert [W]."
 			src.updateUsrDialog()

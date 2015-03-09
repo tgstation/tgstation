@@ -267,9 +267,8 @@
 		copying = 0
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			user.drop_item()
+			user.drop_item(src)
 			copy = O
-			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			flick("bigscanner1", src)
 			updateUsrDialog()
@@ -277,9 +276,8 @@
 			user << "<span class='notice'>There is already something in [src].</span>"
 	else if(istype(O, /obj/item/weapon/photo))
 		if(copier_empty())
-			user.drop_item()
+			user.drop_item(src)
 			photocopy = O
-			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			flick("bigscanner1", src)
 			updateUsrDialog()

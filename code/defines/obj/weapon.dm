@@ -374,17 +374,15 @@
 		if(I.w_class) //if it has a defined weight
 			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
 				if(weight1 == null)
-					user.drop_item()
+					user.drop_item(src)
 					weight1 = I
-					I.forceMove(src)
 					user.show_message("<span class='notice'>You tie [weight1] to the [src].</span>")
 					update_icon()
 					//del(I)
 					return
 				if(weight2 == null) //just in case
-					user.drop_item()
+					user.drop_item(src)
 					weight2 = I
-					I.forceMove(src)
 					user.show_message("<span class='notice'>You tie [weight2] to the [src].</span>")
 					update_icon()
 					//del(I)

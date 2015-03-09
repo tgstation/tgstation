@@ -73,9 +73,8 @@
 /mob/living/simple_animal/hostile/retaliate/snowman/attackby(var/obj/item/W, var/mob/user)
 	if(!carrot && istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot))
 		visible_message("<span class='notice'>[user] puts \a [W] on \the [src]'s nose.</span>")
-		user.drop_item()
+		user.drop_item(src)
 		carrot = W
-		carrot.loc = src
 		overlays += "snowman_carrot"
 		speak -= "Would you happen to have a carrot for my nose?"
 		src.say("Ah, most excellent!")
@@ -89,9 +88,8 @@
 			hat = null
 		else
 			speak += "I feel so dandy!"
-		user.drop_item()
+		user.drop_item(src)
 		hat = W
-		hat.loc = src
 
 		overlays += image('icons/mob/head.dmi', hat.icon_state)
 

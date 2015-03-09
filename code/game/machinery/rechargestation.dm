@@ -84,14 +84,10 @@
 			occupant << "<span class='notice'>Upgrade completed.</span>"
 			playsound(get_turf(src), 'sound/machines/ping.ogg', 50, 0)
 
-/obj/machinery/recharge_station/attackby(var/obj/item/W, var/mob/user)
+/obj/machinery/recharge_station/attackby(var/obj/item/W, var/mob/living/user)
 	if(is_type_in_list(W, acceptable_upgradeables))
 		if(!(locate(W.type) in upgrade_holder))
-			if(!isMoMMI(user))
-				user:drop_item_v(W)
-			else
-				user:drop_item()
-			W.loc = src
+			user.drop_item(src)
 			upgrade_holder.Add(W)
 			user << "<span class='notice'>You add \the [W] to \the [src].</span>"
 			return

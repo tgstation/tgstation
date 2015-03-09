@@ -121,9 +121,8 @@
 		if(battery)
 			user << "<span class='notice'>The pod already has a battery.</span>"
 			return
-		user.drop_item(W)
+		user.drop_item(src)
 		battery = W
-		W.loc = src
 		return
 	if(istype(W, /obj/item/device/spacepod_equipment))
 		if(!hatch_open)
@@ -137,8 +136,7 @@
 				return
 			else
 				user << "<span class='notice'>You insert \the [W] into the equipment system.</span>"
-				user.drop_item(W)
-				W.loc = equipment_system
+				user.drop_item(equipment_system)
 				equipment_system.weapon_system = W
 				equipment_system.weapon_system.my_atom = src
 				new/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapon_system(src, equipment_system.weapon_system.verb_name, equipment_system.weapon_system.verb_desc) //Yes, it has to be referenced like that. W.verb_name/desc doesn't compile.

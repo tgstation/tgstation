@@ -97,8 +97,7 @@
 				return
 			else
 				stored_modules[module] = used_item
-				user.drop_item(used_item)
-				used_item.loc = src
+				user.drop_item(src)
 				user << "You successfully load \the [used_item] into \the [src]'s [get_module_name(module)] slot."
 				return 1
 
