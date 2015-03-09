@@ -5,6 +5,10 @@
 		Feedstop()
 		return 0
 
+	if(docile)
+		src << "<i>I'm not hungry anymore...</i>"
+		return 0
+
 	if(stat)
 		src << "<i>I must be conscious to do this...</i>"
 		return 0
