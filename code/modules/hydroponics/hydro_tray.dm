@@ -800,7 +800,7 @@
 
 /obj/machinery/portable_atmospherics/hydroponics/examine(mob/user)
 	..()
-	viewcontents(user)
+	view_contents(user)
 
 /obj/machinery/portable_atmospherics/hydroponics/proc/view_contents(mob/user)
 	if(src.seed && !src.dead)
