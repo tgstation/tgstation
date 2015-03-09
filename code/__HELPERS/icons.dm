@@ -798,3 +798,70 @@ The _flatIcons list is a cache for generated icon files.
 		var/image/I = O
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 	return composite
+
+
+//What the mob looks like as animated static
+//By vg's ComicIronic
+/proc/getStaticIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(255,255,255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/static_icon = new/icon('icons/effects/effects.dmi', "static_base")
+	static_icon.AddAlphaMask(flat_icon)
+	return static_icon
+
+
+//What the mob looks like as a pitch black outline
+//By vg's ComicIronic
+/proc/getBlankIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(255,255,255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/blank_icon = new/icon('icons/effects/effects.dmi', "blank_base")
+	blank_icon.AddAlphaMask(flat_icon)
+	return blank_icon
+
+
+//Dwarf fortress style icons based on letters (defaults to the first letter of the Atom's name)
+//By vg's ComicIronic
+/proc/getLetterImage(atom/A, letter= "", uppercase = 0)
+	if(!A)
+		return
+
+	var/icon/atom_icon = new(A.icon, A.icon_state)
+
+	if(!letter)
+		letter = copytext(A.name, 1, 2)
+		if(uppercase == 1)
+			letter = uppertext(letter)
+		else if(uppercase == -1)
+			letter = lowertext(letter)
+
+	var/image/text_image = new(loc = A)
+	text_image.maptext = "<font size = 4>[letter]</font>"
+	text_image.color = AverageColour(atom_icon)
+	text_image.pixel_x = 7
+	text_image.pixel_y = 5
+	del(atom_icon)
+	return text_image
+
+
+//Find's the average colour of the icon
+//By vg's ComicIronic
+/proc/AverageColour(var/icon/I)
+	var/list/colours = list()
+	for(var/x_pixel = 1 to I.Width())
+		for(var/y_pixel = 1 to I.Height())
+			var/this_colour = I.GetPixel(x_pixel, y_pixel)
+			if(this_colour)
+				colours.Add(this_colour)
+
+	if(!colours.len)
+		return null
+
+	var/final_average = colours[1]
+	for(var/colour in (colours - colours[1]))
+		final_average = BlendRGB(final_average, colour, 1)
+	return final_average
+
+

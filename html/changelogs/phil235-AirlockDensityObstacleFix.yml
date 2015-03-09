@@ -1,0 +1,4 @@
+author: phil235
+delete-after: True
+changes:
+  - rscadd: "Airlocks with their safety on no longer closes on dense objects (like mechs or tables)."

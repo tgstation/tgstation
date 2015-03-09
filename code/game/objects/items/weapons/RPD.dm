@@ -139,6 +139,7 @@ var/global/list/RPD_recipes=list(
 	var/p_type = 0
 	var/p_conntype = 0
 	var/p_dir = 1
+	var/p_flipped = 0
 	var/p_class = ATMOS_MODE
 	var/p_disposal = 0
 	var/list/paint_colors = list(
@@ -161,11 +162,11 @@ var/global/list/RPD_recipes=list(
 /obj/item/weapon/pipe_dispenser/attack_self(mob/user as mob)
 	show_menu(user)
 
-/obj/item/weapon/pipe_dispenser/proc/render_dir_img(var/_dir,var/pic,var/title)
+/obj/item/weapon/pipe_dispenser/proc/render_dir_img(var/_dir,var/pic,var/title,var/flipped=0)
 	var/selected=""
 	if(_dir == p_dir)
 		selected=" class=\"selected\""
-	return "<a href=\"?src=\ref[src];setdir=[_dir]\" title=\"[title]\"[selected]><img src=\"[pic]\" /></a>"
+	return "<a href=\"?src=\ref[src];setdir=[_dir];flipped=[flipped]\" title=\"[title]\"[selected]><img src=\"[pic]\" /></a>"
 
 /obj/item/weapon/pipe_dispenser/proc/show_menu(mob/user as mob)
 	if(!user || !src)	return 0
@@ -230,8 +231,8 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=1" title="vertical">&#8597;</a>
-			<a href="?src=\ref[src];setdir=4" title="horizontal">&harr;</a>
+			<a href="?src=\ref[src];setdir=1; flipped=0" title="vertical">&#8597;</a>
+			<a href="?src=\ref[src];setdir=4; flipped=0" title="horizontal">&harr;</a>
 		</p>
 				"}
 		if(PIPE_BENT) // Bent, N-W, N-E etc
@@ -251,11 +252,11 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=9" title="West to North">&#9565;</a>
-			<a href="?src=\ref[src];setdir=5" title="North to East">&#9562;</a>
+			<a href="?src=\ref[src];setdir=9; flipped=0" title="West to North">&#9565;</a>
+			<a href="?src=\ref[src];setdir=5; flipped=0" title="North to East">&#9562;</a>
 			<br />
-			<a href="?src=\ref[src];setdir=10" title="South to West">&#9559;</a>
-			<a href="?src=\ref[src];setdir=6" title="East to South">&#9556;</a>
+			<a href="?src=\ref[src];setdir=10; flipped=0" title="South to West">&#9559;</a>
+			<a href="?src=\ref[src];setdir=6; flipped=0" title="East to South">&#9556;</a>
 		</p>
 				"}
 		if(PIPE_TRINARY) // Manifold
@@ -275,11 +276,11 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=1" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=4" title="North, West, South">&#9571;</a>
+			<a href="?src=\ref[src];setdir=1; flipped=0" title="West, South, East">&#9574;</a>
+			<a href="?src=\ref[src];setdir=4; flipped=0" title="North, West, South">&#9571;</a>
 			<br />
-			<a href="?src=\ref[src];setdir=2" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=8" title="South, East, North">&#9568;</a>
+			<a href="?src=\ref[src];setdir=2; flipped=0" title="East, North, West">&#9577;</a>
+			<a href="?src=\ref[src];setdir=8; flipped=0" title="South, East, North">&#9568;</a>
 		</p>
 				"}
 		if(PIPE_TRIN_M) // Mirrored ones
@@ -300,26 +301,26 @@ var/global/list/RPD_recipes=list(
 				dirsel += render_dir_img(2,"n.png","East North West")
 				dirsel += render_dir_img(8,"e.png","South East North")
 				dirsel += "<br />"
-				dirsel += render_dir_img(6,"sm.png","West South East")
-				dirsel += render_dir_img(5,"wm.png","North West South")
+				dirsel += render_dir_img(6,"sm.png","West South East", 1)
+				dirsel += render_dir_img(5,"wm.png","North West South", 1)
 				dirsel += "<br />"
-				dirsel += render_dir_img(9,"nm.png","East North West")
-				dirsel += render_dir_img(10,"em.png","South East North")
+				dirsel += render_dir_img(9,"nm.png","East North West", 1)
+				dirsel += render_dir_img(10,"em.png","South East North", 1)
 				dirsel += "</p>"
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=1" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=4" title="North, West, South">&#9571;</a>
+			<a href="?src=\ref[src];setdir=1; flipped=0" title="West, South, East">&#9574;</a>
+			<a href="?src=\ref[src];setdir=4; flipped=0" title="North, West, South">&#9571;</a>
 			<br />
-			<a href="?src=\ref[src];setdir=2" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=8" title="South, East, North">&#9568;</a>
+			<a href="?src=\ref[src];setdir=2; flipped=0" title="East, North, West">&#9577;</a>
+			<a href="?src=\ref[src];setdir=8; flipped=0" title="South, East, North">&#9568;</a>
 			<br />
-			<a href="?src=\ref[src];setdir=6" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=5" title="North, West, South">&#9571;</a>
+			<a href="?src=\ref[src];setdir=6; flipped=1" title="West, South, East">&#9574;</a>
+			<a href="?src=\ref[src];setdir=5; flipped=1" title="North, West, South">&#9571;</a>
 			<br />
-			<a href="?src=\ref[src];setdir=9" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=10" title="South, East, North">&#9568;</a>
+			<a href="?src=\ref[src];setdir=9; flipped=1" title="East, North, West">&#9577;</a>
+			<a href="?src=\ref[src];setdir=10; flipped=1" title="South, East, North">&#9568;</a>
 		</p>
 				"}
 		if(PIPE_UNARY) // Unary
@@ -338,10 +339,10 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=[NORTH]" title="North">&uarr;</a>
-			<a href="?src=\ref[src];setdir=[EAST]" title="East">&rarr;</a>
-			<a href="?src=\ref[src];setdir=[SOUTH]" title="South">&darr;</a>
-			<a href="?src=\ref[src];setdir=[WEST]" title="West">&larr;</a>
+			<a href="?src=\ref[src];setdir=[NORTH]; flipped=0" title="North">&uarr;</a>
+			<a href="?src=\ref[src];setdir=[EAST]; flipped=0" title="East">&rarr;</a>
+			<a href="?src=\ref[src];setdir=[SOUTH]; flipped=0" title="South">&darr;</a>
+			<a href="?src=\ref[src];setdir=[WEST]; flipped=0" title="West">&larr;</a>
 		</p>
 					"}
 		if(PIPE_QUAD) // Single icon_state (eg 4-way manifolds)
@@ -354,7 +355,7 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=\ref[src];setdir=1" title="Pipe">&#8597;</a>
+			<a href="?src=\ref[src];setdir=1; flipped=0" title="Pipe">&#8597;</a>
 		</p>
 				"}
 
@@ -409,6 +410,7 @@ var/global/list/RPD_recipes=list(
 	src.add_fingerprint(usr)
 	if(href_list["setdir"])
 		p_dir= text2num(href_list["setdir"])
+		p_flipped = text2num(href_list["flipped"])
 		show_menu(usr)
 
 	if(href_list["eatpipes"])
@@ -509,6 +511,7 @@ var/global/list/RPD_recipes=list(
 			if(do_after(user, 20))
 				activate()
 				var/obj/item/pipe/P = new (A, pipe_type=p_type, dir=p_dir)
+				P.flipped = p_flipped
 				P.update()
 				P.add_fingerprint(usr)
 				return 1

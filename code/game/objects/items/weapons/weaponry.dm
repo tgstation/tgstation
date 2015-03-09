@@ -107,7 +107,7 @@ obj/item/weapon/wirerod
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
-obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
+obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
 	..()
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
@@ -130,3 +130,32 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
 		qdel(I)
 		qdel(src)
+
+
+/obj/item/weapon/throwing_star
+	name = "throwing star"
+	desc = "An ancient weapon still used to this day due to it's ease of lodging itself into victim's body parts"
+	icon_state = "throwingstar"
+	item_state = "eshield0"
+	force = 2
+	throwforce = 0 //This is never used since this has a 100% embed chance.
+	throw_speed = 4
+	embedded_pain_multiplier = 4
+	w_class = 2
+	embed_chance = 100
+	embedded_fall_chance = 0 //Hahaha!
+
+//5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
+//Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
+/obj/item/weapon/storage/box/throwing_stars/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+
+
+
+

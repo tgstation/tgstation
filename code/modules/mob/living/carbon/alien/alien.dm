@@ -25,10 +25,6 @@
 	var/heal_rate = 5
 	var/plasma_rate = 5
 
-	var/oxygen_alert = 0
-	var/toxins_alert = 0
-	var/fire_alert = 0
-
 	var/heat_protection = 0.5
 	var/leaping = 0
 
@@ -60,7 +56,7 @@
 /mob/living/carbon/alien/getToxLoss()
 	return 0
 
-/mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/carbon/alien/handle_environment(var/datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
 	if(locate(/obj/structure/alien/weeds) in loc)
@@ -94,48 +90,42 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360.15)
 		//Body temperature is too hot.
-		fire_alert = max(fire_alert, 1)
+		throw_alert("alien_fire")
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
-				fire_alert = max(fire_alert, 2)
 			if(400 to 460)
 				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-				fire_alert = max(fire_alert, 2)
 			if(460 to INFINITY)
 				if(on_fire)
 					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
-					fire_alert = max(fire_alert, 2)
 				else
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-					fire_alert = max(fire_alert, 2)
-	return
+	else
+		clear_alert("alien_fire")
 
-/mob/living/carbon/alien/proc/handle_mutations_and_radiation()
 
-	// Aliens love radiation nom nom nom
-	if (radiation)
-		if (radiation > 100)
-			radiation = 100
+/mob/living/carbon/alien/ex_act(severity, target)
+	..()
 
-		if (radiation < 0)
-			radiation = 0
+	switch (severity)
+		if (1.0)
+			gib()
+			return
 
-		switch(radiation)
-			if(0 to 50)
-				radiation--
-				if(prob(25))
-					adjustToxLoss(1)
+		if (2.0)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+			adjustEarDamage(30,120)
 
-			if(50 to 75)
-				radiation -= 2
-				adjustToxLoss(1)
-				if(prob(5))
-					radiation -= 5
+		if(3.0)
+			adjustBruteLoss(30)
+			if (prob(50))
+				Paralyse(1)
+			adjustEarDamage(15,60)
 
-			if(75 to 100)
-				radiation -= 3
-				adjustToxLoss(3)
+	updatehealth()
+
 
 /mob/living/carbon/alien/handle_fire()//Aliens on fire code
 	if(..())

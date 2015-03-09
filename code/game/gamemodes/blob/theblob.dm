@@ -91,7 +91,8 @@
 		if(!B)
 			expand(T,1,a_color)//No blob here so try and expand
 			return
-		B.color = a_color
+		B.adjustcolors(a_color)
+
 		B.Pulse((pulse+1),get_dir(src.loc,T), a_color)
 		return
 	return
@@ -153,7 +154,7 @@
 	L.blob_act()
 
 
-/obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/living/user)
+/obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -195,6 +196,8 @@
 	qdel(src)
 
 /obj/effect/blob/proc/adjustcolors(var/a_color)
+	if(a_color)
+		color = a_color
 	return
 
 /obj/effect/blob/normal

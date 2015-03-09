@@ -30,6 +30,7 @@
 	default_color = "00FF00"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	mutant_bodyparts = list("tail", "snout")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -127,6 +128,7 @@
 	sexes = 0
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/shadow
+	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -152,12 +154,38 @@
 	default_color = "00FFFF"
 	darksight = 3
 	invis_sight = SEE_INVISIBLE_LEVEL_ONE
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
+	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	ignored_by = list(/mob/living/carbon/slime)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
+	exotic_blood = /datum/reagent/toxin/slimejelly
+	var/recently_changed = 1
 
+/datum/species/slime/spec_life(mob/living/carbon/human/H)
+	if(!H.reagents.get_reagent_amount("slimejelly"))
+		if(recently_changed)
+			H.reagents.add_reagent("slimejelly", 80)
+			recently_changed = 0
+		else
+			H.reagents.add_reagent("slimejelly", 5)
+			H.adjustBruteLoss(5)
+			H << "<span class='danger'>You feel empty!</span>"
+
+	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
+		if(S.volume < 100)
+			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
+				H.reagents.add_reagent("slimejelly", 0.5)
+				H.nutrition -= 5
+		if(S.volume < 50)
+			if(prob(5))
+				H << "<span class='danger'>You feel drained!</span>"
+		if(S.volume < 10)
+			H.losebreath++
+
+/datum/species/slime/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "slimejelly")
+		return 1
 /*
  JELLYPEOPLE
 */
@@ -169,9 +197,34 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR)
+	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
+	exotic_blood = /datum/reagent/toxin/slimejelly
+	var/recently_changed = 1
 
+/datum/species/jelly/spec_life(mob/living/carbon/human/H)
+	if(!H.reagents.get_reagent_amount("slimejelly"))
+		if(recently_changed)
+			H.reagents.add_reagent("slimejelly", 80)
+			recently_changed = 0
+		else
+			H.reagents.add_reagent("slimejelly", 5)
+			H.adjustBruteLoss(5)
+			H << "<span class='danger'>You feel empty!</span>"
+
+	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
+		if(S.volume < 100)
+			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
+				H.reagents.add_reagent("slimejelly", 0.5)
+				H.nutrition -= 5
+			else if(prob(5))
+				H << "<span class='danger'>You feel drained!</span>"
+		if(S.volume < 10)
+			H.losebreath++
+
+/datum/species/jelly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "slimejelly")
+		return 1
 /*
  GOLEMS
 */
@@ -226,8 +279,10 @@
 	// 2spooky
 	name = "Spooky Scary Skeleton"
 	id = "skeleton"
+	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/skeleton
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
 /*
  ZOMBIES
 */
@@ -239,6 +294,7 @@
 	say_mod = "moans"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/zombie
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
 
 /datum/species/zombie/handle_speech(message)
 	var/list/message_list = text2list(message, " ")

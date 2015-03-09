@@ -28,6 +28,10 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
+/obj/item/weapon/wrench/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 /*
  * Screwdriver
@@ -126,6 +130,11 @@
 	else
 		..()
 
+/obj/item/weapon/wirecutters/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
+	return (BRUTELOSS)
+
 /*
  * Welding Tool
  */
@@ -177,7 +186,7 @@
 	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
 
 
-/obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user)
+/obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		flamethrower_screwdriver(I, user)
 	if(istype(I, /obj/item/stack/rods))
@@ -302,13 +311,13 @@
 		return
 	welding = !welding
 	if(welding)
-		if(remove_fuel(1))
+		if(get_fuel() >= 1)
 			user << "<span class='notice'>You switch [src] on.</span>"
 			force = 15
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			icon_state = "welder1"
-			SSobj.processing.Add(src)
+			SSobj.processing |= src
 		else
 			user << "<span class='notice'>You need more fuel.</span>"
 			welding = 0
@@ -446,6 +455,11 @@
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+
+/obj/item/weapon/crowbar/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 /obj/item/weapon/crowbar/red
 	icon = 'icons/obj/items.dmi'

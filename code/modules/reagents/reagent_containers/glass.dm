@@ -88,6 +88,21 @@
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
 
+/obj/item/weapon/reagent_containers/glass/attackby(var/obj/item/I, mob/user as mob, params)
+	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
+		return
+	var/hotness = is_hot(I)
+	if(hotness)
+		var/added_heat = (hotness / 100) //ishot returns a temperature
+		if(reagents)
+			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
+				reagents.chem_temp += added_heat
+				user << "<span class='notice'>You heat [src] with [I].</span>"
+				reagents.handle_reactions()
+			else
+				user << "<span class='warning'>[src] is already hotter than [I].</span>"
+	..()
+
 
 /obj/item/weapon/reagent_containers/glass/beaker
 	name = "beaker"
@@ -204,10 +219,12 @@
 	volume = 70
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob, params)
 	if(isprox(D))
 		user << "<span class='notice'>You add [D] to [src].</span>"
 		qdel(D)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.unEquip(src)
 		qdel(src)
+	else
+		..()

@@ -32,13 +32,19 @@
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
 		user << "<span class='notice'>This wall is too thick to slice through. You will need to find a different path.</span>"
 		return 1
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
-		user << "<span class='notice'>You begin to drill though the wall.</span>"
-		if(do_after(user, 200))
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
+		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
+		if(!D.bcell.use(800))
+			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
+			return 1
+		user << "<span class='notice'>You begin to smash though the [name].</span>"
+		if(do_after(user, 50))
 			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 				return 1
 			if( user.loc == T && user.get_active_hand() == W )
-				user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
+				D.update_icon()
+				D.playDigSound()
+				visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
 				dismantle_wall()
 				return 1
 	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)

@@ -37,7 +37,7 @@
 		icon_state = "[base_state]1-p"
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		if (bulb)
 			user.visible_message("<span class='warning'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='warning'>You begin to disconnect [src]'s flashbulb.</span>")
@@ -127,7 +127,7 @@
 		bulb.burn_out()
 		power_change()
 
-/obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
@@ -151,7 +151,7 @@
 /obj/machinery/flasher_button/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user, params)
 	return attack_hand(user)
 
 /obj/machinery/flasher_button/attack_hand(mob/user)

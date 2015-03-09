@@ -149,19 +149,10 @@
 		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")
 
 /proc/admin_forcemove(var/mob/mover, var/atom/newloc)
-	var/startdensity = mover.density
-	var/startflags = mover.pass_flags
-	var/startincorporeal = 0
-	if(istype(mover, /mob/living))
-		var/mob/living/L = mover
-		startincorporeal = L.incorporeal_move
-		L.incorporeal_move = 1
-	mover.density = 0
-	mover.pass_flags = ALL
-	newloc.density = 0
-	. = mover.Move(newloc)
-	mover.density = startdensity
-	mover.pass_flags = startflags
-	if(istype(mover, /mob/living))
-		var/mob/living/L = mover
-		L.incorporeal_move = startincorporeal
+	mover.loc = newloc
+	mover.on_forcemove(newloc)
+
+/mob/proc/on_forcemove(var/atom/newloc)
+	return
+
+

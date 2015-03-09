@@ -12,6 +12,9 @@
 	var/obj/item/weapon/disk/nuclear/the_disk = null
 	var/active = 0
 
+/obj/item/weapon/pinpointer/Destroy()
+	active = 0
+	..()
 
 /obj/item/weapon/pinpointer/attack_self()
 	if(!active)
@@ -239,7 +242,8 @@
 			if(16 to INFINITY)
 				icon_state = "pinonfar"
 
-	spawn(5) .()
+	spawn(5)
+		.()
 
 /obj/item/weapon/pinpointer/operative
 	name = "operative pinpointer"

@@ -26,7 +26,7 @@
 	overlays += "clipboard_over"
 
 
-/obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/paper))
 		user.drop_item()
 		W.loc = src

@@ -119,23 +119,13 @@
 		var/multiplier = text2num(href_list["multiplier"])
 		if (!multiplier ||(multiplier <= 0)) //href protection
 			return
-		if (src.get_amount() < R.req_amount*multiplier)
-			if (R.req_amount*multiplier>1)
-				usr << "<span class='danger'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
-			else
-				usr << "<span class='danger'>You haven't got enough [src] to build \the [R.title]!</span>"
-			return
-		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			usr << "<span class='danger'>There is another [R.title] here!</span>"
-			return
-		if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
-			usr << "<span class='danger'>\The [R.title] must be constructed on the floor!</span>"
+		if(!building_checks(R, multiplier))
 			return
 		if (R.time)
 			usr << "<span class='notice'>Building [R.title] ...</span>"
 			if (!do_after(usr, R.time))
 				return
-			if (src.get_amount() < R.req_amount*multiplier)
+			if(!building_checks(R, multiplier))
 				return
 
 		var/atom/O = new R.result_type( usr.loc )
@@ -167,6 +157,21 @@
 			return
 	return
 
+/obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
+	if (src.get_amount() < R.req_amount*multiplier)
+		if (R.req_amount*multiplier>1)
+			usr << "<span class='danger'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
+		else
+			usr << "<span class='danger'>You haven't got enough [src] to build \the [R.title]!</span>"
+		return 0
+	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
+		usr << "<span class='danger'>There is another [R.title] here!</span>"
+		return 0
+	if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
+		usr << "<span class='danger'>\The [R.title] must be constructed on the floor!</span>"
+		return 0
+	return 1
+
 /obj/item/stack/proc/use(var/used) // return 0 = borked; return 1 = had enough
 	if (is_cyborg)
 		return source.use_charge(used * cost)
@@ -177,6 +182,7 @@
 		if(usr)
 			usr.unEquip(src, 1)
 		qdel(src)
+	update_icon()
 	return 1
 
 /obj/item/stack/proc/add(var/amount)
@@ -184,6 +190,7 @@
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
+	update_icon()
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
 	var/obj/item/stack/oldsrc = src
@@ -199,6 +206,7 @@
 		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
 		if(oldsrc.amount <= 0)
 			break
+	oldsrc.update_icon()
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
@@ -214,7 +222,7 @@
 		..()
 	return
 
-/obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/stack/attackby(obj/item/W as obj, mob/user as mob, params)
 
 	if (istype(W, src.type))
 		var/obj/item/stack/S = W
@@ -240,6 +248,7 @@
 			src.use(to_transfer)
 			if (src && usr.machine==src)
 				spawn(0) src.interact(usr)
+			S.update_icon()
 
 	else
 		..()

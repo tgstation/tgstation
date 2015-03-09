@@ -204,7 +204,7 @@
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
 	..()
 
-/turf/simulated/mineral/gibtonite/attackby(obj/item/I, mob/user)
+/turf/simulated/mineral/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && stage == 1)
 		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
@@ -381,7 +381,7 @@
 				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
 	return
 
-/turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob)
+/turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob, params)
 
 	if (!user.IsAdvancedToolUser())
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
@@ -391,23 +391,29 @@
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
-/*
-	if (istype(W, /obj/item/weapon/pickaxe/radius))
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
-			return
-*/
-//Watch your tabbing, microwave. --NEO
+
+		if(istype(P, /obj/item/weapon/pickaxe/drill))
+			var/obj/item/weapon/pickaxe/drill/D = P
+			if(isrobot(user))
+				var/mob/living/silicon/robot/R = user
+				if(!R.cell.use(D.drillcost))
+					R << "<span class='notice'>Your [D.name] doesn't have enough charge.</span>"
+					return
+			if(!D.bcell.use(D.drillcost))
+				user << "<span class='notice'>Your [D.name] doesn't have enough charge.</span>"
+				return
+
 		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
 		user << "<span class='danger'>You start picking.</span>"
-		//playsound(user, 'sound/weapons/Genhit.ogg', 20, 1)
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed))
-			user << "<span class='notice'>You finish cutting into the rock.</span>"
-			gets_drilled(user)
+			if(istype(src, /turf/simulated/mineral)) //sanity check against turf being deleted during digspeed delay
+				user << "<span class='notice'>You finish cutting into the rock.</span>"
+				P.update_icon()
+				gets_drilled(user)
 	else
 		return attack_hand(user)
 	return
@@ -519,7 +525,7 @@
 			src.gets_dug()
 	return
 
-/turf/simulated/floor/plating/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/floor/plating/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0
@@ -536,45 +542,30 @@
 		user << "<span class='danger'>You start digging.</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
-		sleep(40)
+		sleep(20)
 		if ((user.loc == T && user.get_active_hand() == W))
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 			return
 
-	if ((istype(W,/obj/item/weapon/pickaxe/drill)))
+	if ((istype(W, /obj/item/weapon/pickaxe)))
+		var/obj/item/weapon/pickaxe/P = W
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
 
 		if (dug)
-			user << "<span class='warning'>This area has already been dug.</span>"
+			user << "<span class='danger'>This area has already been dug.</span>"
 			return
 
 		user << "<span class='danger'>You start digging.</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
-		sleep(30)
+		sleep(P.digspeed)
 		if ((user.loc == T && user.get_active_hand() == W))
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
-
-	if ((istype(W,/obj/item/weapon/pickaxe/drill/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/jackhammer/borgdrill)))
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
 			return
-
-		if (dug)
-			user << "<span class='warning'>This area has already been dug.</span>"
-			return
-
-		user << "<span class='danger'>You start digging.</span>"
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
-
-		sleep(0)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dug a hole.</span>"
-			gets_dug()
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W

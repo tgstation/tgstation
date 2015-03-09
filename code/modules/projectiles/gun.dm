@@ -20,16 +20,23 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
-	var/suppressed = 0
+	var/suppressed = 0					//whether or not a message is displayed when fired
 	var/can_suppress = 0
-	var/recoil = 0
+	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
-	var/trigger_guard = 1
-	var/sawn_desc = null
+	var/trigger_guard = 1				//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
+	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_state = SAWN_INTACT
-	var/burst_size = 1
-	var/fire_delay = 0
+	var/burst_size = 1					//how large a burst is
+	var/fire_delay = 0					//rate of fire for burst firing and semi auto
+	var/semicd = 0						//cooldown handler
+	var/heavy_weapon = 0
+
+	var/unique_rename = 0 //allows renaming with a pen
+	var/unique_reskin = 0 //allows one-time reskinning
+	var/reskinned = 0 //whether or not the gun has been reskinned
+	var/list/options = list()
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -39,6 +46,7 @@
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
 
+	var/list/upgrades = list()
 
 /obj/item/weapon/gun/New()
 	..()
@@ -86,6 +94,11 @@
 		else
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
+	if(heavy_weapon)
+		if(user.get_inactive_hand())
+			if(prob(15))
+				user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
+				user.drop_item()
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -152,14 +165,40 @@
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	add_fingerprint(user)
 
-	for(var/i = 1 to burst_size)
-		if(!issilicon(user))
-			if( i>1 && !(src in get_both_hands(user))) //for burst firing
+	if(semicd)
+		return
+
+	if(heavy_weapon)
+		if(user.get_inactive_hand())
+			recoil = 4 //one-handed kick
+		else
+			recoil = initial(recoil)
+
+	if(burst_size > 1)
+		for(var/i = 1 to burst_size)
+			if(!issilicon(user))
+				if( i>1 && !(src in get_both_hands(user))) //for burst firing
+					break
+			if(chambered)
+				if(!chambered.fire(target, user, params, , suppressed))
+					shoot_with_empty_chamber(user)
+					break
+				else
+					if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+						shoot_live_shot(user, 1, target, message)
+					else
+						shoot_live_shot(user, 0, target, message)
+			else
+				shoot_with_empty_chamber(user)
 				break
+			process_chamber()
+			update_icon()
+			sleep(fire_delay)
+	else
 		if(chambered)
 			if(!chambered.fire(target, user, params, , suppressed))
 				shoot_with_empty_chamber(user)
-				break
+				return
 			else
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 					shoot_live_shot(user, 1, target, message)
@@ -167,10 +206,12 @@
 					shoot_live_shot(user, 0, target, message)
 		else
 			shoot_with_empty_chamber(user)
-			break
+			return
 		process_chamber()
 		update_icon()
-		sleep(fire_delay)
+		semicd = 1
+		spawn(fire_delay)
+			semicd = 0
 
 	if(user.hand)
 		user.update_inv_l_hand(0)
@@ -184,7 +225,7 @@
 	else
 		return
 
-/obj/item/weapon/gun/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	if(istype(A, /obj/item/device/flashlight/seclite))
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)
@@ -215,6 +256,11 @@
 				S.update_brightness(user)
 				update_icon()
 				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
+
+	if(unique_rename)
+		if(istype(A, /obj/item/weapon/pen))
+			rename_gun(user)
+
 	..()
 	return
 
@@ -269,3 +315,32 @@
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+
+
+/obj/item/weapon/gun/attack_hand(mob/user as mob)
+	if(unique_reskin && !reskinned && loc == user)
+		reskin_gun(user)
+		return
+	..()
+
+/obj/item/weapon/gun/proc/reskin_gun(var/mob/M)
+	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
+
+	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
+		if(options[choice] == null)
+			return
+		if(sawn_state == SAWN_OFF)
+			icon_state = options[choice] + "-sawn"
+		else
+			icon_state = options[choice]
+		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
+		reskinned = 1
+		return
+
+/obj/item/weapon/gun/proc/rename_gun(var/mob/M)
+	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
+
+	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
+		name = input
+		M << "You name the gun [input]. Say hello to your new friend."
+		return

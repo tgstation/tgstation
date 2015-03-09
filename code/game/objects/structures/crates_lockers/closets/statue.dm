@@ -16,8 +16,7 @@
 
 	if(ishuman(L) || ismonkey(L) || iscorgi(L))
 		if(L.buckled)
-			L.buckled = 0
-			L.anchored = 0
+			L.buckled.unbuckle_mob()
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE
 			L.client.eye = src
@@ -46,7 +45,7 @@
 		qdel(src)
 		return
 
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	..()
 
 /obj/structure/closet/statue/process()
@@ -124,7 +123,7 @@
 	for(var/mob/M in src)
 		shatter(M)
 
-/obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob, params)
 	health -= I.force
 	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
 	if(health <= 0)

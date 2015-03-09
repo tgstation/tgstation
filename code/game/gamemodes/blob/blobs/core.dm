@@ -11,7 +11,8 @@
 
 /obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2)
 	blob_cores += src
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
+	adjustcolors(color) //so it atleast appears
 	if(!overmind)
 		create_overmind(new_overmind)
 	if(overmind)
@@ -21,6 +22,7 @@
 
 
 /obj/effect/blob/core/adjustcolors(var/a_color)
+	overlays.Cut()
 	color = null
 	var/image/I = new('icons/mob/blob.dmi', "blob")
 	I.color = a_color

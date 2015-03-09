@@ -23,7 +23,7 @@
 /obj/structure/kitchenspike/attack_paw(mob/user as mob)
 	return src.attack_hand(usr)
 
-/obj/structure/kitchenspike/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+/obj/structure/kitchenspike/attackby(obj/item/weapon/grab/G as obj, mob/user as mob, params)
 	if(!istype(G, /obj/item/weapon/grab))
 		return
 	if(istype(G.affecting, /mob/living/carbon/monkey))
@@ -90,11 +90,11 @@
 				user << "You remove the hide from the alien!"
 			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/xenomeat(src.loc )
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/xeno(src.loc )
 				usr << "You remove some meat from the alien."
 			else if(src.meat == 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/xenomeat(src.loc)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/xeno(src.loc)
 				usr << "You remove the last piece of meat from the alien!"
 				src.icon_state = "spike"
 				src.occupied = 0
