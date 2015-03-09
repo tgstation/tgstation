@@ -126,12 +126,16 @@ datum/reagent/goonchem/crank/addiction_act_stage4(var/mob/living/M as mob)
 	M.adjustBruteLoss(3*REM)
 	..()
 	return
-/datum/reagent/goonchem/krokodil/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
-	M << "<span class='userdanger'>Your skin sloughs off!</span>"
-	M.adjustBruteLoss(rand(50,80)*REM)
+
+/datum/reagent/krokodil/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
+	if(!istype(M.dna.species, /datum/species/cosmetic_zombie))
+		M << "<span class='userdanger'>Your skin falls off easily!</span>"
+		M.adjustBruteLoss(rand(50,80)*REM) // holy shit your skin just FELL THE FUCK OFF
+		hardset_dna(M, null, null, null, null, /datum/species/cosmetic_zombie)
+	else
+		M.adjustBruteLoss(5*REM)
 	..()
 	return
-
 /datum/chemical_reaction/krokodil
 	name = "Krokodil"
 	id = "krokodil"
