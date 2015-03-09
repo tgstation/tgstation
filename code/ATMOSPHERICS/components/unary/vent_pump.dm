@@ -144,6 +144,11 @@
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency,radio_filter_in)
 
+/obj/machinery/atmospherics/unary/vent_pump/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+	..()
+	src.broadcast_status()
+	return 1
+
 /obj/machinery/atmospherics/unary/vent_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
