@@ -178,7 +178,7 @@
 /datum/disease/transformation/slime
 	name = "Advanced Mutation Transformation"
 	cure_text = "frost oil"
-	cures = list("cryostylane")
+	cures = list("frostoil")
 	cure_chance = 80
 	agent = "Advanced Mutation Toxin"
 	desc = "This highly concentrated extract converts anything into more of itself."

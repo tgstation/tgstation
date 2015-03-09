@@ -238,7 +238,7 @@ silicate
 	name = "Solid Plasma"
 	id = "solidplasma"
 	result = null
-	required_reagents = list("iron" = 5, "cryostylane" = 5, "plasma" = 20)
+	required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
 	result_amount = 1
 	mob_react = 1
 
@@ -609,8 +609,8 @@ datum/chemical_reaction/pestkiller
 //Blue
 /datum/chemical_reaction/slimefrost
 	name = "Slime Frost Oil"
-	id = "m_cryostylane"
-	result = "cryostylane"
+	id = "m_frostoil"
+	result = "frostoil"
 	required_reagents = list("plasma" = 1)
 	result_amount = 10
 	required_container = /obj/item/slime_extract/blue

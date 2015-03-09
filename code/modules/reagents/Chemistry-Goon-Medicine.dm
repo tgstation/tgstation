@@ -17,7 +17,6 @@ datum/reagent/goonchem/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob,
 		M.adjustFireLoss(-volume)
 		if(show_message)
 			M << "<span class='notice'>You feel your burns healing!</span>"
-		M.emote("scream")
 	if(method == INGEST)
 		M.adjustToxLoss(0.5*volume)
 		if(show_message)
@@ -101,7 +100,7 @@ datum/reagent/goonchem/charcoal
 datum/reagent/goonchem/charcoal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(-3*REM)
-	for(var/datum/reagent/goonchem/R in M.reagents.reagent_list)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
 			M.reagents.remove_reagent(R.id,1)
 	..()
@@ -180,7 +179,7 @@ datum/reagent/goonchem/calomel
 
 datum/reagent/goonchem/calomel/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	for(var/datum/reagent/goonchem/R in M.reagents.reagent_list)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
 			M.reagents.remove_reagent(R.id,5)
 	if(M.health > 20)
@@ -236,7 +235,7 @@ datum/reagent/goonchem/pen_acid/on_mob_life(var/mob/living/M as mob)
 		M.adjustBruteLoss(1*REM)
 	if(M.radiation < 0)
 		M.radiation = 0
-	for(var/datum/reagent/goonchem/R in M.reagents.reagent_list)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
 			M.reagents.remove_reagent(R.id,4)
 	..()

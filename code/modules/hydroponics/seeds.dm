@@ -475,11 +475,11 @@
 	growthstages = 4
 
 /obj/item/seeds/icepepperseed
-	name = "pack of chilly pepper seeds"
-	desc = "These seeds grow into chilly pepper plants."
+	name = "pack of ice pepper seeds"
+	desc = "These seeds grow into ice pepper plants."
 	icon_state = "seed-icepepper"
 	species = "chiliice"
-	plantname = "Chilly Pepper Plants"
+	plantname = "Ice Pepper Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	lifespan = 25
 	endurance = 15

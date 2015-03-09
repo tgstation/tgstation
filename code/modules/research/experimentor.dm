@@ -408,7 +408,7 @@
 			visible_message("<span class='notice'>[src]'s emergency coolant system gives off a small ding!</span>")
 			var/obj/machinery/vending/coffee/C = new /obj/machinery/vending/coffee(get_turf(pick(oview(1,src))))
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //Ding! Your death coffee is ready!
-			chosenchem = pick("uranium","cryostylane","ephedrine")
+			chosenchem = pick("uranium","frostoil","ephedrine")
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
@@ -418,8 +418,8 @@
 			visible_message("<span class='notice'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
-			R.add_reagent("cryostylane" , 50)
-			investigate_log("Experimentor has released cryostylane gas.", "experimentor")
+			R.add_reagent("frostoil" , 50)
+			investigate_log("Experimentor has released frostoil gas.", "experimentor")
 			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
