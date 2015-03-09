@@ -109,7 +109,7 @@
 	desc = "If you can see this, please file a bug report via the Report Issue button in the top right corner"
 	ammo_type = /obj/item/ammo_casing/caseless/gatling
 	caliber = "gatling"
-	max_ammo = 400
+	max_ammo = 800 //400 bullets is surprisingly little when you're actually using the thing
 
 
 ///////////EXTERNAL MAGAZINES////////////////

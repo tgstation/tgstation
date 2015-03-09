@@ -62,36 +62,36 @@
 				if("speargun")
 					new /obj/item/weapon/gun/projectile/automatic/speargun(get_turf(H))
 				if("cannon")
-					var/obj/item/weapon/gun/energy/lasercannon/gat
-					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.
-					new gat(get_turf(H))
+					var/obj/item/weapon/gun/energy/lasercannon/gat = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.
+
 				if("crossbow")
 					var/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large/gat = new(get_turf(H))
-					gat.pin = /obj/item/device/firing_pin
+					gat.pin = new /obj/item/device/firing_pin
 
 				if("nuclear")
 					var/obj/item/weapon/gun/energy/gun/nuclear/gat = new(get_turf(H))
-					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed. PRAISE THE CODERBUS
+					gat.pin = new /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed. PRAISE THE CODERBUS
 
 				if("sabr")
 					var/obj/item/weapon/gun/projectile/automatic/gat = new(get_turf(H))
-					gat.pin = /obj/item/device/firing_pin
+					gat.pin = new /obj/item/device/firing_pin
 
 				if("bulldog")
 					var/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/gat = new(get_turf(H))
-					gat.pin = /obj/item/device/firing_pin
+					gat.pin = new /obj/item/device/firing_pin
 
 				if("c20r")
 					var/obj/item/weapon/gun/projectile/automatic/c20r/gat = new(get_turf(H))
-					gat.pin = /obj/item/device/firing_pin
+					gat.pin = new /obj/item/device/firing_pin
 
 				if("saw")
 					var/obj/item/weapon/gun/projectile/automatic/l6_saw/gat = new(get_turf(H))
-					gat.pin = /obj/item/device/firing_pin
+					gat.pin = new /obj/item/device/firing_pin
 
 				if("car")
 					var/obj/item/weapon/gun/projectile/automatic/m90/gat = new(get_turf(H))
-					gat.pin = /obj/item/device/firing_pin
+					gat.pin = new /obj/item/device/firing_pin
 
 				if("boltaction")
 					new /obj/item/weapon/gun/projectile/shotgun/boltaction(get_turf(H))

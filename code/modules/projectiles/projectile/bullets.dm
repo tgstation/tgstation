@@ -13,7 +13,7 @@
 	stamina = 80
 
 /obj/item/projectile/bullet/weakbullet1  //used in gatling guns, low damage, low stamina - people will almost never be hit by less than 5 of these, and people who don't move might get 20 at once
-	damage = 7
+	damage = 10
 
 
 /obj/item/projectile/bullet/weakbullet2 //detective revolver instastuns, but multiple shots are better for keeping punks down

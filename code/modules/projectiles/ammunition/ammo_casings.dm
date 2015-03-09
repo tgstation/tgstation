@@ -179,7 +179,7 @@
 	name = "minigun round casing"
 	projectile_type = /obj/item/projectile/bullet/weakbullet1
 	caliber = "minigun"
-
+	variance = 0.5
 
 
 

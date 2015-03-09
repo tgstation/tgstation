@@ -248,7 +248,7 @@
 	burst_size = 4
 	fire_delay = 1
 
-//////////////////GATLING GUN//////////////////
+//////////////////GATLING GUN////////////////// Total damage potential: 4000
 
 /obj/item/weapon/gun/projectile/automatic/gatling
 	name = "syndicate minigun"
@@ -309,8 +309,9 @@
 		..()
 
 	else if(select == 0)
-		usr << "<span class='warning'>The minigun must be spun up to shoot!</span>"
-		sleep (15) 									//punishment for not being spun up already is a delay to fire
+		usr << "<span class='warning'>You try to fire, but realise the minigun is not on!</span>"
+		usr << "<span class='warning'>You fumble for the spin-up trigger!</span>"
+		sleep (10) 									//punishment for not being spun up already is a delay to fire
 		spin_up()
 
 /obj/item/weapon/gun/projectile/automatic/gatling/dropped()
