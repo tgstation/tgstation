@@ -741,7 +741,7 @@
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_carp = 3,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori = 1,
 					/obj/item/weapon/storage/box/matches = 10,
-					/obj/item/weapon/lighter/random = 4,
+					/obj/item/weapon/lighter/grayscale = 4,
 					/obj/item/weapon/storage/fancy/rollingpapers = 5)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2, /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold = 1)

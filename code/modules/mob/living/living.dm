@@ -450,6 +450,8 @@ Sorry Giacom. Please don't be mad :(
 	if(ishuman(src))
 		var/mob/living/carbon/human/human_mob = src
 		human_mob.restore_blood()
+		human_mob.remove_all_embedded_objects()
+
 	update_fire()
 	regenerate_icons()
 	..()

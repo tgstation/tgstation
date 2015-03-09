@@ -160,9 +160,9 @@
 /datum/chemical_reaction/blackpowder_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
 	sleep(rand(50,100))
 	var/turf/simulated/T = get_turf(holder.my_atom)
-	var/ex_severe = round(created_volume / 10)
-	var/ex_heavy = round(created_volume / 8)
-	var/ex_light = round(created_volume / 6)
-	var/ex_flash = round(created_volume / 4)
+	var/ex_severe = round(created_volume / 100)
+	var/ex_heavy = round(created_volume / 42)
+	var/ex_light = round(created_volume / 21)
+	var/ex_flash = round(created_volume / 8)
 	explosion(T,ex_severe,ex_heavy,ex_light,ex_flash, 1)
 	return

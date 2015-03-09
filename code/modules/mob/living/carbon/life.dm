@@ -151,7 +151,7 @@
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1
-		oxygen_alert = max(oxygen_alert, 1)
+		throw_alert("oxy")
 
 		return 0
 
@@ -181,13 +181,13 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		oxygen_alert = max(oxygen_alert, 1)
+		throw_alert("oxy")
 
 	else //Enough oxygen
 		failed_last_breath = 0
 		adjustOxyLoss(-5)
 		oxygen_used = breath.oxygen/6
-		oxygen_alert = 0
+		clear_alert("oxy")
 
 	breath.oxygen -= oxygen_used
 	breath.carbon_dioxide += oxygen_used
@@ -212,9 +212,9 @@
 		var/ratio = (breath.toxins/safe_tox_max) * 10
 		if(reagents)
 			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		toxins_alert = max(toxins_alert, 1)
+		throw_alert("tox_in_air")
 	else
-		toxins_alert = 0
+		clear_alert("tox_in_air")
 
 	//TRACE GASES
 	if(breath.trace_gases.len)
@@ -235,16 +235,6 @@
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-	if(breath.temperature > (T0C+66)) // Hot air hurts :(
-		if(prob(20))
-			src << "<span class='danger'>You feel a searing heat in your lungs!</span>"
-		fire_alert = max(fire_alert, 2)
-	else
-		fire_alert = 0
-	if(breath.temperature < (T0C-20))
-		if(prob(20))
-			src << "<span class='danger'>You feel your face freezing and an icicle forming in your lungs!</span>"
-	return
 
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)

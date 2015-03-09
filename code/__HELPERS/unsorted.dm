@@ -776,7 +776,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		sleep(timefraction)
 		if(!user || !target)
 			return 0
-		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.stat || ( user.stunned || user.weakened || user.paralysis || user.lying ) )
+		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			return 0
 
 	return 1
@@ -798,7 +798,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		sleep(delayfraction)
 
 
-		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T))
+		if(!user || user.incapacitated() || !(user.loc == T))
 			return 0
 
 		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
@@ -1490,3 +1490,14 @@ var/list/WALLITEMS = list(
 		if(mob in living_mob_list)
 			living_player_count += 1
 	return living_player_count
+
+/proc/randomColor(var/mode = 0)	//if 1 it doesn't pick white, black or gray
+	switch(mode)
+		if(0)
+			return pick("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
+						"crimson","lime","darkgreen","cyan","navy","teal","purple","indigo")
+		if(1)
+			return pick("red","green","blue","brown","yellow","orange","darkred","crimson",
+						"lime","darkgreen","cyan","navy","teal","purple","indigo")
+		else
+			return "white"

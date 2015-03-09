@@ -309,10 +309,17 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 
 	..()
 
-/obj/item/clothing/under/verb/rolldown()
+/obj/item/clothing/under/AltClick()
+	..()
+	rolldown()
+
+/obj/item/clothing/under/verb/jumpsuit_adjust()
 	set name = "Adjust Jumpsuit Style"
-	set category = "Object"
+	set category = null
 	set src in usr
+	rolldown()
+
+/obj/item/clothing/under/proc/rolldown()
 	if(!can_use(usr))
 		return
 	if(!can_adjust)
@@ -331,6 +338,13 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 		src.adjusted = 1
 	usr.update_inv_w_uniform()
 	..()
+
+/obj/item/clothing/under/examine(mob/user)
+	..()
+	if(src.adjusted)
+		user << "Alt-click on [src] to wear it normally."
+	else
+		user << "Alt-click on [src] to wear it casually."
 
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"

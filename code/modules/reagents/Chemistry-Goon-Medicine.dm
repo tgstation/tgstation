@@ -618,7 +618,6 @@ datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob,
 			living_mob_list |= list(M)
 			M.emote("gasp")
 			add_logs(M, M, "revived", object="strange reagent")
-			hardset_dna(M, null, null, null, null, /datum/species/zombie)
 	..()
 	return
 datum/reagent/strange_reagent/on_mob_life(var/mob/living/M as mob)

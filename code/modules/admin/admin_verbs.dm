@@ -118,7 +118,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/callproc_datum,
 	/client/proc/SDQL2_query,
 	/client/proc/test_movable_UI,
-	/client/proc/test_snap_UI
+	/client/proc/test_snap_UI,
+	/client/proc/debugNatureMapGenerator
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

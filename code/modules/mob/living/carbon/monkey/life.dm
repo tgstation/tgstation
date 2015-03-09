@@ -71,16 +71,16 @@
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			pressure_alert = 2
+			throw_alert("pressure","highpressure",2)
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			pressure_alert = 1
+			throw_alert("pressure","highpressure",1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			pressure_alert = 0
+			clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			pressure_alert = -1
+			throw_alert("pressure","lowpressure",1)
 		else
 			adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-			pressure_alert = -2
+			throw_alert("pressure","lowpressure",2)
 
 	return
 
@@ -97,8 +97,7 @@
 
 	handle_hud_icons_health()
 
-	if(pressure)
-		pressure.icon_state = "pressure[pressure_alert]"
+
 
 	if(pullin)
 		if(pulling)
@@ -106,30 +105,7 @@
 		else
 			pullin.icon_state = "pull0"
 
-	if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
-	if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-	if (fire) fire.icon_state = "fire[fire_alert ? 2 : 0]"
-
-	if(bodytemp)
-		switch(bodytemperature) //310.055 optimal body temp
-			if(345 to INFINITY)
-				bodytemp.icon_state = "temp4"
-			if(335 to 345)
-				bodytemp.icon_state = "temp3"
-			if(327 to 335)
-				bodytemp.icon_state = "temp2"
-			if(316 to 327)
-				bodytemp.icon_state = "temp1"
-			if(300 to 316)
-				bodytemp.icon_state = "temp0"
-			if(295 to 300)
-				bodytemp.icon_state = "temp-1"
-			if(280 to 295)
-				bodytemp.icon_state = "temp-2"
-			if(260 to 280)
-				bodytemp.icon_state = "temp-3"
-			else
-				bodytemp.icon_state = "temp-4"
+	//blame the person who coded them. Temporary fix added.
 
 	return 1
 
