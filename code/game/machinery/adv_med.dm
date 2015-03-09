@@ -449,6 +449,8 @@
 			mech = "Assisted:"
 		if(i.robotic == 2)
 			mech = "Mechanical:"
+		if(istype(i,/datum/organ/internal/mami))
+			mech = "Error: Non-Organic Brain Detected?"
 
 		var/infection = "None"
 		switch (i.germ_level)
