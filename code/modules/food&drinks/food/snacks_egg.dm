@@ -16,21 +16,6 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	filling_color = "#F0E68C"
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/afterattack(obj/target, mob/user, proximity)
-	if(!proximity)
-		return
-
-	if(istype(target, /obj/item/weapon/reagent_containers))
-		if(target.is_open_container() && target.reagents)
-
-			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "<span class='notice'>[target] is full.</span>"
-			else
-				user << "<span class='notice'>You break [src] in [target].</span>"
-				target.reagents.add_reagent("eggyolk", 5)
-				qdel(src)
-			return
-
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
 	new/obj/effect/decal/cleanable/egg_smudge(src.loc)
