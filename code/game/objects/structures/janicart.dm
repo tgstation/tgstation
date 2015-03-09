@@ -258,8 +258,8 @@
 			if(A != src && A != M)
 				return
 	M.loc = loc //we move the mob on the janicart's turf before checking if we can buckle.
-	if(..())
-		update_mob()
+	..()
+	update_mob()
 
 /obj/structure/stool/bed/chair/janicart/unbuckle_mob()
 	if(buckled_mob)
