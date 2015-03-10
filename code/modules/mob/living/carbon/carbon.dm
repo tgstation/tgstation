@@ -133,8 +133,6 @@
 	else
 		mode() // Activate held item
 
-
-
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(health >= 0)
 
@@ -153,11 +151,6 @@
 		AdjustWeakened(-3)
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-
-
-
-
-
 
 /mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0)
 	var/damage = intensity - check_eye_prot()
@@ -194,58 +187,6 @@
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
-
-
-
-
-
-/*
-
-
-				var/eye_prot = C.check_eye_prot()
-				if(C.eye_blind || eye_prot >= 2)
-					eye_prot = 4
-				var/severity = 3 - eye_prot
-				if(prob(33))
-					severity += 1
-				else if(prob(50))
-					severity -= 1
-				severity = min(max(severity, 0), 4)
-
-				switch(severity)
-					if(0)
-						//no effect
-						C << "<span class='info'>A small, bright dot appears in your vision.</span>"
-					if(1)
-						//industrial grade eye protection
-						C.eye_stat += rand(0, 2)
-						C << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
-					if(2)
-						//basic eye protection (sunglasses)
-						flick("flash", C.flash)
-						C.eye_stat += rand(1, 6)
-						C << "<span class='danger'>Your eyes were blinded!</span>"
-					if(3)
-						//no eye protection
-						if(prob(2))
-							C.Weaken(1)
-						flick("e_flash", C.flash)
-						C.eye_stat += rand(3, 7)
-						C << "<span class='danger'>Your eyes were blinded!</span>"
-					if(4)
-						//the effect has been worsened by something
-						if(prob(5))
-							C.Weaken(1)
-						flick("e_flash", C.flash)
-						C.eye_stat += rand(5, 10)
-						C << "<span class='danger'>Your eyes were blinded!</span>"
-
-
-
-
-*/
-
-
 
 /mob/living/carbon/proc/tintcheck()
 	return 0

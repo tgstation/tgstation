@@ -640,8 +640,7 @@ datum/chemical_reaction/pestkiller
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-		if(M:check_eye_prot() <= 0)
-			flick("e_flash", M.flash)
+		M.flash_eyes()
 
 	for(var/i = 1, i <= 4 + rand(1,2), i++)
 		var/chosen = pick(borks)
