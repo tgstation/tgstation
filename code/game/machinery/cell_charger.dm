@@ -10,7 +10,7 @@
 	active_power_usage = 10 //Power is already drained to charge batteries
 	power_channel = EQUIP
 	var/obj/item/weapon/cell/charging = null
-	var/transfer_rate = 25 //How much power do we output every process tick ?
+	var/transfer_rate = 200 //How much power do we output every process tick ?
 	var/transfer_efficiency = 0.7 //How much power ends up in the battery in percentage ?
 	var/chargelevel = -1
 
@@ -114,7 +114,7 @@
 		return
 
 	if(emagged) //Did someone fuck with the charger ?
-		use_power(transfer_rate*100) //Drain all the power
+		use_power(transfer_rate*10) //Drain all the power
 		charging.give(transfer_rate*transfer_efficiency*0.25) //Lose most of it
 	else
 		use_power(transfer_rate) //Snatch some power
