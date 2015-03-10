@@ -1,8 +1,10 @@
+#define STUN_SET_AMOUNT	2
+
 /obj/item/cybernetic_implant
 	name = "cybernetic implant"
 	desc = "a state-of-the-art implant that improves a baseline's functionality"
 	icon = 'icons/obj/surgery.dmi'
-	var/mob/owner = null
+	var/mob/living/carbon/owner = null
 	var/implant_color = "#FFFFFF"
 
 /obj/item/cybernetic_implant/New(var/mob/M = null)
@@ -13,7 +15,9 @@
 /obj/item/cybernetic_implant/proc/function()
 	return
 
+
 //[[[[EYES]]]]
+
 /obj/item/cybernetic_implant/eyes
 	name = "cybernetic eyes"
 	desc = "artificial photoreceptors with specialized functionality"
@@ -172,3 +176,24 @@
 		if(!r_hand_ignore && owner.r_hand)
 			owner.r_hand.flags &= ~NODROP
 		owner << "<span class='notice'>Your hands relax...</span>"
+
+/obj/item/cybernetic_implant/brain/nerve_restore
+	name = "CNS restorer implant"
+	desc = "This implant will automatically give you back control over your central nervous system, reducing down time when stunned."
+	implant_color = "#FFFF00"
+
+/obj/item/cybernetic_implant/brain/nerve_restore/function()
+	SSobj.processing |= src
+
+/obj/item/cybernetic_implant/brain/nerve_restore/process()
+	if(!owner)
+		SSobj.processing.Remove(src)
+		qdel(src)
+		return
+	if(owner.stat == DEAD)
+		return
+
+	if(owner.stunned > STUN_SET_AMOUNT)
+		owner.stunned = STUN_SET_AMOUNT
+	if(owner.weakened > STUN_SET_AMOUNT)
+		owner.weakened = STUN_SET_AMOUNT
