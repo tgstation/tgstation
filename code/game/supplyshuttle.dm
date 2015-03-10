@@ -46,10 +46,6 @@ var/list/mechtoys = list(
 	layer = 4
 	explosion_resistance = 5
 
-/obj/structure/plasticflaps/New()
-	..()
-	anchored=0
-
 /obj/structure/plasticflaps/attackby(obj/item/I as obj, mob/user as mob)
 	..()
 	if (istype(I, /obj/item/weapon/crowbar))
@@ -68,8 +64,7 @@ var/list/mechtoys = list(
 	else if (iswelder(I) && anchored == 0)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/mineral/plastic/P = new /obj/item/stack/sheet/mineral/plastic (user.loc)
-			P.amount = 10
+			var/obj/item/stack/sheet/mineral/plastic/P = new /obj/item/stack/sheet/mineral/plastic (src.loc,10)
 			qdel(src)
 			return
 	return ..()
