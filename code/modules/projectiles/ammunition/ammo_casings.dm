@@ -111,11 +111,13 @@
 	variance = 0.9
 
 /obj/item/ammo_casing/shotgun/ion
-	name = "ion slug"
-	desc = "An advanced shotgun shell which uses a bluespace crystal to produce an effect similar to a standard ion rifle, without the risk of \
-	the weapon disabling itself inherent to energy based ion weapons."
+	name = "ion shell"
+	desc = "An advanced shotgun shell which uses a subspace ansible crystal to produce an effect similar to a standard ion rifle. \
+	The unique properties of the crystal splot the pulse into a spread of individually weaker bolts."
 	icon_state = "ionshell"
-	projectile_type = /obj/item/projectile/ion
+	projectile_type = /obj/item/projectile/ion/weak
+	pellets = 4
+	variance = 0.9
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
