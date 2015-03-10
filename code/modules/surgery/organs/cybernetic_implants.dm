@@ -23,7 +23,6 @@
 	desc = "artificial photoreceptors with specialized functionality"
 	icon_state = "eye_implant"
 	var/eye_color = "fff"
-
 	var/flash_protect = 0
 
 /obj/item/cybernetic_implant/eyes/New()
@@ -42,7 +41,7 @@
 
 /obj/item/cybernetic_implant/eyes/medical_hud
 	name = "medical hud implant"
-	desc = "These cybernetic eyes will display a permanent medical HUD over everything you see. Wiggle eyes to control."
+	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
 	eye_color = "0ff"
 	implant_color = "#00FFFF"
 
@@ -57,7 +56,7 @@
 
 /obj/item/cybernetic_implant/eyes/security_hud
 	name = "security hud implant"
-	desc = "These cybernetic eyes will display a permanent security HUD over everything you see. Wiggle eyes to control."
+	desc = "These cybernetic eyes will display a security HUD over everything you see. Wiggle eyes to control."
 	eye_color = "d00"
 	implant_color = "#CC0000"
 
@@ -128,6 +127,11 @@
 	overlays |= overlay
 	..()
 
+/obj/item/cybernetic_implant/brain/emp_act(severity)
+	var/stun_amount = 5 + (severity-1 ? 0 : 5)
+	owner.Stun(stun_amount)
+	return stun_amount
+
 /obj/item/cybernetic_implant/brain/anti_drop
 	name = "anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
@@ -177,15 +181,23 @@
 			owner.r_hand.flags &= ~NODROP
 		owner << "<span class='notice'>Your hands relax...</span>"
 
-/obj/item/cybernetic_implant/brain/nerve_restore
-	name = "CNS restorer implant"
-	desc = "This implant will automatically give you back control over your central nervous system, reducing down time when stunned."
+/obj/item/cybernetic_implant/brain/anti_drop/emp_act(severity)
+	if(prob(50 + (25 * (severity-1 ? 0 : 1))))
+		if(!l_hand_ignore && owner.l_hand)
+			owner.l_hand.flags &= ~NODROP
+		if(!r_hand_ignore && owner.r_hand)
+			owner.r_hand.flags &= ~NODROP
+	..()
+
+/obj/item/cybernetic_implant/brain/anti_stun
+	name = "CNS Rebooter implant"
+	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
 
-/obj/item/cybernetic_implant/brain/nerve_restore/function()
+/obj/item/cybernetic_implant/brain/anti_stun/function()
 	SSobj.processing |= src
 
-/obj/item/cybernetic_implant/brain/nerve_restore/process()
+/obj/item/cybernetic_implant/brain/anti_stun/process()
 	if(!owner)
 		SSobj.processing.Remove(src)
 		qdel(src)
@@ -197,3 +209,8 @@
 		owner.stunned = STUN_SET_AMOUNT
 	if(owner.weakened > STUN_SET_AMOUNT)
 		owner.weakened = STUN_SET_AMOUNT
+
+/obj/item/cybernetic_implant/brain/anti_stun/emp_act(severity)
+	SSobj.processing.Remove(src)
+	spawn(..() * 10)
+		SSobj.processing |= src
