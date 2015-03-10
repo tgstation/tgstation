@@ -3000,6 +3000,14 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/prism
 
+/datum/design/cell_charger
+	name = "Circuit Design (Cell Charger)"
+	desc = "Allows for the construction of circuit boards used to build a cell charger"
+	id = "cellcharger"
+	req_tech = list("materials" = 2, "engineering" = 2, "powerstorage" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cell_charger
 
 /*
  *

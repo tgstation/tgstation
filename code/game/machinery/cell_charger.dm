@@ -3,20 +3,31 @@
 	desc = "Charges power cells, drains power."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger0"
+	icon_state_open = "ccharger_open"
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 10 //Power is already drained to charge batteries
 	power_channel = EQUIP
 	var/obj/item/weapon/cell/charging = null
-	var/transfer_rate = 50 //How much power do we output every process tick ?
+	var/transfer_rate = 25 //How much power do we output every process tick ?
 	var/transfer_efficiency = 0.7 //How much power ends up in the battery in percentage ?
 	var/chargelevel = -1
 
-	machine_flags = WRENCHMOVE | FIXED2WORK
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EMAGGABLE
 
 	ghost_read = 0 // Deactivate ghost touching.
 	ghost_write = 0
+
+/obj/machinery/cell_charger/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/cell_charger,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor
+	)
 
 /obj/machinery/cell_charger/proc/updateicon()
 	icon_state = "ccharger[charging ? 1 : 0]"
@@ -60,6 +71,7 @@
 		updateicon()
 	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		emagged = 1 //Congratulations, you've done it
+		user << "<span class='warning'>You hear fizzling and you notice a wire turning burning hot. Better not use it anymore</span>"
 		return
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
@@ -68,7 +80,7 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()
-			spawn(10)
+			spawn(15)
 				explosion(src.loc, -1, 1, 3, adminlog = 0) //Overload
 			return
 		usr.put_in_hands(charging)
@@ -102,10 +114,10 @@
 		return
 
 	if(emagged) //Did someone fuck with the charger ?
-		use_power(transfer_rate*50) //Drain all the power
-		charging.give(transfer_rate*transfer_efficiency*0.2) //Lose most of it
+		use_power(transfer_rate*100) //Drain all the power
+		charging.give(transfer_rate*transfer_efficiency*0.25) //Lose most of it
 	else
-		use_power(transfer_rate)		//Snatch some power
-		charging.give(transfer_rate*transfer_efficiency)	//Inefficiency (Joule effect + other shenanigans)
+		use_power(transfer_rate) //Snatch some power
+		charging.give(transfer_rate*transfer_efficiency) //Inefficiency (Joule effect + other shenanigans)
 
 	updateicon()

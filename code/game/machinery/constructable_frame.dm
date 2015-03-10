@@ -906,6 +906,16 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 3,
 							"/obj/item/weapon/stock_parts/capacitor" = 6)
 
+/obj/item/weapon/circuitboard/cell_charger
+	name = "Circuit Board (Cell Charger)"
+	build_path = "/obj/machinery/cell_charger"
+	board_type = "machine"
+	origin_tech = "materials=2;engineering=2;powerstorage=3"
+	frame_desc = "Requires 1 Scanning Module and 2 Capacitors."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/capacitor" = 2)
+
 /*
  *
  *
