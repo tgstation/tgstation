@@ -61,7 +61,7 @@
 /obj/item/ammo_casing/shotgun/improvised
 	name = "improvised shell"
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
-	icon_state = "gshell"
+	icon_state = "improvshell"
 	projectile_type = /obj/item/projectile/bullet/pellet/weak
 	m_amt = 250
 	pellets = 5
@@ -109,6 +109,13 @@
 	projectile_type = /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
 	pellets = 4
 	variance = 0.9
+
+/obj/item/ammo_casing/shotgun/ion
+	name = "ion slug"
+	desc = "An advanced shotgun shell which uses a bluespace crystal to produce an effect similar to a standard ion rifle, without the risk of \
+	the weapon disabling itself inherent to energy based ion weapons."
+	icon_state = "ionshell"
+	projectile_type = /obj/item/projectile/ion
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"

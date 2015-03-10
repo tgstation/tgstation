@@ -127,6 +127,23 @@
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 
+/datum/table_recipe/ionslug
+	name = "Ion Slug Shell"
+	result = /obj/item/ammo_casing/shotgun/ion
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/stock_parts/micro_laser/ultra = 1,
+				/obj/item/bluespace_crystal/artificial = 1)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/improvisedslug
+	name = "Improvised Shotgun Shell"
+	result = /obj/item/ammo_casing/shotgun/improvised
+	reqs = list(/obj/item/weapon/grenade/chem_grenade = 1,
+				/obj/item/stack/sheet/metal = 1,
+				/obj/item/stack/cable_coil = 1,
+				/datum/reagent/fuel = 10)
+
 /datum/table_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised

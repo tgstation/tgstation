@@ -188,6 +188,10 @@ obj/item/projectile/kinetic/New()
 	damage = 25
 	weaken = 5
 
+/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
+	explosion(target, -1, 0, 1)
+	return 1
+
 /obj/item/projectile/bullet/magspear
 	name = "magnetic spear"
 	desc = "WHITE WHALE, HOLY GRAIL"
