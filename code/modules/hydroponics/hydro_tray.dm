@@ -845,5 +845,7 @@
 /obj/machinery/portable_atmospherics/hydroponics/soil/New()
 	..()
 	verbs -= /obj/machinery/portable_atmospherics/hydroponics/verb/close_lid
+	component_parts = list()
+
 
 #undef HYDRO_SPEED_MULTIPLIER
