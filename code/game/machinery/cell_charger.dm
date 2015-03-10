@@ -1,14 +1,16 @@
 /obj/machinery/cell_charger
 	name = "cell charger"
-	desc = "It charges power cells."
+	desc = "Charges power cells, drains power."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger0"
 	anchored = 1
 	use_power = 1
-	idle_power_usage = 5
-	active_power_usage = 60
+	idle_power_usage = 10
+	active_power_usage = 10 //Power is already drained to charge batteries
 	power_channel = EQUIP
 	var/obj/item/weapon/cell/charging = null
+	var/transfer_rate = 25 //How much power do we output every process tick ?
+	var/transfer_efficiency = 0.7 //How much power ends up in the battery in percentage ?
 	var/chargelevel = -1
 
 	machine_flags = WRENCHMOVE | FIXED2WORK
@@ -20,15 +22,12 @@
 	icon_state = "ccharger[charging ? 1 : 0]"
 
 	if(charging && !(stat & (BROKEN|NOPOWER)) )
-
 		var/newlevel = 	round(charging.percent() * 4.0 / 99)
 		//world << "nl: [newlevel]"
 
 		if(chargelevel != newlevel)
-
 			overlays.len = 0
 			overlays += "ccharger-o[newlevel]"
-
 			chargelevel = newlevel
 	else
 		overlays.len = 0
@@ -46,28 +45,37 @@
 	..()
 	if(istype(W, /obj/item/weapon/cell) && anchored)
 		if(charging)
-			user << "<span class='warning'>There is already a cell in the charger.</span>"
+			user << "<span class='warning'>There is already a cell in [src].</span>"
 			return
 		else
 			if(areaMaster.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>"
+				user << "<span class='warning'>[src] blinks red as you try to insert the cell!</span>"
 				return
 
 			user.drop_item()
 			W.loc = src
 			charging = W
-			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
+			user.visible_message("<span class='notice'>[user] inserts a cell into [src].</span>", "<span class='notice'>You insert a cell into [src].</span>")
 			chargelevel = -1
 		updateicon()
+	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
+		emagged = 1 //Congratulations, you've done it
+		return
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	if(charging)
+		if(emagged) //Oh shit nigger what are you doing
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, src)
+			s.start()
+			spawn(10)
+				explosion(src.loc, -1, 1, 3, adminlog = 0) //Overload
+			return
 		usr.put_in_hands(charging)
 		charging.add_fingerprint(user)
 		charging.updateicon()
-
 		src.charging = null
-		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
+		user.visible_message("<span class='notice'>[user] removes the cell from [src].</span>", "<span class='notice'>You remove the cell from [src].</span>")
 		chargelevel = -1
 		updateicon()
 
@@ -93,7 +101,11 @@
 	if(!charging || (stat & (BROKEN|NOPOWER)) || !anchored)
 		return
 
-	use_power(200)		//this used to use CELLRATE, but CELLRATE is fucking awful. feel free to fix this properly!
-	charging.give(175)	//inefficiency.
+	if(emagged) //Did someone fuck with the charger ?
+		use_power(transfer_rate*100) //Drain all the power
+		charging.give(transfer_rate*transfer_efficiency*0.1) //Lose most of it
+	else
+		use_power(transfer_rate)		//Snatch some power
+		charging.give(transfer_rate*transfer_efficiency)	//Inefficiency (Joule effect + other shenanigans)
 
 	updateicon()
