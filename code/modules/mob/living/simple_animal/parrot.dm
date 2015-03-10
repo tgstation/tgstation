@@ -51,7 +51,7 @@
 	response_disarm = "gently moves aside"
 	response_harm   = "swats"
 	stop_automated_movement = 1
-	a_intent = I_HURT //parrots now start "aggressive" since only player parrots will nuzzle.
+	//NO a_intent = I_HURT //parrots now start "aggressive" since only player parrots will nuzzle.
 	attacktext = "chomps"
 	friendly = "grooms"
 
