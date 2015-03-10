@@ -144,6 +144,8 @@
 
 
 /datum/game_mode/malfunction/check_finished()
+	if(round_converted)
+		return ..()
 	if (station_captured && !to_nuke_or_not_to_nuke)
 		return 1
 	if (is_malf_ai_dead())
