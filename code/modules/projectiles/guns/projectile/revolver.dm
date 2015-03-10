@@ -121,6 +121,16 @@
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 
+/obj/item/weapon/gun/projectile/revolver/cannon
+	name = "hand cannon"
+	desc = "A massive revolver chambered in .500 S&W. For when you need to make something disappear."
+	icon_state = "500revolver"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev500
+	fire_sound = 'sound/weapons/Gunshot5.ogg'
+	fire_delay = 20
+	recoil = 2
+	heavy_weapon = 1
+	force = 15
 
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.

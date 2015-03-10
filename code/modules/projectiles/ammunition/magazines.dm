@@ -40,6 +40,13 @@
 	caliber = "38"
 	max_ammo = 6
 
+/obj/item/ammo_box/magazine/internal/cylinder/rev500
+	name = "large revolver cylinder"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/a500
+	caliber = "500"
+	max_ammo = 5
+
 /obj/item/ammo_box/magazine/internal/shot
 	name = "shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here"
