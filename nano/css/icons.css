@@ -259,6 +259,9 @@
 /* Camera */
 .mapIcon16.icon-camera { background-position: -96px -224px; }
 
+/* Bhangmeter */
+.mapIcon16.icon-bhang { background-position: -112px -224px; }
+
 /* Command Positions */
 .mapIcon16.rank-captain {
     background-position: -224px -112px;
