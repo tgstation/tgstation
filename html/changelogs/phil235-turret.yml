@@ -1,4 +1,0 @@
-author: phil235
-delete-after: True
-changes:
-  - bugfix: "Turrets now target occupied mechs and don't target drones."
