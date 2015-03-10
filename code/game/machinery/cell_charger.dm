@@ -12,6 +12,8 @@
 	var/obj/item/weapon/cell/charging = null
 	var/transfer_rate = 200 //How much power do we output every process tick ?
 	var/transfer_efficiency = 0.7 //How much power ends up in the battery in percentage ?
+	var/transfer_rate_coeff = 1 //What is the quality of the parts that transfer energy (capacitators) ?
+	var/transfer_efficiency_bonus = 0 //What is the efficiency "bonus" (additive to percentage) from the parts used (scanning module) ?
 	var/chargelevel = -1
 
 	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EMAGGABLE
@@ -28,6 +30,19 @@
 		/obj/item/weapon/stock_parts/capacitor,
 		/obj/item/weapon/stock_parts/capacitor
 	)
+	RefreshParts()
+
+/obj/machinery/cell_charger/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/scanning_module/SM in component_parts)
+		T = (SM.rating - 1)*0.1 //There is one scanning module. Level 1 changes nothing (70 %), level 2 transfers 80 % of power, level 3 90 %
+	transfer_efficiency_bonus = T
+	T = 0
+	for(var/obj/item/weapon/stock_parts/capacitor/CA in component_parts)
+		T += CA.rating //Two capacitors, every upgrade rank acts as a direct multiplier (up to 3 times base for two Level 3 Capacitors)
+	transfer_rate_coeff = T/2
+	T = 0
+
 
 /obj/machinery/cell_charger/proc/updateicon()
 	icon_state = "ccharger[charging ? 1 : 0]"
@@ -114,10 +129,10 @@
 		return
 
 	if(emagged) //Did someone fuck with the charger ?
-		use_power(transfer_rate*10) //Drain all the power
-		charging.give(transfer_rate*transfer_efficiency*0.25) //Lose most of it
+		use_power(transfer_rate*transfer_rate_coeff*10) //Drain all the power
+		charging.give(transfer_rate*transfer_rate_coeff*(transfer_efficiency+transfer_efficiency_bonus)*0.25) //Lose most of it
 	else
-		use_power(transfer_rate) //Snatch some power
-		charging.give(transfer_rate*transfer_efficiency) //Inefficiency (Joule effect + other shenanigans)
+		use_power(transfer_rate*transfer_rate_coeff) //Snatch some power
+		charging.give(transfer_rate*transfer_rate_coeff*(transfer_efficiency+transfer_efficiency_bonus)) //Inefficiency (Joule effect + other shenanigans)
 
 	updateicon()
