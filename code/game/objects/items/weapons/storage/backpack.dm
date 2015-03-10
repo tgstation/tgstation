@@ -227,6 +227,12 @@
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
 
+/obj/item/weapon/storage/backpack/satchel_mime
+	name = "mime satchel"
+	desc = "A coture satchel with fashionable stripes for every fashionable mime"
+	icon_state = "satchel-mime"
+	item_state = "satchel-mime"
+
 /obj/item/weapon/storage/backpack/satchel_flat
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
