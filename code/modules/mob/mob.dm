@@ -390,6 +390,8 @@ var/list/slot_equipment_priority = list( \
 
 		src.pulling = AM
 		AM.pulledby = src
+		if(pullin)
+			pullin.icon_state = "pull"
 		if(ismob(AM))
 			var/mob/M = AM
 			if(!iscarbon(src))
@@ -405,6 +407,8 @@ var/list/slot_equipment_priority = list( \
 	if(pulling)
 		pulling.pulledby = null
 		pulling = null
+		if(pullin)
+			pullin.icon_state = "pull0"
 
 /mob/verb/mode()
 	set name = "Activate Held Object"

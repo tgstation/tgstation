@@ -206,13 +206,6 @@
 	else
 		throw_alert("charge","nocell")
 
-
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull"
-		else
-			pullin.icon_state = "pull0"
-
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 	if ((src.blind && src.stat != 2))
