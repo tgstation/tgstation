@@ -119,6 +119,12 @@
 	pellets = 4
 	variance = 0.9
 
+/obj/item/ammo_casing/shotgun/laserslug
+	name = "laser slug"
+	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a laser weapon in a ballistic package."
+	icon_state = "lshell"
+	projectile_type = /obj/item/projectile/beam
+
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
 	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."

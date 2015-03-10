@@ -143,6 +143,17 @@
 				/obj/item/stack/sheet/metal = 1,
 				/obj/item/stack/cable_coil = 1,
 				/datum/reagent/fuel = 10)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/laserslug
+	name = "Laser Slug Shell"
+	result = /obj/item/ammo_casing/shotgun/laserslug
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/stock_parts/capacitor/adv = 1,
+				/obj/item/weapon/stock_parts/micro_laser/high = 1)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
 
 /datum/table_recipe/ishotgun
 	name = "Improvised Shotgun"
