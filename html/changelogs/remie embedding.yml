@@ -1,0 +1,8 @@
+author: RemieRichards
+
+delete-after: True
+
+changes: 
+  - wip: "Embedding from explosions has been tweaked, they will always throw objects fast enough to get embedded if they can."
+  - tweak: "Damage taken when embedded objects fall out has been increased."
+  - tweak: "Damage dealt by objects getting embedded has been decreased."
