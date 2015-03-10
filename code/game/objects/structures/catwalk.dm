@@ -57,4 +57,5 @@
 
 	if(istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
-		coil.catwalk_place(src, user)
+		if(get_turf(src) == src.loc)
+			coil.turf_place(src.loc, user)

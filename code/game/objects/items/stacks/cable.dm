@@ -122,7 +122,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	if(!isturf(user.loc))
 		return
 
-	if(get_dist(F, user) > 1)		//too far
+	if(!user.Adjacent(F))		//too far
 		user << "You can't lay cable at a place that far away."
 		return
 
@@ -167,51 +167,6 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 			if(prob(50)) // fail
 				getFromPool(/obj/item/stack/cable_coil, C.loc)
 				returnToPool(C)
-
-//I really wish that redundant shit wasn't needed, but snowflake code yeah
-/obj/item/stack/cable_coil/proc/catwalk_place(obj/structure/catwalk/Catwalk, mob/user)
-
-	if(get_dist(Catwalk.loc, user) > 1)	//too far
-		user << "You can't lay cable at a place that far away."
-		return
-
-	var/dirn
-
-	if(user.loc == Catwalk.loc)
-		dirn = user.dir			// if laying on the tile we're on, lay in the direction we're facing
-	else
-		dirn = get_dir(Catwalk.loc, user)
-
-	for(var/obj/structure/cable/LC in Catwalk.loc)
-		if(LC.d2 == dirn && LC.d1 == 0)
-			user << "There's already a cable at that position."
-			return
-
-	var/obj/structure/cable/C = getFromPool(/obj/structure/cable, Catwalk.loc)
-	C.cableColor(_color)
-
-	// set up the new cable
-	C.d1 = 0 // it's a O-X node cable
-	C.d2 = dirn
-	C.add_fingerprint(user)
-	C.update_icon()
-
-	//create a new powernet with the cable, if needed it will be merged later
-	var/datum/powernet/PN = new()
-	PN.add_cable(C)
-
-	C.mergeConnectedNetworks(C.d2)		// merge the powernet with adjacents powernets
-	C.mergeConnectedNetworksOnTurf()	// merge the powernet with on turf powernets
-
-	if(C.d2 & (C.d2 - 1)) // if the cable is layed diagonally, check the others 2 possible directions
-		C.mergeDiagonalsNetworks(C.d2)
-
-	use(1)
-
-	if(C.shock(user, 50))
-		if(prob(50)) // fail
-			getFromPool(/obj/item/stack/cable_coil, C.loc)
-			returnToPool(C)
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
