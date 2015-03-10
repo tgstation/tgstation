@@ -13,7 +13,7 @@
 	update_icon()
 
 /obj/item/weapon/gun/energy/gun/hos
-	desc = "This is an expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
+	desc = "This is a expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
 	item_state = null
 	force = 10
