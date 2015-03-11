@@ -69,7 +69,8 @@ var/global/list/GlobalPool = list()
 
 	if(AM in GlobalPool[AM.type])
 		return
-
+	
+	AM.Destroy()
 	AM.ResetVars()
 
 	if(!GlobalPool[AM.type])
