@@ -7,7 +7,7 @@
 	var/num_pages = 0
 	var/num_results = 0
 	var/datum/library_query/query = new()
-	
+
 	icon = 'icons/obj/library.dmi'
 	icon_state = "computer"
 
@@ -26,8 +26,8 @@
 
 /obj/machinery/computer/library/proc/get_page(var/page_num)
 	var/sql = "SELECT id, author, title, category, ckey FROM library"
-	if(query)
-		sql += " [query.toSQL()]"
+	//if(query)
+		//sql += " [query.toSQL()]"
 	// Pagination
 	sql += " LIMIT [LIBRARY_BOOKS_PER_PAGE] OFFSET [page_num * LIBRARY_BOOKS_PER_PAGE]"
 
