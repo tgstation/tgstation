@@ -47,7 +47,6 @@ var/list/mechtoys = list(
 	explosion_resistance = 5
 
 /obj/structure/plasticflaps/attackby(obj/item/I as obj, mob/user as mob)
-	..()
 	if (istype(I, /obj/item/weapon/crowbar))
 		if(anchored == 1)
 			user.visible_message("[user] pops loose the flaps.", "You pop loose the flaps.")
