@@ -48,7 +48,7 @@
 var/global/list/masterPool = new
 
 // Read-only or compile-time vars and special exceptions.
-var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z")
+var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z","group")
 
 /*
  * @args
