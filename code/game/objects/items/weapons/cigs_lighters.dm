@@ -552,6 +552,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user.SetLuminosity(user.luminosity + 2)
 			processing_objects.Add(src)
 		else
+			user.delayNextAttack(5) //Only turning it off causes a delay. This breaks rapid text sequences without slowing mid-sequence.
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off
