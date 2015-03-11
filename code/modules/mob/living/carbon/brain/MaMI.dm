@@ -5,7 +5,6 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mami_empty"
 	var/obj/item/device/mmi/posibrain/posibrain = null
-	robotic = 2
 
 /obj/item/organ/brain/mami/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/device/mmi/posibrain) && !brainmob)
