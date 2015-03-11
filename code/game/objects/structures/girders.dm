@@ -127,6 +127,7 @@
 						if(S.amount < 1) return ..()
 						user << "<span class='info'>Now finalising reinforced wall.</span>"
 						if(do_after(user, 50))
+							if(!loc || gcDestroyed) return // Got destroyed during the doafter
 							if(!src || !S || S.amount < 1) return
 							S.use(1)
 							user << "\blue Wall fully reinforced!"
@@ -141,6 +142,7 @@
 						if(S.amount < 1) return ..()
 						user << "<span class='info'>Now reinforcing girders</span>"
 						if (do_after(user,60))
+							if(!loc || gcDestroyed) return // Got destroyed during the doafter
 							if(!src || !S || S.amount < 1 || !get_turf(src)) return
 							S.use(1)
 							user << "<span class='info'>Girders reinforced!</span>"
