@@ -268,7 +268,7 @@
 			if(!M.client || istype(M, /mob/new_player))
 				continue //skip monkeys, leavers and new players
 			var/T = get_turf(src)
-			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T,null)))
+			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T,null)))
 				M.show_message(message)
 
 
