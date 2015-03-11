@@ -9,6 +9,7 @@
 	flags = OPENCONTAINER
 	volume = 100
 
+
 	var/draw_warnings = 1 //Set to 0 to stop it from drawing the alert lights.
 
 	// Plant maintenance vars.
@@ -767,18 +768,7 @@
 		remove_dead(user)
 
 	else
-		if(seed && !dead)
-			usr << "[src] has \blue [seed.display_name] \black planted."
-			if(health <= (seed.endurance / 2))
-				usr << "The plant looks \red unhealthy."
-		else
-			usr << "[src] is empty."
-		usr << "Water: [round(waterlevel,0.1)]/100"
-		usr << "Nutrient: [round(nutrilevel,0.1)]/10"
-		if(weedlevel >= 5)
-			usr << "[src] is \red filled with weeds!"
-		if(pestlevel >= 5)
-			usr << "[src] is \red filled with tiny worms!"
+		view_contents(user)
 
 		if(!istype(src,/obj/machinery/portable_atmospherics/hydroponics/soil))
 
@@ -807,6 +797,28 @@
 					light_available =  5
 
 			usr << "The tray's sensor suite is reporting a light level of [light_available] lumens and a temperature of [environment.temperature]K."
+
+/obj/machinery/portable_atmospherics/hydroponics/examine(mob/user)
+	..()
+	view_contents(user)
+
+/obj/machinery/portable_atmospherics/hydroponics/proc/view_contents(mob/user)
+	if(src.seed && !src.dead)
+		user << "[src] has \blue [src.seed.display_name] \black planted."
+		if(src.health <= (src.seed.endurance / 2))
+			user << "The plant looks \red unhealthy."
+		else
+			user << "[src] is empty."
+		user << "Water: [round(src.waterlevel,0.1)]/100"
+		user << "Nutrient: [round(src.nutrilevel,0.1)]/10"
+		if(src.weedlevel >= 5)
+			user << "[src] is \red filled with weeds!"
+		if(src.pestlevel >= 5)
+			user << "[src] is \red filled with tiny worms!"
+	else if(src.seed && src.dead)
+		user << "[src] is full of dead plant matter."
+	else
+		user << "[src] has nothing planted!"
 
 /obj/machinery/portable_atmospherics/hydroponics/verb/close_lid()
 	set name = "Toggle Tray Lid"
