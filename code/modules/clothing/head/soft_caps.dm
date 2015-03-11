@@ -11,8 +11,18 @@
 		src.flipped=0
 		..()
 
+	verb/flipcap()
+		set category = "Object"
+		set name = "Flip cap"
+
+		flip(usr)
+
+
 /obj/item/clothing/head/soft/AltClick(var/mob/user)
-	..()
+	flip(user)
+
+
+/obj/item/clothing/head/soft/proc/flip(var/mob/user)
 	if(user.canmove && !user.stat && !user.restrained())
 		src.flipped = !src.flipped
 		if(src.flipped)
