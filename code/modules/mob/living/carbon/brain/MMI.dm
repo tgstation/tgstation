@@ -102,7 +102,7 @@
 /obj/item/device/mmi/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(try_handling_mommi_construction(O,user))
 		return
-	if(istype(O,/obj/item/organ/brain) && !brainmob && !istype(O,obj/item/organ/brain/mami)) //Time to stick a brain in it --NEO
+	if(istype(O,/obj/item/organ/brain) && !brainmob) //Time to stick a brain in it --NEO
 		if(!O:brainmob)
 			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>"
 			return
