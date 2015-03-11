@@ -5,7 +5,7 @@
 	languages = MONKEY
 	icon_state = "monkey1"
 	icon = 'icons/mob/monkey.dmi'
-	setGender(NEUTER)
+	gender = (NEUTER)
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 

@@ -604,6 +604,13 @@ its easier to just keep the beam vertical.
 		ASSERT(gend != PLURAL && gend != NEUTER)
 	src:gender = gend
 
+/atom/setGender(gend = FEMALE)
+	if(!("gender" in vars))
+		CRASH("Oh shit you stupid nigger the [src] doesn't have a gender variable.")
+	if(ishuman(src))
+		ASSERT(gend != PLURAL && gend != NEUTER)
+	src:gender = gend
+
 /mob/living/carbon/human/setGender(gend = FEMALE)
 	if(gend == PLURAL || gend == NEUTER || (gend != FEMALE && gend != MALE))
 		CRASH("SOMEBODY SET A BAD GENDER ON [src] [gend]")

@@ -9,7 +9,7 @@
 	desc = "A pack of papers, secured by some red ribbon."
 	icon = 'icons/obj/paper.dmi'
 	icon_state = "pp_large"
-	setGender(NEUTER)
+	gender = (NEUTER)
 	throwforce = 2
 	w_class = 3.0
 	throw_range = 5
@@ -89,7 +89,7 @@
 	desc = "A red ribbon, normally used to tie things up."
 	icon = 'icons/obj/paper.dmi'
 	icon_state = "ribbon"
-	setGender(NEUTER)
+	gender = (NEUTER)
 	slot_flags = SLOT_HEAD
 	throwforce = 0
 	w_class = 1.0

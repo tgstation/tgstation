@@ -1,5 +1,5 @@
 /mob/living/silicon
-	setGender(NEUTER)
+	gender = (NEUTER)
 	voice_name = "synthesized voice"
 	languages = ROBOT | HUMAN | MONKEY | ALIEN
 	var/syndicate = 0

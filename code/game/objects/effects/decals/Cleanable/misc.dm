@@ -1,7 +1,7 @@
 /obj/effect/decal/cleanable/generic
 	name = "clutter"
 	desc = "Someone should clean that up."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	density = 0
 	anchored = 1
 	layer = 2
@@ -11,7 +11,7 @@
 /obj/effect/decal/cleanable/ash
 	name = "ashes"
 	desc = "Ashes to ashes, dust to dust, and into space."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	anchored = 1
@@ -23,7 +23,7 @@
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	density = 0
 	anchored = 1
 	layer = 2
@@ -34,7 +34,7 @@
 /obj/effect/decal/cleanable/flour
 	name = "flour"
 	desc = "It's still good. Four second rule!"
-	setGender(PLURAL)
+	gender = (PLURAL)
 	density = 0
 	anchored = 1
 	layer = 2
@@ -44,7 +44,7 @@
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
 	desc = "Jeez. I hope that's not for lunch."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	density = 0
 	anchored = 1
 	layer = 2
@@ -83,7 +83,7 @@
 /obj/effect/decal/cleanable/vomit
 	name = "vomit"
 	desc = "Gosh, how unpleasant."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	density = 0
 	anchored = 1
 	layer = 2
@@ -155,7 +155,7 @@
 /obj/effect/decal/cleanable/soot
 	name = "soot"
 	desc = "One hell of a party..."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	icon = 'icons/effects/tile_effects.dmi'
 	icon_state = "tile_soot"
 	anchored = 1

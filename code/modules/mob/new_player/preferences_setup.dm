@@ -3,9 +3,9 @@ datum/preferences
 	proc/randomize_appearance_for(var/mob/living/carbon/human/H)
 		if(H)
 			if(H.gender == MALE)
-				setGender(MALE)
+				gender = (MALE)
 			else
-				setGender(FEMALE)
+				gender = (FEMALE)
 		s_tone = random_skin_tone()
 		h_style = random_hair_style(gender, species)
 		f_style = random_facial_hair_style(gender, species)

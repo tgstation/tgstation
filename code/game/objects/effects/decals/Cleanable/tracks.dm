@@ -195,6 +195,6 @@ var/global/list/image/fluidtrack_cache=list()
 	coming_state = "wheels"
 	going_state  = ""
 	desc = "They look like tracks left by wheels."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	random_icon_states = null
 	amount = 0

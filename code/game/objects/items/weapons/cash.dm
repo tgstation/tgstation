@@ -10,7 +10,7 @@ var/global/list/moneytypes=list(
 /obj/item/weapon/spacecash
 	name = "credit chip"
 	desc = "Money money money."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	icon = 'icons/obj/money.dmi'
 	icon_state = "cash1"
 	opacity = 0

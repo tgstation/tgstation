@@ -1,7 +1,7 @@
 /obj/effect/decal/slag
 	name = "slag puddle"
 	desc = "The molten remains of something."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "slagcold"
 	anchored = 1

@@ -15,7 +15,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil_red"
-	setGender(NEUTER)
+	gender = (NEUTER)
 	amount = MAXCOIL
 	singular_name = "cable pieces"
 	max_amount = MAXCOIL

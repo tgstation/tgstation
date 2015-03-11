@@ -5,7 +5,7 @@
 
 /obj/item/weapon/paper
 	name = "paper"
-	setGender(NEUTER)
+	gender = (NEUTER)
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0

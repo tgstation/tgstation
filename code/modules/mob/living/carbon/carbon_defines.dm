@@ -1,5 +1,5 @@
 /mob/living/carbon/
-	setGender(MALE)
+	gender = (MALE)
 	var/list/stomach_contents = list()
 	var/list/datum/disease2/disease/virus2 = list()
 	var/antibodies = 0

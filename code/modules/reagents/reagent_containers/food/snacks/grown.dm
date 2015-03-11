@@ -55,7 +55,7 @@
 	desc = "Great for toppings!"
 	icon_state = "cherry"
 	filling_color = "#FF0000"
-	setGender(PLURAL)
+	gender = (PLURAL)
 	plantname = "cherry"
 	slot_flags = SLOT_EARS
 
@@ -217,7 +217,7 @@
 	name = "bunch of poison-berries"
 	desc = "Taste so good, you could die!"
 	icon_state = "poisonberrypile"
-	setGender(PLURAL)
+	gender = (PLURAL)
 	potency = 15
 	filling_color = "#B422C7"
 	plantname = "poisonberries"
@@ -226,7 +226,7 @@
 	name = "bunch of death-berries"
 	desc = "Taste so good, you could die!"
 	icon_state = "deathberrypile"
-	setGender(PLURAL)
+	gender = (PLURAL)
 	potency = 50
 	filling_color = "#4E0957"
 	plantname = "deathberries"
@@ -382,7 +382,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	name = "soybeans"
 	desc = "It's pretty bland, but oh the possibilities..."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	filling_color = "#E6E8B7"
 	icon_state = "soybeans"
 	plantname = "soybean"
@@ -461,7 +461,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	name = "wheat"
 	desc = "Sigh... wheat... a-grain?"
-	setGender(PLURAL)
+	gender = (PLURAL)
 	icon_state = "wheat"
 	filling_color = "#F7E186"
 	plantname = "wheat"
@@ -469,7 +469,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk
 	name = "rice stalk"
 	desc = "Rice to see you."
-	setGender(PLURAL)
+	gender = (PLURAL)
 	icon_state = "rice"
 	filling_color = "#FFF8DB"
 	plantname = "rice"

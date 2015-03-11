@@ -7,7 +7,7 @@
 	voice_name = "alien"
 	//speak_emote = list("hisses")
 	icon = 'icons/mob/alien.dmi'
-	setGender(NEUTER)
+	gender = (NEUTER)
 	dna = null
 	languages = ALIEN
 

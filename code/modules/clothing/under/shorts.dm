@@ -1,7 +1,7 @@
 /obj/item/clothing/under/shorts
 	name = "athletic shorts"
 	desc = "95% Polyester, 5% Spandex!"
-	setGender(PLURAL)
+	gender = (PLURAL)
 	flags = FPRINT  | ONESIZEFITSALL
 	body_parts_covered = LOWER_TORSO
 
