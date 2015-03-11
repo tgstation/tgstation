@@ -1,0 +1,6 @@
+author: phil235
+
+delete-after: True
+
+changes: 
+  - rscadd: "The tablecrafting window now also shows partial recipes in grey, if there's some of the things required for the recipe on the table. Recipe requirements are now also shown next to the names of recipes listed in the window."

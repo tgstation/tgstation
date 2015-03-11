@@ -84,10 +84,12 @@
 
 /datum/table_recipe/flamethrower
 	name = "Flamethrower"
-	result = /obj/item/weapon/flamethrower
+	result = /obj/item/weapon/flamethrower/full
 	reqs = list(/obj/item/weapon/weldingtool = 1,
 				/obj/item/device/assembly/igniter = 1,
 				/obj/item/stack/rods = 2)
+	parts = list(/obj/item/device/assembly/igniter = 1,
+				/obj/item/weapon/weldingtool = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 20
 
