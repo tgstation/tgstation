@@ -1291,4 +1291,8 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	else
 		return 0
 
+/obj/machinery/power/apc/cultify()
+	if(src.invisibility != INVISIBILITY_MAXIMUM)
+		src.invisibility = INVISIBILITY_MAXIMUM
+
 #undef APC_UPDATE_ICON_COOLDOWN

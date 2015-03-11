@@ -480,7 +480,7 @@ var/global/list/RPD_recipes=list(
 		return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
-	if(istype(A, /obj/structure/lattice))
+	if(istype(A, /obj/structure/lattice) || istype(A,/obj/structure/catwalk))
 		A = get_turf(A)
 
 	switch(p_class)
