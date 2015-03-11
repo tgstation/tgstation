@@ -14,7 +14,7 @@
 	consume_range = 6
 
 /obj/machinery/singularity/narsie/large/exit/New()
-	..(cultspawn=0)
+	..()
 	processing_objects.Add(src)
 
 /obj/machinery/singularity/narsie/large/exit/update_icon()
