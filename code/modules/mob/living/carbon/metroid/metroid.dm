@@ -10,7 +10,7 @@
 
 	maxHealth = 150
 	health = 150
-	gender = NEUTER
+	setGender(NEUTER)
 
 	update_icon = 0
 	nutrition = 700 // 1000 = max
@@ -62,7 +62,7 @@
 
 	maxHealth = 200
 	health = 200
-	gender = NEUTER
+	setGender(NEUTER)
 
 	update_icon = 0
 	nutrition = 800 // 1200 = max

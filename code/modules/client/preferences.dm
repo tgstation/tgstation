@@ -1274,7 +1274,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 	character.sec_record = sec_record
 	character.gen_record = gen_record
 
-	character.gender = gender
+	character.setGender(gender)
 	character.age = age
 	character.b_type = b_type
 
@@ -1349,7 +1349,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 	if(character.gender in list(PLURAL, NEUTER))
 		if(isliving(src)) //Ghosts get neuter by default
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-			character.gender = MALE
+			character.setGender(MALE)
 
 /datum/preferences/proc/open_load_dialog(mob/user)
 

@@ -1188,9 +1188,9 @@
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
-			gender = MALE
+			setGender(MALE)
 		else
-			gender = FEMALE
+			setGender(FEMALE)
 	regenerate_icons()
 	check_dna()
 

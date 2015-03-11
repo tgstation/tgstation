@@ -5,7 +5,7 @@
 	icon_state = "cat2"
 	icon_living = "cat2"
 	icon_dead = "cat2_dead"
-	gender = MALE
+	setGender(MALE)
 	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
 	speak_emote = list("purrs", "meows")
 	emote_hear = list("meows", "mews")
@@ -32,7 +32,7 @@
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
-	gender = FEMALE
+	setGender(FEMALE)
 
 /mob/living/simple_animal/cat/Life()
 	//MICE!
@@ -83,4 +83,4 @@
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
-	gender = NEUTER
+	setGender(NEUTER)

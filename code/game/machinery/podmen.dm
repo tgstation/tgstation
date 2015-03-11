@@ -23,7 +23,7 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 	var/ckey = null
 	var/realName = null
 	var/mob/living/carbon/human/source //Donor of blood, if any.
-	gender = MALE
+	setGender(MALE)
 	var/obj/machinery/hydroponics/parent = null
 	var/list/found_player = list()
 	var/beingharvested = 0*/

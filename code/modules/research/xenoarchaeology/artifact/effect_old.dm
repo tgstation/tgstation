@@ -366,9 +366,9 @@
 						H << pick("\green You feel a little different.","\green You feel strange.","\green You feel different.")
 					//todo
 					if (H.gender == FEMALE)
-						H.gender = MALE
+						H.setGender(MALE)
 					else
-						H.gender = FEMALE
+						H.setGender(FEMALE)
 					/*H.dna.ready_dna(H)
 					H.update_body()
 					H.update_face()*/
@@ -482,9 +482,9 @@
 						H << pick("\green You feel a little different.","\green You feel strange.","\green You feel different.")
 					//todo
 					if (H.gender == FEMALE)
-						H.gender = MALE
+						H.setGender(MALE)
 					else
-						H.gender = FEMALE
+						H.setGender(FEMALE)
 					/*H.dna.ready_dna(H)
 					H.update_body()
 					H.update_face()*/

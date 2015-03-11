@@ -8,7 +8,7 @@
 	icon_dead = "corgi_dead"
 	health = 30
 	maxHealth = 30
-	gender = MALE
+	setGender(MALE)
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
 	emote_hear = list("barks", "woofs", "yaps","pants")
@@ -367,7 +367,7 @@
 /mob/living/simple_animal/corgi/Ian
 	name = "Ian"
 	real_name = "Ian"	//Intended to hold the name without altering it.
-	gender = MALE
+	setGender(MALE)
 	desc = "It's a corgi."
 	var/turns_since_scan = 0
 	var/obj/movement_target
@@ -483,7 +483,7 @@
 /mob/living/simple_animal/corgi/Lisa
 	name = "Lisa"
 	real_name = "Lisa"
-	gender = FEMALE
+	setGender(FEMALE)
 	desc = "It's a corgi with a cute pink bow."
 	icon_state = "lisa"
 	icon_living = "lisa"

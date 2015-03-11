@@ -67,7 +67,7 @@
 		del(t)
 
 	var/mob/living/simple_animal/hostile/retaliate/cluwne/new_mob = new (get_turf(src))
-	new_mob.gender=src.gender
+	new_mob.setGender(gender)
 	new_mob.name = pick(clown_names)
 	new_mob.real_name = new_mob.name
 	new_mob.mutations += M_CLUMSY
@@ -190,7 +190,7 @@
 	O.cell.maxcharge = 7500
 	O.cell.charge = 7500
 
-	O.gender = gender
+	O.setGender(gender)
 	O.invisibility = 0
 
 	if(mind)		//TODO
@@ -236,7 +236,7 @@
 	O.cell.charge = (round_start ? 10000 : 15000)
 
 
-	O.gender = gender
+	O.setGender(gender)
 	O.invisibility = 0
 
 

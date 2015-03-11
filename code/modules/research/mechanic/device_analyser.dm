@@ -6,7 +6,7 @@
 	desc = "An electromagnetic scanner used by mechanics. Capable of storing objects and machines as portable designs."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "mechanic"
-	gender = NEUTER
+	setGender(NEUTER)
 	var/list/loaded_designs = list() //the stored designs
 	var/max_designs = 10
 	var/syndi_filter = 1 //whether the scanner should filter traitor tech items. 1 is filtered, 0 is not filtered

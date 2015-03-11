@@ -77,7 +77,7 @@
 /obj/item/weapon/soap
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
-	gender = PLURAL
+	setGender(PLURAL)
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
 	w_class = 1.0
@@ -178,7 +178,7 @@
 /obj/item/weapon/legcuffs
 	name = "legcuffs"
 	desc = "Use this to keep prisoners in line."
-	gender = PLURAL
+	setGender(PLURAL)
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
 	flags = FPRINT
@@ -191,7 +191,7 @@
 /obj/item/weapon/legcuffs/bolas
 	name = "bolas"
 	desc = "An entangling bolas. Throw at your foes to trip them and prevent them from running."
-	gender = NEUTER
+	setGender(NEUTER)
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolas"
 	flags = FPRINT
@@ -577,7 +577,7 @@
 /obj/item/weapon/table_parts
 	name = "table parts"
 	desc = "Parts of a table. Poor table."
-	gender = PLURAL
+	setGender(PLURAL)
 	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
 	m_amt = 3750
@@ -749,7 +749,7 @@
 /obj/item/weapon/stock_parts
 	name = "stock part"
 	desc = "What?"
-	gender = PLURAL
+	setGender(PLURAL)
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = 2.0
 	var/rating = 1
@@ -961,7 +961,7 @@
 /obj/item/weapon/ectoplasm
 	name = "ectoplasm"
 	desc = "spooky"
-	gender = PLURAL
+	setGender(PLURAL)
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
 	w_type = RECYK_BIOLOGICAL

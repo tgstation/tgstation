@@ -55,7 +55,7 @@
 	bald
 		name = "Bald"
 		icon_state = "bald"
-		gender = MALE
+		setGender(MALE)
 		species_allowed = list("Human","Unathi","Grey","Plasmaman","Skellington")
 
 	short
@@ -113,7 +113,7 @@
 	ponytail2
 		name = "Ponytail 2"
 		icon_state = "hair_pa"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	ponytail3
 		name = "Ponytail 3"
@@ -126,13 +126,13 @@
 	pompadour
 		name = "Pompadour"
 		icon_state = "hair_pompadour"
-		gender = MALE
+		setGender(MALE)
 		species_allowed = list("Human","Unathi")
 
 	quiff
 		name = "Quiff"
 		icon_state = "hair_quiff"
-		gender = MALE
+		setGender(MALE)
 
 	bedhead
 		name = "Bedhead"
@@ -149,41 +149,41 @@
 	beehive
 		name = "Beehive"
 		icon_state = "hair_beehive"
-		gender = FEMALE
+		setGender(FEMALE)
 		species_allowed = list("Human","Unathi")
 
 	bobcurl
 		name = "Bobcurl"
 		icon_state = "hair_bobcurl"
-		gender = FEMALE
+		setGender(FEMALE)
 		species_allowed = list("Human","Unathi")
 
 	bob
 		name = "Bob"
 		icon_state = "hair_bobcut"
-		gender = FEMALE
+		setGender(FEMALE)
 		species_allowed = list("Human","Unathi")
 
 	bowl
 		name = "Bowl"
 		icon_state = "hair_bowlcut"
-		gender = MALE
+		setGender(MALE)
 
 	buzz
 		name = "Buzzcut"
 		icon_state = "hair_buzzcut"
-		gender = MALE
+		setGender(MALE)
 		species_allowed = list("Human","Unathi")
 
 	crew
 		name = "Crewcut"
 		icon_state = "hair_crewcut"
-		gender = MALE
+		setGender(MALE)
 
 	combover
 		name = "Combover"
 		icon_state = "hair_combover"
-		gender = MALE
+		setGender(MALE)
 
 	devillock
 		name = "Devil Lock"
@@ -208,12 +208,12 @@
 	afro_large
 		name = "Big Afro"
 		icon_state = "hair_bigafro"
-		gender = MALE
+		setGender(MALE)
 
 	sargeant
 		name = "Flat Top"
 		icon_state = "hair_sargeant"
-		gender = MALE
+		setGender(MALE)
 
 	emo
 		name = "Emo"
@@ -230,17 +230,17 @@
 	hitop
 		name = "Hitop"
 		icon_state = "hair_hitop"
-		gender = MALE
+		setGender(MALE)
 
 	jensen
 		name = "Adam Jensen Hair"
 		icon_state = "hair_jensen"
-		gender = MALE
+		setGender(MALE)
 
 	gelled
 		name = "Gelled Back"
 		icon_state = "hair_gelled"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	spiky
 		name = "Spiky"
@@ -253,33 +253,33 @@
 	kagami
 		name = "Pigtails"
 		icon_state = "hair_kagami"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	himecut
 		name = "Hime Cut"
 		icon_state = "hair_himecut"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	braid
 		name = "Floorlength Braid"
 		icon_state = "hair_braid"
-		gender = FEMALE
+		setGender(FEMALE)
 		flags = HAIRSTYLE_CANTRIP
 
 	odango
 		name = "Odango"
 		icon_state = "hair_odango"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	ombre
 		name = "Ombre"
 		icon_state = "hair_ombre"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	updo
 		name = "Updo"
 		icon_state = "hair_updo"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	skinhead
 		name = "Skinhead"
@@ -288,69 +288,69 @@
 	balding
 		name = "Balding Hair"
 		icon_state = "hair_e"
-		gender = MALE // turnoff!
+		setGender(MALE) // turnoff!
 
 	familyman
 		name = "The Family Man"
 		icon_state = "hair_thefamilyman"
-		gender = MALE
+		setGender(MALE)
 
 	mahdrills
 		name = "Drillruru"
 		icon_state = "hair_drillruru"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	dandypomp
 		name = "Dandy Pompadour"
 		icon_state = "hair_dandypompadour"
-		gender = MALE
+		setGender(MALE)
 
 	poofy
 		name = "Poofy"
 		icon_state = "hair_poofy"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	crono
 		name = "Toriyama"
 		icon_state = "hair_toriyama"
-		gender = MALE
+		setGender(MALE)
 
 	vegeta
 		name = "Toriyama 2"
 		icon_state = "hair_toriyama2"
-		gender = MALE
+		setGender(MALE)
 
 	cia
 		name = "CIA"
 		icon_state = "hair_cia"
-		gender = MALE
+		setGender(MALE)
 
 	mulder
 		name = "Mulder"
 		icon_state = "hair_mulder"
-		gender = MALE
+		setGender(MALE)
 
 	scully
 		name = "Scully"
 		icon_state = "hair_scully"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	marisa
 		name = "Marisa"
 		icon_state = "hair_marisa"
-		gender = FEMALE
+		setGender(FEMALE)
 		additional_accessories = 1
 
 	nitori
 		name = "Nitori"
 		icon_state = "hair_nitori"
-		gender = FEMALE
+		setGender(FEMALE)
 		additional_accessories = 1
 
 	joestar
 		name = "Joestar"
 		icon_state = "hair_joestar"
-		gender = MALE
+		setGender(MALE)
 
 	metal
 		name = "Metal"
@@ -359,57 +359,57 @@
 	edgeworth
 		name = "Edgeworth"
 		icon_state = "hair_edgeworth"
-		gender = MALE
+		setGender(MALE)
 
 	objection
 		name = "Objection!"
 		icon_state = "hair_objection"
-		gender = MALE
+		setGender(MALE)
 
 	dubs
 		name = "Check 'Em"
 		icon_state = "hair_dubs"
-		gender = MALE
+		setGender(MALE)
 
 	swordsman
 		name = "Black Swordsman"
 		icon_state = "hair_blackswordsman"
-		gender = MALE
+		setGender(MALE)
 
 	mentalist
 		name = "Mentalist"
 		icon_state = "hair_mentalist"
-		gender = MALE
+		setGender(MALE)
 
 	fujisaki
 		name = "Fujisaki"
 		icon_state = "hair_fujisaki"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	schierke
 		name = "Schierke"
 		icon_state = "hair_schierke"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	akari
 		name = "Akari"
 		icon_state = "hair_akari"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	fujiyabashi
 		name = "Fujuyabashi"
 		icon_state = "hair_fujiyabashi"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	nia
 		name = "Nia"
 		icon_state = "hair_nia"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	shinobu
 		name = "Shinobu"
 		icon_state = "hair_shinobu"
-		gender = FEMALE
+		setGender(FEMALE)
 
 	bald
 		name = "Bald"
@@ -425,12 +425,12 @@
 /datum/sprite_accessory/facial_hair
 
 	icon = 'icons/mob/human_face.dmi'
-	gender = MALE // barf (unless you're a dorf, dorfs dig chix /w beards :P)
+	setGender(MALE) // barf (unless you're a dorf, dorfs dig chix /w beards :P)
 
 	shaved
 		name = "Shaved"
 		icon_state = "bald"
-		gender = NEUTER
+		setGender(NEUTER)
 		species_allowed = list("Human","Unathi","Tajaran","Skrell","Vox","Grey","Plasmaman","Skellington")
 
 	watson
@@ -549,42 +549,42 @@
 		name = "Skrell Male Tentacles"
 		icon_state = "skrell_hair_m"
 		species_allowed = list("Skrell")
-		gender = MALE
+		setGender(MALE)
 		do_colouration = 0
 
 	skr_tentacle_f
 		name = "Skrell Female Tentacles"
 		icon_state = "skrell_hair_f"
 		species_allowed = list("Skrell")
-		gender = FEMALE
+		setGender(FEMALE)
 		do_colouration = 0
 
 	skr_gold_m
 		name = "Gold plated Skrell Male Tentacles"
 		icon_state = "skrell_goldhair_m"
 		species_allowed = list("Skrell")
-		gender = MALE
+		setGender(MALE)
 		do_colouration = 0
 
 	skr_gold_f
 		name = "Gold chained Skrell Female Tentacles"
 		icon_state = "skrell_goldhair_f"
 		species_allowed = list("Skrell")
-		gender = FEMALE
+		setGender(FEMALE)
 		do_colouration = 0
 
 	skr_clothtentacle_m
 		name = "Cloth draped Skrell Male Tentacles"
 		icon_state = "skrell_clothhair_m"
 		species_allowed = list("Skrell")
-		gender = MALE
+		setGender(MALE)
 		do_colouration = 0
 
 	skr_clothtentacle_f
 		name = "Cloth draped Skrell Female Tentacles"
 		icon_state = "skrell_clothhair_f"
 		species_allowed = list("Skrell")
-		gender = FEMALE
+		setGender(FEMALE)
 		do_colouration = 0
 
 	taj_ears

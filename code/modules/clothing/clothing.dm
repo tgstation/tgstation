@@ -101,7 +101,7 @@ BLIND     // can't see anything
 //Gloves
 /obj/item/clothing/gloves
 	name = "gloves"
-	gender = PLURAL //Carn: for grammarically correct text-parsing
+	setGender(PLURAL) //Carn: for grammarically correct text-parsing
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.50
@@ -190,7 +190,7 @@ BLIND     // can't see anything
 	name = "shoes"
 	icon = 'icons/obj/clothing/shoes.dmi'
 	desc = "Comfortable-looking shoes."
-	gender = PLURAL //Carn: for grammarically correct text-parsing
+	setGender(PLURAL) //Carn: for grammarically correct text-parsing
 	var/chained = 0
 	var/chaintype = null // Type of chain.
 	siemens_coefficient = 0.9
