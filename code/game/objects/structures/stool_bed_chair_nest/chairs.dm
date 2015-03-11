@@ -195,3 +195,4 @@
 				buckled_mob.buckled = src //Restoring
 		if(buckled_mob)
 			buckled_mob.dir = dir
+	return 1
