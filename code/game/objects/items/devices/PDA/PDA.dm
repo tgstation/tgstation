@@ -1333,8 +1333,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			else//Cartridge menu linking
 				mode = text2num(href_list["choice"])
-				cartridge.mode = mode
-				cartridge.unlock()
+				if(cartridge)
+					cartridge.mode = mode
+					cartridge.unlock()
 	else//If not in range, can't interact or not using the pda.
 		U.unset_machine()
 		U << browse(null, "window=pda")
