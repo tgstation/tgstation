@@ -37,31 +37,31 @@
 		user << "<span class='notice'>The label can't stick to the [target.name].  (Try using a pen)</span>"
 		return
 
-		if(target.labeled)
-			target.remove_label()
-		target.labeled = " ([label])"
-		target.name = "[target.name] ([label])"
-		new/atom/proc/remove_label(target)
+	if(target.labeled)
+		target.remove_label()
+	target.labeled = " ([label])"
+	target.name = "[target.name] ([label])"
+	new/atom/proc/remove_label(target)
 
-		if(user.a_intent == I_HURT && target.min_harm_label)
-			user.visible_message("<span class='warning'>[user] labels [target] as [label]... with malicious intent!</span>", \
-								 "<span class='warning'>You label [target] as [label]... with malicious intent!</span>") //OK this is total shit but I don't want to add TOO many vars to /atom
-			target.harm_labeled = min(length(label) + 2, chars_left)
-			target.harm_label_update()
-		else
-			user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
-								 "<span class='notice'>You label [target] as [label].</span>")
+	if(user.a_intent == I_HURT && target.min_harm_label)
+		user.visible_message("<span class='warning'>[user] labels [target] as [label]... with malicious intent!</span>", \
+							 "<span class='warning'>You label [target] as [label]... with malicious intent!</span>") //OK this is total shit but I don't want to add TOO many vars to /atom
+		target.harm_labeled = min(length(label) + 2, chars_left)
+		target.harm_label_update()
+	else
+		user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
+							 "<span class='notice'>You label [target] as [label].</span>")
 
-		chars_left = max(chars_left - (length(label) + 2),0)
-	
-		if(!chars_left)
-			user << "<span class='notice'>The labeler is empty.</span>"
-			mode = 0
-			icon_state = "labeler_e"
-			return
-		if(chars_left < length(label) + 2)
-			user << "<span class='notice'>The labeler is almost empty.</span>"
-			label = copytext(label,1,min(chars_left, length(label) + 1))
+	chars_left = max(chars_left - (length(label) + 2),0)
+
+	if(!chars_left)
+		user << "<span class='notice'>The labeler is empty.</span>"
+		mode = 0
+		icon_state = "labeler_e"
+		return
+	if(chars_left < length(label) + 2)
+		user << "<span class='notice'>The labeler is almost empty.</span>"
+		label = copytext(label,1,min(chars_left, length(label) + 1))
 
 /obj/item/weapon/hand_labeler/attack_self(mob/user as mob)
 	if(!chars_left)
