@@ -75,7 +75,7 @@
 		if(M.mind && M.mind.special_role)
 			M.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
-		M.job = "Cyborg"
+		M.job = "MoMMI"
 
 		M.cell = locate(/obj/item/weapon/cell) in contents
 		M.cell.loc = M
@@ -233,12 +233,14 @@
 
 /obj/item/device/mmi/examine(mob/user)
 	user << "<span class='info'>*---------*</span>"
-	if(src.brainmob)
-		if(src.brainmob.stat == DEAD)
-			user << "<span class='deadsay'>It appears the brain has suffered irreversible tissue degeneration</span>" //suicided
-		else if(!src.brainmob.client)
-			user << "<span class='notice'>It appears to be lost in its own thoughts</span>" //closed game window
-		else if(!src.brainmob.key)
-			user << "<span class='warning'>It seems to be in a deep dream-state</span>" //ghosted
-	user << "<span class='info'>It's interface is [locked ? "locked" : "unlocked"] </span>"
+	..()
+	if(locked!=2)
+		if(src.brainmob)
+			if(src.brainmob.stat == DEAD)
+				user << "<span class='deadsay'>It appears the brain has suffered irreversible tissue degeneration</span>" //suicided
+			else if(!src.brainmob.client)
+				user << "<span class='notice'>It appears to be lost in its own thoughts</span>" //closed game window
+			else if(!src.brainmob.key)
+				user << "<span class='warning'>It seems to be in a deep dream-state</span>" //ghosted
+		user << "<span class='info'>It's interface is [locked ? "locked" : "unlocked"] </span>"
 	user << "<span class='info'>*---------*</span>"

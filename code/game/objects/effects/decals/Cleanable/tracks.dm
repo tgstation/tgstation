@@ -107,6 +107,12 @@ var/global/list/image/fluidtrack_cache=list()
 			if(!istype(stack))
 				stack = list()
 			stack.Add(track)
+			if(isnull(setdirs["[b]"]))
+				warning("[src] had a bad directional [b] or bad list [setdirs.len]")
+				warning("Setdirs keys:")
+				for(var/key in setdirs)
+					warning(key)
+				continue
 			setdirs["[b]"]=stack.Find(track)
 			updatedtracks |= b
 			updated=1
@@ -198,3 +204,4 @@ var/global/list/image/fluidtrack_cache=list()
 	gender = PLURAL
 	random_icon_states = null
 	amount = 0
+

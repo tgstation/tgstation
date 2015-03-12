@@ -239,11 +239,8 @@ turf/simulated/floor/proc/update_icon()
 	else
 		return 0
 
-/turf/simulated/floor/is_catwalk()
-	return 0
-
 /turf/simulated/floor/is_plating()
-	if(!floor_tile && !is_catwalk())
+	if(!floor_tile)
 		return 1
 	return 0
 
@@ -295,7 +292,6 @@ turf/simulated/floor/proc/update_icon()
 //This proc auto corrects the grass tiles' siding.
 /turf/simulated/floor/proc/make_plating()
 	if(istype(src,/turf/simulated/floor/engine)) return
-	if(is_catwalk()) return
 
 	if(is_grass_floor())
 		for(var/direction in cardinal)
@@ -440,7 +436,7 @@ turf/simulated/floor/proc/update_icon()
 		if(is_light_floor())
 			var/obj/item/stack/tile/light/T = floor_tile
 			if(T.state)
-				user.drop_item(C)
+				user.drop_item()
 				del(C)
 				T.state = C //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
@@ -476,11 +472,6 @@ turf/simulated/floor/proc/update_icon()
 
 			make_plating()
 			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
-		if(is_catwalk())
-			if(broken) return
-			ReplaceWithLattice()
-			user << "<span class='notice'>You begin dismantling the catwalk.</span>"
-			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return
 
 	if(istype(C, /obj/item/stack/rods))
@@ -495,15 +486,11 @@ turf/simulated/floor/proc/update_icon()
 					return
 			else
 				user << "<span class='warning'>You need more rods.</span>"
-		else if (is_catwalk())
-			user << "<span class='warning'>The entire thing is 100% rods already, it doesn't need any more.</span>"
 		else
 			user << "<span class='warning'>You must remove the plating first.</span>"
 		return
 
 	if(istype(C, /obj/item/stack/tile))
-		if (is_catwalk())
-			user << "<span class='warning'>The catwalk is too primitive to support tiling.</span>"
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
@@ -535,7 +522,7 @@ turf/simulated/floor/proc/update_icon()
 
 
 	if(istype(C, /obj/item/stack/cable_coil))
-		if(is_plating() || is_catwalk())
+		if(is_plating())
 			var/obj/item/stack/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else

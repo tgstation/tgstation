@@ -7,7 +7,7 @@
 	var/num_pages = 0
 	var/num_results = 0
 	var/datum/library_query/query = new()
-	
+
 	icon = 'icons/obj/library.dmi'
 	icon_state = "computer"
 
@@ -25,11 +25,10 @@
 	return FALSE
 
 /obj/machinery/computer/library/proc/get_page(var/page_num)
-	var/sql = "SELECT id, author, title, category, ckey FROM library"
-	if(query)
-		sql += " [query.toSQL()]"
+	var/sql = "SELECT id, author, title, category, ckey FROM library LIMIT [page_num * LIBRARY_BOOKS_PER_PAGE], [LIBRARY_BOOKS_PER_PAGE]"
+	//if(query)
+		//sql += " [query.toSQL()]"
 	// Pagination
-	sql += " LIMIT [LIBRARY_BOOKS_PER_PAGE] OFFSET [page_num * LIBRARY_BOOKS_PER_PAGE]"
 
 	var/DBQuery/_query = dbcon_old.NewQuery(sql)
 	_query.Execute()
@@ -49,8 +48,8 @@
 
 /obj/machinery/computer/library/proc/get_num_results()
 	var/sql = "SELECT COUNT(*) FROM library"
-	if(query)
-		sql += query.toSQL()
+	//if(query)
+		//sql += query.toSQL()
 
 	var/DBQuery/_query = dbcon_old.NewQuery(sql)
 	_query.Execute()
@@ -63,9 +62,12 @@
 	var/start = max(0,page_num-3)
 	var/end = min(num_pages, page_num+3)
 	for(var/i = start,i <= end,i++)
-		pagelist += "<a href='?src=\ref[src];page=[i]'>[i+1]</a>"
-		if(i != start)
-			pagelist += " "
+		var/dat = "<a href='?src=\ref[src];page=[i]'>[i+1]</a>"
+		if(i == page_num)
+			dat = "<font size=3><b>[dat]</b></font>"
+		if(i != end)
+			dat += " "
+		pagelist += dat
 	pagelist += "</div>"
 	return pagelist
 

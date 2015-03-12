@@ -148,7 +148,7 @@
 	if(src.contents.len > 0) //TODO: several items at once? several different items?
 		user << "<span class='warning'>Something is already in [src]</span>."
 		return 1
-	var/what = O
+	var/atom/movable/what = O
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		what = G.affecting
@@ -159,8 +159,11 @@
 		return 1
 	user.visible_message("<span class='notice'>[user] puts [what] into [src].</span>", \
 		"You put [what] into the [src].")
-	user.drop_item()
-	what:loc = src
+	if(what == user.get_active_hand())
+		user.drop_item(src)
+	else
+		user.drop_item()
+		what.loc = src
 	return
 
 /obj/machinery/processor/attack_hand(var/mob/user as mob)

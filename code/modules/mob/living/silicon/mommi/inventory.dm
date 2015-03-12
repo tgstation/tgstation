@@ -111,15 +111,14 @@
 			client.screen -= tool_state
 		contents -= tool_state
 		var/obj/item/TS = tool_state
-		var/turf/T = null
-		if(Target)
-			T=get_turf(Target)
-		else
-			T=get_turf(src)
-		TS.layer=initial(TS.layer)
-		TS.loc = T.loc
+		if(!Target)
+			Target = get_turf(src)
 
-		if(istype(T))
+		TS.layer=initial(TS.layer)
+		TS.loc = Target
+
+		if(istype(Target, /turf))
+			var/turf/T = Target
 			T.Entered(tool_state)
 		TS.dropped(src)
 		tool_state = null

@@ -59,9 +59,8 @@
 /obj/item/weapon/crossbow/attackby(obj/item/W as obj, mob/user as mob)
 	if(!arrow)
 		if (istype(W,/obj/item/weapon/arrow))
-			user.drop_item()
+			user.drop_item(src)
 			arrow = W
-			arrow.loc = src
 			user.visible_message("[user] slides [arrow] into [src].","You slide [arrow] into [src].")
 			icon_state = "crossbow-nocked"
 			return

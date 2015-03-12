@@ -23,8 +23,7 @@
 		if(!dish)
 
 			dish = I
-			c.drop_item()
-			I.loc = src
+			c.drop_item(src)
 	if(istype(I,/obj/item/weapon/diseasedisk))
 		user << "You upload the contents of the disk into the buffer"
 		memorybank = I:effect

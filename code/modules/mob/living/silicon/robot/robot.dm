@@ -805,8 +805,7 @@
 		else if(cell)
 			user << "There is a power cell already installed."
 		else
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			cell = W
 			user << "You insert the power cell."
 
@@ -862,8 +861,7 @@
 		else
 			if(U.action(src))
 				usr << "You apply the upgrade to [src]!"
-				usr.drop_item()
-				U.loc = src
+				usr.drop_item(src)
 			else
 				usr << "Upgrade error!"
 

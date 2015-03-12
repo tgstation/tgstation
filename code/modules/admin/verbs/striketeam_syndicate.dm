@@ -108,7 +108,7 @@ var/global/sent_syndicate_strike_team = 0
 	var/syndicate_commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
 	var/syndicate_commando_name = pick(last_names)
 
-	new_syndicate_commando.gender = pick(MALE, FEMALE)
+	new_syndicate_commando.setGender(pick(MALE, FEMALE))
 
 	var/datum/preferences/A = new()//Randomize appearance for the commando.
 	A.randomize_appearance_for(new_syndicate_commando)

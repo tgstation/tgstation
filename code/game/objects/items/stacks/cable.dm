@@ -122,7 +122,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	if(!isturf(user.loc))
 		return
 
-	if(get_dist(F, user) > 1)		//too far
+	if(!user.Adjacent(F))		//too far
 		user << "You can't lay cable at a place that far away."
 		return
 

@@ -41,6 +41,8 @@ var/global/list/ghdel_profiling = list()
 	// When this object moves. (args: loc)
 	var/event/on_moved = new()
 
+	var/labeled //Stupid and ugly way to do it, but the alternative would probably require rewriting everywhere a name is read.
+
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	if(!(B in beams))
 		beams.Add(B)
@@ -594,3 +596,20 @@ its easier to just keep the beam vertical.
 
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
+
+/datum/proc/setGender(gend = FEMALE)
+	if(!("gender" in vars))
+		CRASH("Oh shit you stupid nigger the [src] doesn't have a gender variable.")
+	if(ishuman(src))
+		ASSERT(gend != PLURAL && gend != NEUTER)
+	src:gender = gend
+
+/atom/setGender(gend = FEMALE)
+	gender = gend
+
+/mob/living/carbon/human/setGender(gend = FEMALE)
+	if(gend == PLURAL || gend == NEUTER || (gend != FEMALE && gend != MALE))
+		CRASH("SOMEBODY SET A BAD GENDER ON [src] [gend]")
+	var/old_gender = src.gender
+	src.gender = gend
+	testing("Set [src]'s gender to [gend], old gender [old_gender] previous gender [prev_gender]")

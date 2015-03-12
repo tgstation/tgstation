@@ -168,8 +168,7 @@ obj/machinery/computer/forensic_scanning
 						I.icon_state = "evidenceobj"
 					else
 						scanning = I
-						M.drop_item()
-						I.loc = src
+						M.drop_item(src)
 				else
 					usr << "Invalid Object Rejected."
 			if("card")  //Processing a fingerprint card.
@@ -187,8 +186,7 @@ obj/machinery/computer/forensic_scanning
 							card.loc = src.loc
 						card = null
 						return
-					M.drop_item()
-					I.loc = src
+					M.drop_item(src)
 					process_card()
 				else
 					usr << "\red Invalid Object Rejected."

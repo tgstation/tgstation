@@ -79,10 +79,8 @@
 				allow_upgrade = 0
 		if(state == GRAB_AGGRESSIVE)
 			var/h = affecting.hand
-			affecting.hand = 0
-			affecting.drop_item()
-			affecting.hand = 1
-			affecting.drop_item()
+			affecting.drop_l_hand()
+			affecting.drop_r_hand()
 			affecting.hand = h
 			for(var/obj/item/weapon/grab/G in affecting.grabbed_by)
 				if(G == src) continue

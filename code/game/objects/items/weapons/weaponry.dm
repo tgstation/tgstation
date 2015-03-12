@@ -52,12 +52,12 @@
 		user.take_organ_damage(10)
 		user.Paralyse(20)
 		return
-	if(M.mind)
-		if(M.mind.vampire)
-			if(ishuman(M))
-				if(!(VAMP_FULL in M.mind.vampire.powers))
-					M << "<span class='warning'>The nullrod's power interferes with your own!</span>"
-					M.mind.vampire.nullified = max(5, M.mind.vampire.nullified + 2)
+	if(M.mind && M.mind.vampire && ishuman(M))
+		if(!(VAMP_MATURE in M.mind.vampire.powers))
+			M << "<span class='warning'>The nullrod's power interferes with your own!</span>"
+			M.mind.vampire.nullified = max(5, M.mind.vampire.nullified + 2)
+			if(user.mind && user.mind.assigned_role == "Chaplain")
+				M.mind.vampire.smitecounter += 30
 	..()
 
 /obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob)
@@ -65,6 +65,14 @@
 	if (istype(A, /turf/simulated/floor))
 		user << "\blue You hit the floor with the [src]."
 		call(/obj/effect/rune/proc/revealrunes)(src)
+
+/obj/item/weapon/nullrod/pickup(mob/living/user as mob)
+	if(user.mind)
+		if(user.mind.assigned_role == "Chaplain")
+			user << "<span class ='notice'>The obsidian rod is teeming with divine power. You feel like you could pulverize a horde of undead with this.</span>"
+		if(user.mind.vampire && !(VAMP_UNDYING in user.mind.vampire.powers))
+			user.mind.vampire.smitecounter += 60
+			user << "<span class ='warning'>You feel an unwanted presence as you pick up the rod.</span>"
 
 /obj/item/weapon/sord
 	name = "\improper SORD"

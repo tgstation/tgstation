@@ -11,9 +11,8 @@
 	switch(state)
 		if(0)
 			if(istype(W, /obj/item/weapon/circuitboard/airlock) && W:icon_state != "door_electronics_smoked")
-				user.drop_item()
+				user.drop_item(src)
 				circuit=W
-				circuit.loc=src
 				state++
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(istype(W, /obj/item/weapon/crowbar))
@@ -223,8 +222,7 @@
 			user << "<span class='rose'>It's locked, you can't put anything into it.</span>"
 		else if(!occupant)
 			user << "<span class='notice'>You insert \the [W] into \the [src], and it floats as the hoverfield activates.</span>"
-			user.drop_item()
-			W.loc=src
+			user.drop_item(src)
 			occupant=W
 			update_icon()
 

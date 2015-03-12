@@ -61,8 +61,7 @@
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			src.diskette = W
 			user << "You insert [W]."
 			src.updateUsrDialog()
@@ -377,7 +376,7 @@
 		return
 
 	subject.dna.check_integrity()
-
+	var/datum/organ/internal/brain/Brain = subject.internal_organs_by_name["brain"]
 	// Borer sanity checks.
 	var/mob/living/simple_animal/borer/B=subject.has_brain_worms()
 	if(B && B.controlling)
@@ -385,9 +384,12 @@
 		subject.do_release_control(1)
 
 	var/datum/dna2/record/R = new /datum/dna2/record()
-	R.dna=subject.dna
+	if(!isnull(Brain.owner_dna) && Brain.owner_dna != subject.dna)
+		R.dna = Brain.owner_dna
+	else
+		R.dna=subject.dna
 	R.ckey = subject.ckey
-	R.id= copytext(md5(subject.real_name), 2, 6)
+	R.id= copytext(md5(R.dna.real_name), 2, 6)
 	R.name=R.dna.real_name
 	R.types=DNA2_BUF_UI|DNA2_BUF_UE|DNA2_BUF_SE
 

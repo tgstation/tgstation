@@ -127,6 +127,7 @@
 						if(S.amount < 1) return ..()
 						user << "<span class='info'>Now finalising reinforced wall.</span>"
 						if(do_after(user, 50))
+							if(!loc || gcDestroyed) return // Got destroyed during the doafter
 							if(!src || !S || S.amount < 1) return
 							S.use(1)
 							user << "\blue Wall fully reinforced!"
@@ -141,6 +142,7 @@
 						if(S.amount < 1) return ..()
 						user << "<span class='info'>Now reinforcing girders</span>"
 						if (do_after(user,60))
+							if(!loc || gcDestroyed) return // Got destroyed during the doafter
 							if(!src || !S || S.amount < 1 || !get_turf(src)) return
 							S.use(1)
 							user << "<span class='info'>Girders reinforced!</span>"
@@ -187,8 +189,7 @@
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
 		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
-			user.drop_item()
-			P.loc = src.loc
+			user.drop_item(src.loc)
 			user << "\blue You fit the pipe into the [src]!"
 	else
 		..()

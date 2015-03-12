@@ -176,8 +176,8 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			M.mind.special_role = "Vampire"
 			ticker.mode.forge_vampire_objectives(M.mind)
 			ticker.mode.greet_vampire(M.mind)
-			M.mind.vampire.bloodtotal = 500
-			M.mind.vampire.bloodusable = 500
+			M.mind.vampire.bloodtotal = 666
+			M.mind.vampire.bloodusable = 666
 			M.check_vampire_upgrade(M.mind)
 
 			var/obj/item/packobelongings/pack = new /obj/item/packobelongings(M)
@@ -197,7 +197,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			M.equip_to_slot_or_del(new/obj/item/clothing/shoes/jackboots, slot_shoes)
 			M.equip_to_slot_or_del(new/obj/item/clothing/gloves/batmangloves, slot_gloves)
 			M.equip_to_slot_or_del(new/obj/item/clothing/mask/gas/death_commando, slot_wear_mask)
-			M.equip_to_slot_or_del(new/obj/item/clothing/suit/hgpirate, slot_wear_suit)
+			M.equip_to_slot_or_del(new/obj/item/clothing/suit/storage/draculacoat, slot_wear_suit)
 			M.equip_to_slot_or_del(new/obj/item/clothing/head/chaplain_hood, slot_head)
 			M.equip_to_slot_or_del(new/obj/item/weapon/tank/emergency_oxygen/double, slot_s_store)
 
@@ -205,7 +205,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			M << "Your previous belongings have been stored in your backpack."
 			M.regenerate_icons()
 
-			M << "<span class='danger'>You have been gifted a total of 500 usable units of blood!</span>"
+			M << "<span class='danger'>You have been gifted a total of 666 usable units of blood!</span>"
 			return 1
 
 

@@ -15,6 +15,12 @@
 			src << "<span class='notice'>You feel like a pleb.</span>"
 	handle_beams()
 
+	//handles "call on life", allowing external life-related things to be processed
+	for(var/toCall in src.callOnLife)
+		if(locate(toCall) && callOnLife[toCall])
+			call(locate(toCall),callOnLife[toCall])()
+		else callOnLife -= toCall
+
 	if(mind)
 		if(mind in ticker.mode.implanted)
 			if(implanting) return

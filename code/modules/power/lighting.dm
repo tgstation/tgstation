@@ -311,7 +311,7 @@
 				update()
 
 				user.drop_item()	//drop the item to update overlays and such
-				del(L)
+				qdel(L)
 
 				if(on && rigged)
 

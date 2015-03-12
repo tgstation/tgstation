@@ -126,7 +126,7 @@
 		if(M in player_list)
 			M << msg
 
-	log_admin("DirectNarrate: [key_name(usr)] at [formatJumpTo(get_turf(usr))]: [msg]")
+	log_admin("LocalNarrate: [key_name(usr)] at [formatJumpTo(get_turf(usr))]: [msg]")
 	message_admins("\blue \bold DirectNarrate: [key_name(usr)] at [formatJumpTo(get_turf(usr))]: [msg]<BR>", 1)
 	feedback_add_details("admin_verb","LIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -440,11 +440,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(record_found)//If they have a record we can determine a few things.
 		new_character.real_name = record_found.fields["name"]
-		new_character.gender = record_found.fields["sex"]
+		new_character.setGender(record_found.fields["sex"])
 		new_character.age = record_found.fields["age"]
 		new_character.b_type = record_found.fields["b_type"]
 	else
-		new_character.gender = pick(MALE,FEMALE)
+		new_character.setGender(pick(MALE,FEMALE))
 		var/datum/preferences/A = new()
 		A.randomize_appearance_for(new_character)
 		new_character.real_name = G_found.real_name

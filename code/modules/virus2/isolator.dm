@@ -19,8 +19,7 @@
 		return
 
 	src.beaker =  B
-	user.drop_item()
-	B.loc = src
+	user.drop_item(src)
 	if(istype(B,/obj/item/weapon/reagent_containers/syringe))
 		user << "You add the syringe to the machine!"
 		src.updateUsrDialog()

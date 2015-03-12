@@ -306,8 +306,7 @@
 		return
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
 		if (isnull(coin))
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			coin = W
 			user << "<span class='notice'>You insert a coin into [src].</span>"
 		else
@@ -1023,9 +1022,8 @@
 				usr << "You begin to insert \the [C] into \the [src]."
 				if(do_after(user, 10))
 					usr << "<span class='notice'>You secure \the [C]!</span>"
-					user.drop_item()
+					user.drop_item(src)
 					_circuitboard=C
-					C.loc=src
 					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 					build++
 					update_icon()

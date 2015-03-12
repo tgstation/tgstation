@@ -229,6 +229,8 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("light tubes box", /obj/item/weapon/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs box", /obj/item/weapon/storage/box/lights/bulbs), \
 	new/datum/stack_recipe("mouse traps box", /obj/item/weapon/storage/box/mousetraps), \
+	new/datum/stack_recipe("candle box", /obj/item/weapon/storage/fancy/candle_box/empty), \
+	new/datum/stack_recipe("crayon box", /obj/item/weapon/storage/fancy/crayons/empty), \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \

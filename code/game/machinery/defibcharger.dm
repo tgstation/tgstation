@@ -107,8 +107,7 @@ obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as o
 		if(a.power_equip == 0)
 			user << "<span class='warning'>[src] blinks red as you try to insert [D]!</span>"
 			return
-		user.drop_item()
-		G.loc = src
+		user.drop_item(src)
 		charging = G
 		use_power = 2
 		update_icon()

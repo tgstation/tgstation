@@ -51,7 +51,7 @@
 	response_disarm = "gently moves aside"
 	response_harm   = "swats"
 	stop_automated_movement = 1
-	a_intent = I_HURT //parrots now start "aggressive" since only player parrots will nuzzle.
+	//NO a_intent = I_HURT //parrots now start "aggressive" since only player parrots will nuzzle.
 	attacktext = "chomps"
 	friendly = "grooms"
 
@@ -228,8 +228,7 @@
 
 						var/obj/item/device/radio/headset/headset_to_add = item_to_add
 
-						usr.drop_item()
-						headset_to_add.loc = src
+						usr.drop_item(src)
 						src.ears = headset_to_add
 						usr << "You fit the headset onto [src]."
 

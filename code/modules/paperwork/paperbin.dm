@@ -70,8 +70,7 @@
 	if(!istype(i))
 		return
 
-	user.drop_item()
-	i.loc = src
+	user.drop_item(src)
 	user << "<span class='notice'>You put [i] in [src].</span>"
 	papers.Add(i)
 	amount++

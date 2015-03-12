@@ -119,6 +119,8 @@ var/list/camera_names=list()
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
 	if(!istype(user))
 		return
+	if(!status)
+		return
 	status = 0
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 	playsound(get_turf(src), 'sound/weapons/slash.ogg', 100, 1)
@@ -149,6 +151,7 @@ var/list/camera_names=list()
 
 	// OTHER
 	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+		user.delayNextAttack(5)
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null

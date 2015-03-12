@@ -60,8 +60,7 @@
 				user << "<span class='warning'>Unwield [F] first!</span>"
 				return
 			fireaxe = O
-			user.drop_item(O)
-			contents += O
+			user.drop_item(src)
 			visible_message("<span class='notice'>[user] places [F] back into [src].</span>", \
 			"<span class='notice'>You place [F] back into [src].</span>")
 			update_icon()

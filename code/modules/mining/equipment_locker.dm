@@ -39,8 +39,7 @@
 			return
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
-			usr.drop_item()
-			I.loc = src
+			usr.drop_item(src)
 			inserted_id = I
 
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(var/obj/item/weapon/ore/O)
@@ -133,7 +132,7 @@
 				inserted_id = null
 			if(href_list["choice"] == "claim")
 				var/datum/money_account/acct = get_card_account(inserted_id)
-				if(acct.charge(-credits,null,"Claimed mining credits.",dest_name = "Ore Redemption"))
+				if(acct && acct.charge(-credits,null,"Claimed mining credits.",dest_name = "Ore Redemption"))
 					credits = 0
 					usr << "<span class='notice'>Credits transferred.</span>"
 				else
@@ -141,8 +140,7 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
-				usr.drop_item()
-				I.loc = src
+				usr.drop_item(src)
 				inserted_id = I
 			else
 				usr << "<span class='warning'>No valid ID.</span>"
@@ -261,8 +259,7 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
-				usr.drop_item()
-				I.loc = src
+				usr.drop_item(src)
 				inserted_id = I
 			else usr << "<span class='warning'>No valid ID.</span>"
 	if(href_list["purchase"])
@@ -294,8 +291,7 @@
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
-			usr.drop_item()
-			I.loc = src
+			usr.drop_item(src)
 			inserted_id = I
 		return
 	..()

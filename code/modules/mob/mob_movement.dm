@@ -425,6 +425,9 @@
 	var/area/A = get_area_master(mob)
 	if(A)
 		A.Entered(mob)
+	if(isturf(mob.loc))
+		var/turf/T = mob.loc
+		T.Entered(mob)
 	return 1
 
 
@@ -470,6 +473,8 @@
 		break
 
 	if(!dense_object && (locate(/obj/structure/lattice) in oview(1, src)))
+		dense_object++
+	if(!dense_object && (locate(/obj/structure/catwalk) in oview(1, src)))
 		dense_object++
 
 	//Lastly attempt to locate any dense objects we could push off of

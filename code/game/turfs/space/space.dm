@@ -7,6 +7,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
+	intact = 0 //No seriously, that's not a joke. Allows cable to be laid PROPERLY on catwalks
 
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))

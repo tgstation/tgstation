@@ -104,13 +104,13 @@
 			if(!dbcon_old.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-
+				num_results = src.get_num_results()
+				num_pages = Ceiling(num_results/LIBRARY_BOOKS_PER_PAGE)
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:196: dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
 				dat += {"<ul>
 					<li><A href='?src=\ref[src];id=-1'>(Order book by SS<sup>13</sup>BN)</A></li>
 				</ul>"}
-
 				var/pagelist = get_pagelist()
 
 				dat += pagelist
@@ -226,6 +226,11 @@
 		onclose(usr, "library")
 		return
 
+	if(href_list["page"])
+		if(num_pages == 0)
+			page_num = 0
+		else
+			page_num = Clamp(text2num(href_list["page"]), 0, num_pages)
 	if(href_list["del"])
 		if(!usr.check_rights(R_ADMIN))
 			usr << "You aren't an admin, piss off."

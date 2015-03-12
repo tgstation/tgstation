@@ -9,7 +9,7 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | EJECTNOTDEL
 	flags = OPENCONTAINER | NOREACT
 	pass_flags = PASSTABLE
 	var/operating = 0 // Is it on?
@@ -22,6 +22,8 @@
 	var/global/max_n_of_items = 0
 	var/list/holdingitems = list()
 	var/limit = 100
+	var/speed_multiplier = 1
+	var/scanning_power = 0
 
 // see code/modules/food/recipes_microwave.dm for recipes
 //Cannot use tools - screwdriver and crowbar for recipes. Or at least fix things before you do
@@ -67,6 +69,20 @@
 				acceptable_reagents |= reagent
 			if (recipe.items)
 				max_n_of_items = max(max_n_of_items,recipe.items.len)
+
+/*******************
+*   Part Upgrades
+********************/
+/obj/machinery/microwave/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		T += M.rating-1
+	speed_multiplier = initial(speed_multiplier)+(T * 0.25)
+
+	T = 0
+	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
+		T += M.rating-1
+	scanning_power = initial(scanning_power)+(T)
 
 /*******************
 *   Item Adding
@@ -163,8 +179,7 @@
 				"<span class='notice'>You add one of [O] to \the [src].</span>")
 		else
 		//	user.before_take_item(O)	//This just causes problems so far as I can tell. -Pete
-			user.drop_item()
-			O.loc = src
+			user.drop_item(src)
 			contents += O
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
@@ -255,8 +270,16 @@
 		if (items_counts.len==0 && reagents.reagent_list.len==0)
 			dat = {"<B>The microwave is empty</B><BR>"}
 		else
-			dat = {"<b>Ingredients:</b><br>[dat]"}
-		dat += {"<HR><BR>\
+			dat = {"<b>Ingredients:</b><br>[dat]<HR><BR>"}
+			if (scanning_power >= 2 )
+				var/datum/recipe/recipe = select_recipe(available_recipes,src)
+				if (!recipe)
+					dat += {"<font color = 'red'>ERROR: No matching recipe found!</font><br>"}
+				else
+					var/obj/O = recipe.result
+					var/display_name = initial(O.name)
+					dat += {"<b>Expected result: </b>[display_name]<br>"}
+		dat += {"\
 <A href='?src=\ref[src];action=cook'>Turn on!<BR>\
 <A href='?src=\ref[src];action=dispose'>Eject ingredients!<BR>\
 "}
@@ -333,7 +356,7 @@
 		if (stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
-		sleep(10)
+		sleep(10/speed_multiplier)
 	return 1
 
 /obj/machinery/microwave/proc/has_extra_item()

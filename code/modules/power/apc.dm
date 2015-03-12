@@ -390,8 +390,7 @@
 			if (stat & MAINT)
 				user << "\red There is no connector for your power cell."
 				return
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			cell = W
 			user.visible_message(\
 				"\red [user.name] has inserted the power cell to [src.name]!",\
@@ -1291,5 +1290,9 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		return 1
 	else
 		return 0
+
+/obj/machinery/power/apc/cultify()
+	if(src.invisibility != INVISIBILITY_MAXIMUM)
+		src.invisibility = INVISIBILITY_MAXIMUM
 
 #undef APC_UPDATE_ICON_COOLDOWN

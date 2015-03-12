@@ -179,8 +179,6 @@
 	return 0
 /turf/proc/is_carpet_floor()
 	return 0
-/turf/proc/is_catwalk()
-	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
 
@@ -275,14 +273,14 @@
 
 	if(connections) connections.erase_all()
 
-	if(istype(src,/turf/simulated) && !iscatwalk(src))
+	if(istype(src,/turf/simulated))
 		//Yeah, we're just going to rebuild the whole thing.
 		//Despite this being called a bunch during explosions,
 		//the zone will only really do heavy lifting once.
 		var/turf/simulated/S = src
 		env = S.air //Get the air before the change
 		if(S.zone) S.zone.rebuild()
-	if(istype(src,/turf/simulated/floor) && !iscatwalk(src))
+	if(istype(src,/turf/simulated/floor))
 		var/turf/simulated/floor/F = src
 		if(F.floor_tile)
 			returnToPool(F.floor_tile)

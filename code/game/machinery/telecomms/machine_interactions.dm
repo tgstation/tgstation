@@ -53,7 +53,7 @@
 					A.amount -= 5
 					if(A.amount <= 0)
 						user.drop_item()
-						del(A)
+						returnToPool(A)
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
 				else

@@ -169,6 +169,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_admin_dump_delprofile,
 	/client/proc/mob_list,
 	/client/proc/cure_disease,
+	/client/proc/cmd_admin_find_bad_blood_tracks,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
 #endif
@@ -767,9 +768,9 @@ var/list/admin_verbs_mod = list(
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
-			M.gender = MALE
+			M.setGender(MALE)
 		else
-			M.gender = FEMALE
+			M.setGender(FEMALE)
 	M.update_hair()
 	M.update_body()
 	M.check_dna(M)

@@ -1,3 +1,17 @@
+//multitool programming whitelist
+var/global/list/multitool_var_whitelist = list(	"id_tag",
+													"master_tag",
+													"command",
+													"input_tag",
+													"output_tag",
+													"tag_airpump",
+													"tag_exterior_door",
+													"tag_interior_door",
+													"tag_chamber_sensor",
+													"tag_interior_sensor",
+													"tag_exterior_sensor",
+													)
+
 /*
 Overview:
    Used to create objects that need a per step proc call.  Default definition of 'New()'
@@ -155,12 +169,12 @@ Class Procs:
 		machines -= src
 	if(src in power_machines)
 		power_machines -= src
-
+/*
 	if(component_parts)
 		for(var/atom/movable/AM in component_parts)
 			AM.loc = loc
 			component_parts -= AM
-
+*/
 		component_parts = null
 
 	..()
@@ -246,6 +260,12 @@ Class Procs:
 		var/update_mt_menu=0
 		var/re_init=0
 		if("set_tag" in href_list)
+			if(!(href_list["set_tag"] in multitool_var_whitelist))
+				var/current_tag = src.vars[href_list["set_tag"]]
+				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
+				log_admin("[usr] ([formatPlayerPanel(usr,usr.ckey)]) attempted to modify variable(var = [href_list["set_tag"]], value = [newid]) using multitool - [formatJumpTo(usr)]")
+				message_admins("[usr] ([formatPlayerPanel(usr,usr.ckey)]) attempted to modify variable(var = [href_list["set_tag"]], value = [newid]) using multitool - [formatJumpTo(usr)]")
+				return
 			if(!(href_list["set_tag"] in vars))
 				usr << "<span class='warning'>Something went wrong: Unable to find [href_list["set_tag"]] in vars!</span>"
 				return 1

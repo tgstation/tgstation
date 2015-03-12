@@ -163,8 +163,7 @@ Pressure: [env.return_pressure()]"}
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has robotized [M.key].")
-		spawn(10)
-			return M:Robotize()
+		. = M:Robotize()
 
 	else
 		alert("Invalid mob")
@@ -178,8 +177,7 @@ Pressure: [env.return_pressure()]"}
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has MoMMIfied [M.key].")
-		spawn(10)
-			return M:MoMMIfy()
+		. = M:MoMMIfy()
 
 	else
 		alert("Invalid mob")
@@ -201,8 +199,7 @@ Pressure: [env.return_pressure()]"}
 		return
 
 	log_admin("[key_name(src)] has animalized [M.key].")
-	spawn(10)
-		return M.Animalize()
+	. = M.Animalize()
 
 
 /client/proc/makepAI(var/turf/T in mob_list)
@@ -1113,6 +1110,31 @@ Pressure: [env.return_pressure()]"}
 	F << "Types,Number of Instances"
 	for(var/key in type_instances)
 		F << "[key],[type_instances[key]]"
+
+	usr << "\blue Dumped to [F]"
+
+/client/proc/cmd_admin_find_bad_blood_tracks()
+	set category = "Debug"
+	set name = "Find broken blood tracks"
+	if(!holder) return
+	message_admins("[src] used find broken blood tracks")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F =file("data/logs/profiling/[date_string]_broken_blood.log")
+	fdel(F)
+	for(var/obj/effect/decal/cleanable/blood/tracks/T in blood_list)
+		if(!T.loc)
+			F << "Found [T] in a null location but still in the blood list"
+			F << "--------------------------------------"
+			continue
+		var/dat
+		for(var/b in cardinal)
+			if(isnull(T.setdirs["[b]"]))
+				dat += ("[T] ([formatJumpTo(T)]) had a bad directional [b] or bad list [T.setdirs.len]")
+				dat += ("Setdirs keys:")
+				for(var/key in T.setdirs)
+					dat += (key)
+		dat += "--------------------------------------"
+		F << dat
 
 	usr << "\blue Dumped to [F]"
 

@@ -8,7 +8,7 @@
 	layer = 2.3 //under pipes
 	//	flags = CONDUCT
 
-	canSmoothWith = "/obj/structure/lattice=0&/turf=0"
+	canSmoothWith = "/obj/structure/lattice=0&/obj/structure/catwalk=0&/turf=0"
 
 /obj/structure/lattice/New(loc)
 	..(loc)

@@ -1,7 +1,7 @@
 /obj/item/weapon/handcuffs
 	name = "handcuffs"
 	desc = "Use this to keep prisoners in line."
-	gender = PLURAL
+	setGender(PLURAL)
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
 	flags = FPRINT

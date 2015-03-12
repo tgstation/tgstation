@@ -82,8 +82,9 @@
 	return
 
 /obj/item/weapon/tank/plasma/plasmaman
-	desc = "The lifeblood of plasmamen.  Warning:  Extremely flammable, do not inhale (unless you're a plasman)."
+	desc = "The lifeblood of plasmamen.  Warning:  Extremely flammable, do not inhale (unless you're a plasmaman)."
 	icon_state = "plasma_fr"
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
 /*
  * Emergency Oxygen

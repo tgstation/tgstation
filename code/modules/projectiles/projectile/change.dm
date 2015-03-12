@@ -56,7 +56,7 @@
 				new_mob.languages |= HUMAN
 			if("robot")
 				new_mob = new /mob/living/silicon/robot(M.loc)
-				new_mob.gender = M.gender
+				new_mob.setGender(M.gender)
 				new_mob.invisibility = 0
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
@@ -65,7 +65,7 @@
 				new_mob.languages |= HUMAN
 			if("mommi")
 				new_mob = new /mob/living/silicon/robot/mommi(M.loc)
-				new_mob.gender = M.gender
+				new_mob.setGender(M.gender)
 				new_mob.invisibility = 0
 				new_mob.job = "MoMMI"
 				var/mob/living/silicon/robot/mommi/MoMMI = new_mob
@@ -112,7 +112,7 @@
 			if("human")
 				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
 
-				new_mob.gender = M.gender
+				new_mob.setGender(M.gender)
 
 				var/datum/preferences/A = new()	//Randomize appearance for the human
 				A.randomize_appearance_for(new_mob)
@@ -124,7 +124,7 @@
 			if("furry")
 				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
 
-				new_mob.gender = M.gender
+				new_mob.setGender(M.gender)
 
 				var/datum/preferences/A = new()	//Randomize appearance for the human
 				A.randomize_appearance_for(new_mob)
@@ -135,7 +135,7 @@
 			/* RIP
 			if("cluwne")
 				new_mob = new /mob/living/simple_animal/hostile/retaliate/cluwne(M.loc)
-				new_mob.gender=src.gender
+				new_mob.setGender(gender)
 				new_mob.name = pick(clown_names)
 				new_mob.real_name = new_mob.name
 				new_mob.mutations += M_CLUMSY

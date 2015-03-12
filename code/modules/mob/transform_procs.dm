@@ -67,7 +67,7 @@
 		del(t)
 
 	var/mob/living/simple_animal/hostile/retaliate/cluwne/new_mob = new (get_turf(src))
-	new_mob.gender=src.gender
+	new_mob.setGender(gender)
 	new_mob.name = pick(clown_names)
 	new_mob.real_name = new_mob.name
 	new_mob.mutations += M_CLUMSY
@@ -184,13 +184,13 @@
 		del(t)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(src))
-
+	. = O
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
 	O.cell.maxcharge = 7500
 	O.cell.charge = 7500
 
-	O.gender = gender
+	O.setGender(gender)
 	O.invisibility = 0
 
 	if(mind)		//TODO
@@ -208,11 +208,11 @@
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
-	O.Namepick()
+	spawn() O.Namepick()
 
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
-	return O
+
 
 //human -> mommi
 /mob/living/carbon/human/proc/MoMMIfy(round_start = 0)
@@ -229,14 +229,14 @@
 		del(t)
 
 	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi(get_turf(src))
-
+	. = O
 	// MoMMIs produced by Robotize get an automatic power cell
 	O.cell = new(O)
 	O.cell.maxcharge = (round_start ? 10000 : 15000)
 	O.cell.charge = (round_start ? 10000 : 15000)
 
 
-	O.gender = gender
+	O.setGender(gender)
 	O.invisibility = 0
 
 
@@ -255,12 +255,11 @@
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
-	O.Namepick()
+	spawn() O.Namepick()
 
 
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
-	return O
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
