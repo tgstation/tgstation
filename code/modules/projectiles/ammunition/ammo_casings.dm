@@ -199,8 +199,26 @@
 /obj/item/ammo_casing/caseless/magspear
 	name = "magnetic spear"
 	desc = "A reusable spear that is typically loaded into kinetic spearguns."
-	projectile_type = /obj/item/projectile/bullet/magspear
+	projectile_type = /obj/item/projectile/bullet/reusable/magspear
 	caliber = "speargun"
 	icon_state = "magspear"
 	throwforce = 15 //still deadly when thrown
 	throw_speed = 3
+
+/obj/item/ammo_casing/caseless/foam_dart
+	name = "foam dart"
+	desc = "Its nerf or nothing! Ages 8 and up."
+	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart
+	caliber = "foam_force"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamdart"
+
+/obj/item/ammo_casing/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]"
+
+/obj/item/ammo_casing/caseless/foam_dart/riot
+	name = "riot foam dart"
+	desc = "Who's smart idea was it to use toys as crowd control? Ages 18 and up."
+	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
+	icon_state = "foamdart_riot"

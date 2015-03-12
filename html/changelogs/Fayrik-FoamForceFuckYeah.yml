@@ -1,0 +1,10 @@
+author: Fayrik
+
+delete-after: True
+
+changes: 
+  - rscdel: "Deleted the toy crossbow that wasn't a gun, but flung projectiles like a gun. Why was that even a thing?"
+  - rscadd: "Added an abstract new type of reusable ammo."
+  - rscadd: "Added three new foam force guns and a foam force crossbow, all of which take the new foam dart ammo."
+  - rscadd: "Added foam force darts to the autolathe, and a crate orderable from cargo containing the new guns."
+  - rscadd: "New crossbow can be won as an arcade prize."
