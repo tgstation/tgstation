@@ -634,7 +634,7 @@ proc/populate_seed_list()
 	if(immutable > 0) return
 
 	//Set up some basic information.
-	var/datum/seed/new_seed = new
+	var/datum/seed/new_seed = new /datum/seed()
 	new_seed.name = "new line"
 	new_seed.uid = 0
 	new_seed.roundstart = 0
@@ -687,6 +687,7 @@ proc/populate_seed_list()
 	new_seed.flower_icon =          flower_icon
 	new_seed.alter_temp = 			alter_temp
 
+	ASSERT(istype(new_seed)) //something happened...
 	return new_seed
 
 // Actual roundstart seed types after this point.
