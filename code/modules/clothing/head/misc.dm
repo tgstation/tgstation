@@ -166,6 +166,14 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
+/obj/item/clothing/head/corgi
+	name = "corgi suit head"
+	desc = "Who doesn't want to be Ian!?"
+	icon_state = "corgihead"
+	item_state = "corgihead"
+	flags = BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+
 /obj/item/clothing/head/fedora
 	name = "fedora"
 	icon_state = "fedora"
