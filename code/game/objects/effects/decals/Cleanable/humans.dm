@@ -1,6 +1,7 @@
 #define DRYING_TIME 5 * 60*10			//for 1 unit of depth in puddle (amount var)
 
 var/global/list/image/splatter_cache=list()
+var/global/list/blood_list = list()
 
 /obj/effect/decal/cleanable/blood
 	name = "blood"
@@ -23,6 +24,7 @@ var/global/list/image/splatter_cache=list()
 	return
 
 /obj/effect/decal/cleanable/blood/Destroy()
+	blood_list -= src
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 		D.holder = null
@@ -44,6 +46,7 @@ var/global/list/image/splatter_cache=list()
 	..("viruses","virus2", "blood_DNA", args)
 /obj/effect/decal/cleanable/blood/New()
 	..()
+	blood_list += src
 	update_icon()
 
 	if(ticker && ticker.mode && ticker.mode.name == "cult")

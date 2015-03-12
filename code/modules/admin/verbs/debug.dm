@@ -1113,6 +1113,31 @@ Pressure: [env.return_pressure()]"}
 
 	usr << "\blue Dumped to [F]"
 
+/client/proc/cmd_admin_find_bad_blood_tracks()
+	set category = "Debug"
+	set name = "Find broken blood tracks"
+	if(!holder) return
+	message_admins("[src] used find broken blood tracks")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F =file("data/logs/profiling/[date_string]_broken_blood.log")
+	fdel(F)
+	for(var/obj/effect/decal/cleanable/blood/tracks/T in blood_list)
+		if(!T.loc)
+			F << "Found [T] in a null location but still in the blood list"
+			F << "--------------------------------------"
+			continue
+		var/dat
+		for(var/b in cardinal)
+			if(isnull(T.setdirs["[b]"]))
+				dat += ("[T] ([formatJumpTo(T)]) had a bad directional [b] or bad list [T.setdirs.len]")
+				dat += ("Setdirs keys:")
+				for(var/key in T.setdirs)
+					dat += (key)
+		dat += "--------------------------------------"
+		F << dat
+
+	usr << "\blue Dumped to [F]"
+
 #ifdef PROFILE_MACHINES
 /client/proc/cmd_admin_dump_macprofile()
 	set category = "Debug"
