@@ -99,7 +99,7 @@
 /obj/item/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burns."
-	gender = (PLURAL)
+	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
 	origin_tech = "biotech=1"

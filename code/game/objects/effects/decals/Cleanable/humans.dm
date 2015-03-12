@@ -6,7 +6,7 @@ var/global/list/blood_list = list()
 /obj/effect/decal/cleanable/blood
 	name = "blood"
 	desc = "It's thick and gooey. Perhaps it's the chef's cooking?"
-	gender = (PLURAL)
+	gender = PLURAL
 	density = 0
 	anchored = 1
 	layer = 2
@@ -139,7 +139,7 @@ var/global/list/blood_list = list()
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
 	desc = "It's red."
-	gender = (PLURAL)
+	gender = PLURAL
 	icon = 'icons/effects/drip.dmi'
 	icon_state = "1"
 	random_icon_states = list("1","2","3","4","5")
@@ -150,7 +150,7 @@ var/global/list/blood_list = list()
 /obj/effect/decal/cleanable/blood/writing
 	icon_state = "tracks"
 	desc = "It looks like a writing in blood."
-	gender = (NEUTER)
+	gender = NEUTER
 	random_icon_states = list("writing1","writing2","writing3","writing4","writing5")
 	amount = 0
 	var/message
@@ -171,7 +171,7 @@ var/global/list/blood_list = list()
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
-	gender = (PLURAL)
+	gender = PLURAL
 	density = 0
 	anchored = 1
 	layer = 2
