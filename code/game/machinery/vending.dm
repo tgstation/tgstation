@@ -741,6 +741,17 @@
 					/obj/item/weapon/gun/projectile/shotgun = 2)
 	premium = list(/obj/item/ammo_box/magazine/smgm9mm = 2,/obj/item/ammo_box/magazine/m50 = 4,/obj/item/ammo_box/magazine/m45 = 2,/obj/item/ammo_box/magazine/m75 = 2)
 	contraband = list(/obj/item/clothing/under/patriotsuit = 1,/obj/item/weapon/bedsheet/patriot = 3)
+	refill_canister = /obj/item/weapon/vending_refill/liberationstation
+
+/obj/machinery/vending/liberationstation/New()
+	..()
+	component_parts = list()
+	var/obj/item/weapon/circuitboard/vendor/V = new(null)
+	V.set_type(type)
+	component_parts += V
+	component_parts += new /obj/item/weapon/vending_refill/liberationstation(0)
+	component_parts += new /obj/item/weapon/vending_refill/liberationstation(0)
+	component_parts += new /obj/item/weapon/vending_refill/liberationstation(0)
 
 /obj/machinery/vending/cigarette
 	name = "\improper ShadyCigs Deluxe"
