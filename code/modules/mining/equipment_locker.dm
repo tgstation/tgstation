@@ -132,7 +132,7 @@
 				inserted_id = null
 			if(href_list["choice"] == "claim")
 				var/datum/money_account/acct = get_card_account(inserted_id)
-				if(acct.charge(-credits,null,"Claimed mining credits.",dest_name = "Ore Redemption"))
+				if(acct && acct.charge(-credits,null,"Claimed mining credits.",dest_name = "Ore Redemption"))
 					credits = 0
 					usr << "<span class='notice'>Credits transferred.</span>"
 				else
