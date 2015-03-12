@@ -6,6 +6,7 @@
 	say_message = "hums"
 	ventcrawler = 2
 	var/is_adult = 0
+	var/docile = 0
 	languages = SLIME | HUMAN
 	faction = list("slime")
 
@@ -135,8 +136,8 @@
 			stat(null, "Health: [round((health / 200) * 100)]%")
 		else
 			stat(null, "Health: [round((health / 150) * 100)]%")
-
-		stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
+		if(!docile)
+			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
 		if(amount_grown >= 10)
 			if(is_adult)
 				stat(null, "You can reproduce!")
@@ -602,71 +603,60 @@
 
 ////Pet Slime Creation///
 
-/obj/item/weapon/slimepotion
+/obj/item/slimepotion
 	name = "docility potion"
-	desc = "A potent chemical mix that will nullify a slime's powers, causing it to become docile and tame."
+	desc = "A potent chemical mix that nullifies a slime's hunger, causing it to become docile and tame."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "<span class='warning'> The potion only works on baby slimes!</span>"
-			return ..()
-		if(M.is_adult) //Can't tame adults
-			user << "<span class='warning'> Only baby slimes can be tamed!</span>"
-			return..()
-		if(M.stat)
-			user << "<span class='warning'> The slime is dead!</span>"
-			return..()
-		if(M.mind)
-			user << "<span class='warning'> The slime resists!</span>"
-			return ..()
-		var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
-		pet.icon_state = "[M.colour] baby slime"
-		pet.icon_living = "[M.colour] baby slime"
-		pet.icon_dead = "[M.colour] baby slime dead"
-		pet.colour = "[M.colour]"
-		user <<"You feed the slime the potion, removing it's powers and calming it."
-		qdel(M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
-
-		if (!newname)
-			newname = "pet slime"
-		pet.name = newname
-		pet.real_name = newname
-		qdel(src)
-
-/obj/item/weapon/slimepotion2
-	name = "advanced docility potion"
-	desc = "A potent chemical mix that will nullify a slime's powers, causing it to become docile and tame. This one is meant for adult slimes"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle19"
-
-/obj/item/weapon/slimepotion2/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-	if(!istype(M, /mob/living/carbon/slime/))//If target is not a slime.
-		user << "<span class='warning'> The potion only works on slimes!</span>"
+/obj/item/slimepotion/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+	if(!isslime(M))
+		user << "<span class='warning'>The potion only works on slimes!</span>"
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'> The slime is dead!</span>"
+		user << "<span class='warning'>The slime is dead!</span>"
 		return..()
-	if(M.mind)
-		user << "<span class='warning'> The slime resists!</span>"
-		return ..()
-	var/mob/living/simple_animal/slime/adult/pet = new /mob/living/simple_animal/slime/adult(M.loc)
-	pet.icon_state = "[M.colour] adult slime"
-	pet.icon_living = "[M.colour] adult slime"
-	pet.icon_dead = "[M.colour] baby slime dead"
-	pet.colour = "[M.colour]"
-	user <<"You feed the slime the potion, removing it's powers and calming it."
-	qdel(M)
+
+	M.docile = 1
+	M.nutrition = 700
+	M <<"<span class='warning'> You absorb the potion and feel your intense desire to feed melt away.</span>"
+	user <<"<span class='notice'> You feed the slime the potion, removing it's hunger and calming it.</span>"
 	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 	if (!newname)
 		newname = "pet slime"
-	pet.name = newname
-	pet.real_name = newname
+	M.name = newname
+	M.real_name = newname
 	qdel(src)
 
+/obj/item/slimepotion2
+	name = "sentience potion"
+	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle19"
+
+/obj/item/slimepotion2/afterattack(mob/living/M as mob, mob/user as mob)
+	if(!(isslime(M) || isanimal(M) || ismonkey(M) || !M.ckey)) //I'm sorry for this line
+		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
+		return ..()
+	if(M.stat)
+		user << "<span class='warning'>[M] is dead!</span>"
+		return..()
+
+	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+	var/client/C = null
+
+	if(candidates.len)
+		C = pick(candidates)
+		M.key = C.key
+		M.languages |= HUMAN
+		M << "<span class='warning'>All at once it makes sense, you know what you are and who you are! Self awareness is yours!</span>"
+		M << "You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost."
+		user << "<span class='warning'>[M] is suddenly attentive and aware. It worked!</span>"
+		qdel(src)
+	else
+		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down. Maybe you should try again later...</span>"
+		..()
 
 /obj/item/weapon/slimesteroid
 	name = "slime steroid"

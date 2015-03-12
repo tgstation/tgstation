@@ -4,6 +4,10 @@
 	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+
+	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
+	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
+
 	var/hitsound = null
 	var/throwhitsound = null
 	var/w_class = 3.0
@@ -48,9 +52,15 @@
 	var/hooded = 0
 
 	//So items can have custom embedd values
+	//Because customisation is king
 	var/embed_chance = EMBED_CHANCE
 	var/embedded_fall_chance = EMBEDDED_ITEM_FALLOUT
 	var/embedded_pain_chance = EMBEDDED_PAIN_CHANCE
+	var/embedded_pain_multiplier = EMBEDDED_PAIN_MULTIPLIER  //The coefficient of multiplication for the damage this item does while embedded (this*w_class)
+	var/embedded_fall_pain_multiplier = EMBEDDED_FALL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when falling out of a limb (this*w_class)
+	var/embedded_impact_pain_multiplier = EMBEDDED_IMPACT_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when first embedded (this*w_class)
+	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
+	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
 
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
@@ -417,16 +427,19 @@
 
 
 /obj/item/throw_impact(A)
-	if(istype(A, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = A
-		if(can_embed(src))
-			if(prob(embed_chance))
-				var/obj/item/organ/limb/L = pick(H.organs)
-				L.embedded_objects |= src
-				add_blood(H)//it embedded itself in you, of course it's bloody!
-				loc = H
-				L.take_damage(w_class*5)
-				H.visible_message("<span class='danger'>\the [name] embeds itself in [H]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [name] embeds itself in your [L.getDisplayName()]!</span>")
-				return
+	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if(istype(A, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = A
+			if(can_embed(src))
+				if(prob(embed_chance))
+					var/obj/item/organ/limb/L = pick(H.organs)
+					L.embedded_objects |= src
+					add_blood(H)//it embedded itself in you, of course it's bloody!
+					loc = H
+					L.take_damage(w_class*embedded_impact_pain_multiplier)
+					H.visible_message("<span class='danger'>\the [name] embeds itself in [H]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [name] embeds itself in your [L.getDisplayName()]!</span>")
+					return
 
+	//Reset regardless of if we hit a human.
+	throw_speed = initial(throw_speed) //explosions change this.
 	..()

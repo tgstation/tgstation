@@ -27,6 +27,7 @@
 	var/busy = 0
 	var/buildstackamount = 1
 	var/framestackamount = 2
+	var/mob/tableclimber
 
 /obj/structure/table/New()
 	..()
@@ -219,6 +220,10 @@
 
 /obj/structure/table/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(tableclimber)
+		tableclimber.Weaken(2)
+		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You've been knocked off the table", "You see [tableclimber.name] get knocked off the table</span>")
+
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -383,6 +388,7 @@
 	var/climb_time = 20
 	if(user.restrained()) //Table climbing takes twice as long when restrained.
 		climb_time *= 2
+	tableclimber = user
 	if(do_mob(user, user, climb_time))
 		if(src.loc) //Checking if table has been destroyed
 			user.pass_flags += PASSTABLE
@@ -392,7 +398,9 @@
 									"<span class='notice'>You climb onto [src].</span>")
 			add_logs(user, src, "climbed onto")
 			user.Stun(2)
+			tableclimber = null
 			return 1
+	tableclimber = null
 	return 0
 
 

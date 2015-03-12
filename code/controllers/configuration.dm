@@ -103,6 +103,8 @@
 	var/continuous_round_wiz = 0
 	var/continuous_round_malf = 0
 	var/continuous_round_blob = 0
+	var/midround_antag_time_check = 60  // How late (in minutes) you want the midround antag system to stay on, setting this to 0 will disable the system
+	var/midround_antag_life_check = 0.7 // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
@@ -401,6 +403,10 @@
 					config.continuous_round_malf	= 1
 				if("continuous_round_blob")
 					config.continuous_round_blob	= 1
+				if("midround_antag_time_check")
+					config.midround_antag_time_check = text2num(value)
+				if("midround_antag_life_check")
+					config.midround_antag_life_check = text2num(value)
 				if("shuttle_refuel_delay")
 					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")

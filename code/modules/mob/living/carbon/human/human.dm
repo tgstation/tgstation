@@ -251,11 +251,11 @@
 			var/obj/item/organ/limb/L = locate(href_list["embedded_limb"])
 			if(!I || !L || I.loc != src) //no item, no limb, or item is not in limb (the person atleast) anymore
 				return
-			var/time_taken = 30*I.w_class
+			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
 			usr.visible_message("<span class='notice'>[usr] attempts to remove [I] from their [L.getDisplayName()]!</span>","<span class='notice'>You attempt to remove [I] from your [L.getDisplayName()], it will take [time_taken/10] seconds.</span>")
 			if(do_after(usr, time_taken, needhand = 1))
 				L.embedded_objects -= I
-				L.take_damage(8*I.w_class)//It hurts to rip it out, get surgery you dingus.
+				L.take_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.loc = get_turf(src)
 				usr.put_in_hands(I)
 				usr.emote("scream")
