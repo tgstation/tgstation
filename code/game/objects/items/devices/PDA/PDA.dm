@@ -1606,7 +1606,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(5)
 			if(atmos_analys)
 				if(A.Adjacent(user))
-					if(!A.attackby(atmos_analys))
+					if(!A.attackby(atmos_analys, user))
 						atmos_analys.afterattack(A, user, 1)
 		if (6)
 			if(dev_analys) //let's use this instead. Much neater
