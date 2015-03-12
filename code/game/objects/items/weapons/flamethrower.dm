@@ -195,9 +195,15 @@
 
 /obj/item/weapon/flamethrower/full/New(var/loc)
 	..()
-	weldtool = new /obj/item/weapon/weldingtool(src)
+	for(var/obj/item/weapon/weldingtool/W in src)
+		weldtool = W
+	for(var/obj/item/device/assembly/igniter/I in src)
+		igniter = I
+	if(!weldtool)
+		weldtool = new /obj/item/weapon/weldingtool(src)
 	weldtool.status = 0
-	igniter = new /obj/item/device/assembly/igniter(src)
+	if(!igniter)
+		igniter = new /obj/item/device/assembly/igniter(src)
 	igniter.secured = 0
 	status = 1
 	update_icon()
