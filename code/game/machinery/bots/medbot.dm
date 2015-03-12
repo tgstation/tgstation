@@ -479,7 +479,7 @@
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 						reagent_glass.reagents.trans_to(patient,injection_amount) //Inject from beaker instead.
-						reagent_glass.reagents.reaction(patient, 2)
+						reagent_glass.reagents.reaction(patient, INGEST)
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
 				C.visible_message("<span class='danger'>[src] injects [patient] with the syringe!</span>", \
