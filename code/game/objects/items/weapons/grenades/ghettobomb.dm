@@ -61,7 +61,7 @@
 			active = 0
 			det_time = rand(30,80)
 
-/obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //
+/obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //Activating the IED
 	if(!active)
 		if(clown_check(user))
 			user << "<span class='warning'>You light the [name]!</span>"
@@ -84,6 +84,18 @@
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()
 	explosion(src.loc,-1,0,2)
+	if(istype(loc, /obj/item/weapon/legcuffs/beartrap))
+		var/obj/item/weapon/legcuffs/beartrap/boomtrap
+		if(istype(boomtrap.loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = loc.loc
+			if(H.legcuffed)
+				var/datum/organ/external/l = H.get_organ("l_leg")
+				var/datum/organ/external/r = H.get_organ("r_leg")
+				if(l && !(l.status & ORGAN_DESTROYED))
+					l.status |= ORGAN_DESTROYED
+				if(r && !(r.status & ORGAN_DESTROYED))
+					r.status |= ORGAN_DESTROYED
+				del(H.legcuffed)
 	del(src)
 
 /obj/item/weapon/grenade/iedcasing/examine(mob/user)
