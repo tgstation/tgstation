@@ -860,7 +860,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			user << "You cannot interface with silicon photo uploading"	//gtfo pAIs
 
 		if(targetcam.aipictures.len == 0)
-			usr << "<span class='userdanger'>No images saved</span>"
+			usr << "<span class='boldannounce'>No images saved</span>"
 			return
 		for(var/datum/picture/t in targetcam.aipictures)
 			nametemp += t.fields["name"]

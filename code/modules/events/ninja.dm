@@ -408,13 +408,13 @@ ________________________________________________________________________________
 			U.gib()
 			return 0
 		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
-			U << "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING..."
+			U << "<span class='boldannounce'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING..."
 			return 0
 		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
-			U << "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING..."
+			U << "<span class='boldannounce'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING..."
 			return 0
 		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
-			U << "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING..."
+			U << "<span class='boldannounce'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING..."
 			return 0
 
 		affecting = U
@@ -570,7 +570,7 @@ ________________________________________________________________________________
 		U.incorporeal_move = 0
 		kamikaze = 0
 		k_unlock = 0
-		U << "<span class='notice'>Disengaging mode...</span>\n<b>CODE NAME</b>: <span class='userdanger'>KAMIKAZE</span>"
+		U << "<span class='notice'>Disengaging mode...</span>\n<b>CODE NAME</b>: <span class='boldannounce'>KAMIKAZE</span>"
 
 //=======//AI VERBS//=======//
 
@@ -1242,7 +1242,7 @@ ________________________________________________________________________________
 		else if(s_initialized)
 			U << "<span class='danger'>The suit is already functioning.</span> Please report this bug."
 		else
-			U << "<span class='userdanger'>ERROR</span>: You cannot use this function at this time."
+			U << "<span class='boldannounce'>ERROR</span>: You cannot use this function at this time."
 	return
 
 //=======//DEINITIALIZE//=======//
@@ -1256,7 +1256,7 @@ ________________________________________________________________________________
 		if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
 			return
 		if(s_busy || NAI.flush)
-			U << "<span class='userdanger'>ERROR</span>: You cannot use this function at this time."
+			U << "<span class='boldannounce'>ERROR</span>: You cannot use this function at this time."
 			return
 		s_busy = 1
 		for(var/i = 0,i<7,i++)
@@ -1539,7 +1539,7 @@ ________________________________________________________________________________
 				U.electrocute_act(damage, src,0.1,1)//The last argument is a safety for the human proc that checks for gloves.
 				cell.charge -= damage
 			else
-				A << "<span class='userdanger'>ERROR</span>: Not enough energy remaining."
+				A << "<span class='boldannounce'>ERROR</span>: Not enough energy remaining."
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
@@ -1600,7 +1600,7 @@ ________________________________________________________________________________
 						for(var/i, i<4, i++)
 							switch(i)
 								if(0)
-									U << "<span class='notice'>Engaging mode...</span>\n<b>CODE NAME</b>: <span class='userdanger'>KAMIKAZE</span>"
+									U << "<span class='notice'>Engaging mode...</span>\n<b>CODE NAME</b>: <span class='boldannounce'>KAMIKAZE</span>"
 								if(1)
 									U << "<span class='notice'>Re-routing power nodes... \nUnlocking limiter...</span>"
 								if(2)
@@ -1614,7 +1614,7 @@ ________________________________________________________________________________
 									return
 							sleep(s_delay)
 					else
-						U << "<span class='userdanger'>ERROR</span>: Unable to initiate mode."
+						U << "<span class='boldannounce'>ERROR</span>: Unable to initiate mode."
 				else
 					U << browse(null, "window=spideros")
 					s_busy = 0
@@ -1636,7 +1636,7 @@ ________________________________________________________________________________
 					t_disk.loc = T
 					t_disk = null
 				else
-					U << "<span class='userdanger'>ERROR</span>: Could not eject disk."
+					U << "<span class='boldannounce'>ERROR</span>: Could not eject disk."
 
 		if("Copy to Disk")
 			var/datum/tech/current_data = locate(href_list["target"])
@@ -1657,7 +1657,7 @@ ________________________________________________________________________________
 					pai.loc = T
 					pai = null
 				else
-					U << "<span class='userdanger'>ERROR</span>: Could not eject pAI card."
+					U << "<span class='boldannounce'>ERROR</span>: Could not eject pAI card."
 
 		if("Override AI Laws")
 			var/law_zero = A.laws.zeroth//Remembers law zero, if there is one.
@@ -1678,25 +1678,25 @@ ________________________________________________________________________________
 						if(AI==A)
 							switch(i)
 								if(0)
-									A << "<span class='userdanger'>WARNING</span>: purge procedure detected. \nNow hacking host..."
-									U << "<span class='userdanger'>WARNING</span>: HACKING ATï¿½ï¿½TEMPï¿½ IN PR0GRESs!"
+									A << "<span class='boldannounce'>WARNING</span>: purge procedure detected. \nNow hacking host..."
+									U << "<span class='boldannounce'>WARNING</span>: HACKING ATï¿½ï¿½TEMPï¿½ IN PR0GRESs!"
 									spideros = 0
 									k_unlock = 0
 									U << browse(null, "window=spideros")
 								if(1)
 									A << "Disconnecting neural interface..."
-									U << "<span class='userdanger'>WARï¿½NING</span>: ï¿½Rï¿½O0ï¿½Grï¿½--S 2&3%"
+									U << "<span class='boldannounce'>WARï¿½NING</span>: ï¿½Rï¿½O0ï¿½Grï¿½--S 2&3%"
 								if(2)
 									A << "Shutting down external protocol..."
-									U << "<span class='userdanger'>WARNING</span>: Pï¿½ï¿½ï¿½ï¿½RÖGrï¿½5S 677^%"
+									U << "<span class='boldannounce'>WARNING</span>: Pï¿½ï¿½ï¿½ï¿½RÖGrï¿½5S 677^%"
 									cancel_stealth()
 								if(3)
 									A << "Connecting to kernel..."
-									U << "<span class='userdanger'>WARNING</span>: ï¿½Rï¿½rï¿½R_404"
+									U << "<span class='boldannounce'>WARNING</span>: ï¿½Rï¿½rï¿½R_404"
 									A.control_disabled = 0
 								if(4)
 									A << "Connection established and secured. Menu updated."
-									U << "<span class='userdanger'>Wï¿½r#nING</span>: #%@!!WÈ|_4ï¿½54@ \nUnï¿½B88l3 Tï¿½ Lï¿½-ï¿½o-Lï¿½CaT2 ##$!ï¿½RNï¿½0..%.."
+									U << "<span class='boldannounce'>Wï¿½r#nING</span>: #%@!!WÈ|_4ï¿½54@ \nUnï¿½B88l3 Tï¿½ Lï¿½-ï¿½o-Lï¿½CaT2 ##$!ï¿½RNï¿½0..%.."
 									grant_AI_verbs()
 									return
 							sleep(s_delay)
@@ -1821,7 +1821,7 @@ ________________________________________________________________________________
 			if(s_control)
 				I:transfer_ai("NINJASUIT","AICARD",src,U)
 			else
-				U << "<span class='userdanger'>ERROR</span>: Remote access channel disabled."
+				U << "<span class='boldannounce'>ERROR</span>: Remote access channel disabled."
 			return//Return individually so that ..() can run properly at the end of the proc.
 		else if(istype(I, /obj/item/device/paicard) && !pai)//If it's a pai card.
 			U:drop_item()
@@ -1876,7 +1876,7 @@ ________________________________________________________________________________
 					TD.stored = null
 					U << "<span class='notice'>Data analyzed and updated. Disk erased.</span>"
 				else
-					U << "<span class='userdanger'>ERROR</span>: Procedure interrupted. Process terminated."
+					U << "<span class='boldannounce'>ERROR</span>: Procedure interrupted. Process terminated."
 			else
 				I.loc = src
 				t_disk = I
@@ -1938,7 +1938,7 @@ ________________________________________________________________________________
 				if(!kamikaze)
 					user << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
 				else
-					user << "<span class='userdanger'>KAMIKAZE MODE ENGAGED!</span>"
+					user << "<span class='boldannounce'>KAMIKAZE MODE ENGAGED!</span>"
 				user << "There are <B>[s_bombs]</B> smoke bomb\s remaining."
 				user << "There are <B>[a_boost]</B> adrenaline booster\s remaining."
 			else
@@ -2083,7 +2083,7 @@ ________________________________________________________________________________
 			spawn(0)
 				var/turf/location = get_turf(U)
 				for(var/mob/living/silicon/ai/AI in player_list)
-					AI << "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
+					AI << "<span class='boldannounce'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
 			if(A:files&&A:files.known_tech.len)
 				for(var/datum/tech/current_data in S.stored_research)
 					U << "<span class='notice'>Checking \the [current_data.name] database.</span>"
@@ -2303,7 +2303,7 @@ It is possible to destroy the net by the occupant or someone else.
 			for(var/mob/O in viewers(src, 3))
 				O.show_message("[M.name] was recovered from the energy net!", 1, "You hear a grunt.", 2)
 			if(!isnull(master))//As long as they still exist.
-				master << "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
+				master << "<span class='boldannounce'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
 		qdel(src)
 	return
 
@@ -2317,7 +2317,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 	if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 		if(!isnull(master))//As long as they still exist.
-			master << "<span class='userdanger'>ERROR</span>: unable to locate \the [mob_name]. Procedure terminated."
+			master << "<span class='boldannounce'>ERROR</span>: unable to locate \the [mob_name]. Procedure terminated."
 		qdel(src)//Get rid of the net.
 		return
 

@@ -23,7 +23,7 @@
 	if(charged)
 		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt, rend_desc)
 		charged = 0
-		user.visible_message("<span class='userdanger'>[src] hums with power as [usr] deals a blow to [activate_descriptor] itself!</span>")
+		user.visible_message("<span class='boldannounce'>[src] hums with power as [usr] deals a blow to [activate_descriptor] itself!</span>")
 	else
 		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
 
