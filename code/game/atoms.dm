@@ -42,6 +42,10 @@ var/global/list/ghdel_profiling = list()
 	var/event/on_moved = new()
 
 	var/labeled //Stupid and ugly way to do it, but the alternative would probably require rewriting everywhere a name is read.
+	var/min_harm_label = 0 //Minimum langth of harm-label to be effective. 0 means it cannot be harm-labeled. If any label should work, set this to 1 or 2. 
+	var/harm_labeled = 0 //Length of current harm-label. 0 if it doesn't have one.
+	var/list/harm_label_examine //Messages that appears when examining the item if it is harm-labeled. Message in position 1 is if it is harm-labeled but the label is too short to work, while message in position 2 is if the harm-label works.
+	//var/harm_label_icon_state //Makes sense to have this, but I can't sprite. May be added later.
 
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	if(!(B in beams))
@@ -314,6 +318,12 @@ its easier to just keep the beam vertical.
 			user << "<span class='info'>Nothing.</span>"
 	if(on_fire)
 		user << "<span class='danger'>OH SHIT! IT'S ON FIRE!</span>"
+
+	if(min_harm_label && harm_labeled)
+		if(harm_labeled < min_harm_label)
+			user << harm_label_examine[1]
+		else
+			user << harm_label_examine[2]
 	return
 
 // /atom/proc/MouseDrop_T()

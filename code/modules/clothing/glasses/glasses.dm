@@ -37,6 +37,7 @@
 	desc = "Yarr."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
+	min_harm_label = 0
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -44,6 +45,10 @@
 	icon_state = "monocle"
 	item_state = "headset" // lol
 	species_fit = list("Vox")
+	min_harm_label = 3
+	harm_label_examine = list("<span class='info'>A tiny label is on the lens.</span>","<span class='warning'>A label covers the lens!</span>")
+/obj/item/clothing/glasses/monocle/harm_label_update()
+	return //Can't exactly blind someone by covering one eye.
 
 /obj/item/clothing/glasses/material
 	name = "Optical Material Scanner"
@@ -148,6 +153,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	vision_flags = BLIND
 	species_fit = list("Vox")
+	min_harm_label = 0
 
 /obj/item/clothing/glasses/sunglasses/prescription
 	name = "prescription sunglasses"
@@ -159,6 +165,7 @@
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
 	species_fit = list("Vox")
+	min_harm_label = 15
 
 /obj/item/clothing/glasses/sunglasses/sechud
 	name = "HUDSunglasses"
@@ -206,12 +213,34 @@
 	desc = "A monocle thermal."
 	icon_state = "thermoncle"
 	flags = 0 //doesn't protect eyes because it's a monocle, duh
+	min_harm_label = 3
+	harm_label_examine = list("<span class='info'>A tiny label is on the lens.</span>","<span class='warning'>A label covers the lens!</span>")
+/obj/item/clothing/glasses/thermal/monocle/harm_label_update()
+	if(harm_labeled < min_harm_label)
+		vision_flags |= SEE_MOBS
+		see_invisible |= SEE_INVISIBLE_MINIMUM
+		invisa_view = 2
+	else
+		vision_flags &= ~SEE_MOBS
+		see_invisible &= ~SEE_INVISIBLE_MINIMUM
+		invisa_view = 0
 
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "Optical Thermal Eyepatch"
 	desc = "An eyepatch with built-in thermal optics"
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
+	min_harm_label = 3
+	harm_label_examine = list("<span class='info'>A tiny label is on the lens.</span>","<span class='warning'>A label covers the lens!</span>")
+/obj/item/clothing/glasses/thermal/eyepatch/harm_label_update()
+	if(harm_labeled < min_harm_label)
+		vision_flags |= SEE_MOBS
+		see_invisible |= SEE_INVISIBLE_MINIMUM
+		invisa_view = 2
+	else
+		vision_flags &= ~SEE_MOBS
+		see_invisible &= ~SEE_INVISIBLE_MINIMUM
+		invisa_view = 0
 
 /obj/item/clothing/glasses/thermal/jensen
 	name = "Optical Thermal Implants"
