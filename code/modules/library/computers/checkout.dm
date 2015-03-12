@@ -226,6 +226,11 @@
 		onclose(usr, "library")
 		return
 
+	if(href_list["page"])
+		if(num_pages == 0)
+			page_num = 0
+		else
+			page_num = Clamp(text2num(href_list["page"]), 0, num_pages)
 	if(href_list["del"])
 		if(!usr.check_rights(R_ADMIN))
 			usr << "You aren't an admin, piss off."
