@@ -1,4 +1,0 @@
-author: Dylanstrategie
-delete-after: true
-changes:
-  - bugfix: Fix radiation collectors sometimes showing incorrect power values after being tinkered with
