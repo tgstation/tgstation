@@ -2,8 +2,6 @@
 	layer = 3
 	var/last_move = null
 	var/anchored = 0
-	var/move_speed = 10
-	var/l_move_time = 1
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
@@ -50,8 +48,6 @@
 		return
 
 	last_move = direct
-	src.move_speed = world.timeofday - src.l_move_time
-	src.l_move_time = world.timeofday
 
 	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
 		if(loc && direct && last_move == direct)

@@ -1,11 +1,3 @@
-
-/mob/living/carbon
-	var/oxygen_alert = 0
-	var/toxins_alert = 0
-	var/fire_alert = 0
-	var/pressure_alert = 0
-	var/temperature_alert = 0
-
 /mob/living/carbon/Life()
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED

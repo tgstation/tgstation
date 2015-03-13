@@ -12,7 +12,7 @@
 	faction = list("alien")
 	ventcrawler = 2
 	languages = ALIEN
-	nightvision = 1
+	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
 
