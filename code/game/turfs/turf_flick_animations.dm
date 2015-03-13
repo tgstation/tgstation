@@ -17,7 +17,6 @@
 		flick("turf_animation",c_animation)
 		spawn(10)
 			if(c_animation)
-				c_animation.Destroy()
 				returnToPool(c_animation)
 				c_animation = null
 
