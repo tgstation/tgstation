@@ -432,9 +432,7 @@
 		item.layer = initial(item.layer)
 		src.visible_message("\red [src] has thrown [item].")
 
-		if(!src.lastarea)
-			src.lastarea = get_area(T)
-		if((istype(src.loc, /turf/space)) || (src.lastarea.has_gravity == 0))
+		if((istype(src.loc, /turf/space)) || (src.areaMaster.has_gravity == 0))
 			var/mob/space_obj=src
 			// If we're being held, make the guy holding us move.
 			if(istype(loc,/obj/item/weapon/holder))

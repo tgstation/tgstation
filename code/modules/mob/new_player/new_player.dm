@@ -329,7 +329,6 @@
 	job_master.EquipRank(character, rank, 1)					//equips the human
 	EquipCustomItems(character)
 	character.loc = pick(latejoin)
-	character.lastarea = get_area(loc)
 	character.store_position()
 
 	ticker.mode.latespawn(character)
@@ -392,7 +391,6 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 	close_spawn_windows()
 
 	var/mob/living/carbon/human/new_character = new(loc)
-	new_character.lastarea = get_area(loc)
 
 	var/datum/species/chosen_species
 	if(client.prefs.species)
