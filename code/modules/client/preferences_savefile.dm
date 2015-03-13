@@ -132,6 +132,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
+	S["chat_toggles"]		<< chat_toggles
 	S["ghost_form"]			<< ghost_form
 
 	return 1
