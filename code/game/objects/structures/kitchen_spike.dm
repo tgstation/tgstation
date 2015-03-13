@@ -57,7 +57,7 @@
 			qdel(G)
 		else
 			user << "<span class='danger'>The spike already has something on it, finish collecting its meat first!</span>"
-	else if(istype(G.affecting, /mob/living/carbon/alien))
+	else if(istype(G.affecting, /mob/living/simple_animal/hostile/bear))
 		if(src.occupied == 0)
 			src.icon_state = "spikebloodybearz"
 			src.occupied = 1
