@@ -665,6 +665,16 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_holding
+	name = "Cyborg Upgrade (Ore Satchel of Holding)"
+	id = "borg_upgrade_holding"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/soh
+	req_tech = list("engineering" = 5, "materials" = 5, "bluespace" = 3)
+	materials = list("$metal" = 10000, "$gold" = 250, "$uranium" = 500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_syndicate_module
 	name = "Cyborg Illegal Upgrades Module"
 	desc = "Allows for the construction of restricted upgrades for cyborgs"
