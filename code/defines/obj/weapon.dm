@@ -1,7 +1,7 @@
 /obj/item/weapon/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items.dmi'b
 	icon_state = "red_phone"
 	flags = FPRINT
 	siemens_coefficient = 1
@@ -419,6 +419,9 @@
 
 /obj/item/weapon/legcuffs/beartrap/attackby(var/obj/item/I, mob/user as mob) //Let's get explosive.
 	if(istype(I, /obj/item/weapon/grenade/iedcasing))
+		if(IED)
+			user << "<span class='warning'>This beartrap already has an IED hooked up to it!</span>"
+			return
 		IED = I
 		switch(IED.assembled)
 			if(0,1) //if it's not fueled/hooked up
@@ -428,6 +431,7 @@
 			if(2,3)
 				user.drop_item()
 				I.loc = src
+				var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[AM]'>?</A> has rigged a beartrap with an IED at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
 				user << "<span class='notice'>You sneak the [IED] underneath the pressure plate and connect the trigger wire.</span>"
 				desc = "A trap used to catch bears and other legged creatures. <span class='warning'>There is an IED hooked up to it.</span>"
 			else
