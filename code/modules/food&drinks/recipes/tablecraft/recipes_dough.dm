@@ -6,6 +6,15 @@
 
 //these recipes can also be done with attackby.
 
+/datum/table_recipe/wheatdough
+	name = "Whole Wheat Dough"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/water = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/dough
+
 /datum/table_recipe/cakebatter
 	name = "Cake Batter"
 	reqs = list(
@@ -13,12 +22,6 @@
 		/obj/item/weapon/reagent_containers/food/snacks/dough = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cakebatter
-
-/datum/table_recipe/cakebatter/alt
-	reqs = list(
-		/datum/reagent/consumable/soymilk = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/dough = 1
-	)
 
 /datum/table_recipe/piedough
 	name = "Pie Dough"
@@ -28,12 +31,6 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/piedough
 
-/datum/table_recipe/piedough/alt
-	reqs = list(
-		/datum/reagent/consumable/soymilk = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/flatdough = 1
-	)
-
 /datum/table_recipe/rawpastrybase
 	name = "Raw Pastry Base"
 	reqs = list(
@@ -41,12 +38,6 @@
 		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
-
-/datum/table_recipe/rawpastrybase/alt
-	reqs = list(
-		/datum/reagent/consumable/soymilk = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1
-	)
 
 
 
