@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/projectile/automatic/toy
 	name = "foam force SMG"
 	desc = "A bullpup three-round burst toy SMG. Ages 8 and up."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "saber"
 	item_state = "c20r"
 	mag_type = /obj/item/ammo_box/magazine/toy
@@ -36,7 +36,7 @@
 /obj/item/weapon/gun/projectile/shotgun/toy
 	name = "foam force shotgun"
 	desc = "A toy shotgun with wood furniture and a four-shell capacity underneath. Ages 8 and up."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/guns/toy.dmi'
 	force = 0
 	throwforce = 0
 	origin_tech = null

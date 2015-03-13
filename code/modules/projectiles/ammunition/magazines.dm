@@ -237,6 +237,9 @@ obj/item/ammo_box/magazine/tommygunm45
 	max_ammo = 18
 	multiple_sprites = 2
 
+/obj/item/ammo_box/magazine/toy/riot
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+
 /obj/item/ammo_box/magazine/toy/pistol
 	name = "foam force pistol magazine"
 	icon_state = "9x19p"

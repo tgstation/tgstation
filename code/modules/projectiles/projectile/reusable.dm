@@ -6,12 +6,22 @@
 /obj/item/projectile/bullet/reusable/on_hit(var/atom/target, var/blocked = 0)
 	if(!proj_hit)
 		proj_hit = 1
-		new ammo_type(src.loc)
+		if (src.contents.len)
+			var/obj/content
+			for(content in src.contents)
+				content.loc = src.loc
+		else
+			new ammo_type(src.loc)
 	..()
 
 /obj/item/projectile/bullet/reusable/on_range()
 	if(!proj_hit)
-		new ammo_type(src.loc)
+		if (src.contents.len)
+			var/obj/content
+			for(content in src.contents)
+				content.loc = src.loc
+		else
+			new ammo_type(src.loc)
 		..()
 
 /obj/item/projectile/bullet/reusable/magspear
@@ -25,6 +35,8 @@
 	name = "foam dart"
 	desc = "I hope you're wearing eye protection."
 	damage = 0 // It's a damn toy.
+	damage_type = OXY
+	nodamage = 1
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamdart"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
@@ -34,4 +46,4 @@
 	name = "riot foam dart"
 	icon_state = "foamdart_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
-	stamina = 24
+	stamina = 25
