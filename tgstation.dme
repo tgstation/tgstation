@@ -982,7 +982,6 @@
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_bread.dm"
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_burger.dm"
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_cake.dm"
-#include "code\modules\food&drinks\recipes\tablecraft\recipes_dough.dm"
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_egg.dm"
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_meat.dm"
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_misc.dm"
