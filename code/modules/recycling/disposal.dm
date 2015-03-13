@@ -133,6 +133,15 @@
 			update()
 			return
 
+		if(istype(I, /obj/item/weapon/storage/bag/chem))
+			var/obj/item/weapon/storage/bag/chem/C = I
+			user << "\blue You empty the pill collector."
+			for(var/obj/item/O in C.contents)
+				C.remove_from_storage(O,src)
+			C.update_icon()
+			update()
+			return
+
 		var/obj/item/weapon/grab/G = I
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))

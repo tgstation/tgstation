@@ -1098,6 +1098,22 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		src.updateUsrDialog()
 		return 0
 
+	//Fill the machine with the pill collector!
+	if(istype(O, /obj/item/weapon/storage/bag/chem))
+		var/obj/item/weapon/storage/bag/B = O
+		for (var/obj/item/P in B.contents) //Looks for each pill in the bag, transfers it.
+			B.remove_from_storage(P,src)
+			holdingitems += P
+			if(holdingitems && holdingitems.len >= limit) //Same sanity check as above
+				user << "You fill the All-In-One grinder to the brim."
+				break
+
+		if(!O.contents.len)
+			user << "You empty the pill collector into the All-In-One grinder."
+
+		src.updateUsrDialog()
+		return 0
+
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
 		user << "Cannot refine into a reagent."
 		return 1

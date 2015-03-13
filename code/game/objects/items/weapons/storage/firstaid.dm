@@ -150,6 +150,16 @@
 			return
 	return
 
+/obj/item/weapon/storage/pill_bottle/attackby(var/obj/item/I, var/mob/user)
+	if(!I) return
+	if(istype(I, /obj/item/weapon/storage/bag/chem))
+			var/obj/item/weapon/storage/bag/chem/C = I
+			user << "\blue You transfer the contents of the pill collector."
+			for(var/obj/item/O in C.contents)
+				if(can_be_inserted(O))
+					handle_item_insertion(O, 1)
+	return
+
 /obj/item/weapon/storage/pill_bottle/kelotane
 	name = "Pill bottle (kelotane)"
 	desc = "Contains pills used to treat burns."
