@@ -1,7 +1,7 @@
 /obj/item/weapon/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
-	icon = 'icons/obj/items.dmi'b
+	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
 	flags = FPRINT
 	siemens_coefficient = 1
