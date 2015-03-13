@@ -32,10 +32,6 @@
 	..()
 	parent = new_parent
 
-/mob/living/simple_animal/bee/resetVariables()
-	Destroy()
-	..()
-
 /mob/living/simple_animal/bee/Destroy()
 	..()
 	if(parent)
