@@ -76,6 +76,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
+	var/blockTracking = 0 //For AI tracking
 
 //Mask
 /obj/item/clothing/mask
