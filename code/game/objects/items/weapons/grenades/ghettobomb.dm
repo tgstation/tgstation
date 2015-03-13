@@ -95,7 +95,7 @@
 					l.status |= ORGAN_DESTROYED
 				if(r && !(r.status & ORGAN_DESTROYED))
 					r.status |= ORGAN_DESTROYED
-				del(H.legcuffed)
+				qdel(H.legcuffed)
 	del(src)
 
 /obj/item/weapon/grenade/iedcasing/examine(mob/user)
