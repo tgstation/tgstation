@@ -33,21 +33,6 @@
 
 /obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(locked)
-		if (istype(W, /obj/item/weapon/melee/energy/blade) && !emagged)
-			emagged = 1
-			src.overlays += image('icons/obj/storage.dmi', icon_sparking)
-			sleep(6)
-			src.overlays = null
-			overlays += image('icons/obj/storage.dmi', icon_locking)
-			locked = 0
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
-			user << "You slice through the lock on [src]."
-			return
-
 		if (istype(W, /obj/item/weapon/screwdriver))
 			if (do_after(user, 20))
 				src.open =! src.open

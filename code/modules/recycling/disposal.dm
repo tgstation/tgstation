@@ -115,10 +115,6 @@
 			else
 				return
 
-	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		user << "<span class='notice'>You can't place \the [I] into \the [src].</span>"
-		return
-
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
 		user << "<span class='warning'> You empty the bag.</span>"
