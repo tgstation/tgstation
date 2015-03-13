@@ -187,6 +187,14 @@
 	item_state = "ponchoshame"
 	flags = NODROP
 
+/obj/item/clothing/suit/corgisuit
+	name = "corgi suit"
+	desc = "Because theres a little corgi in all of us."
+	icon_state = "corgisuit"
+	item_state = "corgisuit"
+	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
+
 /*
  * Misc
  */

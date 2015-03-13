@@ -470,3 +470,22 @@
 	icon_state = "plaid_purple"
 	item_state = "plaid_purple"
 	item_color = "plaid_purple"
+
+/obj/item/clothing/under/basiluniform
+	name = "basil battle uniform"
+	desc = "The jumpsuits of champions."
+	icon_state = "basiluniform"
+	item_state = "basiluniform"
+	item_color = "basiluniform"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
+
+/obj/item/clothing/under/sybiluniform
+	name = "sybil battle uniform"
+	desc = "Watch out for this grey and crimson tide."
+	icon_state = "sybiluniform"
+	item_state = "sybiluniform"
+	item_color = "sybiluniform"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
