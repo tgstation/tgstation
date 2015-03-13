@@ -749,7 +749,8 @@
 				atk_verb = M.dna.species.attack_verb
 
 			var/damage = rand(0, 9)
-			damage += punchmod
+			if(M.dna)
+				damage += M.dna.species.punchmod
 
 			if(!damage)
 				if(M.dna)
