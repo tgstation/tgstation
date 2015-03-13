@@ -80,14 +80,14 @@
 /obj/effect/beam/proc/target_destroyed(var/list/args)
 	if(master)
 		beam_testing("Child got target_destroyed!  Feeding to master.")
-		master.target_moved(args)
+		master.target_destroyed(args)
 		return
 
 	if(!targetDestroyKey)
 		beam_testing("Uh oh, got a target_destroyed when we weren't listening for one.")
 		return
 
-	beam_testing("Disconnecting: Target destroyed.")
+	beam_testing("\ref[src] Disconnecting: \ref[target] Target destroyed.")
 	// Disconnect and re-emit.
 	disconnect()
 
@@ -103,6 +103,8 @@
 	qdel(src)
 
 /obj/effect/beam/proc/get_master()
+	var/master_ref = "\ref[master]"
+	beam_testing("\ref[src] [master ? "get_master is returning [master_ref]" : "get_master is returning ourselves."]")
 	if(master)
 		return master
 	return src
@@ -265,6 +267,13 @@
 		for(var/obj/machinery/power/emitter/E in sources)
 			if(E.beam == src)
 				E.beam = null
+		for(var/obj/machinery/prism/P in sources)
+			if(P.beam == src)
+				P.beam = null
+		for(var/obj/machinery/mirror/M in sources)
+			for(var/thing in M.emitted_beams)
+				if(thing == src)
+					M.emitted_beams -= thing
 	..()
 
 /obj/effect/beam/Destroy()
@@ -282,15 +291,10 @@
 		if(src in F.beams)
 			F.beams -= src
 	for(var/obj/machinery/prism/P in prism_list)
-		var/changed = 0
 		if(src == P.beam)
 			P.beam = null
-			changed = 1
 		if(src in P.beams)
 			P.beams -= src
-			changed = 1
-		if(changed)
-			P.update_beams()
 	for(var/obj/machinery/power/photocollector/PC in photocollector_list)
 		if(src in PC.beams)
 			PC.beams -= src

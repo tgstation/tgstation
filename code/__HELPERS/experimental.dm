@@ -111,6 +111,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 	if(isnull(masterPool["[AM.type]"]))
 		masterPool["[AM.type]"] = list()
 
+	AM.Destroy()
 	AM.resetVariables()
 	masterPool["[AM.type]"] += AM
 
