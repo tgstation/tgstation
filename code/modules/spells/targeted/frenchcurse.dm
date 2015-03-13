@@ -26,6 +26,7 @@
 		magicmimemask.unacidable = 1	//cannot be acided
 		magicmimeunder.unacidable = 1
 		magicmimemask.muted = 1 	//silence
+		magicmimemask.can_flip = 0   //no pushing the mask up off your face
 		var/obj/old_mask = target.wear_mask
 		var/obj/old_uniform = target.w_uniform
 		if(old_mask)
