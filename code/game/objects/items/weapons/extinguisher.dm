@@ -99,7 +99,7 @@
 		message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
+	if(proximity_flag)
 		if((istype(target, /obj/structure/reagent_dispensers)))
 			var/obj/o = target
 			var/list/badshit=list()
@@ -223,7 +223,7 @@
 
 
 /obj/item/weapon/extinguisher/foam/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
+	if(proximity_flag)
 		if((istype(target, /obj/structure/reagent_dispensers/watertank)))
 			var/obj/o = target
 			o.reagents.trans_to(src, 50)
