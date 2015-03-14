@@ -240,12 +240,9 @@
 	//if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
 	//	if(!mob.Process_Spacemove(0))	return 0
 
-	if(!mob.lastarea)
-		mob.lastarea = get_area(mob.loc)
-	if(mob.lastarea)
-		if((istype(mob.loc, /turf/space)) || ((mob.lastarea.has_gravity == 0) && (!istype(mob.loc, /obj/spacepod))))  // last section of if statement prevents spacepods being unable to move when the gravity goes down
-			if(!mob.Process_Spacemove(0))	return 0
-
+	if((istype(mob.loc, /turf/space)) || ((mob.areaMaster.has_gravity == 0) && (!istype(mob.loc, /obj/spacepod))))  // last section of if statement prevents spacepods being unable to move when the gravity goes down
+		if(!mob.Process_Spacemove(0))
+			return 0
 
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
 		var/atom/O = mob.loc
@@ -452,13 +449,12 @@
 			continue
 
 		if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-			if(lastarea)
-				if((istype(turf,/turf/simulated/floor)) && (src.lastarea.has_gravity == 0) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
-					continue
+			if((istype(turf,/turf/simulated/floor)) && (src.areaMaster.has_gravity == 0) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
+				continue
 
 
 		else
-			if((istype(turf,/turf/simulated/floor)) && (src.lastarea && src.lastarea.has_gravity == 0)) // No one else gets a chance.
+			if((istype(turf,/turf/simulated/floor)) && (src.areaMaster.has_gravity == 0)) // No one else gets a chance.
 				continue
 
 

@@ -142,9 +142,9 @@
 
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
+
 	if(ismob(Obj))
-		Obj:lastarea = get_area(Obj.loc)
-		if(Obj:lastarea.has_gravity == 0)
+		if(Obj.areaMaster.has_gravity == 0)
 			inertial_drift(Obj)
 
 	/*
