@@ -13,9 +13,6 @@
 		//Breathing, if applicable
 		handle_breathing()
 
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
-
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
@@ -28,10 +25,16 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		if(!client && !stat)
+			handle_automated_movement()
+
+			handle_automated_speech()
+
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment
-	handle_environment(environment)
+	if(environment)
+		handle_environment(environment)
 
 	handle_fire()
 
@@ -55,9 +58,6 @@
 
 
 /mob/living/proc/handle_breathing()
-
-/mob/living/proc/handle_changeling()
-	return
 
 /mob/living/proc/handle_mutations_and_radiation()
 	if(radiation)
@@ -88,23 +88,6 @@
 	if(reagents)
 		reagents.metabolize(src)
 
-	if(drowsyness)
-		drowsyness--
-		eye_blurry = max(2, eye_blurry)
-		if(prob(5))
-			sleeping += 1
-			Paralyse(5)
-
-	confused = max(0, confused - 1)
-	// decrement dizziness counter, clamped to 0
-	if(resting)
-		dizziness = max(0, dizziness - 5)
-		jitteriness = max(0, jitteriness - 5)
-	else
-		dizziness = max(0, dizziness - 1)
-		jitteriness = max(0, jitteriness - 1)
-
-	updatehealth()
 	return
 
 /mob/living/proc/handle_blood()
@@ -121,8 +104,9 @@
 
 /mob/living/proc/handle_regular_status_updates()
 
+	updatehealth()
+
 	if(stat != DEAD)
-		updatehealth()
 
 		if(paralysis)
 			AdjustParalysis(-1)
@@ -147,6 +131,12 @@
 				update_icons()
 
 		return 1
+
+/mob/living/proc/handle_automated_movement()
+	return
+
+/mob/living/proc/handle_automated_speech()
+	return
 
 /mob/living/proc/handle_disabilities()
 	//Eyes
@@ -179,21 +169,9 @@
 
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 
-	if(stat == DEAD)
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
-		see_invisible = SEE_INVISIBLE_LIVING
-		if(see_override)
-			see_invisible = see_override
+	update_sight()
 
+	if(stat != DEAD)
 		if(blind)
 			if(eye_blind)
 				blind.layer = 18
@@ -222,7 +200,12 @@
 			if(!client.adminobs)
 				reset_view(null)
 
-/mob/living/proc/handle_hud_icons()
+/mob/living/proc/update_sight()
 	return
 
+/mob/living/proc/handle_hud_icons()
+	handle_hud_icons_health()
+	return
 
+/mob/living/proc/handle_hud_icons_health()
+	return

@@ -41,15 +41,13 @@
 
 /mob/living/carbon/alien/handle_vision()
 
-	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
-
-	if (stat == 2)
+	if (stat == DEAD)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != 2)
+	else if (stat != DEAD)
 		sight |= SEE_MOBS
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_OBJS
@@ -62,40 +60,8 @@
 		if(see_override)
 			see_invisible = see_override
 
-	if ((blind && stat != 2))
-		if((eye_blind))
-			blind.layer = 18
-		else
-			blind.layer = 0
-
-			if (disabilities & NEARSIGHT)
-				client.screen += global_hud.vimpaired
-
-			if (eye_blurry)
-				client.screen += global_hud.blurry
-
-			if (druggy)
-				client.screen += global_hud.druggy
-
-	if (stat != 2)
-		if(machine)
-			if (!( machine.check_eye(src) ))
-				reset_view(null)
-		else
-			if(!client.adminobs)
-				reset_view(null)
-
-
 /mob/living/carbon/alien/handle_hud_icons()
 
 	handle_hud_icons_health()
-
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull"
-		else
-			pullin.icon_state = "pull0"
-
-
 
 	return 1

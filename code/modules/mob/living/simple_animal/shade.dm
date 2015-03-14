@@ -28,14 +28,12 @@
 	status_flags = CANPUSH
 
 
-/mob/living/simple_animal/shade/Life()
-	..()
-	if(stat == 2)
-		new /obj/item/weapon/ectoplasm (src.loc)
-		visible_message("<span class='warning'>[src] lets out a contented sigh as their form unwinds.</span>")
-		ghostize()
-		qdel(src)
-		return
+/mob/living/simple_animal/shade/death()
+	new /obj/item/weapon/ectoplasm (src.loc)
+	visible_message("<span class='warning'>[src] lets out a contented sigh as their form unwinds.</span>")
+	ghostize()
+	qdel(src)
+	return
 
 
 /mob/living/simple_animal/shade/attackby(var/obj/item/O as obj, var/mob/user as mob, params)  //Marker -Agouri

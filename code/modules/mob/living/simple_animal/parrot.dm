@@ -347,18 +347,12 @@
 /mob/living/simple_animal/parrot/Life()
 	..()
 
-	//Sprite and AI update for when a parrot gets pulled
+	//Sprite update for when a parrot gets pulled
 	if(pulledby && stat == CONSCIOUS)
 		icon_state = "parrot_fly"
 		if(!client)
 			parrot_state = PARROT_WANDER
 		return
-
-	if(client || stat)
-		return //Lets not force players or dead/incap parrots to move
-
-	if(!isturf(src.loc) || !canmove || buckled)
-		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
 
 
 //-----SPEECH
@@ -366,6 +360,8 @@
 	   Phrases that the parrot Hear()s get added to speach_buffer.
 	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
 	   Then it clears the buffer to make sure they dont magically remember something from hours ago. */
+/mob/living/simple_animal/parrot/handle_automated_speech()
+	..()
 	if(speech_buffer.len && prob(10))
 		if(speak.len)
 			speak.Remove(pick(speak))
@@ -373,6 +369,10 @@
 		speak.Add(pick(speech_buffer))
 		clearlist(speech_buffer)
 
+
+/mob/living/simple_animal/parrot/handle_automated_movement()
+	if(!..())
+		return //If it can't or shouldn't move, dont let it move.
 
 //-----SLEEPING
 	if(parrot_state == PARROT_PERCH)

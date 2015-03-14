@@ -14,53 +14,11 @@
 		return
 	if(!loc)
 		return
-	var/datum/gas_mixture/environment = loc.return_air()
 
-	if(stat != DEAD)
-
-		//Breathing, if applicable
-		handle_breathing()
-
+	if(..())
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
-
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-		//Blud
-		handle_blood()
-
-		//Random events (vomiting etc)
-		handle_random_events()
-
 		. = 1
-
-	//Handle temperature/pressure differences between body and environment
-	handle_environment(environment)
-
-	handle_fire()
-
-	//stuff in the stomach
-	handle_stomach()
-
-	update_canmove()
-
-	update_gravity(mob_has_gravity())
-
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
-
-	handle_regular_status_updates() // Status updates, death etc.
-
-	if(client)
-		handle_regular_hud_updates()
-
-	return .
-
-
 
 ///////////////
 // BREATHING //
@@ -253,7 +211,7 @@
 	return
 
 
-/mob/living/carbon/handle_changeling()
+/mob/living/carbon/proc/handle_changeling()
 	return
 
 /mob/living/carbon/handle_mutations_and_radiation()
@@ -341,6 +299,7 @@
 
 		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
 			Paralyse(3)
+			stat = UNCONSCIOUS
 
 		..()
 
@@ -503,15 +462,11 @@
 				damageoverlay.overlays += I
 				damageoverlay.overlays += black
 
-
-	handle_vision()
-	handle_hud_icons()
+	..()
 
 	return 1
 
-/mob/living/carbon/handle_vision()
-
-	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
+/mob/living/carbon/update_sight()
 
 	if(stat == DEAD)
 		sight |= SEE_TURFS
@@ -528,38 +483,11 @@
 		if(see_override)
 			see_invisible = see_override
 
-		if(blind)
-			if(eye_blind)
-				blind.layer = 18
-			else
-				blind.layer = 0
-
-				if (disabilities & NEARSIGHT)
-					client.screen += global_hud.vimpaired
-
-				if (eye_blurry)
-					client.screen += global_hud.blurry
-
-				if (druggy)
-					client.screen += global_hud.druggy
-
-				if(eye_stat > 20)
-					if(eye_stat > 30)
-						client.screen += global_hud.darkMask
-					else
-						client.screen += global_hud.vimpaired
-
-		if(machine)
-			if (!( machine.check_eye(src) ))
-				reset_view(null)
-		else
-			if(!client.adminobs)
-				reset_view(null)
 
 /mob/living/carbon/handle_hud_icons()
 	return
 
-/mob/living/carbon/proc/handle_hud_icons_health()
+/mob/living/carbon/handle_hud_icons_health()
 	if(healths)
 		if (stat != DEAD)
 			switch(health)

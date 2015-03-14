@@ -85,27 +85,24 @@
 		health = maxHealth
 	return
 
-/mob/living/simple_animal/Life()
+/mob/living/simple_animal/handle_regular_status_updates()
+	if(!..())
+		auto_revive()
 
-	if(stat == DEAD)
-		if(health > 0)
-			icon_state = icon_living
-			dead_mob_list -= src
-			living_mob_list += src
-			stat = CONSCIOUS
-			density = 1
-			update_canmove()
-		return 0
-
-	updatehealth()
-
-	if(health < 1)
+	else if(health < 1)
 		death()
-	else
-		handle_regular_status_updates()
 
-	//Movement
-	if(!client && !stop_automated_movement && wander)
+/mob/living/simple_animal/proc/auto_revive()
+	if(stat == DEAD && health > 0)
+		icon_state = icon_living
+		dead_mob_list -= src
+		living_mob_list += src
+		stat = CONSCIOUS
+		density = 1
+		update_canmove()
+
+/mob/living/simple_animal/handle_automated_movement()
+	if(!stop_automated_movement && wander)
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
@@ -114,9 +111,10 @@
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
+			return 1
 
-	//Speaking
-	if(!client && speak_chance)
+/mob/living/simple_animal/handle_automated_speech()
+	if(speak_chance)
 		if(rand(0,200) < speak_chance)
 			if(speak && speak.len)
 				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
@@ -150,7 +148,7 @@
 						emote("me", 2, pick(emote_hear))
 
 
-	//Atmos
+/mob/living/simple_animal/handle_environment()
 	var/atmos_suitable = 1
 
 	var/atom/A = src.loc
@@ -204,7 +202,8 @@
 
 	if(!atmos_suitable)
 		adjustBruteLoss(unsuitable_atmos_damage)
-	return 1
+
+
 
 /mob/living/simple_animal/gib(var/animation = 0)
 	if(icon_gib)
@@ -383,7 +382,7 @@
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/death(gibbed)
-	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them
+	health = 0 // so /mob/living/simple_animal/handle_regular_status_updates() doesn't magically revive them
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
@@ -423,6 +422,8 @@
 			return 0
 	return 1
 
+/mob/living/simple_animal/handle_fire()
+	return
 
 /mob/living/simple_animal/update_fire()
 	return
