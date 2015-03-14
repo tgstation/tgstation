@@ -38,6 +38,15 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/xemeatpie
 
+/datum/table_recipe/bearypie
+	name = "Beary Pie"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/bear = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pie/bearypie
+
 /datum/table_recipe/cherrypie
 	name = "Cherry pie"
 	reqs = list(

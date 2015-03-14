@@ -53,6 +53,12 @@
 	icon_state = "xburger"
 	list_reagents = list("nutriment" = 2, "vitamin" = 6)
 
+/obj/item/weapon/reagent_containers/food/snacks/burger/bear
+	name = "bearger"
+	desc = "Best served rawr."
+	icon_state = "bearger"
+	list_reagents = list("nutriment" = 3, "vitamin" = 6)
+
 /obj/item/weapon/reagent_containers/food/snacks/burger/clown
 	name = "clown burger"
 	desc = "This tastes funny..."

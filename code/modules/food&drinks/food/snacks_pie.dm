@@ -31,6 +31,11 @@
 	icon_state = "berryclafoutis"
 	list_reagents = list("nutriment" = 1, "vitamin" = 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/pie/bearypie
+	name = "beary pie"
+	desc = "You can't wait to get your paws on this.."
+	icon_state = "bearypie"
+	list_reagents = list("nutriment" = 2, "vitamin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/meatpie
 	name = "meat-pie"
