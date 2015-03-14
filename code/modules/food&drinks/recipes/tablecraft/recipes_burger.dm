@@ -51,7 +51,7 @@ datum/table_recipe/bearger
 		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/bear = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/bearger
 
 /datum/table_recipe/fishburger
 	name = "Fish burger"
