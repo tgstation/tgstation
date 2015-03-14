@@ -17,8 +17,8 @@
 					if(table_contents[B] >= R.reqs[A])
 						continue main_loop
 			return 0
-	for(var/A in R.chem_catalists)
-		if(table_contents[A] < R.chem_catalists[A])
+	for(var/A in R.chem_catalysts)
+		if(table_contents[A] < R.chem_catalysts[A])
 			return 0
 	return 1
 
@@ -196,12 +196,12 @@
 						req_text += " [R.reqs[A]] [RE.name]"
 						qdel(RE)
 
-				if(R.chem_catalists.len)
-					catalist_text += ", Catalists:"
-					for(var/C in R.chem_catalists)
+				if(R.chem_catalysts.len)
+					catalist_text += ", Catalysts:"
+					for(var/C in R.chem_catalysts)
 						if(ispath(C, /datum/reagent))
 							var/datum/reagent/RE = new C
-							catalist_text += " [R.chem_catalists[C]] [RE.name]"
+							catalist_text += " [R.chem_catalysts[C]] [RE.name]"
 							qdel(RE)
 				if(R.tools.len)
 					tool_text += ", Tools:"
