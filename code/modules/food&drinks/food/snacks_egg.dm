@@ -18,8 +18,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/egg_smudge(src.loc)
 	reagents.reaction(hit_atom, TOUCH)
+	var/eggdecal = new/obj/effect/decal/cleanable/egg_smudge(src.loc)
+	reagents.trans_to(eggdecal, reagents.total_volume)
 	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
