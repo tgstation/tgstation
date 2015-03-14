@@ -1414,3 +1414,105 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 				break
 		remove_object(O)
+
+//*************************************************************************************
+//
+//
+//It just felt right to put the ghetto chemistry tools here with chemistry machinery.
+//
+//
+//*************************************************************************************
+/obj/item/weapon/electrolyzer
+	name = "Electrolyzer"
+	icon_state = "chemg_wired"
+	item_state = "chemg_wired"
+	desc = "A refurbished grenade-casing jury rigged to split simple chemicals."
+	w_class = 2.0
+	force = 2.0
+	var/list/beakers = new/list()
+	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
+
+/obj/item/weapon/electrolyzer/attack_self(mob/user as mob)
+	if(beakers.len)
+		for(var/obj/B in beakers)
+			if(istype(B))
+				beakers -= B
+				user.put_in_hands(B)
+
+/obj/item/weapon/electrolyzer/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/wirecutters))
+		if(beakers.len)
+			user << "<span class='warning'> The electrolyzer contains beakers!</span>"
+			return
+		else
+			user << "<span class='notice'> You disassemble the electrolyzer.</span>"
+			var/turf/T = get_turf(src)
+			new /obj/item/stack/cable_coil(T)
+			new /obj/item/weapon/grenade/chem_grenade(T)
+			del(src)
+			return
+	else if(is_type_in_list(W, allowed_containers))
+		var/obj/item/weapon/reagent_containers/glass/G = W
+		if(G.reagents.reagent_list.len > 1)
+			user << "<span class='warning'> That mixture is too complex!</span>"
+			return
+		if(beakers.len == 2)
+			user << "<span class='warning'> The grenade can not hold more containers.</span>"
+			return
+		else if(beakers.len == 1)
+			if(beaker[1].total_volume && !W.reagents.total_volume)
+				user << "<span class='notice'> You add \the [W] to the electrolyzer as the empty container.</span>"
+				insert_beaker(W)
+			else if(!beaker[1].total_volume && W.reagents.total_volume)
+				user << "<span class='notice'> You add \the [W] to the electrolyzer as the active container.</span>"
+				insert_beaker(W)
+			else
+				user << "<span class='warning'> The electrolyzer requires one active beaker and one empty beaker!</span>"
+				return
+		else
+			else if(W.reagents.total_volume)
+				user << "<span class='notice'> You add \the [W] to the electrolyzer as the active container.</span>"
+				insert_beaker(W)
+			else
+				user << "<span class='notice'> You add \the [W] to the electrolyzer as the active container.</span>"
+				insert_beaker(W)
+	else if(istype(W, /obj/item/weapon/cell))
+		if(beakers.len < 2)
+			user << "<span class='warning'> The electrolyzer requires one active beaker and one empty beaker!</span>"
+			return
+		var/obj/item/weapon/cell/C = W
+		if(C.charge >= 1000)
+			var/obj/item/weapon/reagent_containers/active = null
+			var/obj/item/weapon/reagent_containers/empty = null
+			for(var/obj/item/weapon/reagent_containers/B in beakers)
+				if(B.reagent_list.len > 1) //This should never fire, no way to put this into the device
+					user << "<span class='warning'> That mixture is too complex!</span>"
+					return
+				else if(B.reagent_list.len == 1)
+					active = B
+				else if (!B.reagent_list.len)
+					empty = B
+				else
+					user << "<span class='warning'> An error has occured. Your beaker had between 0 and 1 reagents. Please report this message.</span>"
+			C.charge -= 1000
+			for(var/datum/chemical_reaction/R in chemical_reactions_list)
+				if(R.result == active.reagents.get_master_reagent_id())
+					var/total_reactions = active.total_volume / R.result.amount
+					var/primary = 1
+					active.remove_reagent(R.result,total_reactions*R.result.amount) //This moves over the reactive bulk, and leaves behind the amount too small to react
+					for(var/E in R.required_reagents)
+						if(primary)
+							active.add_reagent(E, R.required_reagents(E)*total_reactions) //Put component amount * reaction count back in primary
+							primary = 0
+						else
+							empty.add_reagent(E, R.required_reagents(E)*total_reactions)
+					user << "<span class='warning'> The system electrolyzes!</span>"
+					return
+			user << "<span class='notice'> The system didn't react...</span>"
+		else
+			user << "<span class='warning'> This cell does not have enough charge!</span>"
+
+/obj/item/weapon/electrolyzer/insert_beaker(obj/item/weapon/W as obj, mob/user as mob)
+	user.drop_item()
+	W.loc = src
+	beakers += W
