@@ -287,6 +287,21 @@
 			else
 				..(act)
 
+		if ("fart")
+			if(reagents.total_volume > 0)
+				message = "<B>[src]</B> lets out a juicy one!"
+				reagents.add_reagent("spore", 10) //ew stinky
+				var/datum/effect/effect/system/chem_smoke_spread/S = new /datum/effect/effect/system/chem_smoke_spread
+				S.attach(src)
+				playsound(loc, 'sound/effects/fart.ogg', 50, 1, 7, 1, 1)
+				if(S)
+					S.set_up(reagents, 1, 0, loc, silent = 1)
+					S.start()
+				reagents.clear_reagents() //phew, that emptied me out
+			else
+				message = message = "<B>[src]</B> lets out a little toot."
+				playsound(loc, 'sound/effects/fart.ogg', 10, 1)
+
 		if ("sniff")
 			message = "<B>[src]</B> sniffs."
 			m_type = 2
