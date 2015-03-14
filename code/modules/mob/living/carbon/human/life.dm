@@ -38,9 +38,6 @@
 	tinttotal = tintcheck() //here as both hud updates and status updates call it
 
 	if(..())
-		if(dna)
-			for(var/datum/mutation/human/HM in dna.mutations)
-				HM.on_life(src)
 
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()

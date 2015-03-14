@@ -8,8 +8,9 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "dough"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("nutriment" = 3)
 	w_class = 3
+	flags = OPENCONTAINER
 
 
 // Dough + rolling pin = flat dough
@@ -34,8 +35,9 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	slices_num = 3
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pizzabread
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("nutriment" = 3)
 	w_class = 3
+	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzabread
 	name = "pizza bread"
@@ -54,6 +56,7 @@
 	icon_state = "doughslice"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/bun
 	filling_color = "#CD853F"
+	flags = OPENCONTAINER
 
 
 /obj/item/weapon/reagent_containers/food/snacks/bun
@@ -71,7 +74,7 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "cakebatter"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain
-	list_reagents = list("nutriment" = 9)
+	list_reagents = list("nutriment" = 3)
 	w_class = 3
 
 // Cake batter + rolling pin = pie dough
@@ -94,7 +97,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
 	slices_num = 3
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pie/plain
-	list_reagents = list("nutriment" = 9)
+	list_reagents = list("nutriment" = 3)
 	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase

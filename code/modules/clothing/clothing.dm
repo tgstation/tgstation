@@ -76,7 +76,6 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
-	var/blockTracking = 0 //For AI tracking
 
 //Mask
 /obj/item/clothing/mask
@@ -267,7 +266,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 	female_clothing_icons[index] = female_clothing_icon
 
 /obj/item/clothing/under/verb/toggle()
-	set name = "Adjust Suit Sensors"
+	set name = "Toggle Suit Sensors"
 	set category = "Object"
 	set src in usr
 	var/mob/M = usr

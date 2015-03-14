@@ -426,30 +426,21 @@ datum/objective/download/proc/gen_amount_goal()
 	explanation_text = "Download [target_amount] research level\s."
 	return target_amount
 
-datum/objective/download/check_completion()//NINJACODE
+datum/objective/download/check_completion()
 	if(!ishuman(owner.current))
 		return 0
-
-	var/mob/living/carbon/human/H = owner.current
-	if(!H || H.stat == DEAD)
+	if(!owner.current || owner.current.stat == 2)
 		return 0
-
-	if(!istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+	if(!(istype(owner.current:wear_suit, /obj/item/clothing/suit/space/space_ninja)&&owner.current:wear_suit:s_initialized))
 		return 0
-
-	var/obj/item/clothing/suit/space/space_ninja/SN = H.wear_suit
-	if(!SN.s_initialized)
-		return 0
-
 	var/current_amount
-	if(!SN.stored_research.len)
+	var/obj/item/clothing/suit/space/space_ninja/S = owner.current:wear_suit
+	if(!S.stored_research.len)
 		return 0
 	else
-		for(var/datum/tech/current_data in SN.stored_research)
-			if(current_data.level)
-				current_amount += (current_data.level-1)
-	if(current_amount<target_amount)
-		return 0
+		for(var/datum/tech/current_data in S.stored_research)
+			if(current_data.level>1)	current_amount+=(current_data.level-1)
+	if(current_amount<target_amount)	return 0
 	return 1
 
 
