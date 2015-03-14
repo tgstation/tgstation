@@ -39,6 +39,11 @@
 	gcDestroyed = "Bye, world!"
 	tag = null
 	loc = null
+	if(contents)
+		for(var/thing in contents)
+			if(istype(thing, /obj/item/weapon/disk/nuclear))
+				qdel(thing)
+		contents.len = 0
 	..()
 
 /proc/delete_profile(var/type, code = 0)
