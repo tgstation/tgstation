@@ -433,7 +433,9 @@
 				I.loc = src
 				var/turf/bombturf = get_turf(src)
 				var/area/A = get_area(bombturf)
-				var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[AM]'>?</A> has rigged a beartrap with an IED at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+				var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[mob]'>?</A> has rigged a beartrap with an IED at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+				message_admins(log_str)
+				log_game(log_str)
 				user << "<span class='notice'>You sneak the [IED] underneath the pressure plate and connect the trigger wire.</span>"
 				desc = "A trap used to catch bears and other legged creatures. <span class='warning'>There is an IED hooked up to it.</span>"
 			else
