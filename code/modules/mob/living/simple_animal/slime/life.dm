@@ -1,11 +1,11 @@
-/mob/living/carbon/slime
+/mob/living/simple_animal/slime
 	var/AIproc = 0 // determines if the AI loop is activated
 	var/Atkcool = 0 // attack cooldown
 	var/Tempstun = 0 // temporary temperature stuns
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
 
-/mob/living/carbon/slime/Life()
+/mob/living/simple_animal/slime/Life()
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
@@ -17,10 +17,10 @@
 		if (!ckey)
 			handle_speech_and_mood()
 
-/mob/living/carbon/slime/handle_breathing()
+/mob/living/simple_animal/slime/handle_breathing()
 	return
 
-/mob/living/carbon/slime/proc/AIprocess()  // the master AI process
+/mob/living/simple_animal/slime/proc/AIprocess()  // the master AI process
 
 	if(AIproc || stat == DEAD || client) return
 
@@ -45,7 +45,7 @@
 			break
 
 		if(Target)
-			for(var/mob/living/carbon/slime/M in view(1,Target))
+			for(var/mob/living/simple_animal/slime/M in view(1,Target))
 				if(M.Victim == Target)
 					Target = null
 					AIproc = 0
@@ -99,7 +99,7 @@
 
 	AIproc = 0
 
-/mob/living/carbon/slime/handle_environment(datum/gas_mixture/environment)
+/mob/living/simple_animal/slime/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		adjustToxLoss(rand(10,20))
 		return
@@ -131,7 +131,7 @@
 
 	return //TODO: DEFERRED
 
-/mob/living/carbon/slime/proc/adjust_body_temperature(current, loc_temp, boost)
+/mob/living/simple_animal/slime/proc/adjust_body_temperature(current, loc_temp, boost)
 	var/temperature = current
 	var/difference = abs(current-loc_temp)	//get difference
 	var/increments// = difference/10			//find how many increments apart they are
@@ -148,7 +148,7 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/carbon/slime/handle_chemicals_in_body()
+/mob/living/simple_animal/slime/handle_chemicals_in_body()
 
 	if(reagents) reagents.metabolize(src)
 
@@ -163,13 +163,13 @@
 	return //TODO: DEFERRED
 
 
-/mob/living/carbon/slime/handle_mutations_and_radiation()
+/mob/living/simple_animal/slime/handle_mutations_and_radiation()
 	return
 
-/mob/living/carbon/slime/handle_regular_hud_updates()
+/mob/living/simple_animal/slime/handle_regular_hud_updates()
 	return
 
-/mob/living/carbon/slime/handle_regular_status_updates()
+/mob/living/simple_animal/slime/handle_regular_status_updates()
 
 	if(is_adult)
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
@@ -232,7 +232,7 @@
 
 	return 1
 
-/mob/living/carbon/slime/proc/handle_nutrition()
+/mob/living/simple_animal/slime/proc/handle_nutrition()
 
 	if(prob(15))
 		nutrition -= 1 + is_adult
@@ -252,7 +252,7 @@
 		else
 			Evolve()
 
-/mob/living/carbon/slime/proc/add_nutrition(var/nutrition_to_add = 0, var/lastnut = 0)
+/mob/living/simple_animal/slime/proc/add_nutrition(var/nutrition_to_add = 0, var/lastnut = 0)
 	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
 	if(nutrition >= (lastnut + 50))
 		if(prob(80))
@@ -264,7 +264,7 @@
 
 
 
-/mob/living/carbon/slime/proc/handle_targets()
+/mob/living/simple_animal/slime/proc/handle_targets()
 	if(Tempstun)
 		if(!Victim) // not while they're eating!
 			canmove = 0
@@ -332,7 +332,7 @@
 
 					if(!L.canmove) // Only one slime can latch on at a time.
 						var/notarget = 0
-						for(var/mob/living/carbon/slime/M in view(1,L))
+						for(var/mob/living/simple_animal/slime/M in view(1,L))
 							if(M.Victim == L)
 								notarget = 1
 						if(notarget)
@@ -381,7 +381,7 @@
 			spawn()
 				AIprocess()
 
-/mob/living/carbon/slime/proc/handle_speech_and_mood()
+/mob/living/simple_animal/slime/proc/handle_speech_and_mood()
 	//Mood starts here
 	var/newmood = ""
 	if (rabid || attacked) newmood = "angry"
@@ -538,23 +538,23 @@
 					phrases += "[M]... feed me..."
 			say (pick(phrases))
 
-/mob/living/carbon/slime/proc/get_max_nutrition() // Can't go above it
+/mob/living/simple_animal/slime/proc/get_max_nutrition() // Can't go above it
 	if (is_adult) return 1200
 	else return 1000
 
-/mob/living/carbon/slime/proc/get_grow_nutrition() // Above it we grow, below it we can eat
+/mob/living/simple_animal/slime/proc/get_grow_nutrition() // Above it we grow, below it we can eat
 	if (is_adult) return 1000
 	else return 800
 
-/mob/living/carbon/slime/proc/get_hunger_nutrition() // Below it we will always eat
+/mob/living/simple_animal/slime/proc/get_hunger_nutrition() // Below it we will always eat
 	if (is_adult) return 600
 	else return 500
 
-/mob/living/carbon/slime/proc/get_starve_nutrition() // Below it we will eat before everything else
-	if (is_adult) return 300
+/mob/living/simple_animal/slime/proc/get_starve_nutrition() // Below it we will eat before everything else
+	if(is_adult) return 300
 	else return 200
 
-/mob/living/carbon/slime/proc/will_hunt(var/hunger = -1) // Check for being stopped from feeding and chasing
+/mob/living/simple_animal/slime/proc/will_hunt(var/hunger = -1) // Check for being stopped from feeding and chasing
 	if (hunger == 2 || rabid || attacked) return 1
 	if (Leader) return 0
 	if (holding_still) return 0

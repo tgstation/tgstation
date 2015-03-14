@@ -77,7 +77,7 @@
 	if(istype(G, /obj/item/weapon/grab))
 		if(!ismob(G:affecting))
 			return
-		for(var/mob/living/carbon/slime/M in range(1,G:affecting))
+		for(var/mob/living/simple_animal/slime/M in range(1,G:affecting))
 			if(M.Victim == G:affecting)
 				usr << "[G:affecting:name] will not fit into the [src.name] because they have a slime latched onto their head."
 				return

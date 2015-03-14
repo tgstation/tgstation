@@ -947,7 +947,7 @@ obj/mecha/proc/can_use(mob/user)
 		user << "<span class='warning'>Access denied.</span>"
 		src.log_append_to_last("Permission denied.")
 		return
-	for(var/mob/living/carbon/slime/S in range(1,user))
+	for(var/mob/living/simple_animal/slime/S in range(1,user))
 		if(S.Victim == user)
 			user << "You're too busy getting your life sucked out of you."
 			return

@@ -148,13 +148,13 @@
 						emote("me", 2, pick(emote_hear))
 
 
-/mob/living/simple_animal/handle_environment()
+/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
 	var/atmos_suitable = 1
 
 	var/atom/A = src.loc
 	if(isturf(A))
 		var/turf/T = A
-		var/areatemp = T.temperature
+		var/areatemp = get_temperature(environment)
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
@@ -266,7 +266,7 @@
 			adjustBruteLoss(harm_intent_damage)
 			add_logs(M, src, "attacked", admin=0)
 			updatehealth()
-	return
+			return 1
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(..()) //successful monkey bite.
@@ -297,7 +297,7 @@
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			attack_threshold_check(damage)
 
-/mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M as mob)
 	..()
 	var/damage = rand(1, 3)
 

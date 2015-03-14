@@ -1,4 +1,4 @@
-/mob/living/carbon/slime
+/mob/living/simple_animal/slime
 	name = "baby slime"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
@@ -8,6 +8,15 @@
 	var/is_adult = 0
 	languages = SLIME | HUMAN
 	faction = list("slime")
+
+	harm_intent_damage = 5
+	icon_living = "grey baby slime"
+	icon_dead = "grey baby slime dead"
+	response_help  = "pets"
+	response_disarm = "shoos"
+	response_harm   = "stomps on"
+	emote_see = list("jiggles", "bounces in place")
+	speak_emote = list("chirps")
 
 	layer = 5
 
@@ -54,7 +63,36 @@
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
-/mob/living/carbon/slime/New()
+/*
+/mob/living/simple_animal/slime         //repath it to slime/pet???
+	name = "pet slime"
+	desc = "A lovable, domesticated slime."
+	health = 100
+	maxHealth = 100
+	icon = 'icons/mob/slimes.dmi'
+*/
+
+/mob/living/simple_animal/slime/adult
+	health = 200
+	maxHealth = 200
+	icon_state = "grey adult slime"
+	icon_living = "grey adult slime"
+/*
+/mob/living/simple_animal/slime/adult/New()
+	..()
+	overlays += "aslime-:33"
+
+/mob/living/simple_animal/slime/adult/death(gibbed)
+	for(var/i = 0, i<=1, i++)
+		var/mob/living/simple_animal/slime/S1 = new /mob/living/simple_animal/slime (src.loc)
+		S1.icon_state = "[colour] baby slime"
+		S1.icon_living = "[colour] baby slime"
+		S1.icon_dead = "[colour] baby slime dead"
+		S1.colour = "[colour]"
+	qdel(src)
+*/
+
+/mob/living/simple_animal/slime/New()
 	create_reagents(100)
 	spawn (0)
 		number = rand(1, 1000)
@@ -67,14 +105,14 @@
 		coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	..()
 
-/mob/living/carbon/slime/regenerate_icons()
+/mob/living/simple_animal/slime/regenerate_icons()
 	icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
 	overlays.len = 0
 	if (mood)
 		overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
 	..()
 
-/mob/living/carbon/slime/movement_delay()
+/mob/living/simple_animal/slime/movement_delay()
 	if (bodytemperature >= 330.23) // 135 F
 		return -1	// slimes become supercharged at high temperatures
 
@@ -98,7 +136,7 @@
 
 	return tally + config.slime_delay
 
-/mob/living/carbon/slime/ObjBump(obj/O)
+/mob/living/simple_animal/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
 		var/probab = 10
 		switch(powerlevel)
@@ -117,17 +155,17 @@
 						spawn(45)
 							Atkcool = 0
 
-/mob/living/carbon/slime/MobBump(mob/M)
+/mob/living/simple_animal/slime/MobBump(mob/M)
 	if(istype(M, /mob/living/carbon/human)) //pushing humans
 		if(is_adult && prob(10)) //only if we're adult, and 10% of the time
 			return 0
 		else
 			return 1
 
-/mob/living/carbon/slime/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/slime/Process_Spacemove(var/movement_dir = 0)
 	return 2
 
-/mob/living/carbon/slime/Stat()
+/mob/living/simple_animal/slime/Stat()
 	..()
 
 	if(statpanel("Status"))
@@ -145,20 +183,20 @@
 
 		stat(null,"Power Level: [powerlevel]")
 
-/mob/living/carbon/slime/adjustFireLoss(amount)
+/mob/living/simple_animal/slime/adjustFireLoss(amount)
 	..(-abs(amount)) // Heals them
 	return
 
-/mob/living/carbon/slime/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/slime/bullet_act(var/obj/item/projectile/Proj)
 	attacked += 10
 	..(Proj)
 	return 0
 
-/mob/living/carbon/slime/emp_act(severity)
+/mob/living/simple_animal/slime/emp_act(severity)
 	powerlevel = 0 // oh no, the power!
 	..()
 
-/mob/living/carbon/slime/ex_act(severity, target)
+/mob/living/simple_animal/slime/ex_act(severity, target)
 	..()
 
 	switch (severity)
@@ -175,23 +213,23 @@
 
 	updatehealth()
 
-/mob/living/carbon/slime/MouseDrop(var/atom/movable/A as mob|obj)
+/mob/living/simple_animal/slime/MouseDrop(var/atom/movable/A as mob|obj)
 	if(isliving(A) && A != src && usr == src)
 		var/mob/living/Food = A
 		if(Food.Adjacent(src) && !stat && Food.stat != DEAD) //messy
 			Feedon(Food)
 	..()
 
-/mob/living/carbon/slime/unEquip(obj/item/W as obj)
+/mob/living/simple_animal/slime/unEquip(obj/item/W as obj)
 	return
 
-/mob/living/carbon/slime/start_pulling(var/atom/movable/AM)
+/mob/living/simple_animal/slime/start_pulling(var/atom/movable/AM)
 	return
 
-/mob/living/carbon/slime/attack_ui(slot)
+/mob/living/simple_animal/slime/attack_ui(slot)
 	return
 
-/mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M as mob)
 	..()
 	if(src.Victim)
 		src.Victim = null
@@ -208,14 +246,14 @@
 		M.updatehealth()
 	return
 
-/mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M as mob)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		attacked += 10
 		adjustBruteLoss(damage)
 		updatehealth()
 
-/mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/simple_animal/slime/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			attacked += 10
@@ -223,7 +261,7 @@
 			updatehealth()
 	return
 
-/mob/living/carbon/slime/attack_larva(mob/living/carbon/alien/larva/L as mob)
+/mob/living/simple_animal/slime/attack_larva(mob/living/carbon/alien/larva/L as mob)
 	if(..()) //successful larva bite.
 		var/damage = rand(1, 3)
 		if(stat != DEAD)
@@ -231,7 +269,7 @@
 			adjustBruteLoss(damage)
 			updatehealth()
 
-/mob/living/carbon/slime/attack_hulk(mob/living/carbon/human/user)
+/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
 		adjustBruteLoss(5)
 		if(Victim || Target)
@@ -246,7 +284,7 @@
 				step_away(src,user,15)
 
 
-/mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M as mob)
 	if(Victim)
 		if(Victim == M)
 			if(prob(60))
@@ -269,8 +307,6 @@
 				Victim = null
 				anchored = 0
 				step_away(src,M)
-
-			return
 
 		else
 			M.do_attack_animation(src)
@@ -299,37 +335,13 @@
 				anchored = 0
 				step_away(src,M)
 
-			return
-
-	if(..()) //To allow surgery to return properly.
 		return
 
-	switch(M.a_intent)
-		if("help")
-			help_shake_act(M)
-		if("grab")
-			grabbedby(M)
-		else
-			M.do_attack_animation(src)
-			var/damage = rand(1, 9)
-			attacked += 10
-			if (prob(90))
-				playsound(loc, "punch", 25, 1, -1)
-				add_logs(M, src, "attacked", admin=0)
-				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-						"<span class='userdanger'>[M] has punched [src]!</span>")
 
-				if (stat != DEAD)
-					adjustBruteLoss(damage)
-					updatehealth()
-			else
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
-	return
+	if(..()) //successful attack
+		attacked += 10
 
-
-
-/mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(..()) //if harm or disarm intent.
 
 		if (M.a_intent == "harm")
@@ -369,7 +381,7 @@
 					anchored = 0
 					if(prob(80) && !client)
 						Discipline++
-						if(!istype(src, /mob/living/carbon/slime))
+						if(!istype(src, /mob/living/simple_animal/slime))
 							if(Discipline == 1)
 								attacked = 0
 
@@ -393,7 +405,7 @@
 			updatehealth()
 	return
 
-/mob/living/carbon/slime/attackby(obj/item/W, mob/living/user, params)
+/mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W,/obj/item/stack/sheet/mineral/plasma)) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]
@@ -464,16 +476,13 @@
 							canmove = 1
 	..()
 
-/mob/living/carbon/slime/restrained()
+/mob/living/simple_animal/slime/restrained()
 	return 0
 
-/mob/living/carbon/slime/show_inv(mob/user)
+/mob/living/simple_animal/slime/show_inv(mob/user)
 	return
 
-/mob/living/carbon/slime/toggle_throw_mode()
-	return
-
-/mob/living/carbon/slime/proc/apply_water()
+/mob/living/simple_animal/slime/proc/apply_water()
 	adjustToxLoss(rand(15,20))
 	if (!client)
 		if (Target) // Like cats
@@ -495,18 +504,18 @@
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 //has it been enhanced before?
 
-	attackby(obj/item/O as obj, mob/user as mob)
-		if(istype(O, /obj/item/weapon/slimesteroid2))
-			if(enhanced == 1)
-				user << "<span class='warning'> This extract has already been enhanced!</span>"
-				return ..()
-			if(Uses == 0)
-				user << "<span class='warning'> You can't enhance a used extract!</span>"
-				return ..()
-			user <<"You apply the enhancer. It now has triple the amount of uses."
-			Uses = 3
-			enhanced = 1
-			qdel(O)
+/obj/item/slime_extract/attackby(obj/item/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/weapon/slimesteroid2))
+		if(enhanced == 1)
+			user << "<span class='warning'> This extract has already been enhanced!</span>"
+			return ..()
+		if(Uses == 0)
+			user << "<span class='warning'> You can't enhance a used extract!</span>"
+			return ..()
+		user <<"You apply the enhancer. It now has triple the amount of uses."
+		Uses = 3
+		enhanced = 1
+		qdel(O)
 
 /obj/item/slime_extract/New()
 		..()
@@ -608,8 +617,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+	attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+		if(!istype(M, /mob/living/simple_animal/slime))//If target is not a slime.
 			user << "<span class='warning'> The potion only works on baby slimes!</span>"
 			return ..()
 		if(M.is_adult) //Can't tame adults
@@ -642,8 +651,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-/obj/item/weapon/slimepotion2/attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-	if(!istype(M, /mob/living/carbon/slime/))//If target is not a slime.
+/obj/item/weapon/slimepotion2/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+	if(!istype(M, /mob/living/simple_animal/slime/))//If target is not a slime.
 		user << "<span class='warning'> The potion only works on slimes!</span>"
 		return ..()
 	if(M.stat)
@@ -674,8 +683,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
-	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
-		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+	attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+		if(!istype(M, /mob/living/simple_animal/slime))//If target is not a slime.
 			user << "<span class='warning'> The steroid only works on baby slimes!</span>"
 			return ..()
 		if(M.is_adult) //Can't tame adults
@@ -819,20 +828,52 @@
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	qdel(src)
 
-/mob/living/carbon/slime/getTrail()
+/mob/living/simple_animal/slime/getTrail()
 	return null
 
-/mob/living/carbon/slime/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+/mob/living/simple_animal/slime/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
 	if(lube>=2)
 		return 0
 	.=..()
 
-/mob/living/carbon/slime/stripPanelUnequip(obj/item/what, mob/who)
+/mob/living/simple_animal/slime/stripPanelUnequip(obj/item/what, mob/who)
 	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
 
-/mob/living/carbon/slime/stripPanelEquip(obj/item/what, mob/who)
+/mob/living/simple_animal/slime/stripPanelEquip(obj/item/what, mob/who)
 	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
+
+/mob/living/simple_animal/slime/examine(mob/user)
+
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	if (src.stat == DEAD)
+		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
+	else
+		if (src.getBruteLoss())
+			msg += "<span class='warning'>"
+			if (src.getBruteLoss() < 40)
+				msg += "It has some punctures in its flesh!"
+			else
+				msg += "<B>It has severe punctures and tears in its flesh!</B>"
+			msg += "</span>\n"
+
+		switch(powerlevel)
+
+			if(2 to 3)
+				msg += "It is flickering gently with a little electrical activity.\n"
+
+			if(4 to 5)
+				msg += "It is glowing gently with moderate levels of electrical activity.\n"
+
+			if(6 to 9)
+				msg += "<span class='warning'>It is glowing brightly with high levels of electrical activity.</span>\n"
+
+			if(10)
+				msg += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>\n"
+
+	msg += "*---------*</span>"
+	user << msg
 	return
 
 
@@ -904,7 +945,7 @@
 	src.visible_message("<span class='warning'> The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
 		src.visible_message("<span class='warning'> The [name] bursts open!</span>")
-		new/mob/living/carbon/slime(T)
+		new/mob/living/simple_animal/slime(T)
 		qdel(src)
 
 

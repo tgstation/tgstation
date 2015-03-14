@@ -65,7 +65,7 @@
 	return 0
 
 
-/mob/living/carbon/attack_slime(mob/living/carbon/slime/M)
+/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
 	if(..())
 		var/power = M.powerlevel + rand(0,3)
 		Weaken(power)

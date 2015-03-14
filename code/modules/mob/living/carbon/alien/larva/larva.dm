@@ -38,7 +38,7 @@
 /mob/living/carbon/alien/larva/attack_ui(slot_id)
 	return
 
-/mob/living/carbon/alien/larva/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/carbon/alien/larva/attack_slime(mob/living/simple_animal/slime/M as mob)
 
 	..()
 	var/damage = rand(5, 35)

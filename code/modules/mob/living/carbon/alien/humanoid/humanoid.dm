@@ -28,7 +28,7 @@
 	if(l_store) l_store.emp_act(severity)
 	..()
 
-/mob/living/carbon/alien/humanoid/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/carbon/alien/humanoid/attack_slime(mob/living/simple_animal/slime/M as mob)
 	..()
 	var/damage = rand(5, 35)
 	if(M.is_adult)

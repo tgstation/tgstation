@@ -1,9 +1,9 @@
-/mob/living/carbon/slime/death(gibbed)
+/mob/living/simple_animal/slime/death(gibbed)
 	if(stat == DEAD)
 		return
 	if(!gibbed)
 		if(is_adult)
-			var/mob/living/carbon/slime/M = new /mob/living/carbon/slime(loc)
+			var/mob/living/simple_animal/slime/M = new /mob/living/simple_animal/slime(loc)
 			M.colour = colour
 			M.rabid = 1
 			is_adult = 0
@@ -28,6 +28,6 @@
 
 	return ..(gibbed)
 
-/mob/living/carbon/slime/gib()
+/mob/living/simple_animal/slime/gib()
 	death(1)
 	qdel(src)

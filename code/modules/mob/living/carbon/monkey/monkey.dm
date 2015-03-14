@@ -159,7 +159,7 @@
 		updatehealth()
 
 
-/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M as mob)
 	..()
 	var/damage = rand(1, 3)
 

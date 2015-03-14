@@ -636,7 +636,7 @@
 
 
 
-/mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M as mob)
 	if(..()) //successful slime shock
 		flick("noise", flash)
 		var/stunprob = M.powerlevel * 7 + 10

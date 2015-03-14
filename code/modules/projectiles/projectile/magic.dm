@@ -164,9 +164,9 @@ proc/wabbajack(mob/living/M)
 					else
 						new_mob.languages |= HUMAN
 				if("slime")
-					new_mob = new /mob/living/carbon/slime(M.loc)
+					new_mob = new /mob/living/simple_animal/slime(M.loc)
 					if(prob(50))
-						var/mob/living/carbon/slime/Slime = new_mob
+						var/mob/living/simple_animal/slime/Slime = new_mob
 						Slime.is_adult = 1
 					new_mob.languages |= HUMAN
 				if("xeno")

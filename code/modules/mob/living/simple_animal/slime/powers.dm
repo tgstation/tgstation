@@ -1,4 +1,4 @@
-/mob/living/carbon/slime/verb/Feed()
+/mob/living/simple_animal/slime/verb/Feed()
 	set category = "Slime"
 	set desc = "This will let you feed on any valid creature in the surrounding area. This should also be used to halt the feeding process."
 	if(Victim)
@@ -11,7 +11,7 @@
 
 	var/list/choices = list()
 	for(var/mob/living/C in view(1,src))
-		if(C!=src && !istype(C,/mob/living/carbon/slime) && Adjacent(C))
+		if(C!=src && !istype(C,/mob/living/simple_animal/slime) && Adjacent(C))
 			choices += C
 
 	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
@@ -30,7 +30,7 @@
 			src << "<i>This subject does not have a strong enough life energy...</i>"
 			return 0
 
-		for(var/mob/living/carbon/slime/met in view())
+		for(var/mob/living/simple_animal/slime/met in view())
 			if(met.Victim == M && met != src)
 				src << "<i>The [met.name] is already feeding on this subject...</i>"
 				return 0
@@ -42,7 +42,7 @@
 		return 1
 
 
-/mob/living/carbon/slime/proc/Feedon(var/mob/living/M)
+/mob/living/simple_animal/slime/proc/Feedon(var/mob/living/M)
 	Victim = M
 	src.loc = M.loc
 	canmove = 0
@@ -155,18 +155,18 @@
 
 	Victim = null
 
-/mob/living/carbon/slime/proc/Feedstop()
+/mob/living/simple_animal/slime/proc/Feedstop()
 	if(Victim)
 		if(Victim.client) Victim << "[src] has let go of your head!"
 		Victim = null
 
-/mob/living/carbon/slime/proc/UpdateFeed(var/mob/M)
+/mob/living/simple_animal/slime/proc/UpdateFeed(var/mob/M)
 	if(Victim)
 		if(Victim == M)
 			loc = M.loc // simple "attach to head" effect!
 
 
-/mob/living/carbon/slime/verb/Evolve()
+/mob/living/simple_animal/slime/verb/Evolve()
 	set category = "Slime"
 	set desc = "This will let you evolve from baby to adult slime."
 
@@ -185,7 +185,7 @@
 	else
 		src << "<i>I have already evolved...</i>"
 
-/mob/living/carbon/slime/verb/Reproduce()
+/mob/living/simple_animal/slime/verb/Reproduce()
 	set category = "Slime"
 	set desc = "This will make you split into four Slimes."
 
@@ -203,7 +203,7 @@
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
 			for(var/i=1,i<=4,i++)
-				var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/(loc)
+				var/mob/living/simple_animal/slime/M = new /mob/living/simple_animal/slime/(loc)
 				if(prob(mutation_chance))
 					M.colour = slime_mutation[rand(1,4)]
 				else
@@ -215,7 +215,7 @@
 				babies += M
 				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 
-			var/mob/living/carbon/slime/new_slime = pick(babies)
+			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = "harm"
 			new_slime.languages = languages
 			if(src.mind)

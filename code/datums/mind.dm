@@ -1334,7 +1334,7 @@
 	..()
 
 //slime
-/mob/living/carbon/slime/mind_initialize()
+/mob/living/simple_animal/slime/mind_initialize()
 	..()
 	mind.special_role = "slime"
 	mind.assigned_role = "slime"
