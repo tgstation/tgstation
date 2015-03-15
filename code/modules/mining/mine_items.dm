@@ -134,9 +134,6 @@ proc/move_mining_shuttle()
 		return
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
-	if(!src.allowed(usr))
-		usr << "<span class='warning'>Unauthorized Access.</span>"
-		return
 	if(href_list["move"])
 		if(ticker.mode.name == "blob")
 			if(ticker.mode:declared)
