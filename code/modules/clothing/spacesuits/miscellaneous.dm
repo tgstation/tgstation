@@ -195,3 +195,25 @@
 	flash_protect = 0
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
+
+/obj/item/clothing/head/helmet/space/freedom
+	name = "eagle helmet"
+	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
+	icon_state = "griffinhat"
+	item_state = "griffinhat"
+	armor = list(melee = 40, bullet = 40, laser = 30, energy = 25, bomb = 100, bio = 100, rad = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	unacidable = 1
+
+/obj/item/clothing/suit/space/freedom
+	name = "eagle suit"
+	desc = "An advanced, light suit, fabricated from a mixture of synthetic feathers and space-resistant material. A gun holster appears to be intergrated into the suit and the wings appear to be stuck in 'freedom' mode."
+	icon_state = "freedom"
+	item_state = "freedom"
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	armor = list(melee = 40, bullet = 40, laser = 30,energy = 25, bomb = 100, bio = 100, rad = 100)
+	slowdown = 1
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	unacidable = 1
