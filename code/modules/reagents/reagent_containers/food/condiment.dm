@@ -118,7 +118,7 @@
 				if("sodiumchloride")
 					name = "Salt Shaker"
 					desc = "Salt. From space oceans, presumably."
-					icon_state = "saltshaker"
+					icon_state = "saltshakersmall"
 				if("blackpepper")
 					name = "Pepper Mill"
 					desc = "Often used to flavor food or make people sneeze."
