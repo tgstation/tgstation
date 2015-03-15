@@ -1,6 +1,0 @@
-author: phil235
-
-delete-after: True
-
-changes: 
-  - rscadd: "Doors can damage mechs by crushing them now."
