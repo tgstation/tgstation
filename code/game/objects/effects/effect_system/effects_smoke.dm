@@ -207,7 +207,7 @@
 
 /obj/effect/effect/chem_smoke/Move()
 	..()
-	for(var/mob/living/carbon/human/A in view(1, src))
+	for(var/mob/living/A in view(1, src))
 		if(reagents.total_volume >= 1)
 			reagents.reaction(A, TOUCH)
 			reagents.trans_to(A.reagents, 10)
