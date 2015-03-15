@@ -268,7 +268,7 @@
 			if (!( src.machine.check_eye(src) ))
 				src.reset_view(null)
 		else
-			if(client && !client.adminobs)
+			if(client && !client.adminobs && !iscamera(client.eye))
 				reset_view(null)
 
 	return 1

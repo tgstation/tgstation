@@ -282,6 +282,7 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/power/smes/Topic(href, href_list)
+	if(usr.z != z) return 1
 	..()
 	if(href_list["close"])
 		if(usr.machine == src) usr.unset_machine()

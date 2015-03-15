@@ -354,7 +354,7 @@ var/global/loopModeNames=list(
 	if(isobserver(usr) && !isAdminGhost(usr))
 		usr << "\red You can't push buttons when your fingers go right through them, dummy."
 		return
-	..()
+	if(..()) return 1
 	if(emagged)
 		usr << "\red You touch the bluescreened menu. Nothing happens. You feel dumber."
 		return

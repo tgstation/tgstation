@@ -43,6 +43,7 @@
 			icon_state = "isolator_in"
 
 	Topic(href, href_list)
+		if(..()) return 1
 		if(stat & BROKEN) return
 		if(usr.stat || usr.restrained()) return
 		if(!in_range(src, usr)) return

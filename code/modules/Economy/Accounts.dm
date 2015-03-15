@@ -321,7 +321,7 @@ var/global/list/all_money_accounts = list()
 	return
 
 /obj/machinery/account_database/Topic(var/href, var/href_list)
-	..()
+	if(..()) return 1
 	if(href_list["toggle_activated"])
 		activated = !activated
 

@@ -265,7 +265,7 @@
 		if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
 			usr << "\red The disposal units power is disabled."
 			return
-		..()
+		if(..()) return 1
 		src.add_fingerprint(usr)
 		if(stat & BROKEN)
 			return

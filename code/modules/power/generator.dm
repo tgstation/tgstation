@@ -182,7 +182,7 @@ Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"}
 
 
 /obj/machinery/power/generator/Topic(href, href_list)
-	..()
+	if(usr.z != z) return 1
 	if("close" in href_list)
 		usr << browse(null, "window=teg")
 		usr.unset_machine()

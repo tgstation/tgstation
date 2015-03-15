@@ -74,7 +74,7 @@
 		onclose(user, "airlock")
 
 	Topic(href, href_list)
-		..()
+		if(..()) return 1
 		if (usr.stat || usr.restrained() || (!ishuman(usr) && !isrobot(usr)) || icon_state == "door_electronics_smoked")
 			return
 		if (href_list["close"])

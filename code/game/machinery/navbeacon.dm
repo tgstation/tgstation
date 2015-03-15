@@ -187,7 +187,7 @@ Transponder Codes:<UL>"}
 		return
 
 	Topic(href, href_list)
-		..()
+		if(..()) return 1
 		if (usr.stat)
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))

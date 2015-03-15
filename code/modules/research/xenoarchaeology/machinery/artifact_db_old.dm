@@ -16,7 +16,7 @@
 	catalogued_artifacts = new/list
 
 /obj/machinery/computer/artifact_database/Topic(href, href_list)
-	..()
+	if(..()) return 1
 	if( href_list["close"] )
 		usr << browse(null, "window=artifact_db")
 		usr.machine = null

@@ -36,7 +36,7 @@
 	return
 
 /obj/machinery/artillerycontrol/Topic(href, href_list)
-	..()
+	if(..()) return 1
 	if (usr.stat || usr.restrained())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))

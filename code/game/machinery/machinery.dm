@@ -353,6 +353,10 @@ Class Procs:
 			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return 1
 
+		if(!isAI(usr) && usr.z != z)
+			if(usr.z != 2)
+				usr << "<span class='warning'>WARNING: Unable to interface with \the [src.name].</span>"
+				return 1
 		var/norange = 0
 		if(istype(usr, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = usr

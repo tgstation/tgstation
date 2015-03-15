@@ -172,7 +172,7 @@ var/bomb_set
 		src.deployable = 1
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)
-	..()
+	if(..()) return 1
 	if (!usr.canmove || usr.stat || usr.restrained())
 		return
 	if (!ishuman(usr))

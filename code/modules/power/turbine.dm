@@ -169,6 +169,7 @@
 	return
 
 /obj/machinery/power/turbine/Topic(href, href_list)
+	if(usr.z != z) return 1
 	..()
 	if(stat & BROKEN)
 		return

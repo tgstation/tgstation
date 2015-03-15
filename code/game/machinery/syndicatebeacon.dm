@@ -39,6 +39,7 @@
 		onclose(user, "syndbeacon")
 
 	Topic(href, href_list)
+		if(..()) return 1
 		if(href_list["betraitor"])
 			if(charges < 1)
 				src.updateUsrDialog()

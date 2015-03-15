@@ -150,7 +150,7 @@
 	return
 
 /obj/machinery/zero_point_emitter/Topic(href, href_list)
-	..()
+	if(..()) return 1
 	if( href_list["input"] )
 		var/i = text2num(href_list["input"])
 		var/d = i
