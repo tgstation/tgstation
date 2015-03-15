@@ -77,6 +77,10 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	else
 		return ..()
 
+/obj/item/stack/cable_coil/use(var/amount)
+	. = ..()
+	update_icon()
+
 /obj/item/stack/cable_coil/update_icon()
 	if(!_color)
 		_color = pick("red", "yellow", "blue", "green")
