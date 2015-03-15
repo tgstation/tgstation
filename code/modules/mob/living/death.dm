@@ -26,7 +26,8 @@
 	end_animation(animate)
 
 /mob/living/proc/spawn_dust()
-	new /obj/effect/decal/cleanable/ash(loc)
+	var/obj/effect/decal/cleanable/ashdecal = new/obj/effect/decal/cleanable/ash(loc)
+	ashdecal.reagents.add_reagent("ash", 35)
 
 /mob/living/proc/dust_animation(var/animate, var/flick_name = "")
 	flick(flick_name, animate)

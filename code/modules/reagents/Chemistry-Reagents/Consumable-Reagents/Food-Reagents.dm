@@ -381,7 +381,8 @@ datum/reagent/consumable/flour
 datum/reagent/consumable/flour/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(!istype(T, /turf/space))
-		new /obj/effect/decal/cleanable/flour(T)
+		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
+		reagentdecal.reagents.add_reagent("flour", volume)
 
 datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"

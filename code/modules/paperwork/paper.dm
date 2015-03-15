@@ -342,7 +342,8 @@
 	info = "[stars(info)]"
 	sleep(burntime) //7 seconds
 	src.visible_message("<span class='danger'>[src] burns away, leaving behind a pile of ashes.</span>")
-	new /obj/effect/decal/cleanable/ash(src.loc)
+	var/obj/effect/decal/cleanable/ashdecal = new/obj/effect/decal/cleanable/ash(src.loc)
+	ashdecal.reagents.add_reagent("ash", 5)
 	qdel(src)
 
 /*

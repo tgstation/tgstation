@@ -17,7 +17,7 @@
 				user << "<span class='notice'>[W] is full!</span>"
 				return
 			else
-				user << "<span class='notice'>you scoop up [src] into [W]!</span>"
+				user << "<span class='notice'>You scoop up [src] into [W]!</span>"
 				reagents.trans_to(W, reagents.total_volume)
 				if(!reagents.total_volume) //scooped up all of it
 					qdel(src)

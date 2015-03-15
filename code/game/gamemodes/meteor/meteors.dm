@@ -236,7 +236,8 @@
 /obj/effect/meteor/irradiated/meteor_effect()
 	..(heavy)
 	explosion(src.loc, 0, 0, 4, 3, 0)
-	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
+	var/obj/effect/decal/cleanable/meteordecal = new/obj/effect/decal/cleanable/greenglow(get_turf(src))
+	meteordecal.reagents.add_reagent("uranium", 20)
 	for(var/mob/living/L in view(5, src))
 		L.apply_effect(40, IRRADIATE)
 
