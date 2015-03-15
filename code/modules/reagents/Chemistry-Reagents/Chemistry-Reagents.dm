@@ -265,13 +265,10 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
 			qdel(hotspot)
-	T.color = initial(T.color)
 	return
 
 datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
-	if(!istype(O, /obj/effect))
-		O.color = initial(O.color)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
@@ -281,7 +278,6 @@ datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 datum/reagent/water/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	if(!istype(M, /mob/living))
 		return
-	M.color = initial(M.color)
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(volume / 10))
 		if(M.fire_stacks <= 0)
@@ -681,13 +677,10 @@ datum/reagent/space_cleaner/reaction_obj(var/obj/O, var/volume)
 	else
 		if(O)
 			O.clean_blood()
-			if(!istype(O, /obj/effect))
-				O.color = initial(O.color)
 
 datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 	if(volume >= 1)
 		T.clean_blood()
-		T.color = initial(T.color)
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
@@ -701,7 +694,6 @@ datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 datum/reagent/space_cleaner/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.color = initial(C.color)
 		if(C.r_hand)
 			C.r_hand.clean_blood()
 		if(C.l_hand)
