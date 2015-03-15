@@ -383,6 +383,7 @@
 								return
 					if(H.heart_attack)
 						H.heart_attack = 0
+						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
 					if(H.stat == 2)
 						var/health = H.health
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")

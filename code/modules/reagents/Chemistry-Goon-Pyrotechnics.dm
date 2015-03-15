@@ -357,7 +357,7 @@
 /datum/reagent/goonchem/phlogiston
 	name = "Phlogiston"
 	id = "phlogiston"
-	description = "+1 BURN, +1 BURNING and sets you alight. Don't be deceived by that meager +1, having phlogiston in the bloodstream can be very dangerous without a fire extinguisher or firebot. Even then, they can't prevent you from spontaneously igniting every cycle."
+	description = "Catches you on fire and makes you ignite."
 	reagent_state = LIQUID
 	color = "#FF9999" // rgb: 96, 165, 132
 
