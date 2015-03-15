@@ -174,3 +174,9 @@
 	icon_state = "magspear"
 	throwforce = 15 //still deadly when thrown
 	throw_speed = 3
+
+/obj/item/ammo_casing/a500
+	desc = "A .500 S&W bullet casing."
+	icon_state = "50-casing"
+	caliber = "500"
+	projectile_type = /obj/item/projectile/bullet/hugebullet
