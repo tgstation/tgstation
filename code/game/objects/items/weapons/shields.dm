@@ -70,7 +70,6 @@
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
-		reflect_chance = 40
 	else
 		force = 3
 		throwforce = 3
@@ -78,7 +77,6 @@
 		w_class = 1
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
 		user << "<span class='notice'>[src] can now be concealed.</span>"
-		reflect_chance = 0
 	add_fingerprint(user)
 
 /obj/item/weapon/shield/riot/tele
