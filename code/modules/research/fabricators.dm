@@ -173,14 +173,14 @@
 
 /obj/machinery/r_n_d/fabricator/proc/queue_pop()
 	var/datum/design/D = queue[1]
-	queue -= D
+	queue.Cut(1, 2)
 	return D
 
 //adds a design to a part list
 /obj/machinery/r_n_d/fabricator/proc/add_part_to_set(set_name as text, var/datum/design/part)
 	if(!part || !istype(part))
 		return 0
-		
+
 	var/list/part_set_list = part_sets[set_name]
 	if(!part_set_list)
 		part_set_list = list()
