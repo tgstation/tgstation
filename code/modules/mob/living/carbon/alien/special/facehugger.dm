@@ -174,8 +174,8 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]_impregnated"
 
 		if(!target.getlimb(/obj/item/organ/limb/robot/chest) && !(target.status_flags & XENO_HOST))
-			new /obj/item/alien_embryo(target)
-
+			var/obj/item/alien_embryo/AE = new /obj/item/alien_embryo(target)
+			AE.color = color
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/corgi/C = target

@@ -44,6 +44,7 @@
 			if("Drone")
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 		if(mind)	mind.transfer_to(new_xeno)
+		new_xeno.color = color
 		qdel(src)
 		return
 	else

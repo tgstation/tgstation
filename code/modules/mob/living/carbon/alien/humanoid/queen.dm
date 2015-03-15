@@ -66,7 +66,9 @@
 		adjustToxLoss(-75)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("<span class='alertalien'>[src] has laid an egg!</span>"), 1)
-		new /obj/structure/alien/egg(loc)
+
+		var/obj/structure/alien/egg/E = new /obj/structure/alien/egg(get_turf(src))
+		E.color = color
 	return
 
 
