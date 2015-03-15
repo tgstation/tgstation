@@ -219,7 +219,8 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal(src.loc)
-		del(src)
+		qdel(src)
+
 	if(istype(W, /obj/item/weapon/chair_painter))
 		var/obj/item/weapon/chair_painter/C = W
 		color = rgb(C.red,C.green,C.blue)
