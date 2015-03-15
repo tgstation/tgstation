@@ -205,43 +205,26 @@ datum/reagents/proc/metabolize(var/mob/M)
 	if(M)
 		chem_temp = M.bodytemperature
 		handle_reactions()
-	for(var/reagent in reagent_list)
-		var/datum/reagent/R = reagent
-		if(!R.three_tick)
-			if(M.reagent_check(R) != 1)
-				if(R.volume >= R.overdose_threshold && !R.overdosed && R.overdose_threshold > 0)
-					R.overdosed = 1
-					M << "<span class = 'userdanger'>You feel like you took too much of [R.name]!</span>"
-					R.overdose_start(M)
-				if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list) && R.addiction_threshold > 0)
-					var/datum/reagent/new_reagent = new R.type()
-					addiction_list.Add(new_reagent)
-				if(R.overdosed)
-					R.overdose_process(M)
-				if(is_type_in_list(R,addiction_list))
-					for(var/datum/reagent/addicted_reagent in addiction_list)
-						if(istype(R, addicted_reagent))
-							addicted_reagent.addiction_stage = -15 // you're satisfied for a good while.
-				R.on_mob_life(M)
-		else
-			if(last_tick == 3)
-				if(M && R)
-					if(M.reagent_check(R) != 1)
-						if(R.volume >= R.overdose_threshold && !R.overdosed && R.overdose_threshold > 0)
-							R.overdosed = 1
-							M << "<span class = 'userdanger'>You feel like you took too much of [R.name]!</span>"
-							R.overdose_start(M)
-						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list) && R.addiction_threshold > 0)
-							var/datum/reagent/new_reagent = new R.type()
-							addiction_list.Add(new_reagent)
-						if(R.overdosed)
-							R.overdose_process(M)
-						if(is_type_in_list(R,addiction_list))
-							for(var/datum/reagent/addicted_reagent in addiction_list)
-								if(istype(R, addicted_reagent))
-									addicted_reagent.addiction_stage = -15 // you're satisfied for a good while.
-						R.on_mob_life(M)
-
+	if(last_tick == 3)
+		last_tick = 1
+		for(var/A in reagent_list)
+			var/datum/reagent/R = A
+			if(M && R)
+				if(M.reagent_check(R) != 1)
+					if(R.volume >= R.overdose_threshold && !R.overdosed && R.overdose_threshold > 0)
+						R.overdosed = 1
+						M << "<span class = 'userdanger'>You feel like you took too much of [R.name]!</span>"
+						R.overdose_start(M)
+					if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list) && R.addiction_threshold > 0)
+						var/datum/reagent/new_reagent = new R.type()
+						addiction_list.Add(new_reagent)
+					if(R.overdosed)
+						R.overdose_process(M)
+					if(is_type_in_list(R,addiction_list))
+						for(var/datum/reagent/addicted_reagent in addiction_list)
+							if(istype(R, addicted_reagent))
+								addicted_reagent.addiction_stage = -15 // you're satisfied for a good while.
+					R.on_mob_life(M)
 	if(addiction_tick == 6)
 		addiction_tick = 1
 		for(var/A in addiction_list)
@@ -264,8 +247,6 @@ datum/reagents/proc/metabolize(var/mob/M)
 				if(R.addiction_stage > 40)
 					M << "<span class = 'notice'>You feel like you've gotten over your need for [R.name].</span>"
 					addiction_list.Remove(R)
-	if(last_tick == 3)
-		last_tick = 1
 	addiction_tick++
 	last_tick++
 	update_total()
