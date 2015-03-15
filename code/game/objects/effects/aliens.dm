@@ -305,7 +305,8 @@
 
 
 /obj/structure/alien/egg/New()
-	new /obj/item/clothing/mask/facehugger(src)
+	var/obj/item/clothing/mask/facehugger/F = new /obj/item/clothing/mask/facehugger(src)
+	F.color = color
 	..()
 	spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 		Grow()

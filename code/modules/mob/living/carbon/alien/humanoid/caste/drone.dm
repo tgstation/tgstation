@@ -42,6 +42,7 @@
 				O.show_message(text("<span class='alertalien'>[src] begins to twist and contort!</span>"), 1)
 			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
 			mind.transfer_to(new_xeno)
+			new_xeno.color = color
 			qdel(src)
 		else
 			src << "<span class='notice'>We already have an alive queen.</span>"
