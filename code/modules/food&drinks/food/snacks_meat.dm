@@ -72,7 +72,7 @@
 	desc = "Because eating bear wasn't manly enough."
 	icon_state = "bearsteak"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 2, "vitamin" = 5, "manlydwarf" = 5)
+	list_reagents = list("nutriment" = 2, "vitamin" = 5, "manlydorf" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "faggot"
