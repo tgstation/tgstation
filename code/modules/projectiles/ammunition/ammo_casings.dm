@@ -183,10 +183,14 @@
 	else
 		return 0
 
+/obj/item/ammo_casing/caseless/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]"
 
 /obj/item/ammo_casing/caseless/a75
 	desc = "A .75 bullet casing."
 	caliber = "75"
+	icon_state = "s-casing-live"
 	projectile_type = /obj/item/projectile/bullet/gyro
 
 /obj/item/ammo_casing/a40mm
@@ -210,29 +214,8 @@
 	desc = "Its nerf or nothing! Ages 8 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart
 	caliber = "foam_force"
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foamdart"
-	var/modified = 0
-
-/obj/item/ammo_casing/caseless/foam_dart/attackby(var/obj/item/A as obj, mob/user as mob, params)
-	..()
-	if (istype(A, /obj/item/weapon/screwdriver) && !modified)
-		modified = 1
-		BB.damage_type = BRUTE
-		icon_state = "foamdart_empty"
-		desc = "Its nerf or nothing! ...Although, this one doesn't look too safe."
-		user << "<span class='notice'>You pop the safety cap off of [src].</span>"
-	else if ((istype(A, /obj/item/weapon/pen) || istype(A, /obj/item/weapon/reagent_containers/syringe)) && modified && !BB.contents.len)
-		user.drop_item()
-		A.loc = BB
-		BB.damage = 5
-		BB.nodamage = 0
-		user << "<span class='notice'>You insert [A] into [src].</span>"
-	return
-
-/obj/item/ammo_casing/caseless/foam_dart/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]"
 
 /obj/item/ammo_casing/caseless/foam_dart/riot
 	name = "riot foam dart"
