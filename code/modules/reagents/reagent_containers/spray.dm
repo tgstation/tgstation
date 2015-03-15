@@ -62,19 +62,35 @@
 
 
 /obj/item/weapon/reagent_containers/spray/proc/spray(var/atom/A)
+	var/range = max(min(spray_currentrange, get_dist(src, A)), 1)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
-	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_currentrange)
+	reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
+	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
+	var/wait_step = max(round(9/range),2)
 	spawn(0)
-		for(var/i=0, i<spray_currentrange, i++)
+		for(var/i=0, i<range, i++)
 			step_towards(D,A)
-			D.reagents.reaction(get_turf(D))
-			for(var/atom/T in get_turf(D))
-				D.reagents.reaction(T)
-			sleep(3)
-		qdel(D)
+			sleep(wait_step)
 
+			for(var/atom/T in get_turf(D))
+				if(T == D || T.invisibility) //we ignore the puff itself and stuff below the floor
+					continue
+				if(puff_reagent_left <= 0)
+					break
+				D.reagents.reaction(T)
+				if(ismob(T)) //mobs are obstacles that consume part of the puff, shortening its range.
+					puff_reagent_left -= 1
+
+			if(puff_reagent_left > 0)
+				D.reagents.reaction(get_turf(D))
+				puff_reagent_left -= 1
+
+			if(puff_reagent_left <= 0) // we used all the puff so we delete it.
+				qdel(D)
+				return
+		qdel(D)
 
 /obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
 
@@ -146,41 +162,16 @@
 
 
 /obj/item/weapon/reagent_containers/spray/chemsprayer/spray(var/atom/A)
-	var/Sprays[3]
-	for(var/i=1, i<=3, i++) // intialize sprays
-		if(src.reagents.total_volume < 1) break
-		var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
-		D.create_reagents(amount_per_transfer_from_this)
-		src.reagents.trans_to(D, amount_per_transfer_from_this)
-
-		D.color = mix_color_from_reagents(D.reagents.reagent_list)
-
-		Sprays[i] = D
-
 	var/direction = get_dir(src, A)
 	var/turf/T = get_turf(A)
 	var/turf/T1 = get_step(T,turn(direction, 90))
 	var/turf/T2 = get_step(T,turn(direction, -90))
 	var/list/the_targets = list(T,T1,T2)
 
-	for(var/i=1, i<=Sprays.len, i++)
-		spawn()
-			var/obj/effect/decal/chempuff/D = Sprays[i]
-			if(!D) continue
-
-			// Spreads the sprays a little bit
-			var/turf/my_target = pick(the_targets)
-			the_targets -= my_target
-
-			for(var/j=0, j<=spray_currentrange, j++)
-				step_towards(D, my_target)
-				D.reagents.reaction(get_turf(D))
-				for(var/atom/t in get_turf(D))
-					D.reagents.reaction(t)
-				sleep(2)
-			qdel(D)
-
-
+	for(var/i=1, i<=3, i++) // intialize sprays
+		if(reagents.total_volume < 1)
+			return
+		..(the_targets[i])
 
 /obj/item/weapon/reagent_containers/spray/chemsprayer/attack_self(var/mob/user)
 
