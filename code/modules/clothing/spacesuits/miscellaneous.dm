@@ -178,7 +178,6 @@
 	item_state = "ert_medical"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 
-	//EVA Suit
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
 	icon_state = "space"
