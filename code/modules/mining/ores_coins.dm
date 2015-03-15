@@ -38,17 +38,22 @@
 	points = 1
 	refined_type = /obj/item/stack/sheet/glass
 
-/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
+/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
-	for(var/i = 0,i < 1,i++)
-		var/obj/item/stack/sheet/mineral/sandstone/S = new (user.loc)
-		for (var/obj/item/weapon/ore/glass/G in user.loc)
-			if(S.amount < S.max_amount)
-				S.amount++
-				qdel(G)
-			else
-				i--
-				break
+	var/sandAmt = 1
+	for(var/obj/item/weapon/ore/glass/G in user.loc) // The sand on the floor
+		sandAmt += 1
+		qdel(G)
+	while(sandAmt > 0)
+		var/obj/item/stack/sheet/mineral/sandstone/SS = new /obj/item/stack/sheet/mineral/sandstone(user.loc)
+		if(sandAmt >= SS.max_amount)
+			SS.amount = SS.max_amount
+		else
+			SS.amount = sandAmt
+			for(var/obj/item/stack/sheet/mineral/sandstone/SA in user.loc)
+				if(SA != SS && SA.amount < SA.max_amount)
+					SA.attackby(SS, user) //we try to transfer all old unfinished stacks to the new stack we created.
+		sandAmt -= SS.max_amount
 	qdel(src)
 	return
 

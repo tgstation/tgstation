@@ -269,15 +269,15 @@
 	return reagents.get_reagent_amount("fuel")
 
 
-//Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
-/obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/M = null)
+//Removes fuel from the welding tool. If a mob is passed, it will try to flash the mob's eyes. This should probably be renamed to use()
+/obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/living/M = null)
 	if(!welding || !check_fuel())
 		return 0
 	if(get_fuel() >= amount)
 		reagents.remove_reagent("fuel", amount)
 		check_fuel()
 		if(M)
-			eyecheck(M)
+			M.flash_eyes(2)
 		return 1
 	else
 		if(M)
@@ -308,6 +308,7 @@
 //Toggles the welder off and on
 /obj/item/weapon/weldingtool/proc/toggle(mob/user, message = 0)
 	if(!status)
+		user << "<span class='notice'>[src] can't be turned on while unsecured.</span>"
 		return
 	welding = !welding
 	if(welding)
@@ -330,44 +331,6 @@
 		damtype = "brute"
 		hitsound = "swing_hit"
 		icon_state = "welder"
-
-
-
-//Decides whether or not to damage a player's eyes based on what they're wearing as protection
-//Note: This should probably be moved to mob
-/obj/item/weapon/weldingtool/proc/eyecheck(mob/user)
-	if(!iscarbon(user))
-		return 1
-	var/mob/living/carbon/C = user
-	var/safety = C.eyecheck()
-
-	switch(safety)
-		if(1)
-			usr << "<span class='warning'>Your eyes sting a little.</span>"
-			user.eye_stat += rand(1, 2)
-			if(user.eye_stat > 12)
-				user.eye_blurry += rand(3, 6)
-		if(0)
-			usr << "<span class='warning'>Your eyes burn.</span>"
-			user.eye_stat += rand(2, 4)
-			if(user.eye_stat > 10)
-				user.eye_blurry += rand(4, 10)
-		if(-1)
-			usr << "<span class='warning'>Your thermals intensify the welder's glow. Your eyes itch and burn severely!</span>"
-			user.eye_blurry += rand(12, 20)
-			user.eye_stat += rand(12, 16)
-	if(user.eye_stat > 10 && safety < 2)
-		user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
-	if (prob(user.eye_stat - 25 + 1))
-		user << "<span class='warning'>You go blind!</span>"
-		user.disabilities |= BLIND
-	else if(prob(user.eye_stat - 15 + 1))
-		user << "<span class='warning'>You go blind!</span>"
-		user.eye_blind = 5
-		user.eye_blurry = 5
-		user.disabilities |= NEARSIGHT
-		spawn(100)
-			user.disabilities &= ~NEARSIGHT
 
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)

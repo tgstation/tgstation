@@ -30,6 +30,8 @@
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
 
+	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_SLEEP (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
+
 /mob/living/simple_animal/hostile/Life()
 
 	. = ..()
@@ -39,6 +41,8 @@
 	if(ranged)
 		ranged_cooldown--
 	if(client)
+		return 0
+	if(!AICanContinue())
 		return 0
 	if(!stat)
 		switch(stance)
@@ -55,6 +59,9 @@
 			if(HOSTILE_STANCE_ATTACKING)
 				AttackTarget()
 				DestroySurroundings()
+
+		if(AIShouldSleep())
+			AIStatus = AI_SLEEP
 
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
@@ -314,3 +321,32 @@
 		target = A
 		OpenFire(A)
 	..()
+
+
+
+////// AI Status ///////
+/mob/living/simple_animal/hostile/proc/AICanContinue()
+	switch(AIStatus)
+		if(AI_ON)
+			. = 1
+		if(AI_SLEEP)
+			if(AIShouldWake())
+				. = 1
+				AIStatus = AI_ON //Wake up for more than one Life() cycle.
+			else
+				. = 0
+		if(AI_OFF)
+			. = 0
+
+
+//Returns 1 if the AI should wake up
+//Returns 0 if the AI should remain asleep
+/mob/living/simple_animal/hostile/proc/AIShouldWake()
+	. = 0
+	if(FindTarget())
+		. = 1
+
+
+//Convenience
+/mob/living/simple_animal/hostile/proc/AIShouldSleep()
+	. = !(AIShouldWake())

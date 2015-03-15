@@ -215,6 +215,7 @@
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
 
 /datum/mutation/human/bad_dna/on_acquiring(var/mob/living/carbon/human/owner)
+	owner << text_gain_indication
 	var/mob/new_mob
 	if(prob(95))
 		if(prob(50))
