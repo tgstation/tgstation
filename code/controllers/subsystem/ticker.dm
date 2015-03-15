@@ -9,6 +9,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/restart_timeout = 250				//delay when restarting server
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
+	var/force_ending = 0					//Round was ended by admin intervention
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -91,7 +92,7 @@ var/datum/subsystem/ticker/ticker
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			if(!mode.explosion_in_progress && mode.check_finished())
+			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
 				auto_toggle_ooc(1) // Turn it on
 				declare_completion()

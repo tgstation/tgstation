@@ -90,12 +90,4 @@
 
 	handle_hud_icons_health()
 
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull"
-		else
-			pullin.icon_state = "pull0"
-
-
-
 	return 1

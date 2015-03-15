@@ -308,6 +308,7 @@
 //Toggles the welder off and on
 /obj/item/weapon/weldingtool/proc/toggle(mob/user, message = 0)
 	if(!status)
+		user << "<span class='notice'>[src] can't be turned on while unsecured.</span>"
 		return
 	welding = !welding
 	if(welding)

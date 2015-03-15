@@ -113,7 +113,9 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 				spawn(0) //Simultaneously not one at a time
 					var/throw_range = rand(throw_dist, max_range)
 					var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
-					I.throw_at(throw_at, throw_range,1)
+					I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
+					I.throw_at(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
+
 
 		var/took = (world.timeofday-start)/10
 		//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare

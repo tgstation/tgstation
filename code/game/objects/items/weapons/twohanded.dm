@@ -192,7 +192,6 @@ obj/item/weapon/twohanded/
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/hacked = 0
-	reflect_chance = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	item_color = pick("red", "blue", "green", "purple")
@@ -234,7 +233,7 @@ obj/item/weapon/twohanded/
 		user << "<span class='warning'>You cant pick up such dangerous item with your meaty hands without losing fingers, better not to.</span>"
 		return 1
 
-/obj/item/weapon/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflect_chance var for balance issues and switches hitsounds.
+/obj/item/weapon/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
 	if(istype(M))
 		if(M.dna.check_mutation(HULK))
 			M << "<span class='warning'>You lack the grace to wield this.</span>"
@@ -279,9 +278,10 @@ obj/item/weapon/twohanded/
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
-	force_wielded = 18 // Was 13, Buffed - RR
+	force_wielded = 18
 	throwforce = 20
-	throw_speed = 3
+	throw_speed = 4
+	embedded_impact_pain_multiplier = 3
 	flags = NOSHIELD
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")

@@ -63,7 +63,6 @@
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	var/powered = 1 //used to check for drill charge when mining
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
 	playsound(src, pick(digsound),50,1)
@@ -87,20 +86,11 @@
 	desc = "An electric mining drill for the especially scrawny."
 	var/drillcost = 125 //80 mineral walls by default
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
-	powered = 0
 
 /obj/item/weapon/pickaxe/drill/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)
-	update_charge()
 	return
-
-/obj/item/weapon/pickaxe/drill/proc/update_charge()
-	if(bcell && bcell.charge >= drillcost)
-		powered = 1
-	else
-		powered = 0
-	update_icon()
 
 /obj/item/weapon/pickaxe/drill/update_icon()
 	if(!bcell)
@@ -119,14 +109,14 @@
 			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
-			update_charge()
+			update_icon()
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(bcell)
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
 			bcell = null
 			user << "<span class='notice'>You remove the cell from [src].</span>"
-			update_charge()
+			update_icon()
 			return
 		..()
 	return

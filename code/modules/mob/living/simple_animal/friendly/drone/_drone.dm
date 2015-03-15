@@ -119,15 +119,6 @@
 		user << "<span class='notice'>The drone's LED screen shows a BSOD, Blue screen of Death!</span>"
 
 
-/mob/living/simple_animal/drone/Move()
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull"
-		else
-			pullin.icon_state = "pull0"
-	..()
-
-
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
 	return 1
 

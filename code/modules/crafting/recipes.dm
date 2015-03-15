@@ -5,7 +5,7 @@
 	var/tools[] = list() //type paths of items needed but not consumed
 	var/time = 30 //time in deciseconds
 	var/parts[] = list() //type paths of items that will be placed in the result
-	var/chem_catalists[] = list() //like tools but for reagents
+	var/chem_catalysts[] = list() //like tools but for reagents
 
 
 /datum/table_recipe/IED
@@ -87,7 +87,9 @@
 	result = /obj/item/weapon/flamethrower
 	reqs = list(/obj/item/weapon/weldingtool = 1,
 				/obj/item/device/assembly/igniter = 1,
-				/obj/item/stack/rods = 2)
+				/obj/item/stack/rods = 1)
+	parts = list(/obj/item/device/assembly/igniter = 1,
+				/obj/item/weapon/weldingtool = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 20
 
