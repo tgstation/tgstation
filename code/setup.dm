@@ -1,4 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+#define RUNWARNING // disable if they re-enable run() in 507 or newer.
 
 #define DEBUG
 #define PROFILE_MACHINES // Disable when not debugging.
