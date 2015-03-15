@@ -27,6 +27,7 @@
 	var/busy = 0
 	var/buildstackamount = 1
 	var/framestackamount = 2
+	var/mob/tableclimber
 
 /obj/structure/table/New()
 	..()
@@ -219,6 +220,10 @@
 
 /obj/structure/table/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(tableclimber)
+		tableclimber.Weaken(2)
+		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You've been knocked off the table", "You see [tableclimber.name] get knocked off the table</span>")
+
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -309,16 +314,6 @@
 	if(isrobot(user))
 		return
 
-	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread()
-		SS.set_up(5, 0, src.loc)
-		SS.start()
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		user.visible_message("<span class='notice'>The [src.name] was sliced apart by [user]!</span>")
-		table_destroy(1)
-		return
-
 	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;
 		if(user.drop_item())
 			I.Move(loc)
@@ -383,6 +378,7 @@
 	var/climb_time = 20
 	if(user.restrained()) //Table climbing takes twice as long when restrained.
 		climb_time *= 2
+	tableclimber = user
 	if(do_mob(user, user, climb_time))
 		if(src.loc) //Checking if table has been destroyed
 			user.pass_flags += PASSTABLE
@@ -392,7 +388,9 @@
 									"<span class='notice'>You climb onto [src].</span>")
 			add_logs(user, src, "climbed onto")
 			user.Stun(2)
+			tableclimber = null
 			return 1
+	tableclimber = null
 	return 0
 
 

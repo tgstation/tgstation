@@ -250,9 +250,14 @@
 	else
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>"
 
-
 /obj/structure/stool/bed/chair/janicart/user_buckle_mob(mob/living/M, mob/user)
-	M.loc = loc
+	if(user.incapacitated()) //user can't move the mob on the janicart's turf if incapacitated
+		return
+	for(var/atom/movable/A in get_turf(src)) //we check for obstacles on the turf.
+		if(A.density)
+			if(A != src && A != M)
+				return
+	M.loc = loc //we move the mob on the janicart's turf before checking if we can buckle.
 	..()
 	update_mob()
 

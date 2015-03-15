@@ -324,6 +324,8 @@
 			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 50
 	mutations = list()
 	SetOpacity(0)
+	if(buckled_mob)
+		unbuckle_mob()
 	..()
 
 /obj/effect/spacevine/proc/on_chem_effect(datum/reagent/R)

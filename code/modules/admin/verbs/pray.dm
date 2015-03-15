@@ -20,7 +20,7 @@
 	msg = "<span class='adminnotice'>\icon[cross] <b><font color=purple>PRAY: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;traitor=\ref[src]'>TP</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
 
 	for(var/client/C in admins)
-		if(C.prefs.toggles & CHAT_PRAYER)
+		if(C.prefs.chat_toggles & CHAT_PRAYER)
 			C << msg
 	usr << "Your prayers have been received by the gods."
 

@@ -258,8 +258,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/list/receive = get_mobs_in_radio_ranges(radios) //this includes all hearers.
 
 	for(var/mob/R in receive) //Filter receiver list.
-		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			receive -= R
+
+	for(var/mob/M in player_list)
+		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
+			receive |= M
 
 	var/rendered = virt.compose_message(virt, virt.languages, message, freq) //Always call this on the virtualspeaker to advoid issues.
 	for(var/atom/movable/hearer in receive)
@@ -366,7 +370,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 
