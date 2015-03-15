@@ -53,7 +53,7 @@
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	#ifdef RUNWARNING
-	#if DM_VERSION > 507
+	#if DM_VERSION > 506
 		#warn Run is deprecated and disabled for some fucking reason in 507.1275/6, if you have a version that doesn't have run() disabled then comment out #define RUNWARNING in setup.dm
 	src << ftp( file(path) )
 	#else
