@@ -1,0 +1,6 @@
+author: phil235
+
+delete-after: True
+
+changes: 
+  - rscadd: "Bookbags have a new sprite and can hold bibles."

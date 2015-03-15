@@ -2,4 +2,4 @@ author: Ahammer18
 delete-after: true
 
 changes: 
-  - rscadd: "added drone asses"
+  - bugfix: "Adds ass photocopying for drones"

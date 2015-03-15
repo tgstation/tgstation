@@ -1,0 +1,9 @@
+author: RemieRichards
+delete-after: True
+changes:
+  - wip: "Beginning major rework and refactor of messy Ninja code."
+  - rscdel: "Roleplay based, kill deathsquad and kill alien queen objectives removed."
+  - rscdel: "Kamikaze mode removed."
+  - rscdel: "AIs and pAIs can no longer be integrated into a ninja suit."
+  - tweak: "Energy blade power replaced by an energy katana that can be dropped but is more deadly."
+  - rscadd: "Energy katana can emag any object it hits."
