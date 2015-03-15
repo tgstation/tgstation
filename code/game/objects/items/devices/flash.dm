@@ -59,19 +59,17 @@
 
 /obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 5, targeted = 1)
 	add_logs(user, M, "flashed", object="[src.name]")
-	var/safety = M.eyecheck()
-	if(safety <= 0)
-		M.confused += power
-		flick("e_flash", M.flash)
-		if(user && targeted)
+	if(user && targeted)
+		if(M.flash_eyes(1, 1))
+			M.confused += power
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
 			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
-		return 1
-	else
-		if(user && targeted)
+		else
 			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
-		return 0
+	else
+		if(M.flash_eyes())
+			M.confused += power
 
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -82,9 +80,10 @@
 		return 1
 
 	else if(issilicon(M))
-		M.Weaken(rand(5,10))
 		add_logs(user, M, "flashed", object="[src.name]")
-		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>")
+		if(M.flash_eyes())
+			M.Weaken(rand(5,10))
+			user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>")
 		return 1
 
 	user.visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")

@@ -58,12 +58,6 @@ silicate
 	required_reagents = list("aluminium" = 1, "silicon" = 1, "oxygen" = 1)
 	result_amount = 3
 */
-/datum/chemical_reaction/stoxin
-	name = "Sleep Toxin"
-	id = "stoxin"
-	result = "stoxin"
-	required_reagents = list("chloralhydrate" = 1, "sugar" = 4)
-	result_amount = 5
 
 /datum/chemical_reaction/sterilizine
 	name = "Sterilizine"
@@ -549,8 +543,7 @@ datum/chemical_reaction/pestkiller
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-		if(M:eyecheck() <= 0)
-			flick("e_flash", M.flash)
+		M.flash_eyes()
 
 	for(var/i = 1, i <= 4 + rand(1,2), i++)
 		var/chosen = pick(borks)
@@ -580,8 +573,7 @@ datum/chemical_reaction/pestkiller
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-		if(M:eyecheck() <= 0)
-			flick("e_flash", M.flash)
+		M.flash_eyes()
 
 	for(var/i = 1, i <= 4 + rand(1,2), i++)
 		var/chosen = pick(borks)

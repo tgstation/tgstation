@@ -213,7 +213,7 @@
 	s.set_up(2, 1, location)
 	s.start()
 	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
-		if(C.eyecheck())
+		if(C.check_eye_prot())
 			continue
 		flick("e_flash", C.flash)
 		if(get_dist(C, location) < 4)
@@ -229,7 +229,7 @@
 	s.set_up(2, 1, location)
 	s.start()
 	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
-		if(C.eyecheck())
+		if(C.check_eye_prot())
 			continue
 		flick("e_flash", C.flash)
 		if(get_dist(C, location) < 4)
