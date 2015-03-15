@@ -285,7 +285,7 @@
 	return
 
 /obj/machinery/computer/telecomms/traffic/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	..()
+	return ..()
 
 /obj/machinery/computer/telecomms/emag(mob/user)
 	if(!emagged)
@@ -293,7 +293,7 @@
 		emagged = 1
 		user << "\blue You you disable the security protocols"
 	src.updateUsrDialog()
-	return
+	return 1
 /obj/machinery/computer/telecomms/traffic/proc/canAccess(var/mob/user)
 	if(issilicon(user) || in_range(user, src))
 		return 1
