@@ -54,7 +54,7 @@
 				I.pixel_y = -5
 			if("keeper")
 				I.pixel_y = -7
-			if("repairbot")
+			if("repairbot" || "scout")
 				I.pixel_y = -14
 			if("replicator")
 				I.pixel_y = -10
