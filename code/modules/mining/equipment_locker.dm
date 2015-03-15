@@ -171,6 +171,7 @@
 			if(out.amount >= 1)
 				inp.amount -= out.amount
 				unload_mineral(out)
+			inp.zero_amount()
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
 	if(href_list["plasteel"])
