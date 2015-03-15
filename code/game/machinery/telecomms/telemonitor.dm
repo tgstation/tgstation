@@ -10,6 +10,7 @@
 /obj/machinery/computer/telecomms/monitor
 	name = "Telecommunications Monitor"
 	icon_state = "comm_monitor"
+	circuit = "/obj/item/weapon/circuitboard/comm_monitor"
 
 	var/screen = 0				// the screen number:
 	var/list/machinelist = list()	// the machines located by the computer
@@ -138,8 +139,9 @@
 	return
 
 /obj/machinery/computer/telecomms/monitor/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+	if(..())
+		return 1
 	src.updateUsrDialog()
-	return ..()
 
 /obj/machinery/computer/telecomms/monitor/emag(mob/user)
 	if(!emagged)
