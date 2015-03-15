@@ -132,6 +132,8 @@
 							temp_img = icon("icons/ass/assfemale.png")
 						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
 							temp_img = icon("icons/ass/assmale.png")
+					else if(isdrone (ass) || istype(ass,/mob/living/simple_animal/drone)) //Drones are hot
+						temp_img = icon("icons/ass/assdrone.png")
 					else
 						break
 					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)

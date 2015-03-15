@@ -969,6 +969,9 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 			GT.amount = GT.max_amount
 		else
 			GT.amount = grassAmt
+			for(var/obj/item/stack/tile/grass/GR in user.loc)
+				if(GR != GT && GR.amount < GR.max_amount)
+					GR.attackby(GT, user) //we try to transfer all old unfinished stacks to the new stack we created.
 		grassAmt -= GT.max_amount
 	qdel(src)
 	return
@@ -991,6 +994,9 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 			CT.amount = CT.max_amount
 		else
 			CT.amount = carpetAmt
+			for(var/obj/item/stack/tile/carpet/CA in user.loc)
+				if(CA != CT && CA.amount < CA.max_amount)
+					CA.attackby(CT, user) //we try to transfer all old unfinished stacks to the new stack we created.
 		carpetAmt -= CT.max_amount
 	qdel(src)
 	return

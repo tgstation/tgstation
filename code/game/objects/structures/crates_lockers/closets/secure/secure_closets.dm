@@ -65,18 +65,6 @@
 	if(!src.opened && src.broken)
 		user << "<span class='notice'>The locker appears to be broken.</span>"
 		return
-	else if(istype(W, /obj/item/weapon/melee/energy/blade) && !broken)
-		broken = 1
-		locked = 0
-		desc = "It appears to be broken."
-		icon_state = icon_off
-		flick(icon_broken, src)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		visible_message("<span class='warning'>[user] has sliced the locker open with an energy blade!</span>", "You hear metal being sliced and sparks flying.")
 	else
 		..(W, user)
 

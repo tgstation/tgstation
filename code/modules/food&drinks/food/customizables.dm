@@ -15,6 +15,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable
 	bitesize = 4
 	w_class = 3
+	volume = 60
 
 	var/ingMax = 12
 	var/list/ingredients = list()
@@ -67,9 +68,8 @@
 					return
 			name = "[customname] [initial(name)]"
 
-
 	else . = ..()
-	return
+
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/update_name(obj/item/weapon/reagent_containers/food/snacks/S)
 	for(var/obj/item/I in ingredients)

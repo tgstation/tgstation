@@ -13,15 +13,16 @@ datum/reagent/silver_sulfadiazine
 	metabolization_rate = 2
 
 datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
-	if(method == TOUCH)
-		M.adjustFireLoss(-volume)
-		if(show_message)
-			M << "<span class='notice'>You feel your burns healing!</span>"
-		M.emote("scream")
-	if(method == INGEST)
-		M.adjustToxLoss(0.5*volume)
-		if(show_message)
-			M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+	if(iscarbon(M))
+		if(method == TOUCH)
+			M.adjustFireLoss(-volume)
+			if(show_message)
+				M << "<span class='notice'>You feel your burns healing!</span>"
+			M.emote("scream")
+		if(method == INGEST)
+			M.adjustToxLoss(0.5*volume)
+			if(show_message)
+				M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
 
@@ -40,15 +41,16 @@ datum/reagent/styptic_powder
 	metabolization_rate = 2
 
 datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
-	if(method == TOUCH)
-		M.adjustBruteLoss(-volume)
-		if(show_message)
-			M << "<span class='notice'>You feel your wounds knitting back together!</span>"
-		M.emote("scream")
-	if(method == INGEST)
-		M.adjustToxLoss(0.5*volume)
-		if(show_message)
-			M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+	if(iscarbon(M))
+		if(method == TOUCH)
+			M.adjustBruteLoss(-volume)
+			if(show_message)
+				M << "<span class='notice'>You feel your wounds knitting back together!</span>"
+			M.emote("scream")
+		if(method == INGEST)
+			M.adjustToxLoss(0.5*volume)
+			if(show_message)
+				M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
 	return
 
@@ -83,11 +85,12 @@ datum/reagent/synthflesh
 
 datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume,var/show_message = 1)
 	if(!M) M = holder.my_atom
-	if(method == TOUCH)
-		M.adjustBruteLoss(-1.5*volume)
-		M.adjustFireLoss(-1.5*volume)
-		if(show_message)
-			M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
+	if(iscarbon(M))
+		if(method == TOUCH)
+			M.adjustBruteLoss(-1.5*volume)
+			M.adjustFireLoss(-1.5*volume)
+			if(show_message)
+				M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
 	return
 
@@ -698,8 +701,7 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 		for(var/mob/living/carbon/human/H in viewers(get_turf(holder.my_atom), null))
-			if(H:eyecheck() <= 0)
-				flick("e_flash", H.flash)
+			H.flash_eyes()
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen = pick(critters)
 			var/mob/living/simple_animal/hostile/C = new chosen
