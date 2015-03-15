@@ -139,6 +139,8 @@
 	return 0
 
 /mob/proc/Life()
+	if(spell_master)
+		spell_master.update_spells(0, src)
 	return
 
 /mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N, var/dir)
@@ -1162,11 +1164,11 @@ var/list/slot_equipment_priority = list( \
 				if(istype(S, /spell/noclothes) || !statpanel(S.panel))
 					continue //Not showing the noclothes spell
 				switch(S.charge_type)
-					if("recharge")
+					if(Sp_RECHARGE)
 						statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
-					if("charges")
+					if(Sp_CHARGES)
 						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
-					if("holdervar")
+					if(Sp_HOLDVAR)
 						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
 
 

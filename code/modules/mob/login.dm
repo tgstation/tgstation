@@ -63,3 +63,7 @@
 		if(M_FARSIGHT in mutations)
 			client.view = max(client.view, world.view+2)
 	CallHook("Login", list("client" = src.client, "mob" = src))
+
+	if(spell_master)
+		client.screen += spell_master
+		spell_master.toggle_open(spell_master.showing + 1)

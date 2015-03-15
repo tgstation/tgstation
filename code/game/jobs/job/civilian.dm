@@ -297,10 +297,10 @@
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 			H.equip_or_collect(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
 			H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
-		H.spell_list += new /spell/aoe_turf/conjure/forcewall/mime(H)
+		H.add_spell(new /spell/aoe_turf/conjure/forcewall/mime)
+		H.spell_master.icon_state = "grey_spell_ready"
 		H.miming = 1
 		return 1
-
 
 
 /datum/job/janitor

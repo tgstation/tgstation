@@ -12,6 +12,8 @@ code\game\dna\genes\goon_powers.dm
 	var/list/mutations = list() //mutation strings
 	duration = 100 //deciseconds
 
+	override_base = "genetic"
+
 
 /spell/targeted/genetic/cast(list/targets)
 	..()
@@ -36,7 +38,7 @@ code\game\dna\genes\goon_powers.dm
 
 	spell_flags = 0
 	invocation = "STI KALY"
-	invocation_type = "whisper"
+	invocation_type = SpI_WHISPER
 	message = "<span class='danger'>Your eyes cry out in pain!</span>"
 	cooldown_min = 50
 
@@ -46,6 +48,9 @@ code\game\dna\genes\goon_powers.dm
 	amt_eye_blind = 10
 	amt_eye_blurry = 20
 
+	hud_state = "wiz_blind"
+	override_base = ""
+
 /spell/targeted/genetic/mutate
 	name = "Mutate"
 	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
@@ -54,7 +59,7 @@ code\game\dna\genes\goon_powers.dm
 	charge_max = 400
 	spell_flags = Z2NOCAST | NEEDSCLOTHES | INCLUDEUSER
 	invocation = "BIRUZ BENNAR"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
 	range = 0
 	max_targets = 1
@@ -62,3 +67,5 @@ code\game\dna\genes\goon_powers.dm
 	mutations = list(M_LASER, M_HULK)
 	duration = 300
 	cooldown_min = 300 //25 deciseconds reduction per rank
+
+	hud_state = "wiz_hulk"

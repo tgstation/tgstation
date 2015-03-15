@@ -8,9 +8,11 @@
 	range = 3
 	max_targets = 1
 	invocation = "STAUN EI"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	amt_stunned = 5//just exists to make sure the statue "catches" them
 	cooldown_min = 200 //100 deciseconds reduction per rank
+
+	hud_state = "wiz_statue"
 
 /spell/targeted/flesh_to_stone/cast(var/list/targets, mob/user)
 	..()

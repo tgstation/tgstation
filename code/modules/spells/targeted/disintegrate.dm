@@ -6,12 +6,14 @@
 	charge_max = 600
 	spell_flags = NEEDSCLOTHES
 	invocation = "EI NATH"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	sparks_spread = 1
 	sparks_amt = 4
+
+	hud_state = "wiz_disint"
 
 /spell/targeted/disintegrate/cast(var/list/targets)
 	..()

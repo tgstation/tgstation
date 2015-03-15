@@ -359,11 +359,11 @@
 	desc = "The subject becomes able to convert excess cellular energy into thermal energy."
 	panel = "Mutant Powers"
 
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = 600
 
 	spell_flags = INCLUDEUSER
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 	range = 0
 	selection_type = "range"
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)

@@ -48,7 +48,7 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 
 			if(possible_targets.len)
 				if(spell_flags & SELECTABLE) //if we are allowed to choose. see setup.dm for details
-					targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+					targets += input(user, "Choose the target for the spell.", "Targeting") as mob in possible_targets
 				else
 					targets += pick(possible_targets)
 			//Adds a safety check post-input to make sure those targets are actually in range.
@@ -62,7 +62,7 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 
 		if(spell_flags & SELECTABLE)
 			for(var/i = 1; i<=max_targets, i++)
-				var/mob/M = input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				var/mob/M = input(user, "Choose the target for the spell.", "Targeting") as mob in possible_targets
 				if(M in view_or_range(range, user, selection_type))
 					targets += M
 					possible_targets -= M
@@ -82,11 +82,7 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 
 	if(compatible_mobs && compatible_mobs.len)
 		for(var/mob/living/target in targets) //filters out all the non-compatible mobs
-			var/found = 0
-			for(var/mob_type in compatible_mobs)
-				if(istype(target, mob_type))
-					found = 1
-			if(!found)
+			if(!is_type_in_list(target, compatible_mobs))
 				targets -= target
 
 	return targets

@@ -176,80 +176,80 @@
 					switch(href_list["spell_choice"])
 						if("noclothes")
 							feedback_add_details("wizard_spell_learned","NC")
-							H.spell_list += new /spell/noclothes
+							H.add_spell(new/spell/noclothes)
 							temp = "This teaches you how to use your spells without your magical garb, truely you are the wizardest."
 							uses--
 						if("magicmissile")
 							feedback_add_details("wizard_spell_learned","MM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/projectile/magic_missile(H)
+							H.add_spell(new/spell/targeted/projectile/magic_missile)
 							temp = "You have learned magic missile."
 						if("fireball")
 							feedback_add_details("wizard_spell_learned","FB") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/projectile/dumbfire/fireball(H)
+							H.add_spell(new/spell/targeted/projectile/dumbfire/fireball)
 							temp = "You have learned fireball."
 						if("disintegrate")
 							feedback_add_details("wizard_spell_learned","DG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/disintegrate(H)
+							H.add_spell(new/spell/targeted/disintegrate)
 							temp = "You have learned disintegrate."
 						if("disabletech")
 							feedback_add_details("wizard_spell_learned","DT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/aoe_turf/disable_tech(H)
+							H.add_spell(new/spell/aoe_turf/disable_tech)
 							temp = "You have learned disable technology."
 						if("smoke")
 							feedback_add_details("wizard_spell_learned","SM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/aoe_turf/smoke(H)
+							H.add_spell(new/spell/aoe_turf/smoke)
 							temp = "You have learned smoke."
 						if("blind")
 							feedback_add_details("wizard_spell_learned","BD") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/genetic/blind(H)
+							H.add_spell(new/spell/targeted/genetic/blind)
 							temp = "You have learned blind."
 						if("subjugation")
 							feedback_add_details("wizard_spell_learned","SJ") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/subjugation(H)
+							H.add_spell(new/spell/targeted/subjugation)
 							temp = "You have learned subjugate."
 						if("mindswap")
 							feedback_add_details("wizard_spell_learned","MT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/mind_transfer(H)
+							H.add_spell(new/spell/targeted/mind_transfer)
 							temp = "You have learned mindswap."
 						if("forcewall")
 							feedback_add_details("wizard_spell_learned","FW") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/aoe_turf/conjure/forcewall(H)
+							H.add_spell(new/spell/aoe_turf/conjure/forcewall)
 							temp = "You have learned forcewall."
 						if("blink")
 							feedback_add_details("wizard_spell_learned","BL") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/aoe_turf/blink(H)
+							H.add_spell(new/spell/aoe_turf/blink)
 							temp = "You have learned blink."
 						if("teleport")
 							feedback_add_details("wizard_spell_learned","TP") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/area_teleport(H)
+							H.add_spell(new/spell/area_teleport)
 							temp = "You have learned teleport."
 						if("mutate")
 							feedback_add_details("wizard_spell_learned","MU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/genetic/mutate(H)
+							H.add_spell(new/spell/targeted/genetic/mutate)
 							temp = "You have learned mutate."
 						if("etherealjaunt")
 							feedback_add_details("wizard_spell_learned","EJ") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/ethereal_jaunt(H)
+							H.add_spell(new/spell/targeted/ethereal_jaunt)
 							temp = "You have learned ethereal jaunt."
 						if("knock")
 							feedback_add_details("wizard_spell_learned","KN") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/aoe_turf/knock(H)
+							H.add_spell(new/spell/aoe_turf/knock)
 							temp = "You have learned knock."
 						if("horseman")
 							feedback_add_details("wizard_spell_learned","HH") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/horsemask(H)
+							H.add_spell(new/spell/targeted/horsemask)
 							temp = "You have learned curse of the horseman."
 						if("frenchcurse")
 							feedback_add_details("wizard_spell_learned","FC") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/frenchcurse(H)
+							H.add_spell(new/spell/targeted/frenchcurse)
 							temp = "You have learned the french curse."
 						if("fleshtostone")
 							feedback_add_details("wizard_spell_learned","FS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/flesh_to_stone(H)
+							H.add_spell(new/spell/targeted/flesh_to_stone)
 							temp = "You have learned flesh to stone."
 						if("arsenath")
 							feedback_add_details("wizard_spell_learned","AN") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/targeted/buttbots_revenge(H)
+							H.add_spell(new/spell/targeted/buttbots_revenge)
 							temp = "You have learned butt-bot's revenge."
 						if("summonguns")
 							if(!istype(ticker.mode, /datum/game_mode/wizard/raginmages))
@@ -278,7 +278,7 @@
 						if("soulstone")
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
-							H.spell_list += new /spell/aoe_turf/conjure/construct()
+							H.add_spell(new/spell/aoe_turf/conjure/construct)
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
 							max_uses--
 						if("armor")
@@ -317,7 +317,7 @@
 							max_uses--
 						if("chariot")
 							feedback_add_details("wizard_spell_learned","WM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.spell_list += new /spell/aoe_turf/conjure/pontiac()
+							H.add_spell(new/spell/aoe_turf/conjure/pontiac)
 							temp = "This spell summons a glorious, flaming chariot that can move in space and through walls.  It also has an extremely long cooldown."
 		else
 			if(href_list["temp"])
@@ -354,7 +354,7 @@
 	if(used)
 		recoil(user)
 	else
-		user.spell_list += S
+		user.add_spell(S)
 		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
 		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
 		onlearned(user)

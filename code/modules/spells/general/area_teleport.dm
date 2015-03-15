@@ -6,7 +6,7 @@
 	charge_max = 600
 	spell_flags = NEEDSCLOTHES
 	invocation = "SCYAR NILA"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	smoke_spread = 1

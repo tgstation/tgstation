@@ -6,7 +6,7 @@
 	charge_max = 300
 	spell_flags = 0
 	invocation = "FU'K Y'U D'NY"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	range = 1
 	cooldown_min = 50
 
@@ -14,6 +14,8 @@
 	sparks_amt = 4
 
 	compatible_mobs = list(/mob/living/carbon/human)
+
+	hud_state = "wiz_mime"
 
 /spell/targeted/frenchcurse/cast(list/targets, mob/user = usr)
 	..()

@@ -6,11 +6,13 @@
 	charge_max = 300
 	spell_flags = Z2NOCAST | NEEDSCLOTHES | INCLUDEUSER
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 	range = -1
 	max_targets = 1
 	cooldown_min = 100 //50 deciseconds reduction per rank
 	duration = 50 //in deciseconds
+
+	hud_state = "wiz_jaunt"
 
 /spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	for(var/mob/living/target in targets)

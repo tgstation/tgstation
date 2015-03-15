@@ -78,17 +78,22 @@
 
 /datum/dna/gene/basic/grant_spell
 	var/spell/spelltype
+	var/list/granted_spells
 
 	activate(var/mob/M, var/connected, var/flags)
 		..(M,connected,flags)
-		M.spell_list += new spelltype(M)
+		var/spell/granted = new spelltype
+		M.add_spell(granted)
+		granted_spells += granted
 		return 1
 
 	deactivate(var/mob/M, var/connected, var/flags)
 		..(M,connected,flags)
 		for(var/spell/S in M.spell_list)
-			if(istype(S, spelltype))
-				M.spell_list.Remove(S)
+			if(S in granted_spells)
+				M.remove_spell(S)
+				granted_spells -= S
+				qdel(S)
 		return 1
 
 /datum/dna/gene/basic/grant_verb
@@ -121,14 +126,17 @@
 	desc = "Drops the bodytemperature of another person."
 	panel = "Mutant Powers"
 
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = 600
 
-	spell_flags = Z2NOCAST | INCLUDEUSER
-	invocation_type = "none"
+	spell_flags = Z2NOCAST
+	invocation_type = SpI_NONE
 	range = 1
 	max_targets = 1
 	selection_type = "range"
+
+	override_base = "genetic"
+	hud_state = "gen_ice"
 
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
@@ -197,15 +205,18 @@
 	desc = "Eat just about anything!"
 	panel = "Mutant Powers"
 
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = 300
 
 	spell_flags = 0
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 	range = 1
 	max_targets = 1
 	selection_type = "view"
 	spell_flags = SELECTABLE
+
+	override_base = "genetic"
+	hud_state = "gen_fat"
 
 	cast_sound = 'sound/items/eatfood.ogg'
 	compatible_mobs = list(/obj/item,/mob/living/simple_animal/hostile,/mob/living/simple_animal/parrot,/mob/living/simple_animal/cat,/mob/living/simple_animal/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/mouse, /mob/living/carbon/monkey, /mob/living/carbon/human)
@@ -352,11 +363,11 @@
 	panel = "Mutant Powers"
 	range = -1
 
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = 60
 
 	spell_flags = INCLUDEUSER
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 
 	duration = 10 //used for jump distance here
 
@@ -452,7 +463,7 @@
 	charge_max = 1800
 
 	spell_flags = 0
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 	range = 1
 	max_targets = 1
 	selection_type = "range"
