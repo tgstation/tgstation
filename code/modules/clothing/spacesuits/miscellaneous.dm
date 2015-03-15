@@ -125,52 +125,60 @@
 	item_color = "ert_commander"
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
 	strip_delay = 130
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
 	brightness_on = 7
 
+/obj/item/clothing/suit/space/hardsuit/ert
+	name = "emergency response team suit"
+	desc = "Standard issue command suit for the ERT."
+	icon_state = "ert_command"
+	item_state = "ert_command"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	slowdown = 0
+	strip_delay = 130
+
+	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
 	desc = "Standard issue security helmet for the ERT."
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
 	item_color = "ert_security"
 
+/obj/item/clothing/suit/space/hardsuit/ert/sec
+	desc = "Standard issue security suit for the ERT."
+	icon_state = "ert_security"
+	item_state = "ert_security"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
+
+	//ERT Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
 	desc = "Standard issue engineer helmet for the ERT."
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
 	item_color = "ert_engineer"
 
+/obj/item/clothing/suit/space/hardsuit/ert/engi
+	desc = "Standard issue engineer suit for the ERT."
+	icon_state = "ert_engineer"
+	item_state = "ert_engineer"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
+
+	//ERT Medical
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	desc = "Standard issue medical helmet for the ERT."
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
 	item_color = "ert_medical"
 
-/obj/item/clothing/suit/space/ert
-	name = "emergency response team suit"
-	desc = "Standard issue command suit for the ERT."
-	icon_state = "ert_command"
-	item_state = "ert_command"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
-	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
-	slowdown = 0
-	strip_delay = 130
-
-/obj/item/clothing/suit/space/ert/sec
-	desc = "Standard issue security suit for the ERT."
-	icon_state = "ert_security"
-	item_state = "ert_security"
-
-/obj/item/clothing/suit/space/ert/engi
-	desc = "Standard issue engineer suit for the ERT."
-	icon_state = "ert_engineer"
-	item_state = "ert_engineer"
-
-/obj/item/clothing/suit/space/ert/med
+/obj/item/clothing/suit/space/hardsuit/ert/med
 	desc = "Standard issue medical suit for the ERT."
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 
+	//EVA Suit
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
 	icon_state = "space"
