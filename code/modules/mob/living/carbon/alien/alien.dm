@@ -50,7 +50,7 @@
 /mob/living/carbon/alien/proc/getPlasma()
 	return storedPlasma
 
-/mob/living/carbon/alien/eyecheck()
+/mob/living/carbon/alien/check_eye_prot()
 	return 2
 
 /mob/living/carbon/alien/getToxLoss()

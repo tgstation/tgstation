@@ -701,8 +701,7 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 		for(var/mob/living/carbon/human/H in viewers(get_turf(holder.my_atom), null))
-			if(H:eyecheck() <= 0)
-				flick("e_flash", H.flash)
+			H.flash_eyes()
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen = pick(critters)
 			var/mob/living/simple_animal/hostile/C = new chosen
