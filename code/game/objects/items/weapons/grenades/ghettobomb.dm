@@ -85,7 +85,7 @@
 	update_mob()
 	explosion(src.loc,-1,0,2)
 	if(istype(loc, /obj/item/weapon/legcuffs/beartrap))
-		var/obj/item/weapon/legcuffs/beartrap/boomtrap
+		var/obj/item/weapon/legcuffs/beartrap/boomtrap = loc
 		if(istype(boomtrap.loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc.loc
 			if(H.legcuffed)
