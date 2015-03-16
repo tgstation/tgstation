@@ -1,0 +1,10 @@
+author: Thunder12345
+
+delete-after: True
+
+changes: 
+  - rscadd: "Two new shotgun shells. Ion shell, shotgun version of ion rifle, built with 1 x techshell, 1 x ultra microlaser, 1 x ansible crystal. Laser slug, regular laser shot in a shotgun shell, build with 1 x techshell, 1 x high power microlaser, 1 x advanced capacitor."
+
+  - rscadd: "Improvised shotgun shells can now be constructed with 1 x grenade casing, 1 x metal sheet, 1 x cable, 10 units welding fuel. Can be packed with a further 5 units of gunpowder to turn it into a potentially lethal diceroll."
+
+  - bugfix: "FRAG-12 shotgun shells are no longer duds, now explosive."
