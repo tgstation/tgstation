@@ -124,21 +124,16 @@
 			user << "You can't place that item inside the disposal unit."
 			return
 
-		if(istype(I, /obj/item/weapon/storage/bag/trash))
-			var/obj/item/weapon/storage/bag/trash/T = I
-			user << "\blue You empty the bag."
-			for(var/obj/item/O in T.contents)
-				T.remove_from_storage(O,src)
-			T.update_icon()
-			update()
-			return
-
-		if(istype(I, /obj/item/weapon/storage/bag/chem))
-			var/obj/item/weapon/storage/bag/chem/C = I
-			user << "\blue You empty the pill collector."
-			for(var/obj/item/O in C.contents)
-				C.remove_from_storage(O,src)
-			C.update_icon()
+		if(istype(I, /obj/item/weapon/storage/bag/))
+			var/obj/item/weapon/storage/bag/B = I
+			if(B.contents.len == 0)
+				user << "<span class='notice'> You throw away the empty [B].</span>"
+				B.loc = src
+				return
+			user << "<span class='notice'> You empty the [B].</span>"
+			for(var/obj/item/O in B.contents)
+				B.remove_from_storage(O,src)
+			B.update_icon()
 			update()
 			return
 
