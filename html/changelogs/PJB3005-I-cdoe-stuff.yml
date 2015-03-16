@@ -1,0 +1,6 @@
+author: PJB3005
+
+delete-after: True
+
+changes:
+  - rscadd: Added multitool menu autolinking to airlock controllers.
