@@ -86,6 +86,8 @@
 	var/see_invisible = 0
 	var/see_in_dark = 0
 	var/prescription = 0
+	min_harm_label = 12
+	harm_label_examine = list("<span class='info'>A label is covering one lens, but doesn't reach the other.</span>","<span class='warning'>A label covers the lenses!</span>")
 	species_restricted = list("exclude","Muton")
 /*
 SEE_SELF  // can see self, no matter what
@@ -96,7 +98,11 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
           // in a lit area (via pixel_x,y or smooth movement), can see those pixels
 BLIND     // can't see anything
 */
-
+/obj/item/clothing/glasses/harm_label_update()
+	if(harm_labeled >= min_harm_label)
+		vision_flags |= BLIND
+	else
+		vision_flags &= ~BLIND
 
 //Gloves
 /obj/item/clothing/gloves

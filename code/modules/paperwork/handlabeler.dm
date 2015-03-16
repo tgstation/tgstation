@@ -37,13 +37,21 @@
 		user << "<span class='notice'>The label can't stick to the [target.name].  (Try using a pen)</span>"
 		return
 
-	user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
-						 "<span class='notice'>You label [target] as [label].</span>")
 	if(target.labeled)
 		target.remove_label()
 	target.labeled = " ([label])"
 	target.name = "[target.name] ([label])"
 	new/atom/proc/remove_label(target)
+
+	if(user.a_intent == I_HURT && target.min_harm_label)
+		user.visible_message("<span class='warning'>[user] labels [target] as [label]... with malicious intent!</span>", \
+							 "<span class='warning'>You label [target] as [label]... with malicious intent!</span>") //OK this is total shit but I don't want to add TOO many vars to /atom
+		target.harm_labeled = min(length(label) + 2, chars_left)
+		target.harm_label_update()
+	else
+		user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
+							 "<span class='notice'>You label [target] as [label].</span>")
+
 	chars_left = max(chars_left - (length(label) + 2),0)
 
 	if(!chars_left)
@@ -113,7 +121,13 @@
 	var/atom/A = src
 	A.name = replacetext(A.name, A.labeled, "")
 	A.labeled = null
+	if(A.harm_labeled)
+		A.harm_labeled = 0
+		A.harm_label_update()
 	A.verbs -= /atom/proc/remove_label
+
+/atom/proc/harm_label_update()
+	return //To be assigned on a per-item basis.
 
 /obj/item/device/label_roll
 	name = "label roll"
