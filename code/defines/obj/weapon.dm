@@ -429,7 +429,7 @@
 				IED = null
 				return
 			if(2,3)
-				user.drop_item()
+				drop_item(src)
 				I.loc = src
 				var/turf/bombturf = get_turf(src)
 				var/area/A = get_area(bombturf)
@@ -448,8 +448,7 @@
 			IED = null
 			user << "<span class='notice'>You remove the IED from the [src].</span>"
 			return
-		..()
-	return
+	..()
 
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed)
@@ -473,7 +472,7 @@
 					H.legcuffed = src
 					src.loc = H
 					H.update_inv_legcuffed()
-					H << "\red <B>You step on \the [src]!</B>"
+					H << "<span class='danger'>You step on \the [src]!</span>"
 					if(IED && IED.active)
 						H << "<span class='danger'>The [src]'s IED has been activated!</span>"
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
