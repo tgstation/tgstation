@@ -101,7 +101,6 @@
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
 	glass = 1
-	soundeffect = 'sound/machines/windowdoor.ogg'
 	pitch = 100
 
 /obj/machinery/door/airlock/centcom
