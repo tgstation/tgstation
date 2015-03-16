@@ -54,7 +54,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/berryclafoutis
 
-/datum/table_recipe/berryclafoutis
+/datum/table_recipe/bearypie
 	name = "Beary Pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
