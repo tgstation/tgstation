@@ -1460,10 +1460,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			user << "<span class='warning'> The grenade can not hold more containers.</span>"
 			return
 		else if(beakers.len == 1)
-			if(beaker[1].total_volume && !W.reagents.total_volume)
+			if(beaker[1].reagents.total_volume && !W.reagents.total_volume)
 				user << "<span class='notice'> You add \the [W] to the electrolyzer as the empty container.</span>"
 				insert_beaker(W)
-			else if(!beaker[1].total_volume && W.reagents.total_volume)
+			else if(!beaker[1].reagents.total_volume && W.reagents.total_volume)
 				user << "<span class='notice'> You add \the [W] to the electrolyzer as the active container.</span>"
 				insert_beaker(W)
 			else
@@ -1494,11 +1494,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					empty = B
 				else
 					user << "<span class='warning'> An error has occured. Your beaker had between 0 and 1 reagents. Please report this message.</span>"
-			C.charge -= 1000
 			for(var/datum/chemical_reaction/R in chemical_reactions_list)
 				if(R.result == active.reagents.get_master_reagent_id())
 					var/total_reactions = active.total_volume / R.result.amount
 					var/primary = 1
+					C.charge -= (30*total_reactions)
 					active.remove_reagent(R.result,total_reactions*R.result.amount) //This moves over the reactive bulk, and leaves behind the amount too small to react
 					for(var/E in R.required_reagents)
 						if(primary)
@@ -1511,8 +1511,69 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			user << "<span class='notice'> The system didn't react...</span>"
 		else
 			user << "<span class='warning'> This cell does not have enough charge!</span>"
+	else
+		..()
 
 /obj/item/weapon/electrolyzer/insert_beaker(obj/item/weapon/W as obj, mob/user as mob)
 	user.drop_item()
 	W.loc = src
 	beakers += W
+
+
+/obj/structure/centrifuge
+	name = "toilet"
+	desc = "This toilet is actually a diguised centrifuge, containing [cans.len] cans."
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "toilet11"
+	density = 0
+	anchored = 1
+	var/list/cans = new/list()
+	var/obj/item/weapon/reagent_containers/beaker = null // This is anything except cans, inserted into the top.
+
+/obj/structure/centrifuge/attackby(obj/item/weapon/reagent_containers/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/))
+		if(!W.reagents.total_volume)
+			W.loc = src
+			cans += W
+			user << "<span class='notice'> You add a can. It now contains [cans.len].</span>"
+		else
+			user << "<span class='warning'> The can needs to be empty!</span>"
+			return
+	else if(!beaker)
+		if(W.reagents.total_volume)
+			src.beaker =  W
+			user.drop_item(src)
+		else
+			user << "<span class='warning'> There is nothing to separate in that container.</span>"
+			return
+	else
+		..()
+
+/obj/structure/centrifuge/attack_hand(mob/user as mob)
+	if(cans || beaker)
+		for(var/O in cans)
+			O.loc = src.loc
+			cans -= O
+		if(beaker)
+			beaker.loc = src.loc
+			beaker = null
+		user << "<span class='notice'> You remove everything from the centrifuge.</span>"
+	else
+		user << "<span class='warning'> There is nothing to eject!</span>"
+
+/obj/structure/centrifuge/verb/flush()
+	H.visible_message("The [src] groans as it spits out cans.")
+	while(cans.len>0 && beaker.reagents.reagent_list.len>0)
+		var/obj/item/weapon/reagent_containers/C = cans[1]
+		beaker.trans_id_to(C,beaker.reagents.reagent_list[1],50)
+		C.loc = src.loc
+		cans -= C
+		if(!cans.len)
+			user << "<span class='warning'> With no remaining cans, the rest of the concoction swirls down the drain...</span>"
+			beaker.clear_reagents()
+			return
+		if(!beaker.reagents.reagent_list.len)
+			user << "<span class='notice'> The empty beaker plops out.</span>"
+			beaker.loc = src.loc
+			beaker = null
+			return
