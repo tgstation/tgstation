@@ -1,0 +1,5 @@
+﻿author: Delimusca
+
+delete-after: True
+
+  - rscadd: "Drag-drop an item to the floor to mass-move any items of that type."

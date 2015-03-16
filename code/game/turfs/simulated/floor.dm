@@ -183,3 +183,15 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 						dirtoverlay.alpha = 10
 					else if(dirt > 100)
 						dirtoverlay.alpha = min(dirtoverlay.alpha+10, 200)
+
+/turf/simulated/floor/MouseDrop_T(atom/dropping, mob/user)
+	if(istype(dropping, /obj/item) && istype(dropping.loc, /turf))
+		var/obj/item/I = dropping
+		if(isliving(user) && !user.stat)
+			for(I in I.loc)
+				if(!istype(I, dropping.type))
+					continue
+				if(I.anchored)
+					continue
+				I.loc = src
+				sleep(1)
