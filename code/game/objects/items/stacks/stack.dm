@@ -140,7 +140,8 @@
 		var/atom/O = new R.result_type( usr.loc )
 		O.dir = usr.dir
 		if(is_type_in_list(O,unanchored))
-			O.anchored = 0
+			var/obj/A = O
+			A.anchored = 0
 		if (R.max_res_amount>1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
