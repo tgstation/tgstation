@@ -10,6 +10,7 @@
 	bonus_reagents = list("sugar" = 1)
 	list_reagents = list("nutriment" = 3, "sugar" = 2)
 	var/extra_reagent = null
+	filling_color = "#D2691E"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/New()
 	..()
@@ -18,6 +19,7 @@
 		name = "frosted donut"
 		reagents.add_reagent("sprinkles", 2)
 		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
+		filling_color = "#FF69B4"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
@@ -34,6 +36,7 @@
 		name = "frosted chaos donut"
 		reagents.add_reagent("sprinkles", 2)
 		bonus_reagents = list("sprinkles" = 2, "[extra_reagent]" = 3, "sugar" = 1)
+		filling_color = "#FF69B4"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly
 	name = "jelly donut"
@@ -51,6 +54,7 @@
 		name = "frosted jelly Donut"
 		reagents.add_reagent("sprinkles", 2)
 		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
+		filling_color = "#FF69B4"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly
 	name = "jelly donut"
@@ -72,6 +76,7 @@
 	icon_state = "muffin"
 	bonus_reagents = list("vitamin" = 1)
 	list_reagents = list("nutriment" = 6)
+	filling_color = "#F4A460"
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin/berry
 	name = "berry muffin"
@@ -91,6 +96,7 @@
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bonus_reagents = list("vitamin" = 1)
 	list_reagents = list("nutriment" = 5)
+	filling_color = "#FFE4E1"
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
