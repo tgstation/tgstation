@@ -20,6 +20,7 @@
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	var/parts = /obj/item/weapon/table_parts
+	var/icon/clicked
 	var/flipped = 0
 	var/health = 100
 
@@ -54,6 +55,9 @@
 	new parts(loc)
 	density = 0
 	qdel(src)
+
+/obj/structure/table/proc/can_disassemble()
+	return 1
 
 /obj/structure/table/update_icon()
 	spawn(2) //So it properly updates when deleting
@@ -215,6 +219,8 @@
 		else
 			dir = 2
 
+	clicked = new/icon(src.icon, src.icon_state, src.dir) //giving you runtime icon access is too byond Byond
+
 /obj/structure/table/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -324,8 +330,11 @@
 	return
 
 
-/obj/structure/table/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/table/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (!W) return
+
+	var/list/params_list = params2list(params)
+
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if (istype(G.affecting, /mob/living))
@@ -346,8 +355,9 @@
 			del(W)
 			return
 
-	if (istype(W, /obj/item/weapon/wrench))
-		user << "\blue Now disassembling table"
+	if (istype(W, /obj/item/weapon/wrench) && can_disassemble())
+		//if(!params_list.len || text2num(params_list["icon-y"]) < 8) //8 above the bottom of the icon
+		user << "<span class='notice'>Now disassembling table</span>"
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50))
 			destroy()
@@ -366,7 +376,12 @@
 			O.show_message("\blue The [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
 		destroy()
 
-	user.drop_item(src.loc)
+	if(user.drop_item(src.loc))
+		if(W.loc == src.loc && params_list.len)
+			var/clamp_x = clicked.Width() / 2
+			var/clamp_y = clicked.Height() / 2
+			W.pixel_x = Clamp(text2num(params_list["icon-x"]) - clamp_x, -clamp_x, clamp_x)
+			W.pixel_y = Clamp(text2num(params_list["icon-y"]) - clamp_y, -clamp_y, clamp_y)
 	return
 
 /obj/structure/table/proc/straight_table_check(var/direction)
@@ -514,18 +529,20 @@
 	parts = /obj/item/weapon/table_parts/reinforced
 	var/status = 2
 
+/obj/structure/table/reinforced/can_disassemble()
+	return status != 2
+
 /obj/structure/table/reinforced/flip(var/direction)
 	if (status == 2)
 		return 0
 	else
 		return ..()
 
-/obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(!(WT.welding))
-			user.drop_item(src.loc)
-			return
+		if(!(WT.welding)/* || (params_list.len && text2num(params_list["icon-y"]) > 8)*/) //8 above the bottom of the icon
+			return ..()
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
 				user << "\blue Now weakening the reinforced table"
@@ -543,13 +560,7 @@
 					src.status = 2
 			return
 		return
-
-	if (istype(W, /obj/item/weapon/wrench))
-		if(src.status == 2)
-			user.drop_item(src.loc)
-			return
-
-	..()
+	return ..()
 
 /*
  * Racks

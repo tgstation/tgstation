@@ -33,6 +33,8 @@
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
 		W.layer = 20	//TODO: move to equipped?
+		W.pixel_x = initial(W.pixel_x)
+		W.pixel_y = initial(W.pixel_y)
 //		l_hand.screen_loc = ui_lhand
 		W.equipped(src,slot_l_hand)
 		if(client)	client.screen |= W
@@ -50,6 +52,8 @@
 		W.loc = src
 		r_hand = W
 		W.layer = 20
+		W.pixel_x = initial(W.pixel_x)
+		W.pixel_y = initial(W.pixel_y)
 //		r_hand.screen_loc = ui_rhand
 		W.equipped(src,slot_r_hand)
 		if(client)	client.screen |= W

@@ -292,9 +292,9 @@
 	. = ..()
 	verbs.len = 0
 
-/atom/movable/overlay/attackby(a, b)
+/atom/movable/overlay/attackby(a, b, c)
 	if (src.master)
-		return src.master.attackby(a, b)
+		return src.master.attackby(a, b, c)
 	return
 
 /atom/movable/overlay/attack_paw(a, b, c)

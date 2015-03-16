@@ -4,7 +4,7 @@
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/human/UnarmedAttack(var/atom/A, var/proximity)
+/mob/living/carbon/human/UnarmedAttack(var/atom/A, var/proximity, var/params)
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 
 	// Special glove functions:
@@ -16,17 +16,17 @@
 		return
 
 	if(src.can_use_active_hand())
-		A.attack_hand(src)
+		A.attack_hand(src, params)
 	else
-		A.attack_stump(src)
+		A.attack_stump(src, params)
 	return
 
-/atom/proc/attack_hand(mob/user as mob)
+/atom/proc/attack_hand(mob/user as mob, params)
 	return
 
 //called when we try to click but have no hand
 //good for general purposes
-/atom/proc/attack_stump(mob/user as mob)
+/atom/proc/attack_stump(mob/user as mob, params)
 	if(!requires_dexterity(user))
 		attack_hand(user) //if the object doesn't need dexterity, we can use our stump
 	else
