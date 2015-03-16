@@ -63,7 +63,7 @@ var/list/mechtoys = list(
 	else if (iswelder(I) && anchored == 0)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/mineral/plastic/P = new /obj/item/stack/sheet/mineral/plastic (src.loc,10)
+			new /obj/item/stack/sheet/mineral/plastic (src.loc,10)
 			qdel(src)
 			return
 	return ..()
