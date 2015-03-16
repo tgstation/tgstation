@@ -54,12 +54,14 @@
 				I.pixel_y = -5
 			if("keeper")
 				I.pixel_y = -7
-			if("repairbot" || "scout")
+			if("repairbot")
 				I.pixel_y = -14
 			if("replicator")
 				I.pixel_y = -10
 			if("mommiprime")
 				I.pixel_y = -7
+			if("scout")
+				I.pixel_y = -15
 		// Add the adjusted hat to our overlays
 		overlays += I
 
