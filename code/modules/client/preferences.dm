@@ -14,8 +14,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI",											//7
 	"cultist" = /datum/game_mode/cult,				//8
 	"blob" = /datum/game_mode/blob,					//9
-	"monkey" = /datum/game_mode/monkey,				//10
-	"gangster" = /datum/game_mode/gang				//11
+	"ninja",										//10
+	"monkey" = /datum/game_mode/monkey,				//11
+	"gangster" = /datum/game_mode/gang				//12
 )
 
 

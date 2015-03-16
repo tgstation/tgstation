@@ -16,7 +16,6 @@
 	health = 150
 	gender = NEUTER
 
-	update_icon = 0
 	nutrition = 700
 
 	see_in_dark = 8

@@ -152,7 +152,7 @@
 	maxbodytemp = 360
 	force_threshold = 10
 	environment_smash = 3
-	mob_size = 2
+	mob_size = MOB_SIZE_LARGE
 
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
