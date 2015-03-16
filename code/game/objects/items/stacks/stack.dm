@@ -111,7 +111,7 @@
 
 	if (href_list["make"])
 		if (src.amount < 1) returnToPool(src) //Never should happen
-
+		var/list/unanchored = list(/obj/structure/plasticflaps) //In the future, if you want anything to be made unanchored, add it here
 		var/list/recipes_list = recipes
 		if (href_list["sublist"])
 			var/datum/stack_recipe_list/srl = recipes_list[text2num(href_list["sublist"])]
@@ -139,6 +139,9 @@
 			return
 		var/atom/O = new R.result_type( usr.loc )
 		O.dir = usr.dir
+		if(is_type_in_list(O,unanchored))
+			var/obj/A = O
+			A.anchored = 0
 		if (R.max_res_amount>1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
