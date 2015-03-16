@@ -658,17 +658,17 @@
 	var/mspeed = 0
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
-		var/hasjetpack = 0
-		if(istype(H.back, /obj/item/weapon/tank/jetpack))
-			var/obj/item/weapon/tank/jetpack/J = H.back
-			if(J.allow_thrust(0.01, H))
-				hasjetpack = 1
+
 		var/grav = has_gravity(H)
+		var/hasjetpack = 0
+		if(!grav)
+			if(istype(H.back, /obj/item/weapon/tank/jetpack))
+				var/obj/item/weapon/tank/jetpack/J = H.back
+				if(J.allow_thrust(0.01, H))
+					hasjetpack = 1
+			mspeed = 1 - hasjetpack
 
 		if(grav || !hasjetpack)
-			if(!grav)
-				mspeed += 1 //Slower space without jetpack
-
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
 				mspeed += (health_deficiency / 25)
