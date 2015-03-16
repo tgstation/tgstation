@@ -134,9 +134,6 @@
 /obj/structure/stool/bed/chair/office/dark
 	icon_state = "officechair_dark"
 
-/obj/structure/stool/bed/chair/office/red
-	icon_state = "officechair_red"
-
 /obj/structure/stool/bed/chair/office/blue
 	icon_state = "officechair_blue"
 

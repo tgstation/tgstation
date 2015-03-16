@@ -3,7 +3,7 @@ author: pudl
 delete-after: True
 
 changes: 
-  - rscadd: "Added red and blue office chairs to decorate security and medbay with, respectively."
+  - rscadd: "Added blue office chairs to decorate medbay with."
   - rscadd: "Added multi-tile couches, ported from Urist McStation."
   - rscadd: "Added a chair painter item, used to paint chairs any color on the RGB spectrum."
   - rscadd: "Several potted plants scattered around the station for cosmetics."
