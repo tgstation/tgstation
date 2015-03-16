@@ -128,7 +128,7 @@
 			var/obj/item/weapon/storage/bag/B = I
 			if(B.contents.len == 0)
 				user << "<span class='notice'> You throw away the empty [B].</span>"
-				B.loc = src
+				user.drop_item(src)
 				return
 			user << "<span class='notice'> You empty the [B].</span>"
 			for(var/obj/item/O in B.contents)
