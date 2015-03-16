@@ -8,7 +8,6 @@
 	unacidable = 1
 	canAttachCam =  0
 
-
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
 	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
