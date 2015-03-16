@@ -658,7 +658,6 @@
 	var/mspeed = 0
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
-
 		var/hasjetpack = 0
 		if(istype(H.back, /obj/item/weapon/tank/jetpack))
 			var/obj/item/weapon/tank/jetpack/J = H.back
@@ -667,30 +666,30 @@
 		var/grav = has_gravity(H)
 
 		if(grav || !hasjetpack)
-			if(!grav && !hasjetpack)
+			if(!grav)
 				mspeed += 1 //Slower space without jetpack
-			else
-				var/health_deficiency = (100 - H.health + H.staminaloss)
-				if(health_deficiency >= 40)
-					mspeed += (health_deficiency / 25)
 
-				var/hungry = (500 - H.nutrition) / 5	//So overeat would be 100 and default level would be 80
-				if(hungry >= 70)
-					mspeed += hungry / 50
+			var/health_deficiency = (100 - H.health + H.staminaloss)
+			if(health_deficiency >= 40)
+				mspeed += (health_deficiency / 25)
 
-				if(H.wear_suit)
-					mspeed += H.wear_suit.slowdown
-				if(H.shoes)
-					mspeed += H.shoes.slowdown
-				if(H.back)
-					mspeed += H.back.slowdown
+			var/hungry = (500 - H.nutrition) / 5	//So overeat would be 100 and default level would be 80
+			if(hungry >= 70)
+				mspeed += hungry / 50
 
-				if((H.disabilities & FAT))
-					mspeed += 1.5
-				if(H.bodytemperature < 283.222)
-					mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
+			if(H.wear_suit)
+				mspeed += H.wear_suit.slowdown
+			if(H.shoes)
+				mspeed += H.shoes.slowdown
+			if(H.back)
+				mspeed += H.back.slowdown
 
-				mspeed += speedmod
+			if((H.disabilities & FAT))
+				mspeed += 1.5
+			if(H.bodytemperature < 283.222)
+				mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
+
+			mspeed += speedmod
 
 	if(H.status_flags & GOTTAGOFAST)
 		mspeed -= 1
