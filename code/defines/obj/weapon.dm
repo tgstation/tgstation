@@ -429,7 +429,7 @@
 				IED = null
 				return
 			if(2,3)
-				drop_item(src)
+				user.drop_item(src)
 				I.loc = src
 				var/turf/bombturf = get_turf(src)
 				var/area/A = get_area(bombturf)
