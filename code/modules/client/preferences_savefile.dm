@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	10
+#define SAVEFILE_VERSION_MAX	12
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
