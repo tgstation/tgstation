@@ -190,7 +190,7 @@
 			var/datum/picture/selection
 			var/mob/living/silicon/ai/tempAI = usr
 			if(tempAI.aicamera.aipictures.len == 0)
-				usr << "<span class='userdanger'>No images saved</span>"
+				usr << "<span class='boldannounce'>No images saved</span>"
 				return
 			for(var/datum/picture/t in tempAI.aicamera.aipictures)
 				nametemp += t.fields["name"]

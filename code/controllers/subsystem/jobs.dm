@@ -23,7 +23,7 @@ var/datum/subsystem/job/SSjob
 	occupations = list()
 	var/list/all_jobs = typesof(/datum/job)
 	if(!all_jobs.len)
-		world << "<span class='userdanger'>Error setting up jobs, no job datums found</span>"
+		world << "<span class='boldannounce'>Error setting up jobs, no job datums found</span>"
 		return 0
 
 	for(var/J in all_jobs)

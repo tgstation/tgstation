@@ -203,7 +203,7 @@
 				usr << "<span class='warning'>[text_hack]</span>"
 				bot_reset()
 			else if(!hacked)
-				usr << "<span class='userdanger'>[text_dehack_fail]</span>"
+				usr << "<span class='boldannounce'>[text_dehack_fail]</span>"
 			else
 				emagged = 0
 				hacked = 0

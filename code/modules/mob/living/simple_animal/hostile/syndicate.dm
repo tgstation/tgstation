@@ -79,7 +79,7 @@
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			src.health -= Proj.damage
 	else
-		visible_message("<span class='userdanger'>[src] blocks [Proj] with its shield!</span>")
+		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
 	return 0
 
 
