@@ -17,6 +17,7 @@
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
 	var/custom_food_type = null  //for food customizing. path of the custom food to create
 	var/junkiness = 0  //for junk food. used to lower human satiety.
+	var/list/bonus_reagents = list() //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
@@ -154,6 +155,12 @@
 		if(slice(sharpness, W, user))
 			return 1
 
+//Called when you finish tablecrafting a snack.
+/obj/item/weapon/reagent_containers/food/snacks/CheckParts()
+	if(bonus_reagents.len)
+		for(var/r_id in bonus_reagents)
+			var/amount = bonus_reagents[r_id]
+			reagents.add_reagent(r_id, amount)
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/slice(var/accuracy, obj/item/weapon/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
@@ -186,11 +193,12 @@
 	var/reagents_per_slice = reagents.total_volume/slices_num
 	for(var/i=1 to (slices_num-slices_lost))
 		var/obj/item/weapon/reagent_containers/food/snacks/slice = new slice_path (loc)
-		initialize_slice(slice)
-		reagents.trans_to(slice,reagents_per_slice)
+		initialize_slice(slice, reagents_per_slice)
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice)
+/obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
+	slice.create_reagents(slice.volume)
+	reagents.trans_to(slice,reagents_per_slice)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
@@ -204,9 +212,14 @@
 	overlays += I
 
 // initialize_cooked_food() is called when microwaving the food
-/obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
+/obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency = 1)
+	S.create_reagents(S.volume)
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)
+	if(S.bonus_reagents.len)
+		for(var/r_id in S.bonus_reagents)
+			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
+			S.reagents.add_reagent(r_id, amount)
 
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
