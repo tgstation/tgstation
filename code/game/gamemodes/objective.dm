@@ -5,6 +5,7 @@ datum/objective
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
 	var/dangerrating = 0				//How hard the objective is, essentially. Used for dishing out objectives and checking overall victory.
+	var/martyr_compatible = 1			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 datum/objective/New(var/text)
 	if(text)
@@ -124,6 +125,7 @@ datum/objective/maroon/update_explanation_text()
 datum/objective/debrain//I want braaaainssss
 	var/target_role_type=0
 	dangerrating = 20
+	martyr_compatible = 0
 
 datum/objective/debrain/find_target_by_role(role, role_type=0)
 	target_role_type = role_type
@@ -183,6 +185,7 @@ datum/objective/protect/update_explanation_text()
 datum/objective/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
 	dangerrating = 25
+	martyr_compatible = 0 //Technically you won't get both anyway.
 
 datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat)
@@ -233,6 +236,7 @@ datum/objective/block/check_completion()
 datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 	dangerrating = 5
+	martyr_compatible = 0
 
 datum/objective/escape/check_completion()
 	if(issilicon(owner.current))
@@ -258,6 +262,7 @@ datum/objective/escape/check_completion()
 datum/objective/escape/escape_with_identity
 	dangerrating = 10
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
+	martyr_compatible = 0
 
 datum/objective/escape/escape_with_identity/find_target()
 	target = ..()
@@ -286,6 +291,7 @@ datum/objective/escape/escape_with_identity/check_completion()
 datum/objective/survive
 	explanation_text = "Stay alive until the end."
 	dangerrating = 3
+	martyr_compatible = 0
 
 datum/objective/survive/check_completion()
 	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
@@ -295,10 +301,22 @@ datum/objective/survive/check_completion()
 	return 1
 
 
+datum/objective/martyr
+	explanation_text = "Die a glorious death."
+	dangerrating = 1
+	martyr_compatible = 0
+
+datum/objective/martyr/check_completion()
+	if(!owner.current) //Gibbed, etc.
+		return 1
+	if(owner.current && owner.current.stat == DEAD) //You're dead! Yay!
+		return 1
+	return 0
+
 
 datum/objective/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
-
+	martyr_compatible = 1
 
 
 var/global/list/possible_items = list()
@@ -306,6 +324,7 @@ datum/objective/steal
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
 	dangerrating = 5 //Overridden by the individual item's difficulty, but defaults to 5 for custom objectives.
+	martyr_compatible = 0
 
 datum/objective/steal/get_target()
 	return steal_target
