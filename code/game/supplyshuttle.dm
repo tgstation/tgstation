@@ -46,12 +46,7 @@ var/list/mechtoys = list(
 	layer = 4
 	explosion_resistance = 5
 
-/obj/structure/plasticflaps/New()
-	..()
-	anchored=0
-
 /obj/structure/plasticflaps/attackby(obj/item/I as obj, mob/user as mob)
-	..()
 	if (istype(I, /obj/item/weapon/crowbar))
 		if(anchored == 1)
 			user.visible_message("[user] pops loose the flaps.", "You pop loose the flaps.")
@@ -65,11 +60,10 @@ var/list/mechtoys = list(
 			var/turf/T = get_turf(loc)
 			if(T)
 				T.blocks_air = 1
-	else if (iswelder(I) && anchored = 0)
+	else if (iswelder(I) && anchored == 0)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/mineral/plastic/P = new /obj/item/stack/sheet/mineral/plastic (user.loc)
-			P.amount = 10
+			var/obj/item/stack/sheet/mineral/plastic/P = new /obj/item/stack/sheet/mineral/plastic (src.loc,10)
 			qdel(src)
 			return
 	return ..()
