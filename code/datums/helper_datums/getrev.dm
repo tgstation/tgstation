@@ -89,7 +89,9 @@ client/verb/showrevinfo()
 	set category = "OOC"
 	set name = "Show Server Revision"
 	var/output =  "Sorry, the revision info is unavailable."
-	output = file2text("/home/bay12/live/data/gitcommit")
+	output = file2text("/.git/HEAD")
+	if(!output || output == "")
+		output = "Unable to load revision info from HEAD"
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\helper_datums\getrev.dm:93: output += "Current Infomational Settings: <br>"
