@@ -627,6 +627,8 @@
 
 
 /obj/item/weapon/relic/proc/reveal()
+	if(revealed) //Re-rolling your relics seems a bit overpowered, yes?
+		return
 	revealed = TRUE
 	name = realName
 	cooldownMax = rand(60,300)
@@ -657,11 +659,13 @@
 	var/mob/living/simple_animal/corgi/C = new/mob/living/simple_animal/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)),10,rand(3,8))
 	throwSmoke(get_turf(C))
+	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/weapon/relic/proc/clean(var/mob/user)
 	playsound(src.loc, "sparks", rand(25,50), 1)
 	var/obj/item/weapon/grenade/chem_grenade/cleaner/CL = new/obj/item/weapon/grenade/chem_grenade/cleaner(get_turf(user))
 	CL.prime()
+	warn_admins(user, "Smoke", 0)
 
 /obj/item/weapon/relic/proc/flash(var/mob/user)
 	playsound(src.loc, "sparks", rand(25,50), 1)
@@ -670,7 +674,9 @@
 	warn_admins(user, "Flash")
 
 /obj/item/weapon/relic/proc/petSpray(var/mob/user)
-	visible_message("<span class='notice'>[src] begans to shake, and in the distance the sound of rampaging animals arises!</span>")
+	var/message = "<span class='danger'>[src] begans to shake, and in the distance the sound of rampaging animals arises!</span>"
+	visible_message(message)
+	user << message
 	var/animals = rand(1,25)
 	var/counter
 	var/list/valid_animals = list(/mob/living/simple_animal/parrot,/mob/living/simple_animal/butterfly,/mob/living/simple_animal/cat,/mob/living/simple_animal/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/fox,/mob/living/simple_animal/lizard,/mob/living/simple_animal/mouse,/mob/living/simple_animal/pug,/mob/living/simple_animal/hostile/bear,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/carp)
@@ -678,9 +684,12 @@
 		var/mobType = pick(valid_animals)
 		new mobType(get_turf(src))
 	warn_admins(user, "Mass Mob Spawn")
+	if(prob(60))
+		user << "<span class='warning'>[src] falls apart!</span>"
+		qdel(src)
 
 /obj/item/weapon/relic/proc/rapidDupe(var/mob/user)
-	visible_message("<span class='notice'>[src] emits a loud pop!</span>")
+	audible_message("<span class='notice'>[src] emits a loud pop!</span>")
 	var/list/dupes = list()
 	var/counter
 	var/max = rand(5,10)
@@ -698,26 +707,33 @@
 		for(counter = 1; counter <= dupes.len; counter++)
 			var/obj/item/weapon/relic/R = dupes[counter]
 			qdel(R)
+	warn_admins(user, "Rapid duplicator", 0)
 
 /obj/item/weapon/relic/proc/explode(var/mob/user)
-	visible_message("<span class='notice'>[src] begins to heat up!</span>")
+	user << "<span class='danger'>[src] begins to heat up!</span>"
 	spawn(rand(35,100))
 		if(src.loc == user)
 			visible_message("<span class='notice'>The [src]'s top opens, releasing a powerful blast!</span>")
 			explosion(user.loc, -1, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
 			warn_admins(user, "Explosion")
+			qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
 /obj/item/weapon/relic/proc/teleport(var/mob/user)
-	visible_message("<span class='notice'>The [src] begins to vibrate!</span>")
+	user << "<span class='notice'>The [src] begins to vibrate!</span>"
 	spawn(rand(10,30))
-		if(src.loc == user)
+		var/turf/userturf = get_turf(user)
+		if(src.loc == user && userturf.z != ZLEVEL_CENTCOM) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
 			visible_message("<span class='notice'>The [src] twists and bends, relocating itself!</span>")
+			throwSmoke(userturf)
+			do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg')
 			throwSmoke(get_turf(user))
-			do_teleport(user, get_turf(user), 8, asoundin = 'sound/effects/phasein.ogg')
-			throwSmoke(get_turf(user))
+			warn_admins(user, "Teleport", 0)
 
 //Admin Warning proc for relics
-/obj/item/weapon/relic/proc/warn_admins(var/mob/user, var/RelicType)
+/obj/item/weapon/relic/proc/warn_admins(var/mob/user, var/RelicType, var/priority = 1)
 	var/turf/T = get_turf(src)
-	message_admins("[RelicType] relic activated by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
-	log_game("[RelicType] relic used by [user.ckey]([user]) in ([T.x],[T.y],[T.z])")
+	var/log_msg = "[RelicType] relic used by [user.ckey]([user]) in ([T.x],[T.y],[T.z])"
+	if(priority) //For truly dangerous relics that may need an admin's attention. BWOINK!
+		message_admins("[RelicType] relic activated by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+	log_game(log_msg)
+	investigate_log(log_msg, "experimentor")
