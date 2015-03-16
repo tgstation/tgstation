@@ -40,6 +40,7 @@
 	var/g_amt = 0	// glass
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
+	var/upgraded = 0 //If the item has had any type of upgrade kit used on it.
 
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
@@ -395,6 +396,8 @@
 
 /obj/item/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	. = 1
+	if(unacidable)
+		return
 	for(var/V in armor)
 		if(armor[V] > 0)
 			.-- //it survives the acid...
