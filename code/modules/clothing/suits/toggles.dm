@@ -80,6 +80,8 @@
 
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
+	jetpack = new /obj/item/weapon/tank/jetpack/suit()
+	jetpack.loc = src
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
@@ -137,3 +139,13 @@
 		H << "You disengage the helmet on the hardsuit."
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 		RemoveHelmet()
+
+/obj/item/clothing/suit/space/hardsuit/verb/Jetpack()
+	set name = "Toggle Jetpack"
+	set category = "Object"
+	jetpack.toggle()
+
+/obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets()
+	set name = "Toggle Jetpack Stabilization"
+	set category = "Object"
+	jetpack.toggle_rockets()

@@ -45,6 +45,7 @@
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
 	action_button_name = "Toggle Helmet"
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
+	var/obj/item/weapon/tank/jetpack/suit/jetpack = null
 
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/atmos

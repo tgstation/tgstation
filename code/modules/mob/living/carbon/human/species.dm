@@ -654,6 +654,11 @@
 		var/obj/item/weapon/tank/jetpack/J = H.back
 		if(J.allow_thrust(0.01, H))
 			hasjetpack = 1
+	else if(istype(H.wear_suit,/obj/item/clothing/suit/space/hardsuit))
+		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
+		if(C.jetpack.allow_thrust(0.01, H))
+			hasjetpack = 1
+
 	var/grav = has_gravity(H)
 
 	if(!grav && !hasjetpack)
