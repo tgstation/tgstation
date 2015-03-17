@@ -884,6 +884,14 @@ var/list/slot_equipment_priority = list( \
 //	M.Login()	//wat
 	return
 
+/client/verb/issue_report()
+	set name = "Github Report"
+	set category = "OOC"
+	var/dat = {"	<title>/vg/station Github Ingame Reporting</title>
+					Revision: [return_revision()]
+					<iframe src='http://ss13.pomf.se/issues/?ckey=[ckey(key)]&address=[world.internet_address]:[world.port]' style='border:none' width='480' height='480' scroll=no></iframe>"}
+	src << browse(dat, "window=github;size=480x480")
+
 /client/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"

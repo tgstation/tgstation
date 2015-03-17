@@ -897,6 +897,8 @@ window "chemdispenser"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 	elem "amount"
 		type = LABEL
 		pos = 0,0
@@ -923,6 +925,8 @@ window "chemdispenser"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 	elem "child1"
 		type = CHILD
 		pos = 0,32
@@ -1423,9 +1427,37 @@ window "rpane"
 		splitter = 50
 		show-splitter = true
 		lock = none
+	elem "github"
+		type = BUTTON
+		pos = 455,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "BugReport"
+		image = ""
+		command = "Github-Report"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
 	elem "special_button"
 		type = BUTTON
-		pos = 456,0
+		pos = 518,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1647,7 +1679,7 @@ window "rpane"
 		button-type = pushbox
 	elem "browseb"
 		type = BUTTON
-		pos = 570,0
+		pos = 580,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
