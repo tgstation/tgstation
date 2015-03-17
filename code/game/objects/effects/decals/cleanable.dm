@@ -21,3 +21,10 @@
 				reagents.trans_to(W, reagents.total_volume)
 				if(!reagents.total_volume) //scooped up all of it
 					qdel(src)
+	if(is_hot(W)) //todo: make heating a reagent holder proc
+		if(istype(W, /obj/item/clothing/mask/cigarette)) return
+		else
+			var/hotness = is_hot(W)
+			var/added_heat = (hotness / 100)
+			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
+			user << "<span class='notice'>You heat [src] with [W]!</span>"
