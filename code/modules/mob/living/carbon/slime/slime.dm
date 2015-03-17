@@ -649,6 +649,7 @@
 		C = pick(candidates)
 		M.key = C.key
 		M.languages |= HUMAN
+		M.faction = list()
 		M << "<span class='warning'>All at once it makes sense, you know what you are and who you are! Self awareness is yours!</span>"
 		M << "You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost."
 		user << "<span class='warning'>[M] is suddenly attentive and aware. It worked!</span>"
