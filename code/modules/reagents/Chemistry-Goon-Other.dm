@@ -40,6 +40,13 @@ datum/reagent/goonchem/carpet
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
+/datum/reagent/goonchem/carpet/reaction_turf(var/turf/simulated/T, var/volume)
+	if(istype(T, /turf/simulated/floor/plating) || istype(T, /turf/simulated/floor/plasteel))
+		var/turf/simulated/floor/F = T
+		F.ChangeTurf(/turf/simulated/floor/fancy/carpet)
+	..()
+	return
+
 datum/reagent/goonchem/bromine
 	name = "Bromine"
 	id = "bromine"

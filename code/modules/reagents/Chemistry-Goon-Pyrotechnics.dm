@@ -462,29 +462,3 @@ datum/reagent/goonchem/pyrosium/on_mob_life(var/mob/living/M as mob)
 		M.bodytemperature += 30 * TEMPERATURE_DAMAGE_COEFFICIENT
 	..()
 	return
-
-/datum/reagent/goonchem/argine
-	name = "Argine"
-	id = "argine"
-	description = "Explodes when lowered to freezing temperatures."
-	reagent_state = LIQUID
-	color = "#FFFFFF"  //rgb: 96, 165, 132
-
-/datum/chemical_reaction/argine_explosion
-	name = "Argine Kaboom"
-	id = "argine_explosion"
-	result = null
-	required_reagents = list("argine" = 1)
-	result_amount = 1
-	required_temp = 174
-	mix_message = "<span class = 'userdanger'>Sparks start flying around the argine!</span>"
-
-/datum/chemical_reaction/argine_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
-	sleep(rand(50,100))
-	var/turf/simulated/T = get_turf(holder.my_atom)
-	var/ex_severe = round(created_volume / 100)
-	var/ex_heavy = round(created_volume / 42)
-	var/ex_light = round(created_volume / 21)
-	var/ex_flash = round(created_volume / 8)
-	explosion(T,ex_severe,ex_heavy,ex_light,ex_flash, 1)
-	return
