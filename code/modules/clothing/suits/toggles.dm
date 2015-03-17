@@ -80,8 +80,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
-	jetpack = new /obj/item/weapon/tank/jetpack/suit()
-	jetpack.loc = src
+	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()

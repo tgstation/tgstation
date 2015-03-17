@@ -110,7 +110,7 @@
 
 
 /obj/item/weapon/tank/jetpack/suit
-	name = "suit embedded jetpack"
+	name = "suit inbuilt jetpack"
 	desc = "A device that will use your internals tank as a gas source for propulsion."
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
@@ -149,12 +149,12 @@
 		H << "You toggle the embedded jetpack [on? "on":"off"]."
 
 /obj/item/weapon/tank/jetpack/suit/proc/turn_off()
+	on = 0
 	SSobj.processing -= src
 	ion_trail.stop()
 	air_contents = null
 	tank = null
 	icon_state = initial(icon_state)
-	on = 0
 
 /obj/item/weapon/tank/jetpack/suit/process()
 	if(!istype(loc.loc,/mob/living/carbon/human))
