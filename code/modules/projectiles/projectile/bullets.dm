@@ -27,6 +27,9 @@
 /obj/item/projectile/bullet/pellet/weak
 	damage = 3
 
+/obj/item/projectile/bullet/pellet/random/New()
+	damage = rand(10)
+
 /obj/item/projectile/bullet/midbullet
 	damage = 20
 	stamina = 65 //two round bursts from the c20r knocks people down

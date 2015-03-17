@@ -1,0 +1,6 @@
+   author: MMMiracles
+   
+   delete-after: True
+   
+   changes: 
+     - rscadd: "Adds the ability to spike bears on a meatspike for their pelt. Yields 5 meat instead of the usual 3 from a knife."

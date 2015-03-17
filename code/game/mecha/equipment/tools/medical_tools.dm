@@ -59,7 +59,7 @@
 		if(chassis.loc!=C || target.loc!=T)
 			return
 		if(occupant)
-			occupant_message("<span class='userdanger'>The sleeper is already occupied!</span>")
+			occupant_message("<span class='boldannounce'>The sleeper is already occupied!</span>")
 			return
 		target.forceMove(src)
 		occupant = target

@@ -12,6 +12,13 @@
 	return 1
 
 
+/obj/item/projectile/ion/weak
+
+/obj/item/projectile/ion/weak/on_hit(atom/target, blocked = 0)
+	empulse(target, 0, 0)
+	return 1
+
+
 /obj/item/projectile/bullet/gyro
 	name ="explosive bolt"
 	icon_state= "bolter"
@@ -187,6 +194,10 @@ obj/item/projectile/kinetic/New()
 	name ="explosive slug"
 	damage = 25
 	weaken = 5
+
+/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
+	explosion(target, -1, 0, 1)
+	return 1
 
 /obj/item/projectile/bullet/magspear
 	name = "magnetic spear"

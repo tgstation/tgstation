@@ -135,11 +135,10 @@
 	result_amount = 1
 	mix_message = "The ingredients form a dough."
 
-/datum/chemical_reaction/cakebatter/on_reaction(var/datum/reagents/holder)
-	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/cakebatter
-	S.loc = get_turf(holder.my_atom)
-	if(holder && holder.my_atom)
-		qdel(holder.my_atom)
+/datum/chemical_reaction/dough/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/dough(location)
 
 /datum/chemical_reaction/cakebatter
 	name = "Cake Batter"
@@ -149,11 +148,10 @@
 	result_amount = 1
 	mix_message = "The ingredients form a cake batter."
 
-/datum/chemical_reaction/cakebatter/on_reaction(var/datum/reagents/holder)
-	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/cakebatter
-	S.loc = get_turf(holder.my_atom)
-	if(holder && holder.my_atom)
-		qdel(holder.my_atom)
+/datum/chemical_reaction/cakebatter/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/cakebatter(location)
 
 /datum/chemical_reaction/cakebatter/vegan
 	id = "vegancakebatter"

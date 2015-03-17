@@ -790,9 +790,6 @@ var/list/slot_equipment_priority = list( \
 	density = !lying
 	update_transform()
 	lying_prev = lying
-	if(update_icon) //forces a full overlay update
-		update_icon = 0
-		regenerate_icons()
 	return canmove
 
 
