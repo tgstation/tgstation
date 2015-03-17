@@ -152,7 +152,7 @@
 	name = "Overload Improvised Shell"
 	result = /obj/item/ammo_casing/shotgun/improvised/overload
 	reqs = list(/obj/item/ammo_casing/shotgun/improvised = 1,
-				/datum/reagent/blackpowder = 5)
+				/datum/reagent/goonchem/blackpowder = 5)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 
