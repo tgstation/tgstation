@@ -204,14 +204,14 @@
 	assembling = 1
 	var/list/step_next = get_forward_step(index)
 	var/list/step_back = get_backward_step(index)
-	if(step_next && (islist(step_next[Co_KEY]) && is_type_in_list(used_atom, step_next[Co_KEY])) || istype(used_atom, step_next[Co_KEY]))
+	if(step_next && ((islist(step_next[Co_KEY]) && is_type_in_list(used_atom, step_next[Co_KEY])) || istype(used_atom, step_next[Co_KEY])))
 	//if our keys are in a list, we want to check them all
 	//otherwise, sanity permits setting it as a single type and checking that
 		if(!try_consume(user, used_atom, step_next, index, FORWARD))
 			assembling = 0
 			return 0
 		return FORWARD //to the first step -> forward
-	if(step_back && (islist(step_back[Co_KEY]) && is_type_in_list(used_atom, step_back[Co_KEY])) || istype(used_atom, step_back[Co_KEY]))
+	if(step_back && ((islist(step_back[Co_KEY]) && is_type_in_list(used_atom, step_back[Co_KEY])) || istype(used_atom, step_back[Co_KEY])))
 		if(!try_consume(user, used_atom, step_back, index, BACKWARD))
 			assembling = 0
 			return 0
