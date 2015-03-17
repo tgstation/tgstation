@@ -144,7 +144,7 @@
 	var/loopsanity = 100
 
 	if(ismob(Obj))
-		if(Obj.areaMaster.has_gravity == 0)
+		if(Obj.areaMaster && Obj.areaMaster.has_gravity == 0)
 			inertial_drift(Obj)
 
 	/*
