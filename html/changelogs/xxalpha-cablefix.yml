@@ -1,0 +1,7 @@
+author: xxalpha
+
+delete-after: True
+
+changes:
+  - bugfix: "Fixed cables on catwalks being destroyed when creating plating floor."
+
