@@ -138,11 +138,15 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
 	icon_state = "throwingstar"
 	item_state = "eshield0"
 	force = 2
-	throwforce = 20
+	throwforce = 0 //This is never used since this has a 100% embed chance.
+	throw_speed = 4
+	embedded_pain_multiplier = 4
 	w_class = 2
 	embed_chance = 100
 	embedded_fall_chance = 0 //Hahaha!
 
+//5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
+//Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
 /obj/item/weapon/storage/box/throwing_stars/New()
 	..()
 	contents = list()
@@ -151,3 +155,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
 	new /obj/item/weapon/throwing_star(src)
 	new /obj/item/weapon/throwing_star(src)
 	new /obj/item/weapon/throwing_star(src)
+
+
+
+

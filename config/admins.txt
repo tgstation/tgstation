@@ -79,3 +79,4 @@ dannno = Game Master
 allura = Game Master
 lo6a4evskiy = Game Master
 vekter = Game Master
+Ahammer18 = Game Master

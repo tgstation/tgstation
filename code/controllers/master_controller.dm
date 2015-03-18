@@ -37,7 +37,7 @@ Note: you can set the datum's defined processing_interval to some integer to set
 		processing_interval = GCD
 
 /datum/controller/game_controller/proc/setup()
-	world << "<span class='userdanger'>Initializing Subsystems...</span>"
+	world << "<span class='boldannounce'>Initializing Subsystems...</span>"
 
 	//sort subsystems by priority, so they initialize in the correct order
 	sortTim(subsystems, /proc/cmp_subsystem_priority)
@@ -52,7 +52,7 @@ Note: you can set the datum's defined processing_interval to some integer to set
 		S.Initialize(world.timeofday)
 		sleep(-1)
 
-	world << "<span class='userdanger'>Initializations complete</span>"
+	world << "<span class='boldannounce'>Initializations complete</span>"
 	world.log << "Initializations complete"
 
 	world.sleep_offline = 1

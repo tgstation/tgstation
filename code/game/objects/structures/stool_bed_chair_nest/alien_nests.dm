@@ -26,7 +26,7 @@
 */
 
 /obj/structure/stool/bed/nest/user_buckle_mob(mob/M as mob, mob/user as mob)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
 	if(istype(M,/mob/living/carbon/alien))
@@ -36,26 +36,21 @@
 
 	unbuckle_mob()
 
-	if(M == usr)
-		return
-	else
+	if(buckle_mob(M))
 		M.visible_message(\
 			"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",\
 			"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in [src]!</span>",\
 			"<span class='notice'>You hear squelching...</span>")
-	return
 
 /obj/structure/stool/bed/nest/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
-		M.pixel_y += 1
+		M.pixel_y += 6
 		M.pixel_x += 2
 		overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=6)
 	else
-		buckled_mob.pixel_y -= 1
-		buckled_mob.pixel_x -= 2
+		M.pixel_x -= 2
+		M.pixel_y = initial(M.pixel_y)
 		overlays.Cut()
-
-
 
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	var/aforce = W.force

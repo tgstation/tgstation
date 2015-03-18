@@ -427,7 +427,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
-	desc = "Strong flavor, dense smoke, infused with Doctor's Delight."
+	desc = "Strong flavor, dense smoke, infused with Omnizine."
 	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 4
 
@@ -570,7 +570,7 @@ var/list/uplink_items = list()
 	name = "Explosive Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Creates a moderately-sized fiery explosion. For those agents who know there is no going back."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_explosive
-	cost = 9
+	cost = 6
 
 // POINTLESS BADASSERY
 

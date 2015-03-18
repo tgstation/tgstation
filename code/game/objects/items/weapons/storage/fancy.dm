@@ -227,7 +227,7 @@
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/New()
 	..()
 	for(var/i = 1 to storage_slots)
-		reagents.add_reagent("doctorsdelight",15)
+		reagents.add_reagent("omnizine",15)
 
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_midori

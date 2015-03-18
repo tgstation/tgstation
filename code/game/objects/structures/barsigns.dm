@@ -228,6 +228,46 @@
 	icon = "theadminbus"
 	desc = "An establishment visited mainly by space-judges. It isn't bombed nearly as much as court hearings."
 
+/datum/barsign/oldcockinn
+	name = "The Old Cock Inn"
+	icon = "oldcockinn"
+	desc = "Something about this sign fills you with despair."
+
+/datum/barsign/thewretchedhive
+	name = "The Wretched Hive"
+	icon = "thewretchedhive"
+	desc = "Legally obligated to instruct you to check your drinks for acid before consumption."
+
+/datum/barsign/robustacafe
+	name = "The Robusta Cafe"
+	icon = "robustacafe"
+	desc = "Holder of the 'Most Lethal Barfights' record 5 years uncontested."
+
+/datum/barsign/emergencyrumparty
+	name = "The Emergency Rum Party"
+	icon = "emergencyrumparty"
+	desc = "Still serving drinks that were banned years ago."
+
+/datum/barsign/combocafe
+	name = "The Combo Cafe"
+	icon = "combocafe"
+	desc = "Renowned system-wide for their utterly uncreative drink combinations."
+
+/datum/barsign/vladssaladbar
+	name = "Vlad's Salad Bar"
+	icon = "vladssaladbar"
+	desc = "Under new management. Vlad was always a bit too trigger happy with that shotgun."
+
+/datum/barsign/theshaken
+	name = "The Shaken"
+	icon = "theshaken"
+	desc = "This establishment does not serve stirred drinks."
+
+/datum/barsign/thealenath
+	name = "The Ale' Nath"
+	icon = "thealenath"
+	desc = "All right, buddy. I think you've had EI NATH. Time to get a cab."
+
 
 
 /datum/barsign/hiddensigns

@@ -13,6 +13,8 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.restore_blood()
+			H.remove_all_embedded_objects()
+
 		for(var/i = 0, i<10,i++)
 			user.adjustBruteLoss(-10)
 			user.adjustOxyLoss(-10)

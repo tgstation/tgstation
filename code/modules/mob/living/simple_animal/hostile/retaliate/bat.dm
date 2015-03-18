@@ -23,7 +23,7 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	environment_smash = 0
 	ventcrawler = 2
-	mob_size = 0
+	mob_size = MOB_SIZE_SMALL
 
 
 	//Space bats need no air to fly in.

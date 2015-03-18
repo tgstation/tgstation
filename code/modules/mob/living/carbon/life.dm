@@ -1,11 +1,3 @@
-
-/mob/living/carbon
-	var/oxygen_alert = 0
-	var/toxins_alert = 0
-	var/fire_alert = 0
-	var/pressure_alert = 0
-	var/temperature_alert = 0
-
 /mob/living/carbon/Life()
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
@@ -343,12 +335,12 @@
 			silent = 0
 			return 1
 
-		if( (getOxyLoss() > 50) || (config.health_threshold_crit >= health) )
+		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
 			Paralyse(3)
+			stat = UNCONSCIOUS
 
 		if(paralysis)
 			AdjustParalysis(-1)
-			stat = UNCONSCIOUS
 		else if(sleeping)
 			handle_dreams()
 			adjustStaminaLoss(-10)
@@ -446,12 +438,11 @@
 
 /mob/living/carbon/proc/handle_disabilities()
 	//Eyes
-	if(disabilities & BLIND || stat)	//blindness from disability or unconsciousness doesn't get better on its own
-		eye_blind = max(eye_blind, 1)
-	else if(eye_blind)			//blindness, heals slowly over time
-		eye_blind = max(eye_blind-1,0)
-	else if(eye_blurry)			//blurry eyes heal slowly
-		eye_blurry = max(eye_blurry-1, 0)
+	if(!(disabilities & BLIND) && !stat)	//blindness from disability or unconsciousness doesn't get better on its own
+		if(eye_blind)			//blindness, heals slowly over time
+			eye_blind = max(eye_blind-1,0)
+		else if(eye_blurry)			//blurry eyes heal slowly
+			eye_blurry = max(eye_blurry-1, 0)
 
 	//Ears
 	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own

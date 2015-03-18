@@ -14,9 +14,16 @@
 
 /datum/game_mode/wizard/raginmages/post_setup()
 	..()
+	var/playercount = 0
 	if(!max_mages)
-		max_mages = round(num_players() / 5)
-
+		for(var/mob/living/player in mob_list)
+			if(player.client && player.stat != 2)
+				playercount += 1
+			max_mages = round(playercount / 8)
+			if(max_mages > 20)
+				max_mages = 20
+			if(max_mages < 1)
+				max_mages = 1
 /datum/game_mode/wizard/raginmages/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
 		wizard.current << "<B>You are the Space Wizard!</B>"

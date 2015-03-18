@@ -336,7 +336,7 @@ obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/
 	var/list/nametemp = list()
 	var/find
 	if(targetloc.aipictures.len == 0)
-		usr << "<span class='userdanger'>No images saved</span>"
+		usr << "<span class='boldannounce'>No images saved</span>"
 		return
 	for(var/datum/picture/t in targetloc.aipictures)
 		nametemp += t.fields["name"]

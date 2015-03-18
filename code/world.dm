@@ -129,11 +129,11 @@
 			if(input["key"] != global.comms_key)
 				return "Bad Key"
 			else
-				#define CHAT_PULLR 2048
+#define CHAT_PULLR	64 //for some reason this has to be here, not sure why. Look in preferences.dm for the "proper" definition.
 				for(var/client/C in clients)
-					if(C.prefs && (C.prefs.toggles & CHAT_PULLR))
+					if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
 						C << "<span class='announce'>PR: [input["announce"]]</span>"
-				#undef CHAT_PULLR
+#undef CHAT_PULLR
 
 /world/Reboot(var/reason)
 #ifdef dellogging
