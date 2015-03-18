@@ -5,13 +5,13 @@
 /mob/living/carbon/alien
 	name = "alien"
 	voice_name = "alien"
-	say_message = "hisses"
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2
 	languages = ALIEN
+	verb_say = "hisses"
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500

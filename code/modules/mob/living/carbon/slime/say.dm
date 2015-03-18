@@ -1,6 +1,3 @@
-/mob/living/carbon/slime/say(var/message)
-	..()
-
 /mob/living/carbon/slime/say_quote(var/text)
 	var/ending = copytext(text, length(text))
 
@@ -11,7 +8,7 @@
 
 	return "telepathically chirps, \"[text]\"";
 
-/mob/living/carbon/slime/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/living/carbon/slime/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 	if(speaker != src && !radio_freq)
 		if (speaker in Friends)
 			speech_buffer = list()

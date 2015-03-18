@@ -236,9 +236,9 @@ obj/mecha/proc/can_use(mob/user)
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(speaker == occupant && radio.broadcasting)
-		radio.talk_into(speaker, text)
+		radio.talk_into(speaker, text, , spans)
 	return
 
 ////////////////////////////
