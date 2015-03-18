@@ -1,5 +1,10 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-#define RUNWARNING // disable if they re-enable run() in 507 or newer.
+
+//#define RUNWARNING // disable if they re-enable run() in 507 or newer.
+
+#ifndef RUNWARNING
+#warn If you have issues with retrieving logs update byond on the server and client to 507.1277 or greater, or uncomment RUNWARNING
+#endif
 
 #define DEBUG
 #define PROFILE_MACHINES // Disable when not debugging.
