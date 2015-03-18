@@ -809,7 +809,7 @@ datum/preferences
 
 					if("ghost_whispers")
 						chat_toggles ^= CHAT_GHOSTWHISPER
-					
+
 					if("ghost_radio")
 						chat_toggles ^= CHAT_GHOSTRADIO
 
@@ -889,11 +889,6 @@ datum/preferences
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
-		/*
-		//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-		if(character.gender in list(PLURAL, NEUTER))
-			if(isliving(src)) //Ghosts get neuter by default
-				message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-				character.gender = MALE
-		*/
-
+		character.update_body()
+		character.update_hair()
+		//character.regenerate_icons()
