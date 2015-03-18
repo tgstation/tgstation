@@ -21,6 +21,7 @@
 #define SPAN_ROBOT "robot"
 #define SPAN_YELL "yell"
 #define SPAN_ITALICS "italics"
+#define SPAN_SANS "sans"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS 1

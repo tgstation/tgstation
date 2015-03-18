@@ -29,6 +29,9 @@
 		message = dna.mutations_say_mods(message)
 	return message
 
+/mob/living/carbon/human/get_spans()
+	return ..() + dna.mutations_get_spans()
+
 /mob/living/carbon/human/GetVoice()
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
 		var/obj/item/clothing/mask/gas/voice/V = wear_mask

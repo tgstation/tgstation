@@ -88,6 +88,9 @@
 	if(message)
 		return message
 
+/datum/mutation/human/proc/get_spans()
+	return list()
+
 /datum/mutation/human/hulk
 
 	name = "Hulk"
