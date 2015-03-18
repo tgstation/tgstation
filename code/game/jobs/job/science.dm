@@ -49,8 +49,8 @@ Scientist
 	department_head = list("Research Director")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 3
+	total_positions = 7
+	spawn_positions = 7
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 
