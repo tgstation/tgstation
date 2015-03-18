@@ -455,7 +455,7 @@
 	item_state = "plaid_red"
 	item_color = "plaid_red"
 	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = 0
+	can_adjust = 1
 
 /obj/item/clothing/under/plaid_skirt/blue
 	name = "blue plaid skirt"
