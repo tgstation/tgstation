@@ -62,6 +62,7 @@
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 0
+	if(zero_amount())	return 0
 	var/title = "Sheet-Glass"
 	title += " ([src.get_amount()] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))

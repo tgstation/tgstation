@@ -1,6 +1,0 @@
-author: phil235
-delete-after: True
-changes:
-  - tweak: "Aliens, slimes, monkeys and ventcrawler mobs can now climb into disposal. Cyborgs and very large mobs can no longer climb into it."
-  - tweak: "Stuffing another mob in a disposal unit is now only done via grabbing."
-

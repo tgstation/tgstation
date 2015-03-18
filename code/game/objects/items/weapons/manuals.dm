@@ -680,7 +680,10 @@
 
 				<h2>Basic ingredients preparation:</h2>
 
-				<b>Dough:</b> Add an egg to 15 flour. Dough can be transformed by using your knife and rolling pin or by adding milk. All doughs can be microwaved.<br>
+				<b>Dough:</b> 10u water + 15u flour for simple dough.<br>
+				15u egg yolk + 15u flour + 5u sugar for cake batter.<br>
+				Doughs can be transformed by using a knife and rolling pin.<br>
+				All doughs can be microwaved.<br>
 				<b>Bowl:</b> Add water to it for soup preparation.<br>
 				<b>Meat:</b> Microwave it, process it, slice it into microwavable cutlets with your knife, or use it raw.<br>
 				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to milk and soy milk to prepare cheese (sliceable) and tofu.

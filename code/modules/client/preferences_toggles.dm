@@ -3,8 +3,8 @@
 	set name = "Show/Hide GhostEars"
 	set category = "Preferences"
 	set desc = ".Toggle Between seeing all mob speech, and only speech of nearby mobs"
-	prefs.toggles ^= CHAT_GHOSTEARS
-	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"]."
+	prefs.chat_toggles ^= CHAT_GHOSTEARS
+	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -12,8 +12,8 @@
 	set name = "Show/Hide GhostSight"
 	set category = "Preferences"
 	set desc = ".Toggle Between seeing all mob emotes, and only emotes of nearby mobs"
-	prefs.toggles ^= CHAT_GHOSTSIGHT
-	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"]."
+	prefs.chat_toggles ^= CHAT_GHOSTSIGHT
+	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -21,17 +21,26 @@
 	set name = "Show/Hide GhostWhispers"
 	set category = "Preferences"
 	set desc = ".Toggle between hearing all whispers, and only whispers of nearby mobs"
-	prefs.toggles ^= CHAT_GHOSTWHISPER
-	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"]."
+	prefs.chat_toggles ^= CHAT_GHOSTWHISPER
+	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGW") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/toggle_ghost_radio()
+	set name = "Show/Hide GhostRadio"
+	set category = "Preferences"
+	set desc = ".Enable or disable hearing radio chatter as a ghost"
+	prefs.chat_toggles ^= CHAT_GHOSTRADIO
+	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTRADIO) ? "see radio chatter" : "not see radio chatter"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc! //social experiment, increase the generation whenever you copypaste this shamelessly GENERATION 1
 
 /client/verb/toggle_ghost_pda()
 	set name = "Show/Hide GhostPDA"
 	set category = "Preferences"
 	set desc = ".Toggle Between seeing all mob pda messages, and only pda messages of nearby mobs"
-	prefs.toggles ^= CHAT_GHOSTPDA
-	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"]."
+	prefs.chat_toggles ^= CHAT_GHOSTPDA
+	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -40,9 +49,9 @@
 	set category = "Preferences"
 	set desc = "Toggle seeing radiochatter from nearby radios and speakers"
 	if(!holder) return
-	prefs.toggles ^= CHAT_RADIO
+	prefs.chat_toggles ^= CHAT_RADIO
 	prefs.save_preferences()
-	usr << "You will [(prefs.toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers"
+	usr << "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggleadminhelpsound()
@@ -59,27 +68,27 @@
 	set name = "Show/Hide Deadchat"
 	set category = "Preferences"
 	set desc ="Toggles seeing deadchat"
-	prefs.toggles ^= CHAT_DEAD
+	prefs.chat_toggles ^= CHAT_DEAD
 	prefs.save_preferences()
-	src << "You will [(prefs.toggles & CHAT_DEAD) ? "now" : "no longer"] see deadchat."
+	src << "You will [(prefs.chat_toggles & CHAT_DEAD) ? "now" : "no longer"] see deadchat."
 	feedback_add_details("admin_verb","TDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggleprayers()
 	set name = "Show/Hide Prayers"
 	set category = "Preferences"
 	set desc = "Toggles seeing prayers"
-	prefs.toggles ^= CHAT_PRAYER
+	prefs.chat_toggles ^= CHAT_PRAYER
 	prefs.save_preferences()
-	src << "You will [(prefs.toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
+	src << "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/togglePRs()
 	set name = "Show/Hide Pull Request Announcements"
 	set category = "Preferences"
 	set desc = "Toggles receiving a notification when new pull requests are created."
-	prefs.toggles ^= CHAT_PULLR
+	prefs.chat_toggles ^= CHAT_PULLR
 	prefs.save_preferences()
-	src << "You will [(prefs.toggles & CHAT_PULLR) ? "now" : "no longer"] see new pull request announcements."
+	src << "You will [(prefs.chat_toggles & CHAT_PULLR) ? "now" : "no longer"] see new pull request announcements."
 	feedback_add_details("admin_verb","TPullR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/togglemidroundantag()
@@ -129,9 +138,9 @@
 	set name = "Show/Hide OOC"
 	set category = "Preferences"
 	set desc = "Toggles seeing OutOfCharacter chat"
-	prefs.toggles ^= CHAT_OOC
+	prefs.chat_toggles ^= CHAT_OOC
 	prefs.save_preferences()
-	src << "You will [(prefs.toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel."
+	src << "You will [(prefs.chat_toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel."
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful

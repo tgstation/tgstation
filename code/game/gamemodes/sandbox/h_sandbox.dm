@@ -115,7 +115,7 @@ datum/hSB/Topic(href, href_list)
 			if("hsbtobj")
 				if(!admin) return
 				if(hsboxspawn)
-					world << "<span class='userdanger'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>"
+					world << "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>"
 					hsboxspawn = 0
 					return
 				else

@@ -90,6 +90,7 @@
 	var/datum/mind/mind = null
 	var/blood_gender = null
 	var/blood_type = null
+	var/mutant_color = null
 	var/factions = null
 	var/contains_sample = 0
 
@@ -103,6 +104,7 @@
 					realName = bloodSample.data["real_name"]
 					blood_gender = bloodSample.data["gender"]
 					blood_type = bloodSample.data["blood_type"]
+					mutant_color = bloodSample.data["mutant_color"]
 					factions = bloodSample.data["factions"]
 					W.reagents.clear_reagents()
 					user << "You inject the contents of the syringe into the seeds."
@@ -719,11 +721,11 @@
 
 /obj/item/seeds/steelmycelium
 	name = "pack of steel-cap mycelium"
-	desc = "This mycelium grows into metal rods."
+	desc = "This mycelium grows into steel logs."
 	icon_state = "mycelium-steelcap"
 	species = "steelcap"
 	plantname = "Steel Caps"
-	product = /obj/item/stack/rods
+	product = /obj/item/weapon/grown/log/steel
 	lifespan = 80
 	endurance = 50
 	maturation = 15

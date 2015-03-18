@@ -129,7 +129,7 @@
 	move_to_delay = 4
 	maxHealth = 400
 	health = 400
-	mob_size = 2
+	mob_size = MOB_SIZE_LARGE
 
 /obj/item/projectile/neurotox
 	name = "neurotoxin"

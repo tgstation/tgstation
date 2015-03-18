@@ -78,26 +78,13 @@
 	last_flash = world.time
 	use_power(1000)
 
-	for (var/mob/O in viewers(src, null))
-		if (get_dist(src, O) > src.range)
+	for (var/mob/living/L in viewers(src, null))
+		if (get_dist(src, L) > range)
 			continue
 
-		if (istype(O, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = O
-			if(!H.eyecheck() <= 0)
-				continue
+		if(L.flash_eyes())
+			L.Weaken(strength)
 
-		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
-			continue
-
-		O.Weaken(strength)
-		if ((O.eye_stat > 15 && prob(O.eye_stat + 50)))
-			flick("e_flash", O:flash)
-			O.eye_stat += rand(1, 2)
-		else
-			if(!O.eye_blind)
-				flick("flash", O:flash)
-				O.eye_stat += rand(0, 2)
 	return 1
 
 

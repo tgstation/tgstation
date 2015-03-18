@@ -171,6 +171,8 @@
 			if(out.amount >= 1)
 				inp.amount -= out.amount
 				unload_mineral(out)
+			if(inp.amount < 1)
+				stack_list -= text2path(href_list["release"])
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
 	if(href_list["plasteel"])
