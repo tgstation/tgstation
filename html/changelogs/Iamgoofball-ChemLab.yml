@@ -4,5 +4,5 @@ delete-after: True
 
 changes: 
   - rscadd: "Science got some extra funding, and the misc. lab is now a Chemistry Lab."
-  - rscadd: "2 new slots have been opened for scientist positions to staff the new lab."
+  - rscadd: "1 new slot has been opened for scientists to staff the new lab."
   - experiment: "All scientist job slots are now available at roundstart. I could not find any reasoning for only 3 of the 5 slots being open at roundstart before."
