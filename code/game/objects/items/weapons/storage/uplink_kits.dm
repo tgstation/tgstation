@@ -90,7 +90,8 @@
 				new /obj/item/clothing/gloves/bikergloves(src)
 				new /obj/item/clothing/mask/gas/voice(src)
 				new /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver(src)
-				new /obj/item/weapon/card/emag(src)
+				new /obj/item/weapon/storage/pill_bottle/hyperzine(src)
+				new /obj/item/weapon/card/id/syndicate(src)
 				return
 
 /obj/item/weapon/storage/box/syndie_kit
