@@ -9,6 +9,9 @@
 
 	return ..()
 
+/mob/living/silicon/get_spans()
+	return ..() | SPAN_ROBOT
+
 /mob/living/proc/robot_talk(var/message)
 	log_say("[key_name(src)] : [message]")
 	var/desig = "Default Cyborg" //ezmode for taters
