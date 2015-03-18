@@ -330,7 +330,8 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 		usr << "You adjust the suit back to normal."
 		src.adjusted = 0
 	else
-		src.fitted = NO_FEMALE_UNIFORM
+		if(src.fitted != FEMALE_UNIFORM_TOP)
+			src.fitted = NO_FEMALE_UNIFORM
 		src.item_color += "_d"
 		usr << "You adjust the suit to wear it more casually."
 		src.adjusted = 1
