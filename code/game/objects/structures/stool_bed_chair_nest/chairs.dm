@@ -134,6 +134,9 @@
 /obj/structure/stool/bed/chair/comfy/beige
 	color = rgb(255,253,195)
 
+/obj/structure/stool/bed/chair/comfy/lime
+	color = rgb(109,254,0)
+
 /obj/structure/stool/bed/chair/office
 	anchored = 0
 
