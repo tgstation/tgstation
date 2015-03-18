@@ -111,19 +111,28 @@
 
 
 /obj/structure/stool/bed/chair/comfy/brown
-	color = rgb(255,113,0)
+	color = rgb(141,70,0)
+
+/obj/structure/stool/bed/chair/comfy/red
+	color = rgb(218,2,10)
+
+/obj/structure/stool/bed/chair/comfy/teal
+	color = rgb(0,234,250)
+
+/obj/structure/stool/bed/chair/comfy/black
+	color = rgb(60,60,60)
+
+/obj/structure/stool/bed/chair/comfy/green
+	color = rgb(1,196,8)
+
+/obj/structure/stool/bed/chair/comfy/purp
+	color = rgb(112,2,176)
+
+/obj/structure/stool/bed/chair/comfy/blue
+	color = rgb(2,9,210)
 
 /obj/structure/stool/bed/chair/comfy/beige
 	color = rgb(255,253,195)
-
-/obj/structure/stool/bed/chair/comfy/teal
-	color = rgb(0,255,255)
-
-/obj/structure/stool/bed/chair/comfy/black
-	color = rgb(167,164,153)
-
-/obj/structure/stool/bed/chair/comfy/lime
-	color = rgb(255,251,0)
 
 /obj/structure/stool/bed/chair/office
 	anchored = 0

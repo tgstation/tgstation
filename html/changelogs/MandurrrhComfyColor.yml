@@ -1,0 +1,10 @@
+
+# Your name.  
+author: Mandurrrh
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+
+changes: 
+  - tweak: "Changed the rgb values for comfy chairs for better colors and more options"
