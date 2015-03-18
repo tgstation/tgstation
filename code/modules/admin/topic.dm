@@ -372,7 +372,7 @@
 					DB_ban_unban(M.ckey, BANTYPE_APPEARANCE)
 					appearance_unban(M)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [key_name_admin(M)]'s appearance ban</span>")
-					M << "<span class='userdanger'><BIG>[usr.client.ckey] has removed your appearance ban.</BIG></span>"
+					M << "<span class='boldannounce'><BIG>[usr.client.ckey] has removed your appearance ban.</BIG></span>"
 
 		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
@@ -386,8 +386,8 @@
 				appearance_fullban(M, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 				notes_add(M.ckey, "Appearance banned - [reason]")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)]</span>")
-				M << "<span class='userdanger'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>"
-				M << "<span class='userdanger'>The reason is: [reason]</span>"
+				M << "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>"
+				M << "<span class='boldannounce'>The reason is: [reason]</span>"
 				M << "<span class='danger'>Appearance ban can be lifted only upon request.</span>"
 				if(config.banappeals)
 					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
@@ -767,8 +767,8 @@
 							msg += ", [job]"
 					notes_add(M.ckey, "Banned  from [msg] - [reason]")
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes</span>")
-					M << "<span class='userdanger'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
-					M << "<span class='userdanger'>The reason is: [reason]</span>"
+					M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
+					M << "<span class='boldannounce'>The reason is: [reason]</span>"
 					M << "<span class='danger'>This jobban will be lifted in [mins] minutes.</span>"
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
@@ -787,8 +787,8 @@
 							else		msg += ", [job]"
 						notes_add(M.ckey, "Banned  from [msg] - [reason]")
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg]</span>")
-						M << "<span class='userdanger'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
-						M << "<span class='userdanger'>The reason is: [reason]</span>"
+						M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
+						M << "<span class='boldannounce'>The reason is: [reason]</span>"
 						M << "<span class='danger'>Jobban can be lifted only upon request.</span>"
 						href_list["jobban2"] = 1 // lets it fall through and refresh
 						return 1
@@ -820,7 +820,7 @@
 						continue
 			if(msg)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] unbanned [key_name_admin(M)] from [msg]</span>")
-				M << "<span class='userdanger'><BIG>You have been un-jobbanned by [usr.client.ckey] from [msg].</BIG></span>"
+				M << "<span class='boldannounce'><BIG>You have been un-jobbanned by [usr.client.ckey] from [msg].</BIG></span>"
 				href_list["jobban2"] = 1 // lets it fall through and refresh
 			return 1
 		return 0 //we didn't do anything!
@@ -884,7 +884,7 @@
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
 				ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
-				M << "<span class='userdanger'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
+				M << "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
 				M << "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes.</span>"
 				feedback_inc("ban_tmp",1)
 				DB_ban_record(BANTYPE_TEMP, M, mins, reason)
@@ -908,7 +908,7 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-				M << "<span class='userdanger'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
+				M << "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
 				M << "<span class='danger'>This is a permanent ban.</span>"
 				if(config.banappeals)
 					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
@@ -1861,7 +1861,7 @@
 						MAX_EX_LIGHT_RANGE = 14
 						MAX_EX_HEAVY_RANGE = 7
 						MAX_EX_DEVESTATION_RANGE = 3
-				message_admins("<span class='userdanger'>[key_name_admin(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]</span>")
+				message_admins("<span class='boldannounce'>[key_name_admin(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]</span>")
 				log_admin("[key_name(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]")
 
 			if("lightsout")
@@ -1953,7 +1953,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","RET")
 				for(var/mob/living/carbon/human/H in player_list)
-					H << "<span class='userdanger'>You suddenly feel stupid.</span>"
+					H << "<span class='boldannounce'>You suddenly feel stupid.</span>"
 					H.setBrainLoss(60)
 				message_admins("[key_name_admin(usr)] made everybody retarded")
 			if("eagles")//SCRAW
