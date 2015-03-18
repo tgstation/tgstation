@@ -14,6 +14,14 @@
 	item_state = "w_suit"
 	can_adjust = 0
 
+/obj/item/clothing/under/patriotsuit
+	name = "Patriotic Suit"
+	desc = "Motorcycle not included."
+	icon_state = "ek"
+	item_state = "ek"
+	item_color = "ek"
+	can_adjust = 0
+
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
@@ -67,7 +75,7 @@
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	item_color = "sexyclown"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/vice
@@ -128,17 +136,16 @@
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
-	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
+	desc = "A soft brown jumpsuit made of synthetic feathers and strong conviction."
 	icon_state = "owl"
 	item_color = "owl"
-	fitted = 0
 	can_adjust = 0
 
-/obj/item/clothing/under/johnny
-	name = "johnny~~ jumpsuit"
-	desc = "Johnny~~"
-	icon_state = "johnny"
-	item_color = "johnny"
+/obj/item/clothing/under/griffin
+	name = "griffon uniform"
+	desc = "A soft brown jumpsuit with a white feather collar made of synthetic feathers and a lust for mayhem."
+	icon_state = "griffin"
+	item_color = "griffin"
 	can_adjust = 0
 
 /obj/item/clothing/under/rainbow
@@ -186,7 +193,6 @@
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
@@ -201,7 +207,6 @@
 	icon_state = "red_suit"
 	item_state = "r_suit"
 	item_color = "red_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/charcoal
 	name = "charcoal suit"
@@ -209,7 +214,6 @@
 	icon_state = "charcoal_suit"
 	item_state = "charcoal_suit"
 	item_color = "charcoal_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/navy
 	name = "navy suit"
@@ -217,7 +221,6 @@
 	icon_state = "navy_suit"
 	item_state = "navy_suit"
 	item_color = "navy_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/burgundy
 	name = "burgundy suit"
@@ -225,7 +228,6 @@
 	icon_state = "burgundy_suit"
 	item_state = "burgundy_suit"
 	item_color = "burgundy_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/checkered
 	name = "checkered suit"
@@ -233,7 +235,6 @@
 	icon_state = "checkered_suit"
 	item_state = "checkered_suit"
 	item_color = "checkered_suit"
-	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/tan
 	name = "tan suit"
@@ -241,7 +242,13 @@
 	icon_state = "tan_suit"
 	item_state = "tan_suit"
 	item_color = "tan_suit"
-	can_adjust = 0
+
+/obj/item/clothing/under/suit_jacket/white
+	name = "white suit"
+	desc = "A white suit and jacket with a black shirt. You wanna play rough? OKAY!."
+	icon_state = "white_suit"
+	item_state = "white_suit"
+	item_color = "white_suit"
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
@@ -249,18 +256,36 @@
 	icon_state = "blackskirt"
 	item_color = "blackskirt"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/schoolgirl
-	name = "schoolgirl uniform"
+	name = "blue schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
 	icon_state = "schoolgirl"
 	item_state = "schoolgirl"
 	item_color = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+
+/obj/item/clothing/under/schoolgirl/red
+	name = "red schoolgirl uniform"
+	icon_state = "schoolgirlred"
+	item_state = "schoolgirlred"
+	item_color = "schoolgirlred"
+
+/obj/item/clothing/under/schoolgirl/green
+	name = "green schoolgirl uniform"
+	icon_state = "schoolgirlgreen"
+	item_state = "schoolgirlgreen"
+	item_color = "schoolgirlgreen"
+
+/obj/item/clothing/under/schoolgirl/orange
+	name = "orange schoolgirl uniform"
+	icon_state = "schoolgirlorange"
+	item_state = "schoolgirlorange"
+	item_color = "schoolgirlorange"
 
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
@@ -301,7 +326,7 @@
 	item_state = "kilt"
 	item_color = "kilt"
 	body_parts_covered = CHEST|GROIN|FEET
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/sexymime
@@ -311,7 +336,7 @@
 	item_state = "sexymime"
 	item_color = "sexymime"
 	body_parts_covered = CHEST|GROIN|LEGS
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/gladiator
@@ -321,7 +346,7 @@
 	item_state = "gladiator"
 	item_color = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = 0
+	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
 
 /obj/item/clothing/under/sundress
@@ -331,7 +356,7 @@
 	item_state = "sundress"
 	item_color = "sundress"
 	body_parts_covered = CHEST|GROIN
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/captainparade
@@ -356,7 +381,7 @@
 	icon_state = "hos_parade_fem"
 	item_state = "r_suit"
 	item_color = "hos_parade_fem"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/assistantformal
@@ -373,7 +398,7 @@
 	icon_state = "black_tango"
 	item_state = "wcoat"
 	item_color = "black_tango"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/stripeddress
@@ -382,7 +407,7 @@
 	icon_state = "striped_dress"
 	item_state = "stripeddress"
 	item_color = "striped_dress"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_FULL
 	can_adjust = 0
 
 /obj/item/clothing/under/sailordress
@@ -391,7 +416,7 @@
 	icon_state = "sailor_dress"
 	item_state = "sailordress"
 	item_color = "sailor_dress"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/redeveninggown
@@ -400,7 +425,7 @@
 	icon_state = "red_evening_gown"
 	item_state = "redeveninggown"
 	item_color = "red_evening_gown"
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/maid
@@ -410,7 +435,7 @@
 	item_state = "maid"
 	item_color = "maid"
 	body_parts_covered = CHEST|GROIN
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/janimaid
@@ -420,5 +445,28 @@
 	item_state = "janimaid"
 	item_color = "janimaid"
 	body_parts_covered = CHEST|GROIN
-	fitted = 0
+	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+
+/obj/item/clothing/under/plaid_skirt
+	name = "red plaid skirt"
+	desc = "A preppy red skirt with a white blouse."
+	icon_state = "plaid_red"
+	item_state = "plaid_red"
+	item_color = "plaid_red"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 1
+
+/obj/item/clothing/under/plaid_skirt/blue
+	name = "blue plaid skirt"
+	desc = "A preppy blue skirt with a white blouse."
+	icon_state = "plaid_blue"
+	item_state = "plaid_blue"
+	item_color = "plaid_blue"
+
+/obj/item/clothing/under/plaid_skirt/purple
+	name = "purple plaid skirt"
+	desc = "A preppy purple skirt with a white blouse."
+	icon_state = "plaid_purple"
+	item_state = "plaid_purple"
+	item_color = "plaid_purple"
