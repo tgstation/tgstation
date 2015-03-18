@@ -1,0 +1,7 @@
+author: pudl
+
+delete-after: True
+
+changes:
+    -rscadd: "Resprites the toolbelt."
+    -rscadd: "Resprites glass cracks."
