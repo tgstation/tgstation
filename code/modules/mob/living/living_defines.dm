@@ -39,8 +39,7 @@
 
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/floating = 0
-	var/nightvision = 0
-	var/mob_size = 1  //size of the mob. 0 is small, 1 is human sized, and 2 is large.
+	var/mob_size = MOB_SIZE_HUMAN
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 
 	var/list/image/staticOverlays = list()

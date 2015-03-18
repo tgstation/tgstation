@@ -117,7 +117,7 @@ datum/reagent/proc/addiction_act_stage3(var/mob/living/M as mob)
 
 datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
 	if(prob(30))
-		M << "<span class = 'userdanger'>You're not feeling good at all! You really need some [name].</span>"
+		M << "<span class = 'boldannounce'>You're not feeling good at all! You really need some [name].</span>"
 	return
 
 datum/reagent/blood

@@ -214,7 +214,7 @@ That prevents a few funky behaviors.
 	if(istype(src, /obj/item/device/aicard))
 		var/obj/item/device/aicard/icard = src
 		if(icard.flush)
-			U << "<span class='userdanger'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol."
+			U << "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol."
 			return
 
 	switch(choice)
@@ -227,13 +227,13 @@ That prevents a few funky behaviors.
 				if("AICARD")
 					var/obj/item/device/aicard/C = src
 					if(C.contents.len)//If there is an AI on card.
-						U << "<span class='userdanger'>Transfer failed</span>: Existing AI found on this terminal. Remove existing AI to install a new one."
+						U << "<span class='boldannounce'>Transfer failed</span>: Existing AI found on this terminal. Remove existing AI to install a new one."
 					else
 						if (ticker.mode.name == "AI malfunction")
 							var/datum/game_mode/malfunction/malf = ticker.mode
 							for (var/datum/mind/malfai in malf.malf_ai)
 								if (T.mind == malfai)
-									U << "<span class='userdanger'>ERROR</span>: Remote transfer interface disabled."//Do ho ho ho~
+									U << "<span class='boldannounce'>ERROR</span>: Remote transfer interface disabled."//Do ho ho ho~
 									return
 						new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
 						T.aiRestorePowerRoutine = 0//So the AI initially has power.
@@ -307,8 +307,8 @@ That prevents a few funky behaviors.
 							T.occupier.cancel_camera()
 							T.occupier = null
 						else if (C.contents.len)
-							U << "<span class='userdanger'>ERROR</span>: Artificial intelligence detected on terminal."
+							U << "<span class='boldannounce'>ERROR</span>: Artificial intelligence detected on terminal."
 						else if (T.active)
-							U << "<span class='userdanger'>ERROR</span>: Reconstruction in progress."
+							U << "<span class='boldannounce'>ERROR</span>: Reconstruction in progress."
 						else if (!T.occupier)
-							U << "<span class='userdanger'>ERROR</span>: Unable to locate artificial intelligence."
+							U << "<span class='boldannounce'>ERROR</span>: Unable to locate artificial intelligence."

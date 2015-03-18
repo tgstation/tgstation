@@ -31,7 +31,7 @@
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	languages = DRONE
-	mob_size = 0
+	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	staticOverlays = list()
 	var/staticChoice = "static"

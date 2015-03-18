@@ -1,6 +1,0 @@
-author: phil235
-delete-after: True
-changes:
-  - rscadd: "Adds egg yolk reagent. You can break eggs in open reagent containers or blend them to get egg yolk."
-  - tweak: "Changes how doughs are made. 10water+15flour chem reaction for dough. 15flour+15eggyolk+5sugar for cake batter (or alternatively soymilk instead of the eggyolk for vegans)."
-  - tweak: "Change customizable snack max volume to 60 and buffs nutriment amount in doughs."
