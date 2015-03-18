@@ -453,3 +453,16 @@
 	icon_state = "libertyshirt"
 	item_state = "libertyshirt"
 	_color = "libertyshirt"
+
+/obj/item/clothing/under/bikersuit
+	name = "Biker's Outfit"
+	icon_state = "biker"
+	item_state = "biker"
+	_color = "biker"
+
+/obj/item/clothing/under/jacketsuit
+	name = "Richard's Outfit"
+	desc = "Do you know what time it is?"
+	icon_state = "jacket"
+	item_state = "jacket"
+	_color = "jacket"

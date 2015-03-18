@@ -208,3 +208,16 @@
 	new /obj/item/weapon/dice/d00( src )
 	new /obj/item/weapon/dice/d12( src )
 	new /obj/item/weapon/dice/d20( src )
+
+/obj/item/weapon/storage/pill_bottle/hyperzine
+	name = "Pill bottle (hyperzine)"
+	desc = "Contains pills used to keep you active."
+
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/pill/hyperzine( src )
+		new /obj/item/weapon/reagent_containers/pill/hyperzine( src )
+		new /obj/item/weapon/reagent_containers/pill/hyperzine( src )
+		new /obj/item/weapon/reagent_containers/pill/hyperzine( src )
+		new /obj/item/weapon/reagent_containers/pill/hyperzine( src )
+		new /obj/item/weapon/reagent_containers/pill/hyperzine( src )

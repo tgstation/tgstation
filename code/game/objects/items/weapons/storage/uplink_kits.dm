@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "psycho" = 1)))
+		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "psycho" = 1, "hotline" = 1)))
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
 				new /obj/item/clothing/mask/gas/voice(src)
@@ -81,6 +81,16 @@
 				new /obj/item/weapon/card/emag(src)
 				new /obj/item/weapon/newspaper(src)
 				new /obj/item/weapon/fireaxe(src)
+				return
+
+			if("hotline")
+				new /obj/item/clothing/under/jacketsuit(src)
+				new /obj/item/clothing/head/helmet/biker(src)
+				new /obj/item/clothing/shoes/mime/biker(src)
+				new /obj/item/clothing/gloves/bikergloves(src)
+				new /obj/item/clothing/mask/gas/voice(src)
+				new /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver(src)
+				new /obj/item/weapon/card/emag(src)
 				return
 
 /obj/item/weapon/storage/box/syndie_kit

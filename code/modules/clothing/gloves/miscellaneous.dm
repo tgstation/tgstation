@@ -84,3 +84,9 @@
 	item_state = "bmgloves"
 	_color="bmgloves"
 	species_fit = list("Vox")
+
+/obj/item/clothing/gloves/bikergloves
+	name = "Biker's Gloves"
+	icon_state = "biker-gloves"
+	item_state = "biker-gloves"
+	_color = "bikergloves"
