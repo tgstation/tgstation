@@ -654,8 +654,8 @@
 		var/obj/item/weapon/tank/jetpack/J = H.back
 		if(J.allow_thrust(0.01, H))
 			hasjetpack = 1
-	else if(istype(H.wear_suit,/obj/item/clothing/suit/space/hardsuit)) //copypasta but faster implementation currently
-		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
+	else if(istype(H.wear_suit,/obj/item/clothing/suit/space/hardsuit/engine)) //copypasta but faster implementation currently
+		var/obj/item/clothing/suit/space/hardsuit/engine/C = H.wear_suit
 		if(C.jetpack.allow_thrust(0.01, H))
 			hasjetpack = 1
 

@@ -129,10 +129,10 @@
 		var/mob/living/carbon/human/H = loc.loc
 
 		if(!H.wear_suit)
-			H << "You must be wearing the suit to use the embedded jetpack."
+			H << "You must be wearing the suit to use the inbuilt jetpack."
 			return
 		if(!istype(H.s_store,/obj/item/weapon/tank/internals))
-			H << "You must have a tank in your suit's torage to use the embedded jetpack."
+			H << "You must have a tank in your suit's storage to use the inbuilt jetpack."
 			return
 		if(usr.stat || !usr.canmove || usr.restrained())
 			return
@@ -146,7 +146,7 @@
 			icon_state = "[icon_state]-on"
 		else
 			turn_off()
-		H << "You toggle the embedded jetpack [on? "on":"off"]."
+		H << "You toggle the inbuilt jetpack [on? "on":"off"]."
 
 /obj/item/weapon/tank/jetpack/suit/proc/turn_off()
 	on = 0
