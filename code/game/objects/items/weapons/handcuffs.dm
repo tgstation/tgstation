@@ -150,9 +150,14 @@
 	name = "bear trap"
 	throw_speed = 1
 	throw_range = 1
-	icon_state = "beartrap0"
+	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
 	var/armed = 0
+	var/trap_damage = 20
+
+/obj/item/weapon/restraints/legcuffs/beartrap/New()
+	..()
+	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/weapon/restraints/legcuffs/beartrap/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is sticking \his head in the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -163,7 +168,7 @@
 	..()
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
-		icon_state = "beartrap[armed]"
+		icon_state = "[initial(icon_state)][armed]"
 		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
 
 
@@ -172,7 +177,7 @@
 		if( (iscarbon(AM) || isanimal(AM)) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
 			var/mob/living/L = AM
 			armed = 0
-			icon_state = "beartrap0"
+			icon_state = "[initial(icon_state)][armed]"
 			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 			L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 					"<span class='userdanger'>You trigger \the [src]!</span>")
@@ -180,9 +185,9 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/H = AM
 				if(H.lying)
-					H.apply_damage(20,BRUTE,"chest")
+					H.apply_damage(trap_damage, BRUTE, "chest")
 				else
-					H.apply_damage(20,BRUTE,(pick("l_leg", "r_leg")))
+					H.apply_damage(trap_damage, BRUTE, (pick("l_leg", "r_leg")))
 				if(!H.legcuffed) //beartrap can't cuff you leg if there's already a beartrap or legcuffs.
 					H.legcuffed = src
 					src.loc = H
@@ -190,5 +195,27 @@
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 
 			else
-				L.apply_damage(20,BRUTE)
+				L.apply_damage(trap_damage,BRUTE)
 	..()
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy
+	name = "energy snare"
+	armed = 1
+	icon_state = "e_snare"
+	trap_damage = 0
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/New()
+	..()
+	spawn(100)
+		if(!istype(loc, /mob))
+			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
+			sparks.set_up(1, 1, src)
+			sparks.start()
+			qdel(src)
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/dropped()
+	..()
+	qdel(src)
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
+	Crossed(user) //honk

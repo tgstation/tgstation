@@ -12,12 +12,26 @@
 	select_fire(user)
 	update_icon()
 
+
+/obj/item/weapon/gun/energy/gun/dragnet
+	name = "DRAGnet"
+	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
+	icon_state = "dragnet"
+	item_state = null	//so the human update icon uses the icon_state instead.
+	origin_tech = "combat=4;magnets=4;materials=4"
+	w_class = 3
+	slot_flags = SLOT_BACK
+	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
+	can_flashlight = 0
+
+
 /obj/item/weapon/gun/energy/gun/hos
 	desc = "This is a expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
 	item_state = null
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
+
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "advanced energy gun"
@@ -34,11 +48,9 @@
 	..()
 	SSobj.processing |= src
 
-
 /obj/item/weapon/gun/energy/gun/nuclear/Destroy()
 	SSobj.processing.Remove(src)
 	..()
-
 
 /obj/item/weapon/gun/energy/gun/nuclear/process()
 	charge_tick++
@@ -50,7 +62,6 @@
 		power_supply.give(100)
 		update_icon()
 	return 1
-
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
 	lightfail = 0

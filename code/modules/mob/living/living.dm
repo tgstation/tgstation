@@ -636,6 +636,7 @@ Sorry Giacom. Please don't be mad :(
 
 				if(C.handcuffed)
 					C.handcuffed.loc = C.loc
+					C.handcuffed.dropped()
 					C.handcuffed = null
 					if(C.buckled && C.buckled.buckle_requires_restraints)
 						C.buckled.unbuckle_mob()
@@ -643,6 +644,7 @@ Sorry Giacom. Please don't be mad :(
 					return
 				if(C.legcuffed)
 					C.legcuffed.loc = C.loc
+					C.legcuffed.dropped()
 					C.legcuffed = null
 					C.update_inv_legcuffed(0)
 			else
