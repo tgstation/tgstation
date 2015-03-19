@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: true
+
+changes: 
+  - rscadd: "Allows alt-clicking to adjust breath masks, flip caps, and unlock/lock closets."
