@@ -1,0 +1,6 @@
+author: MMMiracles
+
+delete-after: True
+
+changes:
+  - tweak: "ERT suits now use helmet toggling like hardsuits."
