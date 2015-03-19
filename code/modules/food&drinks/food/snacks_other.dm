@@ -15,6 +15,7 @@
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
 	filling_color = "#FFD700"
+	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
 	name = "watermelon slice"
@@ -78,7 +79,8 @@
 	name = "loaded baked potato"
 	desc = "Totally baked."
 	icon_state = "loadedbakedpotato"
-	list_reagents = list("nutriment" = 1, "vitamin" = 2)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
+	list_reagents = list("nutriment" = 6)
 	filling_color = "#D2B48C"
 
 /obj/item/weapon/reagent_containers/food/snacks/fries
@@ -102,7 +104,8 @@
 	desc = "Fries. Covered in cheese. Duh."
 	icon_state = "cheesyfries"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 1, "vitamin" = 2)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
+	list_reagents = list("nutriment" = 6)
 	filling_color = "#FFD700"
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe
@@ -125,7 +128,8 @@
 	desc = "An apple coated in sugary sweetness."
 	icon_state = "candiedapple"
 	bitesize = 3
-	list_reagents = list("nutriment" = 2, "sugar" = 3)
+	bonus_reagents = list("nutriment" = 2, "sugar" = 3)
+	list_reagents = list("nutriment" = 3, "sugar" = 2)
 	filling_color = "#FF4500"
 
 /obj/item/weapon/reagent_containers/food/snacks/mint
@@ -141,14 +145,16 @@
 	name = "egg wrap"
 	desc = "The precursor to Pigs in a Blanket."
 	icon_state = "wrap"
-	list_reagents = list("nutriment" = 1, "vitamin" = 3)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
+	list_reagents = list("nutriment" = 5)
 	filling_color = "#F0E68C"
 
 /obj/item/weapon/reagent_containers/food/snacks/beans
 	name = "tin of beans"
 	desc = "Musical fruit in a slightly less musical container."
 	icon_state = "beans"
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 10)
 	filling_color = "#B22222"
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggs
@@ -162,14 +168,16 @@
 	name = "chocolate coin"
 	desc = "A completely edible but nonflippable festive coin."
 	icon_state = "chococoin"
-	list_reagents = list("nutriment" = 1, "sugar" = 1)
+	bonus_reagents = list("nutriment" = 1, "sugar" = 1)
+	list_reagents = list("nutriment" = 3, "cocoa" = 1)
 	filling_color = "#A0522D"
 
 /obj/item/weapon/reagent_containers/food/snacks/chocoorange
 	name = "chocolate orange"
 	desc = "A festive chocolate orange"
 	icon_state = "chocoorange"
-	list_reagents = list("nutriment" = 1, "sugar" = 1)
+	bonus_reagents = list("nutriment" = 1, "sugar" = 1)
+	list_reagents = list("nutriment" = 3, "sugar" = 1)
 	filling_color = "#A0522D"
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
@@ -177,5 +185,6 @@
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 1, "vitamin" = 3)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
+	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 	filling_color = "#BA55D3"
