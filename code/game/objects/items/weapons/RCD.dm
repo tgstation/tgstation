@@ -117,7 +117,7 @@ RCD
 			return
 		qdel(W)
 		matter += 10
-		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
 		return
 
@@ -270,3 +270,11 @@ RCD
 	m_amt = 30000
 	g_amt = 15000
 	w_type = RECYK_ELECTRONIC
+
+/obj/item/weapon/rcd_ammo/attackby(var/obj/O, mob/user)
+	if(istype(O, /obj/item/device/material_synth) && !istype(O, /obj/item/device/material_synth/robot))
+		return O.attackby(src, user)
+	else if(istype(O, /obj/item/weapon/rcd) && !istype(O, /obj/item/weapon/rcd/borg))
+		return O.attackby(src, user)
+	else if(istype(O, /obj/item/weapon/rsf) && !istype(O, /obj/item/weapon/rsf/cyborg))
+		return O.attackby(src, user)

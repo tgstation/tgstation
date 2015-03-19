@@ -39,9 +39,9 @@ RSF
 			user << "The RSF can't hold any more matter."
 			return
 		if ((matter+20) >= max_matter)
-			del(W)
+			qdel(W)
 			matter = max_matter
-			playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 			user << "<span class='notice'>The RSF now holds [matter]/[max_matter] fabrication-units.</span>"
 			return
 		qdel(W)
@@ -119,7 +119,6 @@ RSF
 				user << "Dispensing a Deck of Cards..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
 				new /obj/item/toy/cards(get_turf(A))
-
 		if("cardboard sheet")
 			if(pay(user,1))
 				user << "Dispensing a Cardboard Sheet..."
