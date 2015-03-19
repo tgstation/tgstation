@@ -41,4 +41,5 @@
 			implant.function()
 			user.drop_item()
 			implant.loc = target
+			target.internal_organs |= implant
 			return 1

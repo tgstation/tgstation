@@ -39,13 +39,13 @@
 	if(fluff_message)
 		owner << "<span class='notice'>[fluff_message]</span>"
 
-/obj/item/cybernetic_implant/eyes/medical_hud
+/obj/item/cybernetic_implant/eyes/hud/medical
 	name = "medical hud implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
 	eye_color = "0ff"
 	implant_color = "#00FFFF"
 
-/obj/item/cybernetic_implant/eyes/medical_hud/function()
+/obj/item/cybernetic_implant/eyes/hud/medical/function()
 	if(!owner)
 		return
 
@@ -54,13 +54,13 @@
 	owner.permanent_huds |= H
 	update_eye_color("You suddenly see health bars floating above people's heads...")
 
-/obj/item/cybernetic_implant/eyes/security_hud
+/obj/item/cybernetic_implant/eyes/hud/security
 	name = "security hud implant"
 	desc = "These cybernetic eyes will display a security HUD over everything you see. Wiggle eyes to control."
 	eye_color = "d00"
 	implant_color = "#CC0000"
 
-/obj/item/cybernetic_implant/eyes/security_hud/function()
+/obj/item/cybernetic_implant/eyes/hud/security/function()
 	if(!owner)
 		return
 

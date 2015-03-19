@@ -393,7 +393,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	req_tech = list("materials" = 5, "programming" = 4, "biotech" = 4)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 100)
-	build_path = /obj/item/cybernetic_implant/eyes/medical_hud
+	build_path = /obj/item/cybernetic_implant/eyes/hud/medical
 	category = list("Equipement")
 
 /datum/design/cyberimp_security_hud
@@ -403,7 +403,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	req_tech = list("materials" = 5, "programming" = 5, "biotech" = 5, "combat" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 300, "$gold" = 300)
-	build_path = /obj/item/cybernetic_implant/eyes/security_hud
+	build_path = /obj/item/cybernetic_implant/eyes/hud/security
 	category = list("Equipement")
 
 /datum/design/cyberimp_xray
