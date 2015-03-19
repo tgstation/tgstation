@@ -372,7 +372,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 /obj/machinery/say_quote(var/input, list/spans)
 	var/ending = copytext(input, length(input) - 2)
 	if (ending == "!!!")
-		return "blares, \"[message_spans_start(spans)][input][message_spans_end(spans.len)]\""
+		return "blares, \"attach_spans(input, spans)\""
 
 	return ..()
 
