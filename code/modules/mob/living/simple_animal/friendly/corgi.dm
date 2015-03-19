@@ -2,10 +2,15 @@
 /mob/living/simple_animal/pet
 	icon = 'icons/mob/pets.dmi'
 	var/image/collar = null
+	var/image/pettag = null
+	var/accept_collar = 1
 
 /mob/living/simple_animal/pet/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(istype(O, /obj/item/clothing/tie/petcollar))
+	if(istype(O, /obj/item/clothing/tie/petcollar) && accept_collar)
 		update_collar()
+		user << "<span class='notice'>You put the [O] around [src]'s neck.</span>"
+		qdel(O)
+
 	else
 		..()
 
@@ -14,10 +19,11 @@
 	update_collar()
 
 /mob/living/simple_animal/pet/proc/update_collar()
-	collar += image('icons/obj/pet.dmi', src, "[icon_state]-collar")
-	collar.color = O.color //oo dynamic
-	collar += image('icons/obj/pet.dmi', src, "[icon_state]-tag")
+	overlays.Cut()
+	collar = image('icons/mob/pets.dmi', src, "[icon_state]collar")
+	pettag = image('icons/mob/pets.dmi', src, "[icon_state]tag")
 	overlays += collar
+	overlays += pettag
 
 
 /mob/living/simple_animal/pet/corgi
@@ -45,6 +51,7 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
+	accept_collar = 0 //corgis have their own item handling
 
 /mob/living/simple_animal/pet/corgi/New()
 	..()
@@ -491,6 +498,7 @@
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
 	mob_size = MOB_SIZE_SMALL
+	accept_collar = 1
 
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/corgi/puppy/Topic(href, href_list)
@@ -514,6 +522,7 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
+	accept_collar = 1
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/corgi/Lisa/Topic(href, href_list)

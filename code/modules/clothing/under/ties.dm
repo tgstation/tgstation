@@ -282,9 +282,3 @@
 	name = "pet collar"
 	icon_state = "petcollar"
 	item_color = "petcollar"
-
-/obj/item/clothing/tie/petcollar/red //What color is Jim's red gun?
-	color = "green"
-
-/obj/item/clothing/tie/petcollar/blue
-	color = "blue"
