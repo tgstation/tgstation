@@ -252,7 +252,7 @@
 					add_med_hud()
 		if("translator")
 			if(href_list["toggle"])
-				languages = (languages == ALL) ? (HUMAN & ROBOT) : ALL
+				languages = (languages == ALL) ? (HUMAN | ROBOT) : ALL
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
