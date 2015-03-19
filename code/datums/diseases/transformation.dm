@@ -215,7 +215,7 @@
 	stage3	= list("<span class='danger'>Must... eat... chocolate....</span>", "<span class='danger'>YAP</span>")
 	stage4	= list("<span class='danger'>Visions of washing machines assail your mind!</span>")
 	stage5	= list("<span class='danger'>AUUUUUU!!!</span>")
-	new_form = /mob/living/simple_animal/corgi
+	new_form = /mob/living/simple_animal/pet/corgi
 
 /datum/disease/transformation/corgi/stage_act()
 	..()
