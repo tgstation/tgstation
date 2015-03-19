@@ -46,7 +46,7 @@ RSF
 			return
 		qdel(W)
 		matter += 20
-		playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
+		playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 		user << "<span class='notice'>The RSF now holds [matter]/[max_matter] fabrication-units.</span>"
 		return
 

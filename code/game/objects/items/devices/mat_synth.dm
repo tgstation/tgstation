@@ -148,7 +148,7 @@
 			return
 		else
 			matter += 10
-			playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 			qdel(RA)
 			user << "<span class='notice'>The material synthetizer now holds [matter]/[MAX_MATSYNTH_MATTER] matter-units.</span>"
 	if(istype(O, /obj/item/weapon/card/emag))
