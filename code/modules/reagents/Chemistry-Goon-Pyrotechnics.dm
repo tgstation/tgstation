@@ -212,7 +212,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(2, 1, location)
 	s.start()
-	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
+	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		if(C.check_eye_prot())
 			continue
 		flick("e_flash", C.flash)
@@ -228,7 +228,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(2, 1, location)
 	s.start()
-	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
+	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		if(C.check_eye_prot())
 			continue
 		flick("e_flash", C.flash)
@@ -320,7 +320,7 @@
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
-	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
+	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if((H.ears && (H.ears.flags & EARBANGPROTECT)) || (H.head && (H.head.flags & HEADBANGPROTECT)))
@@ -340,7 +340,7 @@
 	holder.remove_reagent("sonic_powder", created_volume)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
-	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
+	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if((H.ears && (H.ears.flags & EARBANGPROTECT)) || (H.head && (H.head.flags & HEADBANGPROTECT)))
