@@ -24,7 +24,7 @@
 		user << "<span class='notice'>No text set.</span>"
 		return
 
-	if(length(target.name) + length(label) > 64)
+	if(length(target.name) + min(length(label) + 2, chars_left) > 64)
 		user << "<span class='notice'>Label too big.</span>"
 		return
 	if(ishuman(target))
@@ -127,7 +127,7 @@
 	A.verbs -= /atom/proc/remove_label
 
 /atom/proc/harm_label_update()
-	return //To be assigned on a per-item basis.
+	return //To be assigned (or not, in most cases) on a per-item basis.
 
 /obj/item/device/label_roll
 	name = "label roll"
