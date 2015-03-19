@@ -1,0 +1,6 @@
+author: Zelacks
+
+delete-after: True
+
+changes: 
+  - bugfix: "The chemical implant action button should now correctly inject all chemicals when pressed."
