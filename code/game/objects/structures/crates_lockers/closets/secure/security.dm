@@ -54,6 +54,7 @@
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/mining_voucher(src)
 	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/clothing/tie/petcollar(src)
 	return
 
 
