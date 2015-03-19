@@ -208,6 +208,9 @@
 
 	//Get the clone body ready
 	H.dna = R.dna.Clone()
+	H.dna.species = R.dna.species
+	if(H.dna.species != "Human")
+		H.set_species(H.dna.species, 1)
 
 	H.adjustCloneLoss(150) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
 	H.adjustBrainLoss(src.heal_level + 50 + rand(10, 30)) // The rand(10, 30) will come out as extra brain damage
@@ -329,10 +332,7 @@
 		if (!src.check_access(W))
 			user << "<span class='warning'>Access Denied.</span>"
 			return
-		if ((!src.locked) || (isnull(src.occupant)))
-			return
-		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "<span class='warning'>Access Refused.</span>"
+		else if ((!src.locked) || (isnull(src.occupant)))
 			return
 		else
 			src.locked = 0
