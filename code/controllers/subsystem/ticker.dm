@@ -383,6 +383,8 @@ var/datum/subsystem/ticker/ticker
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
 			aiPlayer.show_laws(1)
 
+		world << "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
+
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
