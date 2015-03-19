@@ -58,6 +58,9 @@
 	icon_state = "mime"
 	_color = "mime"
 
+/obj/item/clothing/shoes/mime/biker
+	name = "Biker's shoes"
+
 /obj/item/clothing/shoes/swat
 	name = "\improper SWAT shoes"
 	desc = "When you want to turn up the heat."
@@ -227,3 +230,4 @@
 	desc = "Freedom isn't free, neither were these shoes."
 	icon_state = "libertyshoes"
 	item_state = "libertyshoes"
+

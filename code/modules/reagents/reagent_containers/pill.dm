@@ -230,3 +230,11 @@
 		reagents.add_reagent("impedrezene", 10)
 		reagents.add_reagent("synaptizine", 1)
 		reagents.add_reagent("hyperzine", 10)
+
+/obj/item/weapon/reagent_containers/pill/hyperzine
+	name = "Hyperzine pill"
+	desc = "Gotta go fast!"
+	icon_state = "pill18"
+	New()
+		..()
+		reagents.add_reagent("hyperzine", 10)

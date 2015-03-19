@@ -99,3 +99,19 @@
 	desc = "The headwear of an all powerful and bloodthirsty pirate lord. Simply looking at it sends chills down your spine."
 	armor = list(melee = 75, bullet = 75, laser = 75,energy = 75, bomb = 75, bio = 100, rad = 90)
 	icon_state = "piratelord"
+
+/obj/item/clothing/head/helmet/biker
+	name = "Biker's Helmet"
+	desc = "This helmet should protect you from russians and masked vigilantes."
+	armor = list(melee = 25, bullet = 15, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
+	icon_state = "biker_helmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
+	body_parts_covered = FULL_HEAD
+
+/obj/item/clothing/head/helmet/richard
+	name = "Richard"
+	desc = "Do you like hurting people?"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	icon_state = "richard"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
+	body_parts_covered = FULL_HEAD
