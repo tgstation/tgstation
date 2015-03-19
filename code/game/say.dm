@@ -113,18 +113,13 @@ var/list/freqtospan = list(
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
 
 /proc/attach_spans(input, list/spans = list())
-	return "[message_spans_start(spans)][input][message_spans_end(spans.len)]"
+	return "[message_spans_start(spans)][input]</span>"
 
 /proc/message_spans_start(list/spans = list())
-	var/output = ""
+	var/output = "<span class='"
 	for(var/S in spans)
-		output += "<span class='[S]'>"
-	return output
-
-/proc/message_spans_end(length)
-	var/output = ""
-	for(var/i = 0, i < length, i++)
-		output += "</span>"
+		output = "[output][S] "
+	output = "[output]'>"
 	return output
 
 /mob/living/proc/say_test(var/text)
