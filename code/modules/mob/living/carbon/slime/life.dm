@@ -379,6 +379,8 @@
 			else
 				if (holding_still)
 					holding_still = max(holding_still - 1, 0)
+				else if (docile && pulledby)
+					holding_still = 10
 				else if(canmove && isturf(loc) && prob(33))
 					step(src, pick(cardinal))
 		else if(!AIproc)
