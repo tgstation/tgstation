@@ -193,4 +193,3 @@
 	name = "thunderdome suit"
 	desc = "Pukish armor."	//classy.
 	icon_state = "tdgreen"
-	item_state = "tdgreen"

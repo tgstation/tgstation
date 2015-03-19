@@ -11,6 +11,22 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
+	can_flashlight = 1
+	var/obj/machinery/camera/helmetCam = null
+	var/spawnWithHelmetCam = 0
+	var/canAttachCam = 1
+
+
+/obj/item/clothing/head/helmet/New()
+	..()
+	if(spawnWithHelmetCam)
+		helmetCam = new /obj/machinery/camera(src)
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
+		helmetCam.network = list("SS13")
+		update_icon()
+
+/obj/item/clothing/head/helmet/sec
+	spawnWithHelmetCam = 1
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
@@ -18,6 +34,7 @@
 	icon_state = "helmetalt"
 	item_state = "helmetalt"
 	armor = list(melee = 25, bullet = 80, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0)
+	canAttachCam =  0
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -31,6 +48,7 @@
 	action_button_name = "Toggle Helmet Visor"
 	visor_flags = HEADCOVERSEYES|HEADCOVERSMOUTH
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE
+	canAttachCam =  0
 
 /obj/item/clothing/head/helmet/riot/attack_self()
 	if(usr.canmove && !usr.stat && !usr.restrained())
@@ -60,6 +78,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
+	canAttachCam =  0
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
@@ -72,6 +91,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
+	canAttachCam =  0
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
@@ -81,12 +101,14 @@
 	icon_state = "roman"
 	item_state = "roman"
 	strip_delay = 100
+	canAttachCam =  0
 
 /obj/item/clothing/head/helmet/roman/legionaire
 	name = "roman legionaire helmet"
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
+	canAttachCam =  0
 
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"
@@ -95,6 +117,7 @@
 	flags = HEADCOVERSEYES|BLOCKHAIR
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	canAttachCam =  0
 
 obj/item/clothing/head/helmet/redtaghelm
 	name = "red laser tag helmet"
@@ -105,6 +128,7 @@ obj/item/clothing/head/helmet/redtaghelm
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES
+	canAttachCam =  0
 
 obj/item/clothing/head/helmet/bluetaghelm
 	name = "blue laser tag helmet"
@@ -115,3 +139,150 @@ obj/item/clothing/head/helmet/bluetaghelm
 	armor = list(melee = 30, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES
+	canAttachCam =  0
+
+//LightToggle
+
+/obj/item/clothing/head/helmet/update_icon()
+
+	var/state = "[initial(icon_state)]"
+	if(helmetCam)
+		state += "-cam" //"helmet-cam"
+	if(F)
+		if(F.on)
+			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
+		else
+			state += "-flight" //etc.
+
+	icon_state = state
+
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_head(0)
+
+	return
+
+/obj/item/clothing/head/helmet/ui_action_click()
+	toggle_helmlight()
+
+/obj/item/clothing/head/helmet/attackby(var/obj/item/A as obj, mob/user as mob, params)
+	if(istype(A, /obj/item/device/flashlight/seclite))
+		var/obj/item/device/flashlight/seclite/S = A
+		if(can_flashlight)
+			if(!F)
+				user.drop_item()
+				user << "<span class='notice'>You click [S] into place on [src].</span>"
+				if(S.on)
+					SetLuminosity(0)
+				F = S
+				A.loc = src
+				update_icon()
+				update_helmlight(user)
+				verbs += /obj/item/clothing/head/helmet/proc/toggle_helmlight
+		return
+
+	if(istype(A, /obj/item/weapon/screwdriver))
+		if(F)
+			for(var/obj/item/device/flashlight/seclite/S in src)
+				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+				F = null
+				S.loc = get_turf(user)
+				update_helmlight(user)
+				S.update_brightness(user)
+				update_icon()
+				usr.update_inv_head(0)
+				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
+			return
+
+
+	if(istype(A, /obj/item/weapon/camera_assembly))
+		if(!canAttachCam)
+			user << "<span class='warning'>You can't attach [A] to [src]!</span>"
+			return
+		if(helmetCam)
+			user << "<span class='notice'>[src] already has a mounted camera.</span>"
+			return
+		user.drop_item()
+		helmetCam = new /obj/machinery/camera(src)
+		helmetCam.assembly = A
+		A.loc = helmetCam
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
+		helmetCam.network = list("SS13")
+		update_icon()
+		user.visible_message("<span class='notice'>[user] attaches [A] to [src]</span>","<span class='notice'>You attach [A] to [src]</span>")
+		return
+
+	if(istype(A, /obj/item/weapon/crowbar))
+		if(!helmetCam)
+			..()
+			return
+		user.visible_message("<span class='notice'>[user] removes [helmetCam] from [src]</span>","<span class='notice'>You remove [helmetCam] from [src]</span>")
+		helmetCam.assembly.loc = get_turf(src)
+		helmetCam.assembly.state = 0//Not welded to a wall,. it was inside a helmet
+		qdel(helmetCam)
+		helmetCam = null
+		update_icon()
+		return
+
+	..()
+	return
+
+/obj/item/clothing/head/helmet/proc/toggle_helmlight()
+	set name = "Toggle Helmetlight"
+	set category = "Object"
+	set desc = "Click to toggle your helmet's attached flashlight."
+
+	if(!F)
+		return
+
+	var/mob/living/carbon/human/user = usr
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]."
+	F.on = !F.on
+	user << "<span class='notice'>You toggle the helmetlight [F.on ? "on":"off"].</span>"
+
+	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	update_helmlight(user)
+	return
+
+/obj/item/clothing/head/helmet/proc/update_helmlight(var/mob/user = null)
+	if(F)
+		action_button_name = "Toggle Helmetlight"
+		if(F.on)
+			if(loc == user)
+				user.AddLuminosity(F.brightness_on)
+			else if(isturf(loc))
+				SetLuminosity(F.brightness_on)
+		else
+			if(loc == user)
+				user.AddLuminosity(-F.brightness_on)
+			else if(isturf(loc))
+				SetLuminosity(0)
+		update_icon()
+	else
+		action_button_name = null
+		if(loc == user)
+			user.AddLuminosity(-5)
+		else if(isturf(loc))
+			SetLuminosity(0)
+		return
+
+/obj/item/clothing/head/helmet/pickup(mob/user)
+	if(F)
+		if(F.on)
+			user.AddLuminosity(F.brightness_on)
+			SetLuminosity(0)
+
+
+/obj/item/clothing/head/helmet/equipped(mob/user)
+	if(helmetCam)
+		helmetCam.c_tag = "Helmet-Mounted Camera ([user.name])([rand(1,999)])"
+
+/obj/item/clothing/head/helmet/dropped(mob/user)
+	if(F)
+		if(F.on)
+			user.AddLuminosity(-F.brightness_on)
+			SetLuminosity(F.brightness_on)
+
+	if(helmetCam)
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
