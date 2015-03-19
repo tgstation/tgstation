@@ -33,7 +33,7 @@
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
-		if (!in_range(src, user) || user.stat) return
+		if (!Adjacent(user) || user.stat) return
 		if(!str || !length(str))
 			usr << "<span class='warning'>Invalid text.</span>"
 			return
@@ -78,7 +78,7 @@
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
-		if (!in_range(src, user) || user.stat) return
+		if (!Adjacent(user) || user.stat) return
 		if(!str || !length(str))
 			usr << "<span class='warning'>Invalid text.</span>"
 			return

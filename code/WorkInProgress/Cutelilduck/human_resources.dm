@@ -37,8 +37,8 @@
 		user << "<span class='notice'>The target name cannot be reset!</span>"
 		return
 	else
-		var/str = copytext(reject_bad_text(input(user,"Enter the properly capitolized name for demotion","Set name","")),1,MAX_NAME_LEN)
-		if (!in_range(src, user) || user.stat) return
+		var/str = copytext(reject_bad_text(input(user,"Enter the properly capitalized name for demotion","Set name","")),1,MAX_NAME_LEN)
+		if (!Adjacent(user) || user.stat) return
 		if(!str)
 			alert("Invalid name.")
 			target_name = null

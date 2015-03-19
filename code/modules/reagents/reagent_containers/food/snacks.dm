@@ -146,7 +146,7 @@
 
 	if(istype(W,/obj/item/weapon/pen)) //Renaming food
 		var/n_name = copytext(sanitize(input(user, "What would you like to name this dish?", "Food Renaming", null)  as text), 1, MAX_NAME_LEN)
-		if(in_range(src, user) && user.stat == 0)
+		if(Adjacent(user) && !user.stat)
 			name = "[n_name]"
 		return
 	if(istype(W,/obj/item/weapon/storage))
