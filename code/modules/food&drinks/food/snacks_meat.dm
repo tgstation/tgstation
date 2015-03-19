@@ -70,7 +70,6 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 5)
-<<<<<<< HEAD
 
 /obj/item/weapon/reagent_containers/food/snacks/bearsteak
 	name = "Filet migrawr"
@@ -79,8 +78,6 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 6)
 	list_reagents = list("nutriment" = 2, "vitamin" = 5, "manlydorf" = 5)
-=======
->>>>>>> b5979a49fe43e9e059e6c165b309df0b1c018087
 
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "faggot"
