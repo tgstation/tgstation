@@ -277,22 +277,6 @@
 	if(reagents)
 		reagents.metabolize(src)
 
-	if(drowsyness)
-		drowsyness--
-		eye_blurry = max(2, eye_blurry)
-		if(prob(5))
-			sleeping += 1
-			Paralyse(5)
-
-	confused = max(0, confused - 1)
-	// decrement dizziness counter, clamped to 0
-	if(resting)
-		dizziness = max(0, dizziness - 5)
-		jitteriness = max(0, jitteriness - 5)
-	else
-		dizziness = max(0, dizziness - 1)
-		jitteriness = max(0, jitteriness - 1)
-
 	updatehealth()
 	return
 
@@ -358,6 +342,10 @@
 
 		handle_disabilities()
 
+		var/restingpwr = 1 //used to decrease jitteriness, drowsyness and dizziness
+		if(resting)
+			restingpwr = 5
+
 		//Dizziness
 		if(dizziness)
 			var/client/C = client
@@ -365,7 +353,6 @@
 			var/pixel_y_diff = 0
 			var/temp
 			var/saved_dizz = dizziness
-			dizziness = max(dizziness-1, 0)
 			if(C)
 				var/oldsrc = src
 				var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70 // This shit is annoying at high strength
@@ -391,13 +378,25 @@
 							C.pixel_x -= pixel_x_diff
 							C.pixel_y -= pixel_y_diff
 				src = oldsrc
+			dizziness = max(0, dizziness - restingpwr)
 
-		//Jitteryness
+		//Drowsyness
+		if(drowsyness)
+			drowsyness = max(drowsyness-restingpwr, 0)
+			eye_blurry = max(2, eye_blurry)
+			if(prob(5))
+				sleeping += 1
+				Paralyse(5)
+
+		//Jitteriness
 		if(jitteriness)
 			do_jitter_animation(jitteriness)
-			jitteriness = max(jitteriness-1, 0)
+			jitteriness = max(0, jitteriness-restingpwr)
 
 		//Other
+
+		if(confused)
+			confused = max(0, confused - 1)
 
 		if(stuttering)
 			stuttering = max(stuttering-1, 0)
@@ -453,7 +452,7 @@
 			adjustEarDamage(-0.05,-1)
 
 
-//this handles hud updates. Calles update_vision() and handle_hud_icons()
+//this handles hud updates. Calls update_vision() and handle_hud_icons()
 /mob/living/carbon/proc/handle_regular_hud_updates()
 	if(!client)	return 0
 
