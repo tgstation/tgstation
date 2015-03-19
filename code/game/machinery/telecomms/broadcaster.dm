@@ -220,6 +220,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	virt.source = AM
 	virt.faketrack = data == 4 ? 1 : 0
 	virt.radio = radio
+	virt.verb_say = AM.verb_say
+	virt.verb_ask = AM.verb_ask
+	virt.verb_yell = AM.verb_yell
 
 	if(compression > 0)
 		message = Gibberish(message, compression + 40)
@@ -272,7 +275,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
-		var/blackbox_msg = "[AM] [AM.say_quote(message)]"
+		var/blackbox_msg = "[AM] [AM.say_quote(message, spans)]"
 		if(istype(blackbox))
 			switch(freq)
 				if(1459)

@@ -30,7 +30,7 @@ var/list/freqtospan = list(
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans = list())
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans)
 	var/rendered = compose_message(src, languages, message, , spans)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
 		AM.Hear(rendered, src, languages, message, , spans)
@@ -39,7 +39,7 @@ var/list/freqtospan = list(
 /atom/movable/proc/get_spans()
 	return list()
 
-/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans = list())
+/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -76,7 +76,7 @@ var/list/freqtospan = list(
 
 	return "[verb_say], \"[input]\""
 
-/atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message, list/spans = list())
+/atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message, list/spans)
 	if(languages & message_langs)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM)
@@ -86,9 +86,9 @@ var/list/freqtospan = list(
 	else if(message_langs & HUMAN)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM)
-			return AM.say_quote(stars(raw_message, spans))
+			return AM.say_quote(stars(raw_message), spans)
 		else
-			return speaker.say_quote(stars(raw_message, spans))
+			return speaker.say_quote(stars(raw_message), spans)
 	else if(message_langs & MONKEY)
 		return "chimpers."
 	else if(message_langs & ALIEN)
@@ -112,10 +112,10 @@ var/list/freqtospan = list(
 		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
 
-/proc/attach_spans(input, list/spans = list())
+/proc/attach_spans(input, list/spans)
 	return "[message_spans_start(spans)][input]</span>"
 
-/proc/message_spans_start(list/spans = list())
+/proc/message_spans_start(list/spans)
 	var/output = "<span class='"
 	for(var/S in spans)
 		output = "[output][S] "

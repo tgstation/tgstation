@@ -34,7 +34,7 @@
 /mob/living/silicon/lingcheck()
 	return 0 //Borged or AI'd lings can't speak on the ling channel.
 
-/mob/living/silicon/radio(message, message_mode, list/spans = list())
+/mob/living/silicon/radio(message, message_mode, list/spans)
 	. = ..()
 	if(. != 0)
 		return .

@@ -111,19 +111,19 @@ var/list/department_radio_keys = list(
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
 		spans |= SPAN_ITALICS
 
-	send_speech(message, message_range, src, bubble_type)
+	send_speech(message, message_range, src, bubble_type, spans)
 
 	log_say("[name]/[key] : [message]")
 	return 1
 
-/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans = list())
+/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(!client)
 		return
 	var/deaf_message
 	var/deaf_type
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
-			deaf_message = "<span class='name'>[speaker]</span> talks but you cannot hear them."
+			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear them."
 			deaf_type = 1
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
@@ -133,25 +133,19 @@ var/list/department_radio_keys = list(
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type, list/spans = list())
+/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type, list/spans)
 	var/list/listening = get_hearers_in_view(message_range, source)
-	var/list/listening_dead = list()
 	for(var/mob/M in player_list)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7)) && client) // client is so that ghosts don't have to listen to mice
-			listening_dead |= M
-
-	listening -= listening_dead //so ghosts dont hear stuff twice
+			listening |= M
 
 	var/rendered = compose_message(src, languages, message, , spans)
 	for(var/atom/movable/AM in listening)
 		AM.Hear(rendered, src, languages, message, , spans)
 
-	for(var/mob/M in listening_dead)
-		M.Hear(rendered, src, languages, message, , spans)
-
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
-	for(var/mob/M in (listening + listening_dead))
+	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	spawn(0)
@@ -239,7 +233,7 @@ var/list/department_radio_keys = list(
 
 	return message
 
-/mob/living/proc/radio(message, message_mode, list/spans = list())
+/mob/living/proc/radio(message, message_mode, list/spans)
 	switch(message_mode)
 		if(MODE_R_HAND)
 			if (r_hand)

@@ -133,7 +133,7 @@
 		speech_buffer |= html_decode(raw_message)
 	..()
 
-/mob/living/simple_animal/parrot/radio(message, message_mode, list/spans = list()) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
+/mob/living/simple_animal/parrot/radio(message, message_mode, list/spans) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
 	if(. != 0)
 		return .

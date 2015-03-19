@@ -22,7 +22,7 @@
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai
 
-/mob/living/silicon/ai/radio(message, message_mode, list/spans = list())
+/mob/living/silicon/ai/radio(message, message_mode, list/spans)
 	if(!radio_enabled || aiRestorePowerRoutine || stat) //AI cannot speak if radio is disabled (via intellicard) or depowered.
 		src << "<span class='danger'>Your radio transmitter is offline!</span>"
 		return 0
