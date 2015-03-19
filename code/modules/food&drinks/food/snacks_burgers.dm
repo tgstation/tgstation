@@ -55,12 +55,15 @@
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 6)
+<<<<<<< HEAD
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/bearger
 	name = "bearger"
 	desc = "Best served rawr."
 	icon_state = "bearger"
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 6)
+=======
+>>>>>>> b5979a49fe43e9e059e6c165b309df0b1c018087
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/clown
 	name = "clown burger"

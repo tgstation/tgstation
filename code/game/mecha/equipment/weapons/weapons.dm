@@ -4,6 +4,9 @@
 	origin_tech = "materials=3;combat=3"
 	var/projectile
 	var/fire_sound
+	var/projectiles_per_shot = 1
+	var/deviation = 0
+	var/shot_delay = 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(var/obj/mecha/combat/M as obj)
 	if(..())
@@ -11,23 +14,40 @@
 			return 1
 	return 0
 
+/obj/item/mecha_parts/mecha_equipment/weapon/proc/get_shot_amount()
+	return 1
+
 /obj/item/mecha_parts/mecha_equipment/weapon/action(atom/target)
-	if(!action_checks(target)) return 0
+	if(!action_checks(target))
+		return 0
 	set_ready_state(0)
-	var/turf/curloc = chassis.loc
-	var/atom/targloc = get_turf(target)
-	if (!targloc || !istype(targloc, /turf) || !curloc)
-		return
+
+	var/turf/curloc = get_turf(chassis)
+	var/turf/targloc = get_turf(target)
+	if (!targloc || !istype(targloc) || !curloc)
+		return 0
 	if (targloc == curloc)
-		return
-	playsound(chassis, fire_sound, 50, 1)
-	var/obj/item/projectile/A = new projectile(curloc)
-	A.firer = chassis.occupant
-	A.original = target
-	A.current = curloc
-	A.yo = targloc.y - curloc.y
-	A.xo = targloc.x - curloc.x
-	A.fire()
+		return 0
+
+	for(var/i=1 to get_shot_amount())
+		var/obj/item/projectile/A = new projectile(curloc)
+		A.firer = chassis.occupant
+		A.original = target
+		A.current = curloc
+
+		if(deviation)
+			A.yo = (targloc.y + round(gaussian(0,deviation),1)) - curloc.y
+			A.xo = (targloc.x + round(gaussian(0,deviation),1)) - curloc.x
+		else
+			A.yo = targloc.y - curloc.y
+			A.xo = targloc.x - curloc.x
+
+		A.fire()
+		playsound(chassis, fire_sound, 50, 1)
+
+		if(shot_delay)
+			sleep(shot_delay)
+
 	chassis.log_message("Fired from [src.name], targeting [target].")
 	do_after_cooldown()
 	return 1
@@ -36,9 +56,12 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "general energy weapon"
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/get_shot_amount()
+	return min(round(chassis.cell.charge / energy_drain), projectiles_per_shot)
+
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/action(atom/target)
 	..()
-	chassis.use_power(energy_drain)
+	chassis.use_power(energy_drain * get_shot_amount())
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
@@ -165,6 +188,9 @@
 	var/projectiles
 	var/projectile_energy_cost
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_shot_amount()
+	return min(projectiles, projectiles_per_shot)
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action_checks(target)
 	if(!..())
 		return 0
@@ -196,7 +222,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action(atom/target)
 	if(..())
-		src.projectiles--
+		src.projectiles -= get_shot_amount()
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 
 
@@ -227,39 +253,8 @@
 	projectile = /obj/item/projectile/bullet/midbullet
 	projectiles = 40
 	projectile_energy_cost = 25
-	var/projectiles_per_shot = 4
-	var/deviation = 0.7
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot/action(atom/target)
-	if(!action_checks(target)) return
-	var/turf/curloc = get_turf(chassis)
-	var/turf/targloc = get_turf(target)
-	if(!curloc || !targloc) return
-	var/target_x = targloc.x
-	var/target_y = targloc.y
-	var/target_z = targloc.z
-	targloc = null
-	for(var/i=1 to min(projectiles, projectiles_per_shot))
-		var/dx = round(gaussian(0,deviation),1)
-		var/dy = round(gaussian(0,deviation),1)
-		targloc = locate(target_x+dx, target_y+dy, target_z)
-		if(!targloc || targloc == curloc)
-			break
-		playsound(chassis, fire_sound, 80, 1)
-		var/obj/item/projectile/A = new projectile(curloc)
-		src.projectiles--
-		A.firer = chassis.occupant
-		A.original = target
-		A.current = curloc
-		A.yo = targloc.y - curloc.y
-		A.xo = targloc.x - curloc.x
-		set_ready_state(0)
-		A.process()
-	log_message("Fired from [src.name], targeting [target].")
-	do_after_cooldown()
-	return
-
-
+	projectiles_per_shot = 4
+	deviation = 0.7
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
@@ -269,41 +264,9 @@
 	projectile = /obj/item/projectile/bullet/weakbullet3
 	projectiles = 300
 	projectile_energy_cost = 20
-	var/projectiles_per_shot = 3
-	var/deviation = 0.3
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg/action(atom/target)
-	if(!action_checks(target)) return
-	var/turf/targloc = get_turf(target)
-	var/target_x = targloc.x
-	var/target_y = targloc.y
-	var/target_z = targloc.z
-	targloc = null
-	spawn	for(var/i=1 to min(projectiles, projectiles_per_shot))
-		if(!chassis) break
-		var/turf/curloc = get_turf(chassis)
-		var/dx = round(gaussian(0,deviation),1)
-		var/dy = round(gaussian(0,deviation),1)
-		targloc = locate(target_x+dx, target_y+dy, target_z)
-		if (!targloc || !curloc)
-			continue
-		if (targloc == curloc)
-			continue
-
-		playsound(chassis, fire_sound, 50, 1)
-		var/obj/item/projectile/A = new projectile(curloc)
-		src.projectiles--
-		A.firer = chassis.occupant
-		A.original = target
-		A.current = curloc
-		A.yo = targloc.y - curloc.y
-		A.xo = targloc.x - curloc.x
-		A.process()
-		sleep(2)
-	set_ready_state(0)
-	log_message("Fired from [src.name], targeting [target].")
-	do_after_cooldown()
-	return
+	projectiles_per_shot = 3
+	deviation = 0.3
+	shot_delay = 2
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	name = "\improper SRM-8 missile rack"
