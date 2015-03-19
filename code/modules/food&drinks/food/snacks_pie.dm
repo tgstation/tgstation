@@ -33,7 +33,6 @@
 	icon_state = "berryclafoutis"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 10, "berryjuice" = 5, "vitamin" = 2)
-<<<<<<< HEAD
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/bearypie
 	name = "beary pie"
@@ -41,9 +40,6 @@
 	icon_state = "bearypie"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
 	list_reagents = list("nutriment" = 2, "vitamin" = 3)
-=======
->>>>>>> b5979a49fe43e9e059e6c165b309df0b1c018087
-
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/meatpie
 	name = "meat-pie"
