@@ -498,15 +498,6 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return !(src.stat || src.weakened || src.stunned || src.restrained())
 
-/mob/living/carbon/human/proc/play_xylophone()
-	if(!src.xylophone)
-		visible_message("<span class='notice'>[src] begins playing \his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","You hear a spooky xylophone melody.")
-		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
-		playsound(loc, song, 50, 1, -1)
-		xylophone = 1
-		spawn(1200)
-			xylophone = 0
-
 /mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
@@ -706,8 +697,6 @@
 					src << "<span class='info'>You're completely exhausted.</span>"
 				else
 					src << "<span class='info'>You feel fatigued.</span>"
-			if(dna && dna.species.id && dna.species.id == "skeleton" && !H.w_uniform && !H.wear_suit)
-				H.play_xylophone()
 		else
 			if(H.wear_suit)
 				H.wear_suit.add_fingerprint(M)
