@@ -596,6 +596,7 @@
 #include "code\game\objects\items\weapons\AI_modules.dm"
 #include "code\game\objects\items\weapons\airlock_painter.dm"
 #include "code\game\objects\items\weapons\cards_ids.dm"
+#include "code\game\objects\items\weapons\chairpainter.dm"
 #include "code\game\objects\items\weapons\chrono_eraser.dm"
 #include "code\game\objects\items\weapons\cigs_lighters.dm"
 #include "code\game\objects\items\weapons\clown_items.dm"

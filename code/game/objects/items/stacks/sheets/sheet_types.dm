@@ -1,4 +1,4 @@
-/* Diffrent misc types of sheets
+/* Different misc types of sheets
  * Contains:
  *		Metal
  *		Plasteel
@@ -16,6 +16,10 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("swivel chair", /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("comfy chair", /obj/structure/stool/bed/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = 1, on_floor = 1), \
+	null, \
+	new/datum/stack_recipe("left couch part", /obj/structure/stool/bed/chair/couch/left/black, 2, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("middle couch part", /obj/structure/stool/bed/chair/couch/middle/black, 2, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("right couch part", /obj/structure/stool/bed/chair/couch/right/black, 2, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = 1, on_floor = 1), \
