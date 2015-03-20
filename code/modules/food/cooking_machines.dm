@@ -283,8 +283,8 @@ var/global/ingredientLimit = 10
 	var/image/I = image(src.ingredient.icon,,src.ingredient.icon_state)
 	I.transform *= 0.7
 	C.overlays += I
-	src.ingredient = null
 	qdel(src.ingredient)
+	src.ingredient = null
 	return
 
 // Deep Fryer //////////////////////////////////////////////////
@@ -346,9 +346,9 @@ var/global/ingredientLimit = 10
 	D.icon_state = src.ingredient.icon_state
 	D.overlays = src.ingredient.overlays
 	D.color = "#FFAD33"
-	src.ingredient = null
 	empty_icon() //see if the icon needs updating from the loss of oil
 	qdel(src.ingredient)
+	src.ingredient = null
 	return
 
 // Grill ///////////////////////////////////////////////////////
