@@ -187,6 +187,7 @@ var/global/list/library_section_names = list("Any", "Fiction", "Non-Fiction", "A
 	icon_state = "binder"
 	anchored = 1
 	density = 1
+	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/bookbinder/attackby(var/obj/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/paper/nano))
