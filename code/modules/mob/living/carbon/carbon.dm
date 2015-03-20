@@ -133,8 +133,6 @@
 	else
 		mode() // Activate held item
 
-
-
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(health >= 0)
 
@@ -154,9 +152,41 @@
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
+/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0)
+	var/damage = intensity - check_eye_prot()
+	if(..()) // we've been flashed
+		switch(damage)
+			if(1)
+				src << "<span class='warning'>Your eyes sting a little.</span>"
+				if(prob(40))
+					eye_stat += 1
 
-/mob/living/carbon/proc/eyecheck()
-	return 0
+			if(2)
+				src << "<span class='warning'>Your eyes burn.</span>"
+				eye_stat += rand(2, 4)
+
+			else
+				src << "Your eyes itch and burn severely!</span>"
+				eye_stat += rand(12, 16)
+
+		if(eye_stat > 10)
+			eye_blind += damage
+			eye_blurry += damage * rand(3, 6)
+
+			if(eye_stat > 20)
+				if (prob(eye_stat - 20))
+					src << "<span class='warning'>Your eyes start to burn badly!</span>"
+					disabilities |= NEARSIGHT
+				else if(prob(eye_stat - 25))
+					src << "<span class='warning'>You can't see anything!</span>"
+					disabilities |= BLIND
+			else
+				src << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
+		return 1
+
+	else if(damage == 0) // just enough protection
+		if(prob(20))
+			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
 
 /mob/living/carbon/proc/tintcheck()
 	return 0

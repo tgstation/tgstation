@@ -149,14 +149,10 @@
 		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")
 
 /proc/admin_forcemove(var/mob/mover, var/atom/newloc)
-	var/startdensity = mover.density
-	var/startflags = mover.pass_flags
-	var/startdestinationdensity = newloc.density
-	mover.density = 0
-	mover.pass_flags = ALL
-	newloc.density = 0
-	. = mover.Move(newloc)
-	mover.density = startdensity
-	mover.pass_flags = startflags
-	newloc.density = startdestinationdensity
+	mover.loc = newloc
+	mover.on_forcemove(newloc)
+
+/mob/proc/on_forcemove(var/atom/newloc)
+	return
+
 

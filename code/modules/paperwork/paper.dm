@@ -26,6 +26,7 @@
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
+	var/burning = 0 //Whether or not the paper is on fire
 
 
 /obj/item/weapon/paper/New()
@@ -86,6 +87,15 @@
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 			spawn(20)
 				spam_flag = 0
+
+
+/obj/item/weapon/paper/attack_hand()
+	var/mob/living/carbon/M = usr
+	if(burning)
+		M << "<span class='danger'>Picking up a burning paper seems awfully stupid.</span>"
+		return //Doesn't make any sense to pick up a burning paper
+	else //Probably isn't necessary but it's safer
+		..()
 
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
@@ -268,6 +278,9 @@
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
 
+	if(burning)
+		return
+
 	if(is_blind(user))
 		return
 
@@ -298,8 +311,39 @@
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 
+	if(is_hot(P))
+		if(user.disabilities & CLUMSY && prob(10))
+			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
+								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
+			user.unEquip(P)
+			user.adjust_fire_stacks(1)
+			user.IgniteMob()
+			return
+
+		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
+			return
+
+		user.unEquip(src)
+		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
+		burn(0, 100)
+
+
+
 	add_fingerprint(user)
 
+/obj/item/weapon/paper/fire_act()
+	burn(1, 50)
+
+/obj/item/weapon/paper/proc/burn(var/showmsg, var/burntime)
+	if(showmsg)
+		src.visible_message("<span class='warning'>[src] catches on fire!</span>")
+	burning = 1
+	icon_state = "paper_onfire"
+	info = "[stars(info)]"
+	sleep(burntime) //7 seconds
+	src.visible_message("<span class='danger'>[src] burns away, leaving behind a pile of ashes.</span>")
+	new /obj/effect/decal/cleanable/ash(src.loc)
+	qdel(src)
 
 /*
  * Premade paper

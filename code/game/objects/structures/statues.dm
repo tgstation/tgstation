@@ -57,9 +57,9 @@
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if(!D.bcell.use(D.drillcost))
-			D.update_charge()
+			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
 			return
-		D.update_charge()
+		D.update_icon()
 		if(!src.loc)
 			return
 		user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \

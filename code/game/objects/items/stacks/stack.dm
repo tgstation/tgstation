@@ -173,17 +173,24 @@
 	return 1
 
 /obj/item/stack/proc/use(var/used) // return 0 = borked; return 1 = had enough
+	if(zero_amount())
+		return 0
 	if (is_cyborg)
 		return source.use_charge(used * cost)
 	if (amount < used)
 		return 0
 	amount -= used
-	if (amount <= 0)
+	zero_amount()
+	update_icon()
+	return 1
+
+/obj/item/stack/proc/zero_amount()
+	if (amount < 1)
 		if(usr)
 			usr.unEquip(src, 1)
 		qdel(src)
-	update_icon()
-	return 1
+		return 1
+	return 0
 
 /obj/item/stack/proc/add(var/amount)
 	if (is_cyborg)
@@ -210,6 +217,7 @@
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
+		if(zero_amount())	return
 		var/obj/item/stack/F = new src.type( user, 1)
 		F.copy_evidences(src)
 		user.put_in_hands(F)
@@ -225,6 +233,7 @@
 /obj/item/stack/attackby(obj/item/W as obj, mob/user as mob, params)
 
 	if (istype(W, src.type))
+		if(zero_amount())	return
 		var/obj/item/stack/S = W
 		if (S.is_cyborg)
 			var/to_transfer = min(src.amount, round((S.source.max_energy - S.source.energy) / S.cost))

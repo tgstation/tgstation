@@ -107,10 +107,10 @@
 
 /obj/machinery/implantchair/put_mob(mob/living/carbon/M as mob)
 	if(!iscarbon(M))
-		usr << "<span class='userdanger'>The [src.name] cannot hold this!</span>"
+		usr << "<span class='warning'>The [src.name] cannot hold this!</span>"
 		return
 	if(src.occupant)
-		usr << "<span class='userdanger'>The [src.name] is already occupied!</span>"
+		usr << "<span class='warning'>The [src.name] is already occupied!</span>"
 		return
 	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE

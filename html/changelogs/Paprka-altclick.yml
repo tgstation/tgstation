@@ -1,6 +1,0 @@
-author: Paprka
-
-delete-after: True
-
-changes:
-  - tweak: "Labcoats and uniforms no longer use action buttons and object verbs to adjust their aesthetic style. Alt click them to adjust."

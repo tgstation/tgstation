@@ -10,7 +10,8 @@
 	slices_num = 3
 	filling_color = "#FF0000"
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/rawcutlet/slice)
+/obj/item/weapon/reagent_containers/food/snacks/meat/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/rawcutlet/slice, reagents_per_slice)
+	..()
 	var/image/I = new(icon, "rawcutlet_coloration")
 	I.color = filling_color
 	slice.overlays += I
@@ -18,7 +19,7 @@
 	slice.name = "raw [name] cutlet"
 	slice.meat_type = name
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
+/obj/item/weapon/reagent_containers/food/snacks/meat/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency)
 	..()
 	S.name = "[name] steak"
 
@@ -32,7 +33,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain/human
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/rawcutlet/plain/human
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/human/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/rawcutlet/plain/human/slice)
+/obj/item/weapon/reagent_containers/food/snacks/meat/human/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/rawcutlet/plain/human/slice, reagents_per_slice)
 	..()
 	if(subjectname)
 		slice.subjectname = subjectname
@@ -41,7 +42,7 @@
 		slice.subjectjob = subjectjob
 		slice.name = "raw [subjectjob] cutlet"
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
+/obj/item/weapon/reagent_containers/food/snacks/meat/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency)
 	..()
 	if(subjectname)
 		S.name = "[subjectname] meatsteak"
@@ -170,7 +171,8 @@
 	name = "steak"
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
-	list_reagents = list("nutriment" = 2, "vitamin" = 1)
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 1)
 	trash = /obj/item/trash/plate
 	filling_color = "#B22222"
 
@@ -198,10 +200,11 @@
 	icon_state = "rawcutlet"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/cutlet/plain
 	bitesize = 2
+	list_reagents = list("nutriment" = 1)
 	filling_color = "#B22222"
 	var/meat_type = "meat"
 
-/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
+/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency)
 	..()
 	S.name = "[meat_type] cutlet"
 
@@ -213,7 +216,7 @@
 	var/subjectname = ""
 	var/subjectjob = null
 
-/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/plain/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
+/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/plain/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency)
 	..()
 	if(subjectname)
 		S.name = "[subjectname] [initial(S.name)]"
@@ -236,7 +239,8 @@
 	desc = "A cooked meat cutlet."
 	icon_state = "cutlet"
 	bitesize = 2
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 2)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	filling_color = "#B22222"
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet/plain

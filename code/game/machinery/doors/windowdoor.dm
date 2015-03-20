@@ -262,22 +262,6 @@
 
 	add_fingerprint(user)
 
-	//ninja sword garbage
-	if (src.density && istype(I, /obj/item/weapon/melee/energy/blade))
-		src.operating = -1
-		flick("[src.base_state]spark", src)
-		sleep(6)
-		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
-		playsound(src.loc, "sparks", 50, 1)
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
-		open(2)
-		emagged = 1
-		return 1
-
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(src.density || src.operating)
 			user << "<span class='warning'>You need to open the door to access the maintenance panel.</span>"

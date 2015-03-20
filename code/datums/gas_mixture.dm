@@ -37,7 +37,7 @@ What are the archived variables for?
 
 	var/volume = CELL_VOLUME
 
-	var/temperature = 0 //in Kelvin, use calculate_temperature() to modify
+	var/temperature = 0 //in Kelvin
 
 	var/last_share
 
@@ -746,7 +746,7 @@ What are the archived variables for?
 			if(border_multiplier)
 				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*temperature_archived)/new_self_heat_capacity
 			else
-				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*temperature_archived)/new_self_heat_capacity
+				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*temperature_archived)/new_self_heat_capacity
 
 		temperature_mimic(model, model.thermal_conductivity, border_multiplier)
 

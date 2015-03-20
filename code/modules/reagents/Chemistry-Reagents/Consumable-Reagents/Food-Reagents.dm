@@ -404,3 +404,9 @@ datum/reagent/consumable/vanilla
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#FFFACD"
+
+datum/reagent/consumable/eggyolk
+	name = "Egg Yolk"
+	id = "eggyolk"
+	description = "It's full of protein."
+	color = "#FFB500"

@@ -54,7 +54,7 @@
 	a_intent = "harm" //parrots now start "aggressive" since only player parrots will nuzzle.
 	attacktext = "chomps"
 	friendly = "grooms"
-	mob_size = 0
+	mob_size = MOB_SIZE_SMALL
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created

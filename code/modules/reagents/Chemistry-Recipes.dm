@@ -198,7 +198,7 @@ silicate
 	s.set_up(2, 1, location)
 	s.start()
 	for(var/mob/living/carbon/C in get_hearers_in_view(5, location))
-		if(C.eyecheck())
+		if(C.check_eye_prot())
 			continue
 		flick("e_flash", C.flash)
 		if(get_dist(C, location) < 4)
@@ -640,8 +640,7 @@ datum/chemical_reaction/pestkiller
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-		if(M:eyecheck() <= 0)
-			flick("e_flash", M.flash)
+		M.flash_eyes()
 
 	for(var/i = 1, i <= 4 + rand(1,2), i++)
 		var/chosen = pick(borks)
@@ -671,8 +670,7 @@ datum/chemical_reaction/pestkiller
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-		if(M:eyecheck() <= 0)
-			flick("e_flash", M.flash)
+		M.flash_eyes()
 
 	for(var/i = 1, i <= 4 + rand(1,2), i++)
 		var/chosen = pick(borks)
@@ -870,7 +868,7 @@ datum/chemical_reaction/pestkiller
 	required_other = 1
 /datum/chemical_reaction/slimeppotion/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	var/obj/item/weapon/slimepotion/P = new /obj/item/weapon/slimepotion
+	var/obj/item/slimepotion/P = new /obj/item/slimepotion
 	P.loc = get_turf(holder.my_atom)
 
 
@@ -913,7 +911,7 @@ datum/chemical_reaction/pestkiller
 	required_other = 1
 /datum/chemical_reaction/slimepotion2/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	var/obj/item/weapon/slimepotion2/P = new /obj/item/weapon/slimepotion2
+	var/obj/item/slimepotion2/P = new /obj/item/slimepotion2
 	P.loc = get_turf(holder.my_atom)
 //Adamantine
 /datum/chemical_reaction/slimegolem

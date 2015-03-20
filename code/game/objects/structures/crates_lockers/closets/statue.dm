@@ -30,8 +30,10 @@
 		intialBrute = L.getBruteLoss()
 		intialOxy = L.getOxyLoss()
 		if(ishuman(L))
-			name = "statue of [L.name]"
-			if(L.gender == "female")
+			var/mob/living/carbon/human/H = L
+			name = "statue of [H.name]"
+			H.bleedsuppress = 1
+			if(H.gender == "female")
 				icon_state = "human_female"
 		else if(ismonkey(L))
 			name = "statue of a monkey"

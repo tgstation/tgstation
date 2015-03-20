@@ -3,7 +3,7 @@
 	real_name = "alien larva"
 	icon_state = "larva0"
 	pass_flags = PASSTABLE | PASSMOB
-	mob_size = 0
+	mob_size = MOB_SIZE_SMALL
 
 	maxHealth = 25
 	health = 25

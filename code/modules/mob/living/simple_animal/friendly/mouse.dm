@@ -21,7 +21,7 @@
 	density = 0
 	ventcrawler = 2
 	pass_flags = PASSTABLE | PASSGRILLE
-	mob_size = 0
+	mob_size = MOB_SIZE_SMALL
 	var/body_color //brown, gray and white, leave blank for random
 
 /mob/living/simple_animal/mouse/New()

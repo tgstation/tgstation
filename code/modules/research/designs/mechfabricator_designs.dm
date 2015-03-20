@@ -640,7 +640,7 @@
 	id = "borg_upgrade_disablercooler"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/disablercooler
-	req_tech = list("combat" = 5, "power" = 4)
+	req_tech = list("combat" = 5, "powerstorage" = 4)
 	materials = list("$metal"=80000 , "$glass"=6000 , "$gold"= 2000, "$diamond" = 500)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
@@ -650,7 +650,7 @@
 	id = "borg_upgrade_jetpack"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/jetpack
-	req_tech = list("engineering" = 4, "power" = 4)
+	req_tech = list("engineering" = 4, "powerstorage" = 4)
 	materials = list("$metal"=10000, "$plasma"=5000, "$uranium" = 6000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")

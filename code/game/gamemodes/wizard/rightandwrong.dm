@@ -62,37 +62,29 @@
 				if("speargun")
 					new /obj/item/weapon/gun/projectile/automatic/speargun(get_turf(H))
 				if("cannon")
-					var/obj/item/weapon/gun/energy/lasercannon/gat
-					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.
-					new gat(get_turf(H))
+					var/obj/item/weapon/gun/energy/lasercannon/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.
 				if("crossbow")
-					var/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+					var/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
 				if("nuclear")
-					var/obj/item/weapon/gun/energy/gun/nuclear/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+					var/obj/item/weapon/gun/energy/gun/nuclear/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
 				if("sabr")
-					var/obj/item/weapon/gun/projectile/automatic/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+					var/obj/item/weapon/gun/projectile/automatic/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
 				if("bulldog")
-					var/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+					var/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
 				if("c20r")
-					var/obj/item/weapon/gun/projectile/automatic/c20r/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+					var/obj/item/weapon/gun/projectile/automatic/c20r/gat = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
 				if("saw")
-					var/obj/item/weapon/gun/projectile/automatic/l6_saw/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+					var/obj/item/weapon/gun/projectile/automatic/l6_saw/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
 				if("car")
-					var/obj/item/weapon/gun/projectile/automatic/m90/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
+					var/obj/item/weapon/gun/projectile/automatic/m90/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
 		else
 			switch (randomizemagic)
 				if("fireball")
@@ -108,7 +100,7 @@
 				if("knock")
 					new /obj/item/weapon/spellbook/oneuse/knock(get_turf(H))
 				if("horsemask")
-					new /obj/item/weapon/spellbook/oneuse/horsemask(get_turf(H))
+					new /obj/item/weapon/spellbook/oneuse/barnyard(get_turf(H))
 				if("charge")
 					new /obj/item/weapon/spellbook/oneuse/charge(get_turf(H))
 				if("summonitem")

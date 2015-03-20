@@ -798,7 +798,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		sleep(delayfraction)
 
 
-		if(!user || user.incapacitated() || !(user.loc == T))
+		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == T))
 			return 0
 
 		if(needhand)	//Sometimes you don't want the user to have to keep their active hand

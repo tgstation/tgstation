@@ -41,13 +41,13 @@
 
 /mob/living/carbon/alien/handle_vision()
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
+	else
 		sight |= SEE_MOBS
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_OBJS

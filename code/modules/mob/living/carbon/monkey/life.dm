@@ -97,16 +97,6 @@
 
 	handle_hud_icons_health()
 
-
-
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull"
-		else
-			pullin.icon_state = "pull0"
-
-	//blame the person who coded them. Temporary fix added.
-
 	return 1
 
 /mob/living/carbon/monkey/handle_random_events()

@@ -84,11 +84,12 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	icon = H.icon
-	icon_state = "husk_s"
+	icon_state = "zombie_s"
 	H.hair_style = null
 	H.update_hair()
 	human_overlays = H.overlays
-	adjustcolors(overmind.blob_reagent_datum.color)
+	if(overmind && overmind.blob_reagent_datum)
+		adjustcolors(overmind.blob_reagent_datum.color)
 	H.loc = src
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
 
@@ -152,7 +153,7 @@
 	maxbodytemp = 360
 	force_threshold = 10
 	environment_smash = 3
-	mob_size = 2
+	mob_size = MOB_SIZE_LARGE
 
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()

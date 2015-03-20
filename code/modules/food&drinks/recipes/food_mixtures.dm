@@ -111,43 +111,6 @@
 	required_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
 	result_amount = 6
 
-/datum/chemical_reaction/cakebatter
-	name = "Cake Batter"
-	id = "cakebatter"
-	result = null
-	required_reagents = list("milk" = 5)
-	result_amount = 1
-	required_container = /obj/item/weapon/reagent_containers/food/snacks/dough
-	mix_message = "The dough forms a cake batter."
-
-/datum/chemical_reaction/cakebatter/on_reaction(var/datum/reagents/holder)
-	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/cakebatter
-	S.loc = get_turf(holder.my_atom)
-	if(holder && holder.my_atom)
-		qdel(holder.my_atom)
-
-/datum/chemical_reaction/piedough
-	name = "Pie Dough"
-	id = "piedough"
-	result = null
-	required_reagents = list("milk" = 5)
-	result_amount = 1
-	required_container = /obj/item/weapon/reagent_containers/food/snacks/flatdough
-	mix_message = "The dough forms a pie dough."
-
-/datum/chemical_reaction/piedough/on_reaction(var/datum/reagents/holder)
-	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/piedough
-	S.loc = get_turf(holder.my_atom)
-	if(holder && holder.my_atom)
-		qdel(holder.my_atom)
-
-/datum/chemical_reaction/cakebatter/alt
-	id = "cakebatteralt"
-	required_reagents = list("soymilk" = 5)
-
-/datum/chemical_reaction/piedough/alt
-	id = "piedoughalt"
-	required_reagents = list("soymilk" = 5)
 
 /datum/chemical_reaction/imitationcarpmeat
 	name = "Imitation Carpmeat"
@@ -164,22 +127,33 @@
 	if(holder && holder.my_atom)
 		qdel(holder.my_atom)
 
-/datum/chemical_reaction/rawpastrybase
-	name = "Raw Pastry Base"
-	id = "rawpastrybase"
+/datum/chemical_reaction/dough
+	name = "Dough"
+	id = "dough"
 	result = null
-	required_reagents = list("milk" = 5)
+	required_reagents = list("water" = 10, "flour" = 15)
 	result_amount = 1
-	required_container = /obj/item/weapon/reagent_containers/food/snacks/doughslice
-	mix_message = "The doughslice forms a raw pastry base"
+	mix_message = "The ingredients form a dough."
 
-/datum/chemical_reaction/rawpastrybase/on_reaction(var/datum/reagents/holder)
-	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
-	S.loc = get_turf(holder.my_atom)
-	if(holder && holder.my_atom)
-		qdel(holder.my_atom)
+/datum/chemical_reaction/dough/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/dough(location)
 
-/datum/chemical_reaction/rawpastrybase/alt
-	id = "rawpastrybasealt"
-	required_reagents = list("soymilk" = 5)
+/datum/chemical_reaction/cakebatter
+	name = "Cake Batter"
+	id = "cakebatter"
+	result = null
+	required_reagents = list("eggyolk" = 15, "flour" = 15, "sugar" = 5)
+	result_amount = 1
+	mix_message = "The ingredients form a cake batter."
+
+/datum/chemical_reaction/cakebatter/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/cakebatter(location)
+
+/datum/chemical_reaction/cakebatter/vegan
+	id = "vegancakebatter"
+	required_reagents = list("soymilk" = 15, "flour" = 15, "sugar" = 5)
 
