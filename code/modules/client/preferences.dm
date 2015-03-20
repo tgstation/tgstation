@@ -891,4 +891,3 @@ datum/preferences
 
 		character.update_body()
 		character.update_hair()
-		//character.regenerate_icons()
