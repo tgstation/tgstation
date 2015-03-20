@@ -328,3 +328,82 @@
 				power_supply.give(shot.e_cost)	//...to recharge the shot
 
 	return 1
+
+/obj/item/weapon/gun/energy/sniper
+	name = "beam sniper rifle"
+	desc = "A rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
+	icon_state = "crossbow"
+	item_state = "crossbow"
+	fire_sound = 'sound/weapons/marauder.ogg'
+	origin_tech = "combat=6;materials=5;powerstorage=4"
+	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
+	slot_flags = SLOT_BACK
+	fire_delay = 35
+	w_class = 4.0
+	var/zoomed = 0
+
+/obj/item/weapon/gun/energy/sniper/attack_self(mob/living/user as mob)
+	if(istype(user,/mob/living/carbon/human))
+		zoom(user)
+	else
+		usr << "You are unable to focus through the [src]."
+
+/obj/item/weapon/gun/energy/sniper/dropped(mob/living/user as mob)
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		H.unzoom()
+	..()
+
+/obj/item/weapon/gun/energy/sniper/proc/zoom(var/mob/living/carbon/human/user, var/tileoffset = 11,var/viewsize = 12) //tileoffset is client view offset in the direction the user is facing. viewsize is how far out this thing zooms. 7 is normal view
+	var/cannotzoom
+
+	if(user.stat)
+		usr << "You can't focus your eyes while you're dead."
+		cannotzoom = 1
+	else if(!zoomed && user.get_active_hand() != src)
+		usr << "You are too distracted to look through the [src], perhaps if it was in your active hand this might work better."
+		cannotzoom = 1
+
+	if(!zoomed && !cannotzoom)
+	//	if(!user.hud_used.hud_shown)
+	//		user.button_pressed_F12(1)	// If the user has already limited their HUD this avoids them having a HUD when they zoom in
+	//	user.button_pressed_F12(1)
+		user.client.view = viewsize
+		zoomed = 1
+		user.notransform = 1
+
+		var/tilesize = 32
+		var/viewoffset = tilesize * tileoffset
+
+		switch(user.dir)
+			if (NORTH)
+				user.client.pixel_x = 0
+				user.client.pixel_y = viewoffset
+			if (SOUTH)
+				user.client.pixel_x = 0
+				user.client.pixel_y = -viewoffset
+			if (EAST)
+				user.client.pixel_x = viewoffset
+				user.client.pixel_y = 0
+			if (WEST)
+				user.client.pixel_x = -viewoffset
+				user.client.pixel_y = 0
+
+		user.visible_message("[user] peers through the [src]'s scope.")
+
+	else
+		user.unzoom()
+		zoomed = 0
+
+		if(!cannotzoom)
+			user.visible_message("[zoomed ? "[user] looks up from the [src]" : "[user] lowers the [src]"].")
+
+	return
+
+/mob/living/carbon/human/proc/unzoom()
+	client.view = world.view
+//	if(!hud_used.hud_shown)
+//		button_pressed_F12(1)
+	notransform = 0
+	client.pixel_x = 0
+	client.pixel_y = 0
