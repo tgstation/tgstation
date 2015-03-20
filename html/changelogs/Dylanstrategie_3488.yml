@@ -1,0 +1,5 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - bugfix: Fix library computers showing as books when power is cut off
+  - imageadd: Add unpowered and broken library computer sprites
