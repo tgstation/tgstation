@@ -34,6 +34,12 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 10, "berryjuice" = 5, "vitamin" = 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/pie/bearypie
+	name = "beary pie"
+	desc = "No brown bears, this is a good sign."
+	icon_state = "bearypie"
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
+	list_reagents = list("nutriment" = 2, "vitamin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/meatpie
 	name = "meat-pie"

@@ -45,6 +45,14 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
 
+datum/table_recipe/bearger
+	name = "Bearger"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/bear = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/bearger
+
 /datum/table_recipe/fishburger
 	name = "Fish burger"
 	reqs = list(

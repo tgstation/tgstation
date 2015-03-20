@@ -71,6 +71,14 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 5)
 
+/obj/item/weapon/reagent_containers/food/snacks/bearsteak
+	name = "Filet migrawr"
+	desc = "Because eating bear wasn't manly enough."
+	icon_state = "bearsteak"
+	trash = /obj/item/trash/plate
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 6)
+	list_reagents = list("nutriment" = 2, "vitamin" = 5, "manlydorf" = 5)
+
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "faggot"
 	desc = "A great meal all round. Not a cord of wood."
