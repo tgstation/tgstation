@@ -1574,7 +1574,7 @@ proc/populate_seed_list()
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cherries)
 	plant_icon = "cherry"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,15), "sugar" = list(1,15))
+	chems = list("nutriment" = list(1,15))
 
 	lifespan = 35
 	maturation = 5
