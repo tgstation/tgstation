@@ -81,9 +81,9 @@
 
 	else if(issilicon(M))
 		add_logs(user, M, "flashed", object="[src.name]")
-		if(M.flash_eyes())
-			M.Weaken(rand(5,10))
-			user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>")
+		flick("e_flash", M.flash)
+		M.Weaken(rand(5,10))
+		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>")
 		return 1
 
 	user.visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")

@@ -416,6 +416,9 @@
 /mob/living/silicon/setEarDamage()
 	return
 
+/mob/living/silicon/check_eye_prot()
+	return 2
+
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)
 		return aicamera.selectpicture(aicamera)
