@@ -293,42 +293,6 @@ datum/reagent/toxin/beer2/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-
-
-//ACID
-
-
-datum/reagent/toxin/acid
-	name = "Sulphuric acid"
-	id = "sacid"
-	description = "A strong mineral acid with the molecular formula H2SO4."
-	color = "#DB5008" // rgb: 219, 80, 8
-	toxpwr = 1
-	var/acidpwr = 10 //the amount of protection removed from the armour
-
-datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/volume)
-	if(!istype(C))
-		return
-	if(method != TOUCH)
-		if(!C.unacidable)
-			C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
-			return
-
-	C.acid_act(acidpwr, toxpwr, volume)
-
-datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
-	if(istype(O.loc, /mob)) //handled in human acid_act()
-		return
-	O.acid_act(acidpwr, toxpwr, volume)
-
-datum/reagent/toxin/acid/fluacid
-	name = "Fluorosulfuric acid"
-	id = "facid"
-	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
-	color = "#8E18A9" // rgb: 142, 24, 169
-	toxpwr = 2
-	acidpwr = 20
-
 datum/reagent/toxin/coffeepowder
 	name = "Coffee Grounds"
 	id = "coffeepowder"
@@ -353,7 +317,7 @@ datum/reagent/toxin/mutetoxin //the new zombie powder.
 	toxpwr = 0
 
 datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
-	M.silent += REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
+	M.silent = max(M.silent, 3)
 	..()
 
 datum/reagent/toxin/staminatoxin
@@ -369,6 +333,39 @@ datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
 	data = max(data - 1, 3)
 	..()
 
+
+//ACID
+
+
+datum/reagent/toxin/acid
+	name = "Sulphuric acid"
+	id = "sacid"
+	description = "A strong mineral acid with the molecular formula H2SO4."
+	color = "#DB5008" // rgb: 219, 80, 8
+	toxpwr = 1
+	var/acidpwr = 10 //the amount of protection removed from the armour
+
+datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/volume)
+	if(!istype(C))
+		return
+	if(method != TOUCH)
+		C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
+		return
+
+	C.acid_act(acidpwr, toxpwr, volume)
+
+datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
+	if(istype(O.loc, /mob)) //handled in human acid_act()
+		return
+	O.acid_act(acidpwr, toxpwr, volume)
+
+datum/reagent/toxin/acid/fluacid
+	name = "Fluorosulfuric acid"
+	id = "facid"
+	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
+	color = "#8E18A9" // rgb: 142, 24, 169
+	toxpwr = 2
+	acidpwr = 20
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM

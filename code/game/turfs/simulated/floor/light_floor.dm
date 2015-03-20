@@ -24,7 +24,7 @@
     if(on)
         switch(state)
             if(0)
-                icon_state = "light_on_[coloredlights[currentcolor]]"
+                icon_state = "light_on-[coloredlights[currentcolor]]"
                 SetLuminosity(1)
             if(1)
                 var/num = pick("1","2","3","4")

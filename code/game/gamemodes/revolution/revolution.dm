@@ -117,7 +117,7 @@
 /datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		rev_mind.current << "<span class='userdanger'><FONT size = 3>You are a member of the revolutionaries' leadership!</FONT></span>"
+		rev_mind.current << "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
 	for(var/datum/objective/objective in rev_mind.objectives)
 		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		rev_mind.special_role = "Head Revolutionary"

@@ -101,12 +101,6 @@
 		C.Deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/Destroy()
-	var/turf/T = loc
-	for(var/obj/structure/cable/C in T)
-		C.Destroy()
-	..()
-
 /obj/structure/lattice/catwalk/Deconstruct()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
@@ -118,6 +112,7 @@
 	if(istype(C, /obj/item/stack/cable_coil))
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //catwalks 'enable' coil laying on space tiles, not the catwalks themselves
+		return
 
 /obj/structure/lattice/catwalk/updateOverlays()
 	overlays.Cut()

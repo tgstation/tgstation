@@ -22,6 +22,8 @@
 
 
 /datum/game_mode/blob/declare_completion()
+	if(round_converted) //So badmin blobs later don't step on the dead natural blobs metaphorical toes
+		..()
 	if(blobwincount <= blobs.len)
 		feedback_set_details("round_end_result","win - blob took over")
 		world << "<FONT size = 3><B>The blob has taken over the station!</B></FONT>"

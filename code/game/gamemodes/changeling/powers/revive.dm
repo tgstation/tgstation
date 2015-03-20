@@ -23,6 +23,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.restore_blood()
+		H.remove_all_embedded_objects()
 	user << "<span class='notice'>We have regenerated.</span>"
 
 	user.status_flags &= ~(FAKEDEATH)

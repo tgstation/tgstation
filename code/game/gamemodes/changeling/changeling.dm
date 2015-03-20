@@ -154,8 +154,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
 	if (you_are)
-		changeling.current << "<span class='userdanger'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
-	changeling.current << "<span class='userdanger'>Use say \":g message\" to communicate with your fellow changelings.</span>"
+		changeling.current << "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
+	changeling.current << "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>"
 	changeling.current << "<b>You must complete the following tasks:</b>"
 
 	if (changeling.current.mind)
@@ -222,7 +222,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				text += "<br><font color='green'><b>The changeling was successful!</b></font>"
 				feedback_add_details("changeling_success","SUCCESS")
 			else
-				text += "<br><span class='userdanger'>The changeling has failed.</span>"
+				text += "<br><span class='boldannounce'>The changeling has failed.</span>"
 				feedback_add_details("changeling_success","FAIL")
 			text += "<br>"
 

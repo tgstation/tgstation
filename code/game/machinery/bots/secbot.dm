@@ -358,7 +358,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
-	visible_message("<span class='userdanger'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

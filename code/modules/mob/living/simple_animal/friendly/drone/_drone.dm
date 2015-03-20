@@ -31,7 +31,7 @@
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	languages = DRONE
-	mob_size = 0
+	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	staticOverlays = list()
 	var/staticChoice = "static"
@@ -119,15 +119,6 @@
 		user << "<span class='notice'>The drone's LED screen shows a BSOD, Blue screen of Death!</span>"
 
 
-/mob/living/simple_animal/drone/Move()
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull"
-		else
-			pullin.icon_state = "pull0"
-	..()
-
-
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
 	return 1
 
@@ -181,3 +172,6 @@
 					L -= I
 		if(cleared)
 			src << "--- [class] alarm in [A.name] has been cleared."
+
+/mob/living/simple_animal/drone/check_eye_prot()
+	return 2
