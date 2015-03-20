@@ -110,8 +110,6 @@
 /obj/structure/lattice/catwalk/Destroy()
 	var/turf/T = loc
 	T.cancable = 0
-	for(var/obj/structure/cable/C in T)
-		C.Destroy()
 	..()
 
 /obj/structure/lattice/catwalk/Deconstruct()
