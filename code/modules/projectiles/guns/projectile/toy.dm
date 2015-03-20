@@ -1,12 +1,11 @@
 /obj/item/weapon/gun/projectile/automatic/toy
 	name = "foam force SMG"
-	desc = "A bullpup three-round burst toy SMG. Ages 8 and up."
+	desc = "A prototype three-round burst toy submachine gun. Ages 8 and up."
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "saber"
-	item_state = "c20r"
-	mag_type = /obj/item/ammo_box/magazine/toy
+	item_state = "gun"
+	mag_type = /obj/item/ammo_box/magazine/toy/smg
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-	fire_delay = 2
 	force = 0
 	throwforce = 0
 	burst_size = 3
@@ -20,7 +19,6 @@
 	name = "foam force pistol"
 	desc = "A small, easily concealable toy handgun. Ages 8 and up."
 	icon_state = "pistol"
-	item_state = "gun"
 	w_class = 2
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	fire_sound = 'sound/weapons/Gunshot.ogg'
@@ -51,8 +49,10 @@
 /obj/item/weapon/gun/projectile/shotgun/toy/crossbow
 	name = "foam force crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamcrossbow"
 	item_state = "crossbow"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/crossbow
 	fire_sound = 'sound/items/syringeproj.ogg'
 	slot_flags = SLOT_BELT
 	w_class = 2
