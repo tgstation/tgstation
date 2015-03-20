@@ -392,7 +392,7 @@ Auto Patrol: []"},
 		..()
 		return
 
-	if(type != /obj/item/clothing/head/helmet) //Eh, but we don't want people making secbots out of space helmets.
+	if(type != /obj/item/clothing/head/helmet && type != /obj/item/clothing/head/helmet/sec) //Eh, but we don't want people making secbots out of space helmets.
 		return
 
 	if(S.secured)
