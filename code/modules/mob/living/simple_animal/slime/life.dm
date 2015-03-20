@@ -198,9 +198,6 @@
 		else
 			Evolve()
 
-/mob/living/simple_animal/slime/pet/handle_nutrition()
-	return
-
 /mob/living/simple_animal/slime/proc/add_nutrition(var/nutrition_to_add = 0, var/lastnut = 0)
 	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
 	if(nutrition >= (lastnut + 50))
@@ -310,7 +307,7 @@
 
 		if(!Target) // If we have no target, we are wandering or following orders
 			if (Leader)
-				if (holding_still)
+				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if(canmove && isturf(loc))
 					step_to(src, Leader)
@@ -322,7 +319,7 @@
 					step(src, pick(cardinal))
 
 			else
-				if (holding_still)
+				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if (docile && pulledby)
 					holding_still = 10
@@ -332,21 +329,11 @@
 			spawn()
 				AIprocess()
 
-/mob/living/simple_animal/slime/pet/handle_targets()
-	if(attacked > 50) attacked = 50
+/mob/living/simple_animal/slime/handle_automated_movement()
+	return //random movement is currently handled in handle_target()
 
-	if(attacked > 0)
-		attacked--
-
-	if(Discipline > 0)
-
-		if(Discipline >= 5 && rabid)
-			if(prob(60))
-				rabid = 0
-
-		if(prob(10))
-			Discipline--
-	return
+/mob/living/simple_animal/slime/handle_automated_speech()
+	return //random speech is currently handled in handle_speech()
 
 /mob/living/simple_animal/slime/proc/handle_mood()
 	//Mood starts here

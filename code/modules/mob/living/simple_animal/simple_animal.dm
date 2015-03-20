@@ -338,9 +338,8 @@
 	if(O.flags & NOBLUDGEON)
 		return
 
-	user.changeNext_move(CLICK_CD_MELEE)
-
 	if(istype(O, /obj/item/stack/medical))
+		user.changeNext_move(CLICK_CD_MELEE)
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
@@ -363,28 +362,13 @@
 			return
 
 	if((meat_type || skin_type) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/sharpness = is_sharp(O)
 		if(sharpness)
 			harvest(user, sharpness)
 			return
 
-	user.do_attack_animation(src)
-	var/damage = 0
-	if(O.force)
-		if(O.force >= force_threshold)
-			damage = O.force
-			if (O.damtype == STAMINA)
-				damage = 0
-			visible_message("<span class='danger'>[user] has [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] [src] with [O]!</span>",\
-							"<span class='userdanger'>[user] has [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] you with [O]!</span>")
-		else
-			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>",\
-							"<span class='userdanger'>[O] bounces harmlessly off of [src].</span>")
-		playsound(loc, O.hitsound, 50, 1, -1)
-	else
-		user.visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>",\
-							"<span class='warning'>This weapon is ineffective, it does no damage.</span>")
-	adjustBruteLoss(damage)
+	..()
 
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later

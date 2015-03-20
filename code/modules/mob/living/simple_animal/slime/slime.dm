@@ -6,6 +6,7 @@
 	say_message = "hums"
 	ventcrawler = 2
 	var/is_adult = 0
+	var/docile = 0
 	languages = SLIME | HUMAN
 	faction = list("slime")
 
@@ -24,7 +25,6 @@
 	health = 150
 	gender = NEUTER
 
-	update_icon = 0
 	nutrition = 700
 
 	see_in_dark = 8
@@ -62,18 +62,6 @@
 	var/colour = "grey"
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
-
-
-/mob/living/simple_animal/slime/pet
-	name = "pet slime"
-	desc = "A lovable, domesticated slime."
-	health = 100
-	maxHealth = 100
-
-/mob/living/simple_animal/slime/pet/New()
-	..()
-	if(is_adult)
-		overlays += "aslime-:33"
 
 /mob/living/simple_animal/slime/New()
 	if(is_adult)
@@ -162,7 +150,8 @@
 		else
 			stat(null, "Health: [round((health / 150) * 100)]%")
 
-		stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
+		if(!docile)
+			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
 		if(amount_grown >= 10)
 			if(is_adult)
 				stat(null, "You can reproduce!")
@@ -323,10 +312,7 @@
 				anchored = 0
 				step_away(src,M)
 
-		return
-
-
-	if(..()) //successful attack
+	else if(..()) //successful attack
 		attacked += 10
 
 /mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -403,7 +389,7 @@
 		var/obj/item/stack/sheet/mineral/plasma/S = W
 		S.use(1)
 		return
-	else if(W.force > 0)
+	if(W.force > 0)
 		attacked += 10
 		if(prob(25))
 			user.do_attack_animation(src)
@@ -411,7 +397,7 @@
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
-	else if(W.force >= 3)
+	if(W.force >= 3)
 		var/force_effect = 2 * W.force
 		if(is_adult)
 			force_effect = round(W.force/2)
@@ -499,4 +485,7 @@
 	msg += "*---------*</span>"
 	user << msg
 	return
+
+/mob/living/simple_animal/slime/pet
+	docile = 1
 

@@ -293,7 +293,7 @@
 	updatehealth()
 	if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 		death()
-		return
+		return 1
 
 	if(stat != DEAD)
 
