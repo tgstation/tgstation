@@ -382,8 +382,8 @@
 		if(emagged)
 			user << "<span class='userdanger'><font size=3>You're never going to make it to Orion...</span></font>"
 			user.death()
-			sleep(30)
 			emagged = 0 //removes the emagged status after you lose
+			playing = 0 //also a new game
 			name = "The Orion Trail"
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
@@ -561,6 +561,7 @@
 				src.visible_message("<span class='userdanger'><font size=3>A miniature black hole suddenly appears in front of [src], devouring [usr] alive!</font></span>")
 				usr.Stun(10) //you can't run :^)
 				var/S = new /obj/singularity/academy(usr.loc)
+				emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
 				sleep(50)
 				src.visible_message("<span class='userdanger'>[S] winks out, just as suddenly as it appeared.</span>")
 				qdel(S)
