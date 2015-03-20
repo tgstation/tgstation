@@ -162,7 +162,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			break
 
 	if(callShuttle)
-		if(emergency.mode < SHUTTLE_DOCKED)
+		if(emergency.mode < SHUTTLE_CALL)
 			emergency.request(null, 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
