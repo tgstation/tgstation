@@ -311,6 +311,13 @@ Class Procs:
 			update_mt_menu=1
 
 		if("buffer" in href_list)
+			if(istype(src, /obj/machinery/telecomms))
+				if(!hasvar(src, "id"))
+					usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+					return
+			else if(!hasvar(src, "id_tag"))
+				usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+				return
 			P.buffer = src
 			usr << "<span class='confirm'>A green light flashes, and the device appears in the multitool buffer.</span>"
 			update_mt_menu=1
