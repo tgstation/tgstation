@@ -66,7 +66,7 @@
 		desc = desc + " The display flickers slightly."
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
-	name = "HUD GAR glasses"
+	name = "HUD gar glasses"
 	desc = "GAR glasses with a HUD."
 	icon_state = "gars"
 	item_state = "garb"
@@ -76,8 +76,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars
-	name = "SUPER HUD GAR glasses"
-	desc = "SUPER GAR glasses with a HUD."
+	name = "giga HUD gar glasses"
+	desc = "GIGA GAR glasses with a HUD."
 	icon_state = "supergars"
 	item_state = "garb"
 	force = 12

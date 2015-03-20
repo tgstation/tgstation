@@ -16,7 +16,7 @@
 	darkness_view = 8
 
 /obj/item/clothing/glasses/meson/gar
-	name = "Gar Mesons"
+	name = "gar mesons"
 	icon_state = "garm"
 	item_state = "garm"
 	desc = "Do the impossible, see the invisible!"
@@ -100,7 +100,7 @@
 
 /obj/item/clothing/glasses/sunglasses/garb/supergarb
 	desc = "Believe in us humans."
-	name = "black super gar glasses"
+	name = "black giga gar glasses"
 	icon_state = "supergarb"
 	item_state = "garb"
 	force = 12
@@ -118,7 +118,7 @@
 
 /obj/item/clothing/glasses/sunglasses/gar/supergar
 	desc = "We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!"
-	name = "super gar glasses"
+	name = "giga gar glasses"
 	icon_state = "supergar"
 	item_state = "gar"
 	force = 12
