@@ -259,7 +259,7 @@
 
 			if(traitor.total_TC)
 				if(traitor.spent_TC)
-					text += "<br><span class='sinister'>TC: [traitor.spent_TC]/[traitor.total_TC] - The tools used by the [(traitor in implanted) ? "greytide" : special_role_text] were: [list2text(traitor.uplink_items_bought, " "]</span>"
+					text += "<br><span class='sinister'>TC: [traitor.spent_TC]/[traitor.total_TC] - The tools used by the [(traitor in implanted) ? "greytide" : special_role_text] were: [list2text(traitor.uplink_items_bought, " ")]</span>"
 				else
 					text += "<span class='sinister'>The [(traitor in implanted) ? "greytide" : special_role_text] was a smooth operator this round (did not purchase any uplink items)</span>"
 
