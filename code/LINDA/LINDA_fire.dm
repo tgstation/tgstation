@@ -61,7 +61,7 @@
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/simulated/location = loc
-	if(!istype(location))	return 0
+	if(!istype(location) || !(location.air))	return 0
 
 	if(volume > CELL_VOLUME*0.95)	bypassing = 1
 	else bypassing = 0
@@ -101,7 +101,7 @@
 		Kill()
 		return
 
-	if(location.air.toxins < 0.5 || location.air.oxygen < 0.5)
+	if(!(location.air) || location.air.toxins < 0.5 || location.air.oxygen < 0.5)
 		Kill()
 		return
 
