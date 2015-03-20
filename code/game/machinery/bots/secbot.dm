@@ -375,7 +375,8 @@ Auto Patrol: []"},
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effect/decal/cleanable/oil(loc)
+	var/obj/effect/decal/cleanable/oildecal = new/obj/effect/decal/cleanable/oil(loc)
+	oildecal.reagents.add_reagent("oil", 15)
 	qdel(src)
 
 /obj/machinery/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)

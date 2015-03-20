@@ -559,7 +559,8 @@ datum/reagent/radium/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(volume >= 3)
 		if(!istype(T, /turf/space))
-			new /obj/effect/decal/cleanable/greenglow(T)
+			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
+			reagentdecal.reagents.add_reagent("radium", volume)
 			return
 
 datum/reagent/thermite
@@ -630,7 +631,8 @@ datum/reagent/uranium/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(volume >= 3)
 		if(!istype(T, /turf/space))
-			new /obj/effect/decal/cleanable/greenglow(T)
+			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
+			reagentdecal.reagents.add_reagent("uranium", volume)
 
 datum/reagent/aluminium
 	name = "Aluminium"

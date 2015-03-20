@@ -554,7 +554,8 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	new /obj/effect/decal/cleanable/ash(src.loc)
+	var/obj/effect/decal/cleanable/ashdecal = new/obj/effect/decal/cleanable/ash(src.loc)
+	ashdecal.reagents.add_reagent("ash", 6)
 	src.visible_message("<span class='suicide'> The [src.name] explodes!","</span> You hear a snap!")
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	qdel(src)

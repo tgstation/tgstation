@@ -188,7 +188,8 @@ var/global/list/crematoriums = new/list()
 			if(O != connected) //Creamtorium does not burn hot enough to destroy the tray
 				qdel(O)
 
-		new /obj/effect/decal/cleanable/ash(src)
+		var/obj/effect/decal/cleanable/ashdecal = new/obj/effect/decal/cleanable/ash(src)
+		ashdecal.reagents.add_reagent("ash", rand(10, 40))
 		sleep(30)
 		locked = 0
 		update_icon()

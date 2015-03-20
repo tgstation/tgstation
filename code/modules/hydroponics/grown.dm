@@ -807,6 +807,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	for(var/atom/A in get_turf(target))
 		src.reagents.reaction(A)
+	src.reagents.trans_to(splat, reagents.total_volume)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom)
 	..()
