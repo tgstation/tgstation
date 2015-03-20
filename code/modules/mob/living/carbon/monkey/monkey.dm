@@ -138,7 +138,6 @@
 
 		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			var/damage = 5
 			if(prob(95))
 				Weaken(10)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
@@ -148,7 +147,6 @@
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [name]!</span>")
 			add_logs(M, src, "disarmed", admin=0)
-			adjustBruteLoss(damage)
 			updatehealth()
 	return
 

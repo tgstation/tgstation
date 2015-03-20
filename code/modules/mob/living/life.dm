@@ -58,31 +58,10 @@
 
 
 /mob/living/proc/handle_breathing()
+	return
 
 /mob/living/proc/handle_mutations_and_radiation()
-	if(radiation)
-
-		switch(radiation)
-			if(0 to 50)
-				radiation--
-				if(prob(25))
-					adjustToxLoss(1)
-					updatehealth()
-
-			if(50 to 75)
-				radiation -= 2
-				adjustToxLoss(1)
-				if(prob(5))
-					radiation -= 5
-				updatehealth()
-
-			if(75 to 100)
-				radiation -= 3
-				adjustToxLoss(3)
-				updatehealth()
-
-		radiation = Clamp(radiation, 0, 100)
-
+	return
 
 /mob/living/proc/handle_chemicals_in_body()
 	if(reagents)

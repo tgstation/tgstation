@@ -193,7 +193,7 @@
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-
+	return
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)

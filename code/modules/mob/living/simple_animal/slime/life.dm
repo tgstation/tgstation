@@ -15,10 +15,8 @@
 		handle_nutrition()
 		handle_targets()
 		if (!ckey)
-			handle_speech_and_mood()
-
-/mob/living/simple_animal/slime/handle_breathing()
-	return
+			handle_mood()
+			handle_speech()
 
 /mob/living/simple_animal/slime/proc/AIprocess()  // the master AI process
 
@@ -150,7 +148,8 @@
 
 /mob/living/simple_animal/slime/handle_chemicals_in_body()
 
-	if(reagents) reagents.metabolize(src)
+	if(reagents)
+		reagents.metabolize(src)
 
 	if (reagents.get_reagent_amount("plasma")>=5)
 		mutation_chance = min(mutation_chance + 5,50) //Prevents mutation chance going >50%
@@ -162,75 +161,16 @@
 
 	return //TODO: DEFERRED
 
-
-/mob/living/simple_animal/slime/handle_mutations_and_radiation()
-	return
-
-/mob/living/simple_animal/slime/handle_regular_hud_updates()
-	return
-
 /mob/living/simple_animal/slime/handle_regular_status_updates()
 
-	if(is_adult)
-		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-	else
-		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
+	..()
 
-	if(health < config.health_threshold_dead && stat != DEAD)
-		death()
-		return
-
-	else if(health < config.health_threshold_crit)
-
-		if(!reagents.has_reagent("epinephrine"))
-			adjustOxyLoss(3)
-
-		if(stat != DEAD)
-			Paralyse(3)
-			stat = UNCONSCIOUS
-	else
-		if(stat != DEAD)
-			stat = CONSCIOUS
-
-	if(prob(30))
+	if(stat != DEAD && prob(30))
 		adjustOxyLoss(-1)
 		adjustToxLoss(-1)
 		adjustFireLoss(-1)
 		adjustCloneLoss(-1)
 		adjustBruteLoss(-1)
-
-	if (stat == DEAD)
-		lying = 1
-		eye_blind = max(eye_blind, 1)
-	else
-		if(stunned > 0)
-			AdjustStunned(-1)
-		if(weakened > 0)
-			AdjustWeakened(-1)
-		if (paralysis > 0)
-			AdjustParalysis(-1)
-
-	if(stuttering)
-		stuttering = 0
-
-	if(eye_blind)
-		eye_blind = 0
-		eye_blind = max(eye_blind, 1)
-
-	setEarDamage((ear_damage < 25 ? 0 : ear_damage),(disabilities & DEAF ? 1 :0))
-
-	density = !( src.lying )
-
-	if(disabilities & BLIND)
-		eye_blind = max(eye_blind, 1)
-
-	if(eye_blurry > 0)
-		eye_blurry = 0
-
-	if(druggy > 0)
-		druggy = 0
-
-	return 1
 
 /mob/living/simple_animal/slime/proc/handle_nutrition()
 
@@ -251,6 +191,9 @@
 			Reproduce()
 		else
 			Evolve()
+
+/mob/living/simple_animal/slime/pet/handle_nutrition()
+	return
 
 /mob/living/simple_animal/slime/proc/add_nutrition(var/nutrition_to_add = 0, var/lastnut = 0)
 	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
@@ -381,11 +324,29 @@
 			spawn()
 				AIprocess()
 
-/mob/living/simple_animal/slime/proc/handle_speech_and_mood()
+/mob/living/simple_animal/slime/pet/handle_targets()
+	if(attacked > 50) attacked = 50
+
+	if(attacked > 0)
+		attacked--
+
+	if(Discipline > 0)
+
+		if(Discipline >= 5 && rabid)
+			if(prob(60))
+				rabid = 0
+
+		if(prob(10))
+			Discipline--
+	return
+
+/mob/living/simple_animal/slime/proc/handle_mood()
 	//Mood starts here
 	var/newmood = ""
-	if (rabid || attacked) newmood = "angry"
-	else if (Target) newmood = "mischevous"
+	if (rabid || attacked)
+		newmood = "angry"
+	else if(Target)
+		newmood = "mischevous"
 
 	if (!newmood)
 		if (Discipline && prob(25))
@@ -400,6 +361,7 @@
 		mood = newmood
 		regenerate_icons()
 
+/mob/living/simple_animal/slime/proc/handle_speech()
 	//Speech understanding starts here
 	var/to_say
 	if (speech_buffer.len > 0)

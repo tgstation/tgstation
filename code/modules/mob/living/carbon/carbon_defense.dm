@@ -13,7 +13,7 @@
 
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
-	if(lying || isslime(src))
+	if(lying)
 		if(surgeries.len)
 			if(user.a_intent == "help")
 				for(var/datum/surgery/S in surgeries)
@@ -34,7 +34,7 @@
 		if(D.IsSpreadByTouch())
 			ContractDisease(D)
 
-	if(lying || isslime(src))
+	if(lying)
 		if(user.a_intent == "help")
 			if(surgeries.len)
 				for(var/datum/surgery/S in surgeries)

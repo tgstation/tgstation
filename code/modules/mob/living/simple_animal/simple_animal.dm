@@ -83,6 +83,7 @@
 /mob/living/simple_animal/updatehealth()
 	if(health > maxHealth)
 		health = maxHealth
+	..()
 	return
 
 /mob/living/simple_animal/handle_regular_status_updates()
@@ -91,6 +92,23 @@
 
 	else if(health < 1)
 		death()
+	else
+		if(stuttering)
+			stuttering = 0
+
+		if(eye_blind)
+			eye_blind = min(eye_blind, 1)
+
+		setEarDamage((ear_damage < 25 ? 0 : ear_damage),(disabilities & DEAF ? 1 :0))
+
+		if(disabilities & BLIND)
+			eye_blind = max(eye_blind, 1)
+
+		if(eye_blurry > 0)
+			eye_blurry = 0
+
+		if(druggy > 0)
+			druggy = 0
 
 /mob/living/simple_animal/proc/auto_revive()
 	if(stat == DEAD && health > 0)
