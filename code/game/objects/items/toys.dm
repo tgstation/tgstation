@@ -434,8 +434,9 @@
 	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
 	var/drawtype = "rune"
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
@@ -515,9 +516,20 @@
 			temp = "letter"
 		else if(graffiti.Find(drawtype))
 			temp = "graffiti"
+		var/graf_rot
+		if(oriented.Find(drawtype))
+			switch(user.dir)
+				if(EAST)
+					graf_rot = 90
+				if(SOUTH)
+					graf_rot = 180
+				if(WEST)
+					graf_rot = 270
+				else
+					graf_rot = 0
 		user << "You start drawing a [temp] on the [target.name]."
 		if(instant || do_after(user, 50))
-			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp)
+			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
 			user << "You finish drawing [temp]."
 			if(uses)
 				uses--
