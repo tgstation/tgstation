@@ -257,6 +257,12 @@
 				text += "<br><font color='red'><B>The [(traitor in implanted) ? "greytide" : special_role_text] has failed!</B></font>"
 				feedback_add_details("traitor_success","FAIL")
 
+			if(traitor.total_TC)
+				if(traitor.spent_TC)
+					text += "<br><span class='sinister'>TC: [traitor.spent_TC]/[traitor.total_TC] - The tools used by the [(traitor in implanted) ? "greytide" : special_role_text] were: [list2text(traitor.uplink_items_bought, " "]</span>"
+				else
+					text += "<span class='sinister'>The [(traitor in implanted) ? "greytide" : special_role_text] was a smooth operator this round (did not purchase any uplink items)</span>"
+
 		world << text
 	return 1
 
@@ -298,6 +304,7 @@
 			target_radio.traitor_frequency = freq
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
+			traitor_mob.mind.total_TC += target_radio.hidden_uplink.uses
 		else if (istype(R, /obj/item/device/pda))
 			// generate a passcode if the uplink is hidden in a PDA
 			var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
@@ -309,6 +316,7 @@
 
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
+			traitor_mob.mind.total_TC += R.hidden_uplink.uses
 	//Begin code phrase.
 	if(!safety)//If they are not a rev. Can be added on to.
 		traitor_mob << "The Syndicate provided you with the following information on how to identify other agents:"

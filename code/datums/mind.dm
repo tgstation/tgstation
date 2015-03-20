@@ -65,6 +65,9 @@ datum/mind
 
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
+	var/list/uplink_items_bought = list()
+	var/total_TC = 0
+	var/spent_TC = 0
 
 	proc/transfer_to(mob/living/new_character)
 		if(!istype(new_character))

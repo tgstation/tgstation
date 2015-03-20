@@ -13,6 +13,7 @@
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 40
 
+	var/obj/nuclear_uplink
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -147,7 +148,12 @@
 	update_all_synd_icons()
 
 	if(uplinklocker)
-		new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
+		var/obj/structure/closet/C = new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
+		spawn(10) //gives time for the contents to spawn properly
+			for(var/obj/item/thing in C)
+				if(thing.hidden_uplink)
+					nuclear_uplink = thing
+					break
 	if(nuke_spawn && synd_spawn.len > 0)
 		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
 		the_bomb.r_code = nuke_code
@@ -218,7 +224,7 @@
 		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/space/plasmaman/nuclear(synd_mob), slot_wear_suit)
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/tank/plasma/plasmaman(synd_mob), slot_s_store)
 		synd_mob.equip_or_collect(new /obj/item/clothing/mask/breath/(synd_mob), slot_wear_mask)
-		synd_mob.internal = synd_mob.get_item_by_slot(slot_s_store) 
+		synd_mob.internal = synd_mob.get_item_by_slot(slot_s_store)
 		if (synd_mob.internals)
 			synd_mob.internals.icon_state = "internal1"
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
@@ -348,7 +354,15 @@
 			else
 				text += "body destroyed"
 			text += ")"
-
+		var/obj/item/nuclear_uplink = src:nuclear_uplink
+		if(nuclear_uplink && nuclear_uplink.hidden_uplink)
+			if(nuclear_uplink.hidden_uplink.purchase_log.len)
+				text += "<span class='sinister'>The tools used by the syndicate operatives were: "
+				for(var/entry in nuclear_uplink.hidden_uplink.purchase_log)
+					text += "<br>[entry]TC(s)"
+				text += "</span>"
+			else
+				text += "<span class='sinister'>The nukeops were smooth operators this round (did not purchase any uplink items)</span>"
 		world << text
 	return 1
 

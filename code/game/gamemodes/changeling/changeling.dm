@@ -212,6 +212,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				text += "<br><font color='red'><B>The changeling has failed.</B></font>"
 				feedback_add_details("changeling_success","FAIL")
 
+			if(changeling.total_TC)
+				if(changeling.spent_TC)
+					text += "<br><span class='sinister'>TC: [changeling.spent_TC]/[changeling.total_TC] - The tools used by the Changeling were: [list2text(changeling.uplink_items_bought)]</span>"
+				else
+					text += "<span class='sinister'>The Changeling was a smooth operator this round (did not purchase any uplink items)</span>"
+
 		world << text
 
 
