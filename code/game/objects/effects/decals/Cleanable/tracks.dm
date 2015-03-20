@@ -68,6 +68,7 @@ var/global/list/image/fluidtrack_cache=list()
 	*/
 /obj/effect/decal/cleanable/blood/tracks/resetVariables()
 	stack = list()
+	..("stack", "setdirs")
 	setdirs=list(
 		"1"=0,
 		"2"=0,
@@ -78,8 +79,6 @@ var/global/list/image/fluidtrack_cache=list()
 		"64"=0,
 		"128"=0
 	)
-
-	..("stack", "setdirs")
 
 /obj/effect/decal/cleanable/blood/tracks/proc/AddTracks(var/list/DNA, var/comingdir, var/goingdir, var/bloodcolor="#A10808")
 	var/updated=0
@@ -107,12 +106,21 @@ var/global/list/image/fluidtrack_cache=list()
 			if(!istype(stack))
 				stack = list()
 			stack.Add(track)
-			if(isnull(setdirs["[b]"]))
+			if(!setdirs || !istype(setdirs, /list) || setdirs.len < 8 || isnull(setdirs["[b]"]))
 				warning("[src] had a bad directional [b] or bad list [setdirs.len]")
 				warning("Setdirs keys:")
 				for(var/key in setdirs)
 					warning(key)
-				continue
+				setdirs=list (
+				"1"=0,
+				"2"=0,
+				"4"=0,
+				"8"=0,
+				"16"=0,
+				"32"=0,
+				"64"=0,
+				"128"=0
+				)
 			setdirs["[b]"]=stack.Find(track)
 			updatedtracks |= b
 			updated=1
@@ -132,6 +140,21 @@ var/global/list/image/fluidtrack_cache=list()
 			if(!istype(stack))
 				stack = list()
 			stack.Add(track)
+			if(!setdirs || !istype(setdirs, /list) || setdirs.len < 8 || isnull(setdirs["[b]"]))
+				warning("[src] had a bad directional [b] or bad list [setdirs.len]")
+				warning("Setdirs keys:")
+				for(var/key in setdirs)
+					warning(key)
+				setdirs=list (
+								"1"=0,
+								"2"=0,
+								"4"=0,
+								"8"=0,
+								"16"=0,
+								"32"=0,
+								"64"=0,
+								"128"=0
+							)
 			setdirs["[b]"]=stack.Find(track)
 			updatedtracks |= b
 			updated=1
