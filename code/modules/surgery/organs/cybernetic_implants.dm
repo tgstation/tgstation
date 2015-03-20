@@ -109,6 +109,7 @@
 	var/save_sight = owner.sight
 	owner.sight &= 0
 	owner.disabilities |= BLIND
+	owner << "<span class='warning'>Static obfuscates your vision!</span>"
 	spawn(50)
 	owner.sight |= save_sight
 	owner.disabilities &= ~BLIND
@@ -130,6 +131,7 @@
 /obj/item/cybernetic_implant/brain/emp_act(severity)
 	var/stun_amount = 5 + (severity-1 ? 0 : 5)
 	owner.Stun(stun_amount)
+	owner << "<span class='warning'>Your body seizes up!</span>"
 	return stun_amount
 
 /obj/item/cybernetic_implant/brain/anti_drop
@@ -138,6 +140,8 @@
 	var/active = 0
 	var/l_hand_ignore = 0
 	var/r_hand_ignore = 0
+	var/obj/item/l_hand_obj = null
+	var/obj/item/r_hand_obj = null
 	implant_color = "#DE7E00"
 
 /obj/item/cybernetic_implant/brain/anti_drop/function()
@@ -146,28 +150,30 @@
 /obj/item/cybernetic_implant/brain/anti_drop/ui_action_click()
 	active = !active
 	if(active)
-		if(owner.l_hand)
-			if(NODROP in owner.l_hand.flags)
+		l_hand_obj = owner.l_hand
+		r_hand_obj = owner.r_hand
+		if(l_hand_obj)
+			if(owner.l_hand.flags & NODROP)
 				l_hand_ignore = 1
 			else
 				owner.l_hand.flags |= NODROP
 				l_hand_ignore = 0
 
-		if(owner.r_hand)
-			if(NODROP in owner.r_hand.flags)
+		if(r_hand_obj)
+			if(owner.r_hand.flags & NODROP)
 				r_hand_ignore = 1
 			else
 				owner.r_hand.flags |= NODROP
 				r_hand_ignore = 0
 
-		if(!owner.r_hand && !owner.l_hand)
+		if(!l_hand_obj && !r_hand_obj)
 			owner << "<span class='notice'>You are not holding any items, your hands relax...</span>"
 			active = 0
 		else
-			var/noodles = 0
-			noodles += !l_hand_ignore && owner.l_hand ? 1 : 0
-			noodles += !r_hand_ignore && owner.r_hand ? 2 : 0
-			switch(noodles)
+			var/msg = 0
+			msg += !l_hand_ignore && l_hand_obj ? 1 : 0
+			msg += !r_hand_ignore && r_hand_obj ? 2 : 0
+			switch(msg)
 				if(1)
 					owner << "<span class='notice'>Your left hand's grip tightens.</span>"
 				if(2)
@@ -175,18 +181,20 @@
 				if(3)
 					owner << "<span class='notice'>Both of your hand's grips tighten.</span>"
 	else
-		if(!l_hand_ignore && owner.l_hand)
-			owner.l_hand.flags &= ~NODROP
-		if(!r_hand_ignore && owner.r_hand)
-			owner.r_hand.flags &= ~NODROP
+		if(!l_hand_ignore && owner.l_hand && owner.l_hand == l_hand_obj)
+			owner.l_hand.flags ^= NODROP
+		if(!r_hand_ignore && owner.r_hand && owner.r_hand == r_hand_obj)
+			owner.r_hand.flags ^= NODROP
 		owner << "<span class='notice'>Your hands relax...</span>"
+		l_hand_obj = null
+		r_hand_obj = null
 
 /obj/item/cybernetic_implant/brain/anti_drop/emp_act(severity)
 	if(prob(50 + (25 * (severity-1 ? 0 : 1))))
-		if(!l_hand_ignore && owner.l_hand)
-			owner.l_hand.flags &= ~NODROP
-		if(!r_hand_ignore && owner.r_hand)
-			owner.r_hand.flags &= ~NODROP
+		if(!l_hand_ignore && owner.l_hand && owner.l_hand == l_hand_obj)
+			owner.l_hand.flags ^= NODROP
+		if(!r_hand_ignore && owner.r_hand && owner.r_hand == r_hand_obj)
+			owner.r_hand.flags ^= NODROP
 	..()
 
 /obj/item/cybernetic_implant/brain/anti_stun

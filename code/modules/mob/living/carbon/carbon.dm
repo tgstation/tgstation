@@ -189,10 +189,9 @@
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
 
 /mob/living/carbon/proc/eyecheck()
-	for(var/obj/item/I in contents)
-		if(istype(I,/obj/item/cybernetic_implant/eyes))
-			var/obj/item/cybernetic_implant/eyes/EFP = I
-			return EFP.flash_protect
+	var/obj/item/cybernetic_implant/eyes/EFP = locate() in src
+	if(EFP)
+		return EFP.flash_protect
 	return 0
 
 /mob/living/carbon/proc/tintcheck()
