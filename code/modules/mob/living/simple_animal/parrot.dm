@@ -126,14 +126,14 @@
 		stat("Held Item", held_item)
 		stat("Mode",a_intent)
 
-/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(speaker != src && prob(20)) //Dont imitate ourselves
 		if(speech_buffer.len >= 20)
 			speech_buffer -= pick(speech_buffer)
 		speech_buffer |= html_decode(raw_message)
 	..()
 
-/mob/living/simple_animal/parrot/radio(message, message_mode) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
+/mob/living/simple_animal/parrot/radio(message, message_mode, list/spans) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
 	if(. != 0)
 		return .
@@ -141,22 +141,22 @@
 	switch(message_mode)
 		if(MODE_HEADSET)
 			if (ears)
-				ears.talk_into(src, message)
+				ears.talk_into(src, message, , spans)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_SECURE_HEADSET)
 			if (ears)
-				ears.talk_into(src, message, 1)
+				ears.talk_into(src, message, 1, spans)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
 			if (ears)
-				ears.talk_into(src, message, message_mode)
+				ears.talk_into(src, message, message_mode, spans)
 			return ITALICS | REDUCE_RANGE
 
 	if(message_mode in radiochannels)
 		if(ears)
-			ears.talk_into(src, message, message_mode)
+			ears.talk_into(src, message, message_mode, spans)
 			return ITALICS | REDUCE_RANGE
 
 	return 0

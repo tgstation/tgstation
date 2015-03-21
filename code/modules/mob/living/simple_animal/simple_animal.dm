@@ -231,12 +231,13 @@
 	adjustBruteLoss(20)
 	return
 
-/mob/living/simple_animal/say_quote(var/text)
-	if(speak_emote && speak_emote.len)
+/mob/living/simple_animal/say_quote(input)
+	var/ending = copytext(input, length(input))
+	if(speak_emote && speak_emote.len && ending != "?" && ending != "!")
 		var/emote = pick(speak_emote)
 		if(emote)
-			return "[emote], \"[text]\""
-	return "says, \"[text]\"";
+			return "[emote], \"[input]\""
+	return ..()
 
 /mob/living/simple_animal/emote(var/act, var/m_type=1, var/message = null)
 	if(stat)

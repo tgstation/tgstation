@@ -3,7 +3,6 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
-	say_message = "hums"
 	ventcrawler = 2
 	var/is_adult = 0
 	var/docile = 0
@@ -20,6 +19,10 @@
 
 	see_in_dark = 8
 	update_slimes = 0
+	
+	verb_say = "telepathically chirps"
+	verb_ask = "telepathically asks"
+	verb_yell = "telephatically cries"
 
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.

@@ -4,10 +4,8 @@
 	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
 
-/datum/mutation/human/wacky/say_mod(var/message)
-	if(message)
-		message = "<span class='sans'>[message]</span>"
-	return message
+/datum/mutation/human/wacky/get_spans()
+	return list(SPAN_SANS)
 
 /datum/mutation/human/mute
 	name = "Mute"
