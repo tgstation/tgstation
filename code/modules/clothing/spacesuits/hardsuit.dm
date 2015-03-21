@@ -45,7 +45,17 @@
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
 	action_button_name = "Toggle Helmet"
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
+	var/obj/item/weapon/tank/jetpack/suit/jetpack = null
 
+/obj/item/clothing/suit/space/hardsuit/verb/Jetpack()
+	set name = "Toggle Inbuilt Jetpack"
+	set category = "Object"
+	jetpack.toggle()
+
+/obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets()
+	set name = "Toggle Inbuilt Jetpack Stabilization"
+	set category = "Object"
+	jetpack.toggle_rockets()
 
 	//Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/engine
@@ -63,21 +73,11 @@
 	item_state = "eng_hardsuit"
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
-	var/obj/item/weapon/tank/jetpack/suit/jetpack = null
+
 
 /obj/item/clothing/suit/space/hardsuit/engine/New()
 	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
 	..()
-
-/obj/item/clothing/suit/space/hardsuit/engine/verb/Jetpack()
-	set name = "Toggle Inbuilt Jetpack"
-	set category = "Object"
-	jetpack.toggle()
-
-/obj/item/clothing/suit/space/hardsuit/engine/verb/Jetpack_Rockets()
-	set name = "Toggle Inbuilt Jetpack Stabilization"
-	set category = "Object"
-	jetpack.toggle_rockets()
 
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
@@ -231,6 +231,9 @@
 	..()
 	flags ^= NODROP
 
+/obj/item/clothing/suit/space/hardsuit/syndi/New()
+	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
+	..()
 
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
