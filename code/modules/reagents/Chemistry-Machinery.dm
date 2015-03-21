@@ -1082,10 +1082,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		usr << "The machine cannot hold any more items."
 		return 1
 
-	//Fill machine with the plantbag!
-	if(istype(O, /obj/item/weapon/storage/bag/plants))
+	//Fill machine with bags
+	if(istype(O, /obj/item/weapon/storage/bag/plants)||istype(O, /obj/item/weapon/storage/bag/chem))
 		var/obj/item/weapon/storage/bag/B = O
-		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+		for (var/obj/item/G in O.contents)
 			B.remove_from_storage(G,src)
 			holdingitems += G
 			if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
@@ -1093,7 +1093,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				break
 
 		if(!O.contents.len)
-			user << "You empty the plant bag into the All-In-One grinder."
+			user << "You empty the [O] into the All-In-One grinder."
 
 		src.updateUsrDialog()
 		return 0
