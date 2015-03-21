@@ -155,10 +155,9 @@
 		SSevent.reschedule()
 
 	else 																//Speed it up
-		SSevent.frequency_lower = round(SSevent.frequency_lower * 0.8)	//1 minute | 48 seconds | 34.8 seconds | 30.7 seconds | 24.6 seconds
-		SSevent.frequency_upper = round(SSevent.frequency_upper * 0.6)	//5 minutes | 3 minutes | 1 minute 48 seconds | 1 minute 4.8 seconds | 38.9 seconds
-		if(SSevent.frequency_upper < SSevent.frequency_lower)
-			SSevent.frequency_upper = SSevent.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
+		SSevent.frequency_upper -= 600	//The upper bound falls a minute each time, making the AVERAGE time between events lessen
+		if(SSevent.frequency_upper < SSevent.frequency_lower) //Sanity
+			SSevent.frequency_upper = SSevent.frequency_lower
 
 		SSevent.reschedule()
 		message_admins("Summon Events intensifies, events will now occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes.")
