@@ -60,11 +60,16 @@
 /obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 5, targeted = 1)
 	add_logs(user, M, "flashed", object="[src.name]")
 	if(user && targeted)
+		if(M.weakeyes)
+			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
 		if(M.flash_eyes(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
 			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+			if(M.weakeyes)
+				M.Stun(2)
+				M.visible_message("<span class='disarm'><b>[M]</b> gasps and shields their eyes!</span>")
 		else
 			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 	else
