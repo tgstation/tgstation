@@ -566,7 +566,7 @@
 	if((TARGET && (doing & FIGHTING)) || graytide) // this is a redundancy check
 		var/mob/living/M = TARGET
 		if(istype(M,/mob/living))
-			if(M in range(FUZZY_CHANCE_LOW,src))
+			if(M in range(MIN_RANGE_FIND,src))
 				if(M.health > 1)
 					if(main_hand)
 						if(main_hand.force != 0)
