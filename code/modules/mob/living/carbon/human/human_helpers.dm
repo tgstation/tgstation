@@ -88,6 +88,9 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
+	var/obj/item/cybernetic_implant/eyes/EFP = locate() in src
+	if(EFP)
+		number += EFP.flash_protect
 	return number
 
 /mob/living/carbon/human/check_ear_prot()

@@ -190,6 +190,12 @@
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
 
+/mob/living/carbon/proc/eyecheck()
+	var/obj/item/cybernetic_implant/eyes/EFP = locate() in src
+	if(EFP)
+		return EFP.flash_protect
+	return 0
+
 /mob/living/carbon/proc/tintcheck()
 	return 0
 
