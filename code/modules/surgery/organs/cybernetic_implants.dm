@@ -112,7 +112,7 @@
 	owner << "<span class='warning'>Static obfuscates your vision!</span>"
 	spawn(50)
 	owner.sight |= save_sight
-	owner.disabilities &= ~BLIND
+	owner.disabilities ^= BLIND
 
 
 //[[[[BRAIN]]]]
@@ -181,10 +181,7 @@
 				if(3)
 					owner << "<span class='notice'>Both of your hand's grips tighten.</span>"
 	else
-		if(!l_hand_ignore && owner.l_hand && owner.l_hand == l_hand_obj)
-			owner.l_hand.flags ^= NODROP
-		if(!r_hand_ignore && owner.r_hand && owner.r_hand == r_hand_obj)
-			owner.r_hand.flags ^= NODROP
+		release_items()
 		owner << "<span class='notice'>Your hands relax...</span>"
 		l_hand_obj = null
 		r_hand_obj = null
@@ -195,10 +192,7 @@
 	var/obj/item/L_item = owner.l_hand
 	var/obj/item/R_item = owner.r_hand
 
-	if(!l_hand_ignore && owner.l_hand && owner.l_hand == l_hand_obj)
-		owner.l_hand.flags ^= NODROP
-	if(!r_hand_ignore && owner.r_hand && owner.r_hand == r_hand_obj)
-		owner.r_hand.flags ^= NODROP
+	release_items()
 	..()
 	if(L_item)
 		A = pick(oview(range))
@@ -208,6 +202,12 @@
 		A = pick(oview(range))
 		R_item.throw_at(A, range, 2)
 		owner << "<span class='notice'>Your right arm spasms and throws the [R_item.name]!</span>"
+
+/obj/item/cybernetic_implant/brain/anti_drop/proc/release_items()
+	if(!l_hand_ignore && l_hand_obj in owner.contents)
+		l_hand_obj.flags ^= NODROP
+	if(!r_hand_ignore && r_hand_obj in owner.contents)
+		r_hand_obj.flags ^= NODROP
 
 /obj/item/cybernetic_implant/brain/anti_stun
 	name = "CNS Rebooter implant"
