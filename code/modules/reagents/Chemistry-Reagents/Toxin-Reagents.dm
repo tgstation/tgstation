@@ -258,10 +258,8 @@ datum/reagent/toxin/chloralhydrate
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	current_cycle++
+	switch(current_cycle)
 		if(1 to 10)
 			M.confused += 2
 			M.drowsyness += 2
@@ -269,7 +267,7 @@ datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
 			M.sleeping += 1
 		if(51 to INFINITY)
 			M.sleeping += 1
-			M.adjustToxLoss((data - 50)*REM)
+			M.adjustToxLoss((current_cycle - 50)*REM)
 	..()
 	return
 
@@ -281,15 +279,13 @@ datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/beer2/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	switch(data)
+	switch(current_cycle)
 		if(1 to 50)
 			M.sleeping += 1
 		if(51 to INFINITY)
 			M.sleeping += 1
-			M.adjustToxLoss((data - 50)*REM)
-	data++
+			M.adjustToxLoss((current_cycle - 50)*REM)
+	current_cycle++
 	..()
 	return
 

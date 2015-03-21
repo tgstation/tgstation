@@ -53,15 +53,13 @@ datum/reagent/consumable/carrotjuice
 datum/reagent/consumable/carrotjuice/on_mob_life(var/mob/living/M as mob)
 	M.eye_blurry = max(M.eye_blurry-1 , 0)
 	M.eye_blind = max(M.eye_blind-1 , 0)
-	if(!data)
-		data = 1
-	switch(data)
+	switch(current_cycle)
 		if(1 to 20)
 			//nothing
 		if(21 to INFINITY)
-			if (prob(data-10))
+			if (prob(current_cycle-10))
 				M.disabilities &= ~NEARSIGHT
-	data++
+	current_cycle++
 	..()
 	return
 
@@ -418,10 +416,8 @@ datum/reagent/consumable/atomicbomb/on_mob_life(var/mob/living/M as mob)
 	if (!M.slurring)
 		M.slurring = 1
 	M.slurring += 3
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	current_cycle++
+	switch(current_cycle)
 		if(51 to 200)
 			M.sleeping += 1
 		if(201 to INFINITY)
@@ -437,19 +433,17 @@ datum/reagent/consumable/gargle_blaster
 	color = "#664300" // rgb: 102, 67, 0
 
 datum/reagent/consumable/gargle_blaster/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	data++
+	current_cycle++
 	M.dizziness +=6
-	if(data >= 15 && data <45)
+	if(current_cycle >= 15 && current_cycle <45)
 		if (!M.slurring)
 			M.slurring = 1
 		M.slurring += 3
-	else if(data >= 45 && prob(50) && data <55)
+	else if(current_cycle >= 45 && prob(50) && current_cycle <55)
 		M.confused = max(M.confused+3,0)
-	else if(data >=55)
+	else if(current_cycle >=55)
 		M.druggy = max(M.druggy, 55)
-	else if(data >=200)
+	else if(current_cycle >=200)
 		M.adjustToxLoss(2)
 	..()
 	return
@@ -462,19 +456,17 @@ datum/reagent/consumable/neurotoxin
 
 datum/reagent/consumable/neurotoxin/on_mob_life(var/mob/living/carbon/M as mob)
 	M.weakened = max(M.weakened, 3)
-	if(!data)
-		data = 1
-	data++
+	current_cycle++
 	M.dizziness +=6
-	if(data >= 15 && data <45)
+	if(current_cycle >= 15 && current_cycle <45)
 		if (!M.slurring)
 			M.slurring = 1
 		M.slurring += 3
-	else if(data >= 45 && prob(50) && data <55)
+	else if(current_cycle >= 45 && prob(50) && current_cycle <55)
 		M.confused = max(M.confused+3,0)
-	else if(data >=55)
+	else if(current_cycle >=55)
 		M.druggy = max(M.druggy, 55)
-	else if(data >=200)
+	else if(current_cycle >=200)
 		M.adjustToxLoss(2)
 	..()
 	return
@@ -489,10 +481,8 @@ datum/reagent/consumable/hippies_delight
 
 datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 50)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	current_cycle++
+	switch(current_cycle)
 		if(1 to 5)
 			if (!M.slurring) M.slurring = 1
 			M.Dizzy(10)

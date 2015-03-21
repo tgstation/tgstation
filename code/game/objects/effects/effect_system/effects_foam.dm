@@ -102,7 +102,7 @@
 ///////////////////////////////////////////////
 //FOAM EFFECT DATUM
 /datum/effect/effect/system/foam_spread
-	var/amount = 5		// the size of the foam spread.
+	var/amount = 10		// the size of the foam spread.
 	var/obj/chemholder
 	var/obj/effect/effect/foam/foamtype = /obj/effect/effect/foam
 	var/metal = 0
@@ -126,7 +126,7 @@
 	else
 		location = get_turf(loca)
 
-	amount = round(sqrt(amt / 3), 1)
+	amount = round(sqrt(amt / 2), 1)
 	carry.copy_to(chemholder, carry.total_volume)
 
 

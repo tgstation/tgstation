@@ -359,6 +359,9 @@ datum/reagents/proc/del_reagent(var/reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
+			if(istype(my_atom, /mob/living))
+				var/mob/living/M = my_atom
+				R.reagent_deleted(M)
 			reagent_list -= A
 			del(A)
 			update_total()
@@ -380,7 +383,7 @@ datum/reagents/proc/check_ignoreslow(var/mob/M)
 
 datum/reagents/proc/check_gofast(var/mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("hotline"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST

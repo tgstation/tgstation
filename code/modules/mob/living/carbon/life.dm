@@ -28,6 +28,9 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		//Heart Attacks, etc.
+		handle_heart()
+
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment
@@ -281,6 +284,9 @@
 	return
 
 /mob/living/carbon/proc/handle_blood()
+	return
+
+/mob/living/carbon/proc/handle_heart()
 	return
 
 /mob/living/carbon/proc/handle_random_events()

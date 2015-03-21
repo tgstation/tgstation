@@ -148,7 +148,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 20), 1))
-		reagents.add_reagent("hotline", 3 + round((potency / 10), 1))
+		reagents.add_reagent("salglu_solution", 1 + round((potency / 20), 1))
 		bitesize = 1 + round(reagents.total_volume / 3, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily
@@ -651,7 +651,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = /obj/item/seeds/icepepperseed
-	name = "ice-pepper"
+	name = "ice pepper"
 	desc = "It's a mutant strain of chili"
 	icon_state = "icepepper"
 	filling_color = "#0000CD"
@@ -666,7 +666,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
+		user << "<span class='info'>- Frost Oil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili

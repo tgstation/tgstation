@@ -86,6 +86,8 @@
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='danger'>You hear a heavy electrical crack.</span>" \
 	)
+	if(prob(25) && heart_attack)
+		heart_attack = 0
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
@@ -407,6 +409,12 @@ var/const/GALOSHES_DONT_HELP = 8
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+
+
+/mob/living/carbon/revive()
+	heart_attack = 0
+	..()
+	return
 
 /mob/living/carbon/blob_act()
 	if (stat == DEAD)
