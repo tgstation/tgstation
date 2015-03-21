@@ -142,7 +142,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
  * /obj/item/weapon/resetVariables()
  * 	..("var4")
  */
-/atom/movable/proc/resetVariables()
+/atom/movable/resetVariables()
 	loc = null
 
 	var/list/exclude = global.exclude + args // explicit var exclusion

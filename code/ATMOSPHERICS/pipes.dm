@@ -47,38 +47,35 @@
 
 /obj/machinery/atmospherics/pipe/return_air()
 	if(!parent)
-		parent = new /datum/pipeline()
+		parent = getFromDPool(/datum/pipeline)
 		parent.build_pipeline(src)
-
 	return parent.air
 
 
 /obj/machinery/atmospherics/pipe/build_network()
 	if(!parent)
-		parent = new /datum/pipeline()
+		parent = getFromDPool(/datum/pipeline)
 		parent.build_pipeline(src)
-
 	return parent.return_network()
 
 
 /obj/machinery/atmospherics/pipe/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(!parent)
-		parent = new /datum/pipeline()
+		parent = getFromDPool(/datum/pipeline)
 		parent.build_pipeline(src)
-
 	return parent.network_expand(new_network, reference)
 
 
 /obj/machinery/atmospherics/pipe/return_network(obj/machinery/atmospherics/reference)
 	if(!parent)
-		parent = new /datum/pipeline()
+		parent = getFromDPool(/datum/pipeline)
 		parent.build_pipeline(src)
-
 	return parent.return_network(reference)
 
 
 /obj/machinery/atmospherics/pipe/Destroy()
-	del(parent)
+	if(parent)
+		returnToDPool(parent)
 	for(var/obj/machinery/meter/M in src.loc)
 		if(M.target == src)
 			new /obj/item/pipe_meter(src.loc)
@@ -323,12 +320,12 @@
 /obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
 		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			returnToDPool(parent)
 		node1 = null
 
 	if(reference == node2)
 		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			returnToDPool(parent)
 		node2 = null
 
 	update_icon()
@@ -532,17 +529,17 @@
 /obj/machinery/atmospherics/pipe/manifold/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
 		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			returnToDPool(parent)
 		node1 = null
 
 	if(reference == node2)
 		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			returnToDPool(parent)
 		node2 = null
 
 	if(reference == node3)
 		if(istype(node3, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			returnToDPool(parent)
 		node3 = null
 
 	update_icon()
@@ -769,22 +766,22 @@
 /obj/machinery/atmospherics/pipe/manifold4w/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
 		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			returnToDPool(parent)
 		node1 = null
 
 	if(reference == node2)
 		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			returnToDPool(parent)
 		node2 = null
 
 	if(reference == node3)
 		if(istype(node3, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			returnToDPool(parent)
 		node3 = null
 
 	if(reference == node4)
 		if(istype(node4, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			returnToDPool(parent)
 		node4 = null
 
 	update_icon()

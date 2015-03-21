@@ -65,7 +65,7 @@ var/list/camera_names=list()
 	if(assembly)
 		qdel(assembly)
 		assembly = null
-	qdel(wires)
+	wires = null
 	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
 	..()
 

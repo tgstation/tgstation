@@ -91,10 +91,12 @@
 	else
 		if(node1)
 			node1.disconnect(src)
-			del(network1)
+			if(network1)
+				returnToDPool(network1)
 		if(node2)
 			node2.disconnect(src)
-			del(network2)
+			if(network2)
+				returnToDPool(network2)
 
 		node1 = null
 		node2 = null
