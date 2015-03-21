@@ -241,7 +241,7 @@ datum/reagent/initropidril/on_mob_life(var/mob/living/M as mob)
 datum/reagent/pancuronium
 	name = "Pancuronium"
 	id = "pancuronium"
-	description = "Knocks you out after 10 cycles, 7% chance to cause some oxygen loss."
+	description = "Knocks you out after 30 seconds, 7% chance to cause some oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.2
@@ -258,7 +258,7 @@ datum/reagent/pancuronium/on_mob_life(var/mob/living/M as mob)
 datum/reagent/sodium_thiopental
 	name = "Sodium Thiopental"
 	id = "sodium_thiopental"
-	description = "Puts you to sleep after 10 cycles, along with some major stamina loss."
+	description = "Puts you to sleep after 30 seconds, along with some major stamina loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.7
@@ -274,7 +274,7 @@ datum/reagent/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
 datum/reagent/sulfonal
 	name = "Sulfonal"
 	id = "sulfonal"
-	description = "Deals some toxin damage, and puts you to sleep after 22 cycles."
+	description = "Deals some toxin damage, and puts you to sleep after 66 seconds."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.1
@@ -297,7 +297,7 @@ datum/reagent/sulfonal/on_mob_life(var/mob/living/M as mob)
 datum/reagent/amanitin
 	name = "Amanitin"
 	id = "amanitin"
-	description = "On the last cycle that it's in you, it hits you with a stack of toxin damage based on the cycles elapsed. The more you use, the longer it takes before anything happens, but the harder it hits when it does."
+	description = "On the last second that it's in you, it hits you with a stack of toxin damage based on how long it's been in you. The more you use, the longer it takes before anything happens, but the harder it hits when it does."
 	reagent_state = LIQUID
 	color = "#CF3600"
 
@@ -355,7 +355,7 @@ datum/reagent/coniine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/curare
 	name = "Curare"
 	id = "curare"
-	description = "Does some oxygen and toxin damage, weakens you after 11 cycles.."
+	description = "Does some oxygen and toxin damage, weakens you after 33 seconds."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.1
