@@ -11,7 +11,6 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
-	can_flashlight = 1
 	var/obj/machinery/camera/portable/helmetCam = null
 	var/spawnWithHelmetCam = 0
 	var/canAttachCam = 0
@@ -26,13 +25,14 @@
 		update_icon()
 
 /obj/item/clothing/head/helmet/emp_act(severity)
-	if(helmetCam)
+	if(helmetCam) //Transfer the EMP to the camera so you can still disable it this way.
 		helmetCam.emp_act(severity)
 	..()
 
 /obj/item/clothing/head/helmet/sec
 	spawnWithHelmetCam = 1
 	canAttachCam = 1
+	can_flashlight = 1
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
