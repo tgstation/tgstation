@@ -592,7 +592,7 @@
 	
 /obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
 
-	if(default_deconstruction_screwdriver(user, "mixer0", "mixer0", I)
+	if(default_deconstruction_screwdriver(user, "mixer0", "mixer0", I))
 		if(beaker)
 			beaker.loc = src.loc
 			beaker = null
