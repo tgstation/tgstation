@@ -235,9 +235,6 @@
 	if(reagents)
 		reagents.metabolize(src)
 
-	updatehealth()
-	return
-
 /mob/living/carbon/handle_blood()
 	return
 
@@ -264,44 +261,59 @@
 						M.adjustBruteLoss(5)
 					nutrition += 10
 
+//This updates the health and status of the mob (conscious, unconscious, dead)
 /mob/living/carbon/handle_regular_status_updates()
 
-	updatehealth()
-	if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
-		death()
-		return 1
+	if(..()) //alive
 
-	if(stat != DEAD)
+		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
+			death()
+			return
 
 		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
 			Paralyse(3)
 			stat = UNCONSCIOUS
 
-		..()
-
-		if(sleeping && !paralysis)
-			handle_dreams()
-			adjustStaminaLoss(-10)
-			sleeping = max(sleeping-1, 0)
+		if(sleeping)
 			stat = UNCONSCIOUS
-			if( prob(10) && health && !hal_crit )
-				spawn(0)
-					emote("snore")
 
-		var/restingpwr = 1 + 4 * resting
+		CheckStamina()
+		return 1
 
-		//Dizziness
-		if(dizziness)
-			var/client/C = client
-			var/pixel_x_diff = 0
-			var/pixel_y_diff = 0
-			var/temp
-			var/saved_dizz = dizziness
-			if(C)
-				var/oldsrc = src
-				var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70 // This shit is annoying at high strength
-				src = null
-				spawn(0)
+//this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
+/mob/living/carbon/handle_status_effects()
+	..()
+
+	if(sleeping)
+		handle_dreams()
+		adjustStaminaLoss(-10)
+		sleeping = max(sleeping-1, 0)
+		if( prob(10) && health && !hal_crit )
+			spawn(0)
+				emote("snore")
+
+	var/restingpwr = 1 + 4 * resting
+
+	//Dizziness
+	if(dizziness)
+		var/client/C = client
+		var/pixel_x_diff = 0
+		var/pixel_y_diff = 0
+		var/temp
+		var/saved_dizz = dizziness
+		if(C)
+			var/oldsrc = src
+			var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70 // This shit is annoying at high strength
+			src = null
+			spawn(0)
+				if(C)
+					temp = amplitude * sin(0.008 * saved_dizz * world.time)
+					pixel_x_diff += temp
+					C.pixel_x += temp
+					temp = amplitude * cos(0.008 * saved_dizz * world.time)
+					pixel_y_diff += temp
+					C.pixel_y += temp
+					sleep(3)
 					if(C)
 						temp = amplitude * sin(0.008 * saved_dizz * world.time)
 						pixel_x_diff += temp
@@ -309,64 +321,51 @@
 						temp = amplitude * cos(0.008 * saved_dizz * world.time)
 						pixel_y_diff += temp
 						C.pixel_y += temp
-						sleep(3)
-						if(C)
-							temp = amplitude * sin(0.008 * saved_dizz * world.time)
-							pixel_x_diff += temp
-							C.pixel_x += temp
-							temp = amplitude * cos(0.008 * saved_dizz * world.time)
-							pixel_y_diff += temp
-							C.pixel_y += temp
-						sleep(3)
-						if(C)
-							C.pixel_x -= pixel_x_diff
-							C.pixel_y -= pixel_y_diff
-				src = oldsrc
-			dizziness = max(dizziness - restingpwr, 0)
+					sleep(3)
+					if(C)
+						C.pixel_x -= pixel_x_diff
+						C.pixel_y -= pixel_y_diff
+			src = oldsrc
+		dizziness = max(dizziness - restingpwr, 0)
 
-		if(drowsyness)
-			dizziness = max(drowsyness - restingpwr, 0)
-			eye_blurry = max(2, eye_blurry)
-			if(prob(5))
-				sleeping += 1
-				Paralyse(5)
+	if(drowsyness)
+		dizziness = max(drowsyness - restingpwr, 0)
+		eye_blurry = max(2, eye_blurry)
+		if(prob(5))
+			sleeping += 1
+			Paralyse(5)
 
-		if(confused)
-			confused = max(0, confused - 1)
+	if(confused)
+		confused = max(0, confused - 1)
 
-		//Jitteryness
-		if(jitteriness)
-			do_jitter_animation(jitteriness)
-			jitteriness = max(jitteriness - restingpwr, 0)
+	//Jitteryness
+	if(jitteriness)
+		do_jitter_animation(jitteriness)
+		jitteriness = max(jitteriness - restingpwr, 0)
 
-		//Other
+	if(stuttering)
+		stuttering = max(stuttering-1, 0)
 
-		if(stuttering)
-			stuttering = max(stuttering-1, 0)
+	if(slurring)
+		slurring = max(slurring-1,0)
 
-		if(slurring)
-			slurring = max(slurring-1,0)
+	if(silent)
+		silent = max(silent-1, 0)
 
-		if(silent)
-			silent = max(silent-1, 0)
+	if(druggy)
+		druggy = max(druggy-1, 0)
 
-		if(druggy)
-			druggy = max(druggy-1, 0)
+	if(hallucination)
+		spawn handle_hallucinations()
 
-		if(hallucination)
-			spawn handle_hallucinations()
-
-			if(hallucination<=2)
-				hallucination = 0
-			else
-				hallucination -= 2
-
+		if(hallucination<=2)
+			hallucination = 0
 		else
-			for(var/atom/a in hallucinations)
-				qdel(a)
+			hallucination -= 2
 
-		CheckStamina()
-		return 1
+	else
+		for(var/atom/a in hallucinations)
+			qdel(a)
 
 //this handles hud updates. Calls update_vision() and handle_hud_icons()
 /mob/living/carbon/handle_regular_hud_updates()

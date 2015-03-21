@@ -163,14 +163,13 @@
 
 /mob/living/simple_animal/slime/handle_regular_status_updates()
 
-	..()
-
-	if(stat != DEAD && prob(30))
-		adjustOxyLoss(-1)
-		adjustToxLoss(-1)
-		adjustFireLoss(-1)
-		adjustCloneLoss(-1)
-		adjustBruteLoss(-1)
+	if(..())
+		if(prob(30))
+			adjustOxyLoss(-1)
+			adjustToxLoss(-1)
+			adjustFireLoss(-1)
+			adjustCloneLoss(-1)
+			adjustBruteLoss(-1)
 
 /mob/living/simple_animal/slime/proc/handle_nutrition()
 
@@ -328,10 +327,10 @@
 				AIprocess()
 
 /mob/living/simple_animal/slime/handle_automated_movement()
-	return //random movement is currently handled in handle_target()
+	return //slime random movement is currently handled in handle_target()
 
 /mob/living/simple_animal/slime/handle_automated_speech()
-	return //random speech is currently handled in handle_speech()
+	return //slime random speech is currently handled in handle_speech()
 
 /mob/living/simple_animal/slime/proc/handle_mood()
 	//Mood starts here

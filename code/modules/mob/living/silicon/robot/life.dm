@@ -49,12 +49,12 @@
 		else
 			camera.status = 1
 
-	updatehealth()
+	if (..()) //Alive.
 
-	if(health <= config.health_threshold_dead && stat != DEAD) //die only once
-		death()
+		if(health <= config.health_threshold_dead) //die only once
+			death()
+			return
 
-	if (stat != DEAD) //Alive.
 		if(health < 50) //Gradual break down of modules as more damage is sustained
 			if(uneq_module(module_state_3))
 				src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
@@ -70,28 +70,18 @@
 
 		if (paralysis || stunned || weakened) //Stunned etc.
 			stat = UNCONSCIOUS
-			if (stunned > 0)
-				AdjustStunned(-1)
-			if (weakened > 0)
-				AdjustWeakened(-1)
-			if (paralysis > 0)
-				AdjustParalysis(-1)
-				eye_blind = max(eye_blind, 1)
-
-		else	//Not stunned.
-			src.stat = CONSCIOUS
-
-		if (stuttering)
-			stuttering--
-
-		if (druggy)
-			druggy = max(0, druggy-1)
-
-		handle_disabilities()
 
 		use_power()
 
 		return 1
+
+/mob/living/silicon/robot/handle_status_effects()
+	..()
+	if (stuttering)
+		stuttering = max(0, stuttering - 1)
+
+	if (druggy)
+		druggy = max(0, druggy - 1)
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
 

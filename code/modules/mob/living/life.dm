@@ -41,14 +41,16 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	update_canmove()
-
 	update_gravity(mob_has_gravity())
 
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
-	handle_regular_status_updates() // Status updates, death etc.
+	if(handle_regular_status_updates()) // Status & health update, are we dead or alive etc.
+		handle_disabilities() // eye, ear, brain damages
+		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
+
+	update_canmove()
 
 	if(client)
 		handle_regular_hud_updates()
@@ -72,12 +74,19 @@
 /mob/living/proc/handle_random_events()
 	return
 
+/mob/living/proc/handle_automated_movement()
+	return
+
+/mob/living/proc/handle_automated_speech()
+	return
+
 /mob/living/proc/handle_environment(var/datum/gas_mixture/environment)
 	return
 
 /mob/living/proc/handle_stomach()
 	return
 
+//This updates the health and status of the mob (conscious, unconscious, dead)
 /mob/living/proc/handle_regular_status_updates()
 
 	updatehealth()
@@ -85,7 +94,6 @@
 	if(stat != DEAD)
 
 		if(paralysis)
-			AdjustParalysis(-1)
 			stat = UNCONSCIOUS
 
 		else if (status_flags & FAKEDEATH)
@@ -94,25 +102,21 @@
 		else
 			stat = CONSCIOUS
 
-		handle_disabilities()
-
-		if(stunned)
-			AdjustStunned(-1)
-			if(!stunned)
-				update_icons()
-
-		if(weakened)
-			weakened = max(weakened-1,0)
-			if(!weakened)
-				update_icons()
-
 		return 1
 
-/mob/living/proc/handle_automated_movement()
-	return
+//this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
+/mob/living/proc/handle_status_effects()
+	if(paralysis)
+		AdjustParalysis(-1)
+	if(stunned)
+		AdjustStunned(-1)
+		if(!stunned)
+			update_icons()
 
-/mob/living/proc/handle_automated_speech()
-	return
+	if(weakened)
+		AdjustWeakened(-1)
+		if(!weakened)
+			update_icons()
 
 /mob/living/proc/handle_disabilities()
 	//Eyes

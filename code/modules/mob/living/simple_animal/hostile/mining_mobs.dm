@@ -1,18 +1,10 @@
 /mob/living/simple_animal/hostile/asteroid/
 	vision_range = 2
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
-	heat_damage_per_tick = 20
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
@@ -481,3 +473,9 @@
 			else
 				user << "<span class='info'>You can't improve [D] any further.</span>"
 				return
+
+/mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
+	if(bodytemperature < minbodytemp)
+		adjustBruteLoss(2)
+	else if(bodytemperature > maxbodytemp)
+		adjustBruteLoss(20)
