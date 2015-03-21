@@ -55,6 +55,40 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">22 March 2015</h2>
+			<h3 class="author">Iamgoofball updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes Morphine not knocking you out.</li>
+				<li class="rscdel">Hotline no longer exists. Poppies now have Saline-Glucose Solution.</li>
+				<li class="rscdel">Muriatic Acid, Caustic Soda, and Hydrogen Chloride have been removed, along with the secondary meth recipe. The original recipe still works.</li>
+				<li class="experiment">Foam now produces more bang for your buck when mixed. Your foam grenades should be larger now to account for the slowdown.</li>
+				<li class="rscadd">Adds Stabilizing Agent. This chemical will prevent the effects of certain reactions from taking place in  the container it is in, such as Smoke Powder and Flash Powder, allowing you to get the raw forms of the powders for heating up later.</li>
+				<li class="rscadd">Smoke Powder and Flash Powder can now be mixed along with Stabilizing Agent in order to produce a powder version of the effects. You can then heat these powders to 374K to get the effects.</li>
+				<li class="rscadd">Mixing them without Stabilizing Agent gives the default effects.</li>
+				<li class="rscadd">Adds Sonic Powder, a chemical that deafens and stuns within 5 tiles of the reaction. It also follows the reaction rules of the other 2 powders.</li>
+				<li class="tweak">Liquid Dark Matter and Sorium also now work like the powders do.</li>
+				<li class="tweak">CLF3 now has a higher chance of making plating tiles, and the burn damage caused by it scales based on your fire stacks.</li>
+				<li class="rscadd">Adds Pyrosium. This reagent heats up mobs by 30 degrees every 3 seconds if it has oxygen to react with. Useful for when you want a delayed mix inside of someone.</li>
+				<li class="rscadd">Adds Cryostylane.  This reagent does the opposite of Pyrosium, but it still requires oxygen to react with.</li>
+				<li class="rscadd">Adds Phlogiston. This reagent ignites you and gives you a single fire stack every 3 seconds. Burn damage from this chemical scales up with the fire stacks you have. Counter this with literally any chemical that purges other chems.</li>
+				<li class="experiment">Smoke now transfers reagents to the mob, and applies touch reactions on them. This means smoke can run out of reagents, no more infinite acid smoke. It also only works on mobs, use the new Reagent Foam(tm) for your hellfoam needs. I suggest a CLF3 Fluoroacid Black Powder mix.</li>
+				<li class="experiment">Added a derelict medibot to the code, will place a few on the derelict when this PR is merged as to prevent mapping conflicts.</li>
+				<li class="rscadd">Adds Initropidril. 33% chance to hit with 5-25 TOX damage every 3 seconds, and a 5-10% chance to either stun, cause lots of oxygen damage, or cause your heart to stop. Get it from the traitor Poison Kit.</li>
+				<li class="rscadd">Adds Pancuronium. Paralyses you after 30 seconds, with a 7% chance to cause 3-5 loss of breath. Get it from the traitor Poison Kit.</li>
+				<li class="rscadd">Adds Sodium Thiopental. Knocks you out after 30 seconds, and destroys your stamina. Get it from the traitor Poison Kit.</li>
+				<li class="rscadd">Adds Sulfonal. +1 TOX per 3 seconds, knocks you out in 66 seconds. Mix it with Acetone, Diethylamine, and Sulfur.</li>
+				<li class="rscadd">Adds Amantin. On the last second it is in you, it hits you with a stack of TOX damage based on how long it's been in you. Get it from the traitor Poison Kit.</li>
+				<li class="rscadd">Adds Lipolicide. +1 TOX unless you have nutriment in you. Mix it with Mercury, Diethylamine, and Ephedrine.</li>
+				<li class="rscadd">Adds Coiine. +2 TOX and +5 loss of breath every 3 seconds. Get it from the traitor Poison Kit.</li>
+				<li class="rscadd">Adds Curare. +1 TOX, +1 OXY, paralyzes after 33 seconds. Get it from the traitor Poison Kit.</li>
+				<li class="rscadd">Adds a reagent_deleted() proc to reagents for effects upon the last time it processes in you, like with Amantin.</li>
+				<li class="bugfix">Neurotoxin required temperature for mixing has been set to 674K, it was 370K for some reason.</li>
+			</ul>
+			<h3 class="author">xxalpha updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added Cybernetic Implants: Security HUD, Medical HUD, X-Ray, Thermals, Anti-Drop, Anti-Stun. All implants are researchable and producible by R&D and Robotics.</li>
+			</ul>
+
 			<h2 class="date">21 March 2015</h2>
 			<h3 class="author">Chocobro updated:</h3>
 			<ul class="changes bgimages16">
