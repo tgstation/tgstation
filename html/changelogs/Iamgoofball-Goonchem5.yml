@@ -48,7 +48,7 @@ changes:
   - rscadd: "Adds Phlogiston. This reagent ignites you and gives you a single fire stack every 3 seconds. Burn damage from this chemical scales up with the fire stacks you have. Counter this with literally any chemical that purges other chems."
   - experiment: "Smoke now transfers reagents to the mob, and applies touch reactions on them. This means smoke can run out of reagents, no more infinite acid smoke. It also only works on mobs, use the new Reagent Foam(tm) for your hellfoam needs. I suggest a CLF3 Fluoroacid Black Powder mix."
   - experiment: "Added a derelict medibot to the code, will place a few on the derelict when this PR is merged as to prevent mapping conflicts."
-  - rscadd: "Adds Initropidril. Gives you a stamina buff, with a 33% chance to hit with 5-25 TOX damage a cycle, and a 5-10% chance to either stun, cause lots of oxygen damage, or cause your heart to stop. Get it from the traitor Poison Kit."
+  - rscadd: "Adds Initropidril. 33% chance to hit with 5-25 TOX damage a cycle, and a 5-10% chance to either stun, cause lots of oxygen damage, or cause your heart to stop. Get it from the traitor Poison Kit."
   - rscadd: "Adds Pancuronium. Paralyses you after 10 cycles, with a 7% chance to cause 3-5 LOSEBREATH. Get it from the traitor Poison Kit."
   - rscadd: "Adds Sodium Thiopental. Knocks you out after 10 cycles, and destroys your stamina. Get it from the traitor Poison Kit."
   - rscadd: "Adds Sulfonal. +1 TOX per cycle, knocks you out in 22 cycles. Mix it with Acetone, Diethylamine, and Sulfur."

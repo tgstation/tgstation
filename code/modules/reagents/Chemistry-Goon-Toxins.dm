@@ -209,14 +209,13 @@ datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
 datum/reagent/initropidril
 	name = "Initropidril"
 	id = "initropidril"
-	description = "Major stamina regeneration buff. 33% chance to hit with a random amount of toxin damage, 5-10% chances to cause stunning, suffocation, or immediate heart failure."
+	description = "33% chance to hit with a random amount of toxin damage, 5-10% chances to cause stunning, suffocation, or immediate heart failure."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.4
 
 datum/reagent/initropidril/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	M.adjustStaminaLoss(-5)
 	if(prob(33))
 		M.adjustToxLoss(rand(5,25))
 	if(prob(rand(5,10)))
