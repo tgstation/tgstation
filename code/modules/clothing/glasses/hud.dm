@@ -72,6 +72,7 @@
 	item_state = "garb"
 	force = 10
 	throwforce = 10
+	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
