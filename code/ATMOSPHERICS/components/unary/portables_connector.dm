@@ -49,7 +49,8 @@
 
 	if(node)
 		node.disconnect(src)
-		del(network)
+		if(network)
+			returnToDPool(network)
 
 	node = null
 

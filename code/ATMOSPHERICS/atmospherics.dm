@@ -103,6 +103,8 @@ Pipelines + Other Objects -> Pipe network
 
 	return null
 
+/obj/machinery/atmospherics/proc/unassign_network(datum/pipe_network/reference)
+
 /obj/machinery/atmospherics/proc/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
 	// Used when two pipe_networks are combining
 

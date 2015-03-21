@@ -15,6 +15,18 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 	..()
 
+/datum/pipeline/Del()
+	Destroy()
+	return ..()
+
+/datum/pipe_network/Destroy()
+	for(var/datum/pipeline/pipeline in line_members) //This will remove the pipeline references for us
+		pipeline.network = null
+	for(var/obj/machinery/atmospherics/objects in normal_members) //Procs for the different bases will remove the references
+		objects.unassign_network(src)
+	pipe_networks -= src //Final ref
+
+
 /datum/pipe_network/proc/process()
 	//Equalize gases amongst pipe if called for
 	if(update)

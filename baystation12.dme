@@ -19,6 +19,7 @@
 #include "code\__HELPERS\_macros.dm"
 #include "code\__HELPERS\cmp.dm"
 #include "code\__HELPERS\constants.dm"
+#include "code\__HELPERS\datumpool.dm"
 #include "code\__HELPERS\experimental.dm"
 #include "code\__HELPERS\files.dm"
 #include "code\__HELPERS\game.dm"

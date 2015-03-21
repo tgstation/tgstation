@@ -41,7 +41,8 @@
 /obj/machinery/atmospherics/unary/Destroy()
 	if(node)
 		node.disconnect(src)
-		del(network)
+		if(network)
+			returnToDPool(network)
 	node = null
 	..()
 
@@ -56,7 +57,7 @@
 
 /obj/machinery/atmospherics/unary/build_network()
 	if(!network && node)
-		network = new /datum/pipe_network()
+		network = getFromDPool(/datum/pipe_network)
 		network.normal_members += src
 		network.build_network(node, src)
 
@@ -80,6 +81,11 @@
 
 /obj/machinery/atmospherics/unary/disconnect(obj/machinery/atmospherics/reference)
 	if(reference==node)
-		del(network)
+		if(network)
+			returnToDPool(network)
 		node = null
 	return null
+
+/obj/machinery/atmospherics/unary/unassign_network(datum/pipe_network/reference)
+	if(network == reference)
+		network = null

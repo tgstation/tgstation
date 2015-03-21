@@ -58,9 +58,11 @@
 	update_icon()
 
 	if(network1)
-		del(network1)
+		if(network1)
+			returnToDPool(network1)
 	if(network2)
-		del(network2)
+		if(network1)
+			returnToDPool(network2)
 
 	build_network()
 
