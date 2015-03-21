@@ -66,7 +66,7 @@
 	return
 
 /datum/reagent/clf3/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-	if(method == TOUCH && ishuman(M))
+	if(method == TOUCH && isliving(M))
 		M.adjust_fire_stacks(5)
 		M.IgniteMob()
 		new /obj/effect/hotspot(M.loc)
@@ -396,7 +396,7 @@
 	return
 
 /datum/reagent/napalm/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-	if(method == TOUCH && ishuman(M))
+	if(method == TOUCH && isliving(M))
 		M.adjust_fire_stacks(7)
 		return
 
