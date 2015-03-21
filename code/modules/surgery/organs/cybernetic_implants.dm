@@ -190,12 +190,24 @@
 		r_hand_obj = null
 
 /obj/item/cybernetic_implant/brain/anti_drop/emp_act(severity)
-	if(prob(50 + (25 * (severity-1 ? 0 : 1))))
-		if(!l_hand_ignore && owner.l_hand && owner.l_hand == l_hand_obj)
-			owner.l_hand.flags ^= NODROP
-		if(!r_hand_ignore && owner.r_hand && owner.r_hand == r_hand_obj)
-			owner.r_hand.flags ^= NODROP
+	var/range = severity ? 10 : 5
+	var/atom/A
+	var/obj/item/L_item = owner.l_hand
+	var/obj/item/R_item = owner.r_hand
+
+	if(!l_hand_ignore && owner.l_hand && owner.l_hand == l_hand_obj)
+		owner.l_hand.flags ^= NODROP
+	if(!r_hand_ignore && owner.r_hand && owner.r_hand == r_hand_obj)
+		owner.r_hand.flags ^= NODROP
 	..()
+	if(L_item)
+		A = pick(oview(range))
+		L_item.throw_at(A, range, 2)
+		owner << "<span class='notice'>Your left arm spasms and throws the [L_item.name]!</span>"
+	if(R_item)
+		A = pick(oview(range))
+		R_item.throw_at(A, range, 2)
+		owner << "<span class='notice'>Your right arm spasms and throws the [R_item.name]!</span>"
 
 /obj/item/cybernetic_implant/brain/anti_stun
 	name = "CNS Rebooter implant"

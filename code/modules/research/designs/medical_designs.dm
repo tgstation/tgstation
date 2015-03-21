@@ -103,7 +103,7 @@ datum/design/bluespacebodybag
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
 	id = "ci-medhud"
 	req_tech = list("materials" = 5, "programming" = 4, "biotech" = 4)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 100)
 	build_path = /obj/item/cybernetic_implant/eyes/hud/medical
 	category = list("Medical Designs")
@@ -113,7 +113,7 @@ datum/design/bluespacebodybag
 	desc = "These cybernetic eyes will display a security HUD over everything you see. Wiggle eyes to control."
 	id = "ci-sechud"
 	req_tech = list("materials" = 5, "programming" = 5, "biotech" = 5, "combat" = 2)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 300, "$gold" = 300)
 	build_path = /obj/item/cybernetic_implant/eyes/hud/security
 	category = list("Medical Designs")
@@ -123,7 +123,7 @@ datum/design/bluespacebodybag
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5, "magnets" = 5, "plasmatech" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 200, "$plasma" = 200, "$diamond" = 500)
 	build_path = /obj/item/cybernetic_implant/eyes/xray
 	category = list("Medical Designs")
@@ -133,7 +133,7 @@ datum/design/bluespacebodybag
 	desc = "These cybernetic eyes will give you Thermal vision. Vertical slit pupil included."
 	id = "ci-thermals"
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5, "magnets" = 5, "plasmatech" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 200, "$plasma" = 200, "$diamond" = 500)
 	build_path = /obj/item/cybernetic_implant/eyes/thermals
 	category = list("Medical Designs")
@@ -143,7 +143,7 @@ datum/design/bluespacebodybag
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	id = "ci-antidrop"
 	req_tech = list("materials" = 6, "programming" = 5, "biotech" = 5)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 400, "$gold" = 400)
 	build_path = /obj/item/cybernetic_implant/brain/anti_drop
 	category = list("Medical Designs")
@@ -153,7 +153,7 @@ datum/design/bluespacebodybag
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	id = "ci-antistun"
 	req_tech = list("materials" = 6, "programming" = 5, "biotech" = 5)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 400, "$gold" = 600)
 	build_path = /obj/item/cybernetic_implant/brain/anti_stun
 	category = list("Medical Designs")
