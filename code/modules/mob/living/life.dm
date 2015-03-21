@@ -64,9 +64,6 @@
 	return
 
 /mob/living/proc/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src)
-
 	return
 
 /mob/living/proc/handle_blood()
@@ -135,7 +132,7 @@
 			adjustEarDamage(-0.05,-1)
 
 
-//this handles hud updates. Calles update_vision() and handle_hud_icons()
+//this handles hud updates. Calls update_vision() and handle_hud_icons()
 /mob/living/proc/handle_regular_hud_updates()
 	if(!client)	return 0
 

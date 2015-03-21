@@ -157,17 +157,12 @@
 
 
 /mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M as mob)
-	..()
-	var/damage = rand(1, 3)
-
-	if(M.is_adult)
-		damage = rand(20, 40)
-	else
-		damage = rand(5, 35)
-	adjustBruteLoss(damage)
-	updatehealth()
-
-	return
+	if(..()) //successful slime attack
+		var/damage = rand(5, 35)
+		if(M.is_adult)
+			damage = rand(20, 40)
+		adjustBruteLoss(damage)
+		updatehealth()
 
 /mob/living/carbon/monkey/Stat()
 	..()

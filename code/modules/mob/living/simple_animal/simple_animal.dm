@@ -257,6 +257,7 @@
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		attack_threshold_check(damage)
+		return 1
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
@@ -291,6 +292,7 @@
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
 			attack_threshold_check(damage)
+			return 1
 	if (M.a_intent == "help")
 		if (health > 0)
 			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
@@ -300,13 +302,19 @@
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(..()) //if harm or disarm intent.
-		var/damage = rand(15, 30)
-		visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-				"<span class='userdanger'>[M] has slashed at [src]!</span>")
-		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-		add_logs(M, src, "attacked", admin=0)
-		attack_threshold_check(damage)
-	return
+		if(M.a_intent == "disarm")
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
+					"<span class='userdanger'>[M] [response_disarm] [name]!</span>")
+			add_logs(M, src, "disarmed", admin=0)
+		else
+			var/damage = rand(15, 30)
+			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+					"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+			add_logs(M, src, "attacked", admin=0)
+			attack_threshold_check(damage)
+		return 1
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L as mob)
 	if(..()) //successful larva bite
@@ -314,17 +322,15 @@
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			attack_threshold_check(damage)
+		return 1
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M as mob)
-	..()
-	var/damage = rand(1, 3)
-
-	if(M.is_adult)
-		damage = rand(20, 40)
-	else
-		damage = rand(5, 35)
-	attack_threshold_check(damage)
-	return
+	if(..()) //successful slime attack
+		var/damage = rand(5, 30)
+		if(M.is_adult)
+			damage = rand(10, 40)
+		attack_threshold_check(damage)
+		return 1
 
 /mob/living/simple_animal/proc/attack_threshold_check(var/damage)
 	if(damage <= force_threshold)
@@ -402,9 +408,9 @@
 		if (2.0)
 			adjustBruteLoss(60)
 
-
 		if(3.0)
 			adjustBruteLoss(30)
+	updatehealth()
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health = Clamp(health - damage, 0, maxHealth)

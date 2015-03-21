@@ -95,7 +95,8 @@
 	var/tally = 0
 
 	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45) tally += (health_deficiency / 25)
+	if(health_deficiency >= 45)
+		tally += (health_deficiency / 25)
 
 	if(bodytemperature < 183.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
@@ -145,10 +146,7 @@
 	..()
 
 	if(statpanel("Status"))
-		if(is_adult)
-			stat(null, "Health: [round((health / 200) * 100)]%")
-		else
-			stat(null, "Health: [round((health / 150) * 100)]%")
+		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 		if(!docile)
 			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
@@ -174,21 +172,10 @@
 	..()
 
 /mob/living/simple_animal/slime/ex_act(severity, target)
+	if (severity == 2.0)
+		adjustFireLoss(60)
 	..()
 
-	switch (severity)
-		if (1.0)
-			gib()
-			return
-
-		if (2.0)
-			adjustBruteLoss(60)
-			adjustFireLoss(60)
-
-		if(3.0)
-			adjustBruteLoss(30)
-
-	updatehealth()
 
 /mob/living/simple_animal/slime/MouseDrop(var/atom/movable/A as mob|obj)
 	if(isliving(A) && A != src && usr == src)
@@ -207,58 +194,36 @@
 	return
 
 /mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M as mob)
-	..()
-	if(Victim)
-		Victim = null
-		visible_message("<span class='danger'>[M] pulls [src] off!</span>")
-		return
-	attacked += 5
-	if(src.nutrition >= 100) //steal some nutrition. negval handled in life()
-		src.nutrition -= (50 + (5 * M.amount_grown))
-		M.add_nutrition(50 + (5 * M.amount_grown))
-	if(src.health > 0)
-		src.adjustBruteLoss(4 + (2 * M.amount_grown)) //amt_grown isn't very linear but it works
-		src.updatehealth()
-		M.adjustBruteLoss(-4 + (-2 * M.amount_grown))
-		M.updatehealth()
-	return
+	if(..()) //successful slime attack
+		if(Victim)
+			Victim = null
+			visible_message("<span class='danger'>[M] pulls [src] off!</span>")
+			return
+		attacked += 5
+		if(nutrition >= 100) //steal some nutrition. negval handled in life()
+			nutrition -= (50 + (5 * M.amount_grown))
+			M.add_nutrition(50 + (5 * M.amount_grown))
+		if(health > 0)
+			M.adjustBruteLoss(-4 + (-2 * M.amount_grown))
+			M.updatehealth()
 
 /mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M as mob)
 	if(..())
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		attacked += 10
-		adjustBruteLoss(damage)
-		updatehealth()
+
 
 /mob/living/simple_animal/slime/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(..()) //successful monkey bite.
-		if(stat != DEAD)
-			attacked += 10
-			adjustBruteLoss(rand(1, 3))
-			updatehealth()
-	return
+		attacked += 10
 
 /mob/living/simple_animal/slime/attack_larva(mob/living/carbon/alien/larva/L as mob)
 	if(..()) //successful larva bite.
-		var/damage = rand(1, 3)
-		if(stat != DEAD)
-			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			adjustBruteLoss(damage)
-			updatehealth()
+		attacked += 10
 
 /mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
 		adjustBruteLoss(5)
-		if(Victim || Target)
-			Victim = null
-			Target = null
-			anchored = 0
-			if(prob(80) && !client)
-				Discipline++
-			spawn(0)
-				step_away(src,user,15)
-				sleep(3)
-				step_away(src,user,15)
+		discipline_slime(user)
 
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M as mob)
@@ -272,18 +237,7 @@
 				visible_message("<span class='warning'> [M] manages to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-				if(prob(90) && !client)
-					Discipline++
-
-				spawn()
-					SStun = 1
-					sleep(rand(45,60))
-					if(src)
-						SStun = 0
-
-				Victim = null
-				anchored = 0
-				step_away(src,M)
+				discipline_slime(M)
 
 		else
 			M.do_attack_animation(src)
@@ -295,89 +249,16 @@
 				visible_message("<span class='warning'> [M] manages to wrestle \the [name] off of [Victim]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-				if(prob(80) && !client)
-					Discipline++
-
-					if(!is_adult)
-						if(Discipline == 1)
-							attacked = 0
-
-				spawn()
-					SStun = 1
-					sleep(rand(55,65))
-					if(src)
-						SStun = 0
-
-				Victim = null
-				anchored = 0
-				step_away(src,M)
+				discipline_slime(M)
 
 	else if(..()) //successful attack
 		attacked += 10
 
 /mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(..()) //if harm or disarm intent.
+		attacked += 10
+		discipline_slime(M)
 
-		if (M.a_intent == "harm")
-			if (prob(95))
-				attacked += 10
-				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-				var/damage = rand(15, 30)
-				if (damage >= 25)
-					damage = rand(20, 40)
-					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
-							"<span class='userdanger'>[M] has slashed [name]!</span>")
-				else
-					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
-							"<span class='userdanger'>)[M] has wounded [name]!</span>")
-
-				add_logs(M, src, "attacked", admin=0)
-				if (health != DEAD)
-					adjustBruteLoss(damage)
-					updatehealth()
-			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
-						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
-
-		if (M.a_intent == "disarm")
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			var/damage = 5
-			attacked += 10
-
-			if(prob(95))
-				visible_message("<span class='danger'>[M] has tackled [name]!</span>", \
-						"<span class='userdanger'>[M] has tackled [name]!</span>")
-
-				if(Victim || Target)
-					Victim = null
-					Target = null
-					anchored = 0
-					if(prob(80) && !client)
-						Discipline++
-						if(!istype(src, /mob/living/simple_animal/slime))
-							if(Discipline == 1)
-								attacked = 0
-
-				spawn()
-					SStun = 1
-					sleep(rand(5,20))
-					SStun = 0
-
-				spawn(0)
-
-					step_away(src,M,15)
-					sleep(3)
-					step_away(src,M,15)
-
-			else
-				drop_item()
-				visible_message("<span class='danger'>[M] has disarmed [name]!</span>",
-						"<span class='userdanger'>[M] has disarmed [name]!</span>")
-			add_logs(M, src, "disarmed", admin=0)
-			adjustBruteLoss(damage)
-			updatehealth()
-	return
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W,/obj/item/stack/sheet/mineral/plasma)) //Let's you feed slimes plasma.
@@ -402,29 +283,7 @@
 		if(is_adult)
 			force_effect = round(W.force/2)
 		if(prob(10 + force_effect))
-			if(Victim || Target)
-				if(prob(80) && !client)
-					Discipline++
-				if(Discipline == 1 && !is_adult)
-					attacked = 0
-				spawn()
-					SStun = 1
-					sleep(rand(5,20))
-					SStun = 0
-
-				Victim = null
-				Target = null
-				anchored = 0
-
-				spawn(0)
-					if(user)
-						canmove = 0
-						step_away(src, user)
-						if(prob(25 + 2*force_effect))
-							sleep(2)
-							if(user)
-								step_away(src, user)
-						canmove = 1
+			discipline_slime(user)
 	..()
 
 /mob/living/simple_animal/slime/show_inv(mob/user)
@@ -440,19 +299,6 @@
 
 /mob/living/simple_animal/slime/getTrail()
 	return null
-
-/mob/living/simple_animal/slime/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
-	if(lube>=2)
-		return 0
-	.=..()
-
-/mob/living/simple_animal/slime/stripPanelUnequip(obj/item/what, mob/who)
-	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
-	return
-
-/mob/living/simple_animal/slime/stripPanelEquip(obj/item/what, mob/who)
-	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
-	return
 
 /mob/living/simple_animal/slime/examine(mob/user)
 
@@ -485,6 +331,34 @@
 	msg += "*---------*</span>"
 	user << msg
 	return
+
+/mob/living/simple_animal/slime/proc/discipline_slime(mob/user)
+
+	if(prob(80) && !client)
+		Discipline++
+
+		if(!is_adult)
+			if(Discipline == 1)
+				attacked = 0
+
+	if(Victim || Target)
+		Victim = null
+		Target = null
+		anchored = 0
+
+	spawn(0)
+		SStun = 1
+		sleep(rand(20,60))
+		SStun = 0
+
+	spawn(0)
+		canmove = 0
+		if(user)
+			step_away(src,user,15)
+		sleep(3)
+		if(user)
+			step_away(src,user,15)
+		canmove = 1
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

@@ -159,9 +159,7 @@
 	if (reagents.get_reagent_amount("epinephrine")>=5)
 		mutation_chance = max(mutation_chance - 5,0) //Prevents muation chance going <0%
 		reagents.remove_reagent("epinephrine", 5)
-	src.updatehealth()
-
-	return //TODO: DEFERRED
+	updatehealth()
 
 /mob/living/simple_animal/slime/handle_regular_status_updates()
 
