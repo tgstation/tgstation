@@ -14,3 +14,4 @@ changes:
   - rscadd: Reinforced walls now have custom ex_act procs, which will make them more solid against explosions (they used to have the same strenght as normal walls outside of ex_act 3)
   - rscdel: Diamond walls can no longer be drilled. More work should be done down the line on mineral walls
   - tweak: Singularity now rips regular wall plating more often at 5x5 and 7x7 stage
+  - bugfix: Reinforced walls no longer drop rods at any stage, since those aren't used for construction
