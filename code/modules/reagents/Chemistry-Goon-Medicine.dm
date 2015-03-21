@@ -9,7 +9,7 @@ datum/reagent/silver_sulfadiazine
 	id = "silver_sulfadiazine"
 	description = "On touch, quickly heals burn damage. Basic anti-burn healing drug. On ingestion, deals minor toxin damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 2
 
 datum/reagent/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
@@ -37,7 +37,7 @@ datum/reagent/styptic_powder
 	id = "styptic_powder"
 	description = "On touch, quickly heals brute damage. Basic anti-brute healing drug. On ingestion, deals minor toxin damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 2
 
 datum/reagent/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
@@ -66,7 +66,7 @@ datum/reagent/salglu_solution
 	id = "salglu_solution"
 	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/salglu_solution/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -81,7 +81,7 @@ datum/reagent/synthflesh
 	id = "synthflesh"
 	description = "Has a 100% chance of instantly healing brute and burn damage. One unit of the chemical will heal one point of damage. Touch application only."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume,var/show_message = 1)
 	if(!M) M = holder.my_atom
@@ -99,7 +99,7 @@ datum/reagent/charcoal
 	id = "charcoal"
 	description = "Heals toxin damage, and will also slowly remove any other chemicals."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/charcoal/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -153,7 +153,7 @@ datum/reagent/omnizine
 	id = "omnizine"
 	description = "Heals 1 of each damage type a cycle. If overdosed it will deal significant amounts of each damage type."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 0.2
 	overdose_threshold = 30
 
@@ -179,7 +179,7 @@ datum/reagent/calomel
 	id = "calomel"
 	description = "Quickly purges the body of all chemicals. If your health is above 20, toxin damage is dealt. When you hit 20 health or lower, the damage will cease."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/calomel/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -204,7 +204,7 @@ datum/reagent/potass_iodide
 	id = "potass_iodide"
 	description = "Reduces low radiation damage very effectively."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/potass_iodide/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -228,7 +228,7 @@ datum/reagent/pen_acid
 	id = "pen_acid"
 	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body. Has a chance of dealing brute damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/pen_acid/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -257,7 +257,7 @@ datum/reagent/sal_acid
 	id = "sal_acid"
 	description = "If you have less than 50 brute damage, there is a 50% chance to heal one unit. If overdosed it will have a 50% chance to deal 2 brute damage if the patient has less than 50 brute damage already."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	overdose_threshold = 25
 
 datum/reagent/sal_acid/on_mob_life(var/mob/living/M as mob)
@@ -287,7 +287,7 @@ datum/reagent/salbutamol
 	id = "salbutamol"
 	description = "Quickly heals oxygen damage while slowing down suffocation. Great for stabilizing critical patients!"
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 0.2
 
 datum/reagent/salbutamol/on_mob_life(var/mob/living/M as mob)
@@ -310,7 +310,7 @@ datum/reagent/perfluorodecalin
 	id = "perfluorodecalin"
 	description = "Heals suffocation damage so quickly that you could have a spacewalk, but it mutes your voice. Has a 33% chance of healing brute and burn damage per cycle as well."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 0.2
 
 datum/reagent/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/M as mob)
@@ -337,7 +337,7 @@ datum/reagent/ephedrine
 	id = "ephedrine"
 	description = "Reduces stun times, increases run speed. If overdosed it will deal toxin and oxyloss damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 0.3
 	overdose_threshold = 45
 	addiction_threshold = 30
@@ -397,7 +397,7 @@ datum/reagent/diphenhydramine
 	id = "diphenhydramine"
 	description = "Purges body of lethal Histamine and reduces jitteriness while causing minor drowsiness."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 datum/reagent/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.drowsyness += 1
@@ -419,7 +419,7 @@ datum/reagent/morphine
 	id = "morphine"
 	description = "Will allow you to ignore slowdown from equipment and damage. Will eventually knock you out if you take too much. If overdosed it will cause jitteriness, dizziness, force the victim to drop items in their hands and eventually deal toxin damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	var/cycle_count = 0
 	overdose_threshold = 30
 	addiction_threshold = 25
@@ -512,7 +512,7 @@ datum/reagent/oculine
 	id = "oculine"
 	description = "Cures blindness and heals eye damage over time."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 0.4
 	var/cycle_amount = 0
 
@@ -521,7 +521,7 @@ datum/reagent/atropine
 	id = "atropine"
 	description = "If patients health is below -25 it will heal 3 brute and burn damage per cycle, as well as stop any oxyloss. Good for stabilising critical patients."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 0.2
 	overdose_threshold = 35
 
@@ -562,7 +562,7 @@ datum/reagent/epinephrine
 	id = "epinephrine"
 	description = "mReduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to stop you taking too much oxygen damage. If the patient is in low to severe crit, heals toxins, brute, and burn very effectively. Will not heal patients who are almost dead. If overdosed will stun and deal toxin damage"
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 0.2
 	overdose_threshold = 30
 
@@ -606,7 +606,7 @@ datum/reagent/strange_reagent
 	id = "strange_reagent"
 	description = "A miracle drug that can bring a dead body back to life! If the corpse has suffered too much damage, however, no change will occur to the body. If used on a living person it will deal Brute and Burn damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob, var/method=TOUCH, var/volume)
 	if(M.stat == DEAD)
@@ -645,7 +645,7 @@ datum/reagent/life
 	id = "life"
 	description = "Can create a life form, however it is not guaranteed to be friendly. May want to have Security on hot standby."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 0.2
 
 /datum/chemical_reaction/life
@@ -730,7 +730,7 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 	name = "Mannitol"
 	id = "mannitol"
 	description = "Heals brain damage effectively. Use it in cyro tubes alongside Cryoxadone."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 /datum/reagent/mutadone/on_mob_life(var/mob/living/carbon/human/M as mob)
 	M.jitteriness = 0
@@ -751,13 +751,13 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 	name = "Mutadone"
 	id = "mutadone"
 	description = "Heals your genetic defects."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/antihol
 	name = "Antihol"
 	id = "antihol"
 	description = "Helps remove Alcohol from someone's body, as well as eliminating its side effects."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = 0
@@ -786,7 +786,7 @@ datum/reagent/antihol/on_mob_life(var/mob/living/M as mob)
 	name = "Stimulants"
 	id = "stimulants"
 	description = "Increases run speed and eliminates stuns, can heal minor damage. If overdosed it will deal toxin damage and stun."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	metabolization_rate = 0.4
 	overdose_threshold = 60
 
@@ -819,7 +819,7 @@ datum/reagent/insulin
 	id = "insulin"
 	description = "Increases sugar depletion rates."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 datum/reagent/insulin/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(M.sleeping)

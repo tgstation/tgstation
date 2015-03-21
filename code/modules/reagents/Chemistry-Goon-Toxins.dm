@@ -9,7 +9,7 @@ datum/reagent/polonium
 	id = "polonium"
 	description = "Cause significant Radiation damage over time."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.1
 
 datum/reagent/polonium/on_mob_life(var/mob/living/M as mob)
@@ -24,7 +24,7 @@ datum/reagent/histamine
 	id = "histamine"
 	description = "A dose-dependent toxin, ranges from annoying to incredibly lethal."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.2
 	overdose_threshold = 30
 
@@ -56,7 +56,7 @@ datum/reagent/formaldehyde
 	id = "formaldehyde"
 	description = "Deals a moderate amount of Toxin damage over time. 10% chance to decay into 10-15 histamine."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 
 datum/reagent/formaldehyde/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -80,7 +80,7 @@ datum/reagent/venom
 	id = "venom"
 	description = "Will deal scaling amounts of Toxin and Brute damage over time. 25% chance to decay into 5-10 histamine."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.2
 datum/reagent/venom/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -97,7 +97,7 @@ datum/reagent/neurotoxin2
 	id = "neurotoxin2"
 	description = "Deals toxin and brain damage up to 60 before it slows down, causing confusion and a knockout after 17 elapsed cycles."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	var/cycle_count = 0
 	metabolization_rate = 1
 
@@ -124,7 +124,7 @@ datum/reagent/cyanide
 	id = "cyanide"
 	description = "Deals toxin damage, alongside some oxygen loss. 8% chance of stun and some extra toxin damage."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.1
 
 datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
@@ -152,7 +152,7 @@ datum/reagent/cyanide/on_mob_life(var/mob/living/M as mob)
 	id = "????"
 	description = "????"
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.2
 
 datum/reagent/questionmark/on_mob_life(var/mob/living/M as mob)
@@ -166,7 +166,7 @@ datum/reagent/itching_powder
 	id = "itching_powder"
 	description = "Lots of annoying random effects, chances to do some brute damage from scratching. 6% chance to decay into 1-3 units of histamine."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.3
 
 /datum/reagent/itching_powder/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
@@ -211,7 +211,7 @@ datum/reagent/initropidril
 	id = "initropidril"
 	description = "Major stamina regeneration buff. 33% chance to hit with a random amount of toxin damage, 5-10% chances to cause stunning, suffocation, or immediate heart failure."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.4
 
 datum/reagent/initropidril/on_mob_life(var/mob/living/M as mob)
@@ -244,7 +244,7 @@ datum/reagent/pancuronium
 	id = "pancuronium"
 	description = "Knocks you out after 10 cycles, 7% chance to cause some oxygen loss."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.2
 
 datum/reagent/pancuronium/on_mob_life(var/mob/living/M as mob)
@@ -261,7 +261,7 @@ datum/reagent/sodium_thiopental
 	id = "sodium_thiopental"
 	description = "Puts you to sleep after 10 cycles, along with some major stamina loss."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.7
 
 datum/reagent/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
@@ -277,7 +277,7 @@ datum/reagent/sulfonal
 	id = "sulfonal"
 	description = "Deals some toxin damage, and puts you to sleep after 22 cycles."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.1
 
 /datum/chemical_reaction/sulfonal
@@ -300,7 +300,7 @@ datum/reagent/amanitin
 	id = "amanitin"
 	description = "On the last cycle that it's in you, it hits you with a stack of toxin damage based on the cycles elapsed. The more you use, the longer it takes before anything happens, but the harder it hits when it does."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 
 datum/reagent/amanitin/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -318,7 +318,7 @@ datum/reagent/lipolicide
 	id = "lipolicide"
 	description = "Deals some toxin damage unless they keep eating food. Will reduce nutrition values."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 
 /datum/chemical_reaction/lipolicide
 	name = "lipolicide"
@@ -343,7 +343,7 @@ datum/reagent/coniine
 	id = "coniine"
 	description = "Does moderate toxin damage and oxygen loss."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.05
 
 datum/reagent/coniine/on_mob_life(var/mob/living/M as mob)
@@ -358,7 +358,7 @@ datum/reagent/curare
 	id = "curare"
 	description = "Does some oxygen and toxin damage, weakens you after 11 cycles.."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#CF3600"
 	metabolization_rate = 0.1
 
 datum/reagent/curare/on_mob_life(var/mob/living/M as mob)

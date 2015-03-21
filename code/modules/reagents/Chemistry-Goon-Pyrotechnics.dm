@@ -9,7 +9,7 @@
 	id = "stabilizing_agent"
 	description = "Keeps unstable chemicals stable. This does not work on everything."
 	reagent_state = LIQUID
-	color = "#FF0000" // rgb: 96, 165, 132
+	color = "#FFFFFF"
 
 /datum/chemical_reaction/stabilizing_agent
 	name = "stabilizing_agent"
@@ -23,7 +23,7 @@
 	id = "clf3"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
 	reagent_state = LIQUID
-	color = "#FFFFFF" // rgb: 96, 165, 132
+	color = "#FF0000"
 	metabolization_rate = 4
 
 /datum/chemical_reaction/clf3
@@ -77,7 +77,7 @@
 	id = "sorium"
 	description = "Sends everything flying from the detonation point."
 	reagent_state = LIQUID
-	color = "#FFA500"  //rgb: 96, 165, 132
+	color = "#FFA500"
 
 /datum/chemical_reaction/sorium
 	name = "Sorium"
@@ -109,7 +109,7 @@
 	id = "liquid_dark_matter"
 	description = "Sucks everything into the detonation point."
 	reagent_state = LIQUID
-	color = "#800080"  //rgb: 96, 165, 132
+	color = "#800080"
 
 /datum/chemical_reaction/liquid_dark_matter
 	name = "Liquid Dark Matter"
@@ -155,7 +155,7 @@
 	id = "blackpowder"
 	description = "Explodes. Violently."
 	reagent_state = LIQUID
-	color = "#000000"  //rgb: 96, 165, 132
+	color = "#000000"
 	metabolization_rate = 0.05
 
 /datum/chemical_reaction/blackpowder
@@ -189,7 +189,7 @@
 	id = "flash_powder"
 	description = "Makes a very bright flash."
 	reagent_state = LIQUID
-	color = "#000000"  //rgb: 96, 165, 132
+	color = "#000000"
 
 /datum/chemical_reaction/flash_powder
 	name = "Flash powder"
@@ -241,7 +241,7 @@
 	id = "smoke_powder"
 	description = "Makes a large cloud of smoke that can carry reagents."
 	reagent_state = LIQUID
-	color = "#000000"  //rgb: 96, 165, 132
+	color = "#000000"
 
 /datum/chemical_reaction/smoke_powder
 	name = "smoke_powder"
@@ -298,7 +298,7 @@
 	id = "sonic_powder"
 	description = "Makes a deafening noise."
 	reagent_state = LIQUID
-	color = "#000000"  //rgb: 96, 165, 132
+	color = "#000000"
 
 /datum/chemical_reaction/sonic_powder
 	name = "sonic_powder"
@@ -357,7 +357,7 @@
 	id = "phlogiston"
 	description = "Catches you on fire and makes you ignite."
 	reagent_state = LIQUID
-	color = "#FF9999" // rgb: 96, 165, 132
+	color = "#FF9999"
 
 /datum/chemical_reaction/phlogiston
 	name = "phlogiston"
@@ -387,7 +387,7 @@
 	id = "napalm"
 	description = "Very flammable."
 	reagent_state = LIQUID
-	color = "#FF9999" // rgb: 96, 165, 132
+	color = "#FF9999"
 
 /datum/reagent/napalm/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
