@@ -1,0 +1,5 @@
+author: AnturK
+
+delete-after: True
+changes: 
+  - rscadd: "Added an arrow graffiti, made arrow and body graffiti face the same way as the user"
