@@ -21,9 +21,9 @@
 			if(3)
 				user << "It has no outer grille and the external reinforced cover has been welded into"
 			if(4)
-				user << "It has no outer grille or no external reinforced cover and the external support rods are exposed"
+				user << "It has no outer grille or external reinforced cover and the external support rods are exposed"
 			if(5)
-				user << "It has no outer grille or no external reinforced cover and the external support rods are loose"
+				user << "It has no outer grille or external reinforced cover and the external support rods are loose"
 			if(6)
 				user << "It has no outer grille, external reinforced cover or external support rods and the inner reinforced cover is exposed" //And that's terrible
 
@@ -363,22 +363,20 @@
 	switch(severity)
 		if(1.0)
 			if(prob(66)) //It's "bomb-proof"
-				dismantle_wall(1,1) //So it isn't completely destroyed, nice uh ?
+				dismantle_wall(0,1) //So it isn't completely destroyed, nice uh ?
 			else
-				dismantle_wall(0,1) //Fuck it up nicely
+				dismantle_wall(1,1) //Fuck it up nicely
 		if(2.0)
 			if(prob(25)) //Fairly likely to stand, point-blank damage is "gone"
 				dismantle_wall(0,1)
 			else
 				src.d_state = 4
 				update_icon()
-				getFromPool(/obj/item/stack/rods, get_turf(src)) //Lose one rod, because it blasted right through
-				getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src))
+				getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src)) //Lose the plasteel needed to get there
 		if(3.0)
 			if(prob(15))
 				dismantle_wall(0,1)
 			else //If prob fails, break the outer safety grille to look like scrap damage
 				src.d_state = 1
 				update_icon()
-				getFromPool(/obj/item/stack/rods, get_turf(src), 2)
 	return
