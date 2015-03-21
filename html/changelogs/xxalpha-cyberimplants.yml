@@ -1,6 +1,0 @@
-author: xxalpha
-
-delete-after: True
-
-changes:
-  - rscadd: "Added Cybernetic Implants: Security HUD, Medical HUD, X-Ray, Thermals, Anti-Drop, Anti-Stun. All implants are researchable and produceable by R&D and Robotics."
