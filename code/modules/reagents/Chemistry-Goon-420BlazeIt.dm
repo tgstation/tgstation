@@ -366,7 +366,7 @@ datum/reagent/crank/addiction_act_stage4(var/mob/living/M as mob)
 		M << "<span class='notice'>[high_message]</span>"
 	M.adjustStaminaLoss(-35)
 	M.adjustToxLoss(1)
-	if(prob(rand(1,100)))
+	if(prob(50))
 		M.losebreath++
 		M.adjustOxyLoss(20)
 	..()

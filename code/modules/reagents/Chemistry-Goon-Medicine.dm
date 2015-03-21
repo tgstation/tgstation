@@ -627,7 +627,7 @@ datum/reagent/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob,
 	return
 datum/reagent/strange_reagent/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(rand(1,100)))
+	if(prob(50))
 		M.adjustBruteLoss(2*REM)
 		M.adjustFireLoss(2*REM)
 	..()
