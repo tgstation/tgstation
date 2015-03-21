@@ -205,7 +205,7 @@
 
 					if(do_after(user, 60))
 						playsound(src, 'sound/items/Welder.ogg', 100, 1) //Not an error, play welder sound again
-						src.d_state = 3
+						src.d_state = 2
 						update_icon()
 						user.visible_message("<span class='warning'>[user] fixes the welding damage on \the [src]'s external cover.</span>", \
 						"<span class='notice'>You fix the welding damage on \the [src]'s external cover.</span>", \
@@ -217,15 +217,15 @@
 		if(4)
 			if(istype(W, /obj/item/weapon/wrench))
 
-				user.visible_message("<span class='warning'>[user] starts removing the bolts anchoring \the [src]'s external support rods.</span>", \
-				"<span class='notice'>You start removing the bolts anchoring \the [src]'s external support rods.</span>")
+				user.visible_message("<span class='warning'>[user] starts loosening the bolts anchoring \the [src]'s external support rods.</span>", \
+				"<span class='notice'>You start loosening the bolts anchoring \the [src]'s external support rods.</span>")
 				playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
 
 				if(do_after(user, 40))
 					src.d_state = 5
 					update_icon()
-					user.visible_message("<span class='warning'>[user] removes the bolts anchoring \the [src]'s external support rods.</span>", \
-					"<span class='notice'>You remove the bolts anchoring \the [src]'s external support rods.</span>")
+					user.visible_message("<span class='warning'>[user] loosens the bolts anchoring \the [src]'s external support rods.</span>", \
+					"<span class='notice'>You loosen the bolts anchoring \the [src]'s external support rods.</span>")
 				return
 
 			//Only construction step after reinforced girder, add the second plasteel sheet
@@ -302,6 +302,7 @@
 					user.visible_message("<span class='warning'>[user] pries off [src]'s internal cover.</span>", \
 					"<span class='notice'>You pry off [src]'s internal cover.</span>")
 					dismantle_wall() //Mr. Engineer, break down that reinforced wall
+					playsound(src, 'sound/items/Deconstruct.ogg', 100, 1)
 				return
 
 			//Repair the external support rods welded through in the previous step, with a welding tool. Naturally
@@ -310,7 +311,7 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					user.visible_message("<span class='notice'>[user] begins mending \the [src]'s external support rods.</span>", \
-					"<span class='notice'>You begin mending through \the [src]'s external support rods.</span>")
+					"<span class='notice'>You begin mending \the [src]'s external support rods.</span>")
 					playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 					if(do_after(user, 100))
@@ -318,7 +319,7 @@
 						src.d_state = 5
 						update_icon()
 						user.visible_message("<span class='warning'>[user] mends \the [src]'s external support rods.</span>", \
-						"<span class='notice'>You mend \the [src]'s external support rods, exposing its internal cover.</span>")
+						"<span class='notice'>You mend \the [src]'s external support rods.</span>")
 				else
 					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return

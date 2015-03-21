@@ -16,7 +16,7 @@
 	var/engraving, engraving_quality //engraving on the wall
 	var/del_suppress_resmoothing = 0 // Do not resmooth neighbors on Destroy. (smoothwall.dm)
 
-	canSmoothWith = "/turf/simulated/wall=0&/obj/structure/falsewall=0"
+	canSmoothWith = "/turf/simulated/wall=0&/obj/structure/falsewall=0&/obj/structure/rfalsewall=0"
 
 	soot_type = null
 
@@ -32,7 +32,6 @@
 /turf/simulated/wall/proc/dismantle_wall(devastated = 0, explode = 0)
 	if(istype(src, /turf/simulated/wall/r_wall)) //Reinforced girder has deconstruction steps too. If no girder, drop ONE plasteel sheet AND rods
 		if(!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src))
 			new /obj/structure/girder/reinforced(src)
 		else
@@ -40,7 +39,6 @@
 			getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src))
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood, get_turf(src))
 			B.New(src)
 			new /obj/structure/cultgirder(src)
@@ -51,7 +49,6 @@
 
 	else
 		if(!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder(src)
 			if(mineral == "metal")
 				getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 2)

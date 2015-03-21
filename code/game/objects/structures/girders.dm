@@ -290,15 +290,24 @@
 	return
 
 /obj/structure/girder/update_icon()
+	//Names really shouldn't be set here, but it's the only proc that checks where needed
 	if(anchored)
 		if(state)
+			name = "reinforced girder"
 			icon_state = "reinforced"
 		else
+			name = "girder"
 			icon_state = "girder"
 	else
-		icon_state = "displaced"
+		if(state)
+			name = "displaced reinforced girder"
+			icon_state = "r_displaced"
+		else
+			name = "displaced girder"
+			icon_state = "displaced"
 
 /obj/structure/girder/displaced
+	name = "displaced girder"
 	icon_state = "displaced"
 	anchored = 0
 
@@ -341,6 +350,7 @@
 	return
 
 /obj/structure/cultgirder
+	name = "cult girder"
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "cultgirder"
 	anchored = 1
