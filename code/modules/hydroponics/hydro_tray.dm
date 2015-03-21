@@ -755,6 +755,11 @@
 	else if(dead)
 		remove_dead(user)
 
+/obj/machinery/portable_atmospherics/hydroponics/attack_robot(mob/user as mob)
+
+	if(isMoMMI(user) && Adjacent(user)) //Are we a beep ping ?
+		return attack_hand(user) //Let them use the tray
+
 /obj/machinery/portable_atmospherics/hydroponics/attack_hand(mob/user as mob)
 
 	if(isobserver(user))
