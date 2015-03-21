@@ -4,4 +4,5 @@ delete-after: True
 
 changes:
   - bugfix: "Fixed cables on catwalks being destroyed when creating plating floor."
+  - rscadd: "Portable machines can be mounted on any turf that could hold a cable."
 

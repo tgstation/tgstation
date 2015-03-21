@@ -1,0 +1,6 @@
+author: Phil235
+
+delete-after: True
+
+changes:
+  - bugfix: "Silicons are no longer blinded by welding."
