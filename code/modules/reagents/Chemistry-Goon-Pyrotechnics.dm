@@ -189,7 +189,7 @@
 	id = "flash_powder"
 	description = "Makes a very bright flash."
 	reagent_state = LIQUID
-	color = "#000000"
+	color = "#FFFF00"
 
 /datum/chemical_reaction/flash_powder
 	name = "Flash powder"
@@ -241,7 +241,7 @@
 	id = "smoke_powder"
 	description = "Makes a large cloud of smoke that can carry reagents."
 	reagent_state = LIQUID
-	color = "#000000"
+	color = "#808080"
 
 /datum/chemical_reaction/smoke_powder
 	name = "smoke_powder"
@@ -298,7 +298,7 @@
 	id = "sonic_powder"
 	description = "Makes a deafening noise."
 	reagent_state = LIQUID
-	color = "#000000"
+	color = "#0000FF"
 
 /datum/chemical_reaction/sonic_powder
 	name = "sonic_powder"
