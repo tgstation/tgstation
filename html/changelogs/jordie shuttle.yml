@@ -1,6 +1,0 @@
-author: Jordie0608
-
-delete-after: True
-
-changes:
-  - bugfix: "The backup shuttle will no longer be called if the emergency shuttle is coming."

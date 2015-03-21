@@ -1,9 +1,0 @@
-author: MMMiracles
-
-delete-after: True
-
-changes: 
-  - rscadd: "Adds 3 new bear-based foods."
-  - rscadd: "Beary Pie -1 Plain Pie, 1 berry, 1 bear steak"
-  - rscadd: "Filet Migrawr - 5u of Manlydorf, 1 bear steak, 1 lighter(not used in crafting)"
-  - rscadd: "Bearger - 1 bun, 1 bear steak "
