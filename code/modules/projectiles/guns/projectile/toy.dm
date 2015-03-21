@@ -11,6 +11,7 @@
 	burst_size = 3
 	can_suppress = 0
 	clumsy_check = 0
+	needs_permit = 0
 
 /obj/item/weapon/gun/projectile/automatic/toy/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
 	..()
@@ -40,6 +41,7 @@
 	origin_tech = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy
 	clumsy_check = 0
+	needs_permit = 0
 
 /obj/item/weapon/gun/projectile/shotgun/toy/process_chamber()
 	..()
@@ -56,3 +58,25 @@
 	fire_sound = 'sound/items/syringeproj.ogg'
 	slot_flags = SLOT_BELT
 	w_class = 2
+
+/obj/item/weapon/gun/projectile/automatic/c20r/toy
+	name = "donksoft SMG"
+	desc = "A bullpup two-round burst toy SMG, designated 'C-20r'. Ages 8 and up."
+	icon = 'icons/obj/guns/toy.dmi'
+	can_suppress = 0
+	needs_permit = 0
+	mag_type = /obj/item/ammo_box/magazine/toy/smgm45
+
+/obj/item/weapon/gun/projectile/automatic/c20r/toy/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
+	..()
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/toy
+	name = "donksoft LMG"
+	desc = "A heavily modified toy light machine gun, designated 'L6 SAW'. Ages 8 and up."
+	icon = 'icons/obj/guns/toy.dmi'
+	can_suppress = 0
+	needs_permit = 0
+	mag_type = /obj/item/ammo_box/magazine/toy/m762
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/toy/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
+	..()

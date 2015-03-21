@@ -250,3 +250,23 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/ammo_box/magazine/toy/pistol/riot
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+
+/obj/item/ammo_box/magazine/toy/smgm45
+	name = "donksoft SMG magazine"
+	caliber = "foam_force"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+	max_ammo = 20
+
+/obj/item/ammo_box/magazine/toy/smgm45/update_icon()
+	..()
+	icon_state = "c20r45-[round(ammo_count(),2)]"
+
+/obj/item/ammo_box/magazine/toy/m762
+	name = "donksoft box magazine"
+	caliber = "foam_force"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+	max_ammo = 50
+
+/obj/item/ammo_box/magazine/toy/m762/update_icon()
+	..()
+	icon_state = "a762-[round(ammo_count(),10)]"

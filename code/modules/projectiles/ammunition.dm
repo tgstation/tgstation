@@ -42,7 +42,7 @@
 		for(var/obj/item/ammo_casing/bullet in src.loc)
 			if (box.stored_ammo.len >= box.max_ammo)
 				break
-			if (box.ammo_type == bullet.type && bullet.BB)
+			if (bullet.BB)
 				if (box.give_round(bullet, 0))
 					boolets++
 			else
