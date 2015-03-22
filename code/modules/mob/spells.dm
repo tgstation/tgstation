@@ -1,6 +1,8 @@
-/mob/proc/add_spell(var/spell/spell_to_add)
+/mob/proc/add_spell(var/spell/spell_to_add, var/spell_base = "wiz_spell_ready")
 	if(!spell_master)
 		spell_master = new
+		if(spell_base)
+			spell_master.icon_state = spell_base
 		if(client)
 			src.client.screen += spell_master
 

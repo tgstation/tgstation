@@ -66,6 +66,9 @@ Obviously, requires DNA2.
 
 	invocation_type = SpI_NONE
 
+	override_base = "genetic"
+	hud_state = "gen_hulk"
+
 /spell/targeted/genetic/hulk/New()
 	desc = "Get mad!  For [duration/10] seconds, anyway."
 	..()

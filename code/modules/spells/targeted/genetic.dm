@@ -12,8 +12,6 @@ code\game\dna\genes\goon_powers.dm
 	var/list/mutations = list() //mutation strings
 	duration = 100 //deciseconds
 
-	override_base = "genetic"
-
 
 /spell/targeted/genetic/cast(list/targets)
 	..()
@@ -49,7 +47,6 @@ code\game\dna\genes\goon_powers.dm
 	amt_eye_blurry = 20
 
 	hud_state = "wiz_blind"
-	override_base = ""
 
 /spell/targeted/genetic/mutate
 	name = "Mutate"

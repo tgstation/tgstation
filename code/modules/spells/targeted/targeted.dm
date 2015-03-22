@@ -33,15 +33,24 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 	var/list/targets = list()
 
 	if(max_targets == 0) //unlimited
-		for(var/mob/living/target in view_or_range(range, user, selection_type))
-			targets += target
+		if(range == -2)
+			targets = living_mob_list
+		else
+			for(var/mob/living/target in view_or_range(range, user, selection_type))
+				targets += target
+
 	else if(max_targets == 1) //single target can be picked
-		if(range <= 0 && spell_flags & INCLUDEUSER)
+		if((range == 0 || range == -1) && spell_flags & INCLUDEUSER)
 			targets += user
 		else
 			var/list/possible_targets = list()
+			var/list/starting_targets
+			if(range == -2)
+				starting_targets = living_mob_list
+			else
+				starting_targets = view_or_range(range, user, selection_type)
 
-			for(var/mob/living/M in view_or_range(range, user, selection_type))
+			for(var/mob/living/M in starting_targets)
 				if(!(spell_flags & INCLUDEUSER) && M == user)
 					continue
 				possible_targets += M
@@ -56,16 +65,24 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 
 	else
 		var/list/possible_targets = list()
+		var/list/starting_targets
 
-		for(var/mob/living/target in view_or_range(range, user, selection_type))
+		if(range == -2)
+			starting_targets = living_mob_list
+		else
+			starting_targets = view_or_range(range, user, selection_type)
+
+		for(var/mob/living/target in starting_targets)
 			possible_targets += target
 
 		if(spell_flags & SELECTABLE)
 			for(var/i = 1; i<=max_targets, i++)
 				var/mob/M = input(user, "Choose the target for the spell.", "Targeting") as mob in possible_targets
-				if(M in view_or_range(range, user, selection_type))
-					targets += M
-					possible_targets -= M
+				if(range != -2)
+					if(!(M in view_or_range(range, user, selection_type)))
+						continue
+				targets += M
+				possible_targets -= M
 		else
 			for(var/i=1,i<=max_targets,i++)
 				if(!possible_targets.len)

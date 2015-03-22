@@ -57,8 +57,7 @@
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
 	for(var/spell in construct_spells)
-		src.add_spell(new spell)
-		spell_master.icon_state = "const_spell_ready"
+		src.add_spell(new spell, "const_spell_ready")
 	updateicon()
 
 /mob/living/simple_animal/construct/Die()
