@@ -1081,6 +1081,27 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 //AOE spells
 #define IGNOREDENSE		64	//are dense turfs ignored in selection?
 #define IGNORESPACE		128	//are space turfs ignored in selection?
+//End split flags
+#define CONSTRUCT_CHECK	256	//used by construct spells - checks for nullrods
+#define NO_BUTTON		512	//spell won't show up in the HUD with this
+
+//invocation
+#define SpI_SHOUT	"shout"
+#define SpI_WHISPER	"whisper"
+#define SpI_EMOTE	"emote"
+#define SpI_NONE	"none"
+
+//upgrading
+#define Sp_SPEED	"speed"
+#define Sp_POWER	"power"
+#define Sp_TOTAL	"total"
+
+//casting costs
+#define Sp_RECHARGE	"recharge"
+#define Sp_CHARGES	"charges"
+#define Sp_HOLDVAR	"holdervar"
+
+///////WIZ END/////////
 
 //Some alien checks for reagents for alien races.
 #define IS_DIONA 1

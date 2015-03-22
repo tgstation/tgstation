@@ -40,7 +40,7 @@
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	// Our new boo spell.
-	spell_list += new /spell/aoe_turf/boo(src)
+	add_spell(new /spell/aoe_turf/boo, "grey_spell_ready")
 
 	can_reenter_corpse = flags & GHOST_CAN_REENTER
 	started_as_observer = flags & GHOST_IS_OBSERVER

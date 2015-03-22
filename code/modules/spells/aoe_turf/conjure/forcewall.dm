@@ -8,16 +8,21 @@
 	range = 0
 	cast_sound = null
 
+	hud_state = "wiz_shield"
+
 /spell/aoe_turf/conjure/forcewall/mime
 	name = "Invisible wall"
 	desc = "Create an invisible wall on your location."
 	school = "mime"
 	panel = "Mime"
 	summon_type = list(/obj/effect/forcefield/mime)
-	invocation_type = "emote"
+	invocation_type = SpI_EMOTE
 	invocation = "mimes placing their hands on a flat surfacing, and pushing against it."
 	charge_max = 300
 	cast_sound = null
+
+	override_base = "grey"
+	hud_state = "mime_wall"
 
 /obj/effect/forcefield
 	desc = "A space wizard's magic wall."

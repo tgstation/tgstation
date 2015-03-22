@@ -4,7 +4,7 @@
 	charge_max = 400
 	spell_flags = NEEDSCLOTHES
 	invocation = "NEC CANTIO"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	selection_type = "range"
 	range = 0
 	inner_radius = -1
@@ -13,6 +13,8 @@
 
 	var/emp_heavy = 6
 	var/emp_light = 10
+
+	hud_state = "wiz_tech"
 
 /spell/aoe_turf/disable_tech/cast(list/targets)
 

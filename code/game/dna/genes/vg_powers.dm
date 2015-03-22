@@ -57,14 +57,17 @@ Obviously, requires DNA2.
 	panel = "Mutant Powers"
 	range = -1
 
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = HULK_COOLDOWN
 
 	duration = HULK_DURATION
 
 	spell_flags = INCLUDEUSER
 
-	invocation_type = "none"
+	invocation_type = SpI_NONE
+
+	override_base = "genetic"
+	hud_state = "gen_hulk"
 
 /spell/targeted/genetic/hulk/New()
 	desc = "Get mad!  For [duration/10] seconds, anyway."
