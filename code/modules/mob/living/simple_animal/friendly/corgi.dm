@@ -1,18 +1,28 @@
 //Corgi
 /mob/living/simple_animal/pet
 	icon = 'icons/mob/pets.dmi'
+	var/obj/item/clothing/tie/petcollar/pcollar = null
 	var/image/collar = null
 	var/image/pettag = null
 	var/accept_collar = 1
 
 /mob/living/simple_animal/pet/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(istype(O, /obj/item/clothing/tie/petcollar) && accept_collar)
+	if(istype(O, /obj/item/clothing/tie/petcollar) && accept_collar && !pcollar)
+		var/obj/item/clothing/tie/petcollar/P = O
+		pcollar = P
 		update_collar()
-		user << "<span class='notice'>You put the [O] around [src]'s neck.</span>"
-		qdel(O)
-
+		if(P.tagname)
+			name = P.tagname
+		user << "<span class='notice'>You put the [P] around [src]'s neck.</span>"
+		qdel(P)
 	else
 		..()
+
+/mob/living/simple_animal/pet/New()
+	..()
+	if(pcollar)
+		pcollar = new(src)
+		update_collar()
 
 /mob/living/simple_animal/pet/Die()
 	..()
