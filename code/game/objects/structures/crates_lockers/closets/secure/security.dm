@@ -24,6 +24,7 @@
 	new /obj/item/weapon/cartridge/captain(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/device/radio/headset/heads/captain/alt(src)
+	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	return
@@ -79,6 +80,7 @@
 	new /obj/item/clothing/under/rank/head_of_security/alt(src)
 	new /obj/item/clothing/head/HoS(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/megaphone/sec(src)
