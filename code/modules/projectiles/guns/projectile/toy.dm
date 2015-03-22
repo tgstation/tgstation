@@ -32,6 +32,10 @@
 	..()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
+/obj/item/weapon/gun/projectile/automatic/toy/pistol/riot/New()
+	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
+	..()
+
 /obj/item/weapon/gun/projectile/shotgun/toy
 	name = "foam force shotgun"
 	desc = "A toy shotgun with wood furniture and a four-shell capacity underneath. Ages 8 and up."
