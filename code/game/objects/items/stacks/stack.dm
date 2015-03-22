@@ -209,7 +209,7 @@
 
 /obj/item/stack/preattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if (!proximity_flag)
-		return 1
+		return 0
 
 	if (istype(target, src.type) && src.type==target.type)
 		var/obj/item/stack/S = target
