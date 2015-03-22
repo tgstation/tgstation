@@ -28,22 +28,48 @@
 		SK.master = E
 		del(src)
 
-/obj/structure/stool/bed/chair/proc/handle_rotation(direction) //making this into a seperate proc so office chairs can call it on Move()
+/obj/structure/stool/bed/chair/office/Move(atom/newloc, direct)
+	if(handle_rotation(newloc, direct))
+		..()
+	handle_layer()
+
+/obj/structure/stool/bed/chair/proc/handle_rotation(atom/newloc, direction)
 	if(buckled_mob)
 		buckled_mob.buckled = null //Temporary, so Move() succeeds.
-		if(!buckled_mob.Move(direction))
+		if(isturf(buckled_mob.loc))
+			// Nothing but border objects stop you from leaving a tile, only one loop is needed
+			for(var/obj/obstacle in buckled_mob.loc)
+				if(!obstacle.CheckExit(buckled_mob, newloc) && obstacle != buckled_mob && obstacle != buckled_mob.loc)
+					return 0
+		var/list/large_dense = list()
+		for(var/atom/movable/border_obstacle in newloc)
+			if(border_obstacle.flags&ON_BORDER)
+				if(!border_obstacle.CanPass(buckled_mob, buckled_mob.loc) && (buckled_mob.loc != border_obstacle) && buckled_mob != border_obstacle)
+					return 0
+			else
+				large_dense += border_obstacle
+
+		//Then, check the turf itself
+		if (!newloc.CanPass(buckled_mob, newloc))
+			return 0
+
+		//Finally, check objects/mobs to block entry that are not on the border
+		for(var/atom/movable/obstacle in large_dense)
+			if(!obstacle.CanPass(buckled_mob, buckled_mob.loc) && (buckled_mob.loc != obstacle) && buckled_mob != obstacle)
+				return 0
+		if(!buckled_mob.Move(newloc, direction))
 			buckled_mob.buckled = src
 			dir = buckled_mob.dir
 			return 0
 		buckled_mob.buckled = src //Restoring
 	return 1
 
-
 /obj/structure/stool/bed/chair/proc/handle_layer()
 	if(dir == NORTH)
 		src.layer = FLY_LAYER
 	else
 		src.layer = OBJ_LAYER
+
 
 /obj/structure/stool/bed/chair/proc/spin()
 	src.dir = turn(src.dir, 90)
@@ -160,10 +186,6 @@
 /obj/structure/stool/bed/chair/comfy/lime
 	icon_state = "comfychair_lime"
 
-/obj/structure/stool/bed/chair/office/Move(direction)
-	if(handle_rotation(direction))
-		..()
-	handle_layer()
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"
@@ -179,20 +201,3 @@
 	..()
 	overlays += image(icon,"officechair_dark-overlay",FLY_LAYER)
 
-/obj/structure/stool/bed/chair/office/handle_rotation()
-	layer = OBJ_LAYER
-
-	if(buckled_mob)
-		if(buckled_mob.loc != src.loc)
-			if(!isturf(buckled_mob.loc)) //We lost our mob!
-				unbuckle()
-				return
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			if(!buckled_mob.Move(loc))
-				unbuckle()
-				buckled_mob = null
-			else
-				buckled_mob.buckled = src //Restoring
-		if(buckled_mob)
-			buckled_mob.dir = dir
-	return 1
