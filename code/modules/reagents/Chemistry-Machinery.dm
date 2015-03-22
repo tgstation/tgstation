@@ -579,7 +579,7 @@
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
-	desc = "Used to seperate chemicals and distribute them in a variety of forms"
+	desc = "Used to seperate chemicals and distribute them in a variety of forms."
 	
 /obj/machinery/chem_master/constructable/New()
 	..()
