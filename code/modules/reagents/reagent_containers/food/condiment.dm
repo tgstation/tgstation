@@ -206,4 +206,4 @@
 
 	New()
 		..()
-		reagents.add_reagent("chefspecial", 50)
+		reagents.add_reagent("chefspecial", 20)
