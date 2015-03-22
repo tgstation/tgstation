@@ -152,7 +152,7 @@
 
 	message_admins("The roundtype will be converted. If you feel that the round should not continue, <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
-	spawn(1)//rand(1800,4200)) //somewhere between 3 and 7 minutes from now
+	spawn(rand(1800,4200)) //somewhere between 3 and 7 minutes from now
 		for(var/mob/living/carbon/human/H in antag_canadates)
 			replacementmode.make_antag_chance(H)
 		round_converted = 2
