@@ -19,6 +19,13 @@
 	name = "donut box"
 	var/icon_type = "donut"
 
+	//Note : Fancy storages generally collect one specific type of objects only due to their properties
+	//As such, it would make sense that one click on a stack of the corresponding objects should shove everything in here
+
+	allow_quick_gather = 1
+	use_to_pickup = 1
+	allow_quick_empty = 1
+
 /obj/item/weapon/storage/fancy/update_icon(var/itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "[src.icon_type]box[total_contents]"
@@ -234,6 +241,8 @@
 		new /obj/item/weapon/reagent_containers/glass/beaker/vial(src)
 	return
 
+//I know vial storage is just above, but it really shouldn't be there
+//Furthermore, this can lead to confusion with fancy items now having quick gather and quick empty
 /obj/item/weapon/storage/lockbox/vials
 	name = "secure vial storage box"
 	desc = "A locked box for keeping things away from children."
