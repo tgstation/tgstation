@@ -209,7 +209,7 @@ datum/reagent/corgium
 
 /datum/chemical_reaction/corgium/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /mob/living/simple_animal/corgi(location)
+	new /mob/living/simple_animal/pet/corgi(location)
 	..()
 	return
 
