@@ -1052,11 +1052,6 @@
 		//world << "[angle] [(get_dist(user, A) - 1)]"
 		user.Beam(A, "lightning", 'icons/obj/zap.dmi', 50, 15)
 /*Testing
-proc/get_angle(atom/a, atom/b)
-    return atan2(b.y - a.y, b.x - a.x)
-proc/atan2(x, y)
-    if(!x && !y) return 0
-    return y >= 0 ? arccos(x / sqrt(x * x + y * y)) : -arccos(x / sqrt(x * x + y * y))
 proc
     //  creates an /icon object with 360 states of rotation
     rotate_icon(file, state, step = 1, aa = FALSE)
