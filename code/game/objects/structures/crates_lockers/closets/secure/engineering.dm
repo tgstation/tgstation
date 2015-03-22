@@ -35,6 +35,7 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
+	new /obj/item/weapon/reagent_containers/syringe/atmospherics(src)
 	return
 
 /obj/structure/closet/secure_closet/engineering_electrical

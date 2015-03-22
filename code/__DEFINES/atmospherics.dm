@@ -27,6 +27,9 @@
 #define TANK_RUPTURE_PRESSURE				(40.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
 #define TANK_FRAGMENT_PRESSURE				(50.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion
 #define TANK_FRAGMENT_SCALE	    			(10.*ONE_ATMOSPHERE)	//+1 for each SCALE kPa aboe threshold
+#define AIRCHEM_SIZE						10000
+#define AIRCHEM_SPREAD_RATE					10 //higher is slower
+#define MINIMUM_AIR_CHEM_TO_SUSPEND			(AIRCHEM_SIZE/AIRCHEM_SPREAD_RATE)
 #define MINIMUM_AIR_RATIO_TO_SUSPEND		0.05	//Minimum ratio of air that must move to/from a tile to suspend group processing
 #define MINIMUM_AIR_TO_SUSPEND				(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)	//Minimum amount of air that has to move before a group processing can be suspended
 #define MINIMUM_MOLES_DELTA_TO_MOVE			(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND) //Either this must be active

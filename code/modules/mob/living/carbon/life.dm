@@ -80,7 +80,6 @@
 	var/datum/gas_mixture/environment
 	if(loc)
 		environment = loc.return_air()
-
 	var/datum/gas_mixture/breath
 
 	if(health <= config.health_threshold_crit)

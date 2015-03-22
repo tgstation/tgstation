@@ -23,6 +23,8 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+#define INHALE_SCALE 5
+
 /mob/living/carbon/human
 	var/tinttotal = 0				// Total level of visualy impairing items
 
@@ -101,6 +103,12 @@
 	if(dna)
 		dna.species.breathe(src)
 
+	var/datum/gas_mixture/environment
+	if(loc)
+		environment = loc.return_air()
+
+	if(environment.gas_reagents.total_volume)
+		environment.gas_reagents.trans_to(src,environment.gas_reagents.total_volume*(BREATH_VOLUME/INHALE_SCALE))
 	return
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
