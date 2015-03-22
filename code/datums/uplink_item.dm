@@ -71,12 +71,18 @@ var/list/uplink_items = list()
 
 		var/obj/I = spawn_item(get_turf(user), U, user)
 
+		var/bundlename = name
+		if(name == "Random Item" || name == "For showing that you are The Boss")
+			bundlename = I.name
+		if(I.tag)
+			bundlename = "[I.tag] bundle"
+			I.tag = null
 		if(ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
 			U.purchase_log += "[user] ([user.ckey]) bought [name] for [cost]."
 			if(user.mind)
-				user.mind.uplink_items_bought += name
+				user.mind.uplink_items_bought += bundlename
 				user.mind.spent_TC += cost
 		U.interact(user)
 
