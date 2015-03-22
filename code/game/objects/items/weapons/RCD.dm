@@ -97,25 +97,28 @@ RCD
 
 /obj/item/weapon/rcd/New()
 	..()
-	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	src.spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	return
 
+/obj/item/weapon/rcd/examine(mob/user)
+	..()
+	if(istype(src, /obj/item/weapon/rcd/borg))
+		user << "It's been set to draw power from a power cell."
+	else
+		user << "It currently holds [matter]/[max_matter] matter-units."
 
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		if((matter + 10) > max_matter)
-			user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
+			user << "<span class='notice'>The RCD can't hold any more matter-units.</span>"
 			return
-		user.drop_item()
-		del(W)
+		qdel(W)
 		matter += 10
-		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
-		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 		return
 
 
@@ -235,7 +238,6 @@ RCD
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
@@ -252,12 +254,11 @@ RCD
 
 /obj/item/weapon/rcd/borg/New()
 	..()
-	desc = "A device used to rapidly build walls/floor."
 	canRwall = 1
 
 /obj/item/weapon/rcd_ammo
 	name = "compressed matter cartridge"
-	desc = "Highly compressed matter for the RCD."
+	desc = "Highly compressed matter in a cartridge form, used in various fabricators."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rcd"
 	item_state = "rcdammo"
@@ -269,3 +270,11 @@ RCD
 	m_amt = 30000
 	g_amt = 15000
 	w_type = RECYK_ELECTRONIC
+
+/obj/item/weapon/rcd_ammo/attackby(var/obj/O, mob/user)
+	if(istype(O, /obj/item/device/material_synth) && !istype(O, /obj/item/device/material_synth/robot))
+		return O.attackby(src, user)
+	else if(istype(O, /obj/item/weapon/rcd) && !istype(O, /obj/item/weapon/rcd/borg))
+		return O.attackby(src, user)
+	else if(istype(O, /obj/item/weapon/rsf) && !istype(O, /obj/item/weapon/rsf/cyborg))
+		return O.attackby(src, user)

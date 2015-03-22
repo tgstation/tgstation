@@ -13,6 +13,7 @@ RSF
 	anchored = 0.0
 	m_amt = 40000
 	var/matter = 0
+	var/max_matter = 40
 	var/matter_respawn = 0
 	var/mode = 1
 	var/list/modes
@@ -20,7 +21,6 @@ RSF
 
 /obj/item/weapon/rsf/New()
 	..()
-	update_desc()
 	modes = list(
 		"glass",
 		"paper",
@@ -35,20 +35,19 @@ RSF
 /obj/item/weapon/rsf/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/rcd_ammo))
-		if (matter >= 40)
+		if (matter >= max_matter)
 			user << "The RSF can't hold any more matter."
 			return
-		if ((matter+20) >=40)
-			del(W)
-			matter = 40
-			user << "The RSF now holds [matter]/40 fabrication-units."
-			update_desc()
+		if ((matter+20) >= max_matter)
+			qdel(W)
+			matter = max_matter
+			playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
+			user << "<span class='notice'>The RSF now holds [matter]/[max_matter] fabrication-units.</span>"
 			return
-		del(W)
+		qdel(W)
 		matter += 20
-		playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
-		user << "The RSF now holds [matter]/40 fabrication-units."
-		update_desc()
+		playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
+		user << "<span class='notice'>The RSF now holds [matter]/[max_matter] fabrication-units.</span>"
 		return
 
 /obj/item/weapon/rsf/attack_self(mob/user as mob)
@@ -56,6 +55,13 @@ RSF
 	mode++
 	if(mode>modes.len) mode = 1
 	user << "Now dispensing [modes[mode]]!"
+
+/obj/item/weapon/rsf/examine(mob/user)
+	..()
+	if(istype(src, /obj/item/weapon/rsf/cyborg))
+		user << "It's been set to draw power from a power cell."
+	else
+		user << "It currently holds [matter]/[max_matter] fabrication-units."
 
 /obj/item/weapon/rsf/proc/pay(var/mob/user, var/amount) //spend matter or energy
 	if(isrobot(user)) //if the user is a robot, take power from its cell
@@ -66,12 +72,9 @@ RSF
 
 	if(amount <= matter)
 		matter -= amount
-		user << "The RSF now holds [matter]/40 fabrication-units."
+		user << "The RSF now holds [matter]/[max_matter] fabrication-units."
 		return 1
 	return 0
-
-/obj/item/weapon/rsf/proc/update_desc()
-	desc = "An RSF. It currently holds [matter]/40 fabrication-units."
 
 /obj/item/weapon/rsf/afterattack(atom/A, mob/user as mob)
 	if(!A.Adjacent(user))
@@ -116,13 +119,11 @@ RSF
 				user << "Dispensing a Deck of Cards..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
 				new /obj/item/toy/cards(get_turf(A))
-
 		if("cardboard sheet")
 			if(pay(user,1))
 				user << "Dispensing a Cardboard Sheet..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 10, 1)
 				new /obj/item/stack/sheet/cardboard(get_turf(A))
-	update_desc()
 
 /obj/item/weapon/rsf/cyborg/New()
 	..()
@@ -130,7 +131,4 @@ RSF
 	desc = "A device used to rapidly deploy service items."
 
 /obj/item/weapon/rsf/cyborg/process()
-	return //Borg RSF doesn't need matter
-
-/obj/item/weapon/rsf/cyborg/update_desc()
 	return //Borg RSF doesn't need matter
