@@ -96,6 +96,7 @@
 */
 /mob/living/carbon/monkey/RestrainedClickOn(var/atom/A)
 	if(a_intent != I_HURT || !ismob(A)) return
+	delayNextAttack(10)
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 	var/mob/living/carbon/ML = A
