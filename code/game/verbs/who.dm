@@ -35,6 +35,8 @@
 
 			entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 			Lines += entry
+
+		log_admin("[key_name(usr)] used who verb advanced (shows OOC key - IC name, status and if antagonist)")
 	else
 		for (var/client/C in clients)
 			if (C.holder && C.holder.fakekey)
