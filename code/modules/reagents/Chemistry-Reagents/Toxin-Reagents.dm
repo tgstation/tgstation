@@ -158,10 +158,8 @@ datum/reagent/toxin/zombiepowder/on_mob_life(var/mob/living/carbon/M as mob)
 	..()
 	return
 
-datum/reagent/toxin/zombiepowder/Del()
-	if(holder && ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
-		M.status_flags &= ~FAKEDEATH
+datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
+	M.status_flags &= ~FAKEDEATH
 	..()
 
 datum/reagent/toxin/mindbreaker
@@ -258,10 +256,8 @@ datum/reagent/toxin/chloralhydrate
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	current_cycle++
+	switch(current_cycle)
 		if(1 to 10)
 			M.confused += 2
 			M.drowsyness += 2
@@ -269,7 +265,7 @@ datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
 			M.sleeping += 1
 		if(51 to INFINITY)
 			M.sleeping += 1
-			M.adjustToxLoss((data - 50)*REM)
+			M.adjustToxLoss((current_cycle - 50)*REM)
 	..()
 	return
 
@@ -281,53 +277,15 @@ datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/beer2/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	switch(data)
+	switch(current_cycle)
 		if(1 to 50)
 			M.sleeping += 1
 		if(51 to INFINITY)
 			M.sleeping += 1
-			M.adjustToxLoss((data - 50)*REM)
-	data++
+			M.adjustToxLoss((current_cycle - 50)*REM)
+	current_cycle++
 	..()
 	return
-
-
-
-//ACID
-
-
-datum/reagent/toxin/acid
-	name = "Sulphuric acid"
-	id = "sacid"
-	description = "A strong mineral acid with the molecular formula H2SO4."
-	color = "#DB5008" // rgb: 219, 80, 8
-	toxpwr = 1
-	var/acidpwr = 10 //the amount of protection removed from the armour
-
-datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/volume)
-	if(!istype(C))
-		return
-	if(method != TOUCH)
-		if(!C.unacidable)
-			C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
-			return
-
-	C.acid_act(acidpwr, toxpwr, volume)
-
-datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
-	if(istype(O.loc, /mob)) //handled in human acid_act()
-		return
-	O.acid_act(acidpwr, toxpwr, volume)
-
-datum/reagent/toxin/acid/fluacid
-	name = "Fluorosulfuric acid"
-	id = "facid"
-	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
-	color = "#8E18A9" // rgb: 142, 24, 169
-	toxpwr = 2
-	acidpwr = 20
 
 datum/reagent/toxin/coffeepowder
 	name = "Coffee Grounds"
@@ -353,7 +311,7 @@ datum/reagent/toxin/mutetoxin //the new zombie powder.
 	toxpwr = 0
 
 datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
-	M.silent += REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
+	M.silent = max(M.silent, 3)
 	..()
 
 datum/reagent/toxin/staminatoxin
@@ -369,6 +327,39 @@ datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
 	data = max(data - 1, 3)
 	..()
 
+
+//ACID
+
+
+datum/reagent/toxin/acid
+	name = "Sulphuric acid"
+	id = "sacid"
+	description = "A strong mineral acid with the molecular formula H2SO4."
+	color = "#DB5008" // rgb: 219, 80, 8
+	toxpwr = 1
+	var/acidpwr = 10 //the amount of protection removed from the armour
+
+datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/volume)
+	if(!istype(C))
+		return
+	if(method != TOUCH)
+		C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
+		return
+
+	C.acid_act(acidpwr, toxpwr, volume)
+
+datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
+	if(istype(O.loc, /mob)) //handled in human acid_act()
+		return
+	O.acid_act(acidpwr, toxpwr, volume)
+
+datum/reagent/toxin/acid/fluacid
+	name = "Fluorosulfuric acid"
+	id = "facid"
+	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
+	color = "#8E18A9" // rgb: 142, 24, 169
+	toxpwr = 2
+	acidpwr = 20
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM

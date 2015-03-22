@@ -90,6 +90,7 @@
 	var/datum/mind/mind = null
 	var/blood_gender = null
 	var/blood_type = null
+	var/mutant_color = null
 	var/factions = null
 	var/contains_sample = 0
 
@@ -103,6 +104,7 @@
 					realName = bloodSample.data["real_name"]
 					blood_gender = bloodSample.data["gender"]
 					blood_type = bloodSample.data["blood_type"]
+					mutant_color = bloodSample.data["mutant_color"]
 					factions = bloodSample.data["factions"]
 					W.reagents.clear_reagents()
 					user << "You inject the contents of the syringe into the seeds."
@@ -475,11 +477,11 @@
 	growthstages = 4
 
 /obj/item/seeds/icepepperseed
-	name = "pack of ice-pepper seeds"
-	desc = "These seeds grow into ice-pepper plants."
+	name = "pack of ice pepper seeds"
+	desc = "These seeds grow into ice pepper plants."
 	icon_state = "seed-icepepper"
 	species = "chiliice"
-	plantname = "Ice-Pepper Plants"
+	plantname = "Ice Pepper Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	lifespan = 25
 	endurance = 15
@@ -548,7 +550,7 @@
 	desc = "These may, or may not, grow into oat."
 	icon_state = "seed-oat"
 	species = "oat"
-	plantname = "oat Stalks"
+	plantname = "Oat Stalks"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/oat
 	lifespan = 25
 	endurance = 15
@@ -565,7 +567,7 @@
 	desc = "These may, or may not, grow into rice."
 	icon_state = "seed-rice"
 	species = "rice"
-	plantname = "rice Stalks"
+	plantname = "Rice Stalks"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/rice
 	lifespan = 25
 	endurance = 15
@@ -719,11 +721,11 @@
 
 /obj/item/seeds/steelmycelium
 	name = "pack of steel-cap mycelium"
-	desc = "This mycelium grows into metal rods."
+	desc = "This mycelium grows into steel logs."
 	icon_state = "mycelium-steelcap"
 	species = "steelcap"
 	plantname = "Steel Caps"
-	product = /obj/item/stack/rods
+	product = /obj/item/weapon/grown/log/steel
 	lifespan = 80
 	endurance = 50
 	maturation = 15

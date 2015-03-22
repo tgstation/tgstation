@@ -96,6 +96,7 @@
 		F.ptank = src
 		user.unEquip(src)
 		src.loc = F
+		F.update_icon()
 	return
 
 /obj/item/weapon/tank/internals/plasma/full/New()

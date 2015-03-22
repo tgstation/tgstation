@@ -76,7 +76,7 @@
 	alerts -= category
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
-	client.screen -= alert
+		client.screen -= alert
 	qdel(alert)
 
 // Make sure any alerts you throw have a path that matches /obj/screen/alert/[id] or /obj/screen/alert/[category]

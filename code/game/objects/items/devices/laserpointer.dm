@@ -96,52 +96,19 @@
 
 	//human/alien mobs
 	if(iscarbon(target))
+		var/mob/living/carbon/C = target
 		if(user.zone_sel.selecting == "eyes")
-			var/mob/living/carbon/C = target
+			add_logs(user, C, "shone in the eyes", object="laser pointer")
+
+			var/severity = 1
+			if(prob(33))
+				severity = 2
+			else if(prob(50))
+				severity = 0
 
 			//20% chance to actually hit the eyes
-			if(prob(effectchance * diode.rating))
-				add_logs(user, C, "shone in the eyes", object="laser pointer")
-
-				//eye target check
+			if(prob(effectchance * diode.rating) && C.flash_eyes(severity))
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
-				var/eye_prot = C.eyecheck()
-				if(C.eye_blind || eye_prot >= 2)
-					eye_prot = 4
-				var/severity = 3 - eye_prot
-				if(prob(33))
-					severity += 1
-				else if(prob(50))
-					severity -= 1
-				severity = min(max(severity, 0), 4)
-
-				switch(severity)
-					if(0)
-						//no effect
-						C << "<span class='info'>A small, bright dot appears in your vision.</span>"
-					if(1)
-						//industrial grade eye protection
-						C.eye_stat += rand(0, 2)
-						C << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
-					if(2)
-						//basic eye protection (sunglasses)
-						flick("flash", C.flash)
-						C.eye_stat += rand(1, 6)
-						C << "<span class='danger'>Your eyes were blinded!</span>"
-					if(3)
-						//no eye protection
-						if(prob(2))
-							C.Weaken(1)
-						flick("e_flash", C.flash)
-						C.eye_stat += rand(3, 7)
-						C << "<span class='danger'>Your eyes were blinded!</span>"
-					if(4)
-						//the effect has been worsened by something
-						if(prob(5))
-							C.Weaken(1)
-						flick("e_flash", C.flash)
-						C.eye_stat += rand(5, 10)
-						C << "<span class='danger'>Your eyes were blinded!</span>"
 			else
 				outmsg = "<span class='notice'>You fail to blind [C] by shining [src] at their eyes.</span>"
 
@@ -150,6 +117,7 @@
 		var/mob/living/silicon/S = target
 		//20% chance to actually hit the sensors
 		if(prob(effectchance * diode.rating))
+			flick("e_flash", S.flash)
 			S.Weaken(rand(5,10))
 			S << "<span class='warning'>Your sensors were overloaded by a laser!</span>"
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"

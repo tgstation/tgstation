@@ -3,6 +3,9 @@
 	voice_name = "synthesized voice"
 	languages = ROBOT | HUMAN
 	has_unlimited_silicon_privilege = 1
+	verb_say = "states"
+	verb_ask = "queries"
+	verb_yell = "declares"
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
@@ -21,6 +24,8 @@
 
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
+
+	var/law_change_counter = 0
 
 /mob/living/silicon/contents_explosion(severity, target)
 	return
@@ -338,7 +343,7 @@
 	var/datum/atom_hud/medsensor = huds[med_hud]
 	medsensor.add_hud_to(src)
 
-/mob/living/silicon/verb/sensor_mode()
+/mob/living/silicon/proc/sensor_mode()
 	set name = "Set Sensor Augmentation"
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
 	remove_med_sec_hud()
@@ -415,6 +420,9 @@
 
 /mob/living/silicon/setEarDamage()
 	return
+
+/mob/living/silicon/check_eye_prot()
+	return 2
 
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)

@@ -127,7 +127,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/russian
 	name = "russian revolver"
-	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism that spins the chamber before each trigger pull."
+	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = 0
@@ -175,13 +175,17 @@
 			user << "<span class='notice'>[src] is empty.</span>"
 
 /obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
-	if(user.a_intent == "harm") // Flogging action
-		return
+	if(flag)
+		if(!(target in user.contents) && ismob(target))
+			if(user.a_intent == "harm") // Flogging action
+				return
+
 	if(isliving(user))
 		if(!can_trigger_gun(user))
 			return
 	if(target != user)
-		user << "<span class='warning'>A mechanism prevents you from shooting anyone but yourself.</span>"
+		if(ismob(target))
+			user << "<span class='warning'>A mechanism prevents you from shooting anyone but yourself.</span>"
 		return
 
 	if(ishuman(user))

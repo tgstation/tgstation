@@ -115,10 +115,6 @@
 			else
 				return
 
-	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		user << "<span class='notice'>You can't place \the [I] into \the [src].</span>"
-		return
-
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
 		user << "<span class='warning'> You empty the bag.</span>"
@@ -152,7 +148,7 @@
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
-	if(target.mob_size > 1)
+	if(target.mob_size > MOB_SIZE_HUMAN)
 		user << "<span class='warning'>[target] doesn't fit inside [src].</span>"
 		return
 	src.add_fingerprint(user)

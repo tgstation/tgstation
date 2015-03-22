@@ -141,6 +141,42 @@
 	icon_state = "bottle16"
 	list_reagents = list("formaldehyde" = 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/initropidril
+	name = "initropidril bottle"
+	desc = "A small bottle. Contains initropidril."
+	icon_state = "bottle16"
+	list_reagents = list("initropidril" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/pancuronium
+	name = "pancuronium bottle"
+	desc = "A small bottle. Contains pancuronium."
+	icon_state = "bottle16"
+	list_reagents = list("pancuronium" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/sodium_thiopental
+	name = "sodium_thiopental bottle"
+	desc = "A small bottle. Contains sodium thiopental."
+	icon_state = "bottle16"
+	list_reagents = list("formaldehyde" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/coniine
+	name = "coniine bottle"
+	desc = "A small bottle. Contains coniine."
+	icon_state = "bottle16"
+	list_reagents = list("coniine" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/curare
+	name = "curare bottle"
+	desc = "A small bottle. Contains curare."
+	icon_state = "bottle16"
+	list_reagents = list("curare" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/amanitin
+	name = "amanitin bottle"
+	desc = "A small bottle. Contains amanitin."
+	icon_state = "bottle16"
+	list_reagents = list("amanitin" = 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/histamine
 	name = "histamine bottle"
 	desc = "A small bottle. Contains Histamine."

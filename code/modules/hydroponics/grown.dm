@@ -148,7 +148,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 20), 1))
-		reagents.add_reagent("hotline", 3 + round((potency / 10), 1))
+		reagents.add_reagent("salglu_solution", 1 + round((potency / 20), 1))
 		bitesize = 1 + round(reagents.total_volume / 3, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily
@@ -619,6 +619,7 @@
 	name = "mimana"
 	desc = "It's an excellent prop for a mime."
 	icon_state = "mimana"
+	trash = /obj/item/weapon/grown/bananapeel/mimanapeel
 	filling_color = "#FFFFEE"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mimana/add_juice()
@@ -650,7 +651,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = /obj/item/seeds/icepepperseed
-	name = "ice-pepper"
+	name = "ice pepper"
 	desc = "It's a mutant strain of chili"
 	icon_state = "icepepper"
 	filling_color = "#0000CD"
@@ -665,7 +666,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
+		user << "<span class='info'>- Frost Oil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
@@ -969,6 +970,9 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 			GT.amount = GT.max_amount
 		else
 			GT.amount = grassAmt
+			for(var/obj/item/stack/tile/grass/GR in user.loc)
+				if(GR != GT && GR.amount < GR.max_amount)
+					GR.attackby(GT, user) //we try to transfer all old unfinished stacks to the new stack we created.
 		grassAmt -= GT.max_amount
 	qdel(src)
 	return
@@ -991,6 +995,9 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 			CT.amount = CT.max_amount
 		else
 			CT.amount = carpetAmt
+			for(var/obj/item/stack/tile/carpet/CA in user.loc)
+				if(CA != CT && CA.amount < CA.max_amount)
+					CA.attackby(CT, user) //we try to transfer all old unfinished stacks to the new stack we created.
 		carpetAmt -= CT.max_amount
 	qdel(src)
 	return

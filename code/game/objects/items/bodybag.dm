@@ -111,4 +111,4 @@
 	foldedbag_path = /obj/item/bodybag/bluespace
 	density = 0
 	mob_storage_capacity = 15
-	max_mob_size = 2
+	max_mob_size = MOB_SIZE_LARGE

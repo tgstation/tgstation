@@ -207,19 +207,18 @@
 
 /obj/effect/effect/chem_smoke/Move()
 	..()
-	for(var/atom/A in view(1, src))
-		if(reagents.has_reagent("radium")||reagents.has_reagent("uranium")||reagents.has_reagent("carbon")||reagents.has_reagent("thermite"))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
-			if(prob(5))
-				reagents.reaction(A)
-		else
-			reagents.reaction(A)
+	for(var/mob/living/A in view(1, src))
+		if(reagents.total_volume >= 1)
+			reagents.reaction(A, TOUCH)
+			reagents.trans_to(A.reagents, 10)
 	return
 
 
 /obj/effect/effect/chem_smoke/Crossed(mob/living/carbon/M as mob )
 	..()
-	reagents.reaction(M)
-
+	if(reagents.total_volume >= 1)
+		reagents.reaction(M, TOUCH)
+		reagents.trans_to(M.reagents, 10)
 
 /datum/effect/effect/system/chem_smoke_spread
 	var/total_smoke = 0 // To stop it being spammed and lagging!

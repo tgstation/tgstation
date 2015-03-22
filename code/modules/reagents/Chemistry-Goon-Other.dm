@@ -8,42 +8,41 @@ var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d111
 datum/reagent/oil
 	name = "Oil"
 	id = "oil"
-	description = "A slippery solution."
+	description = "Burns in a small smoky fire, mostly used to get Ash."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/stable_plasma
 	name = "Stable Plasma"
 	id = "stable_plasma"
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/iodine
 	name = "Iodine"
 	id = "iodine"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/fluorine
 	name = "Fluorine"
 	id = "fluorine"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/carpet
 	name = "Carpet"
 	id = "carpet"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 /datum/reagent/carpet/reaction_turf(var/turf/simulated/T, var/volume)
 	if(istype(T, /turf/simulated/floor/plating) || istype(T, /turf/simulated/floor/plasteel))
 		var/turf/simulated/floor/F = T
-		F.visible_message("[T] gets a layer of carpeting applied!")
 		F.ChangeTurf(/turf/simulated/floor/fancy/carpet)
 	..()
 	return
@@ -53,28 +52,28 @@ datum/reagent/bromine
 	id = "bromine"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/phenol
 	name = "Phenol"
 	id = "phenol"
-	description = "A slippery solution."
+	description = "Used for certain medical recipes."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/ash
 	name = "Ash"
 	id = "ash"
-	description = "A burnt solution."
+	description = "Basic ingredient in a couple of recipes."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/acetone
 	name = "Acetone"
 	id = "acetone"
-	description = "A solution."
+	description = "Common ingredient in other recipes."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 /datum/chemical_reaction/acetone
 	name = "acetone"
@@ -118,7 +117,7 @@ datum/reagent/colorful_reagent
 	id = "colorful_reagent"
 	description = "A solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 /datum/chemical_reaction/colorful_reagent
 	name = "colorful_reagent"
@@ -155,7 +154,7 @@ datum/reagent/triple_citrus
 	id = "triple_citrus"
 	description = "A solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 /datum/chemical_reaction/triple_citrus
 	name = "triple_citrus"
@@ -169,7 +168,7 @@ datum/reagent/corn_starch
 	id = "corn_starch"
 	description = "A slippery solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 /datum/chemical_reaction/corn_syrup
 	name = "corn_syrup"
@@ -184,7 +183,7 @@ datum/reagent/corn_syrup
 	id = "corn_syrup"
 	description = "Decays into sugar."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 datum/reagent/corn_syrup/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
@@ -206,7 +205,7 @@ datum/reagent/corgium
 	id = "corgium"
 	description = "Creates a corgi at the reaction location."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 /datum/chemical_reaction/corgium/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -219,7 +218,7 @@ datum/reagent/hair_dye
 	id = "hair_dye"
 	description = "A solution."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
 
 /datum/chemical_reaction/hair_dye
@@ -243,7 +242,7 @@ datum/reagent/barbers_aid
 	id = "barbers_aid"
 	description = "A solution to hair loss across the world."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 /datum/chemical_reaction/barbers_aid
 	name = "barbers_aid"
@@ -268,7 +267,7 @@ datum/reagent/concentrated_barbers_aid
 	id = "concentrated_barbers_aid"
 	description = "A concentrated solution to hair loss across the world."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#C8A5DC"
 
 /datum/chemical_reaction/concentrated_barbers_aid
 	name = "concentrated_barbers_aid"

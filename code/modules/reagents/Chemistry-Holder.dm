@@ -365,19 +365,18 @@ datum/reagents/proc/isolate_reagent(var/reagent)
 			update_total()
 
 datum/reagents/proc/del_reagent(var/reagent)
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
-			reagent_list -= A
-			del(A)
+			if(istype(my_atom, /mob/living))
+				var/mob/living/M = my_atom
+				R.on_mob_delete(M)
+			qdel(R)
+			reagent_list -= R
 			update_total()
 			my_atom.on_reagent_change()
 			check_ignoreslow(my_atom)
 			check_gofast(my_atom)
 			check_goreallyfast(my_atom)
-			return 0
-
-
 	return 1
 
 datum/reagents/proc/check_ignoreslow(var/mob/M)
@@ -389,7 +388,7 @@ datum/reagents/proc/check_ignoreslow(var/mob/M)
 
 datum/reagents/proc/check_gofast(var/mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("hotline"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST

@@ -141,7 +141,12 @@
 /obj/item/weapon/implant/chem/activate(var/cause)
 	if(!cause || !imp_in)	return 0
 	var/mob/living/carbon/R = imp_in
-	reagents.trans_to(R, cause)
+	var/injectamount = null
+	if (cause == "action_button")
+		injectamount = reagents.total_volume
+	else
+		injectamount = cause
+	reagents.trans_to(R, injectamount)
 	R << "You hear a faint *beep*."
 	if(!reagents.total_volume)
 		R << "You hear a faint click from your chest."

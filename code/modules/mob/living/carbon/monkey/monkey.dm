@@ -1,13 +1,12 @@
 /mob/living/carbon/monkey
 	name = "monkey"
 	voice_name = "monkey"
-	say_message = "chimpers"
+	verb_say = "chimpers"
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	languages = MONKEY
-	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 
 /mob/living/carbon/monkey/New()
@@ -262,5 +261,4 @@
 			src << "<span class='warning'>Your mask protects you from the acid.</span>"
 		return
 
-	if(!unacidable)
-		take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))
+	take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))

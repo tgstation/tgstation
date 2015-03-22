@@ -109,7 +109,7 @@
 					<div id=\"rightmenu\">[right_part]</div>
 				</div>
 			</body>
-			</html>"}
+			</html>"} //"
 	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	onclose(usr, "pai")
 	temp = null
@@ -252,7 +252,7 @@
 					add_med_hud()
 		if("translator")
 			if(href_list["toggle"])
-				languages = languages == ALL ? HUMAN & ROBOT : ALL
+				languages = (languages == ALL) ? (HUMAN | ROBOT) : ALL
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
