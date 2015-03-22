@@ -22,6 +22,7 @@
 	
 	verb_say = "telepathically chirps"
 	verb_ask = "telepathically asks"
+	verb_exclaim = "telepathically cries"
 	verb_yell = "telephatically cries"
 
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables

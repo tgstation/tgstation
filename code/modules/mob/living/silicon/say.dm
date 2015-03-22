@@ -1,14 +1,6 @@
 /mob/living/silicon/say(var/message)
 	return ..(message, "R")
 
-/mob/living/silicon/say_quote(input, spans)
-	if(copytext(input, length(input) - 1) == "!!")
-		spans |= SPAN_YELL
-		input = attach_spans(input, spans)
-		return "alarms, \"[input]\""
-
-	return ..()
-
 /mob/living/silicon/get_spans()
 	return ..() | SPAN_ROBOT
 

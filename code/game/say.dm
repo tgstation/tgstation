@@ -68,18 +68,21 @@ var/list/freqtospan = list(
 	var/ending = copytext(input, length(input))
 	if(copytext(input, length(input) - 1) == "!!")
 		spans |= SPAN_YELL
+		return "[verb_yell], \"[attach_spans(input, spans)]\""
 	input = attach_spans(input, spans)
 	if(ending == "?")
 		return "[verb_ask], \"[input]\""
 	if(ending == "!")
-		return "[verb_yell], \"[input]\""
+		return "[verb_exclaim], \"[input]\""
 
 	return "[verb_say], \"[input]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message, list/spans)
 	if(languages & message_langs)
 		var/atom/movable/AM = speaker.GetSource()
-		if(AM)
+		if(AM) //Basically means "if the speaker is virtual"
+			if(AM.verb_say != speaker.verb_say || AM.verb_ask != speaker.verb_ask || AM.verb_exclaim != speaker.verb_exclaim || AM.verb_yell != speaker.verb_yell) //If the saymod was changed
+				return speaker.say_quote(raw_message, spans)
 			return AM.say_quote(raw_message, spans)
 		else
 			return speaker.say_quote(raw_message, spans)
@@ -136,10 +139,10 @@ var/list/freqtospan = list(
 /atom/movable/proc/IsVocal()
 	return 1
 
+/atom/movable/proc/get_alt_name()
+
 //HACKY VIRTUALSPEAKER STUFF BEYOND THIS POINT
 //these exist mostly to deal with the AIs hrefs and job stuff.
-
-/atom/movable/proc/get_alt_name()
 
 /atom/movable/proc/GetJob() //Get a job, you lazy butte
 
