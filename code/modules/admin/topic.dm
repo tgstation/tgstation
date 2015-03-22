@@ -1995,7 +1995,7 @@
 			alert("Removed:\n" + list2text(removed_paths, "\n"))
 
 		var/list/offset = text2list(href_list["offset"],",")
-		var/number = dd_range(1, 100, text2num(href_list["object_count"]))
+		var/number = Clamp(text2num(href_list["object_count"]), 1, 100)
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0

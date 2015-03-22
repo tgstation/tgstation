@@ -4,10 +4,6 @@
  * A large number of misc global procs.
  */
 
-//Returns the middle-most value
-/proc/dd_range(var/low, var/high, var/num)
-	return max(low,min(high,num))
-
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end) return 0
 	var/dy
