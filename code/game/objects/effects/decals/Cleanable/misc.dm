@@ -16,6 +16,10 @@
 	icon_state = "ash"
 	anchored = 1
 
+/obj/effect/decal/cleanable/ash/New()
+	..()
+	reagents.add_reagent("ash", 30)
+
 /obj/effect/decal/cleanable/greenglow
 	name = "green glow"
 
@@ -130,3 +134,23 @@
 	layer = 2
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
+
+/obj/effect/decal/cleanable/chem_pile
+	name = "chemical pile"
+	desc = "A pile of chemicals. You can't quite tell what's inside it."
+	gender = PLURAL
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "ash"
+	anchored = 1
+/obj/effect/decal/cleanable/chem_pile/New()
+	..()
+	SSobj.processing |= src
+
+/obj/effect/decal/cleanable/chem_pile/Destroy()
+	SSobj.processing.Remove(src)
+	..()
+
+/obj/effect/decal/cleanable/chem_pile/process()
+	if(reagents)
+		reagents.reagent_on_tick()
+	return

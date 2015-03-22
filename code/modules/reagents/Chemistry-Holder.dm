@@ -251,6 +251,11 @@ datum/reagents/proc/metabolize(var/mob/M)
 	last_tick++
 	update_total()
 
+datum/reagents/proc/reagent_on_tick()
+	for(var/datum/reagent/R in reagent_list)
+		R.on_tick()
+	return
+
 datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
 	for(var/datum/reagent/R in reagent_list)
 		R.on_move (A, Running)

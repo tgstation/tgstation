@@ -94,6 +94,14 @@ datum/reagent/proc/on_merge(var/data)
 datum/reagent/proc/on_update(var/atom/A)
 	return
 
+// Called every time reagent containers process.
+datum/reagent/proc/on_tick(var/data)
+	return
+
+// Called when the reagent container is hit by an explosion
+datum/reagent/proc/on_ex_act(var/severity)
+	return
+
 // Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
 datum/reagent/proc/overdose_process(var/mob/living/M as mob)
 	return
@@ -560,8 +568,8 @@ datum/reagent/radium/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(volume >= 3)
 		if(!istype(T, /turf/space))
-			new /obj/effect/decal/cleanable/greenglow(T)
-			return
+			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
+			reagentdecal.reagents.add_reagent("uranium", volume)
 
 datum/reagent/thermite
 	name = "Thermite"
@@ -631,7 +639,8 @@ datum/reagent/uranium/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(volume >= 3)
 		if(!istype(T, /turf/space))
-			new /obj/effect/decal/cleanable/greenglow(T)
+			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
+			reagentdecal.reagents.add_reagent("uranium", volume)
 
 datum/reagent/aluminium
 	name = "Aluminium"
