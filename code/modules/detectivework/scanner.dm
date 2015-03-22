@@ -5,7 +5,7 @@
 /obj/item/device/detective_scanner
 	name = "forensic scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
-	icon_state = "forensic1"
+	icon_state = "forensicnew"
 	w_class = 3.0
 	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
