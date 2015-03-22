@@ -592,7 +592,7 @@
 	
 /obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
 
-	if(default_deconstruction_screwdriver(user, "mixer0", "mixer0", I))
+	if(default_deconstruction_screwdriver(user, "mixer0", "mixer0", B))
 		if(beaker)
 			beaker.loc = src.loc
 			beaker = null
@@ -602,12 +602,15 @@
 			loaded_pill_bottle = null
 		return
 		
-	if(exchange_parts(user, I))
+	if(exchange_parts(user, B))
 		return
 		
 	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar(I)
+		if(istype(B, /obj/item/weapon/crowbar))
+			default_deconstruction_crowbar(B)
+			return 1
+		else
+			user << "<span class='warning'>You can't use the [src.name] while it's panel is opened.</span>"
 			return 1
 
 	if(istype(B, /obj/item/weapon/reagent_containers/glass))
