@@ -22,7 +22,6 @@
 	var/amount = 5
 	var/build_number = 8
 
-	var/part_set
 	var/obj/being_built
 	build_time = FAB_TIME_BASE //time modifier for each machine. Protolathes have low time variable, mechfabs have high
 	var/list/queue = list()
@@ -157,6 +156,8 @@
 				warning("[element] was left over in setting up parts.")
 				part_set.Remove(element)
 
+	counter += convert_designs() //fill the rest of the way
+
 	return counter
 
 /obj/machinery/r_n_d/fabricator/process()
@@ -185,7 +186,7 @@
 	var/list/part_set_list = part_sets[set_name]
 	if(!part_set_list)
 		part_set_list = list()
-	for(var/datum/design/D in part_set)
+	for(var/datum/design/D in part_set_list)
 		if(D.build_path == part.build_path)
 			// del part
 			return 0
@@ -397,7 +398,7 @@
 			if(D)
 				files.AddDesign2Known(D)
 		files.RefreshResearch()
-		var/i = src.setup_part_sets()
+		var/i = src.convert_designs()
 		var/tech_output = update_tech()
 		if(!silent)
 			temp = "Processed [i] equipment designs.<br>"
