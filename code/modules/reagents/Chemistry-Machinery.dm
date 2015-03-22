@@ -590,9 +590,9 @@
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 	
-/obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
+/obj/machinery/chem_master/constructable/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
 
-	if(default_deconstruction_screwdriver(user, "mixer0", "mixer0", B))
+	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0_", B))
 		if(beaker)
 			beaker.loc = src.loc
 			beaker = null
