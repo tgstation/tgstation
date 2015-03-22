@@ -61,6 +61,8 @@
 	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
 	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
 
+	var/compost_value = 0
+
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
 		/obj/structure/rack,

@@ -240,3 +240,16 @@
 		qdel(src)
 	else
 		..()
+
+/obj/item/weapon/reagent_containers/glass/compost
+	name = "compost bag"
+	desc = "A big bag of compost."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "compost"
+	m_amt = 0
+	g_amt = 0
+	w_class = 3.0
+	amount_per_transfer_from_this = 10
+	list_reagents = list("compost" = 60)
+	volume = 60
+	flags = OPENCONTAINER

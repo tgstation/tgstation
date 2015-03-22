@@ -853,6 +853,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "hydroponics watertank crate"
 	access = access_hydroponics
 
+/datum/supply_packs/misc/hydroponics/compostbin
+	name = "Compost Tank Crate"
+	contains = list(/obj/structure/reagent_dispensers/compostbin)
+	cost = 15
+	containertype = /obj/structure/largecrate
+	containername = "compost tank crate"
+
 /datum/supply_packs/organic/hydroponics/seeds
 	name = "Seeds Crate"
 	contains = list(/obj/item/seeds/chiliseed,
@@ -1006,6 +1013,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 8
 	containertype = /obj/structure/largecrate
 	containername = "water tank crate"
+
+/datum/supply_packs/misc/watertank/high
+	name = "High-Capacity Water Tank Crate"
+	contains = list(/obj/structure/reagent_dispensers/watertank/high)
+	cost = 15
+	containertype = /obj/structure/largecrate
+	containername = "high-capacity water tank crate"
 
 /datum/supply_packs/misc/lasertag
 	name = "Laser Tag Crate"
