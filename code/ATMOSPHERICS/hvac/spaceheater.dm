@@ -128,7 +128,7 @@
 				var/value = text2num(href_list["val"])
 
 				// limit to 20-90 degC
-				set_temperature = dd_range(20, 90, set_temperature + value)
+				set_temperature = Clamp(set_temperature + value, 20, 90)
 
 			if("cellremove")
 				if(panel_open && cell && !usr.get_active_hand())
