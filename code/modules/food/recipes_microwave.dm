@@ -1109,6 +1109,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/aesirsalad
+	reagents_forbidden = list("synaptizine")
 
 /datum/recipe/validsalad
 	items = list(

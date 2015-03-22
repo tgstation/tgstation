@@ -40,6 +40,7 @@
 /datum/recipe
 
 	var/list/reagents //List of reagents needed and their amount, reagents = list("berryjuice" = 5)
+	var/list/reagents_forbidden //List of reagents that will not be transfered to the cooked item under any circumstance, use smartly and sparringly. reagents_forbidden = list("toxin", "water")
 	var/list/items //List of items needed, items = list(/obj/item/weapon/crowbar, /obj/item/weapon/welder)
 	var/result //Well gee, what we output, result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 	var/time = 100 //In tenths of a second, this is how long it takes for the magic to happen. The machine producing the recipe handles this value, but the recipe defines it
@@ -97,6 +98,9 @@
 	var/obj/result_obj = new result(container) //Spawn the result of our little cuisine in the recipe machine in advance to transfer reagents
 	for(var/obj/O in (container.contents - result_obj)) //Find all objects (for instance, raw food or beakers) in our machine, excluding the result we just created
 		if(O.reagents) //Little sanity, can't hurt
+			for(var/r_r in reagents_forbidden) //Check forbidden reagents
+				O.reagents.del_reagent("[r_r]") //If we find any, remove
+			O.reagents.update_total() //Make sure we're set
 			O.reagents.trans_to(result_obj, O.reagents.total_volume) //If we have reagents in here, squeeze them into the end product
 		qdel(O) //Delete the object, he has outlived his usefulness
 	container.reagents.clear_reagents() //Clear all the reagents we haven't transfered, for instance if we need to cook in water
