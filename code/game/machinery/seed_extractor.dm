@@ -31,30 +31,28 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 
 	// Emptying a plant bag
 	if (istype(O,/obj/item/weapon/storage/bag/plants))
+		if (!hasSpaceCheck(user))
+			return
 		var/obj/item/weapon/storage/P = O
 		var/loaded = 0
-		if(contents.len >= MAX_N_OF_ITEMS)
-			user << "<span class='notice'>\The [src] is full.</span>"
-			return 0
 		for(var/obj/item/seeds/G in P.contents)
+			++loaded
+			moveToStorage(G)
 			if(contents.len >= MAX_N_OF_ITEMS)
 				user << "<span class='notice'>You fill \the [src] to the brim.</span>"
 				return
-			++loaded
-			add(G)
 		if (loaded)
 			user << "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>"
 		else
 			user << "<span class='notice'>There are no seeds in \the [O.name].</span>"
 		return
 
-	// Loading seeds into the machine
+	// Loading individual seeds into the machine
 	if (istype(O,/obj/item/seeds))
-		if(contents.len >= MAX_N_OF_ITEMS)
-			user << "<span class='notice'>\The [src] is full.</span>"
-			return 0
+		if (!hasSpaceCheck(user))
+			return
 		user.drop_item()
-		add(O)
+		moveToStorage(O)
 		user << "<span class='notice'>You add [O] to [src.name].</span>"
 		updateUsrDialog()
 		return
@@ -84,7 +82,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 
 		qdel(O)
 
-	//Grass.
+	//Grass. //Why isn't this using the nonplant_seed_type functionality below?
 	else if(istype(O, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/S = O
 		user << "<span class='notice'>You extract some seeds from the [S.name].</span>"
@@ -128,12 +126,13 @@ datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie,
 	src.amount = am
 
 /obj/machinery/seed_extractor/attack_hand(mob/user as mob)
-	user.set_machine(src)
 	interact(user)
 
 obj/machinery/seed_extractor/interact(mob/user as mob)
 	if (stat)
 		return 0
+
+	user.set_machine(src)
 
 	var/dat = "<b>Stored seeds:</b><br>"
 
@@ -187,11 +186,7 @@ obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 	src.updateUsrDialog()
 	return
 
-obj/machinery/seed_extractor/proc/add(var/obj/item/seeds/O as obj)
-	if(contents.len >= MAX_N_OF_ITEMS)
-		usr << "<span class='notice'>\The [src] is full.</span>"
-		return 0
-
+obj/machinery/seed_extractor/proc/moveToStorage(var/obj/item/seeds/O as obj)
 	if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
 		S.remove_from_storage(O,src)
@@ -205,3 +200,9 @@ obj/machinery/seed_extractor/proc/add(var/obj/item/seeds/O as obj)
 
 	piles += new /datum/seed_pile(O.seed.display_name, O.seed.lifespan, O.seed.endurance, O.seed.maturation, O.seed.production, O.seed.yield, O.seed.potency)
 	return
+
+obj/machinery/seed_extractor/proc/hasSpaceCheck(mob/user as mob)
+	if(contents.len >= MAX_N_OF_ITEMS)
+		user << "<span class='notice'>\The [src] is full.</span>"
+		return 0
+	else return 1
