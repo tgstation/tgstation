@@ -46,7 +46,7 @@
 	return 0
 
 /proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/corgi))
+	if(istype(A, /mob/living/simple_animal/pet/corgi))
 		return 1
 	return 0
 
@@ -56,7 +56,7 @@
 	return 0
 
 /proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/cat))
+	if(istype(A, /mob/living/simple_animal/pet/cat))
 		return 1
 	return 0
 

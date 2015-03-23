@@ -10,6 +10,9 @@
 	if(..())
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
+		//Heart Attacks, etc.
+		handle_heart()
+
 		. = 1
 
 ///////////////
@@ -241,8 +244,9 @@
 /mob/living/carbon/handle_random_events()
 	return
 
-/mob/living/carbon/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/carbon/proc/handle_heart()
 	return
+/mob/living/carbon/handle_environment(var/datum/gas_mixture/environment)	return
 
 /mob/living/carbon/handle_stomach()
 	spawn(0)
@@ -462,10 +466,14 @@
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
+		if(!(SEE_TURFS & permanent_sight_flags))
+			sight &= ~SEE_TURFS
+		if(!(SEE_MOBS & permanent_sight_flags))
+			sight &= ~SEE_MOBS
+		if(!(SEE_OBJS & permanent_sight_flags))
+			sight &= ~SEE_OBJS
+
+		see_in_dark = (sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : 2  //Xray flag combo
 		see_invisible = SEE_INVISIBLE_LIVING
 		if(see_override)
 			see_invisible = see_override

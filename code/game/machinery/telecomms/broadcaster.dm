@@ -59,7 +59,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			Broadcast_Message(signal.data["mob"],
 							  signal.data["vmask"], signal.data["radio"],
 							  signal.data["message"], signal.data["name"], signal.data["job"], signal.data["realname"],
-							  0, signal.data["compression"], signal.data["level"], signal.frequency)
+							  0, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"])
 
 
 	   /** #### - Simple Broadcast - #### **/
@@ -83,7 +83,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], 4, signal.data["compression"], signal.data["level"], signal.frequency)
+							  signal.data["realname"], 4, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"])
 
 		if(!message_delay)
 			message_delay = 1
@@ -143,7 +143,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency)
+							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency, signal.data["spans"])
 
 
 /**
@@ -204,7 +204,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 /proc/Broadcast_Message(var/atom/movable/AM,
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
-						var/data, var/compression, var/list/level, var/freq)
+						var/data, var/compression, var/list/level, var/freq, var/list/spans)
 
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 
@@ -220,6 +220,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	virt.source = AM
 	virt.faketrack = data == 4 ? 1 : 0
 	virt.radio = radio
+	virt.verb_say = AM.verb_say
+	virt.verb_ask = AM.verb_ask
+	virt.verb_yell = AM.verb_yell
 
 	if(compression > 0)
 		message = Gibberish(message, compression + 40)
@@ -265,14 +268,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			receive |= M
 
-	var/rendered = virt.compose_message(virt, virt.languages, message, freq) //Always call this on the virtualspeaker to advoid issues.
+	var/rendered = virt.compose_message(virt, virt.languages, message, freq, spans) //Always call this on the virtualspeaker to advoid issues.
 	for(var/atom/movable/hearer in receive)
-		hearer.Hear(rendered, virt, AM.languages, message, freq)
+		hearer.Hear(rendered, virt, AM.languages, message, freq, spans)
 
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
-		var/blackbox_msg = "[AM] [AM.say_quote(message)]"
+		var/blackbox_msg = "[AM] [AM.say_quote(message, spans)]"
 		if(istype(blackbox))
 			switch(freq)
 				if(1459)

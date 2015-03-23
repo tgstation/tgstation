@@ -242,7 +242,7 @@
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/talk_into(mob/M as mob, text)
+/obj/item/proc/talk_into(mob/M, input, channel, spans)
 	return
 
 /obj/item/proc/dropped(mob/user as mob)

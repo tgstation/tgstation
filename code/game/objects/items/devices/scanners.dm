@@ -123,6 +123,10 @@ MASS SPECTROMETER
 		mob_status = "<font color='red'>Deceased</font>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.heart_attack)
+			user.show_message("<span class='userdanger'>Subject suffering from heart attack: Apply defibrillator immediately.</span>")
 	user.show_message(text("<span class='notice'>Analyzing Results for []:\n\t Overall Status: []</span>", M, mob_status), 1)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

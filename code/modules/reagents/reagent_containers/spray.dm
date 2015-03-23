@@ -68,7 +68,8 @@
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
-	var/wait_step = max(round(9/range),2)
+	var/wait_step = max(round(2+3/range), 2)
+
 	spawn(0)
 		for(var/i=0, i<range, i++)
 			step_towards(D,A)

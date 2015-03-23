@@ -49,7 +49,7 @@
 	name = "Secbot"
 	result = /obj/machinery/bot/secbot
 	reqs = list(/obj/item/device/assembly/signaler = 1,
-				/obj/item/clothing/head/helmet = 1,
+				/obj/item/clothing/head/helmet/sec = 1,
 				/obj/item/weapon/melee/baton = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)

@@ -311,3 +311,9 @@
 			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
 
 	return list2text(message_list, " ")
+
+/datum/species/cosmetic_zombie
+	name = "Human"
+	id = "zombie"
+	sexes = 0
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/zombie

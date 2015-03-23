@@ -111,7 +111,6 @@
 	//see: setup.dm for list of mutations
 
 	var/voice_name = "unidentifiable voice"
-	var/say_message = null // When you are understood by others. Currently only used by aliens and monkeys in their say_quote procs
 
 	var/list/faction = list("neutral") //A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
 	var/move_on_shuttle = 1 // Can move on the shuttle.
@@ -150,3 +149,6 @@
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
+
+	var/list/permanent_huds = list()
+	var/permanent_sight_flags = 0

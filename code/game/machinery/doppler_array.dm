@@ -7,6 +7,7 @@ var/list/doppler_arrays = list()
 	icon_state = "tdoppler"
 	density = 1
 	anchored = 1
+	verb_say = "states coldly"
 
 /obj/machinery/doppler_array/New()
 	..()
@@ -75,9 +76,6 @@ var/list/doppler_arrays = list()
 
 	for(var/message in messages)
 		say(message)
-
-/obj/machinery/doppler_array/say_quote(text)
-	return "states coldly, \"[text]\""
 
 /obj/machinery/doppler_array/power_change()
 	if(stat & BROKEN)

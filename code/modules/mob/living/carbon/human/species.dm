@@ -510,10 +510,16 @@
 		H.see_in_dark = 8
 		if(!H.druggy)		H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
-		H.sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		if(!(SEE_TURFS & H.permanent_sight_flags))
+			H.sight &= ~SEE_TURFS
+		if(!(SEE_MOBS & H.permanent_sight_flags))
+			H.sight &= ~SEE_MOBS
+		if(!(SEE_OBJS & H.permanent_sight_flags))
+			H.sight &= ~SEE_OBJS
+
+		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
-		H.see_in_dark = darksight
 
 		if(H.seer)
 			H.see_invisible = SEE_INVISIBLE_OBSERVER
@@ -1000,10 +1006,8 @@
 
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/datum/gas_mixture/breath
-	// HACK NEED CHANGING LATER
 	if(H.health <= config.health_threshold_crit)
 		H.losebreath++
-
 	if(H.losebreath>0) //Suffocating so do not take a breath
 		H.losebreath--
 		if (prob(10)) //Gasp per 10 ticks? Sounds about right.

@@ -1,6 +1,17 @@
 /mob/living/silicon/say(var/message)
 	return ..(message, "R")
 
+/mob/living/silicon/say_quote(input, spans)
+	if(copytext(input, length(input) - 1) == "!!")
+		spans |= SPAN_YELL
+		input = attach_spans(input, spans)
+		return "alarms, \"[input]\""
+
+	return ..()
+
+/mob/living/silicon/get_spans()
+	return ..() | SPAN_ROBOT
+
 /mob/living/proc/robot_talk(var/message)
 	log_say("[key_name(src)] : [message]")
 	var/desig = "Default Cyborg" //ezmode for taters
@@ -23,19 +34,19 @@
 /mob/living/silicon/lingcheck()
 	return 0 //Borged or AI'd lings can't speak on the ling channel.
 
-/mob/living/silicon/radio(message, message_mode)
+/mob/living/silicon/radio(message, message_mode, list/spans)
 	. = ..()
 	if(. != 0)
 		return .
 
 	if(message_mode == "robot")
 		if (radio)
-			radio.talk_into(src, message)
+			radio.talk_into(src, message, , spans)
 		return REDUCE_RANGE
 
 	else if(message_mode in radiochannels)
 		if(radio)
-			radio.talk_into(src, message, message_mode)
+			radio.talk_into(src, message, message_mode, spans)
 			return ITALICS | REDUCE_RANGE
 
 	return 0

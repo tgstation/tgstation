@@ -92,8 +92,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	trackedIan = locate(/mob/living/simple_animal/corgi/Ian) in mob_list
-	trackedRuntime = locate(/mob/living/simple_animal/cat/Runtime) in mob_list
+	trackedIan = locate(/mob/living/simple_animal/pet/corgi/Ian) in mob_list
+	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in mob_list
 	SetTypeReactions()
 	RefreshParts()
 
@@ -325,7 +325,7 @@
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
-			R.delete()
+			qdel(R)
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s chemical chamber has sprung a leak!</span>")
@@ -337,7 +337,7 @@
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
-			R.delete()
+			qdel(R)
 			ejectItem(TRUE)
 			warn_admins(usr, "[chosenchem] smoke")
 			investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", "experimentor")
@@ -424,7 +424,7 @@
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
-			R.delete()
+			qdel(R)
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, shattering [exp_on] and leaking cold air!.</span>")
@@ -510,7 +510,7 @@
 				trackedIan.loc = src.loc
 				investigate_log("Experimentor has stolen Ian!", "experimentor") //...if anyone ever fixes it...
 			else
-				new /mob/living/simple_animal/corgi(src.loc)
+				new /mob/living/simple_animal/pet/corgi(src.loc)
 				investigate_log("Experimentor has spawned a new corgi.", "experimentor")
 			ejectItem(TRUE)
 		if(globalMalf > 36 && globalMalf < 50)
@@ -532,7 +532,7 @@
 				trackedRuntime.loc = src.loc
 				investigate_log("Experimentor has stolen Runtime!", "experimentor")
 			else
-				new /mob/living/simple_animal/cat(src.loc)
+				new /mob/living/simple_animal/pet/cat(src.loc)
 				investigate_log("Experimentor failed to steal runtime, and instead spawned a new cat.", "experimentor")
 			ejectItem(TRUE)
 		if(globalMalf > 76)
@@ -656,7 +656,7 @@
 
 /obj/item/weapon/relic/proc/corgicannon(var/mob/user)
 	playsound(src.loc, "sparks", rand(25,50), 1)
-	var/mob/living/simple_animal/corgi/C = new/mob/living/simple_animal/corgi(get_turf(user))
+	var/mob/living/simple_animal/pet/corgi/C = new/mob/living/simple_animal/pet/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)),10,rand(3,8))
 	throwSmoke(get_turf(C))
 	warn_admins(user, "Corgi Cannon", 0)
@@ -679,7 +679,7 @@
 	user << message
 	var/animals = rand(1,25)
 	var/counter
-	var/list/valid_animals = list(/mob/living/simple_animal/parrot,/mob/living/simple_animal/butterfly,/mob/living/simple_animal/cat,/mob/living/simple_animal/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/fox,/mob/living/simple_animal/lizard,/mob/living/simple_animal/mouse,/mob/living/simple_animal/pug,/mob/living/simple_animal/hostile/bear,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/carp)
+	var/list/valid_animals = list(/mob/living/simple_animal/parrot,/mob/living/simple_animal/butterfly,/mob/living/simple_animal/pet/cat,/mob/living/simple_animal/pet/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/pet/fox,/mob/living/simple_animal/lizard,/mob/living/simple_animal/mouse,/mob/living/simple_animal/pet/pug,/mob/living/simple_animal/hostile/bear,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/carp)
 	for(counter = 1; counter < animals; counter++)
 		var/mobType = pick(valid_animals)
 		new mobType(get_turf(src))
