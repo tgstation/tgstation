@@ -97,6 +97,8 @@
 		build_inventory(premium, 0, 1, start_empty = 1)
 		for(var/obj/item/weapon/vending_refill/VR in component_parts)
 			refill_inventory(VR, product_records)
+			refill_inventory(VR, coin_records)
+			refill_inventory(VR, hidden_records)
 
 /obj/machinery/vending/ex_act(severity, target)
 	..()
@@ -232,8 +234,8 @@
 			return
 
 		if(component_parts && istype(W, /obj/item/weapon/crowbar))
-			var/datum/data/vending_product/machine = product_records
-			for(var/datum/data/vending_product/machine_content in machine)
+			var/list/all_products = product_records + hidden_records + coin_records
+			for(var/datum/data/vending_product/machine_content in all_products)
 				while(machine_content.amount !=0)
 					for(var/obj/item/weapon/vending_refill/VR in component_parts)
 						VR.charges++
@@ -619,7 +621,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 4,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 4,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater = 15,
-					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/ice = 9,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/ice = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass = 8)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/tea = 10)
 	vend_delay = 15
@@ -654,7 +656,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 5,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 5,/obj/item/weapon/reagent_containers/food/snacks/chips =5,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 5,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 5,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 5,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 5)
-	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
+	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 7)
 	refill_canister = /obj/item/weapon/vending_refill/snack
 	var/chef_compartment_access = "28"
 
@@ -680,7 +682,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
-	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 5)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 6)
 	refill_canister = /obj/item/weapon/vending_refill/cola
 
 //This one's from bay12
@@ -720,7 +722,7 @@
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift = 3,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_robust = 2,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_carp = 3,
-					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori = 1,
+					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori = 3,
 					/obj/item/weapon/storage/box/matches = 10,
 					/obj/item/weapon/lighter/grayscale = 4,
 					/obj/item/weapon/storage/fancy/rollingpapers = 5)
