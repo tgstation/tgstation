@@ -36,7 +36,10 @@ var/global/list/masterdatumPool = new
 	if(!O || !istype(O))
 		O = new A(arglist(B))
 	else
-		O.New(arglist(B))
+		if(B && B.len)
+			O.New(arglist(B))
+		else
+			O.New()
 	return O
 
 /*
