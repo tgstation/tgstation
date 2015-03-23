@@ -585,7 +585,11 @@ var/global/loopModeNames=list(
 		"endgame" = "Apocalypse",
 		"clockwork" = "Clockwork", // Unfinished new cult stuff
 		"thunderdome" = "Thunderdome", // For thunderdome I guess
-		"vidya" = "Vidya",
+//Vidya musak
+		"vidya_one" = "Vidya Pt.1",
+		"vidya_two" = "Vidya Pt.2",
+		"vidya_three" = "Vidya Pt.3",
+		"vidya_four" = "Vidya Pt.4",
 	)
 
 /obj/machinery/media/jukebox/superjuke/attackby(obj/item/W, mob/user)
