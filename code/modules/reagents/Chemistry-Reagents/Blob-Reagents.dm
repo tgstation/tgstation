@@ -9,8 +9,9 @@ datum/reagent/blob/boiling_oil
 datum/reagent/blob/boiling_oil/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
 		M.apply_damage(15, BURN)
-		M.adjust_fire_stacks(2)
-		M.IgniteMob()
+		if(iscarbon(M))
+			M.adjust_fire_stacks(2)
+			M.IgniteMob()
 		if(show_message)
 			M << "<span class = 'userdanger'>The blob splashes you with burning oil!</span>"
 		M.emote("scream")
@@ -52,8 +53,9 @@ datum/reagent/blob/skin_melter/reaction_mob(var/mob/living/M as mob, var/method=
 	if(method == TOUCH)
 		M.apply_damage(10, BRUTE)
 		M.apply_damage(10, BURN)
-		M.adjust_fire_stacks(2)
-		M.IgniteMob()
+		if(iscarbon(M))
+			M.adjust_fire_stacks(2)
+			M.IgniteMob()
 		if(show_message)
 			M << "<span class = 'userdanger'>The blob strikes you, and you feel your skin char and melt!</span>"
 			M.emote("scream")
