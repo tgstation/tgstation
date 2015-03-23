@@ -657,7 +657,7 @@
 "amG" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'EXTERNAL AIRLOCK'"; icon_state = "space"; layer = 4; name = "EXTERNAL AIRLOCK"; pixel_x = 32; pixel_y = 0},/turf/simulated/floor/plating,/area/maintenance/auxsolarport)
 "amH" = (/turf/simulated/wall,/area/maintenance/fpmaint2)
 "amI" = (/obj/structure/closet/crate,/turf/simulated/shuttle/floor,/area/space)
-"amJ" = (/obj/machinery/door/airlock/shuttle{name = "Labor Shuttle Airlock"},/obj/docking_port/mobile{dir = 8; dwidth = 2; height = 5; id = "laborcamp"; name = "labor camp shuttle"; travelDir = 90; width = 9},/obj/docking_port/stationary{dir = 8; dwidth = 2; height = 5; id = "laborcamp_home"; name = "fore bay 1"; width = 9},/turf/simulated/shuttle/floor,/area/space)
+"amJ" = (/obj/machinery/door/airlock/shuttle{id_tag = "prisonshuttle"; name = "Labor Shuttle Airlock"},/obj/docking_port/mobile{dir = 8; dwidth = 2; height = 5; id = "laborcamp"; name = "labor camp shuttle"; travelDir = 90; width = 9},/obj/docking_port/stationary{dir = 8; dwidth = 2; height = 5; id = "laborcamp_home"; name = "fore bay 1"; width = 9},/turf/simulated/shuttle/floor,/area/space)
 "amK" = (/obj/machinery/door/airlock/external{name = "Labor Camp Shuttle Airlock"},/turf/simulated/floor/plating,/area/security/processing)
 "amL" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/security{id_tag = "laborexit"; name = "Labor Shuttle"; req_access = null; req_access_txt = "63"},/turf/simulated/floor/plasteel,/area/security/processing)
 "amM" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"; name = "HIGH VOLTAGE"; pixel_y = 32},/obj/machinery/light{dir = 1},/turf/simulated/floor/plasteel,/area/hallway/primary/fore)
