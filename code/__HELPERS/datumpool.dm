@@ -36,7 +36,10 @@ var/global/list/masterdatumPool = new
 	if(!O || !istype(O))
 		O = new A(arglist(B))
 	else
-		O.New(arglist(B))
+		if(B && B.len)
+			O.New(arglist(B))
+		else
+			O.New()
 	return O
 
 /*
@@ -49,6 +52,8 @@ var/global/list/masterdatumPool = new
  * Example call: returnToDPool(src)
  */
 /proc/returnToDPool(const/datum/D)
+	if(!D)
+		return
 	if(length(masterdatumPool["[D.type]"]) > MAINTAINING_DATUM_POOL_COUNT)
 		#ifdef DEBUG_DATUM_POOL
 		world << text("DEBUG_DATUM_POOL: returnToPool([]) exceeds [] discarding...", D.type, MAINTAINING_DATUM_POOL_COUNT)
