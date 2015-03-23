@@ -76,6 +76,10 @@ var/global/list/masterdatumPool = new
 #undef DEBUG_DATUM_POOL
 #endif
 
+//RETURNS NULL WHEN INITIALIZED AS A LIST() AND POSSIBLY OTHER DISCRIMINATORS
+//IF YOU ARE USING SPECIAL VARIABLES SUCH A LIST() INITIALIZE THEM USING RESET VARIABLES
+//SEE http://www.byond.com/forum/?post=76850 AS A REFERENCE ON THIS
+
 /datum/proc/resetVariables()
 	var/list/exclude = global.exclude + args // explicit var exclusion
 	for(var/key in vars)
