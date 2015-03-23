@@ -1355,6 +1355,8 @@ var/global/list/common_tools = list(
 	/obj/item/clothing/glasses/sunglasses/gar,\
 	/obj/item/clothing/glasses/hud/security/sunglasses/gars,\
 	/obj/item/clothing/glasses/meson/gar,\
+	/obj/item/weapon/psycho/knife,\
+	/obj/item/weapon/psycho/machete,\
 	/obj/item/weapon/twohanded/spear)
 
 	//Because is_sharp is used for food or something.
