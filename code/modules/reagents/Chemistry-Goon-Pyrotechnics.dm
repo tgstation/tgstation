@@ -434,7 +434,7 @@ datum/reagent/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code free
 
 datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
 	if(volume >= 5)
-		for(var/mob/living/carbon/slime/M in T)
+		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 
 datum/reagent/pyrosium

@@ -153,8 +153,12 @@
 	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
+	var/list/not_interested = list()
+	var/being_used = 0
 
 /obj/item/slimepotion2/afterattack(mob/living/M as mob, mob/user as mob)
+	if(being_used || !ismob(M))
+		return
 	if(!(isslime(M) || isanimal(M) || ismonkey(M) || !M.ckey)) //I'm sorry for this line
 		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
 		return ..()
@@ -162,19 +166,50 @@
 		user << "<span class='warning'>[M] is dead!</span>"
 		return..()
 
-	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
-	var/client/C = null
+	user << "<span class='notice'>You begin to apply the potion to [M]...</span>"
+	being_used = 1
 
-	if(candidates.len)
-		C = pick(candidates)
+	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+
+	shuffle(candidates)
+
+	var/time_passed = world.time
+	var/list/consenting_candidates = list()
+
+	for(var/candidate in candidates)
+
+		if(candidate in not_interested)
+			continue
+
+		spawn(0)
+			switch(alert(candidate, "Would you like to play as [M.name]? Please choose quickly!","Confirmation","Yes","No"))
+				if("Yes")
+					if((world.time-time_passed)>=50 || !src)
+						return
+					consenting_candidates += candidate
+				if("No")
+					if(!src)
+						return
+					not_interested += candidate
+
+	sleep(50)
+
+	if(!src)
+		return
+
+	if(consenting_candidates.len)
+		var/client/C = null
+		C = pick(consenting_candidates)
 		M.key = C.key
 		M.languages |= HUMAN
+		M.faction -= "neutral"
 		M << "<span class='warning'>All at once it makes sense, you know what you are and who you are! Self awareness is yours!</span>"
 		M << "You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost."
 		user << "<span class='warning'>[M] is suddenly attentive and aware. It worked!</span>"
 		qdel(src)
 	else
 		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down. Maybe you should try again later...</span>"
+		being_used = 0
 		..()
 
 /obj/item/weapon/slimesteroid

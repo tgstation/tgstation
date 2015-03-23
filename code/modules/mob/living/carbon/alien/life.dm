@@ -37,7 +37,7 @@
 	if(move_delay_add > 0)
 		move_delay_add = max(0, move_delay_add - rand(1, 2))
 
-/mob/living/carbon/alien/handle_vision()
+/mob/living/carbon/alien/update_sight()
 
 	if(stat == DEAD)
 		sight |= SEE_TURFS
