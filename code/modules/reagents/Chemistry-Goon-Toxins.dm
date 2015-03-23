@@ -306,11 +306,10 @@ datum/reagent/amanitin/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/amanitin/reagent_deleted(var/mob/living/M as mob)
+datum/reagent/amanitin/on_mob_delete(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(current_cycle*rand(2,4))
 	..()
-	return
 
 datum/reagent/lipolicide
 	name = "Lipolicide"
