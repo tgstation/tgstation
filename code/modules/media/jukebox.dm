@@ -536,7 +536,8 @@ var/global/loopModeNames=list(
 	playlists=list(
 		"bar"  = "Bar Mix",
 		"jazz" = "Jazz",
-		"rock" = "Rock"
+		"rock" = "Rock",
+		"vidya" = "Vidya",
 	)
 
 // Relaxing elevator music~
@@ -555,6 +556,7 @@ var/global/loopModeNames=list(
 		"rock" = "Rock",
 		"muzak" = "Muzak",
 		"thunderdome" = "Thunderdome", // For thunderdome I guess
+		"vidya" = "Vidya",
 	)
 
 // So I don't have to do all this shit manually every time someone sacrifices pun-pun.
@@ -583,6 +585,7 @@ var/global/loopModeNames=list(
 		"endgame" = "Apocalypse",
 		"clockwork" = "Clockwork", // Unfinished new cult stuff
 		"thunderdome" = "Thunderdome", // For thunderdome I guess
+		"vidya" = "Vidya",
 	)
 
 /obj/machinery/media/jukebox/superjuke/attackby(obj/item/W, mob/user)
