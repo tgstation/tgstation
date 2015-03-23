@@ -1,0 +1,6 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - rscadd: All beaker types now have origin techs
+  - rscadd: Thermite is now logged
+  - tweak: Splashing shit on non-mobs will now be visible to everyone
