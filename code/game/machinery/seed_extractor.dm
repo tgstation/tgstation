@@ -98,7 +98,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 	..()
 
 	return
-
+//Code shamelessly ported over from tgstation's github repo, PR #2973, credit to Kelenius for the original code
 datum/seed_pile
 	var/name = ""
 	var/lifespan = 0	//Saved stats
