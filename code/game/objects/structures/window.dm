@@ -101,7 +101,7 @@
 
 /obj/structure/window/blob_act()
 
-	health -= rand(15, 25)
+	health -= rand(30, 50)
 	healthcheck()
 
 /obj/structure/window/meteorhit()
