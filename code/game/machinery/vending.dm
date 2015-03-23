@@ -94,7 +94,6 @@
 		build_inventory(premium, 0, 1, start_empty = 1)
 		for(var/obj/item/weapon/vending_refill/VR in component_parts)
 			refill_inventory(VR, product_records)
-		for(var/obj/item/weapon/vending_refill/VR in component_parts)
 			refill_inventory(VR, coin_records)
 			refill_inventory(VR, hidden_records)
 
