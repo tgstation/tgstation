@@ -130,15 +130,18 @@ obj/machinery/seed_extractor/interact(mob/user as mob)
 	var/dat = "<b>Stored seeds:</b><br>"
 
 	if (contents.len == 0)
-		dat += "<font color='red'>No seeds</font>"
+		dat += "<font color='red'>No seeds in storage!</font>"
 	else
 		dat += "<table cellpadding='3' style='text-align:center;'><tr><td>Name</td><td>Lifespan</td><td>Endurance</td><td>Maturation</td><td>Production</td><td>Yield</td><td>Potency</td><td>Stock</td></tr>"
 		for (var/datum/seed_pile/O in piles)
 			dat += "<tr><td>[O.name]</td><td>[O.lifespan]</td><td>[O.endurance]</td><td>[O.maturation]</td>"
 			dat += "<td>[O.production]</td><td>[O.yield]</td><td>[O.potency]</td><td>"
-			dat += "<a href='byond://?src=\ref[src];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency]'>Vend</a> <a href='byond://?src=\ref[src];amount=5'>x5</a> ([O.amount] left)</td></tr>"
+			dat += "<a href='byond://?src=\ref[src];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency];amt=1'>Vend</a>"
+			dat += "<a href='byond://?src=\ref[src];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency];amt=5'>5x</a>"
+			dat += "<a href='byond://?src=\ref[src];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency];amt=[O.amount]'>All</a>"
+			dat += "([O.amount] left)</td></tr>"
 		dat += "</table>"
-	var/datum/browser/popup = new(user, "seed_ext", name, 700, 400)
+	var/datum/browser/popup = new(user, "seed_ext", name, 725, 400)
 	popup.set_content(dat)
 	popup.open()
 	return
@@ -154,12 +157,13 @@ obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 	href_list["pr"] = text2num(href_list["pr"])
 	href_list["yi"] = text2num(href_list["yi"])
 	href_list["pot"] = text2num(href_list["pot"])
+	var/amt = text2num(href_list["amt"])
 
 	for (var/datum/seed_pile/N in piles)//Find the pile we need to reduce...
 		if (href_list["name"] == N.name && href_list["li"] == N.lifespan && href_list["en"] == N.endurance && href_list["ma"] == N.maturation && href_list["pr"] == N.production && href_list["yi"] == N.yield && href_list["pot"] == N.potency)
 			if(N.amount <= 0)
 				return
-			N.amount = max(N.amount - 1, 0)
+			N.amount = max(N.amount - amt, 0)
 			if (N.amount <= 0)
 				piles -= N
 				del(N)
@@ -169,7 +173,8 @@ obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 		var/obj/item/seeds/O = T
 		if (O.seed.display_name == href_list["name"] && O.seed.lifespan == href_list["li"] && O.seed.endurance == href_list["en"] && O.seed.maturation == href_list["ma"] && O.seed.production == href_list["pr"] && O.seed.yield == href_list["yi"] && O.seed.potency == href_list["pot"]) //Boy this sure is a long line, let's have this comment stretch it out even more!
 			O.loc = src.loc
-			break
+			amt--
+			if (amt <= 0) break
 
 	src.updateUsrDialog()
 	return
