@@ -33,9 +33,13 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 	if (istype(O,/obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/storage/P = O
 		var/loaded = 0
+		if(contents.len >= MAX_N_OF_ITEMS)
+			user << "<span class='notice'>\The [src] is full.</span>"
+			return 0
 		for(var/obj/item/seeds/G in P.contents)
-			if(contents.len >= 999)
-				break
+			if(contents.len >= MAX_N_OF_ITEMS)
+				user << "<span class='notice'>You fill \the [src] to the brim.</span>"
+				return
 			++loaded
 			add(G)
 		if (loaded)
@@ -46,6 +50,9 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 
 	// Loading seeds into the machine
 	if (istype(O,/obj/item/seeds))
+		if(contents.len >= MAX_N_OF_ITEMS)
+			user << "<span class='notice'>\The [src] is full.</span>"
+			return 0
 		user.drop_item()
 		add(O)
 		user << "<span class='notice'>You add [O] to [src.name].</span>"
@@ -84,9 +91,10 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		S.use(1)
 		new /obj/item/seeds/grassseed(loc)
 
-	if(O) //not sure what this portion of code is supposed to do - needs some commenting
+	if(O)
 		var/obj/item/F = O
 		if(F.nonplant_seed_type)
+			user << "<span class='notice'>You extract some seeds from the [F.name].</span>"
 			user.drop_item()
 			var/t_amount = 0
 			var/t_max = rand(1,4)
@@ -180,7 +188,7 @@ obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 	return
 
 obj/machinery/seed_extractor/proc/add(var/obj/item/seeds/O as obj)
-	if(contents.len >= 999)
+	if(contents.len >= MAX_N_OF_ITEMS)
 		usr << "<span class='notice'>\The [src] is full.</span>"
 		return 0
 

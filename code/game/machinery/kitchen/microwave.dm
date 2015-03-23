@@ -19,7 +19,6 @@
 	var/global/list/datum/recipe/available_recipes // List of the recipes you can use
 	var/global/list/acceptable_items // List of the items you can put in
 	var/global/list/acceptable_reagents // List of the reagents you can put in
-	var/global/max_n_of_items = 0
 	var/list/holdingitems = list()
 	var/limit = 100
 	var/speed_multiplier = 1
@@ -67,8 +66,6 @@
 				acceptable_items |= item
 			for (var/reagent in recipe.reagents)
 				acceptable_reagents |= reagent
-			if (recipe.items)
-				max_n_of_items = max(max_n_of_items,recipe.items.len)
 
 /*******************
 *   Part Upgrades
@@ -168,9 +165,6 @@
 		src.updateUsrDialog()
 		return 1
 	else if(is_type_in_list(O,acceptable_items))
-		if (contents.len>=max_n_of_items)
-			user << "<span class='warning'>This [src] is full of ingredients, you cannot put more.</span>"
-			return 1
 		if (istype(O,/obj/item/stack) && O:amount>1)
 			new O.type (src)
 			O:use(1)
