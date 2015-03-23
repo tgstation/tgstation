@@ -281,7 +281,7 @@
 			C.Stun(8)
 			C.Jitter(150)
 		for(var/obj/structure/window/W in view(4))
-			W.destroy()
+			W.Destroy()
 		playsound(M.current.loc, 'sound/effects/creepyshriek.ogg', 100, 1)
 		M.current.remove_vampire_blood(10)
 		M.current.verbs -= /client/proc/vampire_screech
