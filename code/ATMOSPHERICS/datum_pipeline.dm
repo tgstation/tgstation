@@ -1,8 +1,8 @@
 /datum/pipeline
 	var/datum/gas_mixture/air
 
-	var/list/obj/machinery/atmospherics/pipe/members
-	var/list/obj/machinery/atmospherics/pipe/edges //Used for building networks
+	var/list/obj/machinery/atmospherics/pipe/members = list()
+	var/list/obj/machinery/atmospherics/pipe/edges = list() //Used for building networks
 
 	var/datum/pipe_network/network
 
@@ -24,6 +24,11 @@
 	//Null the fuck out of all these references
 	for(var/obj/machinery/atmospherics/pipe/M in members) //Edges are a subset of members
 		M.parent = null
+
+/datum/pipeline/resetVariables()
+	..("members", "edges")
+	members = list()
+	edges = list()
 
 /datum/pipeline/proc/process()//This use to be called called from the pipe networks
 	if((world.timeofday - last_pressure_check) / 10 >= PRESSURE_CHECK_DELAY)

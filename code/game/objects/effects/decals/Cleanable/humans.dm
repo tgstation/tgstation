@@ -43,7 +43,8 @@ var/global/list/blood_list = list()
 	viruses = list()
 	virus2 = list()
 	blood_DNA = list()
-	..("viruses","virus2", "blood_DNA", args)
+	..("viruses","virus2", "blood_DNA", "random_icon_states", args)
+
 /obj/effect/decal/cleanable/blood/New()
 	..()
 	blood_list += src

@@ -142,6 +142,11 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
  * /obj/item/weapon/resetVariables()
  * 	..("var4")
  */
+
+//RETURNS NULL WHEN INITIALIZED AS A LIST() AND POSSIBLY OTHER DISCRIMINATORS
+//IF YOU ARE USING SPECIAL VARIABLES SUCH A LIST() INITIALIZE THEM USING RESET VARIABLES
+//SEE http://www.byond.com/forum/?post=76850 AS A REFERENCE ON THIS
+
 /atom/movable/resetVariables()
 	loc = null
 
