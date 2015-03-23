@@ -17,7 +17,7 @@
 /obj/structure/closet/crate/secure/loot/bay_03
 	New()
 		..()
-		new/obj/item/weapon/reagent_containers/glass/beaker/bluespacelarge(src)
+		new/obj/item/weapon/reagent_containers/glass/beaker/bluespace/large(src)
 /obj/structure/closet/crate/secure/loot/bay_04
 	New()
 		..()
@@ -33,7 +33,7 @@
 	New()
 		..()
 		for(var/i = 0, i < 3, i++)
-			new/obj/item/weapon/reagent_containers/glass/beaker/noreactlarge(src)
+			new/obj/item/weapon/reagent_containers/glass/beaker/noreact/large(src)
 
 /obj/structure/closet/crate/secure/loot/bay_07
 	New()

@@ -2306,7 +2306,7 @@ k
 	reliability = 100
 	build_path = /obj/item/bluespace_crystal/artificial
 
-/datum/design/bluespacebeaker_small
+/datum/design/bluespacebeaker
 	name = "Bluespace Beaker"
 	desc = "A newly-developed high-capacity beaker, courtesy of bluespace research. Can hold up to 200 units."
 	id = "bluespacebeaker_small"
@@ -2324,9 +2324,9 @@ k
 	build_type = PROTOLATHE
 	materials = list("$diamond" = 1500, "$iron" = 6000, "$glass" = 6000)
 	reliability = 100
-	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespacelarge
+	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace/large
 
-/datum/design/stasisbeaker_small
+/datum/design/stasisbeaker
 	name = "Stasis Beaker"
 	desc = "A beaker powered by experimental bluespace technology. Chemicals are held in stasis and do not react inside of it. Can hold up to 50 units."
 	id = "stasisbeaker_small"
@@ -2344,7 +2344,7 @@ k
 	build_type = PROTOLATHE
 	materials = list("$diamond" = 1500, "$iron" = 3750, "$glass" = 3750, "$uranium" = 1500)
 	reliability = 100
-	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreactlarge
+	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact/large
 
 /datum/design/reactive_teleport_armor
 	name = "Reactive Teleport Armor"
