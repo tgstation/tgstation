@@ -13,6 +13,11 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0001))
 
+#define TURF_COLOR_NOTHING 0
+#define TURF_COLOR_PLASMA 1
+#define TURF_COLOR_SLEEPING 2
+#define TURF_COLOR_MIXED 3
+
 /datum/gas
 	sleeping_agent
 		specific_heat = 40
@@ -44,7 +49,8 @@ What are the archived variables for?
 	var/graphic
 
 	var/list/datum/gas/trace_gases = list()
-
+	var/gas_reagents_parent = null
+	var/datum/reagents/gas_reagents = new(maximum=AIRCHEM_SIZE)
 
 	var/tmp/oxygen_archived
 	var/tmp/carbon_dioxide_archived
@@ -55,6 +61,11 @@ What are the archived variables for?
 
 	var/tmp/graphic_archived
 	var/tmp/fuel_burnt = 0
+
+/datum/gas_mixture/New(var/parent=null)
+	if(parent)
+		gas_reagents_parent = parent
+	..()
 
 	//PV=nRT - related procedures
 /datum/gas_mixture/proc/heat_capacity()
@@ -106,14 +117,30 @@ What are the archived variables for?
 /datum/gas_mixture/proc/check_tile_graphic()
 	//returns 1 if graphic changed
 	graphic = null
-	if(toxins > MOLES_PLASMA_VISIBLE)
-		graphic = "plasma"
-	else
-		var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
-		if(sleeping_agent && (sleeping_agent.moles > 1))
-			graphic = "sleeping_agent"
+	var/doColor = TURF_COLOR_NOTHING
+
+	for(var/datum/reagent/R in gas_reagents.reagent_list)
+		if(R.id == "plasma")
+			doColor = TURF_COLOR_PLASMA
+		else if(R.id == "chloralhydrate" || R.id == "morphine")
+			doColor = TURF_COLOR_SLEEPING
+		else if(R.volume) //not an old color, fall back on mixing
+			doColor = TURF_COLOR_MIXED
 		else
-			graphic = null
+			doColor = TURF_COLOR_NOTHING
+
+	if(doColor == TURF_COLOR_NOTHING)
+		graphic = null
+
+	if(doColor == TURF_COLOR_PLASMA || toxins > MOLES_PLASMA_VISIBLE)
+		graphic = "plasma"
+
+	var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
+	if(doColor == TURF_COLOR_SLEEPING || (sleeping_agent && (sleeping_agent.moles > 1)))
+		graphic = "sleeping_agent"
+
+	if(doColor == TURF_COLOR_MIXED)
+		graphic = "chem_smoke"
 
 	return graphic != graphic_archived
 
@@ -135,7 +162,12 @@ What are the archived variables for?
 					temperature -= (reaction_rate*20000)/heat_capacity()
 
 					reacting = 1
-
+	if(!gas_reagents.my_atom && gas_reagents_parent)
+		//temporarily set the my_atom to the turf of the gas_mixture for processing of reagents, and then revert it
+		//so no unintended behaviour will occur.
+		gas_reagents.my_atom = gas_reagents_parent
+	gas_reagents.handle_reactions(show_message=0)
+	gas_reagents.my_atom = null
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		//world << "pre [temperature], [oxygen], [toxins]"
@@ -147,21 +179,29 @@ What are the archived variables for?
 
 /datum/gas_mixture/proc/fire()
 	var/energy_released = 0
+	var/additional_fuel = 0
 	var/old_heat_capacity = heat_capacity()
 
-	var/datum/gas/volatile_fuel/fuel_store = locate(/datum/gas/volatile_fuel/) in trace_gases
-	if(fuel_store) //General volatile gas burn
-		var/burned_fuel = 0
+	for(var/datum/reagent/R in gas_reagents)
+		if(R.id == "fuel")
+			additional_fuel += R.volume*2
+		if(R.id == "plasma")
+			additional_fuel += R.volume*3
 
-		if(oxygen < fuel_store.moles)
-			burned_fuel = oxygen
-			fuel_store.moles -= burned_fuel
-			oxygen = 0
-		else
-			burned_fuel = fuel_store.moles
-			oxygen -= fuel_store.moles
-			trace_gases -= fuel_store
-			fuel_store = null
+	var/datum/gas/volatile_fuel/fuel_store = locate(/datum/gas/volatile_fuel/) in trace_gases
+	if(fuel_store || additional_fuel) //General volatile gas burn
+		var/burned_fuel = additional_fuel ? additional_fuel : 0
+
+		if(fuel_store)
+			if(oxygen < fuel_store.moles)
+				burned_fuel = oxygen
+				fuel_store.moles -= burned_fuel
+				oxygen = 0
+			else
+				burned_fuel = fuel_store.moles
+				oxygen -= fuel_store.moles
+				trace_gases -= fuel_store
+				fuel_store = null
 
 		energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
 		carbon_dioxide += burned_fuel
@@ -330,6 +370,9 @@ What are the archived variables for?
 	nitrogen += giver.nitrogen
 	toxins += giver.toxins
 
+	if(giver.gas_reagents.total_volume)
+		giver.gas_reagents.trans_to(gas_reagents,giver.gas_reagents.total_volume)
+
 	if(giver.trace_gases.len)
 		for(var/datum/gas/trace_gas in giver.trace_gases)
 			var/datum/gas/corresponding = locate(trace_gas.type) in trace_gases
@@ -360,6 +403,9 @@ What are the archived variables for?
 	nitrogen -= removed.nitrogen
 	carbon_dioxide -= removed.carbon_dioxide
 	toxins -= removed.toxins
+
+	if(gas_reagents.total_volume)
+		gas_reagents.trans_to(removed.gas_reagents,gas_reagents.total_volume,QUANTIZE((gas_reagents.total_volume/sum)*amount))
 
 	if(trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
@@ -392,6 +438,9 @@ What are the archived variables for?
 	carbon_dioxide -= removed.carbon_dioxide
 	toxins -= removed.toxins
 
+	if(gas_reagents.total_volume)
+		gas_reagents.trans_to(removed,gas_reagents/2)
+
 	if(trace_gases.len)
 		for(var/datum/gas/trace_gas in trace_gases)
 			var/datum/gas/corresponding = new trace_gas.type()
@@ -422,6 +471,10 @@ What are the archived variables for?
 	toxins = sample.toxins
 
 	trace_gases.len=null
+
+	if(sample.gas_reagents.total_volume)
+		sample.gas_reagents.copy_to(gas_reagents,sample.gas_reagents.total_volume)
+
 	if(sample.trace_gases.len > 0)
 		for(var/datum/gas/trace_gas in sample.trace_gases)
 			var/datum/gas/corresponding = new trace_gas.type()
@@ -659,6 +712,10 @@ What are the archived variables for?
 				moved_moles += -delta
 				last_share += abs(delta)
 
+	if(gas_reagents.total_volume)
+		//copy instead of trans because of decay rates
+		gas_reagents.copy_to(sharer.gas_reagents,gas_reagents.total_volume/atmos_adjacent_turfs)
+
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
@@ -739,6 +796,10 @@ What are the archived variables for?
 			heat_capacity_transferred += heat_cap_transferred
 			moved_moles += delta
 			moved_moles += abs(delta)
+
+	if(gas_reagents.total_volume)
+		for(var/datum/reagent/R in gas_reagents.reagent_list)
+			gas_reagents.remove_reagent(R,R.volume/2)
 
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/new_self_heat_capacity = old_self_heat_capacity - heat_capacity_transferred
@@ -919,6 +980,11 @@ What are the archived variables for?
 	if((abs(toxins-sample.toxins) > MINIMUM_AIR_TO_SUSPEND) && \
 		((toxins < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins) || (toxins > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins)))
 		return 0
+
+	if(sample.gas_reagents.total_volume)
+		if(gas_reagents.total_volume)
+			if(abs(sample.gas_reagents.total_volume - gas_reagents.total_volume) > MINIMUM_AIR_CHEM_TO_SUSPEND)
+				return 0
 
 	if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
 		if((abs(temperature-sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \

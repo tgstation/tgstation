@@ -1,7 +1,7 @@
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
 	use_power = 0
-	var/datum/gas_mixture/air_contents = new
+	var/datum/gas_mixture/air_contents
 
 	var/obj/machinery/atmospherics/unary/portables_connector/connected_port
 	var/obj/item/weapon/tank/holding
@@ -13,10 +13,10 @@
 
 /obj/machinery/portable_atmospherics/New()
 	..()
-
+	air_contents = new(src)
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-
+	flags |= NOREACT //should be noruntime, amirite
 	return 1
 
 /obj/machinery/portable_atmospherics/process()
@@ -72,7 +72,16 @@
 		src.holding = T
 		update_icon()
 		return
-
+	if(istype(W,/obj/item/weapon/reagent_containers/syringe))
+		var/obj/item/weapon/reagent_containers/syringe/S = W
+		if(S.reagents.total_volume)
+			if(air_contents.gas_reagents.total_volume + S.reagents.total_volume > air_contents.gas_reagents.maximum_volume)
+				user << "<span class='notice'>You locate a seal and insert [S]'s needle, but the [src] has too many reagents already.</span>"
+			else
+				S.reagents.trans_to(air_contents.gas_reagents,S.amount_per_transfer_from_this)
+				S.update_icon()
+				user << "<span class='notice'>You locate a seal and inject [S]'s contents into it.</span>"
+		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(connected_port)
 			disconnect()
