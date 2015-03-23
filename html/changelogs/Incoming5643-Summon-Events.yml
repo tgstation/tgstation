@@ -1,0 +1,9 @@
+   author: Incoming5643
+   
+   delete-after: True
+   
+   changes: 
+     - bugfix: "Summon Events has been reworked to be a bit less manic."
+     - rscadd: "Summon Events will turn off if the wizard and all apprentices die. Any lingering effects are not reversed however."
+     - rscadd: "Improving Summon Events will reduce the average time between events, but not the minimum time between events."
+     - rscdel: "Departmental Uprising has been made admin only for being an RP heavy event that creates antags in an enviroment that doesn't really support that."

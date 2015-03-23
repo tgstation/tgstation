@@ -200,6 +200,9 @@
 			finished = 1
 			return 1
 		else
+			if(SSevent.wizardmode) //If summon events was active, turn it off
+				SSevent.toggleWizardmode()
+				SSevent.resetFrequency()
 			return ..()
 
 	finished = 1
