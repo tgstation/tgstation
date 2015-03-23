@@ -5,6 +5,7 @@
 	icon_state = "sextractor"
 	density = 1
 	anchored = 1
+	var/piles = list()
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
@@ -27,6 +28,29 @@
 	RefreshParts()
 
 obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob)
+
+	// Emptying a plant bag
+	if (istype(O,/obj/item/weapon/storage/bag/plants))
+		var/obj/item/weapon/storage/P = O
+		var/loaded = 0
+		for(var/obj/item/seeds/G in P.contents)
+			if(contents.len >= 999)
+				break
+			++loaded
+			add(G)
+		if (loaded)
+			user << "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>"
+		else
+			user << "<span class='notice'>There are no seeds in \the [O.name].</span>"
+		return
+
+	// Loading seeds into the machine
+	if (istype(O,/obj/item/seeds))
+		user.drop_item()
+		add(O)
+		user << "<span class='notice'>You add [O] to [src.name].</span>"
+		updateUsrDialog()
+		return
 
 	// Fruits and vegetables.
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O, /obj/item/weapon/grown))
@@ -60,7 +84,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		S.use(1)
 		new /obj/item/seeds/grassseed(loc)
 
-	if(O)
+	if(O) //not sure what this portion of code is supposed to do - needs some commenting
 		var/obj/item/F = O
 		if(F.nonplant_seed_type)
 			user.drop_item()
@@ -73,4 +97,98 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 
 	..()
 
+	return
+
+datum/seed_pile
+	var/name = ""
+	var/lifespan = 0	//Saved stats
+	var/endurance = 0
+	var/maturation = 0
+	var/production = 0
+	var/yield = 0
+	var/potency = 0
+	var/amount = 0
+
+datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie, var/poten, var/am = 1)
+	src.name = name
+	src.lifespan = life
+	src.endurance = endur
+	src.maturation = matur
+	src.production = prod
+	src.yield = yie
+	src.potency = poten
+	src.amount = am
+
+/obj/machinery/seed_extractor/attack_hand(mob/user as mob)
+	user.set_machine(src)
+	interact(user)
+
+obj/machinery/seed_extractor/interact(mob/user as mob)
+	if (stat)
+		return 0
+
+	var/dat = "<b>Stored seeds:</b><br>"
+
+	if (contents.len == 0)
+		dat += "<font color='red'>No seeds</font>"
+	else
+		dat += "<table cellpadding='3' style='text-align:center;'><tr><td>Name</td><td>Lifespan</td><td>Endurance</td><td>Maturation</td><td>Production</td><td>Yield</td><td>Potency</td><td>Stock</td></tr>"
+		for (var/datum/seed_pile/O in piles)
+			dat += "<tr><td>[O.name]</td><td>[O.lifespan]</td><td>[O.endurance]</td><td>[O.maturation]</td>"
+			dat += "<td>[O.production]</td><td>[O.yield]</td><td>[O.potency]</td><td>"
+			dat += "<a href='byond://?src=\ref[src];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency]'>Vend</a> <a href='byond://?src=\ref[src];amount=5'>x5</a> ([O.amount] left)</td></tr>"
+		dat += "</table>"
+	var/datum/browser/popup = new(user, "seed_ext", name, 700, 400)
+	popup.set_content(dat)
+	popup.open()
+	return
+
+obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
+	if(..())
+		return
+	usr.set_machine(src)
+
+	href_list["li"] = text2num(href_list["li"])
+	href_list["en"] = text2num(href_list["en"])
+	href_list["ma"] = text2num(href_list["ma"])
+	href_list["pr"] = text2num(href_list["pr"])
+	href_list["yi"] = text2num(href_list["yi"])
+	href_list["pot"] = text2num(href_list["pot"])
+
+	for (var/datum/seed_pile/N in piles)//Find the pile we need to reduce...
+		if (href_list["name"] == N.name && href_list["li"] == N.lifespan && href_list["en"] == N.endurance && href_list["ma"] == N.maturation && href_list["pr"] == N.production && href_list["yi"] == N.yield && href_list["pot"] == N.potency)
+			if(N.amount <= 0)
+				return
+			N.amount = max(N.amount - 1, 0)
+			if (N.amount <= 0)
+				piles -= N
+				del(N)
+			break
+
+	for (var/obj/T in contents)//Now we find the seed we need to vend
+		var/obj/item/seeds/O = T
+		if (O.seed.display_name == href_list["name"] && O.seed.lifespan == href_list["li"] && O.seed.endurance == href_list["en"] && O.seed.maturation == href_list["ma"] && O.seed.production == href_list["pr"] && O.seed.yield == href_list["yi"] && O.seed.potency == href_list["pot"]) //Boy this sure is a long line, let's have this comment stretch it out even more!
+			O.loc = src.loc
+			break
+
+	src.updateUsrDialog()
+	return
+
+obj/machinery/seed_extractor/proc/add(var/obj/item/seeds/O as obj)
+	if(contents.len >= 999)
+		usr << "<span class='notice'>\The [src] is full.</span>"
+		return 0
+
+	if(istype(O.loc,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = O.loc
+		S.remove_from_storage(O,src)
+
+	O.loc = src
+
+	for (var/datum/seed_pile/N in piles)
+		if (O.seed.display_name == N.name && O.seed.lifespan == N.lifespan && O.seed.endurance == N.endurance && O.seed.maturation == N.maturation && O.seed.production == N.production && O.seed.yield == N.yield && O.seed.potency == N.potency)
+			++N.amount
+			return
+
+	piles += new /datum/seed_pile(O.seed.display_name, O.seed.lifespan, O.seed.endurance, O.seed.maturation, O.seed.production, O.seed.yield, O.seed.potency)
 	return
