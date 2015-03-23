@@ -1,2 +1,3 @@
 author: ArthurDentist
-changes: []
+changes:
+   -bugfix: Fixed the Mechantronic uniform sprite.
