@@ -159,7 +159,7 @@
 /obj/item/slimepotion2/afterattack(mob/living/M as mob, mob/user as mob)
 	if(being_used || !ismob(M))
 		return
-	if(!(isslime(M) || isanimal(M) || ismonkey(M) || !M.ckey)) //I'm sorry for this line
+	if( !(isanimal(M) || ismonkey(M)) || M.ckey) //only works on monkeys and animals that aren't player controlled
 		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
 		return ..()
 	if(M.stat)

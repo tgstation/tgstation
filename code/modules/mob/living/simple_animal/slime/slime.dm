@@ -146,10 +146,7 @@
 	return 2
 
 /mob/living/simple_animal/slime/Stat()
-	..()
-
-	if(statpanel("Status"))
-		stat(null, "Health: [round((health / maxHealth) * 100)]%")
+	if(..())
 
 		if(!docile)
 			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
@@ -287,6 +284,7 @@
 		attacked += 10
 		if(prob(25))
 			user.do_attack_animation(src)
+			user.changeNext_move(CLICK_CD_MELEE)
 			user << "<span class='danger'>[W] passes right through [src]!</span>"
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
@@ -346,6 +344,9 @@
 	return
 
 /mob/living/simple_animal/slime/proc/discipline_slime(mob/user)
+
+	if(stat == DEAD)
+		return
 
 	if(prob(80) && !client)
 		Discipline++

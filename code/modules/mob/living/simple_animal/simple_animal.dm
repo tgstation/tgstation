@@ -82,6 +82,7 @@
 			handle_automated_movement()
 
 			handle_automated_speech()
+		return 1
 
 /mob/living/simple_animal/handle_regular_status_updates()
 	if(..())
@@ -374,12 +375,13 @@
 
 	if(statpanel("Status"))
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
+		return 1
 
 /mob/living/simple_animal/death(gibbed)
-	health = 0 // so /mob/living/simple_animal/handle_regular_status_updates() doesn't magically revive them
+	health = 0
 	icon_state = icon_dead
 	stat = DEAD
-	density = 0
+	lying = 1
 	if(!gibbed)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
 	..()
@@ -397,11 +399,6 @@
 		if(3.0)
 			adjustBruteLoss(30)
 	updatehealth()
-
-/mob/living/simple_animal/adjustBruteLoss(damage)
-	health = Clamp(health - damage, 0, maxHealth)
-	if(health < 1 && stat != DEAD)
-		death()
 
 /mob/living/simple_animal/proc/CanAttack(var/atom/the_target)
 	if(see_invisible < the_target.invisibility)
