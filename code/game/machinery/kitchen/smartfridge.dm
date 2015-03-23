@@ -265,7 +265,7 @@
 	else
 		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
 		return 1
-	sortList(item_quants)
+	item_quants = sortList(item_quants)
 	updateUsrDialog()
 
 /obj/machinery/smartfridge/attack_paw(mob/user as mob)
