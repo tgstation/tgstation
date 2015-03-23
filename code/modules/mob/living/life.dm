@@ -25,11 +25,6 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
-		if(!client && !stat)
-			handle_automated_movement()
-
-			handle_automated_speech()
-
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment
@@ -72,12 +67,6 @@
 	return
 
 /mob/living/proc/handle_random_events()
-	return
-
-/mob/living/proc/handle_automated_movement()
-	return
-
-/mob/living/proc/handle_automated_speech()
 	return
 
 /mob/living/proc/handle_environment(var/datum/gas_mixture/environment)

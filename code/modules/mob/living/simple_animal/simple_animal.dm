@@ -76,6 +76,13 @@
 	..()
 	return
 
+/mob/living/simple_animal/Life()
+	if(..())
+		if(!client && !stat)
+			handle_automated_movement()
+
+			handle_automated_speech()
+
 /mob/living/simple_animal/handle_regular_status_updates()
 	if(..())
 		if(health < 1)
@@ -105,19 +112,19 @@
 	if(druggy)
 		druggy = 0
 
-/mob/living/simple_animal/handle_automated_movement()
+/mob/living/simple_animal/proc/handle_automated_movement()
 	if(!stop_automated_movement && wander)
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
-				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
+				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
 					var/anydir = pick(cardinal)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
 			return 1
 
-/mob/living/simple_animal/handle_automated_speech()
+/mob/living/simple_animal/proc/handle_automated_speech()
 	if(speak_chance)
 		if(rand(0,200) < speak_chance)
 			if(speak && speak.len)

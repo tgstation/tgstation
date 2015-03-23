@@ -371,8 +371,9 @@
 
 
 /mob/living/simple_animal/parrot/handle_automated_movement()
-	if(!..())
-		return //If it can't or shouldn't move, dont let it move.
+	if(!isturf(src.loc) || !canmove || buckled)
+		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
+
 
 //-----SLEEPING
 	if(parrot_state == PARROT_PERCH)

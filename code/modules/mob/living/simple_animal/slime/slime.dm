@@ -250,9 +250,14 @@
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				discipline_slime(M)
-
-	else if(..()) //successful attack
-		attacked += 10
+	else
+		if(stat == DEAD && surgeries.len)
+			if(M.a_intent == "help")
+				for(var/datum/surgery/S in surgeries)
+					if(S.next_step(M, src))
+						return 1
+		if(..()) //successful attack
+			attacked += 10
 
 /mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(..()) //if harm or disarm intent.
@@ -261,6 +266,11 @@
 
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
+	if(stat == DEAD && surgeries.len)
+		if(user.a_intent == "help")
+			for(var/datum/surgery/S in surgeries)
+				if(S.next_step(user, src))
+					return 1
 	if(istype(W,/obj/item/stack/sheet/mineral/plasma)) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]
