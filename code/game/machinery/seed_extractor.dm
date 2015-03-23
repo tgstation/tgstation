@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
