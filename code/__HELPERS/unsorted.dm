@@ -613,10 +613,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
-/proc/get_offset_target_turf(var/atom/A, var/dx, var/dy)
-	var/x = min(world.maxx, max(1, A.x + dx))
-	var/y = min(world.maxy, max(1, A.y + dy))
-	return locate(x,y,A.z)
+/proc/get_offset_target_turf(atom/A, dx, dy)
+	var/x = Clamp(A.x + dx, 1, world.maxx)
+	var/y = Clamp(A.y + dy, 1, world.maxy)
+
+	return locate(x, y, A.z)
 
 //returns random gauss number
 proc/GaussRand(var/sigma)
@@ -1298,11 +1299,7 @@ var/list/WALLITEMS = list(
 
 
 proc/get_angle(atom/a, atom/b)
-    return atan2(b.y - a.y, b.x - a.x)
-
-proc/atan2(x, y)
-	if(!x && !y) return 0
-	return y >= 0 ? arccos(x / sqrt(x * x + y * y)) : -arccos(x / sqrt(x * x + y * y))
+    return Atan2(b.y - a.y, b.x - a.x)
 
 proc/rotate_icon(file, state, step = 1, aa = FALSE)
 	var icon/base = icon(file, state)

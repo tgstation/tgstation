@@ -12,9 +12,11 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
                           8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10)
 
 /proc/Atan2(x, y)
-	if(!x && !y) return 0
-	var/a = arccos(x / sqrt(x*x + y*y))
-	return y >= 0 ? a : -a
+	if (!x && !y)
+		return 0
+
+	var/invcos = arccos(x / sqrt(x * x + y * y))
+	return y >= 0 ? invcos : -invcos
 
 proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
