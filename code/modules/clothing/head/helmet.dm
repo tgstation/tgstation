@@ -74,20 +74,22 @@
 				flags &= ~(visor_flags)
 				flags_inv &= ~(visor_flags_inv)
 				icon_state = "[initial(icon_state)]up"
-				usr << "[alt_toggle_message]"
+				usr << "[alt_toggle_message] \the [src]"
 				usr.update_inv_head(0)
-				playsound(src.loc, "[activation_sound]", 100, 0, 4)
+				while(up)
+					playsound(src.loc, "[activation_sound]", 100, 0, 4)
+					sleep(14)
 
 /obj/item/clothing/head/helmet/justice
 	name = "head of justice"
 	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
 	icon_state = "justice"
-	toggle_message = "You turn on the lights on"
-	alt_toggle_message = "You turn off the lights on"
+	toggle_message = "You turn off the lights on"
+	alt_toggle_message = "You turn on the lights on"
 	action_button_name = "Toggle Justice Lights"
 	can_toggle = 1
-	toggle_cooldown = 300
-	activation_sound = 'sound/items/WEEOO.ogg'
+	toggle_cooldown = 14
+	activation_sound = 'sound/items/WEEOO1.ogg'
 
 
 /obj/item/clothing/head/helmet/swat
