@@ -683,6 +683,8 @@ var/list/admin_verbs_mod = list(
 	set category = "Admin"
 
 	if(holder)
+		if(alert("Are you sure you want to deadmin?","Deadmin","Yes","No")=="No")
+			return
 		log_admin("[src] deadminned themself.")
 		message_admins("[src] deadminned themself.")
 		deadmin()

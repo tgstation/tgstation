@@ -190,7 +190,7 @@
 			continue
 		if (item.amount>=item.max_amount)
 			continue
-		src.preattack(item, usr)
+		src.preattack(item, usr,1)
 		break
 
 /obj/item/stack/attack_hand(mob/user as mob)

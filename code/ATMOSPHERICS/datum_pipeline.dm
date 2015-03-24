@@ -68,8 +68,6 @@
 		member.air_temporary.update_values()
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
-	air = new
-
 	var/list/possible_expansions = list(base)
 	members = list(base)
 	edges = list()
@@ -112,6 +110,7 @@
 			possible_expansions -= borderline
 
 	air.volume = volume
+	air.update_values()
 
 /datum/pipeline/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 
