@@ -236,11 +236,6 @@
 	desc = "Pompadour not included."
 	icon_state = "leatherjacket"
 
-/obj/item/clothing/suit/jacket/letterman
-	name = "letterman jacket"
-	desc = "Show your support to the Miami Maniacs today!"
-	icon_state = "letterman"
-
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
 	desc = "A suit made out of chitinous alien hide."
