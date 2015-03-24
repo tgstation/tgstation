@@ -17,10 +17,8 @@
 	heat_level_2 = 400  // Heat damage level 2 above this point.
 	heat_level_3 = 500  // Heat damage level 3 above this point.
 
-/datum/species/plasmaman/say_filter(mob/M, message, datum/language/speaking)
-	if(copytext(message, 1, 2) != "*")
-		message = replacetext(message, "s", stutter("ss"))
-	return message
+/datum/species/plasmaman/handle_speech(message, mob/living/carbon/human/H)
+	return ..(replacetext(message, "s", stutter("ss")), H)
 
 /datum/species/plasmaman/equip(var/mob/living/carbon/human/H)
 	H.fire_sprite = "Plasmaman"
