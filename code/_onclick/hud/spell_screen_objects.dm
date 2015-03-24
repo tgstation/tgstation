@@ -6,6 +6,8 @@
 	var/showing = 0
 	screen_loc = ui_spell_master
 
+	var/mob/spell_holder
+
 /obj/screen/movable/spell_master/MouseDrop()
 	if(showing)
 		return
@@ -22,8 +24,8 @@
 /obj/screen/movable/spell_master/proc/toggle_open(var/forced_state = 0)
 	if(showing && (forced_state != 2))
 		for(var/obj/screen/spell/O in spell_objects)
-			if(usr && usr.client)
-				usr.client.screen -= O
+			if(spell_holder && spell_holder.client)
+				spell_holder.client.screen -= O
 			O.handle_icon_updates = 0
 		showing = 0
 		overlays.len = 0
@@ -40,8 +42,8 @@
 		for(var/i = 1; i <= spell_objects.len; i++)
 			var/obj/screen/spell/S = spell_objects[i]
 			S.screen_loc = "[x_position + (x_position < 8 ? 1 : -1)*(i%7)]:[x_pix],[y_position + (y_position < 8 ? round(i/7) : -round(i/7))]:[y_pix]"
-			if(usr && usr.client)
-				usr.client.screen += S
+			if(spell_holder && spell_holder.client)
+				spell_holder.client.screen += S
 				S.handle_icon_updates = 1
 		update_spells(1)
 		showing = 1

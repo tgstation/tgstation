@@ -5,6 +5,7 @@
 			spell_master.icon_state = spell_base
 		if(client)
 			src.client.screen += spell_master
+		spell_master.spell_holder = src
 
 	spell_list.Add(spell_to_add)
 	spell_master.add_spell(spell_to_add)
