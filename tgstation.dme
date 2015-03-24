@@ -229,6 +229,7 @@
 #include "code\datums\spells\genetic.dm"
 #include "code\datums\spells\inflict_handler.dm"
 #include "code\datums\spells\knock.dm"
+#include "code\datums\spells\lightning.dm"
 #include "code\datums\spells\mime.dm"
 #include "code\datums\spells\mind_transfer.dm"
 #include "code\datums\spells\projectile.dm"
