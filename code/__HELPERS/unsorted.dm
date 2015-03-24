@@ -735,9 +735,8 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	var/Location = user.loc
 	var/holding = user.get_active_hand()
 
-	for(var/i = 0, i<numticks, i++)
+	for (var/i = 1 to numticks)
 		sleep(delayfraction)
-
 
 		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == Location))
 			return 0
@@ -1169,20 +1168,25 @@ proc/get_mob_with_client_list()
 
 
 /proc/parse_zone(zone)
-	if(zone == "r_hand") return "right hand"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "l_arm") return "left arm"
-	else if (zone == "r_arm") return "right arm"
-	else if (zone == "l_leg") return "left leg"
-	else if (zone == "r_leg") return "right leg"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "r_hand") return "right hand"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
-	else return zone
-
+	switch(zone)
+		if ("r_hand")
+			return "right hand"
+		if ("l_hand")
+			return "left hand"
+		if ("l_arm")
+			return "left arm"
+		if ("r_arm")
+			return "right arm"
+		if ("l_leg")
+			return "left leg"
+		if ("r_leg")
+			return "right leg"
+		if ("l_foot")
+			return "left foot"
+		if ("r_foot")
+			return "right foot"
+		else
+			return zone
 
 /proc/get_turf(const/atom/O)
 	if (isnull(O) || isarea(O))
