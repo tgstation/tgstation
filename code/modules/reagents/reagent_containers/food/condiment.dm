@@ -33,7 +33,7 @@
 
 	if(M == user) //user drinking it
 
-		M << "<span class='notice'>You swallow some of contents of \the [src].</span>"
+		M << "<span class='notice'>You swallow some of the contents of \the [src].</span>"
 		if(reagents.total_volume) //Deal with the reagents in the food
 			reagents.reaction(M, INGEST)
 			spawn(5)
@@ -146,6 +146,10 @@
 			if("chefspecial")
 				name = "Chef Excellence's Special Sauce"
 				desc = "A potent sauce distilled from the toxin glands of 1000 Space Carp."
+			if("vinegar")
+				name = "Malt Vinegar Bottle"
+				desc = "Perfect for fish and chips!"
+				icon_state = "vinegar_container"
 			else
 				name = "Misc Condiment Bottle"
 
@@ -207,3 +211,11 @@
 	New()
 		..()
 		reagents.add_reagent("chefspecial", 20)
+
+/obj/item/weapon/reagent_containers/food/condiment/vinegar
+	name = "Malt Vinegar Bottle"
+	desc = "Perfect for fish and chips."
+	New()
+		..()
+		reagents.add_reagent("vinegar", 50)
+
