@@ -46,6 +46,9 @@
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	item_state = "helmet"
+	toggle_message = "You pull the visor down on \the"
+	alt_toggle_message = "You push the visor up on \the"
+	can_toggle = 1
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|HEADBANGPROTECT
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -54,22 +57,31 @@
 	visor_flags = HEADCOVERSEYES|HEADCOVERSMOUTH
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE
 
-/obj/item/clothing/head/helmet/riot/attack_self()
-	if(usr.canmove && !usr.stat && !usr.restrained())
+/obj/item/clothing/head/helmet/attack_self()
+	if(usr.canmove && !usr.stat && !usr.restrained() && can_toggle)
 		if(up)
 			up = !up
 			flags |= (visor_flags)
 			flags_inv |= (visor_flags_inv)
 			icon_state = initial(icon_state)
-			usr << "You pull \the [src] down."
+			usr << "[toggle_message] [src]."
 			usr.update_inv_head(0)
 		else
 			up = !up
 			flags &= ~(visor_flags)
 			flags_inv &= ~(visor_flags_inv)
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push \the [src] up."
+			usr << "[alt_toggle_message]"
 			usr.update_inv_head(0)
+
+/obj/item/clothing/head/helmet/justice
+	name = "head of justice"
+	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
+	icon_state = "justice"
+	toggle_message = "You turn on the lights on \the"
+	alt_toggle_message = "You turn off the lights on \the"
+	action_button_name = "Toggle Justice Lights"
+	can_toggle = 1
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"

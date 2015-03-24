@@ -8,6 +8,8 @@
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	var/alt_desc = null
+	var/toggle_message = null
+	var/alt_toggle_message = null
 
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
@@ -80,6 +82,7 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
+	var/can_toggle = null
 
 //Mask
 /obj/item/clothing/mask
