@@ -589,7 +589,7 @@
 	weedlevel = 0
 
 	update_icon()
-	visible_message("\red The \blue [previous_plant] \red has suddenly mutated into \blue [seed.display_name]!")
+	visible_message("<span class='alert'>The</span> <span class='info'>[previous_plant]</span> <span class='alert'>has suddenly mutated into</span> <span class='info'>[seed.display_name]!</span>")
 
 	return
 
@@ -683,16 +683,16 @@
 			update_icon()
 
 		else
-			user << "\red \The [src] already has seeds in it!"
+			user << "<span class='alert'>\The [src] already has seeds in it!</span>"
 
 	else if (istype(O, /obj/item/weapon/minihoe))  // The minihoe
 
 		if(weedlevel > 0)
-			user.visible_message("\red [user] starts uprooting the weeds.", "\red You remove the weeds from the [src].")
+			user.visible_message("<span class='alert'>[user] starts uprooting the weeds.</span>", "<span class='alert'>You remove the weeds from the [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else
-			user << "\red This plot is completely devoid of weeds. It doesn't need uprooting."
+			user << "<span class='alert'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
 
 	else if (istype(O, /obj/item/weapon/storage/bag/plants))
 
@@ -731,7 +731,7 @@
 	else if(istype(O, /obj/item/apiary))
 
 		if(seed)
-			user << "\red [src] is already occupied!"
+			user << "<span class='alert'>[src] is already occupied!</span>"
 		else
 			user.drop_item()
 			qdel(O)
@@ -780,20 +780,20 @@
 
 /obj/machinery/portable_atmospherics/hydroponics/proc/view_contents(mob/user)
 	if(src.seed && !src.dead)
-		user << "[src] has <span class='notice'>[src.seed.display_name]</span> planted."
+		user << "[src] has <span class='info'>[src.seed.display_name]</span> planted."
 		if(src.health <= (src.seed.endurance / 2))
-			user << "The plant looks <span class='rose'>unhealthy.</span>"
+			user << "The plant looks <span class='alert'>unhealthy.</span>"
 	else if(src.seed && src.dead)
 		user << "[src] is full of dead plant matter."
 	else
-		user << "[src] is empty."
-	if (Adjacent(user))
+		user << "[src] has nothing planted."
+	if (Adjacent(user) || isobserver(user) || issilicon(user))
 		user << "Water: [round(src.waterlevel,0.1)]/100"
 		user << "Nutrient: [round(src.nutrilevel,0.1)]/10"
 		if(src.weedlevel >= 5)
-			user << "[src] is <span class='rose'>filled with weeds!</span>"
+			user << "[src] is <span class='alert'>filled with weeds!</span>"
 		if(src.pestlevel >= 5)
-			user << "[src] is <span class='rose'>filled with tiny worms!</span>"
+			user << "[src] is <span class='alert'>filled with tiny worms!</span>"
 
 		if(!istype(src,/obj/machinery/portable_atmospherics/hydroponics/soil))
 
@@ -821,7 +821,7 @@
 				else
 					light_available =  5
 
-			usr << "The tray's sensor suite is reporting a light level of [light_available] lumens and a temperature of [environment.temperature]K."
+			user << "The tray's sensor suite is reporting a light level of [light_available] lumens and a temperature of [environment.temperature]K."
 
 /obj/machinery/portable_atmospherics/hydroponics/verb/close_lid()
 	set name = "Toggle Tray Lid"
