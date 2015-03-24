@@ -176,13 +176,13 @@ datum/reagent/itching_powder
 
 datum/reagent/itching_powder/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
-	if(prob(rand(5,50)))
+	if(prob(27))
 		M << "You scratch at your head."
 		M.adjustBruteLoss(0.2*REM)
-	if(prob(rand(5,50)))
+	if(prob(27))
 		M << "You scratch at your leg."
 		M.adjustBruteLoss(0.2*REM)
-	if(prob(rand(5,50)))
+	if(prob(27))
 		M << "You scratch at your arm."
 		M.adjustBruteLoss(0.2*REM)
 	if(prob(6))
@@ -218,7 +218,7 @@ datum/reagent/initropidril/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(prob(33))
 		M.adjustToxLoss(rand(5,25))
-	if(prob(rand(5,10)))
+	if(prob(7))
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
@@ -306,11 +306,10 @@ datum/reagent/amanitin/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/amanitin/reagent_deleted(var/mob/living/M as mob)
+datum/reagent/amanitin/on_mob_delete(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	M.adjustToxLoss(current_cycle*rand(2,4))
 	..()
-	return
 
 datum/reagent/lipolicide
 	name = "Lipolicide"

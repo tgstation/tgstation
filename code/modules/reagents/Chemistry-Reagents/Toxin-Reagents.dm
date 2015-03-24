@@ -158,10 +158,8 @@ datum/reagent/toxin/zombiepowder/on_mob_life(var/mob/living/carbon/M as mob)
 	..()
 	return
 
-datum/reagent/toxin/zombiepowder/Del()
-	if(holder && ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
-		M.status_flags &= ~FAKEDEATH
+datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
+	M.status_flags &= ~FAKEDEATH
 	..()
 
 datum/reagent/toxin/mindbreaker

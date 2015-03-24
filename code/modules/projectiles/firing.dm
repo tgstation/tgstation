@@ -25,8 +25,7 @@
 
 	if(reagents && BB.reagents)
 		reagents.trans_to(BB, reagents.total_volume) //For chemical darts/bullets
-		reagents.delete()
-	return
+		qdel(reagents)
 
 /obj/item/ammo_casing/proc/throw_proj(var/turf/targloc, mob/living/user as mob|obj, params)
 	var/turf/curloc = user.loc
