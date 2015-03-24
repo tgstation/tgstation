@@ -33,7 +33,7 @@
 
 	if(M == user) //user drinking it
 
-		M << "<span class='notice'>You swallow some of contents of \the [src].</span>"
+		M << "<span class='notice'>You swallow some of the contents of \the [src].</span>"
 		if(reagents.total_volume) //Deal with the reagents in the food
 			reagents.reaction(M, INGEST)
 			spawn(5)
@@ -215,8 +215,6 @@
 /obj/item/weapon/reagent_containers/food/condiment/vinegar
 	name = "Malt Vinegar Bottle"
 	desc = "Perfect for fish and chips."
-	possible_transfer_amounts = list(1, 50)
-
 	New()
 		..()
 		reagents.add_reagent("vinegar", 50)

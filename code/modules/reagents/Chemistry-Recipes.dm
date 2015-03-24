@@ -2414,3 +2414,11 @@ datum
 			result = "rewriter"
 			required_reagents = list("spacemountainwind" = 1, "coffee" = 1)
 			result_amount = 2
+
+		vinegar
+			name = "Vinegar"
+			id = "vinegar"
+			result = "vinegar"
+			required_reagents = list("wine" = 5)
+			required_catalysts = list("enzyme" = 5)
+			result_amount = 5
