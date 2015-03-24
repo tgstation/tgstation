@@ -10,7 +10,9 @@
 	var/alt_desc = null
 	var/toggle_message = null
 	var/alt_toggle_message = null
-
+	var/activation_sound = null
+	var/toggle_cooldown = null
+	var/cooldown = 0
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
 
