@@ -14,6 +14,9 @@
 	anchored = 1
 	ghost_read=0
 	ghost_write=0
+	min_harm_label = 15 //Seems low, but this is going by the sprite. May need to be changed for balance.
+	harm_label_examine = list("<span class='info'>A label is on the bulb, but doesn't cover it.</span>", "<span class='warning'>A label covers the bulb!</span>")
+
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
@@ -23,6 +26,7 @@
 	anchored = 0
 	base_state = "pflash"
 	density = 1
+	min_harm_label = 35 //A lot. Has to wrap around the bulb, after all.
 
 /*
 /obj/machinery/flasher/New()
@@ -64,9 +68,10 @@
 		return
 
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1)
-	flick("[base_state]_flash", src)
 	src.last_flash = world.time
 	use_power(1000)
+	if(harm_labeled >= min_harm_label)	return //Still "flashes," so power is used and the noise is made, etc., but it doesn't actually flash anyone.
+	flick("[base_state]_flash", src)
 
 	for (var/mob/O in viewers(src, null))
 		if(isobserver(O)) continue

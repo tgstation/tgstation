@@ -17,6 +17,8 @@
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
 	mech_flags = MECH_SCAN_ILLEGAL
+	min_harm_label = 20
+	harm_label_examine = list("<span class='info'>A label is stuck to the trigger, but it is too small to get in the way.</span>", "<span class='warning'>A label firmly sticks the trigger to the guard!</span>")
 
 	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	var/obj/item/projectile/in_chamber = null
@@ -55,6 +57,9 @@
 
 /obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
 	if(flag)	return //we're placing gun on a table or in backpack
+	if(harm_labeled >= min_harm_label)
+		user << "<span class='warning'>A label sticks the trigger to the trigger guard!</span>" //Such a new feature, the player might not know what's wrong if it doesn't tell them.
+		return
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
 		PreFire(A,user,params, "struggle" = struggle) //They're using the new gun system, locate what they're aiming at.
