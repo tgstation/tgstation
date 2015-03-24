@@ -23,7 +23,7 @@
 	return 1
 
 /datum/surgery_step/xenomorph_removal/proc/remove_xeno(mob/user, mob/living/carbon/target)
-	var/obj/item/alien_embryo/A = locate() in target.contents
+	var/obj/item/body_egg/alien_embryo/A = locate() in target.contents
 	if(A)
 		user << "<span class='notice'>You found an unknown alien organism in [target]'s chest!</span>"
 		if(A.stage < 4)
@@ -38,7 +38,7 @@
 
 
 /datum/surgery_step/xenomorph_removal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/alien_embryo/A = locate() in target.contents
+	var/obj/item/body_egg/alien_embryo/A = locate() in target.contents
 	if(A)
 		if(prob(50))
 			A.AttemptGrow(0)

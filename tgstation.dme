@@ -540,6 +540,7 @@
 #include "code\game\objects\effects\spawners\vaultspawner.dm"
 #include "code\game\objects\items\apc_frame.dm"
 #include "code\game\objects\items\blueprints.dm"
+#include "code\game\objects\items\body_egg.dm"
 #include "code\game\objects\items\bodybag.dm"
 #include "code\game\objects\items\candle.dm"
 #include "code\game\objects\items\crayons.dm"
