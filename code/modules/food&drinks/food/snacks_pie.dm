@@ -132,9 +132,3 @@ var/list/global_pie_list = list()
 	icon_state = "gappletart"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 8, "gold" = 5, "vitamin" = 4)
-
-/obj/item/weapon/reagent_containers/food/snacks/pie/syndicate
-	name = "syndicate pie"
-	desc = "A syndicate pie, still deadly."
-	icon_state = "pie"
-	list_reagents = list("cyanide" = 20)

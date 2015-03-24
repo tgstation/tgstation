@@ -25,7 +25,9 @@
 			M.verbs += /mob/living/carbon/human/proc/summon_dank_blade
 		if(prob(5))
 			M << "You feel as if you could go to the nearest computer and create a sci-fi game about space stations."
-			M.reagents.add_reagent("programming", 10)
+			if(M.reagents)
+				M.reagents.add_reagent("programming", 10)
+		M.verbs += /client/verb/mentorhelp
 
 	for(var/obj/item/weapon/reagent_containers/food/snacks/faggot/F in world)
 		if(istype(F, /obj/item/weapon/reagent_containers/food/snacks/faggot/deadchat))
@@ -266,3 +268,31 @@ datum/reagent/medicine/programming/on_mob_life(var/mob/living/M as mob)
 	desc = "A syndicate pie, still deadly."
 	icon_state = "pie"
 	list_reagents = list("cyanide" = 20)
+
+/obj/item/weapon/card/emag/emag_act(mob/user)
+	if(ticker.mode.shitty)
+		user << "You emag the emag, giving you a new emag!"
+		new /obj/item/weapon/card/emag(get_turf(src))
+		new /obj/item/weapon/card/emag/emagged(get_turf(src))
+		qdel(src)
+	return
+
+/obj/item/weapon/card/emag/emagged
+	name = "emagged cryptographic sequencer"
+	desc = "Looks pretty emagged."
+
+/obj/item/weapon/card/emag/emagged/emag_act(mob/user)
+	if(ticker.mode.shitty)
+		user << "You emagg the emagged emag, creating an all access identification card!"
+		new /obj/item/weapon/card/id/captains_spare(get_turf(src))
+	return
+
+/client/verb/mentorhelp(msg as text)
+	set category = "Admin"
+	set name = "Mentorhelp"
+	src << "<span class='deadsay'>PM to-<b>Mentors</b>: [msg]</span>"
+	sleep(50)
+	src << "<span class='deadsay'><font size='4'><b>-- Mentor private message --</b></font></span>"
+	src << "<span class='deadsay'>Mentor PM from-<b>Mentor</b>: git gud</span>"
+	src << "<span class='deadsay'><i>Click on the mentor's name to reply.</i></span>"
+	src << 'sound/effects/adminhelp.ogg'
