@@ -39,14 +39,26 @@
 	gcDestroyed = "Bye, world!"
 	tag = null
 	loc = null
-	if(istype(beams) && beams.len)
-		for(var/obj/effect/beam/B in beams)
-			if(B && B.target == src)
-				B.target = null
-			if(B.master && B.master.target == src)
-				B.master.target = null
-		beams.len = 0
+	var/disk = check_contents_for(/obj/item/weapon/disk/nuclear)
+	if(istype(disk, /obj/item/weapon/disk/nuclear))
+		qdel(disk)
+
 	..()
+
+/atom/proc/check_contents_for(A)
+	set background = 1
+	var/list/L = contents
+
+	for(var/obj/thing in L)
+		if(thing.contents.len)
+			var/finditagain = thing.check_contents_for(A)
+			if(finditagain) L |= finditagain
+
+	for(var/obj/B in L)
+		if(B.type == A)
+			return B
+	return 0
+
 
 /proc/delete_profile(var/type, code = 0)
 	if(!ticker || ticker.current_state < 3) return
@@ -294,9 +306,9 @@
 	. = ..()
 	verbs.len = 0
 
-/atom/movable/overlay/attackby(a, b)
+/atom/movable/overlay/attackby(a, b, c)
 	if (src.master)
-		return src.master.attackby(a, b)
+		return src.master.attackby(a, b, c)
 	return
 
 /atom/movable/overlay/attack_paw(a, b, c)

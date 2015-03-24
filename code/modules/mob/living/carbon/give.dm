@@ -43,10 +43,7 @@
 					return
 				else
 					user.drop_item()
-					if(src.r_hand == null)
-						src.r_hand = I
-					else
-						src.l_hand = I
+					src.put_in_hands(I)
 				I.loc = src
 				I.layer = 20
 				I.add_fingerprint(src)

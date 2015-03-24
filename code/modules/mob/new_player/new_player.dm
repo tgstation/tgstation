@@ -329,7 +329,6 @@
 	job_master.EquipRank(character, rank, 1)					//equips the human
 	EquipCustomItems(character)
 	character.loc = pick(latejoin)
-	character.lastarea = get_area(loc)
 	character.store_position()
 
 	ticker.mode.latespawn(character)
@@ -392,7 +391,6 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 	close_spawn_windows()
 
 	var/mob/living/carbon/human/new_character = new(loc)
-	new_character.lastarea = get_area(loc)
 
 	var/datum/species/chosen_species
 	if(client.prefs.species)
@@ -410,7 +408,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 		if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED))
 			new_character.add_language(client.prefs.language)*/
 	if(ticker.random_players || appearance_isbanned(src)) //disabling ident bans for now
-		new_character.gender = pick(MALE, FEMALE)
+		new_character.setGender(pick(MALE, FEMALE))
 		client.prefs.real_name = random_name(new_character.gender)
 		client.prefs.randomize_appearance_for(new_character)
 		client.prefs.flavor_text = ""
@@ -437,9 +435,11 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 		new_character.dna.SetSEState(GLASSESBLOCK,1,1)
 		new_character.disabilities |= NEARSIGHTED
 
-	if(client.prefs.disabilities & DISABILITY_FLAG_FAT)
+	chosen_species = all_species[client.prefs.species]
+	if( (client.prefs.disabilities & DISABILITY_FLAG_FAT) && (chosen_species.flags & CAN_BE_FAT) )
 		new_character.mutations += M_FAT
-		new_character.overeatduration = 600 // Max overeat
+		new_character.mutations += M_OBESITY
+		new_character.overeatduration = 600
 
 	if(client.prefs.disabilities & DISABILITY_FLAG_EPILEPTIC)
 		new_character.dna.SetSEState(EPILEPSYBLOCK,1,1)

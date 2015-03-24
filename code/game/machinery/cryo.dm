@@ -262,8 +262,7 @@
 			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
 			return
 		beaker =  G
-		user.drop_item()
-		G.loc = src
+		user.drop_item(src)
 		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
 	if(..())
 		return
@@ -368,6 +367,8 @@
 	if (M.abiotic())
 		usr << "<span class='warning'>Subject may not have abiotic items on.</span>"
 		return
+	if(M.buckled)
+		M.buckled.unbuckle()
 	if(!node)
 		usr << "<span class='warning'>The cell is not correctly connected to its pipe network!</span>"
 		return

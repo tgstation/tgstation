@@ -416,7 +416,7 @@
 	return
 
 /obj/machinery/atmoalter/siphs/Topic(href, href_list)
-	..()
+	if(..()) return 1
 
 	if (usr.stat || usr.restrained())
 		return

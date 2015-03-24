@@ -33,6 +33,9 @@
 	// holy water
 	var/holy = 0
 
+	// For building on the asteroid.
+	var/under_turf = /turf/space
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
@@ -139,9 +142,9 @@
 
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
+
 	if(ismob(Obj))
-		Obj:lastarea = get_area(Obj.loc)
-		if(Obj:lastarea.has_gravity == 0)
+		if(Obj.areaMaster && Obj.areaMaster.has_gravity == 0)
 			inertial_drift(Obj)
 
 	/*
@@ -175,8 +178,6 @@
 /turf/proc/is_wood_floor()
 	return 0
 /turf/proc/is_carpet_floor()
-	return 0
-/turf/proc/is_catwalk()
 	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
@@ -272,14 +273,14 @@
 
 	if(connections) connections.erase_all()
 
-	if(istype(src,/turf/simulated) && !iscatwalk(src))
+	if(istype(src,/turf/simulated))
 		//Yeah, we're just going to rebuild the whole thing.
 		//Despite this being called a bunch during explosions,
 		//the zone will only really do heavy lifting once.
 		var/turf/simulated/S = src
 		env = S.air //Get the air before the change
 		if(S.zone) S.zone.rebuild()
-	if(istype(src,/turf/simulated/floor) && !iscatwalk(src))
+	if(istype(src,/turf/simulated/floor))
 		var/turf/simulated/floor/F = src
 		if(F.floor_tile)
 			returnToPool(F.floor_tile)
@@ -475,12 +476,12 @@
 
 //Return a lattice to allow catwalk building
 /turf/proc/canBuildCatwalk()
-	return 0
+	return BUILD_FAILURE
 
 //Return true to allow lattice building
 /turf/proc/canBuildLattice()
-	return 0
+	return BUILD_FAILURE
 
 //Return a lattice to allow plating building, return 0 for error message, return -1 for silent fail.
 /turf/proc/canBuildPlating()
-	return -1
+	return BUILD_SILENT_FAILURE

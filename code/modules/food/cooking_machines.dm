@@ -169,8 +169,7 @@ var/global/ingredientLimit = 10
 		return
 	if(. == "valid")
 		if(src.foodChoices) . = src.foodChoices[(input("Select production.") in src.foodChoices)]
-		user.drop_item()
-		I.loc = src
+		user.drop_item(src)
 		src.ingredient = I
 		spawn() src.cook(.)
 		user << "<span class='notice'>You add the [I.name] to the [src.name].</span>"
@@ -221,7 +220,6 @@ var/global/ingredientLimit = 10
 	icon_state_on = "mixer_on"
 	cookSound = 'sound/machines/juicer.ogg'
 
-	v
 
 /obj/machinery/cooking/candy/validateIngredient(var/obj/item/I)
 	. = ..()
@@ -240,6 +238,7 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/candy/getFoodChoices()
 	return (typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy))
+
 
 // Still ///////////////////////////////////////////////////////
 
@@ -284,8 +283,8 @@ var/global/ingredientLimit = 10
 	var/image/I = image(src.ingredient.icon,,src.ingredient.icon_state)
 	I.transform *= 0.7
 	C.overlays += I
-	src.ingredient = null
 	qdel(src.ingredient)
+	src.ingredient = null
 	return
 
 // Deep Fryer //////////////////////////////////////////////////
@@ -347,9 +346,9 @@ var/global/ingredientLimit = 10
 	D.icon_state = src.ingredient.icon_state
 	D.overlays = src.ingredient.overlays
 	D.color = "#FFAD33"
-	src.ingredient = null
 	empty_icon() //see if the icon needs updating from the loss of oil
 	qdel(src.ingredient)
+	src.ingredient = null
 	return
 
 // Grill ///////////////////////////////////////////////////////

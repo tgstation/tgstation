@@ -335,7 +335,7 @@
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
-	..()
+	if(..()) return 1
 	if(href_list["close"])
 		if(usr.machine == src) usr.unset_machine()
 		return 1

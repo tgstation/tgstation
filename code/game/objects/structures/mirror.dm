@@ -15,7 +15,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isvampire(H))
-			if(!(VAMP_FULL in H.mind.vampire.powers))
+			if(!(VAMP_MATURE in H.mind.vampire.powers))
 				H << "<span class='notice'>You don't see anything.</span>"
 				return
 		var/userloc = H.loc

@@ -7,6 +7,10 @@
 	var/obj/item/device/encryptionkey/keyslot = null//Borg radios can handle a single encryption key
 	subspace_transmission = 1
 
+/obj/item/device/radio/borg/proc/insert_key(obj/item/device/encryptionkey/key)
+	keyslot = key
+	recalculateChannels()
+
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
 	user.set_machine(src)
@@ -34,17 +38,12 @@
 		else
 			user << "This radio doesn't have any encryption keys!"
 
-	if(istype(W, /obj/item/device/encryptionkey/))
-		if(keyslot)
-			user << "The radio can't hold another key!"
-			return
-
-		if(!keyslot)
-			user.drop_item()
-			W.loc = src
-			keyslot = W
-
-		recalculateChannels()
+	if (istype(W, /obj/item/device/encryptionkey))
+		if (!isnull(keyslot))
+			user << "<SPAN CLASS='notice'>The radio can't hold another key!</SPAN>"
+		else
+			user.drop_item(src)
+			insert_key(W)
 
 	return
 
@@ -108,18 +107,6 @@
 	dat+={"[text_wires()]</TT></body></html>"}
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
-	return
-
-
-/obj/item/device/radio/proc/config(op)
-	if(radio_controller)
-		for (var/ch_name in channels)
-			radio_controller.remove_object(src, radiochannels[ch_name])
-	secure_radio_connections = new
-	channels = op
-	if(radio_controller)
-		for (var/ch_name in op)
-			secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 	return
 
 /obj/item/device/radio/off

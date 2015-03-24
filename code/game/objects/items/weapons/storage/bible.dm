@@ -60,19 +60,33 @@
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		user << "\red You don't have the dexterity to do this!"
+	if(ismonkey(user) && ticker.mode.name != "monkey")
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 	if(!chaplain)
-		user << "\red The book sizzles in your hands."
-		user.take_organ_damage(0,10)
+		if(M.mind && M.mind.vampire)
+			user << "<span class='danger'>[deity_name] smites you for your blaspehemy!</span>"
+			user.take_organ_damage(0,20)
+			M.mind.vampire.smitecounter += 30
+		else
+			user << "<span class='warning'>The book sizzles in your hands.</span>"
+			user.take_organ_damage(0,10)
 		return
 
 	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "\red The [src] slips out of your hand and hits your head."
+		user << "<span class='warning'>The [src] slips out of your hand and hits your head.</span>"
 		user.take_organ_damage(10)
 		user.Paralyse(20)
 		return
+
+	if(M.mind && M.mind.vampire)
+		if(ishuman(M))
+			if(!(VAMP_MATURE in M.mind.vampire.powers))
+				if(user.mind && user.mind.assigned_role == "Chaplain")
+					M << "<span class='warning'>[deity_name]'s power interferes with your own!</span>"
+					M.mind.vampire.nullified = max(5, M.mind.vampire.nullified + 2)
+					M.take_organ_damage(0, 10)
+					M.mind.vampire.smitecounter += 10
 
 //	if(..() == BLOCKED)
 //		return
@@ -120,3 +134,10 @@
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	playsound(get_turf(src), "rustle", 50, 1, -5)
 	..()
+
+/obj/item/weapon/storage/bible/pickup(mob/living/user as mob)
+	if(user.mind && user.mind.assigned_role == "Chaplain")
+		user << "<span class ='notice'>You feel [deity_name]'s presence as you pick up the holy book.</span>"
+	if(user.mind && user.mind.vampire && (!VAMP_UNDYING in user.mind.vampire.powers))
+		user.mind.vampire.smitecounter += 30
+		user << "<span class ='danger'>[deity_name] punishes you for picking up the holy book!</span>"

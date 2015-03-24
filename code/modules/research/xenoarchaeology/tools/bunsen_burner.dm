@@ -16,7 +16,6 @@
 		else
 			user.drop_item(src)
 			held_container = W
-			held_container.loc = src
 			user << "\blue You put the [held_container] onto the [src]."
 			var/image/I = image("icon"=W, "layer"=FLOAT_LAYER)
 			underlays += I

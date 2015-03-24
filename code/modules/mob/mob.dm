@@ -139,6 +139,8 @@
 	return 0
 
 /mob/proc/Life()
+	if(spell_master)
+		spell_master.update_spells(0, src)
 	return
 
 /mob/proc/see_narsie(var/obj/machinery/singularity/narsie/large/N, var/dir)
@@ -147,13 +149,14 @@
 			del(narsimage)
 			del(narglow)
 		return
-	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)))
+	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)) && !(N in view(src)))
 		if(!narsimage) //Create narsimage
 			narsimage = image('icons/obj/narsie.dmi',src.loc,"narsie",9,1)
 			narsimage.mouse_opacity = 0
 		if(!narglow) //Create narglow
 			narglow = image('icons/obj/narsie.dmi',narsimage.loc,"glow-narsie",LIGHTING_LAYER+2,1)
 			narglow.mouse_opacity = 0
+/* Animating narsie works like shit thanks to fucking byond
 		if(!N.old_x || !N.old_y)
 			N.old_x = src.x
 			N.old_y = src.y
@@ -193,14 +196,16 @@
 					y_diff = -32
 			animate(narsimage, pixel_x = old_pixel_x+x_diff, pixel_y = old_pixel_y+y_diff, time = 8) //Animate the movement of narsie to narsie's new location
 			animate(narglow, pixel_x = old_pixel_x+x_diff, pixel_y = old_pixel_y+y_diff, time = 8)
-		else
-			//Else if no dir is given, simply send them the image of narsie
-			var/new_x = 32 * (N.x - src.x) + N.pixel_x
-			var/new_y = 32 * (N.y - src.y) + N.pixel_y
-			narsimage.pixel_x = new_x
-			narsimage.pixel_y = new_y
-			narglow.pixel_x = new_x
-			narglow.pixel_y = new_y
+*/
+		//Else if no dir is given, simply send them the image of narsie
+		var/new_x = 32 * (N.x - src.x) + N.pixel_x
+		var/new_y = 32 * (N.y - src.y) + N.pixel_y
+		narsimage.pixel_x = new_x
+		narsimage.pixel_y = new_y
+		narglow.pixel_x = new_x
+		narglow.pixel_y = new_y
+		narsimage.loc = src.loc
+		narglow.loc = src.loc
 		//Display the new narsimage to the player
 		src << narsimage
 		src << narglow
@@ -209,6 +214,23 @@
 			del(narsimage)
 			del(narglow)
 
+/mob/proc/see_rift(var/obj/machinery/singularity/narsie/large/exit/R)
+	if((R.z == src.z) && (get_dist(R,src) <= (R.consume_range+10)) && !(R in view(src)))
+		if(!riftimage)
+			riftimage = image('icons/obj/rift.dmi',src.loc,"rift",LIGHTING_LAYER+2,1)
+			riftimage.mouse_opacity = 0
+
+		var/new_x = 32 * (R.x - src.x) + R.pixel_x
+		var/new_y = 32 * (R.y - src.y) + R.pixel_y
+		riftimage.pixel_x = new_x
+		riftimage.pixel_y = new_y
+		riftimage.loc = src.loc
+
+		src << riftimage
+
+	else
+		if(riftimage)
+			del(riftimage)
 
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)
@@ -473,7 +495,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_w_uniform)
 				if( !(slot_flags & SLOT_ICLOTHING) )
 					return 0
-				if((M_FAT in H.mutations) && !(flags & ONESIZEFITSALL))
+				if((M_FAT in H.mutations) && (H.species && H.species.flags & CAN_BE_FAT) && !(flags & ONESIZEFITSALL))
 					return 0
 				if(H.w_uniform)
 					if(H.w_uniform.canremove)
@@ -864,6 +886,14 @@ var/list/slot_equipment_priority = list( \
 //	M.Login()	//wat
 	return
 
+/client/verb/issue_report()
+	set name = "Github Report"
+	set category = "OOC"
+	var/dat = {"	<title>/vg/station Github Ingame Reporting</title>
+					Revision: [return_revision()]
+					<iframe src='http://ss13.pomf.se/issues/?ckey=[ckey(key)]&address=[world.internet_address]:[world.port]' style='border:none' width='480' height='480' scroll=no></iframe>"}
+	src << browse(dat, "window=github;size=480x480")
+
 /client/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"
@@ -1142,11 +1172,11 @@ var/list/slot_equipment_priority = list( \
 				if(istype(S, /spell/noclothes) || !statpanel(S.panel))
 					continue //Not showing the noclothes spell
 				switch(S.charge_type)
-					if("recharge")
+					if(Sp_RECHARGE)
 						statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
-					if("charges")
+					if(Sp_CHARGES)
 						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
-					if("holdervar")
+					if(Sp_HOLDVAR)
 						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
 
 

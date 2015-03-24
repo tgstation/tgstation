@@ -296,7 +296,7 @@ proc/populate_seed_list()
 	else if(vine_prob < 10)
 		spread = 1
 
-	if(prob(5))
+	if(prob(10))
 		biolum = 1
 		biolum_colour = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 
@@ -364,11 +364,11 @@ proc/populate_seed_list()
 				if(prob(degree*5))
 					harvest_repeat = !harvest_repeat
 			if(10)
-				if(prob(degree*2))
+				if(prob(degree*4))
 					biolum = !biolum
 					if(biolum)
 						source_turf.visible_message("\blue \The [display_name] begins to glow!")
-						if(prob(degree*2))
+						if(prob(degree*4))
 							biolum_colour = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 							source_turf.visible_message("\blue \The [display_name]'s glow <font color='[biolum_colour]'>changes colour</font>!")
 					else
@@ -634,7 +634,7 @@ proc/populate_seed_list()
 	if(immutable > 0) return
 
 	//Set up some basic information.
-	var/datum/seed/new_seed = new
+	var/datum/seed/new_seed = new /datum/seed()
 	new_seed.name = "new line"
 	new_seed.uid = 0
 	new_seed.roundstart = 0
@@ -687,6 +687,7 @@ proc/populate_seed_list()
 	new_seed.flower_icon =          flower_icon
 	new_seed.alter_temp = 			alter_temp
 
+	ASSERT(istype(new_seed)) //something happened...
 	return new_seed
 
 // Actual roundstart seed types after this point.
@@ -1573,7 +1574,7 @@ proc/populate_seed_list()
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cherries)
 	plant_icon = "cherry"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,15), "sugar" = list(1,15))
+	chems = list("nutriment" = list(1,15))
 
 	lifespan = 35
 	maturation = 5

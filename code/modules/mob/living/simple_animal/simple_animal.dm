@@ -102,6 +102,7 @@
 	return
 
 /mob/living/simple_animal/Life()
+	..()
 
 	//Health
 	if(stat == DEAD)

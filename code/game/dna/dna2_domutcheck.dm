@@ -103,9 +103,9 @@
 	var/mob/living/carbon/human/vox/V = new(C.loc)
 
 	if (D.GetUIState(DNA_UI_GENDER))
-		V.gender = FEMALE
+		V.setGender(FEMALE)
 	else
-		V.gender = MALE
+		V.setGender(MALE)
 
 	if(C.mind)
 		C.mind.transfer_to(V)

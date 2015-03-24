@@ -6,7 +6,7 @@
 	charge_max = 500
 	spell_flags = NEEDSCLOTHES
 	invocation = "ARSE NATH"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
@@ -15,6 +15,8 @@
 
 	amt_weakened = 8
 	amt_stunned = 8
+
+	hud_state = "wiz_butt"
 
 /spell/targeted/buttbots_revenge/cast(var/list/targets)
 	..()

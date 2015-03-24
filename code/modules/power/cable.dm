@@ -73,7 +73,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	d2 = text2num(copytext(icon_state, dash + 1))
 
 	var/turf/T = src.loc	// hide if turf is not intact
-	if(!istype(T)) return
+	var/obj/structure/catwalk/Catwalk = (locate(/obj/structure/catwalk) in get_turf(T))
+	if(!istype(T))
+		if(!Catwalk)
+			return //It's just space, abort
 	if(level == 1)
 		hide(T.intact)
 

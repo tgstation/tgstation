@@ -82,9 +82,9 @@
 		dat += "The mature plant will produce [grown_seed.products.len == 1 ? "fruit" : "[grown_seed.products.len] varieties of fruit"].<br>"
 
 	if(grown_seed.requires_nutrients)
-		if(grown_seed.nutrient_consumption < 0.05)
+		if(grown_seed.nutrient_consumption < 0.15)
 			dat += "It consumes a small amount of nutrient fluid.<br>"
-		else if(grown_seed.nutrient_consumption > 0.2)
+		else if(grown_seed.nutrient_consumption > 0.4)
 			dat += "It requires a heavy supply of nutrient fluid.<br>"
 		else
 			dat += "It requires a supply of nutrient fluid.<br>"

@@ -2,18 +2,20 @@
 	name = "Curse of the Horseman"
 	desc = "This spell triggers a curse on a target, causing them to wield an unremovable horse head mask. They will speak like a horse! Any masks they are wearing will be disintegrated. This spell does not require robes."
 	school = "transmutation"
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = 150
 	charge_counter = 0
 	spell_flags = 0
 	invocation = "KN'A FTAGHU, PUCK 'BTHNK!"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	range = 7
 	max_targets = 1
 	cooldown_min = 30 //30 deciseconds reduction per rank
 	selection_type = "range"
 
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+
+	hud_state = "wiz_horse"
 
 /spell/targeted/horsemask/cast(list/targets, mob/user = usr)
 	..()

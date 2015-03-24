@@ -645,6 +645,8 @@
 	if(href_list["close"])
 		if(usr.machine == src) usr.unset_machine()
 		return 1
+	if(..())
+		return 1
 	if(href_list["rcon"])
 		rcon_setting = text2num(href_list["rcon"])
 
@@ -857,7 +859,6 @@
 				qdel(src)
 				return
 
-	return ..()
 
 /obj/machinery/alarm/power_change()
 	if(powered(power_channel))
@@ -1070,7 +1071,7 @@ FIRE ALARM
 	return
 
 /obj/machinery/firealarm/Topic(href, href_list)
-	..()
+	if(..()) return 1
 	if (usr.stat || stat & (BROKEN|NOPOWER))
 		return
 
@@ -1211,7 +1212,7 @@ FIRE ALARM
 	return
 
 /obj/machinery/partyalarm/Topic(href, href_list)
-	..()
+	if(..()) return 1
 	if (usr.stat || stat & (BROKEN|NOPOWER))
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))

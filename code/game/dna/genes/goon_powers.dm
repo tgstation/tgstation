@@ -78,17 +78,22 @@
 
 /datum/dna/gene/basic/grant_spell
 	var/spell/spelltype
+	var/list/granted_spells
 
 	activate(var/mob/M, var/connected, var/flags)
 		..(M,connected,flags)
-		M.spell_list += new spelltype(M)
+		var/spell/granted = new spelltype
+		M.add_spell(granted, "genetic_spell_ready")
+		granted_spells += granted
 		return 1
 
 	deactivate(var/mob/M, var/connected, var/flags)
 		..(M,connected,flags)
 		for(var/spell/S in M.spell_list)
-			if(istype(S, spelltype))
-				M.spell_list.Remove(S)
+			if(S in granted_spells)
+				M.remove_spell(S)
+				granted_spells -= S
+				qdel(S)
 		return 1
 
 /datum/dna/gene/basic/grant_verb
@@ -121,14 +126,17 @@
 	desc = "Drops the bodytemperature of another person."
 	panel = "Mutant Powers"
 
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = 600
 
-	spell_flags = Z2NOCAST | INCLUDEUSER
-	invocation_type = "none"
+	spell_flags = Z2NOCAST
+	invocation_type = SpI_NONE
 	range = 1
 	max_targets = 1
 	selection_type = "range"
+
+	override_base = "genetic"
+	hud_state = "gen_ice"
 
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
@@ -197,15 +205,17 @@
 	desc = "Eat just about anything!"
 	panel = "Mutant Powers"
 
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = 300
 
-	spell_flags = 0
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 	range = 1
 	max_targets = 1
 	selection_type = "view"
 	spell_flags = SELECTABLE
+
+	override_base = "genetic"
+	hud_state = "gen_eat"
 
 	cast_sound = 'sound/items/eatfood.ogg'
 	compatible_mobs = list(/obj/item,/mob/living/simple_animal/hostile,/mob/living/simple_animal/parrot,/mob/living/simple_animal/cat,/mob/living/simple_animal/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/mouse, /mob/living/carbon/monkey, /mob/living/carbon/human)
@@ -352,15 +362,18 @@
 	panel = "Mutant Powers"
 	range = -1
 
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = 60
 
 	spell_flags = INCLUDEUSER
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 
 	duration = 10 //used for jump distance here
 
 	cast_sound = 'sound/weapons/thudswoosh.ogg'
+
+	hud_state = "gen_leap"
+	override_base = "genetic"
 
 /spell/targeted/leap/cast(list/targets, mob/user)
 	for(var/mob/living/target in targets)
@@ -452,11 +465,14 @@
 	charge_max = 1800
 
 	spell_flags = 0
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 	range = 1
 	max_targets = 1
 	selection_type = "range"
 	compatible_mobs = list(/mob/living/carbon/human)
+
+	hud_state = "wiz_hulk"
+	override_base = "genetic"
 
 /spell/targeted/polymorph/cast(list/targets, mob/living/carbon/human/user)
 	..()
@@ -475,11 +491,11 @@
 ////////////////////////////////////////////////////////////////////////
 
 // WAS: /datum/bioEffect/empath
-/datum/dna/gene/basic/grant_verb/empath
+/datum/dna/gene/basic/grant_spell/empath
 	name = "Empathic Thought"
 	desc = "The subject becomes able to read the minds of others for certain information."
 
-	verbtype = /proc/bioproc_empath
+	spelltype = /spell/targeted/empath
 	activation_messages = list("You suddenly notice more about others than you did before.")
 	deactivation_messages = list("You no longer feel able to sense intentions.")
 
@@ -487,41 +503,49 @@
 		..()
 		block = EMPATHBLOCK
 
-/proc/bioproc_empath()
-	set name = "Read Mind"
-	set desc = "Read the minds of others for information."
-	set category = "Mutant Abilities"
+/spell/targeted/empath
+	name = "Read Mind"
+	desc = "Read the minds of others for information."
+	panel = "Mutant Abilities"
 
-	var/list/minds_to_read = list()
-	for(var/mob/living/carbon/C in view(7,usr))
-		if(!istype(C) || C == usr) continue
-		minds_to_read |= C
+	range = 7
+	max_targets = 1
+	spell_flags = SELECTABLE
+	invocation_type = SpI_NONE
 
+	charge_type = Sp_RECHARGE
+	charge_max = 100
 
-	if(usr.stat)
+	compatible_mobs = list(/mob/living/carbon)
+
+	hud_state = "gen_rmind"
+	override_base = "genetic"
+
+/spell/targeted/empath/cast(var/list/targets, mob/user)
+	if(!targets || !targets.len)
 		return
 
-	var/mob/living/carbon/M = input("Choose a being to mind read", "Vulnerable Minds") as null|mob in minds_to_read
+	var/mob/living/carbon/M = targets[1] //only one mob in the list, so we want that one
 
 	if(!M || !M.loc) //Either chose to not read a mind or the mob was caught by qdel
 		return
 
 	if(!istype(M))
-		usr << "<span class='warning'>This can only be used on carbon beings.</span>"
+		user << "<span class='warning'>This can only be used on carbon beings.</span>"
 		return
 
 	if (M_PSY_RESIST in M.mutations)
-		usr << "<span class='warning'>You can't see into [M.name]'s mind at all!</span>"
+		user << "<span class='warning'>You can't see into [M.name]'s mind at all!</span>"
 		return
 
 	if (M.stat == 2)
-		usr << "<span class='warning'>[M.name] is dead and cannot have their mind read.</span>"
+		user << "<span class='warning'>[M.name] is dead and cannot have their mind read.</span>"
 		return
 	if (M.health < 0)
-		usr << "<span class='warning'>[M.name] is dying, and their thoughts are too scrambled to read.</span>"
+		user << "<span class='warning'>[M.name] is dying, and their thoughts are too scrambled to read.</span>"
 		return
 
-	usr << "<span class='notice'><b>Mind Reading of [M.name]:</b></span>"
+	user << "<span class='notice'><b>Mind Reading of [M.name]:</b></span>"
 	var/pain_condition = M.health
 	// lower health means more pain
 	var/list/randomthoughts = list("what to have for lunch","the future","the past","money",
@@ -539,33 +563,33 @@
 
 	switch(pain_condition)
 		if (81 to INFINITY)
-			usr << "<span class='notice'> <b>Condition</b>: [M.name] feels good.</span>"
+			user << "<span class='notice'> <b>Condition</b>: [M.name] feels good.</span>"
 		if (61 to 80)
-			usr << "<span class='notice'> <b>Condition</b>: [M.name] is suffering mild pain.</span>"
+			user << "<span class='notice'> <b>Condition</b>: [M.name] is suffering mild pain.</span>"
 		if (41 to 60)
-			usr << "<span class='notice'> <b>Condition</b>: [M.name] is suffering significant pain.</span>"
+			user << "<span class='notice'> <b>Condition</b>: [M.name] is suffering significant pain.</span>"
 		if (21 to 40)
-			usr << "<span class='notice'> <b>Condition</b>: [M.name] is suffering severe pain.</span>"
+			user << "<span class='notice'> <b>Condition</b>: [M.name] is suffering severe pain.</span>"
 		else
-			usr << "<span class='notice'> <b>Condition</b>: [M.name] is suffering excruciating pain.</span>"
+			user << "<span class='notice'> <b>Condition</b>: [M.name] is suffering excruciating pain.</span>"
 			thoughts = "haunted by their own mortality"
 
 	switch(M.a_intent)
 		if (I_HELP)
-			usr << "<span class='notice'> <b>Mood</b>: You sense benevolent thoughts from [M.name].</span>"
+			user << "<span class='notice'> <b>Mood</b>: You sense benevolent thoughts from [M.name].</span>"
 		if (I_DISARM)
-			usr << "<span class='notice'> <b>Mood</b>: You sense cautious thoughts from [M.name].</span>"
+			user << "<span class='notice'> <b>Mood</b>: You sense cautious thoughts from [M.name].</span>"
 		if (I_GRAB)
-			usr << "<span class='notice'> <b>Mood</b>: You sense hostile thoughts from [M.name].</span>"
+			user << "<span class='notice'> <b>Mood</b>: You sense hostile thoughts from [M.name].</span>"
 		if (I_HURT)
-			usr << "<span class='notice'> <b>Mood</b>: You sense cruel thoughts from [M.name].</span>"
+			user << "<span class='notice'> <b>Mood</b>: You sense cruel thoughts from [M.name].</span>"
 			for(var/mob/living/L in view(7,M))
 				if (L == M)
 					continue
 				thoughts = "thinking about punching [L.name]"
 				break
 		else
-			usr << "<span class='notice'> <b>Mood</b>: You sense strange thoughts from [M.name].</span>"
+			user << "<span class='notice'> <b>Mood</b>: You sense strange thoughts from [M.name].</span>"
 
 	if (istype(M,/mob/living/carbon/human))
 		var/numbers[0]
@@ -574,14 +598,13 @@
 			numbers += H.mind.initial_account.account_number
 			numbers += H.mind.initial_account.remote_access_pin
 		if(numbers.len>0)
-			usr << "<span class='notice'> <b>Numbers</b>: You sense the number[numbers.len>1?"s":""] [english_list(numbers)] [numbers.len>1?"are":"is"] important to [M.name].</span>"
-	usr << "<span class='notice'> <b>Thoughts</b>: [M.name] is currently [thoughts].</span>"
+			user << "<span class='notice'> <b>Numbers</b>: You sense the number[numbers.len>1?"s":""] [english_list(numbers)] [numbers.len>1?"are":"is"] important to [M.name].</span>"
+	user << "<span class='notice'> <b>Thoughts</b>: [M.name] is currently [thoughts].</span>"
 
-	if (/datum/dna/gene/basic/grant_verb/empath in M.active_genes)
+	if (/spell/targeted/empath in M.spell_list)
 		M << "<span class='warning'> You sense [usr.name] reading your mind.</span>"
 	else if (prob(5) || (M.mind && M.mind.assigned_role=="Chaplain"))
 		M << "<span class='warning'> You sense someone intruding upon your thoughts...</span>"
-	return
 
 ////////////////////////////////////////////////////////////////////////
 

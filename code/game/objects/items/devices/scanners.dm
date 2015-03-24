@@ -92,8 +92,11 @@ REAGENT SCANNER
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
 
-
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
+	healthanalyze(M, user, mode)
+	src.add_fingerprint(user)
+
+proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 	if (( (M_CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
@@ -213,7 +216,6 @@ REAGENT SCANNER
 			else
 				user.show_message("\blue Blood Level Normal: [blood_percent]% [blood_volume]cl")
 		user.show_message("\blue Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font>")
-	src.add_fingerprint(user)
 	return
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()

@@ -545,7 +545,7 @@ datum/reagent/zed
 	var/obj/landmark/s = pick(t)
 	var/mob/living/carbon/human/zombie/Z = new/mob/living/carbon/human/zombie(s.loc)
 
-	Z.gender = pick(MALE, FEMALE)
+	Z.setGender(pick(MALE, FEMALE))
 
 	/* DNA2 broke this
 	var/flooks = new/list()

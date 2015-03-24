@@ -6,7 +6,7 @@
 	charge_max = 150
 	spell_flags = NEEDSCLOTHES
 	invocation = "FORTI GY AMA"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	range = 7
 	cooldown_min = 90 //15 deciseconds reduction per rank
 
@@ -15,6 +15,8 @@
 	proj_type = /obj/item/projectile/spell_projectile/seeking/magic_missile
 	duration = 10
 	proj_step_delay = 5
+
+	hud_state = "wiz_mm"
 
 /spell/targeted/projectile/magic_missile/prox_cast(var/list/targets, atom/spell_holder)
 	targets = ..()

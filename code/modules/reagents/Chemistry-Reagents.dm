@@ -199,6 +199,9 @@
 	else if(istype(self.data["donor"], /mob/living/carbon/alien))
 		var/obj/effect/decal/cleanable/blood/B = blood_splatter(T,self,1)
 		if(B) B.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
+
+	if(volume >= 5 && !istype(T.loc, /area/chapel)) //blood desanctifies non-chapel tiles
+		T.holy = 0
 	return
 
 /datum/reagent/vaccine
@@ -684,19 +687,23 @@
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("<span class='notice'>[]'s eyes blink and become clearer.</span>", M), 1) // So observers know it worked.
 		// Vamps react to this like acid
-		if(isvampire(M) && prob(10))
-			if(!(VAMP_FULL in M.mind.vampire.powers))
-				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1*REM)
-				M.take_organ_damage(0, 1*REM)
+		if(M.mind.vampire && prob(10))
+			if(!M) M = holder.my_atom
+			if(!(VAMP_MATURE in M.mind.vampire.powers))
+				M.adjustToxLoss(1)
+				M.take_organ_damage(0, 2)
+				M.mind.vampire.smitecounter += 5
+			else
+				M.take_organ_damage(0, 1)
+				M.mind.vampire.smitecounter += 2
 	holder.remove_reagent(src.id, 10 * REAGENTS_METABOLISM) //high metabolism to prevent extended uncult rolls.
 
 /datum/reagent/holywater/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	// Vamps react to this like acid
 	if(ishuman(M))
-		if(isvampire(M))
-			if(!(VAMP_FULL in M.mind.vampire.powers))
-				var/mob/living/carbon/human/H=M
+		if(M.mind.vampire)
+			var/mob/living/carbon/human/H=M
+			if(!(VAMP_UNDYING in M.mind.vampire.powers))
 				if(method == TOUCH)
 					if(H.wear_mask)
 						H << "<span class='warning'>Your mask protects you from the holy water!</span>"
@@ -709,15 +716,18 @@
 						if(prob(15) && volume >= 30)
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
-								if(affecting.take_damage(25, 0))
+								M.mind.vampire.smitecounter += 10
+								if(affecting.take_damage(30, 0))
 									H.UpdateDamageIcon(1)
 								H.status_flags |= DISFIGURED
 								H.emote("scream",,, 1)
 						else
 							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
-			else
-				if(!M.unacidable)
-					M.take_organ_damage(min(15, volume * 2))
+							M.mind.vampire.smitecounter += 30
+				else
+					if(!M.unacidable)
+						M.take_organ_damage(min(15, volume * 2))
+						M.mind.vampire.smitecounter += 5
 	return
 
 /datum/reagent/holywater/reaction_turf(var/turf/T, var/volume)
@@ -3656,7 +3666,7 @@
 			if (!L)
 				H.adjustToxLoss(5)
 			else if(istype(L))
-				L.take_damage(0.05, 1)
+				L.take_damage(0.05, 0.5)
 			H.adjustToxLoss(0.1)
 	if(!holder)
 		holder = M.reagents
@@ -3740,9 +3750,9 @@
 	description = "Yohoho and all that."
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/ethanol/tequilla
+/datum/reagent/ethanol/tequila
 	name = "Tequila"
-	id = "tequilla"
+	id = "tequila"
 	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 	color = "#FFFF91" // rgb: 255, 255, 145
 	//boozepwr = 2
@@ -3887,9 +3897,9 @@
 	description = "Anime's favorite drink."
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/ethanol/deadrum/tequilla
+/datum/reagent/ethanol/deadrum/tequila
 	name = "Tequila"
-	id = "tequilla"
+	id = "tequila"
 	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 	color = "#A8B0B7" // rgb: 168, 176, 183
 
@@ -4068,9 +4078,9 @@
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/ethanol/deadrum/tequilla_sunrise
+/datum/reagent/ethanol/deadrum/tequila_sunrise
 	name = "Tequila Sunrise"
-	id = "tequillasunrise"
+	id = "tequilasunrise"
 	description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0

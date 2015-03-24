@@ -14,6 +14,7 @@
 	var/list/transplant_data // Blood DNA and colour of donor
 	var/rejecting            // Is this organ already being rejected?
 	var/obj/item/organ/organ_holder
+	var/datum/dna/owner_dna
 
 
 /datum/organ/internal/Copy()
@@ -27,7 +28,9 @@
 	I.transplant_data = transplant_data
 	I.rejecting = rejecting
 	I.organ_holder = null
+	I.owner_dna = owner_dna
 	return I
+
 /datum/organ/internal/proc/rejuvenate()
 	damage=0
 

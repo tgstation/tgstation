@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS admin_sessions (
 	`expires` DATETIME
 );
 	"}
-	execute(sql)
+	return execute(sql)
 
 /datum/migration/ss13/_002/down()
-	execute("DROP TABLE IF EXISTS admin_sessions;");
+	return execute("DROP TABLE IF EXISTS admin_sessions;");

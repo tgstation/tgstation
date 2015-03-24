@@ -104,6 +104,8 @@
 	slot_flags = SLOT_BELT
 	m_amt = 2000
 	w_type = RECYK_ELECTRONIC
+	min_harm_label = 3
+	harm_label_examine = list("<span class='info'>A tiny label is on the lens.</span>", "<span class='warning'>A label covers the lens!</span>")
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1
@@ -156,7 +158,7 @@
 			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		user.drop_item()
-		del(I)
+		qdel(I)
 		pictures_left = pictures_max
 		icon_state = icon_on
 		on = 1
@@ -321,6 +323,9 @@
 
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
+	if(min_harm_label && harm_labeled >= min_harm_label)
+		printpicture(user, icon('icons/effects/96x96.dmi',"blocked"), "You can't see a thing.", flag)
+		return
 	var/mobs = ""
 	var/isAi = istype(user, /mob/living/silicon/ai)
 	var/list/seen

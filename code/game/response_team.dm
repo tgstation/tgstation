@@ -247,9 +247,9 @@ proc/trigger_armed_response_team(var/force = 0)
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
-			M.gender = MALE
+			M.setGender(MALE)
 		else
-			M.gender = FEMALE
+			M.setGender(FEMALE)
 	//M.rebuild_appearance()
 	M.update_hair()
 	M.update_body()

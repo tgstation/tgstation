@@ -1,6 +1,7 @@
 #define DRYING_TIME 5 * 60*10			//for 1 unit of depth in puddle (amount var)
 
 var/global/list/image/splatter_cache=list()
+var/global/list/blood_list = list()
 
 /obj/effect/decal/cleanable/blood
 	name = "blood"
@@ -23,6 +24,7 @@ var/global/list/image/splatter_cache=list()
 	return
 
 /obj/effect/decal/cleanable/blood/Destroy()
+	blood_list -= src
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 		D.holder = null
@@ -41,9 +43,11 @@ var/global/list/image/splatter_cache=list()
 	viruses = list()
 	virus2 = list()
 	blood_DNA = list()
-	..("viruses","virus2", "blood_DNA", args)
+	..("viruses","virus2", "blood_DNA", "random_icon_states", args)
+
 /obj/effect/decal/cleanable/blood/New()
 	..()
+	blood_list += src
 	update_icon()
 
 	if(ticker && ticker.mode && ticker.mode.name == "cult")
@@ -253,7 +257,7 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/mucus
 	name = "mucus"
 	desc = "Disgusting mucus."
-	gender = PLURAL
+	setGender(PLURAL)
 	density = 0
 	anchored = 1
 	layer = 2

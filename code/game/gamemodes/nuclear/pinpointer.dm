@@ -36,7 +36,9 @@
 
 	var/turf/T = get_turf(target)
 	var/turf/L = get_turf(src)
-
+	if(!T || !L)
+		icon_state = "pinonnull"
+		return
 	if(T.z != L.z)
 		icon_state = "pinonnull"
 	else

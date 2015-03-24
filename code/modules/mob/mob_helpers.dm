@@ -29,6 +29,12 @@
 			return 1
 	return 0
 
+/proc/check_holy(var/mob/A) //checks to see if the tile the mob stands on is holy
+	var/turf/T = get_turf(A)
+	if(!T) return 0
+	if(!T.holy) return 0
+	return 1  //The tile is holy. Beware!
+
 proc/hasorgans(A)
 	return ishuman(A)
 
@@ -262,14 +268,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 	spawn(1)
 		var/oldeye=M.client.eye
-		var/x
 		M.shakecamera = 1
-		for(x=0; x<duration, x++)
+
+		for (var/x = 1 to duration)
 			if(!M || !M.client)
 				M.shakecamera = 0
 				return //somebody disconnected while being shaken
-			M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
+			M.client.eye = locate(Clamp(M.loc.x + rand(-strength, strength), 1, world.maxx), Clamp(M.loc.y + rand(-strength, strength), 1, world.maxy), M.loc.z)
 			sleep(1)
+
 		M.shakecamera = 0
 		M.client.eye=oldeye
 

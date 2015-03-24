@@ -196,7 +196,8 @@
 		if (opened)
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
+			M.state = 1
+			M.build_state = 2
 			M.icon_state = "box_1"
 			for(var/obj/I in component_parts)
 				if(I.reliability != 100 && crit_fail)
@@ -210,8 +211,7 @@
 			return
 
 		beaker = item
-		user.drop_item()
-		item.loc = src
+		user.drop_item(src)
 		user.visible_message("[user] adds \a [item] to \the [src]!", "You add \a [item] to \the [src]!")
 		return
 	if(istype(item, /obj/item/weapon/grab)) //sanity checks, you chucklefucks
@@ -343,8 +343,7 @@
 	..()
 	if (istype(O, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!src.disk)
-			user.drop_item()
-			O.loc = src
+			user.drop_item(src)
 			src.disk = O
 			user << "You insert [O]."
 			nanomanager.update_uis(src) // update all UIs attached to src()

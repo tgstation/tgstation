@@ -354,7 +354,7 @@ var/global/loopModeNames=list(
 	if(isobserver(usr) && !isAdminGhost(usr))
 		usr << "\red You can't push buttons when your fingers go right through them, dummy."
 		return
-	..()
+	if(..()) return 1
 	if(emagged)
 		usr << "\red You touch the bluescreened menu. Nothing happens. You feel dumber."
 		return
@@ -536,7 +536,11 @@ var/global/loopModeNames=list(
 	playlists=list(
 		"bar"  = "Bar Mix",
 		"jazz" = "Jazz",
-		"rock" = "Rock"
+		"rock" = "Rock",
+		"vidyaone" = "Vidya Pt.1",
+		"vidyatwo" = "Vidya Pt.2",
+		"vidyathree" = "Vidya Pt.3",
+		"vidyafour" = "Vidya Pt.4",
 	)
 
 // Relaxing elevator music~
@@ -555,6 +559,10 @@ var/global/loopModeNames=list(
 		"rock" = "Rock",
 		"muzak" = "Muzak",
 		"thunderdome" = "Thunderdome", // For thunderdome I guess
+		"vidyaone" = "Vidya Pt.1",
+		"vidyatwo" = "Vidya Pt.2",
+		"vidyathree" = "Vidya Pt.3",
+		"vidyafour" = "Vidya Pt.4",
 	)
 
 // So I don't have to do all this shit manually every time someone sacrifices pun-pun.
@@ -576,13 +584,18 @@ var/global/loopModeNames=list(
 		"rock" = "Rock",
 		"muzak" = "Muzak",
 
+
 		"emagged" = "Syndie Mix",
 		"shuttle" = "Shuttle",
-		//"keygen" = "Keygen", // ONLY UNCOMMENT AFTER POMF REDUCES PLAYLIST SIZE OR YOU WILL CRASH THE ENTIRE GODDAMN SERVER.
 
 		"endgame" = "Apocalypse",
 		"clockwork" = "Clockwork", // Unfinished new cult stuff
 		"thunderdome" = "Thunderdome", // For thunderdome I guess
+//Vidya musak
+		"vidyaone" = "Vidya Pt.1",
+		"vidyatwo" = "Vidya Pt.2",
+		"vidyathree" = "Vidya Pt.3",
+		"vidyafour" = "Vidya Pt.4",
 	)
 
 /obj/machinery/media/jukebox/superjuke/attackby(obj/item/W, mob/user)

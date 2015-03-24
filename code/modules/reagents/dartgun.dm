@@ -84,9 +84,8 @@
 				user << "<span class='notice'>There's already a cartridge in [src].</span>"
 				return 0
 
-		user.drop_item()
+		user.drop_item(src)
 		cartridge = D
-		D.loc = src
 		user << "<span class='notice'>You slot [D] into [src].</span>"
 		update_icon()
 		return
@@ -98,8 +97,7 @@
 			user << "<span class='warning'>[src] already has [max_beakers] vials in it - another one isn't going to fit!</span>"
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/B = I
-		user.drop_item()
-		B.loc = src
+		user.drop_item(src)
 		beakers += B
 		user << "<span class='notice'>You slot [B] into [src].</span>"
 		src.updateUsrDialog()

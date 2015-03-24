@@ -25,8 +25,8 @@
 	check whether you're adjacent to the target, then pass off the click to whoever
 	is recieving it.
 	The most common are:
-	* mob/UnarmedAttack(atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
-	* atom/attackby(item,user) - used only when adjacent
+	* mob/UnarmedAttack(atom,adjacent,params) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
+	* atom/attackby(item,user,params) - used only when adjacent
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
@@ -101,7 +101,7 @@
 
 			var/resolved = W.preattack(A, src, 1, params)
 			if(!resolved)
-				resolved = A.attackby(W,src)
+				resolved = A.attackby(W,src, params)
 				if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
 					delayNextAttack(10)
 				if(!resolved && A && W)
@@ -111,13 +111,14 @@
 		else
 			if(ismob(A) || istype(W, /obj/item/weapon/grab))
 				delayNextAttack(10)
-			UnarmedAttack(A, 1)
+			UnarmedAttack(A, 1, params)
 		return
 	else // non-adjacent click
 		if(W)
 			if(ismob(A))
 				delayNextAttack(10)
-			W.afterattack(A,src,0,params) // 0: not Adjacent
+			if(!W.preattack(A, src, 0,  params))
+				W.afterattack(A,src,0,params) // 0: not Adjacent
 		else
 			if(ismob(A))
 				delayNextAttack(10)
@@ -140,7 +141,7 @@
 	proximity_flag is not currently passed to attack_hand, and is instead used
 	in human click code to allow glove touches only at melee range.
 */
-/mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
+/mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag, var/params)
 	if(ismob(A))
 		delayNextAttack(10)
 	return

@@ -1,0 +1,12 @@
+<!--
+Title: Bhangmeter UI (Main content)
+Used In File(s): /code/game/machinery/doppler_array.dm
+ -->
+{{:helper.link('Show Tracker Map', 'pin-s', {'showMap' : 1})}}
+<table width="100%"><tbody>
+	{{if data.explosions && data.explosions.length > 1}}
+		{{for data.explosions}}
+			<tr><td>({{:value.time}}) - ({{:value.area}} {{:value.xoffset}},{{:value.yoffset}},{{:value.z}})<tr><td>({{:value.cap ? "[Theoretical Results] " : ""}} Epicenter radius: <span class='bad'>{{:value.dev}}</span>. Outer radius: <span class='average'>{{:value.heavy}}</span>. Shockwave radius: <span class='good'>{{:value.light}}</span>. Temporal displacement of tachyons: {{:helper.precisionRound(value.took, 2)}} second{{:value.took != 1 ? "s" : ""}}
+		{{/for}}
+	{{/if}}
+</tbody></table>

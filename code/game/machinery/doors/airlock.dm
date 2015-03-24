@@ -51,6 +51,7 @@
 	autoclose = 1
 	var/busy = 0
 	soundeffect = 'sound/machines/airlock.ogg'
+	var/pitch = 30
 
 	emag_cost = 1 // in MJ
 
@@ -100,6 +101,7 @@
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
 	glass = 1
+	pitch = 100
 
 /obj/machinery/door/airlock/centcom
 	name = "Airlock"
@@ -644,6 +646,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
 	// If you add an if(..()) check you must first remove the var/nowindow parameter.
 	// Otherwise it will runtime with this kind of error: null.Topic()
+	if(!isAI(usr) && usr.z != z) return 1
 	if(!nowindow)
 		..()
 	if(!isAdminGhost(usr))
@@ -1109,7 +1112,7 @@ About the new airlock wires panel:
 		if( !arePowerSystemsOn() || (stat & NOPOWER) || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
 			return 0
 	use_power(50)
-	playsound(get_turf(src), soundeffect, 30, 1)
+	playsound(get_turf(src), soundeffect, pitch, 1)
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close()
 	// This worries me - N3X

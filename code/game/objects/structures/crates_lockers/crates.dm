@@ -468,7 +468,7 @@
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)
 			user  << "<span class='notice'>You attach [W] to [src].</span>"
-			user.drop_item(src)
+			user.drop_item(src.loc)
 			return
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(rigged)

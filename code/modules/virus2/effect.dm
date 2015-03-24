@@ -621,7 +621,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 
 /datum/disease2/effect/spaceadapt
 	name = "Space Adaptation Effect"
-	stage = 3
+	stage = 5
 /datum/disease2/effect/spaceadapt/activate(var/mob/living/carbon/mob,var/multiplier)
 	var/mob/living/carbon/human/H = mob
 	if (mob.reagents.get_reagent_amount("dexalinp") < 10)

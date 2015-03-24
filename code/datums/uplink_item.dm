@@ -71,12 +71,21 @@ var/list/uplink_items = list()
 
 		var/obj/I = spawn_item(get_turf(user), U, user)
 
+		var/bundlename = name
+		if(name == "Random Item" || name == "For showing that you are The Boss")
+			bundlename = I.name
+		if(I.tag)
+			bundlename = "[I.tag] bundle"
+			I.tag = null
 		if(ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
 			U.purchase_log += "[user] ([user.ckey]) bought [name] for [cost]."
-
+			if(user.mind)
+				user.mind.uplink_items_bought += bundlename
+				user.mind.spent_TC += cost
 		U.interact(user)
+
 		return 1
 	return 0
 
@@ -93,7 +102,7 @@ var/list/uplink_items = list()
 //Librarian
 /datum/uplink_item/jobspecific/etwenty
 	name = "The E20"
-	desc = "A seemingly innocent dice, those who are not afraid to roll for attack will find it's effects quite explosive. Has a four second timer."
+	desc = "A seemingly innocent die, those who are not afraid to roll for attack will find it's effects quite explosive. Has a four second timer."
 	item = /obj/item/weapon/dice/d20/e20
 	cost = 3
 	job = list("Librarian")

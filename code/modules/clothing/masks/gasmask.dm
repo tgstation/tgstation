@@ -46,6 +46,47 @@
 	origin_tech = "syndicate=4"
 	action_button_name = "Toggle Mask"
 	species_fit = list("Vox")
+	var/list/clothing_choices = list()
+
+/obj/item/clothing/mask/gas/voice/New()
+	..()
+	for(var/Type in typesof(/obj/item/clothing/mask) - list(/obj/item/clothing/mask, /obj/item/clothing/mask/gas/voice))
+		clothing_choices += new Type
+	return
+
+/obj/item/clothing/mask/gas/voice/attackby(obj/item/I, mob/user)
+	..()
+	if(!istype(I, /obj/item/clothing/mask) || istype(I, src.type))
+		return 0
+	else
+		var/obj/item/clothing/mask/M = I
+		if(src.clothing_choices.Find(M))
+			user << "<span class='warning'>[M.name]'s pattern is already stored.</span>"
+			return
+		src.clothing_choices += M
+		user << "<span class='notice'>[M.name]'s pattern absorbed by \the [src].</span>"
+		return 1
+	return 0
+
+/obj/item/clothing/mask/gas/voice/verb/change()
+	set name = "Change Mask Form"
+	set category = "Object"
+	set src in usr
+
+	var/obj/item/clothing/mask/A
+	A = input("Select Colour to change it to", "BOOYEA", A) in clothing_choices
+	if(!A)
+		return
+
+	desc = null
+	permeability_coefficient = 0.90
+
+	desc = A.desc
+	name = A.name
+	icon = A.icon
+	icon_state = A.icon_state
+	item_state = A.item_state
+	usr.update_inv_wear_mask(1)	//so our overlays update.
 
 /obj/item/clothing/mask/gas/voice/attack_self(mob/user)
 	vchange = !vchange
@@ -94,6 +135,12 @@
 	icon_state = "mime"
 	item_state = "mime"
 	species_fit = list("Vox")
+	var/muted = 0
+
+/obj/item/clothing/mask/gas/mime/treat_mask_message(var/message)
+	if(src.muted)
+		return("")
+	return message
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"

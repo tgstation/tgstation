@@ -251,7 +251,7 @@ var/list/beam_master = list()
 	var/reference = "\ref[src]" // So we do not have to recalculate it a ton.
 
 	spawn(0)
-		var/target_dir = src.dir // TODO: remove dir arg.
+		var/target_dir = dir ? dir : src.dir// TODO: remove dir arg. Or don't because the way this was set up without it broke spacepods.
 
 		while(loc) // Move until we hit something.
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))

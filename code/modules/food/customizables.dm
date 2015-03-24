@@ -32,7 +32,7 @@
 	else . = ..()
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/boiledspagetti/attackby(obj/item/I,mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti/attackby(obj/item/I,mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		new/obj/item/weapon/reagent_containers/food/snacks/customizable/pasta(get_turf(src),I)
 		qdel(src)
@@ -85,8 +85,7 @@
 		user << "<span class='warning'>How about no.</span>"
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
-		user.drop_item()
-		S.loc = src
+		user.drop_item(src)
 		src.ingredients += S
 		S.reagents.trans_to(src,S.reagents.total_volume)
 		src.update()
@@ -155,7 +154,7 @@
 	icon_state = "personal_pizza"
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
-	name = "spagetti"
+	name = "spaghetti"
 	desc = "Noodles. With stuff. Delicious."
 	icon_state = "pasta_bot"
 
@@ -287,8 +286,7 @@
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		if(src.ingredients.len < src.ingMax)
 			var/obj/item/weapon/reagent_containers/food/snacks/S = I
-			user.drop_item()
-			S.loc = src
+			user.drop_item(src)
 			user << "<span class='notice'>You add the [S.name] to the [src.name].</span>"
 			S.reagents.trans_to(src,S.reagents.total_volume)
 			src.ingredients += S

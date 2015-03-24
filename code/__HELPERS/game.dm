@@ -212,6 +212,19 @@
 
 	return hear
 
+/proc/get_movables_in_radio_ranges(var/list/obj/item/device/radio/radios)
+
+	//set background = 1
+
+	. = list()
+	// Returns a list of mobs who can hear any of the radios given in @radios
+	for(var/i = 1; i <= radios.len; i++)
+		var/obj/item/device/radio/R = radios[i]
+		if(R)
+			. |= get_hearers_in_view(R)
+	. |= get_mobs_in_radio_ranges(radios)
+	return .
+
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
 	//set background = 1

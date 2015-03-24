@@ -123,9 +123,9 @@
 		O.set_species(Mo.greaterform)
 
 	if (M.dna.GetUIState(DNA_UI_GENDER))
-		O.gender = FEMALE
+		O.setGender(FEMALE)
 	else
-		O.gender = MALE
+		O.setGender(MALE)
 
 	if (M)
 		if (M.dna)

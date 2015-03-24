@@ -12,75 +12,76 @@
 	var/list/req_components = null
 	var/list/req_component_names = null
 	var/list/components_in_use = null
-	state = 1
+	var/build_state = 1
 
 	// For pods
 	var/list/connected_parts = list()
 	var/pattern_idx=0
+	machine_flags = WRENCHMOVE | FIXED2WORK
 
-	proc/update_desc()
-		var/D
-		if(req_components)
-			D = "Requires "
-			var/first = 1
-			for(var/I in req_components)
-				if(req_components[I] > 0)
-					D += "[first?"":", "][num2text(req_components[I])] [req_component_names[I]]"
-					first = 0
-			if(first) // nothing needs to be added, then
-				D += "nothing"
-			D += "."
-		desc = D
+/obj/machinery/constructable_frame/proc/update_desc()
+	var/D
+	if(req_components)
+		D = "Requires "
+		var/first = 1
+		for(var/I in req_components)
+			if(req_components[I] > 0)
+				D += "[first?"":", "][num2text(req_components[I])] [req_component_names[I]]"
+				first = 0
+		if(first) // nothing needs to be added, then
+			D += "nothing"
+		D += "."
+	desc = D
 
 /obj/machinery/constructable_frame/machine_frame
 
-	attackby(obj/item/P as obj, mob/user as mob)
-		if(P.crit_fail)
-			user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
-			return
-		switch(state)
-			if(1)
-				if(istype(P, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/C = P
-					if(C.amount >= 5)
-						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-						user << "<span class='notice'>You start to add cables to the frame.</span>"
-						if(do_after(user, 20))
-							if(C && C.amount >= 5) // Check again
-								C.use(5)
-								user << "<span class='notice'>You add cables to the frame.</span>"
-								state = 2
-								icon_state = "box_1"
-				else if(istype(P, /obj/item/stack/sheet/glass/glass))
-					var/obj/item/stack/sheet/glass/glass/G=P
-					if(G.amount<1)
-						user << "<span class='warning'>How...?</span>"
-						return
-					G.use(1)
-					user << "<span class='notice'>You add the glass to the frame.</span>"
+/obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob)
+	if(P.crit_fail)
+		user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
+		return
+	switch(build_state)
+		if(1)
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C = P
+				if(C.amount >= 5)
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-					new /obj/structure/displaycase_frame(src.loc)
-					del(src)
+					user << "<span class='notice'>You start to add cables to the frame.</span>"
+					if(do_after(user, 20))
+						if(C && C.amount >= 5) // Check again
+							C.use(5)
+							user << "<span class='notice'>You add cables to the frame.</span>"
+							build_state = 2
+							icon_state = "box_1"
+			else if(istype(P, /obj/item/stack/sheet/glass/glass))
+				var/obj/item/stack/sheet/glass/glass/G=P
+				if(G.amount<1)
+					user << "<span class='warning'>How...?</span>"
 					return
-				else
-					if(istype(P, /obj/item/weapon/wrench))
-						playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-						user << "<span class='notice'>You dismantle the frame.</span>"
-						//new /obj/item/stack/sheet/metal(src.loc, 5)
-						var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, src.loc)
-						M.amount = 5
-						del(src)
-			if(2)
+				G.use(1)
+				user << "<span class='notice'>You add the glass to the frame.</span>"
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				new /obj/structure/displaycase_frame(src.loc)
+				del(src)
+				return
+			else
+				if(istype(P, /obj/item/weapon/wrench))
+					playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
+					user << "<span class='notice'>You dismantle the frame.</span>"
+					//new /obj/item/stack/sheet/metal(src.loc, 5)
+					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, src.loc)
+					M.amount = 5
+					del(src)
+		if(2)
+			if(!..())
 				if(istype(P, /obj/item/weapon/circuitboard))
 					var/obj/item/weapon/circuitboard/B = P
 					if(B.board_type == "machine")
 						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "<span class='notice'>You add the circuit board to the frame.</span>"
 						circuit = P
-						user.drop_item()
-						P.loc = src
+						user.drop_item(src)
 						icon_state = "box_2"
-						state = 3
+						build_state = 3
 						components = list()
 						req_components = circuit.req_components.Copy()
 						for(var/A in circuit.req_components)
@@ -102,15 +103,16 @@
 					if(istype(P, /obj/item/weapon/wirecutters))
 						playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 						user << "<span class='notice'>You remove the cables.</span>"
-						state = 1
+						build_state = 1
 						icon_state = "box_0"
 						var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
 						A.amount = 5
 
-			if(3)
+		if(3)
+			if(!..())
 				if(istype(P, /obj/item/weapon/crowbar))
 					playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-					state = 2
+					build_state = 2
 					circuit.loc = src.loc
 					circuit = null
 					if(components.len == 0)
@@ -181,8 +183,7 @@
 											break
 										else
 											user << "<span class='warning'>You do not have enough [P]!</span>"
-									user.drop_item()
-									P.loc = src
+									user.drop_item(src)
 									components += P
 									req_components[I]--
 									update_desc()
@@ -902,6 +903,16 @@ obj/item/weapon/circuitboard/rdserver
 	req_components = list(
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 3,
 							"/obj/item/weapon/stock_parts/capacitor" = 6)
+
+/obj/item/weapon/circuitboard/cell_charger
+	name = "Circuit Board (Cell Charger)"
+	build_path = "/obj/machinery/cell_charger"
+	board_type = "machine"
+	origin_tech = "materials=2;engineering=2;powerstorage=3"
+	frame_desc = "Requires 1 Scanning Module and 2 Capacitors."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/capacitor" = 2)
 
 /*
  *

@@ -97,7 +97,7 @@
 
 
 /obj/machinery/keycard_auth/Topic(href, href_list)
-	..()
+	if(..()) return 1
 	if(busy)
 		usr << "This device is busy."
 		return

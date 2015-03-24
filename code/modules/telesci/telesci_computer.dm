@@ -58,15 +58,11 @@
 			user << "\red There is already a cell in \the [name]."
 			return
 		else
-			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
-			if(!isarea(a))
-				return
-			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "\red \The [name] blinks red as you try to insert the cell!"
+			if(areaMaster.power_equip == 0) // There's no APC in this area, don't try to cheat power!
+				user << "<span class='warning'>\The [name] blinks red as you try to insert the cell!</span>"
 				return
 
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			cell = W
 			user.visible_message("[user] inserts a cell into the [src].", "You insert a cell into the [src].")
 		update_icon()
@@ -92,7 +88,7 @@
   *
   * @return nothing
   */
-/obj/machinery/computer/telescience/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/computer/telescience/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	if(stat & (BROKEN|NOPOWER)) return
 	if(user.stat || user.restrained()) return
 
@@ -112,18 +108,17 @@
 		"cell" = cell_data
 	)
 
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+
 	if (!ui)
 		// the ui does not exist, so we'll create a new one
 		ui = new(user, src, ui_key, "telescience_console.tmpl", name, 380, 210)
 		// When the UI is first opened this is the data it will use
 		ui.set_initial_data(data)
-		ui.set_auto_update(1) // Charging action
+		// Open the new ui window.
 		ui.open()
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
+		// Auto update every Master Controller tick.
+		ui.set_auto_update(1)
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	user << "You are too primitive to use this computer."

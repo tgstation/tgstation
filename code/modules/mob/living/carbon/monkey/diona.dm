@@ -69,7 +69,7 @@
 /mob/living/carbon/monkey/diona/New()
 
 	..()
-	gender = NEUTER
+	setGender(NEUTER)
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
 	//add_language("Rootspeak")

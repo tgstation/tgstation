@@ -85,7 +85,7 @@
 		permutated = list()
 	else
 		permutated.len = 0
-	return("permutated")
+	..("permutated")
 
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area)
 	if(A == firer)

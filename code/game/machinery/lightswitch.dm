@@ -36,6 +36,7 @@
 	switch(buildstage)
 		if(2)
 			if(isscrewdriver(W))
+				user << "You begin unscrewing \the [src]."
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				if(do_after(user,10))
 					user << "<span class='notice'>You unscrew the cover blocking the inner wiring of \the [src].</span>"
@@ -44,6 +45,7 @@
 			return
 		if(1)
 			if(isscrewdriver(W))
+				user << "You begin screwing closed \the [src]."
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				if(do_after(user,10))
 					user << "<span class='notice'>You tightly screw closed the cover of \the [src].</span>"
@@ -51,6 +53,7 @@
 					power_change()
 				return
 			if(iswirecutter(W))
+				user << "You begin cutting the wiring from \the [src]."
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 				if(do_after(user,10))
 					user << "<span class='notice'>You cut the wiring to the lighting power line.</span>"
@@ -63,12 +66,14 @@
 				if(coil.amount < 3)
 					user << "<span class='warning'>You need at least two wire pieces for this!</span>"
 					return
+				user << "You begin wiring \the [src]."
 				if(do_after(user,10))
 					user << "<span class='notice'>You wire \the [src]!.</span>"
 					coil.use(3)
 					buildstage = 1
 				return
 			if(iscrowbar(W))
+				user << "You begin prying \the [src] off the wall."
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 				if(do_after(user,10))
 					user << "<span class='notice'>You pry the frame off of the wall.</span>"

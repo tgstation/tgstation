@@ -15,6 +15,12 @@
 			src << "<span class='notice'>You feel like a pleb.</span>"
 	handle_beams()
 
+	//handles "call on life", allowing external life-related things to be processed
+	for(var/toCall in src.callOnLife)
+		if(locate(toCall) && callOnLife[toCall])
+			call(locate(toCall),callOnLife[toCall])()
+		else callOnLife -= toCall
+
 	if(mind)
 		if(mind in ticker.mode.implanted)
 			if(implanting) return
@@ -294,12 +300,12 @@
 				L += get_contents(D.wrapped)
 		return L
 
-/mob/living/proc/check_contents_for(A)
+/mob/living/check_contents_for(A)
 	var/list/L = src.get_contents()
 
 	for(var/obj/B in L)
 		if(B.type == A)
-			return 1
+			return B
 	return 0
 
 

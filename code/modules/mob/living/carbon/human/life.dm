@@ -524,8 +524,6 @@ var/global/list/organ_damage_overlays = list(
 	var/datum/organ/internal/lungs/L = internal_organs_by_name["lungs"]
 	if(L)
 		L.process()
-	else
-		src << "<span class='warning'>You have no lungs which to breathe with, panic and tell a coder.</span>"
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/datum/gas_mixture/breath
@@ -1206,12 +1204,6 @@ var/global/list/organ_damage_overlays = list(
 			if( prob(2) && health && !hal_crit )
 				spawn(0)
 					emote("snore")
-			if(mind)
-				if(mind.vampire)
-					if(istype(loc, /obj/structure/closet/coffin))
-						adjustBruteLoss(-1)
-						adjustFireLoss(-1)
-						adjustToxLoss(-1)
 		else if(resting)
 			if(halloss > 0)
 				adjustHalLoss(-3)
@@ -1288,15 +1280,28 @@ var/global/list/organ_damage_overlays = list(
 
 		//Jitteryness
 		if(jitteriness)
-			var/amplitude = min(4, (jitteriness/100) + 1) + 2
+			var/amplitude = min(8, (jitteriness/70) + 1)
 			var/pixel_x_diff = rand(-amplitude, amplitude)
-			var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
+			var/pixel_y_diff = rand(-amplitude, amplitude)
 
-			spawn()
-				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
-				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+
 			jitteriness = max(jitteriness-1, 0)
-
+			if(!jitteriness)
+				animate(src)
+			else
+				spawn()
+					animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+					animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
+					
+					pixel_x_diff = rand(-amplitude, amplitude)
+					pixel_y_diff = rand(-amplitude, amplitude)
+					animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+					animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
+					
+					pixel_x_diff = rand(-amplitude, amplitude)
+					pixel_y_diff = rand(-amplitude, amplitude)
+					animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+					animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
 
 		//Other
 		if(stunned)
@@ -1421,13 +1426,6 @@ var/global/list/organ_damage_overlays = list(
 				if("shadow")
 					see_in_dark = 8
 					see_invisible = SEE_INVISIBLE_LEVEL_ONE
-		if(mind && mind.vampire)
-			if((VAMP_VISION in mind.vampire.powers) && !(VAMP_FULL in mind.vampire.powers))
-				sight |= SEE_MOBS
-			if((VAMP_FULL in mind.vampire.powers))
-				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-				see_in_dark = 8
-				if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		if(M_XRAY in mutations)
 			sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 			see_in_dark = 8

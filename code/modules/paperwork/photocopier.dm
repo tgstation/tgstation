@@ -267,9 +267,8 @@
 		copying = 0
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			user.drop_item()
+			user.drop_item(src)
 			copy = O
-			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			flick("bigscanner1", src)
 			updateUsrDialog()
@@ -277,9 +276,8 @@
 			user << "<span class='notice'>There is already something in [src].</span>"
 	else if(istype(O, /obj/item/weapon/photo))
 		if(copier_empty())
-			user.drop_item()
+			user.drop_item(src)
 			photocopy = O
-			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			flick("bigscanner1", src)
 			updateUsrDialog()
@@ -302,6 +300,7 @@
 		var/obj/item/weapon/grab/G = O
 		if(ismob(G.affecting) && G.affecting != ass)
 			var/mob/GM = G.affecting
+			if(GM.buckled) return
 			visible_message("<span class='warning'>[usr] drags [GM.name] onto the photocopier!</span>")
 			GM.forceMove(get_turf(src))
 			ass = GM
@@ -331,7 +330,8 @@
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			if(do_after(user, 50))
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-				M.state = 2
+				M.state = 1
+				M.build_state = 2
 				M.icon_state = "box_1"
 				for(var/obj/I in component_parts)
 					if(I.reliability != 100 && crit_fail)

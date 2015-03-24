@@ -84,3 +84,34 @@
 	item_state = "hopcap"
 	icon_state = "hopcap"
 	flags_inv = 0
+
+/obj/item/clothing/head/helmet/aviatorhelmet
+	name = "Aviator Helmet"
+	desc = "Help the Bombardier!"
+	armor = list(melee = 25, bullet = 0, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
+	item_state = "aviator_helmet"
+	icon_state = "aviator_helmet"
+	flags_inv = HIDEEARS|HIDEHAIR
+	species_restricted = list("exclude","Vox")
+
+/obj/item/clothing/head/helmet/piratelord
+	name = "pirate lord's helmet"
+	desc = "The headwear of an all powerful and bloodthirsty pirate lord. Simply looking at it sends chills down your spine."
+	armor = list(melee = 75, bullet = 75, laser = 75,energy = 75, bomb = 75, bio = 100, rad = 90)
+	icon_state = "piratelord"
+
+/obj/item/clothing/head/helmet/biker
+	name = "Biker's Helmet"
+	desc = "This helmet should protect you from russians and masked vigilantes."
+	armor = list(melee = 25, bullet = 15, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
+	icon_state = "biker_helmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
+	body_parts_covered = FULL_HEAD
+
+/obj/item/clothing/head/helmet/richard
+	name = "Richard"
+	desc = "Do you like hurting people?"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	icon_state = "richard"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
+	body_parts_covered = FULL_HEAD

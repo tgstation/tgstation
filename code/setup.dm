@@ -1,5 +1,11 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+//#define RUNWARNING // disable if they re-enable run() in 507 or newer.
+
+#ifndef RUNWARNING
+#warn If you have issues with retrieving logs update byond on the server and client to 507.1277 or greater, or uncomment RUNWARNING
+#endif
+
 #define DEBUG
 #define PROFILE_MACHINES // Disable when not debugging.
 
@@ -402,6 +408,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_WHISPER	209		// causes quiet whispering
 #define M_DIZZY		210		// Trippy.
 #define M_SANS		211		// IF YOU SEE THIS WHILST BROWSING CODE, YOU HAVE BEEN VISITED BY: THE FONT OF SHITPOSTING. GREAT LUCK AND WEALTH WILL COME TO YOU, BUT ONLY IF YOU SAY 'fuck comic sans' IN YOUR PR.
+#define M_FARSIGHT	212		// Increases mob's view range by 2
 
 // Bustanuts
 #define M_HARDCORE      300
@@ -864,19 +871,22 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define EQUIP_FAILACTION_DROP 2
 
 // Vampire power defines
-#define VAMP_REJUV   1
-#define VAMP_GLARE   2
-#define VAMP_HYPNO   3
-#define VAMP_SHAPE   4
-#define VAMP_VISION  5
-#define VAMP_DISEASE 6
-#define VAMP_CLOAK   7
-#define VAMP_BATS    8
-#define VAMP_SCREAM  9
-#define VAMP_JAUNT   10
-#define VAMP_SLAVE   11
-#define VAMP_BLINK   12
-#define VAMP_FULL    13
+#define VAMP_REJUV    1
+#define VAMP_GLARE    2
+#define VAMP_HYPNO    3
+#define VAMP_SHAPE    4
+#define VAMP_VISION   5
+#define VAMP_DISEASE  6
+#define VAMP_CLOAK    7
+#define VAMP_BATS     8
+#define VAMP_SCREAM   9
+#define VAMP_JAUNT    10
+#define VAMP_SLAVE    11
+#define VAMP_BLINK    12
+#define VAMP_MATURE   13
+#define VAMP_SHADOW   14
+#define VAMP_CHARISMA 15
+#define VAMP_UNDYING  16
 
 // Moved from machine_interactions.dm
 #define STATION_Z  1
@@ -925,14 +935,14 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MELTPOINT_STEEL   1510+T0C
 #define MELTPOINT_SILICON 1687 // KELVIN
 #define MELTPOINT_PLASTIC 180+T0C
-#define MELTPOINT_SNOW	304.15	//about 30캜
+#define MELTPOINT_SNOW	304.15	//about 30째C
 
 // snow business
-#define SNOWBALL_MINIMALTEMP 265	//about -10캜, the minimal temperature at which a thrown snowball can cool you down.
+#define SNOWBALL_MINIMALTEMP 265	//about -10째C, the minimal temperature at which a thrown snowball can cool you down.
 #define SNOWBALL_TIMELIMIT 400	//in deciseconds, how long after being spawn does the snowball disappears if it hasn't been picked up
 
-#define SNOWSPREAD_MAXTEMP 296.15	//23캜, the maximal temperature (in Kelvin) at which cosmic snow will spread to adjacent tiles
-#define COSMICSNOW_MINIMALTEMP 233	//-40캜, the lowest temperature at which Cosmic snow will cool down its surroundings
+#define SNOWSPREAD_MAXTEMP 296.15	//23째C, the maximal temperature (in Kelvin) at which cosmic snow will spread to adjacent tiles
+#define COSMICSNOW_MINIMALTEMP 233	//-40째C, the lowest temperature at which Cosmic snow will cool down its surroundings
 
 //the following defines refer to the number of cosmic snow tiles in the world.
 #define COSMICFREEZE_LEVEL_1 300	//Cosmic snow now has a chance to spawn a sappling upon spreading.
@@ -1071,8 +1081,36 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 //AOE spells
 #define IGNOREDENSE		64	//are dense turfs ignored in selection?
 #define IGNORESPACE		128	//are space turfs ignored in selection?
+//End split flags
+#define CONSTRUCT_CHECK	256	//used by construct spells - checks for nullrods
+#define NO_BUTTON		512	//spell won't show up in the HUD with this
+
+//invocation
+#define SpI_SHOUT	"shout"
+#define SpI_WHISPER	"whisper"
+#define SpI_EMOTE	"emote"
+#define SpI_NONE	"none"
+
+//upgrading
+#define Sp_SPEED	"speed"
+#define Sp_POWER	"power"
+#define Sp_TOTAL	"total"
+
+//casting costs
+#define Sp_RECHARGE	"recharge"
+#define Sp_CHARGES	"charges"
+#define Sp_HOLDVAR	"holdervar"
+
+///////WIZ END/////////
 
 //Some alien checks for reagents for alien races.
 #define IS_DIONA 1
 #define IS_VOX 2
 #define IS_PLASMA 3
+
+
+//Turf Construction defines
+#define BUILD_SILENT_FAILURE -1		//We failed but don't give an error message
+#define BUILD_FAILURE 0				//We failed so give an error message
+#define BUILD_SUCCESS 1			//Looks for a lattice to build.
+#define BUILD_IGNORE 2		//Ignores the need for lattice to build.

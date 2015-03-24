@@ -6,9 +6,21 @@
 			log_admin("[key_name(usr)] has left build mode.")
 			M.client.buildmode = 0
 			M.client.show_popup_menus = 1
+			/*
+			var/list/bmholders = list()
 			for(var/obj/effect/bmode/buildholder/H)
 				if(H.cl == M.client)
-					del(H)
+					//del(H)
+					bmholders += H
+			for(var/obj/effect/bmode/bm)
+				for(var/obj/effect/bmode/buildholder/HH in bmholders)
+					if(bm.master == HH) del(bm)
+			for(var/obj/effect/bmode/buildholder/HH in bmholders)
+				del(HH)
+				*/
+			if(M.client.buildmode_objs && M.client.buildmode_objs.len)
+				for(var/BM in M.client.buildmode_objs)
+					del(BM)
 		else
 			log_admin("[key_name(usr)] has entered build mode.")
 			M.client.buildmode = 1
@@ -33,6 +45,7 @@
 			M.client.screen += C
 			M.client.screen += D
 			H.cl = M.client
+			M.client.buildmode_objs |= list(H,A,B,C,D)
 
 /obj/effect/bmode//Cleaning up the tree a bit
 	density = 1

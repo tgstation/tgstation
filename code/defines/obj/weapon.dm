@@ -374,17 +374,15 @@
 		if(I.w_class) //if it has a defined weight
 			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
 				if(weight1 == null)
-					user.drop_item()
+					user.drop_item(src)
 					weight1 = I
-					I.forceMove(src)
 					user.show_message("<span class='notice'>You tie [weight1] to the [src].</span>")
 					update_icon()
 					//del(I)
 					return
 				if(weight2 == null) //just in case
-					user.drop_item()
+					user.drop_item(src)
 					weight2 = I
-					I.forceMove(src)
 					user.show_message("<span class='notice'>You tie [weight2] to the [src].</span>")
 					update_icon()
 					//del(I)
@@ -406,6 +404,7 @@
 	icon_state = "beartrap0"
 	desc = "A trap used to catch bears and other legged creatures."
 	var/armed = 0
+	var/obj/item/weapon/grenade/iedcasing/IED = null
 
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</b>"
@@ -418,8 +417,53 @@
 		icon_state = "beartrap[armed]"
 		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
 
+/obj/item/weapon/legcuffs/beartrap/attackby(var/obj/item/I, mob/user as mob) //Let's get explosive.
+	if(istype(I, /obj/item/weapon/grenade/iedcasing))
+		if(IED)
+			user << "<span class='warning'>This beartrap already has an IED hooked up to it!</span>"
+			return
+		IED = I
+		switch(IED.assembled)
+			if(0,1) //if it's not fueled/hooked up
+				user << "<span class='warning'>You haven't prepared this IED yet!</span>"
+				IED = null
+				return
+			if(2,3)
+				user.drop_item(src)
+				I.loc = src
+				var/turf/bombturf = get_turf(src)
+				var/area/A = get_area(bombturf)
+				var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has rigged a beartrap with an IED at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+				message_admins(log_str)
+				log_game(log_str)
+				user << "<span class='notice'>You sneak the [IED] underneath the pressure plate and connect the trigger wire.</span>"
+				desc = "A trap used to catch bears and other legged creatures. <span class='warning'>There is an IED hooked up to it.</span>"
+			else
+				user << "<span class='danger'>You shouldn't be reading this message! Contact a coder or someone, something broke!</span>"
+				IED = null
+				return
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(IED)
+			IED.loc = get_turf(src.loc)
+			IED = null
+			user << "<span class='notice'>You remove the IED from the [src].</span>"
+			return
+	..()
+
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed)
+		if(IED && isturf(src.loc))
+			IED.active = 1
+			IED.overlays -= image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
+			IED.icon_state = initial(icon_state) + "_active"
+			IED.assembled = 3
+			var/turf/bombturf = get_turf(src)
+			var/area/A = get_area(bombturf)
+			var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[AM]'>?</A> has triggered an IED-rigged [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+			message_admins(log_str)
+			log_game(log_str)
+			spawn(IED.det_time)
+				IED.prime()
 		if(ishuman(AM))
 			if(isturf(src.loc))
 				var/mob/living/carbon/H = AM
@@ -428,7 +472,9 @@
 					H.legcuffed = src
 					src.loc = H
 					H.update_inv_legcuffed()
-					H << "\red <B>You step on \the [src]!</B>"
+					H << "<span class='danger'>You step on \the [src]!</span>"
+					if(IED && IED.active)
+						H << "<span class='danger'>The [src]'s IED has been activated!</span>"
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 					for(var/mob/O in viewers(H, null))
 						if(O == H)

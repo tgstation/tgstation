@@ -7,7 +7,8 @@
 	opacity = 0
 	anchored = 1
 	unacidable = 1
-
+	ghost_read = 0
+	ghost_write = 0
 	var/const/max_health = 200
 	var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
@@ -152,6 +153,8 @@
 		var/malfunction = 0 //Malfunction causes parts of the shield to slowly dissapate
 		var/list/deployed_shields = list()
 		var/locked = 0
+		ghost_read = 0
+		ghost_write = 0
 
 		machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK | SCREWTOGGLE
 

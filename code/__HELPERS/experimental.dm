@@ -48,7 +48,7 @@
 var/global/list/masterPool = new
 
 // Read-only or compile-time vars and special exceptions.
-var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z")
+var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z","group")
 
 /*
  * @args
@@ -111,6 +111,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 	if(isnull(masterPool["[AM.type]"]))
 		masterPool["[AM.type]"] = list()
 
+	AM.Destroy()
 	AM.resetVariables()
 	masterPool["[AM.type]"] += AM
 
@@ -141,7 +142,12 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
  * /obj/item/weapon/resetVariables()
  * 	..("var4")
  */
-/atom/movable/proc/resetVariables()
+
+//RETURNS NULL WHEN INITIALIZED AS A LIST() AND POSSIBLY OTHER DISCRIMINATORS
+//IF YOU ARE USING SPECIAL VARIABLES SUCH A LIST() INITIALIZE THEM USING RESET VARIABLES
+//SEE http://www.byond.com/forum/?post=76850 AS A REFERENCE ON THIS
+
+/atom/movable/resetVariables()
 	loc = null
 
 	var/list/exclude = global.exclude + args // explicit var exclusion

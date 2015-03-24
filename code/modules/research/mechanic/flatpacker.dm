@@ -45,7 +45,7 @@
 
 	RefreshParts()
 
-obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker/build_part(var/datum/design/mechanic_design/part)
+/obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker/build_part(var/datum/design/mechanic_design/part)
 	if(!part)
 		return
 

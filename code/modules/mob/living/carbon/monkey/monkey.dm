@@ -61,7 +61,7 @@
 
 	if (!(dna))
 		if(gender == NEUTER)
-			gender = pick(MALE, FEMALE)
+			setGender(pick(MALE, FEMALE))
 		dna = new /datum/dna( null )
 		dna.real_name = real_name
 		dna.ResetSE()
@@ -115,7 +115,7 @@
 
 	..()
 	alien = 1
-	gender = NEUTER
+	setGender(NEUTER)
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
 	//add_language("Rootspeak")

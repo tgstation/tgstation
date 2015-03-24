@@ -214,13 +214,11 @@
 			return
 
 		if(!keyslot1)
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			keyslot1 = W
 
 		else
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			keyslot2 = W
 
 

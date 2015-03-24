@@ -15,6 +15,7 @@
 	var/amount = 1
 	var/perunit = 3750
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/redeemed = 0 // For selling minerals to central command via supply shuttle.
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
@@ -110,7 +111,7 @@
 
 	if (href_list["make"])
 		if (src.amount < 1) returnToPool(src) //Never should happen
-
+		var/list/unanchored = list(/obj/structure/plasticflaps) //In the future, if you want anything to be made unanchored, add it here
 		var/list/recipes_list = recipes
 		if (href_list["sublist"])
 			var/datum/stack_recipe_list/srl = recipes_list[text2num(href_list["sublist"])]
@@ -138,6 +139,9 @@
 			return
 		var/atom/O = new R.result_type( usr.loc )
 		O.dir = usr.dir
+		if(is_type_in_list(O,unanchored))
+			var/obj/A = O
+			A.anchored = 0
 		if (R.max_res_amount>1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
@@ -179,17 +183,14 @@
 		spawn returnToPool(src)
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
-	var/obj/item/stack/oldsrc = src
-	src = null
 	for (var/obj/item/stack/item in usr.loc)
-		if (item==oldsrc)
+		if (src == item)
 			continue
-		if(oldsrc.type != item.type)
+		if(src.type != item.type)
 			continue
 		if (item.amount>=item.max_amount)
 			continue
-		oldsrc.attackby(item, usr)
-		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
+		src.preattack(item, usr)
 		break
 
 /obj/item/stack/attack_hand(mob/user as mob)
@@ -207,6 +208,9 @@
 	return
 
 /obj/item/stack/preattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if (!proximity_flag)
+		return 0
+
 	if (istype(target, src.type) && src.type==target.type)
 		var/obj/item/stack/S = target
 		if (amount >= max_amount)

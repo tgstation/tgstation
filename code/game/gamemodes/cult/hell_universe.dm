@@ -57,11 +57,11 @@ In short:
 	MiscSet()
 	APCSet()
 	KillMobs()
+	AmbientSet()
 
 	runedec += 9000	//basically removing the rune cap
 
 	ticker.StartThematic("endgame")
-
 
 
 /datum/universal_state/hell/proc/AreaSet()
@@ -107,6 +107,11 @@ In short:
 	if(space.name == "Space")
 		space.overlays += I
 
+/datum/universal_state/hell/proc/AmbientSet()
+	for(var/turf/T in world)
+		if(istype(T, /turf/space))	continue
+		T.update_lumcount(1, 255, 0, 0, 0)
+
 /datum/universal_state/hell/proc/MiscSet()
 	for(var/turf/simulated/floor/T in world)
 		if(!T.holy && prob(1))
@@ -122,7 +127,6 @@ In short:
 			APC.chargemode = 0
 			if(APC.cell)
 				APC.cell.charge = 0
-				power_machines -= APC
 			APC.emagged = 1
 			APC.queue_icon_update()
 

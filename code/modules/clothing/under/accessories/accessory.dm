@@ -31,7 +31,8 @@
 		user.drop_item(has_suit)
 		user << "<span class='notice'>You attach [src] to [has_suit].</span>"
 		src.add_fingerprint(user)
-	loc = has_suit
+	else
+		loc = has_suit
 	has_suit.overlays += inv_overlay
 
 /obj/item/clothing/accessory/proc/on_removed(mob/user as mob)

@@ -6,7 +6,7 @@
 	charge_max = 600
 	spell_flags = 0
 	invocation = "GIN'YU CAPAN"
-	invocation_type = "whisper"
+	invocation_type = SpI_WHISPER
 	max_targets = 1
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
@@ -15,6 +15,8 @@
 	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
 	var/msg_wait = 500 //how long in deciseconds it waits before telling that body doesn't feel right or mind swap robbed of a spell
 	amt_paralysis = 20 //how much the victim is paralysed for after the spell
+
+	hud_state = "wiz_mindswap"
 
 /spell/targeted/mind_transfer/cast(list/targets, mob/user)
 	..()

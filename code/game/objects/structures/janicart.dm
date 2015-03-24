@@ -58,8 +58,7 @@
 			user << "<span class='notice'>This pimpin' ride is out of water!</span>"
 	else if(istype(W, /obj/item/weapon/storage/bag/trash))
 		user << "<span class='notice'>You hook the trashbag onto the pimpin' ride.</span>"
-		user.drop_item()
-		W.loc = src
+		user.drop_item(src)
 		mybag = W
 
 

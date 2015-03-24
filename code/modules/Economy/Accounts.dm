@@ -292,8 +292,7 @@ var/global/list/all_money_accounts = list()
 			emag(user)
 			return
 		if(!held_card)
-			usr.drop_item()
-			idcard.loc = src
+			usr.drop_item(src)
 			held_card = idcard
 
 			if(access_cent_captain in idcard.access)
@@ -322,7 +321,7 @@ var/global/list/all_money_accounts = list()
 	return
 
 /obj/machinery/account_database/Topic(var/href, var/href_list)
-	..()
+	if(..()) return 1
 	if(href_list["toggle_activated"])
 		activated = !activated
 
@@ -366,8 +365,7 @@ var/global/list/all_money_accounts = list()
 						return
 					if (istype(I, /obj/item/weapon/card/id))
 						var/obj/item/weapon/card/id/C = I
-						usr.drop_item()
-						C.loc = src
+						usr.drop_item(src)
 						held_card = C
 						if(access_level < 3)
 							if(access_cent_captain in C.access)

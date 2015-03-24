@@ -49,9 +49,8 @@
 					usr << "You begin to insert \the [C] into \the [src]."
 					if(do_after(user, 10))
 						usr << "\blue You secure \the [C]!"
-						user.drop_item()
+						user.drop_item(src)
 						_circuitboard=C
-						C.loc=src
 						playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 						build++
 						update_icon()
@@ -212,3 +211,86 @@
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency)
+
+/obj/machinery/embedded_controller/radio/handle_multitool_topic(var/href, var/list/href_list, var/mob/user)//need to add an override here because this shit is stupidly hardcoded and I don't want to have to revise this code, atleast not right now
+	var/obj/item/device/multitool/P = get_multitool(usr)
+	if(P && istype(P))
+		var/update_mt_menu=0
+		var/re_init=0
+		if("set_tag" in href_list)
+			if(!(href_list["set_tag"] in vars))
+				usr << "<span class='warning'>Something went wrong: Unable to find [href_list["set_tag"]] in vars!</span>"
+				return 1
+			var/current_tag = src.vars[href_list["set_tag"]]
+			var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
+			if(newid)
+				vars[href_list["set_tag"]] = newid
+				re_init=1
+
+		if("unlink" in href_list)
+			var/idx = text2num(href_list["unlink"])
+			if (!idx)
+				return 1
+
+			var/obj/O = getLink(idx)
+			if(!O)
+				return 1
+			if(!canLink(O))
+				usr << "<span class='warning'>You can't link with that device.</span>"
+				return 1
+
+			if(unlinkFrom(usr, O))
+				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link was removed.</span>"
+			else
+				usr << "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when unlinking the two devices.</span>"
+			update_mt_menu=1
+
+		if("link" in href_list)
+			var/obj/O = P.buffer
+			if(!O)
+				return 1
+			if(!canLink(O,href_list))
+				usr << "<span class='warning'>You can't link with that device.</span>"
+				return 1
+			if (isLinkedWith(O))
+				usr << "<span class='attack'>A red light flashes on \the [P]. The two devices are already linked.</span>"
+				return 1
+
+			if(linkWith(usr, O, href_list))
+				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link has been created.</span>"
+				re_init = 1//this is the only thing different, crappy, I know
+			else
+				usr << "<span class='attack'>A red light flashes on \the [P].  It appears something went wrong when linking the two devices.</span>"
+			update_mt_menu=1
+
+		if("buffer" in href_list)
+			if(istype(src, /obj/machinery/telecomms))
+				if(!hasvar(src, "id"))
+					usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+					return
+			else if(!hasvar(src, "id_tag"))
+				usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+				return
+			P.buffer = src
+			usr << "<span class='confirm'>A green light flashes, and the device appears in the multitool buffer.</span>"
+			update_mt_menu=1
+
+		if("flush" in href_list)
+			usr << "<span class='confirm'>A green light flashes, and the device disappears from the multitool buffer.</span>"
+			P.buffer = null
+			update_mt_menu=1
+
+		var/ret = multitool_topic(usr,href_list,P.buffer)
+		if(ret == MT_ERROR)
+			return 1
+		if(ret & MT_UPDATE)
+			update_mt_menu=1
+		if(ret & MT_REINIT)
+			re_init=1
+
+		if(re_init)
+			initialize()
+		if(update_mt_menu)
+			//usr.set_machine(src)
+			update_multitool_menu(usr)
+			return 1

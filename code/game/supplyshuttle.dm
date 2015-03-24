@@ -46,6 +46,28 @@ var/list/mechtoys = list(
 	layer = 4
 	explosion_resistance = 5
 
+/obj/structure/plasticflaps/attackby(obj/item/I as obj, mob/user as mob)
+	if (istype(I, /obj/item/weapon/crowbar))
+		if(anchored == 1)
+			user.visible_message("[user] pops loose the flaps.", "You pop loose the flaps.")
+			anchored = 0
+			var/turf/T = get_turf(loc)
+			if(T)
+				T.blocks_air = 0
+		else
+			user.visible_message("[user] pops in the flaps.", "You pop in the flaps.")
+			anchored = 1
+			var/turf/T = get_turf(loc)
+			if(T)
+				T.blocks_air = 1
+	else if (iswelder(I) && anchored == 0)
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.remove_fuel(0, user))
+			new /obj/item/stack/sheet/mineral/plastic (src.loc,10)
+			qdel(src)
+			return
+	return ..()
+
 /obj/structure/plasticflaps/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(60)
@@ -138,7 +160,7 @@ var/list/mechtoys = list(
 	//supply points have been replaced with MONEY MONEY MONEY - N3X
 	var/credits_per_slip = 2
 	var/credits_per_crate = 5
-	var/credits_per_plasma = 0.5 // 2 plasma for 1 point
+	//var/credits_per_plasma = 0.5 // 2 plasma for 1 point
 	//control
 	var/ordernum
 	var/list/centcomm_orders = list()
@@ -151,7 +173,7 @@ var/list/mechtoys = list(
 	var/moving = 0
 	var/eta_timeofday
 	var/eta
-
+	var/datum/materials/materials_list = new
 	New()
 		ordernum = rand(1,9000)
 
@@ -266,12 +288,24 @@ var/list/mechtoys = list(
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
 
+			if(istype(MA, /obj/item/stack/sheet/mineral/plasma))
+				var/obj/item/stack/sheet/mineral/plasma/P = MA
+				if(P.redeemed) continue
+				var/datum/material/mat = materials_list.getMaterial(P.sheettype)
+				cargo_acct.money += (mat.value * 2) * P.amount // Central Command pays double for plasma they receive that hasn't been redeemed already.
+
 			// Must be in a crate!
-			if(istype(MA,/obj/structure/closet/crate))
+			else if(istype(MA,/obj/structure/closet/crate))
 				cargo_acct.money += credits_per_crate
 				var/find_slip = 1
 
 				for(var/atom/A in MA)
+					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
+						var/obj/item/stack/sheet/mineral/plasma/P = A
+						if(P.redeemed) continue
+						var/datum/material/mat = materials_list.getMaterial(P.sheettype)
+						cargo_acct.money += (mat.value * 2) * P.amount // Central Command pays double for plasma they receive that hasn't been redeemed already.
+						continue
 					if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
 						var/obj/item/weapon/paper/slip = A
 						if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense

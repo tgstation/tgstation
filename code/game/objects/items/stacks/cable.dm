@@ -41,7 +41,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	..()
 
 	recipes = cable_recipes
-
+	src.amount = amount
 	if(param_color)
 		_color = param_color
 
@@ -76,6 +76,10 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 			user << "Nothing to fix!"
 	else
 		return ..()
+
+/obj/item/stack/cable_coil/use(var/amount)
+	. = ..()
+	update_icon()
 
 /obj/item/stack/cable_coil/update_icon()
 	if(!_color)
@@ -122,7 +126,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	if(!isturf(user.loc))
 		return
 
-	if(get_dist(F, user) > 1)		//too far
+	if(!user.Adjacent(F))		//too far
 		user << "You can't lay cable at a place that far away."
 		return
 
@@ -287,9 +291,10 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 /obj/item/stack/cable_coil/cut
 	item_state = "coil_red2"
 
-/obj/item/stack/cable_coil/cut/New(loc)
+/obj/item/stack/cable_coil/cut/New(loc, length = MAXCOIL, var/param_color = null, amount)
 	..(loc)
-	src.amount = rand(1, 2)
+	if(!amount)
+		src.amount = rand(1, 2)
 	pixel_x = rand(-2, 2)
 	pixel_y = rand(-2, 2)
 	update_icon()
@@ -322,7 +327,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	_color = "white"
 	icon_state = "coil_white"
 
-/obj/item/stack/cable_coil/random/New()
+/obj/item/stack/cable_coil/random/New(loc, length = MAXCOIL, var/param_color = null, amount = length)
+	..()
 	_color = pick("red","yellow","green","blue","pink")
 	icon_state = "coil_[_color]"
-	..()

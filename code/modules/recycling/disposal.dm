@@ -124,12 +124,16 @@
 			user << "You can't place that item inside the disposal unit."
 			return
 
-		if(istype(I, /obj/item/weapon/storage/bag/trash))
-			var/obj/item/weapon/storage/bag/trash/T = I
-			user << "\blue You empty the bag."
-			for(var/obj/item/O in T.contents)
-				T.remove_from_storage(O,src)
-			T.update_icon()
+		if(istype(I, /obj/item/weapon/storage/bag/))
+			var/obj/item/weapon/storage/bag/B = I
+			if(B.contents.len == 0)
+				user << "<span class='notice'> You throw away the empty [B].</span>"
+				user.drop_item(src)
+				return
+			user << "<span class='notice'> You empty the [B].</span>"
+			for(var/obj/item/O in B.contents)
+				B.remove_from_storage(O,src)
+			B.update_icon()
 			update()
 			return
 
@@ -265,7 +269,7 @@
 		if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
 			usr << "\red The disposal units power is disabled."
 			return
-		..()
+		if(..()) return 1
 		src.add_fingerprint(usr)
 		if(stat & BROKEN)
 			return
@@ -570,7 +574,7 @@
 			AM.loc = src
 			if(istype(AM, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = AM
-				if(M_FAT in H.mutations)		// is a human and fat?
+				if((M_FAT in H.mutations) && (H.species && H.species.flags & CAN_BE_FAT))		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
 			if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 				var/obj/structure/bigDelivery/T = AM

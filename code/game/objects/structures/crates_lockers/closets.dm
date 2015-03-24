@@ -223,7 +223,7 @@
 
 	if(health <= 0)
 		dump_contents()
-		del(src)
+		qdel(src)
 
 // This is broken, see attack_ai.
 /obj/structure/closet/attack_robot(mob/living/silicon/robot/user as mob)
@@ -287,7 +287,7 @@
 		if(isrobot(user))
 			return
 
-		user.drop_item(src)
+		user.drop_item(src.loc)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return

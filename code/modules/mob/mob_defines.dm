@@ -44,16 +44,15 @@
 	var/obj/screen/m_hat = null
 	var/obj/screen/m_hatbg = null
 
-	//construct spells hud icons
-	var/obj/screen/construct_spell1 = null
-	var/obj/screen/construct_spell2 = null
-	var/obj/screen/construct_spell3 = null
-	var/obj/screen/construct_spell4 = null
-	var/obj/screen/construct_spell5 = null
+	//spells hud icons - this interacts with add_spell and remove_spell
+	var/obj/screen/movable/spell_master/spell_master = null
 
 	//thou shall always be able to see the Geometer of Blood
 	var/image/narsimage = null
 	var/image/narglow = null
+
+	//thou shall always be able to see the Bluespace Rift
+	var/image/riftimage = null
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
@@ -217,8 +216,6 @@
 	var/update_icon = 1 //Set to 1 to trigger update_icons() at the next life() call
 
 	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
-
-	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 

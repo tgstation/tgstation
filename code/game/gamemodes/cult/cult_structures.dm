@@ -72,6 +72,8 @@
 	name = "Desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
 	icon_state = "tomealtar"
+	luminosity = 2
+	l_color = "#3e0000"
 //	luminosity = 5
 
 //sprites for this no longer exist	-Pete
@@ -166,7 +168,7 @@
 				W.dropped(M)
 
 		var/mob/living/new_mob = new /mob/living/simple_animal/hostile/retaliate/cluwne(A.loc)
-		new_mob.gender=src.gender
+		new_mob.setGender(gender)
 		new_mob.name = pick(clown_names)
 		new_mob.real_name = new_mob.name
 		new_mob.mutations += M_CLUMSY

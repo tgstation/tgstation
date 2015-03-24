@@ -71,11 +71,9 @@
 
 		user << "\blue You install [O] in [src]!"
 
-		user.drop_item()
+		user.drop_item(src)
 		src.mmi = O
 		src.transfer_personality(O)
-
-		O.loc = src
 		src.update_icon()
 		return 1
 

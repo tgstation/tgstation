@@ -1,8 +1,8 @@
 /datum/pipeline
 	var/datum/gas_mixture/air
 
-	var/list/obj/machinery/atmospherics/pipe/members
-	var/list/obj/machinery/atmospherics/pipe/edges //Used for building networks
+	var/list/obj/machinery/atmospherics/pipe/members = list()
+	var/list/obj/machinery/atmospherics/pipe/edges = list() //Used for building networks
 
 	var/datum/pipe_network/network
 
@@ -12,16 +12,25 @@
 	var/const/PRESSURE_CHECK_DELAY=5 // 5s delay between pchecks to give pipenets time to recover.
 
 /datum/pipeline/Del()
-	if(network)
-		del(network)
+	Destroy()
+	return ..()
 
-	if(air && air.volume)
+/datum/pipeline/Destroy()
+	if(network) //For the pipenet rebuild
+		returnToDPool(network)
+	if(air && air.volume) //For the pipeline rebuild next tick
 		temporarily_store_air()
 		del(air)
+	//Null the fuck out of all these references
+	for(var/obj/machinery/atmospherics/pipe/M in members) //Edges are a subset of members
+		M.parent = null
 
-	..()
+/datum/pipeline/resetVariables()
+	..("members", "edges")
+	members = list()
+	edges = list()
 
-datum/pipeline/proc/process()//This use to be called called from the pipe networks
+/datum/pipeline/proc/process()//This use to be called called from the pipe networks
 	if((world.timeofday - last_pressure_check) / 10 >= PRESSURE_CHECK_DELAY)
 		//Check to see if pressure is within acceptable limits
 		var/pressure = air.return_pressure()
@@ -122,7 +131,7 @@ datum/pipeline/proc/process()//This use to be called called from the pipe networ
 
 /datum/pipeline/proc/return_network(obj/machinery/atmospherics/reference)
 	if(!network)
-		network = new /datum/pipe_network()
+		network = getFromDPool(/datum/pipe_network)
 		network.build_network(src, null)
 			//technically passing these parameters should not be allowed
 			//however pipe_network.build_network(..) and pipeline.network_extend(...)
@@ -134,7 +143,7 @@ datum/pipeline/proc/process()//This use to be called called from the pipe networ
 	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
 	air_sample.volume = mingle_volume
 
-	if(istype(target) && target.zone && !iscatwalk(target))
+	if(istype(target) && target.zone)
 		//Have to consider preservation of group statuses
 		var/datum/gas_mixture/turf_copy = new
 
@@ -156,7 +165,7 @@ datum/pipeline/proc/process()//This use to be called called from the pipe networ
 		//turf_air already modified by equalize_gases()
 
 	/*
-	if(istype(target) && !target.processing && !iscatwalk(target))
+	if(istype(target) && !target.processing)
 		if(target.air)
 			if(target.air.check_tile_graphic())
 				target.update_visuals(target.air)

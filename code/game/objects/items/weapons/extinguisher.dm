@@ -94,13 +94,12 @@
 		if(isrobot(user) && !isMoMMI(user)) // MoMMI's can but borgs can't
 			user << "You're a robot. No."
 			return
-		user.drop_item()
-		W.loc=src
+		user.drop_item(src)
 		user << "You cram \the [W] into the nozzle of \the [src]."
 		message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
 
-/obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	if(get_dist(src,target) <= 1)
+/obj/item/weapon/extinguisher/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag)
 		if((istype(target, /obj/structure/reagent_dispensers)))
 			var/obj/o = target
 			var/list/badshit=list()
@@ -213,7 +212,7 @@
 					if(W.loc == my_target) break
 					sleep(2)
 
-		if((istype(usr.loc, /turf/space)) || (usr.lastarea && usr.lastarea.has_gravity == 0))
+		if((istype(user.loc, /turf/space)) || (user.areaMaster.has_gravity == 0))
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 	else
@@ -223,8 +222,8 @@
 
 
 
-/obj/item/weapon/extinguisher/foam/afterattack(atom/target, mob/user , flag)
-	if(get_dist(src,target) <= 1)
+/obj/item/weapon/extinguisher/foam/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag)
 		if((istype(target, /obj/structure/reagent_dispensers/watertank)))
 			var/obj/o = target
 			o.reagents.trans_to(src, 50)
@@ -306,7 +305,7 @@
 					if(W.loc == my_target) break
 					sleep(2)
 
-		if((istype(usr.loc, /turf/space)) || (usr.lastarea && usr.lastarea.has_gravity == 0))
+		if((istype(user.loc, /turf/space)) || (user.areaMaster.has_gravity == 0))
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 	else

@@ -193,7 +193,7 @@
 		return 1
 	if(istype(W, /obj/item/device/device_analyser))
 		return 0
-	user.drop_item(src)
+	user.drop_item(src.loc)
 	return 0
 
 /obj/machinery/conveyor/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
@@ -204,14 +204,15 @@
 	return {"
 	<ul>
 		<li><b>Direction:</b>
-			<a href="?src=\ref[src];setdir=[NORTH]" title="North">&uarr;</a>
-			<a href="?src=\ref[src];setdir=[EAST]" title="East">&rarr;</a>
-			<a href="?src=\ref[src];setdir=[SOUTH]" title="South">&darr;</a>
-			<a href="?src=\ref[src];setdir=[WEST]" title="West">&larr;</a>
-			<a href="?src=\ref[src];setdir=[NORTHEAST]" title="Northeast">&#8625;</a>
-			<a href="?src=\ref[src];setdir=[NORTHWEST]" title="Northwest">&#8624;</a>
-			<a href="?src=\ref[src];setdir=[SOUTHEAST]" title="Southeast">&#8627;</a>
-			<a href="?src=\ref[src];setdir=[SOUTHWEST]" title="Southwest">&#8626;</a>
+			<a href="?src=\ref[src];setdir=[NORTH]" title="North">[src.in_reverse ? "&darr;" : "&uarr;"]</a>
+			<a href="?src=\ref[src];setdir=[EAST]" title="East">[src.in_reverse ? "&larr;" : "&rarr;"]</a>
+			<a href="?src=\ref[src];setdir=[SOUTH]" title="South">[src.in_reverse ? "&uarr;" : "&darr;"]</a>
+			<a href="?src=\ref[src];setdir=[WEST]" title="West">[src.in_reverse ? "&rarr;" : "&larr;"]</a>
+			<a href="?src=\ref[src];setdir=[NORTHEAST]" title="Northeast">[src.in_reverse ? "&#8601;" : "&#8599;"]</a>
+			<a href="?src=\ref[src];setdir=[NORTHWEST]" title="Northwest">[src.in_reverse ? "&#8598;" : "&#8600;"]</a>
+			<a href="?src=\ref[src];setdir=[SOUTHEAST]" title="Southeast">[src.in_reverse ? "&#8600;" : "&#8598;"]</a>
+			<a href="?src=\ref[src];setdir=[SOUTHWEST]" title="Southwest">[src.in_reverse ? "&#8599;" : "&#8601;"]</a>
+			<a href="?src=\ref[src];reverse" title="Reverse Direction">&#8644;</a>
 		</li>
 		<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=1367">Reset</a>)</li>
 		<li><b>ID Tag:</b> <a href="?src=\ref[src];set_id=1">[dis_id_tag]</a></li>
@@ -226,7 +227,11 @@
 		dir=text2num(href_list["setdir"])
 		updateConfig()
 		return MT_UPDATE
-
+	if("reverse" in href_list)
+		operating=0
+		in_reverse=!in_reverse
+		updateConfig()
+		return MT_UPDATE
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)

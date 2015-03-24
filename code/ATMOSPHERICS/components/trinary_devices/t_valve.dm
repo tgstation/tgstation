@@ -74,9 +74,9 @@
 	update_icon()
 
 	if(network1)
-		del(network1)
+		returnToDPool(network1)
 	if(network3)
-		del(network3)
+		returnToDPool(network3)
 	build_network()
 
 	if(network1&&network2)
@@ -99,9 +99,9 @@
 	update_icon()
 
 	if(network1)
-		del(network1)
+		returnToDPool(network1)
 	if(network2)
-		del(network2)
+		returnToDPool(network2)
 	build_network()
 
 	if(network1&&network3)
@@ -123,7 +123,7 @@
 
 /obj/machinery/atmospherics/trinary/tvalve/attack_hand(mob/user as mob)
 	if(isobserver(user) && !canGhostWrite(user,src,"toggles"))
-		user << "\red Nope."
+		user << "<span class='warning'>Nope.</span>"
 		return
 
 	investigation_log(I_ATMOS,"was [state ? "opened (straight)" : "closed (side)"] by [key_name(usr)]")
@@ -190,7 +190,7 @@
 
 /obj/machinery/atmospherics/trinary/tvalve/digital/attack_hand(mob/user as mob)
 	if(!src.allowed(user))
-		user << "\red Access denied."
+		user << "<span class='warning'>Access denied.</span>"
 		return
 	..()
 

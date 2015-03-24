@@ -120,17 +120,16 @@
 		return 0
 
 /obj/machinery/apiary/process()
-
 	if(swarming > 0)
 		swarming -= 1
 		if(swarming <= 0)
 			for(var/mob/living/simple_animal/bee/B in src.loc)
 				bees_in_hive += B.strength
-				del(B)
+				returnToPool(B)
 	else if(bees_in_hive < 10)
 		for(var/mob/living/simple_animal/bee/B in src.loc)
 			bees_in_hive += B.strength
-			del(B)
+			returnToPool(B)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -173,7 +172,8 @@
 
 		//make some new bees
 		if(bees_in_hive >= 10 && prob(bees_in_hive * 10))
-			var/mob/living/simple_animal/bee/B = new(get_turf(src), src)
+			var/turf/T = get_turf(src)
+			var/mob/living/simple_animal/bee/B = getFromPool(/mob/living/simple_animal/bee, T, src)
 			owned_bee_swarms.Add(B)
 			B.mut = mut
 			B.toxic = toxic
@@ -201,11 +201,11 @@
 				if(prob(10))
 					if(!isnull(seed_types[H.seed.name]))
 						H.seed = H.seed.diverge(-1)
-					H.seed.lifespan = max(initial(H.seed.lifespan) * 1.5, H.seed.lifespan + 1)
+					if(H.seed) H.seed.lifespan = max(initial(H.seed.lifespan) * 1.5, H.seed.lifespan + 1)
 				if(prob(10))
 					if(!isnull(seed_types[H.seed.name]))
 						H.seed = H.seed.diverge(-1)
-					H.seed.endurance = max(initial(H.seed.endurance) * 1.5, H.seed.endurance + 1)
+					if(H.seed) H.seed.endurance = max(initial(H.seed.endurance) * 1.5, H.seed.endurance + 1)
 				if(H.toxins && prob(10))
 					H.toxins = min(0, H.toxins - 1)
 					toxic++
@@ -216,7 +216,7 @@
 		B.target_turf = get_turf(src)
 		B.strength -= 1
 		if(B.strength <= 0)
-			del(B)
+			returnToPool(B)
 		else if(B.strength <= 5)
 			B.icon_state = "bees[B.strength]"
 	bees_in_hive = 0
@@ -233,8 +233,8 @@
 		var/spawn_strength = bees_in_hive
 		if(bees_in_hive >= 5)
 			spawn_strength = 6
-
-		var/mob/living/simple_animal/bee/B = new(get_turf(src), src)
+		var/turf/T = get_turf(src)
+		var/mob/living/simple_animal/bee/B = getFromPool(/mob/living/simple_animal/bee, T, src)
 		B.target = M
 		B.strength = spawn_strength
 		B.feral = 25

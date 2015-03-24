@@ -105,12 +105,15 @@
 	var/hashelmet = 0
 	var/hassuit = 0
 	var/hashuman = 0
-	if(HELMET)
+	var/full = 0
+	if(HELMET && (!stat & NOPOWER))
 		hashelmet = 1
-	if(SUIT)
+	if(SUIT && (!stat & NOPOWER))
 		hassuit = 1
-	if(OCCUPANT)
+	if(OCCUPANT && (!stat & NOPOWER))
 		hashuman = 1
+	if((HELMET || SUIT || OCCUPANT) && (stat & NOPOWER))
+		full = 1
 	icon_state = text("suitstorage[][][][][][][][][]",
 					hashelmet,
 					hassuit,
@@ -118,7 +121,7 @@
 					src.isopen,
 					src.islocked,
 					src.isUV,
-					!(stat & NOPOWER),
+					(full||!(stat & NOPOWER)),
 					stat & BROKEN,
 					src.issuperUV)
 
@@ -581,8 +584,9 @@
 	if((stat & NOPOWER) && iscrowbar(I) && !islocked)
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		user << "<span class='notice'>You begin prying the equipment out of the suit storage unit</span>"
-		if(do_after(20))
+		if(do_after(user,20))
 			dump_everything()
+			update_icon()
 	if(stat & NOPOWER)
 		return
 	if(..())
@@ -627,8 +631,7 @@
 			user << "<font color='blue'>The unit already contains a suit.</font>"
 			return
 		user << "You load the [S.name] into the storage compartment."
-		user.drop_item()
-		S.loc = src
+		user.drop_item(src)
 		src.SUIT = S
 		src.update_icon()
 		src.updateUsrDialog()
@@ -641,8 +644,7 @@
 			user << "<font color='blue'>The unit already contains a helmet.</font>"
 			return
 		user << "You load the [H.name] into the storage compartment."
-		user.drop_item()
-		H.loc = src
+		user.drop_item(src)
 		src.HELMET = H
 		src.update_icon()
 		src.updateUsrDialog()
@@ -655,8 +657,7 @@
 			user << "<font color='blue'>The unit already contains a mask.</font>"
 			return
 		user << "You load the [M.name] into the storage compartment."
-		user.drop_item()
-		M.loc = src
+		user.drop_item(src)
 		src.MASK = M
 		src.update_icon()
 		src.updateUsrDialog()
@@ -669,8 +670,7 @@
 			user << "<font color='blue'>The unit already contains shoes.</font>"
 			return
 		user << "You load \the [M.name] into the storage compartment."
-		user.drop_item()
-		M.loc = src
+		user.drop_item(src)
 		src.BOOTS = M
 		src.update_icon()
 		src.updateUsrDialog()
