@@ -24,7 +24,7 @@
 /datum/event/radiation_storm/start()
 	spawn()
 		world << sound('sound/AI/radiation.ogg')
-		command_alert("High levels of radiation detected near the station, ETA until arrival is 30 seconds.. Please evacuate into one of the shielded maintenance tunnels.", "Anomaly Alert")
+		command_alert("High levels of radiation detected near the station, ETA in 30 seconds.. Please evacuate into one of the shielded maintenance tunnels.", "Anomaly Alert")
 
 		for(var/area/A in world)
 			if(A.z != 1 || is_safe_zone(A))
