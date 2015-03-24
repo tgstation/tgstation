@@ -146,6 +146,10 @@
 			if("chefspecial")
 				name = "Chef Excellence's Special Sauce"
 				desc = "A potent sauce distilled from the toxin glands of 1000 Space Carp."
+			if("vinegar")
+				name = "Malt Vinegar Bottle"
+				desc = "Perfect for fish and chips!"
+				icon_state = "vinegar_container"
 			else
 				name = "Misc Condiment Bottle"
 
@@ -207,3 +211,13 @@
 	New()
 		..()
 		reagents.add_reagent("chefspecial", 20)
+
+/obj/item/weapon/reagent_containers/food/condiment/vinegar
+	name = "Malt Vinegar Bottle"
+	desc = "Perfect for fish and chips."
+	possible_transfer_amounts = list(1, 50)
+
+	New()
+		..()
+		reagents.add_reagent("vinegar", 50)
+

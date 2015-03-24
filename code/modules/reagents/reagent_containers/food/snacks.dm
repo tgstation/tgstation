@@ -303,16 +303,6 @@
 		reagents.add_reagent("sugar", 2)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/chips
-	name = "chips"
-	desc = "Commander Riker's What-The-Crisps"
-	icon_state = "chips"
-	trash = /obj/item/trash/chips
-	New()
-		..()
-		reagents.add_reagent("nutriment", 3)
-		bitesize = 1
-
 /obj/item/weapon/reagent_containers/food/snacks/cookie
 	name = "cookie"
 	desc = "COOKIE!!!"
@@ -3150,3 +3140,96 @@
 	bitesize = 3
 
 
+//////////////////CHIPS//////////////////
+
+
+/obj/item/weapon/reagent_containers/food/snacks/chips
+	name = "chips"
+	desc = "Commander Riker's What-The-Crisps"
+	icon_state = "chips"
+	trash = /obj/item/trash/chips
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable
+	name = "Plain Chips"
+	desc = "Where did the bag come from?"
+	icon_state = "plain_chips"
+	item_state = "plain_chips"
+	trash = null
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/New()
+	..()
+	reagents.add_reagent("nutriment", 5)
+	bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/vinegar
+	name = "Salt and Vinegar Chips"
+	desc = "The objectively best flavour."
+	icon_state = "salt_vinegar_chips"
+	item_state = "salt_vinegar_chips"
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/vinegar/New()
+	..()
+	reagents.add_reagent("nutriment", 5)
+	bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/cheddar
+	name = "Cheddar Chips"
+	desc = "Dangerously cheesy."
+	icon_state = "cheddar_chips"
+	item_state = "cheddar_chips"
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/cheddar/New()
+	..()
+	reagents.add_reagent("nutriment", 5)
+	bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/clown
+	name = "Banana Chips"
+	desc = "A clown's favourite snack!"
+	icon_state = "clown_chips"
+	item_state = "clown_chips"
+
+/obj/item/weapon/reagent_containers/food/snacks/chip/scookable/clown/New()
+	..()
+	reagents.add_reagent("nutriment", 5)
+	reagents.add_reagent("honkserum", 5)
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/nuclear
+	name = "Nuclear Chips"
+	desc = "Radioactive taste!"
+	icon_state = "nuclear_chips"
+	item_state = "nuclear_chips"
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/nuclear/New()
+	..()
+	reagents.add_reagent("nutriment", 5)
+	reagents.add_reagent("nuka_cola", 5)
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/communist
+	name = "Communist Chips"
+	desc = "A perfect snack to share with the party!"
+	icon_state = "commie_chips"
+	item_state = "commie_chips"
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/communist/New()
+	..()
+	reagents.add_reagent("nutriment", 5)
+	reagents.add_reagent("vodka", 5)
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/xeno
+	name = "Xeno Raiders"
+	desc = "A great taste that is out of this world!"
+	icon_state = "xeno_chips"
+	item_state = "xeno_chips"
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/cookable/xeno/New()
+	..()
+	reagents.add_reagent("nutriment", 10)
+	bitesize = 2

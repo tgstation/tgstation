@@ -4467,3 +4467,23 @@
 	if(istype(holder))
 		holder.reagent_list -= src
 		holder = null
+
+/datum/reagent/vinegar //Eventually there will be a way of making vinegar.
+	name = "Vinegar"
+	id = "vinegar"
+	reagent_state = LIQUID
+	color = "#3F1900" // rgb: 63, 25, 0
+
+/datum/reagent/honkserum
+	name = "Honk Serum"
+	id = "honkserum"
+	description = "Concentrated honking"
+	reagent_state = LIQUID
+	color = "#F2C900" // rgb: 242, 201, 0
+	custom_metabolism = 0.01
+
+/datum/reagent/honkserum/on_mob_life(var/mob/living/M)
+	if(prob(0.9))
+		M.say(pick("Honk", "HONK", "Hoooonk", "Honk?", "Henk", "Hunke?", "Honk!"))
+	..()
+	return

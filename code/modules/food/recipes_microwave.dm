@@ -1171,6 +1171,50 @@
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/curry/xeno
 
+// Chips ///////////////////////////////////////////////////////
+
+/datum/recipe/chips
+	reagents = list ("sodiumchloride" = 2)
+	items = list (/obj/item/weapon/reagent_containers/food/snacks/grown/potato)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chips/cookable
+
+/datum/recipe/vinegarchips
+	reagents = list ("sodiumchloride" = 2, "vinegar" = 5)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/grown/potato)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chips/cookable/vinegar
+
+/datum/recipe/cheddarchips
+	reagents = list ("sodiumchloride" = 2)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chips/cookable/cheddar
+
+/datum/recipe/clownchips
+	reagents = list ("banana" = 20)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/grown/potato)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chips/cookable/clown
+
+/datum/recipe/nuclearchips
+	reagents = list ("uranium" = 10, "sodiumchloride" = 2)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/grown/potato)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chips/cookable/nuclear
+
+/datum/recipe/commiechips
+	reagents = list ("sodiumchloride" = 2, "vodka" = 10)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/grown/potato)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chips/cookable/communist
+
+/datum/recipe/xenochips
+	reagents = list ("sodiumchloride " = 2)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
+		/obj/item/weapon/reagent_containers/food/snacks/xenomeat,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chips/cookable/xeno
+
+
 // Misc ////////////////////////////////////////////////////////
 
 /datum/recipe/cracker
