@@ -77,7 +77,7 @@
 	var/usealienwhitelist = 0
 	var/limitalienplayers = 0
 	var/alien_to_human_ratio = 0.5
-	
+
 	//used to determine if cyborgs/AI can speak
 	var/silent_ai = 0
 	var/silent_borg = 0
@@ -160,6 +160,8 @@
 	var/emag_recharge_ticks = 0
 
 	var/map_voting = 0
+
+	var/default_ooc_color = "#002eb8"
 
 /datum/configuration/New()
 	. = ..()
