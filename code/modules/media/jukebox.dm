@@ -537,7 +537,10 @@ var/global/loopModeNames=list(
 		"bar"  = "Bar Mix",
 		"jazz" = "Jazz",
 		"rock" = "Rock",
-		"vidya" = "Vidya",
+		"vidyaone" = "Vidya Pt.1",
+		"vidyatwo" = "Vidya Pt.2",
+		"vidyathree" = "Vidya Pt.3",
+		"vidyafour" = "Vidya Pt.4",
 	)
 
 // Relaxing elevator music~
@@ -556,7 +559,10 @@ var/global/loopModeNames=list(
 		"rock" = "Rock",
 		"muzak" = "Muzak",
 		"thunderdome" = "Thunderdome", // For thunderdome I guess
-		"vidya" = "Vidya",
+		"vidyaone" = "Vidya Pt.1",
+		"vidyatwo" = "Vidya Pt.2",
+		"vidyathree" = "Vidya Pt.3",
+		"vidyafour" = "Vidya Pt.4",
 	)
 
 // So I don't have to do all this shit manually every time someone sacrifices pun-pun.
