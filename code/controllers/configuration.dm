@@ -143,6 +143,7 @@
 	var/ghost_interaction = 0
 
 	var/comms_password = ""
+	var/paperwork_library = 0 //use the library DLL.
 
 	var/use_irc_bot = 0
 	var/irc_bot_host = "localhost"
@@ -475,6 +476,9 @@
 
 				if("comms_password")
 					config.comms_password = value
+					
+				if("paperwork_library")
+					config.paperwork_library = 1
 
 				if("irc_bot_host")
 					config.irc_bot_host = value
