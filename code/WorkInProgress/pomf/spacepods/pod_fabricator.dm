@@ -11,6 +11,26 @@
 	nano_file = "podfab.tmpl"
 	research_flags = NANOTOUCH | HASOUTPUT | HASMAT_OVER | TAKESMATIN | ACCESS_EMAG | LOCKBOXES
 
+	part_sets = list( //set names must be unique
+		"Pod_Frame" = list(
+			/obj/item/pod_parts/pod_frame/fore_port,
+			/obj/item/pod_parts/pod_frame/fore_starboard,
+			/obj/item/pod_parts/pod_frame/aft_port,
+			/obj/item/pod_parts/pod_frame/aft_starboard
+		),
+		"Pod_Armor" = list(
+			/obj/item/pod_parts/armor
+		),
+		"Pod_Parts" = list(
+			/obj/item/pod_parts/core
+		),
+		"Pod_Weaponry" = list(
+			/obj/item/device/spacepod_equipment/weaponry/taser
+		),
+		"Misc" = list(
+		)
+	)
+
 
 /obj/machinery/r_n_d/fabricator/pod/New()
 	. = ..()

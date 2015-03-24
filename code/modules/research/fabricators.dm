@@ -22,7 +22,6 @@
 	var/amount = 5
 	var/build_number = 8
 
-	var/part_set
 	var/obj/being_built
 	build_time = FAB_TIME_BASE //time modifier for each machine. Protolathes have low time variable, mechfabs have high
 	var/list/queue = list()
@@ -135,28 +134,31 @@
 
 //creates a set with the name and the list of things you give it
 /obj/machinery/r_n_d/fabricator/proc/setup_part_sets()
-	var/i = 0
-	part_sets.len = 0
-	var/list/cat_set
-	for(var/datum/design/D in files.known_designs)
-		if(D.category && (D.build_type & src.build_number))
-			cat_set = part_sets[D.category]
-			if(!part_sets[D.category])
-				cat_set = list()
-			cat_set.Add(D)
-			part_sets[D.category] = cat_set.Copy()
-			i++
-		if(!D.category && (D.build_type & src.build_number))
-			cat_set = part_sets["Misc"]
-			if(!part_sets["Misc"])
-				cat_set = list()
-			cat_set.Add(D)
-			part_sets[D.category] = cat_set.Copy()
-			i++
-		if(!istype(D))
-			warning("[D] was passed into add_part_set and not found to be datum/design")
-	cat_set.len = 0
-	return i
+	if(!part_sets || !part_sets.len)
+		return
+
+	var/counter = 0
+	for(var/datum/design/D in files.possible_designs) //the reason we do possible is that some designs don't have base requirement
+		for(var/name_set in part_sets)
+			var/list/part_set = part_sets[name_set]
+			if(!istype(part_set) || !part_set.len)
+				continue
+			for(var/i = 1; i <= part_set.len; i++)
+				if(D.build_path == part_set[i])
+					part_set[i] = D
+					counter++
+					break
+
+	for(var/name_set in part_sets)
+		var/list/part_set = part_sets[name_set]
+		for(var/element in part_set)
+			if(!istype(element, /datum/design))
+				warning("[element] was left over in setting up parts.")
+				part_set.Remove(element)
+
+	counter += convert_designs() //fill the rest of the way
+
+	return counter
 
 /obj/machinery/r_n_d/fabricator/process()
 	if(busy || stopped)
@@ -184,7 +186,7 @@
 	var/list/part_set_list = part_sets[set_name]
 	if(!part_set_list)
 		part_set_list = list()
-	for(var/datum/design/D in part_set)
+	for(var/datum/design/D in part_set_list)
 		if(D.build_path == part.build_path)
 			// del part
 			return 0
@@ -396,7 +398,7 @@
 			if(D)
 				files.AddDesign2Known(D)
 		files.RefreshResearch()
-		var/i = src.setup_part_sets()
+		var/i = src.convert_designs()
 		var/tech_output = update_tech()
 		if(!silent)
 			temp = "Processed [i] equipment designs.<br>"
