@@ -1,7 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - experiment: Nutriments from raw food now carry over to cooked items, like all other reagents
-  - experiment: Cooked items can now contain 100 units of reagents (up from 50)
-  - experiment: Chef's Special Sauce now starts with 50 units of its famous reagent
-  - tweak: Salt shakers and pepper mills now contain and start with 50 units of their respective reagents
