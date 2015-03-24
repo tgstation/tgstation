@@ -109,6 +109,7 @@
 	range = -2 //the world
 	max_targets = 1
 	selection_type = "view"
+	spell_flags = SELECTABLE
 
 	override_base = "genetic"
 	hud_state = "gen_project"
