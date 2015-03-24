@@ -34,6 +34,8 @@
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
 
+	var/shitty = 0 //Whether or not Shitty Suggestions are in effect
+
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
