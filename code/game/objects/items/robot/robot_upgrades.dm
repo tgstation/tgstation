@@ -171,7 +171,27 @@
 			qdel(D)
 		for(var/obj/item/weapon/shovel/S in R.module.modules)
 			qdel(S)
-		R.module.modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
+		R.module.modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(R.module)
+		R.module.rebuild()
+		return 1
+
+/obj/item/borg/upgrade/soh
+	name = "mining cyborg satchel of holding"
+	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+
+/obj/item/borg/upgrade/soh/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+
+	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
+		R << "Upgrade mounting error!  No suitable hardpoint detected!"
+		usr << "There's no mounting point for the module!"
+		return 0
+	else
+		for(var/obj/item/weapon/storage/bag/ore/cyborg/S in R.module.modules)
+			qdel(S)
+		R.module.modules += new /obj/item/weapon/storage/bag/ore/holding(R.module)
 		R.module.rebuild()
 		return 1
 
