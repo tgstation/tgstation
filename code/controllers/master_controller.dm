@@ -90,6 +90,9 @@ datum/controller/game_controller/proc/setup()
 	setup_economy()
 	SetupXenoarch()
 	cachedamageicons()
+	world << "\red \b Caching Jukebox playlists..."
+	load_juke_playlists()
+	world << "\red \b Caching Jukebox playlists complete."
 	//if(map && map.dorf)
 		//mining_surprises = typesof(/mining_surprise/dorf) - /mining_surprise/dorf
 		//max_secret_rooms += 2
