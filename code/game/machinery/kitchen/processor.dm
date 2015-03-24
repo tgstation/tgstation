@@ -10,7 +10,7 @@
 	var/processing = 0
 	var/opened = 0.0
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 	use_power = 1
 	idle_power_usage = 20
