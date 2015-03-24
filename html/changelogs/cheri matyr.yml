@@ -1,6 +1,0 @@
-author: Cheridan
-
-delete-after: True
-
-changes: 
-  - rscadd: "Adds the matyr objective to be dead at the round's end. You can get this objective if you have no others that would need you to survive."
