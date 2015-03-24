@@ -745,6 +745,7 @@
 			contents.len = 0
 			component_parts.len = 0
 			qdel(src)
+
 	return
 
 /obj/machinery/portable_atmospherics/hydroponics/attack_tk(mob/user as mob)
@@ -771,7 +772,28 @@
 		remove_dead(user)
 
 	else
-		view_contents(user)
+		examine(user) //using examine() to display the reagents inside the tray as well
+
+/obj/machinery/portable_atmospherics/hydroponics/examine(mob/user)
+	..()
+	view_contents(user)
+
+/obj/machinery/portable_atmospherics/hydroponics/proc/view_contents(mob/user)
+	if(src.seed && !src.dead)
+		user << "[src] has \blue [src.seed.display_name] \black planted."
+		if(src.health <= (src.seed.endurance / 2))
+			user << "The plant looks \red unhealthy."
+	else if(src.seed && src.dead)
+		user << "[src] is full of dead plant matter."
+	else
+		user << "[src] is empty."
+	if (Adjacent(user))
+		user << "Water: [round(src.waterlevel,0.1)]/100"
+		user << "Nutrient: [round(src.nutrilevel,0.1)]/10"
+		if(src.weedlevel >= 5)
+			user << "[src] is \red filled with weeds!"
+		if(src.pestlevel >= 5)
+			user << "[src] is \red filled with tiny worms!"
 
 		if(!istype(src,/obj/machinery/portable_atmospherics/hydroponics/soil))
 
@@ -800,28 +822,6 @@
 					light_available =  5
 
 			usr << "The tray's sensor suite is reporting a light level of [light_available] lumens and a temperature of [environment.temperature]K."
-
-/obj/machinery/portable_atmospherics/hydroponics/examine(mob/user)
-	..()
-	view_contents(user)
-
-/obj/machinery/portable_atmospherics/hydroponics/proc/view_contents(mob/user)
-	if(src.seed && !src.dead)
-		user << "[src] has \blue [src.seed.display_name] \black planted."
-		if(src.health <= (src.seed.endurance / 2))
-			user << "The plant looks \red unhealthy."
-		else
-			user << "[src] is empty."
-		user << "Water: [round(src.waterlevel,0.1)]/100"
-		user << "Nutrient: [round(src.nutrilevel,0.1)]/10"
-		if(src.weedlevel >= 5)
-			user << "[src] is \red filled with weeds!"
-		if(src.pestlevel >= 5)
-			user << "[src] is \red filled with tiny worms!"
-	else if(src.seed && src.dead)
-		user << "[src] is full of dead plant matter."
-	else
-		user << "[src] has nothing planted!"
 
 /obj/machinery/portable_atmospherics/hydroponics/verb/close_lid()
 	set name = "Toggle Tray Lid"
