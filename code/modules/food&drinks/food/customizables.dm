@@ -195,6 +195,15 @@
 	ingMax = 6
 	icon_state = "pie"
 
+/obj/item/weapon/reagent_containers/food/snacks/customizable/pie/New()
+	..()
+	global_pie_list.Add(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/customizable/pie/Destroy()
+	global_pie_list.Remove(src)
+	..()
+
+
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
 	name = "pizza"

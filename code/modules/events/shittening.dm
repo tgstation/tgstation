@@ -27,3 +27,26 @@
 		F.visible_message("<span class='deadsay'><b><i>Strange energies suddenly swirl around \the [F], which begins to glow with an eldritch light.</i></b></span>")
 		new /obj/item/weapon/reagent_containers/food/snacks/faggot/deadchat(F.loc)
 		qdel(F)
+	for(var/obj/machinery/turret/T in global_turret_list)
+		T.say("Firmware update complete: Switching to High Explosive Rounds.")
+		T.lasertype = 7
+
+	for(var/obj/machinery/porta_turret/T in global_turret_list)
+		T.say("Firmware update complete: Switching to High Explosive Rounds.")
+		T.projectile = /obj/item/projectile/bullet/gyro
+		T.eprojectile = /obj/item/projectile/bullet/gyro
+
+	for(var/obj/item/weapon/storage/box/monkeycubes/B in global_monkeycubebox_list)
+		B.visible_message("<span class = 'notice'>[B] appears to go through box division, and has divided into 2 separate boxes! What could be inside the new box?")
+		new /obj/item/weapon/storage/box/clowncubes(B.loc)
+
+	for(var/obj/item/weapon/reagent_containers/food/snacks/pie/P in global_pie_list)
+		if(istype(P, /obj/item/weapon/reagent_containers/food/snacks/pie/syndicate))
+			continue
+		P.visible_message("<span class = 'notice'>[P] transforms into a syndicate pie!</span>")
+		new /obj/item/weapon/reagent_containers/food/snacks/pie/syndicate(P.loc)
+		qdel(P)
+	for(var/obj/item/weapon/reagent_containers/food/snacks/customizable/pie/P in global_pie_list)
+		P.visible_message("<span class = 'notice'>[P] transforms into a syndicate pie!</span>")
+		new /obj/item/weapon/reagent_containers/food/snacks/pie/syndicate(P.loc)
+		qdel(P)

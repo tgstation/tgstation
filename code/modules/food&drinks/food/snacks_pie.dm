@@ -1,9 +1,18 @@
+var/list/global_pie_list = list()
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	trash = /obj/item/trash/plate
 	bitesize = 3
 	w_class = 3
 	list_reagents = list("nutriment" = 10, "vitamin" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/pie/New()
+	..()
+	global_pie_list.Add(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/pie/Destroy()
+	global_pie_list.Remove(src)
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/plain
 	name = "plain pie"
@@ -123,3 +132,9 @@
 	icon_state = "gappletart"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 8, "gold" = 5, "vitamin" = 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/pie/syndicate
+	name = "syndicate pie"
+	desc = "A syndicate pie, still deadly."
+	icon_state = "pie"
+	list_reagents = list("cyanide" = 20)
