@@ -21,8 +21,7 @@ datum/reagent
 	var/list/data
 	var/current_cycle = 0
 	var/volume = 0
-	//var/list/viruses = list()
-	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
+	var/color = "#000000" // rgb: 0, 0, 0
 	var/can_synth = 1
 	var/metabolization_rate = REAGENTS_METABOLISM
 	var/overrides_metab = 0
@@ -30,6 +29,11 @@ datum/reagent
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
+
+datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
+	..()
+	holder = null
+
 datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
 		return 0
@@ -80,6 +84,10 @@ datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
+// Called when this reagent is removed while inside a mob
+datum/reagent/proc/on_mob_delete(mob/M)
+	return
+
 datum/reagent/proc/on_move(var/mob/M)
 	return
 
@@ -119,9 +127,6 @@ datum/reagent/proc/addiction_act_stage3(var/mob/living/M as mob)
 datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
 	if(prob(30))
 		M << "<span class = 'boldannounce'>You're not feeling good at all! You really need some [name].</span>"
-	return
-
-/datum/reagent/proc/reagent_deleted()
 	return
 
 datum/reagent/blood
@@ -212,14 +217,6 @@ datum/reagent/blood/reaction_turf(var/turf/simulated/T, var/volume)//splash the 
 			newVirus.holder = blood_prop
 	return
 
-/* Must check the transfering of reagents and their data first. They all can point to one disease datum.
-
-			Del()
-				if(src.data["virus"])
-					var/datum/disease/D = src.data["virus"]
-					D.cure(0)
-				..()
-*/
 datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"

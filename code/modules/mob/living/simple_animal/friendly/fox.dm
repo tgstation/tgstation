@@ -1,7 +1,8 @@
 //Foxxy
-/mob/living/simple_animal/fox
+/mob/living/simple_animal/pet/fox
 	name = "fox"
 	desc = "It's a fox. I wonder what it says?"
+	icon = 'icons/mob/pets.dmi'
 	icon_state = "fox"
 	icon_living = "fox"
 	icon_dead = "fox_dead"
@@ -18,6 +19,7 @@
 	response_harm = "kicks"
 
 //Captain fox
-/mob/living/simple_animal/fox/Renault
+/mob/living/simple_animal/pet/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
+	pcollar = /obj/item/clothing/tie/petcollar

@@ -154,10 +154,10 @@
 	list_reagents = list("pancuronium" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/sodium_thiopental
-	name = "sodium_thiopental bottle"
+	name = "sodium thiopental bottle"
 	desc = "A small bottle. Contains sodium thiopental."
 	icon_state = "bottle16"
-	list_reagents = list("formaldehyde" = 30)
+	list_reagents = list("sodium_thiopental" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/coniine
 	name = "coniine bottle"

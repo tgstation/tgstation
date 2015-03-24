@@ -111,6 +111,7 @@
 
 	else
 		var/is_hijacker = prob(10)
+		var/martyr_chance = prob(20)
 		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
 		if(!exchange_blue && traitors.len >= 5) 	//Set up an exchange if there are enough traitors
 			if(!exchange_red)
@@ -149,13 +150,28 @@
 				var/datum/objective/hijack/hijack_objective = new
 				hijack_objective.owner = traitor
 				traitor.objectives += hijack_objective
+				return
+
+
+		var/martyr_compatibility = 1 //You can't succeed in stealing if you're dead.
+		for(var/datum/objective/O in traitor.objectives)
+			if(!O.martyr_compatible)
+				martyr_compatibility = 0
+				break
+
+		if(martyr_compatibility && martyr_chance)
+			var/datum/objective/martyr/martyr_objective = new
+			martyr_objective.owner = traitor
+			traitor.objectives += martyr_objective
+			return
+
 		else
-			if (!(locate(/datum/objective/escape) in traitor.objectives))
+			if(!(locate(/datum/objective/escape) in traitor.objectives))
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = traitor
 				traitor.objectives += escape_objective
+				return
 
-	return
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)

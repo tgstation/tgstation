@@ -474,7 +474,7 @@
 						if(istype(location, /turf/simulated))
 							location.add_vomit_floor(src, 1)
 				if("Interstellar Flux")
-					if(prob(rand(50,100))) //50% of the time, it works 100% of the time
+					if(prob(75))
 						M.Weaken(3)
 						M.visible_message("<span class='danger'>[M] is swept off their feet!</span>", "<span class='userdanger'>A sudden gust of powerful wind slams you into the floor!</span>")
 						M.take_organ_damage(25)

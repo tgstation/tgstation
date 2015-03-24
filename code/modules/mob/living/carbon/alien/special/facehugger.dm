@@ -145,7 +145,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 		if(!sterile) L.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 	else if (iscorgi(M))
-		var/mob/living/simple_animal/corgi/C = M
+		var/mob/living/simple_animal/pet/corgi/C = M
 		loc = C
 		C.facehugger = src
 
@@ -178,7 +178,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 
 		if(iscorgi(target))
-			var/mob/living/simple_animal/corgi/C = target
+			var/mob/living/simple_animal/pet/corgi/C = target
 			src.loc = get_turf(C)
 			C.facehugger = null
 	else

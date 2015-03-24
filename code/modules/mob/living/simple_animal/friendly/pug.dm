@@ -1,8 +1,8 @@
-//Corgi //best comment 2014
-/mob/living/simple_animal/pug
+/mob/living/simple_animal/pet/pug
 	name = "\improper pug"
 	real_name = "pug"
 	desc = "It's a pug."
+	icon = 'icons/mob/pets.dmi'
 	icon_state = "pug"
 	icon_living = "pug"
 	icon_dead = "pug_dead"
@@ -19,7 +19,7 @@
 	response_harm   = "kicks"
 	see_in_dark = 5
 
-/mob/living/simple_animal/pug/Life()
+/mob/living/simple_animal/pet/pug/Life()
 	..()
 
 	if(!stat && !resting && !buckled)
@@ -30,7 +30,7 @@
 					dir = i
 					sleep(1)
 
-/mob/living/simple_animal/pug/attackby(var/obj/item/O as obj, var/mob/user as mob, params)  //Marker -Agouri
+/mob/living/simple_animal/pet/pug/attackby(var/obj/item/O as obj, var/mob/user as mob, params)  //Marker -Agouri
 	if(istype(O, /obj/item/weapon/newspaper))
 		if(!stat)
 			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")

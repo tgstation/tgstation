@@ -51,6 +51,15 @@ datum/reagents/New(maximum=100)
 				chemical_reactions_list[id] += D
 				break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
+datum/reagents/Destroy()
+	..()
+	for(var/datum/reagent/R in reagent_list)
+		qdel(R)
+	reagent_list.Cut()
+	reagent_list = null
+	if(my_atom && my_atom.reagents == src)
+		my_atom.reagents = null
+
 datum/reagents/proc/remove_any(var/amount=1)
 	var/total_transfered = 0
 	var/current_list_element = 1
@@ -356,22 +365,18 @@ datum/reagents/proc/isolate_reagent(var/reagent)
 			update_total()
 
 datum/reagents/proc/del_reagent(var/reagent)
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
 			if(istype(my_atom, /mob/living))
 				var/mob/living/M = my_atom
-				R.reagent_deleted(M)
-			reagent_list -= A
-			del(A)
+				R.on_mob_delete(M)
+			qdel(R)
+			reagent_list -= R
 			update_total()
 			my_atom.on_reagent_change()
 			check_ignoreslow(my_atom)
 			check_gofast(my_atom)
 			check_goreallyfast(my_atom)
-			return 0
-
-
 	return 1
 
 datum/reagents/proc/check_ignoreslow(var/mob/M)
@@ -535,12 +540,6 @@ datum/reagents/proc/remove_all_type(var/reagent_type, var/amount, var/strict = 0
 
 	return has_removed_reagent
 
-datum/reagents/proc/delete()
-	for(var/datum/reagent/R in reagent_list)
-		R.holder = null
-	if(my_atom)
-		my_atom.reagents = null
-
 			//two helper functions to preserve data across reactions (needed for xenoarch)
 datum/reagents/proc/get_data(var/reagent_id)
 	for(var/datum/reagent/D in reagent_list)
@@ -581,6 +580,6 @@ datum/reagents/proc/copy_data(var/datum/reagent/current_reagent)
 // Max vol is maximum volume of holder
 atom/proc/create_reagents(var/max_vol)
 	if(reagents)
-		reagents.delete()
+		qdel(reagents)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src

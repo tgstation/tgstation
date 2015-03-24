@@ -470,3 +470,10 @@
 	icon_state = "plaid_purple"
 	item_state = "plaid_purple"
 	item_color = "plaid_purple"
+
+/obj/item/clothing/under/jester
+	name = "jester suit"
+	desc = "A jolly dress, well suited to entertain your master, nuncle."
+	icon_state = "jester"
+	item_color = "jester"
+	can_adjust = 0
