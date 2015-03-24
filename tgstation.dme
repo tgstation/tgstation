@@ -264,7 +264,6 @@
 #include "code\game\data_huds.dm"
 #include "code\game\dna.dm"
 #include "code\game\say.dm"
-#include "code\game\shitty_suggestions.dm"
 #include "code\game\shuttle_engines.dm"
 #include "code\game\skincmd.dm"
 #include "code\game\smoothwall.dm"
