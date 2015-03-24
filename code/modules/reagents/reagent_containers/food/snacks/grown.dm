@@ -11,8 +11,8 @@
 	var/plantname
 	var/potency = -1
 	icon = 'icons/obj/harvest.dmi'
-	New(newloc,newpotency)
-		if (!isnull(newpotency))
+	New(newloc, newpotency)
+		if(!isnull(newpotency))
 			potency = newpotency
 		..()
 		src.pixel_x = rand(-5.0, 5)
@@ -23,7 +23,7 @@
 
 	//Handle some post-spawn var stuff.
 	spawn(1)
-		// Fill the object up with the appropriate reagents.
+		//Fill the object up with the appropriate reagents.
 		if(!isnull(plantname))
 			var/datum/seed/S = seed_types[plantname]
 			if(!S || !S.chems)
@@ -36,10 +36,10 @@
 				var/rtotal = reagent_data[1]
 				if(reagent_data.len > 1 && potency > 0)
 					rtotal += round(potency/reagent_data[2])
-				reagents.add_reagent(rid,max(1,rtotal))
+				reagents.add_reagent(rid, max(1, rtotal))
 
 		if(reagents.total_volume > 0)
-			bitesize = 1+round(reagents.total_volume / 2, 1)
+			bitesize = 1 + round(reagents.total_volume/2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	name = "ear of corn"
@@ -88,8 +88,9 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		if(W:amount >= 5)
 			W:amount -= 5
-			if(!W:amount) qdel(W)
-			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
+			if(!W:amount)
+				qdel(W)
+			user << "<span class='notice'>You add some cable to \the [src] and slide it inside the battery encasing.</span>"
 			var/obj/item/weapon/cell/potato/pocell = new /obj/item/weapon/cell/potato(user.loc)
 			pocell.maxcharge = src.potency * 10
 			pocell.charge = pocell.maxcharge
@@ -141,40 +142,6 @@
 	filling_color = "#C4C4C4"
 	plantname = "plastic"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/shand
-	name = "S'rendarr's Hand leaf"
-	desc = "A leaf sample from a lowland thicket shrub. Smells strongly like wax."
-	icon_state = "shand"
-	filling_color = "#70C470"
-	plantname = "shand"
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mtear
-	name = "sprig of Messa's Tear"
-	desc = "A mountain climate herb with a soft, cold blue flower, known to contain an abundance of healing chemicals."
-	icon_state = "mtear"
-	filling_color = "#70C470"
-	plantname = "mtear"
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mtear/attack_self(mob/user as mob)
-	if(istype(user.loc,/turf/space))
-		return
-	var/obj/item/stack/medical/ointment/tajaran/poultice = new /obj/item/stack/medical/ointment/tajaran(user.loc)
-
-	poultice.heal_burn = potency
-	qdel(src)
-
-	user << "<span class='notice'>You mash the petals into a poultice.</span>"
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/shand/attack_self(mob/user as mob)
-	if(istype(user.loc,/turf/space))
-		return
-	var/obj/item/stack/medical/bruise_pack/tajaran/poultice = new /obj/item/stack/medical/bruise_pack/tajaran(user.loc)
-
-	poultice.heal_brute = potency
-	qdel(src)
-
-	user << "<span class='notice'>You mash the leaves into a poultice.</span>"
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
@@ -186,16 +153,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
 	if(istype(loc,/mob))
-		loc.SetLuminosity(round(loc.luminosity - potency/5,1))
+		loc.SetLuminosity(round(loc.luminosity - potency/5, 1))
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
 	src.SetLuminosity(0)
-	user.SetLuminosity(round(user.luminosity + (potency/5),1))
+	user.SetLuminosity(round(user.luminosity + (potency/5), 1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	user.SetLuminosity(round(user.luminosity - (potency/5),1))
-	src.SetLuminosity(round(potency/5,1))
+	user.SetLuminosity(round(user.luminosity - (potency/5), 1))
+	src.SetLuminosity(round(potency/5, 1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	name = "cocoa pod"
@@ -282,10 +249,6 @@
 	plantname = "apple"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
-	name = "apple"
-	desc = "It's a little piece of Eden."
-	icon_state = "apple"
-	potency = 15
 	filling_color = "#B3BD5E"
 	plantname = "poisonapple"
 
@@ -317,9 +280,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
-		new /obj/item/clothing/head/pumpkinhead (user.loc)
+	if(W.is_sharp() >= 1)
+		user.visible_message("<span class='notice'>[user] carves a face into \the [src] with \the [W]!</span>", "<span class='notice'>You carve a face into \the [src] with \the [W]!</span>")
+		new /obj/item/clothing/head/pumpkinhead(src.loc) //Don't move it
 		qdel(src)
 		return
 
@@ -408,11 +371,10 @@
 	icon_state = "killertomato"
 	potency = 10
 	filling_color = "#FF0000"
-	potency = 30
 	plantname = "killertomato"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user as mob)
-	if(istype(user.loc,/turf/space))
+	if(istype(user.loc, /turf/space))
 		return
 	new /mob/living/simple_animal/tomato(user.loc)
 	qdel(src)
@@ -431,7 +393,7 @@
 	..()
 	var/obj/effect/decal/cleanable/blood/splatter/S = getFromPool(/obj/effect/decal/cleanable/blood/splatter,src.loc)
 	S.New(S.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='warning'>\The [src] splatters.</span>")
 	src.reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		src.reagents.reaction(A)
@@ -450,13 +412,12 @@
 	..()
 	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil,src.loc)
 	O.New(O.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='notice'>\The [src] splatters.</span>")
 	src.reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		src.reagents.reaction(A)
 	qdel(src)
 	return
-
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	name = "wheat"
@@ -545,7 +506,7 @@
 	plantname = "walkingmushroom"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user as mob)
-	if(istype(user.loc,/turf/space))
+	if(istype(user.loc, /turf/space))
 		return
 	new /mob/living/simple_animal/hostile/mushroom(user.loc)
 	qdel(src)
@@ -568,7 +529,7 @@
 	plantname = "glowshroom"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user as mob)
-	if(istype(user.loc,/turf/space))
+	if(istype(user.loc, /turf/space))
 		return
 	var/obj/effect/glowshroom/planted = new /obj/effect/glowshroom(user.loc)
 
@@ -581,15 +542,15 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Del()
 	if(istype(loc,/mob))
-		loc.SetLuminosity(round(loc.luminosity - potency/10,1))
+		loc.SetLuminosity(round(loc.luminosity - potency/10, 1))
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
 	SetLuminosity(0)
-	user.SetLuminosity(round(user.luminosity + (potency/10),1))
+	user.SetLuminosity(round(user.luminosity + (potency/10), 1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.SetLuminosity(round(user.luminosity - (potency/10),1))
+	user.SetLuminosity(round(user.luminosity - (potency/10), 1))
 	SetLuminosity(round(potency/10,1))
 
 
@@ -600,10 +561,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
 	name = "blue-space tomato"
-	desc = "So lubricated, you might slip through space-time."
+	desc = "Its juices lubricate so well, you might slip through space-time."
 	icon_state = "bluespacetomato"
 	potency = 20
-	origin_tech = "bluespace=3"
+	origin_tech = "bluespace = 3"
 	filling_color = "#91F8FF"
 	plantname = "bluespacetomato"
 
@@ -616,45 +577,51 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/blood/oil(src.loc)
-		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+		visible_message("<span class='notice'>\The [src] splatters.</span>")
 		qdel(src)
 		return
 	for(var/turf/T in orange(M,outer_teleport_radius))
-		if(T in orange(M,inner_teleport_radius)) continue
-		if(istype(T,/turf/space)) continue
-		if(T.density) continue
-		if(T.x>world.maxx-outer_teleport_radius || T.x<outer_teleport_radius)	continue
-		if(T.y>world.maxy-outer_teleport_radius || T.y<outer_teleport_radius)	continue
+		if(T in orange(M, inner_teleport_radius))
+			continue
+		if(istype(T, /turf/space))
+			continue
+		if(T.density)
+			continue
+		if(T.x > world.maxx-outer_teleport_radius || T.x < outer_teleport_radius)
+			continue
+		if(T.y > world.maxy-outer_teleport_radius || T.y < outer_teleport_radius)
+			continue
 		turfs += T
 	if(!turfs.len)
 		var/list/turfs_to_pick_from = list()
-		for(var/turf/T in orange(M,outer_teleport_radius))
-			if(!(T in orange(M,inner_teleport_radius)))
+		for(var/turf/T in orange(M, outer_teleport_radius))
+			if(!(T in orange(M, inner_teleport_radius)))
 				turfs_to_pick_from += T
 		turfs += pick(/turf in turfs_to_pick_from)
 	var/turf/picked = pick(turfs)
-	if(!isturf(picked)) return
-	switch(rand(1,2))//Decides randomly to teleport the thrower or the throwee.
-		if(1) // Teleports the person who threw the tomato.
+	if(!isturf(picked))
+		return
+	switch(rand(1, 2)) //50-50 % chance to teleport the thrower or the target.
+		if(1) //Teleports the person who threw the tomato.
 			s.set_up(3, 1, M)
 			s.start()
 			new/obj/effect/decal/cleanable/molten_item(M.loc) //Leaves a pile of goo behind for dramatic effect.
-			M.loc = picked //
-			sleep(1)
-			s.set_up(3, 1, M)
-			s.start() //Two set of sparks, one before the teleport and one after.
-		if(2) //Teleports mob the tomato hit instead.
-			for(var/mob/A in get_turf(hit_atom))//For the mobs in the tile that was hit...
+			M.loc = picked //Send then to that location we picked previously
+			spawn()
+				s.set_up(3, 1, M)
+				s.start() //Two set of sparks, one before the teleport and one after. //Sure then ?
+		if(2) //Teleports the target instead.
+			for(var/mob/A in get_turf(hit_atom)) //For the mobs in the tile that was hit...
 				s.set_up(3, 1, A)
 				s.start()
 				new/obj/effect/decal/cleanable/molten_item(A.loc) //Leave a pile of goo behind for dramatic effect...
 				A.loc = picked//And teleport them to the chosen location.
-				sleep(1)
-				s.set_up(3, 1, A)
-				s.start()
-	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil,src.loc)
+				spawn()
+					s.set_up(3, 1, A)
+					s.start()
+	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, src.loc)
 	O.New(O.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
+	visible_message("<span class='danger'>The [src] splatters, causing a distortion in space-time.</span>")
 	qdel(src)
 	return
 
@@ -668,9 +635,9 @@
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("nutriment", 1)
-			reagents.add_reagent("space_drugs", 1+round(potency / 8, 1))
-			reagents.add_reagent("kelotane", 1+round(potency / 8, 1))
-			reagents.add_reagent("bicaridine", 1+round(potency / 10, 1))
-			reagents.add_reagent("toxin", 1+round(potency / 10, 1))
+			reagents.add_reagent("space_drugs", 1 + round(potency/8, 1))
+			reagents.add_reagent("kelotane", 1 + round(potency/8, 1))
+			reagents.add_reagent("bicaridine", 1 + round(potency/10, 1))
+			reagents.add_reagent("toxin", 1 + round(potency/10, 1))
 			reagents.add_reagent("spiritbreaker", 10)
-			bitesize = 1+round(reagents.total_volume / 2, 1)
+			bitesize = 1+round(reagents.total_volume/2, 1)
