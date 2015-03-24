@@ -139,8 +139,8 @@
 /obj/structure/reagent_dispensers/compostbin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	var/load = 1
 	var/obj/item/I = W
-	if(G.compost_value > 0)
-		reagents.add_reagent("compost",G.compost_value)
+	if(I.compost_value > 0)
+		reagents.add_reagent("compost",I.compost_value)
 	else
 		load = 0
 
