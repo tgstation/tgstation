@@ -85,6 +85,7 @@
 	src.update_status()
 
 	makepowernets()
+	paperwork_setup()
 
 	//sun = new /datum/sun()
 	radio_controller = new /datum/controller/radio()
@@ -230,6 +231,7 @@
 			sleep(60)
 
 	processScheduler.stop()
+	paperwork_stop()
 
 	spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
