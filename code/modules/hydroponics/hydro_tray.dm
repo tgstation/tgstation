@@ -780,9 +780,9 @@
 
 /obj/machinery/portable_atmospherics/hydroponics/proc/view_contents(mob/user)
 	if(src.seed && !src.dead)
-		user << "[src] has \blue [src.seed.display_name] \black planted."
+		user << "[src] has <span class='notice'>[src.seed.display_name]</span> planted."
 		if(src.health <= (src.seed.endurance / 2))
-			user << "The plant looks \red unhealthy."
+			user << "The plant looks <span class='rose'>unhealthy.</span>"
 	else if(src.seed && src.dead)
 		user << "[src] is full of dead plant matter."
 	else
@@ -791,9 +791,9 @@
 		user << "Water: [round(src.waterlevel,0.1)]/100"
 		user << "Nutrient: [round(src.nutrilevel,0.1)]/10"
 		if(src.weedlevel >= 5)
-			user << "[src] is \red filled with weeds!"
+			user << "[src] is <span class='rose'>filled with weeds!</span>"
 		if(src.pestlevel >= 5)
-			user << "[src] is \red filled with tiny worms!"
+			user << "[src] is <span class='rose'>filled with tiny worms!</span>"
 
 		if(!istype(src,/obj/machinery/portable_atmospherics/hydroponics/soil))
 
