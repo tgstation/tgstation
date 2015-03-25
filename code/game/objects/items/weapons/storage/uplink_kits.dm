@@ -98,7 +98,7 @@
 			else
 				new /obj/item/weapon/psycho/knife(src)
 			new /obj/item/weapon/gun/projectile/revolver(src)
-			new /obj/item/weapon/storage/firstaid/tactical(src)
+			new /obj/item/clothing/shoes/syndigaloshes(src)
 			return
 
 /obj/item/weapon/storage/box/syndie_kit
