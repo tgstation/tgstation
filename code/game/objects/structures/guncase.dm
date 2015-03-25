@@ -32,38 +32,42 @@
 			contents += O
 			user << "<span class='notice'>You place [O] in [src].</span>"
 			update_icon()
+			updateUsrDialog()
 		else
-			if(!open)
-				open = 1
-			else
-				open = 0
+			open = !open
+			update_icon()
 	else
-		if(!open)
-			open = 1
-		else
-			open = 0
+		open = !open
 		update_icon()
 
 /obj/structure/guncase/attack_hand(mob/user)
 	if(isrobot(usr) || isalien(usr))
 		return
 	if(contents.len && open)
-		var/obj/item/weapon/gun/choice = input("Which gun would you like to remove from the case?") as null|obj in contents
-		if(choice)
-			if(!user.canUseTopic(src))
-				return
-			if(ishuman(user))
-				if(!user.get_active_hand())
-					user.put_in_hands(choice)
-			else
-				choice.loc = get_turf(src)
-			update_icon()
+		var/dat = "<HEAD><TITLE>[name]</TITLE></HEAD><center>"
+		for(var/i = contents.len, i >= 1, i--)
+			var/obj/item/O = contents[i]
+			dat += "<a href='?src=\ref[src];retrieve=\ref[O]'>[O.name]</a><br>"
+		dat += "</center>"
+		usr << browse(dat, "window=guncase;size=350x300")
 	else
-		if(!open)
-			open = 1
-		else
-			open = 0
+		open = !open
 		update_icon()
+
+/obj/structure/guncase/Topic(href, href_list)
+	if(href_list["retrieve"])
+		usr << browse("", "window=guncase")
+		var/obj/item/O = locate(href_list["retrieve"])
+		if(!usr.canUseTopic(src))
+			return
+		if(ishuman(usr))
+			if(!usr.get_active_hand())
+				usr.put_in_hands(O)
+			else
+				O.loc = get_turf(src)
+			update_icon()
+			updateUsrDialog()
+
 
 /obj/structure/guncase/shotgun
 	name = "shotgun locker"
