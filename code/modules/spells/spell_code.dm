@@ -88,7 +88,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 		return
 	if(cast_delay && !spell_do_after(user, cast_delay))
 		return
-	var/list/targets = choose_targets()
+	var/list/targets = choose_targets(user)
 	if(targets && targets.len)
 		invocation(user, targets)
 		take_charge(user, skipcharge)

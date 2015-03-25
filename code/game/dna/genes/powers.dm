@@ -114,30 +114,38 @@
 	override_base = "genetic"
 	hud_state = "gen_project"
 
-	compatible_mobs = list(/mob/living/carbon)
+	compatible_mobs = list(/mob/living/carbon/human)
 
-/spell/targeted/remotesay/choose_targets(mob/living/carbon/human/user)
+/spell/targeted/remotesay/choose_targets(var/mob/living/carbon/human/user)
+	//world << "[user] choose targets"
 	if(!istype(user))
+		//world << "[user] is not human"
 		return list()
 
 	var/list/targets = ..()
-	for(var/mob/living/carbon/M in targets)
+	//world << "super found [targets ? "[targets.len] entry\s" : "nothing"]"
+	for(var/mob/living/carbon/human/M in targets)
+		//world << "checking [M] for [src]([user])"
 		if(!user.can_mind_interact(M))
+			//world << "[M] is not interactable"
 			targets -= M
 
 	return targets
 
 /spell/targeted/remotesay/cast(var/list/targets, mob/living/carbon/human/user)
+	//world << "casting remote say for [user]"
 	if(!targets || !targets.len || !user || !istype(user))
+		//world << "[(!targets ? "bad list" : (!targets.len ? "no entries" : ""))] [!user ? "no user" : ""] [!istype(user) ? "wrong user type" : ""]"
 		return
 
 	if(user.stat!=CONSCIOUS)
+		//world << "[user]'s stat is bad [user.stat]"
 		user.reset_view(0)
 		user.remoteview_target = null
 		return
 
 	var/say = stripped_input(user, "What do you wish to say?", "Project Mind")
-	for(var/mob/living/carbon/target in targets)
+	for(var/mob/living/carbon/human/target in targets)
 		if(M_REMOTE_TALK in target.mutations)
 			target.show_message("<span class='notice'>You hear [user.real_name]'s voice: [say]</span>")
 		else

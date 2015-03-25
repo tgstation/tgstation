@@ -53,6 +53,8 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 			for(var/mob/living/M in starting_targets)
 				if(!(spell_flags & INCLUDEUSER) && M == user)
 					continue
+				if(compatible_mobs && compatible_mobs.len)
+					if(!is_type_in_list(M, compatible_mobs)) continue
 				possible_targets += M
 
 			if(possible_targets.len)
