@@ -317,7 +317,7 @@ its easier to just keep the beam vertical.
 	if(desc)
 		user << desc
 
-	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+	if(reagents && is_open_container() && !ismob(src)) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)
 			for(var/datum/reagent/R in reagents.reagent_list)

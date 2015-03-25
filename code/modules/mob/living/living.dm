@@ -977,3 +977,6 @@ default behaviour is:
 				now_pushing = 0
 			return
 	return
+
+/mob/living/is_open_container()
+	return 1
