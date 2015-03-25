@@ -85,6 +85,7 @@
 	if(spell_objects.len)
 		toggle_open(showing + 1)
 	else
+		spell_holder.spell_master = null
 		qdel(src)
 
 /obj/screen/movable/spell_master/proc/silence_spells(var/amount)

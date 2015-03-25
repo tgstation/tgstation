@@ -1216,3 +1216,21 @@
 	New()
 		block = FARSIGHTBLOCK
 		..()
+
+/obj/item/weapon/dnainjector/remotesay
+	name = "DNA-Injector (Remote Say)"
+	desc = "Share it with the world."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	New()
+		block = REMOTETALKBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antiremotesay
+	name = "DNA-Injector (Remote Say)"
+	desc = "Keep it to yourself."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	New()
+		block = REMOTETALKBLOCK
+		..()
