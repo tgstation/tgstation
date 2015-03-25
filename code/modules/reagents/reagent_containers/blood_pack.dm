@@ -44,6 +44,9 @@
 /obj/item/weapon/reagent_containers/blood/examine(mob/user)
 	//I don't want this to be an open container.
 	..()
+	if(get_dist(user,src) > 3)
+		user << "<span class='info'>You can't make out the contents.</span>"
+		return
 	if(reagents)
 		user << "It contains:"
 		if(reagents.reagent_list.len)

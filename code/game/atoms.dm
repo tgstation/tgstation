@@ -318,12 +318,15 @@ its easier to just keep the beam vertical.
 		user << desc
 
 	if(reagents && is_open_container() && !ismob(src)) //is_open_container() isn't really the right proc for this, but w/e
-		user << "It contains:"
-		if(reagents.reagent_list.len)
-			for(var/datum/reagent/R in reagents.reagent_list)
-				user << "<span class='info'>[R.volume] units of [R.name]</span>"
+		if(get_dist(user,src) > 3)
+			user << "<span class='info'>You can't make out the contents.</span>"
 		else
-			user << "<span class='info'>Nothing.</span>"
+			user << "It contains:"
+			if(reagents.reagent_list.len)
+				for(var/datum/reagent/R in reagents.reagent_list)
+					user << "<span class='info'>[R.volume] units of [R.name]</span>"
+			else
+				user << "<span class='info'>Nothing.</span>"
 	if(on_fire)
 		user << "<span class='danger'>OH SHIT! IT'S ON FIRE!</span>"
 
