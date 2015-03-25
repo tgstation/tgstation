@@ -57,6 +57,7 @@
 
 /obj/machinery/porta_turret/New()
 	..()
+	global_turret_list.Add(src)
 	icon_state = "[lasercolor]grey_target_prism"
 	//Sets up a spark system
 	spark_system = new /datum/effect/effect/system/spark_spread
@@ -142,6 +143,7 @@
 
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
+	global_turret_list.Remove(src)
 	qdel(cover)
 	..()
 

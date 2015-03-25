@@ -25,7 +25,9 @@
 			M.verbs += /mob/living/carbon/human/proc/summon_dank_blade
 		if(prob(5))
 			M << "You feel as if you could go to the nearest computer and create a sci-fi game about space stations."
-			M.reagents.add_reagent("programming", 10)
+			if(M.reagents)
+				M.reagents.add_reagent("programming", 10)
+		M.verbs += /client/verb/mentorhelp
 
 	for(var/obj/item/weapon/reagent_containers/food/snacks/faggot/F in world)
 		if(istype(F, /obj/item/weapon/reagent_containers/food/snacks/faggot/deadchat))
@@ -33,6 +35,30 @@
 		F.visible_message("<span class='deadsay'><b><i>Strange energies suddenly swirl around \the [F], which begins to glow with an eldritch light.</i></b></span>")
 		new /obj/item/weapon/reagent_containers/food/snacks/faggot/deadchat(F.loc)
 		qdel(F)
+	/*
+	for(var/obj/machinery/turret/T in global_turret_list)
+		T.say("Firmware update complete: Switching to High Explosive Rounds.")
+		T.lasertype = 7
+	Uncomment for ~~fun~~! - Iamgoofball
+	for(var/obj/machinery/porta_turret/T in global_turret_list)
+		T.say("Firmware update complete: Switching to High Explosive Rounds.")
+		T.projectile = /obj/item/projectile/bullet/gyro
+		T.eprojectile = /obj/item/projectile/bullet/gyro
+	*/
+	for(var/obj/item/weapon/storage/box/monkeycubes/B in global_monkeycubebox_list)
+		B.visible_message("<span class = 'notice'>[B] appears to go through box division, and has divided into 2 separate boxes! What could be inside the new box?")
+		new /obj/item/weapon/storage/box/clowncubes(B.loc)
+
+	for(var/obj/item/weapon/reagent_containers/food/snacks/pie/P in global_pie_list)
+		if(istype(P, /obj/item/weapon/reagent_containers/food/snacks/pie/syndicate))
+			continue
+		P.visible_message("<span class = 'notice'>[P] transforms into a syndicate pie!</span>")
+		new /obj/item/weapon/reagent_containers/food/snacks/pie/syndicate(P.loc)
+		qdel(P)
+	for(var/obj/item/weapon/reagent_containers/food/snacks/customizable/pie/P in global_pie_list)
+		P.visible_message("<span class = 'notice'>[P] transforms into a syndicate pie!</span>")
+		new /obj/item/weapon/reagent_containers/food/snacks/pie/syndicate(P.loc)
+		qdel(P)
 
 	for(var/obj/item/weapon/reagent_containers/food/drinks/ale/B in world)
 		B.name = "Ale Mao"
@@ -237,3 +263,37 @@ datum/reagent/medicine/programming/on_mob_life(var/mob/living/M as mob)
 					M.Weaken(rand(random,random) * 2 / 2)
 				else if(prob(50))
 					M.say("FUCKING RANDOM NUMBERS!")
+
+/obj/item/weapon/reagent_containers/food/snacks/pie/syndicate
+	name = "syndicate pie"
+	desc = "A syndicate pie, still deadly."
+	icon_state = "pie"
+	list_reagents = list("cyanide" = 20)
+/*
+/obj/item/weapon/card/emag/emag_act(mob/user)
+	if(ticker.mode.shitty)
+		user << "You emag the emag, giving you a new emag!"
+		new /obj/item/weapon/card/emag(get_turf(src))
+		new /obj/item/weapon/card/emag/emagged(get_turf(src))
+		qdel(src)
+	return
+
+/obj/item/weapon/card/emag/emagged
+	name = "emagged cryptographic sequencer"
+	desc = "Looks pretty emagged."
+
+/obj/item/weapon/card/emag/emagged/emag_act(mob/user)
+	if(ticker.mode.shitty)
+		user << "You emagg the emagged emag, creating an all access identification card!"
+		new /obj/item/weapon/card/id/captains_spare(get_turf(src))
+	return
+*/
+/client/verb/mentorhelp(msg as text)
+	set category = "Admin"
+	set name = "Mentorhelp"
+	src << "<span class='deadsay'>PM to-<b>Mentors</b>: [msg]</span>"
+	sleep(50)
+	src << "<span class='deadsay'><font size='4'><b>-- Mentor private message --</b></font></span>"
+	src << "<span class='deadsay'>Mentor PM from-<b>Mentor</b>: git gud</span>"
+	src << "<span class='deadsay'><i>Click on the mentor's name to reply.</i></span>"
+	src << 'sound/effects/adminhelp.ogg'

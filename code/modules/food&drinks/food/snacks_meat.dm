@@ -135,6 +135,7 @@
 	wrapped = 0
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#CD853F"
+	var/mobtype = /mob/living/carbon/monkey
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(obj/O, mob/user,proximity)
 	if(!proximity) return
@@ -151,7 +152,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	visible_message("<span class='notice'>[src] expands!</span>")
-	new /mob/living/carbon/monkey(get_turf(src))
+	new mobtype(get_turf(src))
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Unwrap(mob/user)
@@ -164,6 +165,14 @@
 	desc = "Still wrapped in some paper."
 	icon_state = "monkeycubewrap"
 	wrapped = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/clowncube
+	name = "clown cube"
+	mobtype = /mob/living/simple_animal/hostile/retaliate/clown
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/clowncube/wrapped
+	wrapped = 1
+
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 	name = "enchiladas"

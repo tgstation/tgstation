@@ -37,6 +37,7 @@
 	..()
 	return 1
 
+var/list/global_turret_list = list()
 
 /obj/machinery/turret
 	name = "turret"
@@ -56,6 +57,7 @@
 		// 4 = change (HONK)
 		// 5 = bluetag
 		// 6 = redtag
+		// 7 = rocket
 	var/health = 80
 	var/obj/machinery/turretcover/cover = null
 	var/popping = 0
@@ -80,6 +82,7 @@
 	..()
 	src.cover = new /obj/machinery/turretcover(src.loc)
 	src.cover.host = src
+	global_turret_list.Add(src)
 	return
 
 /obj/machinery/turretcover
@@ -227,6 +230,8 @@
 				A = new /obj/item/projectile/lasertag/bluetag( loc )
 			if(6)
 				A = new /obj/item/projectile/lasertag/redtag( loc )
+			if(7)
+				A = new /obj/item/projectile/bullet/gyro( loc )
 		A.original = target
 		use_power(500)
 	else
@@ -305,6 +310,7 @@
 	sleep(3)
 	flick("explosion", src)
 	spawn(13)
+		global_turret_list.Remove(src)
 		qdel(src)
 
 
