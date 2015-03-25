@@ -106,3 +106,120 @@
 
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
+
+
+
+/obj/item/weapon/psycho
+	name = "MEME KNIFE"
+	desc = "The memes are loose! Alert the administration!"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "knife"
+	throwforce = 69
+	w_class = 1
+	throw_speed = 5
+	throw_range = 8
+	force = 10
+	m_amt = 10
+	g_amt = 10
+
+/obj/item/weapon/psycho/knife
+	name = "pocket knife"
+	desc = "A small stainless-steel pocket knife. It's as sharp as the edge of a flatline."
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	w_class = 2
+	force = 13
+	throwforce = 15
+	m_amt = 75
+	g_amt = 0
+	embed_chance = 100
+	embedded_fall_chance = 25
+
+/obj/item/weapon/psycho/bat
+	name = "baseball bat"
+	desc = "A heavy wooden baseball bat."
+	icon_state = "bat"
+	w_class = 4
+	force = 17
+	throwforce = 5
+	throw_range = 3
+	m_amt = 0
+	g_amt = 0
+
+/obj/item/weapon/psycho/pipe
+	name = "lead pipe"
+	desc = "A section of lead piping. It seems designed to transport hydrogen gas."
+	icon_state = "paip"
+	w_class = 3
+	force = 12
+	throwforce = 5
+	throw_range = 4
+	m_amt = 100
+	g_amt = 0
+
+/obj/item/weapon/twohanded/golf_club
+	name = "golf club"
+	desc = "A golf club. It's long, heavy, and worn down - probably because of all its use in Paris."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "golf0"
+	w_class = 4
+	force = 5
+	force_unwielded = 5
+	force_wielded = 17
+	throwforce = 3
+	throw_range = 1
+	m_amt = 200
+	g_amt = 0
+
+/obj/item/weapon/twohanded/golf_club/update_icon()
+	icon_state = "golf[wielded]"
+	return
+
+/obj/item/weapon/psycho/frying_pan
+	name = "frying pan"
+	desc = "A grease-free steel frying pan. Reminds you of silver lights."
+	icon_state = "pan"
+	hitsound = 'sound/items/trayhit2.ogg'
+	w_class = 3
+	force = 14
+	throwforce = 4
+	m_amt = 150
+	g_amt = 0
+
+/obj/item/weapon/twohanded/sledgehammer
+	name = "sledgehammer"
+	desc = "A massive sledgehammer. It's unwieldly and probably more effective in two hands."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "sledge0"
+	force = 7
+	force_unwielded = 7
+	force_wielded = 22
+	throwforce = 10
+	throw_range = 1
+	w_class = 5
+	m_amt = 75 //the hammer head
+
+/obj/item/weapon/twohanded/sledgehammer/update_icon()
+	icon_state = "sledge[wielded]"
+	return
+
+/obj/item/weapon/psycho/machete
+	name = "machete"
+	desc = "A utilitarian machete. Bring out your inner animal."
+	icon_state = "machete"
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	w_class = 3
+	force = 16
+	throwforce = 14
+	embed_chance = 33
+	embedded_fall_chance = 50
+	m_amt = 105
+	g_amt = 0
+
+/obj/item/weapon/psycho/hammer
+	name = "hammer"
+	desc = "A utility hammer, found in any good carpenter's toolbox. Used by assassins in deep cover."
+	icon_state = "hammer"
+	force = 9
+	w_class = 2
+	throwforce = 4
+	m_amt = 25
