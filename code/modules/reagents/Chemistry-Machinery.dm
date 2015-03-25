@@ -268,7 +268,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/brewer
 	name = "Space-Brewery"
 	icon_state = "brewer"
-	var/obj/item/weapon/reagent_containers/glass/kettle = null
 	dispensable_reagents = list("tea","greentea","redtea", "coffee","milk","cream","water","hot_coco", "soymilk")
 
 
@@ -281,7 +280,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/soda_dispenser
 	name = "Soda Dispenser"
 	icon_state = "soda_dispenser"
-	var/obj/item/weapon/reagent_containers/glass/ = null
 	dispensable_reagents = list("cola", "sodawater", "lemon_lime", "dr_gibb", "spacemountainwind", "ice", "tonic")
 
 /obj/machinery/chem_dispenser/soda_dispenser/mapping
@@ -291,7 +289,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/booze_dispenser
 	name = "Booze Dispenser"
 	icon_state = "booze_dispenser"
-	var/obj/item/weapon/reagent_containers/glass/ = null
 	dispensable_reagents = list("beer", "whiskey", "tequila", "vodka", "vermouth", "rum", "cognac", "wine", "kahlua", "ale", "ice")
 
 /obj/machinery/chem_dispenser/booze_dispenser/mapping

@@ -4641,7 +4641,7 @@ var/global/list/tonio_doesnt_remove=list(
 	description = "Rejuvinating!"
 
 /datum/reagent/drink/coffee/seccoffee
-	name = "Wake up call"
+	name = "Wake Up Call"
 	id = "seccoffee"
 	description = "All the essentials."
 
