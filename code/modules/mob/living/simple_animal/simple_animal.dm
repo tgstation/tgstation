@@ -89,15 +89,7 @@
 
 	//Health
 	if(stat == DEAD)
-		if(health > 0)
-			icon_state = icon_living
-			dead_mob_list -= src
-			living_mob_list += src
-			stat = CONSCIOUS
-			density = 1
-			update_canmove()
 		return 0
-
 
 	if(health < 1 && stat != DEAD)
 		Die()
@@ -394,7 +386,6 @@
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
-	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them
 	dead_mob_list += src
 	icon_state = icon_dead
 	stat = DEAD
@@ -452,6 +443,9 @@
 
 /mob/living/simple_animal/revive()
 	health = maxHealth
+	icon_state = icon_living
+	density = 1
+	update_canmove()
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
