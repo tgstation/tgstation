@@ -4523,7 +4523,7 @@ var/global/list/chifir_doesnt_remove=list(
 	if(ishuman(M) && prob(5))
 		var/mob/living/carbon/human/H=M
 		H.vomit()
-		holder.remove_reagent(id,volume) // Remove all charcoal.
+		holder.remove_reagent(id,volume)
 		return
 
 	for(var/datum/reagent/reagent in holder.reagent_list)
@@ -4605,7 +4605,7 @@ var/global/list/tonio_doesnt_remove=list(
 	if(ishuman(M) && prob(5))
 		var/mob/living/carbon/human/H=M
 		H.vomit()
-		holder.remove_reagent("tonio",volume) // Remove all charcoal.
+		holder.remove_reagent("tonio",volume)
 		return
 
 	for(var/datum/reagent/reagent in holder.reagent_list)
