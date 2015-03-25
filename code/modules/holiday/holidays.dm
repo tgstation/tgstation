@@ -54,7 +54,7 @@
 // The actual holidays
 
 /datum/holiday/new_year
-	name = "New Year"
+	name = NEW_YEAR
 	begin_day = 30 // 1 day early
 	begin_month = DECEMBER
 	end_day = 5 //4 days extra
@@ -65,8 +65,8 @@
 	begin_day = 2
 	begin_month = FEBRUARY
 
-/datum/holiday/velentines
-	name = "Velentine's Day"
+/datum/holiday/valentines
+	name = VALENTINES
 	begin_day = 9 //6 days early
 	begin_month = FEBRUARY
 	end_day = 15 //1 day extra
@@ -90,7 +90,7 @@
 	begin_month = MARCH
 
 /datum/holiday/april_fools
-	name = "April Fool's Day"
+	name = APRIL_FOOLS
 	begin_day = 1
 	begin_month = APRIL
 	end_day = 8 //7 days extra so everyone can enjoy the festivities
@@ -177,7 +177,7 @@
 	begin_month = OCTOBER
 
 /datum/holiday/halloween
-	name = "Halloween"
+	name = HALLOWEEN
 	begin_day = 24 //7 days early
 	begin_month = OCTOBER
 	end_day = 7 //7 days extra
@@ -220,7 +220,7 @@
 	begin_month = DECEMBER
 
 /datum/holiday/xmas
-	name = "Christmas"
+	name = CHRISTMAS
 	begin_day = 18 //7 days early
 	begin_month = DECEMBER
 	end_day = 8 //14 days extra, christmas is important
@@ -247,7 +247,7 @@
 	return pick("Mike","Friday","Evil","Myers","Murder","Deathly","Stabby")
 
 /datum/holiday/easter
-	name = "Easter"
+	name = EASTER
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 6
 

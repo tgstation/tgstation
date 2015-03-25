@@ -13,7 +13,7 @@
 	var/max_occurrences = 20		//The maximum number of times this event can occur (naturally), it can still be forced.
 								//By setting this to 0 you can effectively disable an event.
 
-	var/holidayID				//string which should match the events.holiday variable if you wish this event to be holiday-specific
+	var/holidayID = ""			//string which should be in the SSevents.holidays list if you wish this event to be holiday-specific
 								//anything with a (non-null) holidayID which does not match holiday, cannot run.
 	var/wizardevent = 0
 

@@ -65,7 +65,7 @@ var/datum/subsystem/events/SSevent
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.earliest_start >= world.time)		continue
 		if(E.holidayID)
-			if(!holidays[E.holidayID])			continue
+			if(!holidays || !holidays[E.holidayID])			continue
 		if(E.weight < 0)						//for round-start events etc.
 			if(E.runEvent() == PROCESS_KILL)
 				E.max_occurrences = 0
@@ -82,7 +82,7 @@ var/datum/subsystem/events/SSevent
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.earliest_start >= world.time)		continue
 		if(E.holidayID)
-			if(!holidays[E.holidayID])			continue
+			if(!holidays || !holidays[E.holidayID])			continue
 		sum_of_weights -= E.weight
 
 		if(sum_of_weights <= 0)				//we've hit our goal
