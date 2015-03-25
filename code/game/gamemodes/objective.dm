@@ -265,6 +265,7 @@ datum/objective/escape/check_completion()
 datum/objective/escape/escape_with_identity
 	dangerrating = 10
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
+	var/target_missing_id
 
 datum/objective/escape/escape_with_identity/find_target()
 	target = ..()
@@ -273,7 +274,16 @@ datum/objective/escape/escape_with_identity/find_target()
 datum/objective/escape/escape_with_identity/update_explanation_text()
 	if(target && target.current)
 		target_real_name = target.current.real_name
-		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role] while wearing their identification card."
+		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role]"
+		var/mob/living/carbon/human/H
+		if(ishuman(target.current))
+			H = target.current
+		if(H && H.get_id_name() != target_real_name)
+			target_missing_id = 1
+		else
+			explanation_text += " while wearing their identification card"
+		explanation_text += "." //Proper punctuation is important!
+
 	else
 		explanation_text = "Free Objective."
 
@@ -285,7 +295,7 @@ datum/objective/escape/escape_with_identity/check_completion()
 	var/mob/living/carbon/human/H = owner.current
 	if(..())
 		if(H.dna.real_name == target_real_name)
-			if(H.get_id_name()== target_real_name)
+			if(H.get_id_name()== target_real_name || target_missing_id)
 				return 1
 	return 0
 
