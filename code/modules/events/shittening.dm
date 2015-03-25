@@ -35,15 +35,16 @@
 		F.visible_message("<span class='deadsay'><b><i>Strange energies suddenly swirl around \the [F], which begins to glow with an eldritch light.</i></b></span>")
 		new /obj/item/weapon/reagent_containers/food/snacks/faggot/deadchat(F.loc)
 		qdel(F)
+	/*
 	for(var/obj/machinery/turret/T in global_turret_list)
 		T.say("Firmware update complete: Switching to High Explosive Rounds.")
 		T.lasertype = 7
-
+	Uncomment for ~~fun~~! - Iamgoofball
 	for(var/obj/machinery/porta_turret/T in global_turret_list)
 		T.say("Firmware update complete: Switching to High Explosive Rounds.")
 		T.projectile = /obj/item/projectile/bullet/gyro
 		T.eprojectile = /obj/item/projectile/bullet/gyro
-
+	*/
 	for(var/obj/item/weapon/storage/box/monkeycubes/B in global_monkeycubebox_list)
 		B.visible_message("<span class = 'notice'>[B] appears to go through box division, and has divided into 2 separate boxes! What could be inside the new box?")
 		new /obj/item/weapon/storage/box/clowncubes(B.loc)
@@ -268,7 +269,7 @@ datum/reagent/medicine/programming/on_mob_life(var/mob/living/M as mob)
 	desc = "A syndicate pie, still deadly."
 	icon_state = "pie"
 	list_reagents = list("cyanide" = 20)
-
+/*
 /obj/item/weapon/card/emag/emag_act(mob/user)
 	if(ticker.mode.shitty)
 		user << "You emag the emag, giving you a new emag!"
@@ -286,7 +287,7 @@ datum/reagent/medicine/programming/on_mob_life(var/mob/living/M as mob)
 		user << "You emagg the emagged emag, creating an all access identification card!"
 		new /obj/item/weapon/card/id/captains_spare(get_turf(src))
 	return
-
+*/
 /client/verb/mentorhelp(msg as text)
 	set category = "Admin"
 	set name = "Mentorhelp"
