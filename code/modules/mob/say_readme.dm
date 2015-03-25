@@ -52,7 +52,7 @@ global procs
 		What languages this object speaks/understands. If the languages of the speaker don't match the languages
 		of the hearer, the message will be modified in the hearer's lang_treat().
 	
-	verb_say/verb_ask/verb_yell
+	verb_say/verb_ask/verb_exclaim/verb_yell
 		These determine what the verb is for their respective action. Used in say_quote().
 
 	say(message)
@@ -74,8 +74,12 @@ global procs
 		Modifies the message by comparing the languages of the speaker with the languages of the hearer.
 		Called on the hearer.
 
-	say_quote(text, spans)
+	say_quote(input, spans)
 		Adds a verb and quotes to a message. Also attaches span classes to a message. Verbs are determined by verb_say/verb_ask/verb_yell variables. Called on the speaker.
+	
+	get_spans(input, spans)
+		Returns the list of spans that are always applied to messages of this atom.
+		Always return ..() | + youroutput when overriding this proc!
 
 /mob
 	say_dead(message)
