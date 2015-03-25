@@ -171,6 +171,22 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 6
 
+/datum/uplink_item/dangerous/foamsmg
+	name = "Toy Submachine Gun"
+	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
+	item = /obj/item/weapon/gun/projectile/automatic/c20r/toy
+	cost = 12
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
+
+/datum/uplink_item/dangerous/foammachinegun
+	name = "Toy Machine Gun"
+	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating riot grade darts, that can briefly incapacitate someone in just one volley."
+	item = /obj/item/weapon/gun/projectile/automatic/l6_saw/toy
+	cost = 30
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
+
 /datum/uplink_item/dangerous/viscerators
 	name = "Viscerator Delivery Grenade"
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
@@ -287,6 +303,14 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
+/datum/uplink_item/ammo/toydarts
+	name = "Box of Riot Darts"
+	desc = "A box of 40 Donksoft foam riot darts, for reloading any compatible foam dart gun. Don't forget to share!"
+	item = /obj/item/ammo_box/foambox/riot
+	cost = 10
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
+
 // STEALTHY WEAPONS
 
 /datum/uplink_item/stealthy_weapons
@@ -299,6 +323,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/throwing_stars
 	cost = 6
 	excludefrom = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/stealthy_weapons/foampistol
+	name = "Toy Gun (with Stun Darts)"
+	desc = "An innocent looking toy pistol designed to fire foam darts. Comes loaded with riot grade darts, to incapacitate a target."
+	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
+	cost = 10
+	surplus = 10
 
 /datum/uplink_item/stealthy_weapons/sleepy_pen
 	name = "Sleepy Pen"

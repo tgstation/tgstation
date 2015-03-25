@@ -27,15 +27,6 @@
 	bot_type = SEC_BOT
 	bot_filter = RADIO_SECBOT
 
-	//List of weapons that secbots will not arrest for
-	var/safe_weapons = list(\
-		/obj/item/weapon/gun/energy/laser/bluetag,\
-		/obj/item/weapon/gun/energy/laser/redtag,\
-		/obj/item/weapon/gun/energy/laser/practice,\
-		/obj/item/weapon/melee/classic_baton/telescopic,\
-		/obj/item/weapon/gun/energy/kinetic_accelerator)
-
-
 /obj/machinery/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
 	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
@@ -188,6 +179,17 @@ Auto Patrol: []"},
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = 0
 		icon_state = "secbot[on]"
+
+/obj/machinery/bot/secbot/bullet_act(var/obj/item/projectile/Proj)
+	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
+			if (!Proj.nodamage && Proj.damage < src.health)
+				threatlevel = Proj.firer.assess_threat(src)
+				threatlevel += 6
+				if(threatlevel >= 4)
+					target = Proj.firer
+					mode = BOT_HUNT
+	..()
 
 /obj/machinery/bot/secbot/bot_process()
 	if (!..())
@@ -350,9 +352,8 @@ Auto Patrol: []"},
 		else
 			continue
 /obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
-	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
-		if(!(slot_item.type in safe_weapons))
-			return 1
+	if(slot_item && slot_item.needs_permit)
+		return 1
 	return 0
 
 /obj/machinery/bot/secbot/explode()

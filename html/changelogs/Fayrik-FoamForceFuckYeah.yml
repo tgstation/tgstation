@@ -1,0 +1,14 @@
+author: Fayrik
+
+delete-after: True
+
+changes: 
+  - rscdel: "Deleted the toy crossbow that wasn't a gun, but flung projectiles like a gun. Why was that even a thing?"
+  - rscadd: "Added an abstract new type of reusable ammo."
+  - rscadd: "Added three new foam force guns and a foam force crossbow, all of which take the new foam dart ammo."
+  - rscadd: "Added foam force dart boxes to the autolathe, and two crates orderable from cargo containing the new guns."
+  - rscadd: "Added two new donksoft guns, the syndicate's own brand of Foam Force. Available in all good uplinks!"
+  - tweak: "New crossbow can be won as an arcade prize."
+  - tweak: "All kinds of ammo containers can now be used to rapidly collect live ammunition on the ground."
+  - tweak: "Speedloaders and traditional ammo boxes can now be restocked."
+  - bugfix: "Security bots now react to being shot."
