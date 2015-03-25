@@ -255,7 +255,7 @@
 
 			if(possible_targets.len)
 				if(spell_flags & SELECTABLE) //if we are allowed to choose. see setup.dm for details
-					targets += input("Choose the target for the spell.", "Targeting") as anything in possible_targets
+					targets += input("Choose the target for the spell.", "Targeting") as null|anything in possible_targets
 				else
 					targets += pick(possible_targets)
 			//Adds a safety check post-input to make sure those targets are actually in range.
@@ -301,6 +301,8 @@
 
 	return targets
 /spell/targeted/eat/cast(list/targets, mob/user)
+	if(!targets || !targets.len)
+		return 0
 	var/atom/movable/the_item = targets[1]
 	if(!the_item || !the_item.Adjacent(usr))
 		return
