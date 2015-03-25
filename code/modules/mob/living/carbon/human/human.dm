@@ -1206,11 +1206,11 @@
 		return 0
 	if((temp_turf.z != our_turf.z) || M.stat!=CONSCIOUS) //Not on the same zlevel as us or they're dead.
 		//world << "[(temp_turf.z != our_turf.z) ? "not on the same zlevel as [M]" : "[M] is not concious"]"
-		user << "Cannot establish a telepathic link with [M]."
+		src << "Cannot establish a telepathic link with [M]."
 		return 0
 	if(M_PSY_RESIST in M.mutations)
 		//world << "[M] has psy resist"
-		user << "Cannot maintain a telepathic link with [M]."
+		src << "Cannot maintain a telepathic link with [M]."
 		return 0
 	return 1
 
