@@ -368,3 +368,25 @@
 		reagents.add_reagent("fluorosurfactant", 20)
 
 */
+
+/obj/item/weapon/reagent_containers/glass/kettle
+	name = "Kettle"
+	desc = "A pot made for holding hot drinks. Can hold up to 50 units."
+	icon_state = "kettle"
+	m_amt = 200
+	volume = 50
+	w_type = RECYK_GLASS
+	amount_per_transfer_from_this = 10
+	flags = FPRINT  | OPENCONTAINER
+
+/obj/item/weapon/reagent_containers/glass/kettle/red
+	icon_state = "kettle_red"
+
+/obj/item/weapon/reagent_containers/glass/kettle/blue
+	icon_state = "kettle_blue"
+
+/obj/item/weapon/reagent_containers/glass/kettle/purple
+	icon_state = "kettle_purple"
+
+/obj/item/weapon/reagent_containers/glass/kettle/green
+	icon_state = "kettle_green"
