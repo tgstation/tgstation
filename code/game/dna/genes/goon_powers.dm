@@ -84,6 +84,8 @@
 		..(M,connected,flags)
 		var/spell/granted = new spelltype
 		M.add_spell(granted, "genetic_spell_ready")
+		if(!granted_spells)
+			granted_spells = list()
 		granted_spells += granted
 		return 1
 
@@ -255,7 +257,9 @@
 
 			if(possible_targets.len)
 				if(spell_flags & SELECTABLE) //if we are allowed to choose. see setup.dm for details
-					targets += input("Choose the target for the spell.", "Targeting") as null|anything in possible_targets
+					var/atom/movable/M = input("Choose something to eat.", "Targeting") as null|anything in possible_targets
+					if(M)
+						targets += M
 				else
 					targets += pick(possible_targets)
 			//Adds a safety check post-input to make sure those targets are actually in range.
@@ -269,7 +273,9 @@
 
 		if(spell_flags & SELECTABLE)
 			for(var/i = 1; i<=max_targets, i++)
-				var/atom/movable/M = input("Choose the target for the spell.", "Targeting") as anything in possible_targets
+				var/atom/movable/M = input("Choose something to eat.", "Targeting") as null|anything in possible_targets
+				if(!M)
+					break
 				if(M in view_or_range(range, user, selection_type))
 					targets += M
 					possible_targets -= M
@@ -300,6 +306,7 @@
 			targets -= I
 
 	return targets
+
 /spell/targeted/eat/cast(list/targets, mob/user)
 	if(!targets || !targets.len)
 		return 0
