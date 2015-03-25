@@ -39,17 +39,17 @@
 	var/stamina = 0
 	var/jitter = 0
 	var/forcedodge = 0
-
+	// 1 to pass solid objects, 2 to pass solid turfs (results in bugs, bugs and tons of bugs)
 	var/range = 0
 	var/proj_hit = 0
 
-/obj/item/projectile/proc/Range()
-	if(range)
-		range--
-		if(range <= 0)
-			on_range()
-	else
+/obj/item/projectile/proc/Range(var/remove=1)
+	if(range <= 0) //-1 for infinite range
 		return
+
+	range -= remove
+	if(range <= 0)
+		qdel()
 
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
 	proj_hit = 1
@@ -102,6 +102,7 @@
 		bumped = 0 // reset bumped variable!
 		loc = new_loc
 		permutated.Add(A)
+		Range()
 		return 0
 	qdel(src)
 

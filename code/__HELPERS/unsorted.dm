@@ -1267,33 +1267,33 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			var/turf/T = locate(final_x, final_y, AM.z)
 			if(T)
 				return T
-				
+
 //Finds the distance between two atoms, in pixels
 /proc/getPixelDistance(var/atom/A, var/atom/B)
 	if(!istype(A)||!istype(B))
 		return 0
-	
+
 	var/_x1 = A.x
 	var/_x2 = B.x
 	var/_y1 = A.y
 	var/_y2 = B.y
-	
+
 	//Ensure _x1 is bigger, simplicity
 	if(_x2 > _x1)
 		var/tx = _x1
 		_x1 = _x2
 		_x2 = tx
-	
+
 	//Ensure _y1 is bigger, simplicity
 	if(_y2 > _y1)
 		var/ty = _y1
 		_y1 = _y2
 		_y2 = ty
-	
+
 	//DY/DX
 	var/dx = _x1 - _x2 + A.pixel_x + B.pixel_x
 	var/dy = _y1 - _y2 + A.pixel_y + B.pixel_y
-	
+
 	//Distance check
 	if(dx == 0 && dy == 0) //No distance, don't bother calculating
 		return 0
@@ -1359,7 +1359,7 @@ var/global/list/common_tools = list(
 			return 1000
 		else
 			return 0
-	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		return 3800
 	if(istype(W, /obj/item/weapon/melee/energy))
 		var/obj/item/weapon/melee/energy/O = W

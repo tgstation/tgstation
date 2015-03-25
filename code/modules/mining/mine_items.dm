@@ -150,20 +150,6 @@
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls.."
 	drillcost = 200
 
-/obj/item/weapon/pickaxe/plasmacutter
-	name = "plasma cutter"
-	icon_state = "plasmacutter"
-	item_state = "gun"
-	w_class = 3 //it is smaller than the pickaxe
-	damtype = "fire"
-	throwforce = 8
-	digspeed = 30 //Mines slightly faster than a normal pickaxe, but doubles as an unlimited-ammo welding tool in some cases such as wall deconstruction
-	digsound = list('sound/weapons/plasma_cutter.ogg')
-	hitsound = 'sound/weapons/plasma_cutter.ogg'
-	origin_tech = "materials=4;plasmatech=3;engineering=3"
-	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-
-
 /*****************************Shovel********************************/
 
 /obj/item/weapon/shovel
