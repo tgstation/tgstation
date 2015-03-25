@@ -157,6 +157,19 @@
 		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
 	feedback_add_details("admin_verb","TAmbi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+// This needs a toggle because you people are awful and spammed terrible music
+/client/verb/toggle_instruments()
+	set name = "Hear/Silence Instruments"
+	set category = "Preferences"
+	set desc = "Toggles hearing musical instruments like the violin and piano"
+	prefs.toggles ^= SOUND_INSTRUMENTS
+	prefs.save_preferences()
+	if(prefs.toggles & SOUND_INSTRUMENTS)
+		src << "You will now hear people playing musical instruments."
+	else
+		src << "You will no longer hear musical instruments."
+	feedback_add_details("admin_verb","TInstru") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 //be special
 /client/verb/toggle_be_special(role in be_special_flags)
 	set name = "Toggle SpecialRole Candidacy"
