@@ -9,8 +9,8 @@
 /obj/item/stack/sheet/glass
 	w_type = RECYK_GLASS
 	melt_temperature = MELTPOINT_GLASS
-	var/created_window = /obj/structure/window/basic
-	var/full_window = /obj/structure/window/full/basic
+	var/created_window = /obj/structure/window
+	var/full_window = /obj/structure/window/full
 	var/windoor = null
 	var/reinforced = 0
 	var/rglass = 0
@@ -76,8 +76,8 @@
 					if(!found)
 						dir_to_set = direction
 						break
-				var/obj/structure/window/W = new created_window( user.loc, 0 )
-				W.state = 0
+				var/obj/structure/window/W = new created_window(user.loc, 0)
+				W.d_state = 0
 				W.dir = dir_to_set
 				W.ini_dir = W.dir
 				W.anchored = 0
@@ -92,7 +92,7 @@
 					user << "<span class='warning'>There is a window in the way.</span>"
 					return 1
 				var/obj/structure/window/W = new full_window( user.loc, 0 )
-				W.state = 0
+				W.d_state = 0
 				W.dir = SOUTHWEST
 				W.ini_dir = SOUTHWEST
 				W.anchored = 0
@@ -157,7 +157,7 @@
 						dir_to_set = direction
 						break
 				var/obj/structure/window/W = new created_window( user.loc, 0 )
-				W.state = 0
+				W.d_state = 0
 				W.dir = dir_to_set
 				W.ini_dir = W.dir
 				W.anchored = 0
@@ -172,7 +172,7 @@
 					user << "<span class='warning'>There is a window in the way.</span>"
 					return 1
 				var/obj/structure/window/W = new full_window( user.loc, 0 )
-				W.state = 0
+				W.d_state = 0
 				W.dir = SOUTHWEST
 				W.ini_dir = SOUTHWEST
 				W.anchored = 0
@@ -246,6 +246,7 @@
 /*
  * Plasma Glass sheets
  */
+
 /obj/item/stack/sheet/glass/plasmaglass
 	name = "plasma glass"
 	desc = "A very strong and very resistant sheet of a plasma-glass alloy."
@@ -254,11 +255,11 @@
 	sname = "plasma"
 	g_amt=CC_PER_SHEET_GLASS
 	origin_tech = "materials=3;plasmatech=2"
-	created_window = /obj/structure/window/plasmabasic
-	full_window = /obj/structure/window/full/plasmabasic
+	created_window = /obj/structure/window/plasma
+	full_window = /obj/structure/window/full/plasma
 	rglass = /obj/item/stack/sheet/glass/plasmarglass
 	perunit = 2875 //average of plasma and glass
-	melt_temperature = MELTPOINT_STEEL+500
+	melt_temperature = MELTPOINT_STEEL + 500
 	glass_quality = 1.15 //Can you imagine a world in which plasmaglass is worse than rglass
 	shealth = 20
 	shard_type = /obj/item/weapon/shard/plasma
@@ -281,8 +282,8 @@
 	m_amt = 1875
 	melt_temperature = MELTPOINT_STEEL+500 // I guess...?
 	origin_tech = "materials=4;plasmatech=2"
-	created_window = /obj/structure/window/plasmareinforced
-	full_window = /obj/structure/window/full/plasmareinforced
+	created_window = /obj/structure/window/reinforced/plasma
+	full_window = /obj/structure/window/full/reinforced/plasma
 	windoor = /obj/structure/windoor_assembly/plasma
 	perunit = 2875
 	reinforced = 1
