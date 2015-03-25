@@ -98,7 +98,8 @@
 			else
 				new /obj/item/weapon/psycho/knife(src)
 			new /obj/item/weapon/gun/projectile/revolver(src)
-			new /obj/item/clothing/shoes/syndigaloshes(src)
+			var/obj/item/weapon/implanter/I = new /obj/item/weapon/implanter(src)
+			I.imp = new /obj/item/weapon/implant/adrenalin(I)
 			return
 
 /obj/item/weapon/storage/box/syndie_kit
