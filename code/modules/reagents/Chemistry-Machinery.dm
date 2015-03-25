@@ -575,6 +575,67 @@
 	desc = "Used to create condiments and other cooking supplies."
 	condi = 1
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/machinery/chem_master/constructable
+	name = "ChemMaster 2999"
+	desc = "Used to seperate chemicals and distribute them in a variety of forms."
+	
+/obj/machinery/chem_master/constructable/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/chem_master(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
+	
+/obj/machinery/chem_master/constructable/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
+
+	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0_", B))
+		if(beaker)
+			beaker.loc = src.loc
+			beaker = null
+			reagents.clear_reagents()
+		if(loaded_pill_bottle)
+			loaded_pill_bottle.loc = src.loc
+			loaded_pill_bottle = null
+		return
+		
+	if(exchange_parts(user, B))
+		return
+		
+	if(panel_open)
+		if(istype(B, /obj/item/weapon/crowbar))
+			default_deconstruction_crowbar(B)
+			return 1
+		else
+			user << "<span class='warning'>You can't use the [src.name] while it's panel is opened.</span>"
+			return 1
+
+	if(istype(B, /obj/item/weapon/reagent_containers/glass))
+		if(src.beaker)
+			user << "<span class='alert'>A beaker is already loaded into the machine.</span>"
+			return
+		src.beaker = B
+		user.drop_item()
+		B.loc = src
+		user << "You add the beaker to the machine!"
+		src.updateUsrDialog()
+		icon_state = "mixer1"
+
+	else if(!condi && istype(B, /obj/item/weapon/storage/pill_bottle))
+		if(src.loaded_pill_bottle)
+			user << "<span class='alert'>A pill bottle is already loaded into the machine.</span>"
+			return
+		src.loaded_pill_bottle = B
+		user.drop_item()
+		B.loc = src
+		user << "You add the pill bottle into the dispenser slot!"
+		src.updateUsrDialog()
+
+	return
+
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 

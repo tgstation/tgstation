@@ -1,0 +1,6 @@
+author: Pennwick
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added a buildable Chem Master, board is in Circuit Imprinter."
