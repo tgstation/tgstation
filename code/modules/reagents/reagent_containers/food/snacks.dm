@@ -3193,7 +3193,7 @@
 	icon_state = "clown_chips"
 	item_state = "clown_chips"
 
-/obj/item/weapon/reagent_containers/food/snacks/chip/scookable/clown/New()
+/obj/item/weapon/reagent_containers/food/snacks/chip/cookable/clown/New()
 	..()
 	reagents.add_reagent("nutriment", 5)
 	reagents.add_reagent("honkserum", 5)
