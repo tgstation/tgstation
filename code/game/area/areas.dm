@@ -43,7 +43,6 @@
 	..()
 
 	power_change()		// all machines set to current power level, also updates lighting icon
-	InitializeLighting()
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructure so that it stops the icons being screwed up in the map editor.
 
@@ -223,7 +222,7 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && (!requires_power||power_environ) && !lighting_space)//If it doesn't require power, can still activate this proc.
+	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
 		if(fire && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)
@@ -238,6 +237,8 @@
 	//	new lighting behaviour with obj lights
 		icon_state = null
 
+/area/space/updateicon()
+	icon_state = null
 
 /*
 #define EQUIP 1
@@ -251,8 +252,6 @@
 		return 1
 	if(master.always_unpowered)
 		return 0
-	if(src.lighting_space)
-		return 0 // Nope sorry
 	switch(chan)
 		if(EQUIP)
 			return master.power_equip
@@ -261,6 +260,9 @@
 		if(ENVIRON)
 			return master.power_environ
 
+	return 0
+
+/area/space/powered(chan) //Nope.avi
 	return 0
 
 // called when power status changes

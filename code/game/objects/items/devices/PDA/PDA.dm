@@ -21,7 +21,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
-	var/fon = 0 //Is the flashlight function on?
+	var/fon = 1 //Is the flashlight function on?
 	var/f_lum = 3 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
@@ -195,6 +195,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/ai
 	icon_state = "NONE"
 	ttone = "data"
+	fon = 0
 	mode = 5
 	noreturn = 1
 	detonate = 0
@@ -223,6 +224,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/New()
 	..()
+	if(fon)
+		if(!isturf(loc))
+			loc.AddLuminosity(f_lum)
+			SetLuminosity(0)
+		else
+			SetLuminosity(f_lum)
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)

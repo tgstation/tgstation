@@ -46,10 +46,12 @@
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
-
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
 		return
+
+	if(.)
+		Moved(oldloc, direct)
 
 	last_move = direct
 
@@ -57,6 +59,14 @@
 		if(loc && direct && last_move == direct)
 			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
 				newtonian_move(last_move)
+
+//Called after a successful Move(). By this point, we've already moved
+/atom/movable/proc/Moved(atom/OldLoc, Dir)
+	if(light)
+		light.changed = 1
+		light.__x = x
+		light.__y = y
+	return 1
 
 /atom/movable/Del()
 	if(isnull(gc_destroyed) && loc)

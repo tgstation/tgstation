@@ -137,7 +137,7 @@
 
 /datum/spacevine_mutation/light/on_grow(obj/effect/spacevine/holder)
 	if(prob(10*severity))
-		holder.luminosity = 4
+		holder.SetLuminosity(4)
 
 /datum/spacevine_mutation/toxicity
 	name = "toxic"

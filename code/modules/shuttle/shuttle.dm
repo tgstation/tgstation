@@ -321,6 +321,8 @@
 			for(var/obj/O in T0)
 				if(O.invisibility >= 101)
 					continue
+				if(O == T0.lighting_object)
+					continue
 				O.loc = T1
 
 				//close open doors
@@ -350,13 +352,13 @@
 
 		//air system updates
 		for(var/turf/T1 in L1)
-			T1.shift_to_subarea()
+			T1.redraw_lighting()
 			SSair.remove_from_active(T1)
 			T1.CalculateAdjacentTurfs()
 			SSair.add_to_active(T1,1)
 
 		for(var/turf/T0 in L0)
-			T0.shift_to_subarea()
+			T0.redraw_lighting()
 			SSair.remove_from_active(T0)
 			T0.CalculateAdjacentTurfs()
 			SSair.add_to_active(T0,1)
