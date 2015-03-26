@@ -217,7 +217,7 @@
 /obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(stat & NOPOWER)
 		user << "<span class='notice'>\The [src] is unpowered and useless.</span>"
-		return
+		return 1
 
 	if(..())
 		return 1
@@ -267,6 +267,7 @@
 		return 1
 	item_quants = sortList(item_quants)
 	updateUsrDialog()
+	return 1
 
 /obj/machinery/smartfridge/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
