@@ -312,6 +312,9 @@
 	ganghud.leave_hud(defector_mind.current)
 	set_antag_hud(defector_mind.current, null)
 
+/datum/game_mode/gang/late_start_round()
+	makeGangsters()
+
 ///////////////////////////
 //Checks for gang victory//
 ///////////////////////////

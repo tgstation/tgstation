@@ -188,6 +188,8 @@
 	synd_mob.update_icons()
 	return 1
 
+/datum/game_mode/nuclear/late_start_round()
+	makeNukeTeam()
 
 /datum/game_mode/nuclear/check_win()
 	if (nukes_left == 0)

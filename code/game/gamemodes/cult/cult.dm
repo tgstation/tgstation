@@ -255,10 +255,12 @@
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(player.mind && !is_convertable_to_cult(player.mind))
+		if(player.mind && !is_convertable_to_cult(player.mind) && player.stat != DEAD)
 			ucs += player.mind
 	return ucs
 
+/datum/game_mode/cult/late_start_round()
+	makeCult()
 
 /datum/game_mode/cult/proc/check_cult_victory()
 	var/cult_fail = 0

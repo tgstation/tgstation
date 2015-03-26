@@ -32,7 +32,9 @@
 	var/list/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
+	var/latejoin_friendly   //Only modes with this set will attempt to use make_antag_chance() for new arrivals
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
+	var/metamode			//A mode of modes
 
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
@@ -153,11 +155,20 @@
 	message_admins("The roundtype will be converted. If you feel that the round should not continue, <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
 	spawn(rand(1800,4200)) //somewhere between 3 and 7 minutes from now
-		for(var/mob/living/carbon/human/H in antag_canadates)
-			replacementmode.make_antag_chance(H)
+		if(latejoin_friendly) //make_antag_chance handles each player seperately
+			for(var/mob/living/carbon/human/H in antag_canadates)
+				replacementmode.make_antag_chance(H)
+		else //late_start_round handles the round as a whole
+			late_start_round()
 		round_converted = 2
 		message_admins("The roundtype has been converted, antagonists may have been created")
 	return 1
+
+///late_start_round()
+///Jumpstarts a round added after roundstart
+/datum/game_mode/proc/late_start_round()
+	if(pre_setup())
+		post_setup()
 
 ///process()
 ///Called by the gameticker

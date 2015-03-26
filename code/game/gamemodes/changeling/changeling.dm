@@ -13,6 +13,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
+	latejoin_friendly = 1
 	reroll_friendly = 1
 
 

@@ -168,6 +168,8 @@
 	wizard_mob.update_icons()
 	return 1
 
+/datum/game_mode/wizard/late_start_round()
+	makeWizard()
 
 /datum/game_mode/wizard/check_finished()
 
