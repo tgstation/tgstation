@@ -39,11 +39,13 @@
 	death()
 
 /mob/living/simple_animal/mouse/death(gibbed)
-	..(gibbed)
 	if(!ckey)
+		..(1)
 		var/obj/item/trash/deadmouse/M = new(src.loc)
-		M.icon_state = src.icon_dead
+		M.icon_state = icon_dead
 		qdel(src)
+	else
+		..(gibbed)
 
 /mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )

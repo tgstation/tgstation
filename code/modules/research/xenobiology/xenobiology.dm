@@ -219,7 +219,7 @@
 	icon_state = "bottle16"
 
 /obj/item/weapon/slimesteroid/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
-	if(!istype(M, /mob/living/simple_animal/slime))//If target is not a slime.
+	if(!isslime(M))//If target is not a slime.
 		user << "<span class='warning'> The steroid only works on baby slimes!</span>"
 		return ..()
 	if(M.is_adult) //Can't tame adults

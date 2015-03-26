@@ -51,7 +51,7 @@
 		M.unEquip(src)	//so icons update :[
 		qdel(src)
 		return 0
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		if(!canconsume(M, user))
 			return 0
 
@@ -79,7 +79,7 @@
 				M << "<span class='notice'>You cannot force any more of \the [src] to go down your throat.</span>"
 				return 0
 		else
-			if(! (isslime(M) || isbrain(M)) )		//If you're feeding it to someone else.
+			if(!isbrain(M))		//If you're feeding it to someone else.
 				if(wrapped)
 					return 0
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))

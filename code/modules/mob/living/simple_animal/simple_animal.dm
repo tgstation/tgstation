@@ -37,7 +37,7 @@
 	var/maxbodytemp = 350
 
 	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
-	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0) //Leaving something at 0 means it's off - has no maximum
+	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0) //Leaving something at 0 means it's off - has no maximum
 	var/unsuitable_atmos_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
 
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
@@ -71,10 +71,7 @@
 	..()
 
 /mob/living/simple_animal/updatehealth()
-	if(health > maxHealth)
-		health = maxHealth
-	..()
-	return
+	health = max(maxHealth - getBruteLoss(), 0)
 
 /mob/living/simple_animal/Life()
 	if(..())
@@ -85,7 +82,7 @@
 		return 1
 
 /mob/living/simple_animal/handle_regular_status_updates()
-	if(..())
+	if(..()) //alive
 		if(health < 1)
 			death()
 
@@ -269,7 +266,7 @@
 			M.do_attack_animation(src)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
-			adjustBruteLoss(harm_intent_damage)
+			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked", admin=0)
 			updatehealth()
 			return 1
@@ -313,9 +310,9 @@
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M as mob)
 	if(..()) //successful slime attack
-		var/damage = rand(5, 30)
+		var/damage = rand(15, 25)
 		if(M.is_adult)
-			damage = rand(10, 40)
+			damage = rand(20, 35)
 		attack_threshold_check(damage)
 		return 1
 
@@ -381,6 +378,7 @@
 	health = 0
 	icon_state = icon_dead
 	stat = DEAD
+	density = 0
 	lying = 1
 	if(!gibbed)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
@@ -425,6 +423,10 @@
 
 /mob/living/simple_animal/revive()
 	health = maxHealth
+	icon_state = icon_living
+	lying = 0
+	density = 1
+	update_canmove()
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3

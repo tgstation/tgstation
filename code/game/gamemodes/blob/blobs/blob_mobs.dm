@@ -87,6 +87,7 @@
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
+	..(1)
 	// On death, create a small smoke of harmful gas (s-Acid)
 	var/datum/effect/effect/system/chem_smoke_spread/S = new
 	var/turf/location = get_turf(src)
@@ -104,6 +105,7 @@
 	S.set_up(reagents, 1, 1, location, 15, 1) // only 1-2 smoke cloud
 	S.start()
 
+	ghostize()
 	qdel(src)
 
 /mob/living/simple_animal/hostile/blob/blobspore/Destroy()

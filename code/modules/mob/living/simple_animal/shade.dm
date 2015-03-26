@@ -5,7 +5,6 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
-	icon_dead = "shade_dead"
 	maxHealth = 50
 	health = 50
 	speak_emote = list("hisses")
@@ -27,6 +26,7 @@
 
 
 /mob/living/simple_animal/shade/death()
+	..(1)
 	new /obj/item/weapon/ectoplasm (src.loc)
 	visible_message("<span class='warning'>[src] lets out a contented sigh as their form unwinds.</span>")
 	ghostize()

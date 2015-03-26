@@ -101,7 +101,6 @@
 
 /mob/living/simple_animal/slime/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
-		adjustToxLoss(rand(10,20))
 		return
 
 	//var/environment_heat_capacity = environment.heat_capacity()
@@ -120,9 +119,9 @@
 
 		if(bodytemperature <= (T0C - 50)) // hurt temperature
 			if(bodytemperature <= 50) // sqrting negative numbers is bad
-				adjustToxLoss(200)
+				adjustBruteLoss(200)
 			else
-				adjustToxLoss(round(sqrt(bodytemperature)) * 2)
+				adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
 
 	else
 		Tempstun = 0
@@ -165,10 +164,6 @@
 
 	if(..())
 		if(prob(30))
-			adjustOxyLoss(-1)
-			adjustToxLoss(-1)
-			adjustFireLoss(-1)
-			adjustCloneLoss(-1)
 			adjustBruteLoss(-1)
 
 /mob/living/simple_animal/slime/proc/handle_nutrition()
@@ -183,7 +178,7 @@
 	if(nutrition <= 0)
 		nutrition = 0
 		if(prob(75))
-			adjustToxLoss(rand(0,5))
+			adjustBruteLoss(rand(0,5))
 
 	else if (nutrition >= get_grow_nutrition() && amount_grown < 10)
 		nutrition -= 20
@@ -203,7 +198,7 @@
 			powerlevel++
 			if(powerlevel > 10)
 				powerlevel = 10
-				adjustToxLoss(-10)
+				adjustBruteLoss(-10)
 
 
 
@@ -327,13 +322,12 @@
 				AIprocess()
 
 /mob/living/simple_animal/slime/handle_automated_movement()
-	return //slime random movement is currently handled in handle_target()
+	return //slime random movement is currently handled in handle_targets()
 
 /mob/living/simple_animal/slime/handle_automated_speech()
 	return //slime random speech is currently handled in handle_speech()
 
 /mob/living/simple_animal/slime/proc/handle_mood()
-	//Mood starts here
 	var/newmood = ""
 	if (rabid || attacked)
 		newmood = "angry"
@@ -349,7 +343,8 @@
 			newmood = pick("sad", ":3", "pout")
 
 	if ((mood == "sad" || mood == ":3" || mood == "pout") && !newmood)
-		if (prob(75)) newmood = mood
+		if(prob(75))
+			newmood = mood
 
 	if (newmood != mood) // This is so we don't redraw them every time
 		mood = newmood
@@ -432,17 +427,17 @@
 		emote(pick("bounce","sway","light","vibrate","jiggle"))
 	else
 		var/t = 10
-		var/slimes_near = -1 // Don't count myself
+		var/slimes_near = 0
 		var/dead_slimes = 0
 		var/friends_near = list()
-		for (var/mob/living/carbon/M in view(7,src))
-			if (isslime(M))
+		for (var/mob/living/L in view(7,src))
+			if(isslime(L) && L != src)
 				++slimes_near
-				if (M.stat == DEAD)
+				if (L.stat == DEAD)
 					++dead_slimes
-			if (M in Friends)
+			if (L in Friends)
 				t += 20
-				friends_near += M
+				friends_near += L
 		if (nutrition < get_hunger_nutrition()) t += 10
 		if (nutrition < get_starve_nutrition()) t += 10
 		if (prob(2) && prob(t))
@@ -468,12 +463,12 @@
 				phrases += "Purr..."
 			if (attacked)
 				phrases += "Grrr..."
-			if (getToxLoss() > 30)
+			if (bodytemperature < T0C)
 				phrases += "Cold..."
-			if (getToxLoss() > 60)
+			if (bodytemperature < T0C - 30)
 				phrases += "So... cold..."
 				phrases += "Very... cold..."
-			if (getToxLoss() > 90)
+			if (bodytemperature < T0C - 50)
 				phrases += "..."
 				phrases += "C... c..."
 			if (Victim)

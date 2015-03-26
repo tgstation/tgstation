@@ -20,6 +20,8 @@
 
 	layer = 5
 
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+
 	maxHealth = 150
 	health = 150
 	gender = NEUTER
@@ -84,11 +86,15 @@
 	..()
 
 /mob/living/simple_animal/slime/regenerate_icons()
-	icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
-	icon_dead = "[icon_state] dead"
 	overlays.len = 0
-	if(mood)
-		overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
+	var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
+	icon_dead = "[icon_text] dead"
+	if(stat != DEAD)
+		icon_state = icon_text
+		if(mood)
+			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
+	else
+		icon_state = icon_dead
 	..()
 
 /mob/living/simple_animal/slime/movement_delay()
@@ -158,29 +164,25 @@
 
 		stat(null,"Power Level: [powerlevel]")
 
-/mob/living/simple_animal/slime/adjustFireLoss(amount)
-	..(-abs(amount)) // Heals them
-	return
-
 /mob/living/simple_animal/slime/bullet_act(var/obj/item/projectile/Proj)
+	if(!Proj)
+		return
 	attacked += 10
-	..(Proj)
+	if((Proj.damage_type == BURN))
+		adjustBruteLoss(-abs(Proj.damage)) //fire projectiles heals slimes.
+		Proj.on_hit(src, 0)
+	else
+		..(Proj)
 	return 0
 
 /mob/living/simple_animal/slime/emp_act(severity)
 	powerlevel = 0 // oh no, the power!
 	..()
 
-/mob/living/simple_animal/slime/ex_act(severity, target)
-	if (severity == 2.0)
-		adjustFireLoss(60)
-	..()
-
-
 /mob/living/simple_animal/slime/MouseDrop(var/atom/movable/A as mob|obj)
-	if(isliving(A) && A != src && usr == src)
+	if(isliving(A) && A != src)
 		var/mob/living/Food = A
-		if(Food.Adjacent(src) && !stat && Food.stat != DEAD) //messy
+		if(CanFeedon(Food))
 			Feedon(Food)
 	..()
 
@@ -195,16 +197,18 @@
 
 /mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M as mob)
 	if(..()) //successful slime attack
+		if(M == src)
+			return
 		if(Victim)
 			Victim = null
 			visible_message("<span class='danger'>[M] pulls [src] off!</span>")
 			return
 		attacked += 5
 		if(nutrition >= 100) //steal some nutrition. negval handled in life()
-			nutrition -= (50 + (5 * M.amount_grown))
-			M.add_nutrition(50 + (5 * M.amount_grown))
+			nutrition -= (50 + (40 * M.is_adult))
+			M.add_nutrition(50 + (40 * M.is_adult))
 		if(health > 0)
-			M.adjustBruteLoss(-4 + (-2 * M.amount_grown))
+			M.adjustBruteLoss(-10 + (-10 * M.is_adult))
 			M.updatehealth()
 
 /mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M as mob)
@@ -222,7 +226,7 @@
 
 /mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
-		adjustBruteLoss(5)
+		adjustBruteLoss(10)
 		discipline_slime(user)
 
 
@@ -301,7 +305,7 @@
 	return
 
 /mob/living/simple_animal/slime/proc/apply_water()
-	adjustToxLoss(rand(15,20))
+	adjustBruteLoss(rand(15,20))
 	if(!client)
 		if(Target) // Like cats
 			Target = null
@@ -376,4 +380,3 @@
 
 /mob/living/simple_animal/slime/pet
 	docile = 1
-

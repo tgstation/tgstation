@@ -3,7 +3,6 @@
 	desc = ""
 	icon_state = "bee_1"
 	icon_living = "bee"
-	icon_dead = ""
 	speak_emote = list("buzzes")
 	emote_hear = list("buzzes")
 	turns_per_move = 0
@@ -34,7 +33,8 @@
 	update_bees()
 
 /mob/living/simple_animal/hostile/poison/bees/death(gibbed)
-	..(gibbed)
+	..(1)
+	ghostize()
 	qdel(src)
 	return
 

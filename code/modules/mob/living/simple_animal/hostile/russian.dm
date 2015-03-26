@@ -45,10 +45,12 @@
 		casingtype = /obj/item/ammo_casing/a762
 
 /mob/living/simple_animal/hostile/russian/death(gibbed)
-	..(gibbed)
+	..(1)
+	visible_message("<span class='notice'>[src] stops moving.</span>")
 	if(corpse)
 		new corpse (src.loc)
 	if(weapon1)
 		new weapon1 (src.loc)
+	ghostize()
 	qdel(src)
 	return

@@ -51,6 +51,8 @@
 	maxbodytemp = INFINITY
 
 /mob/living/simple_animal/hostile/carp/holocarp/death()
+	..(1)
+	ghostize()
 	qdel(src)
 	return
 

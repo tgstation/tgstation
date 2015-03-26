@@ -442,10 +442,10 @@ Sorry Giacom. Please don't be mad :(
 				C.reagents.clear_reagents()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	if(stat == 2)
+	if(stat == DEAD)
 		dead_mob_list -= src
 		living_mob_list += src
-	if(!isanimal(src))	stat = CONSCIOUS
+	stat = CONSCIOUS
 	if(ishuman(src))
 		var/mob/living/carbon/human/human_mob = src
 		human_mob.restore_blood()
@@ -453,8 +453,7 @@ Sorry Giacom. Please don't be mad :(
 
 	update_fire()
 	regenerate_icons()
-	..()
-	return
+
 
 /mob/living/proc/update_damage_overlays()
 	return

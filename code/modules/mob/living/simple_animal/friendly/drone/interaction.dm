@@ -94,7 +94,8 @@
 		if(health < health_repair_max)
 			user << "<span class='notice'>You start to tighten loose screws on [src].</span>"
 			if(do_after(user,80))
-				health = health_repair_max
+				var/repair = health_repair_max - health
+				adjustBruteLoss(-repair)
 				visible_message("<span class='notice'>[user] tightens [src == user ? "their" : "[src]'s"] loose screws!</span>")
 			else
 				user << "<span class='notice'>You need to remain still to tighten [src]'s screws.</span>"

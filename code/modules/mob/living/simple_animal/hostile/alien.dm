@@ -26,6 +26,8 @@
 	faction = list("alien")
 	status_flags = CANPUSH
 	minbodytemp = 0
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

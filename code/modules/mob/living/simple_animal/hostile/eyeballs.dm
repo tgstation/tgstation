@@ -5,7 +5,6 @@
 	desc = "An odd looking creature, it won't stop staring..."
 	icon_state = "eyeball"
 	icon_living = "eyeball"
-	icon_dead = ""
 	icon_gib = ""
 	meat_type = null
 	meat_amount = 0
@@ -30,5 +29,6 @@
 		emote("me", 1, "glares at [.]")
 
 /mob/living/simple_animal/hostile/carp/eyeball/death()
+	..(1)
+	ghostize()
 	qdel(src)
-	return

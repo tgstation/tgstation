@@ -7,7 +7,6 @@
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm   = "punches"
-	icon_dead = "shade_dead"
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
 	a_intent = "harm"
@@ -28,7 +27,7 @@
 		mob_spell_list += new spell(src)
 
 /mob/living/simple_animal/construct/death()
-	..()
+	..(1)
 	new /obj/item/weapon/ectoplasm (src.loc)
 	visible_message("<span class='danger'>[src] collapses in a shattered heap.</span>")
 	ghostize()
@@ -50,7 +49,7 @@
 
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M as mob)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
-		health += 5
+		adjustBruteLoss(-5)
 		M.emote("me", 1, "mends some of \the <EM>[src]'s</EM> wounds.")
 	else if(src != M)
 		..()
