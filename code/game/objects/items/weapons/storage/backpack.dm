@@ -42,7 +42,7 @@
 	return ..()
 
 /obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	if(istype(W, /obj/item/weapon/storage/backpack/holding) || istype(W, /obj/item/weapon/storage/bag/ore/holding) && !W.crit_fail)
+	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 		var/safety = alert(user, "You feel this may not be the best idea.", "Put in [name]?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || !W)
 			return
