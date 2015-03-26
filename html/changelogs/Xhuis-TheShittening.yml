@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: true
+
+changes: 
+  - rscadd: "Added a new admin event that activates the effects of select intentionally bad suggestions from the forum thread. Included are clown cubes, mentorhelp, emagged emags, and more!"
