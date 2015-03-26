@@ -381,6 +381,16 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/cell = 1)
+							
+/obj/item/weapon/circuitboard/chem_master
+	name = "circuit board (Chem Master 2999)"
+	build_path = /obj/machinery/chem_master/constructable
+	board_type = "machine"
+	origin_tech = "materials=2;programming=2;biotech=1"
+	req_components = list(
+							/obj/item/weapon/reagent_containers/glass/beaker = 2,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/chem_heater
 	name = "circuit board (Chemical Heater)"

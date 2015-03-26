@@ -111,6 +111,16 @@
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/chem_dispenser
 	category = list ("Medical Machinery")
+	
+/datum/design/chem_master
+	name = "Machine Design (Chem Master Board)"
+	desc = "The circuit board for a Chem Master 2999."
+	id = "chem_master"
+	req_tech = list("biotech" = 1, "materials" = 2, "programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/chem_master
+	category = list ("Medical Machinery")
 
 /datum/design/chem_heater
 	name = "Machine Design (Chemical Heater Board)"

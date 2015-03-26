@@ -9,7 +9,7 @@
 	attachable = 1
 	verb_say = "beeps"
 	verb_ask = "beeps"
-	verb_yell = "beeps"
+	verb_exclaim = "beeps"
 	var/listening = 0
 	var/recorded = "" //the activation message
 

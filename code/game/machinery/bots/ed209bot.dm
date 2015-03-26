@@ -37,14 +37,6 @@
 	bot_type = SEC_BOT
 	bot_filter = RADIO_SECBOT
 
-	//List of weapons that secbots will not arrest for
-	var/safe_weapons = list(\
-		/obj/item/weapon/gun/energy/laser/bluetag,\
-		/obj/item/weapon/gun/energy/laser/redtag,\
-		/obj/item/weapon/gun/energy/laser/practice,\
-		/obj/item/weapon/melee/classic_baton/telescopic,\
-		/obj/item/weapon/gun/energy/kinetic_accelerator)
-
 
 /obj/item/weapon/ed209_assembly
 	name = "\improper ED-209 assembly"
@@ -205,6 +197,17 @@ Auto Patrol[]"},
 		declare_arrests = 0
 		icon_state = "[lasercolor]ed209[on]"
 		set_weapon()
+
+/obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
+	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
+			if (!Proj.nodamage && Proj.damage < src.health)
+				threatlevel = Proj.firer.assess_threat(src)
+				threatlevel += 6
+				if(threatlevel >= 4)
+					target = Proj.firer
+					mode = BOT_HUNT
+	..()
 
 /obj/machinery/bot/ed209/bot_process()
 	if (!..())
@@ -392,9 +395,8 @@ Auto Patrol[]"},
 			continue
 
 /obj/machinery/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
-	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
-		if(!(slot_item.type in safe_weapons))
-			return 1
+	if(slot_item && slot_item.needs_permit)
+		return 1
 	return 0
 
 /* terrible
