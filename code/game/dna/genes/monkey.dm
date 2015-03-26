@@ -89,6 +89,7 @@
 		I.loc = O
 		I.implanted = O
 //		O.update_icon = 1	//queue a full icon update at next life() call
+	H.monkeyizing = 0
 	del(M)
 	return
 
@@ -172,5 +173,6 @@
 		I.loc = O
 		I.implanted = O
 //		O.update_icon = 1	//queue a full icon update at next life() call
+	Mo.monkeyizing = 0
 	del(M)
 	return
