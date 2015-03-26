@@ -84,6 +84,8 @@ datum
 	volume = 2
 	flags = FPRINT | OPENCONTAINER
 
+/obj/item/weapon/reagent_containers/glass/solution_tray/mop_act(obj/item/weapon/mop/M, mob/user)
+	return 1
 obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	if(istype(W, /obj/item/weapon/pen))
 		var/new_label = input("What should the new label be?","Label solution tray")

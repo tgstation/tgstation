@@ -363,10 +363,27 @@
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [M] washes their hands using \the [src].")
 
+/obj/structure/sink/mop_act(obj/item/weapon/mop/M, mob/user)
+	if(busy) return 1
+	user.visible_message("<span class='notice'>[user] puts \the [M] underneath the running water.","<span class='notice'>You put \the [M] underneath the running water.</span>")
+	busy = 1
+	sleep(40)
+	busy = 0
+	M.clean_blood()
+	if(M.reagents.maximum_volume > M.reagents.total_volume)
+		playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
+		M.reagents.add_reagent("water", min(M.reagents.maximum_volume - M.reagents.total_volume, 50))
+		user.visible_message("<span class='notice'>[user] finishes soaking \the [M], \he could clean the entire station with that.</span>","<span class='notice'>You finish soaking \the [M], you feel as if you could clean anything now, even the Chef's backroom...</span>")
+	else
+		user.visible_message("<span class='notice'>[user] removes \the [M], cleaner than before.</span>","<span class='notice'>You remove \the [M] from \the [src], it's all nice and sparkly now but somehow didnt get it any wetter.</span>")
+	return 1
+
 /obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
 	if(busy)
 		user << "\red Someone's already washing here."
 		return
+
+	if(istype(O, /obj/item/weapon/mop)) return
 
 	if (istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O

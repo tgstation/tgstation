@@ -24,18 +24,18 @@
 		user.visible_message("<span class='notice'>[user] unlocks [src]'s wheels!</span>")
 		lockedby += "\[[time_stamp()]\] [usr] ([usr.ckey]) - unlocked [src]"
 
-/obj/structure/mopbucket/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/mop))
+/obj/structure/mopbucket/mop_act(obj/item/weapon/mop/M, mob/user as mob)
+	if (istype(M))
 		if (src.reagents.total_volume >= 1)
-			if(W.reagents.total_volume >= 5)
-				return
+			if(M.reagents.total_volume >= 25)
+				return 1
 			else
-				src.reagents.trans_to(W, 1)
-				user << "<span class='notice'>You wet [W]</span>"
+				src.reagents.trans_to(M, 3)
+				user << "<span class='notice'>You wet [M]</span>"
 				playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 		else
-			user << "<span class='notice'>Nothing left to wet [W] with!</span>"
-	return
+			user << "<span class='notice'>Nothing left to wet [M] with!</span>"
+	return 1
 
 /obj/structure/mopbucket/ex_act(severity)
 	switch(severity)

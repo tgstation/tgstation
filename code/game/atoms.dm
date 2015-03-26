@@ -42,7 +42,7 @@ var/global/list/ghdel_profiling = list()
 	var/event/on_moved = new()
 
 	var/labeled //Stupid and ugly way to do it, but the alternative would probably require rewriting everywhere a name is read.
-	var/min_harm_label = 0 //Minimum langth of harm-label to be effective. 0 means it cannot be harm-labeled. If any label should work, set this to 1 or 2. 
+	var/min_harm_label = 0 //Minimum langth of harm-label to be effective. 0 means it cannot be harm-labeled. If any label should work, set this to 1 or 2.
 	var/harm_labeled = 0 //Length of current harm-label. 0 if it doesn't have one.
 	var/list/harm_label_examine //Messages that appears when examining the item if it is harm-labeled. Message in position 1 is if it is harm-labeled but the label is too short to work, while message in position 2 is if the harm-label works.
 	//var/harm_label_icon_state //Makes sense to have this, but I can't sprite. May be added later.
@@ -634,3 +634,6 @@ its easier to just keep the beam vertical.
 	var/old_gender = src.gender
 	src.gender = gend
 	testing("Set [src]'s gender to [gend], old gender [old_gender] previous gender [prev_gender]")
+
+/atom/proc/mop_act(obj/item/weapon/mop/M, mob/user)
+	return 0

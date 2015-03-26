@@ -47,6 +47,9 @@
 	..()
 	base_name = name
 
+/obj/item/weapon/reagent_containers/glass/mop_act(obj/item/weapon/mop/M, mob/user)
+	return is_open_container()
+
 /obj/item/weapon/reagent_containers/glass/examine(mob/user)
 	..()
 	if(!is_open_container())
@@ -178,27 +181,54 @@
 	g_amt = 500
 	origin_tech = "materials=1"
 
-/obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
+/obj/item/weapon/reagent_containers/glass/beaker/mop_act(obj/item/weapon/mop/M, mob/user)
+	if(..())
+		if (src.reagents.total_volume >= 1)
+			switch(src.reagents.total_volume)
+				if(1 to 30)
+					if(M.reagents.total_volume >= 3)
+						user << "<span class='notice'>You dip \the [M]'s head into \the [src] but don't soak anything up.</span>"
+						return 1
+					src.reagents.trans_to(M, 1)
+					user << "<span class='notice'>You barely manage to wet [M]</span>"
+					playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
+				if(30 to 100)
+					if(M.reagents.total_volume >= 5)
+						user << "<span class='notice'>You dip \the [M]'s head into \the [src] but don't soak anything up.</span>"
+						return 1
+					src.reagents.trans_to(M, 2)
+					user << "<span class='notice'>You manage to wet [M]</span>"
+					playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
+				if(100 to INFINITY)
+					if(M.reagents.total_volume >= 10)
+						user << "<span class='notice'>You dip \the [M]'s head into \the [src] but don't soak anything up.</span>"
+						return 1
+					src.reagents.trans_to(M, 5)
+					user << "<span class='notice'>You manage to soak [M]</span>"
+					playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
+				else
+					user << "What"
+					return 1
+		else
+			user << "<span class='notice'>Nothing left to wet [M] with!</span>"
+		return 1
 
+/obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/pickup(mob/user)
-
 	..()
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/dropped(mob/user)
-
 	..()
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/attack_hand()
-
 	..()
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/update_icon()
-
 	overlays.len = 0
 
 	if(reagents.total_volume)
@@ -274,6 +304,9 @@
 	volume = 25
 	possible_transfer_amounts = list(5,10,15,25)
 
+/obj/item/weapon/reagent_containers/glass/beaker/vial/mop_act(obj/item/weapon/mop/M, mob/user)
+	return 0
+
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 
 	New()
@@ -310,6 +343,38 @@
 	volume = 70
 	flags = FPRINT | OPENCONTAINER
 	slot_flags = SLOT_HEAD
+
+/obj/item/weapon/reagent_containers/glass/bucket/mop_act(obj/item/weapon/mop/M, mob/user)
+	if(..())
+		if (src.reagents.total_volume >= 1)
+			switch(src.reagents.total_volume)
+				if(1 to 30)
+					if(M.reagents.total_volume >= 5)
+						user << "<span class='notice'>You dip \the [M]'s head into \the [src] but don't soak anything up.</span>"
+						return 1
+					src.reagents.trans_to(M, 1)
+					user << "<span class='notice'>You barely manage to wet [M]</span>"
+					playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
+				if(30 to 100)
+					if(M.reagents.total_volume >= 5)
+						user << "<span class='notice'>You dip \the [M]'s head into \the [src] but don't soak anything up.</span>"
+						return 1
+					src.reagents.trans_to(M, 2)
+					user << "<span class='notice'>You manage to wet [M]</span>"
+					playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
+				if(100 to INFINITY)
+					if(M.reagents.total_volume >= 10)
+						user << "<span class='notice'>You dip \the [M]'s head into \the [src] but don't soak anything up.</span>"
+						return 1
+					src.reagents.trans_to(M, 5)
+					user << "<span class='notice'>You manage to soak [M]</span>"
+					playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
+				else
+					user << "What"
+					return 1
+		else
+			user << "<span class='notice'>Nothing left to wet [M] with!</span>"
+		return 1
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob)
 	if(isprox(D))
