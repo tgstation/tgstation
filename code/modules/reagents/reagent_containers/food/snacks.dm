@@ -2706,7 +2706,7 @@
 			return
 
 		var/t = input("Enter what you want to add to the tag:", "Write", null, null) as text
-		if (!in_range(src, user) || user.stat) return
+		if (!Adjacent(user) || user.stat) return
 
 		var/obj/item/pizzabox/boxtotagto = src
 		if( boxes.len > 0 )
