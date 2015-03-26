@@ -99,10 +99,12 @@
 
 /obj/item/borg/upgrade/rename/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
-	R.name = heldname
-	R.custom_name = heldname
-	R.real_name = heldname
-
+	R.name = ""
+	R.custom_name = null
+	R.real_name = ""
+	R.updatename()
+	R.updateicon()
+	R << "<span class='warning'>You may now change your name.</span>"
 	return 1
 
 /obj/item/borg/upgrade/restart

@@ -366,10 +366,15 @@
 
 	spawn(0)
 		var/newname
-		newname = copytext(sanitize(input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text),1,MAX_NAME_LEN)
+		for(var/i = 1 to 3)
+			newname = copytext(sanitize(input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change [3-i] [0-i != 1 ? "tries":"try"] left","") as text),1,MAX_NAME_LEN)
+			if(newname == "")
+				continue
+			if(alert(src,"Do you really want the name:\n[newname]?",,"Yes","No") == "Yes")
+				break
+
 		if (newname != "")
 			custom_name = newname
-
 		updatename()
 		updateicon()
 
