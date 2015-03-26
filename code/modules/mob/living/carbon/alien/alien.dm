@@ -26,7 +26,7 @@
 	var/plasma_rate = 5
 
 	var/heat_protection = 0.5
-	var/leaping = 0
+
 
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep

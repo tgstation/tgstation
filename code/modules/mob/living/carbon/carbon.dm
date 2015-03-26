@@ -384,3 +384,54 @@ var/const/GALOSHES_DONT_HELP = 8
 	else
 		show_message("<span class='userdanger'>The blob attacks!</span>")
 		adjustBruteLoss(10)
+
+///LEAPING/// (Adapted from the alien hunter pounce)
+
+
+mob/living/carbon/proc/toggle_leap()
+	leap_on_click = !leap_on_click
+
+
+/mob/living/carbon/ClickOn(var/atom/A, var/params)
+	face_atom(A)
+	if(leap_on_click)
+		leap_at(A)
+	else
+		//leap_at(A)
+		..()
+
+#define CARBON_LEAP_DIST 3
+
+/mob/living/carbon/proc/leap_at(var/atom/A)
+	if(leap_cooldown)
+		src << "<span class='alert'>You are too fatigued to jump right now!</span>"
+		return
+
+	if(leaping)
+		return
+
+	if(!has_gravity(src) || !has_gravity(A))
+		src << "<span class='alert'>It is unsafe to leap without gravity!</span>"
+		//It's also extremely buggy visually, so it's balance+bugfix
+		return
+	if(lying)
+		return
+
+	else
+		leaping = 1
+		Weaken(1)
+		update_icons()
+		visible_message("<span class='alert'>[src] leaps at \the [A]!</span>")
+		throw_at(A,CARBON_LEAP_DIST,1)
+		leaping = 0
+		update_icons()
+		toggle_leap(0)
+		leap_cooldown = !leap_cooldown
+		spawn(leap_cooldown_time) //5s by default
+			leap_cooldown = !leap_cooldown
+
+/mob/living/carbon/throw_impact(A)
+
+	if(!leaping)
+		return ..()
+

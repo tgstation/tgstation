@@ -50,3 +50,4 @@
 
 	var/blood_max = 0 //how much are we bleeding
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
+	can_leap = 1 //Praise the coderbus!

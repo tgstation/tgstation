@@ -51,7 +51,7 @@
 //Hunter verbs
 
 
-/mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(var/message = 1)
+/mob/living/carbon/alien/humanoid/hunter/toggle_leap(var/message = 1)
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	if(message)
@@ -60,18 +60,11 @@
 		return
 
 
-/mob/living/carbon/alien/humanoid/hunter/ClickOn(var/atom/A, var/params)
-	face_atom(A)
-	if(leap_on_click)
-		leap_at(A)
-	else
-		..()
-
 
 #define MAX_ALIEN_LEAP_DIST 7
 
-/mob/living/carbon/alien/humanoid/hunter/proc/leap_at(var/atom/A)
-	if(pounce_cooldown)
+/mob/living/carbon/alien/humanoid/hunter/leap_at(var/atom/A)
+	if(leap_cooldown)
 		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
 		return
 
@@ -93,9 +86,7 @@
 		update_icons()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(A)
-
-	if(!leaping)
-		return ..()
+	..()
 
 	if(A)
 		if(istype(A, /mob/living))
@@ -106,9 +97,9 @@
 			step_towards(src,L)
 
 			toggle_leap(0)
-			pounce_cooldown = !pounce_cooldown
-			spawn(pounce_cooldown_time) //3s by default
-				pounce_cooldown = !pounce_cooldown
+			leap_cooldown = !leap_cooldown
+			spawn(leap_cooldown_time) //3s by default
+				leap_cooldown = !leap_cooldown
 		else
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
 			weakened = 2

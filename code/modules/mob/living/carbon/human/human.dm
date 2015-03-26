@@ -726,4 +726,34 @@
 	staticOverlay.override = 1
 	staticOverlays["letter"] = staticOverlay
 
+mob/living/carbon/human/throw_impact(A)
+	..()
+
+	if(A)
+		if(istype(A, /mob/living/carbon/human)) //Humans can't tackle aliens and borgs
+			var/mob/living/carbon/human/L = A
+			if(L.l_hand || L.r_hand)
+				L.visible_message("<span class ='danger'>[L] knocks [src] down!</span>","<span class ='userdanger'>[src] tries to tackle you but you knock them away!</span>")
+				Weaken(4)
+		/*	else if(L.l_hand && !L.r_hand)
+				L.visible_message("<span class ='danger'>[L] knocks [src] away with \icon[r_hand]!</span>","<span class ='userdanger'>[src] tries to tackle you but you knock them away with \icon[r_hand]</span>")
+				Weaken(3)
+			else if(!L.l_hand && L.r_hand)
+				L.visible_message("<span class ='danger'>[L] knocks [src] away with \icon[r_hand]!</span>","<span class ='userdanger'>[src] tries to tackle you but you knock them away with \icon[r_hand]!</span>")
+				Weaken(3)
+		*/
+			else
+				L.visible_message("<span class ='danger'>[src] tackles [L] to the ground!</span>","<span class ='userdanger'>[src] tackles you to the ground!</span>")
+				L.Weaken(4)
+				sleep(1)
+				weakened = 1
+				step_towards(src,L)
+
+		else
+			visible_message("<span class ='danger'>[src] crashes into [A]!</span>", "<span class ='userdanger'>[src] crashes into [A]!</span>")
+			weakened = 2
+
+		if(leaping)
+			leaping = 0
+			update_canmove()
 

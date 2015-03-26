@@ -221,8 +221,31 @@
 
 /obj/screen/throw_catch/Click()
 	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.toggle_throw_mode()
+		var/mob/living/carbon/mymob = usr
+		mymob.toggle_throw_mode()
+
+/obj/screen/jump_toggle
+	name = "toggle jump"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "act_jump_off"
+
+/obj/screen/jump_toggle/Click()
+	if(!iscarbon(usr))
+		return
+	var/mob/living/carbon/jumper = usr
+	jumper.leap_on_click = !jumper.leap_on_click
+	update_icon(jumper.leap_on_click)
+	jumper << "<span class='notice'>You will now [jumper.leap_on_click ? "jump at":"no longer jump at"] the target</span>"
+
+/obj/screen/jump_toggle/update_icon(isjump)
+	if(!iscarbon(usr))
+		return
+	icon_state = "act_jump_[isjump ? "on" : "off"]"
+	..()
+
+//	if(iscarbon(usr))  //Not copypasta, only carbons should be trying to jump
+//		var/mob/living/carbon/L = usr
+//		L.toggle_leap()
 
 /obj/screen/zone_sel
 	name = "damage zone"
@@ -330,3 +353,5 @@
 				usr.update_inv_l_hand(0)
 				usr.update_inv_r_hand(0)
 	return 1
+
+

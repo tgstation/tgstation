@@ -7,7 +7,7 @@
 	var/silent = 0 		//Can't talk. Value goes down every life proc. //NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
 
 	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
-	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
+	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps & legcuffs use this.
 
 //inventory slots
 	var/obj/item/back = null
@@ -20,3 +20,11 @@
 
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
+	// Let's get this jumpin' party started
+	var/leap_on_click = 0
+	var/leap_cooldown = 0
+	var/leap_cooldown_time = 100 //3 times slower than an alien's leap
+	var/leaping = 0
+	var/can_leap = 0 //Can this mob leap? Stops brains and such from leaping
+
+

@@ -47,6 +47,7 @@
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
+	var/obj/screen/jump
 
 	using = new /obj/screen/act_intent()
 	using.icon_state = mymob.a_intent
@@ -253,6 +254,10 @@
 	hotkeybuttons += mymob.throw_icon
 
 
+	jump = new /obj/screen/jump_toggle()
+	jump.icon_state = "act_jump_off"
+	jump.screen_loc = "EAST-3:26,SOUTH+1:7"
+
 	mymob.internals = new /obj/screen/internals()
 	mymob.internals.screen_loc = ui_internal
 
@@ -270,6 +275,7 @@
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.screen_loc = ui_pull_resist
 	hotkeybuttons += mymob.pullin
+
 
 	lingchemdisplay = new /obj/screen/ling/chems()
 	lingchemdisplay.screen_loc = ui_lingchemdisplay
@@ -307,7 +313,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay, jump) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += adding + hotkeybuttons
 	inventory_shown = 0;
 
