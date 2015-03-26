@@ -12,6 +12,7 @@
 	random_target = 1
 	var/energy = 0
 	var/ready = 0
+	var/image/halo = null
 
 /obj/effect/proc_holder/spell/targeted/lightning/Click()
 	if(!ready)
@@ -25,7 +26,8 @@
 /obj/effect/proc_holder/spell/targeted/lightning/proc/StartChargeup(mob/user = usr)
 	ready = 1
 	user << "<span class='notice'>You start gathering the power.</span>"
-	//TODO: Add visual indictaor of charging
+	halo = image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = EFFECTS_LAYER)
+	user.overlays.Add(halo)
 	spawn(0)
 		while(ready)
 			sleep(1)
@@ -33,18 +35,22 @@
 			if(energy >= 100 && ready)
 				Discharge()
 
-/obj/effect/proc_holder/spell/targeted/lightning/revert_cast(mob/user = usr)
-	user << "<span class='notice'>No target found in range.</span>"
+obj/effect/proc_holder/spell/targeted/lightning/proc/Reset(mob/user = usr)
 	ready = 0
 	energy = 0
+	if(halo)
+		user.overlays.Remove(halo)
+
+/obj/effect/proc_holder/spell/targeted/lightning/revert_cast(mob/user = usr)
+	user << "<span class='notice'>No target found in range.</span>"
+	Reset(user)
 	..()
 
 /obj/effect/proc_holder/spell/targeted/lightning/proc/Discharge(mob/user = usr)
 	var/mob/living/M = user
 	//M.electrocute_act(25,"Lightning Bolt")
 	M << "<span class='danger'>You lose control over the spell.</span>"
-	energy = 0
-	ready = 0
+	Reset(user)
 	start_recharge()
 
 
@@ -54,8 +60,7 @@
 
 	if(get_dist(user,target)>range)
 		user << "<span class='notice'>They are too far away!</span>"
-		ready = 0
-		energy = 0
+		Reset(user)
 		return
 
 	user.Beam(target,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
@@ -63,21 +68,24 @@
 	switch(energy)
 		if(0 to 25)
 			target.electrocute_act(10,"Lightning Bolt")
+			playsound(get_turf(target), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		if(25 to 75)
 			target.electrocute_act(25,"Lightning Bolt")
+			playsound(get_turf(target), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		if(75 to 100)
 			//CHAIN LIGHTNING
 			Bolt(user,target,energy,user)
-	ready = 0
-	energy = 0
+	Reset(user)
 
 /obj/effect/proc_holder/spell/targeted/lightning/proc/Bolt(mob/origin,mob/target,bolt_energy,mob/user = usr)
 	origin.Beam(target,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 	var/mob/living/carbon/current = target
 	if(bolt_energy < 75)
 		current.electrocute_act(25,"Lightning Bolt")
+		playsound(get_turf(current), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	else
 		current.electrocute_act(25,"Lightning Bolt")
+		playsound(get_turf(current), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		var/list/possible_targets = new
 		for(var/mob/living/M in view_or_range(range,target,"view"))
 			if(user == M || target == M && los_check(current,M)) // || origin == M ? Not sure double shockings is good or not
