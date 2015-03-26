@@ -43,13 +43,13 @@
 	var/range = 0
 	var/proj_hit = 0
 
-/obj/item/projectile/proc/Range(var/remove=1)
-	if(range <= 0) //-1 for infinite range
+/obj/item/projectile/proc/Range()
+	if(range)
+		range--
+		if(range <= 0)
+			on_range()
+	else
 		return
-
-	range -= remove
-	if(range <= 0)
-		qdel()
 
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
 	proj_hit = 1

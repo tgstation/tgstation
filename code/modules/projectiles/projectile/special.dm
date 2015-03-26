@@ -124,13 +124,15 @@ obj/item/projectile/kinetic/New()
 		damage *= 2
 	..()
 
-/obj/item/projectile/kinetic/Range(var/remove=1)
-	if(range <= 0)
-		return
-
-	range -= remove
+/obj/item/projectile/kinetic/Range()
+	range--
 	if(range <= 0)
 		new /obj/item/effect/kinetic_blast(src.loc)
+		for(var/turf/T in range(1, src.loc))
+			if(istype(T, /turf/simulated/mineral))
+				var/turf/simulated/mineral/M = T
+				M.gets_drilled(firer)
+		qdel(src)
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
 	var/turf/target_turf= get_turf(target)
