@@ -85,6 +85,8 @@
 	if(..()) //alive
 		if(health < 1)
 			death()
+			return 0
+		return 1
 
 /mob/living/simple_animal/handle_disabilities()
 	//Eyes

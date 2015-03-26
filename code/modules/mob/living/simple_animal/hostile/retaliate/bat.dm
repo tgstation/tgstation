@@ -24,6 +24,9 @@
 	environment_smash = 0
 	ventcrawler = 2
 	mob_size = MOB_SIZE_SMALL
+	var/max_co2 = 0 //to be removed once metastation map no longer use those for Sgt Araneus
+	var/min_oxy = 0
+	var/max_tox = 0
 
 
 	//Space bats need no air to fly in.
