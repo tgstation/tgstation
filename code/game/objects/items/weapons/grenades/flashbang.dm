@@ -27,10 +27,18 @@
 	var/distance = max(1,get_dist(src,T))
 
 //Flash
+	if(M.weakeyes)
+		M.visible_message("<span class='disarm'><b>[M]</b> screams and collapses!</span>")
+		M << "<span class='userdanger'><font size=3>AAAAGH!</font></span>"
+		M.Weaken(15) //hella stunned
+		M.Stun(15)
+		M.eye_stat += 8
+
 	if(M.flash_eyes())
 		M.eye_stat += rand(1, 3)
 		M.Stun(max(10/distance, 3))
 		M.Weaken(max(10/distance, 3))
+
 
 //Bang
 	if((loc == M) || loc == M.loc)//Holding on person or being exactly where lies is significantly more dangerous and voids protection

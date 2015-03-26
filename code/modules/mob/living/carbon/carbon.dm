@@ -157,6 +157,8 @@
 /mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0)
 	var/damage = intensity - check_eye_prot()
 	if(..()) // we've been flashed
+		if(weakeyes)
+			Stun(2)
 		switch(damage)
 			if(1)
 				src << "<span class='warning'>Your eyes sting a little.</span>"
