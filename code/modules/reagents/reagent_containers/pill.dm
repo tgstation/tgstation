@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/pill
 	name = "pill"
-	desc = "A small capsule of dried chemicals, used to administrate medicine and poison alike in one easy serving."
+	desc = "A small capsule of dried chemicals, used to administer medicine and poison alike in one easy serving."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
 	item_state = "pill"
