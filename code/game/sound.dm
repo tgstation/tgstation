@@ -15,9 +15,6 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 //gas_modified controls if a sound is affected by how much gas there is in the atmosphere of the source
 //space sounds have no gas modification, for example. Though >space sounds
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff, var/gas_modified = 1)
-
-	soundin = get_sfx(soundin) // same sound for everyone
-
 	if(isarea(source))
 		error("[source] is an area and is trying to make the sound: [soundin]")
 		return
@@ -55,15 +52,18 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 		vol = min( round( (vol) * atmos_modifier, 1 ), vol * 2) //upper range of twice the volume. Trust me, otherwise you get 10000 volume in a plasmafire
 		//message_admins("We've adjusted the sound of [source] at [turf_source.loc] to have a range of [7 + extrarange] and a volume of [vol]")
 
- 	// Looping through the player list has the added bonus of working for mobs inside containers
-	for (var/P in player_list)
-		var/mob/M = P
-		if(!M || !M.client)
+	var/Dist = world.view + extrarange
+
+	// Looping through the player list has the added bonus of working for mobs inside containers
+	for (var/mob/player in player_list)
+		if(!player || !player.client)
 			continue
-		if(get_dist(M, turf_source) <= world.view + extrarange)
-			var/turf/T = get_turf(M)
-			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, gas_modified)
+
+		var/turf/player_turf = get_turf(player)
+
+		if (player_turf && player_turf.z == turf_source.z)
+			if(get_dist(player_turf, turf_source) <= Dist)
+				player.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, gas_modified)
 
 var/const/FALLOFF_SOUNDS = 1
 var/const/SURROUND_CAP = 7
@@ -92,10 +92,7 @@ var/const/SURROUND_CAP = 7
 
 	soundin = get_sfx(soundin)
 
-	var/sound/S = sound(soundin)
-	S.wait = 0 //No queue
-	S.channel = 0 //Any channel
-	S.volume = vol
+	var/sound/S = sound(soundin, 0, 0, 0, vol)
 
 	if (vary)
 		if(frequency)
@@ -106,15 +103,16 @@ var/const/SURROUND_CAP = 7
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
 		var/turf/T = get_turf(src)
-		var/dx = turf_source.x - T.x // Hearing from the right/left
 
-		S.x = round(max(-SURROUND_CAP, min(SURROUND_CAP, dx)), 1)
+		var/dx = turf_source.x - T.x // Hearing from the right/left
+		S.x = round(Clamp(dx, -SURROUND_CAP, SURROUND_CAP), 1)
 
 		var/dz = turf_source.y - T.y // Hearing from infront/behind
-		S.z = round(max(-SURROUND_CAP, min(SURROUND_CAP, dz)), 1)
+		S.z = round(Clamp(dz, -SURROUND_CAP, SURROUND_CAP), 1)
 
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
+
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
 	src << S
