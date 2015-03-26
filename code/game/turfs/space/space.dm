@@ -17,6 +17,8 @@
 	return src.attack_hand(user)
 
 /turf/space/canBuildCatwalk()
+	if(locate(/obj/structure/catwalk) in contents)
+		return BUILD_FAILURE
 	return locate(/obj/structure/lattice) in contents
 
 
