@@ -19,7 +19,16 @@
 
 /datum/game_mode/wizard/pre_setup()
 
-	var/datum/mind/wizard = pick(antag_candidates)
+	var/datum/mind/wizard
+	while(!wizard)
+		if(!antag_candidates)
+			return 0
+		var/datum/mind/candidate = pick(antag_candidates)
+		if(candidate.assigned_role) //already taken
+			antag_candidates -= candidate
+			continue
+		wizard = candidate
+
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE"

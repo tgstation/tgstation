@@ -1,16 +1,17 @@
 /datum/game_mode/multimode
 	name = "double trouble"
-	config_tag = "doubletrouble"
+	config_tag = "double"
 	required_players = 40
 	pre_setup_before_jobs = 1
 	metamode = 1
 	var/number_of_modes = 2
 	var/list/modes = list()
 	var/list/post_job_antagonists = list()
+	var/datum/game_mode/victorious_mode
 
 /datum/game_mode/multimode/triple //Oh baby
 	name = "triple threat"
-	config_tag = "triplethreat"
+	config_tag = "triple"
 	required_players = 50
 	number_of_modes = 3
 
@@ -39,8 +40,8 @@
 	for(var/datum/game_mode/mode in modes)
 		if(!mode.pre_setup_before_jobs) //Run their pre_setup later after job selection but before post
 			post_job_antagonists += mode
-		else
-			mode.pre_setup()
+		else if(!mode.pre_setup()) //Everything needs to work so failure cascades
+			return 0
 
 /datum/game_mode/multimode/post_setup()
 	for(var/datum/game_mode/mode in post_job_antagonists)
@@ -51,18 +52,25 @@
 
 	spawn(150)	handle_edgecases() //Allow other spawn shinanagans in indiviudual modes to resolve before finalizing things
 
-	SSshuttle.emergencyNoEscape = 0
-
 /datum/game_mode/multimode/make_antag_chance()
+	for(var/datum/game_mode/mode in modes)
+		mode.make_antag_chance()
 	return
 
 /datum/game_mode/multimode/process()
 	for(var/datum/game_mode/mode in modes)
 		mode.process()
 
-/datum/game_mode/multimode/declare_completion() //only one gets top billing if neither ended the round on their own terms
-	var/datum/game_mode/mode = pick(modes)
-	mode.declare_completion()
+/datum/game_mode/multimode/check_finished()
+	for(var/datum/game_mode/mode in modes)
+		if(mode.check_finished())
+			victorious_mode = mode
+	..()
+
+/datum/game_mode/multimode/declare_completion()
+	if(!victorious_mode) //only one gets top billing if neither ended the round on their own terms
+		victorious_mode = pick(modes)
+	victorious_mode.declare_completion()
 
 /datum/game_mode/multimode/proc/handle_edgecases() //AW HERE WE GO
 	if(syndicates && traitors) //These guys are actually on the same side and should help each other if possible

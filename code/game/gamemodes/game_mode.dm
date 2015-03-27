@@ -113,6 +113,9 @@
 		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
 		return 0
 
+	if(istype(ticker.mode, /datum/game_mode/multimode)) //These are already chock fulla antags
+		return 1
+
 	replacementmode = pickweight(usable_modes)
 
 	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out

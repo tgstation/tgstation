@@ -35,7 +35,12 @@
 		agent_number = n_players/2
 
 	while(agent_number > 0)
+		if(!antag_candidates)
+			break
 		var/datum/mind/new_syndicate = pick(antag_candidates)
+		if(new_syndicate.assigned_role) //This mind is already taken
+			antag_candidates -= new_syndicate
+			continue
 		syndicates += new_syndicate
 		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
 		agent_number--
