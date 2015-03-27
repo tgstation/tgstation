@@ -155,7 +155,7 @@
 
 
 /obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(src.opened)
+	if(opened)
 		if(istype(W, /obj/item/weapon/grab))
 			if(src.large)
 				var/obj/item/weapon/grab/G = W
@@ -173,13 +173,13 @@
 				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 				if(do_after(user,40,5,1))
-					if( !src.opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
+					if( !opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 						return
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					new /obj/item/stack/sheet/metal(src.loc)
 					visible_message("<span class='notice'>[user] has cut \the [src] apart with \the [WT].</span>", "You hear welding.")
 					qdel(src)
-			return
+				return
 
 		if(isrobot(user))
 			return
@@ -187,25 +187,25 @@
 		if(user.drop_item())
 			W.Move(loc)
 
-	else if(istype(W, /obj/item/stack/packageWrap))
-		return
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
-			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
-			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-			if(do_after(user,40,5,1))
-				if(src.opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
-					return
-				playsound(loc, 'sound/items/welder.ogg', 50, 1)
-				welded = !welded
-				user << "<span class='notice'>You [welded ? "welded [src] shut":"unwelded [src]"].</span>"
-				update_icon()
-				user.visible_message("<span class='warning'>[user.name] has [welded ? "welded [src] shut":"unwelded [src]"].</span>")
-		return
-	else if(!place(user, W))
-		src.attack_hand(user)
-	return
+	else
+		if(istype(W, /obj/item/stack/packageWrap))
+			return
+		if(istype(W, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.remove_fuel(0,user))
+				user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
+				playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+				if(do_after(user,40,5,1))
+					if(opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
+						return
+					playsound(loc, 'sound/items/welder.ogg', 50, 1)
+					welded = !welded
+					user << "<span class='notice'>You [welded ? "welded [src] shut":"unwelded [src]"].</span>"
+					update_icon()
+					user.visible_message("<span class='warning'>[user.name] has [welded ? "welded [src] shut":"unwelded [src]"].</span>")
+				return
+		if(!place(user, W))
+			src.attack_hand(user)
 
 /obj/structure/closet/proc/place(var/mob/user, var/obj/item/I)
 	return 0
