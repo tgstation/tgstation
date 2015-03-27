@@ -59,3 +59,88 @@
 	else
 		icon_state = "clown_prototype_off"
 	usr.update_inv_shoes()
+
+//////////////////////////////////////////////////
+///////////BANANIUM PLATED CLOWN SHOES////////////
+//////////////////////////////////////////////////
+
+/obj/item/clothing/shoes/clown_shoes/bananium
+	name = "bananium plated clown shoes"
+	desc = "Trophy shoes for the loudest clowns."
+	icon_state = "clown_bananium"
+	var/sound = "sound/effects/clownstep1.ogg"
+	var/list/sound_list = list("Clown squeak","Bike horn","Meteor","EMPulse","Bubbles","Bang","Body fall","Clang","Glass step","Glass knock","Mouse",
+	"Snap","Sparks","Coin","Crowbar","Polaroid","Timer beep","Tray","Ping","Mecha","Slip","Hot","Laser sword","Gunshot","Laser","Taser")
+	action_button_name = "Choose Noise"
+	var/emagged = 0
+
+/obj/item/clothing/shoes/clown_shoes/bananium/ui_action_click()
+	var/pick_sound = input("Choose noise!","Noise") in sound_list
+	switch(pick_sound)
+		if("Clown squeak")
+			sound = "sound/effects/clownstep[pick(1,2)].ogg"
+		if("Bike horn")
+			sound = "sound/items/bikehorn.ogg"
+		if("Meteor")
+			sound = "sound/effects/meteorimpact.ogg"
+		if("EMPulse")
+			sound = "sound/effects/EMPulse.ogg"
+		if("Bubbles")
+			sound = "sound/effects/bubbles.ogg"
+		if("Bang")
+			sound = "sound/effects/bang.ogg"
+		if("Body fall")
+			sound = "sound/effects/bodyfall[pick(1,2,3,4)].ogg"
+		if("Clang")
+			sound = "sound/effects/clang.ogg"
+		if("Glass step")
+			sound = "sound/effects/glass_step.ogg"
+		if("Glass knock")
+			sound = "sound/effects/Glassknock.ogg"
+		if("Mouse")
+			sound = "sound/effects/mousesqueek.ogg"
+		if("Snap")
+			sound = "sound/effects/snap.ogg"
+		if("Sparks")
+			sound = "sound/effects/sparks[pick(1,2,3,4)].ogg"
+		if("Coin")
+			sound = "sound/items/coinflip.ogg"
+		if("Crowbar")
+			sound = "sound/items/Crowbar.ogg"
+		if("Polaroid")
+			sound = "sound/items/polaroid[pick(1,2)].ogg"
+		if("Timer beep")
+			sound = "sound/items/timer.ogg"
+		if("Tray")
+			sound = "sound/items/trayhit[pick(1,2)].ogg"
+		if("Ping")
+			sound = "sound/machines/ping.ogg"
+		if("Mecha")
+			sound = "sound/mecha/mechstep.ogg"
+		if("Slip")
+			sound = "sound/misc/slip.ogg"
+		if("Hot")
+			sound = "sound/vox_fem/hot.ogg"
+		if("Laser sword")
+			sound = "sound/weapons/blade1.ogg"
+		if("Gunshot")
+			sound = "sound/weapons/Gunshot[pick(2,3,4)].ogg"
+		if("Laser")
+			sound = "sound/weapons/Laser.ogg"
+		if("Taser")
+			sound = "sound/weapons/Taser.ogg"
+		if("%#$HELP")
+			sound = "sound/effects/adminhelp.ogg"
+
+/obj/item/clothing/shoes/clown_shoes/bananium/step_action()
+	if(footstep > 1)
+		playsound(src, sound, 75, 1)
+		footstep = 0
+	else
+		footstep++
+
+/obj/item/clothing/shoes/clown_shoes/bananium/emag_act()
+	if(!emagged)
+		sound_list |= "%#$HELP"
+		usr << "The [src.name] glows ominously."
+		emagged = 1
