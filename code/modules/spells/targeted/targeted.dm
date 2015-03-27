@@ -120,9 +120,10 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 
 /spell/targeted/cast(var/list/targets, mob/user)
 	for(var/mob/living/target in targets)
-		if(!(target in view_or_range(range, user, selection_type))) //filter at time of casting
-			targets -= target
-			continue
+		if(range >= 0)
+			if(!(target in view_or_range(range, user, selection_type))) //filter at time of casting
+				targets -= target
+				continue
 		target.adjustBruteLoss(amt_dam_brute)
 		target.adjustFireLoss(amt_dam_fire)
 		target.adjustToxLoss(amt_dam_tox)
