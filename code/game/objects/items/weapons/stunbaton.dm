@@ -10,7 +10,7 @@
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
 	var/stunforce = 7
-	var/status = 0
+	var/status = 0	//0 - Off ; 1 - Stun ; 2 - EMP
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
 	var/losspertick = 5
@@ -65,12 +65,16 @@
 				bcell.use(losspertick)
 
 /obj/item/weapon/melee/baton/update_icon()
-	if(status)
-		icon_state = "[initial(name)]_active"
-	else if(!bcell)
-		icon_state = "[initial(name)]_nocell"
-	else
-		icon_state = "[initial(name)]"
+	switch(status)
+		if(0)
+			if(!bcell)
+				icon_state = "[initial(name)]_nocell"
+			else
+				icon_state = "[initial(name)]"
+		if(1)
+			icon_state = "[initial(name)]_active"
+		if(2)
+			icon_state = "[initial(name)]_active_emp"
 	update_process()
 
 /obj/item/weapon/melee/baton/examine(mob/user)
@@ -109,8 +113,17 @@
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
-		status = !status
-		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
+		if(status < 2)
+			status++
+		else
+			status = 0
+		switch(status)
+			if(0)
+				user << "<span class='notice'>[src] is now off.</span>"
+			if(1)
+				user << "<span class='notice'>[src] is now set to stun.</span>"
+			if(2)
+				user << "<span class='notice'>[src] is now set to EMP.</span>"
 		playsound(loc, "sparks", 75, 1, -1)
 	else
 		status = 0
@@ -138,30 +151,37 @@
 	var/mob/living/L = M
 
 	if(user.a_intent != "harm")
-		if(status)
+		user.do_attack_animation(L)
+		if(!status)
+			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
+			"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
+			return
+		else
 			user.do_attack_animation(L)
 			baton_stun(L, user)
-		else
-			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
-							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
-			return
 	else
 		..()
-		if(status)
-			baton_stun(L, user)
-
+		baton_stun(L, user)
 
 /obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)
 	user.lastattacked = L
 	L.lastattacker = user
 
-	L.Stun(stunforce)
-	L.Weaken(stunforce)
-	L.apply_effect(STUTTER, stunforce)
+	if(status == 1)
+		L.Stun(stunforce)
+		L.Weaken(stunforce)
+		L.apply_effect(STUTTER, stunforce)
 
-	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
+		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		add_logs(user, L, "stunned")
+	else if(status == 2)
+		empulse_target(L,0,1,1)
+		L.visible_message("<span class='danger'>[user] has EMPed [L] with [src]!</span>", \
+							"<span class='userdanger'>[user] has EMPed you with [src]!</span>")
+		playsound(loc, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		add_logs(user, L, "emped")
 
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
@@ -174,7 +194,6 @@
 		var/mob/living/carbon/human/H = L
 		H.forcesay(hit_appends)
 
-	add_logs(user, L, "stunned")
 
 /obj/item/weapon/melee/baton/emp_act(severity)
 	if(bcell)

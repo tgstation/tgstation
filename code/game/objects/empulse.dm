@@ -34,3 +34,27 @@ proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
 		else if(distance <= light_range)
 			T.emp_act(2)
 	return 1
+
+proc/empulse_target(atom/A, heavy = 1, light = 0, log=0)
+	if(!A)
+		return
+	if(log)
+		message_admins("Targeted EMP with severity ([heavy >= light & heavy ? "strong" : "weak"]) on [A.name]")
+		log_game("Targeted EMP with severity ([heavy >= light & heavy ? "strong" : "weak"]) on [A.name]")
+
+	var/severity = heavy - light
+	switch(severity)
+		if(0)
+			return 0
+		if(1)
+			for(var/obj/O in A.contents)
+				O.emp_act(1)
+		if(-1)
+			for(var/obj/O in A.contents)
+				O.emp_act(2)
+	var/obj/effect/overlay/pulse = new/obj/effect/overlay(get_turf(A))
+	pulse.icon = 'icons/effects/effects.dmi'
+	pulse.icon_state = "emppulse"
+	spawn(20)
+		pulse.delete()
+	return 1
