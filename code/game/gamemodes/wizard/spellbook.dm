@@ -108,7 +108,7 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=summonitem'>Instant Summons</A> (10)<BR>"
 		dat += "<I>This spell can be used to bind a valuable item to you, bringing it to your hand at will. Using this spell while holding the bound item will allow you to unbind it. It does not require wizard garb.</I><BR>"
-		if(ticker.mode.name != "ragin' mages") // we totally need summon greentext x100
+		if(ticker.mode.name != "ragin' mages" && !config.no_summon_events) // we totally need summon greentext x100
 			dat += "<A href='byond://?src=\ref[src];spell_choice=summonevents'>Summon Events</A> (One time use, persistent global spell)<BR>"
 			dat += "<I>Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events.</I><BR>"
 
@@ -124,11 +124,11 @@
 
 		dat += "<HR>"
 
-		if(!("summon guns" in active_challenges))
+		if(!("summon guns" in active_challenges) && !config.no_summon_guns)
 			dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (Single use only, global spell)<BR>"
 			dat += "<I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!</I><BR>"
 
-		if(!("summon magic" in active_challenges))
+		if(!("summon magic" in active_challenges) && !config.no_summon_magic)
 			dat += "<A href='byond://?src=\ref[src];spell_choice=summonmagic'>Summon Magic</A> (Single use only, global spell)<BR>"
 			dat += "<I>Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time.</I><BR>"
 
