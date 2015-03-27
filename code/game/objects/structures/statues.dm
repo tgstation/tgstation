@@ -44,7 +44,7 @@
 									 "<span class='notice'>You have secured the [name]'s bolts!</span>")
 				anchored = 1
 
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user,30))

@@ -29,6 +29,7 @@
 	modifystate = 0
 	can_flashlight = 0
 	pin = null
+	can_charge = 0
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()
