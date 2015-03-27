@@ -201,6 +201,8 @@ var/global/chicken_count = 0
 	speak_chance = 2
 	turns_per_move = 3
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	var/egg_type = /obj/item/weapon/reagent_containers/food/snacks/egg
+	var/food_type = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	meat_amount = 2
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -209,16 +211,21 @@ var/global/chicken_count = 0
 	health = 10
 	ventcrawler = 2
 	var/eggsleft = 0
+	var/eggsFertile = TRUE
 	var/body_color
+	var/icon_prefix = "chicken"
 	pass_flags = PASSTABLE
+	var/list/feedMessages = list("It clucks happily.","It clucks happily.")
+	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
+	var/list/validColors = list("brown","black","white")
 
 /mob/living/simple_animal/chicken/New()
 	..()
 	if(!body_color)
-		body_color = pick( list("brown","black","white") )
-	icon_state = "chicken_[body_color]"
-	icon_living = "chicken_[body_color]"
-	icon_dead = "chicken_[body_color]_dead"
+		body_color = pick(validColors)
+	icon_state = "[icon_prefix]_[body_color]"
+	icon_living = "[icon_prefix]_[body_color]"
+	icon_dead = "[icon_prefix]_[body_color]_dead"
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	chicken_count += 1
@@ -228,9 +235,10 @@ var/global/chicken_count = 0
 	chicken_count -= 1
 
 /mob/living/simple_animal/chicken/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
+	if(istype(O, food_type)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
-			user.visible_message("<span class='notice'>[user] feeds [O] to [name]! It clucks happily.</span>","<span class='notice'>You feed [O] to [name]! It clucks happily.</span>")
+			var/feedmsg = "<span class='notice'>[user] feeds [O] to [name]! [pick(feedMessages)]"
+			user.visible_message(feedmsg)
 			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
@@ -245,13 +253,14 @@ var/global/chicken_count = 0
 	if(!.)
 		return
 	if(!stat && prob(3) && eggsleft > 0)
-		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
+		visible_message("[src] [pick(layMessage)]")
 		eggsleft--
-		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
+		var/obj/item/E = new egg_type(get_turf(src))
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
-		if(chicken_count < MAX_CHICKENS && prob(25))
-			SSobj.processing |= E
+		if(eggsFertile)
+			if(chicken_count < MAX_CHICKENS && prob(25))
+				SSobj.processing |= E
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
