@@ -196,7 +196,7 @@
 
 	else //Something like a glass. Player probably wants to transfer TO it.
 
-		if(!target.volume) //Whatever we are dealing with, it's not chemistry-related or doesn't have space for reagents anyways, most likely a table, or a floor !
+		if(!istype(target, /obj/item/weapon/reagent_containers)) //Not a reagent container, we most likely shouldn't be dealing with it here !
 			return //We're done here
 
 		if(!is_open_container()) //In any case, we aren't working with a closed bottle
