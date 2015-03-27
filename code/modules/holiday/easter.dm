@@ -3,7 +3,7 @@
 	return "Greetings! Have a Happy Easter and keep an eye out for Easter Bunnies!"
 
 /datum/round_event_control/easter
-	name = "2 SPOOKY! (Halloween)"
+	name = "Easter Eggselence"
 	holidayID = EASTER
 	typepath = /datum/round_event/easter
 	weight = -1
