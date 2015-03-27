@@ -483,3 +483,139 @@
 		..()
 		reagents.add_reagent("cola", 50)
 		on_reagent_change()
+
+// Cafe Stuff. Mugs act the same as drinking glasses, but they don't break when thrown.
+
+/obj/item/weapon/reagent_containers/food/drinks/mug
+	name = "mug"
+	desc = "A simple mug."
+	icon = 'icons/obj/cafe.dmi'
+	icon_state = "mug_empty"
+	isGlass = 0
+	amount_per_transfer_from_this = 10
+	volume = 50
+	g_amt = 500
+
+	on_reagent_change()
+
+		if (reagents.reagent_list.len > 0)
+
+			switch(reagents.get_master_reagent_id())
+				if("tea")
+					icon_state = "tea"
+					name = "Tea"
+					desc = "A warm mug of tea."
+				if("greentea")
+					icon_state = "greentea"
+					name = "Green Tea"
+					desc = "Green Tea served in a traditional Japanese tea cup, just like in your Chinese cartoons!"
+				if("redtea")
+					icon_state = "redtea"
+					name = "Red Tea"
+					desc = "Red Tea served in a traditional Chinese tea cup, just like in your Malaysian movies!"
+				if("acidtea")
+					icon_state = "acidtea"
+					name = "Earl's Grey Tea"
+					desc = "A sizzling mug of tea made just for Greys."
+				if("yinyang")
+					icon_state = "yinyang"
+					name = "Zen Tea"
+					desc = "Enjoy inner peace and ignore the watered down taste"
+				if("dantea")
+					icon_state = "dantea"
+					name = "Discount Dans Green Flavor Tea"
+					desc = "Tea probably shouldn't be sizzling like that..."
+				if("singularitea")
+					icon_state = "singularitea"
+					name = "Singularitea"
+					desc = "Brewed under intense radiation to be extra flavorful!"
+				if("mint")
+					icon_state = "mint"
+					name = "Groans Tea: Minty Delight Flavor"
+					desc = "Groans knows mint might not be the kind of flavor our fans expect from us, but we've made sure to give it that patented Groans zing."
+				if("chamomile")
+					icon_state = "chamomile"
+					name = "Groans Tea: Chamomile Flavor"
+					desc = "Groans presents the perfect cure for insomnia; Chamomile!"
+				if("exchamomile")
+					icon_state = "exchamomile"
+					name = "Groans Banned Tea: EXTREME Chamomile Flavor"
+					desc = "Banned literally everywhere."
+				if("fancydan")
+					icon_state = "fancydan"
+					name = "Groans Banned Tea: Fancy Dan Flavor"
+					desc = "Banned literally everywhere."
+				if("gyro")
+					icon_state = "gyro"
+					name = "Gyro"
+					desc = "Nyo ho ho~"
+				if("chifir")
+					icon_state = "chifir"
+					name = "Chifir"
+					desc = "Russian style of tea, not for those with weak stomachs."
+				if("plasmatea")
+					icon_state = "plasmatea"
+					name = "Plasma Pekoe"
+					desc = "You can practically taste the science, or maybe that's just the horrible plasma burns."
+				if("coffee")
+					icon_state = "coffee"
+					name = "Coffee"
+					desc = "A warm mug of coffee."
+				if("cafe_latte")
+					icon_state = "latte"
+					name = "Latte"
+					desc = "Coffee made with espresso and milk."
+				if("soy_latte")
+					icon_state = "soylatte"
+					name = "Soy Latte"
+					desc = "Latte made with soy milk."
+				if("espresso")
+					icon_state = "espresso"
+					name = "Espresso"
+					desc = "Coffee made with water."
+				if("cappuccino")
+					icon_state = "cappuccino"
+					name = "Cappuccino"
+					desc = "coffee made with espresso, milk, and steamed milk."
+				if("doppio")
+					icon_state = "doppio"
+					name = "Doppio"
+					desc = "Ring ring ring"
+				if("tonio")
+					icon_state = "tonio"
+					name = "Tonio"
+					desc = "Delicious, and it'll help you out if you get in a Jam."
+				if("passione")
+					icon_state = "passione"
+					name = "Passione"
+					desc = "Sometimes referred to as a 'Venti Aureo'"
+				if("seccoffee")
+					icon_state = "seccoffee"
+					name = "Wake up call"
+					desc = "The perfect start for any Sec officer's day."
+				if("medcoffee")
+					icon_state = "medcoffee"
+					name = "Lifeline"
+					desc = "Some days, the only thing that keeps you going is cryo and caffeine."
+				if("detcoffee")
+					icon_state = "detcoffee"
+					name = "Joe"
+					desc = "The lights, the smoke, the grime, the station itself felt alive that day as I stepped into my office, mug in hand. It was another one of those days. Some Nurse got smoked in one of the tunnels, and it came down to me to catch the guy did it. I got up to close the blinds of my office, when an officer burst through my door. There had been another one offed in the tunnels, this time an assistant. I grumbled and downed some of my joe. It was bitter, tasteless, but it was what kept me going. I remember back when I was a rookie, this stuff used to taste so great to me. I guess that's just another sign of how this station changes people. I put my mug back down on my desk, dusted off my jacket, and lit my last cigar. I checked to make sure my faithful revolver was loaded, and stepped out, back into the cold halls of the station."
+				if("etank")
+					icon_state = "etank"
+					name = "Recharger"
+					desc = "Helps you get back on your feet after a long day of robot maintenance. Can also be used as a substitute for motor oil."
+
+
+
+
+
+				else
+					icon_state ="mug_what"
+					name = "mug of ..something?"
+					desc = "You aren't really sure what this is."
+		else
+			icon_state = "mug_empty"
+			name = "mug"
+			desc = "A simple mug."
+			return
