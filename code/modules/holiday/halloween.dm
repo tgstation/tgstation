@@ -234,8 +234,6 @@
 	maxHealth = 1e6
 	health = 1e6
 	emote_see = list("silently stares")
-	heat_damage_per_tick = 0
-	cold_damage_per_tick = 0
 	unsuitable_atmos_damage = 0
 	var/timer
 
@@ -288,3 +286,6 @@
 			visible_message("<span class='userdanger'>[src] seems to be resisting the effect!</span>")
 	else
 		..()
+
+/mob/living/simple_animal/hostile/retaliate/clown/insane/handle_temperature_damage()
+	return

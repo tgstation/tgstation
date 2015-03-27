@@ -38,17 +38,6 @@
 /mob/living/carbon/alien/larva/attack_ui(slot_id)
 	return
 
-/mob/living/carbon/alien/larva/attack_slime(mob/living/carbon/slime/M as mob)
-
-	..()
-	var/damage = rand(5, 35)
-	if(M.is_adult)
-		damage = rand(20, 40)
-	adjustBruteLoss(damage)
-	add_logs(M, src, "attacked", admin=0)
-	updatehealth()
-	return
-
 /mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
 		..(user, 1)

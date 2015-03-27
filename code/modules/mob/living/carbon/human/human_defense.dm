@@ -398,25 +398,21 @@ emp_act
 			updatehealth()
 
 
-/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M as mob)
-	..()
-	var/damage = rand(1, 3)
+/mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M as mob)
+	if(..()) //successful slime attack
+		var/damage = rand(5, 25)
+		if(M.is_adult)
+			damage = rand(10, 35)
 
-	if(M.is_adult)
-		damage = rand(10, 35)
-	else
-		damage = rand(5, 25)
+		if(check_shields(damage, "the [M.name]"))
+			return 0
 
-	if(check_shields(damage, "the [M.name]"))
-		return 0
+		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 
-	var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
+		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+		var/armor_block = run_armor_check(affecting, "melee")
+		apply_damage(damage, BRUTE, affecting, armor_block)
 
-	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
-	var/armor_block = run_armor_check(affecting, "melee")
-	apply_damage(damage, BRUTE, affecting, armor_block)
-
-	return
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
 	if(M.occupant.a_intent == "harm")

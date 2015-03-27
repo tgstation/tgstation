@@ -76,3 +76,11 @@ In all, this is a lot like the monkey code. /N
 		adjustBruteLoss(damage)
 		updatehealth()
 
+/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M as mob)
+	if(..()) //successful slime attack
+		var/damage = rand(5, 35)
+		if(M.is_adult)
+			damage = rand(10, 40)
+		adjustBruteLoss(damage)
+		add_logs(M, src, "attacked", admin=0)
+		updatehealth()

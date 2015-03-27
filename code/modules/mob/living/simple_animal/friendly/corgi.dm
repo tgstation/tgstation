@@ -24,8 +24,8 @@
 		pcollar = new(src)
 		update_collar()
 
-/mob/living/simple_animal/pet/Die()
-	..()
+/mob/living/simple_animal/pet/death(gibbed)
+	..(gibbed)
 	update_collar()
 
 /mob/living/simple_animal/pet/proc/update_collar()
@@ -67,8 +67,8 @@
 	..()
 	regenerate_icons()
 
-/mob/living/simple_animal/pet/corgi/Die()
-	..()
+/mob/living/simple_animal/pet/corgi/death(gibbed)
+	..(gibbed)
 	regenerate_icons()
 
 /mob/living/simple_animal/pet/corgi/revive()

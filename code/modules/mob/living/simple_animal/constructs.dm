@@ -7,21 +7,13 @@
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm   = "punches"
-	icon_dead = "shade_dead"
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	faction = list("cult")
 	var/list/construct_spells = list()
@@ -34,8 +26,8 @@
 	for(var/spell in construct_spells)
 		mob_spell_list += new spell(src)
 
-/mob/living/simple_animal/construct/Die()
-	..()
+/mob/living/simple_animal/construct/death()
+	..(1)
 	new /obj/item/weapon/ectoplasm (src.loc)
 	visible_message("<span class='danger'>[src] collapses in a shattered heap.</span>")
 	ghostize()
@@ -57,7 +49,7 @@
 
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M as mob)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
-		health += 5
+		adjustBruteLoss(-5)
 		M.emote("me", 1, "mends some of \the <EM>[src]'s</EM> wounds.")
 	else if(src != M)
 		..()

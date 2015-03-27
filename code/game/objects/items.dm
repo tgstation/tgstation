@@ -337,7 +337,7 @@
 		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
+	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
 		user << "<span class='danger'>You cannot locate any eyes on this creature!</span>"
 		return
 

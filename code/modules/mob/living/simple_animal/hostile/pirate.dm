@@ -20,14 +20,7 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
-	min_oxy = 5
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 1
-	min_co2 = 0
-	max_co2 = 5
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	var/corpse = /obj/effect/landmark/mobcorpse/pirate
 	var/weapon1 = /obj/item/weapon/melee/energy/sword/pirate
@@ -49,11 +42,13 @@
 	weapon1 = /obj/item/weapon/gun/energy/laser
 
 
-/mob/living/simple_animal/hostile/pirate/Die()
-	..()
+/mob/living/simple_animal/hostile/pirate/death()
+	..(1)
+	visible_message("<span class='notice'>[src] stops moving.</span>")
 	if(corpse)
 		new corpse (src.loc)
 	if(weapon1)
 		new weapon1 (src.loc)
+	ghostize()
 	qdel(src)
 	return
