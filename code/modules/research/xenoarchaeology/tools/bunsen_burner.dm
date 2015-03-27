@@ -8,6 +8,7 @@
 	var/heated = 0		//whether the bunsen has been on long enough to let stuff react
 	var/obj/item/weapon/reagent_containers/held_container
 	var/heat_time = 50
+	ghost_read = 0
 
 /obj/machinery/bunsen_burner/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/reagent_containers))
