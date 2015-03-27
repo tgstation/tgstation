@@ -2,7 +2,7 @@
 	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armour against the dangers of the EVA mining process."
 	name = "\improper APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 6
+	step_in = 5
 	max_temperature = 20000
 	health = 200
 	lights_power = 7
@@ -18,6 +18,14 @@
 	..()
 	return
 */
+
+/obj/mecha/working/ripley/Move()
+	. = ..()
+	if(. && (locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in equipment))
+		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
+		if(ore_box)
+			for(var/obj/item/weapon/ore/ore in get_turf(src))
+				ore.Move(ore_box)
 
 /obj/mecha/working/ripley/Destroy()
 	while(src.damage_absorption.["brute"] < 0.6)

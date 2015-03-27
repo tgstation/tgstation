@@ -112,6 +112,11 @@
 	projectile = /obj/item/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/pulse.ogg'
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/M as obj)
+	if(istype(M, /obj/mecha/working))
+		if(M.equipment.len<M.max_equip)
+			return 1
+	return 0
 
 /obj/item/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"

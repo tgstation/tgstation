@@ -230,7 +230,6 @@ obj/item/projectile/kinetic/New()
 			return -1
 	return ..()
 
-
 /obj/item/projectile/plasma/adv/mech
 	range = 12
 	power = 18

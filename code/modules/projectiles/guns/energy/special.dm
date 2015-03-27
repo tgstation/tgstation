@@ -229,9 +229,12 @@
 /obj/item/weapon/gun/energy/plasmacutter/newshot()
 	if (!ammo_type || !reagents)	return
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+
 	var/amount = shot.e_cost / 100
+
 	if(!reagents.get_reagent_amount("plasma") >= amount)
 		return
+
 	reagents.remove_reagent("plasma", amount)
 	chambered = shot
 	chambered.newshot()
