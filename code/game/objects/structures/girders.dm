@@ -33,7 +33,7 @@
 				transfer_fingerprints_to(G)
 				qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user << "<span class='notice'>Now slicing apart the girder...</span>"
 		if(do_after(user,30))
 			if(!src.loc)
@@ -280,7 +280,7 @@
 			transfer_fingerprints_to(R)
 			qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user << "<span class='notice'>Now slicing apart the girder...</span>"
 		if(do_after(user,30))
 			user << "<span class='notice'>You slice apart the girder!</span>"

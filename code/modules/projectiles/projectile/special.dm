@@ -198,3 +198,38 @@ obj/item/projectile/kinetic/New()
 /obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
 	explosion(target, -1, 0, 1)
 	return 1
+
+/obj/item/projectile/plasma
+	name = "plasma blast"
+	icon_state = "plasmacutter"
+	damage_type = BURN
+	damage = 10
+	range = 6
+	var/power = 9
+
+/obj/item/projectile/plasma/on_hit(var/atom/target)
+	if(istype(target, /turf/simulated/mineral))
+		while(target && target.density && range > 0 && power > 0)
+			power -= 1
+			var/turf/simulated/mineral/M = target
+			M.gets_drilled()
+		if(range > 0 && power > 0)
+			return -1
+	return ..()
+
+/obj/item/projectile/plasma/adv
+	range = 9
+	power = 12
+	damage = 15
+
+/obj/item/projectile/plasma/adv/on_hit(var/atom/target)
+	if(!ismob(target) && !istype(target, /turf/simulated/mineral))
+		target.ex_act(3)
+		power -= 10
+		if(range > 0 && power > 0 && (!target || !target.density))
+			return -1
+	return ..()
+
+/obj/item/projectile/plasma/adv/mech
+	range = 12
+	power = 18
