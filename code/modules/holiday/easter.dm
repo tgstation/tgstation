@@ -94,9 +94,8 @@
 //Bunny Suit
 /obj/item/clothing/head/bunnyhead
 	name = "Easter Bunny Head"
-	icon = 'icons/mob/Easter.dmi'
 	icon_state = "bunnyhead"
-	item_state = "bunnyhead-i"
+	item_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'"
 	slowdown = -1
 	flags = BLOCKHAIR
@@ -105,9 +104,8 @@
 /obj/item/clothing/suit/bunnysuit
 	name = "Easter Bunny Suit"
 	desc = "Hop Hop Hop!"
-	icon = 'icons/mob/Easter.dmi'
 	icon_state = "bunnysuit"
-	item_state = "bunnysuit-i"
+	item_state = "bunnysuit"
 	slowdown = -1
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -137,7 +135,8 @@
 	/obj/item/toy/prize/ripley,
 	/obj/item/toy/prize/honk,
 	/obj/item/toy/carpplushie,
-	/obj/item/toy/redbutton)
+	/obj/item/toy/redbutton,
+	/obj/item/clothing/head/collectable/rabbitears)
 	new won(where)
 	new/obj/item/weapon/reagent_containers/food/snacks/chocolateegg(where)
 
@@ -152,3 +151,92 @@
 /obj/effect/spawner/lootdrop/maintenance/New()
 	..()
 	loot += list(/obj/item/weapon/reagent_containers/food/snacks/egg/loaded = 15, /obj/item/weapon/storage/bag/easterbasket = 15)
+
+//Easter Recipes + food
+/obj/item/weapon/reagent_containers/food/snacks/hotcrossbun
+	bitesize = 2
+	name = "hot-cross bun"
+	desc = "The Cross represents the Assistants that died for your sins."
+	icon_state = "hotcrossbun"
+
+/datum/table_recipe/hotcrossbun
+	name = "Hot-Cross Bun"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
+		/datum/reagent/consumable/sugar = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/hotcrossbun
+
+
+/obj/item/weapon/reagent_containers/food/snacks/store/cake/brioche
+	name = "brioche cake"
+	desc = "A ring of sweet, glazed buns."
+	icon_state = "briochecake"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/brioche
+	slices_num = 6
+	bonus_reagents = list("nutriment" = 10, "vitamin" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/cakeslice/brioche
+	name = "brioche cake slice"
+	desc = "Delicious sweet-bread. Who needs anything else?"
+	icon_state = "briochecake_slice"
+	filling_color = "#FFD700"
+
+/datum/table_recipe/briochecake
+	name = "Brioche cake"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
+		/datum/reagent/consumable/sugar = 2
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brioche
+
+/obj/item/weapon/reagent_containers/food/snacks/scotchegg
+	name = "scotch egg"
+	desc = "A boiled egg wrapped in a delicious, seasoned meatball."
+	icon_state = "scotchegg"
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
+	bitesize = 3
+	filling_color = "#FFFFF0"
+	list_reagents = list("nutriment" = 6)
+
+/datum/table_recipe/scotchegg
+	name = "Scotch egg"
+	reqs = list(
+		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/blackpepper = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/scotchegg
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/mammi
+	name = "Mämmi"
+	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
+	icon_state = "mammi"
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
+	list_reagents = list("nutriment" = 8, "vitamin" = 1)
+
+/datum/table_recipe/mammi
+	name = "Mämmi"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
+		/datum/reagent/consumable/milk = 5
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
+
+/obj/item/weapon/reagent_containers/food/snacks/chocolatebunny
+	name = "chocolate bunny"
+	desc = "Contains less than 10% real rabbit!"
+	icon_state = "chocolatebunny"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)
+	filling_color = "#A0522D"
+
+/datum/table_recipe/chocolatebunny
+	name = "Chocolate bunny"
+	reqs = list(
+		/datum/reagent/consumable/sugar = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chocolatebunny
