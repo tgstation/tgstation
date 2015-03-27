@@ -15,6 +15,13 @@
 /obj/item/clothing/mask/breath/attack_self(var/mob/user)
 	adjustmask(user)
 
+/obj/item/clothing/mask/breath/AltClick(var/mob/user)
+	adjustmask(user)
+
+/obj/item/clothing/mask/breath/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click [src] to adjust it.</span>"
+
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
 	name = "medical mask"

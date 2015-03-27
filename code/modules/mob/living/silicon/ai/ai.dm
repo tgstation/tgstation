@@ -783,6 +783,6 @@ var/list/ai_list = list()
 
 	set_autosay()
 
-/mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
+/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)
 	return
 

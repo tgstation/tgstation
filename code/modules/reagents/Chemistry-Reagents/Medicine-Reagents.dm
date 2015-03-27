@@ -14,20 +14,6 @@ datum/reagent/medicine
 datum/reagent/medicine/on_mob_life(var/mob/living/M as mob)
 	holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency) //medicine reagents stay longer if you have a better metabolism
 
-datum/reagent/medicine/lipozine
-	name = "Lipozine" // The anti-nutriment.
-	id = "lipozine"
-	description = "A chemical compound that causes a powerful fat-burning reaction."
-	color = "#BBEDA4" // rgb: 187, 237, 164
-
-datum/reagent/medicine/lipozine/on_mob_life(var/mob/living/M as mob)
-	M.nutrition -= 10 * REAGENTS_METABOLISM
-	M.overeatduration = 0
-	if(M.nutrition < 0)//Prevent from going into negatives.
-		M.nutrition = 0
-	..()
-	return
-
 datum/reagent/medicine/leporazine
 	name = "Leporazine"
 	id = "leporazine"
@@ -141,10 +127,8 @@ datum/reagent/medicine/rezadone
 	color = "#669900" // rgb: 102, 153, 0
 
 datum/reagent/medicine/rezadone/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	current_cycle++
+	switch(current_cycle)
 		if(1 to 15)
 			M.adjustCloneLoss(-1)
 			M.heal_organ_damage(1,1)

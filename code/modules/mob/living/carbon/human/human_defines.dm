@@ -44,8 +44,6 @@
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
-	var/xylophone = 0 //For the spoooooooky xylophone cooldown
-
 	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine
 
 	var/blood_max = 0 //how much are we bleeding

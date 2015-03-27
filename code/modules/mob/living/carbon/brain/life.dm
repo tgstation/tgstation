@@ -64,10 +64,7 @@
 			death()
 			eye_blind = max(eye_blind, 1)
 			silent = 0
-			return 1
-		if(health < config.health_threshold_crit)
-			stat = UNCONSCIOUS
-			eye_blind = max(eye_blind, 1)
+			return
 		else
 			stat = CONSCIOUS
 
@@ -124,8 +121,13 @@
 			else
 				eye_blind = 0
 
-	return 1
+		return 1
 
+/mob/living/carbon/brain/handle_disabilities()
+	return
+
+/mob/living/carbon/brain/handle_status_effects()
+	return
 
 /mob/living/carbon/brain/handle_regular_hud_updates()
 

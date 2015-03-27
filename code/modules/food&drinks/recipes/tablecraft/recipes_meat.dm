@@ -87,6 +87,15 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cornedbeef
 
+/datum/table_recipe/bearsteak
+	name = "Filet migrawr"
+	reqs = list(
+		/datum/reagent/consumable/ethanol/manly_dorf = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/bear = 1,
+		/obj/item/weapon/lighter/grayscale
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/bearsteak
+
 /datum/table_recipe/wingfangchu
 	name = "Wingfangchu"
 	reqs = list(

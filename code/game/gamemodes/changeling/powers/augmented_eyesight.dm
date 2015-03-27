@@ -4,7 +4,7 @@
 /obj/effect/proc_holder/changeling/augmented_eyesight
 	name = "Augmented Eyesight"
 	desc = "Creates heat receptors in our eyes and dramatically increases light sensing ability."
-	helptext = "Grants us night vision and thermal vision. It may be toggled on or off."
+	helptext = "Grants us night vision and thermal vision. It may be toggled on or off. We will become more vulnerable to flash-based devices while active."
 	chemical_cost = 0
 	dna_cost = 2 //Would be 1 without thermal vision
 	var/active = 0 //Whether or not vision is enhanced
@@ -13,9 +13,11 @@
 	active = !active
 	if(active)
 		user << "<span class='notice'>We feel a minute twitch in our eyes, and darkness creeps away.</span>"
+		user.weakeyes = 1
 	else
 		user << "<span class='notice'>Our vision dulls. Shadows gather.</span>"
 		user.sight -= SEE_MOBS
+		user.weakeyes = 0
 	while(active)
 		user.see_in_dark = 8
 		user.see_invisible = 2

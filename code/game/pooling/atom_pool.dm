@@ -69,13 +69,14 @@ var/global/list/GlobalPool = list()
 
 	if(AM in GlobalPool[AM.type])
 		return
-
-	AM.ResetVars()
-
+	
 	if(!GlobalPool[AM.type])
 		GlobalPool[AM.type] = list()
 
-	GlobalPool[AM.type] += AM
+	GlobalPool[AM.type] |= AM
+	
+	AM.Destroy()
+	AM.ResetVars()
 
 
 

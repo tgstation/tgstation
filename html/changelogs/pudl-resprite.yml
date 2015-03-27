@@ -1,0 +1,10 @@
+author: pudl
+
+
+delete-after: True
+
+
+changes: 
+  - rscadd: "The detective's forensic scanner has been resprited."
+  - rscadd: "So has the cargo tagger."
+  - rscadd: "And the RPED."

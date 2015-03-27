@@ -359,4 +359,13 @@
 				I.loc = get_turf(src)
 				visible_message("<span class='danger'>\the [I] falls out of [name]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I] falls out of your [L.getDisplayName()]!</span>")
 
+/mob/living/carbon/human/handle_heart()
+	if(!heart_attack)
+		return
+	else
+		losebreath += 5
+		adjustOxyLoss(5)
+		adjustBruteLoss(1)
+	return
+
 #undef HUMAN_MAX_OXYLOSS

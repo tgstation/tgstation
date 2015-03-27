@@ -455,7 +455,7 @@
 	item_state = "plaid_red"
 	item_color = "plaid_red"
 	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = 0
+	can_adjust = 1
 
 /obj/item/clothing/under/plaid_skirt/blue
 	name = "blue plaid skirt"
@@ -470,3 +470,10 @@
 	icon_state = "plaid_purple"
 	item_state = "plaid_purple"
 	item_color = "plaid_purple"
+
+/obj/item/clothing/under/jester
+	name = "jester suit"
+	desc = "A jolly dress, well suited to entertain your master, nuncle."
+	icon_state = "jester"
+	item_color = "jester"
+	can_adjust = 0

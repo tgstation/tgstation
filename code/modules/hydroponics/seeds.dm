@@ -477,11 +477,11 @@
 	growthstages = 4
 
 /obj/item/seeds/icepepperseed
-	name = "pack of ice-pepper seeds"
-	desc = "These seeds grow into ice-pepper plants."
+	name = "pack of ice pepper seeds"
+	desc = "These seeds grow into ice pepper plants."
 	icon_state = "seed-icepepper"
 	species = "chiliice"
-	plantname = "Ice-Pepper Plants"
+	plantname = "Ice Pepper Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	lifespan = 25
 	endurance = 15
@@ -550,7 +550,7 @@
 	desc = "These may, or may not, grow into oat."
 	icon_state = "seed-oat"
 	species = "oat"
-	plantname = "oat Stalks"
+	plantname = "Oat Stalks"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/oat
 	lifespan = 25
 	endurance = 15
@@ -567,7 +567,7 @@
 	desc = "These may, or may not, grow into rice."
 	icon_state = "seed-rice"
 	species = "rice"
-	plantname = "rice Stalks"
+	plantname = "Rice Stalks"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/rice
 	lifespan = 25
 	endurance = 15

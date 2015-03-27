@@ -1,7 +1,7 @@
 /datum/surgery/core_removal
 	name = "core removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/incise, /datum/surgery_step/extract_core)
-	species = list(/mob/living/carbon/slime)
+	species = list(/mob/living/simple_animal/slime)
 	target_must_be_dead = 1
 
 
@@ -14,7 +14,7 @@
 	user.visible_message("<span class='notice'>[user] begins to extract a core from [target].</span>")
 
 /datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/mob/living/carbon/slime/slime = target
+	var/mob/living/simple_animal/slime/slime = target
 	if(slime.cores > 0)
 		slime.cores--
 		user.visible_message("<span class='notice'>[user] successfully extracts a core from [target]!</span>")
