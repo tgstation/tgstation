@@ -57,7 +57,7 @@
 			if(istype(src,/mob/living))
 				var/mob/living/M = src
 				M.take_organ_damage(20)
-
+	SpinAnimation(0, 0)
 /atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
 	if(do_attack_animation)
 		hulk.changeNext_move(CLICK_CD_MELEE)
