@@ -142,12 +142,12 @@
 
 	else if(istype(M, /mob/living/carbon/human))
 
-		user.visible_message("<span class='danger'>[user] attempts to feed [M] \the [src].</span>", "<span class='danger'>[user] attempts to feed you \the [src].</span>")
+		user.visible_message("<span class='danger'>[user] attempts to feed [M] \the [src].</span>", "<span class='danger'>You attempt to feed [M] \the [src].</span>")
 
 		if(!do_mob(user, M))
 			return
 
-		user.visible_message("<span class='danger'>[user] feeds [M] \the [src].</span>", "<span class='danger'>[user] feeds you \the [src].</span>")
+		user.visible_message("<span class='danger'>[user] feeds [M] \the [src].</span>", "<span class='danger'>You feed [M] \the [src].</span>")
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
@@ -177,11 +177,11 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , flag)
 
-	if(!is_open_container()) //In any case, we aren't working with a closed bottle
-		user << "<span class='warning'>You can't, \the [src] is closed.</span>"
-		return
-
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+
+		if(!is_open_container()) //In any case, we aren't working with a closed bottle
+			user << "<span class='warning'>You can't, \the [src] is closed.</span>"
+			return
 
 		if(!target.reagents.total_volume)
 			user << "<span class='warning'>\The [target] is empty.</span>"
@@ -195,6 +195,13 @@
 		user << "<span  class='notice'>You fill \the [src] with [trans] units of the contents of \the [target].<span>"
 
 	else //Something like a glass. Player probably wants to transfer TO it.
+
+		if(!target.volume) //Whatever we are dealing with, it's not chemistry-related or doesn't have space for reagents anyways, most likely a table, or a floor !
+			return //We're done here
+
+		if(!is_open_container()) //In any case, we aren't working with a closed bottle
+			user << "<span class='warning'>You can't, \the [src] is closed.</span>"
+			return
 
 		if(!target.is_open_container()) //Is the reagent container we're transfering to closed ?
 			user << "<span class='warning'>You can't, \the [target] is closed.</span>"
