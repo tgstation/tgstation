@@ -13,11 +13,8 @@
 		user << "<span class='warning'>You feel stupider, suddenly.</span>"
 		return
 	var/obj/item/I
-	if(!user.hand && user.r_hand == null)
-		user << "<span class='warning'>You don't have anything in your right hand to give to [src]</span>"
-		return
-	if(user.hand && user.l_hand == null)
-		user << "<span class='warning'>You don't have anything in your left hand to give to [src]</span>"
+	if(user.get_active_hand() == null)
+		user << "You don't have anything in your [user.hand ? "left hand" : "right hand"] to give to [src]."
 		return
 	if(user.hand)
 		I = user.l_hand
@@ -34,7 +31,7 @@
 					user << "<span class='warning'>You need to stay still while giving an object.</span>"
 					src << "<span class='warning'>[user] moved away.</span>" //What an asshole
 					return
-				if((user.hand && user.l_hand != I) || (!user.hand && user.r_hand != I))
+				if(user.get_active_hand() != I)
 					user << "<span class='warning'>You need to keep the item in your hand.</span>"
 					src << "<span class='warning'>[user] has put \the [I] away!</span>"
 					return
