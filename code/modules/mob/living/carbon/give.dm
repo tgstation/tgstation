@@ -16,10 +16,7 @@
 	if(user.get_active_hand() == null)
 		user << "You don't have anything in your [user.hand ? "left hand" : "right hand"] to give to [src]."
 		return
-	if(user.hand)
-		I = user.l_hand
-	else if(!user.hand)
-		I = user.r_hand
+	I = user.get_active_hand()
 	if(!I)
 		return
 	if(src.r_hand == null || src.l_hand == null)
