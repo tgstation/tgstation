@@ -59,14 +59,7 @@
 	icon_state = "s_rabbit"
 	icon_living = "s_rabbit"
 	icon_dead = "s_rabbit_dead"
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	unsuitable_atmos_damage = 0	//This damage is taken when atmos doesn't fit all the requirements above
@@ -210,14 +203,14 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/scotchegg
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
-	name = "Mämmi"
+	name = "MÃ¤mmi"
 	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
 	icon_state = "mammi"
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 
 /datum/table_recipe/mammi
-	name = "Mämmi"
+	name = "MÃ¤mmi"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
