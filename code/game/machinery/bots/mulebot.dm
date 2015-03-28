@@ -329,7 +329,7 @@ var/global/mulebot_count = 0
 				refresh=0
 				var/new_dest = input("Enter new destination tag", "Mulebot [suffix ? "([suffix])" : ""]", destination) as text|null
 				refresh=1
-				if(new_dest)
+				if(new_dest && Adjacent(usr) && !usr.stat)
 					set_destination(new_dest)
 
 
@@ -337,7 +337,7 @@ var/global/mulebot_count = 0
 				refresh=0
 				var/new_id = copytext(sanitize(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null),1,MAX_NAME_LEN)
 				refresh=1
-				if(new_id)
+				if(new_id && Adjacent(usr) && !usr.stat)
 					suffix = new_id
 					name = "\improper Mulebot ([suffix])"
 					updateDialog()
@@ -346,7 +346,7 @@ var/global/mulebot_count = 0
 				refresh=0
 				var/new_home = input("Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination) as text|null
 				refresh=1
-				if(new_home)
+				if(new_home && Adjacent(usr) && !usr.stat)
 					home_destination = new_home
 					updateDialog()
 

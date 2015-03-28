@@ -53,10 +53,15 @@ var/list/GPS_list = list()
 /obj/item/device/gps/Topic(href, href_list)
 	..()
 	if(href_list["tag"] )
-		var/a = input("Please enter desired tag.", name, gpstag) as text
+		var/a = input("Please enter desired tag.", name, gpstag) as text|null
+		if (!a) //what a check
+			return
+		if (usr.get_active_hand() != src || usr.stat)
+			usr << "<span class = 'caution'>The GPS needs to be kept in your active hand!</span>"
+			return
 		a = copytext(sanitize(a), 1, 20)
 		if(length(a) != 4)
-			usr << "<span class = 'caution'> The tag must be four letters long!</span>"
+			usr << "<span class = 'caution'>The tag must be four letters long!</span>"
 			return
 		else
 			gpstag = a

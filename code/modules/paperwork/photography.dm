@@ -43,7 +43,7 @@
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
-		if(loc == user && user.stat == 0)
+		if(Adjacent(user) && !user.stat)
 			scribble = txt
 	..()
 

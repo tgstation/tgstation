@@ -43,15 +43,15 @@
 
 /obj/structure/closet/body_bag/attackby(W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
+		var/t = copytext(sanitize(input(user, "What would you like the label to be?", text("[]", src.name), null)  as text|null), 1, MAX_NAME_LEN)
 		if(user.get_active_hand() != W)
 			return
-		if(!in_range(src, user) && src.loc != user)
+		if (!Adjacent(user) || user.stat)
 			return
 		t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 		src.name = "body bag"
 		if(t)
-			src.name += " [t]"
+			src.name += " ([t])"
 			src.overlays += image(src.icon, "bodybag_label")
 		return
 	else if(istype(W, /obj/item/weapon/wirecutters))

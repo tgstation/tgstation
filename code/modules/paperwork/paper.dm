@@ -259,8 +259,12 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
 		//openhelp(user)
 		return
+
 	else if(istype(P, /obj/item/weapon/stamp))
-		if((!in_range(src, usr) && loc != user && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != user && user.get_active_hand() != P))
+		//if((!in_range(src, user) && loc != user && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != user && user.get_active_hand() != P)) return //What the actual FUCK
+
+		if(istype(P, /obj/item/weapon/stamp/clown) && !clown)
+			user << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
 			return
 
 		stamps += (stamps=="" ? "<HR>" : "<BR>") + "<i>This [src.name] has been stamped with the [P.name].</i>"
@@ -268,12 +272,6 @@
 		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 		stampoverlay.pixel_x = rand(-2, 2)
 		stampoverlay.pixel_y = rand(-3, 2)
-
-		if(istype(P, /obj/item/weapon/stamp/clown))
-			if(!clown)
-				user << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
-				return
-
 		stampoverlay.icon_state = "paper_[P.icon_state]"
 
 		if(!stamped)
@@ -282,6 +280,7 @@
 		overlays += stampoverlay
 
 		user << "<span class='notice'>You stamp [src] with your rubber stamp.</span>"
+
 	else if(istype(P, /obj/item/weapon/photo))
 		if(img)
 			user << "<span class='notice'>This paper already has a photo attached.</span>"
