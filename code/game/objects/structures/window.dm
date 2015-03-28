@@ -11,6 +11,7 @@
 	name = "window"
 	desc = "A silicate barrier, used to keep things out and in sight. Fragile."
 	icon = 'icons/obj/structures.dmi'
+	icon_state = "window"
 	density = 1
 	layer = 3.2 //Just above airlocks //For some reason I guess
 	pressure_resistance = 4*ONE_ATMOSPHERE
@@ -22,6 +23,12 @@
 	var/sheettype = /obj/item/stack/sheet/glass //Used for deconstruction
 	var/sheetamount = 1 //Number of sheets needed to build this window (determines how much shit is spawned by destroy())
 	var/reinforced = 0 //Used for deconstruction steps
+
+	var/icon/damage_overlay
+	var/cracked_base = "crack"
+
+	var/fire_temp_threshold = 800
+	var/fire_volume_mod = 100
 
 /obj/structure/window/New(loc)
 
@@ -68,8 +75,21 @@
 				message_admins("Window with pdiff [pdiff] at [formatJumpTo(loc)] destroyed by [M.real_name] ([formatPlayerPanel(M,M.ckey)])!")
 				log_admin("Window with pdiff [pdiff] at [loc] destroyed by [M.real_name] ([M.ckey])!")
 		Destroy()
-	else if(sound)
-		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	else
+		if(sound)
+			playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+		if(health < initial(health))
+			spawn()
+				var/damage_fraction = Clamp(round((initial(health) - health) / initial(health) * 5) + 1, 1, 5) //gives a number, 1-5, based on damagedness
+				var/new_overlay = icon(src.icon, "[cracked_base]", src.dir, damage_fraction)
+				overlays += new_overlay
+				if(damage_overlay)
+					overlays -= damage_overlay //the icon will be gc'd with no ref
+				damage_overlay = new_overlay
+		else
+			if(damage_overlay)
+				overlays -= damage_overlay
+			damage_overlay = null
 
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
 
@@ -449,8 +469,8 @@
 
 /obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 
-	if(exposed_temperature > T0C + 800)
-		health -= round(exposed_volume/100)
+	if(exposed_temperature > T0C + fire_temp_threshold)
+		health -= round(exposed_volume/fire_volume_mod)
 		healthcheck(sound = 0)
 	..()
 
@@ -472,12 +492,8 @@
 	sheettype = /obj/item/stack/sheet/glass/plasmaglass
 	health = 120
 
-/obj/structure/window/plasma/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-
-	if(exposed_temperature > T0C + 32000)
-		health -= (round(exposed_volume/1000))
-		healthcheck(sound = 0)
-	..()
+	fire_temp_threshold = 32000
+	fire_volume_mod = 1000
 
 /obj/structure/window/reinforced/plasma
 
@@ -488,8 +504,7 @@
 	sheettype = /obj/item/stack/sheet/glass/plasmarglass
 	health = 160
 
-/obj/structure/window/plasmareinforced/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-
+/obj/structure/window/reinforced/plasma/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
 /obj/structure/window/reinforced/tinted

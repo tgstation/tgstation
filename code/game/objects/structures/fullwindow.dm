@@ -11,6 +11,8 @@
 	mouse_opacity = 2 // Complete opacity //What in the name of everything is this variable ?
 	layer = 3.21 // Windows are at 3.2.
 
+	cracked_base = "fcrack"
+
 /obj/structure/window/full/New(loc)
 
 	..(loc)
@@ -70,12 +72,8 @@
 	sheettype = /obj/item/stack/sheet/glass/plasmaglass
 	health = 120
 
-/obj/structure/window/plasma/full/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-
-	if(exposed_temperature > T0C + 32000)
-		health -= (round(exposed_volume/1000))
-		healthcheck(sound = 0)
-	..()
+	fire_temp_threshold = 32000
+	fire_volume_mod = 1000
 
 /obj/structure/window/full/reinforced/plasma
 	name = "reinforced plasma window"
@@ -86,7 +84,6 @@
 	health = 160
 
 /obj/structure/window/full/reinforced/plasma/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-
 	return
 
 /obj/structure/window/full/reinforced/tinted
