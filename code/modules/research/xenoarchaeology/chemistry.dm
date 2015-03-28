@@ -86,10 +86,10 @@ datum
 
 obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
-		var/new_label = sanitize(input("What should the new label be?","Label solution tray"))
+		var/new_label = copytext(sanitize(input("What should the new label be?","Label solution tray") as text|null), 1, MAX_NAME_LEN)
 		if(new_label && Adjacent(user) && !user.stat)
 			name = "solution tray ([new_label])"
-			user << "\blue You write on the label of the solution tray."
+			user << "<span class='notice'> You write on the label of the solution tray.</span>"
 	else
 		..(W, user)
 

@@ -145,8 +145,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W,/obj/item/weapon/pen)) //Renaming food
-		var/n_name = copytext(sanitize(input(user, "What would you like to name this dish?", "Food Renaming", null)  as text), 1, MAX_NAME_LEN)
-		if(Adjacent(user) && !user.stat)
+		var/n_name = copytext(sanitize(input(user, "What would you like to name this dish?", "Food Renaming", null) as text|null), 1, MAX_NAME_LEN)
+		if(n_name && Adjacent(user) && !user.stat)
 			name = "[n_name]"
 		return
 	if(istype(W,/obj/item/weapon/storage))
