@@ -1,5 +1,5 @@
 /obj/structure/closet/crate/flatpack
-	name = "flatpack"
+	name = "\improper flatpack"
 	desc = "A ready-to-assemble machine flatpack produced in the space-Swedish style.<br>Crowbar the flatpack open and follow the obtuse instructions to make the resulting machine."
 	icon = 'icons/obj/machines/flatpack.dmi'
 	icon_state = "flatpack"
@@ -17,8 +17,6 @@
 
 /obj/structure/closet/crate/flatpack/attackby(var/atom/A, mob/user)
 	if(assembling)
-		if(unpacking.assemble_busy)
-			return
 		if(unpacking.action(A, user))
 			return 1
 	if(istype(A, /obj/item/weapon/crowbar) && !assembling)
@@ -57,9 +55,10 @@
 /obj/structure/closet/crate/flatpack/attack_hand()
 	return
 
+#define Fl_ACTION	"action"
+
 /datum/construction/flatpack_unpack
 	steps = list()
-	var/assemble_busy = 0
 
 /datum/construction/flatpack_unpack/New(var/atom/A)
 	var/last_step = ""
@@ -69,21 +68,30 @@
 		steps += null
 		switch(current_tool)
 			if("weldingtool")
-				steps[steps.len] = list("key"=/obj/item/weapon/weldingtool,
-							"tool_name" = "welding tool",
-							"action" = "weld the plates")
+				steps[steps.len] = list(Co_KEY=/obj/item/weapon/weldingtool,
+							Co_AMOUNT = 3, //requires the weldingtool is on
+							Co_VIS_MSG = "{USER} weld{S} the plates in {HOLDER}",
+							Co_START_MSG = "{USER} start{s} welding the plates in {HOLDER}",
+							Fl_ACTION = "weld the plates",
+							Co_DELAY = 30)
 			if("screwdriver")
-				steps[steps.len] = list("key"=/obj/item/weapon/screwdriver,
-							"tool_name" = "screwdriver",
-							"action" = "tighten the screws")
+				steps[steps.len] = list(Co_KEY=/obj/item/weapon/screwdriver,
+							Co_VIS_MSG = "{USER} tighten{S} the screws in {HOLDER}",
+							Co_START_MSG = "{USER} start{s} tightening the screws in {HOLDER}",
+							Fl_ACTION = "tighten the screws",
+							Co_DELAY = 30)
 			if("wrench")
-				steps[steps.len] = list("key"=/obj/item/weapon/wrench,
-							"tool_name" = "wrench",
-							"action" = "secure the bolts")
+				steps[steps.len] = list(Co_KEY=/obj/item/weapon/wrench,
+							Co_VIS_MSG = "{USER} secure{S} the bolts in {HOLDER}",
+							Co_START_MSG = "{USER} start{s} securing the bolts in {HOLDER}",
+							Fl_ACTION = "secure the bolts",
+							Co_DELAY = 30)
 			if("wirecutter")
-				steps[steps.len] = list("key"=/obj/item/weapon/wirecutters,
-							"tool_name" = "wirecutter",
-							"action" = "strip the wiring")
+				steps[steps.len] = list(Co_KEY=/obj/item/weapon/wirecutters,
+							Co_VIS_MSG = "{USER} strip{s} the wiring in {HOLDER}",
+							Co_START_MSG = "{USER} start{s} stripping the wiring in {HOLDER}",
+							Fl_ACTION = "strip the wiring",
+							Co_DELAY = 30)
 	holder = A
 	..()
 
@@ -95,7 +103,10 @@
 		if(prob(5) && !misprinted)
 			current_step = steps[rand(1, steps.len)] //misprints ahoy
 			misprinted = 1
-		instructions += "<b>You see a small pictogram of \a [current_step["tool_name"]].</b><br> The minute script says: \"Be sure to [current_step["action"]] [pick("on a clear carpet", "with an adult", "with your friends", "under the captain's watchful gaze")].\"<br>"
+
+		var/obj/item/current_tool = current_step[Co_KEY]
+
+		instructions += "<b>You see a small pictogram of \a [initial(current_tool.name)].</b><br> The minute script says: \"Be sure to [current_step[Fl_ACTION]] [pick("on a clear carpet", "with an adult", "with your friends", "under the captain's watchful gaze")].\"<br>"
 	return list("instructions" = instructions, "misprint" = misprinted)
 
 /datum/construction/flatpack_unpack/action(atom/used_atom, mob/user as mob)
@@ -103,21 +114,6 @@
 
 /datum/construction/flatpack_unpack/set_desc(index as num)
 	return
-
-/datum/construction/flatpack_unpack/check_step(atom/used_atom,mob/user as mob) //check last step only
-	var/valid_step = is_right_key(user,used_atom)
-	if(valid_step)
-		if(custom_action(valid_step, used_atom, user))
-			var/list/step = steps[steps.len]
-			user.show_message("You begin to [step["action"]]...")
-			assemble_busy = 1
-			if(do_after(user, 30))
-				assemble_busy = 0
-				user.show_message("You successfully [step["action"]] in the assembly.")
-				next_step(user)
-			assemble_busy = 0
-			return 1
-	return 0
 
 /datum/construction/flatpack_unpack/spawn_result(mob/user as mob)
 	var/obj/structure/closet/crate/flatpack/FP = holder
@@ -128,3 +124,5 @@
 		FP.Finalize()
 		del(src)
 		return 1
+
+#undef Fl_ACTION
