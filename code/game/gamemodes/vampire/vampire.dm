@@ -10,7 +10,7 @@
 	restricted_jobs = list("AI", "Cyborg", "Mobile MMI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain") //Consistent screening has filtered all infiltration attempts on high value jobs
 	protected_jobs = list()
 	required_players = 1
-	required_players_secret = 15
+	required_players_secret = 15 //High-low-pop. Same thing as changelings, but we also need more counters like the Chaplain
 	required_enemies = 2
 	recommended_enemies = 4
 

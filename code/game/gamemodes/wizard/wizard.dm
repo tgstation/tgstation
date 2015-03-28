@@ -1,14 +1,11 @@
-/*/proc/iswizard(mob/living/M as mob)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)*/ //See _macros.dm
-
 /datum/game_mode
 	var/list/datum/mind/wizards = list()
 
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
-	required_players = 2
-	required_players_secret = 10
+	required_players = 2 //A wizard and a crewman
+	required_players_secret = 10 //Low-pop. We can allow magic at low-pop, at worst the round will be other quickly
 	required_enemies = 1
 	recommended_enemies = 1
 

@@ -23,8 +23,8 @@
 	var/list/datum/mind/modePlayer = new
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors
-	var/required_players = 0
-	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
+	var/required_players = 0 //Minimum number of players to be chosen at all. DO NOT SET THIS WITHOUT GOOD, FUNCTIONALITY-RELATED REASONS, THIS ALSO AFFECTS MANUAL PICKS
+	var/required_players_secret = 0 //Minimum number of players for that gamemode to be chosen during Secret. This is what you want to set to limit gamemodes based on population !
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/newscaster_announcements = null

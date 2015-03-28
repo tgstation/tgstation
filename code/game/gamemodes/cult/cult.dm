@@ -34,8 +34,8 @@
 	config_tag = "cult"
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent", "Mobile MMI")
 	protected_jobs = list()
-	required_players = 5
-	required_players_secret = 15
+	required_players = 5 //Maximum cultist number + one neutral crewman
+	required_players_secret = 20 //Medium-high-pop. Possibility for converts, so needs at least a staffed crew
 	required_enemies = 3
 	recommended_enemies = 4
 
