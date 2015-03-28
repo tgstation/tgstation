@@ -130,7 +130,7 @@
 		overlays += "Gibtonite_igniter"
 		return
 
-	if(wires)
+	if(wires && !primed)
 		if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler))
 			wires.Interact(user)
 			return
