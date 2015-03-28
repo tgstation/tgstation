@@ -507,7 +507,8 @@
 
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
-		return
+		usr << browse(null, "window=vending")
+		return 1
 
 	//testing("..(): [href]")
 
@@ -534,66 +535,63 @@
 	usr.set_machine(src)
 
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		if (href_list["vend"] && src.vend_ready && !currently_vending)
-			//testing("vend: [href]")
+	if (href_list["vend"] && src.vend_ready && !currently_vending)
+		//testing("vend: [href]")
 
-			if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
-				usr << "\red Access denied." //Unless emagged of course
-				flick(src.icon_deny,src)
-				return
-
-			var/idx=text2num(href_list["vend"])
-			var/cat=text2num(href_list["cat"])
-
-			var/datum/data/vending_product/R = GetProductByID(idx,cat)
-			if (!R || !istype(R) || !R.product_path || R.amount <= 0)
-				message_admins("Invalid vend request by [formatJumpTo(src.loc)]: [href]")
-				return
-
-			if(R.price == null || !R.price)
-				src.vend(R, usr)
-			else
-				src.currently_vending = R
-				src.updateUsrDialog()
-
+		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
+			usr << "\red Access denied." //Unless emagged of course
+			flick(src.icon_deny,src)
 			return
 
-		else if (href_list["cancel_buying"])
-			src.currently_vending = null
+		var/idx=text2num(href_list["vend"])
+		var/cat=text2num(href_list["cat"])
+
+		var/datum/data/vending_product/R = GetProductByID(idx,cat)
+		if (!R || !istype(R) || !R.product_path || R.amount <= 0)
+			message_admins("Invalid vend request by [formatJumpTo(src.loc)]: [href]")
+			return
+
+		if(R.price == null || !R.price)
+			src.vend(R, usr)
+		else
+			src.currently_vending = R
 			src.updateUsrDialog()
-			return
 
-		else if (href_list["buy"])
-			if(istype(usr, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H=usr
-				var/obj/item/weapon/card/card = null
-				var/obj/item/device/pda/pda = null
-				if(istype(H.wear_id,/obj/item/weapon/card))
-					card=H.wear_id
-				else if(istype(H.get_active_hand(),/obj/item/weapon/card))
-					card=H.get_active_hand()
-				else if(istype(H.wear_id,/obj/item/device/pda))
-					pda=H.wear_id
-					if(pda.id)
-						card=pda.id
-				else if(istype(H.get_active_hand(),/obj/item/device/pda))
-					pda=H.get_active_hand()
-					if(pda.id)
-						card=pda.id
-				if(card)
-					connect_account(card)
-			src.updateUsrDialog()
-			return
-
-		else if ((href_list["togglevoice"]) && (src.panel_open))
-			src.shut_up = !src.shut_up
-
-		src.add_fingerprint(usr)
-		src.updateUsrDialog()
-	else
-		usr << browse(null, "window=vending")
 		return
+
+	else if (href_list["cancel_buying"])
+		src.currently_vending = null
+		src.updateUsrDialog()
+		return
+
+	else if (href_list["buy"])
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H=usr
+			var/obj/item/weapon/card/card = null
+			var/obj/item/device/pda/pda = null
+			if(istype(H.wear_id,/obj/item/weapon/card))
+				card=H.wear_id
+			else if(istype(H.get_active_hand(),/obj/item/weapon/card))
+				card=H.get_active_hand()
+			else if(istype(H.wear_id,/obj/item/device/pda))
+				pda=H.wear_id
+				if(pda.id)
+					card=pda.id
+			else if(istype(H.get_active_hand(),/obj/item/device/pda))
+				pda=H.get_active_hand()
+				if(pda.id)
+					card=pda.id
+			if(card)
+				connect_account(card)
+		src.updateUsrDialog()
+		return
+
+	else if ((href_list["togglevoice"]) && (src.panel_open))
+		src.shut_up = !src.shut_up
+
+	src.add_fingerprint(usr)
+	src.updateUsrDialog()
+
 	return
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user, by_voucher = 0)

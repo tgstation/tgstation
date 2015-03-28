@@ -108,8 +108,8 @@
 
 /obj/machinery/computer/pod/Topic(href, href_list)
 	if(..())
-		return
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
+		return 1
+	else
 		usr.set_machine(src)
 		if(href_list["power"])
 			var/t = text2num(href_list["power"])

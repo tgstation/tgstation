@@ -117,8 +117,8 @@
 						src.attack_ai(M)
 
 					// check for TK users
-					else if (ishuman(M))
-						if(istype(M.l_hand, /obj/item/tk_grab) || istype(M.r_hand, /obj/item/tk_grab))
+					if(M.mutations && M.mutations.len)
+						if(M_TK in M.mutations)
 							is_in_use = 1
 							src.attack_hand(M)
 					else

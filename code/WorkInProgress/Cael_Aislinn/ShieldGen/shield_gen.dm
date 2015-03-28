@@ -189,7 +189,7 @@
 
 /obj/machinery/shield_gen/Topic(href, href_list[])
 	if(!isAI(usr) && usr.z != z) return 1
-	..()
+	if(..()) return 1
 	if( href_list["close"] )
 		usr << browse(null, "window=shield_generator")
 		usr.unset_machine()

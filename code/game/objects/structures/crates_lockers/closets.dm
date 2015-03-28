@@ -395,7 +395,7 @@
 	return 1
 
 /obj/structure/closet/container_resist()
-	var/mob/living/user = usr
+	var/mob/user = usr
 	var/breakout_time = 2 //2 minutes by default
 
 	if(opened || (!welded && !locked))

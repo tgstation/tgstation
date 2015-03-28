@@ -114,11 +114,8 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 			return 1
 
 		var/norange = 0
-		if(istype(usr, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = usr
-			if(istype(H.l_hand, /obj/item/tk_grab))
-				norange = 1
-			else if(istype(H.r_hand, /obj/item/tk_grab))
+		if(usr.mutations && usr.mutations.len)
+			if(M_TK in usr.mutations)
 				norange = 1
 
 		if(!norange)

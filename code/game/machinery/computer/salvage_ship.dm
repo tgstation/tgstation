@@ -80,11 +80,10 @@
 
 
 /obj/machinery/computer/salvage_ship/Topic(href, href_list)
-	if(!isliving(usr))	return
-	var/mob/living/user = usr
+	if(..()) return 1
+	var/mob/user = usr
 
-	if(in_range(src, user) || istype(user, /mob/living/silicon))
-		user.set_machine(src)
+	user.set_machine(src)
 
 	if(href_list["salvage"])
 		salvage_move_to(/area/shuttle/salvage/start)

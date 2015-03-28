@@ -188,7 +188,7 @@ obj/machinery/anomaly/Topic(href, href_list)
 	if(href_list["begin"])
 		if(temperature >= 350)
 			var/proceed = input("Unsafe internal temperature detected, enter YES below to continue.","Warning")
-			if(proceed == "YES" && get_dist(src, usr) <= 1)
+			if(proceed == "YES" && !..()) //call parent again to run distance and power checks again.
 				scan_process = 1
 		else
 			scan_process = 1

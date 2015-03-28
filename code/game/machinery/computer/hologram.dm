@@ -57,8 +57,8 @@
 
 /obj/machinery/computer/hologram_comp/Topic(href, href_list)
 	if(..())
-		return
-	if (in_range(src, usr))
+		return 1
+	else
 		flick("holo_console1", src)
 		if (href_list["power"])
 			if (src.projector.hologram)

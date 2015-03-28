@@ -243,10 +243,11 @@
 
 /obj/machinery/particle_accelerator/control_box/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!istype(user, /mob/living/silicon))
-			user.unset_machine()
-			user << browse(null, "window=pacontrol")
-			return
+		if(!istype(user, /mob/living/silicon) && !isAdminGhost(user))
+			if(!user.mutations || user.mutations.len || !(M_TK in user.mutations))
+				user.unset_machine()
+				user << browse(null, "window=pacontrol")
+				return
 	user.set_machine(src)
 
 	var/dat = ""

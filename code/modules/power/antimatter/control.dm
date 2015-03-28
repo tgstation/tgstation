@@ -340,7 +340,7 @@
 		if(usr.machine == src) usr.unset_machine()
 		return 1
 	//Ignore input if we are broken or guy is not touching us, AI can control from a ways away
-	if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon/ai)))
+	if(stat & (BROKEN|NOPOWER))
 		usr.unset_machine()
 		usr << browse(null, "window=AMcontrol")
 		return

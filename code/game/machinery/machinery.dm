@@ -365,11 +365,8 @@ Class Procs:
 				usr << "<span class='warning'>WARNING: Unable to interface with \the [src.name].</span>"
 				return 1
 		var/norange = 0
-		if(istype(usr, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = usr
-			if(istype(H.l_hand, /obj/item/tk_grab))
-				norange = 1
-			else if(istype(H.r_hand, /obj/item/tk_grab))
+		if(usr.mutations && usr.mutations.len)
+			if(M_TK in usr.mutations)
 				norange = 1
 
 		if(!norange)
@@ -379,6 +376,7 @@ Class Procs:
 		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
 
 	src.add_fingerprint(usr)
+	src.add_hiddenprint(usr)
 
 	handle_multitool_topic(href,href_list,usr)
 	return 0

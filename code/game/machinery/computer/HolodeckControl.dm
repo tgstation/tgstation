@@ -72,8 +72,8 @@
 
 /obj/machinery/computer/HolodeckControl/Topic(href, href_list)
 	if(..())
-		return
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+		return 1
+	else
 		usr.set_machine(src)
 
 		if(href_list["emptycourt"])

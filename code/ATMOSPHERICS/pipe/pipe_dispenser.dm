@@ -88,10 +88,13 @@
 
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
-		return
-	if(!anchored || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
 		return
+		return
+	if(!anchored)
+		usr << browse(null, "window=pipedispenser")
+		return
+
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["make"])

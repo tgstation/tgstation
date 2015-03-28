@@ -75,13 +75,11 @@ var/global/vox_shuttle_location
 	onclose(user, "computer")
 
 /obj/machinery/computer/vox_station/Topic(href, href_list)
-	if(!isliving(usr))
-		return
+	if(..()) return 1
 
-	var/mob/living/user = locate("\ref[usr]")
+	var/mob/user = usr
 
-	if(in_range(src, user) || issilicon(user))
-		user.set_machine(src)
+	user.set_machine(src)
 
 	vox_shuttle_location = "station"
 

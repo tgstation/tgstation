@@ -132,6 +132,23 @@ nanoui is used to open and update nano browser uis
 				push_data(null, 1) // Update the UI, force the update in case the status is 0, data is null so that previous data is used
 
  /**
+  * Checks if the nanoui user can ignore distance checks.
+  *
+  * @param nothing
+  *
+  * @return Bool True if they can interact from any range
+  */
+
+/datum/nanoui/proc/check_interactive()
+	if(user.mutations && user.mutations.len)
+		if(M_TK in user.mutations)
+			return 1
+	if(isrobot(user))
+		if(src_object in view(7, user))
+			return 1
+	return (isAI(user) || !distance_check || isAdminGhost(user))
+
+ /**
   * Update the status (visibility) of this ui based on the user's status
   *
   * @param push_update int (bool) Push an update to the ui to update it's status. This is set to 0/false if an update is going to be pushed anyway (to avoid unnessary updates)
@@ -139,15 +156,9 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/update_status(var/push_update = 0)
-	if (istype(user, /mob/living/silicon/ai) || !distance_check)
+	if (check_interactive())
 		set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
-	else if (istype(user, /mob/living/silicon/robot))
-		if (src_object in view(7, user)) // robots can see and interact with things they can see within 7 tiles
-			set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
-		else
-			set_status(STATUS_DISABLED, push_update) // no updates, completely disabled (red visibility)
 	else
-
 		var/dist = 0
 		if(istype(src_object, /atom))
 			var/atom/A = src_object

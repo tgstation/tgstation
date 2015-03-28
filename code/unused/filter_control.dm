@@ -92,8 +92,8 @@
 		usr.machine = null
 		return	//Who cares if we're dead or whatever let us close the fucking window
 	if(..())
-		return
-	if ((((get_dist(src, usr) <= 1 || usr.telekinesis == 1) || istype(usr, /mob/living/silicon/ai)) && istype(src.loc, /turf)))
+		return 1
+	else
 		usr.machine = src
 		if (src.allowed(usr) || src.emagged && !(stat & BROKEN))
 			if (href_list["tg"])	//someone modified the html so I added a check here

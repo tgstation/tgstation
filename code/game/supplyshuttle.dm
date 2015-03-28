@@ -641,10 +641,7 @@ var/list/mechtoys = list(
 		world.log << "## ERROR: Eek. The supply_shuttle controller datum is missing somehow."
 		return
 	if(..())
-		return
-
-	if(isturf(loc) && ( in_range(src, usr) || istype(usr, /mob/living/silicon) ) )
-		usr.set_machine(src)
+		return 1
 
 	//Calling the shuttle
 	if(href_list["send"])

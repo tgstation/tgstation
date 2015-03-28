@@ -27,11 +27,16 @@
 	updateDialog()
 
 /obj/machinery/computer/artifact_database/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
+	if ((stat & (BROKEN|NOPOWER)))
+		user.machine = null
+		user << browse(null, "window=artifact_db")
+		return
+	if ( (!Adjacent(user)) && !issilicon(user))
+		if (!user.mutations && !user.mutations.len && !(M_TK in user.mutations))
 			user.machine = null
 			user << browse(null, "window=artifact_db")
 			return
+
 	var/t = "<B>Artifact Database</B><BR>"
 	t += "<hr>"
 	for(var/datum/catalogued_artifact/CA in catalogued_artifacts)
