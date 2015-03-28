@@ -1313,6 +1313,93 @@
 		)
 	result = /obj/item/weapon/storage/fancy/chicken_bucket
 
+/datum/recipe/gigapuddi
+	reagents = list("milk" = 15)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/gigapuddi
+
+/datum/recipe/gigapuddi/happy
+	reagents = list("milk" = 15, "sugar" = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/gigapuddi/happy
+
+/datum/recipe/gigapuddi/anger
+	reagents = list("milk" = 15, "sodiumchloridsp" = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/gigapuddi/anger
+
+/datum/recipe/flan
+	reagents = list("milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/flan
+
+/datum/recipe/omurice
+	reagents = list("rice" = 5, "ketchup" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/omurice
+
+/datum/recipe/omurice/heart
+	reagents = list("rice" = 5, "ketchup" = 5, "sugar" = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/omurice/heart
+
+/datum/recipe/bluespace
+	reagents = list("milk" = 5, "flour" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/berries,
+		/obj/item/bluespace_crystal
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/bluespace
+
+/datum/recipe/yellowcake
+	reagents = list("uranium" = 5, "radium" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/yellowcake
+
+/datum/recipe/yellowcupcake
+	reagents = list("uranium" = 2, "radium" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg)
+	result = /obj/item/weapon/reagent_containers/food/snacks/yellowcupcake
+
+/datum/recipe/cookiebowl
+	reagents = list("flour" = 5, "sugar" = 2)
+	items = list (
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cookiebowl
+
+/datum/recipe/chococherrycake
+	reagents = list("milk" = 5, "flour" = 15)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/chococherrycake
+
+/datum/recipe/pumpkinbread
+	reagents = list("flour" = 15)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinbread
+
 // Currently Disabled //////////////////////////////////////////
 
 /*
