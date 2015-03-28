@@ -167,9 +167,7 @@ var/global/list/damage_icon_parts = list()
 	previous_damage_appearance = damage_appearance
 	*/
 
-	var/icon/standing = icon('icons/mob/dam_human.dmi', "00")
-
-	var/image/standing_image = image("icon" = standing)
+	var/image/standing_image = image('icons/mob/dam_human.dmi', "blank")
 
 	// blend the individual damage states with our icons
 	for(var/datum/organ/external/O in organs)
