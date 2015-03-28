@@ -78,7 +78,7 @@
 		else
 			..()
 	else if(istype(W,/obj/item/weapon/pen))
-		plaque_contents = copytext(sanitize(input(user, "What would you like to write on the plaque?", "Skeleton plaque", null) as text|null), 1, MAX_NAME_LEN)
+		plaque_contents = copytext(sanitize(input(user, "What would you like to write on the plaque?", "Skeleton plaque", null) as text|null), 1)
 		if (!plaque_contents || !Adjacent(user) || user.stat) return
 		user.visible_message("[user] writes something on the base of [src].","You relabel the plaque on the base of \icon[src] [src].")
 		if(src.contents.Find(/obj/item/weapon/fossil/skull/horned))
