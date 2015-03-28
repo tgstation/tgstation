@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "bond" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1)))
+	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "bond" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1, "jacket" = 1)))
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/gas/voice(src)
@@ -87,6 +87,24 @@
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/weapon/card/id/syndicate(src)
 			return
+
+		if("jacket") //Do you like hurting other people?
+			var/weapon = rand(1,4)
+			new /obj/item/clothing/head/chicken(src)
+			new /obj/item/clothing/suit/jacket/letterman(src)
+			new /obj/item/clothing/under/pants/classicjeans(src)
+			new /obj/item/weapon/card/emag(src)
+			switch(weapon)
+				if(1)
+					new /obj/item/weapon/melee/pocket_knife(src)
+				if(2)
+					new /obj/item/weapon/melee/lead_pipe(src)
+				if(3)
+					new /obj/item/weapon/melee/frying_pan(src)
+				if(4)
+					new /obj/item/weapon/melee/machete(src)
+			new /obj/item/weapon/device/murder_phone(src)
+			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"

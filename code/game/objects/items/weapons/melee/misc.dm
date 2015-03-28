@@ -106,3 +106,104 @@
 
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
+
+/obj/item/weapon/melee/pocket_knife
+	name = "pocket knife"
+	desc = "A small, stainless-steel pocket knife with an imitation leather handle."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "pocket_knife"
+	slot_flags = SLOT_BELT
+	w_class = 2
+	force = 10
+	throwforce = 8
+	throw_range = 8
+	attack_verb = list("cut", "stabbed", "sliced")
+	embed_chance = 80
+	embedded_fall_chance = 33
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/melee/baseball_bat
+	name = "baseball bat"
+	desc = "A hefty, sturdy wooden baseball bat. Ideally, hits baseballs."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "ball_bat"
+	w_class = 4
+	force = 18
+	throwforce = 7
+	throw_range = 2
+	attack_verb = list("slammed", "smashed", "beaten")
+
+/obj/item/weapon/melee/lead_pipe
+	name = "lead pipe"
+	desc = "A section of lead piping. What's it doing up here, where it can't possibly be utilized?"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "lead_pipe"
+	slot_flags = SLOT_BELT
+	w_class = 3
+	force = 12
+	throwforce = 9
+	throw_range = 5
+	m_amt = 75
+
+/obj/item/weapon/melee/golf_club
+	name = "golf club"
+	desc = "You don't even know anymore. Why would someone bring a nine-iron onto a space station?"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "golf_club"
+	w_class = 4
+	force = 16
+	throwforce = 7
+	throw_range = 3
+	m_amt = 125
+
+/obj/item/weapon/melee/frying_pan
+	name = "frying pan"
+	desc = "A cast-iron frying pan designed for cooking food."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "frying_pan"
+	w_class = 3
+	force = 12
+	throwforce = 10
+	throw_range = 5
+	m_amt = 75
+	attack_verb = list("panned", "goldrushed")
+	hitsound = 'sound/items/trayhit2.ogg'
+
+/obj/item/weapon/melee/sledgehammer
+	name = "sledgehammer"
+	desc = "A massive sledgehammer for breaking things and sticking them in place."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "sledgehammer"
+	w_class = 5
+	force = 22 //It's a fuckin' SLEDGEHAMMER.
+	throwforce = 20
+	throw_range = 1
+	m_amt = 25 //Hammer's head
+
+/obj/item/weapon/melee/machete
+	name = "machete"
+	desc = "A machete, ideal for cutting through thick vegetation."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "machete"
+	slot_flags = SLOT_BELT
+	w_class = 3
+	force = 15
+	throwforce = 17
+	throw_range = 8
+	embed_chance = 25
+	embedded_fall_chance = 50
+	m_amt = 100
+	attack_verb = list("slashed", "sliced", "cut", "stabbed")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/melee/hammer
+	name = "carpentry hammer"
+	desc = "A handy-dandy hammer found in any good architect's toolbox."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "carpenter_hammer"
+	slot_flags = SLOT_BELT
+	w_class = 2
+	force = 9
+	throwforce = 5
+	throw_range = 8 //Hammers are fairly light
+	m_amt = 10

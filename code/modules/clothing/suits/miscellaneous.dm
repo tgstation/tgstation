@@ -236,6 +236,12 @@
 	desc = "Pompadour not included."
 	icon_state = "leatherjacket"
 
+/obj/item/clothing/suit/jacket/letterman
+	name = "letterman jacket"
+	desc = "Show your support to the Miami Maniacs by wearing this jacket. Tire iron not included."
+	icon_state = "lettermanjacket"
+	allowed = list(/obj/item/weapon/melee, /obj/item/weapon/tank/internals/emergency_oxygen)
+
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
 	desc = "A suit made out of chitinous alien hide."
