@@ -30,11 +30,8 @@
 				user << "<span class ='notice'>You remove [G]'s old pin.</span>"
 
 			if(!G.pin)
-				gun = G
 				user.drop_item()
-				gun.pin = src
-				loc = gun
-				gun_insert(user)
+				gun_insert(user, G)
 				user << "<span class ='notice'>You insert [src] into [G].</span>"
 			else
 				user << "<span class ='notice'>This firearm already has a firing pin installed.</span>"
@@ -44,10 +41,14 @@
 		emagged = 1
 		user << "<span class='notice'>You override the authentication mechanism.</span>"
 
-/obj/item/device/firing_pin/proc/gun_insert(mob/living/user)
+/obj/item/device/firing_pin/proc/gun_insert(mob/living/user, var/obj/item/weapon/gun/G)
+	gun = G
+	loc = gun
+	gun.pin = src
 	return
 
 /obj/item/device/firing_pin/proc/gun_remove(mob/living/user)
+	gun.pin = null
 	gun = null
 	return
 
@@ -74,6 +75,7 @@
 /obj/item/device/firing_pin/test_range
 	name = "test-range firing pin"
 	desc = "This safety firing pin allows weapons to be fired within proximity to a firing range."
+	fail_message = "<span class='warning'>TEST RANGE CHECK FAILED.</span>"
 	pin_removeable = 1
 
 /obj/item/device/firing_pin/test_range/pin_auth(mob/living/user)
@@ -129,9 +131,9 @@
 		return 0
 	return 1
 
-/obj/item/device/firing_pin/clown/ultra/gun_insert(mob/living/user)
-	gun.clumsy_check = 0
+/obj/item/device/firing_pin/clown/ultra/gun_insert(mob/living/user, var/obj/item/weapon/gun/G)
 	..()
+	G.clumsy_check = 0
 
 /obj/item/device/firing_pin/clown/ultra/gun_remove(mob/living/user)
 	gun.clumsy_check = initial(gun.clumsy_check)
