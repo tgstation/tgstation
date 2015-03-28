@@ -23,6 +23,7 @@
 	flags = FPRINT
 
 /obj/item/weapon/storage/bag/preattack(atom/target, mob/user, adjacent, params)
+	if(!user.Adjacent(target)) return 0
 	if(use_to_pickup)
 		if(collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
 			var/turf/gather_location
