@@ -74,27 +74,52 @@ MIDROUND_ANTAG MONKEY
 
 
 ## Probablities for midround antagonists (aka mulligan antagonists).
-## When midround antagonoist is activated in one of the modes set in the last section, it will choose a new roundtype from these probablities.
+## When midround antagonist is activated in one of the modes set in the last section, it will choose a new roundtype from these probablities.
 ## Set to 0 to disable that mode.
 
 MIDROUND_PROBABILITY TRAITOR 5
-MIDROUND_PROBABILITY TRAITORCHAN 4
-MIDROUND_PROBABILITY DOUBLE_AGENTS 3
-MIDROUND_PROBABILITY NUCLEAR 2
-MIDROUND_PROBABILITY REVOLUTION 2
+MIDROUND_PROBABILITY TRAITORCHAN 2
+MIDROUND_PROBABILITY DOUBLE_AGENTS 1
+MIDROUND_PROBABILITY NUCLEAR 1
+MIDROUND_PROBABILITY REVOLUTION 1
 MIDROUND_PROBABILITY GANG 0
-MIDROUND_PROBABILITY CULT 2
-MIDROUND_PROBABILITY CHANGELING 2
-MIDROUND_PROBABILITY WIZARD 4
+MIDROUND_PROBABILITY CULT 1
+MIDROUND_PROBABILITY CHANGELING 3
+MIDROUND_PROBABILITY WIZARD 1
 MIDROUND_PROBABILITY MALFUNCTION 1
-MIDROUND_PROBABILITY BLOB 2
-MIDROUND_PROBABILITY RAGINMAGES 2
-MIDROUND_PROBABILITY MONKEY 1
+MIDROUND_PROBABILITY BLOB 1
+MIDROUND_PROBABILITY RAGINMAGES 0
+MIDROUND_PROBABILITY MONKEY 0
 MIDROUND_PROBABILITY METEOR 0
 MIDROUND_PROBABILITY EXTENDED 0
 
 ## You probably don't want to segue into sandbox.
 MIDROUND_PROBABILITY SANDBOX 0
+
+
+
+## Failure behavior for midround antagonists (aka mulligan antagonists).
+## If midround antagonist fails for whatever reason these toggles dictate what happens next.
+## If the toggle is uncommented, the round ends immediately. Otherwise the round will continue seperate of the mulligan system.
+
+#MIDROUND_FAILURE TRAITOR
+#MIDROUND_FAILURE TRAITORCHAN
+#MIDROUND_FAILURE DOUBLE_AGENTS
+#MIDROUND_FAILURE NUCLEAR
+#MIDROUND_FAILURE REVOLUTION
+#MIDROUND_FAILURE GANG
+#MIDROUND_FAILURE CULT
+#MIDROUND_FAILURE CHANGELING
+MIDROUND_FAILURE WIZARD
+MIDROUND_FAILURE MALFUNCTION
+MIDROUND_FAILURE BLOB
+MIDROUND_FAILURE RAGINMAGES
+#MIDROUND_FAILURE MONKEY
+
+## These modes don't have antagonists and are included only for completion
+#MIDROUND_FAILURE METEOR
+#MIDROUND_FAILURE EXTENDED
+#MIDROUND_FAILURE SANDBOX
 
 
 
@@ -105,3 +130,6 @@ MIDROUND_ANTAG_TIME_CHECK 60
 
 ## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped.
 MIDROUND_ANTAG_LIFE_CHECK 0.7
+
+## A percentage for station intactness. Destroyed walls, floors, grills, windows, and machinery will count against this rating.
+MIDROUND_ANTAG_INTEGRITY_CHECK 50

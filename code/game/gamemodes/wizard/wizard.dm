@@ -175,7 +175,7 @@
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 
-	if((config.continuous["wizard"] && !config.midround_antag["wizard"]) || round_converted == 1) //No reason to waste resources
+	if((config.continuous["wizard"] && !config.midround_antag["wizard"]) || round_converted == 1 || !wizards) //No reason to waste resources
 		return ..() //Check for evacuation/nuke
 
 	for(var/datum/mind/wizard in wizards)
@@ -192,7 +192,10 @@
 	else
 		round_converted = convert_roundtype()
 		if(!round_converted)
-			return 1
+			if(config.midround_failure["wizard"])
+				return 1
+			else
+				config.midround_antag["wizard"] = 0
 		else
 			if(SSevent.wizardmode) //If summon events was active, turn it off
 				SSevent.toggleWizardmode()

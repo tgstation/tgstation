@@ -46,7 +46,10 @@
 	else
 		round_converted = convert_roundtype()
 		if(!round_converted)
-			return 1
+			if(config.midround_failure["double_agents"])
+				return 1
+			else
+				config.midround_antag["double_agents"] = 0
 	..()
 
 /datum/game_mode/traitor/double_agents/forge_traitor_objectives(var/datum/mind/traitor)

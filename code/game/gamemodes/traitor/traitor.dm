@@ -103,7 +103,10 @@
 	else
 		round_converted = convert_roundtype()
 		if(!round_converted)
-			return 1
+			if(config.midround_failure["traitor"])
+				return 1
+			else
+				config.midround_antag["traitor"] = 0
 	..()
 
 /datum/game_mode/traitor/proc/add_latejoin_traitor(var/datum/mind/character)

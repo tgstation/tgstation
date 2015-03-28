@@ -16,7 +16,11 @@
 			if(config.midround_antag["blob"])
 				round_converted = convert_roundtype()
 				if(!round_converted)
-					return 1
+					if(config.midround_failure["blob"])
+						return 1
+					else
+						config.midround_antag["blob"] = 0
+						return ..()
 			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 				SSshuttle.emergency.mode = SHUTTLE_DOCKED
 				SSshuttle.emergency.timer = world.time

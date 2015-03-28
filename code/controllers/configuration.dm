@@ -84,6 +84,7 @@
 	var/list/midround_probabilities = list()// relative probability of each mode in midround antagonist
 	var/list/continuous = list()			// which roundtypes continue if all antagonists die
 	var/list/midround_antag = list()		// which roundtypes use the midround antagonist system
+	var/list/midround_failure = list()		// which roundtypes just quit if midround fails
 
 	var/humans_need_surnames = 0
 	var/allow_random_events = 0			// enables random events mid-round when set to 1
@@ -103,7 +104,8 @@
 	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
 	var/midround_antag_time_check = 60  // How late (in minutes) you want the midround antag system to stay on, setting this to 0 will disable the system
 	var/midround_antag_life_check = 0.7 // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
-	var/midround_antag_depth_check = 3  // A max number of mulligans that can occur in a round (a depth of rounds).
+	var/midround_antag_integrity_check = 70  // A percentage of station intactness below which the check will fail, see blob_report.dm on how integrity is calculated
+
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
@@ -470,8 +472,8 @@
 					config.midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
 					config.midround_antag_life_check = text2num(value)
-				if("midround_antag_depth_check")
-					config.midround_antag_depth_check = text2num(value)
+				if("midround_antag_integrity_check")
+					config.midround_antag_integrity_check = text2num(value)
 				if("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
@@ -512,6 +514,12 @@
 						config.midround_antag[mode_name] = 1
 					else
 						diary << "Unknown midround antagonist configuration definition: [mode_name]."
+				if("midround_failure")
+					var/mode_name = lowertext(value)
+					if(mode_name in config.modes)
+						config.midround_failure[mode_name] = 1
+					else
+						diary << "Unknown midround failure condition configuration definition: [mode_name]."
 
 
 	fps = round(fps)

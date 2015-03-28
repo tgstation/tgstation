@@ -244,7 +244,10 @@
 	else
 		round_converted = convert_roundtype()
 		if(!round_converted)
-			return 1
+			if(config.midround_failure["revolution"])
+				return 1
+			else
+				config.midround_antag["revolution"] = 0
 	..()
 
 

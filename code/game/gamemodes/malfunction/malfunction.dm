@@ -167,7 +167,10 @@
 				set_security_level("red")
 			round_converted = convert_roundtype()
 			if(!round_converted)
-				return 1
+				if(config.midround_failure["malfunction"])
+					return 1
+				else
+					config.midround_antag["malfunction"] = 0
 		else
 			return 1
 

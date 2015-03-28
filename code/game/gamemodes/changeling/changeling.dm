@@ -188,7 +188,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	else
 		round_converted = convert_roundtype()
 		if(!round_converted)
-			return 1
+			if(config.midround_failure["changeling"])
+				return 1
+			else
+				config.midround_antag["changeling"] = 0
 	..()
 
 /datum/game_mode/proc/auto_declare_completion_changeling()

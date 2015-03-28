@@ -194,11 +194,11 @@
 /datum/game_mode/nuclear/check_finished()
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
-	if((config.continuous["nuclear"] && !config.midround_antag["nuclear"]) || round_converted == 1) //No reason to waste resources
+	if((config.continuous["nuclear"] && !config.midround_antag["nuclear"]) || round_converted == 1 || !syndicates) //No reason to waste resources
 		return ..() //Check for evacuation/nuke
 
-	for(var/datum/mind/traitor in syndicates)
-		if(traitor.current.stat != DEAD)
+	for(var/datum/mind/nukeop in syndicates)
+		if(nukeop.current.stat != DEAD)
 			return ..()
 
 	if(!config.continuous["nuclear"] || !config.midround_antag["nuclear"])
@@ -207,7 +207,10 @@
 	else
 		round_converted = convert_roundtype()
 		if(!round_converted)
-			return 1
+			if(config.midround_failure["nuclear"])
+				return 1
+			else
+				config.midround_antag["nuclear"] = 0
 	..()
 
 /datum/game_mode/nuclear/check_win()
