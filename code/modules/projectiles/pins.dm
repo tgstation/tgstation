@@ -150,6 +150,7 @@
 /obj/item/device/firing_pin/dna
 	name = "DNA-keyed firing pin"
 	desc = "This is a DNA-locked firing pin which only authorizes one user."
+	icon_state = "firing_pin_dna"
 	fail_message = "<span class='warning'>DNA CHECK FAILED.</span>"
 	var/unique_enzymes = null
 
