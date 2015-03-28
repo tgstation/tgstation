@@ -1327,7 +1327,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/gigapuddi/happy
 
 /datum/recipe/gigapuddi/anger
-	reagents = list("milk" = 15, "sodiumchloridsp" = 5)
+	reagents = list("milk" = 15, "sodiumchloride" = 5)
 	result = /obj/item/weapon/reagent_containers/food/snacks/gigapuddi/anger
 
 /datum/recipe/flan
