@@ -161,6 +161,7 @@ obj/item/clothing/head/helmet/bluetaghelm
 
 /obj/item/clothing/head/helmet/ui_action_click()
 	toggle_helmlight()
+	..()
 
 /obj/item/clothing/head/helmet/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	if(istype(A, /obj/item/device/flashlight/seclite))
