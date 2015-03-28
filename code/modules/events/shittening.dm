@@ -12,10 +12,15 @@
 /datum/round_event/shittening/announce()
 	priority_announce("Unknown, possibly hostile alien lifeforms resembling feces detected aboard [station_name()], please be wary of shitty behaviors.", "Shit Alert")
 
+//IT BEGINS
 /datum/round_event/shittening/start()
 	ticker.mode.shitty = 1
+	world << "<span class='danger'>The world suddenly feels very shitty.</span>"
+
+
+
+	//Mob changes
 	for(var/mob/M in living_mob_list)
-		M << "<span class='userdanger'>You suddenly feel as if the universe is just that much shittier.</span>"
 		if(M.job == "Chaplain")
 			M << "<span class='notice'><b><font size=3>The light of [ticker.Bible_deity_name ? ticker.Bible_deity_name : "the gods"] suffuses you, igniting an inner fire. You are now a paladin!</font></span>"
 			M.verbs += /mob/living/carbon/human/proc/smite_evil
@@ -23,18 +28,21 @@
 		if(M.job == "Botanist")
 			M << "<span class='notice'>You feel far out, man...</span>"
 			M.verbs += /mob/living/carbon/human/proc/summon_dank_blade
-		if(prob(5))
-			M << "You feel as if you could go to the nearest computer and create a sci-fi game about space stations."
-			if(M.reagents)
-				M.reagents.add_reagent("programming", 10)
+		M << "You feel as if you could go to the nearest computer and create a sci-fi game about space stations."
+		if(M.reagents)
+			M.reagents.add_reagent("programming", 10)
 		M.verbs += /client/verb/mentorhelp
 
+
+
+	//Object changes
 	for(var/obj/item/weapon/reagent_containers/food/snacks/faggot/F in world)
 		if(istype(F, /obj/item/weapon/reagent_containers/food/snacks/faggot/deadchat))
 			continue
 		F.visible_message("<span class='deadsay'><b><i>Strange energies suddenly swirl around \the [F], which begins to glow with an eldritch light.</i></b></span>")
 		new /obj/item/weapon/reagent_containers/food/snacks/faggot/deadchat(F.loc)
 		qdel(F)
+
 	/*
 	for(var/obj/machinery/turret/T in global_turret_list)
 		T.say("Firmware update complete: Switching to High Explosive Rounds.")
@@ -45,6 +53,7 @@
 		T.projectile = /obj/item/projectile/bullet/gyro
 		T.eprojectile = /obj/item/projectile/bullet/gyro
 	*/
+
 	for(var/obj/item/weapon/storage/box/monkeycubes/B in global_monkeycubebox_list)
 		B.visible_message("<span class = 'notice'>[B] appears to go through box division, and has divided into 2 separate boxes! What could be inside the new box?")
 		new /obj/item/weapon/storage/box/clowncubes(B.loc)
@@ -64,12 +73,15 @@
 		B.name = "Ale Mao"
 		B.desc = "The most memetic drink you've ever laid eyes on."
 
+	for(var/obj/item/weapon/kitchen/utensil/fork/F in world)
+		F.visible_message("<span class='warning'>\The [F] suddenly seems a bit sharper...</span>")
+		F.force = 10
+
+	for(var/obj/item/weapon/reagent_containers/food/condiment/enzyme/E in world)
+		E.visible_message("<span class='danger'>\The [E] suddenly looks that much more memetic.</span>")
+		E.name = "mountain dew"
 
 
-
-
-//This is stuff implemented by the Shitty Suggestions thread on the forums
-//These only work if an admin has triggered the Shitty Suggestion Activation event via buttons
 
 //Smite Evil: A chaplain ability that can either heal a non-antag or damage an antag. Has a 2-minute cooldown.
 /mob/living/carbon/human/proc/smite_evil(var/mob/living/carbon/heathen)
@@ -125,7 +137,7 @@
 		return
 
 	usr.visible_message("<span class='danger'>[usr]'s arm rapidly morphs into a large blade-like plant closely resembling an ambrosia branch!</span>", \
-					    "<span class='alienalert'>It's time to make some people <b>trip</b>, duuude.</span>")
+					    "<font color=green>It's time to make some people <b>trip</b>, duuude.</font>")
 
 	usr.put_in_hands(/obj/item/weapon/melee/arm_blade/grass)
 	usr.verbs -= /mob/living/carbon/human/proc/summon_dank_blade
@@ -190,7 +202,7 @@
 		hippie.say(pick(trippy_phrases))
 
 	if(uses <= 0)
-		hippie.visible_message("<span class'danger'>\The [src] curls up, slipping off of [hippie]'s arm, and withers away.</span>")
+		src.visible_message("<span class'danger'>\The [src] curls up, slipping off of [hippie]'s arm, and withers away.</span>")
 		qdel(src)
 
 
@@ -237,6 +249,7 @@ datum/reagent/medicine/programming
 	color = "#2D0F00" //brown
 
 datum/reagent/medicine/programming/on_mob_life(var/mob/living/M as mob)
+	..()
 	var/effect = rand(1,3)
 	if(prob(10))
 		switch(effect)
@@ -254,7 +267,7 @@ datum/reagent/medicine/programming/on_mob_life(var/mob/living/M as mob)
 					if(prob(75))
 						if(prob(90))
 							M.visible_message("<b>[M]</b> holds up an imaginary spork!")
-				var/random = rand(1,1000000)
+				var/random = rand(1,100 0000)
 				M.say(random / rand(2,5) * rand(1,2) + rand(1,250))
 				random = rand(1,2)
 				if(prob(50))
@@ -264,12 +277,18 @@ datum/reagent/medicine/programming/on_mob_life(var/mob/living/M as mob)
 				else if(prob(50))
 					M.say("FUCKING RANDOM NUMBERS!")
 
+
+
+//Syndicate pies
 /obj/item/weapon/reagent_containers/food/snacks/pie/syndicate
 	name = "syndicate pie"
 	desc = "A syndicate pie, still deadly."
 	icon_state = "pie"
 	list_reagents = list("cyanide" = 20)
-/*
+
+
+
+//Emagging emags
 /obj/item/weapon/card/emag/emag_act(mob/user)
 	if(ticker.mode.shitty)
 		user << "You emag the emag, giving you a new emag!"
@@ -287,13 +306,16 @@ datum/reagent/medicine/programming/on_mob_life(var/mob/living/M as mob)
 		user << "You emagg the emagged emag, creating an all access identification card!"
 		new /obj/item/weapon/card/id/captains_spare(get_turf(src))
 	return
-*/
+
+
+
+//Mentorhelp
 /client/verb/mentorhelp(msg as text)
 	set category = "Admin"
 	set name = "Mentorhelp"
 	src << "<span class='deadsay'>PM to-<b>Mentors</b>: [msg]</span>"
 	sleep(50)
 	src << "<span class='deadsay'><font size='4'><b>-- Mentor private message --</b></font></span>"
-	src << "<span class='deadsay'>Mentor PM from-<b>Mentor</b>: git gud</span>"
+	src << "<span class='deadsay'>Mentor PM from-<b>Mentor</b>: [pick("git gud", "Very carefully.", "Not at all")]</span>"
 	src << "<span class='deadsay'><i>Click on the mentor's name to reply.</i></span>"
 	src << 'sound/effects/adminhelp.ogg'

@@ -20,6 +20,7 @@
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
+	var/warranty
 
 /obj/item/weapon/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -36,14 +37,18 @@
 	sprite_name = "miniFE"
 
 /obj/item/weapon/extinguisher/New()
+	warranty = rand(1,10)
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
+	..()
 
 /obj/item/weapon/extinguisher/attack_self(mob/user as mob)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
 	user << "The safety is [safety ? "on" : "off"]."
+	if(ticker.mode.shitty)
+		user << "You check the warrantly label; it's [warranty] years old."
 	return
 
 /obj/item/weapon/extinguisher/proc/AttemptRefill(atom/target, mob/user)
@@ -76,6 +81,10 @@
 	if(Refill)
 		return
 	if (!safety)
+		if(ticker.mode.shitty)
+			switch(warranty)
+				if(5 to 10)
+					return
 		if (src.reagents.total_volume < 1)
 			usr << "<span class='danger'>\The [src] is empty.</span>"
 			return
