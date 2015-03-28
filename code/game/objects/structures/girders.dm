@@ -13,7 +13,7 @@
 				user.visible_message("<span class='notice'>[user] starts disassembling \the [src]</span>", \
 				"<span class='notice'>You start disassembling \the [src]</span>")
 				if(do_after(user, 40))
-					user.visible_message("<span class='warning'>[src] dissasembles \the [src]</span>", \
+					user.visible_message("<span class='warning'>[user] dissasembles \the [src]</span>", \
 					"<span class='notice'>You dissasemble \the [src]</span>")
 					getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 					qdel(src)
