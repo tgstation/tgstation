@@ -8,7 +8,6 @@ Sorry Giacom. Please don't be mad :(
 		push_mob_back(src, A.push_dir)
 */
 
-
 /mob/living/New()
 	. = ..()
 	generateStaticOverlay()
@@ -97,7 +96,7 @@ Sorry Giacom. Please don't be mad :(
 		M.loc = oldloc
 		M.LAssailant = src
 
-		for(var/mob/living/carbon/slime/slime in view(1,M))
+		for(var/mob/living/simple_animal/slime/slime in view(1,M))
 			if(slime.Victim == M)
 				slime.UpdateFeed()
 
@@ -443,10 +442,10 @@ Sorry Giacom. Please don't be mad :(
 				C.reagents.clear_reagents()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	if(stat == 2)
+	if(stat == DEAD)
 		dead_mob_list -= src
 		living_mob_list += src
-	if(!isanimal(src))	stat = CONSCIOUS
+	stat = CONSCIOUS
 	if(ishuman(src))
 		var/mob/living/carbon/human/human_mob = src
 		human_mob.restore_blood()
@@ -454,8 +453,7 @@ Sorry Giacom. Please don't be mad :(
 
 	update_fire()
 	regenerate_icons()
-	..()
-	return
+
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -549,7 +547,7 @@ Sorry Giacom. Please don't be mad :(
 		s_active.close(src)
 
 	if(update_slimes)
-		for(var/mob/living/carbon/slime/M in view(1,src))
+		for(var/mob/living/simple_animal/slime/M in view(1,src))
 			M.UpdateFeed(src)
 
 /mob/living/proc/makeTrail(var/turf/T, var/mob/living/M)
@@ -883,3 +881,28 @@ Sorry Giacom. Please don't be mad :(
 	animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y) , time = 2)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
+/mob/living/proc/get_temperature(var/datum/gas_mixture/environment)
+	var/loc_temp = T0C
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		loc_temp =  M.return_temperature()
+
+	else if(istype(loc, /obj/structure/transit_tube_pod))
+		loc_temp = environment.temperature
+
+	else if(istype(get_turf(src), /turf/space))
+		var/turf/heat_turf = get_turf(src)
+		loc_temp = heat_turf.temperature
+
+	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		var/obj/machinery/atmospherics/unary/cryo_cell/C = loc
+
+		if(C.air_contents.total_moles() < 10)
+			loc_temp = environment.temperature
+		else
+			loc_temp = C.air_contents.temperature
+
+	else
+		loc_temp = environment.temperature
+
+	return loc_temp

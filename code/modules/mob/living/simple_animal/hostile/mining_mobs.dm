@@ -1,18 +1,10 @@
 /mob/living/simple_animal/hostile/asteroid/
 	vision_range = 2
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
-	heat_damage_per_tick = 20
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
@@ -108,12 +100,12 @@
 		if(3.0)
 			adjustBruteLoss(110)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/Die()
+/mob/living/simple_animal/hostile/asteroid/basilisk/death(gibbed)
 	var/counter
 	for(counter=0, counter<2, counter++)
 		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
 		D.layer = 4.1
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
@@ -204,10 +196,10 @@
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/Die()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/death(gibbed)
 	alerted = 0
 	Reward()
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(var/damage)
 	idle_vision_range = 9
@@ -253,10 +245,10 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/Die()
+/mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	new /obj/item/asteroid/hivelord_core(src.loc)
 	mouse_opacity = 1
-	..()
+	..(gibbed)
 
 /obj/item/asteroid/hivelord_core
 	name = "hivelord remains"
@@ -318,7 +310,7 @@
 	spawn(100)
 		qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/Die()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
@@ -367,9 +359,9 @@
 	anchored = 1
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Die()
+/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	anchored = 0
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
@@ -434,10 +426,10 @@
 		spawn(50)
 			qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Die()
+/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
 	G.layer = 4.1
-	..()
+	..(gibbed)
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
@@ -481,3 +473,9 @@
 			else
 				user << "<span class='info'>You can't improve [D] any further.</span>"
 				return
+
+/mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
+	if(bodytemperature < minbodytemp)
+		adjustBruteLoss(2)
+	else if(bodytemperature > maxbodytemp)
+		adjustBruteLoss(20)

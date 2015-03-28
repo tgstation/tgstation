@@ -32,6 +32,7 @@
 	flick(flick_name, animate)
 
 /mob/living/death(gibbed)
+	eye_blind = max(eye_blind, 1)
 	timeofdeath = world.time
 
 	living_mob_list -= src

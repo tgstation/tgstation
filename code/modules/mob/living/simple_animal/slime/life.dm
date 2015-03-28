@@ -1,11 +1,13 @@
-/mob/living/carbon/slime
+
+/mob/living/simple_animal/slime
 	var/AIproc = 0 // determines if the AI loop is activated
 	var/Atkcool = 0 // attack cooldown
 	var/Tempstun = 0 // temporary temperature stuns
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
 
-/mob/living/carbon/slime/Life()
+
+/mob/living/simple_animal/slime/Life()
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
@@ -15,12 +17,10 @@
 		handle_nutrition()
 		handle_targets()
 		if (!ckey)
-			handle_speech_and_mood()
+			handle_mood()
+			handle_speech()
 
-/mob/living/carbon/slime/handle_breathing()
-	return
-
-/mob/living/carbon/slime/proc/AIprocess()  // the master AI process
+/mob/living/simple_animal/slime/proc/AIprocess()  // the master AI process
 
 	if(AIproc || stat == DEAD || client) return
 
@@ -45,7 +45,7 @@
 			break
 
 		if(Target)
-			for(var/mob/living/carbon/slime/M in view(1,Target))
+			for(var/mob/living/simple_animal/slime/M in view(1,Target))
 				if(M.Victim == Target)
 					Target = null
 					AIproc = 0
@@ -99,9 +99,8 @@
 
 	AIproc = 0
 
-/mob/living/carbon/slime/handle_environment(datum/gas_mixture/environment)
+/mob/living/simple_animal/slime/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
-		adjustToxLoss(rand(10,20))
 		return
 
 	//var/environment_heat_capacity = environment.heat_capacity()
@@ -120,9 +119,9 @@
 
 		if(bodytemperature <= (T0C - 50)) // hurt temperature
 			if(bodytemperature <= 50) // sqrting negative numbers is bad
-				adjustToxLoss(200)
+				adjustBruteLoss(200)
 			else
-				adjustToxLoss(round(sqrt(bodytemperature)) * 2)
+				adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
 
 	else
 		Tempstun = 0
@@ -131,7 +130,7 @@
 
 	return //TODO: DEFERRED
 
-/mob/living/carbon/slime/proc/adjust_body_temperature(current, loc_temp, boost)
+/mob/living/simple_animal/slime/proc/adjust_body_temperature(current, loc_temp, boost)
 	var/temperature = current
 	var/difference = abs(current-loc_temp)	//get difference
 	var/increments// = difference/10			//find how many increments apart they are
@@ -148,9 +147,10 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/carbon/slime/handle_chemicals_in_body()
+/mob/living/simple_animal/slime/handle_chemicals_in_body()
 
-	if(reagents) reagents.metabolize(src)
+	if(reagents)
+		reagents.metabolize(src)
 
 	if (reagents.get_reagent_amount("plasma")>=5)
 		mutation_chance = min(mutation_chance + 5,50) //Prevents mutation chance going >50%
@@ -158,81 +158,15 @@
 	if (reagents.get_reagent_amount("epinephrine")>=5)
 		mutation_chance = max(mutation_chance - 5,0) //Prevents muation chance going <0%
 		reagents.remove_reagent("epinephrine", 5)
-	src.updatehealth()
+	updatehealth()
 
-	return //TODO: DEFERRED
+/mob/living/simple_animal/slime/handle_regular_status_updates()
 
+	if(..())
+		if(prob(30))
+			adjustBruteLoss(-1)
 
-/mob/living/carbon/slime/handle_mutations_and_radiation()
-	return
-
-/mob/living/carbon/slime/handle_regular_hud_updates()
-	return
-
-/mob/living/carbon/slime/handle_regular_status_updates()
-
-	if(is_adult)
-		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-	else
-		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
-	if(health < config.health_threshold_dead && stat != DEAD)
-		death()
-		return
-
-	else if(health < config.health_threshold_crit)
-
-		if(!reagents.has_reagent("epinephrine"))
-			adjustOxyLoss(3)
-
-		if(stat != DEAD)
-			Paralyse(3)
-			stat = UNCONSCIOUS
-	else
-		if(stat != DEAD)
-			stat = CONSCIOUS
-
-	if(prob(30))
-		adjustOxyLoss(-1)
-		adjustToxLoss(-1)
-		adjustFireLoss(-1)
-		adjustCloneLoss(-1)
-		adjustBruteLoss(-1)
-
-	if (stat == DEAD)
-		lying = 1
-		eye_blind = max(eye_blind, 1)
-	else
-		if(stunned > 0)
-			AdjustStunned(-1)
-		if(weakened > 0)
-			AdjustWeakened(-1)
-		if (paralysis > 0)
-			AdjustParalysis(-1)
-
-	if(stuttering)
-		stuttering = 0
-
-	if(eye_blind)
-		eye_blind = 0
-		eye_blind = max(eye_blind, 1)
-
-	setEarDamage((ear_damage < 25 ? 0 : ear_damage),(disabilities & DEAF ? 1 :0))
-
-	density = !( src.lying )
-
-	if(disabilities & BLIND)
-		eye_blind = max(eye_blind, 1)
-
-	if(eye_blurry > 0)
-		eye_blurry = 0
-
-	if(druggy > 0)
-		druggy = 0
-
-	return 1
-
-/mob/living/carbon/slime/proc/handle_nutrition()
+/mob/living/simple_animal/slime/proc/handle_nutrition()
 
 	if(docile) //God as my witness, I will never go hungry again
 		nutrition = 700
@@ -244,7 +178,7 @@
 	if(nutrition <= 0)
 		nutrition = 0
 		if(prob(75))
-			adjustToxLoss(rand(0,5))
+			adjustBruteLoss(rand(0,5))
 
 	else if (nutrition >= get_grow_nutrition() && amount_grown < 10)
 		nutrition -= 20
@@ -256,7 +190,7 @@
 		else
 			Evolve()
 
-/mob/living/carbon/slime/proc/add_nutrition(var/nutrition_to_add = 0, var/lastnut = 0)
+/mob/living/simple_animal/slime/proc/add_nutrition(var/nutrition_to_add = 0, var/lastnut = 0)
 	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
 	if(nutrition >= (lastnut + 50))
 		if(prob(80))
@@ -264,11 +198,11 @@
 			powerlevel++
 			if(powerlevel > 10)
 				powerlevel = 10
-				adjustToxLoss(-10)
+				adjustBruteLoss(-10)
 
 
 
-/mob/living/carbon/slime/proc/handle_targets()
+/mob/living/simple_animal/slime/proc/handle_targets()
 	if(Tempstun)
 		if(!Victim) // not while they're eating!
 			canmove = 0
@@ -336,7 +270,7 @@
 
 					if(!L.canmove) // Only one slime can latch on at a time.
 						var/notarget = 0
-						for(var/mob/living/carbon/slime/M in view(1,L))
+						for(var/mob/living/simple_animal/slime/M in view(1,L))
 							if(M.Victim == L)
 								notarget = 1
 						if(notarget)
@@ -365,7 +299,7 @@
 
 		if(!Target) // If we have no target, we are wandering or following orders
 			if (Leader)
-				if (holding_still)
+				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if(canmove && isturf(loc))
 					step_to(src, Leader)
@@ -377,7 +311,7 @@
 					step(src, pick(cardinal))
 
 			else
-				if (holding_still)
+				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if (docile && pulledby)
 					holding_still = 10
@@ -387,12 +321,20 @@
 			spawn()
 				AIprocess()
 
-/mob/living/carbon/slime/proc/handle_speech_and_mood()
-	//Mood starts here
+/mob/living/simple_animal/slime/handle_automated_movement()
+	return //slime random movement is currently handled in handle_targets()
+
+/mob/living/simple_animal/slime/handle_automated_speech()
+	return //slime random speech is currently handled in handle_speech()
+
+/mob/living/simple_animal/slime/proc/handle_mood()
 	var/newmood = ""
-	if (rabid || attacked) newmood = "angry"
-	else if (docile) newmood = ":3"
-	else if (Target) newmood = "mischevous"
+	if (rabid || attacked)
+		newmood = "angry"
+	else if (docile)
+		newmood = ":3"
+	else if (Target)
+		newmood = "mischevous"
 
 	if (!newmood)
 		if (Discipline && prob(25))
@@ -401,12 +343,14 @@
 			newmood = pick("sad", ":3", "pout")
 
 	if ((mood == "sad" || mood == ":3" || mood == "pout") && !newmood)
-		if (prob(75)) newmood = mood
+		if(prob(75))
+			newmood = mood
 
 	if (newmood != mood) // This is so we don't redraw them every time
 		mood = newmood
 		regenerate_icons()
 
+/mob/living/simple_animal/slime/proc/handle_speech()
 	//Speech understanding starts here
 	var/to_say
 	if (speech_buffer.len > 0)
@@ -483,17 +427,17 @@
 		emote(pick("bounce","sway","light","vibrate","jiggle"))
 	else
 		var/t = 10
-		var/slimes_near = -1 // Don't count myself
+		var/slimes_near = 0
 		var/dead_slimes = 0
 		var/friends_near = list()
-		for (var/mob/living/carbon/M in view(7,src))
-			if (isslime(M))
+		for (var/mob/living/L in view(7,src))
+			if(isslime(L) && L != src)
 				++slimes_near
-				if (M.stat == DEAD)
+				if (L.stat == DEAD)
 					++dead_slimes
-			if (M in Friends)
+			if (L in Friends)
 				t += 20
-				friends_near += M
+				friends_near += L
 		if (nutrition < get_hunger_nutrition()) t += 10
 		if (nutrition < get_starve_nutrition()) t += 10
 		if (prob(2) && prob(t))
@@ -519,12 +463,12 @@
 				phrases += "Purr..."
 			if (attacked)
 				phrases += "Grrr..."
-			if (getToxLoss() > 30)
+			if (bodytemperature < T0C)
 				phrases += "Cold..."
-			if (getToxLoss() > 60)
+			if (bodytemperature < T0C - 30)
 				phrases += "So... cold..."
 				phrases += "Very... cold..."
-			if (getToxLoss() > 90)
+			if (bodytemperature < T0C - 50)
 				phrases += "..."
 				phrases += "C... c..."
 			if (Victim)
@@ -545,23 +489,23 @@
 					phrases += "[M]... feed me..."
 			say (pick(phrases))
 
-/mob/living/carbon/slime/proc/get_max_nutrition() // Can't go above it
+/mob/living/simple_animal/slime/proc/get_max_nutrition() // Can't go above it
 	if (is_adult) return 1200
 	else return 1000
 
-/mob/living/carbon/slime/proc/get_grow_nutrition() // Above it we grow, below it we can eat
+/mob/living/simple_animal/slime/proc/get_grow_nutrition() // Above it we grow, below it we can eat
 	if (is_adult) return 1000
 	else return 800
 
-/mob/living/carbon/slime/proc/get_hunger_nutrition() // Below it we will always eat
+/mob/living/simple_animal/slime/proc/get_hunger_nutrition() // Below it we will always eat
 	if (is_adult) return 600
 	else return 500
 
-/mob/living/carbon/slime/proc/get_starve_nutrition() // Below it we will eat before everything else
-	if (is_adult) return 300
+/mob/living/simple_animal/slime/proc/get_starve_nutrition() // Below it we will eat before everything else
+	if(is_adult) return 300
 	else return 200
 
-/mob/living/carbon/slime/proc/will_hunt(var/hunger = -1) // Check for being stopped from feeding and chasing
+/mob/living/simple_animal/slime/proc/will_hunt(var/hunger = -1) // Check for being stopped from feeding and chasing
 	if (docile)	return 0
 	if (hunger == 2 || rabid || attacked) return 1
 	if (Leader) return 0

@@ -1,4 +1,4 @@
-/mob/living/carbon/slime/emote(var/act)
+/mob/living/simple_animal/slime/emote(var/act)
 
 
 	if (findtext(act, "-", 1, null))
@@ -76,7 +76,7 @@
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
-	if ((message && src.stat == 0))
+	if ((message && stat == CONSCIOUS))
 		if(client)
 			log_emote("[name]/[key] : [message]")
 		if (m_type & 1)

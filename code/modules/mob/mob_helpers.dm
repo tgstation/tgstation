@@ -31,7 +31,7 @@
 	return 0
 
 /proc/isslime(A)
-	if(istype(A, /mob/living/carbon/slime))
+	if(istype(A, /mob/living/simple_animal/slime))
 		return 1
 	return 0
 

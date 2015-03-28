@@ -5,23 +5,8 @@
 	if (src.notransform)
 		return
 
-	//Status updates, death etc.
 	clamp_values()
-	handle_regular_status_updates()
-
-	if(client)
-		handle_regular_hud_updates()
-		update_items()
-	if (src.stat != DEAD) //still using power
-		use_power()
-
-	update_canmove()
-
-	update_gravity(mob_has_gravity())
-
-	handle_fire()
-
-
+	..()
 
 /mob/living/silicon/robot/proc/clamp_values()
 
@@ -36,51 +21,40 @@
 
 /mob/living/silicon/robot/proc/use_power()
 
-	if (src.cell)
-		if(src.cell.charge <= 0)
+	if(cell)
+		if(cell.charge <= 0)
 			uneq_all()
-			src.stat = 1
-		else if (src.cell.charge <= 100)
+			stat = UNCONSCIOUS
+		else if (cell.charge <= 100)
 			uneq_all()
-			src.cell.use(1)
+			cell.use(1)
 		else
-			if(src.module_state_1)
-				src.cell.use(5)
-			if(src.module_state_2)
-				src.cell.use(5)
-			if(src.module_state_3)
-				src.cell.use(5)
-			src.cell.use(1)
-			src.eye_blind = 0
-			src.stat = 0
+			if(module_state_1)
+				cell.use(5)
+			if(module_state_2)
+				cell.use(5)
+			if(module_state_3)
+				cell.use(5)
+			cell.use(1)
 	else
 		uneq_all()
-		src.stat = 1
+		stat = UNCONSCIOUS
 
 
-/mob/living/silicon/robot/proc/handle_regular_status_updates()
+/mob/living/silicon/robot/handle_regular_status_updates()
 
-	if(src.camera && !scrambledcodes)
-		if(src.stat == 2 || wires.IsCameraCut())
-			src.camera.status = 0
+	if(camera && !scrambledcodes)
+		if(stat == DEAD || wires.IsCameraCut())
+			camera.status = 0
 		else
-			src.camera.status = 1
+			camera.status = 1
 
-	health = maxHealth - (getOxyLoss() + getFireLoss() + getBruteLoss())
+	if (..()) //Alive.
 
-	if(getOxyLoss() > 50) Paralyse(3)
+		if(health <= config.health_threshold_dead) //die only once
+			death()
+			return
 
-	if(src.sleeping)
-		Paralyse(3)
-		src.sleeping--
-
-	if(src.resting)
-		Weaken(5)
-
-	if(health <= config.health_threshold_dead && src.stat != 2) //die only once
-		death()
-
-	if (src.stat != 2) //Alive.
 		if(health < 50) //Gradual break down of modules as more damage is sustained
 			if(uneq_module(module_state_3))
 				src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
@@ -91,47 +65,48 @@
 					if(uneq_module(module_state_1))
 						src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
 
-		if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
-			src.stat = 1
-			if (src.stunned > 0)
-				AdjustStunned(-1)
-			if (src.weakened > 0)
-				AdjustWeakened(-1)
-			if (src.paralysis > 0)
-				AdjustParalysis(-1)
-				src.eye_blind = max(eye_blind, 1)
-			else
-				src.eye_blind = 0
+		if(getOxyLoss() > 50)
+			Paralyse(3)
 
-		else	//Not stunned.
-			src.stat = 0
+		if (paralysis || stunned || weakened) //Stunned etc.
+			stat = UNCONSCIOUS
 
-	else //Dead.
-		src.eye_blind = 1
+		use_power()
 
-	if (src.stuttering) src.stuttering--
+		return 1
 
-	if (src.eye_blind)
-		src.eye_blind--
+/mob/living/silicon/robot/handle_status_effects()
+	..()
+	if (stuttering)
+		stuttering = max(0, stuttering - 1)
 
-	src.density = !( src.lying )
+	if (druggy)
+		druggy = max(0, druggy - 1)
 
-	if (src.disabilities & BLIND)
-		src.eye_blind = max(1, eye_blind)
+/mob/living/silicon/robot/handle_regular_hud_updates()
 
-	if (src.eye_blurry > 0)
-		src.eye_blurry--
-		src.eye_blurry = max(0, src.eye_blurry)
+	if(!client)
+		return
 
-	if (src.druggy > 0)
-		src.druggy--
-		src.druggy = max(0, src.druggy)
-
+	if (syndicate)
+		if(ticker.mode.name == "traitor")
+			for(var/datum/mind/tra in ticker.mode.traitors)
+				if(tra.current)
+					var/I = image('icons/mob/mob.dmi', loc = tra.current, icon_state = "traitor") //no traitor sprite in that dmi!
+					src.client.images += I
+		if(connected_ai)
+			connected_ai.connected_robots -= src
+			connected_ai = null
+		if(mind)
+			if(!mind.special_role)
+				mind.special_role = "traitor"
+				ticker.mode.traitors += mind
+	..()
 	return 1
 
-/mob/living/silicon/robot/proc/handle_regular_hud_updates()
+/mob/living/silicon/robot/update_sight()
 
-	if (src.stat == 2 || src.sight_mode & BORGXRAY)
+	if (stat == DEAD || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
@@ -150,7 +125,7 @@
 		else if (src.sight_mode & BORGTHERM)
 			src.sight |= SEE_MOBS
 			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		else if (src.stat != 2)
+		else if (src.stat != DEAD)
 			src.sight &= ~SEE_MOBS
 			src.sight &= ~SEE_TURFS
 			src.sight &= ~SEE_OBJS
@@ -158,39 +133,32 @@
 		if(see_override)
 			see_invisible = see_override
 
-	if (src.healths)
-		if (src.stat != 2)
+/mob/living/silicon/robot/handle_hud_icons()
+	update_items()
+	update_cell()
+	..()
+
+/mob/living/silicon/robot/handle_hud_icons_health()
+	if (healths)
+		if (stat != DEAD)
 			switch(health)
 				if(100 to INFINITY)
-					src.healths.icon_state = "health0"
+					healths.icon_state = "health0"
 				if(50 to 100)
-					src.healths.icon_state = "health2"
+					healths.icon_state = "health2"
 				if(0 to 50)
-					src.healths.icon_state = "health3"
+					healths.icon_state = "health3"
 				if(-50 to 0)
-					src.healths.icon_state = "health4"
+					healths.icon_state = "health4"
 				if(config.health_threshold_dead to -50)
-					src.healths.icon_state = "health5"
+					healths.icon_state = "health5"
 				else
-					src.healths.icon_state = "health6"
+					healths.icon_state = "health6"
 		else
-			src.healths.icon_state = "health7"
+			healths.icon_state = "health7"
 
-	if (src.syndicate && src.client)
-		if(ticker.mode.name == "traitor")
-			for(var/datum/mind/tra in ticker.mode.traitors)
-				if(tra.current)
-					var/I = image('icons/mob/mob.dmi', loc = tra.current, icon_state = "traitor")
-					src.client.images += I
-		if(src.connected_ai)
-			src.connected_ai.connected_robots -= src
-			src.connected_ai = null
-		if(src.mind)
-			if(!src.mind.special_role)
-				src.mind.special_role = "traitor"
-				ticker.mode.traitors += src.mind
-
-	if (src.cell)
+/mob/living/silicon/robot/proc/update_cell()
+	if (cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
 		switch(cellcharge)
 			if(0.75 to INFINITY)
@@ -206,44 +174,18 @@
 	else
 		throw_alert("charge","nocell")
 
-	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
-
-	if ((src.blind && src.stat != 2))
-		if(src.eye_blind)
-			src.blind.layer = 18
-		else
-			src.blind.layer = 0
-			if (src.disabilities & NEARSIGHT)
-				src.client.screen += global_hud.vimpaired
-
-			if (src.eye_blurry)
-				src.client.screen += global_hud.blurry
-
-			if (src.druggy)
-				src.client.screen += global_hud.druggy
-
-	if (src.stat != 2)
-		if (src.machine)
-			if (!( src.machine.check_eye(src) ))
-				src.reset_view(null)
-		else
-			if(!client.adminobs)
-				reset_view(null)
-
-	return 1
-
 /mob/living/silicon/robot/proc/update_items()
-	if (src.client)
-		src.client.screen -= src.contents
-		for(var/obj/I in src.contents)
+	if (client)
+		client.screen -= contents
+		for(var/obj/I in contents)
 			if(I && !(istype(I,/obj/item/weapon/stock_parts/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || istype(I,/obj/item/device/mmi)))
-				src.client.screen += I
-	if(src.module_state_1)
-		src.module_state_1:screen_loc = ui_inv1
-	if(src.module_state_2)
-		src.module_state_2:screen_loc = ui_inv2
-	if(src.module_state_3)
-		src.module_state_3:screen_loc = ui_inv3
+				client.screen += I
+	if(module_state_1)
+		module_state_1:screen_loc = ui_inv1
+	if(module_state_2)
+		module_state_2:screen_loc = ui_inv2
+	if(module_state_3)
+		module_state_3:screen_loc = ui_inv3
 
 
 //Robots on fire
@@ -269,6 +211,8 @@
 		IgniteMob()
 
 /mob/living/silicon/robot/update_canmove()
-	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
-	else canmove = 1
+	if(paralysis || stunned || weakened || buckled || lockcharge)
+		canmove = 0
+	else
+		canmove = 1
 	return canmove

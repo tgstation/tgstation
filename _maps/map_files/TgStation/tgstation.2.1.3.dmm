@@ -5154,7 +5154,7 @@
 "bVf" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/virology)
 "bVg" = (/obj/structure/table,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/virology)
 "bVh" = (/obj/machinery/light{dir = 4},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/virology)
-"bVi" = (/mob/living/carbon/slime,/turf/simulated/floor/engine,/area/toxins/xenobiology)
+"bVi" = (/mob/living/simple_animal/slime,/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "bVj" = (/obj/machinery/door/window/northleft{base_state = "right"; dir = 8; icon_state = "right"; name = "Containment Pen"; req_access_txt = "55"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/machinery/door/poddoor/preopen{id = "xenobio2"; name = "containment blast door"},/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "bVk" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/machinery/door/window/northleft{dir = 4; name = "Containment Pen"; req_access_txt = "55"},/obj/machinery/door/poddoor/preopen{id = "xenobio7"; name = "containment blast door"},/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "bVl" = (/obj/structure/filingcabinet/chestdrawer,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/toxins/misc_lab)

@@ -63,7 +63,7 @@
 		healthcheck()
 		return
 
-/obj/structure/grille/attack_slime(mob/living/carbon/slime/user as mob)
+/obj/structure/grille/attack_slime(mob/living/simple_animal/slime/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(!user.is_adult)	return

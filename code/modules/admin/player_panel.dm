@@ -229,8 +229,6 @@
 				if(iscarbon(M)) //Carbon stuff
 					if(ishuman(M))
 						M_job = M.job
-					else if(isslime(M))
-						M_job = "slime"
 					else if(ismonkey(M))
 						M_job = "Monkey"
 					else if(isalien(M)) //aliens
@@ -254,6 +252,8 @@
 				else if(isanimal(M)) //simple animals
 					if(iscorgi(M))
 						M_job = "Corgi"
+					else if(isslime(M))
+						M_job = "slime"
 					else
 						M_job = "Animal"
 

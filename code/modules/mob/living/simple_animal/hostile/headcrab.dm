@@ -29,7 +29,7 @@
 		var/mob/living/carbon/human/H = target
 		if(H.stat == DEAD)
 			Infect(target)
-			src.Die()
+			death()
 			return
 	target.attack_animal(src)
 
