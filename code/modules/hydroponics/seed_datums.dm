@@ -99,7 +99,7 @@ proc/populate_seed_list()
 	var/spread = 0                  // 0 limits plant to tray, 1 = creepers, 2 = vines.
 	var/carnivorous = 0             // 0 = none, 1 = eat pests in tray, 2 = eat living things  (when a vine).
 	var/parasite = 0                // 0 = no, 1 = gain health from weed level.
-	var/immutable = 0                // If set, plant will never mutate. If -1, plant is  highly mutable.
+	var/immutable = 0               // If set, plant will never mutate. If -1, plant is  highly mutable.
 	var/alter_temp                  // If set, the plant will periodically alter local temp by this amount.
 
 	// Cosmetics.

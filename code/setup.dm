@@ -962,6 +962,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define EJECTNOTDEL		32 //when we destroy the machine, does it remove all its items or destroy them?
 #define WELD_FIXED		64 //if it is attacked by a welder and is anchored, it'll toggle between welded and unwelded to the floor
 
+#define MAX_N_OF_ITEMS 999 // Used for certain storage machinery, BYOND infinite loop detector doesn't look things over 1000.
+
 //gun shit - prepare to have various things added to this
 #define SILENCECOMP  1 		//Silencer-compatible
 #define AUTOMAGDROP  2		//Does the mag drop when it's empty?
