@@ -8,8 +8,8 @@
 /datum/game_mode/heist
 	name = "heist"
 	config_tag = "heist"
-	required_players = 5 //Enough raiders to start and one crewman
-	required_players_secret = 25 //High-pop. We want a fully staffed crew, otherwise it's a cakewalk !
+	required_players = 15
+	required_players_secret = 25
 	required_enemies = 4
 	recommended_enemies = 6
 

@@ -10,8 +10,8 @@ var/list/blob_nodes = list()
 	name = "Blob"
 	config_tag = "Blob"
 
-	required_players = 1 //Failsafe since we need a blob player
-	required_players_secret = 25 //High-pop. Blob needs to face off a staffed crew !
+	required_players = 15
+	required_players_secret = 25
 	restricted_jobs = list("Cyborg", "AI", "Mobile MMI")
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)

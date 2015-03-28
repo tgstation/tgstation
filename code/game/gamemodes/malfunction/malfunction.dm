@@ -4,8 +4,8 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
-	required_players = 2 //The AI and Dave
-	required_players_secret = 20 //Medium-high-pop. We want the AI to be challenged and the station to be staffed
+	required_players = 2
+	required_players_secret = 15
 	required_enemies = 1
 	recommended_enemies = 1
 

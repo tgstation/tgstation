@@ -5,8 +5,8 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 6 //5 operatives and a crewman
-	required_players_secret = 20 //Medium-high-pop. Staffed station at least
+	required_players = 6
+	required_players_secret = 25 // 25 players - 5 players to be the nuke ops = 20 players remaining
 	required_enemies = 5
 	recommended_enemies = 5
 

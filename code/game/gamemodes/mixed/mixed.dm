@@ -6,8 +6,8 @@
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
 
-	required_players = 10 //Safety bracket
-	required_players_secret = 30 //Higher-high-pop. It's antag boogaloo, so we aren't doing it without a full station
+	required_players = 20
+	required_players_secret = 25
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
 	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
