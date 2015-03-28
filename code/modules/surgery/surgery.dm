@@ -106,16 +106,25 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 			if(canuse && S.is_valid_mutantrace(M) && !(M in S.doing_surgery))
 				S.doing_surgery += M
 				S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
+				M.attack_log += "\[[time_stamp()]\] [S.type] began by <b>[user]/[user.ckey]</b>"
+				user.attack_log += "\[[time_stamp()]\] Began [S.type] on <b>[M]/[M.ckey]</b>"
+				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> began [S.type] on <b>[M]/[M.ckey]</b>")
 				var/selection = user.zone_sel.selecting
 				//We had proper tools! (or RNG smiled.) and user did not move or change hands.
 				if(do_mob(user, M, rand(S.min_duration, S.max_duration)) && (prob(S.tool_quality(tool) / (sleep_fail + clumsy + 1))) && selection == user.zone_sel.selecting)
 					S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
+					M.attack_log += "\[[time_stamp()]\] [S.type] successfully completed by <b>[user]/[user.ckey]</b>"
+					user.attack_log += "\[[time_stamp()]\] Successfully completed [S.type] on <b>[M]/[M.ckey]</b>"
+					log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> successfully completed [S.type] on <b>[M]/[M.ckey]</b>")
 				else
 					if ((tool in user.contents) && (user.Adjacent(M)))											//or
 						if(sleep_fail)
 							user << "<span class='warning'>The patient is squirming around in pain!</span>"
 							M.emote("scream",,, 1)
 						S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
+						M.attack_log += "\[[time_stamp()]\] [S.type] [sleep_fail ? "sleeping " : ""]failure by <b>[user]/[user.ckey]</b>"
+						user.attack_log += "\[[time_stamp()]\] [sleep_fail ? "Sleeping failed" : "Failed"] [S.type] on <b>[M]/[M.ckey]</b>"
+						log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> [sleep_fail ? "sleeping failed" : "failed"] [S.type] on <b>[M]/[M.ckey]</b>")
 				if(M) //good, we still exist
 					S.doing_surgery -= M
 				else
