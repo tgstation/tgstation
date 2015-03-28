@@ -158,7 +158,8 @@
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
 	src.throwing = 1
-	SpinAnimation(5, -1)
+	if(!istype(target, /obj/singularity)) // turns out 1000+ spinning objects being thrown at the singularity creates lag - Iamgoofball
+		SpinAnimation(5, -1)
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
 	var/dx = (target.x > src.x) ? EAST : WEST
