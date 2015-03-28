@@ -50,7 +50,7 @@
 
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -155,7 +155,7 @@
 /obj/item/weapon/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
