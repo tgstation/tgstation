@@ -997,6 +997,7 @@
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_sandwich.dm"
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_soup.dm"
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_spaghetti.dm"
+#include "code\modules\holiday\easter.dm"
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\hydroponics\biogenerator.dm"
 #include "code\modules\hydroponics\grown.dm"

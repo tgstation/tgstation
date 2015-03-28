@@ -4,6 +4,8 @@
 			return back
 		if(slot_wear_mask)
 			return wear_mask
+		if(slot_head)
+			return head
 		if(slot_handcuffed)
 			return handcuffed
 		if(slot_legcuffed)
@@ -13,3 +15,16 @@
 		if(slot_r_hand)
 			return r_hand
 	return null
+
+
+/mob/living/carbon/unEquip(obj/item/I)
+	. = ..()
+	if(!. || !I)
+		return
+
+	if(I == head)
+		head = null
+		if(I.flags & BLOCKHAIR)
+			update_hair(0)
+		update_inv_head(0)
+

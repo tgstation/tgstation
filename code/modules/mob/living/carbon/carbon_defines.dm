@@ -13,6 +13,7 @@
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/weapon/tank/internal = null
+	var/obj/item/head = null
 
 	var/datum/dna/dna = null//Carbon
 	var/heart_attack = 0
