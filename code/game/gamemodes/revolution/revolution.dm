@@ -15,8 +15,8 @@
 	name = "revolution"
 	config_tag = "revolution"
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Mobile MMI","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
-	required_players = 4 //Enough to spawn all headrevs and one head
-	required_players_secret = 20 //Medium-high-pop. We want a fairly staffed station for what is about to happen
+	required_players = 4
+	required_players_secret = 25
 	required_enemies = 3
 	recommended_enemies = 3
 

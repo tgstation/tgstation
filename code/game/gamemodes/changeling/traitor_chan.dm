@@ -1,10 +1,10 @@
 /datum/game_mode/traitor/changeling
 	name = "traitor+changeling"
 	config_tag = "traitorchan"
-	traitors_possible = 3 //Hard limit on traitors if scaling is turned off
+	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	restricted_jobs = list("AI", "Cyborg", "Mobile MMI")
 	required_players = 1
-	required_players_secret = 15 //Medium-pop. Traitors and changelings, need space for both to blend in
+	required_players_secret = 10
 	required_enemies = 2
 	recommended_enemies = 3
 
