@@ -124,7 +124,7 @@
 				special_role_text = "antagonist"
 			if(vampire.total_TC)
 				if(vampire.spent_TC)
-					text += "<br><span class='sinister'>TC: [vampire.spent_TC]/[vampire.total_TC] - The tools used by the Vampire were: [list2text(vampire.uplink_items_bought, ", ")]</span>"
+					text += "<br><span class='sinister'>TC Remaining: [vampire.total_TC - vampire.spent_TC]/[vampire.total_TC] - The tools used by the Vampire were: [list2text(vampire.uplink_items_bought, ", ")]</span>"
 				else
 					text += "<span class='sinister'>The Vampire was a smooth operator this round (did not purchase any uplink items)</span>"
 			if(traitorwin)
@@ -155,7 +155,7 @@
 
 			if(Mind.total_TC)
 				if(Mind.spent_TC)
-					text += "<br><span class='sinister'>TC: [Mind.spent_TC]/[Mind.total_TC] - The tools used by the Enthralled were: [list2text(Mind.uplink_items_bought, ", ")]</span>"
+					text += "<br><span class='sinister'>TC Remaining: [Mind.total_TC - Mind.spent_TC]/[Mind.total_TC] - The tools used by the Enthralled were: [list2text(Mind.uplink_items_bought, ", ")]</span>"
 				else
 					text += "<span class='sinister'>The Enthralled was a smooth operator this round (did not purchase any uplink items)</span>"
 

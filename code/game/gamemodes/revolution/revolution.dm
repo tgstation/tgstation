@@ -387,7 +387,7 @@
 			text += ")"
 			if(headrev.total_TC)
 				if(headrev.spent_TC)
-					text += "<br><span class='sinister'>TC: [headrev.spent_TC]/[headrev.total_TC] - The tools used by the Head Revolutionary were: [list2text(headrev.uplink_items_bought, ", ")]</span>"
+					text += "<br><span class='sinister'>TC Remaining: [headrev.total_TC - headrev.spent_TC]/[headrev.total_TC] - The tools used by the Head Revolutionary were: [list2text(headrev.uplink_items_bought, ", ")]</span>"
 				else
 					text += "<span class='sinister'>The Head Revolutionary was a smooth operator this round (did not purchase any uplink items)</span>"
 
