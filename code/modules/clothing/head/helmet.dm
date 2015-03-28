@@ -21,7 +21,7 @@
 	if(spawnWithHelmetCam)
 		helmetCam = new /obj/machinery/camera/portable(src)
 		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
-		helmetCam.network = list("SS13")
+		helmetCam.network = list("Helm")
 		update_icon()
 
 /obj/item/clothing/head/helmet/emp_act(severity)
@@ -204,7 +204,7 @@ obj/item/clothing/head/helmet/bluetaghelm
 		helmetCam.assembly = A
 		A.loc = helmetCam
 		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
-		helmetCam.network = list("SS13")
+		helmetCam.network = list("Helm")
 		update_icon()
 		user.visible_message("<span class='notice'>[user] attaches [A] to [src]</span>","<span class='notice'>You attach [A] to [src]</span>")
 		return
