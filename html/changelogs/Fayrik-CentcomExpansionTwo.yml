@@ -1,0 +1,9 @@
+author: Fayrik
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added a bowman headset for death squads and ERTs."
+  - tweak: "Deathsquad radio channel is now called the Centcom radio channel."
+  - bugfix: "Fixed the admin buttons not spawning ERT Medic gear properly."
+  - tweak: "Expanded Emergency Shuttle dock to allow for more round end griff."
