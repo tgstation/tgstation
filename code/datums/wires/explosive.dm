@@ -30,3 +30,17 @@ var/const/WIRE_EXPLODE = 1
 	var/obj/item/weapon/c4/P = holder
 	P.explode(get_turf(P))
 
+
+
+/datum/wires/explosive/gibtonite
+	holder_type = /obj/item/weapon/twohanded/required/gibtonite
+
+/datum/wires/explosive/gibtonite/CanUse(var/mob/living/L)
+	return 1
+
+/datum/wires/explosive/gibtonite/UpdateCut(var/index, var/mended)
+	return
+
+/datum/wires/explosive/gibtonite/explode()
+	var/obj/item/weapon/twohanded/required/gibtonite/P = holder
+	P.GibtoniteReaction(null, 2)
