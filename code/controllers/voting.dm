@@ -114,12 +114,21 @@ var/global/datum/controller/vote/vote = new()
 /datum/controller/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
+	var/feedbackanswer
 	if(winners.len > 0)
 		if(winners.len > 1)
 			text = "<b>Vote Tied Between:</b><br>"
 			for(var/option in winners)
 				text += "\t[option]<br>"
+			feedbackanswer = list2text(winners, " ")
 		. = pick(winners)
+		if(mode == "map")
+			if(!feedbackanswer)
+				feedbackanswer = .
+				feedback_set("map vote winner", feedbackanswer)
+			else
+				feedback_set("map vote tie", "[feedbackanswer] chosen: [.]")
+
 		text += "<b>Vote Result: [.]</b>"
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
