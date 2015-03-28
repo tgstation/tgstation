@@ -147,7 +147,7 @@
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls.."
+	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
 	drillcost = 100
 
 /*****************************Shovel********************************/

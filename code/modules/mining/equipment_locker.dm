@@ -821,7 +821,7 @@
 /obj/item/device/t_scanner/adv_mining_scanner/scan()
 	if(!cooldown)
 		cooldown = 1
-		spawn(40)
+		spawn(35)
 			cooldown = 0
 		var/turf/t = get_turf(src)
 		var/list/mobs = recursive_mob_check(t, 1,0,0)
