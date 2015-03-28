@@ -69,6 +69,24 @@
 		carriermind.current.viruses += D
 	..()
 
+/datum/game_mode/monkey/check_finished()
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if((config.continuous["monkey"] && !config.midround_antag["monkey"]) || round_converted == 1) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
+	for(var/datum/mind/monkey in ape_infectees)
+		if(monkey.current.stat != DEAD || !ismonkey(monkey.current)) //SUFFER NOT AN APE TO LIVE
+			return ..()
+
+	if(!config.continuous["monkey"] || !config.midround_antag["monkey"])
+		return 1
+
+	else
+		round_converted = convert_roundtype()
+		if(!round_converted)
+			return 1
+	..()
+
 /datum/game_mode/monkey/proc/check_monkey_victory()
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		if (M.HasDisease(/datum/disease/transformation/jungle_fever))

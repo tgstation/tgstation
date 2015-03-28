@@ -188,6 +188,27 @@
 	synd_mob.update_icons()
 	return 1
 
+/datum/game_mode/nuclear/late_start_round()
+	makeNukeTeam()
+
+/datum/game_mode/nuclear/check_finished()
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if((config.continuous["nuclear"] && !config.midround_antag["nuclear"]) || round_converted == 1) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
+
+	for(var/datum/mind/traitor in syndicates)
+		if(traitor.current.stat != DEAD)
+			return ..()
+
+	if(!config.continuous["nuclear"] || !config.midround_antag["nuclear"])
+		return 1
+
+	else
+		round_converted = convert_roundtype()
+		if(!round_converted)
+			return 1
+	..()
 
 /datum/game_mode/nuclear/check_win()
 	if (nukes_left == 0)

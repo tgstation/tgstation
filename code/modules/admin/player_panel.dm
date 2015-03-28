@@ -367,9 +367,14 @@
 /datum/admins/proc/check_antagonists()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
-		dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
+		dat += "Current Game Mode: <B>[ticker.mode.name]"
 		if(ticker.mode.replacementmode)
-			dat += "Replacement Game Mode: <B>[ticker.mode.replacementmode.name]</B><BR>"
+			dat += "/[ticker.mode.replacementmode.name]"
+			if(ticker.mode.replacementmode.replacementmode)
+				dat += "/[ticker.mode.replacementmode.replacementmode.name]"
+				if(ticker.mode.replacementmode.replacementmode.replacementmode)
+					dat += " (but wait, there's more!)" //This is getting silly
+		dat += "</B><BR>"
 		dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
 		dat += "<B>Emergency shuttle</B><BR>"
 		if(SSshuttle.emergency.mode < SHUTTLE_CALL)
@@ -381,6 +386,13 @@
 				dat += "<a href='?_src_=holder;call_shuttle=2'>Send Back</a><br>"
 			else
 				dat += "ETA: <a href='?_src_=holder;edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+		dat += "<B>Continuous Round Status</B><BR>"
+		dat += "<a href='?_src_=holder;toggle_continuous=1'>[config.continuous[ticker.mode.config_tag] ? "Continue if antagonists die" : "End on antagonist death"]</a>"
+		if(config.continuous[ticker.mode.config_tag])
+			dat += ", <a href='?_src_=holder;toggle_midround_antag=1'>[config.midround_antag[ticker.mode.config_tag] ? "creating replacement antagonists" : "not creating new antagonists"]</a><BR>"
+		else
+			dat += "<BR>"
+		dat += "<BR>"
 		dat += "<a href='?_src_=holder;end_round=\ref[usr]'>End Round Now</a><br>"
 		dat += "<a href='?_src_=holder;delay_round_end=1'>[ticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
 		if(ticker.mode.syndicates.len)

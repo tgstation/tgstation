@@ -1,0 +1,107 @@
+## Probablities for game modes chosen in 'secret' and 'random' modes.
+## Default probablity is 1, increase to make that mode more likely to be picked.
+## Set to 0 to disable that mode.
+
+PROBABILITY TRAITOR 5
+PROBABILITY TRAITORCHAN 4
+PROBABILITY DOUBLE_AGENTS 3
+PROBABILITY NUCLEAR 2
+PROBABILITY REVOLUTION 2
+PROBABILITY GANG 0
+PROBABILITY CULT 2
+PROBABILITY CHANGELING 2
+PROBABILITY WIZARD 4
+PROBABILITY MALFUNCTION 1
+PROBABILITY BLOB 2
+PROBABILITY RAGINMAGES 2
+PROBABILITY MONKEY 1
+PROBABILITY METEOR 0
+PROBABILITY EXTENDED 0
+
+## You probably want to keep sandbox off by default for secret and random.
+PROBABILITY SANDBOX 0
+
+
+
+## Toggles for continuous modes.
+## Modes that aren't continuous will end the instant all antagonists are dead.
+## Keep in mind that this is quite unlikely for round types where antagonists are numerous and/or less obvious.
+
+CONTINUOUS TRAITOR
+CONTINUOUS TRAITORCHAN
+CONTINUOUS DOUBLE_AGENTS
+CONTINUOUS NUCLEAR
+CONTINUOUS REVOLUTION
+CONTINUOUS GANG
+CONTINUOUS CULT
+CONTINUOUS CHANGELING
+CONTINUOUS WIZARD
+CONTINUOUS MALFUNCTION
+CONTINUOUS BLOB
+CONTINUOUS RAGINMAGES
+CONTINUOUS MONKEY
+
+## These modes don't have antagonists and are included only for completion
+#CONTINUOUS METEOR
+#CONTINUOUS EXTENDED
+#CONTINUOUS SANDBOX
+
+
+
+## Toggles for allowing midround antagonists (aka mulligan antagonists).
+## In modes that are continuous, if all antagonists should die then a new set of antagonists will be created.
+## Which rounds can use this feature depend on these toggles. Keep in mind that toggling this for a non continous round is pointless.
+
+MIDROUND_ANTAG TRAITOR
+MIDROUND_ANTAG TRAITORCHAN
+MIDROUND_ANTAG DOUBLE_AGENTS
+MIDROUND_ANTAG NUCLEAR
+MIDROUND_ANTAG REVOLUTION
+MIDROUND_ANTAG GANG
+MIDROUND_ANTAG CULT
+MIDROUND_ANTAG CHANGELING
+MIDROUND_ANTAG WIZARD
+MIDROUND_ANTAG MALFUNCTION
+MIDROUND_ANTAG BLOB
+MIDROUND_ANTAG RAGINMAGES
+MIDROUND_ANTAG MONKEY
+
+## These modes don't have antagonists and are included only for completion
+#MIDROUND_ANTAG METEOR
+#MIDROUND_ANTAG EXTENDED
+#MIDROUND_ANTAG SANDBOX
+
+
+
+## Probablities for midround antagonists (aka mulligan antagonists).
+## When midround antagonoist is activated in one of the modes set in the last section, it will choose a new roundtype from these probablities.
+## Set to 0 to disable that mode.
+
+MIDROUND_PROBABILITY TRAITOR 5
+MIDROUND_PROBABILITY TRAITORCHAN 4
+MIDROUND_PROBABILITY DOUBLE_AGENTS 3
+MIDROUND_PROBABILITY NUCLEAR 2
+MIDROUND_PROBABILITY REVOLUTION 2
+MIDROUND_PROBABILITY GANG 0
+MIDROUND_PROBABILITY CULT 2
+MIDROUND_PROBABILITY CHANGELING 2
+MIDROUND_PROBABILITY WIZARD 4
+MIDROUND_PROBABILITY MALFUNCTION 1
+MIDROUND_PROBABILITY BLOB 2
+MIDROUND_PROBABILITY RAGINMAGES 2
+MIDROUND_PROBABILITY MONKEY 1
+MIDROUND_PROBABILITY METEOR 0
+MIDROUND_PROBABILITY EXTENDED 0
+
+## You probably don't want to segue into sandbox.
+MIDROUND_PROBABILITY SANDBOX 0
+
+
+
+###Other midround antag settings###
+
+## A time, in minutes, after which the midround antag system stops attempting to run and continuous rounds end immediately upon completion.
+MIDROUND_ANTAG_TIME_CHECK 60
+
+## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped.
+MIDROUND_ANTAG_LIFE_CHECK 0.7

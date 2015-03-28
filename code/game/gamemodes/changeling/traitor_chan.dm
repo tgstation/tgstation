@@ -6,7 +6,7 @@
 	required_players = 0
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
-	reroll_friendly = 1
+	latejoin_friendly = 1
 
 	var/list/possible_changelings = list()
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
@@ -75,4 +75,25 @@
 				if(age_check(character.client))
 					if(!(character.job in ticker.mode.restricted_jobs))
 						character.mind.make_Changling()
+	..()
+
+/datum/game_mode/traitor/changeling/check_finished()
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if((config.continuous["traitorchan"] && !config.midround_antag["traitorchan"]) || round_converted == 1) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
+	for(var/datum/mind/changeling in changelings)
+		if(isliving(changeling.current))
+			return ..()
+	for(var/datum/mind/traitor in traitors)
+		if(traitor.current.stat != DEAD)
+			return ..()
+
+	if(!config.continuous["traitorchan"] || !config.midround_antag["traitorchan"])
+		return 1
+
+	else
+		round_converted = convert_roundtype()
+		if(!round_converted)
+			return 1
 	..()

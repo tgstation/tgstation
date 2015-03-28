@@ -260,6 +260,9 @@
 	return ucs
 
 
+/datum/game_mode/cult/late_start_round()
+	makeCult()
+
 /datum/game_mode/cult/proc/check_cult_victory()
 	var/cult_fail = 0
 	if(cult_objectives.Find("survive"))
@@ -284,6 +287,24 @@
 	else
 		return 1
 
+/datum/game_mode/cult/check_finished()
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if((config.continuous["cult"] && !config.midround_antag["cult"]) || round_converted == 1) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
+
+	for(var/datum/mind/cultist in cult)
+		if(cultist.current.stat != DEAD)
+			return ..()
+
+	if(!config.continuous["cult"] || !config.midround_antag["cult"])
+		return 1
+
+	else
+		round_converted = convert_roundtype()
+		if(!round_converted)
+			return 1
+	..()
 
 /datum/game_mode/cult/declare_completion()
 
