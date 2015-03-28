@@ -1,0 +1,5 @@
+author: RemieRichards
+delete-after: True
+changes:
+  - rscadd: "Monkeys can now wear ANY mask, not just ones they had specific icons for."
+  - rscadd: "Monkeys can now wear HATS, That's right, Monkey Hats!"
