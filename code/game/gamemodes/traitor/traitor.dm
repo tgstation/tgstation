@@ -9,7 +9,8 @@
 	config_tag = "traitor"
 	restricted_jobs = list("Cyborg","Mobile MMI")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
-	required_players = 0
+	required_players = 1
+	required_players_secret = 5 //We need at least five players to make this worthwhile (see autotraitor.dm otherwise). Sorry super low-pop players
 	required_enemies = 1
 	recommended_enemies = 4
 	var/traitor_name = "traitor"

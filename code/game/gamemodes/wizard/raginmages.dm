@@ -1,8 +1,8 @@
 /datum/game_mode/wizard/raginmages
 	name = "Ragin' Mages"
 	config_tag = "raginmages"
-	required_players = 1
-	required_players_secret = 15
+	required_players = 2 //A wizard and a crewman
+	required_players_secret = 30 //Higher high-pop. We're airdropping a shitload of Wizards, each one his own one-man-army. We want a fully staffed station to counter !
 	var/max_mages = 0
 	var/making_mage = 0
 	var/mages_made = 1
