@@ -122,22 +122,21 @@
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					dir = i
 					sleep(1)
-	else
-		..()
 
-	if (shaved)
-		user << "<span class='warning'>You can't shave this corgi, it's already been shaved.</span>"
+	if (istype(O, /obj/item/weapon/razor))
+		if (shaved)
+			user << "<span class='warning'>You can't shave this corgi, it's already been shaved.</span>"
+			return
+		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>")
+		if(do_after(user, 50))
+			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O]. </span>")
+			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+			shaved = 1
+			icon_state = "[initial(icon_living)]_shaved"
+			icon_living = "[initial(icon_living)]_shaved"
+			icon_dead = "[initial(icon_living)]_saved_dead"
 		return
-	user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>")
-	if(do_after(user, 50))
-		user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O]. </span>")
-		playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
-		shaved = 1
-		icon_state = "[initial(icon_living)]_shaved"
-		icon_living = "[initial(icon_living)]_shaved"
-		icon_dead = "[initial(icon_living)]_saved_dead"
-	return
-..()
+	..()
 
 
 /mob/living/simple_animal/pet/corgi/Topic(href, href_list)
