@@ -5,7 +5,6 @@
 	var/name
 
 /datum/mutation/New()
-
 	mutations_list[name] = src
 
 /datum/mutation/human
@@ -345,20 +344,6 @@
 		return
 	. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
-/datum/mutation/human/laser_eyes
-
-	name = "Laser Eyes"
-	quality = POSITIVE
-	dna_block = NON_SCANNABLE
-	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
-
-/datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
-	if(owner.a_intent == "harm")
-		owner.LaserEyes(target)
-
-
-
-////////////////////////////// Goon powers /////////////////////////////////////////
 
 /datum/mutation/human/stealth
 	name = "Cloak Of Darkness"
@@ -405,10 +390,6 @@
 	if(..())
 		return
 	owner.alpha = 255
-
-
-
-//////////////////// Goon disabilities //////////////////////////////////////////
 
 /datum/mutation/human/wacky
 	name = "Wacky"
@@ -596,3 +577,16 @@
 		message = replacetext(message," faggot "," square ")
 		message = replacetext(message," muh valids "," getting my kicks ")
 	return trim(message)
+
+
+/datum/mutation/human/laser_eyes
+
+	name = "Laser Eyes"
+	quality = POSITIVE
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
+
+/datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
+	if(owner.a_intent == "harm")
+		owner.LaserEyes(target)
+
