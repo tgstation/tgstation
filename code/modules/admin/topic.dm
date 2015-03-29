@@ -7,6 +7,9 @@
 		return
 
 	if(href_list["makeAntag"])
+		if (!ticker.mode)
+			usr << "<span class='danger'>Not until the round starts!</span>"
+			return
 		switch(href_list["makeAntag"])
 			if("1")
 				message_admins("[key_name_admin(usr)] created traitors.")

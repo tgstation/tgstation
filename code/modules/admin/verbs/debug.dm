@@ -1136,12 +1136,13 @@ var/global/list/g_fancy_list_of_types = null
 	M.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen(M), slot_s_store)
 	M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(M), slot_belt)
 
-	M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse(M), slot_r_hand)
+	M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/loyalpin(M), slot_r_hand)
 
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)//Here you go Deuryn
 	L.imp_in = M
 	L.implanted = 1
+	M.sec_hud_set_implants()
 
 	var/obj/item/weapon/card/id/W = new(M)
 	W.icon_state = "centcom"
