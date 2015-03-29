@@ -94,6 +94,8 @@
 	SSshuttle.emergencyNoEscape = 1
 	..()
 
+/datum/game_mode/revolution/late_start_round()
+	makeRevs()
 
 /datum/game_mode/revolution/process()
 	check_counter++

@@ -122,15 +122,3 @@
 		feedback_set_details("round_end_result","loss - wizard killed")
 		world << "<FONT size=3><B>The crew has managed to hold off the wizard attack! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
 	..(1)
-
-/datum/game_mode/wizard/raginmages/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
-	if(!G_found || !G_found.key)	return
-
-	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
-
-	G_found.client.prefs.copy_to(new_character)
-	ready_dna(new_character)
-	new_character.key = G_found.key
-
-	return new_character

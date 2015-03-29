@@ -6,6 +6,7 @@
 	required_players = 0
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
+	latejoin_friendly = 1
 	reroll_friendly = 1
 
 	var/list/possible_changelings = list()

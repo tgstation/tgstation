@@ -35,7 +35,12 @@
 		agent_number = n_players/2
 
 	while(agent_number > 0)
+		if(!antag_candidates)
+			break
 		var/datum/mind/new_syndicate = pick(antag_candidates)
+		if(new_syndicate.assigned_role) //This mind is already taken
+			antag_candidates -= new_syndicate
+			continue
 		syndicates += new_syndicate
 		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
 		agent_number--
@@ -188,6 +193,8 @@
 	synd_mob.update_icons()
 	return 1
 
+/datum/game_mode/nuclear/late_start_round()
+	makeNukeTeam()
 
 /datum/game_mode/nuclear/check_win()
 	if (nukes_left == 0)

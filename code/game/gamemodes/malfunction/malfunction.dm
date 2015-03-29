@@ -36,7 +36,8 @@
 		if(player.client && player.ready)
 			if(player.client.prefs.be_special & BE_MALF)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "AI") && DummyAIjob.player_old_enough(player.client))
-					antag_candidates += player.mind
+					if(!player.mind.assigned_role)
+						antag_candidates += player.mind
 	antag_candidates = shuffle(antag_candidates)
 	return antag_candidates
 
@@ -97,6 +98,9 @@
 	malf.current << "Remember that only APCs that are on the station can help you take over the station."
 	malf.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
 	return
+
+/datum/game_mode/malfunction/late_start_round()
+	src.makeMalfAImode()
 
 /datum/game_mode/malfunction/process(seconds)
 	if ((apcs > 0) && malf_mode_declared)
