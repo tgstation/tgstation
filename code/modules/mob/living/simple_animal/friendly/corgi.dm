@@ -58,6 +58,8 @@
 	see_in_dark = 5
 	childtype = /mob/living/simple_animal/pet/corgi/puppy
 	species = /mob/living/simple_animal/pet/corgi
+	var/shaved_state = "corgi_shaved"
+	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
@@ -67,6 +69,7 @@
 	..()
 	regenerate_icons()
 
+
 /mob/living/simple_animal/pet/corgi/death(gibbed)
 	..(gibbed)
 	regenerate_icons()
@@ -75,7 +78,23 @@
 	..()
 	regenerate_icons()
 
-/mob/living/simple_animal/pet/corgi/sac_act(var/obj/effect/rune/R, victim)
+/mob/living/simple_animal/pet/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(user.stat == CONSCIOUS && istype(O, /obj/item/weapon/razor))
+		if (shaved)
+			user << "<span class='warning'>You can't shave this corgi, it's already been shaved.</span>"
+			return
+		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>")
+		if(do_after(user, 50))
+			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O]. </span>")
+			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+			shaved = 1
+			icon_state = "[shaved_state]"
+			icon_living = "[shaved_state]"
+			icon_dead = "[shaved_state]_dead"
+		return
+	..()
+
+/mob/living/simple_animal/pet/corgi/sac_act(var/obj/effect/rune/R, victim) //Still the best thing in this game
 	usr << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
 	usr.reagents.add_reagent("hell_water", 2)
 	R.stone_or_gib(victim)
@@ -507,6 +526,8 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	shaved_state = "puppy_shaved"
+	shaved = 0
 	mob_size = MOB_SIZE_SMALL
 	accept_collar = 1
 
@@ -532,6 +553,7 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
+	shaved_state = "lisa_shaved"
 	accept_collar = 1
 
 //Lisa already has a cute bow!
