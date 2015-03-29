@@ -522,3 +522,44 @@
 	qdel(boxes)
 	qdel(closer)
 	..()
+
+/obj/item/weapon/storage/preattack(atom/target, mob/user, adjacent, params)
+	if(!adjacent) return 0
+	if(use_to_pickup)
+		if(collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
+			var/turf/gather_location
+			if(isturf(target.loc))
+				if(!can_be_inserted(target))
+					return 0 //letting the click process continue
+				gather_location = target.loc
+			else if(isturf(target))
+				gather_location = target
+			else
+				return 0
+			var/list/rejections = list()
+			var/success = 0
+			var/failure = 0
+
+			for(var/obj/item/I in gather_location)
+				if(I.type in rejections) // To limit bag spamming: any given type only complains once
+					continue
+				if(!can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
+					rejections += I.type	// therefore full bags are still a little spammy
+					failure = 1
+					continue
+				success = 1
+				handle_item_insertion(I, 1)	//The 1 stops the "You put the [target] into [src]" insertion message from being displayed.
+			if(success && !failure)
+				user << "<span class='notice'>You put everything in [src].</span>"
+				return 1
+			else if(success)
+				user << "<span class='notice'>You put some things in [src].</span>"
+				return 1
+			else
+				user << "<span class='notice'>You fail to pick anything up with [src].</span>"
+				return 0
+
+		else if(can_be_inserted(target))
+			handle_item_insertion(target)
+			return 1
+	return 0
