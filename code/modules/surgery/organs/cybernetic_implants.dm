@@ -44,6 +44,7 @@
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
 	eye_color = "0ff"
 	implant_color = "#00FFFF"
+	origin_tech = "materials=4;programming=3;biotech=4"
 
 /obj/item/cybernetic_implant/eyes/hud/medical/function()
 	if(!owner)
@@ -59,6 +60,7 @@
 	desc = "These cybernetic eyes will display a security HUD over everything you see. Wiggle eyes to control."
 	eye_color = "d00"
 	implant_color = "#CC0000"
+	origin_tech = "materials=4;programming=4;biotech=3;combat=1"
 
 /obj/item/cybernetic_implant/eyes/hud/security/function()
 	if(!owner)
@@ -74,6 +76,7 @@
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	eye_color = "000"
 	implant_color = "#000000"
+	origin_tech = "materials=6;programming=4;biotech=5;magnets=5;plasmatech=2"
 
 /obj/item/cybernetic_implant/eyes/xray/function()
 	if(!owner)
@@ -93,6 +96,7 @@
 	eye_color = "FC0"
 	implant_color = "#FFCC00"
 	flash_protect = -1
+	origin_tech = "materials=6;programming=4;biotech=5;magnets=5;plasmatech=2;syndicate=4"
 
 /obj/item/cybernetic_implant/eyes/thermals/function()
 	if(!owner)
@@ -143,6 +147,7 @@
 	var/obj/item/l_hand_obj = null
 	var/obj/item/r_hand_obj = null
 	implant_color = "#DE7E00"
+	origin_tech = "materials=5;programming=4;biotech=4"
 
 /obj/item/cybernetic_implant/brain/anti_drop/function()
 	action_button_name = "Toggle Anti-Drop"
@@ -213,6 +218,7 @@
 	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
+	origin_tech = "materials=6;programming=4;biotech=5"
 
 /obj/item/cybernetic_implant/brain/anti_stun/function()
 	SSobj.processing |= src
@@ -234,3 +240,93 @@
 	SSobj.processing.Remove(src)
 	spawn(..() * 10)
 		SSobj.processing |= src
+
+
+//[[[[CHEST]]]]
+
+/obj/item/cybernetic_implant/chest
+	name = "cybernetic torso implant"
+	desc = "implants for the organs in your torso"
+	icon_state = "chest_implant"
+
+/obj/item/cybernetic_implant/chest/nutriment
+	name = "Nutriment pump implant"
+	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
+	icon_state = "chest_implant"
+	var/hunger_threshold = NUTRITION_LEVEL_STARVING
+	var/synthesizing = 0
+	var/nutriment_amount = 30
+	var/poison_amount = 5
+	origin_tech = "materials=5;programming=3;biotech=4"
+
+/obj/item/cybernetic_implant/chest/nutriment/function()
+	SSobj.processing |= src
+
+/obj/item/cybernetic_implant/chest/nutriment/process()
+	if(synthesizing)
+		return
+	if(!owner)
+		SSobj.processing.Remove(src)
+		qdel(src)
+		return
+	if(owner.stat == DEAD)
+		return
+
+	if(owner.nutrition <= hunger_threshold)
+		synthesizing = 1
+		spawn(50)
+			owner << "<span class='notice'>You feel less hungry...</span>"
+			owner.nutrition += nutriment_amount
+			synthesizing = 0
+
+/obj/item/cybernetic_implant/chest/nutriment/plus
+	name = "Nutriment pump implant PLUS"
+	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
+	icon_state = "chest_implant"
+	hunger_threshold = NUTRITION_LEVEL_HUNGRY
+	nutriment_amount = 50
+	poison_amount = 10
+	origin_tech = "materials=5;programming=3;biotech=5"
+
+/obj/item/cybernetic_implant/chest/nutriment/emp_act(severity)
+	owner.reagents.add_reagent("????",poison_amount / severity) //food poisoning
+	owner << "<span class='notice'>You feel like your insides are burning.</span>"
+
+/obj/item/cybernetic_implant/chest/reviver
+	name = "Reviver implant"
+	desc = "This implant will automatically deliver a therapeutic dose of electrical energy to your heart if it ever stops beating, and inject you with nanites. A second chance!"
+	icon_state = "chest_implant"
+	var/defibrillating = 0
+	var/recharge_time
+
+/obj/item/cybernetic_implant/chest/reviver/function()
+	recharge_time = world.time + 2000
+	SSobj.processing |= src
+
+/obj/item/cybernetic_implant/chest/reviver/process()
+	if(defibrillating)
+		return
+	if(!owner)
+		SSobj.processing.Remove(src)
+		qdel(src)
+		return
+	if(world.time < recharge_time)
+		return
+	if(owner.stat != DEAD)
+		return
+
+	defibrillating = 1
+	spawn(600)
+		if(owner.stat == DEAD)
+			owner.visible_message("<span class='warning'>[owner]'s body convulses by itself.")
+			playsound(get_turf(src), "bodyfall", 50, 1)
+			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
+			owner.reagents.add_reagent("nanites",10)
+			owner.stat = UNCONSCIOUS
+			owner.heart_attack = 0
+			dead_mob_list -= owner
+			living_mob_list |= list(owner)
+			owner.emote("gasp")
+			add_logs(owner, owner, "revived", object="defibrillator implant")
+			recharge_time = world.time + 20000
+		defibrillating = 0
