@@ -75,6 +75,8 @@
 	onclose(user, "computer")
 	return
 
+/obj/machinery/computer/syndicate_station/power_change()
+	return
 
 /obj/machinery/computer/syndicate_station/Topic(href, href_list)
 	if(..()) return 1

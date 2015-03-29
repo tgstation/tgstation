@@ -74,6 +74,9 @@ var/global/vox_shuttle_location
 	user << browse(dat, "window=computer;size=575x450")
 	onclose(user, "computer")
 
+/obj/machinery/computer/vox_station/power_change()
+	return
+
 /obj/machinery/computer/vox_station/Topic(href, href_list)
 	if(..()) return 1
 

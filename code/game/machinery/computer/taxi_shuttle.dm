@@ -99,6 +99,8 @@
 		return 1
 	return 0
 
+/obj/machinery/computer/taxi_shuttle/power_change()
+	return
 
 /obj/machinery/computer/taxi_shuttle/Topic(href, href_list)
 	if(..())	return 1
