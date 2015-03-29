@@ -660,10 +660,21 @@
 		var/grav = has_gravity(H)
 		var/hasjetpack = 0
 		if(!grav)
+			var/obj/item/weapon/tank/jetpack/J
+			var/obj/item/weapon/tank/jetpack/P
+
 			if(istype(H.back, /obj/item/weapon/tank/jetpack))
-				var/obj/item/weapon/tank/jetpack/J = H.back
+				J = H.back
+			if(istype(H.wear_suit,/obj/item/clothing/suit/space/hardsuit)) //copypasta but faster implementation currently
+				var/obj/item/clothing/suit/space/hardsuit/engine/C = H.wear_suit
+				P = C.jetpack
+			if(J)
 				if(J.allow_thrust(0.01, H))
 					hasjetpack = 1
+			else if(P)
+				if(P.allow_thrust(0.01, H))
+					hasjetpack = 1
+
 			mspeed = 1 - hasjetpack
 
 		if(grav || !hasjetpack)
