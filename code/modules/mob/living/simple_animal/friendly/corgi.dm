@@ -134,7 +134,7 @@
 			shaved = 1
 			icon_state = "[initial(icon_living)]_shaved"
 			icon_living = "[initial(icon_living)]_shaved"
-			icon_dead = "[initial(icon_living)]_saved_dead"
+			icon_dead = "[initial(icon_living)]_shaved_dead"
 		return
 	..()
 
