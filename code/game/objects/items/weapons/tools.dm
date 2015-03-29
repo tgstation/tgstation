@@ -532,7 +532,7 @@
 /obj/item/weapon/weldingtool/attack(mob/M as mob, mob/user as mob)
 	if(hasorgans(M))
 		if(can_operate(M))
-			if(do_surgery(M, user, tool))
+			if(do_surgery(M, user, src))
 				return
 		var/datum/organ/external/S = M:organs_by_name[user.zone_sel.selecting]
 		if (!S) return
