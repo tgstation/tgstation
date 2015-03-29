@@ -100,6 +100,11 @@ RCD
 	return
 
 
+/obj/item/weapon/rcd/Destroy()
+	qdel(spark_system)
+	spark_system = null
+	return ..()
+
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/rcd_ammo))

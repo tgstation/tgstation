@@ -13,10 +13,10 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	unacidable = 1//So effect are not targeted by alien acid.
 	pass_flags = PASSTABLE | PASSGRILLE
 
-/obj/effect/proc/delete()
-	loc = null
-	if(reagents)
-		qdel(reagents)
+/obj/effect/effect/Destroy()
+	..()
+	PlaceInPool(src)
+	return 1
 
 /datum/effect/effect/proc/fadeOut(var/atom/A, var/frames = 16)
 	if(A.alpha == 0) //Handle already transparent case
@@ -35,6 +35,11 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	var/turf/location
 	var/atom/holder
 	var/setup = 0
+
+/datum/effect/effect/system/Destroy()
+	holder = null
+	location = null
+	..()
 
 /datum/effect/effect/system/proc/set_up(n = 3, c = 0, turf/loc)
 	if(n > 10)
