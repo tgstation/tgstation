@@ -138,8 +138,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 
 /mob/living/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
-	if(!unacidable)
-		take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
+	take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
 
 /mob/living/proc/grabbedby(mob/living/carbon/user)
 	if(user == src || anchored)
@@ -162,7 +161,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
 
 
-/mob/living/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/attack_slime(mob/living/simple_animal/slime/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -171,26 +170,11 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		return // can't attack while eating!
 
 	if (stat != DEAD)
+		add_logs(M, src, "attacked", admin=0)
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
-
-		if(M.powerlevel > 0)
-			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
-
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-				return 1
-	add_logs(M, src, "attacked", admin=0)
-	return
+		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)

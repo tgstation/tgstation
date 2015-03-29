@@ -31,7 +31,6 @@
 	var/obj/item/belt = null
 	var/obj/item/gloves = null
 	var/obj/item/glasses = null
-	var/obj/item/head = null
 	var/obj/item/ears = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null
@@ -43,8 +42,6 @@
 	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc, line 24. I'm sick and tired of missing comments. -Agouri
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
-
-	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine
 

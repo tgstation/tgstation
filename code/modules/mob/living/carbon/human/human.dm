@@ -73,8 +73,12 @@
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
-		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
-			stat("Energy Charge", round(wear_suit:cell:charge/100))
+
+		//NINJACODE
+		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
+			var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
+			if(SN.s_initialized)
+				stat("Energy Charge", round(SN.cell.charge/100))
 
 
 /mob/living/carbon/human/ex_act(severity, ex_target)
@@ -494,15 +498,6 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return !(src.stat || src.weakened || src.stunned || src.restrained())
 
-/mob/living/carbon/human/proc/play_xylophone()
-	if(!src.xylophone)
-		visible_message("<span class='notice'>[src] begins playing \his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","You hear a spooky xylophone melody.")
-		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
-		playsound(loc, song, 50, 1, -1)
-		xylophone = 1
-		spawn(1200)
-			xylophone = 0
-
 /mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
@@ -651,11 +646,9 @@
 
 
 
-/mob/living/carbon/human/help_shake_act(mob/living/carbon/human/M)
+/mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
 	if(!istype(M))
 		return
-
-	var/mob/living/carbon/human/H = src
 
 	if(health >= 0)
 		if(src == M)
@@ -663,7 +656,7 @@
 				"<span class='notice'>[src] examines \himself.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
-			for(var/obj/item/organ/limb/org in H.organs)
+			for(var/obj/item/organ/limb/org in organs)
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
@@ -693,22 +686,20 @@
 				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
 
 				for(var/obj/item/I in org.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[H];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
+					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
 
-			if(H.blood_max)
+			if(blood_max)
 				src << "<span class='danger'>You are bleeding!</span>"
 			if(staminaloss)
 				if(staminaloss > 30)
 					src << "<span class='info'>You're completely exhausted.</span>"
 				else
 					src << "<span class='info'>You feel fatigued.</span>"
-			if(dna && dna.species.id && dna.species.id == "skeleton" && !H.w_uniform && !H.wear_suit)
-				H.play_xylophone()
 		else
-			if(H.wear_suit)
-				H.wear_suit.add_fingerprint(M)
-			else if(H.w_uniform)
-				H.w_uniform.add_fingerprint(M)
+			if(wear_suit)
+				wear_suit.add_fingerprint(M)
+			else if(w_uniform)
+				w_uniform.add_fingerprint(M)
 
 			..()
 

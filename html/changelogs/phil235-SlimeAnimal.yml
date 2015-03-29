@@ -1,0 +1,7 @@
+author: phil235
+delete-after: True
+
+changes: 
+  - tweak: "All slimes are now simple animals instead of carbon life forms."
+  - rscdel: "Remove crit status from brain and slimes."
+  - rscadd: "Simple animal aliens can now see in the dark like regular aliens."

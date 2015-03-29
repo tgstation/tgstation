@@ -5,14 +5,14 @@
 /mob/living/carbon/alien
 	name = "alien"
 	voice_name = "alien"
-	say_message = "hisses"
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2
 	languages = ALIEN
-	nightvision = 1
+	verb_say = "hisses"
+	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
 
@@ -50,7 +50,7 @@
 /mob/living/carbon/alien/proc/getPlasma()
 	return storedPlasma
 
-/mob/living/carbon/alien/eyecheck()
+/mob/living/carbon/alien/check_eye_prot()
 	return 2
 
 /mob/living/carbon/alien/getToxLoss()
@@ -185,7 +185,7 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/obj/item/alien_embryo/A = locate() in C
+				var/obj/item/body_egg/alien_embryo/A = locate() in C
 				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 				client.images += I
 	return

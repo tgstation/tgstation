@@ -44,11 +44,11 @@
 	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen
 
 /obj/machinery/suit_storage_unit/engine
-	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/engine
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/ce
-	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/elite
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/engine/elite
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	STORAGE_TYPE= /obj/item/clothing/shoes/magboots/advance
 
@@ -61,7 +61,7 @@
 	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
 
 /obj/machinery/suit_storage_unit/atmos
-	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/atmos
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	MASK_TYPE = /obj/item/clothing/mask/gas
 	STORAGE_TYPE = /obj/item/weapon/watertank/atmos
 
@@ -79,26 +79,22 @@
 	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
 
 /obj/machinery/suit_storage_unit/ertCom
-	SUIT_TYPE = /obj/item/clothing/suit/space/ert
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/ert
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ertSec
-	SUIT_TYPE = /obj/item/clothing/suit/space/ert/sec
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ertEngi
-	SUIT_TYPE = /obj/item/clothing/suit/space/ert/engi
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ertMed
-	SUIT_TYPE = /obj/item/clothing/suit/space/ert/med
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/ert/med
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 

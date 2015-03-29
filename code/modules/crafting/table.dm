@@ -12,15 +12,33 @@
 	check_table()
 	main_loop:
 		for(var/A in R.reqs)
+			var/needed_amount = R.reqs[A]
 			for(var/B in table_contents)
 				if(ispath(B, A))
 					if(table_contents[B] >= R.reqs[A])
 						continue main_loop
+					else
+						needed_amount -= table_contents[B]
+						if(needed_amount <= 0)
+							continue main_loop
+						else
+							continue
 			return 0
-	for(var/A in R.chem_catalists)
-		if(table_contents[A] < R.chem_catalists[A])
+	for(var/A in R.chem_catalysts)
+		if(table_contents[A] < R.chem_catalysts[A])
 			return 0
 	return 1
+
+/obj/structure/table/proc/partial_check_contents(datum/table_recipe/R)
+	check_table()
+	var/required_amount = max(round(R.reqs.len/2), 1)
+	var/amount = 0
+	for(var/A in R.reqs)
+		for(var/B in table_contents)
+			if(ispath(B, A))
+				amount += 1
+	if(amount >= required_amount)
+		return 1
 
 /obj/structure/table/proc/check_table()
 	table_contents = list()
@@ -65,6 +83,9 @@
 			if(!check_contents(R) || !check_tools(user, R))
 				return 0
 			var/atom/movable/I = new R.result (loc)
+			if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
+				var/obj/item/weapon/reagent_containers/food/snacks/S = I
+				S.create_reagents(S.volume)
 			var/list/parts = del_reqs(R, I)
 			for(var/A in parts)
 				if(istype(A, /obj/item))
@@ -104,15 +125,18 @@
 			item_loop:
 				for(var/B in table_contents)
 					if(ispath(B, A))
-						while(amt > 0)
+						var/item_amount = table_contents[B]
+						while(item_amount > 0)
 							I = locate(B) in loc
 							Deletion.Add(I)
 							I.loc = null //remove it from the table loc so that we don't locate the same item every time (will be relocated inside the crafted item in construct_item())
 							amt--
+							item_amount--
 							if(reagenttransfer && istype(I,/obj/item/weapon/reagent_containers))
 								var/obj/item/weapon/reagent_containers/RC = I
 								RC.reagents.trans_to(resultobject, RC.reagents.total_volume)
-						break item_loop
+							if(amt <= 0)
+								break item_loop
 		else
 			var/datum/reagent/RG = new A
 			reagent_loop:
@@ -164,11 +188,46 @@
 		dat += "Crafting in progress...</div>"
 	else
 		for(var/datum/table_recipe/R in table_recipes)
+			var/name_text = ""
+			var/req_text = ""
+			var/tool_text = ""
+			var/catalist_text = ""
 			if(check_contents(R))
-				dat += "<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A><BR>"
+				name_text ="<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A>"
+
+			else if(partial_check_contents(R))
+				name_text = "<span class='linkOff'>[R.name]</span>"
+
+			if(name_text)
+				for(var/A in R.reqs)
+					if(ispath(A, /obj))
+						var/obj/O = new A
+						req_text += " [R.reqs[A]] [O.name]"
+						qdel(O)
+					if(ispath(A, /datum/reagent))
+						var/datum/reagent/RE = new A
+						req_text += " [R.reqs[A]] [RE.name]"
+						qdel(RE)
+
+				if(R.chem_catalysts.len)
+					catalist_text += ", Catalysts:"
+					for(var/C in R.chem_catalysts)
+						if(ispath(C, /datum/reagent))
+							var/datum/reagent/RE = new C
+							catalist_text += " [R.chem_catalysts[C]] [RE.name]"
+							qdel(RE)
+				if(R.tools.len)
+					tool_text += ", Tools:"
+					for(var/O in R.tools)
+						if(ispath(O, /obj))
+							var/obj/T = new O
+							tool_text += " [R.tools[O]] [T.name]"
+							qdel(T)
+
+				dat += "[name_text][req_text][tool_text][catalist_text]<BR>"
 		dat += "</div>"
 
-	var/datum/browser/popup = new(user, "table", "Table", 300, 300)
+	var/datum/browser/popup = new(user, "table", "Table", 500, 500)
 	popup.set_content(dat)
 	popup.open()
 	return

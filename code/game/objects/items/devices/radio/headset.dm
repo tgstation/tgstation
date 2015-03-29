@@ -23,7 +23,7 @@
 	keyslot2 = null
 	..()
 
-/obj/item/device/radio/headset/talk_into(mob/living/M as mob, message, channel)
+/obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
 	if (!listening)
 		return
 	..()

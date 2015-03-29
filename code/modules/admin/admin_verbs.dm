@@ -83,7 +83,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
-	/client/proc/forceEvent
+	/client/proc/forceEvent,
+	/client/proc/bluespace_artillery
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -319,7 +320,7 @@ var/list/admin_verbs_hideable = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "<span class='userdanger'>Invisimin off. Invisibility reset.</span>"
+			mob << "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>"
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
 			mob << "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"

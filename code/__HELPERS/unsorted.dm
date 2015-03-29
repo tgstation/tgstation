@@ -506,7 +506,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/carbon/monkey/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/slime/M in sortmob)
+	for(var/mob/living/simple_animal/slime/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
@@ -798,7 +798,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		sleep(delayfraction)
 
 
-		if(!user || user.incapacitated() || !(user.loc == T))
+		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == T))
 			return 0
 
 		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
@@ -1267,7 +1267,38 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			var/turf/T = locate(final_x, final_y, AM.z)
 			if(T)
 				return T
+				
+//Finds the distance between two atoms, in pixels
+/proc/getPixelDistance(var/atom/A, var/atom/B)
+	if(!istype(A)||!istype(B))
+		return 0
+	
+	var/_x1 = A.x
+	var/_x2 = B.x
+	var/_y1 = A.y
+	var/_y2 = B.y
+	
+	//Ensure _x1 is bigger, simplicity
+	if(_x2 > _x1)
+		var/tx = _x1
+		_x1 = _x2
+		_x2 = tx
+	
+	//Ensure _y1 is bigger, simplicity
+	if(_y2 > _y1)
+		var/ty = _y1
+		_y1 = _y2
+		_y2 = ty
+	
+	//DY/DX
+	var/dx = _x1 - _x2 + A.pixel_x + B.pixel_x
+	var/dy = _y1 - _y2 + A.pixel_y + B.pixel_y
+	
+	//Distance check
+	if(dx == 0 && dy == 0) //No distance, don't bother calculating
+		return 0
 
+	. = sqrt(((dx**2) + (dy**2)))
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1351,6 +1382,10 @@ var/global/list/common_tools = list(
 	/obj/item/weapon/twohanded/fireaxe,\
 	/obj/item/weapon/hatchet,\
 	/obj/item/weapon/throwing_star,\
+	/obj/item/clothing/glasses/sunglasses/garb,\
+	/obj/item/clothing/glasses/sunglasses/gar,\
+	/obj/item/clothing/glasses/hud/security/sunglasses/gars,\
+	/obj/item/clothing/glasses/meson/gar,\
 	/obj/item/weapon/twohanded/spear)
 
 	//Because is_sharp is used for food or something.

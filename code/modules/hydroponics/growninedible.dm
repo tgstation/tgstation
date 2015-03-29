@@ -4,7 +4,7 @@
 
 /obj/item/weapon/grown // Grown weapons
 	name = "grown_weapon"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	var/seed = null
 	var/plantname = ""
 	var/product	//a type path
@@ -45,7 +45,6 @@
 	seed = /obj/item/seeds/towermycelium
 	name = "tower-cap log"
 	desc = "It's better than bad, it's good!"
-	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
@@ -55,6 +54,8 @@
 	plant_type = 2
 	origin_tech = "materials=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	var/plank_type = /obj/item/stack/sheet/mineral/wood
+	var/plank_name = "wooden planks"
 	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/tea/aspera,
@@ -67,19 +68,16 @@
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
-		for(var/i = 0,i < 2,i++)
-			var/obj/item/stack/sheet/mineral/wood/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/mineral/wood/G in user.loc)
-				if(G == NG)
-					continue
-				if(G.amount >= G.max_amount)
-					continue
-				G.amount += round(potency / 25)
-				G.attackby(NG, user)
-				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
+		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
+		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(potency / 25))
+		var/old_plank_amount = plank.amount
+		for(var/obj/item/stack/ST in user.loc)
+			if(ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
+				ST.attackby(plank, user) //we try to transfer all old unfinished stacks to the new stack we created.
+		if(plank.amount > old_plank_amount)
+			user << "You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name]."
 		qdel(src)
-		return
+
 	if(is_type_in_list(W,accepted))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
 		if(leaf.dry)
@@ -93,11 +91,19 @@
 		else
 			usr << "<span class ='warning'> You must dry this first.</span>"
 
+/obj/item/weapon/grown/log/steel
+	seed = /obj/item/seeds/steelmycelium
+	name = "steel-cap log"
+	desc = "It's made of metal."
+	icon_state = "steellogs"
+	accepted = list()
+	plank_type = /obj/item/stack/rods
+	plank_name = "rods"
+
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflowerseed
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	damtype = "fire"
 	force = 0
@@ -116,7 +122,6 @@
 	seed = /obj/item/seeds/novaflowerseed
 	name = "novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "novaflower"
 	damtype = "fire"
 	force = 0
@@ -217,7 +222,7 @@
 /obj/item/weapon/grown/nettle/death
 	seed = /obj/item/seeds/deathnettleseed
 	name = "deathnettle"
-	desc = "The <span class='danger'>glowing</span> \black nettle incites <span class='userdanger'>rage</span>\black in you just from looking at it!"
+	desc = "The <span class='danger'>glowing</span> \black nettle incites <span class='boldannounce'>rage</span>\black in you just from looking at it!"
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
@@ -288,7 +293,6 @@
 /obj/item/weapon/grown/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
 	w_class = 1.0
@@ -308,7 +312,6 @@
 /obj/item/weapon/grown/snapcorn
 	name = "snap corn"
 	desc = "A cob with snap pops"
-	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "snapcorn"
 	item_state = "corncob"
 	w_class = 1.0

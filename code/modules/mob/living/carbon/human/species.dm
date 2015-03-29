@@ -510,10 +510,16 @@
 		H.see_in_dark = 8
 		if(!H.druggy)		H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
-		H.sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		if(!(SEE_TURFS & H.permanent_sight_flags))
+			H.sight &= ~SEE_TURFS
+		if(!(SEE_MOBS & H.permanent_sight_flags))
+			H.sight &= ~SEE_MOBS
+		if(!(SEE_OBJS & H.permanent_sight_flags))
+			H.sight &= ~SEE_OBJS
+
+		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
-		H.see_in_dark = darksight
 
 		if(H.seer)
 			H.see_invisible = SEE_INVISIBLE_OBSERVER
@@ -607,14 +613,6 @@
 			H.throw_alert("nutrition","hungry")
 		else
 			H.throw_alert("nutrition","starving")
-
-	if(H.pullin)
-		if(H.pulling)								H.pullin.icon_state = "pull"
-		else									H.pullin.icon_state = "pull0"
-//			if(rest)	//Not used with new UI
-//				if(resting || lying || sleeping)		rest.icon_state = "rest1"
-//				else									rest.icon_state = "rest0"
-
 
 	return 1
 
@@ -755,7 +753,8 @@
 				atk_verb = M.dna.species.attack_verb
 
 			var/damage = rand(0, 9)
-			damage += punchmod
+			if(M.dna)
+				damage += M.dna.species.punchmod
 
 			if(!damage)
 				if(M.dna)
@@ -1005,10 +1004,8 @@
 
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/datum/gas_mixture/breath
-	// HACK NEED CHANGING LATER
 	if(H.health <= config.health_threshold_crit)
 		H.losebreath++
-
 	if(H.losebreath>0) //Suffocating so do not take a breath
 		H.losebreath--
 		if (prob(10)) //Gasp per 10 ticks? Sounds about right.

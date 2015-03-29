@@ -9,6 +9,9 @@
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	var/alt_desc = null
 
+	var/obj/item/device/flashlight/F = null
+	var/can_flashlight = 0
+
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
@@ -76,6 +79,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
+	var/blockTracking = 0 //For AI tracking
 
 //Mask
 /obj/item/clothing/mask
@@ -266,7 +270,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 	female_clothing_icons[index] = female_clothing_icon
 
 /obj/item/clothing/under/verb/toggle()
-	set name = "Toggle Suit Sensors"
+	set name = "Adjust Suit Sensors"
 	set category = "Object"
 	set src in usr
 	var/mob/M = usr
@@ -329,7 +333,8 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 		usr << "You adjust the suit back to normal."
 		src.adjusted = 0
 	else
-		src.fitted = NO_FEMALE_UNIFORM
+		if(src.fitted != FEMALE_UNIFORM_TOP)
+			src.fitted = NO_FEMALE_UNIFORM
 		src.item_color += "_d"
 		usr << "You adjust the suit to wear it more casually."
 		src.adjusted = 1
@@ -402,3 +407,4 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 		if(!user.stat && user.canmove && !user.restrained())
 			return 1
 	return 0
+

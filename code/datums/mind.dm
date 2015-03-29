@@ -592,7 +592,7 @@
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type) return
 
 		var/datum/objective/new_objective = null
@@ -650,6 +650,10 @@
 
 			if ("survive")
 				new_objective = new /datum/objective/survive
+				new_objective.owner = src
+
+			if("martyr")
+				new_objective = new /datum/objective/martyr
 				new_objective.owner = src
 
 			if ("nuclear")
@@ -724,14 +728,14 @@
 		switch(href_list["revolution"])
 			if("clear")
 				remove_rev()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary!</FONT></span>"
+				current << "<span class='userdanger'>You have been brainwashed! You are no longer a revolutionary!</span>"
 				message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
 				log_admin("[key_name(usr)] has de-rev'ed [current].")
 			if("rev")
 				if(src in ticker.mode.head_revolutionaries)
 					ticker.mode.head_revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					current << "<span class='userdanger'><FONT size = 3>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</FONT></span>"
+					current << "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>"
 				else if(!(src in ticker.mode.revolutionaries))
 					current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
 				else
@@ -746,9 +750,9 @@
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					current << "<span class='userdanger'><FONT size = 3>You have proved your devotion to revoltion! Yea are a head revolutionary now!</FONT></span>"
+					current << "<span class='userdanger'>You have proved your devotion to revoltion! Yea are a head revolutionary now!</span>"
 				else if(!(src in ticker.mode.head_revolutionaries))
-					current << "<span class='userdanger'><FONT size = 3>You are a member of the revolutionaries' leadership now!</FONT></span>"
+					current << "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>"
 				else
 					return
 				if (ticker.mode.head_revolutionaries.len>0)
@@ -874,7 +878,7 @@
 		switch(href_list["cult"])
 			if("clear")
 				remove_cultist()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a cultist!</FONT></span>"
+				current << "<span class='userdanger'>You have been brainwashed! You are no longer a cultist!</span>"
 				message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
 				log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
@@ -908,14 +912,14 @@
 		switch(href_list["wizard"])
 			if("clear")
 				remove_wizard()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a wizard!</FONT></span>"
+				current << "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>"
 				log_admin("[key_name(usr)] has de-wizard'ed [current].")
 			if("wizard")
 				if(!(src in ticker.mode.wizards))
 					ticker.mode.wizards += src
 					special_role = "Wizard"
 					//ticker.mode.learn_basic_spells(current)
-					current << "<span class='userdanger'>You are the Space Wizard!</span>"
+					current << "<span class='boldannounce'>You are the Space Wizard!</span>"
 					message_admins("[key_name_admin(usr)] has wizard'ed [current].")
 					log_admin("[key_name(usr)] has wizard'ed [current].")
 			if("lair")
@@ -932,7 +936,7 @@
 		switch(href_list["changeling"])
 			if("clear")
 				remove_changeling()
-				current << "<span class='userdanger'><FONT size = 3>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</FONT></span>"
+				current << "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>"
 				message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 				log_admin("[key_name(usr)] has de-changeling'ed [current].")
 			if("changeling")
@@ -940,7 +944,7 @@
 					ticker.mode.changelings += src
 					current.make_changeling()
 					special_role = "Changeling"
-					current << "<span class='userdanger'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>"
+					current << "<span class='boldannounce'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>"
 					message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 					log_admin("[key_name(usr)] has changeling'ed [current].")
 			if("autoobjectives")
@@ -961,7 +965,7 @@
 		switch(href_list["nuclear"])
 			if("clear")
 				remove_nukeop()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a syndicate operative!</FONT></span>"
+				current << "<span class='userdanger'>You have been brainwashed! You are no longer a syndicate operative!</span>"
 				message_admins("[key_name_admin(usr)] has de-nuke op'ed [current].")
 				log_admin("[key_name(usr)] has de-nuke op'ed [current].")
 			if("nuclear")
@@ -1011,7 +1015,7 @@
 		switch(href_list["traitor"])
 			if("clear")
 				remove_traitor()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a traitor!</FONT></span>"
+				current << "<span class='userdanger'>You have been brainwashed! You are no longer a traitor!</span>"
 				message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
 
@@ -1019,7 +1023,7 @@
 				if(!(src in ticker.mode.traitors))
 					ticker.mode.traitors += src
 					special_role = "traitor"
-					current << "<span class='userdanger'>You are a traitor!</span>"
+					current << "<span class='boldannounce'>You are a traitor!</span>"
 					message_admins("[key_name_admin(usr)] has traitor'ed [current].")
 					log_admin("[key_name(usr)] has traitor'ed [current].")
 					if(isAI(current))
@@ -1083,7 +1087,7 @@
 		switch(href_list["silicon"])
 			if("unmalf")
 				remove_malf()
-				current << "<span class='userdanger'><FONT size = 3>You have been patched! You are no longer malfunctioning!</FONT></span>"
+				current << "<span class='userdanger'>You have been patched! You are no longer malfunctioning!</span>"
 				message_admins("[key_name_admin(usr)] has de-malf'ed [current].")
 				log_admin("[key_name(usr)] has de-malf'ed [current].")
 
@@ -1334,7 +1338,7 @@
 	..()
 
 //slime
-/mob/living/carbon/slime/mind_initialize()
+/mob/living/simple_animal/slime/mind_initialize()
 	..()
 	mind.special_role = "slime"
 	mind.assigned_role = "slime"
@@ -1392,7 +1396,7 @@
 	mind.assigned_role = "Animal"
 	mind.special_role = "Animal"
 
-/mob/living/simple_animal/corgi/mind_initialize()
+/mob/living/simple_animal/pet/corgi/mind_initialize()
 	..()
 	mind.assigned_role = "Corgi"
 	mind.special_role = "Corgi"

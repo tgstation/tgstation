@@ -2,13 +2,15 @@
 	layer = 3
 	var/last_move = null
 	var/anchored = 0
-	var/move_speed = 10
-	var/l_move_time = 1
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/mob/pulledby = null
 	var/languages = 0 //For say() and Hear()
+	var/verb_say = "says"
+	var/verb_ask = "asks"
+	var/verb_exclaim = "exclaims"
+	var/verb_yell = "yells"
 	var/inertia_dir = 0
 	var/pass_flags = 0
 	glide_size = 8
@@ -50,8 +52,6 @@
 		return
 
 	last_move = direct
-	src.move_speed = world.timeofday - src.l_move_time
-	src.l_move_time = world.timeofday
 
 	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
 		if(loc && direct && last_move == direct)
@@ -117,7 +117,7 @@
 	if(pulledby)
 		return 1
 
-	if(locate(/obj/structure/lattice) in orange(1, get_turf(src))) //Not realistic but makes pushing things in space easier
+	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
 		return 1
 
 	return 0
@@ -159,7 +159,7 @@
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
 	src.throwing = 1
-
+	SpinAnimation(5, 1)
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
 	var/dx = (target.x > src.x) ? EAST : WEST

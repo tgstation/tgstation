@@ -74,6 +74,15 @@
 	adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
+	inv_box.name = "head"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "head"
+	inv_box.screen_loc = ui_monkey_head
+	inv_box.slot_id = slot_head
+	inv_box.layer = 19
+	adding += inv_box
+
+	inv_box = new /obj/screen/inventory()
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
@@ -96,7 +105,7 @@
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
-	mymob.pullin.icon_state = "pull0"
+	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 
 	lingchemdisplay = new /obj/screen/ling/chems()

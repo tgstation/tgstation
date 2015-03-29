@@ -14,8 +14,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI",											//7
 	"cultist" = /datum/game_mode/cult,				//8
 	"blob" = /datum/game_mode/blob,					//9
-	"monkey" = /datum/game_mode/monkey,				//10
-	"gangster" = /datum/game_mode/gang				//11
+	"ninja",										//10
+	"monkey" = /datum/game_mode/monkey,				//11
+	"gangster" = /datum/game_mode/gang				//12
 )
 
 
@@ -808,7 +809,7 @@ datum/preferences
 
 					if("ghost_whispers")
 						chat_toggles ^= CHAT_GHOSTWHISPER
-					
+
 					if("ghost_radio")
 						chat_toggles ^= CHAT_GHOSTRADIO
 
@@ -888,11 +889,5 @@ datum/preferences
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
-		/*
-		//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-		if(character.gender in list(PLURAL, NEUTER))
-			if(isliving(src)) //Ghosts get neuter by default
-				message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-				character.gender = MALE
-		*/
-
+		character.update_body()
+		character.update_hair()

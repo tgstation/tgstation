@@ -203,7 +203,7 @@
 				usr << "<span class='warning'>[text_hack]</span>"
 				bot_reset()
 			else if(!hacked)
-				usr << "<span class='userdanger'>[text_dehack_fail]</span>"
+				usr << "<span class='boldannounce'>[text_dehack_fail]</span>"
 			else
 				emagged = 0
 				hacked = 0
@@ -323,7 +323,7 @@
 	pulse2.dir = pick(cardinal)
 
 	spawn(10)
-		pulse2.delete()
+		qdel(pulse2)
 	if (on)
 		turn_off()
 	spawn(severity*300)

@@ -187,6 +187,15 @@
 	item_state = "ponchoshame"
 	flags = NODROP
 
+/obj/item/clothing/suit/whitedress
+	name = "white dress"
+	desc = "A fancy white dress."
+	icon_state = "white_dress"
+	item_state = "w_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	flags_inv = HIDEJUMPSUIT|HIDESHOES
+
+
 /*
  * Misc
  */

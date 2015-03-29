@@ -233,7 +233,7 @@
 /obj/item/device/radio/proc/isWireCut(var/index)
 	return wires.IsIndexCut(index)
 
-/obj/item/device/radio/talk_into(atom/movable/M, message, channel)
+/obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -359,7 +359,12 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"languages" = M.languages //The languages M is talking in.
+			"languages" = M.languages, //The languages M is talking in.
+			"spans" = spans, //the span classes of this message.
+			"verb_say" = M.verb_say, //the verb used when talking normally
+			"verb_ask" = M.verb_ask, //the verb used when asking
+			"verb_exclaim" = M.verb_exclaim, //the verb used when exclaiming
+			"verb_yell" = M.verb_yell //the verb used when yelling
 			)
 		signal.frequency = freq
 
@@ -403,7 +408,13 @@
 		"type" = 0,
 		"server" = null,
 		"reject" = 0,
-		"level" = position.z
+		"level" = position.z,
+		"languages" = languages,
+		"spans" = spans,
+		"verb_say" = M.verb_say,
+		"verb_ask" = M.verb_ask,
+		"verb_exclaim" = M.verb_exclaim,
+		"verb_yell" = M.verb_yell
 		)
 	signal.frequency = text2num(freq) // Quick frequency set
 	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
@@ -420,14 +431,15 @@
 		// Send a mundane broadcast with limited targets:
 		Broadcast_Message(M, voicemask,
 						  src, message, voice, jobname, real_name,
-						  filter_type, signal.data["compression"], list(position.z), freq)
+						  filter_type, signal.data["compression"], list(position.z), freq, spans,
+						  verb_say, verb_ask, verb_exclaim, verb_yell)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(radio_freq)
 		return
 	if(broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
-			talk_into(speaker, raw_message)
+			talk_into(speaker, raw_message, , spans)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 

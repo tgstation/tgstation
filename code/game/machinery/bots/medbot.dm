@@ -51,6 +51,17 @@
 	treatment_fire = "omnizine"
 	treatment_tox = "omnizine"
 
+/obj/machinery/bot/medbot/derelict
+	name = "\improper Old Medibot"
+	desc = "Looks like it hasn't been modified since the late 2080s."
+	skin = "bezerk"
+	heal_threshold = 0
+	declare_crit = 0
+	treatment_oxy = "pancuronium"
+	treatment_brute = "pancuronium"
+	treatment_fire = "sodium_thiopental"
+	treatment_tox = "sodium_thiopental"
+
 /obj/item/weapon/firstaid_arm_assembly
 	name = "incomplete medibot assembly."
 	desc = "A first aid kit with a robot arm permanently grafted to it."
@@ -479,7 +490,7 @@
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 						reagent_glass.reagents.trans_to(patient,injection_amount) //Inject from beaker instead.
-						reagent_glass.reagents.reaction(patient, 2)
+						reagent_glass.reagents.reaction(patient, INGEST)
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
 				C.visible_message("<span class='danger'>[src] injects [patient] with the syringe!</span>", \
@@ -500,7 +511,7 @@
 
 /obj/machinery/bot/medbot/explode()
 	on = 0
-	visible_message("<span class='userdanger'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)

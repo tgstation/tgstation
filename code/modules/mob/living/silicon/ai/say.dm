@@ -19,26 +19,14 @@
 	//Also includes the </a> for AI hrefs, for convenience.
 	return " [radio_freq ? "(" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
-/mob/living/silicon/ai/say_quote(var/text)
-	var/ending = copytext(text, length(text))
-
-	if(ending == "?")
-		return "queries, \"<span class = 'robot'>[text]</span>\"";
-	else if(copytext(text, length(text) - 1) == "!!")
-		return "alarms, \"<span class = 'robot'><span class = 'yell'>[text]</span></span>\"";
-	else if(ending == "!")
-		return "declares, \"[text]\"";
-
-	return "states, \"<span class = 'robot'>[text]</span>\"";
-
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai
 
-/mob/living/silicon/ai/radio(message, message_mode)
+/mob/living/silicon/ai/radio(message, message_mode, list/spans)
 	if(!radio_enabled || aiRestorePowerRoutine || stat) //AI cannot speak if radio is disabled (via intellicard) or depowered.
 		src << "<span class='danger'>Your radio transmitter is offline!</span>"
 		return 0
-	..(message,message_mode)
+	..()
 
 /mob/living/silicon/ai/get_message_mode(message)
 	if(copytext(message, 1, 3) in list(":h", ":H", ".h", ".H", "#h", "#H"))

@@ -1,3 +1,6 @@
+#define TARGET_CLOSEST 1
+#define TARGET_RANDOM 2
+
 /obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
 
@@ -245,6 +248,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
 	var/target_ignore_prev = 1 //only important if max_targets > 1, affects if the spell can be cast multiple times at one person from one cast
 	var/include_user = 0 //if it includes usr in the target list
+	var/random_target = 0 // chooses random viable target instead of asking the caster
+	var/random_target_priority = TARGET_CLOSEST // if random_target is enabled how it will pick the target
 
 /obj/effect/proc_holder/spell/aoe_turf //affects all turfs in view or range (depends)
 	var/inner_radius = -1 //for all your ring spell needs
@@ -269,7 +274,22 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 				//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
 				//Adds a safety check post-input to make sure those targets are actually in range.
-				var/mob/M = input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				var/mob/M
+				if(!random_target)
+					M = input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+				else
+					switch(random_target_priority)
+						if(TARGET_RANDOM)
+							M = pick(possible_targets)
+						if(TARGET_CLOSEST)
+							for(var/mob/living/L in possible_targets)
+								if(M)
+									if(get_dist(user,L) < get_dist(user,M))
+										if(los_check(user,L))
+											M = L
+								else
+									if(los_check(user,L))
+										M = L
 				if(M in view_or_range(range, user, selection_type)) targets += M
 
 		else
@@ -315,4 +335,16 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))
 		return 0
+	return 1
+
+/obj/effect/proc_holder/spell/targeted/proc/los_check(mob/A,mob/B)
+	//Checks for obstacles from A to B
+	var/obj/dummy = new(A.loc)
+	dummy.pass_flags |= PASSTABLE
+	for(var/turf/turf in getline(A,B))
+		for(var/atom/movable/AM in turf)
+			if(!AM.CanPass(dummy,turf,1))
+				qdel(dummy)
+				return 0
+	qdel(dummy)
 	return 1

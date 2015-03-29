@@ -8,14 +8,7 @@
 	icon = 'icons/mob/blob.dmi'
 	pass_flags = PASSBLOB
 	faction = list("blob")
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 360
 	var/mob/camera/blob/overmind = null
@@ -84,15 +77,17 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	icon = H.icon
-	icon_state = "husk_s"
+	icon_state = "zombie_s"
 	H.hair_style = null
 	H.update_hair()
 	human_overlays = H.overlays
-	adjustcolors(overmind.blob_reagent_datum.color)
+	if(overmind && overmind.blob_reagent_datum)
+		adjustcolors(overmind.blob_reagent_datum.color)
 	H.loc = src
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
 
-/mob/living/simple_animal/hostile/blob/blobspore/Die()
+/mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
+	..(1)
 	// On death, create a small smoke of harmful gas (s-Acid)
 	var/datum/effect/effect/system/chem_smoke_spread/S = new
 	var/turf/location = get_turf(src)
@@ -110,6 +105,7 @@
 	S.set_up(reagents, 1, 1, location, 15, 1) // only 1-2 smoke cloud
 	S.start()
 
+	ghostize()
 	qdel(src)
 
 /mob/living/simple_animal/hostile/blob/blobspore/Destroy()
@@ -152,7 +148,7 @@
 	maxbodytemp = 360
 	force_threshold = 10
 	environment_smash = 3
-	mob_size = 2
+	mob_size = MOB_SIZE_LARGE
 
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
@@ -165,6 +161,6 @@
 /mob/living/simple_animal/hostile/blob/blobbernaut/blob_act()
 	return
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Die()
-	..()
+/mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
+	..(gibbed)
 	flick("blobbernaut_death", src)

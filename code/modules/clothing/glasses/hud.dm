@@ -65,3 +65,21 @@
 		emagged = 1
 		desc = desc + " The display flickers slightly."
 
+/obj/item/clothing/glasses/hud/security/sunglasses/gars
+	name = "HUD gar glasses"
+	desc = "GAR glasses with a HUD."
+	icon_state = "gars"
+	item_state = "garb"
+	force = 10
+	throwforce = 10
+	throw_speed = 4
+	attack_verb = list("sliced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars
+	name = "giga HUD gar glasses"
+	desc = "GIGA GAR glasses with a HUD."
+	icon_state = "supergars"
+	item_state = "garb"
+	force = 12
+	throwforce = 12

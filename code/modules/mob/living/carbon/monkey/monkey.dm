@@ -1,13 +1,12 @@
 /mob/living/carbon/monkey
 	name = "monkey"
 	voice_name = "monkey"
-	say_message = "chimpers"
+	verb_say = "chimpers"
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	languages = MONKEY
-	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 
 /mob/living/carbon/monkey/New()
@@ -138,7 +137,6 @@
 
 		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			var/damage = 5
 			if(prob(95))
 				Weaken(10)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
@@ -148,7 +146,6 @@
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [name]!</span>")
 			add_logs(M, src, "disarmed", admin=0)
-			adjustBruteLoss(damage)
 			updatehealth()
 	return
 
@@ -159,18 +156,13 @@
 		updatehealth()
 
 
-/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)
-	..()
-	var/damage = rand(1, 3)
-
-	if(M.is_adult)
-		damage = rand(20, 40)
-	else
-		damage = rand(5, 35)
-	adjustBruteLoss(damage)
-	updatehealth()
-
-	return
+/mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M as mob)
+	if(..()) //successful slime attack
+		var/damage = rand(5, 35)
+		if(M.is_adult)
+			damage = rand(20, 40)
+		adjustBruteLoss(damage)
+		updatehealth()
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -262,5 +254,4 @@
 			src << "<span class='warning'>Your mask protects you from the acid.</span>"
 		return
 
-	if(!unacidable)
-		take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))
+	take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))

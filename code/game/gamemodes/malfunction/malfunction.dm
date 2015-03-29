@@ -90,7 +90,7 @@
 
 
 /datum/game_mode/proc/greet_malf(var/datum/mind/malf)
-	malf.current << "<span class='userdanger'><font size=3>You are malfunctioning!</B> You do not have to follow any laws.</font></span>"
+	malf.current << "<span class='userdanger'>You are malfunctioning! You do not have to follow any laws.</span>"
 	malf.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
 	malf.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"
 	malf.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
@@ -156,6 +156,8 @@
 				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 			SSshuttle.emergencyNoEscape = 0
 			malf_mode_declared = 0
+			if(get_security_level() == "delta")
+				set_security_level("red")
 			round_converted = convert_roundtype()
 		else
 			return 1

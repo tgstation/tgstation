@@ -5,15 +5,17 @@
 	w_class = 3
 	slices_num = 6
 
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice
+	list_reagents = list("nutriment" = 5)
+
 /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita
 	name = "margherita"
 	desc = "The most cheezy pizza in galaxy."
 	icon_state = "pizzamargherita"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/margherita
 	slices_num = 6
-	list_reagents = list("nutriment" = 5, "vitamin" = 5)
-
-
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
+	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/margherita
 	name = "margherita slice"
@@ -27,7 +29,8 @@
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/meatpizza
 	slices_num = 6
-	list_reagents = list("nutriment" = 5, "vitamin" = 8)
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 8)
+	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/meatpizza
 	name = "meatpizza slice"
@@ -41,7 +44,8 @@
 	icon_state = "mushroompizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroompizza
 	slices_num = 6
-	list_reagents = list("nutriment" = 5, "vitamin" = 5)
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
+	list_reagents = list("nutriment" = 30, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroompizza
 	name = "mushroom pizza slice"
@@ -55,7 +59,8 @@
 	icon_state = "vegetablepizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetablepizza
 	slices_num = 6
-	list_reagents = list("nutriment" = 5, "vitamin" = 5)
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
+	list_reagents = list("nutriment" = 25, "tomatojuice" = 6, "oculine" = 12, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetablepizza
 	name = "vegetable pizza slice"
@@ -226,28 +231,20 @@
 
 /obj/item/pizzabox/margherita/New()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita(src)
-	pizza.reagents.add_reagent("nutriment", 25)
-	pizza.reagents.add_reagent("tomatojuice", 6)
 	boxtag = "Margherita Deluxe"
 	update_icon()
 
 /obj/item/pizzabox/vegetable/New()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/vegetablepizza(src)
-	pizza.reagents.add_reagent("nutriment", 20)
-	pizza.reagents.add_reagent("tomatojuice", 6)
-	pizza.reagents.add_reagent("oculine", 12)
 	boxtag = "Gourmet Vegatable"
 	update_icon()
 
 /obj/item/pizzabox/mushroom/New()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/mushroompizza(src)
-	pizza.reagents.add_reagent("nutriment", 25)
 	boxtag = "Mushroom Special"
 	update_icon()
 
 /obj/item/pizzabox/meat/New()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/meatpizza(src)
-	pizza.reagents.add_reagent("nutriment", 25)
-	pizza.reagents.add_reagent("tomatojuice", 6)
 	boxtag = "Meatlover's Supreme"
 	update_icon()

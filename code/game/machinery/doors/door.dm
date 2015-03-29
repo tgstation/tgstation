@@ -265,6 +265,8 @@
 		var/turf/location = src.loc
 		if(istype(location, /turf/simulated)) //add_blood doesn't work for borgs/xenos, but add_blood_floor does.
 			location.add_blood_floor(L)
+	for(var/obj/mecha/M in get_turf(src))
+		M.take_damage(DOOR_CRUSH_DAMAGE)
 
 /obj/machinery/door/proc/requiresID()
 	return 1

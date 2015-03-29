@@ -4,16 +4,14 @@
 	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
 
-/datum/mutation/human/wacky/say_mod(var/message)
-	if(message)
-		message = "<span class='sans'>[message]</span>"
-	return message
+/datum/mutation/human/wacky/get_spans()
+	return list(SPAN_SANS)
 
 /datum/mutation/human/mute
 	name = "Mute"
 	quality = NEGATIVE
-	text_gain_indication = "<span class='notice'>You feel unable to express yourself at all.</span>"
-	text_lose_indication = "<span class='notice'>You feel able to speak freely again.</span>"
+	text_gain_indication = "<span class='danger'>You feel unable to express yourself at all.</span>"
+	text_lose_indication = "<span class='danger'>You feel able to speak freely again.</span>"
 
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
@@ -81,8 +79,8 @@
 /datum/mutation/human/unintelligable
 	name = "Unintelligable"
 	quality = NEGATIVE
-	text_gain_indication = "<span class='notice'>You can't seem to form any coherent thoughts!</span>"
-	text_lose_indication = "<span class='notice'>Your mind feels more clear.</span>"
+	text_gain_indication = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
+	text_lose_indication = "<span class='danger'>Your mind feels more clear.</span>"
 
 /datum/mutation/human/unintelligable/say_mod(var/message)
 	if(message)

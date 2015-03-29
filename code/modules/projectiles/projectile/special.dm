@@ -12,6 +12,13 @@
 	return 1
 
 
+/obj/item/projectile/ion/weak
+
+/obj/item/projectile/ion/weak/on_hit(atom/target, blocked = 0)
+	empulse(target, 0, 0)
+	return 1
+
+
 /obj/item/projectile/bullet/gyro
 	name ="explosive bolt"
 	icon_state= "bolter"
@@ -188,19 +195,6 @@ obj/item/projectile/kinetic/New()
 	damage = 25
 	weaken = 5
 
-/obj/item/projectile/bullet/magspear
-	name = "magnetic spear"
-	desc = "WHITE WHALE, HOLY GRAIL"
-	damage = 30 //takes 3 spears to kill a mega carp, one to kill a normal carp
-	icon_state = "magspear"
-
-/obj/item/projectile/bullet/magspear/on_hit(var/atom/target, var/blocked = 0)
-	if(!proj_hit)
-		proj_hit = 1
-		new /obj/item/ammo_casing/caseless/magspear(src.loc)
-	..()
-
-/obj/item/projectile/bullet/magspear/on_range()
-	if(!proj_hit)
-		new /obj/item/ammo_casing/caseless/magspear(src.loc)
-		..()
+/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
+	explosion(target, -1, 0, 1)
+	return 1
