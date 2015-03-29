@@ -86,9 +86,9 @@
 				m_type = 2
 
 		if ("flip")
-			if (!src.restrained())
-				message = "<B>[src]</B> does a flip!"
-				src.SpinAnimation(5,1)
+			if (!src.restrained() || src.resting || src.sleeping)
+				src << "<span class = 'notice'>You do a flip!</span>"
+				src.SpinAnimation(7,1)
 				m_type = 2
 
 		if ("frown")
