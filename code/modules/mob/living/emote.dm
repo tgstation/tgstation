@@ -85,12 +85,6 @@
 				message = "<B>[src]</B> flaps its wings."
 				m_type = 2
 
-		if ("flip")
-			if (!src.restrained())
-				message = "<B>[src]</B> does a flip!"
-				src.SpinAnimation(5,1)
-				m_type = 2
-
 		if ("frown")
 			message = "<B>[src]</B> frowns."
 			m_type = 1
