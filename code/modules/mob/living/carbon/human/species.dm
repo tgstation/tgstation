@@ -655,52 +655,56 @@
 /datum/species/proc/movement_delay(var/mob/living/carbon/human/H)
 	var/mspeed = 0
 
-	var/hasjetpack = 0
-	if(istype(H.back, /obj/item/weapon/tank/jetpack))
-		var/obj/item/weapon/tank/jetpack/J = H.back
-		if(J.allow_thrust(0.01, H))
-			hasjetpack = 1
-	else if(istype(H.wear_suit,/obj/item/clothing/suit/space/hardsuit/engine)) //copypasta but faster implementation currently
-		var/obj/item/clothing/suit/space/hardsuit/engine/C = H.wear_suit
-		if(C.jetpack.allow_thrust(0.01, H))
-			hasjetpack = 1
+	if(!(H.status_flags & IGNORESLOWDOWN))
 
-	var/grav = has_gravity(H)
+		var/grav = has_gravity(H)
+		var/hasjetpack = 0
+		if(!grav)
+			var/obj/item/weapon/tank/jetpack/J
+			var/obj/item/weapon/tank/jetpack/P
 
-	if(!grav && !hasjetpack)
-		mspeed += 1 //Slower space without jetpack
+			if(istype(H.back, /obj/item/weapon/tank/jetpack))
+				J = H.back
+			if(istype(H.wear_suit,/obj/item/clothing/suit/space/hardsuit)) //copypasta but faster implementation currently
+				var/obj/item/clothing/suit/space/hardsuit/engine/C = H.wear_suit
+				P = C.jetpack
+			if(J)
+				if(J.allow_thrust(0.01, H))
+					hasjetpack = 1
+			else if(P)
+				if(P.allow_thrust(0.01, H))
+					hasjetpack = 1
 
-	var/health_deficiency = (100 - H.health + H.staminaloss)
-	if(health_deficiency >= 40)
-		mspeed += (health_deficiency / 25)
+			mspeed = 1 - hasjetpack
 
-	var/hungry = (500 - H.nutrition) / 5	//So overeat would be 100 and default level would be 80
-	if(hungry >= 70)
-		mspeed += hungry / 50
+		if(grav || !hasjetpack)
+			var/health_deficiency = (100 - H.health + H.staminaloss)
+			if(health_deficiency >= 40)
+				mspeed += (health_deficiency / 25)
 
-	if(H.wear_suit && grav)
-		mspeed += H.wear_suit.slowdown
-	if(H.shoes && grav)
-		mspeed += H.shoes.slowdown
-	if(H.back && grav)
-		mspeed += H.back.slowdown
+			var/hungry = (500 - H.nutrition) / 5	//So overeat would be 100 and default level would be 80
+			if(hungry >= 70)
+				mspeed += hungry / 50
 
-	if((H.disabilities & FAT) && grav)
-		mspeed += 1.5
-	if(H.bodytemperature < 283.222)
-		mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
+			if(H.wear_suit)
+				mspeed += H.wear_suit.slowdown
+			if(H.shoes)
+				mspeed += H.shoes.slowdown
+			if(H.back)
+				mspeed += H.back.slowdown
 
-	mspeed += speedmod
+			if((H.disabilities & FAT))
+				mspeed += 1.5
+			if(H.bodytemperature < 283.222)
+				mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
 
-	if(H.status_flags & IGNORESLOWDOWN)
-		mspeed = 0
+			mspeed += speedmod
 
 	if(H.status_flags & GOTTAGOFAST)
 		mspeed -= 1
 
 	if(H.status_flags & GOTTAGOREALLYFAST)
 		mspeed -= 2
-
 
 	return mspeed
 
