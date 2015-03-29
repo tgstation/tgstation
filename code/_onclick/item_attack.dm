@@ -46,7 +46,7 @@ obj/item/proc/get_clamped_volume()
 	//var/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
-			return
+			return 1
 	//if (istype(M,/mob/living/carbon/brain))
 	//	messagesource = M:container
 	if (hitsound)

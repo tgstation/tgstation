@@ -71,6 +71,12 @@
 
 
 ///////CLOSE SPACE/////
+/datum/surgery_step/cavity/close_space/tool_quality(obj/item/tool)
+	if(tool.is_hot())
+		for (var/T in allowed_tools)
+			if (istype(tool,T))
+				return allowed_tools[T]
+	return 0
 /datum/surgery_step/cavity/close_space
 	priority = 2
 	allowed_tools = list(

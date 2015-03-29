@@ -295,6 +295,8 @@ LOOK FOR SURGERY.DM*/
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is burning \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b>"
 		return (BRUTELOSS)
+	is_hot()
+		return 1
 
 /*
 /obj/item/weapon/cautery/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)

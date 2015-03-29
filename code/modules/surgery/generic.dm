@@ -275,6 +275,12 @@
 
 
 /////////CAUTERIZE///////
+/datum/surgery_step/generic/cauterize/tool_quality(obj/item/tool)
+	if(tool.is_hot())
+		for (var/T in allowed_tools)
+			if (istype(tool,T))
+				return allowed_tools[T]
+	return 0
 /datum/surgery_step/generic/cauterize
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,
