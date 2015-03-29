@@ -1,0 +1,6 @@
+author: tedward1337
+
+delete-after: True
+
+changes: 
+  - rscadd: "Admins now have a button to use Bluespace Artillery at their will."
