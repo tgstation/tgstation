@@ -170,6 +170,21 @@
 		src << "You will no longer hear musical instruments."
 	feedback_add_details("admin_verb","TInstru") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+//Lots of people get headaches from the normal ship ambience, this is to prevent that
+/client/verb/toggle_ship_ambience()
+	set name = "Hear/Silence Ship Ambience"
+	set category = "Preferences"
+	set desc = "Toggles hearing generalized ship ambience, no matter your area."
+	prefs.toggles ^= SOUND_SHIP_AMBIENCE
+	prefs.save_preferences()
+	if(prefs.toggles & SOUND_SHIP_AMBIENCE)
+		src << "You will now hear ship ambience."
+	else
+		src << "You will no longer hear ship ambience."
+		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
+		src.ambience_playing = 0
+	feedback_add_details("admin_verb", "SAmbi") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
+
 //be special
 /client/verb/toggle_be_special(role in be_special_flags)
 	set name = "Toggle SpecialRole Candidacy"

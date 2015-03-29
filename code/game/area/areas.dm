@@ -330,11 +330,11 @@
 	L.lastarea = newarea
 
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
-
-	if(!L.client.ambience_playing)
+	if(!L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		L.client.ambience_playing = 1
 		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+
+	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return //General ambience check is below the ship ambience so one can play without the other
 
 	if(prob(35))
 		var/sound = pick(ambientsounds)
