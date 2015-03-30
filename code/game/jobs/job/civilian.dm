@@ -15,7 +15,7 @@ Clown
 	default_pda = /obj/item/device/pda/clown
 	default_backpack = /obj/item/weapon/storage/backpack/clown
 
-	access = list(access_theatre)
+	access = list(access_theatre, access_maint_tunnels)
 	minimal_access = list(access_theatre)
 
 /datum/job/clown/equip_backpack(var/mob/living/carbon/human/H)
@@ -57,7 +57,7 @@ Mime
 	default_pda = /obj/item/device/pda/mime
 	default_backpack = /obj/item/weapon/storage/backpack/mime
 
-	access = list(access_theatre)
+	access = list(access_theatre, access_maint_tunnels)
 	minimal_access = list(access_theatre)
 
 /datum/job/mime/equip_backpack(var/mob/living/carbon/human/H)
