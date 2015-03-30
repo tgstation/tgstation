@@ -8,8 +8,7 @@
 	var/implant_color = "#FFFFFF"
 
 /obj/item/cybernetic_implant/New(var/mob/M = null)
-	if(M)
-		owner = M
+	owner = M
 	return ..()
 
 /obj/item/cybernetic_implant/proc/function()
@@ -107,6 +106,8 @@
 	update_eye_color("You see prey everywhere you look...")
 
 /obj/item/cybernetic_implant/eyes/emp_act(severity)
+	if(!owner)
+		return
 	if(severity > 1)
 		if(prob(5))
 			return
@@ -133,6 +134,8 @@
 	..()
 
 /obj/item/cybernetic_implant/brain/emp_act(severity)
+	if(!owner)
+		return
 	var/stun_amount = 5 + (severity-1 ? 0 : 5)
 	owner.Stun(stun_amount)
 	owner << "<span class='warning'>Your body seizes up!</span>"
@@ -192,6 +195,8 @@
 		r_hand_obj = null
 
 /obj/item/cybernetic_implant/brain/anti_drop/emp_act(severity)
+	if(!owner)
+		return
 	var/range = severity ? 10 : 5
 	var/atom/A
 	var/obj/item/L_item = owner.l_hand
@@ -237,6 +242,8 @@
 		owner.weakened = STUN_SET_AMOUNT
 
 /obj/item/cybernetic_implant/brain/anti_stun/emp_act(severity)
+	if(!owner)
+		return
 	SSobj.processing.Remove(src)
 	spawn(..() * 10)
 		SSobj.processing |= src
@@ -289,21 +296,25 @@
 	origin_tech = "materials=5;programming=3;biotech=5"
 
 /obj/item/cybernetic_implant/chest/nutriment/emp_act(severity)
+	if(!owner)
+		return
 	owner.reagents.add_reagent("????",poison_amount / severity) //food poisoning
 	owner << "<span class='notice'>You feel like your insides are burning.</span>"
 
-/obj/item/cybernetic_implant/chest/reviver
+/obj/item/cybernetic_implant/chest/heart/reviver
 	name = "Reviver implant"
-	desc = "This implant will automatically deliver a therapeutic dose of electrical energy to your heart if it ever stops beating, and inject you with nanites. A second chance!"
+	desc = "This implant will automatically deliver a therapeutic dose of electrical energy to your heart if it ever stops beating, and inject nanites into your bloodstream. A second chance!"
 	icon_state = "chest_implant"
 	var/defibrillating = 0
-	var/recharge_time
+	var/recharge_time = 0
+	origin_tech = "materials=7;programming=3;biotech=4"
 
-/obj/item/cybernetic_implant/chest/reviver/function()
-	recharge_time = world.time + 2000
-	SSobj.processing |= src
+/obj/item/cybernetic_implant/chest/heart/reviver/function()
+	if(istype(owner,/mob/living/carbon/human))
+		recharge_time = world.time + 2000
+		SSobj.processing |= src
 
-/obj/item/cybernetic_implant/chest/reviver/process()
+/obj/item/cybernetic_implant/chest/heart/reviver/process()
 	if(defibrillating)
 		return
 	if(!owner)
@@ -319,14 +330,33 @@
 	spawn(600)
 		if(owner.stat == DEAD)
 			owner.visible_message("<span class='warning'>[owner]'s body convulses by itself.")
-			playsound(get_turf(src), "bodyfall", 50, 1)
-			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
-			owner.reagents.add_reagent("nanites",10)
-			owner.stat = UNCONSCIOUS
-			owner.heart_attack = 0
+			playsound(owner, "bodyfall", 50, 1)
+			playsound(owner, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 			dead_mob_list -= owner
 			living_mob_list |= list(owner)
+			owner.stat = UNCONSCIOUS
+			owner.reagents.add_reagent("nanites",10)
+			var/mob/living/carbon/human/H = owner
+			var/amount = BLOOD_VOLUME_OKAY - H.vessel.total_volume
+			H.vessel.add_reagent("blood", amount)
+			H.vessel.update_total()
+			owner.heart_attack = 0
 			owner.emote("gasp")
 			add_logs(owner, owner, "revived", object="defibrillator implant")
 			recharge_time = world.time + 20000
 		defibrillating = 0
+
+/obj/item/cybernetic_implant/chest/heart/reviver/emp_act(severity)
+	if(!owner)
+		return
+	if(recharge_time < world.time)
+		recharge_time = world.time + (2000 / severity)
+	else
+		recharge_time += 2000 / severity
+
+	if(prob(30/severity))
+		playsound(owner, 'sound/machines/defib_saftyOff.ogg', 50, 1, -1)
+		spawn(30)
+			playsound(owner, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+			owner.heart_attack = 1
+			owner.visible_message("<span class = 'userdanger'>[owner] clutches at their chest as if their heart stopped!</span>")

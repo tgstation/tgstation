@@ -35,7 +35,7 @@
 /datum/surgery_step/cybernetic_implant/brain/success(mob/user, mob/living/carbon/target, target_zone, obj/item/cybernetic_implant/brain/implant, datum/surgery/surgery)
 	if(implant)
 		var/full = 0
-		for(var/obj/item/I in target.contents)
+		for(var/obj/item/I in target.internal_organs)
 			if(istype(I,/obj/item/cybernetic_implant/brain))
 				full++
 
@@ -57,12 +57,16 @@
 /datum/surgery_step/cybernetic_implant/chest/success(mob/user, mob/living/carbon/target, target_zone, obj/item/cybernetic_implant/chest/implant, datum/surgery/surgery)
 	if(implant)
 		var/full = 0
-		for(var/obj/item/I in target.contents)
+		for(var/obj/item/I in target.internal_organs)
 			if(istype(I,/obj/item/cybernetic_implant/chest))
 				full++
-
 		if(full < MAX_CHEST_IMPLANT)
 			full = 0
+
+		if(istype(implant,/obj/item/cybernetic_implant/chest/heart))
+			if(locate(/obj/item/cybernetic_implant/chest/heart) in target.internal_organs)
+				full = 1
+
 		insert(user,target,implant,target_zone,full)
 		return 1
 
@@ -74,5 +78,5 @@
 		implant.owner = target
 		implant.function()
 		user.drop_item()
-		implant.loc = target
 		target.internal_organs |= implant
+		implant.loc = target
