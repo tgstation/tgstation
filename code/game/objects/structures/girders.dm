@@ -5,7 +5,7 @@
 	density = 1
 	layer = 2
 	var/state = 0
-	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
+	var/girderpasschance = 0 // percentage chance that a projectile passes through the girder.
 
 /obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob, params)
 	add_fingerprint(user)
@@ -236,7 +236,7 @@
 	name = "displaced girder"
 	icon_state = "displaced"
 	anchored = 0
-	girderpasschance = 25
+	girderpasschance = 0
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
