@@ -1663,6 +1663,7 @@
 		var/special_role_description = ""
 		var/health_description = ""
 		var/gender_description = ""
+		var/species_description = "Not A Human"
 		var/turf/T = get_turf(M)
 
 		//Location
@@ -1696,8 +1697,11 @@
 			if(MALE,FEMALE)	gender_description = "[M.gender]"
 			else			gender_description = "<font color='red'><b>[M.gender]</b></font>"
 
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			species_description = "[H.species ? H.species.name : "<span class='danger'><b>No Species</b></span>"]"
 		src.owner << "<b>Info about [M.name]:</b> "
-		src.owner << "Mob type = [M.type]; Gender = [gender_description] Damage = [health_description]"
+		src.owner << "Mob type = [M.type]; Species = [species_description]; Gender = [gender_description]; Damage = [health_description];"
 		src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;"
 		src.owner << "Location = [location_description];"
 		src.owner << "[special_role_description]"

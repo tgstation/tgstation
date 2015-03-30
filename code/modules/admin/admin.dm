@@ -43,6 +43,7 @@ var/global/floorIsLava = 0
 	var/body = {"<html><head><title>Options for [M.key]</title></head>
 <body>Options panel for <b>[M]</b>"}
 	// END AUTOFIX
+	var/species_description
 	if(M.client)
 
 		// AUTOFIXED BY fix_string_idiocy.py
@@ -54,7 +55,9 @@ var/global/floorIsLava = 0
 		body += " <B>Hasn't Entered Game</B> "
 	else
 		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
-
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		species_description = "[H.species ? H.species.name : "<span class='danger'><b>No Species</b></span>"]"
 	body += {"
 		<br><br>\[
 		<a href='?_src_=vars;Vars=\ref[M]'>VV</a> -
@@ -63,7 +66,7 @@ var/global/floorIsLava = 0
 		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
 		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
-		<b>Mob type</b> = [M.type]<br><br>
+		<b>Mob type</b> = [M.type][species_description ? " - Species = [species_description]" : ""]<br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?_src_=holder;unwarn=[M.ckey]'>UNWarn</A> |
