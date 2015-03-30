@@ -106,12 +106,15 @@
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
-		if(loc)
-			loc.Exited(src)
+		var/atom/oldloc = loc
+		if(oldloc)
+			oldloc.Exited(src, destination)
 		loc = destination
-		loc.Entered(src)
-		for(var/atom/movable/AM in loc)
+		destination.Entered(src, oldloc)
+		for(var/atom/movable/AM in destination)
+			if(AM == src)	continue
 			AM.Crossed(src)
+		Moved(oldloc, 0)
 		return 1
 	return 0
 

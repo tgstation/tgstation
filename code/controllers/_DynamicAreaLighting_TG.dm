@@ -36,7 +36,7 @@
 #define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/redraw_lighting()
 #define LIGHTING_ICON 'icons/effects/alphacolors.dmi'
 #define LIGHTING_ICON_STATE "white"
-#define LIGHTING_ALPHA_CHANGE_PER_SECOND 75					//Alpha change that will occur each second
+#define LIGHTING_TIME 1.2									//Time to do any lighting change. Actual number pulled out of my ass
 #define LIGHTING_DARKEST_VISIBLE_ALPHA 230					//Anything darker than this is so dark, we'll just consider the whole tile unlit
 
 /datum/light_source
@@ -166,7 +166,6 @@
 	else
 		if(light.strength == new_luminosity)
 			return
-		light.remove_effect() // we need to remove the effect before changing strength
 	light.strength = new_luminosity
 	luminosity = new_luminosity
 	light.changed = 1
@@ -264,7 +263,7 @@
 				newalpha = 0
 
 		if(lighting_object.alpha != newalpha)
-			var/change_time = (abs(newalpha - lighting_object.alpha)) / LIGHTING_ALPHA_CHANGE_PER_SECOND
+			var/change_time = LIGHTING_TIME
 			animate(lighting_object, alpha = newalpha, time = change_time)
 			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA) //Doesn't actually make it darker or anything, just tells byond you can't see the tile
 				animate(luminosity = 0, time = 0)
