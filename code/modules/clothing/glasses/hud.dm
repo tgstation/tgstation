@@ -37,6 +37,7 @@
 	min_harm_label = 12
 	vision_flags = SEE_MOBS
 	invisa_view = 2
+	eyeprot = 1
 
 /obj/item/clothing/glasses/hud/security/jensenshades/harm_label_update()
 	if(harm_labeled >= min_harm_label)

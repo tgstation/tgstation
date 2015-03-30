@@ -1,5 +1,4 @@
-//the basic glasses can be found in clothing.dm
-
+/* DEFINED IN clothing.dm
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
@@ -7,6 +6,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2;engineering=2"
 	vision_flags = SEE_TURFS
+	eyeprot = -1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	species_fit = list("Vox")
 
@@ -14,6 +14,7 @@
 	name = "prescription mesons"
 	desc = "Optical Meson Scanner with prescription lenses."
 	prescription = 1
+	eyeprot = -1
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/science
@@ -31,6 +32,7 @@
 	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
 	see_in_dark = 8
 	species_fit = list("Vox")
+	eyeprot = -1
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -85,6 +87,7 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = -1
+	eyeprot = 1
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/virussunglasses
@@ -102,6 +105,7 @@
 	item_state = "welding-g"
 	action_button_name = "Toggle Welding Goggles"
 	var/up = 0
+	eyeprot = 2
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/welding/proc/getMask()
@@ -125,12 +129,14 @@
 			src.up = !src.up
 			body_parts_covered |= EYES
 			flags_inv |= HIDEEYES
+			eyeprot = 2
 			icon_state = initial(icon_state)
 			C << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
 			src.body_parts_covered &= ~EYES
 			flags_inv &= ~HIDEEYES
+			eyeprot = 0
 			icon_state = "[initial(icon_state)]up"
 			C << "You push the [src] up out of your face."
 
@@ -152,6 +158,7 @@
 	item_state = "blindfold"
 	see_invisible = SEE_INVISIBLE_LIVING
 	vision_flags = BLIND
+	eyeprot = 4 //What you can't see can't burn your eyes out
 	species_fit = list("Vox")
 	min_harm_label = 0
 
@@ -188,6 +195,7 @@
 	vision_flags = SEE_MOBS
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	invisa_view = 2
+	eyeprot = -2 //prepare for your eyes to get shit on
 
 	emp_act(severity)
 		if(istype(src.loc, /mob/living/carbon/human))
