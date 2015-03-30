@@ -1,4 +1,3 @@
-/* DEFINED IN clothing.dm
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
@@ -9,7 +8,6 @@
 	eyeprot = -1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	species_fit = list("Vox")
-*/
 
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription mesons"
