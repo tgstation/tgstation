@@ -49,7 +49,7 @@
 	var/valid_step = is_right_key(user,used_atom)
 	if(valid_step)
 		assembling = 1
-		if(custom_action(valid_step, used_atom, user))
+		if(custom_action(steps[valid_step], used_atom, user))
 			next_step(user)
 			assembling = 0
 			return 1
@@ -95,16 +95,18 @@
 	return text
 
 /datum/construction/proc/construct_message(step, mob/user)
-	user.visible_message(fixText(step[Co_VIS_MSG],user), fixText(step[Co_VIS_MSG],user,1))
+	if(Co_VIS_MSG in step)
+		user.visible_message(fixText(step[Co_VIS_MSG],user), fixText(step[Co_VIS_MSG],user,1))
 
 /datum/construction/proc/start_construct_message(step, mob/user, atom/movable/used_atom)
-	user.visible_message(fixText(step[Co_START_MSG],user), fixText(step[Co_START_MSG],user,1))
+	if(Co_START_MSG in step)
+		user.visible_message(fixText(step[Co_START_MSG],user), fixText(step[Co_START_MSG],user,1))
 
 /datum/construction/proc/check_all_steps(atom/used_atom,mob/user as mob) //check all steps, remove matching one.
 	for(var/i=1;i<=steps.len;i++)
 		var/list/L = steps[i];
 		if((islist(L[Co_KEY]) && is_type_in_list(used_atom, L[Co_KEY])) ||istype(used_atom, L[Co_KEY]))
-			if(custom_action(i, used_atom, user))
+			if(custom_action(L, used_atom, user))
 				steps[i]=null;//stupid byond list from list removal...
 				listclearnulls(steps);
 				if(!steps.len)
@@ -157,7 +159,7 @@
 		else if(istype(used_atom,/obj/item/weapon/weldingtool) && !(Co_TAKE in given_step))
 			var/obj/item/weapon/weldingtool/welder=used_atom
 			if(!welder.isOn())
-				user << "\blue You tap the [src] with your unlit welder.  [pick("Ding","Dong")]."
+				user << "\blue You tap \the [holder] with your unlit welder.  [pick("Ding","Dong")]."
 				return 0
 			if(!welder.remove_fuel(amount,user))
 				user << "\red You don't have enough fuel!"
@@ -323,7 +325,7 @@
 		else if(istype(used_atom,/obj/item/weapon/weldingtool) && !(Co_TAKE in given_step))
 			var/obj/item/weapon/weldingtool/welder=used_atom
 			if(!welder.isOn())
-				user << "<span class='notice'>You tap the [holder] with your unlit welder.  [pick("Ding","Dong")].</span>"
+				user << "<span class='notice'>You tap \the [holder] with your unlit welder.  [pick("Ding","Dong")].</span>"
 				return 0
 			if(!welder.remove_fuel(amount,user))
 				user << "<span class='rose'>You don't have enough fuel!</span>"
