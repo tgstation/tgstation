@@ -261,7 +261,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				radios |= R
 
 	// Get a list of mobs who can hear from the radios we collected.
-	var/list/receive = get_mobs_in_radio_ranges(radios)
+	var/list/receive = get_movables_in_radio_ranges(radios)
 
 	for (var/mob/R in receive) //Filter receiver list.
 		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
