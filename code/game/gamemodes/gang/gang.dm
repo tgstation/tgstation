@@ -162,6 +162,7 @@
 
 	var/obj/item/device/flash/T = new(mob)
 	var/obj/item/device/recaller/recaller = new(mob)
+	var/obj/item/toy/crayon/spraycan/R = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -172,6 +173,14 @@
 	)
 
 	. = 0
+
+	var/spray = mob.equip_in_one_of_slots(R,slots)
+
+	if (!spray)
+		mob << "Your Syndicate benefactors were unfortunately unable to get you some spraypaint."
+	else
+		mob << "The Spraypaint in your [spray] will help you spread your message of unrest."
+		mob.update_icons()
 
 	var/where2 = mob.equip_in_one_of_slots(recaller, slots)
 	if (!where2)

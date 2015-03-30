@@ -151,7 +151,7 @@
 	if (!spray)
 		mob << "The Syndicate were unfortunately unable to get you some spraypaint."
 	else
-		mob << "The spraypaint in your [spray] will help you spread your message of unrest and revolution."
+		mob << "The Spraypaint in your [spray] will help you spread your message of unrest and revolution."
 		mob.update_icons()
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
