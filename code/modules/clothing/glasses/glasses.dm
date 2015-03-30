@@ -9,6 +9,7 @@
 	eyeprot = -1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	species_fit = list("Vox")
+*/
 
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription mesons"
