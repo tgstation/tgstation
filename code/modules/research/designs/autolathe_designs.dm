@@ -506,3 +506,11 @@
 	materials = list("$metal" = 30000)
 	build_path = /obj/item/ammo_box/c9mm
 	category = list("hacked", "Security")
+
+/datum/design/spraycan
+	name = "Spraycan"
+	id = "spraycan"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 100, "$glass" = 100)
+	build_path = /obj/item/toy/crayon/spraycan
+	category = list("initial", "Tools")
