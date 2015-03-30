@@ -225,32 +225,17 @@
 	. |= get_mobs_in_radio_ranges(radios)
 	return .
 
-/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
+/**
+ * Returns a list of mobs who can hear any of the radios given in @radios.
+ */
+/proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
+	set background = BACKGROUND_ENABLED
 
-	//set background = 1
+	. = new/list()
 
-	. = list()
-	// Returns a list of mobs who can hear any of the radios given in @radios
-	var/list/speaker_coverage = list()
-	for(var/i = 1; i <= radios.len; i++)
-		var/obj/item/device/radio/R = radios[i]
-		if(R)
-			var/turf/speaker = get_turf(R)
-			if(speaker)
-				for(var/turf/T in get_hear(R.canhear_range,speaker))
-					speaker_coverage[T] = T
-
-
-	// Try to find all the players who can hear the message
-	for(var/i = 1; i <= player_list.len; i++)
-		var/mob/M = player_list[i]
-		if(M)
-			var/turf/ear = get_turf(M)
-			if(ear)
-				// Ghostship is magic: Ghosts can hear radio chatter from anywhere
-				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && (M.client) && (M.client.prefs.toggles & CHAT_GHOSTRADIO)))
-					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
-	return .
+	for (var/obj/item/device/radio/R in radios)
+		if (R)
+			. |= get_hearers_in_view(R.canhear_range, R)
 
 #define SIGN(X) ((X<0)?-1:1)
 
