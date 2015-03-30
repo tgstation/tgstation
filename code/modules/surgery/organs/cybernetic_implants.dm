@@ -39,7 +39,7 @@
 		owner << "<span class='notice'>[fluff_message]</span>"
 
 /obj/item/cybernetic_implant/eyes/hud/medical
-	name = "medical hud implant"
+	name = "Medical HUD implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
 	eye_color = "0ff"
 	implant_color = "#00FFFF"
@@ -55,7 +55,7 @@
 	update_eye_color("You suddenly see health bars floating above people's heads...")
 
 /obj/item/cybernetic_implant/eyes/hud/security
-	name = "security hud implant"
+	name = "Security HUD implant"
 	desc = "These cybernetic eyes will display a security HUD over everything you see. Wiggle eyes to control."
 	eye_color = "d00"
 	implant_color = "#CC0000"
@@ -71,7 +71,7 @@
 	update_eye_color("Job indicator icons pop up in your vision. That is not a certified surgeon...")
 
 /obj/item/cybernetic_implant/eyes/xray
-	name = "xray implant"
+	name = "X-ray implant"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	eye_color = "000"
 	implant_color = "#000000"
@@ -90,7 +90,7 @@
 	update_eye_color("Your vision is augmented!")
 
 /obj/item/cybernetic_implant/eyes/thermals
-	name = "thermals implant"
+	name = "Thermals implant"
 	desc = "These cybernetic eyes will give you Thermal vision. Vertical slit pupil included."
 	eye_color = "FC0"
 	implant_color = "#FFCC00"
@@ -142,7 +142,7 @@
 	return stun_amount
 
 /obj/item/cybernetic_implant/brain/anti_drop
-	name = "anti-drop implant"
+	name = "Anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	var/active = 0
 	var/l_hand_ignore = 0
@@ -354,9 +354,11 @@
 	else
 		recharge_time += 2000 / severity
 
-	if(prob(30/severity))
+	if(prob(60/severity))
 		playsound(owner, 'sound/machines/defib_saftyOff.ogg', 50, 1, -1)
 		spawn(30)
 			playsound(owner, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 			owner.heart_attack = 1
-			owner.visible_message("<span class = 'userdanger'>[owner] clutches at their chest as if their heart stopped!</span>")
+			if(owner.stat == CONSCIOUS)
+				owner.Weaken(5)
+				owner.visible_message("<span class = 'userdanger'>[owner] clutches at their chest as if their heart stopped!</span>")

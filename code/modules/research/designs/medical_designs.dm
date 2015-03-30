@@ -182,5 +182,5 @@ datum/design/bluespacebodybag
 	id = "ci-reviver"
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 6)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$gold" = 1000, "$uranium" = 500, "$diamond" = 2000)
+	materials = list("$metal" = 500, "$gold" = 1000, "$uranium" = 1000, "$diamond" = 2000)
 	category = list("Medical Designs")
