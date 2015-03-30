@@ -109,7 +109,7 @@ var/global/ingredientLimit = 10
 	else if(src.active)
 		if(alert(user,"Remove the [src.ingredient.name]?",,"Yes","No") == "Yes")
 			if(src.ingredient && (get_turf(src.ingredient)==get_turf(src)))
-				if(get_dist(src, user) <= 1)
+				if(Adjacent(user))
 					src.active = 0
 					src.icon_state = initial(src.icon_state)
 					src.ingredient.mouse_opacity = 1
@@ -196,7 +196,7 @@ var/global/ingredientLimit = 10
 	src.active = 1
 	src.icon_state = src.icon_state_on
 	sleep(src.cookTime)
-	if(!src.ingredient) return
+	if(!src.ingredient || !active) return
 	src.active = 0
 	src.icon_state = initial(src.icon_state)
 	playsound(get_turf(src),src.cookSound,100,1)
@@ -338,19 +338,27 @@ var/global/ingredientLimit = 10
 	empty_icon()
 
 /obj/machinery/cooking/deepfryer/makeFood(var/item/I)
-	var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/D = new(src.loc)
-	if(cooks_in_reagents)
-		src.transfer_reagents_to_food(D)
-	D.name = "deep fried [src.ingredient.name]"
-	D.icon = src.ingredient.icon
-	D.icon_state = src.ingredient.icon_state
-	D.overlays = src.ingredient.overlays
-	D.color = "#FFAD33"
-	empty_icon() //see if the icon needs updating from the loss of oil
-	qdel(src.ingredient)
-	src.ingredient = null
+	if(istype(src.ingredient,/obj/item/weapon/reagent_containers/food/snacks))
+		if(cooks_in_reagents)
+			src.transfer_reagents_to_food(src.ingredient)
+		src.ingredient.name = "deep fried [src.ingredient.name]"
+		src.ingredient.color = "#FFAD33"
+		src.ingredient.loc = src.loc
+		src.ingredient = null
+		empty_icon() //see if the icon needs updating from the loss of oil
+	else //some admin enabled funfood and we're frying the captain's ID or someshit
+		var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/D = new(src.loc)
+		if(cooks_in_reagents)
+			src.transfer_reagents_to_food(D)
+		D.name = "deep fried [src.ingredient.name]"
+		D.color = "#FFAD33"
+		D.icon = src.ingredient.icon
+		D.icon_state = src.ingredient.icon_state
+		D.overlays = src.ingredient.overlays
+		qdel(src.ingredient)
+		src.ingredient = null
+		empty_icon() //see if the icon needs updating from the loss of oil
 	return
-
 // Grill ///////////////////////////////////////////////////////
 
 /obj/machinery/cooking/grill
@@ -377,10 +385,13 @@ var/global/ingredientLimit = 10
 	src.ingredient.loc = src.loc
 	src.ingredient.mouse_opacity = 0
 	sleep(src.cookTime/3)
+	if(!src.ingredient || !active) return
 	if(src.ingredient) src.ingredient.color = "#C28566"
 	sleep(src.cookTime/3)
+	if(!src.ingredient || !active) return
 	if(src.ingredient) src.ingredient.color = "#A34719"
 	sleep(src.cookTime/3)
+	if(!src.ingredient || !active) return
 	src.icon_state = initial(src.icon_state)
 	src.active = 0
 	if(src.ingredient)
