@@ -44,12 +44,14 @@
 
 /obj/structure/stool/bed/nest/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
-		M.pixel_y += 6
-		M.pixel_x += 2
+		M.pixel_y = initial(M.pixel_y) + 6
+		M.pixel_x = initial(M.pixel_x) + 2
 		overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=6)
 	else
-		M.pixel_x -= 2
+		M.pixel_x = initial(M.pixel_x)
 		M.pixel_y = initial(M.pixel_y)
+		if(M.lying)
+			M.pixel_y = M.lying_pixel_offset
 		overlays.Cut()
 
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob, params)

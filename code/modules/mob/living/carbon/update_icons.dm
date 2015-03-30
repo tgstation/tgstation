@@ -15,7 +15,7 @@
 		else //if(lying != 0)
 			if(lying_prev == 0) //Standing to lying
 				pixel_y = initial(pixel_y)
-				final_pixel_y -= 6
+				final_pixel_y = lying_pixel_offset
 				if(dir & (EAST|WEST)) //Facing east or west
 					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
