@@ -2,6 +2,7 @@
 	name = "clothing"
 	var/list/species_restricted = null //Only these species can wear this kit.
 	var/wizard_garb = 0 // Wearing this empowers a wizard.
+	var/eyeprot = 0 //for head and eyewear
 
 	//temperatures in Kelvin. These default values won't affect protections in any way.
 	var/cold_breath_protection = 300 //that cloth protects its wearer's breath from cold air down to that temperature
@@ -238,6 +239,7 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Muton")
+	eyeprot = 2
 
 	cold_breath_protection = 230
 

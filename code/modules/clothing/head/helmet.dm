@@ -28,6 +28,7 @@
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.7
+	eyeprot = 1
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
@@ -41,6 +42,7 @@
 	species_fit = list("Vox")
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.5
+	eyeprot = 1
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
