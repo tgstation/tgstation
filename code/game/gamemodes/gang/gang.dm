@@ -162,7 +162,7 @@
 
 	var/obj/item/device/flash/T = new(mob)
 	var/obj/item/device/recaller/recaller = new(mob)
-	var/obj/item/toy/crayon/spraycan/R = new(mob)
+	var/obj/item/toy/crayon/spraycan/SC = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -174,7 +174,7 @@
 
 	. = 0
 
-	var/spray = mob.equip_in_one_of_slots(R,slots)
+	var/spray = mob.equip_in_one_of_slots(SC,slots)
 
 	if (!spray)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you some spraypaint."
