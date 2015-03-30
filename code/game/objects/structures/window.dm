@@ -24,7 +24,7 @@
 	var/sheetamount = 1 //Number of sheets needed to build this window (determines how much shit is spawned by destroy())
 	var/reinforced = 0 //Used for deconstruction steps
 
-	var/icon/damage_overlay
+	var/obj/Overlays/damage_overlay
 	var/cracked_base = "crack"
 
 	var/fire_temp_threshold = 800
@@ -78,18 +78,18 @@
 	else
 		if(sound)
 			playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+		if(!damage_overlay)
+			damage_overlay = new(src)
+			damage_overlay.icon = icon('icons/obj/structures.dmi')
+			damage_overlay.dir = src.dir
+
 		if(health < initial(health))
-			spawn()
-				var/damage_fraction = Clamp(round((initial(health) - health) / initial(health) * 5) + 1, 1, 5) //gives a number, 1-5, based on damagedness
-				var/new_overlay = icon(src.icon, "[cracked_base]", src.dir, damage_fraction)
-				overlays += new_overlay
-				if(damage_overlay)
-					overlays -= damage_overlay //the icon will be gc'd with no ref
-				damage_overlay = new_overlay
+			var/damage_fraction = Clamp(round((initial(health) - health) / initial(health) * 5) + 1, 1, 5) //gives a number, 1-5, based on damagedness
+			damage_overlay.icon_state = "[cracked_base][damage_fraction]"
+			overlays += damage_overlay
 		else
-			if(damage_overlay)
-				overlays -= damage_overlay
-			damage_overlay = null
+			damage_overlay.icon_state = ""
+			overlays += damage_overlay
 
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
 
