@@ -69,6 +69,9 @@
 	return
 
 /obj/machinery/atmospherics/unary/thermal_plate/proc/radiate()
+	if(network && network.radiate) //Since each member of a network has the same gases each tick
+		air_contents.copy_from(network.radiate) //We can cut down on processing time by only calculating radiate() once and then applying the result
+		return 1
 
 	var/internal_transfer_moles = 0.25 * air_contents.total_moles()
 	var/datum/gas_mixture/internal_removed = air_contents.remove(internal_transfer_moles)
@@ -86,5 +89,6 @@
 
 	if (network)
 		network.update = 1
+		network.radiate = air_contents
 
 	return 1

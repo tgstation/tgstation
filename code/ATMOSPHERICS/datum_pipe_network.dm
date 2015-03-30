@@ -9,6 +9,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 	var/update = 1
 	var/datum/gas_mixture/air_transient = null
+	var/datum/gas_mixture/radiate = null
 
 /datum/pipe_network/New()
 	air_transient = new()
@@ -37,6 +38,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	if(update)
 		update = 0
 		reconcile_air() //equalize_gases(gases)
+		radiate = null //Reset our last ticks calculation for the post-radiate() gases inside a thermal plate
 
 #ifdef ATMOS_PIPELINE_PROCESSING
 	//Give pipelines their process call for pressure checking and what not. Have to remove pressure checks for the time being as pipes dont radiate heat - Mport
