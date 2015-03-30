@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: true
+
+changes: 
+  - rscadd: "Added cigar cases. They come in three flavors and can be bought from cigarette machines."
