@@ -135,12 +135,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
 	..()
-	if(bitecount == 1)
-		user << "<span class='info'>\The [src] was bitten by someone!</span>"
-	else if(bitecount > 1 && bitecount <= 3)
-		user << "<span class='info'>\The [src] was bitten [bitecount] times!</span>"
-	else
-		user << "<span class='info'>\The [src] was bitten multiple times!</span>"
+	if (bitecount)
+		if(bitecount == 1)
+			user << "<span class='info'>\The [src] was bitten by someone!</span>"
+		else if(bitecount > 1 && bitecount <= 3)
+			user << "<span class='info'>\The [src] was bitten [bitecount] times!</span>"
+		else
+			user << "<span class='info'>\The [src] was bitten multiple times!</span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
 
