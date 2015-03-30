@@ -94,6 +94,7 @@
 #define ui_construct_pull "14:28,2:10" //above the zone_sel icon
 
 #define ui_spell_master "14:16,14:16"
+#define ui_genetic_master "14:16,12:16"
 
 //Pop-up inventory
 #define ui_shoes "2:8,1:5"
