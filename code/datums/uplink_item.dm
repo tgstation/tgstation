@@ -474,7 +474,7 @@ var/list/uplink_items = list()
 	When the built in helmet is deployed your identity will be protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit into combat mode \
 	will allow you all the mobility of a loose fitting uniform without sacrificing armoring. Additionally the suit is collapsible, small enough to fit within a backpack. \
 	Nanotrasen crewmembers are trained to report red space suit sightings, these suits in particular are known to drive employees into a panic."
-	item = /obj/item/weapon/storage/box/syndie_kit/space
+	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 8
 
 /datum/uplink_item/device_tools/thermal
