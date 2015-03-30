@@ -1,0 +1,6 @@
+author: Jordie0608
+
+delete-after: True
+
+changes: 
+  - rscdel: "The admin's old player panel has been removed and the new one has taken it's name."
