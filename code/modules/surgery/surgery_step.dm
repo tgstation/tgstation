@@ -106,7 +106,7 @@
 				return
 		var/obj/item/organ/limb/limb = target.getlimb(limb_type)
 		if(limb)
-			limb.heal_damage(35,0,0)
+			limb.heal_damage(45,0,0)
 	return ..()
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
