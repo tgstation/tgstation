@@ -21,7 +21,7 @@
 	var/d_state = WINDOWLOOSEFRAME //Normal windows have one step (unanchor), reinforced windows have three
 	var/shardtype = /obj/item/weapon/shard
 	var/sheettype = /obj/item/stack/sheet/glass //Used for deconstruction
-	var/sheetamount = 1 //Number of sheets needed to build this window (determines how much shit is spawned by destroy())
+	var/sheetamount = 1 //Number of sheets needed to build this window (determines how much shit is spawned via Destroy())
 	var/reinforced = 0 //Used for deconstruction steps
 
 	var/obj/Overlays/damage_overlay
@@ -74,7 +74,7 @@
 			if(pdiff > 0)
 				message_admins("Window with pdiff [pdiff] at [formatJumpTo(loc)] destroyed by [M.real_name] ([formatPlayerPanel(M,M.ckey)])!")
 				log_admin("Window with pdiff [pdiff] at [loc] destroyed by [M.real_name] ([M.ckey])!")
-		Destroy()
+		Destroy(brokenup = 1)
 	else
 		if(sound)
 			playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
@@ -359,7 +359,7 @@
 					user.visible_message("<span class='warning'>[user] disassembles \the [src].</span>", \
 					"<span class='notice'>You disassemble \the [src].</span>")
 					getFromPool(sheettype, get_turf(src), sheetamount)
-					qdel(src)
+					Destroy()
 					return
 			else
 				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
@@ -419,16 +419,17 @@
 	ini_dir = dir
 	return
 
-/obj/structure/window/Destroy()
+/obj/structure/window/Destroy(var/brokenup = 0)
 
 	density = 0 //Sanity while we do the rest
 	update_nearby_tiles()
-	if(loc)
-		playsound(get_turf(src), "shatter", 70, 1)
 	update_nearby_icons()
-	getFromPool(shardtype, loc, sheetamount)
-	if(reinforced)
-		getFromPool(/obj/item/stack/rods, loc, sheetamount)
+	if(brokenup) //If the instruction we were sent clearly states we're breaking the window, not deleting it !
+		if(loc)
+			playsound(get_turf(src), "shatter", 70, 1)
+		getFromPool(shardtype, loc, sheetamount)
+		if(reinforced)
+			getFromPool(/obj/item/stack/rods, loc, sheetamount)
 	..()
 
 /obj/structure/window/Move()
