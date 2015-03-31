@@ -288,7 +288,7 @@
 
 	joined_player_list += character.ckey
 
-	if(config.allow_latejoin_antagonists)
+	if(config.allow_latejoin_antagonists && ticker.mode.latejoin_friendly)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_RECALL, SHUTTLE_IDLE)
 				ticker.mode.make_antag_chance(character)

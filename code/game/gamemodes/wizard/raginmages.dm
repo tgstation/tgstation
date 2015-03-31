@@ -37,6 +37,12 @@
 	return
 
 /datum/game_mode/wizard/raginmages/check_finished()
+
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if(round_converted == 1)
+		..()
+
 	var/wizards_alive = 0
 	for(var/datum/mind/wizard in wizards)
 		if(!istype(wizard.current,/mob/living/carbon))
@@ -59,8 +65,16 @@
 			make_more_mages()
 	else
 		if(mages_made >= max_mages)
-			finished = 1
-			return 1
+			if(!config.continuous["raginmages"])
+				return 1
+			if(config.continuous["raginmages"] && !config.midround_antag["raginmages"])
+				return ..()
+
+			round_converted = convert_roundtype()
+			if(!round_converted)
+				return 1
+			..()
+
 		else
 			make_more_mages()
 	return ..()
@@ -118,19 +132,6 @@
 			return 1
 
 /datum/game_mode/wizard/raginmages/declare_completion()
-	if(finished)
-		feedback_set_details("round_end_result","loss - wizard killed")
-		world << "<FONT size=3><B>The crew has managed to hold off the wizard attack! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
-	..(1)
-
-/datum/game_mode/wizard/raginmages/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
-	if(!G_found || !G_found.key)	return
-
-	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
-
-	G_found.client.prefs.copy_to(new_character)
-	ready_dna(new_character)
-	new_character.key = G_found.key
-
-	return new_character
+	feedback_set_details("round_end_result","loss - wizard killed")
+	world << "<FONT size=3><B>The crew has managed to hold off the wizard attack! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
+	..()

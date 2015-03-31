@@ -31,7 +31,7 @@
 	var/datum/mind/sacrifice_target = null
 	var/list/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
-	var/reroll_friendly 	//During mode conversion only these are in the running
+	var/latejoin_friendly   //Only modes with this set will attempt to use make_antag_chance() for new arrivals
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
 
 	var/const/waittime_l = 600
@@ -97,21 +97,15 @@
 ///convert_roundtype()
 ///Allows rounds to basically be "rerolled" should the initial premise fall through
 /datum/game_mode/proc/convert_roundtype()
-	var/list/datum/game_mode/runnable_modes = config.get_runnable_modes()
-	var/list/datum/game_mode/usable_modes = list()
-	for(var/datum/game_mode/G in runnable_modes)
-		if(G.reroll_friendly)
-			usable_modes += G
-		else
-			del(G)
+	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes()
 
 	SSshuttle.emergencyNoEscape = 0 //Time to get the fuck out of here
 
-	if(!usable_modes)
-		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
+	if(!runnable_modes)
+		message_admins("Convert_roundtype failed due to no valid modes to convert to.")
 		return 0
 
-	replacementmode = pickweight(usable_modes)
+	replacementmode = pickweight(runnable_modes)
 
 	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out
 		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE)
@@ -129,8 +123,17 @@
 	for(var/mob/Player in mob_list)
 		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
 			living_crew++
+
 	if(living_crew / joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
 		message_admins("Convert_roundtype failed due to too many dead people. Limit is [config.midround_antag_life_check * 100]% living crew")
+		return 0
+
+	var/datum/station_state/current_state = new /datum/station_state()
+	current_state.count()
+	var/station_integrity = round( 100.0 *  start_state.score(current_state), 0.1)
+
+	if(station_integrity < config.midround_antag_integrity_check)
+		message_admins("Convert_roundtype failed due to heavy station destruction. Limit is [config.midround_antag_integrity_check]% integrity.")
 		return 0
 
 	var/list/antag_canadates = list()
@@ -152,12 +155,22 @@
 
 	message_admins("The roundtype will be converted. If you feel that the round should not continue, <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
-	spawn(rand(1800,4200)) //somewhere between 3 and 7 minutes from now
-		for(var/mob/living/carbon/human/H in antag_canadates)
-			replacementmode.make_antag_chance(H)
+	spawn(rand(1200,3000)) //somewhere between 2 and 5 minutes from now
+		if(latejoin_friendly) //make_antag_chance handles each player seperately
+			for(var/mob/living/carbon/human/H in antag_canadates)
+				replacementmode.make_antag_chance(H)
+		else //late_start_round handles the round as a whole
+			late_start_round()
+
 		round_converted = 2
 		message_admins("The roundtype has been converted, antagonists may have been created")
 	return 1
+
+///late_start_round()
+///Jumpstarts a round added after roundstart
+/datum/game_mode/proc/late_start_round()
+	if(pre_setup())
+		post_setup()
 
 ///process()
 ///Called by the gameticker

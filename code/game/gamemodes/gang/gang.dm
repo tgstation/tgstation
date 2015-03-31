@@ -73,8 +73,7 @@
 /datum/game_mode/gang/process()
 	checkwin_counter++
 	if(checkwin_counter >= 5)
-		if(!finished)
-			ticker.mode.check_win()
+		ticker.mode.check_win()
 		checkwin_counter = 0
 	return 0
 
@@ -220,9 +219,36 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/gang/check_finished()
-	if(finished && !config.continuous_round_gang) //Check for Gang Boss death
+
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if((config.continuous["gang"] && !config.midround_antag["gang"]) || round_converted == 1 || !finished) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
+
+	var/list/gangster_pool = list()
+	switch(finished)
+		if("A")
+			gangster_pool = B_bosses + B_gangsters
+		if("B")
+			gangster_pool = A_bosses + A_gangsters
+		else
+			gangster_pool = A_bosses + A_gangsters + B_bosses + B_gangsters
+
+	for(var/datum/mind/gangster in gangster_pool) //All remnants of the losers snuffed out
+		if(gangster.current.stat != DEAD)
+			return ..()
+
+	if(!config.continuous["gang"] || !config.midround_antag["gang"])
 		return 1
-	return ..() //Check for evacuation/nuke
+
+	else
+		round_converted = convert_roundtype()
+		if(!round_converted)
+			if(config.midround_failure["gang"])
+				return 1
+			else
+				config.midround_antag["gang"] = 0
+	..()
 
 ///////////////////////////////////////////
 //Deals with converting players to a gang//
@@ -320,6 +346,9 @@
 
 	ganghud.leave_hud(defector_mind.current)
 	set_antag_hud(defector_mind.current, null)
+
+/datum/game_mode/gang/late_start_round()
+	makeGangsters()
 
 ///////////////////////////
 //Checks for gang victory//

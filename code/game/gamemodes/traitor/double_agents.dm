@@ -5,7 +5,7 @@
 	required_players = 25
 	required_enemies = 5
 	recommended_enemies = 8
-	reroll_friendly = 1
+	latejoin_friendly = 1
 
 	traitor_name = "double agent"
 
@@ -26,6 +26,30 @@
 		if(i + 1 > traitors.len)
 			i = 0
 		target_list[traitor] = traitors[i + 1]
+	..()
+
+/datum/game_mode/traitor/double_agents/check_finished()
+
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+
+	if((config.continuous["double_agents"] && !config.midround_antag["double_agents"]) || round_converted == 1) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
+
+	for(var/datum/mind/traitor in traitors)
+		if(traitor.current.stat != DEAD)
+			return ..()
+
+	if(!config.continuous["double_agents"] || !config.midround_antag["double_agents"])
+		return 1
+
+	else
+		round_converted = convert_roundtype()
+		if(!round_converted)
+			if(config.midround_failure["double_agents"])
+				return 1
+			else
+				config.midround_antag["double_agents"] = 0
 	..()
 
 /datum/game_mode/traitor/double_agents/forge_traitor_objectives(var/datum/mind/traitor)

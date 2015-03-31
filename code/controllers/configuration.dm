@@ -78,9 +78,13 @@
 	//game_options.txt configs
 	var/force_random_names = 0
 	var/list/mode_names = list()
-	var/list/modes = list()				// allowed modes
-	var/list/votable_modes = list()		// votable modes
-	var/list/probabilities = list()		// relative probability of each mode
+	var/list/modes = list()					// allowed modes
+	var/list/votable_modes = list()			// votable modes
+	var/list/probabilities = list()			// relative probability of each mode
+	var/list/midround_probabilities = list()// relative probability of each mode in midround antagonist
+	var/list/continuous = list()			// which roundtypes continue if all antagonists die
+	var/list/midround_antag = list()		// which roundtypes use the midround antagonist system
+	var/list/midround_failure = list()		// which roundtypes just quit if midround fails
 
 	var/humans_need_surnames = 0
 	var/allow_random_events = 0			// enables random events mid-round when set to 1
@@ -98,13 +102,10 @@
 	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
 	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
 	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
-	var/continuous_round_rev = 0		// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
-	var/continuous_round_gang = 0
-	var/continuous_round_wiz = 0
-	var/continuous_round_malf = 0
-	var/continuous_round_blob = 0
 	var/midround_antag_time_check = 60  // How late (in minutes) you want the midround antag system to stay on, setting this to 0 will disable the system
 	var/midround_antag_life_check = 0.7 // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
+	var/midround_antag_integrity_check = 70  // A percentage of station intactness below which the check will fail, see blob_report.dm on how integrity is calculated
+
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
@@ -181,7 +182,7 @@
 		del(M)
 	votable_modes += "secret"
 
-/datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
+/datum/configuration/proc/load(filename, type = "config") //the type can also be game_options or mode_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	var/list/Lines = file2list(filename)
 
 	for(var/t in Lines)
@@ -397,20 +398,6 @@
 					config.sec_start_brig			= 1
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
-				if("continuous_round_rev")
-					config.continuous_round_rev		= 1
-				if("continuous_round_gang")
-					config.continuous_round_gang	= 1
-				if("continuous_round_wiz")
-					config.continuous_round_wiz		= 1
-				if("continuous_round_malf")
-					config.continuous_round_malf	= 1
-				if("continuous_round_blob")
-					config.continuous_round_blob	= 1
-				if("midround_antag_time_check")
-					config.midround_antag_time_check = text2num(value)
-				if("midround_antag_life_check")
-					config.midround_antag_life_check = text2num(value)
 				if("shuttle_refuel_delay")
 					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -489,6 +476,62 @@
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
+		else if(type == "mode_options")
+			switch(name)
+				if("midround_antag_time_check")
+					config.midround_antag_time_check = text2num(value)
+				if("midround_antag_life_check")
+					config.midround_antag_life_check = text2num(value)
+				if("midround_antag_integrity_check")
+					config.midround_antag_integrity_check = text2num(value)
+				if("probability")
+					var/prob_pos = findtext(value, " ")
+					var/prob_name = null
+					var/prob_value = null
+
+					if(prob_pos)
+						prob_name = lowertext(copytext(value, 1, prob_pos))
+						prob_value = copytext(value, prob_pos + 1)
+						if(prob_name in config.modes)
+							config.probabilities[prob_name] = text2num(prob_value)
+						else
+							diary << "Unknown game mode probability configuration definition: [prob_name]."
+					else
+						diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+				if("midround_probability")
+					var/prob_pos = findtext(value, " ")
+					var/prob_name = null
+					var/prob_value = null
+
+					if(prob_pos)
+						prob_name = lowertext(copytext(value, 1, prob_pos))
+						prob_value = copytext(value, prob_pos + 1)
+						if(prob_name in config.modes)
+							config.midround_probabilities[prob_name] = text2num(prob_value)
+						else
+							diary << "Unknown midround probability configuration definition: [prob_name]."
+					else
+						diary << "Incorrect midround probability configuration definition: [prob_name]  [prob_value]."
+				if("continuous")
+					var/mode_name = lowertext(value)
+					if(mode_name in config.modes)
+						config.continuous[mode_name] = 1
+					else
+						diary << "Unknown continuous configuration definition: [mode_name]."
+				if("midround_antag")
+					var/mode_name = lowertext(value)
+					if(mode_name in config.modes)
+						config.midround_antag[mode_name] = 1
+					else
+						diary << "Unknown midround antagonist configuration definition: [mode_name]."
+				if("midround_failure")
+					var/mode_name = lowertext(value)
+					if(mode_name in config.modes)
+						config.midround_failure[mode_name] = 1
+					else
+						diary << "Unknown midround failure condition configuration definition: [mode_name]."
+
+
 	fps = round(fps)
 	if(fps <= 0)
 		fps = initial(fps)
@@ -559,4 +602,18 @@
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+	return runnable_modes
+
+datum/configuration/proc/get_runnable_midround_modes()
+	var/list/datum/game_mode/runnable_modes = new
+	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode))
+		var/datum/game_mode/M = new T()
+		if(!(M.config_tag in modes))
+			del(M)
+			continue
+		if(midround_probabilities[M.config_tag]<=0)
+			del(M)
+			continue
+		if(M.can_start())
+			runnable_modes[M] = midround_probabilities[M.config_tag]
 	return runnable_modes

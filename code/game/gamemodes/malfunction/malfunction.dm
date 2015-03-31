@@ -98,6 +98,9 @@
 	malf.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
 	return
 
+/datum/game_mode/malfunction/late_start_round()
+	src.makeMalfAImode()
+
 /datum/game_mode/malfunction/process(seconds)
 	if ((apcs > 0) && malf_mode_declared)
 		AI_win_timeleft -= apcs * seconds	//Victory timer de-increments based on how many APCs are hacked
@@ -144,12 +147,16 @@
 
 
 /datum/game_mode/malfunction/check_finished()
-	if(round_converted)
-		return ..()
-	if (station_captured && !to_nuke_or_not_to_nuke)
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if((config.continuous["malfunction"] && !config.midround_antag["malfunction"]) || round_converted == 1) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
+
+	if (station_captured && !to_nuke_or_not_to_nuke && !config.continuous["malfunction"])
 		return 1
+
 	if (is_malf_ai_dead())
-		if(config.continuous_round_malf)
+		if(config.continuous["malfunction"])
 			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 				SSshuttle.emergency.mode = SHUTTLE_DOCKED
 				SSshuttle.emergency.timer = world.time
@@ -159,10 +166,15 @@
 			if(get_security_level() == "delta")
 				set_security_level("red")
 			round_converted = convert_roundtype()
+			if(!round_converted)
+				if(config.midround_failure["malfunction"])
+					return 1
+				else
+					config.midround_antag["malfunction"] = 0
 		else
 			return 1
-	return ..() //check for shuttle and nuke
 
+	..()
 
 /datum/game_mode/malfunction/proc/takeover()
 	set category = "Malfunction"

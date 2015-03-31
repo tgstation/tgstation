@@ -36,7 +36,7 @@ client/proc/one_click_antag()
 	return
 
 
-/datum/admins/proc/makeMalfAImode()
+/datum/proc/makeMalfAImode()
 
 	var/list/mob/living/silicon/AIs = list()
 	var/mob/living/silicon/malfAI = null
@@ -57,7 +57,7 @@ client/proc/one_click_antag()
 	return 0
 
 
-/datum/admins/proc/makeTraitors()
+/datum/proc/makeTraitors()
 	var/datum/game_mode/traitor/temp = new
 
 	if(config.protect_roles_from_antagonist)
@@ -93,7 +93,7 @@ client/proc/one_click_antag()
 	return 0
 
 
-/datum/admins/proc/makeChanglings()
+/datum/proc/makeChanglings()
 
 	var/datum/game_mode/changeling/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -127,7 +127,7 @@ client/proc/one_click_antag()
 
 	return 0
 
-/datum/admins/proc/makeRevs()
+/datum/proc/makeRevs()
 
 	var/datum/game_mode/revolution/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -160,7 +160,7 @@ client/proc/one_click_antag()
 
 	return 0
 
-/datum/admins/proc/makeWizard()
+/datum/proc/makeWizard()
 	var/datum/game_mode/wizard/temp = new
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
@@ -198,7 +198,7 @@ client/proc/one_click_antag()
 	return 0
 
 
-/datum/admins/proc/makeCult()
+/datum/proc/makeCult()
 
 	var/datum/game_mode/cult/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -235,7 +235,7 @@ client/proc/one_click_antag()
 
 
 
-/datum/admins/proc/makeNukeTeam()
+/datum/proc/makeNukeTeam()
 
 	var/datum/game_mode/nuclear/temp = new
 	var/list/mob/dead/observer/candidates = list()
@@ -317,16 +317,16 @@ client/proc/one_click_antag()
 
 
 
-/datum/admins/proc/makeAliens()
+/datum/proc/makeAliens()
 	new /datum/round_event/alien_infestation{spawncount=3}()
 	return 1
 
-/datum/admins/proc/makeSpaceNinja()
+/datum/proc/makeSpaceNinja()
 	new /datum/round_event/ninja()
 	return 1
 
 // DEATH SQUADS
-/datum/admins/proc/makeDeathsquad()
+/datum/proc/makeDeathsquad()
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	var/mission = input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
@@ -408,7 +408,7 @@ client/proc/one_click_antag()
 	return
 
 
-/datum/admins/proc/makeGangsters()
+/datum/proc/makeGangsters()
 
 	var/datum/game_mode/gang/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -441,7 +441,7 @@ client/proc/one_click_antag()
 	return 0
 
 // EMERGENCY RESPONSE TEAM
-/datum/admins/proc/makeEmergencyresponseteam()
+/datum/proc/makeEmergencyresponseteam()
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
@@ -539,7 +539,7 @@ client/proc/one_click_antag()
 
 	return
 
-/datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
+/datum/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
 
 	//First we spawn a dude.

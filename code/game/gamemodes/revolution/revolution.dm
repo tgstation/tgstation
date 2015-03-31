@@ -20,7 +20,7 @@
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 
-	var/finished = 0
+	var/finished
 	var/check_counter = 0
 	var/max_headrevs = 3
 	var/list/datum/mind/heads_to_kill = list()
@@ -94,13 +94,15 @@
 	SSshuttle.emergencyNoEscape = 1
 	..()
 
+/datum/game_mode/revolution/late_start_round()
+	makeRevs()
 
 /datum/game_mode/revolution/process()
 	check_counter++
 	if(check_counter >= 5)
 		if(!finished)
 			check_heads()
-			ticker.mode.check_win()
+		ticker.mode.check_win()
 		check_counter = 0
 	return 0
 
@@ -204,23 +206,57 @@
 //////////////////////////////////////
 /datum/game_mode/revolution/check_win()
 	if(check_rev_victory())
-		finished = 1
+		finished = "revs"
 	else if(check_heads_victory())
-		finished = 2
+		finished = "heads"
+
+	if(finished)
+		if(check_rev_victory() && check_heads_victory())
+			finished = "draw"
 	return
 
 ///////////////////////////////
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
-	if(config.continuous_round_rev)
-		if(finished != 0)
+
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if((config.continuous["revolution"] && !config.midround_antag["revolution"]) || round_converted == 1 || !finished) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
+
+	if(config.continuous["revolution"])
+		if(finished)
 			SSshuttle.emergencyNoEscape = 0
-		return ..()
-	if(finished != 0)
-		return 1
 	else
-		return 0
+		return 1
+
+	if(finished == "revs" || finished == "draw") //The implanted people will still need to be taken care of
+		var/list/loyalists = list()
+		for(var/mob/M in living_mob_list)
+			if(M.mind && isloyal(M))
+				loyalists += M.mind
+		for(var/datum/mind/loyalist in loyalists)
+			if(loyalist.current.stat != DEAD)
+				return ..()
+
+	if(finished == "heads" || finished == "draw") //The remaining revs are still a threat
+		for(var/datum/mind/revolutionaries in (revolutionaries + head_revolutionaries))
+			if(revolutionaries.current.stat != DEAD)
+				return ..()
+
+	if(!config.midround_antag["revolution"])
+		return 1
+
+	else
+		round_converted = convert_roundtype()
+		if(!round_converted)
+			if(config.midround_failure["revolution"])
+				return 1
+			else
+				config.midround_antag["revolution"] = 0
+	..()
+
 
 ///////////////////////////////////////////////////
 //Deals with converting players to the revolution//
@@ -305,12 +341,15 @@
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
-	if(finished == 1)
+	if(finished == "revs")
 		feedback_set_details("round_end_result","win - heads killed")
 		world << "<span class='danger'><FONT size = 3>The heads of staff were killed or exiled! The revolutionaries win!</FONT></span>"
-	else if(finished == 2)
+	else if(finished == "heads")
 		feedback_set_details("round_end_result","loss - rev heads killed")
 		world << "<span class='danger'><FONT size = 3>The heads of staff managed to stop the revolution!</FONT></span>"
+	else if(finished == "draw")
+		feedback_set_details("round_end_result","draw - heads and rev heads both killed")
+		world << "<span class='danger'><FONT size = 3>The revolution succeeded, but the leaders of the revolution also were killed or exiled!</FONT></span>"
 	..()
 	return 1
 

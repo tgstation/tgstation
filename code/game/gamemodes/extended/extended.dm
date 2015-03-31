@@ -2,7 +2,6 @@
 	name = "extended"
 	config_tag = "extended"
 	required_players = 0
-	reroll_friendly = 1
 
 /datum/game_mode/announce()
 	world << "<B>The current game mode is - Extended Role-Playing!</B>"
@@ -12,4 +11,9 @@
 	return 1
 
 /datum/game_mode/extended/post_setup()
+	..()
+
+/datum/game_mode/extended/check_finished()
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
 	..()

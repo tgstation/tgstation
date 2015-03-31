@@ -13,7 +13,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
-	reroll_friendly = 1
+	latejoin_friendly = 1
 
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
@@ -170,27 +170,29 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		obj_count++
 	return
 
-/*/datum/game_mode/changeling/check_finished()
-	var/changelings_alive = 0
-	for(var/datum/mind/changeling in changelings)
-		if(!istype(changeling.current,/mob/living/carbon))
-			continue
-		if(changeling.current.stat==2)
-			continue
-		changelings_alive++
+/datum/game_mode/changeling/check_finished()
 
-	if (changelings_alive)
-		changelingdeath = 0
-		return ..()
-	else
-		if (!changelingdeath)
-			changelingdeathtime = world.time
-			changelingdeath = 1
-		if(world.time-changelingdeathtime > TIME_TO_GET_REVIVED)
-			return 1
-		else
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+
+	if((config.continuous["changeling"] && !config.midround_antag["changeling"]) || round_converted == 1) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
+
+	for(var/datum/mind/changeling in changelings)
+		if(isliving(changeling.current)) //mob/living body. Not the same as "stat != DEAD"
 			return ..()
-	return 0*/
+
+	if(!config.continuous["changeling"] || !config.midround_antag["changeling"])
+		return 1
+
+	else
+		round_converted = convert_roundtype()
+		if(!round_converted)
+			if(config.midround_failure["changeling"])
+				return 1
+			else
+				config.midround_antag["changeling"] = 0
+	..()
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
 	if(changelings.len)

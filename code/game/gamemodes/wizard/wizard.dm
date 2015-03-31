@@ -11,7 +11,6 @@
 	pre_setup_before_jobs = 1
 	enemy_minimum_age = 14
 	var/use_huds = 0
-	var/finished = 0
 
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Wizard!</B>"
@@ -168,50 +167,44 @@
 	wizard_mob.update_icons()
 	return 1
 
+/datum/game_mode/wizard/late_start_round()
+	makeWizard()
 
 /datum/game_mode/wizard/check_finished()
 
-	if(round_converted)
-		return ..()
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
 
-	var/wizards_alive = 0
-	var/traitors_alive = 0
+	if((config.continuous["wizard"] && !config.midround_antag["wizard"]) || round_converted == 1 || !wizards) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
+
 	for(var/datum/mind/wizard in wizards)
-		if(!istype(wizard.current,/mob/living/carbon))
-			continue
-		if(wizard.current.stat==2)
-			continue
-		wizards_alive++
+		if(wizard.current.stat != DEAD)
+			return ..()
 
-	if(!wizards_alive)
-		for(var/datum/mind/traitor in traitors)
-			if(!istype(traitor.current,/mob/living/carbon))
-				continue
-			if(traitor.current.stat==2)
-				continue
-			traitors_alive++
+	for(var/datum/mind/traitor in traitors)
+		if(traitor.current.stat != DEAD)
+			return ..()
 
-	if (wizards_alive || traitors_alive)
-		return ..()
+	if(!config.continuous["wizard"] || !config.midround_antag["wizard"])
+		return 1
 
-	if(config.continuous_round_wiz)
+	else
 		round_converted = convert_roundtype()
 		if(!round_converted)
-			finished = 1
-			return 1
+			if(config.midround_failure["wizard"])
+				return 1
+			else
+				config.midround_antag["wizard"] = 0
 		else
 			if(SSevent.wizardmode) //If summon events was active, turn it off
 				SSevent.toggleWizardmode()
 				SSevent.resetFrequency()
-			return ..()
-
-	finished = 1
-	return 1
+	..()
 
 /datum/game_mode/wizard/declare_completion()
-	if(finished)
-		feedback_set_details("round_end_result","loss - wizard killed")
-		world << "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
+	feedback_set_details("round_end_result","loss - wizard killed")
+	world << "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
 	..()
 	return 1
 
