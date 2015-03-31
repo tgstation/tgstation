@@ -26,7 +26,7 @@
 	loadone = !loadone
 	usr <<"<span class='notice'> You set the Device Analyzer to [loadone ? "transfer one design" : "transfer all designs"] on use.</span>"
 
-/obj/item/device/device_analyser/afterattack(var/atom/A, mob/user, proximity_flag) //Hurrah for after-attack
+/obj/item/device/device_analyser/preattack(var/atom/A, mob/user, proximity_flag) //Hurrah for after-attack
 	if(get_turf(src) != get_turf(user)) //we aren't in the same place as our holder, so we have been moved and can ignore scanning
 		return
 	if(proximity_flag != 1)
