@@ -64,6 +64,7 @@
 			target.clean_blood()
 	return
 
+var/list/global_horn_list = list()
 
 /*
  * Bike Horns
@@ -85,6 +86,14 @@
 	var/spam_flag = 0
 	var/honksound = 'sound/items/bikehorn.ogg'
 	var/cooldowntime = 20
+
+/obj/item/weapon/bikehorn/New()
+	..()
+	global_horn_list.Add(src)
+
+/obj/item/weapon/bikehorn/Destroy()
+	global_horn_list.Remove(src)
+	..()
 
 /obj/item/weapon/bikehorn/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!spam_flag)
