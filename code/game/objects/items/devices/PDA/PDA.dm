@@ -1609,15 +1609,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(A.Adjacent(user))
 					if(!A.attackby(atmos_analys, user))
 						atmos_analys.afterattack(A, user, 1)
-		if (6)
-			if(dev_analys) //let's use this instead. Much neater
-				if(A.Adjacent(user))
-					dev_analys.preattack(A, user, 1)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info
 		user << "\blue Paper scanned." //concept of scanning paper copyright brainoblivion 2009
 
+/obj/item/device/pda/preattack(atom/A as mob|obj|turf|area, mob/user as mob)
+	if (scanmode == 6)
+		if(dev_analys) //let's use this instead. Much neater
+			if(A.Adjacent(user))
+				return dev_analys.preattack(A, user, 1)
 
 /obj/item/device/pda/proc/explode() //This needs tuning.
 	if(!src.detonate) return
