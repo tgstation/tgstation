@@ -130,6 +130,22 @@
 
 /obj/item/weapon/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
+	desc = "An integrated electric mining drill."
+	var/warned = 0
+
+/obj/item/weapon/pickaxe/drill/cyborg/update_icon()
+	..() //piggybacking this since it's always called once a turf is dug and doesn't need it's own proc
+	if(bcell.charge < drillcost && !warned)
+		usr << "<span class='danger'>Drill internal battery depleted, power will be drawn from user's power supply.</span>"
+		playsound(src, 'sound/weapons/smg_empty_alarm.ogg',50,1)
+		warned = 1
+
+/obj/item/weapon/pickaxe/drill/cyborg/proc/use_robot_power(var/mob/living/silicon/robot/R)
+	if(!bcell.use(drillcost))
+		if(!R.cell.use(drillcost))
+			R << "<span class='notice'>You don't have enough charge to drill.</span>"
+			return 0
+	return 1
 
 /obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"

@@ -417,11 +417,10 @@
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
 			if(isrobot(user))
-				var/mob/living/silicon/robot/R = user
-				if(!R.cell.use(D.drillcost))
-					R << "<span class='notice'>Your [D.name] doesn't have enough charge.</span>"
+				var/obj/item/weapon/pickaxe/drill/cyborg/RD = D
+				if(!RD.use_robot_power(user))
 					return
-			if(!D.bcell.use(D.drillcost))
+			else if(!D.bcell.use(D.drillcost))
 				user << "<span class='notice'>Your [D.name] doesn't have enough charge.</span>"
 				return
 
