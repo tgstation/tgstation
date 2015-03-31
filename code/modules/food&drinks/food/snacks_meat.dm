@@ -1,6 +1,6 @@
 //Not only meat, actually, but also snacks that are almost meat, such as fish meat or tofu
 
-
+var/list/global_faggot_list = list()
 ////////////////////////////////////////////FISH////////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/cubancarp
@@ -85,6 +85,14 @@
 	icon_state = "faggot"
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	filling_color = "#800000"
+
+/obj/item/weapon/reagent_containers/food/snacks/faggot/New()
+	..()
+	global_faggot_list.Add(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/faggot/Destroy()
+	global_faggot_list.Remove(src)
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
 	name = "sausage"

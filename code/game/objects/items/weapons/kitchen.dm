@@ -10,6 +10,8 @@
  *		Trays
  */
 
+var/list/global_fork_list = list()
+
 /obj/item/weapon/kitchen
 	icon = 'icons/obj/kitchen.dmi'
 
@@ -48,6 +50,14 @@
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
+
+/obj/item/weapon/kitchen/utensil/fork/New()
+	..()
+	global_fork_list.Add(src)
+
+/obj/item/weapon/kitchen/utensil/fork/Destroy()
+	..()
+	global_fork_list.Remove(src)
 
 /obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
