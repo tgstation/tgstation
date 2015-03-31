@@ -129,8 +129,6 @@
 			sound = "sound/weapons/Laser.ogg"
 		if("Taser")
 			sound = "sound/weapons/Taser.ogg"
-		if("%#$HELP")
-			sound = "sound/effects/adminhelp.ogg"
 
 /obj/item/clothing/shoes/clown_shoes/bananium/step_action()
 	if(footstep > 1)
@@ -138,9 +136,3 @@
 		footstep = 0
 	else
 		footstep++
-
-/obj/item/clothing/shoes/clown_shoes/bananium/emag_act()
-	if(!emagged)
-		sound_list |= "%#$HELP"
-		usr << "The [src.name] glows ominously."
-		emagged = 1
