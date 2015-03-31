@@ -265,11 +265,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	var/rendered = virt.compose_message(virt, virt.languages, message, freq) //Always call this on the virtualspeaker to advoid issues.
 
-	for(var/atom/movable/listener in listeners)
+	for (var/atom/movable/listener in listeners)
 		if (listener)
 			listener.Hear(rendered, virt, AM.languages, message, freq)
 
 	if(length(listeners))
+		listeners = null
+
 			// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
 		var/blackbox_msg = "[AM] [AM.say_quote(message)]"
