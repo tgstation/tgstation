@@ -566,11 +566,10 @@ datum/configuration/proc/get_runnable_midround_modes(crew)
 	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
-			world << "DEBUG: fail tag [M.config_tag]"
-			del(M)
+			qdel(M)
 			continue
 		if(probabilities[M.config_tag]<=0)
-			del(M)
+			qdel(M)
 			continue
 		if(M.required_players <= crew)
 			runnable_modes[M] = probabilities[M.config_tag]
