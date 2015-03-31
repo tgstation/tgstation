@@ -7,7 +7,7 @@
 	health = 200
 	lights_power = 7
 	deflect_chance = 15
-	damage_absorption = list("brute"=0.8,"fire"=1,"bullet"=0.8,"laser"=0.9,"energy"=1,"bomb"=0.6)
+	damage_absorption = list("brute"=0.6,"fire"=1,"bullet"=0.8,"laser"=0.9,"energy"=1,"bomb"=0.6)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
@@ -39,7 +39,7 @@
 
 /obj/mecha/working/ripley/go_out()
 	..()
-	if (src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
+	if (src.damage_absorption["brute"] < 0.6 && src.damage_absorption["brute"] > 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-open")
 	else if (src.damage_absorption.["brute"] == 0.3)
@@ -48,30 +48,30 @@
 
 /obj/mecha/working/ripley/moved_inside(var/mob/living/carbon/human/H as mob)
 	..()
-	if (src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
+	if (src.damage_absorption["brute"] < 0.6 && src.damage_absorption["brute"] > 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g")
-	else if (src.damage_absorption.["brute"] == 0.3)
+	else if (src.damage_absorption["brute"] == 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-full")
 
 /obj/mecha/working/ripley/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
 	..()
-	if (src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
+	if (src.damage_absorption["brute"] < 0.6 && src.damage_absorption["brute"] > 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g")
-	else if (src.damage_absorption.["brute"] == 0.3)
+	else if (src.damage_absorption["brute"] == 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-full")
 
 /obj/mecha/working/ripley/firefighter
-	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."
+	desc = "Autonomous Power Loader Unit. This model is refitted with additional thermal protection."
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
 	health = 250
 	lights_power = 7
-	damage_absorption = list("brute"=0.8,"fire"=0.5,"bullet"=0.7,"laser"=0.8,"energy"=1,"bomb"=0.4)
+	damage_absorption = list("brute"=0.6,"fire"=0.5,"bullet"=0.7,"laser"=0.7,"energy"=1,"bomb"=0.4)
 	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 

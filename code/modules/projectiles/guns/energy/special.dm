@@ -214,6 +214,7 @@
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
 	force = 15
+	damtype = "fire"
 	modifystate = -1
 	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=2;engineering=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
