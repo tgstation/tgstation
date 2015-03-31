@@ -54,9 +54,9 @@
 		T.eprojectile = /obj/item/projectile/bullet/gyro
 	*/
 
-	for(var/obj/item/weapon/storage/box/monkeycubes/B in global_monkeycubebox_list)
-		B.visible_message("<span class = 'notice'>[B] appears to go through box division, and has divided into two separate boxes! What could be inside the new box?")
-		new /obj/item/weapon/storage/box/clowncubes(B.loc)
+	for(var/obj/item/weapon/storage/box/monkeycubes/M in global_monkeycubebox_list)
+		M.visible_message("<span class = 'notice'>[M] appears to go through box division, and has divided into two separate boxes! What could be inside the new box?")
+		new /obj/item/weapon/storage/box/clowncubes(M.loc)
 
 	for(var/obj/item/weapon/reagent_containers/food/snacks/pie/P in global_pie_list)
 		if(istype(P, /obj/item/weapon/reagent_containers/food/snacks/pie/syndicate))
@@ -70,13 +70,21 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/pie/syndicate(P.loc)
 		qdel(P)
 
-	for(var/obj/item/weapon/reagent_containers/food/drinks/ale/B in global_ale_list)
-		B.name = "Ale Mao"
-		B.desc = "The most memetic drink you've ever laid eyes on."
+	for(var/obj/item/weapon/reagent_containers/food/drinks/ale/A in global_ale_list)
+		A.name = "Ale Mao"
+		A.desc = "The most memetic drink you've ever laid eyes on."
 
 	for(var/obj/item/weapon/kitchen/utensil/fork/F in global_fork_list)
 		F.visible_message("<span class='warning'>\The [F] suddenly seems a bit sharper...</span>")
 		F.force = 10
+
+	for(var/obj/item/weapon/bikehorn/B in global_horn_list)
+		B.name = "air horn"
+		B.desc = "Damn son, where'd you find this?"
+		B.icon = 'icons/obj/items.dmi'
+		B.icon_state = "air_horn"
+		B.honksound = 'sound/items/AirHorn2.ogg'
+		B.cooldowntime = 5 // :^)
 
 
 //Smite Evil: A chaplain ability that can either heal a non-antag or damage an antag. Has a 2-minute cooldown.
