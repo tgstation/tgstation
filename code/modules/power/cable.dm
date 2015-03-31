@@ -40,6 +40,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/obj/item/device/powersink/attached	// holding this here for qdel
 	var/_color = "red"
 
+	//For rebuilding powernets from scratch
+	var/build_status = 0 //1 means it needs rebuilding during the next tick or on usage
+	var/oldavail = 0
+	var/oldnewavail = 0
+	var/oldload = 0
+
 /obj/structure/cable/yellow
 	_color = "yellow"
 
@@ -83,9 +89,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list += src		//add it to the global cable list
 
 /obj/structure/cable/Destroy()			// called when a cable is deleted
-	if(!defer_powernet_rebuild)			// set if network will be rebuilt manually.
-		if(powernet)
-			cut_cable_from_powernet()	// update the powernets
+	if(powernet)
+		powernet.set_to_build()	// update the powernets
 
 	cable_list -= src
 
@@ -121,6 +126,7 @@ By design, d1 is the smallest direction and d2 is the highest
 // returns the powernet this cable belongs to
 /obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
 	return powernet
+
 
 // telekinesis has no effect on a cable
 /obj/structure/cable/attack_tk(mob/user)
@@ -271,7 +277,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(C.d1 == (direction ^ 3) || C.d2 == (direction ^ 3)) // we've got a diagonally matching cable
 			if(!C.powernet) // if the matching cable somehow got no powernet, make him one (should not happen for cables)
-				var/datum/powernet/newPN = new()
+				var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
 				newPN.add_cable(C)
 
 			if(powernet) //if we already have a powernet, then merge the two powernets
@@ -291,7 +297,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(C.d1 == (direction ^ 12) || C.d2 == (direction ^ 12)) // we've got a diagonally matching cable
 			if(!C.powernet) // if the matching cable somehow got no powernet, make him one (should not happen for cables)
-				var/datum/powernet/newPN = new()
+				var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
 				newPN.add_cable(C)
 
 			if(powernet) // if we already have a powernet, then merge the two powernets
@@ -317,7 +323,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(C.d1 == fdir || C.d2 == fdir) // we've got a matching cable in the neighbor turf
 			if(!C.powernet) // if the matching cable somehow got no powernet, make him one (should not happen for cables)
-				var/datum/powernet/newPN = new()
+				var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
 				newPN.add_cable(C)
 
 			if(powernet) // if we already have a powernet, then merge the two powernets
@@ -330,7 +336,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/list/to_connect = list()
 
 	if(!powernet) // if we somehow have no powernet, make one (should not happen for cables)
-		var/datum/powernet/newPN = new()
+		var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
 		newPN.add_cable(src)
 
 	// first let's add turf cables to our powernet
@@ -429,11 +435,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/list/powerlist = power_list(T1, src, 0, 0) // find the other cables that ended in the centre of the turf, with or without a powernet
 
 	if(powerlist.len>0)
-		var/datum/powernet/PN = new()
+		var/datum/powernet/PN = getFromDPool(/datum/powernet/)
 		propagate_network(powerlist[1], PN) // propagates the new powernet beginning at the source cable
 
 		if(PN.is_empty()) // can happen with machines made nodeless when smoothing cables
-			del(PN) //powernets do not get qdelled
+			returnToDPool(PN) //powernets do not get qdelled
 
 // cut the cable's powernet at this cable and updates the powergrid
 /obj/structure/cable/proc/cut_cable_from_powernet()
@@ -462,7 +468,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	loc = null
 	powernet.remove_cable(src) // remove the cut cable from its powernet
 
-	var/datum/powernet/newPN = new() // creates a new powernet...
+	var/datum/powernet/newPN = getFromDPool(/datum/powernet) // creates a new powernet...
 	propagate_network(P_list[1], newPN)//... and propagates it to the other side of the cable
 
 	// disconnect machines connected to nodes

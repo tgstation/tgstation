@@ -25,8 +25,6 @@ var/global/obj/effect/overlay/slmaster = null
 
 var/global/list/account_DBs = list()
 
-var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
-
 // Used only by space turfs. TODO: Remove.
 // The comment below is no longer accurate.
 var/global/list/global_map = null
@@ -232,7 +230,6 @@ var/list/OOClog = list()
 var/list/adminlog = list()
 
 var/suspend_alert = 0
-var/list/powernets = list()
 
 var/Debug = 0	// global debug switch
 var/Debug2 = 0

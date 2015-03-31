@@ -34,7 +34,6 @@
 	return 0
 
 /datum/game_mode/meteor/post_setup()
-	defer_powernet_rebuild = 2//Might help with the lag
 
 		//Let's set up the announcement and meteor delay immediatly to send to admins and use later
 	meteorannouncedelay = rand((meteorannouncedelay_l/600), (meteorannouncedelay_h/600))*600 //Minute interval for simplicity

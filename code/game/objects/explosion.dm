@@ -83,10 +83,6 @@
 		var/datum/controller/process/lighting = processScheduler.getProcess("lighting")
 		lighting.disable()
 
-		var/powernet_rebuild_was_deferred_already = defer_powernet_rebuild
-		if(defer_powernet_rebuild != 2)
-			defer_powernet_rebuild = 1
-
 		if(heavy_impact_range > 1)
 			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
 			E.set_up(epicenter)
@@ -126,10 +122,6 @@
 		sleep(8)
 
 		lighting.enable()
-
-		if(!powernet_rebuild_was_deferred_already)
-			if(defer_powernet_rebuild != 2)
-				defer_powernet_rebuild = 0
 
 	return 1
 
