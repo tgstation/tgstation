@@ -1,0 +1,13 @@
+author: Fayrik
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added a bowman headset for death squads and ERTs."
+  - tweak: "Deathsquad radio channel is now called the Centcom radio channel."
+  - bugfix: "Fixed the admin buttons not spawning ERT Medic gear properly."
+  - tweak: "Expanded Emergency Shuttle dock to allow for more round end griff."
+  - bugfix: "All 7 ERT members now spawn geared, not just the first 4."
+  - bugfix: "Spawning an ERT or Deathsquad no longer stops a second ERT or Deathsquad from being spawned."
+  - tweak: "Pulse rifles now have 80 shots, not 40."
+  - tweak: "Deathsquads now use loyalty pinned Pulse rifles."

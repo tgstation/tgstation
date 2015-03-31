@@ -92,7 +92,6 @@
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
-	can_adjust = 0
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
@@ -100,7 +99,6 @@
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
-	can_adjust = 0
 
 /obj/item/clothing/under/space
 	name = "\improper NASA jumpsuit"
