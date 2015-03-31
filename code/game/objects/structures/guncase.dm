@@ -23,40 +23,44 @@
 /obj/structure/guncase/update_icon()
 	icon_state = "[case_type]-[contents.len]-[open ? "open" : "closed"]"
 
-/obj/structure/guncase/attackby(obj/item/O, mob/user, params)
-	if(isrobot(usr) || isalien(usr))
+/obj/structure/guncase/attackby(obj/item/I, mob/user, params)
+	if(isrobot(user) || isalien(user))
 		return
-	if(istype(O, gun_category))
+	if(istype(I, gun_category))
 		if(contents.len < 4 && open)
 			user.drop_item()
-			contents += O
-			user << "<span class='notice'>You place [O] in [src].</span>"
+			contents += I
+			user << "<span class='notice'>You place [I] in [src].</span>"
 			update_icon()
-			updateUsrDialog()
-		else
-			open = !open
-			update_icon()
-	else
-		open = !open
-		update_icon()
+			return
+
+	open = !open
+	update_icon()
 
 /obj/structure/guncase/attack_hand(mob/user)
 	if(isrobot(usr) || isalien(usr))
 		return
 	if(contents.len && open)
-		var/dat = "<HEAD><TITLE>[name]</TITLE></HEAD><center>"
-		for(var/i = contents.len, i >= 1, i--)
-			var/obj/item/O = contents[i]
-			dat += "<a href='?src=\ref[src];retrieve=\ref[O]'>[O.name]</a><br>"
-		dat += "</center>"
-		usr << browse(dat, "window=guncase;size=350x300")
+		ShowWindow(user)
 	else
 		open = !open
 		update_icon()
 
+/obj/structure/guncase/proc/ShowWindow(mob/user)
+	var/dat = {"<div class='block'>
+				<h3>Stored Guns</h3>
+				<table align='center'>"}
+	for(var/i = contents.len, i >= 1, i--)
+		var/obj/item/I = contents[i]
+		dat += "<tr><A href='?src=\ref[src];retrieve=\ref[I]'>[I.name]</A><br>"
+	dat += "</table></div>"
+
+	var/datum/browser/popup = new(user, "gunlocker", "<div align='center'>[name]</div>", 350, 300)
+	popup.set_content(dat)
+	popup.open(0)
+
 /obj/structure/guncase/Topic(href, href_list)
 	if(href_list["retrieve"])
-		usr << browse("", "window=guncase")
 		var/obj/item/O = locate(href_list["retrieve"])
 		if(!usr.canUseTopic(src))
 			return
@@ -66,8 +70,6 @@
 			else
 				O.loc = get_turf(src)
 			update_icon()
-			updateUsrDialog()
-
 
 /obj/structure/guncase/shotgun
 	name = "shotgun locker"
