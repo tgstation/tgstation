@@ -133,10 +133,6 @@
 	desc = "An integrated electric mining drill."
 	var/warned = 0
 
-/obj/item/weapon/pickaxe/drill/cyborg/update_icon()
-	..() //piggybacking this since it's always called once a turf is dug and doesn't need it's own proc
-
-
 /obj/item/weapon/pickaxe/drill/cyborg/proc/use_robot_power(var/mob/living/silicon/robot/R)
 	if(!bcell.use(drillcost))
 		if(!warned)
