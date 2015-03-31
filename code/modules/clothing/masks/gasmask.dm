@@ -124,12 +124,12 @@
 	var/phrase_sound = null
 
 
-	if(cooldown < world.time - 35) // A cooldown, to stop people being jerks
+	if(world.time > cooldown) // A cooldown, to stop people being jerks
 		if(!safety)
 			phrase_text = "FUCK YOUR CUNT YOU SHIT EATING COCKSUCKER MAN EAT A DONG FUCKING ASS RAMMING SHIT FUCK EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS OF FUCK AND DO SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT."
 			usr.visible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
 			playsound(src.loc, 'sound/voice/binsult.ogg', 100, 0, 4)
-			sleep(200)
+			cooldown = world.time + 235
 			return
 
 		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases
