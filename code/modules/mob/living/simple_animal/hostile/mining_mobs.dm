@@ -1,18 +1,10 @@
 /mob/living/simple_animal/hostile/asteroid/
 	vision_range = 2
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
-	heat_damage_per_tick = 20
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
@@ -20,6 +12,8 @@
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -108,12 +102,12 @@
 		if(3.0)
 			adjustBruteLoss(110)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/Die()
+/mob/living/simple_animal/hostile/asteroid/basilisk/death(gibbed)
 	var/counter
 	for(counter=0, counter<2, counter++)
 		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
 		D.layer = 4.1
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
@@ -204,10 +198,10 @@
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/Die()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/death(gibbed)
 	alerted = 0
 	Reward()
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(var/damage)
 	idle_vision_range = 9
@@ -253,10 +247,10 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/Die()
+/mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	new /obj/item/asteroid/hivelord_core(src.loc)
 	mouse_opacity = 1
-	..()
+	..(gibbed)
 
 /obj/item/asteroid/hivelord_core
 	name = "hivelord remains"
@@ -318,7 +312,7 @@
 	spawn(100)
 		qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/Die()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
@@ -367,9 +361,9 @@
 	anchored = 1
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Die()
+/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	anchored = 0
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
@@ -434,15 +428,15 @@
 		spawn(50)
 			qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Die()
+/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
 	G.layer = 4.1
-	..()
+	..(gibbed)
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
 	w_class = 3
@@ -463,8 +457,11 @@
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/D = target
 			var/list/damage_absorption = D.damage_absorption
-			if(damage_absorption.["brute"] > 0.3)
-				damage_absorption.["brute"] = max(damage_absorption.["brute"] - 0.1, 0.3)
+			if(damage_absorption["brute"] > 0.3)
+				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
+				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
+				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
+				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				qdel(src)
 				if(D.icon_state == "ripley-open")
@@ -481,3 +478,9 @@
 			else
 				user << "<span class='info'>You can't improve [D] any further.</span>"
 				return
+
+/mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
+	if(bodytemperature < minbodytemp)
+		adjustBruteLoss(2)
+	else if(bodytemperature > maxbodytemp)
+		adjustBruteLoss(20)

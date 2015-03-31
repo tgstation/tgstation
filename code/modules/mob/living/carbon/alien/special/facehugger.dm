@@ -115,7 +115,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(loc == L) return 0
 	if(stat != CONSCIOUS)	return 0
-	if(locate(/obj/item/alien_embryo) in L) return 0
+	if(locate(/obj/item/body_egg/alien_embryo) in L) return 0
 	if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 
 	L.visible_message("<span class='danger'>[src] leaps at [L]'s face!</span>", \
@@ -174,7 +174,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]_impregnated"
 
 		if(!target.getlimb(/obj/item/organ/limb/robot/chest) && !(target.status_flags & XENO_HOST))
-			new /obj/item/alien_embryo(target)
+			new /obj/item/body_egg/alien_embryo(target)
 
 
 		if(iscorgi(target))

@@ -19,8 +19,6 @@
 	gender = NEUTER
 	health = 30
 	maxHealth = 30
-	heat_damage_per_tick = 0
-	cold_damage_per_tick = 0
 	unsuitable_atmos_damage = 0
 	wander = 0
 	speed = 0
@@ -94,8 +92,8 @@
 		pickVisualAppearence()
 
 
-/mob/living/simple_animal/drone/Die()
-	..()
+/mob/living/simple_animal/drone/death(gibbed)
+	..(gibbed)
 	drop_l_hand()
 	drop_r_hand()
 	if(internal_storage)
@@ -175,3 +173,6 @@
 
 /mob/living/simple_animal/drone/check_eye_prot()
 	return 2
+
+/mob/living/simple_animal/drone/handle_temperature_damage()
+	return

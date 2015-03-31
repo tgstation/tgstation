@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: true
+
+changes: 
+  - tweak: "Area ambience and ship ambience are now separate toggles. If you want one type of ambience but not the other, you only need to switch off the type you don't want."

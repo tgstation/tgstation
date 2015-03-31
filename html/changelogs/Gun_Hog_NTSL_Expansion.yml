@@ -1,0 +1,8 @@
+author: Gun Hog
+
+delete-after: True
+
+changes: 
+
+  - rscadd: "NTSL has been updated! It can now read and modify verbs (says, yells, asks)! You can set your own using $say, $yell, $ask, and $exclaim variables in your scripts."
+  - rscadd: "NTSL can now also modify the font, italics, and bolding of radio messages in four ways! In a script, place $loud, $wacky, $emphasis, and/or $robot in a vector to $filters.

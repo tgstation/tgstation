@@ -137,7 +137,6 @@
 
 		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			var/damage = 5
 			if(prob(95))
 				Weaken(10)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
@@ -147,7 +146,6 @@
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [name]!</span>")
 			add_logs(M, src, "disarmed", admin=0)
-			adjustBruteLoss(damage)
 			updatehealth()
 	return
 
@@ -158,18 +156,13 @@
 		updatehealth()
 
 
-/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)
-	..()
-	var/damage = rand(1, 3)
-
-	if(M.is_adult)
-		damage = rand(20, 40)
-	else
-		damage = rand(5, 35)
-	adjustBruteLoss(damage)
-	updatehealth()
-
-	return
+/mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M as mob)
+	if(..()) //successful slime attack
+		var/damage = rand(5, 35)
+		if(M.is_adult)
+			damage = rand(20, 40)
+		adjustBruteLoss(damage)
+		updatehealth()
 
 /mob/living/carbon/monkey/Stat()
 	..()

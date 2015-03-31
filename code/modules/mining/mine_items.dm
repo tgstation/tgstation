@@ -50,7 +50,7 @@
 
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -79,12 +79,12 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	item_state = "jackhammer"
-	digspeed = 30 //available from roundstart, faster than a pickaxe but needs recharging or cell replacements
+	digspeed = 25 //available from roundstart, faster than a pickaxe but needs recharging or cell replacements
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	desc = "An electric mining drill for the especially scrawny."
-	var/drillcost = 125 //80 mineral walls by default
+	var/drillcost = 50 //80 mineral walls by default
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 
 /obj/item/weapon/pickaxe/drill/New() //this one starts with a cell pre-installed.
@@ -134,42 +134,28 @@
 /obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
-	digspeed = 10 //it's a fast drill with a relatively low power cost. what more could you ask for?
+	digspeed = 8 //it's a fast drill with a relatively low power cost. what more could you ask for?
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
-	drillcost = 150 //66 mineral walls by default, but very quickly
+	drillcost = 75 //66 mineral walls by default, but very quickly
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	digspeed = 5 //the epitome of powertools. high power consumption, extremely fast mining, laughs at puny walls
+	digspeed = 4 //the epitome of powertools. high power consumption, extremely fast mining, laughs at puny walls
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls.."
-	drillcost = 200
-
-/obj/item/weapon/pickaxe/plasmacutter
-	name = "plasma cutter"
-	icon_state = "plasmacutter"
-	item_state = "gun"
-	w_class = 3 //it is smaller than the pickaxe
-	damtype = "fire"
-	throwforce = 8
-	digspeed = 30 //Mines slightly faster than a normal pickaxe, but doubles as an unlimited-ammo welding tool in some cases such as wall deconstruction
-	digsound = list('sound/weapons/plasma_cutter.ogg')
-	hitsound = 'sound/weapons/plasma_cutter.ogg'
-	origin_tech = "materials=4;plasmatech=3;engineering=3"
-	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-
+	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
+	drillcost = 100
 
 /*****************************Shovel********************************/
 
 /obj/item/weapon/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT

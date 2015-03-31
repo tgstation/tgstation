@@ -47,7 +47,7 @@ var/datum/subsystem/ticker/ticker
 	NEW_SS_GLOBAL(ticker)
 
 	login_music = pickweight(list('sound/ambience/title2.ogg' = 49, 'sound/ambience/title1.ogg' = 49, 'sound/ambience/clown.ogg' = 2)) // choose title music!
-	if(SSevent.holiday == "April Fool's Day")
+	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
 /datum/subsystem/ticker/Initialize()
@@ -188,11 +188,13 @@ var/datum/subsystem/ticker/ticker
 
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
-	world << sound('sound/AI/welcome.ogg') // Skie
-	//Holiday Round-start stuff	~Carn
-	if(SSevent.holiday)
+	world << sound('sound/AI/welcome.ogg')
+
+	if(SSevent.holidays)
 		world << "<font color='blue'>and...</font>"
-		world << "<h4>Happy [SSevent.holiday] Everybody!</h4>"
+		for(var/holidayname in SSevent.holidays)
+			var/datum/holiday/holiday = SSevent.holidays[holidayname]
+			world << "<h4>[holiday.greet()]</h4>"
 
 
 	spawn(0)//Forking here so we dont have to wait for this to finish

@@ -363,3 +363,14 @@ datum/design/mech_generator_nuclear
 	materials = list("$metal"=10000,"$glass"=1000,"$silver"=500)
 	construction_time = 100
 	category = list("Exosuit Equipment")
+
+datum/design/mech_plasma_cutter
+	name = "Exosuit Module Design (217-D Heavy Plasma Cutter)"
+	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demolishing solid obstacles."
+	id = "mech_plasma_cutter"
+	build_type = MECHFAB
+	req_tech = list("powerstorage"= 3, "engineering" = 3, "materials" = 3, "combat" = 1, "plasma" = 2)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
+	materials = list("$metal" = 1500, "$glass" = 500, "$plasma" = 200)
+	construction_time = 100
+	category = list("Exosuit Equipment")

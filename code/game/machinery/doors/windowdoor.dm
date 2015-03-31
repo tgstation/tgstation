@@ -233,7 +233,7 @@
 	attack_generic(M, M.melee_damage_upper)
 
 
-/obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user as mob)
+/obj/machinery/door/window/attack_slime(mob/living/simple_animal/slime/user as mob)
 	user.do_attack_animation(src)
 	if(!user.is_adult)
 		return

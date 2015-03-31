@@ -16,7 +16,7 @@
 	density = 1
 	verb_say = "beeps"
 	verb_ask = "beeps"
-	verb_yell = "beeps"
+	verb_exclaim = "beeps"
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/vend_delay = 10	//How long does it take to vend?
@@ -727,7 +727,8 @@
 					/obj/item/weapon/lighter/grayscale = 4,
 					/obj/item/weapon/storage/fancy/rollingpapers = 5)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
-	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2, /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold = 1)
+	premium = list(/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold = 2, \
+	/obj/item/weapon/storage/fancy/cigars = 1, /obj/item/weapon/storage/fancy/cigars/havana = 1, /obj/item/weapon/storage/fancy/cigars/cohiba = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
 /obj/machinery/vending/medical

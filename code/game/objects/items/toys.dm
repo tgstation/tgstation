@@ -187,120 +187,6 @@
 	user << "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
 /*
- * Toy crossbow
- */
-
-/obj/item/toy/crossbow
-	name = "foam dart crossbow"
-	desc = "A weapon favored by many overactive children. Ages 8 and up."
-	icon = 'icons/obj/guns/energy.dmi'
-	icon_state = "crossbow100"
-	item_state = "crossbow"
-	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
-	w_class = 2.0
-	attack_verb = list("attacked", "struck", "hit")
-	var/bullets = 5
-
-/obj/item/toy/crossbow/examine(mob/user)
-	..()
-	if (bullets)
-		user << "<span class='notice'>It is loaded with [bullets] foam dart\s.</span>"
-
-/obj/item/toy/crossbow/attackby(obj/item/I as obj, mob/user as mob, params)
-	if(istype(I, /obj/item/toy/ammo/crossbow))
-		if(bullets <= 4)
-			user.drop_item()
-			qdel(I)
-			bullets++
-			user << "<span class='notice'>You load the foam dart into the crossbow.</span>"
-		else
-			usr << "<span class='danger'>It's already fully loaded.</span>"
-
-
-/obj/item/toy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-	if(!isturf(target.loc) || target == user) return
-	if(flag) return
-
-	if (locate (/obj/structure/table, src.loc))
-		return
-	else if (bullets)
-		var/turf/trg = get_turf(target)
-		var/obj/effect/foam_dart_dummy/D = new/obj/effect/foam_dart_dummy(get_turf(src))
-		bullets--
-		D.icon_state = "foamdart"
-		D.name = "foam dart"
-		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
-
-		for(var/i=0, i<6, i++)
-			if (D)
-				if(D.loc == trg) break
-				step_towards(D,trg)
-
-				for(var/mob/living/M in D.loc)
-					if(!istype(M,/mob/living)) continue
-					if(M == user) continue
-					D.visible_message("<span class='danger'>[M] was hit by the foam dart!</span>")
-					new /obj/item/toy/ammo/crossbow(M.loc)
-					qdel(D)
-					return
-
-				for(var/atom/A in D.loc)
-					if(A == user) continue
-					if(A.density)
-						new /obj/item/toy/ammo/crossbow(A.loc)
-						qdel(D)
-
-			sleep(1)
-
-		spawn(10)
-			if(D)
-				new /obj/item/toy/ammo/crossbow(D.loc)
-				qdel(D)
-
-		return
-	else if (bullets == 0)
-		user.Weaken(5)
-		user.visible_message("<span class='danger'>[user] realized they were out of ammo and starting scrounging for some!</span>")
-
-
-/obj/item/toy/crossbow/attack(mob/M as mob, mob/user as mob)
-	src.add_fingerprint(user)
-
-// ******* Check
-
-	if (src.bullets > 0 && M.lying)
-
-		M.visible_message("<span class='danger'>[user] casually lines up a shot with [M]'s head and pulls the trigger!</span>")
-		M.visible_message("<span class='danger'>[M] was hit in the head by the foam dart!</span>", \
-							"<span class='userdanger'>You're hit in the head by the foam dart!</span>", \
-							"<span class='danger'>You hear the sound of foam against skull.</span>")
-
-		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
-		new /obj/item/toy/ammo/crossbow(M.loc)
-		src.bullets--
-	else if (M.lying && src.bullets == 0)
-		M.visible_message("<span class='danger'>[user] casually lines up a shot with [M]'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</span>")
-		user.Weaken(5)
-	return
-
-/obj/item/toy/ammo/crossbow
-	name = "foam dart"
-	desc = "Its nerf or nothing! Ages 8 and up."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "foamdart"
-	w_class = 1.0
-
-/obj/effect/foam_dart_dummy
-	name = ""
-	desc = ""
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "null"
-	anchored = 1
-	density = 0
-
-
-/*
  * Toy swords
  */
 /obj/item/toy/sword
@@ -434,8 +320,9 @@
 	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
 	var/drawtype = "rune"
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
@@ -515,9 +402,20 @@
 			temp = "letter"
 		else if(graffiti.Find(drawtype))
 			temp = "graffiti"
+		var/graf_rot
+		if(oriented.Find(drawtype))
+			switch(user.dir)
+				if(EAST)
+					graf_rot = 90
+				if(SOUTH)
+					graf_rot = 180
+				if(WEST)
+					graf_rot = 270
+				else
+					graf_rot = 0
 		user << "You start drawing a [temp] on the [target.name]."
 		if(instant || do_after(user, 50))
-			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp)
+			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
 			user << "You finish drawing [temp]."
 			if(uses)
 				uses--

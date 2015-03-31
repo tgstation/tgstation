@@ -27,16 +27,6 @@
 	if(l_store) l_store.emp_act(severity)
 	..()
 
-/mob/living/carbon/alien/humanoid/attack_slime(mob/living/carbon/slime/M as mob)
-	..()
-	var/damage = rand(5, 35)
-	if(M.is_adult)
-		damage = rand(10, 40)
-	adjustBruteLoss(damage)
-	add_logs(M, src, "attacked", admin=0)
-	updatehealth()
-	return
-
 /mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
 		..(user, 1)
