@@ -63,9 +63,7 @@
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	if(light)
-		light.changed = 1
-		light.__x = x
-		light.__y = y
+		light.changed()
 	return 1
 
 /atom/movable/Del()
@@ -78,14 +76,13 @@
 	..()
 
 /atom/movable/Destroy()
+	. = ..()
 	if(reagents)
 		qdel(reagents)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	tag = null
 	loc = null
 	invisibility = 101
-	// Do not call ..()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square

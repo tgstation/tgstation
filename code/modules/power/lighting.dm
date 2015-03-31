@@ -277,7 +277,7 @@
 
 	update_icon()
 	if(on)
-		if(!light || light.strength != brightness)
+		if(!light || light.radius != brightness)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)

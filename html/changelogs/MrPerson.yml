@@ -1,2 +1,3 @@
 author: MrPerson
-changes: []
+changes: 
+  - experiment: "New lighting system! Lighting now smoothly transfers from one lighting level to the next."

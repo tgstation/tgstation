@@ -7,9 +7,9 @@ var/datum/subsystem/lighting/SSlighting
 	wait = 5
 	priority = 1
 
-	var/list/lights = list()				//list of all datum/light_source
-	var/lights_workload = 0					//stats on the largest number of lights (max lights.len)
-	var/list/changed_turfs = list()			//list of all turfs which need moving to a new lighting subarea
+	var/list/changed_lights = list()		//list of all datum/light_source that need updating
+	var/changed_lights_workload = 0			//stats on the largest number of lights (max changed_lights.len)
+	var/list/changed_turfs = list()			//list of all turfs which may have a different light level
 	var/changed_turfs_workload = 0			//stats on the largest number of turfs changed (max changed_turfs.len)
 
 
@@ -20,32 +20,29 @@ var/datum/subsystem/lighting/SSlighting
 
 
 /datum/subsystem/lighting/stat_entry()
-	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%) L:[round(lights_workload,1)]/T:[round(changed_turfs_workload,1)]")
+	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%) L:[round(changed_lights_workload,1)]/T:[round(changed_turfs_workload,1)]")
 
 
-//Workhorse of lighting. It cycles through each light to see which ones need their effects updating. It updates their
-//effects and then processes every turf in the queue, moving the turfs to the corresponing lighting sub-area.
-//All queue lists prune themselves, which will cause lights with no luminosity to be garbage collected (cheaper and safer
-//than deleting them).
+//Workhorse of lighting. It cycles through each light that needs updating. It updates their
+//effects and then processes every turf in the queue, updating their lighting object's appearance
+//Any light that returns 1 in check() deletes itself
 //By using queues we are ensuring we don't perform more updates than are necessary
 /datum/subsystem/lighting/fire()
-	lights_workload = MC_AVERAGE(lights_workload, lights.len)
+	changed_lights_workload = MC_AVERAGE(changed_lights_workload, changed_lights.len)
 
 //	for(var/area/A in sortedAreas)
 //		A.luminosity = 1
 
-	var/i=1
-	for(var/thing in lights)
-		if(thing && !thing:check())	//yes, cry that I'm using the : operator, it's much faster looping like this. And this gets called a lot. Dealwithit.
-			++i
+	for(var/datum/light_source/thing in changed_lights)
+		if(!thing || !thing.check())
 			continue
-		qdel(lights[i])
-		lights.Cut(i, i+1)
+		qdel(thing)
+	changed_lights.Cut()
 
 	changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
-	for(var/thing in changed_turfs)
-		if(thing && thing:lighting_changed)
-			thing:redraw_lighting()
+	for(var/turf/thing in changed_turfs)
+		if(thing && thing.lighting_changed)
+			thing.redraw_lighting()
 	changed_turfs.Cut()
 
 //	for(var/area/A in sortedAreas)
@@ -60,13 +57,11 @@ var/datum/subsystem/lighting/SSlighting
 //	for(var/area/A in sortedAreas)
 //		A.luminosity = 1
 
-	var/i=1
-	for(var/thing in lights)
-		if(thing && !thing:check())
-			++i
+	for(var/datum/light_source/thing in changed_lights)
+		if(!thing || !thing.check())
 			continue
-		qdel(lights[i])
-		lights.Cut(i, i+1)
+		qdel(thing)
+	changed_lights.Cut()
 
 	var/z_start = 1
 	var/z_finish = world.maxz
@@ -77,14 +72,14 @@ var/datum/subsystem/lighting/SSlighting
 
 	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
 
-	for(var/T in turfs_to_init)
-		T:init_lighting()
+	for(var/turf/T in turfs_to_init)
+		T.init_lighting()
 
 	if(z_level)
 		//we need to loop through to clear only shifted turfs from the list. or we will cause errors
-		i=1
-		for(var/thing in changed_turfs)
-			if(thing && thing:z < z_start && z_finish < thing:z)
+		var/i=1
+		for(var/turf/thing in changed_turfs)
+			if(thing && thing.z < z_start && z_finish < thing.z)
 				++i
 				continue
 			changed_turfs.Cut(i, i+1)
@@ -102,21 +97,20 @@ var/datum/subsystem/lighting/SSlighting
 /datum/subsystem/lighting/Recover()
 	if(!istype(SSlighting.changed_turfs))
 		SSlighting.changed_turfs = list()
-	if(!istype(SSlighting.lights))
-		SSlighting.lights = list()
+	if(!istype(SSlighting.changed_lights))
+		SSlighting.changed_lights = list()
 
 //	for(var/area/A in sortedAreas)
 //		A.luminosity = 1
 
-	for(var/L in SSlighting.lights)
+	for(var/datum/light_source/L in SSlighting.changed_lights)
 		spawn(-1)			//so we don't crash the loop (inefficient)
-			L:check()
-			lights += L		//If we didn't runtime then this will get transferred over
+			L.check()
 
-	for(var/T in changed_turfs)
-		if(T:lighting_changed)
+	for(var/turf/T in changed_turfs)
+		if(T.lighting_changed)
 			spawn(-1)
-				T:redraw_lighting()
+				T.redraw_lighting()
 
 	var/msg = "## DEBUG: [time2text(world.timeofday)] [name] subsystem restarted. Reports:\n"
 	for(var/varname in SSlighting.vars)

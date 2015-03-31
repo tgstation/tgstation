@@ -1,33 +1,29 @@
 /*
-	Modified DynamicAreaLighting for TGstation - Coded by Carnwennan
+	This is /tg/'s 'newer' lighting system. It's basically a combination of Forum_Account's and ShadowDarke's
+	respective lighting libraries heavily modified by Carnwennan for /tg/station with further edits by
+	MrPerson. Credits, where due, to them.
 
-	This is TG's 'new' lighting system. It's basically a heavily modified combination of Forum_Account's and
-	ShadowDarke's respective lighting libraries. Credits, where due, to them.
+	Originally, like all other lighting libraries on BYOND, we used areas to render different hard-coded light levels.
+	The idea was that this was cheaper than using objects. Well as it turns out, the cost of the system is primarily from the
+	massive loops the system has to run, not from the areas or objects actually doing any work. Thus the newer system uses objects
+	so we can have more lighting states and smooth transitions between them.
 
-	Like sd_DAL (what we used to use), it changes the shading overlays of areas by splitting each type of area into sub-areas
-	by using the var/tag variable and moving turfs into the contents list of the correct sub-area. This method is
-	much less costly than using overlays or objects.
+	This is a queueing system. Everytime we call a change to opacity or luminosity throwgh SetOpacity() or SetLuminosity(),
+	we are simply updating variables and scheduling certain lights/turfs for an update. Actual updates are handled
+	periodically by the SSlighting subsystem. Specifically, it runs check() on every changed light datum and deletes any that
+	return 1. Then it runs redraw_lighting() on every turf with lighting_changed = 1.
 
-	Unlike sd_DAL however it uses a queueing system. Everytime we call a change to opacity or luminosity
-	(through SetOpacity() or SetLuminosity()) we are  simply updating variables and scheduling certain lights/turfs for an
-	update. Actual updates are handled periodically by the SSlighting subsystem. This carries additional overheads, however it
-	means that each thing is changed only once per SSlighting.wait deciseconds. Allowing for greater control
-	over how much priority we'd like lighting updates to have.
-
-	UPDATE: we no longer postpone lighting updates by editting variables, there is now a subsystem/proc/postpone() procedure.
-			So you would do SSlighting.postpone()
-
-	Unlike our old system there are hardcoded maximum luminositys (different for certain atoms).
+	Unlike our older system, there are hardcoded maximum luminosities (different for certain atoms).
 	This is to cap the cost of creating lighting effects.
 	(without this, an atom with luminosity of 20 would have to update 41^2 turfs!) :s
 
-	Also, in order for the queueing system to work, each light remembers the effect it casts on each turf. This is going to
-	have larger memory requirements than our previous system but it's easily worth the hassle for the greater control we
-	gain. It also reduces cost of removing lighting effects by a lot!
+	Each light remembers the effect it casts on each turf. It reduces cost of removing lighting effects by a lot!
 
 	Known Issues/TODO:
-		Shuttles still do not have support for dynamic lighting (I hope to fix this at some point)
+		Shuttles still do not have support for dynamic lighting (I hope to fix this at some point) -probably trivial now
 		No directional lighting support. (prototype looked ugly)
+		Allow lights to be weaker than 'cap' radius
+		Colored lights
 */
 
 #define LIGHTING_CIRCULAR 1									//comment this out to use old square lighting effects.
@@ -41,7 +37,7 @@
 
 /datum/light_source
 	var/atom/owner
-	var/strength = 0
+	var/radius = 0
 	var/changed = 1
 	var/list/effect = list()
 	var/__x = 0		//x coordinate at last update
@@ -52,18 +48,21 @@
 		CRASH("The first argument to the light object's constructor must be the atom that is the light source. Expected atom, received '[A]' instead.")
 	..()
 	owner = A
-	strength = A.luminosity
+	radius = A.luminosity
 	__x = owner.x
 	__y = owner.y
-	// the lighting object maintains a list of all light sources
-	SSlighting.lights += src
+	SSlighting.changed_lights += src
 
+/datum/light_source/Destroy()
+	if(owner && owner.light == src)
+		owner.light = null
+	return ..()
 
 //Check a light to see if its effect needs reprocessing. If it does, remove any old effect and create a new one
 /datum/light_source/proc/check()
 	if(!owner)
 		remove_effect()
-		return 1	//causes it to be removed from our list of lights. The garbage collector will then destroy it.
+		return 1	//causes it to be deleted
 
 	if(changed)
 		changed = 0
@@ -71,6 +70,14 @@
 		return add_effect()
 	return 0
 
+
+/datum/light_source/proc/changed()
+	changed = 1
+	if(owner)
+		__x = owner.x
+		__y = owner.y
+	if(SSlighting)
+		SSlighting.changed_lights |= src
 
 /datum/light_source/proc/remove_effect()
 	// before we apply the effect we remove the light's current effect.
@@ -86,10 +93,10 @@
 
 /datum/light_source/proc/add_effect()
 	// only do this if the light is turned on and is on the map
-	if(owner.loc && strength > 0)
+	if(owner.loc && radius > 0)
 		effect = list()
 		var/turf/To = get_turf(owner)
-		var/range = owner.get_light_range(strength)
+		var/range = owner.get_light_range(radius)
 
 		for(var/turf/T in view(range, To))
 			var/delta_lumcount = T.lumen(src)
@@ -103,18 +110,18 @@
 
 		return 0
 	else
-		owner.light = null
 		return 1	//cause the light to be removed from the lights list and garbage collected once it's no
 					//longer referenced by the queue
 
 /turf/proc/lumen(datum/light_source/L)
-	. = L.strength
-#ifdef USE_CIRCULAR_LIGHTING
-	. -= cheap_hypotenuse(x, y, L.__x, L.__y)
+	var/distance = 0
+#ifdef LIGHTING_CIRCULAR
+	distance = cheap_hypotenuse(x, y, L.__x, L.__y)
 #else
-	. -= max(abs(x - L.__x), abs(y - L.__y))
+	distance = max(abs(x - L.__x), abs(y - L.__y))
 #endif
-	return .
+	return LIGHTING_CAP * (L.radius - distance) / L.radius
+
 
 /turf/space/lumen()
 	return 0
@@ -146,6 +153,10 @@
 
 //Objects with opacity will trigger nearby lights to update at next lighting process.
 /atom/movable/Destroy()
+	if(light)
+		light.changed()
+		light.owner = null
+		light = null
 	if(opacity)
 		UpdateAffectingLights()
 	return ..()
@@ -164,15 +175,15 @@
 			return
 		light = new(src)
 	else
-		if(light.strength == new_luminosity)
+		if(light.radius == new_luminosity)
 			return
-	light.strength = new_luminosity
+	light.radius = new_luminosity
 	luminosity = new_luminosity
-	light.changed = 1
+	light.changed()
 
 /atom/proc/AddLuminosity(delta_luminosity)
 	if(light)
-		SetLuminosity(light.strength + delta_luminosity)
+		SetLuminosity(light.radius + delta_luminosity)
 	else
 		SetLuminosity(delta_luminosity)
 
@@ -301,8 +312,8 @@
 
 /turf/UpdateAffectingLights()
 	if(affecting_lights)
-		for(var/thing in affecting_lights)
-			thing:changed = 1			//force it to update at next process()
+		for(var/datum/light_source/thing in affecting_lights)
+			thing.changed()			//force it to update at next process()
 
 
 #define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.
@@ -311,20 +322,20 @@
 #define LIGHTING_MAX_LUMINOSITY_TURF	1	//turfs have a severely shortened range to protect from inevitable floor-lighttile spam.
 
 //caps luminosity effects max-range based on what type the light's owner is.
-/atom/proc/get_light_range(strength)
-	return min(strength, LIGHTING_MAX_LUMINOSITY_STATIC)
+/atom/proc/get_light_range(radius)
+	return min(radius, LIGHTING_MAX_LUMINOSITY_STATIC)
 
-/atom/movable/get_light_range(strength)
-	return min(strength, LIGHTING_MAX_LUMINOSITY_MOBILE)
+/atom/movable/get_light_range(radius)
+	return min(radius, LIGHTING_MAX_LUMINOSITY_MOBILE)
 
-/mob/get_light_range(strength)
-	return min(strength, LIGHTING_MAX_LUMINOSITY_MOB)
+/mob/get_light_range(radius)
+	return min(radius, LIGHTING_MAX_LUMINOSITY_MOB)
 
-/obj/machinery/light/get_light_range(strength)
-	return min(strength, LIGHTING_MAX_LUMINOSITY_STATIC)
+/obj/machinery/light/get_light_range(radius)
+	return min(radius, LIGHTING_MAX_LUMINOSITY_STATIC)
 
-/turf/get_light_range(strength)
-	return min(strength, LIGHTING_MAX_LUMINOSITY_TURF)
+/turf/get_light_range(radius)
+	return min(radius, LIGHTING_MAX_LUMINOSITY_TURF)
 
 #undef LIGHTING_MAX_LUMINOSITY_STATIC
 #undef LIGHTING_MAX_LUMINOSITY_MOBILE
