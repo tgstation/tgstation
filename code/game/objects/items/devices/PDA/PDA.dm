@@ -1612,7 +1612,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if (6)
 			if(dev_analys) //let's use this instead. Much neater
 				if(A.Adjacent(user))
-					dev_analys.afterattack(A, user, 1)
+					dev_analys.preattack(A, user, 1)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info
