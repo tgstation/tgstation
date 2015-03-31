@@ -15,10 +15,14 @@
 ////////////////////////////////////////////
 
 /datum/powernet/New()
-	powernets += src
+	if(!(src in powernets)) //Pooling changes a disposed variable to 1, causing it to no longer process from the list
+		powernets += src
+
+/datum/powernet/Del()
+	powernets -= src
+	..()
 
 /datum/powernet/Destroy()
-	powernets -= src
 	for(var/obj/structure/cable/C in cables)
 		remove_cable(C)
 	for(var/obj/machinery/power/P in nodes)
@@ -123,7 +127,6 @@
 		NewPN.load = oldload
 		NewPN.avail = oldavail
 		NewPN.newavail = oldnewavail //Ha
-		NewPN.netexcess = oldavail - oldload
 		for(var/obj/structure/cable/C in NewPN.cables)
 			C.oldload = 0
 			C.oldavail = 0
@@ -182,12 +185,9 @@ In modules/power/power.dm :
 	for(var/datum/powernet/PN in powernets)
 		returnToDPool(src)
 
-	powernets.len = 0
-
 	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = getFromDPool(/datum/powernet/)
-			powernets += NewPN
 			NewPN.add_cable(PC)
 			propagate_network(PC, PC.powernet)
 

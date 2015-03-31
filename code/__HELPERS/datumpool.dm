@@ -40,6 +40,7 @@ var/global/list/masterdatumPool = new
 			O.New(arglist(B))
 		else
 			O.New()
+		O.disposed = null //Set to process once again
 	return O
 
 /*
@@ -64,6 +65,7 @@ var/global/list/masterdatumPool = new
 		masterdatumPool["[D.type]"] = list()
 	D.Destroy()
 	D.resetVariables()
+	D.disposed = 1 //Set to stop processing while pooled
 	masterdatumPool["[D.type]"] += D
 
 	#ifdef DEBUG_DATUM_POOL

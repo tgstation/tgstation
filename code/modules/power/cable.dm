@@ -239,24 +239,36 @@ By design, d1 is the smallest direction and d2 is the highest
 ///////////////////////////////////////////
 
 /obj/structure/cable/proc/add_avail(var/amount)
+	check_rebuild()
 	if(powernet)
 		powernet.newavail += amount
 
 /obj/structure/cable/proc/add_load(var/amount)
+	check_rebuild()
 	if(powernet)
 		powernet.load += amount
 
 /obj/structure/cable/proc/surplus()
+	check_rebuild()
 	if(powernet)
 		return powernet.avail-powernet.load
 	else
 		return 0
 
 /obj/structure/cable/proc/avail()
+	check_rebuild()
 	if(powernet)
 		return powernet.avail
 	else
 		return 0
+
+/obj/structure/cable/proc/check_rebuild()
+	if(build_status == 0)
+		return
+	var/list/cables = locate(/obj/structure/cable/) in loc
+	for(var/obj/structure/cable/C in cables)
+		if(C.build_status == 1)
+			C.rebuild_from()
 
 /////////////////////////////////////////////////
 // Cable laying helpers
@@ -441,6 +453,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		if(PN.is_empty()) // can happen with machines made nodeless when smoothing cables
 			returnToDPool(PN) //powernets do not get qdelled
 
+/* No longer used due to applying the pipenet method of rebuilding when needed or during the next powernet tick
 // cut the cable's powernet at this cable and updates the powergrid
 /obj/structure/cable/proc/cut_cable_from_powernet()
 	var/turf/T1 = loc
@@ -476,3 +489,4 @@ By design, d1 is the smallest direction and d2 is the highest
 		for(var/obj/machinery/power/P in T1)
 			if(!P.connect_to_network()) // can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() // remove from current network
+*/
