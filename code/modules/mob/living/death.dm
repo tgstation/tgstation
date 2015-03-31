@@ -38,6 +38,8 @@
 	living_mob_list -= src
 	if(!gibbed)
 		dead_mob_list += src
+	else if(buckled)
+		buckled.unbuckle_mob()
 
 
 /mob/living/proc/setup_animation(var/animation, var/prev_lying)
