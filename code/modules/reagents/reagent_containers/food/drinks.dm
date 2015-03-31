@@ -196,7 +196,7 @@
 
 	else //Something like a glass. Player probably wants to transfer TO it.
 
-		if(!istype(target, /obj/item/weapon/reagent_containers)) //Not a reagent container, we most likely shouldn't be dealing with it here !
+		if(!istype(target, /obj/item/weapon/reagent_containers) && !istype(target, /obj/machinery/microwave)) //Not a reagent container or microwave, we most likely shouldn't be dealing with it here !
 			return //We're done here
 
 		if(!is_open_container()) //In any case, we aren't working with a closed bottle
