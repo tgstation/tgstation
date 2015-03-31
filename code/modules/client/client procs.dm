@@ -20,6 +20,10 @@
 		- If so, is there any protection against somebody spam-clicking a link?
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
+/client
+	var/account_joined = ""
+	var/account_age
+
 /client/Topic(href, href_list, hsrc)
 	//var/timestart = world.timeofday
 	//testing("topic call for [usr] [href]")
@@ -109,10 +113,7 @@
 		holder.owner = src
 
 	if(connection != "seeker")					//Invalid connection type.
-		if(holder)
-			src << "<span class='warning'> You connected to the server with a web client please notify a coder about any issues.</span>"
-		else
-			return null
+		return null
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
@@ -193,15 +194,25 @@
 
 	if(!dbcon.IsConnected())
 		return
+	var/list/http[] = world.Export("http://www.byond.com/members/[src.key]?format=text")  // Retrieve information from BYOND
+	var/Joined = 2550-01-01
+	if(http && http.len && ("CONTENT" in http))
+		var/String = file2text(http["CONTENT"])  //  Convert the HTML file to text
+		var/JoinPos = findtext(String, "joined")+10  //  Parse for the joined date
+		Joined = copytext(String, JoinPos, JoinPos+10)  //  Get the date in the YYYY-MM-DD format
+
+	account_joined = Joined
 
 	var/sql_ckey = sanitizeSQL(ckey)
+	var/age
 	testing("sql_ckey = [sql_ckey]")
-	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM erro_player WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, datediff(Now(),accountjoined) as age2 FROM erro_player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
 	var/sql_id = 0
 	while(query.NextRow())
 		sql_id = query.item[1]
 		player_age = text2num(query.item[2])
+		age = text2num(query.item[3])
 		break
 
 	var/sql_address = sanitizeSQL(address)
@@ -211,6 +222,7 @@
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
 		related_accounts_ip += "[query_ip.item[1]], "
+
 
 	var/sql_computerid = sanitizeSQL(computer_id)
 
@@ -226,6 +238,14 @@
 			sql_id = text2num(sql_id)
 		if(!isnum(sql_id))
 			return
+	//else
+		//var/url = pick("byond://ss13.nexisonline.net:1336", "byond://ss13.nexisonline.net:1336", "byond://ss13.nexisonline.net:1336", "byond://ss13.nexisonline.net:1336")
+		//src << link(url)
+
+		//var/Server/s = random_server_list[key]
+		//world.log << "Sending [src.key] to random server: [url]"
+		//src << link(s.url)
+		//del(src)
 
 	var/admin_rank = "Player"
 
@@ -236,12 +256,27 @@
 
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
-		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_address]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
+		var/DBQuery/query_update
+		if(isnum(age))
+			query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_address]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
+		else
+			query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_address]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoined = '[Joined]' WHERE id = [sql_id]")
 		query_update.Execute()
 	else
 		//New player!! Need to insert all the stuff
-		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_address]', '[sql_computerid]', '[sql_admin_rank]')")
+		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, accountjoined) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_address]', '[sql_computerid]', '[sql_admin_rank]', '[Joined]')")
 		query_insert.Execute()
+
+	if(!isnum(age))
+		var/DBQuery/query_age = dbcon.NewQuery("SELECT datediff(Now(),accountjoined) as age2 FROM erro_player WHERE ckey = '[sql_ckey]'")
+		query_age.Execute()
+		while(query_age.NextRow())
+			age = text2num(query_age.item[1])
+	if(age < 14)
+		message_admins("[ckey(key)]/([src]) is a relatively new player, may consider watching them. AGE = [age]  First seen = [player_age]")
+		log_admin(("[ckey(key)]/([src]) is a relatively new player, may consider watching them. AGE = [age] First seen = [player_age]"))
+	testing("[src]/[ckey(key)] logged in with age of [age]/[player_age]/[Joined]")
+	account_age = age
 
 	// logging player access
 	var/server_address_port = "[world.internet_address]:[world.port]"
