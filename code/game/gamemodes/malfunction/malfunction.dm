@@ -5,7 +5,7 @@
 	name = "AI malfunction"
 	config_tag = "malfunction"
 	antag_flag = BE_MALF
-	required_players = 1 //20
+	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
