@@ -244,6 +244,7 @@
 		new /datum/data/mining_equipment("GAR mesons",			/obj/item/clothing/glasses/meson/gar,							   500),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   800),
+		new /datum/data/mining_equipment("Plasma Cutter", 		/obj/item/weapon/gun/energy/plasmacutter/charged,				   950),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  1200),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               1500),
@@ -344,7 +345,7 @@
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Mining Drill", "Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Mining Drill", "Kinetic Accelerator", "Plasma Cutter", "Resonator", "Mining Drone", "Advanced Scanner")
 	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
 	switch(selection)
@@ -354,6 +355,8 @@
 		if("Kinetic Accelerator")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
 			new /obj/item/weapon/screwdriver(src.loc)
+		if("Plasma Cutter")
+			new /obj/item/weapon/gun/energy/plasmacutter/charged(src.loc)
 		if("Resonator")
 			new /obj/item/weapon/resonator(src.loc)
 			new /obj/item/weapon/screwdriver(src.loc)
@@ -378,7 +381,7 @@
 /obj/item/weapon/mining_voucher
 	name = "mining voucher"
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
 	w_class = 1
 
@@ -410,7 +413,7 @@
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
 	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
@@ -470,7 +473,7 @@
 
 /obj/item/weapon/resonator
 	name = "resonator"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
@@ -783,7 +786,7 @@
 		else
 			for(M in L)
 				var/turf/T = get_turf(M)
-				var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+				var/image/I = image('icons/turf/mining.dmi', loc = T, icon_state = M.scan_state, layer = 18)
 				C.images += I
 				spawn(30)
 					if(C)
@@ -811,7 +814,7 @@
 /obj/item/device/t_scanner/adv_mining_scanner/scan()
 	if(!cooldown)
 		cooldown = 1
-		spawn(60)
+		spawn(35)
 			cooldown = 0
 		var/turf/t = get_turf(src)
 		var/list/mobs = recursive_mob_check(t, 1,0,0)
@@ -828,7 +831,7 @@
 					var/client/C = user.client
 					for(M in L)
 						var/turf/T = get_turf(M)
-						var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+						var/image/I = image('icons/turf/mining.dmi', loc = T, icon_state = M.scan_state, layer = 18)
 						C.images += I
 						spawn(30)
 							if(C)

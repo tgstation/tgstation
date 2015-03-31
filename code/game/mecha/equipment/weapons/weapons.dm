@@ -101,6 +101,22 @@
 	projectile = /obj/item/projectile/beam/pulse/heavy
 	fire_sound = 'sound/weapons/marauder.ogg'
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
+	equip_cooldown = 8
+	name = "217-D Heavy Plasma Cutter"
+	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demloishing solid obstacles."
+	icon_state = "mecha_plasmacutter"
+	item_state = "plasmacutter"
+	energy_drain = 45
+	origin_tech = "materials=3;combat=2;powerstorage=3;plasma=3"
+	projectile = /obj/item/projectile/plasma/adv/mech
+	fire_sound = 'sound/weapons/pulse.ogg'
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/M as obj)
+	if(istype(M, /obj/mecha/working))
+		if(M.equipment.len<M.max_equip)
+			return 1
+	return 0
 
 /obj/item/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"

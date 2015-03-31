@@ -1,0 +1,12 @@
+author: ACCount
+
+delete-after: True
+
+changes: 
+  - rscadd: "The plasma cutter is now a gun that comes in the mining vending machine. Use it to mine fast but expensively."
+  - tweak: "It's also cheaper in RnD, and there's an advanced version of it there too. Yay!"
+  - tweak: "Ripleys and Firefighters have been buffed significantly. Go wild."
+  - tweak: "Precious mesons are cheaper in RnD."
+  - rscadd: "Now you can mine bluespace crystals. They are extremely rare."
+  - rscadd: "You can make remote bombs out of gibtonite. Figure out how."
+  - tweak: "Gibtonite is a bit less stable. Do not hit it with anything heavy."
