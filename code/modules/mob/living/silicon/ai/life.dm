@@ -1,11 +1,11 @@
 /mob/living/silicon/ai/Life()
-	if (src.stat == 2)
+	if (src.stat == DEAD)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
 		//Being dead doesn't mean your temperature never changes
 		var/turf/T = get_turf(src)
 
-		if (src.stat!=0)
+		if (src.stat!= CONSCIOUS)
 			src.cameraFollow = null
 			src.reset_view(null)
 			src.unset_machine()

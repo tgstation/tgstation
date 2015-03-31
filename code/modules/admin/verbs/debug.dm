@@ -863,17 +863,18 @@ var/global/list/g_fancy_list_of_types = null
 					equip_emergencyresponsesquad(M, "sec")
 				if("Engineer")
 					equip_emergencyresponsesquad(M, "eng")
-				if("Medic")
+				if("Medical")
 					equip_emergencyresponsesquad(M, "med")
 
 		if("centcom official")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_com(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/pen(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(M), slot_back)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
@@ -895,16 +896,17 @@ var/global/list/g_fancy_list_of_types = null
 
 		if("centcom commander")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_commander(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/bulletproof(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent/commander(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/cohiba(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/centhat(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/a357(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.icon_state = "centcom"
@@ -916,7 +918,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
 		if("special ops officer")
-			var/obj/item/device/radio/headset/R = new /obj/item/device/radio/headset/headset_cent(M)
+			var/obj/item/device/radio/headset/R = new /obj/item/device/radio/headset/headset_cent/commander(M)
 			R.set_frequency(1441)
 			M.equip_to_slot_or_del(R, slot_ears)
 
@@ -1103,7 +1105,7 @@ var/global/list/g_fancy_list_of_types = null
 
 //Deathsquad
 /proc/equip_deathsquad(var/mob/living/carbon/human/M, var/officer)
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/headset_cent/alt(M)
 	R.set_frequency(1441)
 	M.equip_to_slot_or_del(R, slot_ears)
 
@@ -1134,12 +1136,13 @@ var/global/list/g_fancy_list_of_types = null
 	M.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen(M), slot_s_store)
 	M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(M), slot_belt)
 
-	M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse(M), slot_r_hand)
+	M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/loyalpin(M), slot_r_hand)
 
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)//Here you go Deuryn
 	L.imp_in = M
 	L.implanted = 1
+	M.sec_hud_set_implants()
 
 	var/obj/item/weapon/card/id/W = new(M)
 	W.icon_state = "centcom"
@@ -1147,22 +1150,24 @@ var/global/list/g_fancy_list_of_types = null
 	W.access += get_centcom_access("Death Commando")//Let's add their alloted Centcom access.
 	W.assignment = "Death Commando"
 	W.registered_name = M.real_name
-	W.update_label(M.real_name)
+	W.update_label(W.registered_name, W.assignment)
 	M.equip_to_slot_or_del(W, slot_wear_id)
 
 //Emergency Response Team
 /proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/ertrole)
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
+	var/obj/item/weapon/card/id/W = null
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/headset_cent/alt(M)
 	R.set_frequency(1441)
 	M.equip_to_slot_or_del(R, slot_ears)
 
 	switch(ertrole)
 		if("commander")
+			W = new /obj/item/weapon/card/id/ert(M)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/hardsuit/ert(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert(M), slot_wear_id)
+			M.equip_to_slot_or_del(W, slot_wear_id)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 
@@ -1173,12 +1178,15 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/security/full(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/saber(M), slot_l_store)
 
+			R.keyslot = new /obj/item/device/encryptionkey/heads/captain
+
 		if("sec")
+			W = new /obj/item/weapon/card/id/ert/Security(M)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/hardsuit/ert/sec(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert/Security(M), slot_wear_id)
+			M.equip_to_slot_or_del(W, slot_wear_id)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(M), slot_glasses)
 
@@ -1189,12 +1197,15 @@ var/global/list/g_fancy_list_of_types = null
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/security/full(M), slot_belt)
 
+			R.keyslot = new /obj/item/device/encryptionkey/heads/hos
+
 		if("med")
+			W = new /obj/item/weapon/card/id/ert/Medical(M)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/hardsuit/ert/med(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert/Medical(M), slot_wear_id)
+			M.equip_to_slot_or_del(W, slot_wear_id)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(M), slot_glasses)
 
@@ -1207,12 +1218,15 @@ var/global/list/g_fancy_list_of_types = null
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(M), slot_r_hand)
 
+			R.keyslot = new /obj/item/device/encryptionkey/heads/cmo
+
 		if("eng")
+			W = new /obj/item/weapon/card/id/ert/Engineer(M)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/swat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/hardsuit/ert/engi(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/weapon/card/id/ert/Engineer(M), slot_wear_id)
+			M.equip_to_slot_or_del(W, slot_wear_id)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/meson/engine(M), slot_glasses)
 
@@ -1224,7 +1238,15 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/rcd_ammo/large(M), slot_l_store)
 
+			R.keyslot = new /obj/item/device/encryptionkey/heads/ce
+
+	R.recalculateChannels()
+
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 	L.imp_in = M
 	L.implanted = 1
 	M.sec_hud_set_implants()
+
+	if (W)
+		W.registered_name = M.real_name
+		W.update_label(W.registered_name, W.assignment)

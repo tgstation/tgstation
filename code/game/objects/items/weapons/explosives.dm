@@ -63,6 +63,9 @@
 		return
 	if (ismob(target) || istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
 		return
+	if(loc == target)
+		return
+
 	user << "Planting explosives..."
 
 	if(do_after(user, 50) && in_range(user, target))

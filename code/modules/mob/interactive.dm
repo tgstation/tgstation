@@ -1,24 +1,3 @@
-#define INTERACTING 2
-#define TRAVEL 4
-#define FIGHTING 8
-
-//TRAITS
-
-#define TRAIT_ROBUST 2
-#define TRAIT_UNROBUST 4
-#define TRAIT_SMART 8
-#define TRAIT_DUMB 16
-#define TRAIT_MEAN 32
-#define TRAIT_FRIENDLY 64
-#define TRAIT_THIEVING 128
-
-//defines
-#define MAX_RANGE_FIND 32
-#define MIN_RANGE_FIND 16
-#define FUZZY_CHANCE_HIGH 85
-#define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 15
-
 /*
 	NPC VAR EXPLANATIONS (for modules and other things)
 
@@ -69,6 +48,7 @@
 	var/obj/item/other_hand
 	var/TRAITS = 0
 	var/datum/job/myjob
+	faction = list("station")
 	//trait vars
 	var/robustness = 50
 	var/smartness = 50
@@ -79,6 +59,31 @@
 	//modules
 	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter")
 
+//botPool funcs
+/mob/living/carbon/human/interactive/proc/takeDelegate(var/mob/living/carbon/human/interactive/from,var/doReset=TRUE)
+	eye_color = "red"
+	if(from == src)
+		return FALSE
+	TARGET = from.TARGET
+	LAST_TARGET = from.LAST_TARGET
+	retal = from.retal
+	retal_target = from.retal_target
+	doing = from.doing
+	//
+	timeout = 0
+	inactivity_period = 0
+	interest = 100
+	//
+	if(doReset)
+		from.TARGET = null
+		from.LAST_TARGET = null
+		from.retal = 0
+		from.retal_target = null
+		from.doing = 0
+	return TRUE
+
+//end pool funcs
+
 /mob/living/carbon/human/interactive/proc/random()
 	//this is here because this has no client/prefs/brain whatever.
 	underwear = random_underwear(gender)
@@ -87,7 +92,7 @@
 	facial_hair_style = random_facial_hair_style(gender)
 	hair_color = random_short_color()
 	facial_hair_color = hair_color
-	eye_color = random_eye_color()
+	eye_color = "blue"
 	age = rand(AGE_MIN,AGE_MAX)
 	ready_dna(src,random_blood_type())
 	//job handling
@@ -105,6 +110,12 @@
 	..()
 	retal = 1
 	retal_target = user
+
+/mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
+	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
+	if(potentialAssault)
+		attacked_by(P,potentialAssault)
+	..()
 
 /mob/living/carbon/human/interactive/New()
 	..()
@@ -133,29 +144,29 @@
 		//arms
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
-			del(R)
+			qdel(R)
 			organs += new /obj/item/organ/limb/robot/r_arm
 		else
 			var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in organs
-			del(L)
+			qdel(L)
 			organs += new /obj/item/organ/limb/robot/l_arm
 		//legs
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
-			del(R)
+			qdel(R)
 			organs += new /obj/item/organ/limb/robot/r_leg
 		else
 			var/obj/item/organ/limb/l_leg/L = locate(/obj/item/organ/limb/l_leg) in organs
-			del(L)
+			qdel(L)
 			organs += new /obj/item/organ/limb/robot/l_leg
 		//chest and head
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs
-			del(R)
+			qdel(R)
 			organs += new /obj/item/organ/limb/robot/chest
 		else
 			var/obj/item/organ/limb/head/L = locate(/obj/item/organ/limb/head) in organs
-			del(L)
+			qdel(L)
 			organs += new /obj/item/organ/limb/robot/head
 		for(var/obj/item/organ/limb/LIMB in organs)
 			LIMB.owner = src
@@ -220,10 +231,10 @@
 		toReturn = "Excited"
 	return toReturn
 //END DEBUG
-/mob/living/carbon/human/interactive/proc/isnotfunc()
+/mob/living/carbon/human/interactive/proc/isnotfunc(var/checkDead = TRUE)
 	if(!canmove)
 		return 1
-	if(health <= 0)
+	if(health <= 0 && checkDead)
 		return 1
 	if(restrained())
 		return 1
@@ -634,12 +645,14 @@
 	New()
 		TRAITS |= TRAIT_ROBUST
 		TRAITS |= TRAIT_MEAN
+		faction = list("bot_angry")
 		..()
 
 /mob/living/carbon/human/interactive/friendly
 	New()
 		TRAITS |= TRAIT_FRIENDLY
 		TRAITS |= TRAIT_UNROBUST
+		faction = list("bot_friendly")
 		..()
 
 /mob/living/carbon/human/interactive/greytide
@@ -648,16 +661,6 @@
 		TRAITS |= TRAIT_MEAN
 		TRAITS |= TRAIT_THIEVING
 		TRAITS |= TRAIT_DUMB
+		faction = list("bot_grey")
 		graytide = 1
 		..()
-
-#undef INTERACTING
-#undef TRAVEL
-#undef FIGHTING
-#undef TRAIT_ROBUST
-#undef TRAIT_UNROBUST
-#undef TRAIT_SMART
-#undef TRAIT_DUMB
-#undef TRAIT_MEAN
-#undef TRAIT_FRIENDLY
-#undef TRAIT_THIEVING

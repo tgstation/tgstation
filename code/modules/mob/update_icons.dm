@@ -43,6 +43,9 @@
 /mob/proc/update_inv_head()
 	return
 
+/mob/proc/update_hair()
+	return
+
 /mob/proc/update_inv_gloves()
 	return
 

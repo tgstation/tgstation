@@ -157,7 +157,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 
 			if(prob(5)) //Spawns foam!
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
-				new /obj/effect/effect/foam(loc)
+				PoolOrNew(/obj/effect/effect/foam, loc)
 
 	else if (prob(5))
 		visible_message("[src] makes an excited beeping booping sound!")

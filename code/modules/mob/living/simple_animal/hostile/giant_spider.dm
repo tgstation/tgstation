@@ -43,8 +43,6 @@
 	health = 200
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	heat_damage_per_tick = 20
-	cold_damage_per_tick = 20
 	faction = list("spiders")
 	var/busy = 0
 	pass_flags = PASSTABLE
@@ -263,6 +261,12 @@
 					fed--
 			busy = 0
 			stop_automated_movement = 0
+
+/mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
+	if(bodytemperature < minbodytemp)
+		adjustBruteLoss(20)
+	else if(bodytemperature > maxbodytemp)
+		adjustBruteLoss(20)
 
 #undef SPINNING_WEB
 #undef LAYING_EGGS

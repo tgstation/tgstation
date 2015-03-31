@@ -157,7 +157,7 @@
 	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	hair_color = "mutcolor"
 	hair_alpha = 150
-	ignored_by = list(/mob/living/carbon/slime)
+	ignored_by = list(/mob/living/simple_animal/slime)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	var/recently_changed = 1

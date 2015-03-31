@@ -138,7 +138,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 //HAIR OVERLAY
-/mob/living/carbon/human/proc/update_hair()
+/mob/living/carbon/human/update_hair()
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 

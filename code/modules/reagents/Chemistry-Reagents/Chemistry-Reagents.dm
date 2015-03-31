@@ -252,7 +252,7 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	if(volume >= 10)
 		T.MakeSlippery()
 
-	for(var/mob/living/carbon/slime/M in T)
+	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
 
 	var/hotspot = (locate(/obj/effect/hotspot) in T)
@@ -681,7 +681,7 @@ datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
-		for(var/mob/living/carbon/slime/M in T)
+		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
 	if(istype(T, /turf/simulated/floor))
 		var/turf/simulated/floor/F = T

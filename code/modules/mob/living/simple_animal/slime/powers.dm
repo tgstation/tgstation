@@ -1,6 +1,25 @@
-/mob/living/carbon/slime/verb/Feed()
+/mob/living/simple_animal/slime/verb/Feed()
 	set category = "Slime"
 	set desc = "This will let you feed on any valid creature in the surrounding area. This should also be used to halt the feeding process."
+
+	if(stat)
+		return 0
+
+	var/list/choices = list()
+	for(var/mob/living/C in view(1,src))
+		if(C!=src && !isslime(C) && Adjacent(C))
+			choices += C
+
+	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
+	if(!M) return 0
+	if(CanFeedon(M))
+		Feedon(M)
+		return 1
+
+/mob/living/simple_animal/slime/proc/CanFeedon(var/mob/living/M)
+	if(!Adjacent(M))
+		return 0
+
 	if(Victim)
 		Feedstop()
 		return 0
@@ -13,64 +32,35 @@
 		src << "<i>I must be conscious to do this...</i>"
 		return 0
 
-	var/list/choices = list()
-	for(var/mob/living/C in view(1,src))
-		if(C!=src && !istype(C,/mob/living/carbon/slime) && Adjacent(C))
-			choices += C
+	if(M.stat == DEAD)
+		src << "<i>This subject does not have a strong enough life energy...</i>"
+		return 0
 
-	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
-	if(!M) return 0
-	if(Adjacent(M))
-
-		if(istype(M, /mob/living/carbon/brain))
-			src << "<i>This subject does not have an edible life energy...</i>"
+	for(var/mob/living/simple_animal/slime/met in view())
+		if(met.Victim == M && met != src)
+			src << "<i>The [met.name] is already feeding on this subject...</i>"
 			return 0
+	return 1
 
-		if(istype(M, /mob/living/carbon) && (M.health < -70))
-			src << "<i>This subject does not have a strong enough life energy...</i>"
-			return 0
+/mob/living/simple_animal/slime/proc/Feedon(var/mob/living/M)
 
-		if(istype(M, /mob/living/simple_animal) && (M.health < 1))//animals don't go into crit, stupid; fixes infinite energy exploit
-			src << "<i>This subject does not have a strong enough life energy...</i>"
-			return 0
+	src << "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>"
+	M << "<span class='userdanger'>The [name] has latched onto [M.name]!</span>"
 
-		for(var/mob/living/carbon/slime/met in view())
-			if(met.Victim == M && met != src)
-				src << "<i>The [met.name] is already feeding on this subject...</i>"
-				return 0
-
-		src << "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>"
-		M << "<span class='userdanger'>The [src.name] has latched onto your head!</span>"
-
-		Feedon(M)
-		return 1
-
-
-/mob/living/carbon/slime/proc/Feedon(var/mob/living/M)
 	Victim = M
 	src.loc = M.loc
 	canmove = 0
 	anchored = 1
 	var/lastnut = nutrition
 	var/fed_succesfully = 0
-	var/health_minimum = -70
 
-	if(is_adult)
-		icon_state = "[colour] adult slime eat"
-	else
-		icon_state = "[colour] baby slime eat"
-
-
-	if(istype(Victim, /mob/living/simple_animal))
-		health_minimum = 0
-
-	while(Victim && Victim.health > health_minimum && stat != 2)
+	while(Victim && Victim == M && Victim.stat != DEAD && stat != DEAD)
 		canmove = 0
 
 		if(Adjacent(Victim))
 			loc = M.loc
 
-			if(istype(Victim, /mob/living/carbon))
+			if(iscarbon(Victim))
 				Victim.adjustCloneLoss(rand(5,6))
 				Victim.adjustToxLoss(rand(1,2))
 				if(Victim.health <= 0)
@@ -87,12 +77,12 @@
 
 				fed_succesfully = 1
 
-			else if(health_minimum == 0) //we already know it's a simple_animal from above
+			else if(isanimal(Victim)) //we already know it's a simple_animal from above
 				Victim.adjustBruteLoss(is_adult ? rand(7, 15) : rand(4, 12))
 				fed_succesfully = 1
 
 			else
-				src << "<span class='warning'>[pick("This subject is incompatable", \
+				src << "<span class='warning'>[pick("This subject is incompatible", \
 				"This subject does not have a life energy", "This subject is empty", \
 				"I am not satisified", "I can not feed from this subject", \
 				"I do not feel nourished", "This subject is not food")]...</span>"
@@ -101,10 +91,7 @@
 				add_nutrition(rand(15,30), lastnut)
 
 				//Heal yourself.
-				adjustOxyLoss(-10)
 				adjustBruteLoss(-10)
-				adjustFireLoss(-10)
-				adjustCloneLoss(-10)
 
 				updatehealth()
 				if(Victim)
@@ -115,62 +102,45 @@
 		else
 			break
 
-	if(stat == 2) //why the fuck are you doing icon updating here
-		if(!is_adult)
-			icon_state = "[colour] baby slime dead"
-
-	else
-		if(is_adult)
-			icon_state = "[colour] adult slime"
-		else
-			icon_state = "[colour] baby slime"
-
 	canmove = 1
 	anchored = 0
 
-	if(M)
-		if(M.health < health_minimum)
-			M.canmove = 0
-			if(!client)
-				if(Victim && !rabid && !attacked)
-					if(Victim.LAssailant && Victim.LAssailant != Victim)
-						if(prob(50))
-							if(!(Victim.LAssailant in Friends))
-								Friends[Victim.LAssailant] = 1
-								//Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
-							else
-								++Friends[Victim.LAssailant]
 
+	if(M && M.stat == DEAD)
+		if(!client)
+			if(Victim && !rabid && !attacked)
+				if(Victim.LAssailant && Victim.LAssailant != Victim)
+					if(prob(50))
+						if(!(Victim.LAssailant in Friends))
+							Friends[Victim.LAssailant] = 1
+						else
+							++Friends[Victim.LAssailant]
 
-			if(M.client && istype(src, /mob/living/carbon/human))
-				if(prob(85))
-					rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
+		if(M.client && ishuman(M))
+			if(prob(85))
+				rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
 
-			if(client)
-				src << "<i>This subject does not have a strong enough life energy anymore...</i>"
-		else
-			M.canmove = 1
-
-			if(client)
-				src << "<i>I have stopped feeding...</i>"
-	else
 		if(client)
-			src << "<i>I have stopped feeding...</i>"
+			src << "<i>This subject does not have a strong enough life energy anymore...</i>"
+
+	else if(client)
+		src << "<i>I have stopped feeding...</i>"
 
 	Victim = null
 
-/mob/living/carbon/slime/proc/Feedstop()
+/mob/living/simple_animal/slime/proc/Feedstop()
 	if(Victim)
-		if(Victim.client) Victim << "[src] has let go of your head!"
+		if(Victim.client)
+			Victim << "[src] has let go of your head!"
 		Victim = null
 
-/mob/living/carbon/slime/proc/UpdateFeed(var/mob/M)
+/mob/living/simple_animal/slime/proc/UpdateFeed(var/mob/M)
 	if(Victim)
 		if(Victim == M)
 			loc = M.loc // simple "attach to head" effect!
 
 
-/mob/living/carbon/slime/verb/Evolve()
+/mob/living/simple_animal/slime/verb/Evolve()
 	set category = "Slime"
 	set desc = "This will let you evolve from baby to adult slime."
 
@@ -189,7 +159,7 @@
 	else
 		src << "<i>I have already evolved...</i>"
 
-/mob/living/carbon/slime/verb/Reproduce()
+/mob/living/simple_animal/slime/verb/Reproduce()
 	set category = "Slime"
 	set desc = "This will make you split into four Slimes."
 
@@ -207,7 +177,7 @@
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
 			for(var/i=1,i<=4,i++)
-				var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/(loc)
+				var/mob/living/simple_animal/slime/M = new /mob/living/simple_animal/slime/(loc)
 				if(prob(mutation_chance))
 					M.colour = slime_mutation[rand(1,4)]
 				else
@@ -219,7 +189,7 @@
 				babies += M
 				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 
-			var/mob/living/carbon/slime/new_slime = pick(babies)
+			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = "harm"
 			new_slime.languages = languages
 			if(src.mind)

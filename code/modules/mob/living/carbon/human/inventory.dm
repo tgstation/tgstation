@@ -268,11 +268,6 @@
 	else if(I == glasses)
 		glasses = null
 		update_inv_glasses(0)
-	else if(I == head)
-		head = null
-		if(I.flags & BLOCKHAIR)
-			update_hair(0)	//rebuild hair
-		update_inv_head(0)
 	else if(I == ears)
 		ears = null
 		update_inv_ears(0)

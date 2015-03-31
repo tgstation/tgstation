@@ -110,6 +110,10 @@
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
 	var/mutant_colors = 0
 
+	var/no_summon_guns		//No
+	var/no_summon_magic		//Fun
+	var/no_summon_events	//Allowed
+
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
 	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
@@ -476,6 +480,12 @@
 					config.starlight			= 1
 				if("grey_assistants")
 					config.grey_assistants			= 1
+				if("no_summon_guns")
+					config.no_summon_guns			= 1
+				if("no_summon_magic")
+					config.no_summon_magic			= 1
+				if("no_summon_events")
+					config.no_summon_events			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

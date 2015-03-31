@@ -23,14 +23,7 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 
 	//Space carp aren't affected by cold.
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 
@@ -57,7 +50,9 @@
 	icon_living = "holocarp"
 	maxbodytemp = INFINITY
 
-/mob/living/simple_animal/hostile/carp/holocarp/Die()
+/mob/living/simple_animal/hostile/carp/holocarp/death()
+	..(1)
+	ghostize()
 	qdel(src)
 	return
 

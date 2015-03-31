@@ -646,11 +646,9 @@
 
 
 
-/mob/living/carbon/human/help_shake_act(mob/living/carbon/human/M)
+/mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
 	if(!istype(M))
 		return
-
-	var/mob/living/carbon/human/H = src
 
 	if(health >= 0)
 		if(src == M)
@@ -658,7 +656,7 @@
 				"<span class='notice'>[src] examines \himself.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
-			for(var/obj/item/organ/limb/org in H.organs)
+			for(var/obj/item/organ/limb/org in organs)
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
@@ -688,9 +686,9 @@
 				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
 
 				for(var/obj/item/I in org.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[H];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
+					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
 
-			if(H.blood_max)
+			if(blood_max)
 				src << "<span class='danger'>You are bleeding!</span>"
 			if(staminaloss)
 				if(staminaloss > 30)
@@ -698,10 +696,10 @@
 				else
 					src << "<span class='info'>You feel fatigued.</span>"
 		else
-			if(H.wear_suit)
-				H.wear_suit.add_fingerprint(M)
-			else if(H.w_uniform)
-				H.w_uniform.add_fingerprint(M)
+			if(wear_suit)
+				wear_suit.add_fingerprint(M)
+			else if(w_uniform)
+				w_uniform.add_fingerprint(M)
 
 			..()
 
