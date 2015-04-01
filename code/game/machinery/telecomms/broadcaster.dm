@@ -260,18 +260,18 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			if(R.receive_range(SYND_FREQ, list(R.z)) > -1 && freqtext in radiochannelsreverse)
 				radios |= R
 
-	// Get a list of mobs who can hear from the radios we collected.
-	var/list/receive = get_mobs_in_radio_ranges(radios)
-
-	for (var/mob/R in receive) //Filter receiver list.
-		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
-			receive -= R
+	// Get a list of mobs who can hear from the radios we collected and observers.
+	var/list/listeners = get_mobs_in_radio_ranges(radios) | observers
 
 	var/rendered = virt.compose_message(virt, virt.languages, message, freq) //Always call this on the virtualspeaker to advoid issues.
-	for(var/atom/movable/hearer in receive)
-		hearer.Hear(rendered, virt, AM.languages, message, freq)
 
-	if(length(receive))
+	for (var/atom/movable/listener in listeners)
+		if (listener)
+			listener.Hear(rendered, virt, AM.languages, message, freq)
+
+	if(length(listeners))
+		listeners = null
+
 			// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
 		var/blackbox_msg = "[AM] [AM.say_quote(message)]"
