@@ -7831,7 +7831,7 @@
 "cUE" = (/obj/structure/table,/obj/item/weapon/storage/box/handcuffs,/obj/item/device/flash,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/centcom/evac)
 "cUF" = (/obj/machinery/door/window{dir = 1; base_state = "right"; dir = 4; name = "Security Desk"; req_access_txt = "103"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/centcom/evac)
 "cUG" = (/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"},/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "gravsnow_corner"},/area/syndicate_mothership)
-"cUH" = (/obj/effect/landmark/mobcorpse/russian,/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"},/area/syndicate_mothership)
+"cUH" = (/obj/effect/landmark/corpse/russian,/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"},/area/syndicate_mothership)
 "cUI" = (/obj/machinery/vending/cola,/turf/simulated/shuttle/floor,/area/centcom/evac)
 "cUJ" = (/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"},/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/syndicate_station/start)
 "cUK" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/syndicate_station/start)
