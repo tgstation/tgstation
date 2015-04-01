@@ -1,0 +1,8 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed a bug that caused players to drop whatever item they were holding when using drag n drop to feed a monkey to the xenobio recycler.
+  - bugfix: You now have to strip monkeys before feeding them to the recycler, aka, you cannot destroy items by having the dead monkey hold them when you feed it to the machine.
+  - rscadd: Xenobiology's Monkey Recycler can now be deconstructed, and its board can be printed at R&D. Same requirements as the Food Processor.
+  - rscadd: Added a new machine: Chicken Processor. Its board can be printed at R&D. Same requirements as the Food Processor. Turns chicks and chicken into nuggets. They don't have to be dead, the machine will kill them for you. Don't worry it's painless.
+  - experiment: !ERROR! Experiment X-3671: As a followup to the first cryptographic experiment on the machine, the section chief attempted to directly communicate with it by dressing like a...well you can guess. The results were ugly, the experiments are to be indefinitely suspended, the machine's SCP status is confirmed, pending class: Euclid!ERROR!
