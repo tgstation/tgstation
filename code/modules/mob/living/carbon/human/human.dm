@@ -1042,10 +1042,10 @@
 	var/obj/item/clothing/head/headwear = src.head
 	var/obj/item/clothing/glasses/eyewear = src.glasses
 
-	if(headwear && headwear.eyeprot)
+	if (headwear)
 		. += headwear.eyeprot
 
-	if(eyewear && eyewear.eyeprot)
+	if (eyewear)
 		. += eyewear.eyeprot
 
 	return Clamp(., -1, 2)
