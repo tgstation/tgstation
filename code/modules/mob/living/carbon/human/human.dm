@@ -1034,15 +1034,21 @@
 
 	return
 
-///eyecheck()
-///Returns a number between -1 to 2
+/**
+ * Returns a number between -1 to 2.
+ * TODO: What's the default return value?
+ */
 /mob/living/carbon/human/eyecheck()
 	var/obj/item/clothing/head/headwear = src.head
 	var/obj/item/clothing/glasses/eyewear = src.glasses
-	if(headwear.eyeprot) . += headwear.eyeprot
-	if(eyewear.eyeprot) . += eyewear.eyeprot
-	. = Clamp(., -1, 2)
-	return
+
+	if (headwear)
+		. += headwear.eyeprot
+
+	if (eyewear)
+		. += eyewear.eyeprot
+
+	return Clamp(., -1, 2)
 
 
 /mob/living/carbon/human/IsAdvancedToolUser()
