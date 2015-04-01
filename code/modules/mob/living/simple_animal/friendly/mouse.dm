@@ -20,7 +20,7 @@
 	response_harm   = "splats"
 	density = 0
 	ventcrawler = 2
-	pass_flags = PASSTABLE | PASSGRILLE
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	var/body_color //brown, gray and white, leave blank for random
 
