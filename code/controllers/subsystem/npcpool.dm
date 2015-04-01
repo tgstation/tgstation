@@ -2,7 +2,7 @@ var/datum/subsystem/npcpool/SSbp
 
 /datum/subsystem/npcpool
 	name = "NPCPool"
-	priority = 27
+	priority = 100
 
 	var/list/canBeUsed = list()
 	var/list/canBeUsed_non = list()
@@ -23,7 +23,7 @@ var/datum/subsystem/npcpool/SSbp
 
 
 /datum/subsystem/npcpool/stat_entry()
-	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%) (T:[botPool_l.len + botPool_l_non] | D: [needsDelegate.len] | A: [needsAssistant.len + needsHelp_non.len] | U: [canBeUsed.len + canBeUsed_non.len])")
+	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%) (T:[botPool_l.len + botPool_l_non.len] | D: [needsDelegate.len] | A: [needsAssistant.len + needsHelp_non.len] | U: [canBeUsed.len + canBeUsed_non.len])")
 
 
 /datum/subsystem/npcpool/fire()
@@ -76,9 +76,10 @@ var/datum/subsystem/npcpool/SSbp
 				var/facCount = 0
 				var/helpProb = 0
 				for(var/C in check.faction)
-					if(candidate.faction[facCount] == C)
-						helpProb = min(100,helpProb + 25)
-					facCount++
+					for(var/D in candidate.faction)
+						if(D == C)
+							helpProb = min(100,helpProb + 25)
+						facCount++
 				if(facCount == 1 && helpProb > 0)
 					helpProb = 100
 				if(prob(helpProb))
@@ -94,9 +95,10 @@ var/datum/subsystem/npcpool/SSbp
 				var/facCount = 0
 				var/helpProb = 0
 				for(var/C in check.faction)
-					if(candidate.faction[facCount] == C)
-						helpProb = min(100,helpProb + 10)
-					facCount++
+					for(var/D in candidate.faction)
+						if(D == C)
+							helpProb = min(100,helpProb + 25)
+						facCount++
 				if(facCount == 1 && helpProb > 0)
 					helpProb = 100
 				if(prob(helpProb))
