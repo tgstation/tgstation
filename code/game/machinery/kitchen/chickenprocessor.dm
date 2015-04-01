@@ -9,7 +9,7 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 50
-	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK | EMAGGABLE
 
 /obj/machinery/chicken_processor/New()
 	. = ..()
@@ -39,7 +39,7 @@
 			var/mob/living/simple_animal/chicken/target = grabbed
 			user.drop_item()
 			del(target)
-			user << "<span class='notice'>You stuff the chicken in the machine.</span>"
+			user << "<span class='notice'>[emagged ? "Bkaww!" : "You stuff the chicken in the machine."]</span>"
 			playsound(get_turf(src), 'sound/machines/ya_dun_clucked.ogg', 50, 1)
 			use_power(500)
 			spawn(10)
@@ -49,7 +49,7 @@
 			var/mob/living/simple_animal/chick/target = grabbed
 			user.drop_item()
 			del(target)
-			user << "<span class='notice'>You stuff the chick in the machine, you monster.</span>"
+			user << "<span class='notice'>[emagged ? "Bkaww!" : "You stuff the chick in the machine, you monster."]</span>"
 			playsound(get_turf(src), 'sound/machines/ya_dun_clucked.ogg', 50, 1)
 			use_power(500)
 			spawn(10)
@@ -59,31 +59,36 @@
 			var/mob/living/carbon/human/target = grabbed
 			if (istype(target.wear_suit,/obj/item/clothing/suit/chickensuit) && istype(target.head,/obj/item/clothing/head/chicken))
 				if(emagged)
+					user << "<span class='danger'>Bwak! Bwak! Bwak!</span>"
 					playsound(get_turf(src), 'sound/machines/ya_dun_clucked.ogg', 50, 1)
 					user.drop_item()
+					target.canmove = 0
+					target.icon = null
+					target.invisibility = 101
+					target.density = 0
 					var/throwzone = list()
-					for(var/turf/T in range(src,5))
+					for(var/turf/T in orange(src,4))
 						throwzone += T
-					for(var/obj/O in target.contents)
-						O.loc = src.loc
-						O.throw_at(pick(throwzone),rand(2,5),0)
+					for(var/obj/I in target.contents)
+						I.loc = src.loc
+						I.throw_at(pick(throwzone),rand(2,5),0)
 					hgibs(src.loc, target.viruses, target.dna, target.species.flesh_color, target.species.blood_color)
 					del(target)
-					for(var/i = 1;i<=6;i++))
+					for(var/i = 1;i<=6;i++)
 						new /obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets(src.loc)
 						sleep(2)
 				else
 					user << "<span class='warning'>This chicken is too damn large for the machine!</span>"
 			else
-				user << "<span class='warning'>The machine only accepts poultry!</span>"
+				user << "<span class='warning'>[emagged ? "Caw..." : "The machine only accepts poultry!"]</span>"
 
 		else
-			user << "<span class='warning'>The machine only accepts poultry!</span>"
+			user << "<span class='warning'>[emagged ? "Caw..." : "The machine only accepts poultry!"]</span>"
 
 	else if(istype(O, /mob/living/simple_animal/chicken))
 		var/mob/living/simple_animal/chicken/target = O
 		del(target)
-		user << "<span class='notice'>You stuff the chicken in the machine.</span>"
+		user << "<span class='notice'>[emagged ? "Bkaww!" : "You stuff the chicken in the machine."]</span>"
 		playsound(get_turf(src), 'sound/machines/ya_dun_clucked.ogg', 50, 1)
 		use_power(500)
 		spawn(10)
@@ -92,17 +97,43 @@
 	else if(istype(O, /mob/living/simple_animal/chick))
 		var/mob/living/simple_animal/chick/target = O
 		del(target)
-		user << "<span class='notice'>You stuff the chick in the machine, you monster.</span>"
+		user << "<span class='notice'>[emagged ? "Bkaww!" : "You stuff the chick in the machine, you monster."]</span>"
 		playsound(get_turf(src), 'sound/machines/ya_dun_clucked.ogg', 50, 1)
 		use_power(500)
 		spawn(10)
 			new /obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets(src.loc)
+
+	else if(istype(O, /mob/living/carbon/human))
+		var/mob/living/carbon/human/target = O
+		if (istype(target.wear_suit,/obj/item/clothing/suit/chickensuit) && istype(target.head,/obj/item/clothing/head/chicken))
+			if(emagged)
+				user << "<span class='danger'>Bwak! Bwak! Bwak!</span>"
+				playsound(get_turf(src), 'sound/machines/ya_dun_clucked.ogg', 50, 1)
+				target.canmove = 0
+				target.icon = null
+				target.invisibility = 101
+				target.density = 0
+				var/throwzone = list()
+				for(var/turf/T in orange(src,4))
+					throwzone += T
+				for(var/obj/I in target.contents)
+					I.loc = src.loc
+					I.throw_at(pick(throwzone),rand(2,5),0)
+				hgibs(src.loc, target.viruses, target.dna, target.species.flesh_color, target.species.blood_color)
+				del(target)
+				for(var/i = 1;i<=6;i++)
+					new /obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets(src.loc)
+					sleep(2)
+			else
+				user << "<span class='warning'>This chicken is too damn large for the machine!</span>"
+		else
+			user << "<span class='warning'>[emagged ? "Caw..." : "The machine only accepts poultry!"]</span>"
 	return
 
-/obj/machinery/vending/emag(mob/user)
+/obj/machinery/chicken_processor/emag(mob/user)
 	if(!emagged)
 		emagged = 1
-		src << "Bwak?"
+		visible_message("Bwak?")
 		return 1
 	return -1
 
