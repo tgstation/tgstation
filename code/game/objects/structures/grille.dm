@@ -73,7 +73,7 @@
 	if(M_HULK in user.mutations)
 		health -= 5 //Fair hit
 	else
-		health -= 1 //Do minimal damage to encourage people to use literally ANYTHING else
+		health -= 3 //Do decent damage, still not as good as using a real tool
 	healthcheck(hitsound = 1)
 	shock(user, 100) //If there's power running in the grille, allow the attack but grill the user
 
