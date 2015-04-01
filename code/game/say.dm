@@ -134,7 +134,7 @@ var/list/freqtoname = list(
 	var/output = "<SPAN CLASS='"
 
 	for(var/span in spans)
-		output = "[output][S] "
+		output = "[output][span] "
 
 	output = "[output]'>"
 	return output
