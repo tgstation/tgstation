@@ -45,7 +45,7 @@
 		user << "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>"
 	else if(istype(target,/obj/effect/decal/cleanable))
 		user << "<span class='notice'>You scrub \the [target.name] out.</span>"
-		del(target)
+		returnToPool(target)
 	else if(istype(target,/turf/simulated))
 		var/turf/simulated/T = target
 		var/list/cleanables = list()
@@ -63,7 +63,7 @@
 				C = d
 				break
 		user << "<span class='notice'>You scrub \the [C.name] out.</span>"
-		del(C)
+		returnToPool(C)
 	else
 		user << "<span class='notice'>You clean \the [target.name].</span>"
 		target.clean_blood()
