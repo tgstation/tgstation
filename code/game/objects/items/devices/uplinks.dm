@@ -100,13 +100,18 @@ var/list/world_uplinks = list()
 			var/category = split[1]
 			var/number = text2num(split[2])
 
-			var/list/buyable_items = get_uplink_items()
+			var/list/buyable_items = get_uplink_items(usr)
 
 			var/list/uplink = buyable_items[category]
 			if(uplink && uplink.len >= number)
 				var/datum/uplink_item/I = uplink[number]
 				if(I)
-					I.buy(src, usr)
+					if(I.jobs)
+						for(var/J in I.jobs)
+							if(J == usr.job)
+								I.buy(src, usr)
+							else
+								usr << "<span class='warning'>You cannot buy that item, as you are not in the available jobs list.</span>"
 
 
 	else if(href_list["show_desc"])

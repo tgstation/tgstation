@@ -184,6 +184,14 @@
 	else
 		icon_state = "water_cup_e"
 
+/obj/item/weapon/reagent_containers/food/drinks/moonshine
+	name = "flask"
+	desc = "This flask carries with the overpowering stench of alcohol and... something else."
+	icon_state = "detflask"
+	item_state= "beer"
+	volume = 100
+	list_reagents = list("moonshine_2" = 100)
+
 
 
 //////////////////////////drinkingglass and shaker//
