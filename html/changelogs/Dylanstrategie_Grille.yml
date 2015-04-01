@@ -1,0 +1,11 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - rscadd: Add cult grilles. They stand in for the old grille and whatever windows might have been here, block air, are see-through and are twice as strong
+  - rscadd: Add a specific broken child for grilles, to be used for mapping (do NOT use it as a way to break grilles in the code, please)
+  - rscadd: Add examine information to check if grilles are broken or unanchored
+  - tweak: If you hit an electrified grille with anything but a "complex function" tool (wirecutters and screwdriver), your hit will now register. Insult to injury
+  - tweak: Grille health upped from 17-ish (went into negatives for broken grilles) to 20 (0 is completely broken)
+  - tweak: Damage from all weapons increased (was 1/10th, now 1/2th), damage from humans decreased, slashing grilles with shards saw a nerf
+  - bugfix: Fix duplicating grilles from breaking them, snapping the broken grille to get two rods, and getting one extra rod in the process
+  - sprite: Grille sprite was tweaked. It looks better when under windows or alone, and a tad worse in window bays, might need relative wall boogaloo but solid enough as is
