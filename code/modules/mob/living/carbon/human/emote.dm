@@ -299,7 +299,7 @@
 					S.start()
 				reagents.clear_reagents() //phew, that emptied me out
 			else
-				message = message = "<B>[src]</B> lets out a little toot."
+				message = "<B>[src]</B> lets out a little toot."
 				playsound(loc, 'sound/effects/fart.ogg', 10, 1)
 
 		if ("sniff")
