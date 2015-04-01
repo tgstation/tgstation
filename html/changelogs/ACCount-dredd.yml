@@ -3,4 +3,4 @@ author: ACCount
 delete-after: True
 
 changes: 
-  - tweak: "You can replace test range firing pins with any other pin."
+  - tweak: "You can now replace test range firing pins with any other pin."
