@@ -2711,6 +2711,24 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/processor
 
+/datum/design/monkey_recycler
+	name = "Circuit Design (Monkey Recycler)"
+	desc = "Allows for the construction of circuit boards used to build a Monkey Recycler."
+	id = "monkey"
+	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/monkey_recycler
+
+/datum/design/chicken_processor
+	name = "Circuit Design (Chicken Processor)"
+	desc = "Allows for the construction of circuit boards used to build a Chicken Processor."
+	id = "chicken"
+	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/chicken_processor
+
 /datum/design/air_alarm
 	name = "Circuit Design (Air Alarm)"
 	desc = "Allows for the construction of circuit boards used to build an Air Alarm."
