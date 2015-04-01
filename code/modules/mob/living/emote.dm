@@ -86,8 +86,7 @@
 				m_type = 2
 
 		if ("flip")
-			if (!src.restrained() || src.resting || src.sleeping)
-				src << "<span class = 'notice'>You do a flip!</span>"
+			if (!src.restrained() || !src.resting || !src.sleeping)
 				src.SpinAnimation(7,1)
 				m_type = 2
 
