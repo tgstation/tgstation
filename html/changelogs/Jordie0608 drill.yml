@@ -1,0 +1,7 @@
+author: Jordie0608
+
+delete-after: True
+
+changes: 
+  - tweak: "Cyborg mining drills now use up their internal battery before drawing power from a borg's cell."
+  - bugfix: "Fixes cyborg mining drills not recharging."
