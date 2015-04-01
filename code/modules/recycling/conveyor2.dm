@@ -191,8 +191,6 @@
 	if(istype(W, /obj/item/device/multitool))
 		update_multitool_menu(user)
 		return 1
-	if(istype(W, /obj/item/device/device_analyser))
-		return 0
 	user.drop_item(src.loc)
 	return 0
 
