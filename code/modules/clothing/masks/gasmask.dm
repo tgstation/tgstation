@@ -46,6 +46,7 @@
 	action_button_name = "HALT!"
 	icon_state = "sechailer"
 	var/aggressiveness = 2
+	var/safety = 1
 	ignore_maskadjust = 0
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACE
@@ -101,6 +102,13 @@
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
 
+/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
+	if(safety)
+		safety = 0
+		user << "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer."
+	else
+		return
+
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"
 	set name = "HALT"
@@ -115,7 +123,14 @@
 	var/phrase_sound = null
 
 
-	if(cooldown < world.time - 35) // A cooldown, to stop people being jerks
+	if(world.time > cooldown) // A cooldown, to stop people being jerks
+		if(!safety)
+			phrase_text = "FUCK YOUR CUNT YOU SHIT EATING COCKSUCKER MAN EAT A DONG FUCKING ASS RAMMING SHIT FUCK EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS OF FUCK AND DO SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT."
+			usr.visible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
+			playsound(src.loc, 'sound/voice/binsult.ogg', 100, 0, 4)
+			cooldown = world.time + 235
+			return
+
 		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases
 			if(1)
 				phrase = rand(1,5)	// set the upper limit as the phrase above the first 'bad cop' phrase, the mask will only play 'nice' phrases
