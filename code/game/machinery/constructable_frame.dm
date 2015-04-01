@@ -601,6 +601,32 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
 
+/obj/item/weapon/circuitboard/monkey_recycler
+	name = "Circuit Board (Monkey Recycler)"
+	build_path = "/obj/machinery/monkey_recycler"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
+	frame_desc = "Requires 2 Matter Bins, 1 Capacitors, 1 Scanning Module, 2 Manipulator and 2 High Powered Micro-Lasers   "
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/capacitor" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
+
+/obj/item/weapon/circuitboard/chicken_processor
+	name = "Circuit Board (Chicken Processor)"
+	build_path = "/obj/machinery/chicken_processor"
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
+	frame_desc = "Requires 2 Matter Bins, 1 Capacitors, 1 Scanning Module, 2 Manipulator and 2 High Powered Micro-Lasers   "
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/capacitor" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
+
 /*
 /obj/item/weapon/circuitboard/hydroseeds
 	name = "Circuit Board (MegaSeed Servitor)"
