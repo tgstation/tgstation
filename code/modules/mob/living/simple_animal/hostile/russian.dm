@@ -19,7 +19,7 @@
 	melee_damage_upper = 15
 	attacktext = "punches"
 	a_intent = I_HURT
-	var/corpse = /obj/effect/landmark/mobcorpse/russian
+	var/obj/effect/landmark/corpse/corpse = /obj/effect/landmark/corpse/russian
 	var/weapon1 = /obj/item/weapon/kitchen/utensil/knife/large
 	min_oxy = 5
 	max_oxy = 0
@@ -37,7 +37,7 @@
 /mob/living/simple_animal/hostile/russian/ranged
 	icon_state = "russianranged"
 	icon_living = "russianranged"
-	corpse = /obj/effect/landmark/mobcorpse/russian/ranged
+	corpse = /obj/effect/landmark/corpse/russian/ranged
 	weapon1 = /obj/item/weapon/gun/projectile/mateba
 	ranged = 1
 	retreat_distance = 5
@@ -50,8 +50,9 @@
 /mob/living/simple_animal/hostile/russian/Die()
 	..()
 	if(corpse)
-		new corpse (src.loc)
+		new corpse(loc)
+		corpse.createCorpse()
 	if(weapon1)
-		new weapon1 (src.loc)
-	del src
+		new weapon1 (get_turf(src))
+	qdel(src)
 	return

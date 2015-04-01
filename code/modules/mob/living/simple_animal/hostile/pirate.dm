@@ -29,7 +29,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
-	var/corpse = /obj/effect/landmark/mobcorpse/pirate
+	var/obj/effect/landmark/corpse/corpse = /obj/effect/landmark/corpse/pirate
 	var/weapon1 = /obj/item/weapon/melee/energy/sword/pirate
 
 	faction = "pirate"
@@ -45,15 +45,16 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	projectiletype = /obj/item/projectile/beam
-	corpse = /obj/effect/landmark/mobcorpse/pirate/ranged
+	corpse = /obj/effect/landmark/corpse/pirate/ranged
 	weapon1 = /obj/item/weapon/gun/energy/laser
 
 
 /mob/living/simple_animal/hostile/pirate/Die()
 	..()
 	if(corpse)
-		new corpse (src.loc)
+		new corpse(loc)
+		corpse.createCorpse()
 	if(weapon1)
-		new weapon1 (src.loc)
-	del src
+		new weapon1 (get_turf(src))
+	qdel(src)
 	return
