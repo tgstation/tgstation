@@ -35,36 +35,39 @@
 
 // common helper procs for all power machines
 /obj/machinery/power/proc/add_avail(var/amount)
-	check_rebuild()
-	if(powernet)
+	if(get_powernet())
 		powernet.newavail += amount
 
 /obj/machinery/power/proc/add_load(var/amount)
-	check_rebuild()
-	if(powernet)
+	if(get_powernet())
 		powernet.load += amount
 
 /obj/machinery/power/proc/surplus()
-	check_rebuild()
-	if(powernet)
+	if(get_powernet())
 		return powernet.avail-powernet.load
 	else
 		return 0
 
 /obj/machinery/power/proc/avail()
-	check_rebuild()
-	if(powernet)
+	if(get_powernet())
 		return powernet.avail
 	else
 		return 0
 
+/obj/machinery/power/proc/get_powernet()
+	check_rebuild()
+	return powernet
+
 /obj/machinery/power/proc/check_rebuild()
-	if(build_status == 0)
+	if(!build_status)
 		return
-	var/list/cables = locate(/obj/structure/cable/) in loc
-	for(var/obj/structure/cable/C in cables)
-		if(C.build_status == 1)
-			C.rebuild_from()
+	for(var/obj/structure/cable/C in src.loc)
+		C.check_rebuild()
+
+/obj/machinery/power/proc/getPowernetNodes()
+	if(!get_powernet())
+		return list()
+	return powernet.nodes
 
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	return
@@ -113,10 +116,7 @@
 
 	var/obj/structure/cable/C = T.get_cable_node() // check if we have a node cable on the machine turf, the first found is picked
 
-	if(C && C.build_status == 1)
-		C.rebuild_from()
-
-	if(!C || !C.powernet)
+	if(!C || !C.get_powernet())
 		return 0
 
 	C.powernet.add_machine(src)
@@ -124,7 +124,7 @@
 
 // remove and disconnect the machine from its current powernet
 /obj/machinery/power/proc/disconnect_from_network()
-	if(!powernet)
+	if(!get_powernet())
 		build_status = 0
 		return 0
 
@@ -148,7 +148,7 @@
 		cdir = get_dir(T, loc)
 
 		for(var/obj/structure/cable/C in T)
-			if(C.powernet)
+			if(C.get_powernet())
 				continue
 
 			if(C.d1 == cdir || C.d2 == cdir)
@@ -175,7 +175,7 @@
 	. = list()
 
 	for(var/obj/structure/cable/C in loc)
-		if(C.powernet)
+		if(C.get_powernet())
 			continue
 
 		if(C.d1 == 0) // the cable is a node cable

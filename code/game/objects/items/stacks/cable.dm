@@ -156,7 +156,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 		C.update_icon()
 
 		//create a new powernet with the cable, if needed it will be merged later
-		var/datum/powernet/PN = new()
+		var/datum/powernet/PN = getFromDPool(/datum/powernet)
 		PN.add_cable(C)
 
 		C.mergeConnectedNetworks(C.d2)		// merge the powernet with adjacents powernets

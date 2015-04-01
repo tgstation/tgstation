@@ -123,10 +123,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		icon_state = "[d1]-[d2]"
 
-// returns the powernet this cable belongs to
-/obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
+//Provides sanity for cases in which there may not be a powernet
+//Not necessary for checking powernet during process() of power_machines as it is guaranteed to have a powernet at that time
+/obj/structure/cable/proc/get_powernet()
+	check_rebuild()
 	return powernet
-
 
 // telekinesis has no effect on a cable
 /obj/structure/cable/attack_tk(mob/user)
@@ -196,7 +197,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
-	if((powernet) && (powernet.avail > 1000))
+	if((get_powernet()) && (powernet.avail > 1000))
 		if(!prob(prb))
 			return 0
 
@@ -239,36 +240,29 @@ By design, d1 is the smallest direction and d2 is the highest
 ///////////////////////////////////////////
 
 /obj/structure/cable/proc/add_avail(var/amount)
-	check_rebuild()
-	if(powernet)
+	if(get_powernet())
 		powernet.newavail += amount
 
 /obj/structure/cable/proc/add_load(var/amount)
-	check_rebuild()
-	if(powernet)
+	if(get_powernet())
 		powernet.load += amount
 
 /obj/structure/cable/proc/surplus()
-	check_rebuild()
-	if(powernet)
+	if(get_powernet())
 		return powernet.avail-powernet.load
 	else
 		return 0
 
 /obj/structure/cable/proc/avail()
-	check_rebuild()
-	if(powernet)
+	if(get_powernet())
 		return powernet.avail
 	else
 		return 0
 
 /obj/structure/cable/proc/check_rebuild()
-	if(build_status == 0)
+	if(!build_status)
 		return
-	var/list/cables = locate(/obj/structure/cable/) in loc
-	for(var/obj/structure/cable/C in cables)
-		if(C.build_status == 1)
-			C.rebuild_from()
+	rebuild_from()
 
 /////////////////////////////////////////////////
 // Cable laying helpers
@@ -283,15 +277,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	for(var/obj/structure/cable/C in T)
 		if(!C)
 			continue
-
 		if(src == C)
 			continue
-
 		if(C.d1 == (direction ^ 3) || C.d2 == (direction ^ 3)) // we've got a diagonally matching cable
 			if(!C.powernet) // if the matching cable somehow got no powernet, make him one (should not happen for cables)
 				var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
 				newPN.add_cable(C)
-
 			if(powernet) //if we already have a powernet, then merge the two powernets
 				merge_powernets(powernet,C.powernet)
 			else
@@ -303,15 +294,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	for(var/obj/structure/cable/C in T)
 		if(!C)
 			continue
-
 		if(src == C)
 			continue
-
 		if(C.d1 == (direction ^ 12) || C.d2 == (direction ^ 12)) // we've got a diagonally matching cable
 			if(!C.powernet) // if the matching cable somehow got no powernet, make him one (should not happen for cables)
 				var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
 				newPN.add_cable(C)
-
 			if(powernet) // if we already have a powernet, then merge the two powernets
 				merge_powernets(powernet, C.powernet)
 			else
@@ -329,15 +317,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	for(var/obj/structure/cable/C in TB)
 		if(!C)
 			continue
-
 		if(src == C)
 			continue
-
 		if(C.d1 == fdir || C.d2 == fdir) // we've got a matching cable in the neighbor turf
 			if(!C.powernet) // if the matching cable somehow got no powernet, make him one (should not happen for cables)
 				var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
 				newPN.add_cable(C)
-
 			if(powernet) // if we already have a powernet, then merge the two powernets
 				merge_powernets(powernet,C.powernet)
 			else
@@ -356,31 +341,26 @@ By design, d1 is the smallest direction and d2 is the highest
 	for(var/AM in loc)
 		if(istype(AM, /obj/structure/cable))
 			var/obj/structure/cable/C = AM
-
 			//if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) // only connected if they have a common direction // uncomment if you don't want + wiring
 			if(C.powernet == powernet)
 				continue
-
 			if(C.powernet)
 				merge_powernets(powernet, C.powernet)
 			else
 				powernet.add_cable(C) // the cable was powernetless, let's just add it to our powernet
+
 		else if(istype(AM, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/N = AM
-
 			if(!N.terminal)
 				continue // APC are connected through their terminal
-
 			if(N.terminal.powernet == powernet)
 				continue
-
 			to_connect += N.terminal // we'll connect the machines after all cables are merged
+
 		else if(istype(AM, /obj/machinery/power)) // other power machines
 			var/obj/machinery/power/M = AM
-
 			if(M.powernet == powernet)
 				continue
-
 			to_connect += M //we'll connect the machines after all cables are merged
 
 	// now that cables are done, let's connect found machines
@@ -400,18 +380,14 @@ By design, d1 is the smallest direction and d2 is the highest
 	// get matching cables from the first direction
 	if(d1) // if not a node cable
 		T = get_step(src, d1)
-
 		if(T)
 			. += power_list(T, src, turn(d1, 180), powernetless_only) // get adjacents matching cables
 
 	if(d1 & (d1 - 1)) // diagonal direction, must check the 4 possibles adjacents tiles
 		T = get_step(src, d1 & 3) // go north / south
-
 		if(T)
 			. += power_list(T, src, d1 ^ 3, powernetless_only) // get diagonally matching cables
-
 		T = get_step(src,d1 & 12) // go east / west
-
 		if(T)
 			. += power_list(T, src, d1 ^ 12, powernetless_only) // get diagonally matching cables
 
@@ -425,12 +401,9 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	if(d2 & (d2 - 1)) // diagonal direction, must check the 4 possibles adjacents tiles
 		T = get_step(src, d2 & 3) // go north / south
-
 		if(T)
 			. += power_list(T, src, d2 ^ 3, powernetless_only) // get diagonally matching cables
-
 		T = get_step(src, d2 & 12) // go east / west
-
 		if(T)
 			. += power_list(T, src, d2 ^ 12, powernetless_only) // get diagonally matching cables
 
@@ -452,41 +425,3 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(PN.is_empty()) // can happen with machines made nodeless when smoothing cables
 			returnToDPool(PN) //powernets do not get qdelled
-
-/* No longer used due to applying the pipenet method of rebuilding when needed or during the next powernet tick
-// cut the cable's powernet at this cable and updates the powergrid
-/obj/structure/cable/proc/cut_cable_from_powernet()
-	var/turf/T1 = loc
-	var/list/P_list
-
-	if(!T1)
-		return
-
-	if(d1)
-		T1 = get_step(T1, d1)
-		P_list = power_list(T1, src, turn(d1, 180), 0, cable_only = 1) // what adjacently joins on to cut cable...
-
-	P_list += power_list(loc, src, d1, 0, cable_only = 1) // ... and on turf
-
-	if(P_list.len == 0) //if nothing in both list, then the cable was a lone cable, just delete it and its powernet
-		powernet.remove_cable(src)
-
-		for(var/obj/machinery/power/P in T1)// check if it was powering a machine
-			if(!P.connect_to_network()) // can't find a node cable on a the turf to connect to
-				P.disconnect_from_network() // remove from current network (and delete powernet)
-
-		return
-
-	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
-	loc = null
-	powernet.remove_cable(src) // remove the cut cable from its powernet
-
-	var/datum/powernet/newPN = getFromDPool(/datum/powernet) // creates a new powernet...
-	propagate_network(P_list[1], newPN)//... and propagates it to the other side of the cable
-
-	// disconnect machines connected to nodes
-	if(d1 == 0) // if we cut a node (O-X) cable
-		for(var/obj/machinery/power/P in T1)
-			if(!P.connect_to_network()) // can't find a node cable on a the turf to connect to
-				P.disconnect_from_network() // remove from current network
-*/

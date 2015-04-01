@@ -488,7 +488,7 @@
 		user << "You begin to cut the cables..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 50))
-			if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
+			if (prob(50) && electrocute_mob(usr, terminal.get_powernet(), terminal))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
@@ -997,7 +997,7 @@
 		return 0
 
 /obj/machinery/power/apc/add_load(var/amount)
-	if(terminal && terminal.powernet)
+	if(terminal && terminal.get_powernet())
 		terminal.powernet.load += amount
 
 /obj/machinery/power/apc/avail()

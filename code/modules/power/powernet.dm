@@ -14,6 +14,22 @@
 // each contiguous network of cables & nodes
 ////////////////////////////////////////////
 
+/*
+Powernet procs :
+/datum/powernet/New()
+/datum/powernet/Del()
+/datum/powernet/Destroy()
+/datum/powernet/resetVariables()
+/datum/powernet/proc/remove_cable(var/obj/structure/cable/C)
+/datum/powernet/proc/add_cable(var/obj/structure/cable/C)
+/datum/powernet/proc/remove_machine(var/obj/machinery/power/M)
+/datum/powernet/proc/add_machine(var/obj/machinery/power/M)
+/datum/powernet/proc/reset()
+/datum/powernet/proc/get_electrocute_damage()
+/datum/powernet/proc/set_to_build()
+/obj/structure/cable/proc/rebuild_from()
+*/
+
 /datum/powernet/New()
 	if(!(src in powernets)) //Pooling changes a disposed variable to 1, causing it to no longer process from the list
 		powernets += src
@@ -24,9 +40,11 @@
 
 /datum/powernet/Destroy()
 	for(var/obj/structure/cable/C in cables)
-		remove_cable(C)
+		C.powernet = null
 	for(var/obj/machinery/power/P in nodes)
-		remove_machine(P)
+		P.powernet = null
+	cables = null
+	nodes = null
 
 /datum/powernet/resetVariables()
 	..("cables","nodes")
@@ -36,55 +54,47 @@
 /datum/powernet/proc/is_empty()
 	return !cables.len && !nodes.len
 
-// remove a cable from the current powernet
-// if the powernet is then empty, delete it
-// warning : this proc DON'T check if the cable exists
+// helper proc for removing cables from the current powernet
+// warning : this proc doesn't check if the cable exists, but don't worry a runtime should tell you if it doesn't
 /datum/powernet/proc/remove_cable(obj/structure/cable/C)
 	cables -= C
 	C.powernet = null
+	if(is_empty())
+		returnToDPool(src)
 
-	if(is_empty())	// the powernet is now empty...
-		returnToDPool(src)	// ... delete it
+// helper proc for removing a power machine from the current powernet
+// warning : this proc doesn't check if the machine exists, but don't worry a runtime should tell you if it doesn't
+/datum/powernet/proc/remove_machine(obj/machinery/power/M)
+	nodes -= M
+	M.powernet = null
+	if(is_empty())
+		returnToDPool(src)
 
 // add a cable to the current powernet
-// warning : this proc DON'T check if the cable exists
 /datum/powernet/proc/add_cable(obj/structure/cable/C)
-	if(!C)
-		return 1
 	if(C.powernet)						// if C already has a powernet...
 		if(C.powernet == src)
 			return
 		else
 			C.powernet.remove_cable(C)	// ..remove it
-
-	C.build_status = 0
+	C.build_status = 0 //Resetting build status because it has been added to a powernet
 	C.powernet = src
 	cables += C
 
-// remove a power machine from the current powernet
-// if the powernet is then empty, delete it
-// warning : this proc DON'T check if the machine exists
-/datum/powernet/proc/remove_machine(obj/machinery/power/M)
-	nodes -= M
-	M.powernet = null
-
-	if(is_empty())	// the powernet is now empty...
-		returnToDPool(src)	// ... delete it
-
 // add a power machine to the current powernet
-// warning : this proc DON'T check if the machine exists
 /datum/powernet/proc/add_machine(obj/machinery/power/M)
 	if(M.powernet)							// if M already has a powernet...
 		if(M.powernet == src)
 			return
 		else
 			M.disconnect_from_network()		// ..remove it
-
+	M.build_status = 0 //Resetting build status because it has been added to a powernet
 	M.powernet = src
 	nodes += M
 
 // handles the power changes in the powernet
 // called every ticks by the powernet controller
+// all powernets will have been rebuilt by the time this is called
 /datum/powernet/proc/reset()
 	// see if there's a surplus of power remaining in the powernet and stores unused power in the SMES
 	netexcess = avail - load
@@ -118,7 +128,10 @@
 		P.build_status = 1
 	returnToDPool(src)
 
-//This should rebuild a powernet properly during a new ticks cycle
+//Hopefully this will never ever have to be used
+var/global/powernets_broke = 0
+
+//This will rebuild a powernet properly during the new tick cycle
 /obj/structure/cable/proc/rebuild_from()
 	if(!powernet)
 		var/datum/powernet/NewPN = getFromDPool(/datum/powernet)
@@ -131,23 +144,13 @@
 			C.oldload = 0
 			C.oldavail = 0
 			C.oldnewavail = 0
-
-/*
-Powernet procs :
-
-In modules/power/power.dm :
-
-/datum/powernet/New()
-/datum/powernet/Destroy()
-/datum/powernet/proc/is_empty()
-/datum/powernet/proc/remove_cable(var/obj/structure/cable/C)
-/datum/powernet/proc/add_cable(var/obj/structure/cable/C)
-/datum/powernet/proc/remove_machine(var/obj/machinery/power/M)
-/datum/powernet/proc/add_machine(var/obj/machinery/power/M)
-/datum/powernet/proc/reset()
-/datum/powernet/proc/get_electrocute_damage()
-*/
-
+			C.build_status = 0
+		for(var/obj/machinery/power/P in NewPN.nodes)
+			P.build_status = 0
+	else
+		if(build_status && !powernets_broke)
+			powernets_broke = 1
+			message_admins("Powernets tried to rebuild a network that already had a datum, tell a coder!")
 
 ///////////////////////////////////////////
 // GLOBAL PROCS for powernets handling
@@ -166,16 +169,14 @@ In modules/power/power.dm :
 
 		if(!cable_only && istype(AM, /obj/machinery/power))
 			var/obj/machinery/power/P = AM
-
 			if(P.powernet == 0)					// exclude APCs which have powernet = 0
 				continue
-
 			if(!unmarked || !P.powernet)		// if unmarked=1 we only return things with no powernet
 				if(d == 0)
 					. += P
+
 		else if(istype(AM,/obj/structure/cable))
 			var/obj/structure/cable/C = AM
-
 			if(!unmarked || !C.powernet)
 				if(C.d1 == d || C.d2 == d)
 					. += C
@@ -183,13 +184,12 @@ In modules/power/power.dm :
 // rebuild all power networks from scratch - only called at world creation or by the admin verb
 /proc/makepowernets()
 	for(var/datum/powernet/PN in powernets)
-		returnToDPool(src)
+		PN.set_to_build()
+		powernets = list()
 
 	for(var/obj/structure/cable/PC in cable_list)
-		if(!PC.powernet)
-			var/datum/powernet/NewPN = getFromDPool(/datum/powernet/)
-			NewPN.add_cable(PC)
-			propagate_network(PC, PC.powernet)
+		if(PC.build_status)
+			PC.rebuild_from()
 
 // remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(var/obj/O, var/datum/powernet/PN)
@@ -207,14 +207,14 @@ In modules/power/power.dm :
 
 		if(istype(P, /obj/structure/cable))
 			var/obj/structure/cable/C = P
-
 			if(C.powernet != PN)					// add it to the powernet, if it isn't already there
 				PN.add_cable(C)
-
 			worklist |= C.get_connections()	//get adjacents power objects, with or without a powernet
+
 		else if(P.anchored && istype(P, /obj/machinery/power))
 			var/obj/machinery/power/M = P
 			found_machines |= M						// we wait until the powernet is fully propagates to connect the machines
+
 		else
 			continue
 
@@ -274,7 +274,7 @@ In modules/power/power.dm :
 
 	if(istype(power_source, /obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
-		power_source = Cable.powernet
+		power_source = Cable.get_powernet()
 
 	var/datum/powernet/PN
 	var/obj/item/weapon/cell/cell
