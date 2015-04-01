@@ -263,6 +263,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// Get a list of mobs who can hear from the radios we collected and observers.
 	var/list/listeners = get_mobs_in_radio_ranges(radios) | observers
 
+	radios = null
+
 	var/rendered = virt.compose_message(virt, virt.languages, message, freq) //Always call this on the virtualspeaker to advoid issues.
 
 	for (var/atom/movable/listener in listeners)
