@@ -46,6 +46,9 @@
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	item_state = "helmet"
+	toggle_message = "You pull the visor down on"
+	alt_toggle_message = "You push the visor up on"
+	can_toggle = 1
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|HEADBANGPROTECT
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -53,23 +56,48 @@
 	action_button_name = "Toggle Helmet Visor"
 	visor_flags = HEADCOVERSEYES|HEADCOVERSMOUTH
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE
+	toggle_cooldown = 0
 
-/obj/item/clothing/head/helmet/riot/attack_self()
-	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(up)
-			up = !up
-			flags |= (visor_flags)
-			flags_inv |= (visor_flags_inv)
-			icon_state = initial(icon_state)
-			usr << "You pull \the [src] down."
-			usr.update_inv_head(0)
-		else
-			up = !up
-			flags &= ~(visor_flags)
-			flags_inv &= ~(visor_flags_inv)
-			icon_state = "[initial(icon_state)]up"
-			usr << "You push \the [src] up."
-			usr.update_inv_head(0)
+/obj/item/clothing/head/helmet/attack_self()
+	if(usr.canmove && !usr.stat && !usr.restrained() && can_toggle)
+		if(world.time > cooldown + toggle_cooldown)
+			cooldown = world.time
+			if(up)
+				up = !up
+				flags |= (visor_flags)
+				flags_inv |= (visor_flags_inv)
+				icon_state = initial(icon_state)
+				usr << "[toggle_message] \the [src]."
+				usr.update_inv_head(0)
+			else
+				up = !up
+				flags &= ~(visor_flags)
+				flags_inv &= ~(visor_flags_inv)
+				icon_state = "[initial(icon_state)]up"
+				usr << "[alt_toggle_message] \the [src]"
+				usr.update_inv_head(0)
+				while(up)
+					playsound(src.loc, "[activation_sound]", 100, 0, 4)
+					sleep(15)
+
+/obj/item/clothing/head/helmet/justice
+	name = "helmet of justice"
+	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
+	icon_state = "justice"
+	toggle_message = "You turn off the lights on"
+	alt_toggle_message = "You turn on the lights on"
+	action_button_name = "Toggle Justice Lights"
+	can_toggle = 1
+	toggle_cooldown = 14
+	activation_sound = 'sound/items/WEEOO1.ogg'
+
+/obj/item/clothing/head/helmet/justice/escape
+	name = "alarm helmet"
+	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
+	icon_state = "justice2"
+	toggle_message = "You turn off the light on"
+	alt_toggle_message = "You turn on the light on"
+	action_button_name = "Toggle Alarm Lights"
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
@@ -161,6 +189,7 @@ obj/item/clothing/head/helmet/bluetaghelm
 
 /obj/item/clothing/head/helmet/ui_action_click()
 	toggle_helmlight()
+	..()
 
 /obj/item/clothing/head/helmet/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	if(istype(A, /obj/item/device/flashlight/seclite))

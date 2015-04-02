@@ -119,7 +119,7 @@
 							user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
 				return 1
 
-			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+			if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
 
 				user << "<span class='notice'>You begin slicing through the metal cover.</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -185,7 +185,7 @@
 							user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
 				return 1
 
-			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+			if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
 
 				user << "<span class='notice'>You begin slicing through the support rods.</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)

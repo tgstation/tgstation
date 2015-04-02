@@ -339,7 +339,7 @@
 "gA" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "diagonalWall3"},/area/awaymission/spacebattle/syndicate4)
 "gB" = (/turf/space,/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/awaymission/spacebattle/syndicate4)
 "gC" = (/obj/structure/closet/crate/secure/weapon,/obj/item/weapon/gun/energy/laser,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
-"gD" = (/obj/structure/closet/crate,/obj/item/weapon/spacecash/c10,/obj/item/weapon/spacecash/c10,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
+"gD" = (/obj/structure/closet/crate,/obj/item/stack/spacecash/c10,/obj/item/stack/spacecash/c10,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "gE" = (/obj/effect/decal/cleanable/blood,/turf/simulated/shuttle/wall{tag = "icon-swall3"; icon_state = "swall3"},/area/awaymission/spacebattle/cruiser)
 "gF" = (/obj/effect/landmark/corpse/doctor{mobname = "Adam Smith"; name = "Adam Smith"},/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plasteel,/area/awaymission/spacebattle/cruiser)
 "gG" = (/obj/structure/optable,/turf/simulated/floor/plasteel{icon_state = "white"},/area/awaymission/spacebattle/cruiser)

@@ -333,7 +333,7 @@
 		dizziness = max(dizziness - restingpwr, 0)
 
 	if(drowsyness)
-		dizziness = max(drowsyness - restingpwr, 0)
+		drowsyness = max(drowsyness - restingpwr, 0)
 		eye_blurry = max(2, eye_blurry)
 		if(prob(5))
 			sleeping += 1

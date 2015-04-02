@@ -134,3 +134,26 @@
 #define PEN_FONT "Verdana"
 #define CRAYON_FONT "Comic Sans MS"
 #define SIGNFONT "Times New Roman"
+
+
+//NPC DEFINES
+#define INTERACTING 2
+#define TRAVEL 4
+#define FIGHTING 8
+
+//TRAITS
+
+#define TRAIT_ROBUST 2
+#define TRAIT_UNROBUST 4
+#define TRAIT_SMART 8
+#define TRAIT_DUMB 16
+#define TRAIT_MEAN 32
+#define TRAIT_FRIENDLY 64
+#define TRAIT_THIEVING 128
+
+//defines
+#define MAX_RANGE_FIND 32
+#define MIN_RANGE_FIND 16
+#define FUZZY_CHANCE_HIGH 85
+#define FUZZY_CHANCE_LOW 50
+#define CHANCE_TALK 15

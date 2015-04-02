@@ -45,7 +45,6 @@
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
 	action_button_name = "HALT!"
 	icon_state = "sechailer"
-	var/cooldown = 0
 	var/aggressiveness = 2
 	ignore_maskadjust = 0
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS

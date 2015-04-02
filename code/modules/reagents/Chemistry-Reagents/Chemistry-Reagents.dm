@@ -691,6 +691,11 @@ datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 datum/reagent/space_cleaner/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
+		if(istype(M,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(H.lip_style)
+				H.lip_style = null
+				H.update_body()
 		if(C.r_hand)
 			C.r_hand.clean_blood()
 		if(C.l_hand)

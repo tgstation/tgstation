@@ -144,7 +144,7 @@ Class Procs:
 		pulse2.dir = pick(cardinal)
 
 		spawn(10)
-			pulse2.delete()
+			qdel(pulse2)
 	..()
 
 /obj/machinery/proc/open_machine()

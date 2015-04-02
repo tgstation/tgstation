@@ -577,7 +577,7 @@
 	potency = 15
 	oneharvest = 1
 	plant_type = 0
-	growthstages = 6
+	growthstages = 3
 
 /obj/item/seeds/carrotseed
 	name = "pack of carrot seeds"

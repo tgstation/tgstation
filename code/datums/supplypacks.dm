@@ -185,9 +185,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/security/helmets
 	name = "Helmets Crate"
-	contains = list(/obj/item/clothing/head/helmet,
-					/obj/item/clothing/head/helmet,
-					/obj/item/clothing/head/helmet)
+	contains = list(/obj/item/clothing/head/helmet/sec,
+					/obj/item/clothing/head/helmet/sec,
+					/obj/item/clothing/head/helmet/sec)
 	cost = 10
 	containername = "helmet crate"
 
