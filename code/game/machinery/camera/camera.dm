@@ -331,3 +331,18 @@
 		return 1
 	busy = 0
 	return 0
+
+
+/obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
+	var/turf/prev_turf
+
+/obj/machinery/camera/portable/New()
+	..()
+	assembly.state = 0 //These cameras are portable, and so shall be in the portable state if removed.
+	assembly.anchored = 0
+	assembly.update_icon()
+
+/obj/machinery/camera/portable/process() //Updates whenever the camera is moved.
+	if(cameranet && get_turf(src) != prev_turf)
+		cameranet.updatePortableCamera(src)
+		prev_turf = get_turf(src)

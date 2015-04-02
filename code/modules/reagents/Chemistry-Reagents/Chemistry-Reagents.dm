@@ -19,9 +19,9 @@ datum/reagent
 	var/datum/reagents/holder = null
 	var/reagent_state = LIQUID
 	var/list/data
+	var/current_cycle = 0
 	var/volume = 0
-	//var/list/viruses = list()
-	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
+	var/color = "#000000" // rgb: 0, 0, 0
 	var/can_synth = 1
 	var/metabolization_rate = REAGENTS_METABOLISM
 	var/overrides_metab = 0
@@ -29,6 +29,10 @@ datum/reagent
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
+
+datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
+	..()
+	holder = null
 
 datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
@@ -74,9 +78,14 @@ datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
 	return
 
 datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
+	current_cycle++
 	if(!istype(M, /mob/living))
 		return //Noticed runtime errors from facid trying to damage ghosts, this should fix. --NEO
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
+	return
+
+// Called when this reagent is removed while inside a mob
+datum/reagent/proc/on_mob_delete(mob/M)
 	return
 
 datum/reagent/proc/on_move(var/mob/M)
@@ -208,14 +217,6 @@ datum/reagent/blood/reaction_turf(var/turf/simulated/T, var/volume)//splash the 
 			newVirus.holder = blood_prop
 	return
 
-/* Must check the transfering of reagents and their data first. They all can point to one disease datum.
-
-			Del()
-				if(src.data["virus"])
-					var/datum/disease/D = src.data["virus"]
-					D.cure(0)
-				..()
-*/
 datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
@@ -251,7 +252,7 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	if(volume >= 10)
 		T.MakeSlippery()
 
-	for(var/mob/living/carbon/slime/M in T)
+	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
 
 	var/hotspot = (locate(/obj/effect/hotspot) in T)
@@ -261,12 +262,10 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
 			qdel(hotspot)
-	T.color = initial(T.color)
 	return
 
 datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
-	O.color = initial(O.color)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
@@ -276,7 +275,6 @@ datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 datum/reagent/water/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	if(!istype(M, /mob/living))
 		return
-	M.color = initial(M.color)
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(volume / 10))
 		if(M.fire_stacks <= 0)
@@ -676,16 +674,14 @@ datum/reagent/space_cleaner/reaction_obj(var/obj/O, var/volume)
 	else
 		if(O)
 			O.clean_blood()
-			O.color = initial(O.color)
 
 datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 	if(volume >= 1)
 		T.clean_blood()
-		T.color = initial(T.color)
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
-		for(var/mob/living/carbon/slime/M in T)
+		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
 	if(istype(T, /turf/simulated/floor))
 		var/turf/simulated/floor/F = T
@@ -695,7 +691,11 @@ datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 datum/reagent/space_cleaner/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.color = initial(C.color)
+		if(istype(M,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(H.lip_style)
+				H.lip_style = null
+				H.update_body()
 		if(C.r_hand)
 			C.r_hand.clean_blood()
 		if(C.l_hand)

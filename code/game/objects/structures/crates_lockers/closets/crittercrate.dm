@@ -44,11 +44,11 @@
 
 /obj/structure/closet/critter/corgi
 	name = "corgi crate"
-	content_mob = /mob/living/simple_animal/corgi
+	content_mob = /mob/living/simple_animal/pet/corgi
 
 /obj/structure/closet/critter/corgi/New()
 	if(prob(50))
-		content_mob = /mob/living/simple_animal/corgi/Lisa
+		content_mob = /mob/living/simple_animal/pet/corgi/Lisa
 	..()
 
 /obj/structure/closet/critter/cow
@@ -69,20 +69,20 @@
 
 /obj/structure/closet/critter/cat
 	name = "cat crate"
-	content_mob = /mob/living/simple_animal/cat
+	content_mob = /mob/living/simple_animal/pet/cat
 
 /obj/structure/closet/critter/cat/New()
 	if(prob(50))
-		content_mob = /mob/living/simple_animal/cat/Proc
+		content_mob = /mob/living/simple_animal/pet/cat/Proc
 	..()
 
 /obj/structure/closet/critter/pug
 	name = "pug crate"
-	content_mob = /mob/living/simple_animal/pug
+	content_mob = /mob/living/simple_animal/pet/pug
 
 /obj/structure/closet/critter/fox
 	name = "fox crate"
-	content_mob = /mob/living/simple_animal/fox
+	content_mob = /mob/living/simple_animal/pet/fox
 
 /obj/structure/closet/critter/butterfly
 	name = "butterflies crate"

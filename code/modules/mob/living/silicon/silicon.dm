@@ -3,6 +3,10 @@
 	voice_name = "synthesized voice"
 	languages = ROBOT | HUMAN
 	has_unlimited_silicon_privilege = 1
+	verb_say = "states"
+	verb_ask = "queries"
+	verb_exclaim = "declares"
+	verb_yell = "alarms"
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
@@ -21,6 +25,8 @@
 
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
+
+	var/law_change_counter = 0
 
 /mob/living/silicon/contents_explosion(severity, target)
 	return
@@ -415,6 +421,9 @@
 
 /mob/living/silicon/setEarDamage()
 	return
+
+/mob/living/silicon/check_eye_prot()
+	return 2
 
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)

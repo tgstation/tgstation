@@ -158,10 +158,8 @@ datum/reagent/toxin/zombiepowder/on_mob_life(var/mob/living/carbon/M as mob)
 	..()
 	return
 
-datum/reagent/toxin/zombiepowder/Del()
-	if(holder && ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
-		M.status_flags &= ~FAKEDEATH
+datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
+	M.status_flags &= ~FAKEDEATH
 	..()
 
 datum/reagent/toxin/mindbreaker
@@ -258,10 +256,8 @@ datum/reagent/toxin/chloralhydrate
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	current_cycle++
+	switch(current_cycle)
 		if(1 to 10)
 			M.confused += 2
 			M.drowsyness += 2
@@ -269,7 +265,7 @@ datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
 			M.sleeping += 1
 		if(51 to INFINITY)
 			M.sleeping += 1
-			M.adjustToxLoss((data - 50)*REM)
+			M.adjustToxLoss((current_cycle - 50)*REM)
 	..()
 	return
 
@@ -281,18 +277,55 @@ datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/beer2/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	switch(data)
+	switch(current_cycle)
 		if(1 to 50)
 			M.sleeping += 1
 		if(51 to INFINITY)
 			M.sleeping += 1
-			M.adjustToxLoss((data - 50)*REM)
-	data++
+			M.adjustToxLoss((current_cycle - 50)*REM)
+	current_cycle++
 	..()
 	return
 
+datum/reagent/toxin/coffeepowder
+	name = "Coffee Grounds"
+	id = "coffeepowder"
+	description = "Finely ground coffee beans, used to make coffee."
+	reagent_state = SOLID
+	color = "#5B2E0D" // rgb: 91, 46, 13
+	toxpwr = 0.5
+
+datum/reagent/toxin/teapowder
+	name = "Ground Tea Leaves"
+	id = "teapowder"
+	description = "Finely shredded tea leaves, used for making tea."
+	reagent_state = SOLID
+	color = "#7F8400" // rgb: 127, 132, 0
+	toxpwr = 0.5
+
+datum/reagent/toxin/mutetoxin //the new zombie powder.
+	name = "Mute Toxin"
+	id = "mutetoxin"
+	description = "A toxin that temporarily paralyzes the vocal cords."
+	color = "#F0F8FF" // rgb: 240, 248, 255
+	toxpwr = 0
+
+datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
+	M.silent = max(M.silent, 3)
+	..()
+
+datum/reagent/toxin/staminatoxin
+	name = "Tirizene"
+	id = "tirizene"
+	description = "A toxin that affects the stamina of a person when injected into the bloodstream."
+	color = "#6E2828"
+	data = 13
+	toxpwr = 0
+
+datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(REM * data)
+	data = max(data - 1, 3)
+	..()
 
 
 //ACID
@@ -327,47 +360,6 @@ datum/reagent/toxin/acid/fluacid
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
 	acidpwr = 20
-
-datum/reagent/toxin/coffeepowder
-	name = "Coffee Grounds"
-	id = "coffeepowder"
-	description = "Finely ground coffee beans, used to make coffee."
-	reagent_state = SOLID
-	color = "#5B2E0D" // rgb: 91, 46, 13
-	toxpwr = 0.5
-
-datum/reagent/toxin/teapowder
-	name = "Ground Tea Leaves"
-	id = "teapowder"
-	description = "Finely shredded tea leaves, used for making tea."
-	reagent_state = SOLID
-	color = "#7F8400" // rgb: 127, 132, 0
-	toxpwr = 0.5
-
-datum/reagent/toxin/mutetoxin //the new zombie powder.
-	name = "Mute Toxin"
-	id = "mutetoxin"
-	description = "A toxin that temporarily paralyzes the vocal cords."
-	color = "#F0F8FF" // rgb: 240, 248, 255
-	toxpwr = 0
-
-datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
-	M.silent += REM + 1 //If this var is increased by one or less, it will have no effect since silent is decreased right after reagents are handled in Life(). Hence the + 1.
-	..()
-
-datum/reagent/toxin/staminatoxin
-	name = "Tirizene"
-	id = "tirizene"
-	description = "A toxin that affects the stamina of a person when injected into the bloodstream."
-	color = "#6E2828"
-	data = 13
-	toxpwr = 0
-
-datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(REM * data)
-	data = max(data - 1, 3)
-	..()
-
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM

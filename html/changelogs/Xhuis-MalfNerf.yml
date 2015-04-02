@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: true
+
+changes: 
+  - tweak: "Malfunctioning AIs can no longer leave the station z-level. Upon doing this, they will fail the round."

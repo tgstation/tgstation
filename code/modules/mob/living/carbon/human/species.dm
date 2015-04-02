@@ -510,10 +510,16 @@
 		H.see_in_dark = 8
 		if(!H.druggy)		H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
-		H.sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		if(!(SEE_TURFS & H.permanent_sight_flags))
+			H.sight &= ~SEE_TURFS
+		if(!(SEE_MOBS & H.permanent_sight_flags))
+			H.sight &= ~SEE_MOBS
+		if(!(SEE_OBJS & H.permanent_sight_flags))
+			H.sight &= ~SEE_OBJS
+
+		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
-		H.see_in_dark = darksight
 
 		if(H.seer)
 			H.see_invisible = SEE_INVISIBLE_OBSERVER
@@ -649,47 +655,56 @@
 /datum/species/proc/movement_delay(var/mob/living/carbon/human/H)
 	var/mspeed = 0
 
-	var/hasjetpack = 0
-	if(istype(H.back, /obj/item/weapon/tank/jetpack))
-		var/obj/item/weapon/tank/jetpack/J = H.back
-		if(J.allow_thrust(0.01, H))
-			hasjetpack = 1
-	var/grav = has_gravity(H)
+	if(!(H.status_flags & IGNORESLOWDOWN))
 
-	if(!grav && !hasjetpack)
-		mspeed += 1 //Slower space without jetpack
+		var/grav = has_gravity(H)
+		var/hasjetpack = 0
+		if(!grav)
+			var/obj/item/weapon/tank/jetpack/J
+			var/obj/item/weapon/tank/jetpack/P
 
-	var/health_deficiency = (100 - H.health + H.staminaloss)
-	if(health_deficiency >= 40)
-		mspeed += (health_deficiency / 25)
+			if(istype(H.back, /obj/item/weapon/tank/jetpack))
+				J = H.back
+			if(istype(H.wear_suit,/obj/item/clothing/suit/space/hardsuit)) //copypasta but faster implementation currently
+				var/obj/item/clothing/suit/space/hardsuit/engine/C = H.wear_suit
+				P = C.jetpack
+			if(J)
+				if(J.allow_thrust(0.01, H))
+					hasjetpack = 1
+			else if(P)
+				if(P.allow_thrust(0.01, H))
+					hasjetpack = 1
 
-	var/hungry = (500 - H.nutrition) / 5	//So overeat would be 100 and default level would be 80
-	if(hungry >= 70)
-		mspeed += hungry / 50
+			mspeed = 1 - hasjetpack
 
-	if(H.wear_suit && grav)
-		mspeed += H.wear_suit.slowdown
-	if(H.shoes && grav)
-		mspeed += H.shoes.slowdown
-	if(H.back && grav)
-		mspeed += H.back.slowdown
+		if(grav || !hasjetpack)
+			var/health_deficiency = (100 - H.health + H.staminaloss)
+			if(health_deficiency >= 40)
+				mspeed += (health_deficiency / 25)
 
-	if((H.disabilities & FAT) && grav)
-		mspeed += 1.5
-	if(H.bodytemperature < 283.222)
-		mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
+			var/hungry = (500 - H.nutrition) / 5	//So overeat would be 100 and default level would be 80
+			if(hungry >= 70)
+				mspeed += hungry / 50
 
-	mspeed += speedmod
+			if(H.wear_suit)
+				mspeed += H.wear_suit.slowdown
+			if(H.shoes)
+				mspeed += H.shoes.slowdown
+			if(H.back)
+				mspeed += H.back.slowdown
 
-	if(H.status_flags & IGNORESLOWDOWN)
-		mspeed = 0
+			if((H.disabilities & FAT))
+				mspeed += 1.5
+			if(H.bodytemperature < 283.222)
+				mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
+
+			mspeed += speedmod
 
 	if(H.status_flags & GOTTAGOFAST)
 		mspeed -= 1
 
 	if(H.status_flags & GOTTAGOREALLYFAST)
 		mspeed -= 2
-
 
 	return mspeed
 
@@ -1000,10 +1015,8 @@
 
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/datum/gas_mixture/breath
-	// HACK NEED CHANGING LATER
 	if(H.health <= config.health_threshold_crit)
 		H.losebreath++
-
 	if(H.losebreath>0) //Suffocating so do not take a breath
 		H.losebreath--
 		if (prob(10)) //Gasp per 10 ticks? Sounds about right.

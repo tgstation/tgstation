@@ -388,6 +388,25 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/weapon/grenade/chem_grenade/clf3
+	name = "clf3 grenade"
+	desc = "BURN!-brand foaming clf3. In a special applicator for rapid purging of wide areas."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/clf3/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+
+	B1.reagents.add_reagent("fluorosurfactant", 290)
+	B1.reagents.add_reagent("clf3", 10)
+	B2.reagents.add_reagent("water", 290)
+	B2.reagents.add_reagent("clf3", 10)
+
+	beakers += B1
+	beakers += B2
+
+
 #undef EMPTY
 #undef WIRED
 #undef READY

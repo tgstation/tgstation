@@ -23,7 +23,7 @@
 	keyslot2 = null
 	..()
 
-/obj/item/device/radio/headset/talk_into(mob/living/M as mob, message, channel)
+/obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
 	if (!listening)
 		return
 	..()
@@ -188,10 +188,21 @@
 
 /obj/item/device/radio/headset/headset_cent
 	name = "\improper Centcom headset"
-	desc = "A headset used by the upper echelons of Nanotrasen. \nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	desc = "A headset used by the upper echelons of Nanotrasen. \nTo access the command channel, use :c."
 	icon_state = "cent_headset"
 	item_state = "headset"
+	keyslot = new /obj/item/device/encryptionkey/headset_com
+
+/obj/item/device/radio/headset/headset_cent/commander
 	keyslot = new /obj/item/device/encryptionkey/heads/captain
+
+/obj/item/device/radio/headset/headset_cent/alt
+	name = "\improper Centcom bowman headset"
+	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs."
+	flags = EARBANGPROTECT
+	icon_state = "cent_headset_alt"
+	item_state = "cent_headset_alt"
+	keyslot = null
 
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "

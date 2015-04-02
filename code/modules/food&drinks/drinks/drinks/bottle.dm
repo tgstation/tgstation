@@ -92,8 +92,8 @@
 		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>", \
 				"<span class='userdanger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>")
 	else
-		user.visible_message("<span class='danger'>[target] hits himself with a bottle of [src.name][head_attack_message]!</span>", \
-				"<span class='userdanger'>[target] hits himself with a bottle of [src.name][head_attack_message]!</span>")
+		user.visible_message("<span class='danger'>[target] hits \himself with a bottle of [src.name][head_attack_message]!</span>", \
+				"<span class='userdanger'>[target] hits \himself with a bottle of [src.name][head_attack_message]!</span>")
 
 	//Attack logs
 	add_logs(user, target, "attacked", object="bottle")

@@ -148,7 +148,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 20), 1))
-		reagents.add_reagent("hotline", 3 + round((potency / 10), 1))
+		reagents.add_reagent("salglu_solution", 1 + round((potency / 20), 1))
 		bitesize = 1 + round(reagents.total_volume / 3, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily
@@ -619,6 +619,7 @@
 	name = "mimana"
 	desc = "It's an excellent prop for a mime."
 	icon_state = "mimana"
+	trash = /obj/item/weapon/grown/bananapeel/mimanapeel
 	filling_color = "#FFFFEE"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mimana/add_juice()
@@ -650,7 +651,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = /obj/item/seeds/icepepperseed
-	name = "ice-pepper"
+	name = "ice pepper"
 	desc = "It's a mutant strain of chili"
 	icon_state = "icepepper"
 	filling_color = "#0000CD"
@@ -665,7 +666,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
+		user << "<span class='info'>- Frost Oil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
@@ -1030,6 +1031,8 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 		reagents.add_reagent("oculine", 3+round(potency / 5, 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
+	name = "mushroom"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishimycelium
@@ -1226,21 +1229,21 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 	switch(potency)
 		if(0 to 10)
-			inside_type = /obj/item/weapon/spacecash/
+			inside_type = /obj/item/stack/spacecash/
 		if(11 to 20)
-			inside_type = /obj/item/weapon/spacecash/c10
+			inside_type = /obj/item/stack/spacecash/c10
 		if(21 to 30)
-			inside_type = /obj/item/weapon/spacecash/c20
+			inside_type = /obj/item/stack/spacecash/c20
 		if(31 to 40)
-			inside_type = /obj/item/weapon/spacecash/c50
+			inside_type = /obj/item/stack/spacecash/c50
 		if(41 to 50)
-			inside_type = /obj/item/weapon/spacecash/c100
+			inside_type = /obj/item/stack/spacecash/c100
 		if(51 to 60)
-			inside_type = /obj/item/weapon/spacecash/c200
+			inside_type = /obj/item/stack/spacecash/c200
 		if(61 to 80)
-			inside_type = /obj/item/weapon/spacecash/c500
+			inside_type = /obj/item/stack/spacecash/c500
 		else
-			inside_type = /obj/item/weapon/spacecash/c1000
+			inside_type = /obj/item/stack/spacecash/c1000
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit

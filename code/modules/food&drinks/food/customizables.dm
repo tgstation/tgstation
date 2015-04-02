@@ -129,7 +129,8 @@
 	overlays += I
 
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice)
+/obj/item/weapon/reagent_containers/food/snacks/customizable/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
+	..()
 	slice.name = "[customname] [initial(slice.name)]"
 	slice.filling_color = filling_color
 	slice.update_overlays(src)

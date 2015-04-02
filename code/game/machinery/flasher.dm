@@ -84,6 +84,9 @@
 
 		if(L.flash_eyes())
 			L.Weaken(strength)
+			if(L.weakeyes)
+				L.Weaken(strength * 1.5)
+				L.visible_message("<span class='disarm'><b>[L]</b> gasps and shields their eyes!</span>")
 
 	return 1
 

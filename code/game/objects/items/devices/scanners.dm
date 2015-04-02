@@ -123,6 +123,10 @@ MASS SPECTROMETER
 		mob_status = "<font color='red'>Deceased</font>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.heart_attack)
+			user.show_message("<span class='userdanger'>Subject suffering from heart attack: Apply defibrillator immediately.</span>")
 	user.show_message(text("<span class='notice'>Analyzing Results for []:\n\t Overall Status: []</span>", M, mob_status), 1)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -381,7 +385,7 @@ MASS SPECTROMETER
 	if (!isslime(M))
 		user.show_message("<span class='warning'>This device can only scan slimes!</span>", 1)
 		return
-	var/mob/living/carbon/slime/T = M
+	var/mob/living/simple_animal/slime/T = M
 	user.show_message("Slime scan results:", 1)
 	user.show_message(text("[T.colour] [] slime", T.is_adult ? "adult" : "baby"), 1)
 	user.show_message(text("Nutrition: [T.nutrition]/[]", T.get_max_nutrition()), 1)

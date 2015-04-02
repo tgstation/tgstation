@@ -42,7 +42,7 @@
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
-		health = min(health+2, maxHealth)
+		adjustBruteLoss(-2)
 
 /mob/living/simple_animal/hostile/mushroom/New()//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
@@ -78,7 +78,7 @@
 			if(level_gain < 1)//So we still gain a level if two mushrooms were the same level
 				level_gain = 1
 			M.LevelUp(level_gain)
-		M.health = M.maxHealth
+		M.adjustBruteLoss(-M.maxHealth)
 		qdel(src)
 	..()
 
@@ -87,9 +87,10 @@
 	icon_state = "mushroom_color"
 	UpdateMushroomCap()
 
-/mob/living/simple_animal/hostile/mushroom/Die()
-	visible_message("<span class='notice'>[src] fainted.</span>")
-	..()
+/mob/living/simple_animal/hostile/mushroom/death(gibbed)
+	if(!gibbed)
+		visible_message("<span class='notice'>[src] fainted.</span>")
+	..(gibbed)
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
@@ -101,9 +102,8 @@
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message("<span class='notice'>[src] slowly begins to recover.</span>")
-	health = 5
 	faint_ticker = 0
-	icon_state = icon_living
+	revive()
 	UpdateMushroomCap()
 	recovery_cooldown = 1
 	spawn(300)
@@ -117,7 +117,7 @@
 		else
 			melee_damage_upper += (level_gain * rand(1,5))
 		maxHealth += (level_gain * rand(1,5))
-	health = maxHealth //They'll always heal, even if they don't gain a level, in case you want to keep this shroom around instead of harvesting it
+	adjustBruteLoss(-maxHealth) //They'll always heal, even if they don't gain a level, in case you want to keep this shroom around instead of harvesting it
 
 /mob/living/simple_animal/hostile/mushroom/proc/Bruise()
 	if(!bruised && !stat)

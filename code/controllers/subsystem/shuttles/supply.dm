@@ -303,10 +303,6 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/ordercomp/say_quote(text)
-	return "flashes, \"[text]\""
-
-
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
 		user << "<span class='warning'>Access Denied.</span>"
@@ -530,7 +526,3 @@
 	status_signal.data["command"] = command
 
 	frequency.post_signal(src, status_signal)
-
-
-/obj/machinery/computer/supplycomp/say_quote(text)
-	return "flashes, \"[text]\""

@@ -12,12 +12,16 @@
 	return
 
 
-/obj/effect/decal/cleanable/crayon/New(location, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune")
+/obj/effect/decal/cleanable/crayon/New(location, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0)
 	..()
 	loc = location
 
 	name = e_name
 	desc = "A [name] drawn in crayon."
-
 	icon_state = type
+
+	var/matrix/M = matrix()
+	M.Turn(rotation)
+	src.transform = M
+
 	color = main

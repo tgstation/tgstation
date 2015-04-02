@@ -47,7 +47,7 @@
 	if(occupant)
 		occupant_message("The sleeper is already occupied")
 		return
-	for(var/mob/living/carbon/slime/M in range(1,target))
+	for(var/mob/living/simple_animal/slime/M in range(1,target))
 		if(M.Victim == target)
 			occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
 			return

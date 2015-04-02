@@ -39,6 +39,17 @@
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
 
+/mob/living/simple_animal/attacked_by(var/obj/item/I, var/mob/living/user)
+	if(!I.force)
+		user.visible_message("<span class='warning'>[user] gently taps [src] with [I].</span>",\
+						"<span class='warning'>This weapon is ineffective, it does no damage.</span>")
+	else if(I.force >= force_threshold && I.damtype != STAMINA)
+		..()
+	else
+		visible_message("<span class='danger'>[I] bounces harmlessly off of [src].</span>",\
+					"<span class='userdanger'>[I] bounces harmlessly off of [src].</span>")
+
+
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
