@@ -253,12 +253,13 @@ var/list/department_radio_keys = list(
 						handle_render(M,themessage,src)
 				return 1
 		if(MODE_ANCIENT)
+			if(isMoMMI(src)) return 0 //Noice try, I really do appreciate the effort
 			var/list/stone = search_contents_for(/obj/item/commstone)
 			if(stone.len)
 				var/obj/item/commstone/commstone = stone[1]
 				if(commstone.commdevice)
 					var/list/stones = commstone.commdevice.get_active_stones()
-					var/themessage = text("<span class='ancient'><b>[]:</b> []</span>",src.name,message)
+					var/themessage = text("<span class='ancient'>Ancient communication, <b>[]:</b> []</span>",src.name,message)
 					log_say("Ancient chat: [src.name]/[src.key] : [message]")
 					for(var/thestone in stones)
 						var/mob/M = find_holder_of_type(thestone,/mob)
