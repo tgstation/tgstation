@@ -575,3 +575,12 @@ datum/objective/destroy/update_explanation_text()
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
+
+datum/objective/dontgetbanned
+	dangerrating = 50000
+	explanation_text = "Don't get banned."
+
+datum/objective/dontgetbanned/check_completion()
+	if(!owner.current.client)
+		return 0
+	return 1
