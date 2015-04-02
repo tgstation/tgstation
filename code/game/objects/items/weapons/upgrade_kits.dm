@@ -9,7 +9,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "euk"
 	flags = NOBLUDGEON
-	var/icon/euk_overlay
+	var/icon/euk_overlay = 'icons/effects/euk_overlays.dmi'
+	var/overlay_state
 	var/newcolor = ""
 	var/list/upgrade_types = list()
 
@@ -35,21 +36,19 @@
 	for(var/iconstate in icon_states(target.icon))
 		var/icon/O = new(euk_overlay, overlay_name) //Oooh, shiny!
 		I = new(target.icon, iconstate)
-		O.Blend(I, ICON_OR) //Combine the two icons.
 		O.Blend(I, ICON_ADD) //Trim the shine to the item only and add some vibrance to the item.
 		P.Insert(O, iconstate) //Build a new icon set to use with the item itself.
 
 	target.icon = P //Apply the new icon.
-	target.color = newcolor //Change the color.
+	target.color = newcolor //Change the color, or null it if needed.
 
 /obj/item/weapon/upgradekit/antiacid
 	name = "anti-acid euk"
 	desc = "An Equipment Upgrade Kit, which will plate firearms, shields, mining tools, and exterior clothing with gold to order to increase its resistance against dissolution."
-	euk_overlay = new('icons/effects/euk_overlays.dmi',"shine")
+	overlay_state = "gold"
 	upgrade_types = list(/obj/item/clothing/suit,/obj/item/clothing/head, /obj/item/weapon/gun, /obj/item/weapon/pickaxe, /obj/item/clothing/gloves, \
 	/obj/item/clothing/shoes, /obj/item/weapon/shield)
 	origin_tech = "materials=5;engineering=4"
-	newcolor = "#FFFF00"
 	unacidable = 1
 
 /obj/item/weapon/upgradekit/antiacid/apply_euk(var/obj/item/target, user)
@@ -58,7 +57,7 @@
 	if(target.upgraded || target.unacidable)
 		user << "[src] indicates that [target] is already [target.upgraded ? "upgraded" : "acid-proof"]!"
 		return
-	set_graphic(target, "shine")
+	set_graphic(target, overlay_state)
 	target.unacidable = 1 //Gold is said to resist acid, it also looks cool.
 	target.upgraded = 1
 	target.flags |= CONDUCT //Because coating your gun in gold is probably not a good idea when you touch something electrified.
