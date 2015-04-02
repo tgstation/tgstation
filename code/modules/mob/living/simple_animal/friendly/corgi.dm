@@ -523,6 +523,8 @@
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
 	shaved = 0
+	density = 0
+	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	accept_collar = 1
 

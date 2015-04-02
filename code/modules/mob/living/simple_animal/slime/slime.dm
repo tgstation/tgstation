@@ -29,7 +29,6 @@
 	nutrition = 700
 
 	see_in_dark = 8
-	update_slimes = 0
 
 	verb_say = "telepathically chirps"
 	verb_ask = "telepathically asks"

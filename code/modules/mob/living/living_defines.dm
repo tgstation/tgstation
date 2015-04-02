@@ -32,7 +32,6 @@
 	var/cameraFollow = null
 
 	var/tod = null // Time of death
-	var/update_slimes = 1
 
 	var/on_fire = 0 //The "Are we on fire?" var
 	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
