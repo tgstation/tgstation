@@ -84,7 +84,7 @@
 
 
 			if("hotline")
-				new /obj/item/clothing/under/jacketsuit(src)
+				new /obj/item/clothing/under/bikersuit(src)
 				new /obj/item/clothing/head/helmet/biker(src)
 				new /obj/item/clothing/shoes/mime/biker(src)
 				new /obj/item/clothing/gloves/bikergloves(src)
