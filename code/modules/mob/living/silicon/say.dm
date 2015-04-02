@@ -18,21 +18,15 @@
 
 	log_say("[key_name(src)] (@[src.x],[src.y],[src.z])(binary): [message]")
 
-
 	var/message_a = say_quote(message)
-	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
+	var/rendered = text("<i><span class='game say'>Robotic Talk, <span class='name'>[]</span> <span class='message'>[]</span></span></i>",name,message_a)
 
-	for (var/mob/living/S in living_mob_list)
-		if(S.binarycheck() || S.stat == DEAD) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
-			if(istype(S , /mob/living/silicon/ai) && !isMoMMI(src))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
-				S << renderedAI
-			else
-				S << rendered
-	for(var/mob/dead/observer/O in dead_mob_list)
-		if(istype(O , /mob/dead/observer) && O.stat == DEAD)
-			var/rendered_Obs = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <a href='byond://?src=\ref[O];follow2=\ref[O];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i>"
-			O << rendered_Obs
+	for (var/mob/S in player_list)
+		if(istype(S , /mob/living/silicon/ai))
+			var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
+			S << renderedAI
+		else if(S.binarycheck() || ((S in dead_mob_list) && !istype(S, /mob/new_player)))
+			handle_render(S,rendered,src)
 
 /mob/living/silicon/binarycheck()
 	return 1

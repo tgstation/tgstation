@@ -1338,3 +1338,11 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 /proc/isEmag(obj/O)
 	if(!O) return 0
 	return istype(O, /obj/item/weapon/card/emag)
+
+proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first object holder of the type you specified
+	var/atom/location = reference.loc //ie /mob to find the first mob holding it
+	while(!istype(location,/turf) && !istype(location,null))
+		if(istype(location,typepath))
+			return location
+		location = location.loc
+	return 0
