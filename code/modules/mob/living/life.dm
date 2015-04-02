@@ -96,14 +96,14 @@
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 	if(paralysis)
-		AdjustParalysis(-1)
+		paralysis = max(paralysis-1,0)
 	if(stunned)
-		AdjustStunned(-1)
+		stunned = max(stunned-1,0)
 		if(!stunned)
 			update_icons()
 
 	if(weakened)
-		AdjustWeakened(-1)
+		weakened = max(weakened-1,0)
 		if(!weakened)
 			update_icons()
 
