@@ -40,7 +40,6 @@
 	var/forcedodge = 0
 	// 1 to pass solid objects, 2 to pass solid turfs (results in bugs, bugs and tons of bugs)
 	var/range = 0
-	var/proj_hit = 0
 
 /obj/item/projectile/proc/Range()
 	if(range)
@@ -51,21 +50,16 @@
 		return
 
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
-	proj_hit = 1
 	qdel(src)
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0, hit_zone)
-	if(!isliving(target))	return 0
+	if(!isliving(target))
+		return 0
 	var/mob/living/L = target
+
 	var/organ_hit_text = ""
 	if(L.has_limbs)
 		organ_hit_text = " in \the [parse_zone(def_zone)]"
-	var/reagent_note
-	if(reagents && reagents.reagent_list)
-		reagent_note = " REAGENTS:"
-		for(var/datum/reagent/R in reagents.reagent_list)
-			reagent_note += R.id + " ("
-			reagent_note += num2text(R.volume) + ") "
 	if(suppressed)
 		playsound(loc, hitsound, 5, 1, -1)
 		L << "<span class='userdanger'>You've been shot by \a [src][organ_hit_text]!</span>"
@@ -75,6 +69,13 @@
 			playsound(loc, hitsound, volume, 1, -1)
 		L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
 							"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+
+	var/reagent_note
+	if(reagents && reagents.reagent_list)
+		reagent_note = " REAGENTS:"
+		for(var/datum/reagent/R in reagents.reagent_list)
+			reagent_note += R.id + " ("
+			reagent_note += num2text(R.volume) + ") "
 	add_logs(firer, L, "shot", object="[src]", addition=reagent_note)
 
 	L.on_hit(type)
@@ -101,11 +102,12 @@
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
-		permutated.Add(A)
+		if(A)
+			permutated.Add(A)
 		Range()
 		return 0
 	else
-		if(A.density && !ismob(A)) //if we hit a dense obj or turf then we also hit one of the mobs on it.
+		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
 			for(var/mob/living/L in target_turf)
 				mobs_list += L
@@ -113,14 +115,6 @@
 				var/mob/living/picked_mob = pick(mobs_list)
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
-
-/obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
-
-	if(istype(mover, /obj/item/projectile))
-		return prob(95)
-	else
-		return 1
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
@@ -140,16 +134,8 @@
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original, 1)
-			mob_hit_check()
 			Range()
 			sleep(1)
-
-//proc to check if we hit the mobs in our way.
-/obj/item/projectile/proc/mob_hit_check()
-	for(var/mob/living/L in get_turf(src))
-		if(L.density && !(L in permutated))
-			Bump(L, 1)
-			return
 
 /obj/item/projectile/Crossed(atom/movable/AM as mob) //A mob moving on a tile with a projectile is hit by it.
 	..()
