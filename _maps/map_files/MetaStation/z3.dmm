@@ -124,7 +124,7 @@
 "ct" = (/obj/structure/sign/securearea,/turf/simulated/wall/r_wall,/area/tcommsat/chamber)
 "cu" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cv" = (/obj/item/weapon/paper/crumpled,/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
-"cw" = (/obj/item/weapon/syntiflesh{name = "Cuban Pete-Meat"},/obj/item/weapon/spacecash,/turf/simulated/floor/engine,/area/tcommsat/chamber)
+"cw" = (/obj/item/weapon/syntiflesh{name = "Cuban Pete-Meat"},/obj/item/stack/spacecash,/turf/simulated/floor/engine,/area/tcommsat/chamber)
 "cx" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cy" = (/obj/structure/table,/obj/item/weapon/storage/fancy/cigarettes,/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cz" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)

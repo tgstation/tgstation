@@ -156,7 +156,7 @@
 		if(pin.pin_auth(user) || pin.emagged)
 			return 1
 		else
-			user << "<span class='warning'>INVALID USER.</span>"
+			pin.auth_fail(user)
 			return 0
 	else
 		user << "<span class='notice'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"

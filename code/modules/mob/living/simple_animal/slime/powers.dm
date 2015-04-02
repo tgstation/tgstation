@@ -7,7 +7,7 @@
 
 	var/list/choices = list()
 	for(var/mob/living/C in view(1,src))
-		if(C!=src && !isslime(C) && Adjacent(C))
+		if(C!=src && Adjacent(C))
 			choices += C
 
 	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
@@ -22,6 +22,10 @@
 
 	if(Victim)
 		Feedstop()
+		return 0
+
+	if(isslime(M))
+		src << "<i>I can't latch onto another slime...</i>"
 		return 0
 
 	if(docile)

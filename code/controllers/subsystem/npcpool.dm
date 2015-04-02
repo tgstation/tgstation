@@ -2,7 +2,7 @@ var/datum/subsystem/npcpool/SSbp
 
 /datum/subsystem/npcpool
 	name = "NPCPool"
-	priority = 27
+	priority = 100
 
 	var/list/canBeUsed = list()
 	var/list/canBeUsed_non = list()
@@ -76,9 +76,10 @@ var/datum/subsystem/npcpool/SSbp
 				var/facCount = 0
 				var/helpProb = 0
 				for(var/C in check.faction)
-					if(candidate.faction[facCount] == C)
-						helpProb = min(100,helpProb + 25)
-					facCount++
+					for(var/D in candidate.faction)
+						if(D == C)
+							helpProb = min(100,helpProb + 25)
+						facCount++
 				if(facCount == 1 && helpProb > 0)
 					helpProb = 100
 				if(prob(helpProb))
@@ -94,9 +95,10 @@ var/datum/subsystem/npcpool/SSbp
 				var/facCount = 0
 				var/helpProb = 0
 				for(var/C in check.faction)
-					if(candidate.faction[facCount] == C)
-						helpProb = min(100,helpProb + 10)
-					facCount++
+					for(var/D in candidate.faction)
+						if(D == C)
+							helpProb = min(100,helpProb + 25)
+						facCount++
 				if(facCount == 1 && helpProb > 0)
 					helpProb = 100
 				if(prob(helpProb))
