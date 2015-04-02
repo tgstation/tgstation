@@ -18,13 +18,16 @@
 
 	hud_state = "wiz_mm"
 
+	amt_paralysis = 3
+	amt_stunned = 3
+
+	amt_dam_fire = 10
+
 /spell/targeted/projectile/magic_missile/prox_cast(var/list/targets, atom/spell_holder)
 	targets = ..()
 	spell_holder.visible_message("<span class='danger'>\The [spell_holder] pops with a flash!</span>")
 	for(var/mob/living/M in targets)
-		M.Stun(3)
-		M.Weaken(3)
-		M.adjustFireLoss(10)
+		apply_spell_damage(M)
 	return
 
 //PROJECTILE

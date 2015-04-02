@@ -28,7 +28,8 @@
 	hud_state = "wiz_fireball"
 
 /spell/targeted/projectile/dumbfire/fireball/prox_cast(var/list/targets, spell_holder)
-	cast(targets, spell_holder)
+	for(var/mob/living/M in targets)
+		apply_spell_damage(M)
 	explosion(get_turf(spell_holder), ex_severe, ex_heavy, ex_light, ex_flash)
 
 //PROJECTILE
