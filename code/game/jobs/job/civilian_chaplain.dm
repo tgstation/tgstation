@@ -154,6 +154,8 @@
 					B.name = "The Poky Little Puppy"
 				if("adminism", "admintology")
 					B.name = "Breaking Through the Fourth Wall"
+				if("42")
+					B.name = "The Hitchhiker's Guide to the Galaxy"
 				else
 					B.name = "The Holy Book of [new_religion]"
 
@@ -190,7 +192,7 @@
 
 			while(!accepted)
 				if(!B) break // prevents possible runtime errors
-				new_book_style = input(H,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts", "Unaussprechlichen Kulten", "Necronomicon", "Book of Shadows", "Torah", "Burning", "Honk", "Ianism")
+				new_book_style = input(H,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts", "Unaussprechlichen Kulten", "Necronomicon", "Book of Shadows", "Torah", "Burning", "Honk", "Ianism", "The Guide")
 				switch(new_book_style)
 					if("Koran")
 						B.icon_state = "koran"
@@ -274,6 +276,9 @@
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.dir = 9
+					if("The Guide")
+						B.icon_state = "guide"
+						B.item_state = "guide"
 					else
 						// if christian bible, revert to default
 						B.icon_state = "bible"
