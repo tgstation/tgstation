@@ -68,6 +68,37 @@
 	else
 		footstep++
 
+/obj/item/clothing/shoes/clown_shoes/attackby(obj/item, mob/user)
+	if(istype(item,/obj/item/weapon/bikehorn))
+		if(istype(loc,/turf))
+			var/turf/T = loc
+			var/obj/item/stack/sheet/mineral/bananium/bananium = locate() in T
+			if(!bananium)
+				return
+			var/obj/item/weapon/reagent_containers/food/snacks/grown/banana/banana = locate() in T
+			if(!banana)
+				return
+			var/obj/effect/decal/cleanable/crayon/rune = null
+			for(var/obj/O in T)
+				if(istype(O,/obj/effect/decal/cleanable/crayon))
+					rune = O
+					if(rune.color != "#fff000")
+						rune = null
+						continue
+					if(rune.icon_state != "rune_clown")
+						rune = null
+			if(!rune)
+				return
+			user.drop_item()
+			qdel(item)
+			qdel(bananium)
+			qdel(banana)
+			new /obj/item/clothing/shoes/clown_shoes/bananium(T)
+			playsound(T,"sound/items/Airhorn.ogg",100,0)
+			visible_message("<span class='notice'>[user.name] has performed the honkly ritual successfully!</span>")
+			qdel(src)
+
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
