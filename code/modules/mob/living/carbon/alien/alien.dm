@@ -12,6 +12,7 @@
 	ventcrawler = 2
 	languages = ALIEN
 	verb_say = "hisses"
+	digestion_damage = 10
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -28,9 +29,25 @@
 	var/heat_protection = 0.5
 	var/leaping = 0
 
+/mob/living/carbon/alien/verb/alien_emote(message as text) //There needs to be a separate one for aliums, otherwise it doesn't work.
+	set name = "Me"
+	set category = "IC"
+
+	if(say_disabled)
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		return
+
+	if(usr.restrained() || usr.canmove || usr.stat)
+		return
+
+	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+
+	usr.visible_message("<b>[usr]</b> [message]")
+
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/carbon/alien/verb/alien_emote
 	internal_organs += new /obj/item/organ/brain/alien
 
 	..()
@@ -60,12 +77,12 @@
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
 	if(locate(/obj/structure/alien/weeds) in loc)
-		if(health >= maxHealth - getCloneLoss())
-			adjustToxLoss(plasma_rate)
-		else
-			adjustBruteLoss(-heal_rate)
-			adjustFireLoss(-heal_rate)
-			adjustOxyLoss(-heal_rate)
+		adjustToxLoss(plasma_rate / 2) //Both heals AND gives plasma, but has the plasma rate slower
+		adjustBruteLoss(-heal_rate)
+		adjustFireLoss(-heal_rate)
+		adjustOxyLoss(-heal_rate)
+		adjustBrainLoss(-heal_rate)
+		adjustCloneLoss(-heal_rate)
 
 	if(!environment)
 		return
