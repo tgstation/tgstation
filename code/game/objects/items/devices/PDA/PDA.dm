@@ -27,8 +27,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
 	var/last_text //No text spamming
-	var/last_honk //Also no honk spamming that's bad too
-	var/last_trombone //yada yada spam
+	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
@@ -559,13 +558,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else if((!isnull(cartridge)) && (cartridge.access_engine))
 					scanmode = 4
 			if("Honk")
-				if ( !(last_honk && world.time < last_honk + 20) )
+				if ( !(last_noise && world.time < noise + 20) )
 					playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
-					last_honk = world.time
+					last_noise = world.time
 			if("Trombone")
-				if ( !(last_trombone && world.time < last_trombone + 20) )
+				if ( !(last_noise && world.time < last_noise + 20) )
 					playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1)
-					last_trombone = world.time
+					last_noise = world.time
 			if("Gas Scan")
 				if(scanmode == 5)
 					scanmode = 0
