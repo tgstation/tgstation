@@ -37,6 +37,10 @@
 			if(H.bleedsuppress)
 				user << "[H]'s bleeding is already bandaged."
 				return
+			if(H.surgeries.len)
+				for(var/datum/surgery/S in H.surgeries)
+					user << "[H]'s surgical incision is bleeding, finish \his [S.name] first!"
+				return
 			else if(!H.blood_max)
 				user << "[H] isn't bleeding."
 				return

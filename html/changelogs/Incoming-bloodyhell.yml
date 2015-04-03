@@ -1,0 +1,9 @@
+author: Incoming
+
+delete-after: True
+
+changes: 
+
+  - rscadd: "People now bleed while they are being operated on. Bleeding worsens the more steps are failed and is healed by finishing the surgery."
+  - rscadd: "Operating on a conscious patient increases failure chance on surgery steps, use the anesthetic!"
+  - rscadd: "Self surgery is again possible, but likewise increases your failure chances, weigh your options carefully."

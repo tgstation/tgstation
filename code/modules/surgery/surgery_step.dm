@@ -6,6 +6,7 @@
 	var/time = 10					//how long does the step take?
 	var/new_organ = null 			//Used for multilocation operations
 	var/list/allowed_organs = list()//Allowed organs, see Handle_Multi_Loc below - RR
+	var/added_blood_loss = 0		//failing steps increases bleeding
 
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -52,6 +53,15 @@
 			prob_chance = implements[implement_type]
 		prob_chance *= get_location_modifier(target)
 
+		if(user == target) //Self surgery is harder
+			prob_chance *= 0.8
+
+		if(!target.sleeping && target.stat == CONSCIOUS) //Hold still!
+			prob_chance *= 0.8
+
+		if(prob_chance < 10) //give them a desperate chance at least
+			prob_chance = 10
+
 		if(prob(prob_chance) || isrobot(user))
 			if(success(user, target, target_zone, tool, surgery))
 				advance = 1
@@ -84,6 +94,10 @@
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='warning'>[user] screws up!</span>")
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		added_blood_loss += 0.5 //kept track of seperately so it can be removed at the end seperate of other sources of bleeding
+		H.blood_max += 0.5
 	return 0
 
 
