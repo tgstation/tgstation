@@ -12,7 +12,10 @@
 	var/list/upgrade_holder = list()
 	var/upgrading = 0 // are we upgrading a nigga?
 	var/upgrade_finished = -1 // time the upgrade should finish
-	var/speed_multiplier = 1 // upgrade speed bonuses
+	var/manipulator_coeff = 1 // better manipulator swaps parts faster
+	var/transfer_rate_coeff = 1 // transfer rate bonuses
+	var/capacitor_stored = 0 //power stored in capacitors, to be instantly transferred to robots when they enter the charger
+	var/capacitor_max = 0 //combined max power the capacitors can hold
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | EJECTNOTDEL
 
 /obj/machinery/recharge_station/New()
@@ -21,9 +24,9 @@
 
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/recharge_station,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
 		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/matter_bin,
 		/obj/item/weapon/stock_parts/matter_bin
 	)
 
@@ -33,8 +36,13 @@
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		T += M.rating-1
-	speed_multiplier = initial(speed_multiplier)+(T * 0.5)
-	active_power_usage = 1000 * speed_multiplier
+	manipulator_coeff = initial(manipulator_coeff)+(T)
+	T = 0
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		T += C.rating-1
+	transfer_rate_coeff = initial(transfer_rate_coeff)+(T * 0.2)
+	capacitor_max = initial(capacitor_max)+(T * 750)
+	active_power_usage = 1000 * transfer_rate_coeff
 
 /obj/machinery/recharge_station/Destroy()
 	src.go_out()
@@ -65,6 +73,8 @@
 
 	if(src.occupant)
 		process_occupant()
+	else
+		process_capacitors()
 	return 1
 
 /obj/machinery/recharge_station/proc/process_upgrade()
@@ -126,8 +136,8 @@
 				upgrading = 0
 				return
 			if(alert(user, "You have chosen [upgrading], is this correct?", , "Yes", "No") == "Yes")
-				upgrade_finished = world.timeofday + (600/speed_multiplier)
-				user << "The upgrade should complete in approximately [60/speed_multiplier] seconds, you will be unable to exit \the [src] during this unless you cancel the process."
+				upgrade_finished = world.timeofday + (600/manipulator_coeff)
+				user << "The upgrade should complete in approximately [60/manipulator_coeff] seconds, you will be unable to exit \the [src] during this unless you cancel the process."
 				return
 			else
 				upgrading = 0
@@ -184,8 +194,25 @@
 				R.cell.charge = R.cell.maxcharge
 				return
 			else
-				R.cell.charge = min(R.cell.charge + 200 * speed_multiplier + (isMoMMI(occupant) ? 100 * speed_multiplier : 0), R.cell.maxcharge)
+				if (capacitor_stored)
+					var/juicetofill = R.cell.maxcharge-R.cell.charge
+					if(capacitor_stored > juicetofill)
+						capacitor_stored -= juicetofill
+						R.cell.charge = R.cell.maxcharge
+					else
+						R.cell.charge = R.cell.charge + capacitor_stored
+						capacitor_stored = 0
+				R.cell.charge = min(R.cell.charge + 200 * transfer_rate_coeff + (isMoMMI(occupant) ? 100 * transfer_rate_coeff : 0), R.cell.maxcharge)
 				return
+
+/obj/machinery/recharge_station/proc/process_capacitors()
+	if (capacitor_stored >= capacitor_max)
+		if (idle_power_usage != initial(idle_power_usage)) //probably better to not re-assign the variable each process()?
+			idle_power_usage = initial(idle_power_usage)
+		return 0
+	idle_power_usage = initial(idle_power_usage) + (100 * transfer_rate_coeff)
+	capacitor_stored = min(capacitor_stored + (20 * transfer_rate_coeff), capacitor_max)
+	return 1
 
 /obj/machinery/recharge_station/proc/go_out()
 	if(!( src.occupant ))
