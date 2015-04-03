@@ -24,6 +24,6 @@
 
 		for (var/mob/S in player_list)
 			var/mob/living/silicon/robot/mommi/test = S
-			if(istype(test) && !test.keeper || istype(S, /mob/new_player)) return 1
-			handle_render(S,rendered,src)
+			if((istype(test) && test.keeper) || istype(S,/mob/dead/observer))
+				handle_render(S,rendered,src)
 		return 1
