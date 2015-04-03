@@ -7,25 +7,11 @@ var/global/list/type_instances[0]
 /var/global/datum/map/active/map = new() //Current loaded map
 //Defined in its .dm, see maps/_map.dm for more info.
 
-//FIXME: These are lists of things that get called every tick.
-// All of these badly need optimizing, half of them don't
-// actually need to be called every tick, many of them busy-wait
-// (come on people we're not writing assembly), and many should
-// be using tickers instead (eg narsie, singulo). Major target
-// for cutting down on lag and boosting overall performance.
-var/global/list/machines = list()
-var/global/list/power_machines = list()
-var/global/list/processing_objects = list()
-var/global/list/active_diseases = list()
-var/global/list/events = list()
-
 var/global/obj/effect/datacore/data_core = null
 var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null
 
 var/global/list/account_DBs = list()
-
-var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 
 // Used only by space turfs. TODO: Remove.
 // The comment below is no longer accurate.
@@ -232,7 +218,6 @@ var/list/OOClog = list()
 var/list/adminlog = list()
 
 var/suspend_alert = 0
-var/list/powernets = list()
 
 var/Debug = 0	// global debug switch
 var/Debug2 = 0

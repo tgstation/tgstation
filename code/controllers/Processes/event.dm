@@ -1,3 +1,5 @@
+var/global/list/events = list()
+
 /datum/controller/process/event
 	var/tmp/datum/updateQueue/updateQueueInstance
 

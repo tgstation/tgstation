@@ -7,12 +7,6 @@ var/list/solars_list = list()
 	icon = 'icons/obj/power.dmi'
 	density = 1
 
-/obj/machinery/power/proc/getPowernetNodes()
-	if(!powernet)
-		return list()
-
-	return powernet.nodes
-
 /obj/machinery/power/solar/New(loc)
 	..(loc)
 	solars_list += src

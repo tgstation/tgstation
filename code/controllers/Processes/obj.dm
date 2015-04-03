@@ -1,4 +1,6 @@
 var/global/list/object_profiling = list()
+var/global/list/processing_objects = list()
+
 /datum/controller/process/obj
 	var/tmp/datum/updateQueue/updateQueueInstance
 

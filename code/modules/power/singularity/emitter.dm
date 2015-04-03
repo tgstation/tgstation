@@ -122,7 +122,7 @@
 	..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && powernet && avail(active_power_usage))
+	if (active && get_powernet() && avail(active_power_usage))
 		icon_state = "emitter_+a"
 	else
 		icon_state = "emitter"
@@ -134,7 +134,7 @@
 		return
 	src.add_fingerprint(user)
 	if(state == 2)
-		if(!powernet)
+		if(!get_powernet())
 			user << "The emitter isn't connected to a wire."
 			return 1
 		if(!src.locked)
@@ -173,7 +173,7 @@
 	return 0
 
 /obj/machinery/power/emitter/process()
-	if(!anchored)
+	if(!anchored) //If it got unanchored "inexplicably"... fucking badmins
 		active = 0
 		update_icon()
 		update_beam()
@@ -181,23 +181,25 @@
 	if(stat & BROKEN)
 		return
 
-	if(state != 2 || (!powernet && active_power_usage))
+	if(state != 2 || (!powernet && active_power_usage)) //Not welded to the floor, or no more wire underneath and requires power
 		active = 0
 		update_icon()
 		update_beam()
 		return
 
-	if(((last_shot + fire_delay) <= world.time) && (active == 1))
-		if(!active_power_usage || avail(active_power_usage))
-			add_load(active_power_usage)
+	if(((last_shot + fire_delay) <= world.time) && (active == 1)) //It's currently activated and it hasn't processed in a bit
+		if(!active_power_usage || avail(active_power_usage)) //Doesn't require power or powernet has enough supply
+			add_load(active_power_usage) //Drain it then bitch
 
-			if(!powered)
+			if(!powered) //Yay its powered
 				powered = 1
 				update_icon()
 				investigation_log(I_SINGULO,"regained power and turned <font color='green'>on</font>")
 		else
-			if(powered)
+			if(powered) //Fuck its not anymore
 				powered = 0
+				active = 0 //Whelp time to kill it then
+				update_beam() //Update its beam and icon
 				update_icon()
 				investigation_log(I_SINGULO,"lost power and turned <font color='red'>off</font>")
 			return

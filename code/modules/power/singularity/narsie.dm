@@ -87,12 +87,8 @@ var/global/list/narsie_list = list()
 /obj/machinery/singularity/narsie/large/eat()
 	set background = BACKGROUND_ENABLED
 
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
 	for (var/turf/A in orange(consume_range, src))
 		consume(A)
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
 
 /obj/machinery/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
@@ -405,14 +401,8 @@ var/global/list/narsie_list = list()
 /obj/machinery/singularity/narsie/wizard/eat()
 	set background = BACKGROUND_ENABLED
 
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
-
 	for (var/turf/T in trange(consume_range, src))
 		consume(T)
-
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
 
 /**
  * MR. CLEAN

@@ -40,6 +40,7 @@ var/global/list/masterdatumPool = new
 			O.New(arglist(B))
 		else
 			O.New()
+		O.disposed = null //Set to process once again
 	return O
 
 /*
@@ -64,6 +65,11 @@ var/global/list/masterdatumPool = new
 		masterdatumPool["[D.type]"] = list()
 	D.Destroy()
 	D.resetVariables()
+	D.disposed = 1 //Set to stop processing while pooled
+	#ifdef DEBUG_DATUM_POOL
+	if(D in masterdatumPool["[D.type]"])
+		world << text("returnToPool has been called twice for the same datum of type [] time to panic.", D.type)
+	#endif
 	masterdatumPool["[D.type]"] += D
 
 	#ifdef DEBUG_DATUM_POOL

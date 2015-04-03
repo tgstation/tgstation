@@ -11,10 +11,6 @@
 
 	var/const/PRESSURE_CHECK_DELAY=5 // 5s delay between pchecks to give pipenets time to recover.
 
-/datum/pipeline/Del()
-	Destroy()
-	return ..()
-
 /datum/pipeline/Destroy()
 	if(network) //For the pipenet rebuild
 		returnToDPool(network)

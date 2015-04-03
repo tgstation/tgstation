@@ -20,7 +20,7 @@
 /obj/machinery/power/solar/control/initialize()
 	..()
 
-	if(powernet)
+	if(get_powernet())
 		set_panels(cdir)
 
 /obj/machinery/power/solar/control/Destroy()
