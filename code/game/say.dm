@@ -190,7 +190,7 @@ var/list/freqtoname = list(
 proc/handle_render(var/mob,var/message,var/speaker)
 	if(istype(mob, /mob/new_player)) return //One extra layer of sanity
 	if(istype(mob,/mob/dead/observer))
-		var/reference = "<a href='?src=\ref[src];follow=\ref[speaker]'>(Follow)</a> "
+		var/reference = "<a href='?src=\ref[mob];follow=\ref[speaker]'>(Follow)</a> "
 		message = reference+message
 		mob << message
 	else
