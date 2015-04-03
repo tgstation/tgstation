@@ -76,6 +76,11 @@
 	else
 		return 1
 
+//used in the AStar algorithm to determinate if the turf the door is on is passable
+/obj/machinery/door/window/CanAStarPass(var/obj/item/weapon/card/id/ID, var/to_dir)
+	return !density || (dir != to_dir) || check_access(ID)
+
+
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
