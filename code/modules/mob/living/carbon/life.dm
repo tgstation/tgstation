@@ -255,10 +255,13 @@
 				stomach_contents.Remove(M)
 				continue
 			if(istype(M, /mob/living/carbon) && stat != 2)
+				M.take_organ_damage(0, (src.digestion_damage / (M.stat + 1))) //In the case of xenos: 10 burn damage while alive, 5 while unconscious, 2.5 while dead - to extend the lifespan of eaten people
 				if(M.stat == 2)
-					M.death(1)
-					stomach_contents.Remove(M)
-					qdel(M)
+					if(digest_stomach_contents)
+						sleep(3600) //six minutes
+						stomach_contents.Remove(M)
+						qdel(M)
+						src << "<span class='notice'>You notice an absence in your stomach.</span>"
 					continue
 				if(SSmob.times_fired%3==1)
 					if(!(M.status_flags & GODMODE))

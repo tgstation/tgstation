@@ -1,0 +1,13 @@
+author: Xhuis
+delete-after: true
+
+changes: 
+  - tweak: "Many changes have been made to xenomorphs."
+  - rscadd: "Facehuggers now have an inhand sprite."
+  - rscadd: "Alien weeds now heal all damage types (brain and clone included), and restore plasma at half the rate."
+  - rscadd: "Sentinels are now semi-transparent while walking, similar to hunters. However, they do not have a plasma cost for this."
+  - rscadd: "Alien queens now have a larger name in hivemind chat. In addition, hivemind chat is colored purple"
+  - rscadd: "Xenomorphs now have a proper examine text."
+  - rscadd: "Xenos now have the Me emote."
+  - rscadd: "Xenos will no longer digest eaten mobs in their stomach."
+  - rscadd: "You can now perform surgery on a xenomorph's chest to remove anyone trapped inside their stomach."

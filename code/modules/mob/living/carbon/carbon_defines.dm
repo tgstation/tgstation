@@ -2,6 +2,8 @@
 	gender = MALE
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	var/list/stomach_contents	= list()
+	var/digest_stomach_contents = 1 //Whether or not stomach contents will eventually be digested when the mob inside is dead
+	var/digestion_damage = 5 //How much burn damage stomach acid does to mobs inside the stomach
 	var/list/internal_organs	= list()	//List of /obj/item/organ in the mob. they don't go in the contents.
 
 	var/silent = 0 		//Can't talk. Value goes down every life proc. //NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
