@@ -39,6 +39,9 @@
 //Redirect the attack only if it's a machine, otherwise don't bother
 /obj/item/device/component_exchanger/preattack(var/atom/A, var/mob/user, proximity_flag)
 
+	if(!proximity_flag)
+		return
+
 	if(istype(A, /obj/machinery))
 
 		var/obj/machinery/M = A
