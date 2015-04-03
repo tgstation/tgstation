@@ -79,7 +79,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 //////////////////////////////////
 
 /mob/living/carbon/human
-	var/list/overlays_standing[TOTAL_LAYERS]
+	var/tmp/list/overlays_standing[TOTAL_LAYERS]
 
 /mob/living/carbon/human/proc/update_base_icon_state()
 	//var/race = dna ? dna.mutantrace : null

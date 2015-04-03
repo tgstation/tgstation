@@ -8,37 +8,37 @@
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
-	var/obj/screen/flash = null
-	var/obj/screen/blind = null
-	var/obj/screen/hands = null
-	var/obj/screen/pullin = null
-	var/obj/screen/internals = null
-	var/obj/screen/i_select = null
-	var/obj/screen/m_select = null
-	var/obj/screen/healths = null
-	var/obj/screen/throw_icon = null
-	var/obj/screen/damageoverlay = null
+	var/tmp/obj/screen/flash = null
+	var/tmp/obj/screen/blind = null
+	var/tmp/obj/screen/hands = null
+	var/tmp/obj/screen/pullin = null
+	var/tmp/obj/screen/internals = null
+	var/tmp/obj/screen/i_select = null
+	var/tmp/obj/screen/m_select = null
+	var/tmp/obj/screen/healths = null
+	var/tmp/obj/screen/throw_icon = null
+	var/tmp/obj/screen/damageoverlay = null
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
-	var/obj/screen/zone_sel/zone_sel = null
-	var/obj/screen/leap_icon = null
-	var/obj/screen/healthdoll = null
+	var/tmp/obj/screen/zone_sel/zone_sel = null
+	var/tmp/obj/screen/leap_icon = null
+	var/tmp/obj/screen/healthdoll = null
 
 	var/damageoverlaytemp = 0
-	var/computer_id = null
+	var/tmp/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null
 	var/attack_log = list( )
-	var/obj/machinery/machine = null
+	var/tmp/obj/machinery/machine = null
 	var/other_mobs = null
 	var/memory = ""
 	var/disabilities = 0	//Carbon
-	var/atom/movable/pulling = null
-	var/next_move = null
+	var/tmp/atom/movable/pulling = null
+	var/tmp/next_move = null
 	var/notransform = null	//Carbon
 	var/hand = null
 	var/eye_blind = 0		//Carbon
@@ -70,7 +70,7 @@
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
 	var/jitteriness = 0//Carbon
-	var/nutrition = NUTRITION_LEVEL_FED + 50//Carbon
+	var/tmp/nutrition = NUTRITION_LEVEL_FED + 50//Carbon
 	var/satiety = 0//Carbon
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
@@ -85,17 +85,17 @@
 	var/obj/structure/stool/bed/buckled = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
-	var/obj/item/weapon/storage/s_active = null//Carbon
+	var/tmp/obj/item/weapon/storage/s_active = null//Carbon
 
 	var/seer = 0 //for cult//Carbon, probably Human
 	var/see_override = 0 //0 for no override, sets see_invisible = see_override in mob life process
 
-	var/datum/hud/hud_used = null
+	var/tmp/datum/hud/hud_used = null
 
-	var/list/grabbed_by = list(  )
-	var/list/requests = list(  )
+	var/tmp/list/grabbed_by = list(  )
+	var/tmp/list/requests = list(  )
 
-	var/list/mapobjs = list()
+	var/tmp/list/mapobjs = list()
 
 	var/in_throw_mode = 0
 
@@ -116,7 +116,7 @@
 	var/move_on_shuttle = 1 // Can move on the shuttle.
 
 //The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
-	var/mob/living/carbon/LAssailant = null
+	var/tmp/mob/living/carbon/LAssailant = null
 
 
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
@@ -137,7 +137,7 @@
 
 	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
-	var/area/lastarea = null
+	var/tmp/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 	var/weakeyes = 0 //Are they vulnerable to flashes?
@@ -146,10 +146,10 @@
 
 	var/force_compose = 0 //If this is nonzero, the mob will always compose it's own hear message instead of using the one given in the arguments.
 
-	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
+	var/tmp/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 
-	var/turf/listed_turf = null	//the current turf being examined in the stat panel
+	var/tmp/turf/listed_turf = null	//the current turf being examined in the stat panel
 
 	var/list/permanent_huds = list()
 	var/permanent_sight_flags = 0

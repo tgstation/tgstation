@@ -1,11 +1,11 @@
 /atom/movable
 	layer = 3
-	var/last_move = null
+	var/tmp/last_move = null
 	var/anchored = 0
-	var/throwing = 0
+	var/tmp/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
-	var/mob/pulledby = null
+	var/tmp/mob/pulledby = null
 	var/languages = 0 //For say() and Hear()
 	var/verb_say = "says"
 	var/verb_ask = "asks"

@@ -12,7 +12,7 @@
 	var/code = 30
 	var/frequency = 1457
 	var/delay = 0
-	var/datum/radio_frequency/radio_connection
+	var/tmp/datum/radio_frequency/radio_connection
 
 /obj/item/device/assembly/signaler/New()
 	..()

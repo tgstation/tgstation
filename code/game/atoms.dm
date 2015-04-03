@@ -6,14 +6,14 @@
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 	var/list/blood_DNA
-	var/last_bumped = 0
+	var/tmp/last_bumped = 0
 	var/throwpass = 0
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
-	var/list/image/hud_list = list()
+	var/tmp/list/image/hud_list = list()
 	//HUD images that this atom can provide.
 	var/list/hud_possible
 

@@ -4,7 +4,7 @@
 */
 
 // 1 decisecond click delay (above and beyond mob/next_move)
-/mob/var/next_click	= 0
+/mob/var/tmp/next_click	= 0
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
