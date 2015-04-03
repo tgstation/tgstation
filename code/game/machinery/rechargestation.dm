@@ -207,7 +207,8 @@
 
 /obj/machinery/recharge_station/proc/process_capacitors()
 	if (capacitor_stored >= capacitor_max)
-		idle_power_usage = initial(idle_power_usage)
+		if (idle_power_usage != initial(idle_power_usage)) //probably better to not re-assign the variable each process()?
+			idle_power_usage = initial(idle_power_usage)
 		return 0
 	idle_power_usage = initial(idle_power_usage) + (100 * transfer_rate_coeff)
 	capacitor_stored = min(capacitor_stored + (20 * transfer_rate_coeff), capacitor_max)
