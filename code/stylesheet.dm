@@ -50,6 +50,7 @@ h1.alert, h2.alert		{color: #000000;}
 .bnotice				{color: #000099; 	font-weight: bold;}
 .sans					{font-family: 'Comic Sans MS', cursive, sans-serif;}
 .alien					{color: #543354;}
+.ancient				{color: #008B8B;	font-stye: italic;}
 .newscaster				{color: #800000;}
 .mod					{color: #735638;	font-weight: bold;}
 .modooc					{color: #000000;	font-weight: bold;}

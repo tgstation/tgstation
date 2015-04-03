@@ -1484,6 +1484,7 @@
 #include "code\modules\research\xenoarchaeology\readme.dm"
 #include "code\modules\research\xenoarchaeology\artifact\artifact.dm"
 #include "code\modules\research\xenoarchaeology\artifact\artifact_autocloner.dm"
+#include "code\modules\research\xenoarchaeology\artifact\artifact_communication.dm"
 #include "code\modules\research\xenoarchaeology\artifact\artifact_crystal.dm"
 #include "code\modules\research\xenoarchaeology\artifact\artifact_gigadrill.dm"
 #include "code\modules\research\xenoarchaeology\artifact\artifact_hoverpod.dm"
