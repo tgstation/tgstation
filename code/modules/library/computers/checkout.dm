@@ -410,6 +410,6 @@
 		B.title = newbook.title
 		B.author = newbook.author
 		B.dat = http
-		B.icon_state = "book[rand(1,7)]"
+		B.icon_state = "book[rand(1,9)]"
 	src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 
