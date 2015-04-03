@@ -195,7 +195,6 @@
 	else if(istype(W, /obj/item/weapon/shard))
 		health -= W.force * 0.1 //Turns the base shard into a .5 damage item. If you want to break an electrified grille with that, you're going to EARN IT, ROD. BY. ROD.
 		healthcheck(hitsound = 1)
-		shock(user, 5) //Better not slip up, hon
 		..() //We need to call the rest of the attackby proc
 		return //Don't bother to go any further, we handled everything here
 	switch(W.damtype)
