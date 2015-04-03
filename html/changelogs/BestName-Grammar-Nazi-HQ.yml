@@ -1,0 +1,5 @@
+author: BestName
+delete-after: True
+changes: 
+  - tweak: Toxin(Bio) canisters are now called Plasma canisters.
+  - tweak: Gas filters will now filter Plasma instead of Carbon Molecules.
