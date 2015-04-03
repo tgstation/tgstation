@@ -39,7 +39,7 @@
 //Redirect the attack only if it's a machine, otherwise don't bother
 /obj/item/device/component_exchanger/preattack(var/atom/A, var/mob/user, proximity_flag)
 
-	if(!proximity_flag)
+	if(!Adjacent(user))
 		return
 
 	if(istype(A, /obj/machinery))
@@ -73,7 +73,7 @@
 
 /obj/item/device/component_exchanger/proc/component_interaction(mob/user, obj/machinery/M)
 
-	if(get_dist(user, M) > 1) //We aren't hugging the machine, so don't bother. This'll prop up often
+	if(!Adjacent(M, user)) //We aren't hugging the machine, so don't bother. This'll prop up often
 		user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
 		return //Done, done and done, pull out
 
@@ -122,7 +122,7 @@
 		"<span class='notice'>\The [src]'s HUD flashes, a message appears stating it has started scanning and replacing \the [M]'s components.</span>")
 
 		for(var/obj/item/weapon/stock_parts/P in M.component_parts)
-			if(get_dist(M, user) > 1) //Make sure the user doesn't move
+			if(!Adjacent(M, user)) //Make sure the user doesn't move
 				user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
 				return
 			//Yes, an istype list. We don't have helpers for this, and this coder is not that sharp
@@ -176,12 +176,10 @@
 //Option menu if you interact with the component exchanger
 /obj/item/device/component_exchanger/proc/self_interact_menu(var/mob/user)
 
-	if(user.get_active_hand() != src) //Object not in hand anymore
-		return
 
 	var/self_option = alert("Select desired operation", "RMCE V.12 Ready", "Unload Components", "Scan Loaded Components", "Finish Operation")
 
-	if(user.get_active_hand() != src) //Once more, can't be too safe
+	if(user.get_active_hand() != src) //Object not in active hand anymore
 		return
 
 	if(self_option == "Finish Operation")
