@@ -43,8 +43,8 @@
 	canister_color = "blue"
 	can_label = 0
 
-/obj/machinery/portable_atmospherics/canister/toxins
-	name = "Canister \[Toxin (Bio)\]"
+/obj/machinery/portable_atmospherics/canister/plasma
+	name = "Canister \[Plasma\]"
 	icon_state = "orange"
 	canister_color = "orange"
 	can_label = 0
@@ -366,7 +366,7 @@
 
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/toxins/New(loc)
+/obj/machinery/portable_atmospherics/canister/plasma/New(loc)
 	..(loc)
 	air_contents.adjust(tx = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
