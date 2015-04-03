@@ -27,11 +27,10 @@
 
 /obj/item/device/component_exchanger/attackby(var/obj/item/weapon/stock_parts/P, mob/user)
 
-	if(componentstorage.len < maxcomponents) //We have room
+	if(componentstorage.len < maxcomponents && istype(P)) //We have room
 		user.visible_message("<span class='notice'>[user] slots \a [P] into \the [src]'s component storage</span>", \
 		"<span class='notice'>You slot \a [P] into \the [src]'s component storage</span>")
 		user.drop_item(P)
-		P.loc = src //Jam it in
 		componentstorage += P //Add it to the proper component storage list
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1) //User feedback
 	else
@@ -53,7 +52,7 @@
 
 		if(do_after(user, 30)) //3 seconds to obtain a complete reading of the machine's components
 
-			if(get_dist(M, user) > 1)
+			if(!proximity_flag)
 				user << "<span class='warning'>An error message flashes on \the [src]'s HUD, stating its scan was disrupted.</span>"
 				return
 
@@ -123,7 +122,7 @@
 			if(get_dist(M, user) > 1) //Make sure the user doesn't move
 				user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
 				return
-			//Yes, a istype list. We don't have helpers for this, and this coder is not that sharp
+			//Yes, an istype list. We don't have helpers for this, and this coder is not that sharp
 			if(istype(P, /obj/item/weapon/stock_parts/capacitor))
 				for(var/obj/item/weapon/stock_parts/capacitor/R in componentstorage)
 					if(R.rating > P.rating && P.loc != src) //Kind of a hack, but makes sure we don't replace components that already were
@@ -152,6 +151,7 @@
 						perform_indiv_replace(P, R, M)
 			//Good thing there's only a few stock parts types
 
+		M.RefreshParts()
 		user.visible_message("<span class='notice'>[user] pulls \the [src] out of \the [M] as it finishes remplacing components.</span>", \
 		"<span class='notice'>You pull \the [src] out of \the [M] as a message flashes on its HUD stating it has finished remplacing components and will return to the input screen shortly.</span>")
 
@@ -162,16 +162,13 @@
 /obj/item/device/component_exchanger/proc/perform_indiv_replace(var/obj/item/weapon/stock_parts/P, var/obj/item/weapon/stock_parts/R, var/obj/machinery/M)
 
 	//Move the old part into our component exchanger
-	P.loc = src
 	componentstorage += P
 	M.component_parts -= P
 	//Move the new part into the machine
-	R.loc = M
 	M.component_parts += R
 	componentstorage -= R
 	//Update the machine's parts
 	playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1) //User feedback
-	M.RefreshParts()
 
 //Option menu if you interact with the component exchanger
 /obj/item/device/component_exchanger/proc/self_interact_menu(var/mob/user)
