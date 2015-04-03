@@ -124,19 +124,22 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 			if(!(target in view_or_range(range, user, selection_type))) //filter at time of casting
 				targets -= target
 				continue
-		target.adjustBruteLoss(amt_dam_brute)
-		target.adjustFireLoss(amt_dam_fire)
-		target.adjustToxLoss(amt_dam_tox)
-		target.adjustOxyLoss(amt_dam_oxy)
-		//disabling
-		target.Weaken(amt_weakened)
-		target.Paralyse(amt_paralysis)
-		target.Stun(amt_stunned)
-		if(amt_weakened || amt_paralysis || amt_stunned)
-			if(target.buckled)
-				target.buckled.unbuckle()
-		target.eye_blind += amt_eye_blind
-		target.eye_blurry += amt_eye_blurry
-		target.dizziness += amt_dizziness
-		target.confused += amt_confused
-		target.stuttering += amt_stuttering
+		apply_spell_damage(target)
+
+/spell/targeted/proc/apply_spell_damage(mob/living/target)
+	target.adjustBruteLoss(amt_dam_brute)
+	target.adjustFireLoss(amt_dam_fire)
+	target.adjustToxLoss(amt_dam_tox)
+	target.adjustOxyLoss(amt_dam_oxy)
+	//disabling
+	target.Weaken(amt_weakened)
+	target.Paralyse(amt_paralysis)
+	target.Stun(amt_stunned)
+	if(amt_weakened || amt_paralysis || amt_stunned)
+		if(target.buckled)
+			target.buckled.unbuckle()
+	target.eye_blind += amt_eye_blind
+	target.eye_blurry += amt_eye_blurry
+	target.dizziness += amt_dizziness
+	target.confused += amt_confused
+	target.stuttering += amt_stuttering

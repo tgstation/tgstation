@@ -111,45 +111,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return destination
 
-
-
-/proc/LinkBlocked(turf/A, turf/B)
-	if(A == null || B == null) return 1
-	var/adir = get_dir(A,B)
-	var/rdir = get_dir(B,A)
-	if((adir & (NORTH|SOUTH)) && (adir & (EAST|WEST)))	//	diagonal
-		var/iStep = get_step(A,adir&(NORTH|SOUTH))
-		if(!LinkBlocked(A,iStep) && !LinkBlocked(iStep,B)) return 0
-
-		var/pStep = get_step(A,adir&(EAST|WEST))
-		if(!LinkBlocked(A,pStep) && !LinkBlocked(pStep,B)) return 0
-		return 1
-
-	if(DirBlocked(A,adir)) return 1
-	if(DirBlocked(B,rdir)) return 1
-	return 0
-
-
-/proc/DirBlocked(turf/loc,var/dir)
-	for(var/obj/structure/window/D in loc)
-		if(!D.density)			continue
-		if(D.is_fulltile())	return 1
-		if(D.dir == dir)		return 1
-
-	for(var/obj/machinery/door/D in loc)
-		if(!D.density)			continue
-		if(istype(D, /obj/machinery/door/window))
-			if((dir & SOUTH) && (D.dir & (EAST|WEST)))		return 1
-			if((dir & EAST ) && (D.dir & (NORTH|SOUTH)))	return 1
-		else return 1	// it's a real, air blocking door
-	return 0
-
-/proc/TurfBlockedNonWindow(turf/loc)
-	for(var/obj/O in loc)
-		if(O.density && !istype(O, /obj/structure/window))
-			return 1
-	return 0
-
 /proc/sign(x)
 	return x!=0?x/abs(x):0
 
@@ -1335,6 +1296,10 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 	if(O.edge) return 1
 	return 0
 
-/proc/isEmag(obj/O)
-	if(!O) return 0
-	return istype(O, /obj/item/weapon/card/emag)
+proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first object holder of the type you specified
+	var/atom/location = reference.loc //ie /mob to find the first mob holding it
+	while(!istype(location,/turf) && !istype(location,null))
+		if(istype(location,typepath))
+			return location
+		location = location.loc
+	return 0

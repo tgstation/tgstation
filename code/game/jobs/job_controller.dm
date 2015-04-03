@@ -319,7 +319,8 @@ var/global/datum/controller/occupations/job_master
 					count = (officer.current_positions + warden.current_positions + hos.current_positions)
 					if(master_assistant.current_positions > (config.assistantratio * count))
 						if(count < 5) // if theres more than 5 security on the station just let assistants join regardless, they should be able to handle the tide
-							GiveRandomJob(player)
+							player.ready = 0
+							unassigned -= player
 							continue
 				Debug("AC2 Assistant located, Player: [player]")
 				AssignRole(player, "Assistant")

@@ -229,7 +229,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(target && path.len == 0)
 		spawn(0)
 			if(!src || !target) return
-			src.path = AStar(get_turf(src), get_turf(src.target), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
+			src.path = AStar(src.loc, src.target.loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30)
 			if (!path) path = list()
 			if(src.path.len == 0)
 				src.oldtarget = src.target

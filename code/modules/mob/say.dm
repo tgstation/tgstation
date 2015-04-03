@@ -84,3 +84,9 @@
 
 /mob/proc/construct_chat_check(var/setting)
 	return 0
+
+/mob/proc/hivecheck()
+	return 0
+
+/mob/proc/binarycheck()
+	return 0

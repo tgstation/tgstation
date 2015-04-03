@@ -199,7 +199,7 @@ var/global/list/library_section_names = list("Any", "Fiction", "Non-Fiction", "A
 		var/obj/item/weapon/book/b = new(src.loc)
 		b.dat = O:info
 		b.name = "Print Job #[rand(100, 999)]"
-		b.icon_state = "book[rand(1,7)]"
+		b.icon_state = "book[rand(1,9)]"
 		del(O)
 	else
 		return ..()
