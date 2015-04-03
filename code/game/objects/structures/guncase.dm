@@ -28,7 +28,7 @@
 	if(isrobot(user) || isalien(user))
 		return
 	if(istype(I, gun_category))
-		if(contents.len < 4 && open)
+		if(contents.len < capacity && open)
 			user.drop_item()
 			contents += I
 			user << "<span class='notice'>You place [I] in [src].</span>"
