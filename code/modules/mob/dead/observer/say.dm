@@ -30,19 +30,19 @@
 	if (isnull(client))
 		return
 
-	if (isnull(radio_freq))
-		if (!(client.prefs.toggles & CHAT_GHOSTEARS))
-			return
+	var/source = speaker.GetSource()
+
+	var/source_turf = get_turf(source)
+
+	if (get_dist(source_turf, src) <= world.view) // If this isn't true, we can't be in view, so no need for costlier proc.
+		if (source_turf in view(src))
+			message = "<B>[message]</B>"
 	else
-		if (!(client.prefs.toggles & CHAT_GHOSTRADIO))
-			return
+		if (isnull(radio_freq))
+			if (!(client.prefs.toggles & CHAT_GHOSTEARS))
+				return
 		else
-			speaker = speaker.GetSource()
+			if (!(client.prefs.toggles & CHAT_GHOSTRADIO))
+				return
 
-	var/turf/T = get_turf(speaker)
-
-	if (get_dist(T, src) <= world.view) // If this isn't true, we can't be in view, so no need for costlier proc.
-		if (T in view(src))
-			message = "<b>[message]</b>"
-
-	src << "<a href='?src=\ref[src];follow=\ref[speaker]'>(Follow)</a> [message]"
+	src << "<a href='?src=\ref[src];follow=\ref[source]'>(Follow)</a> [message]"
