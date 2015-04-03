@@ -208,7 +208,10 @@
 	target.internal_organs_by_name["brain"] = copied
 	target.internal_organs += copied
 	affected.internal_organs += copied
-	del(B)
+
+	user.u_equip(B)
+	B.loc = target
+	affected.organ_item = B //this stores the organ for continuity
 
 
 /datum/surgery_step/head/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
