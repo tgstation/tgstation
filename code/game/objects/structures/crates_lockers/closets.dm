@@ -200,7 +200,7 @@
 						return
 					playsound(loc, 'sound/items/welder.ogg', 50, 1)
 					welded = !welded
-					user << "<span class='notice'>You [welded ? "welded [src] shut":"unwelded [src]"].</span>"
+					user << "<span class='notice'>You [welded ? "weld [src] shut":"unweld [src]"].</span>"
 					update_icon()
 					user.visible_message("<span class='warning'>[user.name] has [welded ? "welded [src] shut":"unwelded [src]"].</span>")
 				return
@@ -304,7 +304,7 @@
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (This will take about [breakout_time] minutes.)</span>"
 	for(var/mob/O in viewers(src))
 		O << "<span class='warning'>[src] begins to shake violently!</span>"
 	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds

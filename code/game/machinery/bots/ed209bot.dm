@@ -662,12 +662,12 @@ Auto Patrol[]"},
 			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
-				user << "<span class='notice'>Now attaching the gun to the frame...</span>"
+				user << "<span class='notice'>You start attaching the gun to the frame...</span>"
 				sleep(40)
 				if(get_turf(user) == T)
 					build_step++
 					name = "armed [name]"
-					user << "<span class='notice'>Taser gun attached.</span>"
+					user << "<span class='notice'>You attach the gun.</span>"
 
 		if(9)
 			if(istype(W, /obj/item/weapon/stock_parts/cell))

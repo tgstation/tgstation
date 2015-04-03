@@ -95,7 +95,7 @@
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		M << "<span class='notice'>You smash through the wall.</span>"
+		M << "<span class='notice'>You smash through the wall!</span>"
 		dismantle_wall(1)
 		return
 
@@ -103,18 +103,18 @@
 	..(user, 1)
 	if(prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		user << text("<span class='notice'>You smash through the wall.</span>")
+		user << text("<span class='notice'>You smash through the wall!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		dismantle_wall(1)
 
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		user << text("<span class='notice'>You punch the wall.</span>")
+		user << text("<span class='notice'>You punch the wall!</span>")
 	return 1
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user << "<span class='notice'>You push the wall but nothing happens!</span>"
+	user << "<span class='warning'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	..()
@@ -181,7 +181,7 @@
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
-			user << "<span class='notice'>You begin slicing through the outer plating.</span>"
+			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			if(do_after(user, slicing_duration))
 				if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )
@@ -191,7 +191,7 @@
 					dismantle_wall()
 					return 1
 	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
-		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
+		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*0.6))  // plasma cutter is faster than welding tool
 			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )

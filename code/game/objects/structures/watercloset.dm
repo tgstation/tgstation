@@ -48,7 +48,7 @@
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
+		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 30))
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
@@ -171,7 +171,7 @@
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>"
+		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>"
 		if(do_after(user, 50))
 			switch(watertemp)
 				if("normal")
@@ -363,7 +363,7 @@
 		user << "<span class='notice'>Someone's already washing here.</span>"
 		return
 
-	user << "<span class='notice'>You start washing your hands.</span>"
+	user << "<span class='notice'>You start washing your hands...</span>"
 
 	busy = 1
 	sleep(40)
@@ -410,7 +410,7 @@
 	var/obj/item/I = O
 	if(!I || !istype(I,/obj/item)) return
 
-	usr << "<span class='notice'>You start washing [I].</span>"
+	usr << "<span class='notice'>You start washing [I]...</span>"
 
 	busy = 1
 	sleep(40)

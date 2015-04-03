@@ -67,7 +67,7 @@
 		icon_state = "[icon_base]_start"
 		end = get_turf(src)
 		if(start.y != end.y && start.x != end.x || start.z != end.z)
-			usr << "<span class='warning'>[src] can only be projected horizontally or vertically.</span>"
+			usr << "<span class='warning'>[src] can only be projected horizontally or vertically!</span>"
 			return
 		if(get_dist(start,end) >= MAX_TAPE_RANGE)
 			usr << "<span class='warning'>Your holotape segment is too long! It must be [MAX_TAPE_RANGE] tiles long or shorter!</span>"
@@ -113,7 +113,7 @@
 				P.icon_state = "[P.icon_base]_[dir]"
 			cur = get_step_towards(cur,end)
 
-		usr << "<span class='notice'>You finish project the legnth of [icon_base] holotape.</span>"
+		usr << "<span class='notice'>You finish project the length of [icon_base] holotape.</span>"
 		user.visible_message("<span class='warning'>[user] finishes projecting the length of [icon_base] holotape.</span>")
 
 		charging = 1
@@ -138,7 +138,7 @@
 			if(!(W.dir == 5) || !(W.fulltile == 1))
 				return
 
-		user << "<span class='notice'>You start projecting the [icon_base] holotape onto [target].</span>"
+		user << "<span class='notice'>You start projecting the [icon_base] holotape onto [target]...</span>"
 
 		if(!do_mob(user, target, 30))
 			return
@@ -177,8 +177,8 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
-	user.visible_message("<span class='warning'>[user] hits [src].</span>", \
-						 "<span class='warning'>You hit [src].</span>" )
+	user.visible_message("<span class='warning'>[user] hits [src]!</span>", \
+						 "<span class='warning'>You hit [src]!</span>" )
 
 	health -= rand(1,2)
 	healthcheck()
@@ -215,7 +215,7 @@
 
 /obj/item/holotape/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
+	visible_message("<span class='danger'>[src] was hit by [AM]!</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 5

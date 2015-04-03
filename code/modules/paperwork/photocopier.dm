@@ -258,7 +258,7 @@
 			user << "<span class='warning'>There's nothing to fasten [src] to!</span>"
 			return
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]</span>"
+		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>"
 		if(do_after(user, 20))
 			if(gc_destroyed)
 				return

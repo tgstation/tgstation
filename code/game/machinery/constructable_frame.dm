@@ -63,7 +63,7 @@
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "<span class='notice'>You start to add cables to the frame.</span>"
+					user << "<span class='notice'>You start to add cables to the frame...</span>"
 					if(do_after(user, 20))
 						if(C.get_amount() >= 5 && state == 1)
 							C.use(5)
@@ -381,7 +381,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/cell = 1)
-							
+
 /obj/item/weapon/circuitboard/chem_master
 	name = "circuit board (Chem Master 2999)"
 	build_path = /obj/machinery/chem_master/constructable

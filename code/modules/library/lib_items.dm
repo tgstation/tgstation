@@ -251,7 +251,7 @@
 					user << "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
 
 	else if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You begin to carve out [title].</span>"
+		user << "<span class='notice'>You begin to carve out [title]...</span>"
 		if(do_after(user, 30))
 			user << "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>"
 			var/obj/item/weapon/storage/book/B = new

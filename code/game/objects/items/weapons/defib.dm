@@ -130,7 +130,7 @@
 /obj/item/weapon/defibrillator/emag_act(mob/user as mob)
 	if(safety)
 		safety = 0
-		user << "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer."
+		user << "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer!"
 	else
 		safety = 1
 		user << "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer."
@@ -360,11 +360,11 @@
 			defib.cooldowncheck(user)
 			return
 		if(user.zone_sel && user.zone_sel.selecting == "chest")
-			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest.</span>")
+			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='notice'>You begin to place [src] on [M.name]'s chest...</span>")
 			busy = 1
 			update_icon()
 			if(do_after(user, 30)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
-				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
+				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='notice'>You place [src] on [M.name]'s chest...</span>")
 				playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 				var/mob/dead/observer/ghost = H.get_ghost()
 				var/tplus = world.time - H.timeofdeath
@@ -430,5 +430,5 @@
 			busy = 0
 			update_icon()
 		else
-			user << "<span class='notice'>You need to target your patient's chest with [src].</span>"
+			user << "<span class='warning'>You need to target your patient's chest with [src]!</span>"
 			return

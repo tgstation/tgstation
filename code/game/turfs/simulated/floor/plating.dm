@@ -43,7 +43,7 @@
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
-					user << "<span class='notice'>You have reinforced the floor.</span>"
+					user << "<span class='notice'>You reinforce the floor.</span>"
 				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)

@@ -99,7 +99,7 @@
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			usr << "You begin deconstructing [src]."
+			usr << "You begin deconstructing [src]..."
 			if (!do_after(usr, 30))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
@@ -142,7 +142,7 @@
 			user.visible_message("[user.name] adds wires to [src].", \
 				"You add wires to [src].")
 		else
-			user << "<span class='warning'>You need one length of cable to wire [src]."
+			user << "<span class='warning'>You need one length of cable to wire [src]!"
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))

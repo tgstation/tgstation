@@ -464,7 +464,7 @@
 
 // Harvest an animal's delicious byproducts
 /mob/living/simple_animal/proc/harvest(mob/living/user, sharpness = 1)
-	user << "<span class='notice'>You begin to butcher [src].</span>"
+	user << "<span class='notice'>You begin to butcher [src]...</span>"
 	playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 	if(do_mob(user, src, 80/sharpness))
 		visible_message("<span class='notice'>[user] butchers [src].</span>")

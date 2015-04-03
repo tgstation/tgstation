@@ -793,7 +793,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/attackby(obj/item/I as obj, mob/living/user as mob, params)
 
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>"
+		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 60))
 			new /obj/item/newscaster_frame(loc)

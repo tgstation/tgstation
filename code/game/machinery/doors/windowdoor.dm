@@ -185,7 +185,7 @@
 /obj/machinery/door/window/hitby(AM as mob|obj)
 
 	..()
-	visible_message("<span class='danger'>\The [src] was hit by \the [AM].</span>")
+	visible_message("<span class='danger'>\The [src] was hit by \the [AM]!</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -200,7 +200,7 @@
 /obj/machinery/door/window/mech_melee_attack(obj/mecha/M)
 	if(M.damtype == "brute")
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
+		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
 		take_damage(M.force)
 	return
 
@@ -213,8 +213,8 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-	user.visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", \
-				"<span class='userdanger'>[user] smashes against the [src.name].</span>")
+	user.visible_message("<span class='danger'>[user] smashes against the [src.name]!</span>", \
+				"<span class='userdanger'>[user] smashes against the [src.name]!</span>")
 	take_damage(damage)
 
 /obj/machinery/door/window/attack_alien(mob/living/user as mob)
@@ -250,7 +250,7 @@
 		operating = -1
 		flick("[src.base_state]spark", src)
 		sleep(6)
-		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
+		desc += "<BR><span class='warning'>Its access panel is smoking slightly!</span>"
 		open()
 		emagged = 1
 
@@ -264,7 +264,7 @@
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(src.density || src.operating)
-			user << "<span class='warning'>You need to open the door to access the maintenance panel.</span>"
+			user << "<span class='warning'>You need to open the door to access the maintenance panel!</span>"
 			return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		src.p_open = !( src.p_open )
@@ -275,7 +275,7 @@
 		if(p_open && !src.density && !src.operating)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
-								 "You start to remove electronics from the [src.name].")
+								 "You start to remove electronics from the [src.name]...")
 			if(do_after(user,40))
 				if(src.p_open && !src.density && !src.operating && src.loc)
 					var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
@@ -302,7 +302,7 @@
 						qdel(src)
 						return
 
-					user << "<span class='notice'>You removed the airlock electronics!</span>"
+					user << "<span class='notice'>You remove the airlock electronics.</span>"
 
 					var/obj/item/weapon/airlock_electronics/ae
 					if(!electronics)
@@ -338,7 +338,7 @@
 			return
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("<span class='danger'>[user] has hit \the [src] with [I].</span>")
+		visible_message("<span class='danger'>[user] has hit \the [src] with [I]!</span>")
 		if(I.damtype == BURN || I.damtype == BRUTE)
 			take_damage(aforce)
 		return

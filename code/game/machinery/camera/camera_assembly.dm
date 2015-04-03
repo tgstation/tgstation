@@ -156,7 +156,7 @@
 	if(!WT.remove_fuel(0, user))
 		return 0
 
-	user << "<span class='notice'>You start to weld \the [src]..</span>"
+	user << "<span class='notice'>You start to weld \the [src]...</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	busy = 1
 	if(do_after(user, 20))

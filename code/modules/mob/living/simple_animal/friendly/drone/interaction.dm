@@ -92,7 +92,7 @@
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
 		if(health < health_repair_max)
-			user << "<span class='notice'>You start to tighten loose screws on [src].</span>"
+			user << "<span class='notice'>You start to tighten loose screws on [src]...</span>"
 			if(do_after(user,80))
 				var/repair = health_repair_max - health
 				adjustBruteLoss(-repair)

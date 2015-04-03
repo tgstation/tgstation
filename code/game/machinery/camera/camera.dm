@@ -130,7 +130,7 @@
 
 	// DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/screwdriver))
-		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
+		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel...</span>"
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
 		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
@@ -321,7 +321,7 @@
 	if(!WT.remove_fuel(0, user))
 		return 0
 
-	user << "<span class='notice'>You start to weld [src].</span>"
+	user << "<span class='notice'>You start to weld [src]...</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	busy = 1
 	if(do_after(user, 100))

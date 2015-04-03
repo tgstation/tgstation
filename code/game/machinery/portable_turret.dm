@@ -253,7 +253,7 @@
 		if(istype(I, /obj/item/weapon/crowbar))
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
-			user << "<span class='notice'>You begin prying the metal coverings off.</span>"
+			user << "<span class='notice'>You begin prying the metal coverings off...</span>"
 			sleep(20)
 			if(prob(70))
 				user << "<span class='notice'>You remove the turret and salvage some components.</span>"
@@ -267,7 +267,7 @@
 				if(prob(50))
 					new /obj/item/device/assembly/prox_sensor(loc)
 			else
-				user << "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>"
+				user << "<span class='warning'>You remove the turret but did not manage to salvage anything!</span>"
 			qdel(src)
 
 	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
@@ -311,7 +311,7 @@
 
 /obj/machinery/porta_turret/emag_act(user as mob)
 	if(!emagged)
-		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
+		user << "<span class='warning'>You short out [src]'s threat assessment circuits!</span>"
 		visible_message("[src] hums oddly...")
 		emagged = 1
 		iconholder = 1
@@ -649,7 +649,7 @@
 					build_step = 2
 					icon_state = "turret_frame2"
 				else
-					user << "<span class='warning'>You need two sheets of metal to continue construction.</span>"
+					user << "<span class='warning'>You need two sheets of metal to continue construction!</span>"
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
@@ -672,7 +672,7 @@
 				if(!WT.isOn())
 					return
 				if(WT.get_fuel() < 5) //uses up 5 fuel.
-					user << "<span class='notice'>You need more fuel to complete this task.</span>"
+					user << "<span class='warning'>You need more fuel to complete this task!</span>"
 					return
 
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
@@ -734,7 +734,7 @@
 					user << "<span class='notice'>You add some metal armor to the exterior frame.</span>"
 					build_step = 7
 				else
-					user << "<span class='warning'>You need two sheets of metal to continue construction.</span>"
+					user << "<span class='warning'>You need two sheets of metal to continue construction!</span>"
 				return
 
 			else if(istype(I, /obj/item/weapon/screwdriver))
@@ -748,7 +748,7 @@
 				var/obj/item/weapon/weldingtool/WT = I
 				if(!WT.isOn()) return
 				if(WT.get_fuel() < 5)
-					user << "<span class='notice'>You need more fuel to complete this task.</span>"
+					user << "<span class='warning'>You need more fuel to complete this task!</span>"
 
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 30))
@@ -1038,7 +1038,7 @@ Status: []<BR>"},
 	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
 			if(emagged)
-				user << "<span class='notice'>The turret control is unresponsive.</span>"
+				user << "<span class='warning'>The turret control is unresponsive!</span>"
 				return
 
 			locked = !locked
@@ -1055,7 +1055,7 @@ Status: []<BR>"},
 
 /obj/machinery/turretid/emag_act(mob/user as mob)
 	if(!emagged)
-		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
+		user << "<span class='danger'>You short out the turret controls' access analysis module!</span>"
 		emagged = 1
 		locked = 0
 		if(user.machine==src)
@@ -1070,7 +1070,7 @@ Status: []<BR>"},
 /obj/machinery/turretid/attack_hand(mob/user as mob)
 	if ( get_dist(src, user) > 0 )
 		if ( !issilicon(user) )
-			user << "<span class='notice'>You are too far away.</span>"
+			user << "<span class='warning'>You are too far away!</span>"
 			user.unset_machine()
 			user << browse(null, "window=turretid")
 			return

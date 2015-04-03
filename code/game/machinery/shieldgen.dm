@@ -246,14 +246,14 @@
 		if (coil.get_amount() < 1)
 			user << "You need one length of cable to repair [src]."
 			return
-		user << "<span class='notice'>You begin to replace the wires.</span>"
+		user << "<span class='notice'>You begin to replace the wires...</span>"
 		if(do_after(user, 30))
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
 			health = max_health
 			malfunction = 0
-			user << "<span class='notice'>You repair \the [src]!</span>"
+			user << "<span class='notice'>You repair \the [src].</span>"
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/wrench))

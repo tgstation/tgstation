@@ -41,7 +41,7 @@
 				if(!src.loc || anchored)
 					return
 				user.visible_message("<span class='notice'>[user] has secured the [name]'s bolts!</span>", \
-									 "<span class='notice'>You have secured the [name]'s bolts!</span>")
+									 "<span class='notice'>You secure the [name]'s bolts.</span>")
 				anchored = 1
 
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
