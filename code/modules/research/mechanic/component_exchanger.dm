@@ -55,7 +55,7 @@
 
 		if(do_after(user, 30)) //3 seconds to obtain a complete reading of the machine's components
 
-			if(!proximity_flag)
+			if(!Adjacent(user))
 				user << "<span class='warning'>An error message flashes on \the [src]'s HUD, stating its scan was disrupted.</span>"
 				return
 
