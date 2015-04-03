@@ -404,10 +404,11 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/recharge_station"
 	board_type = "machine"
 	origin_tech = "powerstorage=4;programming=3"
-	frame_desc = "Requires 2 manipulators, and 2 matter bins."
+	frame_desc = "Requires 2 capacitors, 1 manipulator, and 1 matter bin."
 	req_components = list (
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/stock_parts/matter_bin" = 2)
+							"/obj/item/weapon/stock_parts/capacitor" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 1,
+							"/obj/item/weapon/stock_parts/matter_bin" = 1)
 
 /obj/item/weapon/circuitboard/heater
 	name = "Circuit Board (Heater)"
