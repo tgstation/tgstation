@@ -845,7 +845,7 @@ datum/mind
 					if(!(src in ticker.mode.traitors))
 						ticker.mode.traitors += src
 						special_role = "traitor"
-						current << "<B>\red You are a traitor!</B>"
+						current << "<SPAN CLASS='danger'><CENTER><BIG>You are a traitor!</CENTER></BIG></SPAN>"
 						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
 						if(isAI(current))
 							var/mob/living/silicon/ai/A = current
