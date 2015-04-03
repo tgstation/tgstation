@@ -27,7 +27,7 @@
 
 	/* objs */
 /datum/food_processor_process/meat
-	input = /obj/item/weapon/reagent_containers/food/snacks/meat
+	input = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
 /datum/food_processor_process/potato

@@ -49,7 +49,7 @@
 	name = "Hot chili"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
@@ -59,7 +59,7 @@
 	name = "Cold chili"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
@@ -150,7 +150,7 @@
 		/datum/reagent/water = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 3,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 3,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant = 1,

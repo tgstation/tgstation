@@ -68,7 +68,7 @@
 	name = "Soylent green"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 2,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/human = 2
+		/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
 

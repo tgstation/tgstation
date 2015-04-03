@@ -1,6 +1,7 @@
 //this category is very little but I think that it has great potential to grow
 ////////////////////////////////////////////SALAD////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/food/snacks/salad
+	icon = 'icons/obj/food/soupsalad.dmi'
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bitesize = 3
 	w_class = 3

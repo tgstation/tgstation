@@ -1,13 +1,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake
+	icon = 'icons/obj/food/piecake.dmi'
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/plain
 	slices_num = 5
 	bitesize = 3
 	list_reagents = list("nutriment" = 20, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice
+	icon = 'icons/obj/food/piecake.dmi'
 	trash = /obj/item/trash/plate
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
+	customfoodfilling = 0 //to avoid infinite cake-ception
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain
 	name = "vanilla cake"
@@ -21,6 +24,7 @@
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "plaincake_slice"
 	filling_color = "#FFD700"
+	customfoodfilling = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/carrot
 	name = "carrot cake"

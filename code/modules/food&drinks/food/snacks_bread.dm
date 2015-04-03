@@ -1,13 +1,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread
+	icon = 'icons/obj/food/burgerbread.dmi'
 	slices_num = 5
 
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
+	icon = 'icons/obj/food/burgerbread.dmi'
 	bitesize = 2
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"
-	slot_flags = SLOT_HEAD // i'm going to kill myself. i'm going to murder my own self.
+	slot_flags = SLOT_HEAD
+	customfoodfilling = 0 //to avoid infinite bread-ception
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
@@ -22,6 +25,7 @@
 	name = "bread slice"
 	desc = "A slice of home."
 	icon_state = "breadslice"
+	customfoodfilling = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/meat
 	name = "meatbread loaf"
@@ -120,6 +124,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/baguette
 	name = "baguette"
 	desc = "Bon appetit!"
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "baguette"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)

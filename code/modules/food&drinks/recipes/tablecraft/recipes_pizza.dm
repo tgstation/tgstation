@@ -16,7 +16,7 @@
 	name = "Meat pizza"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 4,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 4,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)

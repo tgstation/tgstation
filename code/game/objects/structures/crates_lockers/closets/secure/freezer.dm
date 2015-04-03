@@ -42,7 +42,7 @@
 /obj/structure/closet/secure_closet/freezer/meat/New()
 	..()
 	for(var/i = 0, i < 4, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src)
 	return
 
 

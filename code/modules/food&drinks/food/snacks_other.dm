@@ -1,7 +1,7 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/cheesewheel
+/obj/item/weapon/reagent_containers/food/snacks/store/cheesewheel
 	name = "cheese wheel"
 	desc = "A big wheel of delcious Cheddar."
 	icon_state = "cheesewheel"

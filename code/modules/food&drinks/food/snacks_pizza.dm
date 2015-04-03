@@ -2,10 +2,12 @@
 /////////////////////////////////////////////////PIZZA////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	w_class = 3
 	slices_num = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	list_reagents = list("nutriment" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita
@@ -76,7 +78,7 @@
 /obj/item/pizzabox
 	name = "pizza box"
 	desc = "A box suited for pizzas."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox1"
 	var/open = 0 // Is the box open?
 	var/ismessy = 0 // Fancy mess on the lid
@@ -111,7 +113,7 @@
 			icon_state = "pizzabox_open"
 
 		if(pizza)
-			var/image/pizzaimg = image("food.dmi", icon_state = pizza.icon_state)
+			var/image/pizzaimg = image('icons/obj/food/pizzaspaghetti.dmi', icon_state = pizza.icon_state)
 			pizzaimg.pixel_y = -3
 			overlays += pizzaimg
 
@@ -128,7 +130,7 @@
 				doimgtag = 1
 
 		if(doimgtag)
-			var/image/tagimg = image("food.dmi", icon_state = "pizzabox_tag")
+			var/image/tagimg = image('icons/obj/food/containers.dmi', icon_state = "pizzabox_tag")
 			tagimg.pixel_y = boxes.len * 3
 			overlays += tagimg
 

@@ -81,7 +81,7 @@
 
 /datum/chemical_reaction/cheesewheel/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /obj/item/weapon/reagent_containers/food/snacks/cheesewheel(location)
+	new /obj/item/weapon/reagent_containers/food/snacks/store/cheesewheel(location)
 	return
 
 /datum/chemical_reaction/synthmeat
@@ -94,7 +94,7 @@
 
 /datum/chemical_reaction/synthmeat/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /obj/item/weapon/reagent_containers/food/snacks/meat/synthmeat(location)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat(location)
 	return
 
 /datum/chemical_reaction/hot_ramen

@@ -1,5 +1,6 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
+	icon = 'icons/obj/food/piecake.dmi'
 	trash = /obj/item/trash/plate
 	bitesize = 3
 	w_class = 3
@@ -102,7 +103,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 
 
-/obj/item/weapon/reagent_containers/food/snacks/pumpkinpie
+/obj/item/weapon/reagent_containers/food/snacks/pie/pumpkinpie
 	name = "pumpkin pie"
 	desc = "A delicious treat for the autumn months."
 	icon_state = "pumpkinpie"
@@ -113,8 +114,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/pumpkinpieslice
 	name = "pumpkin pie slice"
 	desc = "A slice of pumpkin pie, with whipped cream on top. Perfection."
+	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "pumpkinpieslice"
 	trash = /obj/item/trash/plate
+	filling_color = "#FFA500"
 	list_reagents = list("nutriment" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/appletart
