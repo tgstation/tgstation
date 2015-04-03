@@ -78,7 +78,7 @@
 		return //Done, done and done, pull out
 
 	//Recurring option menu, what do we wish to do ?
-	var/interactoption = alert("Select desired operation", "RMCE V.12 Ready", "Output Information", "Remplace Component", "Finish Operation")
+	var/interactoption = alert("Select desired operation", "RMCE V.12 Ready", "Output Information", "Replace Component", "Finish Operation")
 
 	if(interactoption == "Finish Operation") //Simplest case, the user wants out
 
@@ -116,7 +116,7 @@
 		else
 			user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
 
-	if(interactoption == "Remplace Component")
+	if(interactoption == "Replace Component")
 
 		user.visible_message("<span class='notice'>[user] carefully fits \the [src] into \the [M] as it rattles and starts remplacing components.</span>", \
 		"<span class='notice'>\The [src]'s HUD flashes, a message appears stating it has started scanning and replacing \the [M]'s components.</span>")
