@@ -40,7 +40,7 @@
 	T = 0
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		T += C.rating-1
-	transfer_rate_coeff = initial(transfer_rate_coeff)+(T * 0.3)
+	transfer_rate_coeff = initial(transfer_rate_coeff)+(T * 0.2)
 	capacitor_max = initial(capacitor_max)+(T * 750)
 	active_power_usage = 1000 * transfer_rate_coeff
 
@@ -200,7 +200,7 @@
 						capacitor_stored -= juicetofill
 						R.cell.charge = R.cell.maxcharge
 					else
-						R.cell.charge = min(R.cell.charge + capacitor_stored, R.cell.maxcharge)
+						R.cell.charge = R.cell.charge + capacitor_stored
 						capacitor_stored = 0
 				R.cell.charge = min(R.cell.charge + 200 * transfer_rate_coeff + (isMoMMI(occupant) ? 100 * transfer_rate_coeff : 0), R.cell.maxcharge)
 				return
