@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /*
 A Star pathfinding algorithm
 Returns a list of tiles forming a path from A to B, taking dense objects as well as walls, and the orientation of
@@ -13,10 +11,6 @@ And for the distance one i wrote:
 So an example use might be:
 
 src.path_list = AStar(src.loc, target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance)
-
-Note: The path is returned starting at the END node, so i wrote reverselist to reverse it for ease of use.
-
-src.path_list = reverselist(src.pathlist)
 
 Then to start on the path, all you need to do it:
 Step_to(src, src.path_list[1])
@@ -36,146 +30,304 @@ length to avoid portals or something i guess?? Not that they're counted right no
 
 // Also added 'exclude' turf to avoid travelling over; defaults to null
 
+//Currently, there's four main ways to call AStar
+//
+// 1) adjacent = "/turf/proc/AdjacentTurfsWithAccess" and distance = "/turf/proc/Distance"
+//	Seeks a path moving in all directions (including diagonal) and checking for the correct id to get through doors
+//
+// 2) adjacent = "/turf/proc/CardinalTurfsWithAccess" and distance = "/turf/proc/Distance_cardinal"
+//  Seeks a path moving only in cardinal directions and checking if for the correct id to get through doors
+//  Used by most bots, including Beepsky
+//
+// 3) adjacent = "/turf/proc/AdjacentTurfs" and distance = "/turf/proc/Distance"
+//  Same as 1), but don't check for ID. Can get only get through open doors
+//
+// 4) adjacent = "/turf/proc/AdjacentTurfsSpace" and distance = "/turf/proc/Distance"
+//  Same as 1), but check all turf, including unsimulated
 
-PriorityQueue
-	var/list/queue
-	var/proc/comparison_function
+//////////////////////
+//PriorityQueue object
+//////////////////////
 
-	New(compare)
-		queue = list()
-		comparison_function = compare
+//an ordered list, using the cmp proc to weight the list elements
+/PriorityQueue
+	var/list/L //the actual queue
+	var/cmp //the weight function used to order the queue
 
-	proc/IsEmpty()
-		return !queue.len
+/PriorityQueue/New(compare)
+	L = new()
+	cmp = compare
 
-	proc/Enqueue(var/data)
-		queue.Add(data)
-		var/index = queue.len
+/PriorityQueue/proc/IsEmpty()
+	return !L.len
 
-		//From what I can tell, this automagically sorts the added data into the correct location.
-		while(index > 2 && call(comparison_function)(queue[index / 2], queue[index]) > 0)
-			queue.Swap(index, index / 2)
-			index /= 2
+//add an element in the list,
+//immediatly ordering it to its position using Insertion sort
+/PriorityQueue/proc/Enqueue(var/atom/A)
+	var/i
+	L.Add(A)
+	i = L.len -1
+	while(i > 0 &&  call(cmp)(L[i],A) >= 0) //place the element at it's right position using the compare proc
+		L.Swap(i,i+1) 						//last inserted element being first in case of ties (optimization)
+		i--
 
-	proc/Dequeue()
-		if(!queue.len)
-			return 0
-		return Remove(1)
+//removes and returns the first element in the queue
+/PriorityQueue/proc/Dequeue()
+	if(!L.len)
+		return 0
+	. = L[1]
+	Remove(.)
+	return .
 
-	proc/Remove(var/index)
-		if(index > queue.len)
-			return 0
+//removes an element
+/PriorityQueue/proc/Remove(var/atom/A)
+	return L.Remove(A)
 
-		var/thing = queue[index]
-		queue.Swap(index, queue.len)
-		queue.Cut(queue.len)
-		if(index < queue.len)
-			FixQueue(index)
-		return thing
+//returns a copy of the elements list
+/PriorityQueue/proc/List()
+	var/list/ret = L.Copy()
+	return ret
 
-	proc/FixQueue(var/index)
-		var/child = 2 * index
-		var/item = queue[index]
+//return the position of an element or 0 if not found
+/PriorityQueue/proc/Seek(var/atom/A)
+	return L.Find(A)
 
-		while(child <= queue.len)
-			if(child < queue.len && call(comparison_function)(queue[child], queue[child + 1]) > 0)
-				child++
-			if(call(comparison_function)(item, queue[child]) > 0)
-				queue[index] = queue[child]
-				index = child
-			else
-				break
-			child = 2 * index
-		queue[index] = item
+//return the element at the i_th position
+/PriorityQueue/proc/Get(var/i)
+	if(i > L.len || i < 1)
+		return 0
+	return L[i]
 
-	proc/List()
-		return queue.Copy()
+//replace the passed element at it's right position using the cmp proc
+/PriorityQueue/proc/ReSort(var/atom/A)
+	var/i = Seek(A)
+	if(i == 0)
+		return
+	while(i < L.len && call(cmp)(L[i],L[i+1]) > 0)
+		L.Swap(i,i+1)
+		i++
+	while(i > 1 && call(cmp)(L[i],L[i-1]) <= 0) //last inserted element being first in case of ties (optimization)
+		L.Swap(i,i-1)
+		i--
 
-	proc/Length()
-		return queue.len
+//////////////////////
+//PathNode object
+//////////////////////
 
-	proc/RemoveItem(data)
-		var/index = queue.Find(data)
-		if(index)
-			return Remove(index)
+//A* nodes variables
+/PathNode
+	var/turf/source //turf associated with the PathNode
+	var/PathNode/prevNode //link to the parent PathNode
+	var/f		//A* Node weight (f = g + h)
+	var/g		//A* movement cost variable
+	var/h		//A* heuristic variable
+	var/nt		//count the number of Nodes traversed
 
-PathNode
-	var/datum/position
-	var/PathNode/previous_node
+/PathNode/New(s,p,pg,ph,pnt)
+	source = s
+	prevNode = p
+	g = pg
+	h = ph
+	f = g + h
+	source.PNode = src
+	nt = pnt
 
-	var/best_estimated_cost
-	var/estimated_cost
-	var/known_cost
-	var/cost
-	var/nodes_traversed
+/PathNode/proc/calc_f()
+	f = g + h
 
-	New(_position, _previous_node, _known_cost, _cost, _nodes_traversed)
-		position = _position
-		previous_node = _previous_node
+//////////////////////
+//A* procs
+//////////////////////
 
-		known_cost = _known_cost
-		cost = _cost
-		estimated_cost = cost + known_cost
-
-		best_estimated_cost = estimated_cost
-		nodes_traversed = _nodes_traversed
-
+//the weighting function, used in the A* algorithm
 proc/PathWeightCompare(PathNode/a, PathNode/b)
-	return a.estimated_cost - b.estimated_cost
+	return a.f - b.f
 
-proc/AStar(var/start, var/end, var/proc/adjacent, var/proc/dist, var/max_nodes, var/max_node_depth = 30, var/min_target_dist = 0, var/min_node_dist, var/id, var/datum/exclude)
-	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare)
-	var/list/closed = list()
-	var/list/path
-	var/list/path_node_by_position = list()
+//search if there's a PathNode that points to turf T in the Priority Queue
+proc/SeekTurf(var/PriorityQueue/Queue, var/turf/T)
+	var/i = 1
+	var/PathNode/PN
+	while(i < Queue.L.len + 1)
+		PN = Queue.L[i]
+		if(PN.source == T)
+			return i
+		i++
+	return 0
+
+//the actual algorithm
+proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minnodedist,id=null, var/turf/exclude=null)
+	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare) //the open list, ordered using the PathWeightCompare proc, from lower f to higher
+	var/list/closed = new() //the closed list
+	var/list/path = null //the returned path, if any
+	var/PathNode/cur //current processed turf
+
+	//sanitation
 	start = get_turf(start)
 	if(!start)
 		return 0
 
-	open.Enqueue(new /PathNode(start, null, 0, call(start, dist)(end), 0))
+	//initialization
+	open.Enqueue(new /PathNode(start,null,0,call(start,dist)(end),0))
 
+	//then run the main loop
 	while(!open.IsEmpty() && !path)
-		var/PathNode/current = open.Dequeue()
-		closed.Add(current.position)
+	{
+			//get the lower f node on the open list
+		cur = open.Dequeue() //get the lower f turf in the open list
+		closed.Add(cur.source) //and tell we've processed it
 
-		if(current.position == end || call(current.position, dist)(end) <= min_target_dist)
-			path = new /list(current.nodes_traversed + 1)
-			path[path.len] = current.position
-			var/index = path.len - 1
+		//if we only want to get near the target, check if we're close enough
+		var/closeenough
+		if(mintargetdist)
+			closeenough = call(cur.source,dist)(end) <= mintargetdist
 
-			while(current.previous_node)
-				current = current.previous_node
-				path[index--] = current.position
+		//if too many steps, abandon that path
+		if(maxnodedepth && (cur.nt > maxnodedepth))
+			continue
+
+		//found the target turf (or close enough), let's create the path to it
+		if(cur.source == end || closeenough)
+			path = new()
+			path.Add(cur.source)
+			while(cur.prevNode)
+				cur = cur.prevNode
+				path.Add(cur.source)
 			break
 
-		if(min_node_dist && max_node_depth)
-			if(call(current.position, min_node_dist)(end) + current.nodes_traversed >= max_node_depth)
+		//IMPLEMENTATION TO FINISH
+		//do we really need this minnodedist ???
+		/*if(minnodedist && maxnodedepth)
+			if(call(cur.source,minnodedist)(end) + cur.nt >= maxnodedepth)
+				continue
+		*/
+
+		//get adjacents turfs using the adjacent proc, checking for access with id
+		var/list/L = call(cur.source,adjacent)(id,closed)
+
+		for(var/turf/T in L)
+			if(T == exclude)
 				continue
 
-		if(max_node_depth)
-			if(current.nodes_traversed >= max_node_depth)
-				continue
+			var/newg = cur.g + call(cur.source,dist)(T)
+			if(!T.PNode) //is not already in open list, so add it
+				open.Enqueue(new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1))
+			else //is already in open list, check if it's a better way from the current turf
+				if(newg < T.PNode.g)
+					T.PNode.prevNode = cur
+					T.PNode.g = newg
+					T.PNode.calc_f()
+					open.ReSort(T.PNode)//reorder the changed element in the list
 
-		for(var/datum/datum in call(current.position, adjacent)(id))
-			if(datum == exclude)
-				continue
+	}
 
-			var/best_estimated_cost = current.estimated_cost + call(current.position, dist)(datum)
+	//cleaning after us
+	for(var/PathNode/PN in open.L)
+		PN.source.PNode = null
+	for(var/turf/T in closed)
+		T.PNode = null
 
-			//handle removal of sub-par positions
-			if(datum in path_node_by_position)
-				var/PathNode/target = path_node_by_position[datum]
-				if(target.best_estimated_cost)
-					if(best_estimated_cost + call(datum, dist)(end) < target.best_estimated_cost)
-						open.RemoveItem(target)
-					else
-						continue
+	//if the path is longer than maxnodes, then don't return it
+	if(path && maxnodes && path.len > (maxnodes + 1))
+		return 0
 
-			var/PathNode/next_node = new (datum, current, best_estimated_cost, call(datum, dist)(end), current.nodes_traversed + 1)
-			path_node_by_position[datum] = next_node
-			open.Enqueue(next_node)
-
-			if(max_nodes && open.Length() > max_nodes)
-				open.Remove(open.Length())
+	//reverse the path to get it from start to finish
+	if(path)
+		for(var/i = 1; i <= path.len/2; i++)
+			path.Swap(i,path.len-i+1)
 
 	return path
+
+
+
+
+
+
+///////////////////
+//A* helpers procs
+///////////////////
+
+// Returns true if a link between A and B is blocked
+// Movement through doors allowed if ID has access
+/proc/LinkBlockedWithAccess(turf/A, turf/B, obj/item/weapon/card/id/ID)
+
+	if(A == null || B == null) return 1
+	var/adir = get_dir(A,B)
+	var/rdir = get_dir(B,A)
+	if(adir & (adir-1))	//	diagonal
+		var/turf/iStep = get_step(A,adir&(NORTH|SOUTH))
+		if(!iStep.density && !LinkBlockedWithAccess(A,iStep, ID) && !LinkBlockedWithAccess(iStep,B,ID))
+			return 0
+
+		var/turf/pStep = get_step(A,adir&(EAST|WEST))
+		if(!pStep.density && !LinkBlockedWithAccess(A,pStep,ID) && !LinkBlockedWithAccess(pStep,B,ID))
+			return 0
+
+		return 1
+
+	if(DirBlockedWithAccess(A,adir, ID))
+		return 1
+
+	if(DirBlockedWithAccess(B,rdir, ID))
+		return 1
+
+	for(var/obj/O in B)
+		if(O.density && !istype(O, /obj/machinery/door) && !(O.flags & ON_BORDER))
+			return 1
+
+	return 0
+
+// Returns true if direction is blocked from loc
+// Checks doors against access with given ID
+/proc/DirBlockedWithAccess(turf/loc,var/dir,var/obj/item/weapon/card/id/ID)
+	for(var/obj/structure/window/D in loc)
+		if(!D.density)			continue
+		if(D.dir == SOUTHWEST)	return 1 //full-tile window
+		if(D.dir == dir)		return 1 //matching border window
+
+	for(var/obj/machinery/door/D in loc)
+		if(!D.CanAStarPass(ID,dir))
+			return 1
+	return 0
+
+// Returns true if a link between A and B is blocked
+// Movement through doors allowed if door is open
+/proc/LinkBlocked(turf/A, turf/B)
+	if(A == null || B == null)
+		return 1
+	var/adir = get_dir(A,B)
+	var/rdir = get_dir(B,A)
+	if(adir & (adir-1)) //diagonal
+		var/turf/iStep = get_step(A,adir & (NORTH|SOUTH)) //check the north/south component
+		if(!iStep.density && !LinkBlocked(A,iStep) && !LinkBlocked(iStep,B))
+			return 0
+
+		var/turf/pStep = get_step(A,adir & (EAST|WEST)) //check the east/west component
+		if(!pStep.density && !LinkBlocked(A,pStep) && !LinkBlocked(pStep,B))
+			return 0
+
+		return 1
+
+	if(DirBlocked(A,adir)) return 1
+	if(DirBlocked(B,rdir)) return 1
+
+	for(var/obj/O in B)
+		if(O.density && !istype(O, /obj/machinery/door) && !(O.flags & ON_BORDER))
+			return 1
+
+	return 0
+
+// Returns true if direction is blocked from loc
+// Checks if doors are open
+/proc/DirBlocked(turf/loc,var/dir)
+	for(var/obj/structure/window/D in loc)
+		if(!D.density)			continue
+		if(D.dir == SOUTHWEST)	return 1 //full-tile window
+		if(D.dir == dir)		return 1 //matching border window
+
+	for(var/obj/machinery/door/D in loc)
+		if(!D.density)//if the door is open
+			continue
+		else return 1	// if closed, it's a real, air blocking door
+	return 0
+
+/////////////////////////////////////////////////////////////////////////
