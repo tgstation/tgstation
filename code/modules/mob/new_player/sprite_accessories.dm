@@ -266,6 +266,12 @@
 		gender = FEMALE
 		flags = HAIRSTYLE_CANTRIP
 
+	rapunzel
+		name = "Rapunzel"
+		icon_state = "hair_rapunzel"
+		gender = FEMALE
+		flags = HAIRSTYLE_CANTRIP //FLOORLENGTH BRAID 2: TRIP HARDER
+
 	odango
 		name = "Odango"
 		icon_state = "hair_odango"
@@ -319,6 +325,49 @@
 		name = "Toriyama 2"
 		icon_state = "hair_toriyama2"
 		gender = MALE
+
+	birdnest
+		name = "Bird Nest"
+		icon_state = "hair_birdnest"
+
+	unkept
+		name = "Unkempt"
+		icon_state = "hair_unkept"
+
+	duelist
+		name = "Duelist"
+		icon_state = "hair_duelist"
+		gender = MALE
+
+	fastline
+		name = "Fastline"
+		icon_state = "hair_fastline"
+		gender = MALE
+
+	modern
+		name = "Modern"
+		icon_state = "hair_modern"
+		gender = FEMALE
+
+	unshavenmohawk
+		name = "Unshaven Mohawk"
+		icon_state = "hair_unshavenmohawk"
+		gender = MALE
+
+	megadrills
+		name = "Quadcurls"
+		icon_state = "hair_quadcurls"
+		gender = FEMALE
+
+	drills
+		name = "Twincurls"
+		icon_state = "hair_twincurl"
+		gender = FEMALE
+
+	minidrills
+		name = "Twincurls 2"
+		icon_state = "hair_twincurl2"
+		gender = FEMALE
 
 	cia
 		name = "CIA"
@@ -497,6 +546,26 @@
 	dwarf
 		name = "Dwarf Beard"
 		icon_state = "facial_dwarf"
+
+	britstache
+		name = "Brit Stache"
+		icon_state = "facial_britstache"
+
+	martialartist
+		name = "Martial Artist"
+		icon_state = "facial_martialartist"
+
+	moonshiner
+		name = "Moonshiner"
+		icon_state = "facial_moonshiner"
+
+	tribeard
+		name = "Tri-beard"
+		icon_state = "facial_tribeard"
+
+	unshaven
+		name = "Unshaven"
+		icon_state = "facial_unshaven"
 
 	// Before Goon gets all hot and bothered for "stealing":
 	// A. It's property of SEGA in the first place
