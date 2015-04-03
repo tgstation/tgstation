@@ -5,5 +5,5 @@ changes:
   - rscadd: The Rapid Machinery Component Exchanger can carry up to 10 components (stock_parts), although it will only remplace upgradable components (currently matter bins, scanning modules, manipulators, capacitators and micro-lasers)
   - rscadd: It is used by opening a machinery's maintenance panel (usually with a screwdriver). A menu shows up from there. You need to stay in range until finished !
   - rscadd: You can access further options by interacting with it, like ejecting loaded components or scanning the container
-  - rscadd: The Rapid Machinery Component Exchanger can be researched, and one spawns in every Mechanic's locker
+  - rscadd: The Rapid Machinery Component Exchanger can be researched
   - imageadd: The Rapid Machinery Component Exchanger has a sprite
