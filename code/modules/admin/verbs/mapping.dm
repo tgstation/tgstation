@@ -108,20 +108,19 @@ var/intercom_range_display_status = 0
 	set category = "Mapping"
 	set name = "Intercom Range Display"
 
-	if(intercom_range_display_status)
-		intercom_range_display_status = 0
+	if (intercom_range_display_status)
+		intercom_range_display_status = FALSE
 	else
-		intercom_range_display_status = 1
+		intercom_range_display_status = TRUE
 
-	for(var/obj/effect/debugging/marker/M in world)
-		del(M)
+	for (var/obj/effect/debugging/marker/M in world)
+		qdel(M)
 
-	if(intercom_range_display_status)
-		for(var/obj/item/device/radio/intercom/I in world)
-			for(var/turf/T in orange(7,I))
-				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
-				if (!(F in view(7,I.loc)))
-					del(F)
+	if (intercom_range_display_status)
+		for (var/obj/item/device/radio/intercom/I in world)
+			for (var/turf/T in view(I.canhear_range, I))
+				new /obj/effect/debugging/marker(T)
+
 	feedback_add_details("admin_verb","mIRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/enable_debug_verbs()

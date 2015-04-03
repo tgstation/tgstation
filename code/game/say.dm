@@ -157,7 +157,7 @@ var/list/freqtoname = list(
 	return
 
 /atom/movable/proc/GetSource()
-	return
+	return src
 
 /atom/movable/proc/GetRadio()
 

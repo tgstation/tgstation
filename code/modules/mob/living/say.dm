@@ -164,22 +164,14 @@ var/list/department_radio_keys = list(
 	return message
 
 /mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type)
-	var/list/listening = get_hearers_in_view(message_range, source)
-	var/list/listening_dead = list()
-	for(var/mob/M in player_list)
-		if(client && M.client && M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS)) // client is so that ghosts don't have to listen to mice
-			listening_dead |= M
-
-	listening -= listening_dead //so ghosts dont hear stuff twice
+	var/list/listeners = get_hearers_in_view(message_range, source) | observers
 
 	var/rendered = compose_message(src, languages, message)
-	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, languages, message)
 
-	for(var/mob/M in listening_dead)
-		M.Hear(rendered, src, languages, message)
+	for (var/atom/movable/listener in listeners)
+		listener.Hear(rendered, src, languages, message)
 
-	send_speech_bubble(message, bubble_type, (listening + listening_dead))
+	send_speech_bubble(message, bubble_type, listeners)
 
 /mob/living/proc/say_test(var/text)
 	var/ending = copytext(text, length(text))
