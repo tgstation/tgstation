@@ -1,5 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- rscadd: Adds a new xenoarch artifact, find it and try it out
-- tweak: Lets ghosts follow messages from nonstandard chat channels
