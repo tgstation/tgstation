@@ -7,9 +7,11 @@
 // BEGIN_FILE_DIR
 #define FILE_DIR .
 // END_FILE_DIR
+
 // BEGIN_PREFERENCES
 #define DEBUG
 // END_PREFERENCES
+
 // BEGIN_INCLUDE
 #include "_maps\tgstation2.dm"
 #include "code\_compile_options.dm"
