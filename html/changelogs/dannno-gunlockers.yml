@@ -1,0 +1,6 @@
+author: Dannno
+
+delete-after: True
+
+changes:
+  - rscadd: "Added gun lockers for shotguns and energy guns. Click on the lockers with an item to close them if they're full."
