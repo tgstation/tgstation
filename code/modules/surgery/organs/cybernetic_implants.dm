@@ -256,10 +256,17 @@
 	desc = "implants for the organs in your torso"
 	icon_state = "chest_implant"
 
+/obj/item/cybernetic_implant/chest/New()
+	var/icon/overlay = new /icon('icons/obj/surgery.dmi',"chest_implant_overlay")
+	overlay.ColorTone(implant_color)
+	overlays |= overlay
+	..()
+
 /obj/item/cybernetic_implant/chest/nutriment
 	name = "Nutriment pump implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "chest_implant"
+	implant_color = "#F968B5"
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
 	var/nutriment_amount = 30
@@ -290,6 +297,7 @@
 	name = "Nutriment pump implant PLUS"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	icon_state = "chest_implant"
+	implant_color = "#FF0044"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	nutriment_amount = 50
 	poison_amount = 10
@@ -305,6 +313,7 @@
 	name = "Reviver implant"
 	desc = "This implant will automatically deliver a therapeutic dose of electrical energy to your heart if it ever stops beating, and inject nanites into your bloodstream. A second chance!"
 	icon_state = "chest_implant"
+	implant_color = "#FF8000"
 	var/defibrillating = 0
 	var/recharge_time = 0
 	origin_tech = "materials=7;programming=3;biotech=4"
