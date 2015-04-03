@@ -74,7 +74,7 @@
 /obj/item/commstone/examine(mob/user as mob)
 	..()
 	if(!commdevice || (commdevice.stat & NOPOWER))
-	user << "<span class='info'>It seems to have lost its luster, perhaps the device it is connected to isn't functional."
+		user << "<span class='info'>It seems to have lost its luster, perhaps the device it is connected to isn't functional."
 
 
 /obj/item/commstone/update_icon()

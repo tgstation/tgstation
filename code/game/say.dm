@@ -127,6 +127,19 @@ var/list/freqtoname = list(
 		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
 
+/proc/attach_spans(input, list/spans)
+	return "[message_spans(spans)][input]</span>"
+
+/proc/message_spans(list/spans)
+	var/output = "<SPAN CLASS='"
+
+	for(var/span in spans)
+		output = "[output][span] "
+
+	output = "[output]'>"
+	return output
+
+
 /atom/movable/proc/GetVoice()
 	return name
 
