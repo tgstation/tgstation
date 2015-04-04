@@ -1,0 +1,7 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - rscadd: Add kitchen sink to Bar counter
+  - rscadd: Add lightswitch to Kitchen
+  - rscadd: Add space cleaner to Robotics
+  - bugfix: Fix ultra-fucked bodybag in Robotics
