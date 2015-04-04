@@ -12,7 +12,7 @@ var/global/list/power_machines = list()
 	for(var/i = 1 to power_machines.len)
 		if(i > power_machines.len)
 			break
-		var/obj/machinery/power/M = power_machines[i]
+		var/obj/machinery/M = power_machines[i]
 		if(istype(M) && !M.gcDestroyed)
 			#ifdef PROFILE_MACHINES
 			var/time_start = world.timeofday

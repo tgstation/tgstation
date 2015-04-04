@@ -147,10 +147,6 @@ var/global/powernets_broke = 0
 			C.build_status = 0
 		for(var/obj/machinery/power/P in NewPN.nodes)
 			P.build_status = 0
-	else
-		if(build_status && !powernets_broke)
-			powernets_broke = 1
-			message_admins("Powernets tried to rebuild a network that already had a datum, tell a coder!")
 
 ///////////////////////////////////////////
 // GLOBAL PROCS for powernets handling
@@ -187,9 +183,8 @@ var/global/powernets_broke = 0
 		PN.set_to_build()
 		powernets = list()
 
-	for(var/obj/structure/cable/PC in cable_list)
-		if(PC.build_status)
-			PC.rebuild_from()
+	for(var/obj/structure/cable/C in cable_list)
+		C.rebuild_from()
 
 // remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(var/obj/O, var/datum/powernet/PN)
