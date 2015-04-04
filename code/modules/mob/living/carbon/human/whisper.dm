@@ -51,7 +51,7 @@
 
 	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
 
-	for (var/mob/listener in listeners)
+	for (var/atom/movable/listener in listeners)
 		if (listener)
 			listener.Hear(rendered, src, languages, message)
 
@@ -61,7 +61,7 @@
 
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
 
-	for (var/mob/eavesdropper in eavesdroppers)
+	for (var/atom/movable/eavesdropper in eavesdroppers)
 		if (eavesdropper)
 			eavesdropper.Hear(rendered, src, languages, message)
 
