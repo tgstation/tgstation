@@ -239,6 +239,8 @@
 	if(istype(MB))
 		MB.RunOver(src)
 
+	spreadFire(AM)
+
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
 /mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, var/safety = 0)
 	if(!safety)
