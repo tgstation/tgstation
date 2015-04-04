@@ -5,3 +5,4 @@ changes:
   - rscadd: Add lightswitch to Kitchen
   - rscadd: Add space cleaner to Robotics
   - bugfix: Fix ultra-fucked bodybag in Robotics
+  - bugfix: Remove duplicate Security Hallway APC, move main APC closer to the Security Lobby
