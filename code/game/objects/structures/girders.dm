@@ -22,7 +22,7 @@
 					return
 				user << "<span class='notice'>You disassemble the girder.</span>"
 				var/obj/item/stack/sheet/metal/M = new (loc, 2)
-				transfer_fingerprints_to(M)
+				M.add_fingerprint(user)
 				qdel(src)
 
 	else if(istype(W, /obj/item/weapon/wrench) && state == 3 && 4)
