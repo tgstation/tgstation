@@ -6,7 +6,7 @@
 	icon_state = "control"
 	var/icon_mod = "on" // on, critical, or fuck
 	var/old_icon_mod = "on"
-	anchored = 1
+	anchored = 0
 	density = 1
 	use_power = 1
 	idle_power_usage = 100

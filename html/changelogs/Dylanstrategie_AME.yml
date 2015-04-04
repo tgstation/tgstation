@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - tweak: The AME Control unit now spawns unbolted. MIND THIS IF YOU ARE SETTING UP THE AME, YOU NEED TO WRENCH THE CONTROL UNIT NOW
