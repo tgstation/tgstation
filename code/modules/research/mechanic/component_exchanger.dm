@@ -25,16 +25,29 @@
 
 	self_interact_menu(user)
 
-/obj/item/device/component_exchanger/attackby(var/obj/item/weapon/stock_parts/P, mob/user)
+/obj/item/device/component_exchanger/attackby(var/atom/A, mob/user)
 
-	if(componentstorage.len < maxcomponents && istype(P)) //We have room
-		user.visible_message("<span class='notice'>[user] slots \a [P] into \the [src]'s component storage</span>", \
-		"<span class='notice'>You slot \a [P] into \the [src]'s component storage</span>")
-		user.drop_item(P)
-		componentstorage += P //Add it to the proper component storage list
-		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1) //User feedback
-	else
-		user << "<span class='warning'>\The [src] is full.</span>"
+	if(istype(A, /obj/item/weapon/stock_parts))
+		var/obj/item/weapon/stock_parts/P = A
+		if(componentstorage.len < maxcomponents) //We have room
+			user.visible_message("<span class='notice'>[user] slots \a [P] into \the [src]'s component storage</span>", \
+			"<span class='notice'>You slot \a [P] into \the [src]'s component storage</span>")
+			user.drop_item(P)
+			componentstorage += P //Add it to the proper component storage list
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1) //User feedback
+		else
+			user << "<span class='warning'>\The [src] is full.</span>"
+	else if(istype(A, /obj/item/weapon/storage/bag/gadgets))
+		var/obj/item/weapon/storage/bag/gadgets/G = A
+		if(!contents)
+			user << "<span class='warning'>\The [G] is empty.</span>"
+		for(var/obj/item/weapon/stock_parts/S in G.contents)
+			if(componentstorage.len < maxcomponents)
+				componentstorage += S
+			else
+				user << "<span class='notice'>You fill \the [src] to its capacity with \the [G]'s contents.</span>"
+				return
+		user << "<span class='notice'>You fill up \the [src] with \the [G]'s contents.</span>"
 
 //Redirect the attack only if it's a machine, otherwise don't bother
 /obj/item/device/component_exchanger/preattack(var/atom/A, var/mob/user, proximity_flag)
@@ -66,14 +79,14 @@
 			playsound(get_turf(src), 'sound/machines/Ping.ogg', 50, 1) //User feedback
 			user << "<span class='notice'>\The [src] pings softly. A small message appears on its HUD, instructing to not move until finished."
 
-			component_interaction(user, M) //Our job is done here, we transfer to the second proc (it needs to be recalled if needed)
+			component_interaction(M, user) //Our job is done here, we transfer to the second proc (it needs to be recalled if needed)
 
 			return
 	return
 
-/obj/item/device/component_exchanger/proc/component_interaction(mob/user, obj/machinery/M)
+/obj/item/device/component_exchanger/proc/component_interaction(obj/machinery/M, mob/user)
 
-	if(!Adjacent(M, user)) //We aren't hugging the machine, so don't bother. This'll prop up often
+	if(!Adjacent(user)) //We aren't hugging the machine, so don't bother. This'll prop up often
 		user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
 		return //Done, done and done, pull out
 
@@ -122,7 +135,7 @@
 		"<span class='notice'>\The [src]'s HUD flashes, a message appears stating it has started scanning and replacing \the [M]'s components.</span>")
 
 		for(var/obj/item/weapon/stock_parts/P in M.component_parts)
-			if(!Adjacent(M, user)) //Make sure the user doesn't move
+			if(!Adjacent(user)) //Make sure the user doesn't move
 				user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
 				return
 			//Yes, an istype list. We don't have helpers for this, and this coder is not that sharp
