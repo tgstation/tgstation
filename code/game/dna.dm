@@ -36,8 +36,19 @@
 		destination.dna.uni_identity = uni_identity
 		destination.dna.blood_type = blood_type
 		destination.dna.species = species
+		destination.dna.mutant_color = mutant_color
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations
+
+/datum/dna/proc/copy_dna(var/datum/dna/new_dna)
+	new_dna.unique_enzymes = unique_enzymes
+	new_dna.struc_enzymes = struc_enzymes
+	new_dna.uni_identity = uni_identity
+	new_dna.blood_type = blood_type
+	new_dna.species = new species.type
+	new_dna.mutant_color = mutant_color
+	new_dna.real_name = real_name
+	new_dna.mutations = mutations
 
 /datum/dna/proc/add_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
