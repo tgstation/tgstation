@@ -563,6 +563,8 @@
 			else
 				viable_occupant = null
 				occupant_status += "<span class='bad'>Invalid DNA structure</span></div></div>"
+			if (viable_occupant && viable_occupant.stat == DEAD)
+				viable_occupant = null // No editing the dead.
 		else
 			occupant_status += "<span class='bad'>No subject detected</span></div></div>"
 
