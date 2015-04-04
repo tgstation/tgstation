@@ -1,0 +1,6 @@
+author: kingofkosmos
+
+delete-after: True
+
+changes: 
+  - rscadd: "Girder disassembly method changed: only dislodged girders can be disassembled by using a welder."
