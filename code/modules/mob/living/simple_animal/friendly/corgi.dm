@@ -174,7 +174,7 @@
 
 					if( ! ( item_to_add.type in allowed_types ) )
 						usr << "You set [item_to_add] on [src]'s back, but \he shakes it off!"
-						usr.drop_item(src.loc)
+						usr.drop_item(get_turf(src))
 						if(prob(25))
 							step_rand(item_to_add)
 						if (ckey == null)
