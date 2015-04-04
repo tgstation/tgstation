@@ -37,6 +37,7 @@ Contents:
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninja_sword_recall
 
 	s_initialized=1
 	slowdown=0
@@ -50,3 +51,4 @@ Contents:
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninja_sword_recall

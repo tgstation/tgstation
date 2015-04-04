@@ -40,9 +40,11 @@
 /obj/item/clothing/gloves/space_ninja/Touch(var/atom/A,var/proximity)
 	if(!candrain || draining)
 		return 0
+	if(!istype(loc, /mob/living/carbon/human))
+		return 0 //Only works while worn
+
 	var/mob/living/carbon/human/H = loc
-	if(!istype(H))
-		return 0 // what
+
 	var/obj/item/clothing/suit/space/space_ninja/suit = H.wear_suit
 	if(!istype(suit))
 		return 0
