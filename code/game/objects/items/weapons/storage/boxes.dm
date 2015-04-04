@@ -347,6 +347,7 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
 
+var/list/global_monkeycubebox_list = list()
 /obj/item/weapon/storage/box/monkeycubes
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
@@ -359,7 +360,24 @@
 	..()
 	for(var/i = 1; i <= 5; i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
+	global_monkeycubebox_list.Add(src)
 
+/obj/item/weapon/storage/box/monkeycubes/Destroy()
+	global_monkeycubebox_list.Remove(src)
+	..()
+
+/obj/item/weapon/storage/box/clowncubes
+	name = "clown cube box"
+	desc = "Drymate brand clown cubes. Just add water!"
+	icon = 'icons/obj/food.dmi'
+	icon_state = "monkeycubebox"
+	storage_slots = 7
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube/clowncube)
+
+/obj/item/weapon/storage/box/clowncubes/New()
+	..()
+	for(var/i = 1; i <= 5; i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/clowncube/wrapped(src)
 
 /obj/item/weapon/storage/box/permits
 	name = "box of construction permits"

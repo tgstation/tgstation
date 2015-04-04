@@ -1,3 +1,5 @@
+var/list/global_ale_list = list()
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks.
 ////////////////////////////////////////////////////////////////////////////////
@@ -170,6 +172,14 @@
 	icon_state = "alebottle"
 	item_state = "beer"
 	list_reagents = list("ale" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/ale/New()
+	..()
+	global_ale_list.Add(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/ale/Destroy()
+	global_ale_list.Remove(src)
+	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"

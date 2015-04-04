@@ -1,6 +1,6 @@
 //Not only meat, actually, but also snacks that are almost meat, such as fish meat or tofu
 
-
+var/list/global_faggot_list = list()
 ////////////////////////////////////////////FISH////////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/cubancarp
@@ -86,6 +86,14 @@
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	filling_color = "#800000"
 
+/obj/item/weapon/reagent_containers/food/snacks/faggot/New()
+	..()
+	global_faggot_list.Add(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/faggot/Destroy()
+	global_faggot_list.Remove(src)
+	..()
+
 /obj/item/weapon/reagent_containers/food/snacks/sausage
 	name = "sausage"
 	desc = "A piece of mixed, long meat."
@@ -135,6 +143,7 @@
 	wrapped = 0
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#CD853F"
+	var/mobtype = /mob/living/carbon/monkey
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(obj/O, mob/user,proximity)
 	if(!proximity) return
@@ -151,7 +160,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	visible_message("<span class='notice'>[src] expands!</span>")
-	new /mob/living/carbon/monkey(get_turf(src))
+	new mobtype(get_turf(src))
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Unwrap(mob/user)
@@ -164,6 +173,14 @@
 	desc = "Still wrapped in some paper."
 	icon_state = "monkeycubewrap"
 	wrapped = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/clowncube
+	name = "clown cube"
+	mobtype = /mob/living/simple_animal/hostile/retaliate/clown
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/clowncube/wrapped
+	wrapped = 1
+
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 	name = "enchiladas"

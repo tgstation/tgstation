@@ -10,6 +10,8 @@
  *		Trays
  */
 
+var/list/global_fork_list = list()
+
 /obj/item/weapon/kitchen
 	icon = 'icons/obj/kitchen.dmi'
 
@@ -49,6 +51,14 @@
 	desc = "Pointy."
 	icon_state = "fork"
 
+/obj/item/weapon/kitchen/utensil/fork/New()
+	..()
+	global_fork_list.Add(src)
+
+/obj/item/weapon/kitchen/utensil/fork/Destroy()
+	..()
+	global_fork_list.Remove(src)
+
 /obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
@@ -69,6 +79,12 @@
 		if(user.disabilities & CLUMSY && prob(50))
 			M = user
 		return eyestab(M,user)
+
+/obj/item/weapon/kitchen/utensil/fork/Crossed(var/mob/user)
+	if(ticker.mode.shitty)
+		user.visible_message("<span class='warning'>[user] steps on \the [src]!</span>", \
+							 "<span class='danger'><b>You step on \the [src]!</b></span>")
+		user.Weaken(3)
 
 /*
  * Knives

@@ -927,6 +927,7 @@
 #include "code\modules\events\meteor_wave.dm"
 #include "code\modules\events\prison_break.dm"
 #include "code\modules\events\radiation_storm.dm"
+#include "code\modules\events\shittening.dm"
 #include "code\modules\events\shuttle_loan.dm"
 #include "code\modules\events\spacevine.dm"
 #include "code\modules\events\spider_infestation.dm"
