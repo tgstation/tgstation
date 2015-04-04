@@ -25,7 +25,7 @@
 				M.add_fingerprint(user)
 				qdel(src)
 
-	else if(istype(W, /obj/item/weapon/wrench) && state == 3 && 4)
+	else if(istype(W, /obj/item/weapon/wrench) && state == 3)
 		if (!istype(src.loc, /turf/simulated/floor))
 			usr << "<span class='warning'>A floor must be present to secure the girder!</span>"
 			return
@@ -46,7 +46,8 @@
 			if(!src.loc)
 				return
 			user << "<span class='notice'>You slice apart the girder.</span>"
-			new /obj/item/stack/sheet/metal(get_turf(src))
+			var/obj/item/stack/sheet/metal/M = new (loc, 2)
+			M.add_fingerprint(user)
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
