@@ -310,9 +310,9 @@
 			return
 
 	else
-		var/inside = src.search_contents_for(/atom)
-		if(is_type_in_list(/obj/item/weapon/disk/nuclear, inside))
-			usr << "You get the feeling that you shouldn't cremate one of the items in the cremator."
+		var/inside = recursive_type_check(src, /atom/movable) - src
+
+		if (locate(/obj/item/weapon/disk/nuclear) in inside)
 			return
 
 		for (var/mob/M in viewers(src))
@@ -321,7 +321,7 @@
 		cremating = 1
 		locked = 1
 
-		for(var/mob/living/M in inside)
+		for (var/mob/living/M in inside)
 			if (M.stat!=2)
 				M.emote("scream",,, 1)
 			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
@@ -332,8 +332,10 @@
 			M.ghostize()
 			del(M)
 
-		for(var/obj/O in inside) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
-			del(O)
+		for (var/obj/O in inside) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
+			qdel(O)
+
+		inside = null
 
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
@@ -393,12 +395,10 @@
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user as mob)
-	if(src.allowed(usr))
+	if (allowed(user))
 		for (var/obj/structure/crematorium/C in world)
 			if (C.id == id)
-				if (!C.cremating)
-					C.cremate(user)
+				C.cremate(user)
 	else
-		usr << "\red Access denied."
+		user << "<SPAN CLASS='alert'>Access denied.</SPAN>"
 	return
-

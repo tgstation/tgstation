@@ -52,16 +52,14 @@
 				qdel(A)
 				return
 
-			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-				del(A) //The disk's Destroy() proc ensures a new one is created
-				return
+			var/disks_list = recursive_type_check(A, /obj/item/weapon/disk/nuclear)
 
-			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
 			if(istype(A, /obj/structure/stool/bed/chair/vehicle))
 				var/obj/structure/stool/bed/chair/vehicle/B = A
 				if(B.buckled_mob)
-					disk_search = B.buckled_mob.search_contents_for(/obj/item/weapon/disk/nuclear)
-			if(!isemptylist(disk_search))
+					disks_list = recursive_type_check(B.buckled_mob, /obj/item/weapon/disk/nuclear)
+
+			if (length(disks_list))
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A
 					if(MM.client && !MM.stat)
@@ -75,11 +73,12 @@
 						else if(MM.y >= world.maxy -TRANSITIONEDGE)
 							MM.inertia_dir = 2
 					else
-						for(var/obj/item/weapon/disk/nuclear/N in disk_search)
-							del(N)//Make the disk respawn it is on a clientless mob or corpse
+						for (var/obj/item/weapon/disk/nuclear/N in disks_list)
+							qdel(N) // make the disk respawn if it is floating on its own.
 				else
-					for(var/obj/item/weapon/disk/nuclear/N in disk_search)
-						del(N)//Make the disk respawn if it is floating on its own
+					for (var/obj/item/weapon/disk/nuclear/N in disks_list)
+						qdel(N) // make the disk respawn if it is floating on its own.
+
 				return
 
 			//Check if it's a mob pulling an object

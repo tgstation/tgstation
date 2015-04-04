@@ -130,19 +130,39 @@
 
 //This is the new version of recursive_mob_check, used for say().
 //The other proc was left intact because morgue trays use it.
-/proc/recursive_hear_check(var/atom/O)
+/proc/recursive_hear_check(atom/O)
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
 	var/list/found_atoms = list()
 
-	while(processing_list.len)
+	while (processing_list.len)
 		var/atom/A = processing_list[1]
 
-		if(A.flags & HEAR)
+		if (A.flags & HEAR)
 			found_atoms |= A
 
-		for(var/atom/B in A)
-			if(!processed_list[B])
+		for (var/atom/B in A)
+			if (!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_atoms
+
+/proc/recursive_type_check(atom/O, type = /atom)
+	var/list/processing_list = list(O)
+	var/list/processed_list = new/list()
+	var/list/found_atoms = new/list()
+
+	while (processing_list.len)
+		var/atom/A = processing_list[1]
+
+		if (istype(A, type))
+			found_atoms |= A
+
+		for (var/atom/B in A)
+			if (!processed_list[B])
 				processing_list |= B
 
 		processing_list.Cut(1, 2)
