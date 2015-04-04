@@ -223,55 +223,48 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	virt.faketrack = data == 4 ? 1 : 0
 	virt.radio = radio
 
-	if(compression > 0)
+	if (compression > 0)
 		message = Gibberish(message, compression + 40)
 
+	switch (data)
+		if (1) // broadcast only to intercom devices
+			for (var/obj/item/device/radio/intercom/R in all_radios["[freq]"])
+				if (R && R.receive_range(freq, level) > -1)
+					radios += R
+		if (2) // broadcast only to intercoms and station-bounced radios
+			for (var/obj/item/device/radio/R in all_radios["[freq]"])
+				if (istype(R, /obj/item/device/radio/headset))
+					continue
 
-	// --- Broadcast only to intercom devices ---
+				if (R && R.receive_range(freq, level) > -1)
+					radios += R
+		else // broadcast to ALL radio devices
+			for (var/obj/item/device/radio/R in all_radios["[freq]"])
+				if (R && R.receive_range(freq, level) > -1)
+					radios += R
 
-	if(data == 1)
+			/*
+			 * Syndicate radios use magic that allows them to hear everything.
+			 * This was already the case, now it just doesn't need the allinone anymore.
+			 * Solves annoying bugs that aren't worth solving.
+			 */
+			if (num2text(freq) in radiochannelsreverse)
+				for (var/obj/item/device/radio/R in all_radios["[SYND_FREQ]"])
+					if (R && R.receive_range(SYND_FREQ, list(R.z)) > -1)
+						radios |= R
 
-		for (var/obj/item/device/radio/intercom/R in all_radios["[freq]"])
-			if(R.receive_range(freq, level) > -1)
-				radios += R
-
-	// --- Broadcast only to intercoms and station-bounced radios ---
-
-	else if(data == 2)
-
-		for (var/obj/item/device/radio/R in all_radios["[freq]"])
-
-			if(istype(R, /obj/item/device/radio/headset))
-				continue
-
-			if(R.receive_range(freq, level) > -1)
-				radios += R
-
-	// --- Broadcast to ALL radio devices ---
-
-	else
-
-		for (var/obj/item/device/radio/R in all_radios["[freq]"])
-			if(R.receive_range(freq, level) > -1)
-				radios += R
-
-		var/freqtext = num2text(freq)
-		for(var/obj/item/device/radio/R in all_radios["[SYND_FREQ]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
-			if(R.receive_range(SYND_FREQ, list(R.z)) > -1 && freqtext in radiochannelsreverse)
-				radios |= R
-
-	// Get a list of mobs who can hear from the radios we collected and observers.
+	// get a list of mobs who can hear from the radios we collected and observers
 	var/list/listeners = get_mobs_in_radio_ranges(radios) | observers
 
 	radios = null
 
-	var/rendered = virt.compose_message(virt, virt.languages, message, freq) //Always call this on the virtualspeaker to advoid issues.
+	var/rendered = virt.compose_message(virt, virt.languages, message, freq) // always call this on the virtualspeaker to advoid issues
 
 	for (var/atom/movable/listener in listeners)
 		if (listener)
 			listener.Hear(rendered, virt, AM.languages, message, freq)
 
-	if(length(listeners))
+	if (length(listeners))
 		listeners = null
 
 			// --- This following recording is intended for research and feedback in the use of department radio channels ---
