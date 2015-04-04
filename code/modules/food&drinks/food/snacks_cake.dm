@@ -4,6 +4,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/plain
 	slices_num = 5
 	bitesize = 3
+	volume = 80
 	list_reagents = list("nutriment" = 20, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice

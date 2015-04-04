@@ -4,6 +4,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 3
 	w_class = 3
+	volume = 80
 	list_reagents = list("nutriment" = 10, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/plain

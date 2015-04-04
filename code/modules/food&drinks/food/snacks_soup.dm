@@ -3,6 +3,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bitesize = 5
+	volume = 80
 	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/New()

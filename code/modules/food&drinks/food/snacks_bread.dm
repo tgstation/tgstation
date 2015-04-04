@@ -1,6 +1,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread
 	icon = 'icons/obj/food/burgerbread.dmi'
+	volume = 80
 	slices_num = 5
 
 
