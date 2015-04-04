@@ -1,0 +1,4 @@
+author: Boxed
+delete-after: True
+changes:
+	- tweak: Plasmaman mining suits can now be upgraded with goliath hides. Takes 6 hides compared to the normal 5 to reach 90 DR.
