@@ -54,7 +54,6 @@
 		icon_state = "[initial(name)]_nocell"
 	else
 		icon_state = "[initial(name)]"
-	update_process()
 
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()
