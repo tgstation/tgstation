@@ -9,6 +9,7 @@
 	bitesize = 2
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"
+	list_reagents = list("nutriment" = 2)
 	slot_flags = SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 
@@ -115,6 +116,21 @@
 	icon_state = "creamcheesebreadslice"
 	filling_color = "#FF8C00"
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/store/bread/mimana
+	name = "mimana bread"
+	desc = "Best eaten in silence."
+	icon_state = "mimanabread"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/mimana
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
+	list_reagents = list("nutriment" = 20, "mutetoxin" = 5, "nothing" = 5, "vitamin" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/breadslice/mimana
+	name = "mimana bread slice"
+	desc = "A slice of silence!"
+	icon_state = "mimanabreadslice"
+	filling_color = "#C0C0C0"
+	list_reagents = list("nutriment" = 2, "mutetoxin" = 1, "nothing" = 1, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom
 	name = "bread slice"

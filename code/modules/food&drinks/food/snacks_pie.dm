@@ -126,3 +126,43 @@
 	icon_state = "gappletart"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 8, "gold" = 5, "vitamin" = 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/pie/blumpkinpie
+	name = "blumpkin pie"
+	desc = "An odd blue pie made with toxic blumpkin."
+	icon_state = "blumpkinpie"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/blumpkinpieslice
+	slices_num = 5
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/blumpkinpieslice
+	name = "blumpkin pie slice"
+	desc = "A slice of blumpkin pie, with whipped cream on top. Is this edible?"
+	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "blumpkinpieslice"
+	trash = /obj/item/trash/plate
+	filling_color = "#1E90FF"
+	list_reagents = list("nutriment" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/pie/dulcedebatata
+	name = "dulce de batata"
+	desc = "A delicious jelly made with sweet potatoes."
+	icon_state = "dulcedebatata"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/dulcedebatataslice
+	slices_num = 5
+	bonus_reagents = list("nutriment" = 4, "vitamin" = 8)
+
+/obj/item/weapon/reagent_containers/food/snacks/dulcedebatataslice
+	name = "dulce de batata slice"
+	desc = "A slice of sweet dulce de batata jelly."
+	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "dulcedebatataslice"
+	trash = /obj/item/trash/plate
+	filling_color = "#8B4513"
+	list_reagents = list("nutriment" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/pie/frostypie
+	name = "frosty pie"
+	desc = "Tastes like blue and cold."
+	icon_state = "frostypie"
+	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)

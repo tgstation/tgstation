@@ -50,7 +50,7 @@
 				S.trash = null  //we remove the plate before adding the ingredient
 			ingredients += S
 			S.loc = src
-			filling_color = S.filling_color
+			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			update_overlays(S)
 			user << "<span class='notice'>You add the [I.name] to the [name].</span>"
@@ -100,6 +100,20 @@
 	user.unEquip(BASE)
 	qdel(BASE)
 
+/obj/item/weapon/reagent_containers/food/snacks/customizable/proc/mix_filling_color(obj/item/weapon/reagent_containers/food/snacks/S)
+
+	if(ingredients.len == 1)
+		filling_color = S.filling_color
+	else
+		var/list/rgbcolor = list(0,0,0,0)
+		var/customcolor = GetColors(filling_color)
+		var/ingcolor =  GetColors(S.filling_color)
+		rgbcolor[1] = (customcolor[1]+ingcolor[1])/2
+		rgbcolor[2] = (customcolor[2]+ingcolor[2])/2
+		rgbcolor[3] = (customcolor[3]+ingcolor[3])/2
+		rgbcolor[4] = (customcolor[4]+ingcolor[4])/2
+		filling_color = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
+
 /obj/item/weapon/reagent_containers/food/snacks/customizable/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 
 	var/image/I = new(icon, "[initial(icon_state)]_filling")
@@ -127,6 +141,7 @@
 			return
 		if(INGREDIENTS_FILL)
 			overlays.Cut()
+			I.color = filling_color
 		if(INGREDIENTS_LINE)
 			I.pixel_y = rand(-8,3)
 			I.pixel_x = I.pixel_y
@@ -285,7 +300,7 @@
 	icon_state	= "snack_bowl"
 	name = "bowl"
 	desc = "A simple bowl, used for soups and salads."
-	icon = 'icons/obj/food/containers.dmi'
+	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 	flags = OPENCONTAINER
 	w_class = 3

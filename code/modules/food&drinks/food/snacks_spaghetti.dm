@@ -60,3 +60,12 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
 	list_reagents = list("nutriment" = 8, "vitamin" = 6)
 	filling_color = "#F0E68C"
+
+/obj/item/weapon/reagent_containers/food/snacks/snacks/chowmein
+	name = "chow mein"
+	desc = "A nice mix of noodles and fried vegetables."
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+	icon_state = "chowmein"
+	trash = /obj/item/trash/plate
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 4)
+	list_reagents = list("nutriment" = 7, "vitamin" = 6)

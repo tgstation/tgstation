@@ -50,7 +50,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/friedegg = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/wrap
+	result = /obj/item/weapon/reagent_containers/food/snacks/eggwrap
 
 /datum/table_recipe/beans
 	name = "Beans"

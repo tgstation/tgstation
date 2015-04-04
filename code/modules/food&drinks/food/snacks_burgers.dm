@@ -165,3 +165,10 @@
 	list_reagents = list("nutriment" = 40, "vitamin" = 5)
 	w_class = 3
 	volume = 80
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm
+	name = "five alarm burger"
+	desc = "HOT! HOT!"
+	icon_state = "fivealarmburger"
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 5)
+	list_reagents = list("nutriment" = 6, "capsaicin" = 5, "vitamin" = 1)

@@ -178,10 +178,23 @@
 	desc = "A cake made of slimes. Probably not electrified."
 	icon_state = "slimecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/slimecake
-	slices_num = 5
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/slimecake
-	name = "Slime cake slice"
+	name = "slime cake slice"
+	desc = "A slice of slime cake."
 	icon_state = "slimecake_slice"
 	filling_color = "#00FFFF"
+
+/obj/item/weapon/reagent_containers/food/snacks/store/cake/pumpkinspice
+	name = "pumpkin spice cake"
+	desc = "A hollow cake with real pumpkin."
+	icon_state = "pumpkinspicecake"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/pumpkinspice
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/cakeslice/pumpkinspice
+	name = "pumpkin spice cake slice"
+	desc = "A spicy slice of pumpkin goodness."
+	icon_state = "pumpkinspicecakeslice"
+	filling_color = "#FFD700"
