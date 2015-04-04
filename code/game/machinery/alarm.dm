@@ -77,7 +77,7 @@
 
 	// breathable air according to human/Life()
 	var/list/TLV = list(
-		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
+		"oxygen"         = new/datum/tlv(  16,   19, 100, -1.0), // Partial pressure, kpa
 		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
 		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
 		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
