@@ -615,3 +615,6 @@ Class Procs:
 		if("buzz")
 			src.visible_message("<span class='notice'>\icon[src] \The [src] buzzes.</span>")
 			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)
+
+/obj/machinery/proc/check_rebuild()
+	return

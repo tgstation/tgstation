@@ -58,7 +58,7 @@
 	check_rebuild()
 	return powernet
 
-/obj/machinery/power/proc/check_rebuild()
+/obj/machinery/power/check_rebuild()
 	if(!build_status)
 		return
 	for(var/obj/structure/cable/C in src.loc)
