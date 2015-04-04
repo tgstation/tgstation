@@ -61,7 +61,7 @@
 	list_reagents = list("nutriment" = 8, "vitamin" = 6)
 	filling_color = "#F0E68C"
 
-/obj/item/weapon/reagent_containers/food/snacks/snacks/chowmein
+/obj/item/weapon/reagent_containers/food/snacks/chowmein
 	name = "chow mein"
 	desc = "A nice mix of noodles and fried vegetables."
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
@@ -69,3 +69,11 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 4)
 	list_reagents = list("nutriment" = 7, "vitamin" = 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/beefnoodle
+	name = "beef noodle"
+	desc = "Nutritious, beefy and noodly."
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+	icon_state = "beefnoodle"
+	trash = /obj/item/weapon/reagent_containers/glass/bowl
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 6)

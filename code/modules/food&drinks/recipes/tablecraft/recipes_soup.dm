@@ -176,5 +176,22 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/amanitajelly
 
+/datum/table_recipe/sweetpotatosoup
+	name = "Sweet potato soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/weapon/reagent_containers/glass/bowl = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato = 2
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato
 
-
+/datum/table_recipe/redbeetsoup
+	name = "Red beet soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/weapon/reagent_containers/glass/bowl = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/redbeet = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/beet/red

@@ -97,14 +97,6 @@
 	list_reagents = list("nutriment" = 5)
 	filling_color = "#FFE4E1"
 
-/obj/item/weapon/reagent_containers/food/snacks/shantymushi
-	name = "shantymushi"
-	desc = "The chawanmushi's mysterious brother."
-	icon_state = "shantymushi"
-	bonus_reagents = list("vitamin" = 3)
-	list_reagents = list("nutriment" = 5)
-	filling_color = "#F1D4D1"
-
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/waffles
@@ -163,7 +155,7 @@
 	filling_color = "#CD853F"
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
-	name = "\improper Warm Donk-pocket"
+	name = "warm Donk-pocket"
 	desc = "The heated food of choice for the seasoned traitor."
 	bonus_reagents = list("omnizine" = 3)
 	list_reagents = list("nutriment" = 4, "omnizine" = 3)
@@ -244,7 +236,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/oatmealcookie
 	name = "oatmeal cookie"
-	desc = "The vest of both cookie and oatmeal"
+	desc = "The best of both cookie and oat"
 	icon_state = "oatmealcookie"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)

@@ -109,7 +109,7 @@
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili = 2,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = 1
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 

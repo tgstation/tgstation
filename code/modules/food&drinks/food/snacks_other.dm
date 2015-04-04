@@ -192,6 +192,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/tortilla
 	name = "tortilla"
 	desc = "The base for all your burritos."
+	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "tortilla"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	filling_color = "#FFEFD5"
@@ -232,8 +233,8 @@
 	name = "yaki imo"
 	desc = "Made with roasted sweet potatoes!"
 	icon_state = "yakiimo"
-	bonus_reagents = list("nutriment" = 3, "vitamin" = 4)
-	list_reagents = list("nutriment" = 6)
+	trash = /obj/item/trash/plate
+	list_reagents = list("nutriment" = 5, "vitamin" = 4)
 	filling_color = "#8B1105"
 
 /obj/item/weapon/reagent_containers/food/snacks/roastparsnip
@@ -255,7 +256,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/spacefreezy
 	name = "space freezy"
 	desc = "The best icecream in space."
-	icon_state = "spacefrreezy"
+	icon_state = "spacefreezy"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "bluecherryjelly" = 5, "vitamin" = 4)
 	filling_color = "#87CEFA"
@@ -263,7 +264,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sundae
 	name = "sundae"
 	desc = "A classic dessert."
-	icon_state = "sunday"
+	icon_state = "sundae"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 1)
 	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
 	filling_color = "#FFFACD"
@@ -287,7 +288,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/cheesynachos
 	name = "cheesy nachos"
 	desc = "The delicious combination of nachos and melting cheese."
-	icon_state = "cheesy nachos"
+	icon_state = "cheesynachos"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "vitamin" = 3)
 	filling_color = "#FFD700"
@@ -305,5 +306,7 @@
 	desc = "Who knew vodka was a fruit?"
 	icon_state = "melonkeg"
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 3)
-	list_reagents = list("nutriment" = 9, "vodka" = 8, "vitamin" = 4)
+	list_reagents = list("nutriment" = 9, "vodka" = 15, "vitamin" = 4)
 	filling_color = "#FFD700"
+	volume = 80
+	bitesize = 5

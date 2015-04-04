@@ -157,10 +157,10 @@
 	icon_state = "sweetpotatosoup"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/soup/beet/borscht
-	name = "borschtbeet soup"
+/obj/item/weapon/reagent_containers/food/snacks/soup/beet/red
+	name = "red beet soup"
 	desc = "Quite a delicacy."
-	icon_state = "borschtbeetsoup"
+	icon_state = "redbeetsoup"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
 
 

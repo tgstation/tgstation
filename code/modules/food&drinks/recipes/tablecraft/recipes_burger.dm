@@ -199,3 +199,19 @@ datum/table_recipe/bearger
 			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/cherry
+
+/datum/table_recipe/fivealarmburger
+	name = "Five alarm burger"
+	reqs = list(
+			/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili = 2,
+			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm
+
+/datum/table_recipe/ratburger
+	name = "Rat burger"
+	reqs = list(
+			/obj/item/trash/deadmouse = 1,
+			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/rat

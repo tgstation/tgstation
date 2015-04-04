@@ -107,3 +107,29 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/appletart
 
+/datum/table_recipe/blumpkinpie
+	name = "Blumpkin pie"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pie/blumpkinpie
+
+/datum/table_recipe/dulcedebatata
+	name = "Dulce de batata"
+	reqs = list(
+		/datum/reagent/consumable/vanilla = 5,
+		/datum/reagent/water = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato = 2
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pie/dulcedebatata
+
+/datum/table_recipe/frostypie
+	name = "Frosty pie"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pie/frostypie

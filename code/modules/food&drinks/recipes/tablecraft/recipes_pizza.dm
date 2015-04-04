@@ -41,4 +41,32 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/vegetable
 
+/datum/table_recipe/donpocketpizza
+	name = "Donkpocket pizza"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm = 3,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/donkpocket
 
+/datum/table_recipe/dankpizza
+	name = "Dank pizza"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris = 3,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/dank
+
+/datum/table_recipe/sassysagepizza
+	name = "Sassysage pizza"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot = 3,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/sassysage

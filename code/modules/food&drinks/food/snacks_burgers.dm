@@ -171,4 +171,10 @@
 	desc = "HOT! HOT!"
 	icon_state = "fivealarmburger"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 5)
-	list_reagents = list("nutriment" = 6, "capsaicin" = 5, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, "capsaicin" = 5, "condensedcapsaicin" = 5, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/rat
+	name = "rat burger"
+	desc = "Pretty much what you'd expect..."
+	icon_state = "ratburger"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)

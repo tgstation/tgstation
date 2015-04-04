@@ -63,6 +63,7 @@
 	name = "ricebowl"
 	desc = "A bowl of raw rice."
 	icon_state = "ricebowl"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/salad/boiledrice
 	list_reagents = list("nutriment" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/boiledrice
@@ -89,9 +90,3 @@
 	desc = "A bowl of rice with a fried egg."
 	icon_state = "eggbowl"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
-
-/obj/item/weapon/reagent_containers/food/snacks/salad/beefnoodle
-	name = "beef noodle"
-	desc = "Nutritious, beefy and noodly."
-	icon_state = "beefnoodle"
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 6)
