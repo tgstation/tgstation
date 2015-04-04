@@ -328,9 +328,16 @@ var/bomb_set
 				return
 	return
 
-/obj/item/weapon/disk/nuclear/Destroy()
+/obj/item/weapon/disk/nuclear/Del()
 	if(blobstart.len > 0)
-		var/obj/D = new /obj/item/weapon/disk/nuclear(pick(blobstart))
-		message_admins("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
-		log_game("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
+		var/picked_location = pick(blobstart)
+
+		var/log_message = "[type] has been destroyed. Creating one at [formatJumpTo(picked_location)]"
+
+		message_admins(log_message)
+
+		log_game(log_message)
+
+		new /obj/item/weapon/disk/nuclear(picked_location)
+
 	..()
