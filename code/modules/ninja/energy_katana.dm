@@ -2,7 +2,7 @@
 
 /obj/item/weapon/katana/energy
 	name = "energy katana"
-	desc = "a katana infused with a strong energy"
+	desc = "A katana infused with strong energy."
 	icon_state = "energy_katana"
 	item_state = "energy_katana"
 	force = 40
