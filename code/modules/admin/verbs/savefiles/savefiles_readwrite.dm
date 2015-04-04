@@ -24,11 +24,20 @@
 	..()
 	if(!armor["melee"] && !armor["bullet"] && !armor["laser"] && !armor["energy"] && !armor["bomb"] && !armor["bio"] && !armor["rad"])
 		F.dir.Remove("armor")
+	if(!species_exception.len)
+		F.dir.Remove("species_exception")
+	var/itemlist = list(/obj/structure/table,/obj/structure/rack,/obj/structure/closet,/obj/item/weapon/storage,/obj/structure/safe,/obj/machinery/disposal)
+	if(list2params(can_be_placed_into) == list2params(itemlist))
+		F.dir.Remove("can_be_placed_into")
 
 /obj/item/Read(var/savefile/F)
 	..()
 	if(!F["armor"])
 		armor = list("melee" = 0,"bullet" = 0,"laser" = 0,"energy" = 0,"bomb" = 0,"bio" = 0,"rad" = 0)
+	if(!F["species_exception"])
+		species_exception = list()
+	if(!F["can_be_placed_into"])
+		can_be_placed_into = list(/obj/structure/table,/obj/structure/rack,/obj/structure/closet,/obj/item/weapon/storage,/obj/structure/safe,/obj/machinery/disposal)
 
 /obj/item/weapon/Write(var/savefile/F)
 	..()
@@ -49,6 +58,11 @@
 /mob/Read()
 	..()
 	regenerate_icons()
+
+/mob/living/carbon/human/Read()
+	..()
+	updateappearance(src)
+	domutcheck(src)
 
 
 // Removes mobs from blood's donor. We do not want to S/L the whole mob from blood syringe
@@ -109,6 +123,17 @@
 				ticker.mode.forge_revolutionary_objectives(src)
 			if("traitor")
 				ticker.mode.traitors.Add(src)
+
+
+// Stops Login()-related freezes on mob loading
+/mob/Read(var/savefile/F)
+	var/cilentkey
+	F["key"] >> cilentkey
+	F.dir.Remove("key")
+	..()
+	spawn(5)
+		key = cilentkey
+	F["key"] << cilentkey
 
 
 

@@ -81,7 +81,7 @@
 	var/shakecamera = 0
 	var/a_intent = "help"//Living
 	var/m_intent = "run"//Living
-	var/lastKnownIP = null
+	var/tmp/lastKnownIP = null
 	var/obj/structure/stool/bed/buckled = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
