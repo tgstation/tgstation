@@ -1,0 +1,10 @@
+author: xxalpha
+
+delete-after: True
+
+changes:
+  - rscadd: "Added Nutriment Pump, Nutriment Pump Plus and Reviver implants."
+  - tweak: "Added origin technologies to all implants".
+  - tweak: "The following implants are now much harder to obtain: X-ray, Thermals, Anti-Stun, Nutriment Pump Plus, Reviver."
+  - tweak: "Cauterizing a surgery wound will now heal some of the damage done by the bonesaw if it was used as part of the same surgery."
+  - tweak: "Added ability for Medical HUDs to detect cybernetic implants in humans."
