@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - bugfix: Fix RoboTrays picking up drinks (and most likely setting them on tables and the like) at any range due to a missing proximity flag
