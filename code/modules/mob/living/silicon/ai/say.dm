@@ -70,7 +70,12 @@
 	if(source != current)
 		return ..()
 
-	var/listeners = get_hearers_in_view(message_range, source) | observers
+	var/list/listeners = new/list()
+
+	for (var/mob/living/L in get_hearers_in_view(message_range, source))
+		listeners.Add(L)
+
+	listeners.Add(observers)
 
 	var/rendered = compose_message(src, languages, message)
 
