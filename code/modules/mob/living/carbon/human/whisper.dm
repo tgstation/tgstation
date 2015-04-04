@@ -15,14 +15,11 @@
 		return
 
 	message = "[message]"
-	log_whisper("[src.name]/[src.key] : [message]")
 
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)
 			src << "<span class='danger'>You cannot whisper (muted).</span>"
 			return
-
-	log_whisper("[src.name]/[src.key] : [message]")
 
 	var/alt_name = get_alt_name()
 
@@ -32,6 +29,8 @@
 	// We are unconscious but not in critical, so don't allow them to whisper.
 	if(stat == UNCONSCIOUS && (!critical || said_last_words))
 		return
+
+	log_whisper("[key_name(src)] ([formatLocation(src)]): [message]")
 
 	// If whispering your last words, limit the whisper based on how close you are to death.
 	if(critical && !said_last_words)
@@ -44,34 +43,37 @@
 		said_last_words = src.stat
 	message = treat_message(message)
 
-	var/list/listening_dead = list()
-	for(var/mob/M in player_list)
-		if(M.stat == DEAD && M.client && ((M.client.prefs.toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7)))
-			listening_dead |= M
+	var/listeners = get_hearers_in_view(1, src) | observers
 
-	var/list/listening = get_hearers_in_view(1, src)
-	listening |= listening_dead
-	var/list/eavesdropping = get_hearers_in_view(2, src)
-	eavesdropping -= listening
-	var/list/watching  = hearers(5, src)
-	watching  -= listening
-	watching  -= eavesdropping
+	var/eavesdroppers = get_hearers_in_view(2, src) - listeners
 
-	var/rendered
+	var/watchers = hearers(5, src) - listeners - eavesdroppers
 
-	rendered = "<span class='game say'><span class='name'>[src.name]</span> [whispers] something.</span>"
-	for(var/mob/M in watching)
-		M.show_message(rendered, 2)
+	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
 
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	for (var/atom/movable/listener in listeners)
+		if (listener)
+			listener.Hear(rendered, src, languages, message)
 
-	for(var/mob/M in listening)
-		M.Hear(rendered, src, languages, message)
+	listeners = null
 
 	message = stars(message)
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
-	for(var/mob/M in eavesdropping)
-		M.Hear(rendered, src, languages, message)
 
-	if(said_last_words) //Dying words.
+	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+
+	for (var/atom/movable/eavesdropper in eavesdroppers)
+		if (eavesdropper)
+			eavesdropper.Hear(rendered, src, languages, message)
+
+	eavesdroppers = null
+
+	rendered = "<span class='game say'><span class='name'>[src.name]</span> [whispers] something.</span>"
+
+	for (var/mob/watcher in watchers)
+		if (watcher)
+			watcher.show_message(rendered, 2)
+
+	watchers = null
+
+	if (said_last_words) // dying words
 		succumb(1)
