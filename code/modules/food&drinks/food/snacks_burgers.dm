@@ -164,7 +164,8 @@
 	bonus_reagents = list("vitamin" = 10)
 	list_reagents = list("nutriment" = 40, "vitamin" = 5)
 	w_class = 3
-	volume = 80
+	bitesize = 7
+	volume = 100
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm
 	name = "five alarm burger"

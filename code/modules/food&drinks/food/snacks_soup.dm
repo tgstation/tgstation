@@ -151,6 +151,7 @@
 	bonus_reagents = list("nutriment" = 1, "tomatojuice" = 5, "vitamin" = 5)
 	list_reagents = list("nutriment" = 10, "oculine" = 5, "tomatojuice" = 5, "vitamin" = 5)
 	bitesize = 7
+	volume = 100
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato
 	name = "sweet potato soup"

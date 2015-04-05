@@ -104,3 +104,12 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/eggbowl
+
+/datum/table_recipe/ricepudding
+	name = "Rice pudding"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/salad/boiledrice = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/salad/ricepudding

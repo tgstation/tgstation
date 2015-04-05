@@ -82,7 +82,7 @@
 	filling_color = "#FFA500"
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza/dank
-	name = "vegetable pizza"
+	name = "dank pizza"
 	desc = "The hippie's pizza of choice."
 	icon_state = "dankpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/dank
@@ -96,8 +96,8 @@
 	filling_color = "#2E8B57"
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza/sassysage
-	name = "vegetable pizza"
-	desc = "You can really smell the sassiness and saussages."
+	name = "sassysage pizza"
+	desc = "You can really smell the sassiness."
 	icon_state = "sassysagepizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/sassysage
 	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
