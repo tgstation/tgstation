@@ -12,7 +12,6 @@
 	response_help  = "shoos"
 	response_disarm = "swats away"
 	response_harm   = "squashes"
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 10
 	health = 10
 	faction = list("hostile")
