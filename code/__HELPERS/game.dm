@@ -232,6 +232,12 @@
 
 	return hear
 
+/proc/get_contents_in_object(atom/O, type_path)
+	if (O)
+		return recursive_type_check(O, type_path) - O
+	else
+		return new/list()
+
 /proc/get_movables_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
 	//set background = 1
