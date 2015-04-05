@@ -1,31 +1,37 @@
+#define GIRDER_NORMAL 0
+#define GIRDER_REINF_STRUTS 1
+#define GIRDER_REINF 2
+#define GIRDER_DISPLACED 3
+
 /obj/structure/girder
 	name = "girder"
 	icon_state = "girder"
 	anchored = 1
 	density = 1
 	layer = 2
-	var/state = 0 //state 0 = normal girder, state 1 = no idea, state 2 = reinforced girder, state 3 = displaced/dislodged girder
+	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 
 /obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weapon/weldingtool) && state == 3)
+	if(istype(W, /obj/item/weapon/weldingtool) && state == GIRDER_DISPLACED)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 			user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
 								"You start to disassemble the girder...", "You hear welding and clanking.")
+			var oldloc = src.loc
 			if(do_after(user, 40))
 				if( !WT.isOn() )
 					return
-				if(!src.loc)
+				if(src.loc!=oldloc)
 					return
 				user << "<span class='notice'>You disassemble the girder.</span>"
 				var/obj/item/stack/sheet/metal/M = new (loc, 2)
 				M.add_fingerprint(user)
 				qdel(src)
 
-	else if(istype(W, /obj/item/weapon/wrench) && state == 3)
+	else if(istype(W, /obj/item/weapon/wrench) && state == GIRDER_DISPLACED)
 		if (!istype(src.loc, /turf/simulated/floor))
 			usr << "<span class='warning'>A floor must be present to secure the girder!</span>"
 			return
@@ -61,29 +67,30 @@
 		D.playDigSound()
 		qdel(src)
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
+	else if(istype(W, /obj/item/weapon/screwdriver) && state == GIRDER_REINF)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user << "<span class='notice'>You start unsecuring support struts...</span>"
 		if(do_after(user,40))
 			if(!src.loc)
 				return
 			user << "<span class='notice'>You unsecure the support struts.</span>"
-			state = 1
+			state = GIRDER_REINF_STRUTS
 
-	else if(istype(W, /obj/item/weapon/wirecutters) && istype(src,/obj/structure/girder/reinforced) && state == 1)
+	else if(istype(W, /obj/item/weapon/wirecutters) && state == GIRDER_REINF_STRUTS)
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		user << "<span class='notice'>You start removing support struts...</span>"
 		if(do_after(user,40))
 			if(!src.loc)
 				return
 			user << "<span class='notice'>You remove the support struts.</span>"
+			new /obj/item/stack/sheet/plasteel(get_turf(src))
 			var/obj/structure/girder/G = new (loc)
 			transfer_fingerprints_to(G)
 			qdel(src)
 
-	else if(istype(W, /obj/item/weapon/wrench) && state == 0 && anchored )
+	else if(istype(W, /obj/item/weapon/wrench) && state == GIRDER_NORMAL && anchored )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-		user << "<span class='notice'>Now unsecuring the girder...</span>"
+		user << "<span class='notice'>You start unsecuring the girder...</span>"
 		if(do_after(user, 40))
 			if(!src.loc)
 				return
@@ -103,6 +110,11 @@
 			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
 				if(!anchored)
 					if (S.use(2))
+						user << "<span class='notice'>You start building a false wall...</span>"
+						var oldloc = src.loc
+						if(do_after(user, 20))
+							if(src.loc!=oldloc)
+								return
 						user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
 						var/obj/structure/falsewall/F = new (loc)
 						transfer_fingerprints_to(F)
@@ -114,7 +126,7 @@
 					if(S.get_amount() < 2)
 						user << "<span class='warning'>You need two sheets of metal to finish a wall!</span>"
 						return
-					user << "<span class='notice'>Now adding plating...</span>"
+					user << "<span class='notice'>You start adding plating...</span>"
 					if (do_after(user, 40))
 						if(loc == null || S.get_amount() < 2)
 							return
@@ -134,7 +146,12 @@
 						user << "<span class='warning'>You need at least two sheets to create a false wall!</span>"
 						return
 					S.use(2)
-					user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
+					user << "<span class='notice'>You start building a reinforced false wall...</span>"
+					var oldloc = src.loc
+					if(do_after(user, 20))
+						if(src.loc!=oldloc)
+							return
+					user << "<span class='notice'>You create a reinforced false wall. Push on it to open or close the passage.</span>"
 					var/obj/structure/falsewall/reinforced/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
@@ -180,7 +197,7 @@
 				qdel(src)
 			else
 				if(S.amount < 2) return ..()
-				user << "<span class='notice'>Now adding plating...</span>"
+				user << "<span class='notice'>You start adding plating...</span>"
 				if (do_after(user,40))
 					if(!src.loc || !S || S.amount < 2)
 						return
@@ -244,13 +261,13 @@
 	name = "displaced girder"
 	icon_state = "displaced"
 	anchored = 0
-	state = 3
+	state = GIRDER_DISPLACED
 	girderpasschance = 25
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
 	icon_state = "reinforced"
-	state = 2
+	state = GIRDER_REINF
 	girderpasschance = 0
 
 /obj/structure/girder/reinforced/ex_act(severity, target)
