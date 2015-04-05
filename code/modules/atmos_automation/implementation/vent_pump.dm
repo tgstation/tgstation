@@ -91,7 +91,7 @@
 		return 1
 
 /datum/automation/set_vent_pump_pressure//controls the internal/external pressure bounds of a vent pump.
-	name = "Vent pump: Pressure settings"
+	name = "Vent Pump: Pressure Settings"
 
 	var/vent_pump = null
 	var/intpressureout = 0//these 2 are for DP vents, if it's a unary vent you're sending to it will take intpressureout as var
@@ -200,7 +200,7 @@
 		return 1
 
 /datum/automation/set_vent_pressure_checks
-	name = "Vent pump: pressure checks"
+	name = "Vent Pump: Pressure Checks"
 
 	var/vent_pump = null
 	var/checks = 1
