@@ -3348,3 +3348,89 @@
 	desc = "A slice of pumpkin bread."
 	icon_state = "pumpkinbreadslice"
 	bitesize = 2
+
+////////////////SLIDERS////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/slider
+	name = "slider"
+	desc = "It's so tiny!"
+	icon_state = "slider" //slider
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2.5)
+		bitesize = 1.5
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/synth
+	name = "synth slider"
+	desc = "It's made to be tiny!"
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/xeno
+	name = "xeno slider"
+	desc = "It's green!"
+	icon_state = "slider_xeno"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/chicken
+	name = "chicken slider"
+	desc = "Chicken sliders? That's new."
+	icon_state = "slider_chicken"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/carp
+	name = "carp slider"
+	desc = "I wonder how it tastes!"
+	icon_state = "slider_carp"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("toxin", 1)
+		bitesize = 2.5
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/carp/spider
+	name = "spidey slidey"
+	desc = "I think there's still a leg in there!"
+	icon_state = "slider_spider"
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/clown
+	name = "honky slider"
+	desc = "HONK!"
+	icon_state = "slider_clown"
+	New()
+		..()
+		reagents.add_reagent("honkserum", 2.5)
+		bitesize = 2.5
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/mime
+	name = "quiet Slider"
+	desc = "..."
+	icon_state = "slider_mime" //mime_slider
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/slippery
+	name = "slippery slider"
+	desc = "It's so slippery!"
+	icon_state = "slider_slippery"
+	New()
+		..()
+		reagents.add_reagent("spacelube", 2.5)
+		bitesize = 2.5
+
+/obj/item/weapon/reagent_containers/food/snacks/slider/slippery/Crossed(AM as mob|obj) //exactly the same as soap
+	if (istype(AM, /mob/living/carbon))
+		var/mob/M =	AM
+		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
+			return
+
+		M.stop_pulling()
+		M << "\blue You slipped on the [name]!"
+		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
+		M.Stun(3)
+		M.Weaken(2)
+
+
+////////////////SLIDERS END////////////////
