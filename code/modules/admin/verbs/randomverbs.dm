@@ -803,13 +803,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	// I will both remove their SVN access and permanently ban them from my servers.
 	return
 
-/client/proc/cmd_admin_check_contents(mob/living/M as mob in mob_list)
+/client/proc/cmd_admin_check_contents(mob/living/L as mob in mob_list)
 	set category = "Special Verbs"
-	set name = "Check Contents"
+	set name = "Check Mob Contents"
 
-	var/list/L = M.get_contents()
-	for(var/t in L)
-		usr << "[t]"
+	for (var/content in recursive_type_check(L, /atom) - L)
+		if (content)
+			usr << "\icon[content] [content]"
+
 	feedback_add_details("admin_verb","CC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /* This proc is DEFERRED. Does not do anything.
