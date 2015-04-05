@@ -9,6 +9,10 @@
 /obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user as mob, proximity_flag)
 	if(!target)
 		return
+
+	if(!proximity_flag)
+		return
+
 	//Pick up items, mostly copied from base tray pickup proc
 	//See code\game\objects\items\weapons\kitchen.dm line 241
 	if(istype(target,/obj/item))
