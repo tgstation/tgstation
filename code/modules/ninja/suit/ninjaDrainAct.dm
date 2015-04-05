@@ -2,7 +2,7 @@
 /*
 
 Contents:
-- Assorted ninjaDrainAct() procs
+- Assorted ninjadrain_act() procs
 - What is Object Oriented Programming
 
 They *could* go in their appropriate files, but this is supposed to be modular
@@ -11,14 +11,14 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //Needs to return the amount drained from the atom, if no drain, 0
-/atom/proc/ninjaDrainAct()
+/atom/proc/ninjadrain_act()
 	return 0
 
 
 
 
 //APC//
-/obj/machinery/power/apc/ninjaDrainAct(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/power/apc/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return 0
 
@@ -61,7 +61,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //SMES//
-/obj/machinery/power/smes/ninjaDrainAct(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/power/smes/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return 0
 
@@ -96,7 +96,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //CELL//
-/obj/item/weapon/stock_parts/cell/ninjaDrainAct(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/item/weapon/stock_parts/cell/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return 0
 
@@ -115,7 +115,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //RDCONSOLE//
-/obj/machinery/computer/rdconsole/ninjaDrainAct(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/computer/rdconsole/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return 0
 
@@ -146,7 +146,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 //RD SERVER//
 //Shamelessly copypasted from above, since these two used to be the same proc, but with MANY colon operators
-/obj/machinery/r_n_d/server/ninjaDrainAct(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/r_n_d/server/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return 0
 
@@ -176,7 +176,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //WIRE//
-/obj/structure/cable/ninjaDrainAct(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/structure/cable/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return 0
 
@@ -212,7 +212,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		S.spark_system.start()
 
 //MECH//
-/obj/mecha/ninjaDrainAct(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/mecha/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return 0
 
@@ -239,7 +239,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				break
 
 //BORG//
-/mob/living/silicon/robot/ninjaDrainAct(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/mob/living/silicon/robot/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return 0
 
@@ -267,4 +267,19 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				break
 
 
+//CARBON MOBS//
+/mob/living/carbon/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+	if(!S || !H || !G)
+		return 0
 
+	. = DRAIN_MOB_SHOCK_FAILED
+
+	//Default cell = 10,000 charge, 10,000/1000 = 10 uses without charging/upgrading
+	if(S.cell && S.cell.charge && S.cell.use(1000))
+		. = DRAIN_MOB_SHOCK
+		//Got that electric touch
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, loc)
+		playsound(src, "sparks", 50, 1)
+		visible_message("<span class='danger'>[H] electrocutes [src] with their touch!</span>", "<span class='userdanger'>[H] electrocutes you with their touch!</span>")
+		electrocute_act(25, H)

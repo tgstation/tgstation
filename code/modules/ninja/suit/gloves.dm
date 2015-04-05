@@ -12,7 +12,7 @@
 	 -Sayu
 
 
-	see ninjaDrainAct.dm for ninjaDrainAct()
+	see ninjaDrainAct.dm for ninjadrain_act()
 	Touch() simply calls this on it's target now
 	Ninja's electricuting people when?
 	-Remie
@@ -57,7 +57,7 @@
 	A.add_fingerprint(H)
 
 	draining = 1
-	var/drained = A.ninjaDrainAct(suit,H,src)
+	var/drained = A.ninjadrain_act(suit,H,src)
 	draining = 0
 
 	if(isnum(drained)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)

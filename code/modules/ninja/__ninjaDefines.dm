@@ -17,3 +17,5 @@ Contents:
 //Which was my original intention.
 #define DRAIN_RD_HACKED			1
 #define DRAIN_RD_HACK_FAILED	2
+#define DRAIN_MOB_SHOCK			3
+#define DRAIN_MOB_SHOCK_FAILED	4
