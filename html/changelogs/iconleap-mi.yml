@@ -1,6 +1,0 @@
-author: iconleap
-
-delete-after: True
-
-changes: 
-  - rscadd: More morgue indicator icons from tg, refer to this pull https://github.com/d3athrow/vgstation13/pull/3774.
