@@ -25,6 +25,9 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		//Critical Health Status handling
+		handle_crit()
+
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment
@@ -177,4 +180,7 @@
 	return
 
 /mob/living/proc/handle_hud_icons_health()
+	return
+
+/mob/living/proc/handle_crit()
 	return

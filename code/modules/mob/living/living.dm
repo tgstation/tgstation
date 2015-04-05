@@ -244,14 +244,18 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustBruteLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
-	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+	bruteloss += amount
+	if(bruteloss <= 0)
+		bruteloss = 0
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
-	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
+	oxyloss += amount
+	if(oxyloss <= 0)
+		oxyloss = 0
 
 /mob/living/proc/setOxyLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
@@ -262,7 +266,9 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustToxLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
-	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
+	toxloss += amount
+	if(toxloss <= 0)
+		toxloss = 0
 
 /mob/living/proc/setToxLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
@@ -273,14 +279,18 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustFireLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
-	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+	fireloss += amount
+	if(fireloss <= 0)
+		fireloss = 0
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
-	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+	cloneloss += amount
+	if(cloneloss <= 0)
+		cloneloss = 0
 
 /mob/living/proc/setCloneLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
@@ -291,7 +301,9 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustBrainLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
-	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
+	brainloss  += amount
+	if(brainloss <= 0)
+		brainloss = 0
 
 /mob/living/proc/setBrainLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
@@ -302,7 +314,9 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/adjustStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
-	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
+	staminaloss += amount
+	if(staminaloss <= 0)
+		staminaloss = 0
 
 /mob/living/proc/setStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0

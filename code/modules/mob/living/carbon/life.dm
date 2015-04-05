@@ -270,14 +270,16 @@
 
 	if(..()) //alive
 
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
+		if(!getorgan(/obj/item/organ/brain))
 			death()
 			return
-
-		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
-			Paralyse(3)
-			stat = UNCONSCIOUS
-
+		if(getBrainLoss() >= 100 && stat != DEAD)
+			Weaken(20)
+			losebreath += 10
+			silent += 2
+		if(getBrainLoss() >= 120 && stat != DEAD)
+			visible_message("<span class='danger'><B>[src]</B> goes limp, their facial expression utterly blank.</span>")
+			death()
 		if(sleeping)
 			stat = UNCONSCIOUS
 
@@ -502,3 +504,114 @@
 					healths.icon_state = "health6"
 		else
 			healths.icon_state = "health7"
+
+/mob/living/carbon/handle_crit()
+	var/paralyse_amount = 0
+	var/losebreath_amount = 0
+	var/cardiac_arrest_chance = 0
+	var/brain_damage_from_crit = 0
+	if(!is_incrit(src))
+		if(was_incrit)
+			losebreath -= 5
+			adjustOxyLoss(-1)
+			if(losebreath < 0)
+				losebreath = 0
+			if(!losebreath && !getOxyLoss())
+				was_incrit = 0
+		return
+	else
+		was_incrit = 1
+		switch(health)
+			if(-9 to 0)
+				paralyse_amount = 1
+				losebreath_amount = 1
+				cardiac_arrest_chance = 0
+				brain_damage_from_crit = 0
+				world << "stage1"
+			if(-19 to -10)
+				paralyse_amount = 1
+				losebreath_amount = 2
+				cardiac_arrest_chance = 0
+				brain_damage_from_crit = 0
+				world << "stage2"
+			if(-29 to -20)
+				paralyse_amount = 1
+				losebreath_amount = 5
+				cardiac_arrest_chance = 5
+				brain_damage_from_crit = 0
+				world << "stage3"
+			if(-39 to -30)
+				paralyse_amount = 1
+				losebreath_amount = 8
+				cardiac_arrest_chance = 10
+				brain_damage_from_crit = 0
+				world << "stage4"
+			if(-49 to -40)
+				paralyse_amount = 1
+				losebreath_amount = 8
+				cardiac_arrest_chance = 15
+				brain_damage_from_crit = 0
+				world << "stage5"
+			if(-59 to -50)
+				paralyse_amount = 2
+				losebreath_amount = 8
+				cardiac_arrest_chance = 20
+				brain_damage_from_crit = 1
+				world << "stage6"
+			if(-69 to -60)
+				paralyse_amount = 2
+				losebreath_amount = 8
+				cardiac_arrest_chance = 25
+				brain_damage_from_crit = 1
+				world << "stage7"
+			if(-79 to -70)
+				paralyse_amount = 2
+				losebreath_amount = 8
+				cardiac_arrest_chance = 30
+				brain_damage_from_crit = 1
+				world << "stage8"
+			if(-89 to -80)
+				paralyse_amount = 2
+				losebreath_amount = 8
+				cardiac_arrest_chance = 35
+				brain_damage_from_crit = 2
+				world << "stage9"
+			if(-94 to -90)
+				paralyse_amount = 2
+				losebreath_amount = 8
+				cardiac_arrest_chance = 40
+				brain_damage_from_crit = 2
+				world << "stage10"
+			if(-INFINITY to -95)
+				paralyse_amount = 2
+				losebreath_amount = 8
+				cardiac_arrest_chance = 45
+				brain_damage_from_crit = 2
+				world << "stage11"
+		var/picked_effect = rand(1,4)
+		switch(picked_effect)
+			if(1)
+				Paralyse(paralyse_amount)
+			if(2)
+				losebreath += losebreath_amount
+				adjustBrainLoss(brain_damage_from_crit)
+			if(3)
+				if(prob(cardiac_arrest_chance))
+					if(!heart_attack)
+						src << "<span class = 'userdanger'>Your heart stops!</span>"
+						heart_attack = 1
+					else
+						losebreath += losebreath_amount
+			if(4)
+				Paralyse(paralyse_amount)
+		if(!reagents.has_reagent("epinephrine"))
+			adjustBrainLoss(brain_damage_from_crit)
+			world << "dealing [brain_damage_from_crit] of brain loss"
+		stuttering += 5
+		if(!reagents.has_reagent("epinephrine"))
+			adjustOxyLoss(2)
+		var/deathprob = (getBrainLoss()/4)
+		if(prob(deathprob) && health <= -100)
+			world << "CRITDEATH [deathprob]"
+			death()
+	return

@@ -1015,8 +1015,6 @@
 
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/datum/gas_mixture/breath
-	if(H.health <= config.health_threshold_crit)
-		H.losebreath++
 	if(H.losebreath>0) //Suffocating so do not take a breath
 		H.losebreath--
 		if (prob(10)) //Gasp per 10 ticks? Sounds about right.

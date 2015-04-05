@@ -365,7 +365,6 @@
 	else
 		losebreath += 5
 		adjustOxyLoss(5)
-		adjustBruteLoss(1)
+		adjustBrainLoss(0.5)
 	return
-
 #undef HUMAN_MAX_OXYLOSS
