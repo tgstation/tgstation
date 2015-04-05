@@ -163,35 +163,35 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 		)
-	result = /obj/item/weapon/storage/fancy/food_box/slider_box/special/synth
+	result = /obj/item/weapon/storage/fancy/food_box/slider_box/synth
 
 /datum/recipe/sliders/xeno
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/xenomeat,
 		/obj/item/weapon/reagent_containers/food/snacks/xenomeat
 		)
-	result = /obj/item/weapon/storage/fancy/food_box/slider_box/special/xeno
+	result = /obj/item/weapon/storage/fancy/food_box/slider_box/xeno
 
 /datum/recipe/sliders/chicken
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/rawchicken,
 		/obj/item/weapon/reagent_containers/food/snacks/rawchicken
 		)
-	result = /obj/item/weapon/storage/fancy/food_box/slider_box/special/chicken
+	result = /obj/item/weapon/storage/fancy/food_box/slider_box/chicken
 
 /datum/recipe/sliders/carp
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat
 		)
-	result = /obj/item/weapon/storage/fancy/food_box/slider_box/special/carp
+	result = /obj/item/weapon/storage/fancy/food_box/slider_box/carp
 
 /datum/recipe/sliders/spider
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/spidermeat,
 		/obj/item/weapon/reagent_containers/food/snacks/spidermeat
 		)
-	result = /obj/item/weapon/storage/fancy/food_box/slider_box/special/spider
+	result = /obj/item/weapon/storage/fancy/food_box/slider_box/spider
 
 /datum/recipe/sliders/clown
 	items = list(
@@ -199,7 +199,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/clothing/mask/gas/clown_hat
 		)
-	result = /obj/item/weapon/storage/fancy/food_box/slider_box/special/clown
+	result = /obj/item/weapon/storage/fancy/food_box/slider_box/clown
 
 /datum/recipe/sliders/mime
 	items = list(
@@ -207,7 +207,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/clothing/head/beret
 		)
-	result = /obj/item/weapon/storage/fancy/food_box/slider_box/special/mime
+	result = /obj/item/weapon/storage/fancy/food_box/slider_box/mime
 
 /datum/recipe/sliders/slippery
 	reagents = list("flour" = 10, "lube" = 5)
@@ -216,7 +216,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana
 		)
-	result = /obj/item/weapon/storage/fancy/food_box/slider_box/special/slippery
+	result = /obj/item/weapon/storage/fancy/food_box/slider_box/slippery
 
 // Eggs ////////////////////////////////////////////////////////
 
