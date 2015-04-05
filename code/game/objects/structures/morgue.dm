@@ -310,7 +310,7 @@
 		del(src.connected)
 	return
 
-/obj/structure/crematorium/proc/cremate(atom/A, mob/user as mob)
+/obj/structure/crematorium/proc/cremate(mob/user)
 //	for(var/obj/machinery/crema_switch/O in src) //trying to figure a way to call the switch, too drunk to sort it out atm
 //		if(var/on == 1)
 //		return
@@ -326,6 +326,7 @@
 		var/inside = recursive_type_check(src, /atom/movable) - src
 
 		if (locate(/obj/item/weapon/disk/nuclear) in inside)
+			user << "<SPAN CLASS='warning'>You get the feeling that you shouldn't cremate one of the items in the cremator.</SPAN>"
 			return
 
 		for (var/mob/M in viewers(src))
