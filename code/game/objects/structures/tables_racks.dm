@@ -615,7 +615,7 @@
 	return
 
 /obj/item/weapon/rack_parts/attack_self(mob/user as mob)
-	user << "<span class='notice'>Constructing rack...</span>"
+	user << "<span class='notice'>You start constructing a rack...</span>"
 	if (do_after(user, 50))
 		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
 		R.add_fingerprint(user)

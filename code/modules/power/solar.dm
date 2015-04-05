@@ -59,14 +59,14 @@
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] begins to take the glass off the solar panel.</span>")
+		user.visible_message("<span class='warning'>[user] begins to take the glass off the solar panel.</span>", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
 		if(do_after(user, 50))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
 				S.give_glass()
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
+			user.visible_message("<span class='warning'>[user] takes the glass off the solar panel.</span>", "<span class='notice'>You take the glass off the solar panel.</span>")
 			qdel(src)
 		return
 	else if (W)
@@ -396,6 +396,7 @@
 
 /obj/machinery/power/solar_control/attackby(I as obj, user as mob, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
+		user << "<span class='notice'>You start screwdriving the computer...</span>"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)

@@ -76,12 +76,12 @@ obj/structure/windoor_assembly/Destroy()
 			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
 				var/obj/item/weapon/weldingtool/WT = W
 				if (WT.remove_fuel(0,user))
-					user.visible_message("<span class='warning'>[user] dissassembles the windoor assembly.</span>", "<span class='notice'>You start to dissassemble the windoor assembly...</span>")
+					user.visible_message("<span class='warning'>[user] disassembles the windoor assembly.</span>", "<span class='notice'>You start to disassemble the windoor assembly...</span>")
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 
 					if(do_after(user, 40))
 						if(!src || !WT.isOn()) return
-						user << "<span class='notice'>You dissasembled the windoor assembly!</span>"
+						user << "<span class='notice'>You disassemble the windoor assembly.</span>"
 						var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
 						RG.add_fingerprint(user)
 						if(secure)
@@ -95,7 +95,7 @@ obj/structure/windoor_assembly/Destroy()
 			if(istype(W, /obj/item/weapon/wrench) && !anchored)
 				for(var/obj/machinery/door/window/WD in src.loc)
 					if(WD.dir == src.dir)
-						user << "<span class='warning'>There is already a windoor in that location.</span>"
+						user << "<span class='warning'>There is already a windoor in that location!</span>"
 						return
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor...")

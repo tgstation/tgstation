@@ -302,9 +302,9 @@
 		return
 	src.add_fingerprint(user)
 	if(target == user)
-		visible_message("<span class='warning'>[user] starts climbing onto the photocopier!</span>")
+		visible_message("<span class='warning'>[user] starts climbing onto the photocopier...</span>")
 	else
-		visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier!</span>")
+		visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier...</span>")
 
 	if(do_after(user, 20))
 		if(!target || target.gc_destroyed || gc_destroyed || !Adjacent(target)) //check if the photocopier/target still exists.

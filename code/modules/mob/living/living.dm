@@ -613,7 +613,7 @@ Sorry Giacom. Please don't be mad :(
 
 	if(isalienadult(C) || C.dna.check_mutation(HULK))
 		C.visible_message("<span class='warning'>[C] is trying to break [I]!</span>")
-		C << "<span class='notice'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>"
+		C << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
 		spawn(0)
 			if(do_after(C, 50))
 				if(!I || C.buckled)
@@ -624,7 +624,7 @@ Sorry Giacom. Please don't be mad :(
 	else
 
 		C.visible_message("<span class='warning'>[C] attempts to remove [I]!</span>")
-		C << "<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>"
+		C << "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>"
 		spawn(0)
 			if(do_after(C, breakouttime, 10))
 				if(!I || C.buckled)
@@ -688,7 +688,7 @@ Sorry Giacom. Please don't be mad :(
 				C.changeNext_move(CLICK_CD_BREAKOUT)
 				C.last_special = world.time + CLICK_CD_BREAKOUT
 				C.visible_message("<span class='warning'>[C] attempts to unbuckle themself!</span>", \
-							"<span class='notice'>You attempt to unbuckle yourself. (This will take around one minute and you need to stay still.)</span>")
+							"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
 				spawn(0)
 					if(do_after(usr, 600))
 						if(!C.buckled)

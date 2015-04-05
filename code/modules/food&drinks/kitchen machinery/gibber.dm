@@ -91,10 +91,10 @@
 		user << "<span class='danger'>Subject may not have abiotic items on.</span>"
 		return
 
-	user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>")
+	user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>", "<span class='notice'>You start to put [G.affecting] into the gibber...</span>")
 	src.add_fingerprint(user)
 	if(do_after(user, 30) && G && G.affecting && !occupant)
-		user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>")
+		user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>", "<span class='notice'>You stuff [G.affecting] into the gibber.</span>")
 		var/mob/M = G.affecting
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE

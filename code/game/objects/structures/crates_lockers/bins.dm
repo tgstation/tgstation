@@ -52,7 +52,7 @@
 	if(.)
 		if(O != user)
 			user.visible_message("<span class='danger'>[user] tries to stuff [O] into [src].</span>", \
-							 	 "<span class='danger'>You try to stuff [O] into [src].</span>", \
+							 	 "<span class='danger'>You try to stuff [O] into [src]...</span>", \
 							 	 "<span class='danger'>You hear clanging.</span>")
 			if (!do_after(user, 40))
 				return

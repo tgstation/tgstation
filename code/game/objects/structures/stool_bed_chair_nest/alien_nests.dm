@@ -18,7 +18,7 @@
 		else
 			M.visible_message(\
 				"<span class='warning'>[M.name] struggles to break free from the gelatinous resin!</span>",\
-				"<span class='warning'>You struggle to break free from the gelatinous resin. (Stay still for two minutes.)</span>",\
+				"<span class='warning'>You struggle to break free from the gelatinous resin... (Stay still for two minutes.)</span>",\
 				"You hear squelching...")
 			if(!do_after(M, 1200))
 				if(M && M.buckled)

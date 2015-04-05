@@ -69,7 +69,7 @@
 					return
 				if(!swirlie)
 					if(open)
-						GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give [GM] a swirlie!</span>")
+						GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>You start to give [GM] a swirlie...</span>")
 						swirlie = GM
 						if(do_after(user, 30, 5, 0))
 							GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives [GM] a swirlie!</span>", "You hear a toilet flushing.")
@@ -85,17 +85,17 @@
 						GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams [GM.name] into [src]!</span>")
 						GM.adjustBruteLoss(5)
 			else
-				user << "<span class='notice'>You need a tighter grip.</span>"
+				user << "<span class='warning'>You need a tighter grip!</span>"
 
 	if(cistern)
 		if(I.w_class > 3)
-			user << "<span class='notice'>[I] does not fit.</span>"
+			user << "<span class='warning'>[I] does not fit!</span>"
 			return
 		if(w_items + I.w_class > 5)
-			user << "<span class='notice'>The cistern is full.</span>"
+			user << "<span class='warning'>The cistern is full!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='notice'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>"
+			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>"
 			return
 		I.loc = src
 		w_items += I.w_class

@@ -28,7 +28,7 @@
 				if(!src.loc || !anchored)
 					return
 				user.visible_message("<span class='notice'>[user] loosened the [name]'s bolts!</span>", \
-									 "<span class='notice'>You loosened the [name]'s bolts!</span>")
+									 "<span class='notice'>You loosen the [name]'s bolts.</span>")
 				anchored = 0
 		else
 			if (!istype(src.loc, /turf/simulated/floor))
@@ -51,7 +51,7 @@
 			if(!src.loc)
 				return
 			user.visible_message("<span class='notice'>[user] slices apart the [name]!</span>", \
-								 "<span class='notice'>You slice apart the [name]!</span>")
+								 "<span class='notice'>You slice apart the [name].</span>")
 			Dismantle(1)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
@@ -75,8 +75,8 @@
 			if(!src.loc)
 				return
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-			user.visible_message("<span class='notice'>[user] slices apart the [name]!</span>", \
-								 "<span class='notice'>You slice apart the [name]!</span>")
+			user.visible_message("<span class='notice'>[user] slices apart the [name].</span>", \
+								 "<span class='notice'>You slice apart the [name].</span>")
 			Dismantle(1)
 
 	else

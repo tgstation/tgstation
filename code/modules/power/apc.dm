@@ -473,7 +473,7 @@
 			user << "<span class='warning'>You need ten lengths of cable for APC!</span>"
 			return
 		user.visible_message("<span class='warning'>[user.name] adds cables to the APC frame.</span>", \
-							"You start adding cables to the APC frame...")
+							"<span class='notice'>You start adding cables to the APC frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (C.amount >= 10 && !terminal && opened && has_electronics != 2)
@@ -493,7 +493,7 @@
 
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user.visible_message("<span class='warning'>[user.name] inserts the power control board into [src].</span>", \
-							"You start to insert the power control board into the frame...")
+							"<span class='notice'>You start to insert the power control board into the frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10))
 			if(has_electronics==0)
@@ -509,7 +509,7 @@
 			user << "<span class='warning'>You need more welding fuel to complete this task!</span>"
 			return
 		user.visible_message("<span class='warning'>[user.name] welds [src].</span>", \
-							"You start welding the APC frame...", \
+							"<span class='notice'>You start welding the APC frame...</span>", \
 							"You hear welding.")
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 		if(do_after(user, 50))
@@ -540,7 +540,7 @@
 			user << "<span class='warning'>You cannot repair this APC until you remove the electronics still inside!</span>"
 			return
 		user.visible_message("<span class='warning'>[user.name] replaces the damaged APC frame with a new one.</span>",\
-							"You begin to replace the damaged APC frame...")
+							"<span class='notice'>You begin to replace the damaged APC frame...</span>")
 		if(do_after(user, 50))
 			user << "<span class='notice'>You replace the damaged APC frame with a new one.</span>"
 			qdel(W)

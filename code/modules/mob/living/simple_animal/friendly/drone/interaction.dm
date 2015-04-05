@@ -32,14 +32,14 @@
 
 								D << "<span class='notice'>You can't seem to find the [pick(faux_gadgets)]. Without it, [src] [pick(faux_problems)].</span>"
 								return
-							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>")
+							D.visible_message("<span class='notice'>[D] begins to reactivate [src]...</span>")
 							if(do_after(user,30,needhand = 1))
 								health = health_repair_max
 								stat = CONSCIOUS
 								icon_state = icon_living
 								dead_mob_list -= src
 								living_mob_list += src
-								D.visible_message("<span class='notice'>[D] reactivates [src]!</span>")
+								D.visible_message("<span class='notice'>[D] reactivates [src].</span>")
 								alert_drones(DRONE_NET_CONNECT)
 								if(G)
 									G << "<span class='boldnotice'>DRONE NETWORK: </span><span class='ghostalert'>You were reactivated by [D]!</span>"
@@ -48,7 +48,7 @@
 
 						if("Cannibalize")
 							if(D.health < D.maxHealth)
-								D.visible_message("<span class='notice'>[D] begins to cannibalize parts from [src].</span>")
+								D.visible_message("<span class='notice'>[D] begins to cannibalize parts from [src]...</span>")
 								if(do_after(D, 60,5,0))
 									D.visible_message("<span class='notice'>[D] repairs itself using [src]'s remains!</span>")
 									D.adjustBruteLoss(-src.maxHealth)

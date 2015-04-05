@@ -24,11 +24,11 @@
 
 	if (isrobot(user) || src.locked)
 		if(istype(O, /obj/item/device/multitool))
-			user << "<span class = 'caution'> Resetting circuitry...</span>"
+			user << "<span class = 'caution'> You start to reset the circuitry...</span>"
 			playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
 			if(do_after(user, 20))
 				src.locked = 0
-				user << "<span class = 'caution'> You disable the locking modules.</span>"
+				user << "<span class = 'notice'> You disable the locking modules.</span>"
 				update_icon()
 			return
 		else if(istype(O, /obj/item/weapon))
@@ -85,11 +85,11 @@
 				spawn(10) update_icon()
 				return
 			else
-				user << "<span class = 'caution'> Resetting circuitry...</span>"
+				user << "<span class = 'caution'> You start to reset the circuitry...</span>"
 				playsound(user, 'sound/machines/lockenable.ogg', 50, 1)
 				if(do_after(user, 20))
 					src.locked = 1
-					user << "<span class = 'caution'> You re-enable the locking modules.</span>"
+					user << "<span class = 'notice'> You re-enable the locking modules.</span>"
 				return
 		else
 			localopened = !localopened
