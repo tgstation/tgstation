@@ -20,7 +20,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 //APC//
 /obj/machinery/power/apc/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
-		return 0
+		return INVALID_DRAIN
 
 	var/maxcapacity = 0 //Safety check for batteries
 	var/drain = 0 //Drain amount from batteries
@@ -63,7 +63,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 //SMES//
 /obj/machinery/power/smes/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
-		return 0
+		return INVALID_DRAIN
 
 	var/maxcapacity = 0 //Safety check for batteries
 	var/drain = 0 //Drain amount from batteries
@@ -98,10 +98,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 //CELL//
 /obj/item/weapon/stock_parts/cell/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
-		return 0
-
-	if(loc != H) //Only drain while held.
-		return 0
+		return INVALID_DRAIN
 
 	. = 0
 
@@ -120,7 +117,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 //RDCONSOLE//
 /obj/machinery/computer/rdconsole/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
-		return 0
+		return INVALID_DRAIN
 
 	. = DRAIN_RD_HACK_FAILED
 
@@ -151,7 +148,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 //Shamelessly copypasted from above, since these two used to be the same proc, but with MANY colon operators
 /obj/machinery/r_n_d/server/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
-		return 0
+		return INVALID_DRAIN
 
 	. = DRAIN_RD_HACK_FAILED
 
@@ -181,7 +178,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 //WIRE//
 /obj/structure/cable/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
-		return 0
+		return INVALID_DRAIN
 
 	var/maxcapacity = 0 //Safety check
 	var/drain = 0 //Drain amount
@@ -217,7 +214,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 //MECH//
 /obj/mecha/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
-		return 0
+		return INVALID_DRAIN
 
 	var/maxcapacity = 0 //Safety check
 	var/drain = 0 //Drain amount
@@ -244,7 +241,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 //BORG//
 /mob/living/silicon/robot/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
-		return 0
+		return INVALID_DRAIN
 
 	var/maxcapacity = 0 //Safety check
 	var/drain = 0 //Drain amount
@@ -273,7 +270,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 //CARBON MOBS//
 /mob/living/carbon/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
-		return 0
+		return INVALID_DRAIN
 
 	. = DRAIN_MOB_SHOCK_FAILED
 

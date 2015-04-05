@@ -15,7 +15,9 @@ Contents:
 //ninjaDrainAct() defines for non numerical returns
 //While not strictly needed, it's nicer than them just returning "twat"
 //Which was my original intention.
-#define INVALID_DRAIN			"INVALID"
+
+#define INVALID_DRAIN			"INVALID" //This one is if the drain proc needs to cancel, eg missing variables, etc, it's important.
+
 #define DRAIN_RD_HACKED			"RDHACK"
 #define DRAIN_RD_HACK_FAILED	"RDHACKFAIL"
 #define DRAIN_MOB_SHOCK			"MOBSHOCK"
