@@ -94,7 +94,7 @@
 	if ((istype(H, /obj/item/weapon/restraints/handcuffs) && !( src.chained )))
 		//H = null
 		if (src.icon_state != "orange") return
-		if(istype(H, /obj/item/weapon/restraints/handcuffs/cable))
+		if(istype(H, /obj/item/weapon/restraints/handcuffs/zipties))
 			return 0
 		qdel(H)
 		src.chained = 1

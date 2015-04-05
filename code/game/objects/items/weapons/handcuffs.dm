@@ -32,7 +32,7 @@
 		if(do_mob(user, C, 30))
 			apply_cuffs(C,user)
 			user << "<span class='notice'>You handcuff [C].</span>"
-			if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
+			if(istype(src, /obj/item/weapon/restraints/handcuffs/zipties))
 				feedback_add_details("handcuffs","C")
 			else
 				feedback_add_details("handcuffs","H")
@@ -54,54 +54,15 @@
 		target.update_inv_handcuffed(0)
 		return
 
-/obj/item/weapon/restraints/handcuffs/cable
-	name = "cable restraints"
-	desc = "Looks like some cables tied together. Could be used to tie something up."
-	icon_state = "cuff_red"
-	item_state = "coil_red"
-	breakouttime = 300 //Deciseconds = 30s
+/obj/item/weapon/restraints/handcuffs/zipties
+	name = "zipties"
+	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
+	icon_state = "cuff_white"
+	breakouttime = 450 //Deciseconds = 45s
+	trashtype = /obj/item/weapon/restraints/handcuffs/zipties/used
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 
-/obj/item/weapon/restraints/handcuffs/cable/red
-	icon_state = "cuff_red"
-
-/obj/item/weapon/restraints/handcuffs/cable/yellow
-	icon_state = "cuff_yellow"
-
-/obj/item/weapon/restraints/handcuffs/cable/blue
-	icon_state = "cuff_blue"
-	item_state = "coil_blue"
-
-/obj/item/weapon/restraints/handcuffs/cable/green
-	icon_state = "cuff_green"
-
-/obj/item/weapon/restraints/handcuffs/cable/pink
-	icon_state = "cuff_pink"
-
-/obj/item/weapon/restraints/handcuffs/cable/orange
-	icon_state = "cuff_orange"
-
-/obj/item/weapon/restraints/handcuffs/cable/cyan
-	icon_state = "cuff_cyan"
-
-/obj/item/weapon/restraints/handcuffs/cable/white
-	icon_state = "cuff_white"
-
-/obj/item/weapon/restraints/handcuffs/cable/attackby(var/obj/item/I, mob/user as mob, params)
-	..()
-	if(istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
-		if (R.use(1))
-			var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
-			user.unEquip(src)
-			user.put_in_hands(W)
-			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
-			qdel(src)
-		else
-			user << "<span class='warning'>You need one rod to make a wired rod.</span>"
-			return
-
-/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
+/obj/item/weapon/restraints/handcuffs/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
 		if(!C.handcuffed)
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
@@ -109,25 +70,19 @@
 								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
 			if(do_mob(user, C, 30))
 				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
+					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/zipties/used(C)
 					C.update_inv_handcuffed(0)
 					user << "<span class='notice'>You handcuff [C].</span>"
 					add_logs(user, C, "handcuffed")
 			else
 				user << "<span class='warning'>You fail to handcuff [C].</span>"
 
-/obj/item/weapon/restraints/handcuffs/cable/zipties
-	name = "zipties"
-	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
-	icon_state = "cuff_white"
-	breakouttime = 450 //Deciseconds = 45s
-	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
 
-/obj/item/weapon/restraints/handcuffs/cable/zipties/used
+/obj/item/weapon/restraints/handcuffs/zipties/used
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_white_used"
 
-/obj/item/weapon/restraints/handcuffs/cable/zipties/used/attack()
+/obj/item/weapon/restraints/handcuffs/zipties/used/attack()
 	return
 
 

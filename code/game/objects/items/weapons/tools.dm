@@ -123,7 +123,7 @@
 		item_state = "cutters_yellow"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
-	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/restraints/handcuffs/cable))
+	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/restraints/handcuffs/zipties))
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		qdel(C.handcuffed)
 		C.handcuffed = null
