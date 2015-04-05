@@ -93,7 +93,7 @@
 				G.health = initial(G.health)
 				G.density = 1
 				G.broken = 0
-				G.icon_state = "[initial(icon_state)]"
+				G.icon_state = "[initial(G.icon_state)]"
 				use(1)
 			else
 				return 1
