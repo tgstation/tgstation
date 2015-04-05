@@ -131,6 +131,15 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "MULEbot Crate"
 	group = "Supplies"
 
+/datum/supply_packs/metal50
+	name = "50 Metal Sheets"
+	contains = list(/obj/item/stack/sheet/metal)
+	amount = 50
+	cost = 10
+	containertype = /obj/structure/closet/crate/engi
+	containername = "Metal sheets crate"
+	group = "Supplies"
+
 /datum/supply_packs/glass50
 	name = "50 Glass Sheets"
 	contains = list(/obj/item/stack/sheet/glass/glass)
@@ -149,6 +158,24 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Wooden planks crate"
 	group = "Supplies"
 
+/datum/supply_packs/carpet
+	name = "30 Carpet Tiles"
+	contains = list(/obj/item/stack/tile/carpet)
+	amount = 30
+	cost = 15
+	containertype = /obj/structure/closet/crate
+	containername = "Carpet Crate"
+	group = "Supplies"
+
+/datum/supply_packs/grass
+	name = "30 Grass Tiles"
+	contains = list(/obj/item/stack/tile/grass)
+	amount = 30
+	cost = 15
+	containertype = /obj/structure/closet/crate
+	containername = "Grass Crate"
+	group = "Supplies"
+
 /datum/supply_packs/watertank
 	name = "Water tank crate"
 	contains = list(/obj/structure/reagent_dispensers/watertank)
@@ -163,15 +190,6 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	cost = 8
 	containertype = /obj/structure/largecrate
 	containername = "fuel tank crate"
-	group = "Supplies"
-
-/datum/supply_packs/metal50
-	name = "50 Metal Sheets"
-	contains = list(/obj/item/stack/sheet/metal)
-	amount = 50
-	cost = 10
-	containertype = /obj/structure/closet/crate/engi
-	containername = "Metal sheets crate"
 	group = "Supplies"
 
 /datum/supply_packs/mining
@@ -255,24 +273,6 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "EFTPOS crate"
-	group = "Supplies"
-
-/datum/supply_packs/carpet
-	name = "30 Carpet Tiles"
-	contains = list(/obj/item/stack/tile/carpet)
-	amount = 30
-	cost = 15
-	containertype = /obj/structure/closet/crate
-	containername = "Carpet Crate"
-	group = "Supplies"
-
-/datum/supply_packs/grass
-	name = "30 Grass Tiles"
-	contains = list(/obj/item/stack/tile/grass)
-	amount = 30
-	cost = 15
-	containertype = /obj/structure/closet/crate
-	containername = "Grass Crate"
 	group = "Supplies"
 
 //////CLOTHING//////
