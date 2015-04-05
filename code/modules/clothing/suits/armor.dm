@@ -194,3 +194,15 @@
 	armor = list(melee = 75, bullet = 75, laser = 75,energy = 75, bomb = 75, bio = 100, rad = 90)
 	icon_state = "piratelord"
 	item_state = "piratelord"
+
+/obj/item/clothing/suit/armor/volnutt
+	name = "Digouter Suit"
+	desc = "Found abandoned on an ancient space colony!"
+	icon_state = "volnutt"
+	item_state = "volnutt"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	slowdown = 0
+	armor = list(melee = 50, bullet = 40, laser = 40, energy = 40, bomb = 40, bio = 0, rad = 0)
