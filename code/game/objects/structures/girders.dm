@@ -19,8 +19,8 @@
 		if(WT.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 			user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
-								"You start to disassemble the girder...", "You hear welding and clanking.")
-			var oldloc = src.loc
+								"<span class='notice'>You start to disassemble the girder...</span>", "You hear welding and clanking.")
+			var/oldloc = src.loc
 			if(do_after(user, 40))
 				if( !WT.isOn() )
 					return
@@ -37,7 +37,7 @@
 			return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		user << "<span class='notice'>You start securing the girder...</span>"
-		var oldloc = src.loc
+		var/oldloc = src.loc
 		if(do_after(user, 40))
 			if(src.loc!=oldloc)
 				return
@@ -111,7 +111,7 @@
 				if(!anchored)
 					if (S.use(2))
 						user << "<span class='notice'>You start building a false wall...</span>"
-						var oldloc = src.loc
+						var/oldloc = src.loc
 						if(do_after(user, 20))
 							if(src.loc!=oldloc)
 								return
@@ -147,7 +147,7 @@
 						return
 					S.use(2)
 					user << "<span class='notice'>You start building a reinforced false wall...</span>"
-					var oldloc = src.loc
+					var/oldloc = src.loc
 					if(do_after(user, 20))
 						if(src.loc!=oldloc)
 							return
@@ -190,7 +190,7 @@
 					user << "<span class='warning'>You need at least two sheets to create a false wall.</span>"
 					return
 				S.use(2)
-				user << "<span class='notice'>You create a false wall! Push on it to open or close the passage.</span>"
+				user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
 				var/F = text2path("/obj/structure/falsewall/[M]")
 				var/obj/structure/FW = new F (loc)
 				transfer_fingerprints_to(FW)
@@ -202,7 +202,7 @@
 					if(!src.loc || !S || S.amount < 2)
 						return
 					S.use(2)
-					user << "<span class='notice'>You added the plating!</span>"
+					user << "<span class='notice'>You add the plating.</span>"
 					var/turf/Tsrc = get_turf(src)
 					Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[M]"))
 					for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -217,7 +217,7 @@
 		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
 			user.drop_item()
 			P.loc = src.loc
-			user << "<span class='notice'>You fit the pipe into \the [src]!</span>"
+			user << "<span class='notice'>You fit the pipe into \the [src].</span>"
 	else
 		..()
 
@@ -263,6 +263,7 @@
 	anchored = 0
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
+	layer = 2.45
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
@@ -303,7 +304,7 @@
 		if(WT.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 			user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
-								"You start to disassemble the girder...", "You hear welding and clanking.")
+								"<span class='notice'>You start to disassemble the girder...</span>", "You hear welding and clanking.")
 			if(do_after(user, 40))
 				if( !WT.isOn() )
 					return
