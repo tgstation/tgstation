@@ -37,6 +37,7 @@
 	delayNextMove(0)
 
 	sight |= SEE_SELF
+
 	..()
 
 	if(loc && !isturf(loc))
@@ -67,3 +68,7 @@
 	if(spell_master)
 		client.screen += spell_master
 		spell_master.toggle_open(spell_master.showing + 1)
+
+	if (isobj(loc))
+		var/obj/location = loc
+		location.on_log()

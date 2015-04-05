@@ -288,3 +288,11 @@ a {
 
 /obj/proc/verb_pickup(mob/living/user)
 	return 0
+
+/**
+ * If a mob logouts/logins in side of an object you can use this proc.
+ */
+/obj/proc/on_log()
+	if (isobj(loc))
+		var/obj/location = loc
+		location.on_log()
