@@ -64,7 +64,9 @@
 		if(drained)
 			H << "<span class='notice'>Gained <B>[drained]</B> energy from \the [A].</span>"
 		else
-			H << "<span class='danger'>\this [A] has run dry of power, you must find another source!</span>"
+			H << "<span class='danger'>\The [A] has run dry of power, you must find another source!</span>"
+	else
+		drained = 0 //as to not cancel attack_hand()
 
 	return drained
 

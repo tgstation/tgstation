@@ -10,9 +10,9 @@ They *could* go in their appropriate files, but this is supposed to be modular
 */
 
 
-//Needs to return the amount drained from the atom, if no drain, 0
+//Needs to return the amount drained from the atom, if no drain on a power object, return 0, otherwise, return a define.
 /atom/proc/ninjadrain_act()
-	return 0
+	return INVALID_DRAIN
 
 
 
@@ -98,6 +98,9 @@ They *could* go in their appropriate files, but this is supposed to be modular
 //CELL//
 /obj/item/weapon/stock_parts/cell/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
+		return 0
+
+	if(loc != H) //Only drain while held.
 		return 0
 
 	. = 0

@@ -15,7 +15,8 @@ Contents:
 //ninjaDrainAct() defines for non numerical returns
 //While not strictly needed, it's nicer than them just returning "twat"
 //Which was my original intention.
-#define DRAIN_RD_HACKED			1
-#define DRAIN_RD_HACK_FAILED	2
-#define DRAIN_MOB_SHOCK			3
-#define DRAIN_MOB_SHOCK_FAILED	4
+#define INVALID_DRAIN			"INVALID"
+#define DRAIN_RD_HACKED			"RDHACK"
+#define DRAIN_RD_HACK_FAILED	"RDHACKFAIL"
+#define DRAIN_MOB_SHOCK			"MOBSHOCK"
+#define DRAIN_MOB_SHOCK_FAILED	"MOBSHOCKFAIL"
