@@ -9,6 +9,7 @@
 	var/disarmed = 0
 	var/wires = list("orange", "green", "blue", "yellow", "aqua", "purple")
 	var/correct_wire
+	var/armer //Used for admin purposes
 
 /obj/item/device/pizza_bomb/attack_self(mob/user)
 	if(disarmed)
@@ -23,6 +24,9 @@
 		timer = Clamp(timer, 10, 100)
 		icon_state = "pizzabox1"
 		user << "<span class='notice'>You set the timer to [timer / 10] before activating the payload and closing \the [src]."
+		message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has set a timer on a pizza bomb to [timer/10] seconds at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a>.")
+		log_game("[key_name(usr)] has set the timer on a pizza bomb to [timer/10] seconds ([loc.x],[loc.y],[loc.z]).")
+		armer = usr
 		name = "pizza box"
 		desc = "A box suited for pizzas."
 		return
@@ -32,6 +36,8 @@
 		icon_state = "pizzabox_bomb"
 		audible_message("<span class='warning'>\icon[src] *beep* *beep*</span>")
 		user << "<span class='danger'>That's no pizza! That's a bomb!</span>"
+		message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has triggered a pizza bomb armed by [armer] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a>.")
+		log_game("[key_name(usr)] has triggered a pizza bomb armed by [armer] ([loc.x],[loc.y],[loc.z]).")
 		primed = 1
 		sleep(timer)
 		return go_boom()
