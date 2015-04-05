@@ -24,7 +24,6 @@
 	amt_dam_fire = 10
 
 /spell/targeted/projectile/magic_missile/prox_cast(var/list/targets, atom/spell_holder)
-	targets = ..()
 	spell_holder.visible_message("<span class='danger'>\The [spell_holder] pops with a flash!</span>")
 	for(var/mob/living/M in targets)
 		apply_spell_damage(M)
