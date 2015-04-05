@@ -807,7 +807,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Check Mob Contents"
 
-	for (var/content in recursive_type_check(L, /atom) - L)
+	for (var/content in get_contents_in_object(L, /atom))
 		if (content)
 			usr << "\icon[content] [content]"
 
