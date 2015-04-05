@@ -11,7 +11,6 @@ Contents:
 /obj/item/clothing/suit/space/space_ninja/proc/grant_equip_verbs()
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/stealth
 	n_gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/toggled
 
@@ -21,7 +20,6 @@ Contents:
 /obj/item/clothing/suit/space/space_ninja/proc/remove_equip_verbs()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/stealth
 	if(n_gloves)
 		n_gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled

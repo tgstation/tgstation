@@ -19,6 +19,21 @@
 			playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
 			target.emag_act(user)
 
+
+//If we hit the Ninja who owns this Katana, they catch it.
+//Works for if the Ninja throws it or it throws itself or someone tries
+//To throw it at the ninja
+/obj/item/weapon/katana/energy/throw_impact(atom/hit_atom)
+	if(ishuman(hit_atom))
+		var/mob/living/carbon/human/H = hit_atom
+		if(istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+			var/obj/item/clothing/suit/space/space_ninja/SN = H.wear_suit
+			if(SN.energyKatana == src)
+				returnToOwner(H, 0, 1)
+				return
+
+	..()
+
 /obj/item/weapon/katana/energy/proc/returnToOwner(var/mob/living/carbon/human/user, var/doSpark = 1, var/caught = 0)
 	if(!istype(user))
 		return
@@ -31,15 +46,18 @@
 	var/msg = ""
 
 	if(user.put_in_hands(src))
-		msg = "<span class='notice'>Your Energy Katana teleports into your hand!</span>"
+		msg = "Your Energy Katana teleports into your hand!"
 	else if(user.equip_to_slot_if_possible(src, slot_belt, 0, 1, 1))
-		msg = "<span class='notice'>Your Energy Katana teleports back to you, sheathing itself as it does so!</span>"
+		msg = "Your Energy Katana teleports back to you, sheathing itself as it does so!</span>"
 	else
 		loc = get_turf(user)
-		msg = "<span class='notice'>Your Energy Katana teleports to your location!</span>"
+		msg = "Your Energy Katana teleports to your location!"
 
 	if(caught)
-		msg = "You catch your Energy Katana!"
+		if(loc == user)
+			msg = "You catch your Energy Katana!"
+		else
+			msg = "Your Energy Katana lands at your feet!"
 
 	if(msg)
 		user << "<span class='notice'>[msg]</span>"
@@ -49,3 +67,14 @@
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+
+
+/obj/item/weapon/katana/energy/Del()
+	qdel(spark_system)
+	spark_system = null
+	..()
+
+/obj/item/weapon/katana/energy/Destroy()
+	qdel(spark_system)
+	spark_system = null
+	return ..()

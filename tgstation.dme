@@ -1236,7 +1236,6 @@
 #include "code\modules\ninja\suit\mask.dm"
 #include "code\modules\ninja\suit\ninjaDrainAct.dm"
 #include "code\modules\ninja\suit\shoes.dm"
-#include "code\modules\ninja\suit\SpiderOS.dm"
 #include "code\modules\ninja\suit\suit.dm"
 #include "code\modules\ninja\suit\suit_attackby.dm"
 #include "code\modules\ninja\suit\suit_initialisation.dm"
