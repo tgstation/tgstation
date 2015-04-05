@@ -11,6 +11,9 @@
  *		Candle Box
  *		Crayon Box
  *		Cigarette Box
+ *		Food Box
+ *		Chicken Bucket
+ *		Slider Box
  */
 
 /obj/item/weapon/storage/fancy/
@@ -311,23 +314,21 @@
 	..()
 	m_amt = contents.len * 2500
 
-/obj/item/weapon/storage/fancy/chicken_bucket
+/obj/item/weapon/storage/fancy/food_box/chicken_bucket
 	name = "chicken bucket"
 	desc = "Now we're doing it!"
-	icon = 'icons/obj/food.dmi'
 	icon_state = "kfc_drumsticks"
 	item_state = "kfc_bucket"
 	icon_type = "drumsticks"
-	storage_slots = 6
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick")
 
-/obj/item/weapon/storage/fancy/chicken_bucket/New()
+/obj/item/weapon/storage/fancy/food_box/chicken_bucket/New()
 	..()
 	for(var/i=1; i <= storage_slots; i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick(src)
 	return
 
-/obj/item/weapon/storage/fancy/chicken_bucket/remove_from_storage(obj/item/W as obj, atom/new_location)
+/obj/item/weapon/storage/fancy/food_box/chicken_bucket/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
 	if(!contents.len)
 		new/obj/item/trash/chicken_bucket(get_turf(src.loc))
@@ -336,5 +337,66 @@
 			C.u_equip(src)
 		qdel(src)
 
-/obj/item/weapon/storage/fancy/chicken_bucket/update_icon(var/itemremoved = 0)
+/obj/item/weapon/storage/fancy/food_box/chicken_bucket/update_icon(var/itemremoved = 0)
 	return
+
+/obj/item/weapon/storage/fancy/food_box
+	name = "food box"
+	desc = "Holds food."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "slider_box"
+	storage_slots = 6
+	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks")
+
+/obj/item/weapon/storage/fancy/food_box/update_icon(var/itemremoved = 0) //this is so that your box doesn't turn into a donut box, see line 29
+	return
+
+//SLIDER BOXES
+
+/obj/item/weapon/storage/fancy/food_box/slider_box
+	name = "slider box"
+	desc = "I wonder what's inside."
+	icon_type = "slider"
+	storage_slots = 4
+	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/slider")
+	var/slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider//set this as the spawn path of your slider
+
+/obj/item/weapon/storage/fancy/food_box/slider_box/New()
+	..()
+	for(var/i=1, i <= storage_slots; i++)
+		new slider_type(src)
+
+/obj/item/weapon/storage/fancy/food_box/slider_box/synth
+	name = "synth slider box"
+	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/synth
+
+/obj/item/weapon/storage/fancy/food_box/slider_box/xeno
+	name = "xeno slider box"
+	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/xeno
+
+/obj/item/weapon/storage/fancy/food_box/slider_box/chicken
+	name = "chicken slider box"
+	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/chicken
+
+/obj/item/weapon/storage/fancy/food_box/slider_box/carp
+	name = "carp slider box"
+	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/carp
+
+/obj/item/weapon/storage/fancy/food_box/slider_box/spider
+	name = "spidey slidey box"
+	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/carp/spider
+
+/obj/item/weapon/storage/fancy/food_box/slider_box/clown
+	name = "honky slider box"
+	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/clown
+
+/obj/item/weapon/storage/fancy/food_box/slider_box/mime
+	name = "quiet slider box"
+	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/mime
+
+/obj/item/weapon/storage/fancy/food_box/slider_box/slippery
+	name = "slippery slider box"
+	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/slippery
+	storage_slots = 2
+
+//SLIDER BOXES END

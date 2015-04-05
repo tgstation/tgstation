@@ -1,0 +1,6 @@
+author: Boxed
+delete-after: True
+changes:
+  -rscadd: Added sliders! Recipes on the wiki.
+  -rscadd: Added food boxes for future recipes that pop out more than one result.
+  -tweak: Chicken buckets are now thingermajigs of food boxes.
