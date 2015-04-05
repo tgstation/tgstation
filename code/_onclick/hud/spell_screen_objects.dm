@@ -4,6 +4,10 @@
 	icon_state = "wiz_spell_ready"
 	var/list/obj/screen/spell/spell_objects = list()
 	var/showing = 0
+
+	var/open_state = "master_open"
+	var/closed_state = "master_closed"
+
 	screen_loc = ui_spell_master
 
 	var/mob/spell_holder
@@ -29,7 +33,7 @@
 			O.handle_icon_updates = 0
 		showing = 0
 		overlays.len = 0
-		overlays.Add("master_closed")
+		overlays.Add(closed_state)
 	else if(forced_state != 1)
 		var/temp_loc = screen_loc
 
@@ -48,7 +52,7 @@
 		update_spells(1)
 		showing = 1
 		overlays.len = 0
-		overlays.Add("master_open")
+		overlays.Add(open_state)
 
 /obj/screen/movable/spell_master/proc/add_spell(var/spell/spell)
 	if(!spell) return
@@ -63,7 +67,7 @@
 	var/obj/screen/spell/newscreen = new
 
 	newscreen.spell = spell
-	if(!spell.override_base)
+	if(!spell.override_base) //if it's not set, we do basic checks
 		if(spell.spell_flags & CONSTRUCT_CHECK)
 			newscreen.spell_base = "const" //construct spells
 		else
@@ -85,7 +89,7 @@
 	if(spell_objects.len)
 		toggle_open(showing + 1)
 	else
-		spell_holder.spell_master = null
+		spell_holder.spell_masters.Remove(src)
 		qdel(src)
 
 /obj/screen/movable/spell_master/proc/silence_spells(var/amount)
@@ -101,8 +105,18 @@
 		spell.update_charge(forced)
 
 
+/obj/screen/movable/spell_master/genetic
+	name = "Mutant Powers"
+	icon_state = "genetic_spell_ready"
 
-//ACTUAL SPELLS
+	open_state = "genetics_open"
+	closed_state = "genetics_closed"
+
+	screen_loc = ui_genetic_master
+
+//////////////ACTUAL SPELLS//////////////
+//This is what you click to cast things//
+/////////////////////////////////////////
 /obj/screen/spell
 	icon = 'icons/mob/screen_spells.dmi'
 	icon_state = "wiz_spell_base"
@@ -123,20 +137,7 @@
 		return //nothing to see here
 
 	overlays -= spell.hud_state
-/*
-	if(spell.charge_type == Sp_RECHARGE)
-		if(spell.charge_counter < spell.charge_max)
-			icon_state = "[spell_base]_spell_base"
-		else
-			icon_state = "[spell_base]_spell_ready"
-	else if(spell.charge_type == Sp_CHARGES)
-		icon_state = "[spell_base]_spell_base"
-		if(spell.charge_counter)
-			var/icon/partial_charge = icon(src.icon, "[spell_base]_spell_ready")
-			world << "[partial_charge.Width()], [partial_charge.Height() * round(spell.charge_counter / spell.charge_max)]"
-			partial_charge.Crop(1, 1, partial_charge.Width(), partial_charge.Height() * round(spell.charge_counter / spell.charge_max))
-			overlays += partial_charge
-*/
+
 	if(spell.charge_type == Sp_RECHARGE || spell.charge_type == Sp_CHARGES)
 		if(spell.charge_counter < spell.charge_max)
 			icon_state = "[spell_base]_spell_base"
