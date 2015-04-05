@@ -3421,21 +3421,18 @@
 	desc = "It's so slippery!"
 	icon_state = "slider_slippery"
 
-/obj/item/weapon/reagent_containers/food/snacks/slider/slippery/New()
-	..()
-	reagents.add_reagent("lube", 2.5)
-	bitesize = 2.5
-
 /obj/item/weapon/reagent_containers/food/snacks/slider/slippery/Crossed(atom/movable/O) //exactly the same as soap
 	if (istype(O, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = O
 
 		if (H.shoes && H.shoes.flags & NOSLIP)
-			H.stop_pulling()
-			H << "<SPAN CLASS='notice'>You slipped on the [name]!</SPAN>"
-			playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-			H.Stun(3)
-			H.Weaken(2)
+			return
+
+		H.stop_pulling()
+		H << "<SPAN CLASS='notice'>You slipped on the [name]!</SPAN>"
+		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
+		H.Stun(3)
+		H.Weaken(2)
 
 
 
