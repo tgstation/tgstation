@@ -330,14 +330,16 @@ var/bomb_set
 
 /obj/item/weapon/disk/nuclear/Del()
 	if(blobstart.len > 0)
-		var/picked_location = pick(blobstart)
+		var/picked_turf = get_turf(pick(blobstart))
 
-		var/log_message = "[type] has been destroyed. Creating one at [formatJumpTo(picked_location)]"
+		var/picked_area = formatLocation(picked_turf)
 
-		message_admins(log_message)
+		var/log_message = "[type] has been destroyed. Creating one at"
 
-		log_game(log_message)
+		log_game("[log_message] [picked_area]")
 
-		new /obj/item/weapon/disk/nuclear(picked_location)
+		message_admins("[log_message] [formatJumpTo(picked_turf, picked_area)]")
+
+		new /obj/item/weapon/disk/nuclear(picked_turf)
 
 	..()
