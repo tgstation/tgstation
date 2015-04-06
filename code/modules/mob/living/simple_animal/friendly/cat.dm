@@ -79,4 +79,3 @@
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
 	gender = NEUTER
-	mob_size = MOB_SIZE_SMALL

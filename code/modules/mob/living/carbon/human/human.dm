@@ -743,4 +743,9 @@
 	staticOverlay.override = 1
 	staticOverlays["letter"] = staticOverlay
 
-
+/mob/living/carbon/human/cuff_resist(obj/item/I)
+	if(dna && dna.check_mutation(HULK))
+		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		..(I, cuff_break = 1)
+	else
+		..()

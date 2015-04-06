@@ -57,7 +57,7 @@
 
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
-
+	var/flying = 0 //whether it's flying or touching the ground.
 
 /mob/living/simple_animal/New()
 	..()
