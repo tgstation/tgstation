@@ -267,7 +267,7 @@ Auto Patrol: []"},
 							if( !Adjacent(target) || !isturf(target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
 							if(!target.handcuffed)
-								target.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(target)
+								target.handcuffed = new /obj/item/weapon/restraints/handcuffs/zipties/used(target)
 								target.update_inv_handcuffed(0)	//update the handcuffs overlay
 								playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 								back_to_idle()

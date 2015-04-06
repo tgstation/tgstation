@@ -528,25 +528,6 @@ obj/structure/cable/proc/avail()
 		icon_state = "coil_[item_color]"
 		name = "cable coil"
 
-/obj/item/stack/cable_coil/verb/make_restraint()
-	set name = "Make Cable Restraints"
-	set category = "Object"
-	var/mob/M = usr
-
-	if(ishuman(M) && !M.restrained() && !M.stat && M.canmove)
-		if(!istype(usr.loc,/turf))
-			return
-		if(src.amount <= 14)
-			usr << "<span class='danger'>You need at least 15 lengths to make restraints!</span>"
-			return
-		var/obj/item/weapon/restraints/handcuffs/cable/B = new /obj/item/weapon/restraints/handcuffs/cable(usr.loc)
-		B.icon_state = "cuff_[item_color]"
-		usr << "<span class='notice'>You wind some cable together to make some restraints.</span>"
-		src.use(15)
-	else
-		usr << "<span class='notice'>You cannot do that.</span>"
-	..()
-
 // Items usable on a cable coil :
 //   - Wirecutters : cut them duh !
 //   - Cable coil : merge cables
