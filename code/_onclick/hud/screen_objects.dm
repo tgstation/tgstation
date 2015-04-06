@@ -135,7 +135,7 @@
 				else
 					var/obj/item/clothing/mask/M = C.wear_mask
 					if(M.mask_adjusted) // if mask on face but pushed down
-						M.adjustmask(usr) // automatically adjust it back
+						M.adjustmask(C) // automatically adjust it back
 					if(istype(C.l_hand, /obj/item/weapon/tank))
 						C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
 						C.internal = C.l_hand
