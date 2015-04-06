@@ -17,6 +17,7 @@
 				user << "<span class='notice'>You wrap some wires around [src].</span>"
 				update_icon()
 				strip_delay -= 10
+				name = "wired " + name
 			else
 				user << "<span class='notice'>There is not enough wire to cover [src].</span>"
 		else
@@ -49,6 +50,7 @@
 			user << "<span class='notice'>You cut the wires away from [src].</span>"
 			new /obj/item/stack/cable_coil(get_turf(src), 2)
 			strip_delay += 10
+			name = initial(name)
 			update_icon()
 	..()
 	return
