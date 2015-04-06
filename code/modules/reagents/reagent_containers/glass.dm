@@ -437,7 +437,7 @@
 
 /obj/item/weapon/reagent_containers/glass/kettle
 	name = "Kettle"
-	desc = "A pot made for holding hot drinks. Can hold up to 50 units."
+	desc = "A pot made for holding hot drinks. Can hold up to 75 units."
 	icon_state = "kettle"
 	m_amt = 200
 	volume = 75
