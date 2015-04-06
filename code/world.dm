@@ -189,6 +189,12 @@
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["players"] = list()
+		s["map_name"] = map.nameLong
+		s["gamestate"] = 1
+		if(ticker)
+			s["gamestate"] = ticker.current_state
+		s["active_players"] = get_active_player_count()
+		s["revision"] = return_revision()
 		var/n = 0
 		var/admins = 0
 
