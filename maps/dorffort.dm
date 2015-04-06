@@ -133,7 +133,7 @@
 	spawntypes = list(
 		/obj/structure/closet/crate/secure/large/reinforced/shard		= 1,
 		/obj/machinery/the_singularitygen								= 2,
-		/obj/machinery/portable_atmospherics/canister/toxins			= 3,
+		/obj/machinery/portable_atmospherics/canister/plasma			= 3,
 		/obj/machinery/suit_storage_unit/engie							= 3,
 		/obj/machinery/power/emitter									= 5,
 		/obj/machinery/suit_storage_unit/elite							= 1,
@@ -165,7 +165,7 @@
 		/turf/simulated/floor/grass = 100
 	)
 	walltypes = list(
-		/obj/structure/window/full/plasmabasic		= 100
+		/obj/structure/window/full/plasma		= 100
 	)
 	spawntypes = list(
 		/obj/machinery/portable_atmospherics/hydroponics				= 5,
