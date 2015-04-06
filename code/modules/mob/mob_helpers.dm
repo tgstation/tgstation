@@ -136,6 +136,13 @@ proc/isorgan(A)
 			return 1
 	return 0
 
+/proc/is_incrit(A)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = A
+		if(config.health_threshold_crit >= H.health)
+			return 1
+	return 0
+
 /proc/check_zone(zone)
 	if(!zone)	return "chest"
 	switch(zone)

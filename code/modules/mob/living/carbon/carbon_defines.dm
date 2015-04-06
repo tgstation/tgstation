@@ -22,3 +22,4 @@
 
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
+	var/was_incrit = 0
