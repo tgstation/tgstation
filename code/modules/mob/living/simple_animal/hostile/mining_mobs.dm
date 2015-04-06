@@ -436,7 +436,7 @@
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
 	w_class = 3
@@ -457,8 +457,11 @@
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/D = target
 			var/list/damage_absorption = D.damage_absorption
-			if(damage_absorption.["brute"] > 0.3)
-				damage_absorption.["brute"] = max(damage_absorption.["brute"] - 0.1, 0.3)
+			if(damage_absorption["brute"] > 0.3)
+				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
+				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
+				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
+				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				qdel(src)
 				if(D.icon_state == "ripley-open")

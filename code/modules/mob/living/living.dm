@@ -70,6 +70,9 @@ Sorry Giacom. Please don't be mad :(
 
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
+	//Even if we don't push/swap places, we "touched" them, so spread fire
+	spreadFire(M)
+
 	if(now_pushing)
 		return 1
 
@@ -695,13 +698,12 @@ Sorry Giacom. Please don't be mad :(
 					if(do_after(usr, 600))
 						if(!C.buckled)
 							return
-						C.visible_message("<span class='danger'>[C] manages to unbuckle themself!</span>", \
-											"<span class='notice'>You successfully unbuckle yourself.</span>")
 						C.buckled.user_unbuckle_mob(C,C)
 					else
-						C << "<span class='warning'>You fail to unbuckle yourself!</span>"
+						if(C && C.buckled)
+							C << "<span class='warning'>You fail to unbuckle yourself!</span>"
 			else
-				L.buckled.user_unbuckle_mob(L,L)
+				C.buckled.user_unbuckle_mob(C,C)
 		else
 			L.buckled.user_unbuckle_mob(L,L)
 

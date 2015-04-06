@@ -377,7 +377,7 @@
 "lp" = (/obj/structure/rack,/obj/item/clothing/suit/wizrobe/magusblue,/obj/item/clothing/head/wizard/magus,/obj/item/weapon/staff,/turf/unsimulated/floor{icon_state = "grimy"},/area/wizard_station)
 "lq" = (/obj/machinery/camera{pixel_x = 10; network = list("thunder"); c_tag = "Arena"},/turf/simulated/floor/bluegrid,/area/tdome)
 "lw" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/chips,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
-"lx" = (/obj/structure/table/wood,/obj/item/weapon/spacecash,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
+"lx" = (/obj/structure/table/wood,/obj/item/stack/spacecash,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "ly" = (/obj/structure/rack,/obj/item/clothing/suit/wizrobe/red,/obj/item/clothing/shoes/sandal,/obj/item/clothing/head/wizard/red,/obj/item/weapon/staff,/turf/unsimulated/floor{icon_state = "grimy"},/area/wizard_station)
 "lz" = (/obj/structure/rack,/obj/item/clothing/suit/wizrobe/magusred,/obj/item/clothing/head/wizard/magus,/obj/item/weapon/staff,/turf/unsimulated/floor{icon_state = "grimy"},/area/wizard_station)
 "lD" = (/obj/machinery/door/poddoor{id = "thunderdomegen"; name = "General Supply"},/turf/unsimulated/floor{icon_state = "floor"},/area/tdome)

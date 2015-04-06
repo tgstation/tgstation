@@ -4,10 +4,9 @@
 	var/obj/item/clothing/tie/petcollar/pcollar = null
 	var/image/collar = null
 	var/image/pettag = null
-	var/accept_collar = 1
 
 /mob/living/simple_animal/pet/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(istype(O, /obj/item/clothing/tie/petcollar) && accept_collar && !pcollar)
+	if(istype(O, /obj/item/clothing/tie/petcollar) && !pcollar)
 		var/obj/item/clothing/tie/petcollar/P = O
 		pcollar = P
 		update_collar()
@@ -23,6 +22,10 @@
 	if(pcollar)
 		pcollar = new(src)
 		update_collar()
+
+/mob/living/simple_animal/pet/revive()
+	..()
+	update_collar()
 
 /mob/living/simple_animal/pet/death(gibbed)
 	..(gibbed)
@@ -62,7 +65,6 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
-	accept_collar = 0 //corgis have their own item handling
 
 /mob/living/simple_animal/pet/corgi/New()
 	..()
@@ -210,7 +212,6 @@
 						/obj/item/weapon/tank/internals/oxygen,
 						/obj/item/weapon/tank/internals/air,
 						/obj/item/weapon/extinguisher,
-						/obj/item/clothing/tie/petcollar
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -524,7 +525,6 @@
 	icon_dead = "puppy_dead"
 	shaved = 0
 	mob_size = MOB_SIZE_SMALL
-	accept_collar = 1
 
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/corgi/puppy/Topic(href, href_list)
@@ -548,7 +548,6 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
-	accept_collar = 1
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/corgi/Lisa/Topic(href, href_list)

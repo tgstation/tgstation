@@ -1229,21 +1229,21 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 	switch(potency)
 		if(0 to 10)
-			inside_type = /obj/item/weapon/spacecash/
+			inside_type = /obj/item/stack/spacecash/
 		if(11 to 20)
-			inside_type = /obj/item/weapon/spacecash/c10
+			inside_type = /obj/item/stack/spacecash/c10
 		if(21 to 30)
-			inside_type = /obj/item/weapon/spacecash/c20
+			inside_type = /obj/item/stack/spacecash/c20
 		if(31 to 40)
-			inside_type = /obj/item/weapon/spacecash/c50
+			inside_type = /obj/item/stack/spacecash/c50
 		if(41 to 50)
-			inside_type = /obj/item/weapon/spacecash/c100
+			inside_type = /obj/item/stack/spacecash/c100
 		if(51 to 60)
-			inside_type = /obj/item/weapon/spacecash/c200
+			inside_type = /obj/item/stack/spacecash/c200
 		if(61 to 80)
-			inside_type = /obj/item/weapon/spacecash/c500
+			inside_type = /obj/item/stack/spacecash/c500
 		else
-			inside_type = /obj/item/weapon/spacecash/c1000
+			inside_type = /obj/item/stack/spacecash/c1000
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit

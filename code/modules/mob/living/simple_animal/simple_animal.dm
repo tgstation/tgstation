@@ -71,7 +71,8 @@
 	..()
 
 /mob/living/simple_animal/updatehealth()
-	health = max(maxHealth - getBruteLoss(), 0)
+	..()
+	health = Clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/Life()
 	if(..())
@@ -248,10 +249,15 @@
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
 		return
-	if((Proj.damage_type != STAMINA))
-		adjustBruteLoss(Proj.damage)
-		Proj.on_hit(src, 0)
+	apply_damage(Proj.damage, Proj.damage_type)
+	Proj.on_hit(src, 0)
 	return 0
+
+/mob/living/simple_animal/adjustFireLoss(var/amount)
+	adjustBruteLoss(amount)
+
+/mob/living/simple_animal/adjustStaminaLoss(var/amount)
+	return
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
 	switch(M.a_intent)
