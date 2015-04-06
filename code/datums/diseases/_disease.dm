@@ -181,7 +181,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 /datum/disease/proc/Copy()
 	var/datum/disease/D = new type()
 	D.strain_data = strain_data.Copy()
-	return new D
+	return D
 
 
 /datum/disease/proc/GetDiseaseID()
