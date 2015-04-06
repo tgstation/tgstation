@@ -272,6 +272,13 @@ datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 			cube.Expand()
 	return
 
+datum/reagent/water/reaction_obj(var/obj/O, var/volume)
+	src = null
+	if(istype(O,/obj/item/dehy_carp))
+		var/obj/item/dehy_carp/dehy = O
+		dehy.Swell() // Makes a carp
+		return
+
 datum/reagent/water/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	if(!istype(M, /mob/living))
 		return
