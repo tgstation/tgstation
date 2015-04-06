@@ -23,7 +23,7 @@
 		H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 		H.Weaken(3)
 		sleep(30)
-		var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine)
+		var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow)
 		var/list/possible_morphs = typesof(/datum/species/) - blacklisted_species
 		var/datum/species/mutation = pick(possible_morphs)
 		if(prob(90) && mutation)
