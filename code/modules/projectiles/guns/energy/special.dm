@@ -221,6 +221,7 @@
 	flags = CONDUCT | OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	can_charge = 0
+	needs_permit = 0
 	var/volume = 15
 
 /obj/item/weapon/gun/energy/plasmacutter/New()
@@ -239,11 +240,6 @@
 	reagents.remove_reagent("plasma", amount)
 	chambered = shot
 	chambered.newshot()
-	return
-
-/obj/item/weapon/gun/energy/plasmacutter/examine()
-	..()
-	usr << "Has [reagents.get_reagent_amount("plasma")] unit\s of plasma left."
 	return
 
 /obj/item/weapon/gun/energy/plasmacutter/attackby(var/obj/item/A, var/mob/user)
