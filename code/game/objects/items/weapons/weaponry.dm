@@ -138,7 +138,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
 	icon_state = "throwingstar"
 	item_state = "eshield0"
 	force = 2
-	throwforce = 0 //This is never used since this has a 100% embed chance.
+	throwforce = 20 //This is never used on mobs since this has a 100% embed chance.
 	throw_speed = 4
 	embedded_pain_multiplier = 4
 	w_class = 2
