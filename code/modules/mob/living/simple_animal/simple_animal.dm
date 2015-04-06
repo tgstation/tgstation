@@ -387,7 +387,6 @@
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
-	lying = 1
 	if(!gibbed)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
 	..()
@@ -432,8 +431,7 @@
 /mob/living/simple_animal/revive()
 	health = maxHealth
 	icon_state = icon_living
-	lying = 0
-	density = 1
+	density = initial(density)
 	update_canmove()
 	..()
 
@@ -484,3 +482,12 @@
 		return
 	else
 		..()
+
+/mob/living/simple_animal/update_canmove()
+	if(paralysis || stunned || weakened || stat || resting || buckled)
+		drop_r_hand()
+		drop_l_hand()
+		canmove = 0
+	else
+		canmove = 1
+	return canmove
