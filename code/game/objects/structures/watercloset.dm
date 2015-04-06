@@ -7,6 +7,7 @@
 	icon_state = "toilet00"
 	density = 0
 	anchored = 1
+	var/state = 0
 	var/open = 0			//if the lid is up
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
@@ -44,6 +45,16 @@
 	icon_state = "toilet[open][cistern]"
 
 /obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
+	if(open && cistern && !state && istype(I,/obj/item/stack/rods))
+		user << "<span class='notice'>You add the rods to the toilet.</span>"
+		var/obj/item/stack/rods/R = I
+		R.use(2)
+		state++
+	if(open && cistern && state && istype(I,/obj/item/weapon/paper))
+		user << "<span class='notice'>You create a filter with the paper and insert it.</span>"
+		new /obj/structure/centrifuge(src.loc)
+		qdel(I)
+		qdel(src)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
