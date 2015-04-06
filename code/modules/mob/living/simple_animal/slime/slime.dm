@@ -164,6 +164,10 @@
 
 		stat(null,"Power Level: [powerlevel]")
 
+/mob/living/simple_animal/slime/adjustFireLoss(amount)
+	..(-abs(amount)) // Heals them
+	return
+
 /mob/living/simple_animal/slime/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
 		return

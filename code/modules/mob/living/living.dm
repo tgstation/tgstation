@@ -70,6 +70,9 @@ Sorry Giacom. Please don't be mad :(
 
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
+	//Even if we don't push/swap places, we "touched" them, so spread fire
+	spreadFire(M)
+
 	if(now_pushing)
 		return 1
 
@@ -323,6 +326,7 @@ Sorry Giacom. Please don't be mad :(
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			usr.sleeping = 20 //Short nap
+	update_canmove()
 
 /mob/proc/get_contents()
 
@@ -332,6 +336,7 @@ Sorry Giacom. Please don't be mad :(
 
 	resting = !resting
 	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
+	update_canmove()
 
 //Recursive function to find everything a mob is holding.
 /mob/living/get_contents(var/obj/item/weapon/storage/Storage = null)
@@ -775,7 +780,10 @@ Sorry Giacom. Please don't be mad :(
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
 	else if(!on && floating)
-		animate(src, pixel_y = initial(pixel_y), time = 10)
+		var/final_pixel_y = initial(pixel_y)
+		if(lying && !buckled)
+			final_pixel_y = lying_pixel_offset
+		animate(src, pixel_y = final_pixel_y, time = 10)
 		floating = 0
 
 //called when the mob receives a bright flash
@@ -838,9 +846,12 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 
-/atom/movable/proc/do_attack_animation(atom/A)
+/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
+	var/final_pixel_y = initial(pixel_y)
+	if(end_pixel_y)
+		final_pixel_y = end_pixel_y
 	var/direction = get_dir(src, A)
 	switch(direction)
 		if(NORTH)
@@ -863,20 +874,27 @@ Sorry Giacom. Please don't be mad :(
 		if(SOUTHWEST)
 			pixel_x_diff = -8
 			pixel_y_diff = -8
+
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = initial(pixel_y), time = 2)
+	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
 
 /mob/living/do_attack_animation(atom/A)
-	..()
+	var/final_pixel_y = initial(pixel_y)
+	if(lying && !buckled)
+		final_pixel_y = lying_pixel_offset
+	..(A, final_pixel_y)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
+	var/final_pixel_y = initial(pixel_y)
+	if(lying && !buckled)
+		final_pixel_y = lying_pixel_offset
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
-	animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y) , time = 2)
+	animate(pixel_x = initial(pixel_x) , pixel_y = final_pixel_y , time = 2)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(var/datum/gas_mixture/environment)

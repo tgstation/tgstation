@@ -97,7 +97,16 @@
 ///convert_roundtype()
 ///Allows rounds to basically be "rerolled" should the initial premise fall through
 /datum/game_mode/proc/convert_roundtype()
-	var/list/datum/game_mode/runnable_modes = config.get_runnable_modes()
+	var/living_crew = 0
+
+	for(var/mob/Player in mob_list)
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+			living_crew++
+	if(living_crew / joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
+		message_admins("Convert_roundtype failed due to too many dead people. Limit is [config.midround_antag_life_check * 100]% living crew")
+		return 0
+
+	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew)
 	var/list/datum/game_mode/usable_modes = list()
 	for(var/datum/game_mode/G in runnable_modes)
 		if(G.reroll_friendly)
@@ -122,15 +131,6 @@
 
 	if(world.time >= (config.midround_antag_time_check * 600))
 		message_admins("Convert_roundtype failed due to round length. Limit is [config.midround_antag_time_check] minutes.")
-		return 0
-
-	var/living_crew = 0
-
-	for(var/mob/Player in mob_list)
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
-			living_crew++
-	if(living_crew / joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
-		message_admins("Convert_roundtype failed due to too many dead people. Limit is [config.midround_antag_life_check * 100]% living crew")
 		return 0
 
 	var/list/antag_canadates = list()
