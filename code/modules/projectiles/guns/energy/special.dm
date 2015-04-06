@@ -158,8 +158,6 @@
 			upgrades["plasma"]++
 			range_add++
 			user << "<span class='info'>You upgrade [src]'s accelerating chamber with plasma.</span>"
-			if(prob(5 * (range_add + 1) * (range_add + 1)) && power_supply)
-				power_supply.rigged = 1 // This is dangerous!
 			S.use(1)
 
 	..()
