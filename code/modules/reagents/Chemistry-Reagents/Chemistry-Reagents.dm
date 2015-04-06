@@ -368,6 +368,13 @@ datum/reagent/slimetoxin
 	description = "A corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
 
+datum/reagent/unstableslimetoxin
+	name = "Unstable Mutation Toxin"
+	id = "unstablemutationtoxin"
+	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	metabolization_rate = 5 * REAGENTS_METABOLISM //Very high, so it goes away quickly even if it doesn't react in the mob
+
 datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
 	id = "amutationtoxin"
