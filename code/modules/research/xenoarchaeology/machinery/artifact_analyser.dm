@@ -126,7 +126,6 @@
 		usr.unset_machine(src)
 		usr << browse(null, "window=artanalyser")
 
-	..()
 	updateDialog()
 
 //hardcoded responses, oh well

@@ -16,7 +16,7 @@ obj/machinery/atmospherics/trinary/filter
 /*
 Filter types:
 -1: Nothing
- 0: Carbon Molecules: Plasma Toxin, Oxygen Agent B
+ 0: Plasma: Plasma Toxin, Oxygen Agent B
  1: Oxygen: Oxygen ONLY
  2: Nitrogen: Nitrogen ONLY
  3: Carbon Dioxide: Carbon Dioxide ONLY
@@ -141,14 +141,14 @@ obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
 		return
 
 	if(!src.allowed(user))
-		user << "\red Access denied."
+		user << "<span class='warning'>Access denied.</span>"
 		return
 
 	var/dat
 	var/current_filter_type
 	switch(filter_type)
 		if(0)
-			current_filter_type = "Carbon Molecules"
+			current_filter_type = "Plasma"
 		if(1)
 			current_filter_type = "Oxygen"
 		if(2)
@@ -166,7 +166,7 @@ obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
 			<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 			<b>Filtering: </b>[current_filter_type]<br><HR>
 			<h4>Set Filter Type:</h4>
-			<A href='?src=\ref[src];filterset=0'>Carbon Molecules</A><BR>
+			<A href='?src=\ref[src];filterset=0'>Plasma</A><BR>
 			<A href='?src=\ref[src];filterset=1'>Oxygen</A><BR>
 			<A href='?src=\ref[src];filterset=2'>Nitrogen</A><BR>
 			<A href='?src=\ref[src];filterset=3'>Carbon Dioxide</A><BR>
@@ -215,15 +215,7 @@ obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
 
 /obj/machinery/atmospherics/trinary/filter/mirrored
 	icon_state = "intactm_off"
-
-/obj/machinery/atmospherics/trinary/filter/mirrored/initialize()
-	if(node1 && node2 && node3) return
-
-	node1 = findConnecting(dir)
-	node2 = findConnecting(turn(dir, -90))
-	node3 = findConnecting(turn(dir, -180))
-
-	update_icon()
+	pipe_flags = IS_MIRROR
 
 /obj/machinery/atmospherics/trinary/filter/mirrored/update_icon()
 	if(stat & NOPOWER)

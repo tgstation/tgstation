@@ -491,12 +491,6 @@
 		if(do_after(user, used_digging.digspeed) && user) //the better the drill, the faster the digging
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
-	if (istype(W, /obj/item/stack/tile/plasteel))
-		var/obj/item/stack/tile/plasteel/S = W
-		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
-		S.build(src)
-		S.use(1)
-		return
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
@@ -1004,3 +998,18 @@
 /turf/unsimulated/floor/asteroid/plating
 	intact=0
 	icon_state="asteroidplating"
+
+/turf/unsimulated/floor/asteroid/canBuildCatwalk()
+	return BUILD_FAILURE
+
+/turf/unsimulated/floor/asteroid/canBuildLattice()
+	if(!(locate(/obj/structure/lattice) in contents))
+		return BUILD_SUCCESS
+	return BUILD_FAILURE
+
+/turf/unsimulated/floor/asteroid/canBuildPlating()
+	if(locate(/obj/structure/lattice) in contents)
+		return BUILD_FAILURE
+	if(!dug)
+		return BUILD_IGNORE
+	return 0

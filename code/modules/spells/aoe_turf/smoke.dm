@@ -6,10 +6,12 @@
 	charge_max = 120
 	spell_flags = 0
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 	range = 1
 	inner_radius = -1
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
 	smoke_spread = 2
 	smoke_amt = 5
+
+	hud_state = "wiz_smoke"

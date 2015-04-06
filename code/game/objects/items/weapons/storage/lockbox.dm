@@ -188,3 +188,21 @@
 				return
 	else
 		..()
+
+/obj/item/weapon/storage/lockbox/coinbox
+	name = "coinbox"
+	desc = "A secure container for the profits of a vending machine."
+	icon_state = "coinbox+l"
+	w_class = 5
+	max_w_class = 4
+	max_combined_w_class = 30
+	force = 15
+	throwforce = 10
+	flags = TWOHANDABLE | MUSTTWOHAND //big sucka
+	storage_slots = 20
+	req_access = list(access_qm)
+	locked = 1
+	broken = 0
+	icon_locked = "coinbox+l"
+	icon_closed = "coinbox"
+	icon_broken = "coinbox+b"

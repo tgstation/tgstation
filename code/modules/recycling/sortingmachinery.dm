@@ -33,12 +33,13 @@
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		if (!Adjacent(user) || user.stat) return
 		if(!str || !length(str))
 			usr << "<span class='warning'>Invalid text.</span>"
 			return
 		for(var/mob/M in viewers())
 			M << "<span class='notice'>[user] labels [src] as [str].</span>"
-		src.name = "[src.name] ([str])"
+		src.name = "[src.name] ([str])" //needs updating
 	return
 
 /obj/item/smallDelivery
@@ -77,12 +78,13 @@
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		if (!Adjacent(user) || user.stat) return
 		if(!str || !length(str))
 			usr << "<span class='warning'>Invalid text.</span>"
 			return
 		for(var/mob/M in viewers())
 			M << "<span class='notice'>[user] labels [src] as [str].</span>"
-		src.name = "[src.name] ([str])"
+		src.name = "[src.name] ([str])" //also needs updating
 	return
 
 

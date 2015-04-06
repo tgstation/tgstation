@@ -65,7 +65,7 @@ var/list/camera_names=list()
 	if(assembly)
 		qdel(assembly)
 		assembly = null
-	qdel(wires)
+	wires = null
 	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
 	..()
 
@@ -119,6 +119,8 @@ var/list/camera_names=list()
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
 	if(!istype(user))
 		return
+	if(!status)
+		return
 	status = 0
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 	playsound(get_turf(src), 'sound/weapons/slash.ogg', 100, 1)
@@ -140,13 +142,16 @@ var/list/camera_names=list()
 	else if(istype(W, /obj/item/weapon/weldingtool) && wires.CanDeconstruct())
 		if(weld(W, user))
 			if(assembly)
-				assembly.loc = src.loc
 				assembly.state = 1
-			del(src)
+				assembly.loc = src.loc
+				assembly = null
+
+			qdel(src)
 
 
 	// OTHER
 	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+		user.delayNextAttack(5)
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null
@@ -221,13 +226,13 @@ var/list/camera_names=list()
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
 	for(var/mob/living/silicon/S in mob_list)
-		S.triggerAlarm("Camera", get_area(src), list(src), src)
+		S.triggerAlarm("Camera", areaMaster, list(src), src)
 
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
 	for(var/mob/living/silicon/S in mob_list)
-		S.cancelAlarm("Camera", get_area(src), list(src), src)
+		S.cancelAlarm("Camera", areaMaster, list(src), src)
 
 /obj/machinery/camera/proc/can_use()
 	if(!status)

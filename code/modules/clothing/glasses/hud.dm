@@ -3,11 +3,15 @@
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags = 0 //doesn't protect eyes because it's a monocle, duh
 	origin_tech = "magnets=3;biotech=2"
+	min_harm_label = 3
+	harm_label_examine = list("<span class='info'>A tiny label is on the lens.</span>","<span class='warning'>A label covers the lens!</span>")
 	var/list/icon/current = list() //the current hud icons
 
 	proc
 		process_hud(var/mob/M)	return
 
+/obj/item/clothing/glasses/hud/harm_label_update()
+	return
 
 
 /obj/item/clothing/glasses/hud/health
@@ -16,7 +20,8 @@
 	icon_state = "healthhud"
 
 /obj/item/clothing/glasses/hud/health/process_hud(var/mob/M)
-	process_med_hud(M)
+	if(harm_labeled < min_harm_label)
+		process_med_hud(M)
 
 
 /obj/item/clothing/glasses/hud/security
@@ -29,8 +34,17 @@
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
 	icon_state = "jensenshades"
 	item_state = "jensenshades"
+	min_harm_label = 12
 	vision_flags = SEE_MOBS
 	invisa_view = 2
+	eyeprot = 1
+
+/obj/item/clothing/glasses/hud/security/jensenshades/harm_label_update()
+	if(harm_labeled >= min_harm_label)
+		vision_flags |= BLIND
+	else
+		vision_flags &= ~BLIND
 
 /obj/item/clothing/glasses/hud/security/process_hud(var/mob/M)
-	process_sec_hud(M,1)
+	if(harm_labeled < min_harm_label)
+		process_sec_hud(M,1)

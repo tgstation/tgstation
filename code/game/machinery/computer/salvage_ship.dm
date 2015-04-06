@@ -78,13 +78,13 @@
 	onclose(user, "computer")
 	return
 
+/obj/machinery/computer/salvage_ship/power_change()
+	return
 
 /obj/machinery/computer/salvage_ship/Topic(href, href_list)
-	if(!isliving(usr))	return
-	var/mob/living/user = usr
+	if(..()) return 1
 
-	if(in_range(src, user) || istype(user, /mob/living/silicon))
-		user.set_machine(src)
+	usr.set_machine(src)
 
 	if(href_list["salvage"])
 		salvage_move_to(/area/shuttle/salvage/start)

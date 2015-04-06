@@ -66,6 +66,14 @@
 
 	mutation = M_OBESITY
 
+	can_activate(var/mob/M, var/flags)
+		if(!ishuman(M)) return 0
+
+		var/mob/living/carbon/human/H = M
+		if(H.species && !(H.species.flags & CAN_BE_FAT)) return 0
+
+		return 1
+
 	New()
 		..()
 		block=FATBLOCK
@@ -286,19 +294,6 @@
 // USELESS SHIT //
 //////////////////
 
-// WAS: /datum/bioEffect/strong
-/datum/dna/gene/disability/strong
-	// pretty sure this doesn't do jack shit, putting it here until it does
-	name = "Strong"
-	desc = "Enhances the subject's ability to build and retain heavy muscles."
-	activation_message = "You feel buff!"
-	deactivation_message = "You feel wimpy and weak."
-
-	mutation = M_STRONG
-
-	New()
-		..()
-		block=STRONGBLOCK
 
 // WAS: /datum/bioEffect/horns
 /datum/dna/gene/disability/horns
@@ -364,15 +359,19 @@
 	desc = "The subject becomes able to convert excess cellular energy into thermal energy."
 	panel = "Mutant Powers"
 
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = 600
 
 	spell_flags = INCLUDEUSER
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 	range = -1
+	max_targets = 1
 	selection_type = "range"
 	compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	cast_sound = 'sound/effects/bamf.ogg'
+
+	hud_state = "gen_immolate"
+	override_base = "genetic"
 
 /spell/targeted/immolate/cast(list/targets)
 	..()
@@ -385,44 +384,57 @@
 ////////////////////////////////////////////////////////////////////////
 
 // WAS: /datum/bioEffect/melt
-/datum/dna/gene/basic/grant_verb/melt
+/datum/dna/gene/basic/grant_spell/melt
 	name = "Self Biomass Manipulation"
 	desc = "The subject becomes able to transform the matter of their cells into a liquid state."
 	flags = GENE_UNNATURAL
 	activation_messages = list("You feel strange and jiggly.")
 	deactivation_messages = list("You feel more solid.")
 
-	verbtype=/proc/bioproc_melt
+	spelltype = /spell/targeted/melt
 
 	New()
 		..()
 		block = MELTBLOCK
 
-/proc/bioproc_melt()
-	set name = "Dissolve"
-	set desc = "Transform yourself into a liquified state."
-	set category = "Mutant Abilities"
+/spell/targeted/melt
+	name = "Dissolve"
+	desc = "Transform yourself into a liquified state."
+	panel = "Mutant Powers"
 
-	if (istype(usr,/mob/living/carbon/human/))
-		var/mob/living/carbon/human/H = usr
+	charge_type = Sp_CHARGES
+	charge_max = 1
 
-		H.visible_message("\red <b>[H.name]'s flesh melts right off! Holy shit!</b>")
-		//if (H.gender == "female")
-		//	playsound(H.loc, 'female_fallscream.ogg', 50, 0)
-		//else
-		//	playsound(H.loc, 'male_fallscream.ogg', 50, 0)
-		//playsound(H.loc, 'bubbles.ogg', 50, 0)
-		//playsound(H.loc, 'loudcrunch2.ogg', 50, 0)
-		var/mob/living/carbon/human/skellington/nH = new /mob/living/carbon/human/skellington(H.loc, delay_ready_dna=1)
-		if(nH.has_brain())
-			var/datum/organ/internal/brain/skellBrain = nH.internal_organs_by_name["brain"]
-			del(skellBrain)
-		nH.real_name = H.real_name
-		nH.name = "[H.name]'s skeleton"
-		//H.decomp_stage = 4
-		H.gib(1)
-	else
-		usr.visible_message("\red <b>[usr.name] melts into a pile of bloody viscera!</b>")
-		usr.gib(1)
+	spell_flags = INCLUDEUSER
+	invocation_type = SpI_NONE
+	range = -1
+	max_targets = 1
+	selection_type = "range"
 
-	return
+	override_base = "genetic"
+	hud_state = "gen_dissolve"
+
+/spell/targeted/melt/cast(var/list/targets, mob/user)
+	for(var/mob/M in targets)
+		if (istype(M,/mob/living/carbon/human/))
+			var/mob/living/carbon/human/H = M
+
+			H.visible_message("\red <b>[H.name]'s flesh melts right off! Holy shit!</b>")
+			//if (H.gender == "female")
+			//	playsound(H.loc, 'female_fallscream.ogg', 50, 0)
+			//else
+			//	playsound(H.loc, 'male_fallscream.ogg', 50, 0)
+			//playsound(H.loc, 'bubbles.ogg', 50, 0)
+			//playsound(H.loc, 'loudcrunch2.ogg', 50, 0)
+			var/mob/living/carbon/human/skellington/nH = new /mob/living/carbon/human/skellington(H.loc, delay_ready_dna=1)
+			if(nH.has_brain())
+				var/datum/organ/internal/brain/skellBrain = nH.internal_organs_by_name["brain"]
+				del(skellBrain)
+			nH.real_name = H.real_name
+			nH.name = "[H.name]'s skeleton"
+			//H.decomp_stage = 4
+			H.gib(1)
+		else
+			M.visible_message("\red <b>[usr.name] melts into a pile of bloody viscera!</b>")
+			M.gib(1)
+

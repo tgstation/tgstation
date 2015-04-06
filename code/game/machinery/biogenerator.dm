@@ -45,24 +45,34 @@
 
 /datum/biogen_recipe/nutrient/ez
 	id="ez"
-	cost=10
 	name="E-Z-Nutrient"
+	reagent="eznutrient"
+	cost=10
+	amount_per_unit=10
 	other_amounts=list(5)
-	result=/obj/item/weapon/reagent_containers/glass/fertilizer/ez
 
 /datum/biogen_recipe/nutrient/l4z
 	id="l4z"
-	cost=20
 	name="Left 4 Zed"
+	reagent="left4zed"
+	cost=20
+	amount_per_unit=10
 	other_amounts=list(5)
-	result=/obj/item/weapon/reagent_containers/glass/fertilizer/l4z
 
 /datum/biogen_recipe/nutrient/rh
 	id="rh"
-	cost=25
 	name="Robust Harvest"
+	reagent="robustharvest"
+	cost=25
+	amount_per_unit=10
 	other_amounts=list(5)
-	result=/obj/item/weapon/reagent_containers/glass/fertilizer/rh
+
+/datum/biogen_recipe/nutrient/beez
+	cost=40
+	id="beez"
+	name="Bottle of BeezEez"
+	other_amounts=list(5)
+	result=/obj/item/beezeez
 
 /datum/biogen_recipe/leather
 	category="Leather"
@@ -91,11 +101,70 @@
 	name="Plant Bag"
 	result=/obj/item/weapon/storage/bag/plants
 
+/datum/biogen_recipe/leather/gadget
+	cost=350
+	id="gadget"
+	name="Gadget Bag"
+	result=/obj/item/weapon/storage/bag/gadgets
+
+/datum/biogen_recipe/leather/ore
+	cost=350
+	id="ore"
+	name="Mining Satchel"
+	result=/obj/item/weapon/storage/bag/ore
+
 /datum/biogen_recipe/leather/satchel
 	cost=400
 	id="satchel"
 	name="Leather Satchel"
 	result=/obj/item/weapon/storage/backpack/satchel
+
+/datum/biogen_recipe/leather/briefcase
+	cost=400
+	id="briefcase"
+	name="Leather Briefcase"
+	result=/obj/item/weapon/storage/briefcase/biogen
+
+/datum/biogen_recipe/paper
+	category="Paper"
+
+/datum/biogen_recipe/paper/papersheet
+	cost=15
+	id="papersheet"
+	name="Paper Sheet"
+	other_amounts=list(5,10)
+	result=/obj/item/weapon/paper
+
+/datum/biogen_recipe/paper/clipboard
+	cost=75
+	id="clipboard"
+	name="Clipboard"
+	result=/obj/item/weapon/clipboard
+
+/datum/biogen_recipe/paper/cardboard
+	cost=100
+	id="cardboard"
+	name="Cardboard Sheet"
+	other_amounts=list(5,10)
+	result=/obj/item/stack/sheet/cardboard
+
+/datum/biogen_recipe/paper/giftwrap
+	cost=300
+	id="giftwrap"
+	name="Wrapping Paper"
+	result=/obj/item/weapon/wrapping_paper
+
+/datum/biogen_recipe/paper/packagewrap
+	cost=350
+	id="packagewrap"
+	name="Package Wrapper"
+	result=/obj/item/weapon/packageWrap
+
+/datum/biogen_recipe/paper/paperbin
+	cost=550 //100 from the cardboard, 30*15=450 from the paper
+	id="paperbin"
+	name="Paper Bin (30 sheets)"
+	result=/obj/item/weapon/paper_bin
 
 /datum/biogen_recipe/misc
 	category="Misc."
@@ -107,19 +176,12 @@
 	other_amounts=list(5)
 	result=/obj/item/weapon/plantspray/pests
 
-/datum/biogen_recipe/misc/beez
-	cost=40
-	id="beez"
-	name="BeezEez"
+/datum/biogen_recipe/misc/candle
+	cost=50
+	id="candle"
+	name="Red Candle"
 	other_amounts=list(5)
-	result=/obj/item/beezeez
-
-/datum/biogen_recipe/misc/cardboard
-	cost=200
-	id="cardboard"
-	name="Cardboard Sheet"
-	other_amounts=list(5,10)
-	result=/obj/item/stack/sheet/cardboard
+	result=/obj/item/candle
 
 /datum/biogen_recipe/misc/charcoal
 	cost=100
@@ -128,13 +190,17 @@
 	other_amounts=list(5,10)
 	result=/obj/item/stack/sheet/charcoal
 
-/datum/biogen_recipe/misc/paper
-	cost=75
-	id="paper"
-	name="Sheet of Paper"
-	other_amounts=list(5,10)
-	result=/obj/item/weapon/paper
+/datum/biogen_recipe/misc/soap
+	cost=250
+	id="soap"
+	name="Bar of Soap"
+	result=/obj/item/weapon/soap/nanotrasen
 
+/datum/biogen_recipe/misc/crayons
+	cost=400
+	id="crayons"
+	name="Box of Crayons"
+	result=/obj/item/weapon/storage/fancy/crayons
 
 /obj/machinery/biogenerator
 	name = "Biogenerator"
@@ -224,16 +290,17 @@
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
-		if(i >= 10)
+		if(i >= 20)
 			user << "\red The biogenerator is already full! Activate it."
 		else
+			var/obj/item/weapon/storage/bag/B = O
 			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-				G.loc = src
+				B.remove_from_storage(G,src)
 				i++
-				if(i >= 10)
+				if(i >= 20)
 					user << "\blue You fill the biogenerator to its capacity."
 					break
-			if(i<10)
+			if(i<20)
 				user << "\blue You empty the plant bag into the biogenerator."
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
@@ -242,7 +309,7 @@
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
-		if(i >= 10)
+		if(i >= 20)
 			user << "\red The biogenerator is full! Activate it."
 		else
 			user.before_take_item(O)
@@ -385,9 +452,8 @@
 	return 1
 
 /obj/machinery/biogenerator/Topic(href, href_list)
-	if(stat & BROKEN) return
-	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
+
+	if(..()) return 1
 
 	usr.set_machine(src)
 

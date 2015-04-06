@@ -1,90 +1,108 @@
+#define WINDOWLOOSE 0
+#define WINDOWLOOSEFRAME 1
+#define WINDOWUNSECUREFRAME 2
+#define WINDOWSECURE 3
+
 /obj/structure/window/full
-	sheets = 2
-	dir=SOUTHWEST
-	mouse_opacity=2 // Complete opacity.
+
+	name = "window"
+	icon_state = "window"
+	sheetamount = 2
+	mouse_opacity = 2 // Complete opacity //What in the name of everything is this variable ?
 	layer = 3.21 // Windows are at 3.2.
 
+	cracked_base = "fcrack"
+
 /obj/structure/window/full/New(loc)
+
 	..(loc)
 	flags &= ~ON_BORDER
 
 /obj/structure/window/full/CheckExit(atom/movable/O as mob|obj, target as turf)
+
 	return 1
 
-/obj/structure/window/full/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/window/full/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	return 0
 
+/obj/structure/window/full/can_be_reached(mob/user)
+
+	return 1 //That about it Captain
+
 /obj/structure/window/full/is_fulltile()
+
 	return 1
 
-//merges adjacent full-tile windows into one (blatant ripoff from game/smoothwall.dm)
+//Merges adjacent full-tile windows into one (blatant ripoff from game/smoothwall.dm)
 /obj/structure/window/full/update_icon()
+
 	//A little cludge here, since I don't know how it will work with slim windows. Most likely VERY wrong.
-	//this way it will only update full-tile ones
+	//This way it will only update full-tile ones
 	//This spawn is here so windows get properly updated when one gets deleted.
-	spawn(2)
-		if(!src) return
-		if(!is_fulltile())
+	spawn()
+		if(!src)
 			return
-		var/junction = 0 //will be used to determine from which side the window is connected to other windows
+		var/junction = 0 //Will be used to determine from which side the window is connected to other windows
 		if(anchored)
-			for(var/obj/structure/window/full/W in orange(src,1))
+			for(var/obj/structure/window/full/W in orange(src, 1))
 				if(W.anchored && W.density) //Only counts anchored, not-destroyed full-tile windows.
-					if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
+					if(abs(x-W.x)-abs(y-W.y)) 	//Doesn't count windows, placed diagonally to src
 						junction |= get_dir(src,W)
-		icon_state = "[basestate][junction]"
+		icon_state = "[initial(icon_state)][junction]"
 		return
-
-/obj/structure/window/full/basic
-	desc = "It looks thin and flimsy. A few knocks with... anything, really should shatter it."
-	icon_state = "window"
-	basestate = "window"
-
-/obj/structure/window/full/plasmabasic
-	name = "plasma window"
-	desc = "A plasma-glass alloy window. It looks insanely tough to break. It appears it's also insanely tough to burn through."
-	basestate = "plasmawindow"
-	icon_state = "plasmawindow"
-	shardtype = /obj/item/weapon/shard/plasma
-	health = 120
-
-/obj/structure/window/full/plasmabasic/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 32000)
-		hit(round(exposed_volume / 1000), 0)
-	..()
-
-/obj/structure/window/full/plasmareinforced
-	name = "reinforced plasma window"
-	desc = "A plasma-glass alloy window, with rods supporting it. It looks hopelessly tough to break. It also looks completely fireproof, considering how basic plasma windows are insanely fireproof."
-	basestate = "plasmarwindow"
-	icon_state = "plasmarwindow"
-	shardtype = /obj/item/weapon/shard/plasma
-	reinf = 1
-	health = 160
-
-/obj/structure/window/full/plasmareinforced/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return
 
 /obj/structure/window/full/reinforced
 	name = "reinforced window"
-	desc = "It looks rather strong. Might take a few good hits to shatter it."
+	desc = "A window with a rod matrice. It looks more solid than the average window."
 	icon_state = "rwindow"
-	basestate = "rwindow"
+	sheettype = /obj/item/stack/sheet/glass/rglass
 	health = 40
-	reinf = 1
+	d_state = WINDOWSECURE
+	reinforced = 1
+
+/obj/structure/window/full/plasma
+
+	name = "plasma window"
+	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
+	icon_state = "plasmawindow"
+	shardtype = /obj/item/weapon/shard/plasma
+	sheettype = /obj/item/stack/sheet/glass/plasmaglass
+	health = 120
+
+	fire_temp_threshold = 32000
+	fire_volume_mod = 1000
+
+/obj/structure/window/full/reinforced/plasma
+	name = "reinforced plasma window"
+	desc = "A window made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough to break and is most likely nigh fireproof."
+	icon_state = "plasmarwindow"
+	shardtype = /obj/item/weapon/shard/plasma
+	sheettype = /obj/item/stack/sheet/glass/plasmarglass
+	health = 160
+
+/obj/structure/window/full/reinforced/plasma/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return
 
 /obj/structure/window/full/reinforced/tinted
+
 	name = "tinted window"
-	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
+	desc = "A window with a rod matrice. Its surface is completely tinted, making it opaque. Why not a wall ?"
 	icon_state = "twindow"
-	basestate = "twindow"
 	opacity = 1
+	sheettype = /obj/item/stack/sheet/glass/rglass //A glass type for this window doesn't seem to exist, so here's to you
 
 /obj/structure/window/full/reinforced/tinted/frosted
+
 	name = "frosted window"
-	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
+	desc = "A window with a rod matrice. Its surface is completely tinted, making it opaque, and it's frosty. Why not an ice wall ?"
 	icon_state = "fwindow"
-	basestate = "fwindow"
 	health = 30
+	sheettype = /obj/item/stack/sheet/glass/rglass //Ditto above
+
+#undef WINDOWLOOSE
+#undef WINDOWLOOSEFRAME
+#undef WINDOWUNSECUREFRAME
+#undef WINDOWSECURE

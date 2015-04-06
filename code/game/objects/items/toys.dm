@@ -911,7 +911,7 @@
 		playsound(user, 'sound/effects/bamf.ogg', 20, 1)
 
 /obj/item/device/whisperphone
-	name = "whipserphone"
+	name = "whisperphone"
 	desc = "A device used to project your voice. Quietly."
 	icon_state = "megaphone"
 	item_state = "radio"

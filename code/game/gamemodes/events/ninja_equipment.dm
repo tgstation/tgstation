@@ -814,8 +814,7 @@ ________________________________________________________________________________
 				U << "<span class='warning'>ERROR:</span> Remote access channel disabled."
 			return//Return individually so that ..() can run properly at the end of the proc.
 		else if(istype(I, /obj/item/device/paicard) && !pai)//If it's a pai card.
-			U:drop_item()
-			I.loc = src
+			U:drop_item(src)
 			pai = I
 			U << "<span class='notice'>You slot \the [I] into \the [src].</span>"
 			updateUsrDialog()
@@ -840,8 +839,7 @@ ________________________________________________________________________________
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
 				U << "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>"
 				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay))
-					U.drop_item()
-					I.loc = src
+					U.drop_item(src)
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
 					var/obj/item/weapon/cell/old_cell = cell
 					old_cell.charge = 0

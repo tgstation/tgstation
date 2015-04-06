@@ -232,6 +232,9 @@ RESPAWN_AS_MOMMI
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
 
+## Uncomment to use the paperwork library
+#PAPERWORK_LIBRARY
+
 ## Uncomment to enable sending data to the IRC bot.
 #USE_IRC_BOT
 

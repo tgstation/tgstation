@@ -37,6 +37,7 @@
 	delayNextMove(0)
 
 	sight |= SEE_SELF
+
 	..()
 
 	if(loc && !isturf(loc))
@@ -59,4 +60,16 @@
 	if(ckey in deadmins)
 		verbs += /client/proc/readmin
 
+	if(client)
+		if(M_FARSIGHT in mutations)
+			client.view = max(client.view, world.view+2)
 	CallHook("Login", list("client" = src.client, "mob" = src))
+
+	if(spell_masters)
+		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
+			client.screen += spell_master
+			spell_master.toggle_open(spell_master.showing + 1)
+
+	if (isobj(loc))
+		var/obj/location = loc
+		location.on_log()

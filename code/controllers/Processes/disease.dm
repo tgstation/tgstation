@@ -1,3 +1,5 @@
+var/global/list/active_diseases = list()
+
 /datum/controller/process/disease
 	var/tmp/datum/updateQueue/updateQueueInstance
 

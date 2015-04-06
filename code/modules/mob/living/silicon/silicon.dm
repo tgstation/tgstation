@@ -1,7 +1,7 @@
 /mob/living/silicon
 	gender = NEUTER
 	voice_name = "synthesized voice"
-	languages = ROBOT | HUMAN
+	languages = ROBOT | HUMAN | MONKEY | ALIEN
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
@@ -104,6 +104,12 @@
 				alarm_types_clear[i] = 0
 
 /mob/living/silicon/drop_item()
+	return
+
+/mob/living/silicon/drop_l_hand()
+	return
+
+/mob/living/silicon/drop_r_hand()
 	return
 
 /mob/living/silicon/generate_static_overlay()

@@ -4,8 +4,8 @@
 #define HOURS   * 36000
 
 //Returns the world time in english
-proc/worldtime2text()
-	return "[round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"
+proc/worldtime2text(timestamp = world.time)
+	return "[round(timestamp / 36000) + 12]:[(timestamp / 600 % 60) < 10 ? add_zero(timestamp / 600 % 60, 1) : timestamp / 600 % 60]"
 
 proc/time_stamp()
 	return time2text(world.timeofday, "hh:mm:ss")

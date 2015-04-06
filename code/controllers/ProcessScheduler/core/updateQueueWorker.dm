@@ -33,6 +33,8 @@ datum/updateQueueWorker/proc/doWork()
 
 	if (istype(object) && !isturf(object) && !object.disposed && isnull(object.gcDestroyed)) // We only work with real objects
 		call(object, procName)(arglist(arguments))
+	else if (istype(object, /turf/unsimulated/wall/supermatter)) // Of course, everything has its exceptions
+		call(object, procName)(arglist(arguments))
 
 	// If there's nothing left to execute
 	// or we were killed while running the above code, mark finished and return.

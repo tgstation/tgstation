@@ -152,10 +152,6 @@
 	add_fingerprint(user)
 	show_to(user)
 
-
-/obj/item/weapon/storage/dropped(mob/user as mob)
-	return
-
 /obj/item/clothing/suit/storage/MouseDrop(atom/over_object)
 	if(ishuman(usr))
 		var/mob/living/carbon/human/M = usr

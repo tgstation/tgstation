@@ -11,18 +11,61 @@
 	New()
 		block=NOBREATHBLOCK
 
-/datum/dna/gene/basic/remoteview
+/datum/dna/gene/basic/grant_spell/remoteview
 	name="Remote Viewing"
 	activation_messages=list("Your mind expands.")
 	deactivation_messages=list("Your mind is no longer expanded.")
 	mutation=M_REMOTE_VIEW
 
+	spelltype = /spell/targeted/remoteobserve
+
 	New()
 		block=REMOTEVIEWBLOCK
 
-	activate(var/mob/M, var/connected, var/flags)
-		..(M,connected,flags)
-		M.verbs += /mob/living/carbon/human/proc/remoteobserve
+/spell/targeted/remoteobserve
+	name = "Remote View"
+	panel = "Mutant Powers"
+
+	charge_type = Sp_RECHARGE
+	charge_max = 50
+
+	invocation_type = SpI_NONE
+	range = -2
+	max_targets = 1
+	spell_flags = SELECTABLE | INCLUDEUSER
+
+	override_base = "genetic"
+	hud_state = "gen_rmind"
+
+/spell/targeted/remoteobserve/cast(var/list/targets, mob/living/carbon/human/user)
+	if(!targets || !targets.len || !user || !istype(user))
+		return
+
+	if(user.stat!=CONSCIOUS)
+		user.remoteview_target = null
+		user.reset_view(0)
+		return
+
+	if(istype(user.l_hand, /obj/item/tk_grab) || istype(user.r_hand, /obj/item/tk_grab/))
+		user << "<span class='warning'>Your mind is too busy with that telekinetic grab.</span>"
+		user.remoteview_target = null
+		user.reset_view(0)
+		return
+
+	if(user.client.eye != user.client.mob)
+		user.remoteview_target = null
+		user.reset_view(0)
+		return
+
+	for(var/mob/living/target in targets)
+		if (target)
+			if(target == user)
+				user.remoteview_target = null
+				user.reset_view(0)
+			else
+				user.remoteview_target = target
+				user.reset_view(target)
+			break
 
 /datum/dna/gene/basic/regenerate
 	name="Regenerate"
@@ -42,18 +85,64 @@
 	New()
 		block=INCREASERUNBLOCK
 
-/datum/dna/gene/basic/remotetalk
+/datum/dna/gene/basic/grant_spell/remotetalk
 	name="Telepathy"
 	activation_messages=list("You feel your voice can penetrate other minds.")
 	deactivation_messages=list("Your mind can no longer project your voice onto others.")
 	mutation=M_REMOTE_TALK
 
+	spelltype = /spell/targeted/remotesay
+
 	New()
+		..()
 		block=REMOTETALKBLOCK
 
-	activate(var/mob/M, var/connected, var/flags)
-		..(M,connected,flags)
-		M.verbs += /mob/living/carbon/human/proc/remotesay
+/spell/targeted/remotesay
+	name = "Project Mind"
+	desc = "Speak into the minds of others."
+	panel = "Mutant Powers"
+
+	charge_type = Sp_RECHARGE
+	charge_max = 50
+
+	invocation_type = SpI_NONE
+	range = -2 //the world
+	max_targets = 1
+	selection_type = "view"
+	spell_flags = SELECTABLE
+
+	override_base = "genetic"
+	hud_state = "gen_project"
+
+	compatible_mobs = list(/mob/living/carbon/human)
+
+/spell/targeted/remotesay/choose_targets(var/mob/living/carbon/human/user)
+	if(!istype(user))
+		return list()
+
+	var/list/targets = ..()
+	for(var/mob/living/carbon/human/M in targets)
+		if(!user.can_mind_interact(M))
+			targets -= M
+
+	return targets
+
+/spell/targeted/remotesay/cast(var/list/targets, mob/living/carbon/human/user)
+	if(!targets || !targets.len || !user || !istype(user))
+		return
+
+	var/say = stripped_input(user, "What do you wish to say?", "Project Mind")
+	if(!say)
+		return
+
+	for(var/mob/living/carbon/human/target in targets)
+		if(M_REMOTE_TALK in target.mutations)
+			target.show_message("<span class='notice'>You hear [user.real_name]'s voice: [say]</span>")
+		else
+			target.show_message("<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
+		user.show_message("<span class='notice'>You project your mind into [target.real_name]: [say]</span>")
+		for(var/mob/dead/observer/G in dead_mob_list)
+			G.show_message("<i>Telepathic message from <b>[user]</b> to <b>[target]</b>: [say]</i>")
 
 /datum/dna/gene/basic/morph
 	name="Morph"

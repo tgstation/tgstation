@@ -12,6 +12,26 @@
 	m_amt = 10000
 	w_type = RECYK_ELECTRONIC
 	var/code = 2
+	var/datum/radio_frequency/radio_connection
+
+/obj/item/device/radio/electropack/New()
+	..()
+	if(radio_controller)
+		initialize()
+	else
+		spawn(50)
+			if(radio_controller) initialize()
+
+/obj/item/device/radio/electropack/initialize()
+	if(frequency < MINIMUM_FREQUENCY || frequency > MAXIMUM_FREQUENCY)
+		src.frequency = sanitize_frequency(src.frequency)
+
+	set_frequency(frequency)
+
+/obj/item/device/radio/electropack/set_frequency(new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	radio_connection = radio_controller.add_object(src, frequency)
 
 /obj/item/device/radio/electropack/attack_hand(mob/user as mob)
 	if(src == user.back)
@@ -102,9 +122,9 @@
 			if(!M.moved_recently && M.last_move)
 				M.moved_recently = 1
 				step(M, M.last_move)
-				sleep(50)
-				if(M)
-					M.moved_recently = 0
+				spawn(50)
+					if(M)
+						M.moved_recently = 0
 		M << "<span class='danger'>You feel a sharp shock!</span>"
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, M)

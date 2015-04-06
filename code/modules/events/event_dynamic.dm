@@ -2,7 +2,7 @@ var/list/event_last_fired = list()
 
 //Always triggers an event when called, dynamically chooses events based on job population
 /proc/spawn_dynamic_event()
-	if(!config.allow_random_events)
+	if(!config.allow_random_events || map && map.dorf)
 		return
 
 	var/minutes_passed = world.time/600

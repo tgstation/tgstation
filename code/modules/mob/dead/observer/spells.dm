@@ -38,8 +38,11 @@ var/global/list/boo_phrases_silicon=list(
 	school = "transmutation"
 	charge_max = 600
 	invocation = ""
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 	range = 1 // Or maybe 3?
+
+	override_base = "grey"
+	hud_state = "boo"
 
 /spell/aoe_turf/boo/cast(list/targets)
 	for(var/turf/T in targets)

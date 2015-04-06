@@ -21,6 +21,9 @@
 	var/blocks_air = 0
 	var/icon_old = null
 
+	//associated PathNode in the A* algorithm
+	var/PathNode/PNode = null
+
 	// Bot shit
 	var/targetted_by=null
 
@@ -32,6 +35,9 @@
 
 	// holy water
 	var/holy = 0
+
+	// For building on the asteroid.
+	var/under_turf = /turf/space
 
 /turf/New()
 	..()
@@ -139,9 +145,9 @@
 
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
+
 	if(ismob(Obj))
-		Obj:lastarea = get_area(Obj.loc)
-		if(Obj:lastarea.has_gravity == 0)
+		if(Obj.areaMaster && Obj.areaMaster.has_gravity == 0)
 			inertial_drift(Obj)
 
 	/*
@@ -175,8 +181,6 @@
 /turf/proc/is_wood_floor()
 	return 0
 /turf/proc/is_carpet_floor()
-	return 0
-/turf/proc/is_catwalk()
 	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
@@ -272,14 +276,14 @@
 
 	if(connections) connections.erase_all()
 
-	if(istype(src,/turf/simulated) && !iscatwalk(src))
+	if(istype(src,/turf/simulated))
 		//Yeah, we're just going to rebuild the whole thing.
 		//Despite this being called a bunch during explosions,
 		//the zone will only really do heavy lifting once.
 		var/turf/simulated/S = src
 		env = S.air //Get the air before the change
 		if(S.zone) S.zone.rebuild()
-	if(istype(src,/turf/simulated/floor) && !iscatwalk(src))
+	if(istype(src,/turf/simulated/floor))
 		var/turf/simulated/floor/F = src
 		if(F.floor_tile)
 			returnToPool(F.floor_tile)
@@ -426,38 +430,108 @@
 			M.take_damage(100, "brute")
 
 /turf/proc/Bless()
-	if(flags & NOJAUNT)
-		return
 	flags |= NOJAUNT
 
-/turf/proc/AdjacentTurfs()
-	var/L[] = new()
-	for(var/turf/simulated/t in oview(src,1))
-		if(!t.density)
-			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-				L.Add(t)
+/////////////////////////////////////////////////////////////////////////
+// Navigation procs
+// Used for A-star pathfinding
+////////////////////////////////////////////////////////////////////////
+
+///////////////////////////
+//Cardinal only movements
+///////////////////////////
+
+// Returns the surrounding cardinal turfs with open links
+// Including through doors openable with the ID
+/turf/proc/CardinalTurfsWithAccess(var/obj/item/weapon/card/id/ID)
+	var/list/L = new()
+	var/turf/simulated/T
+
+	for(var/dir in cardinal)
+		T = get_step(src, dir)
+		if(istype(T) && !T.density)
+			if(!LinkBlockedWithAccess(src, T, ID))
+				L.Add(T)
 	return L
 
-// This Distance proc assumes that only cardinal movement is
+// Returns the surrounding cardinal turfs with open links
+// Don't check for ID, doors passable only if open
+/turf/proc/CardinalTurfs()
+	var/list/L = new()
+	var/turf/simulated/T
+
+	for(var/dir in cardinal)
+		T = get_step(src, dir)
+		if(istype(T) && !T.density)
+			if(!LinkBlocked(src, T))
+				L.Add(T)
+	return L
+
+///////////////////////////
+//All directions movements
+///////////////////////////
+
+// Returns the surrounding simulated turfs with open links
+// Including through doors openable with the ID
+/turf/proc/AdjacentTurfsWithAccess(var/obj/item/weapon/card/id/ID = null,var/list/closed)//check access if one is passed
+	var/list/L = new()
+	var/turf/simulated/T
+	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
+		T = get_step(src,dir)
+		if(T in closed) //turf already proceeded in A*
+			continue
+		if(istype(T) && !T.density)
+			if(!LinkBlockedWithAccess(src, T, ID))
+				L.Add(T)
+	return L
+
+//Idem, but don't check for ID and goes through open doors
+/turf/proc/AdjacentTurfs(var/list/closed)
+	var/list/L = new()
+	var/turf/simulated/T
+	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
+		T = get_step(src,dir)
+		if(T in closed) //turf already proceeded by A*
+			continue
+		if(istype(T) && !T.density)
+			if(!LinkBlocked(src, T))
+				L.Add(T)
+	return L
+
+// check for all turfs, including unsimulated ones
+/turf/proc/AdjacentTurfsSpace(var/obj/item/weapon/card/id/ID = null, var/list/closed)//check access if one is passed
+	var/list/L = new()
+	var/turf/T
+	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
+		T = get_step(src,dir)
+		if(T in closed) //turf already proceeded by A*
+			continue
+		if(istype(T) && !T.density)
+			if(!ID)
+				if(!LinkBlocked(src, T))
+					L.Add(T)
+			else
+				if(!LinkBlockedWithAccess(src, T, ID))
+					L.Add(T)
+	return L
+
+//////////////////////////////
+//Distance procs
+//////////////////////////////
+
+//Distance associates with all directions movement
+/turf/proc/Distance(var/turf/T)
+	return get_dist(src,T)
+
+//  This Distance proc assumes that only cardinal movement is
 //  possible. It results in more efficient (CPU-wise) pathing
 //  for bots and anything else that only moves in cardinal dirs.
-/turf/proc/Distance_cardinal(turf/t)
-	if(!src || !t) return 0
-	return abs(src.x - t.x) + abs(src.y - t.y)
+/turf/proc/Distance_cardinal(turf/T)
+	if(!src || !T) return 0
+	return abs(src.x - T.x) + abs(src.y - T.y)
 
-/turf/proc/Distance(turf/t)
-	if(get_dist(src,t) == 1)
-		var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
-		return sqrt(cost)
-	else
-		return get_dist(src,t)
-/turf/proc/AdjacentTurfsSpace()
-	var/L[] = new()
-	for(var/turf/t in oview(src,1))
-		if(!t.density)
-			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-				L.Add(t)
-	return L
+////////////////////////////////////////////////////
+
 
 /turf/proc/cultify()
 	ChangeTurf(/turf/space)
@@ -472,3 +546,15 @@
 				O.singularity_act()
 	ChangeTurf(/turf/space)
 	return(2)
+
+//Return a lattice to allow catwalk building
+/turf/proc/canBuildCatwalk()
+	return BUILD_FAILURE
+
+//Return true to allow lattice building
+/turf/proc/canBuildLattice()
+	return BUILD_FAILURE
+
+//Return a lattice to allow plating building, return 0 for error message, return -1 for silent fail.
+/turf/proc/canBuildPlating()
+	return BUILD_SILENT_FAILURE

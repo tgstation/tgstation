@@ -89,6 +89,7 @@
 		I.loc = O
 		I.implanted = O
 //		O.update_icon = 1	//queue a full icon update at next life() call
+	H.monkeyizing = 0
 	del(M)
 	return
 
@@ -123,9 +124,9 @@
 		O.set_species(Mo.greaterform)
 
 	if (M.dna.GetUIState(DNA_UI_GENDER))
-		O.gender = FEMALE
+		O.setGender(FEMALE)
 	else
-		O.gender = MALE
+		O.setGender(MALE)
 
 	if (M)
 		if (M.dna)
@@ -172,5 +173,6 @@
 		I.loc = O
 		I.implanted = O
 //		O.update_icon = 1	//queue a full icon update at next life() call
+	Mo.monkeyizing = 0
 	del(M)
 	return

@@ -31,7 +31,8 @@
 		user.drop_item(has_suit)
 		user << "<span class='notice'>You attach [src] to [has_suit].</span>"
 		src.add_fingerprint(user)
-	loc = has_suit
+	else
+		loc = has_suit
 	has_suit.overlays += inv_overlay
 
 /obj/item/clothing/accessory/proc/on_removed(mob/user as mob)
@@ -44,6 +45,8 @@
 	src.add_fingerprint(user)
 
 /obj/item/clothing/accessory/proc/on_accessory_interact(mob/user, delayed = 0)
+	if(!has_suit)
+		return
 	if(delayed)
 		has_suit.remove_accessory(user, src)
 		attack_hand(user)

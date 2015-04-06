@@ -1,3 +1,5 @@
+var/global/list/datum/pipe_network/pipe_networks = list()
+
 /datum/controller/process/pipenet/setup()
 	name = "pipenet"
 	schedule_interval = 20 // every 2 seconds

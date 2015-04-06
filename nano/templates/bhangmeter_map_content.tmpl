@@ -1,0 +1,15 @@
+<!--
+Title: Bhangmeter (map content)
+Used In File(s): /code/game/machinery/doppler_array.dm
+ -->
+{{if data.explosions && data.explosions.length > 1}}
+	{{for data.explosions}}
+		{{if value.z == config.mapZLevel}}
+			<div class="mapIcon mapIcon16 icon-bhang {{:helper.explosionToClass(value.light,data.explosion_cap)}}" style="left: {{:(value.x)}}px; bottom: {{:(value.y)}}px;" unselectable="on">
+				<div class="tooltip hidden">
+					({{:value.time}}) - ({{:value.area}} {{:value.xoffset}},{{:value.yoffset}},{{:value.z}})({{:value.cap ? "[Theoretical Results] " : ""}} Epicenter radius: <span class='bad'>{{:value.dev}}</span>. Outer radius: <span class='average'>{{:value.heavy}}</span>. Shockwave radius: <span class='good'>{{:value.light}}</span>. Temporal displacement of tachyons: {{:helper.precisionRound(value.took, 2)}} second{{:value.took != 1 ? "s" : ""}}
+				</div>
+			</div>
+		{{/if}}
+	{{/for}}
+{{/if}}

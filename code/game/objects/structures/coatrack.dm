@@ -37,16 +37,14 @@
 	if (istype(C, /obj/item/clothing/suit/storage/det_suit) && !suit)
 		user << "<span class='notice'>You place your [C] on the [src]</span>"
 		playsound(get_turf(src), "rustle", 50, 1, -5)
-		user.drop_item()
-		C.loc = src
+		user.drop_item(src)
 		suit = C
 		update_icon()
 
 	else if (istype(C, /obj/item/clothing/head/det_hat) && !hat)
 		user << "<span class='notice'>You place your [C] on the [src]</span>"
 		playsound(get_turf(src), "rustle", 50, 1, -5)
-		user.drop_item()
-		C.loc = src
+		user.drop_item(src)
 		hat = C
 		update_icon()
 

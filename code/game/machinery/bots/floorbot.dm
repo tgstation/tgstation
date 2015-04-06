@@ -216,6 +216,10 @@ var/global/list/floorbot_targets=list()
 	if(src.repairing)
 		return
 
+	if(prob(1))
+		var/message = pick("Metal to the metal.","I am the only engineering staff on this station.","Law 1. Place tiles.","Tiles, tiles, tiles...")
+		src.speak(message)
+
 	switch(mode)
 		if(FLOORBOT_IDLE)		// idle
 			walk_to(src,0)
@@ -330,7 +334,7 @@ var/global/list/floorbot_targets=list()
 	// Needed because we used to look this up 15 goddamn times per process. - Nexypoo
 	var/list/shitICanSee = view(7, src)
 
-	if(src.amount <= 0 && !src.have_target())
+	if(src.amount < 50 && !src.have_target())
 		if(src.eattiles)
 			if(src.hunt_for_tiles(shitICanSee, floorbottargets))
 				return 1

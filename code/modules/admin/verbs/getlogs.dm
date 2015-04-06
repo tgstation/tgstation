@@ -52,7 +52,16 @@
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
+	#ifdef RUNWARNING
+	#if DM_VERSION > 506
+		#warn Run is deprecated and disabled for some fucking reason in 507.1275/6, if you have a version that doesn't have run() disabled then comment out #define RUNWARNING in setup.dm
+	src << ftp( file(path) )
+	#else
 	src << run( file(path) )
+	#endif
+	#else
+	src << run( file(path) )
+	#endif
 	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
 	return
 
@@ -72,7 +81,16 @@
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
+	#ifdef RUNWARNING
+	#if DM_VERSION > 506
+		#warn Run is deprecated and disabled for some fucking reason in 507.1275/6, if you have a version that doesn't have run() disabled then comment out #define RUNWARNING in setup.dm
+	src << ftp( file(path) )
+	#else
 	src << run( file(path) )
+	#endif
+	#else
+	src << run( file(path) )
+	#endif
 	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
 	return
 
@@ -87,7 +105,16 @@
 
 	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")].log"
 	if( fexists(path) )
+	#ifdef RUNWARNING
+		#if DM_VERSION > 506
+			#warn Run is deprecated and disabled for some fucking reason in 507.1275/6, if you have a version that doesn't have run() disabled then comment out #define RUNWARNING in setup.dm
+		src << ftp( file(path) )
+		#else
 		src << run( file(path) )
+		#endif
+		#else
+		src << run( file(path) )
+		#endif
 	else
 		src << "<font color='red'>Error: view_txt_log(): File not found/Invalid path([path]).</font>"
 		return
@@ -102,7 +129,16 @@
 
 	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")] Attack.log"
 	if( fexists(path) )
+		#ifdef RUNWARNING
+		#if DM_VERSION > 506
+			#warn Run is deprecated and disabled for some fucking reason in 507.1275/6, if you have a version that doesn't have run() disabled then comment out #define RUNWARNING in setup.dm
+		src << ftp( file(path) )
+		#else
 		src << run( file(path) )
+		#endif
+		#else
+		src << run( file(path) )
+		#endif
 	else
 		src << "<font color='red'>Error: view_atk_log(): File not found/Invalid path([path]).</font>"
 		return

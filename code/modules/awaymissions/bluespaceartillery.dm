@@ -36,10 +36,8 @@
 	return
 
 /obj/machinery/artillerycontrol/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
-		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if(..()) return 1
+	else
 		var/A
 		A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
 		var/area/thearea = teleportlocs[A]

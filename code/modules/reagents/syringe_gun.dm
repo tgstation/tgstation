@@ -26,8 +26,7 @@
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 		if(S.mode != 2)//SYRINGE_BROKEN in syringes.dm
 			if(syringes.len < max_syringes)
-				user.drop_item()
-				I.loc = src
+				user.drop_item(src)
 				syringes += I
 				user << "<span class='notice'>You put the syringe in [src].</span>"
 				user << "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>"
@@ -47,7 +46,7 @@
 /obj/item/weapon/gun/syringe/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)
 	return 1		//SHOOT AND LET THE GOD GUIDE IT (probably will hit a wall anyway)
 
-/obj/item/weapon/gun/syringe/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/gun/syringe/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0)
 	if(syringes.len)
 		spawn(0) fire_syringe(target,user)
 	else

@@ -11,7 +11,7 @@
 	//var/mob/living/carbon/brain/brainmob = null
 	var/list/ghost_volunteers[0]
 	req_access = list(access_robotics)
-	locked = 0
+	locked = 2
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 #ifdef DEBUG_ROLESELECT
@@ -117,7 +117,7 @@
 	ghost_volunteers.Add(O)
 
 /obj/item/device/mmi/posibrain/examine(mob/user)
-	user << "<span class='info'>*---------</span>*"
+//	user << "<span class='info'>*---------</span>*"
 	..()
 	if(src.brainmob)
 		if(src.brainmob.stat == DEAD)
@@ -126,7 +126,7 @@
 			user << "<span class='notice'>It appears to be in stand-by mode.</span>" //closed game window
 		else if(!src.brainmob.key)
 			user << "<span class='warning'>It doesn't seem to be responsive.</span>" //ghosted
-	user << "<span class='info'>*---------*</span>"
+//	user << "<span class='info'>*---------*</span>"
 
 /obj/item/device/mmi/posibrain/emp_act(severity)
 	if(!src.brainmob)

@@ -20,7 +20,7 @@
 /obj/machinery/power/solar/control/initialize()
 	..()
 
-	if(powernet)
+	if(get_powernet())
 		set_panels(cdir)
 
 /obj/machinery/power/solar/control/Destroy()
@@ -117,7 +117,7 @@
 	if(stat & (BROKEN | NOPOWER))
 		return
 
-	if ((get_dist(src, user) > 1))
+	if (!src.Adjacent(user))
 		if (!issilicon(user)&&!isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=solcon")
@@ -179,12 +179,12 @@ Manual Tracking Direction:"}
 
 	if(href_list["rate control"])
 		if(href_list["cdir"])
-			cdir = dd_range(0, 359, (360 + cdir + text2num(href_list["cdir"])) % 360)
+			cdir = Clamp((360 + cdir + text2num(href_list["cdir"])) % 360, 0, 359)
 			spawn(1)
 				set_panels(cdir)
 				update_icon()
 		if(href_list["tdir"])
-			trackrate = dd_range(0, 360, trackrate + text2num(href_list["tdir"]))
+			trackrate = Clamp(trackrate + text2num(href_list["tdir"]), 0, 360)
 			if(trackrate)
 				nexttime = world.time + 6000 / trackrate
 

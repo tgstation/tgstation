@@ -92,12 +92,10 @@
 		return ..()
 
 	if(!scan && access_change_ids in id_card.access)
-		user.drop_item()
-		id_card.loc = src
+		user.drop_item(src)
 		scan = id_card
 	else if(!modify)
-		user.drop_item()
-		id_card.loc = src
+		user.drop_item(src)
 		modify = id_card
 
 	nanomanager.update_uis(src)
@@ -180,7 +178,9 @@
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return 1
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)
@@ -197,8 +197,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_item(src)
 					modify = I
 
 		if ("scan")
@@ -214,8 +213,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_item(src)
 					scan = I
 
 		if("access")

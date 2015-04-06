@@ -65,6 +65,9 @@ datum/mind
 
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
+	var/list/uplink_items_bought = list()
+	var/total_TC = 0
+	var/spent_TC = 0
 
 	proc/transfer_to(mob/living/new_character)
 		if(!istype(new_character))
@@ -842,7 +845,7 @@ datum/mind
 					if(!(src in ticker.mode.traitors))
 						ticker.mode.traitors += src
 						special_role = "traitor"
-						current << "<B>\red You are a traitor!</B>"
+						current << "<SPAN CLASS='danger'><CENTER><BIG>You are a traitor!</BIG></CENTER></SPAN>"
 						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
 						if(isAI(current))
 							var/mob/living/silicon/ai/A = current
@@ -1006,7 +1009,9 @@ datum/mind
 						crystals = input("Amount of telecrystals for [key]","Syndicate uplink", crystals) as null|num
 						if (!isnull(crystals))
 							if (suplink)
+								var/diff = crystals - suplink.uses
 								suplink.uses = crystals
+								total_TC += diff
 				if("uplink")
 					if (!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
 						usr << "\red Equipping a syndicate failed!"

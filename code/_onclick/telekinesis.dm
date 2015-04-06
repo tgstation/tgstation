@@ -95,7 +95,7 @@ var/const/tk_maxrange = 15
 		if(focus)
 			focus.attack_self_tk(user)
 
-	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, proximity)//TODO: go over this
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, proximity, params)//TODO: go over this
 		if(user)
 			user.delayNextAttack(8)
 		if(!target || !user)	return
@@ -140,9 +140,9 @@ var/const/tk_maxrange = 15
 
 		if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
 			var/obj/item/I = focus
-			var/resolved = target.attackby(I, user, user:get_organ_target())
+			var/resolved = target.attackby(I, user, params)
 			if(!resolved && target && I)
-				I.afterattack(target,user,1) // for splashing with beakers
+				I.afterattack(target,user,1,params) // for splashing with beakers
 
 
 		else
@@ -204,7 +204,7 @@ var/const/tk_maxrange = 15
 //equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)
 /*
 		if(istype(user, /mob/living/carbon))
-			if(user:mutations & M_TK && get_dist(source, user) <= 7)
+			if((user:mutations & M_TK) && get_dist(source, user) <= 7)
 				if(user:get_active_hand())	return 0
 				var/X = source:x
 				var/Y = source:y

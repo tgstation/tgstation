@@ -319,3 +319,60 @@
 	siemens_coefficient = 0.5
 	species_restricted = list("exclude","Vox")
 	flags = FPRINT | PLASMAGUARD
+
+
+//Knight armour rigs
+/obj/item/clothing/head/helmet/space/rig/knight
+	name = "Space-Knight helm"
+	desc = "A well polished helmet belonging to a Space-Knight. Favored by space-jousters for its ability to stay on tight after being launched from a mass driver."
+	icon_state = "rig0-knight"
+	item_state = "rig0-knight"
+	armor = list(melee = 60, bullet = 40, laser = 40,energy = 30, bomb = 50, bio = 100, rad = 60)
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
+	siemens_coefficient = 0.2
+	species_restricted = list("exclude","Vox")
+	_color = "knight"
+	flags = FPRINT | PLASMAGUARD
+
+/obj/item/clothing/suit/space/rig/knight
+	name = "Space-Knight armour"
+	desc = "A well polished set of armour belonging to a Space-Knight. Maidens Rescued in Space: 100, Maidens who have slept with me in Space: 0"
+	icon_state = "rig-knight"
+	item_state = "rig-knight"
+	slowdown = 1
+	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/melee/baton,/obj/item/weapon/tank,/obj/item/weapon/shield/energy,/obj/item/weapon/claymore)
+	armor = list(melee = 60, bullet = 40, laser = 40,energy = 30, bomb = 50, bio = 100, rad = 60)
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	siemens_coefficient = 0.5
+	species_restricted = list("exclude","Vox")
+	flags = FPRINT | PLASMAGUARD
+
+/obj/item/clothing/head/helmet/space/rig/knight/black
+	name = "Black Knight's helm"
+	desc = "An ominous black helmet with a gold trim. The small viewports create an intimidating look, while also making it nearly impossible to see anything."
+	icon_state = "rig0-blackknight"
+	item_state = "rig0-blackknight"
+	armor = list(melee = 70, bullet = 65, laser = 50,energy = 25, bomb = 60, bio = 100, rad = 60)
+	_color="blackknight"
+
+/obj/item/clothing/suit/space/rig/knight/black
+	name = "Black Knight's armour"
+	desc = "An ominous black suit of armour with a gold trim. Surprisingly good at preventing accidental loss of limbs."
+	icon_state = "rig-blackknight"
+	item_state = "rig-blackknight"
+	armor = list(melee = 70, bullet = 65, laser = 50,energy = 25, bomb = 60, bio = 100, rad = 60)
+
+/obj/item/clothing/head/helmet/space/rig/knight/solaire
+	name = "Solar helm"
+	desc = "A simple helmet. 'Made in Astora' is inscribed on the back."
+	icon_state = "rig0-solaire"
+	item_state = "rig0-solaire"
+	armor = list(melee = 60, bullet = 65, laser = 90,energy = 30, bomb = 60, bio = 100, rad = 100)
+	_color="solaire"
+
+/obj/item/clothing/suit/space/rig/knight/solaire
+	name = "Solar armour"
+	desc = "A solar powered hardsuit with a fancy insignia on the chest. Perfect for stargazers and adventurers alike."
+	icon_state = "rig-solaire"
+	item_state = "rig-solaire"
+	armor = list(melee = 60, bullet = 65, laser = 90,energy = 30, bomb = 60, bio = 100, rad = 100)

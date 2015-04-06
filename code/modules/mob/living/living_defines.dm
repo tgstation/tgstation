@@ -54,3 +54,10 @@
 
 	// For beam damage stuff
 	var/list/last_beamchecks=list() // world.time of the last time a beam was checked (for fractional damage)
+
+	//
+	var/list/callOnLife = list() //
+
+/mob/living/proc/unsubLife(datum/sub)
+	while("\ref[sub]" in callOnLife)
+		callOnLife -= "\ref[sub]"

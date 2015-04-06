@@ -212,7 +212,7 @@
 	cur_artifact.my_effect.artifact_id = cur_artifact.display_id
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
-
+	if(..()) return 1
 	if(href_list["analyse"])
 		if(owned_pad)
 			var/turf/pad_turf = get_turf(owned_pad)

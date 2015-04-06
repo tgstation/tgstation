@@ -40,7 +40,7 @@
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	// Our new boo spell.
-	spell_list += new /spell/aoe_turf/boo(src)
+	add_spell(new /spell/aoe_turf/boo, "grey_spell_ready")
 
 	can_reenter_corpse = flags & GHOST_CAN_REENTER
 	started_as_observer = flags & GHOST_IS_OBSERVER
@@ -443,7 +443,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/L = list()
 	var/holyblock = 0
 
-	if((usr.invisibility == 0) || ((ticker.mode.name == "cult") && (usr.mind in ticker.mode.cult)))
+	if((usr.invisibility == 0) || (ticker && ticker.mode && (ticker.mode.name == "cult") && (usr.mind in ticker.mode.cult)))
 		for(var/turf/T in get_area_turfs(thearea.type))
 			if(!T.holy)
 				L+=T
@@ -762,16 +762,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	//find a viable mouse candidate
-	var/obj/machinery/mommi_spawner/spawner
 	var/list/found_spawners = list()
-	for(var/obj/machinery/mommi_spawner/s in world)
-		if(s.z == src.z && s.canSpawn())
+	for(var/obj/machinery/mommi_spawner/s in machines)
+		if(s.canSpawn())
 			found_spawners.Add(s)
 	if(found_spawners.len)
-		spawner = pick(found_spawners)
-		spawner.attack_ghost(src)
+		var/options[found_spawners.len]
+		for(var/t=1,t<=found_spawners.len,t++)
+			var/obj/machinery/mommi_spawner/S = found_spawners[t]
+			var/dat = text("[] on z-level = []",get_area(S),S.z)
+			options[t] = dat
+		var/selection = input(src,"Select a MoMMI spawn location", "Become MoMMI",null) as null|anything in options
+		if(selection)
+			for(var/i = 1, i<=options.len, i++)
+				if(options[i] == selection)
+					var/obj/machinery/mommi_spawner/final = found_spawners[i]
+					final.attack_ghost(src)
+					break
 	else
-		src << "<span class='warning'>Unable to find any powered MoMMI Spawners on this z-level.</span>"
+		src << "<span class='warning'>Unable to find any MoMMI Spawners ready to build a MoMMI in the universe. Please try again.</span>"
 
 	//if(host)
 	//	host.ckey = src.ckey
@@ -837,3 +846,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A]</span>")
 	return 1
+
+/mob/dead/observer/Login()
+	..()
+	observers += src
+
+/mob/dead/observer/Logout()
+	observers -= src
+	..()

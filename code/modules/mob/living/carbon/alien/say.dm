@@ -12,10 +12,10 @@
 		return
 
 	var/message_a = say_quote(message)
-	var/rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
-	for (var/mob/living/S in player_list)
-		if((!S.stat && (S.hivecheck())) || ((S in dead_mob_list) && !istype(S, /mob/new_player)))
-			S << rendered
+	var/rendered = text("<i><span class='game say'>Hivemind, <span class='name'>[]</span> <span class='message'>[]</span></span></i>",name,message_a)
+	for (var/mob/S in player_list)
+		if((!S.stat && S.hivecheck()) || ((S in dead_mob_list) && !istype(S, /mob/new_player)))
+			handle_render(S,rendered,src)
 
 /mob/living/carbon/alien/handle_inherent_channels(message, message_mode)
 	if(!..())

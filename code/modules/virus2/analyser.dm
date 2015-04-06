@@ -32,8 +32,7 @@
 		var/mob/living/carbon/c = user
 		if(!dish)
 			dish = I
-			c.drop_item()
-			I.loc = src
+			c.drop_item(src)
 			for(var/mob/M in viewers(src))
 				if(M == user)	continue
 				M.show_message("\blue [user.name] inserts the [dish.name] in the [src.name]", 3)

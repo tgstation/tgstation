@@ -6,22 +6,29 @@
 	charge_max = 20
 	spell_flags = Z2NOCAST | IGNOREDENSE | IGNORESPACE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = SpI_NONE
 	range = 7
 	inner_radius = 1
 	cooldown_min = 5 //4 deciseconds reduction per rank
-
-	smoke_spread = 0
-	smoke_amt = 1
+	hud_state = "wiz_blink"
 
 /spell/aoe_turf/blink/cast(var/list/targets, mob/user)
 	if(!targets.len)
 		return
 
 	var/turf/T = pick(targets)
+	var/turf/starting = get_turf(user)
 	if(T)
 		if(user.buckled)
 			user.buckled.unbuckle()
-		user.loc = T
+		user.forceMove(T)
+
+		var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
+		smoke.set_up(3, 0, starting)
+		smoke.start()
+
+		smoke = new()
+		smoke.set_up(3, 0, T)
+		smoke.start()
 
 	return

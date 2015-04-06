@@ -133,6 +133,13 @@
 		return 1
 	return ..()
 
+/obj/item/device/material_synth/examine(mob/user)
+	..()
+	if(istype(src, /obj/item/device/material_synth/robot))
+		user << "It's been set to draw power from a power cell."
+	else
+		user << "It currently holds [matter]/[MAX_MATSYNTH_MATTER] matter-units."
+
 /obj/item/device/material_synth/attackby(var/obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/RA = O
@@ -141,7 +148,9 @@
 			return
 		else
 			matter += 10
+			playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 			qdel(RA)
+			user << "<span class='notice'>The material synthetizer now holds [matter]/[MAX_MATSYNTH_MATTER] matter-units.</span>"
 	if(istype(O, /obj/item/weapon/card/emag))
 		if(!emagged)
 			emagged = 1

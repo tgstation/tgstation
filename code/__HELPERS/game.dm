@@ -130,19 +130,39 @@
 
 //This is the new version of recursive_mob_check, used for say().
 //The other proc was left intact because morgue trays use it.
-/proc/recursive_hear_check(var/atom/O)
+/proc/recursive_hear_check(atom/O)
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
 	var/list/found_atoms = list()
 
-	while(processing_list.len)
+	while (processing_list.len)
 		var/atom/A = processing_list[1]
 
-		if(A.flags & HEAR)
+		if (A.flags & HEAR)
 			found_atoms |= A
 
-		for(var/atom/B in A)
-			if(!processed_list[B])
+		for (var/atom/B in A)
+			if (!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_atoms
+
+/proc/recursive_type_check(atom/O, type = /atom)
+	var/list/processing_list = list(O)
+	var/list/processed_list = new/list()
+	var/list/found_atoms = new/list()
+
+	while (processing_list.len)
+		var/atom/A = processing_list[1]
+
+		if (istype(A, type))
+			found_atoms |= A
+
+		for (var/atom/B in A)
+			if (!processed_list[B])
 				processing_list |= B
 
 		processing_list.Cut(1, 2)
@@ -212,32 +232,36 @@
 
 	return hear
 
-/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
+/proc/get_contents_in_object(atom/O, type_path)
+	if (O)
+		return recursive_type_check(O, type_path) - O
+	else
+		return new/list()
+
+/proc/get_movables_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
 	//set background = 1
 
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
-	var/list/speaker_coverage = list()
 	for(var/i = 1; i <= radios.len; i++)
 		var/obj/item/device/radio/R = radios[i]
 		if(R)
-			var/turf/speaker = get_turf(R)
-			if(speaker)
-				for(var/turf/T in get_hear(R.canhear_range,speaker))
-					speaker_coverage[T] = T
-
-
-	// Try to find all the players who can hear the message
-	for(var/i = 1; i <= player_list.len; i++)
-		var/mob/M = player_list[i]
-		if(M)
-			var/turf/ear = get_turf(M)
-			if(ear)
-				// Ghostship is magic: Ghosts can hear radio chatter from anywhere
-				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && (M.client) && (M.client.prefs.toggles & CHAT_GHOSTRADIO)))
-					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
+			. |= get_hearers_in_view(R)
+	. |= get_mobs_in_radio_ranges(radios)
 	return .
+
+/**
+ * Returns a list of mobs who can hear any of the radios given in @radios.
+ */
+/proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
+	set background = BACKGROUND_ENABLED
+
+	. = new/list()
+
+	for (var/obj/item/device/radio/R in radios)
+		if (R)
+			. |= get_hearers_in_view(R.canhear_range, R)
 
 #define SIGN(X) ((X<0)?-1:1)
 

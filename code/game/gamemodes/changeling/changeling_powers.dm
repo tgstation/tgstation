@@ -373,9 +373,9 @@
 
 	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src, delay_ready_dna=1 )
 	if (C.dna.GetUIState(DNA_UI_GENDER))
-		O.gender = FEMALE
+		O.setGender(FEMALE)
 	else
-		O.gender = MALE
+		O.setGender(MALE)
 	O.dna = C.dna.Clone()
 	C.dna = null
 	O.real_name = chosen_dna.real_name
@@ -735,6 +735,8 @@ var/list/datum/dna/hivemind_bank = list()
 /mob/proc/sting_can_reach(mob/M as mob, sting_range = 1)
 	if(M.loc == src.loc) return 1 //target and source are in the same thing
 	if(!isturf(src.loc) || !isturf(M.loc)) return 0 //One is inside, the other is outside something.
+	if(sting_range < 2)
+		return Adjacent(M)
 	if(AStar(src.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, sting_range)) //If a path exists, good!
 		return 1
 	return 0

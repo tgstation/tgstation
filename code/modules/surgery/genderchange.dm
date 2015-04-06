@@ -57,10 +57,10 @@
 	//H.gender_ambiguous = 0
 	if(target.gender == FEMALE)
 		user.visible_message("<span class='notice'>[user] has made a man out of [target]!</span>")
-		target.gender = MALE
+		target.setGender(MALE)
 	else
 		user.visible_message("<span class='notice'>[user] has made a woman out of [target]!</span>")
-		target.gender = FEMALE
+		target.setGender(FEMALE)
 	target.regenerate_icons()
 	target.op_stage.genitals = 0
 	return 1
@@ -70,6 +70,6 @@
 	user.visible_message("<span class='warning'>[user] mutilates [target]'s genitals beyond recognition!</span>")
 	target.apply_damage(50, BRUTE, "groin", 1)
 	target.emote("scream", automatic = 1)
-	target.gender = pick(MALE, FEMALE)
+	target.setGender(pick(MALE, FEMALE))
 	target.regenerate_icons()
 	return 1

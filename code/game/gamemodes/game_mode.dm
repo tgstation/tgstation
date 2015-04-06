@@ -192,6 +192,7 @@
 			if(suplink)
 				var/extra = 4
 				suplink.uses += extra
+				if(man.mind) man.mind.total_TC += extra
 				man << "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity."
 			else
 				// Give them a warning!

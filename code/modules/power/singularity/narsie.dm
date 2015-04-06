@@ -1,5 +1,6 @@
 var/global/narsie_behaviour = "CultStation13"
 var/global/narsie_cometh = 0
+var/global/list/narsie_list = list()
 /obj/machinery/singularity/narsie //Moving narsie to its own file for the sake of being clearer
 	name = "Nar-Sie"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
@@ -15,6 +16,14 @@ var/global/narsie_cometh = 0
 	consume_range = 3 //How many tiles out do we eat
 
 
+/obj/machinery/singularity/narsie/New()
+	..()
+	narsie_list.Add(src)
+
+/obj/machinery/singularity/narsie/Destroy()
+	narsie_list.Remove(src)
+	..()
+
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
 	icon = 'icons/obj/narsie.dmi'
@@ -26,10 +35,12 @@ var/global/narsie_cometh = 0
 	luminosity = 1
 	l_color = "#3e0000"
 
-
 	current_size = 12
 	consume_range = 12 // How many tiles out do we eat.
 	var/announce=1
+	var/narnar = 1
+//	var/old_x
+//	var/old_y
 
 /obj/machinery/singularity/narsie/large/New()
 	..()
@@ -43,12 +54,21 @@ var/global/narsie_cometh = 0
 			mode_ticker.third_phase()
 
 	if (emergency_shuttle)
-		emergency_shuttle.incall(0.3)
+		emergency_shuttle.incall()
 		emergency_shuttle.can_recall = 0
 		emergency_shuttle.settimeleft(600)
 
-	SetUniversalState(/datum/universal_state/hell)
+	if(narnar)
+		SetUniversalState(/datum/universal_state/hell)
 	narsie_cometh = 1
+
+	/* //For animating narsie manually, doesn't work well
+	//Begin narsie vision
+	for(var/mob/M in player_list)
+		if(M.client)
+			M.see_narsie(src)
+	alpha = 0
+	*/
 /*
 	updateicon()
 */
@@ -67,12 +87,8 @@ var/global/narsie_cometh = 0
 /obj/machinery/singularity/narsie/large/eat()
 	set background = BACKGROUND_ENABLED
 
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
-	for (var/atom/A in orange(consume_range, src))
+	for (var/turf/A in orange(consume_range, src))
 		consume(A)
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
 
 /obj/machinery/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
@@ -84,21 +100,19 @@ var/global/narsie_cometh = 0
 				M.apply_effect(3, STUN)
 
 
-/obj/machinery/singularity/narsie/Bump(atom/A)
+/obj/machinery/singularity/narsie/large/Bump(atom/A)
+	if(!narnar) return
 	if(isturf(A))
 		narsiewall(A)
 	else if(istype(A, /obj/structure/cult))
 		qdel(A)
-	else
-		consume(A)
 
-/obj/machinery/singularity/narsie/Bumped(atom/A)
+/obj/machinery/singularity/narsie/large/Bumped(atom/A)
+	if(!narnar) return
 	if(isturf(A))
 		narsiewall(A)
 	else if(istype(A, /obj/structure/cult))
 		qdel(A)
-	else
-		consume(A)
 
 /obj/machinery/singularity/narsie/move(var/force_move = 0)
 	if(!move_self)
@@ -129,19 +143,22 @@ var/global/narsie_cometh = 0
 
 	if(target && prob(60))
 		movement_dir = get_dir(src,target)
-
 	spawn(0)
+//		old_x = src.x
+//		old_y = src.y
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
-		for(var/mob/M in mob_list)
+		for(var/mob/M in player_list)
 			if(M.client)
-				M.see_narsie(src)
-	spawn(1)
+				M.see_narsie(src,movement_dir)
+	spawn(10)
+//		old_x = src.x
+//		old_y = src.y
 		step(src, movement_dir)
 		narsiefloor(get_turf(loc))
-		for(var/mob/M in mob_list)
+		for(var/mob/M in player_list)
 			if(M.client)
-				M.see_narsie(src)
+				M.see_narsie(src,movement_dir)
 	return 1
 
 /obj/machinery/singularity/narsie/proc/narsiefloor(var/turf/T)//leaving "footprints"
@@ -181,9 +198,6 @@ var/global/narsie_cometh = 0
 			var/dist = get_dist(A, src)
 
 			for (var/atom/movable/AM in A.contents)
-				if (AM == src) // This is the snowflake.
-					continue
-
 				if (dist <= consume_range)
 					consume(AM)
 					continue
@@ -387,14 +401,8 @@ var/global/narsie_cometh = 0
 /obj/machinery/singularity/narsie/wizard/eat()
 	set background = BACKGROUND_ENABLED
 
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
-
 	for (var/turf/T in trange(consume_range, src))
 		consume(T)
-
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
 
 /**
  * MR. CLEAN
@@ -417,6 +425,7 @@ var/global/mr_clean_targets = list(
 	desc = "This universe is dirty. Time to change that."
 	icon = 'icons/obj/mrclean.dmi'
 	icon_state = ""
+	narnar = 0
 
 /obj/machinery/singularity/narsie/large/clean/process()
 	eat()

@@ -1,4 +1,5 @@
 var/global/list/power_machinery_profiling = list()
+var/global/list/power_machines = list()
 
 /datum/controller/process/power_machinery
 	var/tmp/datum/updateQueue/updateQueueInstance
@@ -16,6 +17,8 @@ var/global/list/power_machinery_profiling = list()
 			#ifdef PROFILE_MACHINES
 			var/time_start = world.timeofday
 			#endif
+
+			M.check_rebuild() //Checks to make sure the powernet doesn't need to be rebuilt, rebuilds it if it does
 
 			if(M.process() == PROCESS_KILL)
 				M.inMachineList = 0

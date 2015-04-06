@@ -74,8 +74,7 @@
 	if(istype(W, /obj/item/weapon/fuel_assembly) && !cur_assembly)
 		if(emergency_insert_ready)
 			cur_assembly = W
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			emergency_insert_ready = 0
 			return
 
@@ -137,7 +136,7 @@
 	user.set_machine(src)
 
 /obj/machinery/power/rust_fuel_injector/Topic(href, href_list)
-	..()
+	if(..()) return 1
 
 	if( href_list["modify_tag"] )
 		id_tag = input("Enter new ID tag", "Modifying ID tag") as text|null

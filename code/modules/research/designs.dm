@@ -130,6 +130,14 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/security
 
+/datum/design/advseccamera
+	name = "Circuit Design (Advanced Security Cameras)"
+	desc = "Allows for the construction of circuit boards used to build advanced security camera computers."
+	id = "advseccamera"
+	req_tech = list("programming" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/security/advanced
 
 /datum/design/aicore
 	name = "Circuit Design (AI Core)"
@@ -504,7 +512,7 @@ k
 	id = "rdconsole_robotics"
 	build_path = /obj/item/weapon/circuitboard/rdconsole/robotics
 
-/datum/design/rdconsole/robotics
+/datum/design/rdconsole/mechanic
 	name = "Circuit Design (Mechanic R&D Console)"
 	id = "rdconsole_mechanic"
 	build_path = /obj/item/weapon/circuitboard/rdconsole/mechanic
@@ -513,6 +521,11 @@ k
 	name = "Circuit Design (MoMMI R&D Console)"
 	id = "rdconsole_mommi"
 	build_path = /obj/item/weapon/circuitboard/rdconsole/mommi
+
+/datum/design/rdconsole/pod
+	name = "Circuit Design (Pod Bay R&D Console)"
+	id = "rdconsole_pod"
+	build_path = /obj/item/weapon/circuitboard/rdconsole/pod
 
 /datum/design/ordercomp
 	name = "Circuit Design (Supply ordering console)"
@@ -2293,7 +2306,7 @@ k
 	reliability = 100
 	build_path = /obj/item/bluespace_crystal/artificial
 
-/datum/design/bluespacebeaker_small
+/datum/design/bluespacebeaker
 	name = "Bluespace Beaker"
 	desc = "A newly-developed high-capacity beaker, courtesy of bluespace research. Can hold up to 200 units."
 	id = "bluespacebeaker_small"
@@ -2311,9 +2324,9 @@ k
 	build_type = PROTOLATHE
 	materials = list("$diamond" = 1500, "$iron" = 6000, "$glass" = 6000)
 	reliability = 100
-	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespacelarge
+	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace/large
 
-/datum/design/stasisbeaker_small
+/datum/design/stasisbeaker
 	name = "Stasis Beaker"
 	desc = "A beaker powered by experimental bluespace technology. Chemicals are held in stasis and do not react inside of it. Can hold up to 50 units."
 	id = "stasisbeaker_small"
@@ -2331,7 +2344,7 @@ k
 	build_type = PROTOLATHE
 	materials = list("$diamond" = 1500, "$iron" = 3750, "$glass" = 3750, "$uranium" = 1500)
 	reliability = 100
-	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreactlarge
+	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact/large
 
 /datum/design/reactive_teleport_armor
 	name = "Reactive Teleport Armor"
@@ -2698,6 +2711,24 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/processor
 
+/datum/design/monkey_recycler
+	name = "Circuit Design (Monkey Recycler)"
+	desc = "Allows for the construction of circuit boards used to build a Monkey Recycler."
+	id = "monkey"
+	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/monkey_recycler
+
+/datum/design/chicken_processor
+	name = "Circuit Design (Chicken Processor)"
+	desc = "Allows for the construction of circuit boards used to build a Chicken Processor."
+	id = "chicken"
+	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/chicken_processor
+
 /datum/design/air_alarm
 	name = "Circuit Design (Air Alarm)"
 	desc = "Allows for the construction of circuit boards used to build an Air Alarm."
@@ -2725,13 +2756,22 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/airlock
 
+/datum/design/airlock
+	name = "Circuit Design (Intercom)"
+	desc = "Allows for the construction of circuit boards used to build an intercom."
+	id = "intercom"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/intercom_electronics
+
 /datum/design/conveyor
 	name = "Circuit Design (Conveyor)"
 	desc = "Allows for the construction of circuit boards used to build a conveyor belt."
 	id = "conveyor"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "sacid" = 20)
+	materials = list("$glass" = 200, "sacid" = 5)
 	build_path = /obj/item/weapon/circuitboard/conveyor
 
 /datum/design/bhangmeter
@@ -2977,3 +3017,37 @@ k
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/prism
+
+/datum/design/cell_charger
+	name = "Circuit Design (Cell Charger)"
+	desc = "Allows for the construction of circuit boards used to build a cell charger"
+	id = "cellcharger"
+	req_tech = list("materials" = 2, "engineering" = 2, "powerstorage" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cell_charger
+
+/*
+ *
+ *
+ * Xeno botany boards!
+ *
+ *
+ */
+/datum/design/botany_centrifuge
+	name = "Circuit Design (Lysis-Isolation Centrifuge)"
+	desc = "Allows for the cosntruction of circuit boards used to build a centrifuge used in hydroponics research."
+	id="botany_centrifuge"
+	req_tech = list ("engineering" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/botany_centrifuge
+
+/datum/design/botany_bioballistic
+	name = "Circuit Design (Bioballistic Delivery System)"
+	desc = "Allows for the cosntruction of circuit boards used to build a Bioballistic delivery system used in hydroponics research."
+	id="botany_bioballistic"
+	req_tech = list ("engineering" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/botany_bioballistic

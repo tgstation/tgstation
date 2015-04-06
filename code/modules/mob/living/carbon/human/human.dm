@@ -317,7 +317,7 @@
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor)
-		src.visible_message("<span class='danger'>[M] [M.attacktext] [src] in \the [affecting.display_name]!</span>", 1)
+		src.visible_message("<span class='danger'>[M] [M.attacktext] [src] in \the [affecting.display_name]!</span>")
 
 
 /mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
@@ -597,6 +597,8 @@
 		return get_id_name("Unknown")
 	if( head && (head.flags_inv&HIDEFACE) )
 		return get_id_name("Unknown")		//Likewise for hats
+	if(mind && mind.vampire && (VAMP_SHADOW in mind.vampire.powers) && mind.vampire.ismenacing)
+		return get_id_name("Unknown")
 	var/face_name = get_face_name()
 	var/id_name = get_id_name("")
 	if(id_name && (id_name != face_name))
@@ -1045,24 +1047,21 @@
 
 	return
 
-///eyecheck()
-///Returns a number between -1 to 2
+/**
+ * Returns a number between -1 to 2.
+ * TODO: What's the default return value?
+ */
 /mob/living/carbon/human/eyecheck()
-	var/number = 0
-	if(istype(src.head, /obj/item/clothing/head/welding))
-		if(!src.head:up)
-			number += 2
-	if(istype(src.head, /obj/item/clothing/head/helmet/space))
-		number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
-		number -= 1
-	if(istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
-		number += 1
-	if(istype(src.glasses, /obj/item/clothing/glasses/welding))
-		var/obj/item/clothing/glasses/welding/W = src.glasses
-		if(!W.up)
-			number += 2
-	return number
+	var/obj/item/clothing/head/headwear = src.head
+	var/obj/item/clothing/glasses/eyewear = src.glasses
+
+	if (headwear)
+		. += headwear.eyeprot
+
+	if (eyewear)
+		. += eyewear.eyeprot
+
+	return Clamp(., -1, 2)
 
 
 /mob/living/carbon/human/IsAdvancedToolUser()
@@ -1199,100 +1198,31 @@
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
-			gender = MALE
+			setGender(MALE)
 		else
-			gender = FEMALE
+			setGender(FEMALE)
 	regenerate_icons()
 	check_dna()
 
 	visible_message("<span class='notice'>\The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!</span>", "<span class='notice'>You change your appearance!</span>", "<span class='warning'>Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!</span>")
-/mob/living/carbon/human/proc/can_mind_interact(mob/M)
+/mob/living/carbon/human/proc/can_mind_interact(var/mob/M)
+	//world << "Starting can interact on [M]"
 	if(!ishuman(M)) return 0 //Can't see non humans with your fancy human mind.
+	//world << "[M] is a human"
 	var/turf/temp_turf = get_turf(M)
+	var/turf/our_turf = get_turf(src)
 	if(!temp_turf)
+		//world << "[M] is in null space"
 		return 0
-	if((temp_turf.z != 1 && temp_turf.z != 5) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead
+	if((temp_turf.z != our_turf.z) || M.stat!=CONSCIOUS) //Not on the same zlevel as us or they're dead.
+		//world << "[(temp_turf.z != our_turf.z) ? "not on the same zlevel as [M]" : "[M] is not concious"]"
+		src << "Cannot establish a telepathic link with [M]."
 		return 0
 	if(M_PSY_RESIST in M.mutations)
+		//world << "[M] has psy resist"
+		src << "Cannot maintain a telepathic link with [M]."
 		return 0
 	return 1
-
-/mob/living/carbon/human/proc/remotesay()
-	set name = "Project mind"
-	set category = "Mutant Abilities"
-
-	if(stat!=CONSCIOUS)
-		reset_view(0)
-		remoteview_target = null
-		return
-
-	if(!(M_REMOTE_TALK in src.mutations))
-		src.verbs -= /mob/living/carbon/human/proc/remotesay
-		return
-	var/list/creatures = list()
-	for(var/mob/living/carbon/h in world)
-		if(!get_turf(h) || h.gcDestroyed) continue
-		if(!can_mind_interact(h)) continue
-		creatures += h
-	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
-	if (isnull(target))
-		return
-
-	var/say = input ("What do you wish to say")
-	if(M_REMOTE_TALK in target.mutations)
-		target.show_message("<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
-	else
-		target.show_message("<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
-	usr.show_message("<span class='notice'>You project your mind into [target.real_name]: [say]</span>")
-	for(var/mob/dead/observer/G in world)
-		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
-
-/mob/living/carbon/human/proc/remoteobserve()
-	set name = "Remote View"
-	set category = "Mutant Abilities"
-
-	if(stat!=CONSCIOUS)
-		remoteview_target = null
-		reset_view(0)
-		return
-
-	if(!(M_REMOTE_VIEW in src.mutations))
-		remoteview_target = null
-		reset_view(0)
-		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
-		return
-
-	if(istype(l_hand, /obj/item/tk_grab) || istype(r_hand, /obj/item/tk_grab/))
-		src << "<span class='warning'>Your mind is too busy with that telekinetic grab.</span>"
-		remoteview_target = null
-		reset_view(0)
-		return
-
-	if(client.eye != client.mob)
-		remoteview_target = null
-		reset_view(0)
-		return
-
-	var/list/mob/creatures = list()
-
-	for(var/mob/living/carbon/h in world)
-		if(!can_mind_interact(h)) continue
-		creatures += h
-
-	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
-
-	if(istype(l_hand, /obj/item/tk_grab) || istype(r_hand, /obj/item/tk_grab/))
-		src << "<span class='warning'>Your mind is too busy with that telekinetic grab.</span>"
-		remoteview_target = null
-		reset_view(0)
-		return
-
-	if (target)
-		remoteview_target = target
-		reset_view(target)
-	else
-		remoteview_target = null
-		reset_view(0)
 
 /mob/living/carbon/human/proc/get_visible_gender()
 	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
@@ -1780,4 +1710,6 @@
 				step_towards(hand, src)
 				src << "<span class = 'warning'>The [S] pulls \the [hand] from your grip!</span>"
 	apply_effect(current_size * 3, IRRADIATE)
+	if(shoes)
+		if(shoes.flags & NOSLIP) return 0
 	..()

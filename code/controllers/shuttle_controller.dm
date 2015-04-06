@@ -239,6 +239,8 @@ datum/shuttle_controller
 									AM.Move(D)
 								// Remove windows, grills, lattice, etc.
 								if(istype(A,/obj/structure) || istype(A,/obj/machinery))
+									if(istype(A,/obj/machinery/singularity))
+										continue
 									qdel(A)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*
@@ -247,7 +249,7 @@ datum/shuttle_controller
 									return
 								*/
 
-							if(istype(T, /turf/simulated) || T.is_catwalk())
+							if(istype(T, /turf/simulated))
 								del(T)
 
 						start_location.move_contents_to(end_location)

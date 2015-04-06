@@ -46,7 +46,7 @@ obj/item/proc/get_clamped_volume()
 	//var/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
-			return
+			return 1
 	//if (istype(M,/mob/living/carbon/brain))
 	//	messagesource = M:container
 	if (hitsound)
@@ -143,7 +143,7 @@ obj/item/proc/get_clamped_volume()
 		if(!(user in viewers(M, null)))
 			showname = "."
 
-		if(attack_verb && attack_verb.len)
+		if(istype(attack_verb,/list) && attack_verb.len)
 			M.visible_message("<span class='danger'>[M] has been [pick(attack_verb)] with [src][showname]</span>",
 			"<span class='userdanger'>[M] has been [pick(attack_verb)] with [src][showname]!</span>")
 		else if(force == 0)

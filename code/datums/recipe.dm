@@ -23,98 +23,111 @@
  *    obj is a machine (or magik hat) with prerequisites,
  *    exact = 0 forces algorithm to ignore superfluous stuff.
  *
- *
  *  Functions you do not need to call directly but could:
  *  /datum/recipe/proc/check_reagents(var/datum/reagents/avail_reagents)
- *    //1=precisely,  0=insufficiently, -1=superfluous
+ *    //1 = precisely,  0 = insufficiently, -1 = superfluous
  *
  *  /datum/recipe/proc/check_items(var/obj/container as obj)
- *    //1=precisely, 0=insufficiently, -1=superfluous
+ *    //1 = precisely, 0=insufficiently, -1 = superfluous
  *
  * */
 
+//The person who made this honestly thought that the average coder from the distant future of 2015 would understand any of this shit without a thorough and painful examination
+//And this is exactly why any Chemistry-related system is impenetrable to anyone but the best coders, even things theorically as simple as this
+//So as I decrypt this arcane coding technology, I'll add comments where I see it fit, so absolutely fucking everywhere
+//I'll take my Nobel Prize with fries thank you
+//And yes indeed I know it's a lot of comments, but if you're not here to understand how recipes work, why are you here ?
 /datum/recipe
-	var/list/reagents // example:  = list("berryjuice" = 5) // do not list same reagent twice
-	var/list/items // example: =list(/obj/item/weapon/crowbar, /obj/item/weapon/welder) // place /foo/bar before /foo
-	var/result //example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
-	var/time = 100 // 1/10 part of second
 
+	var/list/reagents //List of reagents needed and their amount, reagents = list("berryjuice" = 5)
+	var/list/reagents_forbidden //List of reagents that will not be transfered to the cooked item under any circumstance, use smartly and sparringly. reagents_forbidden = list("toxin", "water")
+	var/list/items //List of items needed, items = list(/obj/item/weapon/crowbar, /obj/item/weapon/welder)
+	var/result //Well gee, what we output, result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
+	var/time = 100 //In tenths of a second, this is how long it takes for the magic to happen. The machine producing the recipe handles this value, but the recipe defines it
 
-/datum/recipe/proc/check_reagents(var/datum/reagents/avail_reagents) //1=precisely, 0=insufficiently, -1=superfluous
+//First step, let's check the reagents in our recipe machine (generally a microwave)
+//Since it's reagents, it's about time for Chemistry-Holder insanity
+/datum/recipe/proc/check_reagents(var/datum/reagents/avail_reagents) //1 = Precisely what we need, 0 = Not enough, -1 = More than needed
+	//Now, here comes the arcane magic. Before we even do anything, we estimate we have just what we need. Why ? Who knows
 	. = 1
-	for (var/r_r in reagents)
-		var/aval_r_amnt = avail_reagents.get_reagent_amount(r_r)
-		if (!(abs(aval_r_amnt - reagents[r_r])<0.5)) //if NOT equals
-			if (aval_r_amnt>reagents[r_r])
-				. = -1
-			else
-				return 0
-	if ((reagents?(reagents.len):(0)) < avail_reagents.reagent_list.len)
-		return -1
-	return .
+	//Scan the reagents in our recipe machine thingie one by one for shit we need in our recipe (water, hotsauce, salt, etc...)
+	for(var/r_r in reagents)
+		//Get the amount of said reagent we'll need in our recipe and assign it to that variable
+		var/reagent_amount = avail_reagents.get_reagent_amount(r_r)
+		//And now, the fun begins. Let's put this in plain words because holy crap
+		if(!(abs(reagent_amount - reagents[r_r]) < 0.5)) //If the absolute value of the amount of our reagent minus the needed amount of reagents for the recipe is NOT under 0.5 (rounding sanity)
+			if(reagent_amount > reagents[r_r]) //Let's check if the amount of our reagent is above the needed amount
+				. = -1 //If so, then we can say that we have more of this reagent that needed
+			else //Else
+				return 0 //We don't have what we need, abort, ABORT
+		//Remember that this is a for loop, so we do this for every reagent listed in our recipe
+	//Now, that check was fun, but we need to check for reagents we have not included per se (things not used in our recipe)
+	if((reagents ? (reagents.len) : (0)) < avail_reagents.reagent_list.len) //Given we have reagents in our recipe, are there more reagents in our machine than reagents needed in our recipe ?
+		return -1 //We have more reagents than needed, period
+	//Otherwise, get that value we determined earlier and send it, nevermind that a variable would have worked since it cannot be null
+	return . //If we have too much reagent (in numerical amounts) but only the reagents we need, -1, otherwise 1
 
-/datum/recipe/proc/check_items(var/obj/container as obj) //1=precisely, 0=insufficiently, -1=superfluous
-	if (!items)
-		if (locate(/obj/) in container)
-			return -1
-		else
-			return 1
-	. = 1
-	var/list/checklist = items.Copy()
-	for (var/obj/O in container)
-		var/found = 0
-		for (var/type in checklist)
-			if (istype(O,type))
-				checklist-=type
-				found = 1
-				break
-		if (!found)
-			. = -1
-	if (checklist.len)
-		return 0
-	return .
+//We just had fun with reagents, now let's check for items, literally any item, that is in our recipe. Apples, wrenches, dildos
+//You would imagine that this would take a few lines of simple code, but you don't grasp oldcoder logic
+/datum/recipe/proc/check_items(var/obj/container as obj) //1 = Precisely what we need, 0 = Not enough, -1 = More than needed
+	if(!items) //If there's no items in our recipe
+		if(locate(/obj/) in container) //And there are items in our recipe machine currently
+			return -1 //That's too much, abort
+		else //Nothing in our recipe machine
+			return 1 //Just what we need, *ping
+	. = 1 //The arcane magic rises again
+	var/list/checklist = items.Copy() //We need items in our recipe, so let's copy every single item in our recipe into a checklist
+	//Time for a loop
+	for(var/obj/O in container) //Let's loop through all the objects in our recipe machine
+		var/found = 0 //For once we use an actual variable
+		for(var/type in checklist) //At every object we find, stop to take a look at our entire checklist
+			if(istype(O, type)) //Is that what we are looking for yet
+				checklist -= type //Good, strike it out of our checklist
+				found = 1 //WE FOUND IT MA
+				break //Break that loop, continue downwards
+		if(!found) //Did we not find the object in our recipe machine on the checklist ?
+			. = -1 //Something extra in our ingredients, notify the cops
+	//We start looping through the objects in the container again at this point, until we checked every single one of them
+	if(checklist.len) //Are there still items on our recipe checklist ?
+		return 0 //Something is missing, abort
+	return . //If we found extra items, return -1, otherwise return 1
 
-//general version
-/datum/recipe/proc/make(var/obj/container as obj)
-	var/obj/result_obj = new result(container)
-	for (var/obj/O in (container.contents-result_obj))
-		O.reagents.trans_to(result_obj, O.reagents.total_volume)
-		qdel(O)
-	container.reagents.clear_reagents()
-	return result_obj
+//Food-related recipe production
+//Note : Due to changes to no longer wipe nutriments from cooked items, this is the same as make. So from now on this is THE "turn recipe into new thing" proc
+/datum/recipe/proc/make_food(var/obj/container as obj) //Find our recipe machine and let's begin
+	var/obj/result_obj = new result(container) //Spawn the result of our little cuisine in the recipe machine in advance to transfer reagents
+	for(var/obj/O in (container.contents - result_obj)) //Find all objects (for instance, raw food or beakers) in our machine, excluding the result we just created
+		if(O.reagents) //Little sanity, can't hurt
+			for(var/r_r in reagents_forbidden) //Check forbidden reagents
+				O.reagents.del_reagent("[r_r]") //If we find any, remove
+			O.reagents.update_total() //Make sure we're set
+			O.reagents.trans_to(result_obj, O.reagents.total_volume) //If we have reagents in here, squeeze them into the end product
+		qdel(O) //Delete the object, he has outlived his usefulness
+	container.reagents.clear_reagents() //Clear all the reagents we haven't transfered, for instance if we need to cook in water
+	return result_obj //Here we go, your result sire
 
-// food-related
-/datum/recipe/proc/make_food(var/obj/container as obj)
-	var/obj/result_obj = new result(container)
-	for (var/obj/O in (container.contents-result_obj))
-		if (O.reagents)
-			O.reagents.del_reagent("nutriment")
-			O.reagents.update_total()
-			O.reagents.trans_to(result_obj, O.reagents.total_volume)
-		qdel(O)
-	container.reagents.clear_reagents()
-	return result_obj
-
+//Find what to do with all this shit in the microwave dynamically, without blowing up the station
+//We consider all recipes in the game, obj (typecast as obj and estimated as obj because fuck you) and wherever or not its ingredients are exact based on what we learned from the last two procs
 /proc/select_recipe(var/list/datum/recipe/avaiable_recipes, var/obj/obj as obj, var/exact = 1 as num)
-	if (!exact)
-		exact = -1
-	var/list/datum/recipe/possible_recipes = new
-	for (var/datum/recipe/recipe in avaiable_recipes)
-		if (recipe.check_reagents(obj.reagents)==exact && recipe.check_items(obj)==exact)
-			possible_recipes+=recipe
-	if (possible_recipes.len==0)
-		return null
-	else if (possible_recipes.len==1)
-		return possible_recipes[1]
-	else //okay, let's select the most complicated recipe
-		var/r_count = 0
-		var/i_count = 0
-		. = possible_recipes[1]
-		for (var/datum/recipe/recipe in possible_recipes)
-			var/N_i = (recipe.items)?(recipe.items.len):0
-			var/N_r = (recipe.reagents)?(recipe.reagents.len):0
-			if (N_i > i_count || (N_i== i_count && N_r > r_count ))
-				r_count = N_r
-				i_count = N_i
-				. = recipe
-		return .
+	if(!exact) //Is the recipe not exact (1)
+		exact = -1 //Change it to -1 for simplicity, too much or not enough is the same problem now
+	var/list/datum/recipe/possible_recipes = new //Create a list, hopefully not ending the universe in the process
+	for(var/datum/recipe/recipe in avaiable_recipes) //Loop through the ingame recipes
+		if(recipe.check_reagents(obj.reagents) == exact && recipe.check_items(obj) == exact) //What did we return for reagents and objects ingredient checks, and does it fit with our recipe ?
+			possible_recipes += recipe //Perfect, we can make this recipe with our current ingredients, add it
+	if(possible_recipes.len == 0) //We're done looping through the ingame recipes, did we find nothing ?
+		return null //Game over
+	else if(possible_recipes.len == 1) //Do we have precisely ONE recipe, the only one ?
+		return possible_recipes[1] //He is the chosen one
+	else //Okay, let's select the most complicated recipe //For posterity, this is the only comment oldcoder left outside of defining what "-1", "0" and "1" correspond to, in broken English
+		var/reagents_count = 0 //Let's reserve two variables for the fun inbound, this one for reagents
+		var/items_count = 0 //Ditto above, this one is for ingredients
+		. = possible_recipes[1] //We'll estimate the first recipe we found is the correct one until we start looping, to avoid returning nothing, nevermind this is what . allows
+		for(var/datum/recipe/recipe in possible_recipes) //Loop through all those recipes we found to be matching
+			var/items_number = (recipe.items) ? (recipe.items.len) : 0 //Get the exact length of items needed for each recipe
+			var/reagents_number = (recipe.reagents) ? (recipe.reagents.len) : 0 //Get the exact length of reagents needed for each recipe
+			if(items_number > items_count || (items_number == items_count && reagents_number > reagents_count)) //If there's more items or as much items and more reagents than the previous recipe
+				reagents_count = reagents_number //Set this as new maximum
+				items_count = items_number //And this one too
+				. = recipe //This recipe is now our favourite
+		return . //We found the most complex recipe, send that

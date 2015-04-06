@@ -21,14 +21,25 @@
 	anchored = 1.0
 
 /obj/structure/morgue/proc/update()
-	if (src.connected)
-		src.icon_state = "morgue0"
+	if (connected)
+		icon_state = "morgue0"
 	else
-		if (src.contents.len)
-			src.icon_state = "morgue2"
+		if (contents.len > 0)
+			var/list/inside = recursive_type_check(src, /mob)
+
+			for (var/mob/body in inside)
+				if (body && body.client)
+					icon_state = "morgue4" // clone that mofo
+					return
+
+			if (inside.len > 0)
+				inside = null
+				icon_state = "morgue3" // no mobs at all, but objects inside
+			else
+				icon_state = "morgue2" // dead no-client mob
+
 		else
-			src.icon_state = "morgue1"
-	return
+			icon_state = "morgue1"
 
 /obj/structure/morgue/ex_act(severity)
 	switch(severity)
@@ -93,7 +104,7 @@
 		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 		if (user.get_active_hand() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if (!Adjacent(user) || user.stat)
 			return
 		t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 		if (t)
@@ -122,6 +133,8 @@
 		del(src.connected)
 	return
 
+/obj/structure/morgue/on_log()
+	update()
 
 /*
  * Morgue tray
@@ -189,14 +202,14 @@
 	var/locked = 0
 
 /obj/structure/crematorium/proc/update()
-	if (src.connected)
-		src.icon_state = "crema0"
+	if (cremating)
+		icon_state = "crema_active"
+		return
+
+	if (contents.len > 0)
+		icon_state = "crema2"
 	else
-		if (src.contents.len)
-			src.icon_state = "crema2"
-		else
-			src.icon_state = "crema1"
-	return
+		icon_state = "crema1"
 
 /obj/structure/crematorium/ex_act(severity)
 	switch(severity)
@@ -268,7 +281,7 @@
 		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 		if (user.get_active_hand() != P)
 			return
-		if ((!in_range(src, usr) > 1 && src.loc != user))
+		if (!Adjacent(user) || user.stat)
 			return
 		t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 		if (t)
@@ -297,7 +310,7 @@
 		del(src.connected)
 	return
 
-/obj/structure/crematorium/proc/cremate(atom/A, mob/user as mob)
+/obj/structure/crematorium/proc/cremate(mob/user)
 //	for(var/obj/machinery/crema_switch/O in src) //trying to figure a way to call the switch, too drunk to sort it out atm
 //		if(var/on == 1)
 //		return
@@ -310,18 +323,20 @@
 			return
 
 	else
-		var/inside = src.search_contents_for(/atom)
-		if(is_type_in_list(/obj/item/weapon/disk/nuclear, inside))
-			usr << "You get the feeling that you shouldn't cremate one of the items in the cremator."
+		var/inside = get_contents_in_object(src, /atom/movable)
+
+		if (locate(/obj/item/weapon/disk/nuclear) in inside)
+			user << "<SPAN CLASS='warning'>You get the feeling that you shouldn't cremate one of the items in the cremator.</SPAN>"
 			return
 
 		for (var/mob/M in viewers(src))
 			M.show_message("\red You hear a roar as the crematorium activates.", 1)
 
-		cremating = 1
 		locked = 1
+		cremating = 1
+		update()
 
-		for(var/mob/living/M in inside)
+		for (var/mob/living/M in inside)
 			if (M.stat!=2)
 				M.emote("scream",,, 1)
 			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
@@ -332,12 +347,15 @@
 			M.ghostize()
 			del(M)
 
-		for(var/obj/O in inside) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
-			del(O)
+		for (var/obj/O in inside) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
+			qdel(O)
+
+		inside = null
 
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
 		cremating = 0
+		update()
 		locked = 0
 		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 	return
@@ -393,12 +411,10 @@
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user as mob)
-	if(src.allowed(usr))
+	if (allowed(user))
 		for (var/obj/structure/crematorium/C in world)
 			if (C.id == id)
-				if (!C.cremating)
-					C.cremate(user)
+				C.cremate(user)
 	else
-		usr << "\red Access denied."
+		user << "<SPAN CLASS='alert'>Access denied.</SPAN>"
 	return
-

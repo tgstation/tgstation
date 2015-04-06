@@ -67,14 +67,19 @@
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 	if(A == loc || (A in loc) || (A in contents))
 		// No adjacency checks
-		delayNextAttack(8)
 		/*if(W.flags&USEDELAY)
 			next_move += 5
 		*/
 
-		var/resolved = A.attackby(W,src)
-		if(!resolved && A && W)
-			W.afterattack(A,src,1,params)
+		var/resolved = W.preattack(A, src, 1, params)
+		if(!resolved)
+			resolved = A.attackby(W,src)
+			if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
+				delayNextAttack(10)
+			if(!resolved && A && W)
+				W.afterattack(A,src,1,params) // 1 indicates adjacency
+			else
+				delayNextAttack(10)
 		return
 
 
@@ -86,10 +91,15 @@
 			if(W.flags&USEDELAY)
 				next_move += 5
 			*/
-
-			var/resolved = A.attackby(W, src)
-			if(!resolved && A && W)
-				W.afterattack(A, src, 1, params)
+			var/resolved = W.preattack(A, src, 1, params)
+			if(!resolved)
+				resolved = A.attackby(W,src)
+				if(ismob(A) || istype(A, /obj/mecha))
+					delayNextAttack(10)
+				if(!resolved && A && W)
+					W.afterattack(A,src,1,params) // 1 indicates adjacency
+				else
+					delayNextAttack(10)
 			return
 		else
 			//next_move = world.time + 10

@@ -7,6 +7,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
+	intact = 0 //No seriously, that's not a joke. Allows cable to be laid PROPERLY on catwalks
 
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
@@ -15,43 +16,21 @@
 /turf/space/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/turf/space/attackby(obj/item/C as obj, mob/user as mob)
+/turf/space/canBuildCatwalk()
+	if(locate(/obj/structure/catwalk) in contents)
+		return BUILD_FAILURE
+	return locate(/obj/structure/lattice) in contents
 
-	if (istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(L)
-			if(R.amount < 2)
-				user << "<span class='warning'>You don't have enough rods to do that.</span>"
-				return
-			user << "<span class='notice'>You begin to build a catwalk.</span>"
-			if(do_after(user,30))
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				user << "<span class='notice'>You build a catwalk!</span>"
-				R.use(2)
-				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
-				qdel(L)
-				return
 
-		user << "<span class='notice'>Constructing support lattice ...</span>"
-		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
-		ReplaceWithLattice()
-		R.use(1)
-		return
+/turf/space/canBuildLattice()
+	if(!(locate(/obj/structure/lattice) in contents))
+		return 1
+	return BUILD_FAILURE
 
-	if (istype(C, /obj/item/stack/tile/plasteel))
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
-			qdel(L)
-			playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
-			S.build(src)
-			S.use(1)
-			return
-		else
-			user << "<span class='warning'>The plating is going to need some support.</span>"
-	return
-
+/turf/space/canBuildPlating()
+	if((locate(/obj/structure/lattice) in contents))
+		return 1
+	return BUILD_FAILURE
 
 // Ported from unstable r355
 
@@ -73,16 +52,14 @@
 				qdel(A)
 				return
 
-			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-				del(A) //The disk's Destroy() proc ensures a new one is created
-				return
+			var/disks_list = recursive_type_check(A, /obj/item/weapon/disk/nuclear)
 
-			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
 			if(istype(A, /obj/structure/stool/bed/chair/vehicle))
 				var/obj/structure/stool/bed/chair/vehicle/B = A
 				if(B.buckled_mob)
-					disk_search = B.buckled_mob.search_contents_for(/obj/item/weapon/disk/nuclear)
-			if(!isemptylist(disk_search))
+					disks_list = recursive_type_check(B.buckled_mob, /obj/item/weapon/disk/nuclear)
+
+			if (length(disks_list))
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A
 					if(MM.client && !MM.stat)
@@ -96,11 +73,12 @@
 						else if(MM.y >= world.maxy -TRANSITIONEDGE)
 							MM.inertia_dir = 2
 					else
-						for(var/obj/item/weapon/disk/nuclear/N in disk_search)
-							del(N)//Make the disk respawn it is on a clientless mob or corpse
+						for (var/obj/item/weapon/disk/nuclear/N in disks_list)
+							qdel(N) // make the disk respawn if it is floating on its own.
 				else
-					for(var/obj/item/weapon/disk/nuclear/N in disk_search)
-						del(N)//Make the disk respawn if it is floating on its own
+					for (var/obj/item/weapon/disk/nuclear/N in disks_list)
+						qdel(N) // make the disk respawn if it is floating on its own.
+
 				return
 
 			//Check if it's a mob pulling an object

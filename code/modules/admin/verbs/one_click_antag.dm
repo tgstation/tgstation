@@ -447,7 +447,7 @@ client/proc/one_click_antag()
 
 	var/mob/living/carbon/human/new_vox = new(spawn_location.loc)
 
-	new_vox.gender = pick(MALE, FEMALE)
+	new_vox.setGender(pick(MALE, FEMALE))
 	new_vox.h_style = "Short Vox Quills"
 	new_vox.regenerate_icons()
 

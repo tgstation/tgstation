@@ -27,18 +27,17 @@ If the spell_projectile is seeking, it will update its target every process and 
 			return
 
 		projectile.original = target
-		projectile.loc = get_turf(user)
 		projectile.starting = get_turf(user)
 		projectile.shot_from = user //fired from the user
 		projectile.current = projectile.original
-		projectile.yo = target.y - target.y
-		projectile.xo = target.x - target.x
+		projectile.yo = target.y - user.y
+		projectile.xo = target.x - user.x
 		projectile.kill_count = src.duration
 		projectile.step_delay = proj_step_delay
 		if(istype(projectile, /obj/item/projectile/spell_projectile))
 			var/obj/item/projectile/spell_projectile/SP = projectile
 			SP.carried = src //casting is magical
-		projectile.process()
+		spawn projectile.process()
 	return
 
 /spell/targeted/projectile/proc/choose_prox_targets(mob/user = usr, var/atom/movable/spell_holder)

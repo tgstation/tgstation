@@ -43,6 +43,7 @@ var/global/floorIsLava = 0
 	var/body = {"<html><head><title>Options for [M.key]</title></head>
 <body>Options panel for <b>[M]</b>"}
 	// END AUTOFIX
+	var/species_description
 	if(M.client)
 
 		// AUTOFIXED BY fix_string_idiocy.py
@@ -54,7 +55,9 @@ var/global/floorIsLava = 0
 		body += " <B>Hasn't Entered Game</B> "
 	else
 		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
-
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		species_description = "[H.species ? H.species.name : "<span class='danger'><b>No Species</b></span>"]"
 	body += {"
 		<br><br>\[
 		<a href='?_src_=vars;Vars=\ref[M]'>VV</a> -
@@ -63,7 +66,7 @@ var/global/floorIsLava = 0
 		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
 		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
-		<b>Mob type</b> = [M.type]<br><br>
+		<b>Mob type</b> = [M.type][species_description ? " - Species = [species_description]" : ""]<br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?_src_=holder;unwarn=[M.ckey]'>UNWarn</A> |
@@ -1102,10 +1105,9 @@ var/global/floorIsLava = 0
 
 	if(!check_rights(R_SPAWN))	return
 
-	var/list/types = typesof(/atom)
 	var/list/matches = new()
 
-	for(var/path in types)
+	for(var/path in typesof(/atom))
 		if(findtext("[path]", object))
 			matches += path
 
@@ -1318,8 +1320,8 @@ proc/formatLocation(location)
 		loc = get_turf(location)
 
 	var/area/A = get_area(location)
-
-	return "[A.name] - [loc.x],[loc.y],[loc.z]"
+	var/answer = "[istype(A) ? "[A.name]" : "UNKNOWN"] - [istype(loc) ? "[loc.x],[loc.y],[loc.z]" : "UNKNOWN"]"
+	return answer
 
 proc/formatPlayerPanel(var/mob/U,var/text="PP")
 	return "<A HREF='?_src_=holder;adminplayeropts=\ref[U]'>[text]</A>"

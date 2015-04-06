@@ -1,26 +1,26 @@
 /obj/machinery/door/window
-	name = "interior door"
-	desc = "A strong door."
+	name = "Window Door"
+	desc = "A sliding glass door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
 	var/base_state = "left"
-	var/health = 150.0 //If you change this, consiter changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	var/health = 100
 	visible = 0.0
 	use_power = 0
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/circuitboard/airlock/electronics = null
 	var/dismantled = 0 // To avoid playing the glass shatter sound on Destroy()
+	var/secure = 0
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
 	ghost_read=0
 	machine_flags = EMAGGABLE
 	soundeffect = 'sound/machines/windowdoor.ogg'
+	var/shard = /obj/item/weapon/shard
 
 /obj/machinery/door/window/New()
 	..()
-
-
 	if ((istype(src.req_access) && src.req_access.len) || istext(req_access))
 		src.icon_state = "[src.icon_state]"
 		src.base_state = src.icon_state
@@ -31,6 +31,11 @@
 	if (!dismantled)
 		playsound(src, "shatter", 70, 1)
 	..()
+
+/obj/machinery/door/window/examine(mob/user as mob)
+	..()
+	if(secure)
+		user << "It is a secure windoor, it is stronger and closes more quickly."
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
 	if (!ismob(AM))
@@ -70,6 +75,11 @@
 		return !density
 	else
 		return 1
+
+//used in the AStar algorithm to determinate if the turf the door is on is passable
+/obj/machinery/door/window/CanAStarPass(var/obj/item/weapon/card/id/ID, var/to_dir)
+	return !density || (dir != to_dir) || check_access(ID)
+
 
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -122,11 +132,9 @@
 /obj/machinery/door/window/proc/take_damage(var/damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		getFromPool(/obj/item/weapon/shard, loc)
-		var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-		CC.amount = 2
-		src.density = 0
-		del(src)
+		getFromPool(shard, loc)
+		getFromPool(/obj/item/stack/cable_coil,src.loc,2)
+		qdel(src)
 		return
 
 /obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
@@ -162,11 +170,9 @@
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("<span class='warning'>[user] smashes against the [src.name].</span>", 1)
 		if (src.health <= 0)
-			getFromPool(/obj/item/weapon/shard, loc)
-			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-			CC.amount = 2
-			src.density = 0
-			del(src)
+			getFromPool(shard, loc)
+			getFromPool(/obj/item/stack/cable_coil, loc, 2)
+			qdel(src)
 	else
 		return src.attack_hand(user)
 
@@ -183,7 +189,7 @@
 			user << "<span class='notice'>You removed the windoor electronics!</span>"
 			make_assembly(user)
 			src.dismantled = 1 // Don't play the glass shatter sound
-			del(src)
+			qdel(src)
 		return
 
 	//If it's in the process of opening/closing or emagged, ignore the click
@@ -204,11 +210,9 @@
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if (src.health <= 0)
-			getFromPool(/obj/item/weapon/shard, loc)
-			var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-			CC.amount = 2
-			src.density = 0
-			del(src)
+			getFromPool(shard, loc)
+			getFromPool(/obj/item/stack/cable_coil, src.loc, 2)
+			qdel(src)
 		return
 
 	src.add_fingerprint(user)
@@ -264,7 +268,10 @@
 /obj/machinery/door/window/proc/make_assembly(mob/user as mob)
 	// Windoor assembly
 	var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
+	set_assembly(user, WA)
+	return WA
 
+/obj/machinery/door/window/proc/set_assembly(mob/user as mob, var/obj/structure/windoor_assembly/WA)
 	WA.name = "Near finished Windoor Assembly"
 	WA.dir = src.dir
 	WA.anchored = 1
@@ -290,19 +297,44 @@
 			AE.conf_access = src.req_one_access
 			AE.one_access = 1
 
-	return WA
-
 /obj/machinery/door/window/brigdoor
-	name = "Secure Door"
+	name = "Secure Window Door"
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)
+	secure = 1
 	var/id_tag = null
-	health = 300.0 //Stronger doors for prison (regular window door health is 200)
+	health = 200
 
 /obj/machinery/door/window/brigdoor/make_assembly(mob/user as mob)
 	var/obj/structure/windoor_assembly/WA = ..(user)
+	WA.secure = "secure_"
+	WA.update_icon()
+	return WA
+
+/obj/machinery/door/window/plasma
+	name = "Plasma Window Door"
+	desc = "A sliding glass door strengthened by plasma."
+	icon = 'icons/obj/doors/plasmawindoor.dmi'
+	health = 300
+	shard = /obj/item/weapon/shard/plasma
+
+/obj/machinery/door/window/plasma/make_assembly(mob/user as mob)
+	// Windoor assembly
+	var/obj/structure/windoor_assembly/plasma/WA = new /obj/structure/windoor_assembly/plasma(src.loc)
+	set_assembly(user, WA)
+	return WA
+
+/obj/machinery/door/window/plasma/secure
+	name = "Secure Plasma Window Door"
+	icon_state = "leftsecure"
+	base_state = "leftsecure"
+	health = 400
+	secure = 1
+
+/obj/machinery/door/window/plasma/secure/make_assembly(mob/user as mob)
+	var/obj/structure/windoor_assembly/plasma/WA = ..(user)
 	WA.secure = "secure_"
 	WA.update_icon()
 	return WA

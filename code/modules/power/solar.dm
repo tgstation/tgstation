@@ -7,12 +7,6 @@ var/list/solars_list = list()
 	icon = 'icons/obj/power.dmi'
 	density = 1
 
-/obj/machinery/power/proc/getPowernetNodes()
-	if(!powernet)
-		return list()
-
-	return powernet.nodes
-
 /obj/machinery/power/solar/New(loc)
 	..(loc)
 	solars_list += src
@@ -89,7 +83,7 @@ var/list/solars_list = list()
 		if(istype(W, /obj/item/weapon/tracker_electronics))
 			tracker = 1
 			user.drop_item()
-			del(W)
+			qdel(W)
 			user.visible_message("<span class='notice'>[user] inserts the electronics into [src].</span>", \
 			"<span class='notice'>You insert the electronics into [src].</span>")
 			return 1

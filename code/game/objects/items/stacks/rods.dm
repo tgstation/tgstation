@@ -20,6 +20,43 @@
 	rec.addAmount("iron",amount/2)
 	return RECYK_METAL
 
+/obj/item/stack/rods/afterattack(atom/Target, mob/user, adjacent, params)
+	var/busy = 0
+	if(adjacent)
+		if(isturf(Target) || istype(Target, /obj/structure/lattice))
+			var/turf/T = get_turf(Target)
+			var/obj/item/stack/rods/R = src
+			var/obj/structure/lattice/L = T.canBuildCatwalk(R)
+			if(istype(L))
+				if(R.amount < 2)
+					user << "<span class='warning'>You need atleast 2 rods to build a catwalk!</span>"
+					return
+				if(busy) //We are already building a catwalk, avoids stacking catwalks
+					return
+				user << "<span class='notice'>You begin to build a catwalk.</span>"
+				busy = 1
+				if(do_after(user, 30))
+					busy = 0
+					if(R.amount < 2)
+						user << "<span class='warning'>You ran out of rods!</span>"
+						return
+					if(!istype(L) || L.loc != T)
+						user << "<span class='warning'>You need a lattice first!</span>"
+						return
+					playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+					user << "<span class='notice'>You build a catwalk!</span>"
+					R.use(2)
+					new /obj/structure/catwalk(T)
+					qdel(L)
+					return
+
+			if(T.canBuildLattice(R))
+				user << "<span class='notice'>Constructing support lattice ...</span>"
+				playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+				new /obj/structure/lattice(T)
+				R.use(1)
+				return
+
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -52,11 +89,11 @@
 
 	if(locate(/obj/structure/grille, user.loc))
 		for(var/obj/structure/grille/G in user.loc)
-			if(G.destroyed)
-				G.health = 10
+			if(G.broken)
+				G.health = initial(G.health)
 				G.density = 1
-				G.destroyed = 0
-				G.icon_state = "grille"
+				G.broken = 0
+				G.icon_state = "[initial(G.icon_state)]"
 				use(1)
 			else
 				return 1
@@ -71,8 +108,8 @@
 			return
 
 		var/obj/structure/grille/Grille = getFromPool(/obj/structure/grille, user.loc)
-		user << "<span class='notice'>You assembled a grille!</span>"
 		if(!Grille)
 			Grille = new(user.loc)
+		user << "<span class='notice'>You assembled a grille!</span>"
 		Grille.add_fingerprint(user)
 		use(2)

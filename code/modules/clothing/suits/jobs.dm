@@ -33,14 +33,15 @@
 	flags_inv = HIDEJUMPSUIT
 	species_fit = list("Vox")
 
-/obj/item/clothing/suit/captunic/capjacket
+/obj/item/clothing/suit/storage/capjacket
 	name = "captain's uniform jacket"
 	desc = "A less formal jacket for everyday captain use."
 	icon_state = "capjacket"
 	item_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
 	species_fit = list("Vox")
+	max_combined_w_class = 6
+	storage_slots = 3
 
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie

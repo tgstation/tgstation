@@ -144,6 +144,9 @@
 
 /obj/item/weapon/tank/Topic(href, href_list)
 	..()
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if (usr.stat|| usr.restrained())
 		return 0
 	if (src.loc != usr)

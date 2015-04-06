@@ -69,12 +69,12 @@
 	M << "<B>You are the [usr.real_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals."
 	switch(type)
 		if("destruction")
-			M.spell_list += new /spell/targeted/projectile/magic_missile()
-			M.spell_list += new /spell/targeted/projectile/dumbfire/fireball()
+			M.add_spell(new /spell/targeted/projectile/magic_missile)
+			M.add_spell(new /spell/targeted/projectile/dumbfire/fireball)
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball."
 		if("bluespace")
-			M.spell_list += new /spell/area_teleport()
-			M.spell_list += new /spell/targeted/ethereal_jaunt()
+			M.add_spell(new /spell/area_teleport)
+			M.add_spell(new /spell/targeted/ethereal_jaunt)
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt."
 		/*
 		if("healing")
@@ -84,8 +84,8 @@
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
 		*/
 		if("robeless")
-			M.spell_list += new /spell/aoe_turf/knock()
-			M.spell_list += new /spell/targeted/mind_transfer()
+			M.add_spell(new /spell/aoe_turf/knock)
+			M.add_spell(new /spell/targeted/mind_transfer)
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap."
 
 	equip_antag(M)

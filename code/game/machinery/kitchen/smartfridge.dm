@@ -11,7 +11,6 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	flags = NOREACT
-	var/global/max_n_of_items = 999 // Sorry but the BYOND infinite loop detector doesn't look things over 1000.
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
 	var/item_quants = list()
@@ -217,13 +216,13 @@
 /obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(stat & NOPOWER)
 		user << "<span class='notice'>\The [src] is unpowered and useless.</span>"
-		return
+		return 1
 
 	if(..())
 		return 1
 
 	if(accept_check(O))
-		if(contents.len >= max_n_of_items)
+		if(contents.len >= MAX_N_OF_ITEMS)
 			user << "<span class='notice'>\The [src] is full.</span>"
 			return 1
 		else
@@ -243,7 +242,7 @@
 		var/objects_loaded = 0
 		for(var/obj/G in bag.contents)
 			if(accept_check(G))
-				if(contents.len >= max_n_of_items)
+				if(contents.len >= MAX_N_OF_ITEMS)
 					user << "<span class='notice'>\The [src] is full.</span>"
 					return 1
 				else
@@ -265,8 +264,9 @@
 	else
 		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
 		return 1
-	sortList(item_quants)
+	item_quants = sortList(item_quants)
 	updateUsrDialog()
+	return 1
 
 /obj/machinery/smartfridge/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

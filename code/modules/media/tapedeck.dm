@@ -219,7 +219,7 @@
 		usr << "\red You can't push buttons when your fingers go right through them, dummy."
 		return
 
-	..()
+	if(..()) return 1
 
 	if (href_list["power"])
 		playing=!playing

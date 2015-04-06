@@ -102,6 +102,8 @@
 	if(usr.abiotic())
 		usr << "<span class='notice'>Subject cannot have abiotic items on.</span>"
 		return
+	if(usr.buckled)
+		return
 	usr.pulling = null
 	usr.client.perspective = EYE_PERSPECTIVE
 	usr.client.eye = src
@@ -134,6 +136,8 @@
 	if(src.occupant)
 		user << "<span class='notice'>\The [src] is already occupied!</span>"
 		return
+	if(G.affecting.buckled)
+		G.affecting.buckled.unbuckle()
 	if(G.affecting.abiotic())
 		user << "<span class='notice'>Subject cannot have abiotic items on.</span>"
 		return

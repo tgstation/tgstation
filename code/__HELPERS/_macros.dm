@@ -69,6 +69,8 @@
 
 #define isitem(A) istype(A, /obj/item)
 
+#define isEmag(A) istype(A, /obj/item/weapon/card/emag)
+
 #define istool(A) is_type_in_list(A, common_tools)
 
 #define iswrench(A) istype(A, /obj/item/weapon/wrench)
@@ -86,6 +88,8 @@
 #define iscrowbar(A) istype(A, /obj/item/weapon/crowbar)
 
 #define iswire(O) istype(O, /obj/item/stack/cable_coil)
+
+#define iscamera(A) istype(A, /obj/machinery/camera)
 
 //Macros for antags
 

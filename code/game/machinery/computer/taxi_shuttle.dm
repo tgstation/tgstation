@@ -99,13 +99,14 @@
 		return 1
 	return 0
 
+/obj/machinery/computer/taxi_shuttle/power_change()
+	return
 
 /obj/machinery/computer/taxi_shuttle/Topic(href, href_list)
-	if(!isliving(usr))	return
-	var/mob/living/user = usr
+	if(..())	return 1
+	var/mob/user = usr
 
-	if(in_range(src, user) || istype(user, /mob/living/silicon))
-		user.set_machine(src)
+	user.set_machine(src)
 
 	for(var/place in href_list)
 		if(href_list[place])

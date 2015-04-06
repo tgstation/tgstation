@@ -39,6 +39,11 @@ var/list/obj/machinery/prism/prism_list = list()
 	prism_list -= src
 	..()
 
+/obj/machinery/prism/proc/check_rotation()
+	for(var/obj/effect/beam/emitter/B in beams)
+		world << "[src] \ref[src] found [get_dir(src, B)] its dir is [dir]"
+		if(get_dir(src, B) != dir)
+			return 1
 /obj/machinery/prism/verb/rotate_cw()
 	set name = "Rotate (Clockwise)"
 	set category = "Object"
@@ -101,12 +106,13 @@ var/list/obj/machinery/prism/prism_list = list()
 		beam.power=0
 		var/list/spawners = list(src)
 		for(var/obj/effect/beam/emitter/B in beams)
+			if(get_dir(src, B) == dir)
+				continue
 			if(B.HasSource(src))
 				warning("Ignoring beam [B] due to recursion.")
 				continue // Prevent infinite loops.
 			// Don't process beams firing into our emission side.
-			if(get_dir(src, B) == dir)
-				continue
+
 			spawners += B.sources
 			beam.power += B.power
 			var/beamdir=get_dir(B.loc,src)

@@ -14,7 +14,7 @@
 
 /obj/item/weapon/mop/New()
 	. = ..()
-	create_reagents(5)
+	create_reagents(50)
 
 /obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 	reagents.reaction(A,1,10) //Mops magically make chems ten times more efficient than usual, aka equivalent of 50 units of whatever you're using
@@ -31,7 +31,8 @@
 /obj/item/weapon/mop/afterattack(atom/A, mob/user as mob)
 	if(!user.Adjacent(A))
 		return
-
+	if(A.mop_act(src, user))
+		return
 	if(istype(A, /mob/living))
 		if(!(reagents.total_volume < 1)) //Slap slap slap
 			A.visible_message("<span class='danger'>[user] covers [A] in the mop's contents</span>")

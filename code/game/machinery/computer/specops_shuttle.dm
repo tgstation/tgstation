@@ -538,10 +538,9 @@ var/specops_shuttle_timeleft = 0
 
 /obj/machinery/computer/specops_shuttle/Topic(href, href_list)
 	if(..())
-		return
+		return 1
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
+	usr.set_machine(src)
 
 	if (href_list["sendtodock"])
 		if(!specops_shuttle_at_station|| specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return

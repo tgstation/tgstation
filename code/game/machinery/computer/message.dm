@@ -294,12 +294,8 @@
 
 /obj/machinery/computer/message_monitor/Topic(href, href_list)
 	if(..())
-		return
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(!istype(usr, /mob/living))
-		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+		return 1
+	else
 		//Authenticate
 		if (href_list["auth"])
 			if(auth)

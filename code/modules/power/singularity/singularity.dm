@@ -282,10 +282,6 @@
 /obj/machinery/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
 
-
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
-
 	for(var/atom/X in orange(grav_pull, src))
 		var/dist = get_dist(X, src)
 		var/obj/machinery/singularity/S = src
@@ -298,9 +294,6 @@
 
 	//for (var/turf/T in trange(grav_pull, src)) // TODO: Create a similar trange for orange to prevent snowflake of self check.
 	//	consume(T)
-
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
 
 	return
 /*

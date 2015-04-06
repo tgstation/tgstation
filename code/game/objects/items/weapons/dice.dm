@@ -5,10 +5,12 @@
 	icon_state = "d6"
 	w_class = 1
 	var/sides = 6
+	var/minsides = 1
 	var/result = null
 
 /obj/item/weapon/dice/New()
-	result = rand(1, sides)
+	..()
+	result = rand(minsides, sides)
 	update_icon()
 
 /obj/item/weapon/dice/d2
@@ -64,7 +66,7 @@
 	diceroll(user, 1)
 
 /obj/item/weapon/dice/proc/diceroll(mob/user as mob, thrown)
-	result = rand(1, sides)
+	result = rand(minsides, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)
 		comment = "Nat 20!"
@@ -98,7 +100,7 @@
 	if(result == 1)
 		user << "<span class='danger'>Rocks fall, you die.</span>"
 		user.gib()
-		user.drop_item(src)
+		user.drop_item(src.loc)
 	else
 		triggered = 1
 		visible_message("<span class='notice'>You hear a quiet click.</span>")

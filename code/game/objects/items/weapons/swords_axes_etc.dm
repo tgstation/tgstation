@@ -115,7 +115,7 @@
 		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD)
 		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY)
 		blood_overlay = image(I)
-		blood_overlay = blood_color
+		blood_overlay.color = blood_color
 
 		overlays += blood_overlay
 

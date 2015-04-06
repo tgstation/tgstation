@@ -91,17 +91,15 @@ Feel free to do whatever with this if you think it lacks.
 		else
 			var/obj/item/device/pda/P = O
 			if(istype(P))
-				user.drop_item(P)
+				user.drop_item(src)
 				storedpda = P
-				P.loc = src
 				//P.add_fingerprint(usr)
 				update_icon()
 
 /obj/machinery/pdapainter/attack_hand(mob/user as mob)
 	..()
 
-
-	if(!istype(usr, /mob/living))
+	if(!ishuman(user))
 		return
 
 	src.add_fingerprint(user)
@@ -134,8 +132,7 @@ Feel free to do whatever with this if you think it lacks.
 	set category = "Object"
 	set src in oview(1)
 
-
-	if(!istype(usr, /mob/living))
+	if(!ishuman(usr))
 		return
 
 	if(storedpda)
@@ -150,9 +147,8 @@ Feel free to do whatever with this if you think it lacks.
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(usr, /mob/living))
+	if(!ishuman(usr))
 		return
-
 	if(storedpda)
 		usr << "You can't print a PDA while \the [storedpda] is loaded into \the [src]."
 		return

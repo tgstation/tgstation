@@ -8,7 +8,7 @@
 	charge_max = 100
 	spell_flags = 0
 	invocation = "ONI SOMA"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
 
@@ -25,7 +25,11 @@
 	var/ex_light = 2
 	var/ex_flash = 5
 
+	hud_state = "wiz_fireball"
+
 /spell/targeted/projectile/dumbfire/fireball/prox_cast(var/list/targets, spell_holder)
+	for(var/mob/living/M in targets)
+		apply_spell_damage(M)
 	explosion(get_turf(spell_holder), ex_severe, ex_heavy, ex_light, ex_flash)
 
 //PROJECTILE

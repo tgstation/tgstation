@@ -26,13 +26,15 @@
 	loadone = !loadone
 	usr <<"<span class='notice'> You set the Device Analyzer to [loadone ? "transfer one design" : "transfer all designs"] on use.</span>"
 
-/obj/item/device/device_analyser/afterattack(var/atom/A, mob/user, proximity_flag) //Hurrah for after-attack
-	if(get_turf(src) != get_turf(user)) //we aren't in the same place as our holder, so we have been moved and can ignore scanning
-		return
+/obj/item/device/device_analyser/preattack(var/atom/A, mob/user, proximity_flag) //Hurrah for after-attack
+	/*if(get_turf(src) != get_turf(user)) //we aren't in the same place as our holder, so we have been moved and can ignore scanning
+		return*/
 	if(proximity_flag != 1)
 		return
 	if(istype(A, /obj)) //don't want to scan mobs or anything like that
 		var/obj/O = A
+		if(istype(O, /obj/machinery/r_n_d/reverse_engine) && loaded_designs.len)
+			return //don't try to scan the reverse engine if we have any designs to upload! let the reverse engine's attackby handle it instead
 		for(var/datum/design/mechanic_design/current_design in loaded_designs)
 			if(current_design.build_path == O.type)
 				user <<"<span class='rose'>You've already got a schematic of \the [O]!</span>"

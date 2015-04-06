@@ -76,13 +76,15 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("apc frame", /obj/item/mounted/frame/apc_frame, 2), \
 	new/datum/stack_recipe("air alarm frame", /obj/item/mounted/frame/alarm_frame, 2), \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/mounted/frame/firealarm, 2), \
+	new/datum/stack_recipe("lightswitch frame", /obj/item/mounted/frame/light_switch, 2), \
+	new/datum/stack_recipe("intercom frame", /obj/item/mounted/frame/intercom, 2), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/machinery/door/mineral/iron, 20, one_per_turf = 1, on_floor = 1), \
 )
 
 /obj/item/stack/sheet/metal
 	name = "metal"
-	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
+	desc = "Sheets made out of metal. It has been dubbed Metal Sheets."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	m_amt = 3750
@@ -227,6 +229,8 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("light tubes box", /obj/item/weapon/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs box", /obj/item/weapon/storage/box/lights/bulbs), \
 	new/datum/stack_recipe("mouse traps box", /obj/item/weapon/storage/box/mousetraps), \
+	new/datum/stack_recipe("candle box", /obj/item/weapon/storage/fancy/candle_box/empty), \
+	new/datum/stack_recipe("crayon box", /obj/item/weapon/storage/fancy/crayons/empty), \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \

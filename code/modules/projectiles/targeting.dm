@@ -41,7 +41,7 @@
 		del(target)
 
 //Compute how to fire.....
-/obj/item/weapon/gun/proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params)
+/obj/item/weapon/gun/proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params, struggle = 0)
 	//Lets not spam it.
 	if(lock_time > world.time - 2) return
 	.
@@ -52,7 +52,7 @@
 		if(M && isliving(M) && M in view(user) && !(M in target))
 			Aim(M) //Aha!  Aim at them!
 		else if(!ismob(M) || (ismob(M) && !(M in view(user)))) //Nope!  They weren't there!
-			Fire(A,user,params)  //Fire like normal, then.
+			Fire(A,user,params, "struggle" = struggle)  //Fire like normal, then.
 	usr.dir = get_cardinal_dir(src, A)
 
 //Aiming at the target mob.

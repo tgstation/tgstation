@@ -383,7 +383,7 @@
 
 /obj/item/clothing/suit/soldiercoat
 	name = "Soldier's Coat"
-	desc = "Ein Mantel gemacht, um die Verbündeten zu zerstören."
+	desc = "Ein Mantel gemacht, um die VerbÃ¼ndeten zu zerstÃ¶ren."
 	icon_state = "soldiersuit"
 	item_state = "soldiersuit"
 
@@ -418,4 +418,16 @@
 	name = "Crazed Jester's Robe"
 	desc = "Do I look like a waiter?"
 	icon_state = "kefkarobe"
-	item_state = "kefkarobe"
+/obj/item/clothing/suit/libertycoat
+	name = "Liberty Coat"
+	desc = "Smells faintly of freedom."
+	icon_state = "libertycoat"
+	item_state = "libertycoat"
+/obj/item/clothing/suit/storage/draculacoat
+	name = "Vampire Coat"
+	desc = "What is a man? A miserable little pile of secrets."
+	icon_state = "draculacoat"
+	item_state = "draculacoat"
+	blood_overlay_type = "coat"
+	cant_hold = list(/obj/item/weapon/nullrod, /obj/item/weapon/storage/bible)
+	armor = list(melee = 30, bullet = 20, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)

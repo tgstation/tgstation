@@ -66,7 +66,7 @@ Class Procs:
 	src.A = A
 	src.B = B
 	zoneA = A.zone
-	if(!istype(B) || iscatwalk(B))
+	if(!istype(B))
 		mark_space()
 		edge = air_master.get_edge(A.zone,B)
 		edge.add_connection(src)
@@ -99,7 +99,7 @@ Class Procs:
 
 /connection/proc/update()
 	//world << "Updated, \..."
-	if(!istype(A,/turf/simulated) || iscatwalk(A))
+	if(!istype(A,/turf/simulated))
 		//world << "Invalid A."
 		erase()
 		return
@@ -115,7 +115,7 @@ Class Procs:
 		else
 			mark_direct()
 
-	var/b_is_space = (!istype(B,/turf/simulated) || iscatwalk(B))
+	var/b_is_space = (!istype(B,/turf/simulated))
 
 	if(state & CONNECTION_SPACE)
 		if(!b_is_space)

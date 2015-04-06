@@ -27,7 +27,7 @@
 			var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 			if (user.get_active_hand() != I)
 				return
-			if((!in_range(src, usr) && src.loc != user))
+			if (!Adjacent(user) || user.stat)
 				return
 			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if(t)

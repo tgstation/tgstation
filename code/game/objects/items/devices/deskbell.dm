@@ -73,7 +73,7 @@
 	return attack_hand(user)
 
 /obj/item/device/deskbell/attack_animal(var/mob/user)
-	return attack_hand(user)
+	return
 
 /obj/item/device/deskbell/attack_hand(var/mob/user)
 	ring()

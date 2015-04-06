@@ -36,12 +36,12 @@ var/global/list/moneytypes=list(
 
 /obj/item/weapon/spacecash/examine(mob/user)
 	if(amount>1)
-		gender = PLURAL
+		setGender(PLURAL)
 		..()
 		user << "It is a stack holding [amount] chips."
 		user << "<span class='info'>It's worth [worth*amount] credits.</span>"
 	else
-		gender = NEUTER
+		setGender(NEUTER)
 		..()
 
 /obj/item/weapon/spacecash/update_icon()
@@ -105,6 +105,12 @@ var/global/list/moneytypes=list(
 	icon_state = "cash1000"
 	worth = 1000
 	stack_color = "#333333"
+
+/obj/structure/closet/cash_closet/New()
+	var/list/types = typesof(/obj/item/weapon/spacecash)
+	for(var/i = 1 to rand(3,10))
+		var/typepath = pick(types)
+		new typepath(src)
 
 /proc/dispense_cash(var/amount, var/loc)
 	for(var/cashtype in moneytypes)

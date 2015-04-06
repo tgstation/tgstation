@@ -72,8 +72,7 @@
 			user << "There is already a reagent container loaded!"
 			return
 
-		user.drop_item()
-		W.loc = src
+		user.drop_item(src)
 		src.beaker = W
 		user << "You attach \the [W] to \the [src]."
 		src.update_icon()
@@ -147,6 +146,7 @@
 
 /obj/machinery/iv_drip/verb/toggle_mode()
 	set name = "Toggle Mode"
+	set category = "Object"
 	set src in view(1)
 
 	if(!istype(usr, /mob/living))

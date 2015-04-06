@@ -9,6 +9,7 @@
 	flags = OPENCONTAINER
 	volume = 100
 
+
 	var/draw_warnings = 1 //Set to 0 to stop it from drawing the alert lights.
 
 	// Plant maintenance vars.
@@ -129,6 +130,18 @@
 	create_reagents(200)
 	connect()
 	update_icon()
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/hydroponics,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
+	RefreshParts()
 	if(closed_system)
 		flags &= ~OPENCONTAINER
 
@@ -519,7 +532,7 @@
 	pestlevel = 0
 	sampled = 0
 	update_icon()
-	visible_message("\blue [src] has been overtaken by [seed.display_name].")
+	visible_message("<span class='info'>[src] has been overtaken by [seed.display_name]</span>.")
 
 	return
 
@@ -576,7 +589,7 @@
 	weedlevel = 0
 
 	update_icon()
-	visible_message("\red The \blue [previous_plant] \red has suddenly mutated into \blue [seed.display_name]!")
+	visible_message("<span class='alert'>The</span> <span class='info'>[previous_plant]</span> <span class='alert'>has suddenly mutated into</span> <span class='info'>[seed.display_name]!</span>")
 
 	return
 
@@ -636,7 +649,7 @@
 		if(!seed)
 
 			var/obj/item/seeds/S = O
-			user.drop_item(O)
+			user.drop_item()
 
 			if(!S.seed)
 				user << "The packet seems to be empty. You throw it away."
@@ -670,16 +683,16 @@
 			update_icon()
 
 		else
-			user << "\red \The [src] already has seeds in it!"
+			user << "<span class='alert'>\The [src] already has seeds in it!</span>"
 
 	else if (istype(O, /obj/item/weapon/minihoe))  // The minihoe
 
 		if(weedlevel > 0)
-			user.visible_message("\red [user] starts uprooting the weeds.", "\red You remove the weeds from the [src].")
+			user.visible_message("<span class='alert'>[user] starts uprooting the weeds.</span>", "<span class='alert'>You remove the weeds from the [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else
-			user << "\red This plot is completely devoid of weeds. It doesn't need uprooting."
+			user << "<span class='alert'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
 
 	else if (istype(O, /obj/item/weapon/storage/bag/plants))
 
@@ -694,7 +707,7 @@
 	else if ( istype(O, /obj/item/weapon/plantspray) )
 
 		var/obj/item/weapon/plantspray/spray = O
-		user.drop_item(O)
+		user.drop_item()
 		toxins += spray.toxicity
 		pestlevel -= spray.pest_kill_str
 		weedlevel -= spray.weed_kill_str
@@ -718,7 +731,7 @@
 	else if(istype(O, /obj/item/apiary))
 
 		if(seed)
-			user << "\red [src] is already occupied!"
+			user << "<span class='alert'>[src] is already occupied!</span>"
 		else
 			user.drop_item()
 			qdel(O)
@@ -727,7 +740,12 @@
 			A.icon = src.icon
 			A.icon_state = src.icon_state
 			A.hydrotray_type = src.type
+			A.component_parts = component_parts.Copy()
+			A.contents = contents.Copy()
+			contents.len = 0
+			component_parts.len = 0
 			qdel(src)
+
 	return
 
 /obj/machinery/portable_atmospherics/hydroponics/attack_tk(mob/user as mob)
@@ -738,10 +756,17 @@
 	else if(dead)
 		remove_dead(user)
 
+/obj/machinery/portable_atmospherics/hydroponics/attack_ai(mob/user as mob)
+
+	return //Until we find something smart for you to do, please steer clear. Thanks
+
+/obj/machinery/portable_atmospherics/hydroponics/attack_robot(mob/user as mob)
+
+	if(isMoMMI(user) && Adjacent(user)) //Are we a beep ping ?
+		return attack_hand(user) //Let them use the tray
+
 /obj/machinery/portable_atmospherics/hydroponics/attack_hand(mob/user as mob)
 
-	if(istype(usr,/mob/living/silicon))
-		return
 	if(isobserver(user))
 		if(!(..()))
 			return 0
@@ -751,18 +776,28 @@
 		remove_dead(user)
 
 	else
-		if(seed && !dead)
-			usr << "[src] has \blue [seed.display_name] \black planted."
-			if(health <= (seed.endurance / 2))
-				usr << "The plant looks \red unhealthy."
-		else
-			usr << "[src] is empty."
-		usr << "Water: [round(waterlevel,0.1)]/100"
-		usr << "Nutrient: [round(nutrilevel,0.1)]/10"
-		if(weedlevel >= 5)
-			usr << "[src] is \red filled with weeds!"
-		if(pestlevel >= 5)
-			usr << "[src] is \red filled with tiny worms!"
+		examine(user) //using examine() to display the reagents inside the tray as well
+
+/obj/machinery/portable_atmospherics/hydroponics/examine(mob/user)
+	..()
+	view_contents(user)
+
+/obj/machinery/portable_atmospherics/hydroponics/proc/view_contents(mob/user)
+	if(src.seed && !src.dead)
+		user << "[src] has <span class='info'>[src.seed.display_name]</span> planted."
+		if(src.health <= (src.seed.endurance / 2))
+			user << "The plant looks <span class='alert'>unhealthy.</span>"
+	else if(src.seed && src.dead)
+		user << "[src] is full of dead plant matter."
+	else
+		user << "[src] has nothing planted."
+	if (Adjacent(user) || isobserver(user) || issilicon(user))
+		user << "Water: [round(src.waterlevel,0.1)]/100"
+		user << "Nutrient: [round(src.nutrilevel,0.1)]/10"
+		if(src.weedlevel >= 5)
+			user << "[src] is <span class='alert'>filled with weeds!</span>"
+		if(src.pestlevel >= 5)
+			user << "[src] is <span class='alert'>filled with tiny worms!</span>"
 
 		if(!istype(src,/obj/machinery/portable_atmospherics/hydroponics/soil))
 
@@ -790,7 +825,7 @@
 				else
 					light_available =  5
 
-			usr << "The tray's sensor suite is reporting a light level of [light_available] lumens and a temperature of [environment.temperature]K."
+			user << "The tray's sensor suite is reporting a light level of [light_available] lumens and a temperature of [environment.temperature]K."
 
 /obj/machinery/portable_atmospherics/hydroponics/verb/close_lid()
 	set name = "Toggle Tray Lid"
@@ -829,5 +864,7 @@
 /obj/machinery/portable_atmospherics/hydroponics/soil/New()
 	..()
 	verbs -= /obj/machinery/portable_atmospherics/hydroponics/verb/close_lid
+	component_parts = list()
+
 
 #undef HYDRO_SPEED_MULTIPLIER

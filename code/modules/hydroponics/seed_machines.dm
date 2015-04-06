@@ -49,6 +49,7 @@
 	var/eject_disk = 0
 	var/failed_task = 0
 	var/disk_needs_genes = 0
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/botany/process()
 
@@ -91,21 +92,10 @@
 		if(S.seed && S.seed.immutable > 0)
 			user << "That seed is not compatible with our genetics technology."
 		else
-			user.drop_item(W)
-			W.loc = src
+			user.drop_item(src)
 			seed = W
 			user << "You load [W] into [src]."
 		return
-
-	if(istype(W,/obj/item/weapon/screwdriver))
-		open = !open
-		user << "\blue You [open ? "open" : "close"] the maintenance panel."
-		return
-
-	if(open)
-		if(istype(W, /obj/item/weapon/crowbar))
-			crowbarDestroy(user)
-			return
 
 	if(istype(W,/obj/item/weapon/disk/botany))
 		if(loaded_disk)
@@ -123,13 +113,12 @@
 					user << "That disk does not have any gene data loaded."
 					return
 
-			user.drop_item(W)
-			W.loc = src
+			user.drop_item(src)
 			loaded_disk = W
 			user << "You load [W] into [src]."
 
 		return
-	..()
+	return ..()
 
 // Allows for a trait to be extracted from a seed packet, destroying that seed.
 /obj/machinery/botany/extractor
@@ -138,6 +127,21 @@
 
 	var/datum/seed/genetics // Currently scanned seed genetic structure.
 	var/degradation = 0     // Increments with each scan, stops allowing gene mods after a certain point.
+
+/obj/machinery/botany/extractor/New()
+	..()
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/botany_centrifuge,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/matter_bin,
+	)
 
 /obj/machinery/botany/extractor/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 
@@ -184,6 +188,8 @@
 
 	if(..())
 		return 1
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
 
 	if(href_list["eject_packet"])
 		if(!seed) return
@@ -259,8 +265,6 @@
 		if(!genetics) return
 		genetics = null
 		degradation = 0
-
-	src.updateUsrDialog()
 	return
 
 // Fires an extracted trait into another packet of seeds with a chance
@@ -269,6 +273,19 @@
 	name = "bioballistic delivery system"
 	icon_state = "traitgun"
 	disk_needs_genes = 1
+
+/obj/machinery/botany/editor/New()
+	..()
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/botany_bioballistic,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/console_screen,
+	)
 
 /obj/machinery/botany/editor/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 

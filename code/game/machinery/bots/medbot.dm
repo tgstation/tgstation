@@ -214,8 +214,7 @@
 			user << "<span class='notice'>There is already a beaker loaded.</span>"
 			return
 
-		user.drop_item()
-		W.loc = src
+		user.drop_item(src)
 		src.reagent_glass = W
 		user << "<span class='notice'>You insert [W].</span>"
 		src.updateUsrDialog()
@@ -591,7 +590,7 @@
 			if(0)
 				if(istype(W, /obj/item/device/healthanalyzer))
 					user.drop_item()
-					del(W)
+					qdel(W)
 					src.build_step++
 					user << "<span class='notice'>You add the health sensor to [src].</span>"
 					src.name = "First aid/robot arm/health analyzer assembly"
@@ -600,7 +599,7 @@
 			if(1)
 				if(isprox(W))
 					user.drop_item()
-					del(W)
+					qdel(W)
 					src.build_step++
 					user << "<span class='notice'>You complete the Medibot! Beep boop.</span>"
 					var/turf/T = get_turf(src)

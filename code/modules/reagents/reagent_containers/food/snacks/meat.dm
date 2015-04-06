@@ -1,27 +1,25 @@
+//The one and only meat, king of foods
+
 /obj/item/weapon/reagent_containers/food/snacks/meat
 	name = "meat"
 	desc = "A slab of meat"
 	icon_state = "meat"
-	health = 180
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
 
-
 /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 	name = "synthetic meat"
 	desc = "A synthetic slab of flesh."
-	//nonplant_seed_type = /obj/item/seeds/synthmeatseed
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/human
-	name = "-meat"
+	name = " meat" //Griffon McDumbass meat
 	var/subjectname = ""
 	var/subjectjob = null
 
-
 /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
-	//same as plain meat
+	//Same as plain meat
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "Corgi meat"

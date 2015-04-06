@@ -298,9 +298,15 @@
 			count += (officer.current_positions + warden.current_positions + hos.current_positions)
 			if(job.current_positions > (config.assistantratio * count))
 				if(count >= 5) // if theres more than 5 security on the station just let assistants join regardless, they should be able to handle the tide
-					return 1
-				return 0
-	return 1
+					. = 1
+				else
+					return 0
+	if(job.title == "Assistant" && job.current_positions > 5)
+		var/datum/job/officer = job_master.GetJob("Security Officer")
+		if(officer.current_positions >= officer.total_positions)
+			officer.total_positions++
+	. = 1
+	return
 
 /mob/new_player/proc/FuckUpGenes(var/mob/living/carbon/human/H)
 	// 20% of players have bad genetic mutations.
@@ -326,10 +332,10 @@
 	job_master.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+	if(character.client.prefs.randomslot) character.client.prefs.random_character_sqlite(character, character.ckey)
 	job_master.EquipRank(character, rank, 1)					//equips the human
 	EquipCustomItems(character)
 	character.loc = pick(latejoin)
-	character.lastarea = get_area(loc)
 	character.store_position()
 
 	ticker.mode.latespawn(character)
@@ -392,7 +398,6 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 	close_spawn_windows()
 
 	var/mob/living/carbon/human/new_character = new(loc)
-	new_character.lastarea = get_area(loc)
 
 	var/datum/species/chosen_species
 	if(client.prefs.species)
@@ -410,7 +415,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 		if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED))
 			new_character.add_language(client.prefs.language)*/
 	if(ticker.random_players || appearance_isbanned(src)) //disabling ident bans for now
-		new_character.gender = pick(MALE, FEMALE)
+		new_character.setGender(pick(MALE, FEMALE))
 		client.prefs.real_name = random_name(new_character.gender)
 		client.prefs.randomize_appearance_for(new_character)
 		client.prefs.flavor_text = ""
@@ -437,9 +442,11 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 		new_character.dna.SetSEState(GLASSESBLOCK,1,1)
 		new_character.disabilities |= NEARSIGHTED
 
-	if(client.prefs.disabilities & DISABILITY_FLAG_FAT)
+	chosen_species = all_species[client.prefs.species]
+	if( (client.prefs.disabilities & DISABILITY_FLAG_FAT) && (chosen_species.flags & CAN_BE_FAT) )
 		new_character.mutations += M_FAT
-		new_character.overeatduration = 600 // Max overeat
+		new_character.mutations += M_OBESITY
+		new_character.overeatduration = 600
 
 	if(client.prefs.disabilities & DISABILITY_FLAG_EPILEPTIC)
 		new_character.dna.SetSEState(EPILEPSYBLOCK,1,1)

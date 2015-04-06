@@ -139,6 +139,24 @@ NanoBaseHelpers = function ()
 
 				return '<div class="displayBar ' + styleClass + '"><div class="displayBarFill ' + styleClass + '" style="width: ' + percentage + '%;"></div><div class="displayBarText ' + styleClass + '">' + showText + '</div></div>';
 			},
+			// Convert explosion range to thing.
+			explosionToClass: function(range, cap) {
+				if(range >= cap) return 'bad';
+				if(cap * 0.25 * 0.66 <= range * 0.25) return 'bad';
+				if(cap * 0.25 * 0.33 <= range * 0.25) return 'average';
+				return 'good';
+			},
+			// Convert status to class for cameras
+			statusToClass: function(status) {
+				if(status==0) return 'good';
+				if(status==1) return 'average';
+				return 'bad';
+			},
+			statusToSpan: function(level) {
+				if(level==0) return '"<span class="good">Active</span>"';
+				if(level==1) return '"<span class="average">Deactivated</span>"';
+				return '"<span class="bad">No Response</span>"';
+			},
 			// Convert danger level to class (for the air alarm)
 			dangerToClass: function(level) {
 				if(level==0) return 'good';

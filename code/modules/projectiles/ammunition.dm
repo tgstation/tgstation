@@ -72,8 +72,7 @@
 			accepted = 1
 		if(AC.BB && accepted && stored_ammo.len < max_ammo)
 			stored_ammo += AC
-			user.drop_item(AC)
-			AC.loc = src
+			user.drop_item(src)
 			user << "<span class='notice'>You successfully load the [src] with \the [AC]</span>"
 			update_icon()
 		else if(!AC.BB)

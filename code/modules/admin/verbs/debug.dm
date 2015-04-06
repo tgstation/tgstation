@@ -163,8 +163,7 @@ Pressure: [env.return_pressure()]"}
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has robotized [M.key].")
-		spawn(10)
-			M:Robotize()
+		. = M:Robotize()
 
 	else
 		alert("Invalid mob")
@@ -178,8 +177,7 @@ Pressure: [env.return_pressure()]"}
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has MoMMIfied [M.key].")
-		spawn(10)
-			M:MoMMIfy()
+		. = M:MoMMIfy()
 
 	else
 		alert("Invalid mob")
@@ -201,8 +199,7 @@ Pressure: [env.return_pressure()]"}
 		return
 
 	log_admin("[key_name(src)] has animalized [M.key].")
-	spawn(10)
-		M.Animalize()
+	. = M.Animalize()
 
 
 /client/proc/makepAI(var/turf/T in mob_list)
@@ -242,8 +239,9 @@ Pressure: [env.return_pressure()]"}
 	if(ishuman(M))
 		log_admin("[key_name(src)] has alienized [M.key].")
 		spawn(10)
-			M:Alienize()
 			feedback_add_details("admin_verb","MKAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			return M:Alienize()
+
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
 		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into an alien.", 1)
 	else
@@ -259,8 +257,8 @@ Pressure: [env.return_pressure()]"}
 	if(ishuman(M))
 		log_admin("[key_name(src)] has slimeized [M.key].")
 		spawn(10)
-			M:slimeize()
 			feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			return M:slimeize()
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
 		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a slime.", 1)
 	else
@@ -1115,6 +1113,31 @@ Pressure: [env.return_pressure()]"}
 
 	usr << "\blue Dumped to [F]"
 
+/client/proc/cmd_admin_find_bad_blood_tracks()
+	set category = "Debug"
+	set name = "Find broken blood tracks"
+	if(!holder) return
+	message_admins("[src] used find broken blood tracks")
+	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
+	var/F =file("data/logs/profiling/[date_string]_broken_blood.log")
+	fdel(F)
+	for(var/obj/effect/decal/cleanable/blood/tracks/T in blood_list)
+		if(!T.loc)
+			F << "Found [T] in a null location but still in the blood list"
+			F << "--------------------------------------"
+			continue
+		var/dat
+		for(var/b in cardinal)
+			if(isnull(T.setdirs["[b]"]))
+				dat += ("[T] ([formatJumpTo(T)]) had a bad directional [b] or bad list [T.setdirs.len]")
+				dat += ("Setdirs keys:")
+				for(var/key in T.setdirs)
+					dat += (key)
+		dat += "--------------------------------------"
+		F << dat
+
+	usr << "\blue Dumped to [F]"
+
 #ifdef PROFILE_MACHINES
 /client/proc/cmd_admin_dump_macprofile()
 	set category = "Debug"
@@ -1254,7 +1277,7 @@ var/global/blood_virus_spreading_disabled = 0
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		M:Cluwneize()
+		return M:Cluwneize()
 		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a cluwne.", 1)
 		feedback_add_details("admin_verb","MKCLU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(src)] has cluwne-ified [M.key].")

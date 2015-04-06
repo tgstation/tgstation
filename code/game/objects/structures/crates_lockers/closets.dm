@@ -223,7 +223,7 @@
 
 	if(health <= 0)
 		dump_contents()
-		del(src)
+		qdel(src)
 
 // This is broken, see attack_ai.
 /obj/structure/closet/attack_robot(mob/living/silicon/robot/user as mob)
@@ -287,7 +287,7 @@
 		if(isrobot(user))
 			return
 
-		user.drop_item(src)
+		user.drop_item(src.loc)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
@@ -395,7 +395,7 @@
 	return 1
 
 /obj/structure/closet/container_resist()
-	var/mob/living/user = usr
+	var/mob/user = usr
 	var/breakout_time = 2 //2 minutes by default
 
 	if(opened || (!welded && !locked))

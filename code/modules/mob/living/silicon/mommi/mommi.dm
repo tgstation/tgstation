@@ -76,7 +76,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	else
 		lawupdate = 0
 
-	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
@@ -90,13 +89,14 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 
 /mob/living/silicon/robot/mommi/choose_icon()
-	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "RepairBot", "Replicator", "Prime")
+	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "RepairBot", "Replicator", "Prime", "Scout")
 	switch(icontype)
 		if("Replicator") subtype = "replicator"
 		if("Keeper")	 subtype = "keeper"
 		if("RepairBot")	 subtype = "repairbot"
 		if("Hover")	     subtype = "hovermommi"
 		if("Prime")	     subtype = "mommiprime"
+		if("Scout")	     subtype = "scout"
 		else			 subtype = "mommi"
 	updateicon()
 	var/answer = input("Is this what you want?", "Mobile MMI", null) in list("Yes", "No")
@@ -117,7 +117,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		modtype=modules[0]
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
-	var/channels = list()
 
 	if(module)
 		return
@@ -141,7 +140,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	updatename()
 
 	choose_icon(6,module_sprites)
-	radio.config(channels)
 	base_icon = icon_state
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -221,8 +219,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		else if(cell)
 			user << "There is a power cell already installed."
 		else
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			cell = W
 			user << "You insert the power cell."
 //			chargecount = 0
@@ -280,8 +277,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				return
 			if(U.action(src))
 				usr << "You apply the upgrade to [src]!"
-				usr.drop_item()
-				U.loc = src
+				usr.drop_item(src)
 			else
 				usr << "Upgrade error!"
 

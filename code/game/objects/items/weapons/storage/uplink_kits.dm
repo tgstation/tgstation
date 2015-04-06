@@ -1,19 +1,19 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "psycho" = 1)))
+		var/tagname = pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "psycho" = 1, "hotline" = 1))
+		switch (tagname)
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
 				new /obj/item/clothing/mask/gas/voice(src)
 				new /obj/item/weapon/card/id/syndicate(src)
 				new /obj/item/clothing/shoes/syndigaloshes(src)
-				return
 
 			if("stealth")
 				new /obj/item/weapon/gun/energy/crossbow(src)
 				new /obj/item/weapon/pen/paralysis(src)
 				new /obj/item/device/chameleon(src)
-				return
+
 
 			if("screwed")
 				new /obj/effect/spawner/newbomb/timer/syndicate(src)
@@ -21,14 +21,14 @@
 				new /obj/item/device/powersink(src)
 				new /obj/item/clothing/suit/space/syndicate(src)
 				new /obj/item/clothing/head/helmet/space/syndicate(src)
-				return
+
 
 			if("guns")
 				new /obj/item/weapon/gun/projectile(src)
 				new /obj/item/ammo_storage/box/a357(src)
 				new /obj/item/weapon/card/emag(src)
 				new /obj/item/weapon/plastique(src)
-				return
+
 
 			if("murder")
 				new /obj/item/weapon/melee/energy/sword(src)
@@ -36,7 +36,7 @@
 				new /obj/item/weapon/card/emag(src)
 				new /obj/item/clothing/shoes/syndigaloshes(src)
 				new /obj/item/weapon/storage/belt/skull(src)
-				return
+
 
 			if("freedom")
 				var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
@@ -47,20 +47,20 @@
 				U.imp = new /obj/item/weapon/implant/uplink(U)
 				U.update()
 				U.name = "Uplink"
-				return
+
 
 			if("hacker")
 				new /obj/item/weapon/aiModule/freeform/syndicate(src)
 				new /obj/item/weapon/card/emag(src)
 				new /obj/item/device/encryptionkey/binary(src)
-				return
+
 
 			if("lordsingulo")
 				new /obj/item/device/radio/beacon/syndicate(src)
 				new /obj/item/clothing/suit/space/syndicate(src)
 				new /obj/item/clothing/head/helmet/space/syndicate(src)
 				new /obj/item/weapon/card/emag(src)
-				return
+
 
 			if("smoothoperator")
 				new /obj/item/weapon/gun/projectile/pistol(src)
@@ -70,7 +70,7 @@
 				new /obj/item/bodybag(src)
 				new /obj/item/clothing/under/suit_jacket(src)
 				new /obj/item/clothing/shoes/laceup(src)
-				return
+
 
 			if("psycho")
 				new /obj/item/clothing/suit/raincoat(src)
@@ -81,7 +81,19 @@
 				new /obj/item/weapon/card/emag(src)
 				new /obj/item/weapon/newspaper(src)
 				new /obj/item/weapon/fireaxe(src)
-				return
+
+
+			if("hotline")
+				new /obj/item/clothing/under/bikersuit(src)
+				new /obj/item/clothing/head/helmet/biker(src)
+				new /obj/item/clothing/shoes/mime/biker(src)
+				new /obj/item/clothing/gloves/bikergloves(src)
+				new /obj/item/clothing/mask/gas/voice(src)
+				new /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver(src)
+				new /obj/item/weapon/storage/pill_bottle/hyperzine(src)
+				new /obj/item/weapon/card/id/syndicate(src)
+		tag = tagname
+
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "Box"

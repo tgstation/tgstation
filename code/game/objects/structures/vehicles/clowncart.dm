@@ -108,13 +108,15 @@
 			qdel(W)
 	else if(istype(W, /obj/item/weapon/storage/bag/plants))
 		var/ate_anything = 0
+		var/obj/item/weapon/storage/bag/B = W
 		for(var/obj/item/I in W.contents)
 			if(feed(I,user))
 				ate_anything+=1
+				B.remove_from_storage(I,null)
 				qdel(I)
 		if(ate_anything)
 			visible_message("<span class='notice'>[user] empties \the [W] into [src].</span>")
-			user << "Added [ate_anything] items to \the [src]."
+			user << "Added [ate_anything] item\s to \the [src]."
 	else if(istype(W, /obj/item/weapon/bananapeel)) //Banana peels
 		visible_message("<span class='notice'>[user] applies [W] to \the [src].</span>")
 		health += 10 //Banana peels repair some damage

@@ -66,7 +66,10 @@
 	var/datum/wires/vending/wires = null
 	var/list/overlays_vending[2]//1 is the panel layer, 2 is the dangermode layer
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY
+	var/list/vouchers
+	var/obj/item/weapon/storage/lockbox/coinbox/coinbox
+
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL
 	languages = HUMAN
 
 	var/obj/machinery/account_database/linked_db
@@ -108,7 +111,8 @@
 		reconnect_database()
 		linked_account = vendor_account
 
-		return
+	coinbox = new(src)
+	coinbox.req_access |= src.req_access
 
 	return
 
@@ -122,6 +126,8 @@
 	cvc.contraband = contraband
 	cvc.premium = premium
 */
+	if(coinbox)
+		coinbox.loc = get_turf(src)
 	..()
 
 /obj/machinery/vending/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -238,6 +244,16 @@
 		else
 			R.product_name = temp.name
 
+/obj/machinery/vending/proc/get_item_by_type(var/this_type)
+	var/list/datum_products = list()
+	datum_products |= hidden_records
+	datum_products |= coin_records
+	datum_products |= product_records
+	for(var/datum/data/vending_product/product in datum_products)
+		if(product.product_path == this_type)
+			return product
+	return null
+
 //		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 
 /obj/machinery/vending/emag(mob/user)
@@ -247,18 +263,64 @@
 		return 1
 	return -1
 
+/obj/machinery/vending/proc/can_accept_voucher(var/obj/item/voucher/voucher, mob/user)
+	if(istype(voucher, /obj/item/voucher/free_item))
+		var/obj/item/voucher/free_item/free_vouch = voucher
+		for(var/vend_item in free_vouch.freebies)
+			var/datum/data/vending_product/product = get_item_by_type(vend_item)
+			if(product && product.amount)
+				return 1
+	return 0
+
+//this should ideally be called last as a parent method, since it can delete the voucher
+/obj/machinery/vending/proc/voucher_act(var/obj/item/voucher/voucher, mob/user)
+	if(istype(voucher, /obj/item/voucher/free_item))
+		var/obj/item/voucher/free_item/free_vouch = voucher
+		for(var/i = 1; i <= free_vouch.vend_amount; i++)
+			if(!free_vouch.freebies || !free_vouch.freebies.len)
+				break
+			var/to_vend = pick(free_vouch.freebies)
+			if(free_vouch.single_items)
+				free_vouch.freebies.Remove(to_vend)
+			var/datum/data/vending_product/product = get_item_by_type(to_vend)
+			if(product && product.amount)
+				src.vend(product, user, by_voucher = 1)
+
+	if(voucher.shred_on_use)
+		qdel(voucher)
+	else
+		if(!vouchers)
+			vouchers = list()
+		vouchers.Add(voucher)
+		if(coinbox)
+			voucher.loc = coinbox
+	return 1
+
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
-	..()
+	. = ..()
+	if(.)
+		return .
 	if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_item()
-		W.loc = src
-		coin = W
-		user << "<span class='notice'>You insert [W] into [src].</span>"
+		if (isnull(coin))
+			user.drop_item(src)
+			coin = W
+			user << "<span class='notice'>You insert a coin into [src].</span>"
+		else
+			user << "<SPAN CLASS='notice'>There's already a coin in [src].</SPAN>"
+
 		return
+	else if(istype(W, /obj/item/voucher))
+		if(can_accept_voucher(W, user))
+			user.drop_item(src)
+			user << "<span class='notice'>You insert [W] into [src].</span>"
+			return voucher_act(W, user)
+		else
+			user << "<span class='notice'>\The [src] refuses to take [W].</span>"
+			return 1
 	/*else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
 		if(!linked_db)
@@ -445,7 +507,8 @@
 
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
-		return
+		usr << browse(null, "window=vending")
+		return 1
 
 	//testing("..(): [href]")
 
@@ -472,87 +535,89 @@
 	usr.set_machine(src)
 
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		if (href_list["vend"] && src.vend_ready && !currently_vending)
-			//testing("vend: [href]")
+	if (href_list["vend"] && src.vend_ready && !currently_vending)
+		//testing("vend: [href]")
 
-			if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
-				usr << "\red Access denied." //Unless emagged of course
-				flick(src.icon_deny,src)
-				return
-
-			var/idx=text2num(href_list["vend"])
-			var/cat=text2num(href_list["cat"])
-
-			var/datum/data/vending_product/R = GetProductByID(idx,cat)
-			if (!R || !istype(R) || !R.product_path || R.amount <= 0)
-				message_admins("Invalid vend request by [formatJumpTo(src.loc)]: [href]")
-				return
-
-			if(R.price == null || !R.price)
-				src.vend(R, usr)
-			else
-				src.currently_vending = R
-				src.updateUsrDialog()
-
+		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
+			usr << "\red Access denied." //Unless emagged of course
+			flick(src.icon_deny,src)
 			return
 
-		else if (href_list["cancel_buying"])
-			src.currently_vending = null
+		var/idx=text2num(href_list["vend"])
+		var/cat=text2num(href_list["cat"])
+
+		var/datum/data/vending_product/R = GetProductByID(idx,cat)
+		if (!R || !istype(R) || !R.product_path || R.amount <= 0)
+			message_admins("Invalid vend request by [formatJumpTo(src.loc)]: [href]")
+			return
+
+		if(R.price == null || !R.price)
+			src.vend(R, usr)
+		else
+			src.currently_vending = R
 			src.updateUsrDialog()
-			return
 
-		else if (href_list["buy"])
-			if(istype(usr, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H=usr
-				var/obj/item/weapon/card/card = null
-				var/obj/item/device/pda/pda = null
-				if(istype(H.wear_id,/obj/item/weapon/card))
-					card=H.wear_id
-				else if(istype(H.get_active_hand(),/obj/item/weapon/card))
-					card=H.get_active_hand()
-				else if(istype(H.wear_id,/obj/item/device/pda))
-					pda=H.wear_id
-					if(pda.id)
-						card=pda.id
-				else if(istype(H.get_active_hand(),/obj/item/device/pda))
-					pda=H.get_active_hand()
-					if(pda.id)
-						card=pda.id
-				if(card)
-					connect_account(card)
-			src.updateUsrDialog()
-			return
-
-		else if ((href_list["togglevoice"]) && (src.panel_open))
-			src.shut_up = !src.shut_up
-
-		src.add_fingerprint(usr)
-		src.updateUsrDialog()
-	else
-		usr << browse(null, "window=vending")
 		return
+
+	else if (href_list["cancel_buying"])
+		src.currently_vending = null
+		src.updateUsrDialog()
+		return
+
+	else if (href_list["buy"])
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H=usr
+			var/obj/item/weapon/card/card = null
+			var/obj/item/device/pda/pda = null
+			if(istype(H.wear_id,/obj/item/weapon/card))
+				card=H.wear_id
+			else if(istype(H.get_active_hand(),/obj/item/weapon/card))
+				card=H.get_active_hand()
+			else if(istype(H.wear_id,/obj/item/device/pda))
+				pda=H.wear_id
+				if(pda.id)
+					card=pda.id
+			else if(istype(H.get_active_hand(),/obj/item/device/pda))
+				pda=H.get_active_hand()
+				if(pda.id)
+					card=pda.id
+			if(card)
+				connect_account(card)
+		src.updateUsrDialog()
+		return
+
+	else if ((href_list["togglevoice"]) && (src.panel_open))
+		src.shut_up = !src.shut_up
+
+	src.add_fingerprint(usr)
+	src.updateUsrDialog()
+
 	return
 
-/obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
+/obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user, by_voucher = 0)
 	if (!allowed(user) && !emagged && wires.IsIndexCut(VENDING_WIRE_IDSCAN)) //For SECURE VENDING MACHINES YEAH
 		user << "\red Access denied." //Unless emagged of course
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
 
-	if (R in coin_records)
-		if(!coin)
-			user << "\blue You need to insert a coin to get this item."
+	if (!by_voucher && (R in coin_records))
+		if (isnull(coin))
+			user << "<SPAN CLASS='notice'>You need to insert a coin to get this item.</SPAN>"
 			return
-		if(coin.string_attached)
-			if(prob(50))
-				user << "\blue You successfully pull the coin out before the [src] could swallow it."
+
+		if (coin.string_attached)
+			if (prob(50))
+				user.put_in_hands(coin)
+				user << "<SPAN CLASS='notice'>You successfully pulled the coin out before the [src] could swallow it.</SPAN>"
 			else
-				user << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
-				del(coin)
-		else
-			del(coin)
+				user << "<SPAN CLASS='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</SPAN>"
+
+		if (!isnull(coinbox))
+			if (coinbox.can_be_inserted(coin, TRUE))
+				coinbox.handle_item_insertion(coin, TRUE)
+
+		coin = null
 
 	R.amount--
 
@@ -703,7 +768,7 @@
 	icon_state = "boozeomat"        //////////////18 drink entities below, plus the glasses, in case someone wants to edit the number of bottles
 	icon_deny = "boozeomat-deny"
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey = 5,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 5,/obj/item/weapon/reagent_containers/food/drinks/beer = 6,
@@ -955,9 +1020,8 @@
 				usr << "You begin to insert \the [C] into \the [src]."
 				if(do_after(user, 10))
 					usr << "<span class='notice'>You secure \the [C]!</span>"
-					user.drop_item()
+					user.drop_item(src)
 					_circuitboard=C
-					C.loc=src
 					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 					build++
 					update_icon()
@@ -1126,7 +1190,7 @@
 	desc = "A kitchen and restaurant equipment vendor"
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
-	products = list(/obj/item/weapon/tray = 8,/obj/item/weapon/kitchen/utensil/fork = 6,/obj/item/weapon/kitchen/utensil/knife/large = 3,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2,/obj/item/trash/bowl = 20, /obj/item/weapon/reagent_containers/food/condiment/peppermill = 5, /obj/item/weapon/reagent_containers/food/condiment/saltshaker	= 5)
+	products = list(/obj/item/weapon/tray = 8,/obj/item/weapon/kitchen/utensil/fork = 6,/obj/item/weapon/kitchen/utensil/knife/large = 3,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2,/obj/item/trash/bowl = 20, /obj/item/weapon/reagent_containers/food/condiment/peppermill = 5, /obj/item/weapon/reagent_containers/food/condiment/saltshaker	= 5, /obj/item/weapon/reagent_containers/food/condiment/vinegar = 5)
 	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/utensil/knife = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/kitchen/utensil/knife/large/butch = 2)
 
 	pack = /obj/structure/vendomatpack/dinnerware
@@ -1161,7 +1225,7 @@
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/circuitboard/airlock = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/circuitboard/air_alarm = 10,/obj/item/weapon/cell/high = 10)
+	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/circuitboard/airlock = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/circuitboard/air_alarm = 10,/obj/item/weapon/intercom_electronics = 10,/obj/item/weapon/cell/high = 10)
 	contraband = list(/obj/item/weapon/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
 
@@ -1224,9 +1288,10 @@
 					/obj/item/clothing/suit/wizrobe/marisa/fake = 3,/obj/item/clothing/under/sundress = 3,/obj/item/clothing/head/witchwig = 3,/obj/item/weapon/staff/broom = 3,
 					/obj/item/clothing/suit/wizrobe/fake = 3,/obj/item/clothing/head/wizard/fake = 3,/obj/item/weapon/staff = 3,/obj/item/clothing/mask/gas/sexyclown = 3,
 					/obj/item/clothing/under/sexyclown = 3,/obj/item/clothing/mask/gas/sexymime = 3,/obj/item/clothing/under/sexymime = 3,/obj/item/clothing/suit/apron/overalls = 3,
-					/obj/item/clothing/head/rabbitears = 3,/obj/item/clothing/head/lordadmiralhat = 3,/obj/item/clothing/suit/lordadmiral = 3,/obj/item/clothing/suit/doshjacket = 3,/obj/item/clothing/under/jester = 3, /obj/item/clothing/head/jesterhat = 3,/obj/item/clothing/shoes/jestershoes = 3, /obj/item/clothing/suit/kefkarobe = 3) //Pretty much everything that had a chance to spawn.
+					/obj/item/clothing/head/rabbitears = 3,/obj/item/clothing/head/lordadmiralhat = 3,/obj/item/clothing/suit/lordadmiral = 3,/obj/item/clothing/suit/doshjacket = 3,/obj/item/clothing/under/jester = 3, /obj/item/clothing/head/jesterhat = 3,/obj/item/clothing/shoes/jestershoes = 3, /obj/item/clothing/suit/kefkarobe = 3,
+					/obj/item/clothing/head/helmet/aviatorhelmet = 3,/obj/item/clothing/shoes/aviatorboots = 3, /obj/item/clothing/under/aviatoruniform = 3,/obj/item/clothing/head/libertyhat = 3,/obj/item/clothing/suit/libertycoat = 3, /obj/item/clothing/under/libertyshirt = 3, /obj/item/clothing/shoes/libertyshoes = 3) //Pretty much everything that had a chance to spawn.
 	contraband = list(/obj/item/clothing/suit/cardborg = 3,/obj/item/clothing/head/cardborg = 3,/obj/item/clothing/suit/judgerobe = 3,/obj/item/clothing/head/powdered_wig = 3)
-	premium = list(/obj/item/clothing/suit/hgpirate = 3, /obj/item/clothing/head/hgpiratecap = 3, /obj/item/clothing/head/helmet/roman = 3, /obj/item/clothing/head/helmet/roman/legionaire = 3, /obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/weapon/shield/riot/roman = 3)
+	premium = list(/obj/item/clothing/suit/hgpirate = 3, /obj/item/clothing/head/hgpiratecap = 3, /obj/item/clothing/head/helmet/roman = 3, /obj/item/clothing/head/helmet/roman/legionaire = 3, /obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/weapon/shield/riot/roman = 3,/obj/item/clothing/under/stilsuit = 3)
 
 	pack = /obj/structure/vendomatpack/autodrobe
 
@@ -1286,7 +1351,7 @@
 
 	pack = /obj/structure/vendomatpack/nazivend
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EMAGGABLE
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | EMAGGABLE
 
 /obj/machinery/vending/nazivend/emag(mob/user)
 	if(!emagged)
@@ -1332,7 +1397,7 @@
 
 	pack = /obj/structure/vendomatpack/sovietvend
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EMAGGABLE
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | EMAGGABLE
 
 
 /obj/machinery/vending/sovietvend/emag(mob/user)

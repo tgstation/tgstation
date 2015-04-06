@@ -124,11 +124,12 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?src
 	return
 
 /obj/machinery/portable_atmospherics/pump/Topic(href, href_list)
+	if(!isAI(usr) && usr.z != z) return 1
 	..()
 	if (usr.stat || usr.restrained())
 		return
 
-	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
+	if (istype(src.loc, /turf))
 		usr.set_machine(src)
 
 		if(href_list["power"])

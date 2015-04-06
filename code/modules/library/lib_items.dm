@@ -34,20 +34,16 @@
 
 /obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
+		user.drop_item(src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/tome))
-		user.drop_item()
-		O.loc = src
+		user.drop_item(src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/spellbook))
-		user.drop_item()
-		O.loc = src
+		user.drop_item(src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/storage/bible))
-		user.drop_item()
-		O.loc = src
+		user.drop_item(src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/wrench))
 		user << "<span class='notice'> Now disassembling bookcase</span>"
@@ -177,7 +173,20 @@
 	var/unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title		 // The real name of the book.
 	var/carved = 0	 // Has the book been hollowed out for use as a secret storage item?
-	var/obj/item/store	//What's in the book?
+	var/wiki_page       // Title of the book's wiki page.
+	var/forbidden = 0     // Prevent ordering of this book. (0=no, 1=yes, 2=emag only)
+	var/obj/item/store	// What's in the book?
+
+/obj/item/weapon/book/New()
+	..()
+	if(wiki_page)
+		dat = {"
+		<html>
+			<body>
+				<iframe width='100%' height='100%' src="http://ss13.nexisonline.net/w/index.php?title=[wiki_page]&printable=yes"></iframe>
+			</body>
+		</html>
+		"}
 
 /obj/item/weapon/book/cultify()
 	new /obj/item/weapon/tome(loc)
@@ -204,8 +213,7 @@
 	if(carved)
 		if(!store)
 			if(W.w_class < 3)
-				user.drop_item()
-				W.loc = src
+				user.drop_item(src)
 				store = W
 				user << "<span class='notice'>You put [W] in [title].</span>"
 				return
@@ -296,7 +304,7 @@
 	throw_range = 5
 	w_class = 1.0
 	flags = FPRINT
-	var/obj/machinery/librarycomp/computer // Associated computer - Modes 1 to 3 use this
+	var/obj/machinery/computer/library/checkout/computer // Associated computer - Modes 1 to 3 use this
 	var/obj/item/weapon/book/book	 //  Currently scanned book
 	var/mode = 0 					// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 

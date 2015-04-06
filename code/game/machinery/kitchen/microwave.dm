@@ -9,7 +9,7 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | EJECTNOTDEL
 	flags = OPENCONTAINER | NOREACT
 	pass_flags = PASSTABLE
 	var/operating = 0 // Is it on?
@@ -19,9 +19,10 @@
 	var/global/list/datum/recipe/available_recipes // List of the recipes you can use
 	var/global/list/acceptable_items // List of the items you can put in
 	var/global/list/acceptable_reagents // List of the reagents you can put in
-	var/global/max_n_of_items = 0
 	var/list/holdingitems = list()
 	var/limit = 100
+	var/speed_multiplier = 1
+	var/scanning_power = 0
 
 // see code/modules/food/recipes_microwave.dm for recipes
 //Cannot use tools - screwdriver and crowbar for recipes. Or at least fix things before you do
@@ -65,8 +66,20 @@
 				acceptable_items |= item
 			for (var/reagent in recipe.reagents)
 				acceptable_reagents |= reagent
-			if (recipe.items)
-				max_n_of_items = max(max_n_of_items,recipe.items.len)
+
+/*******************
+*   Part Upgrades
+********************/
+/obj/machinery/microwave/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		T += M.rating-1
+	speed_multiplier = initial(speed_multiplier)+(T * 0.25)
+
+	T = 0
+	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
+		T += M.rating-1
+	scanning_power = initial(scanning_power)+(T)
 
 /*******************
 *   Item Adding
@@ -131,11 +144,9 @@
 		usr << "The machine cannot hold anymore items."
 		return 1
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
-
+		var/obj/item/weapon/storage/bag/B = O
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-			O.contents -= G
-			G.loc = src
-			contents += G
+			B.remove_from_storage(G,src)
 			if(contents && contents.len >= limit) //Sanity checking so the microwave doesn't overfill
 				user << "You fill the Microwave to the brim."
 				break
@@ -154,9 +165,6 @@
 		src.updateUsrDialog()
 		return 1
 	else if(is_type_in_list(O,acceptable_items))
-		if (contents.len>=max_n_of_items)
-			user << "<span class='warning'>This [src] is full of ingredients, you cannot put more.</span>"
-			return 1
 		if (istype(O,/obj/item/stack) && O:amount>1)
 			new O.type (src)
 			O:use(1)
@@ -165,8 +173,7 @@
 				"<span class='notice'>You add one of [O] to \the [src].</span>")
 		else
 		//	user.before_take_item(O)	//This just causes problems so far as I can tell. -Pete
-			user.drop_item()
-			O.loc = src
+			user.drop_item(src)
 			contents += O
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
@@ -257,8 +264,16 @@
 		if (items_counts.len==0 && reagents.reagent_list.len==0)
 			dat = {"<B>The microwave is empty</B><BR>"}
 		else
-			dat = {"<b>Ingredients:</b><br>[dat]"}
-		dat += {"<HR><BR>\
+			dat = {"<b>Ingredients:</b><br>[dat]<HR><BR>"}
+			if (scanning_power >= 2 )
+				var/datum/recipe/recipe = select_recipe(available_recipes,src)
+				if (!recipe)
+					dat += {"<font color = 'red'>ERROR: No matching recipe found!</font><br>"}
+				else
+					var/obj/O = recipe.result
+					var/display_name = initial(O.name)
+					dat += {"<b>Expected result: </b>[display_name]<br>"}
+		dat += {"\
 <A href='?src=\ref[src];action=cook'>Turn on!<BR>\
 <A href='?src=\ref[src];action=dispose'>Eject ingredients!<BR>\
 "}
@@ -335,7 +350,7 @@
 		if (stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
-		sleep(10)
+		sleep(10/speed_multiplier)
 	return 1
 
 /obj/machinery/microwave/proc/has_extra_item()

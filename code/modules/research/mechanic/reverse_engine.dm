@@ -192,7 +192,7 @@
 /obj/machinery/r_n_d/reverse_engine/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(src.stat & (BROKEN|NOPOWER))
 		return
-	if((user.stat && !isobserver(user)) || user.restrained() || !allowed(user))
+	if((user.stat && !isobserver(user)) || user.restrained() || !allowed(user) || !Adjacent(user))
 		return
 
 	var/data[0]
@@ -222,7 +222,9 @@
 
 	if(..())
 		return
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if(href_list["remove_tosearch"])
 		var/datum/design/mechanic_design/design = research_queue[text2num(href_list["remove_tosearch"])]
 		if(design)

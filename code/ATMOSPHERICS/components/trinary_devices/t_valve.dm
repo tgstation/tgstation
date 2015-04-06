@@ -59,6 +59,13 @@
 
 	return null
 
+/obj/machinery/atmospherics/trinary/tvalve/initialize()
+	..()
+
+	//force build the networks.
+	go_to_side()
+	go_straight()
+
 /obj/machinery/atmospherics/trinary/tvalve/proc/go_to_side()
 
 	if(state) return 0
@@ -67,9 +74,9 @@
 	update_icon()
 
 	if(network1)
-		del(network1)
+		returnToDPool(network1)
 	if(network3)
-		del(network3)
+		returnToDPool(network3)
 	build_network()
 
 	if(network1&&network2)
@@ -92,9 +99,9 @@
 	update_icon()
 
 	if(network1)
-		del(network1)
+		returnToDPool(network1)
 	if(network2)
-		del(network2)
+		returnToDPool(network2)
 	build_network()
 
 	if(network1&&network3)
@@ -116,7 +123,7 @@
 
 /obj/machinery/atmospherics/trinary/tvalve/attack_hand(mob/user as mob)
 	if(isobserver(user) && !canGhostWrite(user,src,"toggles"))
-		user << "\red Nope."
+		user << "<span class='warning'>Nope.</span>"
 		return
 
 	investigation_log(I_ATMOS,"was [state ? "opened (straight)" : "closed (side)"] by [key_name(usr)]")
@@ -151,43 +158,9 @@
 /obj/machinery/atmospherics/trinary/tvalve/return_network_air(datum/network/reference)
 	return null
 
-/obj/machinery/atmospherics/trinary/tvalve/disconnect(obj/machinery/atmospherics/reference)
-	if(reference==node1)
-		del(network1)
-		node1 = null
-
-	else if(reference==node2)
-		del(network2)
-		node2 = null
-
-	else if(reference==node3)
-		del(network3)
-		node2 = null
-
-	return null
-
 /obj/machinery/atmospherics/trinary/tvalve/mirrored
 	icon_state = "tvalvem0"
-
-/obj/machinery/atmospherics/trinary/tvalve/mirrored/initialize()
-	if(node1 && node2 && node3) return
-
-	node1 = findConnecting(turn(dir, 180))
-	node2 = findConnecting(turn(dir, 90))
-	node3 = findConnecting(dir)
-
-	update_icon()
-
-/obj/machinery/atmospherics/trinary/tvalve/mirrored/initialize_directions()
-	switch(dir)
-		if(SOUTH)
-			initialize_directions = SOUTH|NORTH|EAST
-		if(NORTH)
-			initialize_directions = NORTH|SOUTH|WEST
-		if(WEST)
-			initialize_directions = WEST|EAST|SOUTH
-		if(EAST)
-			initialize_directions = EAST|WEST|NORTH
+	pipe_flags = IS_MIRROR
 
 /obj/machinery/atmospherics/trinary/tvalve/mirrored/update_icon(animation)
 	if(animation)
@@ -217,7 +190,7 @@
 
 /obj/machinery/atmospherics/trinary/tvalve/digital/attack_hand(mob/user as mob)
 	if(!src.allowed(user))
-		user << "\red Access denied."
+		user << "<span class='warning'>Access denied.</span>"
 		return
 	..()
 
@@ -261,29 +234,7 @@
 
 /obj/machinery/atmospherics/trinary/tvalve/digital/mirrored
 	icon_state = "tvalvem0"
-
-/obj/machinery/atmospherics/trinary/tvalve/digital/mirrored/initialize()
-	if(node1 && node2 && node3) return
-
-	node1 = findConnecting(turn(dir, 180))
-	node2 = findConnecting(turn(dir, 90))
-	node3 = findConnecting(dir)
-
-	update_icon()
-
-	if(frequency)
-		set_frequency(frequency)
-
-/obj/machinery/atmospherics/trinary/tvalve/digital/mirrored/initialize_directions()
-	switch(dir)
-		if(SOUTH)
-			initialize_directions = SOUTH|NORTH|EAST
-		if(NORTH)
-			initialize_directions = NORTH|SOUTH|WEST
-		if(WEST)
-			initialize_directions = WEST|EAST|SOUTH
-		if(EAST)
-			initialize_directions = EAST|WEST|NORTH
+	pipe_flags = IS_MIRROR
 
 /obj/machinery/atmospherics/trinary/tvalve/digital/mirrored/update_icon(animation)
 	if(animation)

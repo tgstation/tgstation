@@ -1,3 +1,17 @@
+//multitool programming whitelist
+var/global/list/multitool_var_whitelist = list(	"id_tag",
+													"master_tag",
+													"command",
+													"input_tag",
+													"output_tag",
+													"tag_airpump",
+													"tag_exterior_door",
+													"tag_interior_door",
+													"tag_chamber_sensor",
+													"tag_interior_sensor",
+													"tag_exterior_sensor",
+													)
+
 /*
 Overview:
    Used to create objects that need a per step proc call.  Default definition of 'New()'
@@ -155,12 +169,12 @@ Class Procs:
 		machines -= src
 	if(src in power_machines)
 		power_machines -= src
-
+/*
 	if(component_parts)
 		for(var/atom/movable/AM in component_parts)
 			AM.loc = loc
 			component_parts -= AM
-
+*/
 		component_parts = null
 
 	..()
@@ -246,6 +260,12 @@ Class Procs:
 		var/update_mt_menu=0
 		var/re_init=0
 		if("set_tag" in href_list)
+			if(!(href_list["set_tag"] in multitool_var_whitelist))
+				var/current_tag = src.vars[href_list["set_tag"]]
+				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
+				log_admin("[usr] ([formatPlayerPanel(usr,usr.ckey)]) attempted to modify variable(var = [href_list["set_tag"]], value = [newid]) using multitool - [formatJumpTo(usr)]")
+				message_admins("[usr] ([formatPlayerPanel(usr,usr.ckey)]) attempted to modify variable(var = [href_list["set_tag"]], value = [newid]) using multitool - [formatJumpTo(usr)]")
+				return
 			if(!(href_list["set_tag"] in vars))
 				usr << "<span class='warning'>Something went wrong: Unable to find [href_list["set_tag"]] in vars!</span>"
 				return 1
@@ -291,6 +311,13 @@ Class Procs:
 			update_mt_menu=1
 
 		if("buffer" in href_list)
+			if(istype(src, /obj/machinery/telecomms))
+				if(!hasvar(src, "id"))
+					usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+					return
+			else if(!hasvar(src, "id_tag"))
+				usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+				return
 			P.buffer = src
 			usr << "<span class='confirm'>A green light flashes, and the device appears in the multitool buffer.</span>"
 			update_mt_menu=1
@@ -319,6 +346,8 @@ Class Procs:
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 1
+	if(href_list["close"])
+		return
 	var/ghost_flags=0
 	if(ghost_write)
 		ghost_flags |= PERMIT_ALL
@@ -331,12 +360,13 @@ Class Procs:
 			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return 1
 
+		if(!isAI(usr) && usr.z != z)
+			if(usr.z != 2)
+				usr << "<span class='warning'>WARNING: Unable to interface with \the [src.name].</span>"
+				return 1
 		var/norange = 0
-		if(istype(usr, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = usr
-			if(istype(H.l_hand, /obj/item/tk_grab))
-				norange = 1
-			else if(istype(H.r_hand, /obj/item/tk_grab))
+		if(usr.mutations && usr.mutations.len)
+			if(M_TK in usr.mutations)
 				norange = 1
 
 		if(!norange)
@@ -346,6 +376,7 @@ Class Procs:
 		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
 
 	src.add_fingerprint(usr)
+	src.add_hiddenprint(usr)
 
 	handle_multitool_topic(href,href_list,usr)
 	return 0
@@ -413,7 +444,8 @@ Class Procs:
 
 /obj/machinery/proc/dropFrame()
 	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-	M.state = 2
+	M.build_state = 2
+	M.state = 1
 	M.icon_state = "box_1"
 
 /obj/machinery/proc/crowbarDestroy(mob/user)
@@ -583,3 +615,6 @@ Class Procs:
 		if("buzz")
 			src.visible_message("<span class='notice'>\icon[src] \The [src] buzzes.</span>")
 			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)
+
+/obj/machinery/proc/check_rebuild()
+	return

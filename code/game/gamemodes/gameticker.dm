@@ -374,6 +374,9 @@ var/global/datum/controller/gameticker/ticker
 			declare_completion()
 			if(config.map_voting)
 				vote.initiate_vote("map","The Server", popup = 1)
+				var/options = list2text(vote.choices, " ")
+				feedback_set("map vote choices", options)
+
 
 		spawn(50)
 			if (mode.station_was_nuked)
@@ -386,7 +389,11 @@ var/global/datum/controller/gameticker/ticker
 					world << "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>"
 
 			if(blackbox)
-				blackbox.save_all_data_to_sql()
+				if(config.map_voting)
+					spawn(restart_timeout + 1)
+						blackbox.save_all_data_to_sql()
+				else
+					blackbox.save_all_data_to_sql()
 
 			if (watchdog.waiting)
 				world << "<span class='notice'><B>Server will shut down for an automatic update [config.map_voting ? "[(restart_timeout/10)] seconds." : "in a few seconds."]</B></span>"

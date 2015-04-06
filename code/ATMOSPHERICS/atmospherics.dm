@@ -13,6 +13,9 @@ Pipelines + Other Objects -> Pipe network
 #define PIPE_TYPE_STANDARD 0
 #define PIPE_TYPE_HE       1
 
+//Pipe bitflags
+#define IS_MIRROR	1
+
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
@@ -33,6 +36,8 @@ Pipelines + Other Objects -> Pipe network
 
 	// Investigation logs
 	var/log
+
+	var/pipe_flags = 0
 
 // Find a connecting /obj/machinery/atmospherics in specified direction.
 /obj/machinery/atmospherics/proc/findConnecting(var/direction)
@@ -98,6 +103,8 @@ Pipelines + Other Objects -> Pipe network
 
 	return null
 
+/obj/machinery/atmospherics/proc/unassign_network(datum/pipe_network/reference)
+
 /obj/machinery/atmospherics/proc/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
 	// Used when two pipe_networks are combining
 
@@ -115,8 +122,15 @@ Pipelines + Other Objects -> Pipe network
 	error("[src] does not define a buildFrom!")
 	return FALSE
 
+/obj/machinery/atmospherics/cultify()
+	if(src.invisibility != INVISIBILITY_MAXIMUM)
+		src.invisibility = INVISIBILITY_MAXIMUM
+
+
 /obj/machinery/atmospherics/attackby(var/obj/item/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
+		return ..()
+	if(src.machine_flags & WRENCHMOVE)
 		return ..()
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)

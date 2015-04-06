@@ -14,8 +14,8 @@ var/global/list/rad_collectors = list()
 	var/active = 0
 	var/locked = 0
 	var/drain_ratio = 3.5 //3.5 times faster than original.
-	ghost_read=0
-	ghost_write=0
+	ghost_read = 0
+	ghost_write = 0
 
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
@@ -69,9 +69,8 @@ var/global/list/rad_collectors = list()
 		if(src.P)
 			user << "<span class='warning'>A plasma tank is already loaded.</span>"
 			return 1
-		user.drop_item()
+		user.drop_item(src)
 		src.P = W
-		W.loc = src
 		update_icons()
 	else if(istype(W, /obj/item/weapon/crowbar))
 		if(P && !src.locked)
@@ -93,13 +92,14 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/wrenchAnchor(mob/user)
 	if(P)
-		user << "<span class='notice'>Remove the plasma tank first.</span>"
+		user << "<span class='warning'>Remove the plasma tank first.</span>"
 		return
 	if(..() == 1)
 		if(anchored)
 			connect_to_network()
 		else
 			disconnect_from_network()
+			last_power = 0
 		return 1
 	return -1
 
@@ -112,15 +112,16 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
+	last_power = 0
 
-	if (isnull(P))
+	if(isnull(P))
 		return
 
 	P.loc = get_turf(src)
 	P.layer = initial(P.layer)
 	P = null
 
-	if (active)
+	if(active)
 		toggle_power()
 	else
 		update_icons()
@@ -143,12 +144,13 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/proc/toggle_power()
 	active = !active
 
-	if (active)
+	if(active)
 		icon_state = "ca_on"
 		flick("ca_active", src)
 	else
 		icon_state = "ca"
 		flick("ca_deactive", src)
+		last_power = 0
 
 	update_icons()
 

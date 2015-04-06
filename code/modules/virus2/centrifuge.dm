@@ -19,8 +19,7 @@
 	var/mob/living/carbon/C = user
 	if(!sample)
 		sample = I
-		C.drop_item()
-		I.loc = src
+		C.drop_item(src)
 
 	attack_hand(user)
 

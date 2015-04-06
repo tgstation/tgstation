@@ -44,6 +44,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/admin_call_shuttle,	/*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcomm*/
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
+	/client/proc/cmd_admin_local_narrate,	/*send text locally to all players in view, similar to direct narrate*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/check_words,			/*displays cult-words*/
@@ -157,7 +158,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/qdel_toggle,              // /vg/
 	/client/proc/cmd_admin_dump_instances, // /vg/
 	/client/proc/cmd_admin_dump_machine_type_list, // /vg/
-	/client/proc/disable_bloodvirii,       // /vg/
+	/client/proc/disable_bloodvirii,       // /vg
+	/client/proc/handle_paperwork, //this is completely experimental
 	/client/proc/reload_style_sheet,
 	/client/proc/reset_style_sheet,
 	/client/proc/test_movable_UI,
@@ -168,6 +170,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_admin_dump_delprofile,
 	/client/proc/mob_list,
 	/client/proc/cure_disease,
+	/client/proc/cmd_admin_find_bad_blood_tracks,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
 #endif
@@ -680,6 +683,8 @@ var/list/admin_verbs_mod = list(
 	set category = "Admin"
 
 	if(holder)
+		if(alert("Are you sure you want to deadmin?","Deadmin","Yes","No")=="No")
+			return
 		log_admin("[src] deadminned themself.")
 		message_admins("[src] deadminned themself.")
 		deadmin()
@@ -766,9 +771,9 @@ var/list/admin_verbs_mod = list(
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
-			M.gender = MALE
+			M.setGender(MALE)
 		else
-			M.gender = FEMALE
+			M.setGender(FEMALE)
 	M.update_hair()
 	M.update_body()
 	M.check_dna(M)
@@ -871,19 +876,26 @@ var/list/admin_verbs_mod = list(
 		var/sql_ckey = sanitizeSQL(ckey)
 		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin WHERE ckey = [sql_ckey]")
 		query.Execute()
+		usr << "Query executed"
 		while(query.NextRow())
 			var/ckey = query.item[1]
+			usr << "[ckey]"
 			var/rank = query.item[2]
+			usr << "[rank]"
 			if(rank == "Removed")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
 
 			var/rights = query.item[4]
+			usr << "[rights]"
 			if(istext(rights))	rights = text2num(rights)
 			D = new /datum/admins(rank, rights, ckey)
+			usr << "[D.rank],[D.rights]"
 
 			//find the client for a ckey if they are connected and associate them with the new admin datum
 			D.associate(src)
+			usr << "[D.owner]"
 			message_admins("[src] re-adminned themselves.")
 			log_admin("[src] re-adminned themselves.")
 			feedback_add_details("admin_verb","RAS")
 			verbs -= /client/proc/readmin
 			return
+		usr << "query.nextrow() failed"

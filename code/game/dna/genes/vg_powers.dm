@@ -57,14 +57,17 @@ Obviously, requires DNA2.
 	panel = "Mutant Powers"
 	range = -1
 
-	charge_type = "recharge"
+	charge_type = Sp_RECHARGE
 	charge_max = HULK_COOLDOWN
 
 	duration = HULK_DURATION
 
 	spell_flags = INCLUDEUSER
 
-	invocation_type = "none"
+	invocation_type = SpI_NONE
+
+	override_base = "genetic"
+	hud_state = "gen_hulk"
 
 /spell/targeted/genetic/hulk/New()
 	desc = "Get mad!  For [duration/10] seconds, anyway."
@@ -82,3 +85,29 @@ Obviously, requires DNA2.
 		//M.say(pick("",";")+pick("HULK MAD","YOU MADE HULK ANGRY")) // Just a note to security.
 		message_admins("[key_name(M)] has hulked out! ([formatJumpTo(M)])")
 	return
+
+/datum/dna/gene/basic/farsight
+	name = "Farsight"
+	desc = "Increases the subjects ability to see things from afar."
+	activation_messages = list("Your eyes focus.")
+	deactivation_messages = list("Your eyes return to normal.")
+	mutation = M_FARSIGHT
+
+/datum/dna/gene/basic/farsight/New()
+	block=FARSIGHTBLOCK
+	..()
+/datum/dna/gene/basic/farsight/activate(var/mob/M)
+	..()
+	if(M.client)
+		M.client.view = max(M.client.view, world.view+1)
+
+/datum/dna/gene/basic/farsight/deactivate(var/mob/M)
+	..()
+	if(M.client && M.client.view == world.view + 1)
+		M.client.view = world.view
+
+/datum/dna/gene/basic/farsight/can_activate(var/mob/M,var/flags)
+	// Can't be big AND small.
+	if((M.sdisabilities & BLIND) || (M.disabilities & NEARSIGHTED))
+		return 0
+	return ..(M,flags)

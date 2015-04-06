@@ -37,9 +37,8 @@
 /obj/item/weapon/gun/projectile/proc/LoadMag(var/obj/item/ammo_storage/magazine/AM, var/mob/user)
 	if(istype(AM, text2path(mag_type)) && !stored_magazine)
 		if(user)
-			user.drop_item(AM)
+			user.drop_item(src)
 			usr << "<span class='notice'>You load the magazine into \the [src].</span>"
-		AM.loc = src
 		stored_magazine = AM
 		chamber_round()
 		AM.update_icon()
@@ -114,11 +113,10 @@
 		if(user.l_hand != src && user.r_hand != src)	//if we're not in his hands
 			user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
 			return
-		user.drop_item()
+		user.drop_item(src) //put the silencer into the gun
 		user << "<span class='notice'>You screw [A] onto [src].</span>"
 		silenced = A	//dodgy?
 		w_class = 3
-		A.loc = src		//put the silencer into the gun
 		update_icon()
 		return 1
 
@@ -142,13 +140,11 @@
 		//message_admins("Loading the [src], with [AC], [AC.caliber] and [caliber.len]") //Enable this for testing
 		if(AC.BB && caliber[AC.caliber]) // a used bullet can't be fired twice
 			if(load_method == MAGAZINE && !chambered)
-				user.drop_item()
-				AC.loc = src
+				user.drop_item(src)
 				chambered = AC
 				num_loaded++
 			else if(getAmmo() < max_shells)
-				user.drop_item()
-				AC.loc = src
+				user.drop_item(src)
 				loaded += AC
 				num_loaded++
 
@@ -192,7 +188,7 @@
 	else
 		user << "<span class='warning'>Nothing loaded in \the [src]!</span>"
 
-/obj/item/weapon/gun/projectile/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, struggle = 0)
 	..()
 	if(!chambered && stored_magazine && !stored_magazine.ammo_count() && gun_flags &AUTOMAGDROP) //auto_mag_drop decides whether or not the mag is dropped once it empties
 		RemoveMag()

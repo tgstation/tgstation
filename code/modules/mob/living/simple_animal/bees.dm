@@ -32,13 +32,16 @@
 	..()
 	parent = new_parent
 
-/mob/living/simple_animal/bee/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	return 1
-
 /mob/living/simple_animal/bee/Destroy()
+	..()
 	if(parent)
 		parent.owned_bee_swarms.Remove(src)
-	..()
+
+/mob/living/simple_animal/bee/Die()
+	returnToPool(src)
+
+/mob/living/simple_animal/bee/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	return 1
 
 /mob/living/simple_animal/bee/Life()
 	..()
@@ -102,7 +105,8 @@
 				target_turf = null
 			if(strength > 5)
 				//calm down and spread out a little
-				var/mob/living/simple_animal/bee/B = new(get_turf(pick(orange(src,1))))
+				var/turf/T = get_turf(pick(orange(src,1)))
+				var/mob/living/simple_animal/bee/B = getFromPool(/mob/living/simple_animal/bee,T)
 				B.strength = rand(1,5)
 				src.strength -= B.strength
 				if(src.strength <= 5)
@@ -122,7 +126,7 @@
 
 			if(feral > 0)
 				src.strength += B.strength
-				del(B)
+				returnToPool(B)
 				src.icon_state = "bees[src.strength]"
 				if(strength > 5)
 					icon_state = "bees_swarm"
@@ -135,7 +139,7 @@
 
 					B.icon_state = "bees[B.strength]"
 					if(src.strength <= 0)
-						del(src)
+						returnToPool(B)
 						return
 					src.icon_state = "bees[B.strength]"
 					var/turf/simulated/floor/T = get_turf(get_step(src, pick(1,2,4,8)))
@@ -182,7 +186,7 @@
 	if(!parent && prob(10))
 		strength -= 1
 		if(strength <= 0)
-			del(src)
+			returnToPool(src)
 		else if(strength <= 5)
 			icon_state = "bees[strength]"
 

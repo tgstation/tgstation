@@ -75,13 +75,14 @@
 	onclose(user, "computer")
 	return
 
+/obj/machinery/computer/syndicate_station/power_change()
+	return
 
 /obj/machinery/computer/syndicate_station/Topic(href, href_list)
-	if(!isliving(usr))	return
-	var/mob/living/user = usr
+	if(..()) return 1
+	var/mob/user = usr
 
-	if(in_range(src, user) || istype(user, /mob/living/silicon))
-		user.set_machine(src)
+	user.set_machine(src)
 
 	if(href_list["syndicate"])
 		syndicate_move_to(/area/syndicate_station/start)

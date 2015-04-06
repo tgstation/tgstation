@@ -52,8 +52,9 @@
 			D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
 
 	var/t = input(user, "Which camera should you change to?") as null|anything in D
-	if(!t)
+	if(!t || t == "Cancel")
 		user.unset_machine()
+		user.reset_view(null)
 		return 0
 	user.set_machine(src)
 

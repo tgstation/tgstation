@@ -162,20 +162,21 @@
 	return
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
-	. = ..()
-	if(.)
-		spawn()
-			var/area/A = get_area_master(src)
-			ASSERT(istype(A)) // This worries me.
-			var/alarmed = A.doors_down || A.fire
-			if(density && alert("Override firelock safeties and open \the [src]?",,"Yes","No") == "Yes")
-				open()
-			else if(!density)
-				close()
-			else
-				return
-			log_admin("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
-			message_admins("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
+	if(isobserver(user) || user.stat)
+		return
+	spawn()
+		var/area/A = get_area_master(src)
+		ASSERT(istype(A)) // This worries me.
+		var/alarmed = A.doors_down || A.fire
+		var/old_density = src.density
+		if(old_density && alert("Override the [alarmed ? "alarming " : ""]firelock safeties and open \the [src]?",,"Yes","No") == "Yes")
+			open()
+		else if(!old_density)
+			close()
+		else
+			return
+		log_admin("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
+		message_admins("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
 
 /obj/machinery/door/firedoor/attack_hand(mob/user as mob)
 	return attackby(null, user)
@@ -345,8 +346,7 @@
 
 // CHECK PRESSURE
 /obj/machinery/door/firedoor/process()
-	if(1)
-		return ..()
+	..()
 
 	if(density)
 		var/changed = 0
@@ -409,23 +409,29 @@
 	heat_proof = 1
 	air_properties_vary_with_direction = 1
 
-	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-		if(istype(mover) && mover.checkpass(PASSGLASS))
-			return 1
-	/*
-		if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-			if(air_group) return 0
-			return !density*/
-		else
-			return !density
+/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return 1
+/*
+	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
+		if(air_group) return 0
+		return !density*/
+	else
+		return !density
 
-/*	CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
-		if(istype(mover) && mover.checkpass(PASSGLASS))
-			return 1
-		/*if(get_dir(loc, target) == dir)
-			return !density*/
-		else
-			return !density*/
+//used in the AStar algorithm to determinate if the turf the door is on is passable
+/obj/machinery/door/firedoor/CanAStarPass()
+	return !density
+
+
+/*
+/obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return 1
+	/*if(get_dir(loc, target) == dir)
+		return !density*/
+	else
+		return !density*/
 
 /obj/machinery/door/firedoor/multi_tile
 	icon = 'icons/obj/doors/DoorHazard2x1.dmi'

@@ -431,3 +431,38 @@
 	icon_state = "jester"
 	item_state = "jester"
 	_color = "jester"
+
+/obj/item/clothing/under/stilsuit
+	name = "Stilsuit"
+	desc = "Designed to preserve bodymoisture."
+	icon_state = "stilsuit"
+	item_state = "stilsuit"
+	_color = "stilsuit"
+
+/obj/item/clothing/under/aviatoruniform
+	name = "Aviator Uniform"
+	desc = "Now you can look absolutely dashing!"
+	icon_state = "aviator_uniform"
+	item_state = "aviator_uniform"
+	_color = "aviator_uniform"
+	species_restricted = list("exclude","Vox")
+
+/obj/item/clothing/under/libertyshirt
+	name = "Liberty Shirt"
+	desc = "For any freedom loving patriot out there"
+	icon_state = "libertyshirt"
+	item_state = "libertyshirt"
+	_color = "libertyshirt"
+
+/obj/item/clothing/under/bikersuit
+	name = "Biker's Outfit"
+	icon_state = "biker"
+	item_state = "biker"
+	_color = "biker"
+
+/obj/item/clothing/under/jacketsuit
+	name = "Richard's Outfit"
+	desc = "Do you know what time it is?"
+	icon_state = "jacket"
+	item_state = "jacket"
+	_color = "jacket"

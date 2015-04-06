@@ -17,6 +17,7 @@
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
 #define MODE_CULTCHAT "cultchat"
+#define MODE_ANCIENT "ancientchat"
 
 #define SAY_MINIMUM_PRESSURE 10
 var/list/department_radio_keys = list(
@@ -37,6 +38,7 @@ var/list/department_radio_keys = list(
 	  ":d" = "Service",     "#d" = "Service",       ".d" = "Service",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":x" = "cultchat",	"#x" = "cultchat",		".x" = "cultchat",
+	  ":y" = "ancientchat",	"#y" = "ancientchat",	".y" = "ancientchat",
 
 	  ":R" = "right ear",	"#R" = "right ear",		".R" = "right ear", "!R" = "fake right ear",
 	  ":L" = "left ear",	"#L" = "left ear",		".L" = "left ear",  "!L" = "fake left ear",
@@ -55,6 +57,7 @@ var/list/department_radio_keys = list(
 	  ":D" = "Service",     "#D" = "Service",       ".D" = "Service",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":X" = "cultchat",	"#X" = "cultchat",		".X" = "cultchat",
+	  ":Y" = "ancientchat",	"#Y" = "ancientchat", 	".Y" = "ancientchat",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -76,10 +79,7 @@ var/list/department_radio_keys = list(
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
 
-/mob/living/proc/binarycheck()
-	return 0
-
-/mob/living/proc/hivecheck()
+/mob/living/hivecheck()
 	if (isalien(src)) return 1
 	if (!ishuman(src)) return
 	var/mob/living/carbon/human/H = src
@@ -164,22 +164,14 @@ var/list/department_radio_keys = list(
 	return message
 
 /mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type)
-	var/list/listening = get_hearers_in_view(message_range, source)
-	var/list/listening_dead = list()
-	for(var/mob/M in player_list)
-		if(client && M.client && M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS)) // client is so that ghosts don't have to listen to mice
-			listening_dead |= M
-
-	listening -= listening_dead //so ghosts dont hear stuff twice
+	var/list/listeners = get_hearers_in_view(message_range, source) | observers
 
 	var/rendered = compose_message(src, languages, message)
-	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, languages, message)
 
-	for(var/mob/M in listening_dead)
-		M.Hear(rendered, src, languages, message)
+	for (var/atom/movable/listener in listeners)
+		listener.Hear(rendered, src, languages, message)
 
-	send_speech_bubble(message, bubble_type, (listening + listening_dead))
+	send_speech_bubble(message, bubble_type, listeners)
 
 /mob/living/proc/say_test(var/text)
 	var/ending = copytext(text, length(text))
@@ -235,19 +227,39 @@ var/list/department_radio_keys = list(
 		return department_radio_keys[copytext(message, 1, 3)]
 
 /mob/living/proc/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_CHANGELING)
-		if(lingcheck())
-			log_say("[mind.changeling.changelingID]/[src.key] : [message]")
-			for(var/mob/M in mob_list)
-				if(M.lingcheck() || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
-					M << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-			return 1
-	if(message_mode == MODE_CULTCHAT && construct_chat_check(1) /*sending check for humins*/)
-		log_say("Cult channel: [src.name]/[src.key] : [message]")
-		for(var/mob/M in mob_list)
-			if(M.construct_chat_check(2) /*receiving check*/ || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
-				M << "<span class='sinister'><b>[src.name]:</b> [message]</span>"
-		return 1
+	switch(message_mode)
+		if(MODE_CHANGELING)
+			if(lingcheck())
+				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
+				var/themessage = text("<i><font color=#800080><b>[]:</b> []</font></i>",mind.changeling.changelingID,message)
+				for(var/mob/M in player_list)
+					if(M.lingcheck() || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
+						handle_render(M,themessage,src)
+				return 1
+		if(MODE_CULTCHAT)
+			if(construct_chat_check(1)) /*sending check for humins*/
+				log_say("Cult channel: [src.name]/[src.key] : [message]")
+				var/themessage = text("<span class='sinister'><b>[]:</b> []</span>",src.name,message)
+				for(var/mob/M in player_list)
+					if(M.construct_chat_check(2) /*receiving check*/ || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
+						handle_render(M,themessage,src)
+				return 1
+		if(MODE_ANCIENT)
+			if(isMoMMI(src)) return 0 //Noice try, I really do appreciate the effort
+			var/list/stone = search_contents_for(/obj/item/commstone)
+			if(stone.len)
+				var/obj/item/commstone/commstone = stone[1]
+				if(commstone.commdevice)
+					var/list/stones = commstone.commdevice.get_active_stones()
+					var/themessage = text("<span class='ancient'>Ancient communication, <b>[]:</b> []</span>",src.name,message)
+					log_say("Ancient chat: [src.name]/[src.key] : [message]")
+					for(var/thestone in stones)
+						var/mob/M = find_holder_of_type(thestone,/mob)
+						handle_render(M,themessage,src)
+					for(var/M in dead_mob_list)
+						if(!istype(M,/mob/new_player))
+							handle_render(M,themessage,src)
+					return 1
 	return 0
 
 /mob/living/proc/treat_message(message, genesay = 0)

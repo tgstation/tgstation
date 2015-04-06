@@ -69,25 +69,22 @@
 /mob/living/silicon/ai/send_speech(message, message_range = 7, obj/source = src, bubble_type)
 	if(source != current)
 		return ..()
-	var/list/listening = list()
-	for(var/mob/living/L in get_hearers_in_view(message_range, source))
-		if(!istype(L)) continue
-		listening |= L
-	var/list/listening_dead = list()
-	for(var/mob/M in player_list)
-		if(M.client && M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && client) // client is so that ghosts don't have to listen to mice
-			listening_dead |= M
 
-	listening -= listening_dead //so ghosts dont hear stuff twice
+	var/list/listeners = new/list()
+
+	for (var/mob/living/L in get_hearers_in_view(message_range, source))
+		listeners.Add(L)
+
+	listeners.Add(observers)
 
 	var/rendered = compose_message(src, languages, message)
-	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, languages, message)
 
-	for(var/mob/M in listening_dead)
-		M.Hear(rendered, src, languages, message)
+	for (var/atom/movable/listener in listeners)
+		if (listener)
+			listener.Hear(rendered, src, languages, message)
 
-	send_speech_bubble(message, bubble_type, (listening + listening_dead))
+	send_speech_bubble(message, bubble_type, listeners)
+
 var/announcing_vox = 0 // Stores the time of the last announcement
 var/const/VOX_CHANNEL = 200
 var/const/VOX_DELAY = 600

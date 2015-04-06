@@ -157,6 +157,9 @@
 /obj/item/weapon/circuitboard/rdconsole/mechanic
 	name = "Circuit Board (Mechanic R&D Console)"
 	build_path = "/obj/machinery/computer/rdconsole/mechanic"
+/obj/item/weapon/circuitboard/rdconsole/pod
+	name = "Circuit Board (Pod Bay R&D Console)"
+	build_path = "/obj/machinery/computer/rdconsole/pod"
 
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
@@ -313,8 +316,7 @@
 					user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 					src.icon_state = "1"
 					src.circuit = P
-					user.drop_item()
-					P.loc = src
+					user.drop_item(src)
 				else
 					user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
 				return 1

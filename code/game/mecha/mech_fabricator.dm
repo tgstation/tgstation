@@ -37,6 +37,38 @@
 
 	screen = MECH_SCREEN_MAIN
 
+	part_sets = list(//set names must be unique
+		"Robot"=list(
+		),
+		"Robot_Part" = list(
+		),
+		"Ripley"=list(
+		),
+		"Odysseus"=list(
+		),
+		"Gygax"=list(
+		),
+		"Durand"=list(
+		),
+		"HONK"=list(
+		),
+		"Phazon"=list(
+		),
+		"Exosuit_Equipment"=list(
+			/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
+			/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun,
+			/obj/item/mecha_parts/part/phazon_phase_array
+		),
+		"Robotic_Upgrade_Modules" = list(
+		),
+		"Space_Pod" = list(
+			/obj/item/pod_parts/core
+		),
+		"Misc"=list(
+		)
+	)
+
+
 /obj/machinery/r_n_d/fabricator/mech/New()
 	. = ..()
 

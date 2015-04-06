@@ -8,33 +8,34 @@
 	icon_state = null
 	flags = FPRINT  | OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
-	possible_transfer_amounts = list(5,10,25)
+	possible_transfer_amounts = list(5, 10, 25)
 	volume = 50
 
-
-	//merged from bottle.dm - Hinaichigo
+	//Merged from bottle.dm - Hinaichigo
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 0 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
-	//molotov and smashing variables
+	//Molotov and smashing variables
 	var/molotov = 0 //-1 = can be made into molotov, 0 = can't, 1 = has had rag stuffed into it
 	var/lit = 0
 	var/brightness_lit = 3
-	var/bottleheight = 23 //to offset the molotov rag and fire - beer and ale are 23
-	var/smashtext = "bottle of " //to handle drinking glasses and the flask of holy water
-	var/smashname = "broken bottle" //as above
+	var/bottleheight = 23 //To offset the molotov rag and fire - beer and ale are 23
+	var/smashtext = "bottle of " //To handle drinking glasses and the flask of holy water
+	var/smashname = "broken bottle" //As above
 
 /obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
-	if (gulp_size < 5) gulp_size = 5
-	else gulp_size = max(round(reagents.total_volume / 5), 5)
+	if(gulp_size < 5)
+		gulp_size = 5
+	else
+		gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/weapon/reagent_containers/food/drinks/attack_self(mob/user as mob)
 	if(!is_open_container())
-		user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
+		user << "<span class='warning'>You can't, \the [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
 		return 0
 
 	else if(!src.reagents.total_volume || !src)
-		user << "<span  class='rose'>None of [src] left, oh no!<span>"
+		user << "<span class='warning'>\The [src] is empty.<span>"
 		return 0
 
 	else
@@ -45,9 +46,10 @@
 	var/datum/reagents/R = src.reagents
 	var/fillevel = gulp_size
 
-	//smashing on someone
-	if(user.a_intent == I_HURT && isGlass && molotov != 1)  //to smash on someone, must be harm intent, breakable glass, and have no rag inside
-		if(!M)
+	//Smashing on someone
+	if(user.a_intent == I_HURT && isGlass && molotov != 1)  //To smash a bottle on someone, the user must be harm intent, the bottle must be out of glass, and we don't want a rag in here
+
+		if(!M) //This really shouldn't be checked here, but sure
 			return
 
 		force = 15 //Smashing bottles over someoen's head hurts. //todo: check that this isn't overwriting anything it shouldn't be
@@ -127,31 +129,30 @@
 		return
 
 	else if(!is_open_container())
-		user << "<span  class='rose'>You can't; [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
+		user << "<span class='warning'>You can't, \the [src] is closed.</span>"  //Added this here and elsewhere to prevent drinking, etc. from closed drink containers. - Hinaichigo
 		return 0
 
 	else if(!R.total_volume || !R)
-		user << "<span  class='rose'>None of [src] left, oh no!<span>"
+		user << "<span class='warning'>\The [src] is empty.<span>"
 		return 0
 
 	else if(M == user)
 		imbibe(user)
 		return 0
 
+	else if(istype(M, /mob/living/carbon/human))
 
+		user.visible_message("<span class='danger'>[user] attempts to feed [M] \the [src].</span>", "<span class='danger'>You attempt to feed [M] \the [src].</span>")
 
-	else if( istype(M, /mob/living/carbon/human) )
+		if(!do_mob(user, M))
+			return
 
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span  class='rose'>[user] attempts to feed [M] [src].</span>", 1)
-		if(!do_mob(user, M)) return
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span  class='rose'>[user] feeds [M] [src].</span>", 1)
+		user.visible_message("<span class='danger'>[user] feeds [M] \the [src].</span>", "<span class='danger'>You feed [M] \the [src].</span>")
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-
 		log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+
 		if(!iscarbon(user))
 			M.LAssailant = null
 		else
@@ -171,41 +172,48 @@
 
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
-
 	return 0
 
 
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , flag)
+
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-		if(!is_open_container())
-			user << "<span  class='rose'>You can't; [src] is closed.</span>"
-			return 0
+
+		if(!is_open_container()) //In any case, we aren't working with a closed bottle
+			user << "<span class='warning'>You can't, \the [src] is closed.</span>"
+			return
 
 		if(!target.reagents.total_volume)
-			user << "<span  class='rose'>[target] is empty.</span>"
+			user << "<span class='warning'>\The [target] is empty.</span>"
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span  class='rose'>[src] is full.</span>"
+			user << "<span class='warning'>\The [src] is full.</span>"
 			return
 
 		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-		user << "<span  class='notice'>You fill [src] with [trans] units of the contents of [target].<span>"
+		user << "<span  class='notice'>You fill \the [src] with [trans] units of the contents of \the [target].<span>"
 
-	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
-		if(!is_open_container())
-			user << "<span  class='rose'>You can't; [src] is closed.</span>"
-			return 0
+	else //Something like a glass. Player probably wants to transfer TO it.
+
+		if(!istype(target, /obj/item/weapon/reagent_containers) && !istype(target, /obj/machinery/microwave)) //Not a reagent container or microwave, we most likely shouldn't be dealing with it here !
+			return //We're done here
+
+		if(!is_open_container()) //In any case, we aren't working with a closed bottle
+			user << "<span class='warning'>You can't, \the [src] is closed.</span>"
+			return
+
+		if(!target.is_open_container()) //Is the reagent container we're transfering to closed ?
+			user << "<span class='warning'>You can't, \the [target] is closed.</span>"
+			return
 
 		if(!reagents.total_volume)
-			user << "<span  class='rose'>[src] is empty.</span>"
+			user << "<span class='warning'>\The [src] is empty.</span>"
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span  class='rose'>[target] is full.</span>"
+			user << "<span class='warning'>\The [target] is full.</span>"
 			return
-
-
 
 		var/datum/reagent/refill
 		var/datum/reagent/refillName
@@ -214,38 +222,39 @@
 			refillName = reagents.get_master_reagent_name()
 
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "<span  class='notice'>You transfer [trans] units of the solution to [target].</span>"
+		user << "<span class='notice'>You transfer [trans] units of the solution to \the [target].</span>"
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			if(!istype(bro.module, /obj/item/weapon/robot_module/butler))
 				return
-			var/chargeAmount = max(30,4*trans)
+			var/chargeAmount = max(30, 4*trans)
 			bro.cell.use(chargeAmount)
 			user << "Now synthesizing [trans] units of [refillName]..."
-
 
 			spawn(300)
 				reagents.add_reagent(refill, trans)
 				user << "Cyborg [src] refilled."
-
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/examine(mob/user)
-	..()
-	if(!reagents || reagents.total_volume==0)
-		user << "<span  class='info'>\The [src] is empty!</span>"
-	else if (reagents.total_volume<=src.volume/4)
-		user << "<span  class='info'>\The [src] is almost empty!</span>"
-	else if (reagents.total_volume<=src.volume*0.66)
-		user << "<span  class='info'>\The [src] is half full!</span>"
-	else if (reagents.total_volume<=src.volume*0.90)
-		user << "<span  class='info'>\The [src] is almost full!</span>"
-	else
-		user << "<span  class='info'>\The [src] is full!</span>"
 
-/obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //drink the liquid within
-	user << "<span  class='notice'>You swallow a gulp of [src].</span>"
+	..()
+
+	if(!reagents || reagents.total_volume == 0)
+		user << "<span class='info'>\The [src] is empty!</span>"
+	else if (reagents.total_volume <= src.volume/4)
+		user << "<span class='info'>\The [src] is almost empty!</span>"
+	else if (reagents.total_volume <= src.volume*0.66)
+		user << "<span class='info'>\The [src] is about half full, or about half empty!</span>"
+	else if (reagents.total_volume <= src.volume*0.90)
+		user << "<span class='info'>\The [src] is almost full!</span>"
+	else
+		user << "<span class='info'>\The [src] is full!</span>"
+
+/obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //Drink the liquid within
+
+	user << "<span  class='notice'>You swallow a gulp of \the [src].</span>"
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 	if(isrobot(user))
@@ -258,11 +267,9 @@
 
 	return 1
 
-
 /obj/item/weapon/reagent_containers/food/drinks/New()
 	..()
 	score["meals"]++
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
@@ -464,7 +471,7 @@
 				reagents.add_reagent("space_drugs", 20)
 			if(4)
 				name = "Grifeo: Rich"
-				reagents.add_reagent("tequilla", 10)
+				reagents.add_reagent("tequila", 10)
 				reagents.add_reagent("chemical_waste", 10)
 			if(5)
 				name = "Grifeo: Pure"
@@ -723,10 +730,15 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/britcup
 	name = "cup"
-	desc = "A cup with the british flag emblazoned on it."
+	desc = "A cup with the British flag emblazoned on it."
 	icon_state = "britcup"
 	volume = 30
 
+/obj/item/weapon/reagent_containers/food/drinks/americup
+	name = "cup"
+	desc = "A cup with the American flag emblazoned on it."
+	icon_state = "americup"
+	volume = 30
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
@@ -797,15 +809,15 @@
 		..()
 		reagents.add_reagent("vodka", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla
-	name = "Caccavo Guaranteed Quality Tequilla"
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila
+	name = "Caccavo Guaranteed Quality Tequila"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
-	icon_state = "tequillabottle"
+	icon_state = "tequilabottle"
 	isGlass = 1
 	molotov = -1
 	New()
 		..()
-		reagents.add_reagent("tequilla", 100)
+		reagents.add_reagent("tequila", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing
 	name = "Bottle of Nothing"
@@ -820,7 +832,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
-	desc = "Silver laced tequilla, served in space night clubs across the galaxy."
+	desc = "Silver laced tequila, served in space night clubs across the galaxy."
 	icon_state = "patronbottle"
 	bottleheight = 26 //has a cork but for now it goes on top of the cork
 	molotov = -1
@@ -1178,25 +1190,25 @@
 		update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/update_brightness(var/mob/user = null)
-	if(lit)
+	if(lit && molotov)
 		if(loc == user)
 			user.SetLuminosity(user.luminosity + brightness_lit)
 		else if(isturf(loc))
 			SetLuminosity(src.brightness_lit)
-	else
+	else if(molotov)
 		if(loc == user)
 			user.SetLuminosity(user.luminosity - brightness_lit)
 		else if(isturf(loc))
 			SetLuminosity(0)
 
 /obj/item/weapon/reagent_containers/food/drinks/pickup(mob/user)
-	if(lit)
+	if(lit && molotov)
 		user.SetLuminosity(user.luminosity + brightness_lit)
 		SetLuminosity(0)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/dropped(mob/user)
-	if(src)
+	if(src && lit && molotov)
 		user.SetLuminosity(user.luminosity - brightness_lit)
 		SetLuminosity(brightness_lit)
 

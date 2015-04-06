@@ -117,7 +117,7 @@ obj/item/check_airflow_movable(n)
 //Zones A and B are air zones. n represents the amount of air moved.
 
 proc/Airflow(zone/A, zone/B)
-
+	set background = 1
 	var/n = B.air.return_pressure() - A.air.return_pressure()
 
 	 //Don't go any further if n is lower than the lowest value needed for airflow.
@@ -139,95 +139,95 @@ proc/Airflow(zone/A, zone/B)
 				connected_turfs |= C.B
 
 	//Get lists of things that can be thrown across the room for each zone (assumes air is moving from zone B to zone A)
-	var/list/air_sucked = B.movables()
-	var/list/air_repelled = A.movables()
-	if(n < 0)
-		//air is moving from zone A to zone B
-		var/list/temporary_pplz = air_sucked
-		air_sucked = air_repelled
-		air_repelled = temporary_pplz
+	spawn()
+		var/list/air_sucked = B.movables()
+		var/list/air_repelled = A.movables()
+		if(n < 0)
+			//air is moving from zone A to zone B
+			var/list/temporary_pplz = air_sucked
+			air_sucked = air_repelled
+			air_repelled = temporary_pplz
 
-	if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || 1) // If enabled
-		for(var/atom/movable/M in air_sucked)
-			if(M.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) continue
+		if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || 1) // If enabled
+			for(var/atom/movable/M in air_sucked)
+				if(M.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) continue
 
-			//Check for knocking people over
-			if(ismob(M) && n > zas_settings.Get(/datum/ZAS_Setting/airflow_stun_pressure))
-				if(M:status_flags & GODMODE) continue
-				M:airflow_stun()
+				//Check for knocking people over
+				if(ismob(M) && n > zas_settings.Get(/datum/ZAS_Setting/airflow_stun_pressure))
+					if(M:status_flags & GODMODE) continue
+					M:airflow_stun()
 
-			if(M.check_airflow_movable(n))
+				if(M.check_airflow_movable(n))
 
-				//Check for things that are in range of the midpoint turfs.
-				var/list/close_turfs = list()
-				for(var/turf/U in connected_turfs)
-					if(M in range(U)) close_turfs += U
-				if(!close_turfs.len) continue
+					//Check for things that are in range of the midpoint turfs.
+					var/list/close_turfs = list()
+					for(var/turf/U in connected_turfs)
+						if(M in range(U)) close_turfs += U
+					if(!close_turfs.len) continue
 
-				//If they're already being tossed, don't do it again.
-				if(!M.airflow_speed)
+					//If they're already being tossed, don't do it again.
+					if(!M.airflow_speed)
 
-					M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+						M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
-					spawn M.GotoAirflowDest(abs(n)/5)
+						M.GotoAirflowDest(abs(n)/5)
 
-		//Do it again for the stuff in the other zone, making it fly away.
-		for(var/atom/movable/M in air_repelled)
+			//Do it again for the stuff in the other zone, making it fly away.
+			for(var/atom/movable/M in air_repelled)
 
-			if(M.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) continue
+				if(M.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) continue
 
-			if(ismob(M) && abs(n) > zas_settings.Get(/datum/ZAS_Setting/airflow_medium_pressure))
-				if(M:status_flags & GODMODE) continue
-				M:airflow_stun()
+				if(ismob(M) && abs(n) > zas_settings.Get(/datum/ZAS_Setting/airflow_medium_pressure))
+					if(M:status_flags & GODMODE) continue
+					M:airflow_stun()
 
-			if(M.check_airflow_movable(abs(n)))
+				if(M.check_airflow_movable(abs(n)))
 
-				var/list/close_turfs = list()
-				for(var/turf/U in connected_turfs)
-					if(M in range(U)) close_turfs += U
-				if(!close_turfs.len) continue
+					var/list/close_turfs = list()
+					for(var/turf/U in connected_turfs)
+						if(M in range(U)) close_turfs += U
+					if(!close_turfs.len) continue
 
-				//If they're already being tossed, don't do it again.
-				if(!M.airflow_speed)
+					//If they're already being tossed, don't do it again.
+					if(!M.airflow_speed)
 
-					M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+						M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
-					spawn M.RepelAirflowDest(abs(n)/5)
+						spawn M.RepelAirflowDest(abs(n)/5)
 
 proc/AirflowSpace(zone/A)
+	spawn()
+		//The space version of the Airflow(A,B,n) proc.
 
-	//The space version of the Airflow(A,B,n) proc.
+		var/n = A.air.return_pressure()
+		//Here, n is determined by only the pressure in the room.
 
-	var/n = A.air.return_pressure()
-	//Here, n is determined by only the pressure in the room.
+		if(n < zas_settings.Get(/datum/ZAS_Setting/airflow_lightest_pressure)) return
 
-	if(n < zas_settings.Get(/datum/ZAS_Setting/airflow_lightest_pressure)) return
+		var/list/connected_turfs = A.unsimulated_tiles //The midpoints are now all the space connections.
+		var/list/pplz = A.movables() //We only need to worry about things in the zone, not things in space.
 
-	var/list/connected_turfs = A.unsimulated_tiles //The midpoints are now all the space connections.
-	var/list/pplz = A.movables() //We only need to worry about things in the zone, not things in space.
+		if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || 1) // If enabled
+			for(var/atom/movable/M in pplz)
+				if(M.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) continue
 
-	if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || 1) // If enabled
-		for(var/atom/movable/M in pplz)
-			if(M.last_airflow > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_delay)) continue
+				if(ismob(M) && n > zas_settings.Get(/datum/ZAS_Setting/airflow_stun_pressure))
+					var/mob/O = M
+					if(O.status_flags & GODMODE) continue
+					O.airflow_stun()
 
-			if(ismob(M) && n > zas_settings.Get(/datum/ZAS_Setting/airflow_stun_pressure))
-				var/mob/O = M
-				if(O.status_flags & GODMODE) continue
-				O.airflow_stun()
+				if(M.check_airflow_movable(n))
 
-			if(M.check_airflow_movable(n))
+					var/list/close_turfs = list()
+					for(var/turf/U in connected_turfs)
+						if(M in range(U)) close_turfs += U
+					if(!close_turfs.len) continue
 
-				var/list/close_turfs = list()
-				for(var/turf/U in connected_turfs)
-					if(M in range(U)) close_turfs += U
-				if(!close_turfs.len) continue
+					//If they're already being tossed, don't do it again.
+					if(!M.airflow_speed)
 
-				//If they're already being tossed, don't do it again.
-				if(!M.airflow_speed)
-
-					M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
-					spawn
-						if(M) M.GotoAirflowDest(n/10)
+						M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+						M.GotoAirflowDest(n/10)
 						//Sometimes shit breaks, and M isn't there after the spawn.
 */
 
@@ -259,12 +259,12 @@ proc/AirflowSpace(zone/A)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes:magpulse)
 						return
-		src << "\red You are sucked away by airflow!"
+		src << "<SPAN CLASS='warning'>You are sucked away by airflow!</SPAN>"
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
 		return
-	airflow_speed = min(max(n * (9/airflow_falloff),1),9)
+	airflow_speed = Clamp(n * (9 / airflow_falloff), 1, 9)
 	var
 		xo = airflow_dest.x - src.x
 		yo = airflow_dest.y - src.y
@@ -318,13 +318,13 @@ proc/AirflowSpace(zone/A)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes.flags & NOSLIP)
 						return
-		src << "\red You are pushed away by airflow!"
+		src << "<SPAN CLASS='warning'>You are pushed away by airflow!</SPAN>"
 		last_airflow = world.time
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
 		return
-	airflow_speed = min(max(n * (9/airflow_falloff),1),9)
+	airflow_speed = Clamp(n * (9 / airflow_falloff), 1, 9)
 	var
 		xo = -(airflow_dest.x - src.x)
 		yo = -(airflow_dest.y - src.y)
@@ -346,7 +346,7 @@ proc/AirflowSpace(zone/A)
 				airflow_dest = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 			if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 				return
-			if(!istype(loc, /turf))
+			if (!isturf(loc))
 				return
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client)

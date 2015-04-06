@@ -199,6 +199,9 @@
 	else if(istype(self.data["donor"], /mob/living/carbon/alien))
 		var/obj/effect/decal/cleanable/blood/B = blood_splatter(T,self,1)
 		if(B) B.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
+
+	if(volume >= 5 && !istype(T.loc, /area/chapel)) //blood desanctifies non-chapel tiles
+		T.holy = 0
 	return
 
 /datum/reagent/vaccine
@@ -684,19 +687,23 @@
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("<span class='notice'>[]'s eyes blink and become clearer.</span>", M), 1) // So observers know it worked.
 		// Vamps react to this like acid
-		if(isvampire(M) && prob(10))
-			if(!(VAMP_FULL in M.mind.vampire.powers))
-				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1*REM)
-				M.take_organ_damage(0, 1*REM)
+		if(M.mind.vampire && prob(10))
+			if(!M) M = holder.my_atom
+			if(!(VAMP_MATURE in M.mind.vampire.powers))
+				M.adjustToxLoss(1)
+				M.take_organ_damage(0, 2)
+				M.mind.vampire.smitecounter += 5
+			else
+				M.take_organ_damage(0, 1)
+				M.mind.vampire.smitecounter += 2
 	holder.remove_reagent(src.id, 10 * REAGENTS_METABOLISM) //high metabolism to prevent extended uncult rolls.
 
 /datum/reagent/holywater/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	// Vamps react to this like acid
 	if(ishuman(M))
-		if(isvampire(M))
-			if(!(VAMP_FULL in M.mind.vampire.powers))
-				var/mob/living/carbon/human/H=M
+		if(M.mind.vampire)
+			var/mob/living/carbon/human/H=M
+			if(!(VAMP_UNDYING in M.mind.vampire.powers))
 				if(method == TOUCH)
 					if(H.wear_mask)
 						H << "<span class='warning'>Your mask protects you from the holy water!</span>"
@@ -709,15 +716,18 @@
 						if(prob(15) && volume >= 30)
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
-								if(affecting.take_damage(25, 0))
+								M.mind.vampire.smitecounter += 10
+								if(affecting.take_damage(30, 0))
 									H.UpdateDamageIcon(1)
 								H.status_flags |= DISFIGURED
 								H.emote("scream",,, 1)
 						else
 							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
-			else
-				if(!M.unacidable)
-					M.take_organ_damage(min(15, volume * 2))
+							M.mind.vampire.smitecounter += 30
+				else
+					if(!M.unacidable)
+						M.take_organ_damage(min(15, volume * 2))
+						M.mind.vampire.smitecounter += 5
 	return
 
 /datum/reagent/holywater/reaction_turf(var/turf/T, var/volume)
@@ -3348,7 +3358,7 @@
 		return
 
 /datum/reagent/drink/coffee/cafe_latte
-	name = "Cafe Latte"
+	name = "Latte"
 	id = "cafe_latte"
 	description = "A nice, strong and tasty beverage while you are reading."
 	color = "#664300" // rgb: 102, 67, 0
@@ -3656,7 +3666,7 @@
 			if (!L)
 				H.adjustToxLoss(5)
 			else if(istype(L))
-				L.take_damage(0.05, 1)
+				L.take_damage(0.05, 0.5)
 			H.adjustToxLoss(0.1)
 	if(!holder)
 		holder = M.reagents
@@ -3740,9 +3750,9 @@
 	description = "Yohoho and all that."
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/ethanol/tequilla
+/datum/reagent/ethanol/tequila
 	name = "Tequila"
-	id = "tequilla"
+	id = "tequila"
 	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 	color = "#FFFF91" // rgb: 255, 255, 145
 	//boozepwr = 2
@@ -3887,9 +3897,9 @@
 	description = "Anime's favorite drink."
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/ethanol/deadrum/tequilla
+/datum/reagent/ethanol/deadrum/tequila
 	name = "Tequila"
-	id = "tequilla"
+	id = "tequila"
 	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 	color = "#A8B0B7" // rgb: 168, 176, 183
 
@@ -4068,9 +4078,9 @@
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/ethanol/deadrum/tequilla_sunrise
+/datum/reagent/ethanol/deadrum/tequila_sunrise
 	name = "Tequila Sunrise"
-	id = "tequillasunrise"
+	id = "tequilasunrise"
 	description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
@@ -4457,3 +4467,195 @@
 	if(istype(holder))
 		holder.reagent_list -= src
 		holder = null
+
+/datum/reagent/vinegar //Eventually there will be a way of making vinegar.
+	name = "Vinegar"
+	id = "vinegar"
+	reagent_state = LIQUID
+	color = "#3F1900" // rgb: 63, 25, 0
+
+/datum/reagent/honkserum
+	name = "Honk Serum"
+	id = "honkserum"
+	description = "Concentrated honking"
+	reagent_state = LIQUID
+	color = "#F2C900" // rgb: 242, 201, 0
+	custom_metabolism = 0.01
+
+/datum/reagent/honkserum/on_mob_life(var/mob/living/M)
+	if(prob(0.9))
+		M.say(pick("Honk", "HONK", "Hoooonk", "Honk?", "Henk", "Hunke?", "Honk!"))
+	..()
+	return
+
+//Cafe drinks
+
+
+/datum/reagent/drink/tea/greentea
+	name = "Green Tea"
+	id = "greentea"
+	description = "Delicious green tea."
+
+/datum/reagent/drink/tea/redtea
+	name = "Red Tea"
+	id = "redtea"
+	description = "Tasty red tea."
+
+/datum/reagent/drink/tea/singularitea
+	name = "Singularitea"
+	id = "singularitea"
+	description = "Swirly!"
+
+var/global/list/chifir_doesnt_remove=list(
+	"chifir",
+	"blood"
+)
+
+
+/datum/reagent/drink/tea/chifir
+	name = "Chifir"
+	id = "chifir"
+	description = "Strong Russian tea, it'll help you remember what you had for lunch!"
+
+/datum/reagent/drink/tea/chifir/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+
+	if(ishuman(M) && prob(5))
+		var/mob/living/carbon/human/H=M
+		H.vomit()
+		holder.remove_reagent(id,volume)
+		return
+
+	for(var/datum/reagent/reagent in holder.reagent_list)
+		if(reagent.id in chifir_doesnt_remove)
+			continue
+		holder.remove_reagent(reagent.id, 3*REM)
+
+	M.adjustToxLoss(-2*REM)
+	..()
+	return
+
+/datum/reagent/drink/tea/acidtea
+	name = "Earl's Grey Tea"
+	id = "acidtea"
+	description = "Get in touch with your Roswellian side!"
+
+/datum/reagent/drink/tea/yinyang
+	name = "Zen Tea"
+	id = "yinyang"
+	description = "Find inner peace."
+
+/datum/reagent/drink/tea/gyro
+	name = "Gyro"
+	id = "gyro"
+	description = "Nyo ho ho~"
+
+/datum/reagent/drink/tea/dantea
+	name = "Discount Dan's Green Flavor Tea"
+	id = "dantea"
+	description = "Not safe for children above or under the age of 12."
+
+/datum/reagent/drink/tea/mint
+	name = "Groans Tea: Minty Delight Flavor"
+	id = "mint"
+	description = "Very filling!"
+
+/datum/reagent/drink/tea/chamomile
+	name = "Groans Tea: Chamomile Flavor"
+	id = "chamomile"
+	description = "Enjoy a good night's sleep."
+
+/datum/reagent/drink/tea/exchamomile
+	name = "Tea"
+	id = "exchamomile"
+	description = "Who needs to wake up anyway?"
+
+/datum/reagent/drink/tea/fancydan
+	name = "Groans Banned Tea: Fancy Dan Flavor"
+	id = "fancydan"
+	description = "Full of that patented Dan taste you love!"
+
+/datum/reagent/drink/tea/plasmatea
+	name = "Plasma Pekoe"
+	id = "plasmatea"
+	description = "Probably not the safest beverage."
+
+/datum/reagent/drink/coffee/espresso
+	name = "Espresso"
+	id = "espresso"
+	description = "Coffee made with water."
+
+//Let's hope this one works
+var/global/list/tonio_doesnt_remove=list(
+	"tonio",
+	"blood"
+)
+
+
+/datum/reagent/drink/coffee/tonio
+	name = "Tonio"
+	id = "tonio"
+	nutriment_factor = 1 * FOOD_METABOLISM
+
+
+
+/datum/reagent/tonio/on_mob_life(var/mob/living/M as mob)
+	if(!M) M = holder.my_atom
+
+	if(ishuman(M) && prob(5))
+		var/mob/living/carbon/human/H=M
+		H.vomit()
+		holder.remove_reagent("tonio",volume)
+		return
+
+	for(var/datum/reagent/reagent in holder.reagent_list)
+		if(reagent.id in tonio_doesnt_remove)
+			continue
+		holder.remove_reagent(reagent.id, 3*REM)
+
+	M.adjustToxLoss(-2*REM)
+	..()
+	return
+
+	if(!holder) return
+	M:nutrition += nutriment_factor
+	holder.remove_reagent(src.id, FOOD_METABOLISM)
+	if(!M) M = holder.my_atom
+	if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
+	..()
+	return
+
+/datum/reagent/drink/coffee/cappuccino
+	name = "Cappuccino"
+	id = "cappuccino"
+	description = "Espresso with milk."
+
+/datum/reagent/drink/coffee/doppio
+	name = "Doppio"
+	id = "doppio"
+	description = "Double shot of espresso."
+
+/datum/reagent/drink/coffee/passione
+	name = "Passione"
+	id = "passione"
+	description = "Rejuvinating!"
+
+/datum/reagent/drink/coffee/seccoffee
+	name = "Wake Up Call"
+	id = "seccoffee"
+	description = "All the essentials."
+
+/datum/reagent/drink/coffee/medcoffee
+	name = "Lifeline"
+	id = "medcoffee"
+	description = "Tastes like it's got iron in it or something."
+
+/datum/reagent/drink/coffee/detcoffee
+	name = "Joe"
+	id = "detcoffee"
+	description = "Bitter, black, and tasteless. It's the way I've always had my joe, and the way I was having it when one of the officers came running toward me. The chief medical officer got axed, and no one knew who did it. I reluctantly took one last drink before putting on my coat and heading out. I knew that by the time I was finished, my joe would have fallen to a dreadfully low temperature, but I had work to do."
+
+/datum/reagent/drink/coffee/etank
+	name = "Recharger"
+	id = "etank"
+	description = "Regardless of how energized this coffee makes you feel, jumping against doors will still never be a viable way to open them."

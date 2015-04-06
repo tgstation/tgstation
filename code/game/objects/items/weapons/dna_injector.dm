@@ -510,7 +510,7 @@
 		block = PSYRESISTBLOCK
 		..()
 
-/obj/item/weapon/dnainjector/darkcloak
+/*/obj/item/weapon/dnainjector/darkcloak
 	name = "DNA-Injector (Dark Cloak)"
 	desc = "BLEH BLEH, I AM HERE TO SUCK YOUR BLOOD!"
 	datatype = DNA2_BUF_SE
@@ -529,7 +529,7 @@
 	New()
 		block = SHADOWBLOCK
 		..()
-
+*/
 /obj/item/weapon/dnainjector/chameleon
 	name = "DNA-Injector (Chameleon)"
 	desc = "You cant see me."
@@ -1195,4 +1195,42 @@
 	//block = 14
 	New()
 		block = SANSBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/farsightmut
+	name = "DNA-Injector (Farsight)"
+	desc = "This will allow you to focus your eyes better."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	//block = 2
+	New()
+		block = FARSIGHTBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antifarsight
+	name = "DNA-Injector (Anti-Farsight)"
+	desc = "No fun allowed"
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	//block = 2
+	New()
+		block = FARSIGHTBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/remotesay
+	name = "DNA-Injector (Remote Say)"
+	desc = "Share it with the world."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+	New()
+		block = REMOTETALKBLOCK
+		..()
+
+/obj/item/weapon/dnainjector/antiremotesay
+	name = "DNA-Injector (Remote Say)"
+	desc = "Keep it to yourself."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+	New()
+		block = REMOTETALKBLOCK
 		..()

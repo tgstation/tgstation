@@ -8,43 +8,36 @@
 	layer = 2.3 //under pipes
 	//	flags = CONDUCT
 
+	canSmoothWith = "/obj/structure/lattice=0&/obj/structure/catwalk=0&/turf=0"
+
 /obj/structure/lattice/New(loc)
 	..(loc)
 
-	if(!(istype(loc, /turf/space)))
-		qdel(src)
-
-	for(var/obj/structure/lattice/ExistingLattice in loc)
-		if(ExistingLattice != src)
-			qdel(ExistingLattice)
-
 	icon = 'icons/obj/smoothlattice.dmi'
-	icon_state = "latticeblank"
-	updateOverlays()
 
-	for(var/direction in cardinal)
-		var/obj/structure/lattice/NearbyLattice = \
-			locate(/obj/structure/lattice) in get_step(src, direction)
+	relativewall()
 
-		if(istype(NearbyLattice))
-			NearbyLattice.updateOverlays()
+	relativewall_neighbours()
+
+/obj/structure/lattice/relativewall()
+	var/junction = findSmoothingNeighbors()
+	icon_state = "lattice[junction]"
+
+/obj/structure/lattice/isSmoothableNeighbor(atom/A)
+	if (istype(A, /turf/space))
+		return 0
+
+	return ..()
 
 /obj/structure/lattice/blob_act()
-	del(src)
-	return
+	qdel(src)
 
 /obj/structure/lattice/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			qdel(src)
-			return
 		if(2.0)
 			qdel(src)
-			return
-		if(3.0)
-			return
-		else
-	return
 
 /obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
 	if(iswelder(C))
@@ -56,22 +49,3 @@
 	else
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //Attacking to the lattice will attack to the space turf
-		return
-
-/obj/structure/lattice/proc/updateOverlays()
-	set waitfor = 0
-
-	overlays.len = 0
-
-	var/dir_sum = 0
-
-	for(var/direction in cardinal)
-		var/location = get_step(src, direction)
-
-		if(locate(/obj/structure/lattice) in location)
-			dir_sum += direction
-		else
-			if(!istype(location, /turf/space))
-				dir_sum += direction
-
-	icon_state = "lattice[dir_sum]"

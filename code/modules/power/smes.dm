@@ -121,7 +121,7 @@
 			user << "You begin to cut the cables..."
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			if(do_after(user, 50))
-				if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
+				if (prob(50) && electrocute_mob(usr, terminal.get_powernet(), terminal))
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 					s.set_up(5, 1, src)
 					s.start()
@@ -238,7 +238,7 @@
 		updateicon()
 
 /obj/machinery/power/smes/add_load(var/amount)
-	if(terminal && terminal.powernet)
+	if(terminal && terminal.get_powernet())
 		terminal.powernet.load += amount
 
 /obj/machinery/power/smes/attack_ai(mob/user)
@@ -282,8 +282,11 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/power/smes/Topic(href, href_list)
+	if(!isAI(usr) && usr.z != z) return 1
 	..()
-
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if (usr.stat || usr.restrained() )
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")

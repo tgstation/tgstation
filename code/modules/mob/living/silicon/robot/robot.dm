@@ -158,7 +158,7 @@
 	New()
 		..()
 		module = new /obj/item/weapon/robot_module/combat(src)
-		radio.config(list("Security" = 1))
+		radio.insert_key(new/obj/item/device/encryptionkey/headset_sec(radio))
 		base_icon = icon_state
 		icon_state = "droid-combat"
 		overlays -= "eyes"
@@ -195,7 +195,6 @@
 	// END forced modules.
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
-	var/channels = list()
 
 	if(module)
 		return
@@ -212,8 +211,7 @@
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
-			radio.keyslot = new /obj/item/device/encryptionkey/headset_service(radio)
-			radio.recalculateChannels()
+			radio.insert_key(new/obj/item/device/encryptionkey/headset_service(radio))
 			module_sprites["Waitress"] = "Service"
 			module_sprites["Kent"] = "toiletbot"
 			module_sprites["Bro"] = "Brobot"
@@ -226,9 +224,7 @@
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
-			radio.keyslot = new /obj/item/device/encryptionkey/headset_cargo(radio)
-			radio.recalculateChannels()
-			channels = list("Supply" = 1)
+			radio.insert_key(new/obj/item/device/encryptionkey/headset_cargo(radio))
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("MINE")
 			module_sprites["Basic"] = "Miner_old"
@@ -241,9 +237,7 @@
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
-			radio.keyslot = new /obj/item/device/encryptionkey/headset_med(radio)
-			radio.recalculateChannels()
-			channels = list("Medical" = 1)
+			radio.insert_key(new/obj/item/device/encryptionkey/headset_med(radio))
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("Medical")
 			module_sprites["Basic"] = "Medbot"
@@ -257,9 +251,7 @@
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
-			radio.keyslot = new /obj/item/device/encryptionkey/headset_sec(radio)
-			radio.recalculateChannels()
-			channels = list("Security" = 1)
+			radio.insert_key(new/obj/item/device/encryptionkey/headset_sec(radio))
 			module_sprites["Basic"] = "secborg"
 			module_sprites["Red Knight 2.0"] = "sleeksecurity"
 			module_sprites["Black Knight"] = "securityrobot"
@@ -271,9 +263,7 @@
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
-			radio.keyslot = new /obj/item/device/encryptionkey/headset_eng(radio)
-			radio.recalculateChannels()
-			channels = list("Engineering" = 1)
+			radio.insert_key(new/obj/item/device/encryptionkey/headset_eng(radio))
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("Engineering")
 			module_sprites["Basic"] = "Engineering"
@@ -298,15 +288,13 @@
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
-			radio.keyslot = new /obj/item/device/encryptionkey/headset_sec(radio)
-			radio.recalculateChannels()
+			radio.insert_key(new/obj/item/device/encryptionkey/headset_sec(radio))
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Bladewolf"] = "bladewolf"
 			module_sprites["Bladewolf Mk2"] = "bladewolfmk2"
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
 			module_sprites["Marina-CB"] = "marinaCB"
 			module_sprites["Squadbot"] = "squats"
-			channels = list("Security" = 1)
 			speed = -1
 
 	//Custom_sprite check and entry
@@ -325,7 +313,7 @@
 	else
 		var/picked  = pick(module_sprites)
 		icon_state = module_sprites[picked]
-	radio.config(channels)
+
 	base_icon = icon_state
 	SetEmagged(emagged) // Update emag status and give/take emag modules away
 
@@ -378,10 +366,15 @@
 
 	spawn(0)
 		var/newname
-		newname = copytext(sanitize(input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text),1,MAX_NAME_LEN)
+		for(var/i = 1 to 3)
+			newname = copytext(sanitize(input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change [3-i] [0-i != 1 ? "tries":"try"] left","") as text),1,MAX_NAME_LEN)
+			if(newname == "")
+				continue
+			if(alert(src,"Do you really want the name:\n[newname]?",,"Yes","No") == "Yes")
+				break
+
 		if (newname != "")
 			custom_name = newname
-
 		updatename()
 		updateicon()
 
@@ -817,8 +810,7 @@
 		else if(cell)
 			user << "There is a power cell already installed."
 		else
-			user.drop_item()
-			W.loc = src
+			user.drop_item(src)
 			cell = W
 			user << "You insert the power cell."
 
@@ -874,8 +866,7 @@
 		else
 			if(U.action(src))
 				usr << "You apply the upgrade to [src]!"
-				usr.drop_item()
-				U.loc = src
+				usr.drop_item(src)
 			else
 				usr << "Upgrade error!"
 

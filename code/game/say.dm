@@ -127,6 +127,19 @@ var/list/freqtoname = list(
 		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
 
+/proc/attach_spans(input, list/spans)
+	return "[message_spans(spans)][input]</span>"
+
+/proc/message_spans(list/spans)
+	var/output = "<SPAN CLASS='"
+
+	for(var/span in spans)
+		output = "[output][span] "
+
+	output = "[output]'>"
+	return output
+
+
 /atom/movable/proc/GetVoice()
 	return name
 
@@ -144,7 +157,7 @@ var/list/freqtoname = list(
 	return
 
 /atom/movable/proc/GetSource()
-	return
+	return src
 
 /atom/movable/proc/GetRadio()
 
@@ -173,3 +186,12 @@ var/list/freqtoname = list(
 	radio = null
 
 	..("job", "faketrack", "source", "radio")
+
+proc/handle_render(var/mob,var/message,var/speaker)
+	if(istype(mob, /mob/new_player)) return //One extra layer of sanity
+	if(istype(mob,/mob/dead/observer))
+		var/reference = "<a href='?src=\ref[mob];follow=\ref[speaker]'>(Follow)</a> "
+		message = reference+message
+		mob << message
+	else
+		mob << message

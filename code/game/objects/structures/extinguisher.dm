@@ -14,8 +14,7 @@
 		return
 	if(istype(O, /obj/item/weapon/extinguisher))
 		if(!has_extinguisher && opened)
-			user.drop_item(O)
-			contents += O
+			user.drop_item(src)
 			has_extinguisher = O
 			user << "<span class='notice'>You place [O] in [src].</span>"
 		else
