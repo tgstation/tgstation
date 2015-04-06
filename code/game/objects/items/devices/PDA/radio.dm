@@ -5,7 +5,7 @@
 	icon_state = "power_mod"
 	var/obj/item/device/pda/hostpda = null
 	var/list/botlist = null		// list of bots
-	var/obj/machinery/bot/active 	// the active bot; if null, show bot list
+	var/tmp/obj/machinery/bot/active 	// the active bot; if null, show bot list
 	var/list/botstatus			// the status signal sent by the bot
 	var/bot_type				//The type of bot it is.
 	var/bot_filter				//Determines which radio filter to use.

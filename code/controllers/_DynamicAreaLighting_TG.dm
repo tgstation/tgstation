@@ -119,7 +119,7 @@
 
 
 /atom
-	var/datum/light_source/light
+	var/tmp/datum/light_source/light
 
 
 //Turfs with opacity when they are constructed will trigger nearby lights to update

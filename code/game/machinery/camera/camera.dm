@@ -16,7 +16,7 @@
 	anchored = 1.0
 	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
-	var/obj/item/device/camera_bug/bug = null
+	var/tmp/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
 
 	//OTHER

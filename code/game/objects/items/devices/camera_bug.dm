@@ -21,7 +21,7 @@
 	throw_speed	= 4
 	throw_range	= 20
 
-	var/obj/machinery/camera/current = null
+	var/tmp/obj/machinery/camera/current = null
 	var/obj/item/expansion = null
 	var/bugtype = VANILLA_BUG
 

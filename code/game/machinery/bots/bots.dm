@@ -21,20 +21,20 @@
 	var/declare_message = "" //What the bot will display to the HUD user.
 	var/frustration = 0 //Used by some bots for tracking failures to reach their target.
 	var/speed = 2 //The speed at which the bot moves, or the number of times it moves per process() tick.
-	var/turf/ai_waypoint //The end point of a bot's path, or the target location.
-	var/list/path = list() //List of turfs through which a bot 'steps' to reach the waypoint.
-	var/pathset = 0
-	var/list/ignore_list = list() //List of unreachable targets for an ignore-list enabled bot to ignore.
+	var/tmp/turf/ai_waypoint //The end point of a bot's path, or the target location.
+	var/tmp/list/path = list() //List of turfs through which a bot 'steps' to reach the waypoint.
+	var/tmp/pathset = 0
+	var/tmp/list/ignore_list = list() //List of unreachable targets for an ignore-list enabled bot to ignore.
 	var/mode = 0 //Standardizes the vars that indicate the bot is busy with its function.
 	var/tries = 0 //Number of times the bot tried and failed to move.
 	var/remote_disabled = 0 //If enabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
-	var/mob/living/silicon/ai/calling_ai //Links a bot to the AI calling it.
+	var/tmp/mob/living/silicon/ai/calling_ai //Links a bot to the AI calling it.
 	var/obj/item/device/radio/Radio //The bot's radio, for speaking to people.
 	var/radio_frequency //The bot's default radio speaking freqency. Recommended to be on a department frequency.
 	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
 	var/auto_patrol = 0// set to make bot automatically patrol
-	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
-	var/turf/summon_target	// The turf of a user summoning a bot.
+	var/tmp/turf/patrol_target	// this is turf to navigate to (location of beacon)
+	var/tmp/turf/summon_target	// The turf of a user summoning a bot.
 	var/new_destination		// pending new destination (waiting for beacon response)
 	var/destination			// destination description tag
 	var/next_destination	// the next destination in the patrol route
@@ -42,8 +42,8 @@
 	var/blockcount = 0		//number of times retried a blocked path
 	var/awaiting_beacon	= 0	// count of pticks awaiting a beacon response
 
-	var/nearest_beacon			// the nearest beacon's tag
-	var/turf/nearest_beacon_loc	// the nearest beacon's location
+	var/tmp/nearest_beacon			// the nearest beacon's tag
+	var/tmp/turf/nearest_beacon_loc	// the nearest beacon's location
 
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/control_freq = 1447		// bot control frequency

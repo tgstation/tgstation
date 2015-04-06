@@ -20,11 +20,11 @@
 
 	//var/lasers = 0
 
-	var/mob/living/carbon/target
-	var/oldtarget_name
-	var/threatlevel = 0
-	var/target_lastloc //Loc of target when arrested.
-	var/last_found //There's a delay
+	var/tmp/mob/living/carbon/target
+	var/tmp/oldtarget_name
+	var/tmp/threatlevel = 0
+	var/tmp/target_lastloc //Loc of target when arrested.
+	var/tmp/last_found //There's a delay
 //var/emagged = 0 //Emagged Secbots view everyone as a criminal
 	var/declare_arrests = 1 //When making an arrest, should it notify everyone wearing sechuds?
 	var/idcheck = 1 //If true, arrest people with no IDs

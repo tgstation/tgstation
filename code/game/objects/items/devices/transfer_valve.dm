@@ -6,7 +6,7 @@
 	var/obj/item/weapon/tank/tank_one
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device
-	var/mob/attacher = null
+	var/tmp/mob/attacher = null
 	var/valve_open = 0
 	var/toggle = 1
 
