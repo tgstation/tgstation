@@ -266,12 +266,6 @@
 		gender = FEMALE
 		flags = HAIRSTYLE_CANTRIP
 
-	rapunzel
-		name = "Rapunzel"
-		icon_state = "hair_rapunzel"
-		gender = FEMALE
-		flags = HAIRSTYLE_CANTRIP //FLOORLENGTH BRAID 2: TRIP HARDER
-
 	odango
 		name = "Odango"
 		icon_state = "hair_odango"
@@ -353,11 +347,6 @@
 		name = "Unshaven Mohawk"
 		icon_state = "hair_unshavenmohawk"
 		gender = MALE
-
-	megadrills
-		name = "Quadcurls"
-		icon_state = "hair_quadcurls"
-		gender = FEMALE
 
 	drills
 		name = "Twincurls"
