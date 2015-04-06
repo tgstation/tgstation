@@ -38,7 +38,7 @@
 
 /mob/camera/blob/Life()
 	if(!blob_core)
-		qdel()
+		qdel(src)
 	..()
 
 /mob/camera/blob/Destroy()
