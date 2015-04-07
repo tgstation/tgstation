@@ -54,7 +54,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	else
 		dat = "<A href='?src=\ref[src];AIrequest=1'>request an AI's presence.</A>"
 
-	var/datum/browser/popup = new(user, "holopad", name, 300, 100)
+	var/datum/browser/popup = new(user, "holopad", name, 300, 130)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -69,7 +69,8 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 			var/area/area = get_area(src)
 			for(var/mob/living/silicon/ai/AI in living_mob_list)
-				if(!AI.client)	continue
+				if(!AI.client)
+					continue
 				AI << "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>"
 		else
 			temp = "A request for AI presence was already sent recently.<BR>"
