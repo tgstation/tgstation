@@ -52,11 +52,11 @@
 
 /obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob, params)
 	var/turf/T = get_turf(src)
-	if (istype(C, /obj/item/stack/tile/plasteel))
+	if(istype(C, /obj/item/stack/tile/plasteel))
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead (for building plating)
 	if(istype(C, /obj/item/stack/rods))
 		T.attackby(C, user) //see above, for building catwalks
-	if (istype(C, /obj/item/weapon/weldingtool))
+	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
 			user << "<span class='notice'>Slicing [name] joints ...</span>"
@@ -95,6 +95,10 @@
 	desc = "A catwalk for easier EVA manuevering and cable placement."
 	icon_state = "catwalkfull"
 
+/obj/structure/lattice/catwalk/New()
+	..()
+	stored = new/obj/item/stack/rods(src, 2)
+
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
@@ -113,6 +117,15 @@
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //catwalks 'enable' coil laying on space tiles, not the catwalks themselves
 		return
+	if(istype(C, /obj/item/weapon/wirecutters))
+		var/turf/T = get_turf(src)
+		if(locate(/obj/structure/cable, T))
+			user << "<span class='notice'>Remove cables first!</span>"
+			return
+		user << "<span class='notice'>Deconstructing catwalk...</span>"
+		T.ReplaceWithLattice()
+		new/obj/item/stack/rods(T, 1)
+
 
 /obj/structure/lattice/catwalk/updateOverlays()
 	overlays.Cut()

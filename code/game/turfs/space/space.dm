@@ -41,13 +41,19 @@
 			user << "<span class='warning'>There is already a catwalk here.</span>"
 			return
 		if(L)
-			if(R.use(1))
-				user << "<span class='notice'>Constructing catwalk...</span>"
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				qdel(L)
-				ReplaceWithCatwalk()
-			else
-				user << "<span class='warning'>You need two rods to build a catwalk.</span>"
+			user << "<span class='notice'>Constructing catwalk...</span>"
+			if(do_after(user, 20))
+				W = locate(/obj/structure/lattice/catwalk, src)
+				if(W)
+					user << "<span class='warning'>There is already a catwalk here.</span>"
+					return
+				if(R.use(1))
+					user << "<span class='notice'>You construct a catwalk.</span>"
+					playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+					qdel(L)
+					ReplaceWithCatwalk()
+				else
+					user << "<span class='warning'>You need one rod to build a lattice.</span>"
 			return
 		if(R.use(1))
 			user << "<span class='notice'>Constructing support lattice...</span>"
