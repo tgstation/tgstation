@@ -369,12 +369,12 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 
-/obj/machinery/say_quote(var/text)
-	var/ending = copytext(text, length(text) - 2)
+/obj/machinery/say_quote(var/input, list/spans)
+	var/ending = copytext(input, length(input) - 2)
 	if (ending == "!!!")
-		return "blares, \"[text]\""
+		return "blares, \"attach_spans(input, spans)\""
 
-	return "beeps, \"[text]\""
+	return ..()
 
 /obj/machinery/requests_console/proc/createmessage(source, title, message, priority, paper)
 	var/linkedsender

@@ -115,7 +115,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(loc == L) return 0
 	if(stat != CONSCIOUS)	return 0
-	if(locate(/obj/item/alien_embryo) in L) return 0
+	if(locate(/obj/item/body_egg/alien_embryo) in L) return 0
 	if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 
 	L.visible_message("<span class='danger'>[src] leaps at [L]'s face!</span>", \
@@ -145,7 +145,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 		if(!sterile) L.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 	else if (iscorgi(M))
-		var/mob/living/simple_animal/corgi/C = M
+		var/mob/living/simple_animal/pet/corgi/C = M
 		loc = C
 		C.facehugger = src
 
@@ -174,11 +174,11 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]_impregnated"
 
 		if(!target.getlimb(/obj/item/organ/limb/robot/chest) && !(target.status_flags & XENO_HOST))
-			new /obj/item/alien_embryo(target)
+			new /obj/item/body_egg/alien_embryo(target)
 
 
 		if(iscorgi(target))
-			var/mob/living/simple_animal/corgi/C = target
+			var/mob/living/simple_animal/pet/corgi/C = target
 			src.loc = get_turf(C)
 			C.facehugger = null
 	else

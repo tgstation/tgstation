@@ -235,3 +235,11 @@ MIDROUND_ANTAG_TIME_CHECK 60
 
 ## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped
 MIDROUND_ANTAG_LIFE_CHECK 0.7
+
+###Limit Spell Choices##
+## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
+
+#NO_SUMMON_GUNS
+#NO_SUMMON_MAGIC
+#NO_SUMMON_EVENTS
+

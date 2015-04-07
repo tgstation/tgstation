@@ -20,6 +20,8 @@ var/datum/atom_hud/huds = list( \
 	var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
 
 /datum/atom_hud/proc/remove_hud_from(var/mob/M)
+	if(src in M.permanent_huds)
+		return
 	for(var/atom/A in hudatoms)
 		remove_from_single_hud(M, A)
 	hudusers -= M

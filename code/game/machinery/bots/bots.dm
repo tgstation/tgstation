@@ -98,6 +98,7 @@
 /obj/machinery/bot/New()
 	..()
 	SSbot.processing += src //Global bot list
+	SSbp.insertBot(src)
 	botcard = new /obj/item/weapon/card/id(src)
 	set_custom_texts()
 	Radio = new /obj/item/device/radio(src)
@@ -323,7 +324,7 @@
 	pulse2.dir = pick(cardinal)
 
 	spawn(10)
-		pulse2.delete()
+		qdel(pulse2)
 	if (on)
 		turn_off()
 	spawn(severity*300)
@@ -439,7 +440,7 @@ obj/machinery/bot/proc/bot_step(var/dest)
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
 		botcard.access = prev_access
 
-/obj/machinery/bot/proc/call_bot(var/caller, var/turf/waypoint)
+/obj/machinery/bot/proc/call_bot(var/caller, var/turf/waypoint, var/message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
 	var/area/end_area = get_area(waypoint)
 
@@ -456,12 +457,14 @@ obj/machinery/bot/proc/bot_step(var/dest)
 		if(!on)
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		botcard = all_access //Give the bot all-access while under the AI's command.
-		calling_ai << "<span class='notice'>\icon[src] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>"
+		if(message)
+			calling_ai << "<span class='notice'>\icon[src] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>"
 		pathset = 1
 		mode = BOT_RESPONDING
 		tries = 0
 	else
-		calling_ai << "<span class='danger'>Failed to calculate a valid route. Ensure destination is clear of obstructions and within range.</span>"
+		if(message)
+			calling_ai << "<span class='danger'>Failed to calculate a valid route. Ensure destination is clear of obstructions and within range.</span>"
 		calling_ai = null
 		path = list()
 

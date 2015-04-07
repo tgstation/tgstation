@@ -157,6 +157,8 @@
 /mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0)
 	var/damage = intensity - check_eye_prot()
 	if(..()) // we've been flashed
+		if(weakeyes)
+			Stun(2)
 		switch(damage)
 			if(1)
 				src << "<span class='warning'>Your eyes sting a little.</span>"
@@ -189,6 +191,12 @@
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
+
+/mob/living/carbon/proc/eyecheck()
+	var/obj/item/cybernetic_implant/eyes/EFP = locate() in src
+	if(EFP)
+		return EFP.flash_protect
+	return 0
 
 /mob/living/carbon/proc/tintcheck()
 	return 0
@@ -286,55 +294,6 @@
 /mob/living/carbon/proc/canBeHandcuffed()
 	return 0
 
-/mob/living/carbon/unEquip(obj/item/I) //THIS PROC DID NOT CALL ..() AND THAT COST ME AN ENTIRE DAY OF DEBUGGING.
-	. = ..() //Sets the default return value to what the parent returns.
-	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
-		return
-
-	if(I == back)
-		back = null
-		update_inv_back(0)
-	else if(I == wear_mask)
-		if(istype(src, /mob/living/carbon/human)) //If we don't do this hair won't be properly rebuilt.
-			return
-		wear_mask = null
-		update_inv_wear_mask(0)
-	else if(I == handcuffed)
-		handcuffed = null
-		if(buckled && buckled.buckle_requires_restraints)
-			buckled.unbuckle_mob()
-		update_inv_handcuffed(0)
-	else if(I == legcuffed)
-		legcuffed = null
-		update_inv_legcuffed(0)
-
-
-/mob/living/carbon/proc/get_temperature(var/datum/gas_mixture/environment)
-	var/loc_temp = T0C
-	if(istype(loc, /obj/mecha))
-		var/obj/mecha/M = loc
-		loc_temp =  M.return_temperature()
-
-	else if(istype(loc, /obj/structure/transit_tube_pod))
-		loc_temp = environment.temperature
-
-	else if(istype(get_turf(src), /turf/space))
-		var/turf/heat_turf = get_turf(src)
-		loc_temp = heat_turf.temperature
-
-	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-		var/obj/machinery/atmospherics/unary/cryo_cell/C = loc
-
-		if(C.air_contents.total_moles() < 10)
-			loc_temp = environment.temperature
-		else
-			loc_temp = C.air_contents.temperature
-
-	else
-		loc_temp = environment.temperature
-
-	return loc_temp
-
 
 /mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
@@ -342,6 +301,7 @@
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
+	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags&ABSTRACT)) 			? head 		: "Nothing"]</A>
 	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>"}

@@ -220,7 +220,7 @@
 
 /obj/structure/table/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(tableclimber)
+	if(tableclimber && tableclimber != user)
 		tableclimber.Weaken(2)
 		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You've been knocked off the table", "You see [tableclimber.name] get knocked off the table</span>")
 

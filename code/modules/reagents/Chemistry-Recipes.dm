@@ -198,7 +198,7 @@ silicate
 	name = "Zombie Powder"
 	id = "zombiepowder"
 	result = "zombiepowder"
-	required_reagents = list("carpotoxin" = 5, "stoxin" = 5, "copper" = 5)
+	required_reagents = list("carpotoxin" = 5, "morphine" = 5, "copper" = 5)
 	result_amount = 2
 
 /datum/chemical_reaction/rezadone
@@ -433,7 +433,7 @@ datum/chemical_reaction/pestkiller
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 	for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 		O.show_message(text("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>"), 1)
-	var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
+	var/mob/living/simple_animal/slime/S = new /mob/living/simple_animal/slime
 	S.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimeinaprov
@@ -755,7 +755,7 @@ datum/chemical_reaction/pestkiller
 	required_other = 1
 /datum/chemical_reaction/slimebloodlust/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	for(var/mob/living/carbon/slime/slime in viewers(get_turf(holder.my_atom), null))
+	for(var/mob/living/simple_animal/slime/slime in viewers(get_turf(holder.my_atom), null))
 		slime.rabid = 1
 		for(var/mob/O in viewers(get_turf(holder.my_atom), null))
 			O.show_message(text("<span class='danger'>The [slime] is driven into a frenzy!</span>"), 1)

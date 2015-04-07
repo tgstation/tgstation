@@ -4,6 +4,7 @@
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
+	var/alt_icon = 'icons/mob/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
@@ -26,16 +27,6 @@
 	if(r_store) r_store.emp_act(severity)
 	if(l_store) l_store.emp_act(severity)
 	..()
-
-/mob/living/carbon/alien/humanoid/attack_slime(mob/living/carbon/slime/M as mob)
-	..()
-	var/damage = rand(5, 35)
-	if(M.is_adult)
-		damage = rand(10, 40)
-	adjustBruteLoss(damage)
-	add_logs(M, src, "attacked", admin=0)
-	updatehealth()
-	return
 
 /mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")

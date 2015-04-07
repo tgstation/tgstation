@@ -100,15 +100,15 @@ datum/reagent/consumable/capsaicin/on_mob_life(var/mob/living/M as mob)
 			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("cryostylane"))
 				holder.remove_reagent("cryostylane", 5)
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature += rand(5,20)
 		if(15 to 25)
 			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature += rand(10,20)
 		if(25 to INFINITY)
 			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature += rand(15,20)
 	..()
 	return
@@ -125,24 +125,24 @@ datum/reagent/consumable/frostoil/on_mob_life(var/mob/living/M as mob)
 			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature -= rand(5,20)
 		if(15 to 25)
 			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature -= rand(10,20)
 		if(25 to INFINITY)
 			M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(1))
 				M.emote("shiver")
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature -= rand(15,20)
 	..()
 	return
 
 datum/reagent/consumable/frostoil/reaction_turf(var/turf/simulated/T, var/volume)
 	if(volume >= 5)
-		for(var/mob/living/carbon/slime/M in T)
+		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 		//if(istype(T))
 		//	T.atmos_spawn_air(SPAWN_COLD)

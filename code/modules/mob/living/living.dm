@@ -8,7 +8,6 @@ Sorry Giacom. Please don't be mad :(
 		push_mob_back(src, A.push_dir)
 */
 
-
 /mob/living/New()
 	. = ..()
 	generateStaticOverlay()
@@ -71,6 +70,9 @@ Sorry Giacom. Please don't be mad :(
 
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
+	//Even if we don't push/swap places, we "touched" them, so spread fire
+	spreadFire(M)
+
 	if(now_pushing)
 		return 1
 
@@ -97,7 +99,7 @@ Sorry Giacom. Please don't be mad :(
 		M.loc = oldloc
 		M.LAssailant = src
 
-		for(var/mob/living/carbon/slime/slime in view(1,M))
+		for(var/mob/living/simple_animal/slime/slime in view(1,M))
 			if(slime.Victim == M)
 				slime.UpdateFeed()
 
@@ -324,6 +326,7 @@ Sorry Giacom. Please don't be mad :(
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			usr.sleeping = 20 //Short nap
+	update_canmove()
 
 /mob/proc/get_contents()
 
@@ -333,6 +336,7 @@ Sorry Giacom. Please don't be mad :(
 
 	resting = !resting
 	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
+	update_canmove()
 
 //Recursive function to find everything a mob is holding.
 /mob/living/get_contents(var/obj/item/weapon/storage/Storage = null)
@@ -443,10 +447,10 @@ Sorry Giacom. Please don't be mad :(
 				C.reagents.clear_reagents()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	if(stat == 2)
+	if(stat == DEAD)
 		dead_mob_list -= src
 		living_mob_list += src
-	if(!isanimal(src))	stat = CONSCIOUS
+	stat = CONSCIOUS
 	if(ishuman(src))
 		var/mob/living/carbon/human/human_mob = src
 		human_mob.restore_blood()
@@ -454,8 +458,7 @@ Sorry Giacom. Please don't be mad :(
 
 	update_fire()
 	regenerate_icons()
-	..()
-	return
+
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -549,7 +552,7 @@ Sorry Giacom. Please don't be mad :(
 		s_active.close(src)
 
 	if(update_slimes)
-		for(var/mob/living/carbon/slime/M in view(1,src))
+		for(var/mob/living/simple_animal/slime/M in view(1,src))
 			M.UpdateFeed(src)
 
 /mob/living/proc/makeTrail(var/turf/T, var/mob/living/M)
@@ -695,13 +698,12 @@ Sorry Giacom. Please don't be mad :(
 					if(do_after(usr, 600))
 						if(!C.buckled)
 							return
-						C.visible_message("<span class='danger'>[C] manages to unbuckle themself!</span>", \
-											"<span class='notice'>You successfully unbuckle yourself.</span>")
 						C.buckled.user_unbuckle_mob(C,C)
 					else
-						C << "<span class='warning'>You fail to unbuckle yourself!</span>"
+						if(C && C.buckled)
+							C << "<span class='warning'>You fail to unbuckle yourself!</span>"
 			else
-				L.buckled.user_unbuckle_mob(L,L)
+				C.buckled.user_unbuckle_mob(C,C)
 		else
 			L.buckled.user_unbuckle_mob(L,L)
 
@@ -779,7 +781,10 @@ Sorry Giacom. Please don't be mad :(
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
 	else if(!on && floating)
-		animate(src, pixel_y = initial(pixel_y), time = 10)
+		var/final_pixel_y = initial(pixel_y)
+		if(lying && !buckled)
+			final_pixel_y = lying_pixel_offset
+		animate(src, pixel_y = final_pixel_y, time = 10)
 		floating = 0
 
 //called when the mob receives a bright flash
@@ -842,9 +847,12 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 
-/atom/movable/proc/do_attack_animation(atom/A)
+/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
+	var/final_pixel_y = initial(pixel_y)
+	if(end_pixel_y)
+		final_pixel_y = end_pixel_y
 	var/direction = get_dir(src, A)
 	switch(direction)
 		if(NORTH)
@@ -867,19 +875,51 @@ Sorry Giacom. Please don't be mad :(
 		if(SOUTHWEST)
 			pixel_x_diff = -8
 			pixel_y_diff = -8
+
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = initial(pixel_y), time = 2)
+	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
 
 /mob/living/do_attack_animation(atom/A)
-	..()
+	var/final_pixel_y = initial(pixel_y)
+	if(lying && !buckled)
+		final_pixel_y = lying_pixel_offset
+	..(A, final_pixel_y)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
+	var/final_pixel_y = initial(pixel_y)
+	if(lying && !buckled)
+		final_pixel_y = lying_pixel_offset
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
-	animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y) , time = 2)
+	animate(pixel_x = initial(pixel_x) , pixel_y = final_pixel_y , time = 2)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
+/mob/living/proc/get_temperature(var/datum/gas_mixture/environment)
+	var/loc_temp = T0C
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		loc_temp =  M.return_temperature()
+
+	else if(istype(loc, /obj/structure/transit_tube_pod))
+		loc_temp = environment.temperature
+
+	else if(istype(get_turf(src), /turf/space))
+		var/turf/heat_turf = get_turf(src)
+		loc_temp = heat_turf.temperature
+
+	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		var/obj/machinery/atmospherics/unary/cryo_cell/C = loc
+
+		if(C.air_contents.total_moles() < 10)
+			loc_temp = environment.temperature
+		else
+			loc_temp = C.air_contents.temperature
+
+	else
+		loc_temp = environment.temperature
+
+	return loc_temp

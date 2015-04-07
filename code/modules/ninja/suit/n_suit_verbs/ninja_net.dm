@@ -16,7 +16,6 @@
 						return
 				spawn(0)
 					H.Beam(C,"n_beam",,15)
-				C.anchored = 1//Anchors them so they can't move.
 				H.say("Get over here!")
 				var/obj/effect/energy_net/E = new /obj/effect/energy_net(C.loc)
 				E.layer = C.layer+1//To have it appear one layer above the mob.

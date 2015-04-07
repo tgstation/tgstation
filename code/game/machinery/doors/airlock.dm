@@ -38,7 +38,7 @@
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = 0
-	var/doortype = null
+	var/doortype = /obj/structure/door_assembly/door_assembly_0
 	var/justzap = 0
 	var/safe = 1
 	normalspeed = 1

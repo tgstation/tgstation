@@ -123,6 +123,7 @@
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/emproof"
+	needs_permit = 0 // Aparently these are safe to carry? I'm sure Golliaths would disagree.
 	var/overheat = 0
 	var/recent_reload = 1
 	var/range_add = 0
@@ -207,6 +208,71 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 
+/obj/item/weapon/gun/energy/plasmacutter
+	name = "plasma cutter"
+	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	icon_state = "plasmacutter"
+	item_state = "plasmacutter"
+	force = 15
+	damtype = "fire"
+	modifystate = -1
+	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=2;engineering=1"
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
+	flags = CONDUCT | OPENCONTAINER
+	attack_verb = list("attacked", "slashed", "cut", "sliced")
+	can_charge = 0
+	var/volume = 15
+
+/obj/item/weapon/gun/energy/plasmacutter/New()
+	..()
+	create_reagents(volume)
+
+/obj/item/weapon/gun/energy/plasmacutter/newshot()
+	if (!ammo_type || !reagents)	return
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+
+	var/amount = shot.e_cost / 100
+
+	if(!reagents.get_reagent_amount("plasma") >= amount)
+		return
+
+	reagents.remove_reagent("plasma", amount)
+	chambered = shot
+	chambered.newshot()
+	return
+
+/obj/item/weapon/gun/energy/plasmacutter/examine()
+	..()
+	usr << "Has [reagents.get_reagent_amount("plasma")] unit\s of plasma left."
+	return
+
+/obj/item/weapon/gun/energy/plasmacutter/attackby(var/obj/item/A, var/mob/user)
+	if(reagents.maximum_volume > reagents.total_volume)
+		if(istype(A, /obj/item/stack/sheet/mineral/plasma))
+			var/obj/item/stack/sheet/S = A
+			S.use(1)
+			reagents.add_reagent("plasma", 20)
+			user << "<span class='info'>You refill [src] with [S]. [reagents.get_reagent_amount("plasma")] units of plasma left.</span>"
+		if(istype(A, /obj/item/weapon/ore/plasma))
+			qdel(A)
+			reagents.add_reagent("plasma", 10)
+			user << "<span class='info'>You refill [src] with [A]. [reagents.get_reagent_amount("plasma")] units of plasma left.</span>"
+		if(istype(A, /obj/item/weapon/storage/bag/ore))
+			if(locate(/obj/item/weapon/ore/plasma) in A)
+				attackby(locate(/obj/item/weapon/ore/plasma) in A, user)
+	..()
+
+/obj/item/weapon/gun/energy/plasmacutter/charged/New()
+	..()
+	reagents.add_reagent("plasma", volume)
+
+/obj/item/weapon/gun/energy/plasmacutter/adv
+	name = "advanced plasma cutter"
+	icon_state = "adv_plasmacutter"
+	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=3;engineering=2"
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
+	volume = 25
+
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
@@ -219,6 +285,7 @@
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	var/charge_tick = 0
 	var/recharge_time = 2.5
+	can_charge = 0
 
 /obj/item/weapon/gun/energy/disabler/cyborg/New()
 	..()

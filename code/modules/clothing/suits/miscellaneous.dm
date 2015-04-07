@@ -68,7 +68,7 @@
 	icon_state = "judge"
 	item_state = "judge"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/spacecash)
+	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/stack/spacecash)
 	flags_inv = HIDEJUMPSUIT
 
 
@@ -186,6 +186,15 @@
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
 	flags = NODROP
+
+/obj/item/clothing/suit/whitedress
+	name = "white dress"
+	desc = "A fancy white dress."
+	icon_state = "white_dress"
+	item_state = "w_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	flags_inv = HIDEJUMPSUIT|HIDESHOES
+
 
 /*
  * Misc

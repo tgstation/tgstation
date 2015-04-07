@@ -74,11 +74,35 @@
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
 
-		//NINJACODE
-		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
-			var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
+
+	//NINJACODE
+	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.
+		var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
+		if(statpanel("SpiderOS"))
+			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
+			stat("Current Time:", "[worldtime2text()]")
 			if(SN.s_initialized)
-				stat("Energy Charge", round(SN.cell.charge/100))
+				//Suit gear
+				stat("Energy Charge:", "[round(SN.cell.charge/100)]%")
+				stat("Smoke Bombs:", "\Roman [SN.s_bombs]")
+				//Ninja status
+				if(dna)
+					stat("Fingerprints:", "[md5(dna.uni_identity)]")
+					stat("Unique Identity:", "[dna.unique_enzymes]")
+				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
+				stat("Nutrition Status:", "[nutrition]")
+				stat("Oxygen Loss:", "[getOxyLoss()]")
+				stat("Toxin Levels:", "[getToxLoss()]")
+				stat("Burn Severity:", "[getFireLoss()]")
+				stat("Brute Trauma:", "[getBruteLoss()]")
+				stat("Radiation Levels:","[radiation] rad")
+				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
+
+				//Virsuses
+				if(viruses.len)
+					stat("Viruses:", null)
+					for(var/datum/disease/D in viruses)
+						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
 
 /mob/living/carbon/human/ex_act(severity, ex_target)
@@ -238,6 +262,8 @@
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)
+
+	spreadFire(AM)
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
 /mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, var/safety = 0)
@@ -498,15 +524,6 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return !(src.stat || src.weakened || src.stunned || src.restrained())
 
-/mob/living/carbon/human/proc/play_xylophone()
-	if(!src.xylophone)
-		visible_message("<span class='notice'>[src] begins playing \his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","You hear a spooky xylophone melody.")
-		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
-		playsound(loc, song, 50, 1, -1)
-		xylophone = 1
-		spawn(1200)
-			xylophone = 0
-
 /mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
@@ -655,11 +672,9 @@
 
 
 
-/mob/living/carbon/human/help_shake_act(mob/living/carbon/human/M)
+/mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
 	if(!istype(M))
 		return
-
-	var/mob/living/carbon/human/H = src
 
 	if(health >= 0)
 		if(src == M)
@@ -667,7 +682,7 @@
 				"<span class='notice'>[src] examines \himself.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
-			for(var/obj/item/organ/limb/org in H.organs)
+			for(var/obj/item/organ/limb/org in organs)
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
@@ -697,22 +712,20 @@
 				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
 
 				for(var/obj/item/I in org.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[H];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
+					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
 
-			if(H.blood_max)
+			if(blood_max)
 				src << "<span class='danger'>You are bleeding!</span>"
 			if(staminaloss)
 				if(staminaloss > 30)
 					src << "<span class='info'>You're completely exhausted.</span>"
 				else
 					src << "<span class='info'>You feel fatigued.</span>"
-			if(dna && dna.species.id && dna.species.id == "skeleton" && !H.w_uniform && !H.wear_suit)
-				H.play_xylophone()
 		else
-			if(H.wear_suit)
-				H.wear_suit.add_fingerprint(M)
-			else if(H.w_uniform)
-				H.w_uniform.add_fingerprint(M)
+			if(wear_suit)
+				wear_suit.add_fingerprint(M)
+			else if(w_uniform)
+				w_uniform.add_fingerprint(M)
 
 			..()
 

@@ -134,6 +134,24 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	adjust_fire_stacks(0.5)
 	IgniteMob()
 
+
+//Share fire evenly between the two mobs
+//Called in MobBump() and Crossed()
+/mob/living/proc/spreadFire(var/mob/living/L)
+	if(!istype(L))
+		return
+	var/L_old_on_fire = L.on_fire
+
+	if(on_fire) //Only spread fire stacks if we're on fire
+		fire_stacks /= 2
+		L.fire_stacks += fire_stacks
+		L.IgniteMob()
+
+	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
+		L.fire_stacks /= 2
+		fire_stacks += L.fire_stacks
+		IgniteMob()
+
 //Mobs on Fire end
 
 
@@ -161,7 +179,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
 
 
-/mob/living/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/attack_slime(mob/living/simple_animal/slime/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -170,26 +188,11 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		return // can't attack while eating!
 
 	if (stat != DEAD)
+		add_logs(M, src, "attacked", admin=0)
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
-
-		if(M.powerlevel > 0)
-			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
-
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-				return 1
-	add_logs(M, src, "attacked", admin=0)
-	return
+		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)

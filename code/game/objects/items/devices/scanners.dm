@@ -385,7 +385,7 @@ MASS SPECTROMETER
 	if (!isslime(M))
 		user.show_message("<span class='warning'>This device can only scan slimes!</span>", 1)
 		return
-	var/mob/living/carbon/slime/T = M
+	var/mob/living/simple_animal/slime/T = M
 	user.show_message("Slime scan results:", 1)
 	user.show_message(text("[T.colour] [] slime", T.is_adult ? "adult" : "baby"), 1)
 	user.show_message(text("Nutrition: [T.nutrition]/[]", T.get_max_nutrition()), 1)

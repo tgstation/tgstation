@@ -6,63 +6,21 @@
 		return
 	if(!loc)
 		return
-	var/datum/gas_mixture/environment = loc.return_air()
 
-	if(stat != DEAD)
-
-		//Breathing, if applicable
-		handle_breathing()
-
+	if(..())
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
-
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-		//Blud
-		handle_blood()
-
-		//Random events (vomiting etc)
-		handle_random_events()
-
 		//Heart Attacks, etc.
 		handle_heart()
 
 		. = 1
-
-	//Handle temperature/pressure differences between body and environment
-	handle_environment(environment)
-
-	handle_fire()
-
-	//stuff in the stomach
-	handle_stomach()
-
-	update_canmove()
-
-	update_gravity(mob_has_gravity())
-
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
-
-	handle_regular_status_updates() // Status updates, death etc.
-
-	if(client)
-		handle_regular_hud_updates()
-
-	return .
-
-
 
 ///////////////
 // BREATHING //
 ///////////////
 
 //Start of a breath chain, calls breathe()
-/mob/living/carbon/proc/handle_breathing()
+/mob/living/carbon/handle_breathing()
 	if(SSmob.times_fired%4==2 || failed_last_breath)
 		breathe() //Breathe per 4 ticks, unless suffocating
 	else
@@ -230,7 +188,7 @@
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-
+	return
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
@@ -251,7 +209,7 @@
 /mob/living/carbon/proc/handle_changeling()
 	return
 
-/mob/living/carbon/proc/handle_mutations_and_radiation()
+/mob/living/carbon/handle_mutations_and_radiation()
 	if(radiation)
 
 		switch(radiation)
@@ -276,42 +234,21 @@
 		radiation = Clamp(radiation, 0, 100)
 
 
-/mob/living/carbon/proc/handle_chemicals_in_body()
+/mob/living/carbon/handle_chemicals_in_body()
 	if(reagents)
 		reagents.metabolize(src)
 
-	if(drowsyness)
-		drowsyness--
-		eye_blurry = max(2, eye_blurry)
-		if(prob(5))
-			sleeping += 1
-			Paralyse(5)
-
-	confused = max(0, confused - 1)
-	// decrement dizziness counter, clamped to 0
-	if(resting)
-		dizziness = max(0, dizziness - 5)
-		jitteriness = max(0, jitteriness - 5)
-	else
-		dizziness = max(0, dizziness - 1)
-		jitteriness = max(0, jitteriness - 1)
-
-	updatehealth()
+/mob/living/carbon/handle_blood()
 	return
 
-/mob/living/carbon/proc/handle_blood()
+/mob/living/carbon/handle_random_events()
 	return
 
 /mob/living/carbon/proc/handle_heart()
 	return
+/mob/living/carbon/handle_environment(var/datum/gas_mixture/environment)	return
 
-/mob/living/carbon/proc/handle_random_events()
-	return
-
-/mob/living/carbon/proc/handle_environment(var/datum/gas_mixture/environment)
-	return
-
-/mob/living/carbon/proc/handle_stomach()
+/mob/living/carbon/handle_stomach()
 	spawn(0)
 		for(var/mob/living/M in stomach_contents)
 			if(M.loc != src)
@@ -328,55 +265,59 @@
 						M.adjustBruteLoss(5)
 					nutrition += 10
 
-/mob/living/carbon/proc/handle_regular_status_updates()
+//This updates the health and status of the mob (conscious, unconscious, dead)
+/mob/living/carbon/handle_regular_status_updates()
 
-	if(stat == DEAD)
-		eye_blind = max(eye_blind, 1)
-		silent = 0
-	else
-		updatehealth()
+	if(..()) //alive
+
 		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
-			eye_blind = max(eye_blind, 1)
-			silent = 0
-			return 1
+			return
 
 		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
 			Paralyse(3)
 			stat = UNCONSCIOUS
 
-		if(paralysis)
-			AdjustParalysis(-1)
-		else if(sleeping)
-			handle_dreams()
-			adjustStaminaLoss(-10)
-			sleeping = max(sleeping-1, 0)
-			stat = UNCONSCIOUS
-			if( prob(10) && health && !hal_crit )
-				spawn(0)
-					emote("snore")
-
-		else if (status_flags & FAKEDEATH)
+		if(sleeping)
 			stat = UNCONSCIOUS
 
-		else
-			stat = CONSCIOUS
+		CheckStamina()
+		return 1
 
-		handle_disabilities()
+//this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
+/mob/living/carbon/handle_status_effects()
+	..()
 
-		//Dizziness
-		if(dizziness)
-			var/client/C = client
-			var/pixel_x_diff = 0
-			var/pixel_y_diff = 0
-			var/temp
-			var/saved_dizz = dizziness
-			dizziness = max(dizziness-1, 0)
-			if(C)
-				var/oldsrc = src
-				var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70 // This shit is annoying at high strength
-				src = null
-				spawn(0)
+	if(sleeping)
+		handle_dreams()
+		adjustStaminaLoss(-10)
+		sleeping = max(sleeping-1, 0)
+		if( prob(10) && health && !hal_crit )
+			spawn(0)
+				emote("snore")
+
+	var/restingpwr = 1 + 4 * resting
+
+	//Dizziness
+	if(dizziness)
+		var/client/C = client
+		var/pixel_x_diff = 0
+		var/pixel_y_diff = 0
+		var/temp
+		var/saved_dizz = dizziness
+		if(C)
+			var/oldsrc = src
+			var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70 // This shit is annoying at high strength
+			src = null
+			spawn(0)
+				if(C)
+					temp = amplitude * sin(0.008 * saved_dizz * world.time)
+					pixel_x_diff += temp
+					C.pixel_x += temp
+					temp = amplitude * cos(0.008 * saved_dizz * world.time)
+					pixel_y_diff += temp
+					C.pixel_y += temp
+					sleep(3)
 					if(C)
 						temp = amplitude * sin(0.008 * saved_dizz * world.time)
 						pixel_x_diff += temp
@@ -384,83 +325,54 @@
 						temp = amplitude * cos(0.008 * saved_dizz * world.time)
 						pixel_y_diff += temp
 						C.pixel_y += temp
-						sleep(3)
-						if(C)
-							temp = amplitude * sin(0.008 * saved_dizz * world.time)
-							pixel_x_diff += temp
-							C.pixel_x += temp
-							temp = amplitude * cos(0.008 * saved_dizz * world.time)
-							pixel_y_diff += temp
-							C.pixel_y += temp
-						sleep(3)
-						if(C)
-							C.pixel_x -= pixel_x_diff
-							C.pixel_y -= pixel_y_diff
-				src = oldsrc
+					sleep(3)
+					if(C)
+						C.pixel_x -= pixel_x_diff
+						C.pixel_y -= pixel_y_diff
+			src = oldsrc
+		dizziness = max(dizziness - restingpwr, 0)
 
-		//Jitteryness
-		if(jitteriness)
-			do_jitter_animation(jitteriness)
-			jitteriness = max(jitteriness-1, 0)
+	if(drowsyness)
+		drowsyness = max(drowsyness - restingpwr, 0)
+		eye_blurry = max(2, eye_blurry)
+		if(prob(5))
+			sleeping += 1
+			Paralyse(5)
 
-		//Other
+	if(confused)
+		confused = max(0, confused - 1)
 
-		if(stuttering)
-			stuttering = max(stuttering-1, 0)
+	//Jitteryness
+	if(jitteriness)
+		do_jitter_animation(jitteriness)
+		jitteriness = max(jitteriness - restingpwr, 0)
 
-		if(slurring)
-			slurring = max(slurring-1,0)
+	if(stuttering)
+		stuttering = max(stuttering-1, 0)
 
-		if(silent)
-			silent = max(silent-1, 0)
+	if(slurring)
+		slurring = max(slurring-1,0)
 
-		if(druggy)
-			druggy = max(druggy-1, 0)
+	if(silent)
+		silent = max(silent-1, 0)
 
-		if(stunned)
-			AdjustStunned(-1)
-			if(!stunned)
-				update_icons()
+	if(druggy)
+		druggy = max(druggy-1, 0)
 
-		if(weakened)
-			weakened = max(weakened-1,0)
-			if(!weakened)
-				update_icons()
+	if(hallucination)
+		spawn handle_hallucinations()
 
-		if(hallucination)
-			spawn handle_hallucinations()
-
-			if(hallucination<=2)
-				hallucination = 0
-			else
-				hallucination -= 2
-
+		if(hallucination<=2)
+			hallucination = 0
 		else
-			for(var/atom/a in hallucinations)
-				qdel(a)
+			hallucination -= 2
 
-		CheckStamina()
-	return 1
-
-/mob/living/carbon/proc/handle_disabilities()
-	//Eyes
-	if(!(disabilities & BLIND) && !stat)	//blindness from disability or unconsciousness doesn't get better on its own
-		if(eye_blind)			//blindness, heals slowly over time
-			eye_blind = max(eye_blind-1,0)
-		else if(eye_blurry)			//blurry eyes heal slowly
-			eye_blurry = max(eye_blurry-1, 0)
-
-	//Ears
-	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
-		setEarDamage(-1, max(ear_deaf, 1))
 	else
-		// deafness heals slowly over time, unless ear_damage is over 100
-		if(ear_damage < 100)
-			adjustEarDamage(-0.05,-1)
+		for(var/atom/a in hallucinations)
+			qdel(a)
 
-
-//this handles hud updates. Calles update_vision() and handle_hud_icons()
-/mob/living/carbon/proc/handle_regular_hud_updates()
+//this handles hud updates. Calls update_vision() and handle_hud_icons()
+/mob/living/carbon/handle_regular_hud_updates()
 	if(!client)	return 0
 
 	update_action_buttons()
@@ -541,15 +453,11 @@
 				damageoverlay.overlays += I
 				damageoverlay.overlays += black
 
-
-	handle_vision()
-	handle_hud_icons()
+	..()
 
 	return 1
 
-/mob/living/carbon/proc/handle_vision()
-
-	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
+/mob/living/carbon/update_sight()
 
 	if(stat == DEAD)
 		sight |= SEE_TURFS
@@ -558,46 +466,23 @@
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
+		if(!(SEE_TURFS & permanent_sight_flags))
+			sight &= ~SEE_TURFS
+		if(!(SEE_MOBS & permanent_sight_flags))
+			sight &= ~SEE_MOBS
+		if(!(SEE_OBJS & permanent_sight_flags))
+			sight &= ~SEE_OBJS
+
+		see_in_dark = (sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : 2  //Xray flag combo
 		see_invisible = SEE_INVISIBLE_LIVING
 		if(see_override)
 			see_invisible = see_override
 
-		if(blind)
-			if(eye_blind)
-				blind.layer = 18
-			else
-				blind.layer = 0
 
-				if (disabilities & NEARSIGHT)
-					client.screen += global_hud.vimpaired
-
-				if (eye_blurry)
-					client.screen += global_hud.blurry
-
-				if (druggy)
-					client.screen += global_hud.druggy
-
-				if(eye_stat > 20)
-					if(eye_stat > 30)
-						client.screen += global_hud.darkMask
-					else
-						client.screen += global_hud.vimpaired
-
-		if(machine)
-			if (!( machine.check_eye(src) ))
-				reset_view(null)
-		else
-			if(!client.adminobs)
-				reset_view(null)
-
-/mob/living/carbon/proc/handle_hud_icons()
+/mob/living/carbon/handle_hud_icons()
 	return
 
-/mob/living/carbon/proc/handle_hud_icons_health()
+/mob/living/carbon/handle_hud_icons_health()
 	if(healths)
 		if (stat != DEAD)
 			switch(health)

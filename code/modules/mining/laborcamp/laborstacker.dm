@@ -105,7 +105,7 @@
 						else
 							Radio.set_frequency(SEC_FREQ)
 							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", SEC_FREQ)
-							usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
+							usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 
 			if(href_list["choice"] == "release")
 				if(alone_in_area(get_area(loc), usr))

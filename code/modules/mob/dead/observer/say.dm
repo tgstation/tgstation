@@ -16,7 +16,7 @@
 
 	. = src.say_dead(message)
 
-/mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(radio_freq)
 		var/atom/movable/virtualspeaker/V = speaker
 		speaker = V.source
