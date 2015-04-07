@@ -1441,14 +1441,14 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				user.put_in_hands(B)
 
 /obj/item/weapon/electrolyzer/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 		if(beakers.len)
 			user << "<span class='warning'> The electrolyzer contains beakers!</span>"
 			return
 		else
 			user << "<span class='notice'> You disassemble the electrolyzer.</span>"
 			var/turf/T = get_turf(src)
-			new /obj/item/stack/cable_coil(T)
+			new /obj/item/stack/cable_coil(T,2)
 			new /obj/item/weapon/grenade/chem_grenade(T)
 			del(src)
 			return

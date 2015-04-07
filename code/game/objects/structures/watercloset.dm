@@ -46,8 +46,9 @@
 
 /obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
 	if(open && cistern && !state && istype(I,/obj/item/stack/rods))
-		user << "<span class='notice'>You add the rods to the toilet.</span>"
 		var/obj/item/stack/rods/R = I
+		if(R.amount < 2) return
+		user << "<span class='notice'>You add the rods to the toilet.</span>"
 		R.use(2)
 		state++
 	if(open && cistern && state && istype(I,/obj/item/weapon/paper))
