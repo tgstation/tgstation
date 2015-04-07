@@ -243,7 +243,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					if (objective && objective.target == mind)
 						length = length(oldname)
 						position = findtextEx(objective.explanation_text, oldname)
-						objective.explanation_text = copytext(objective.explanation_text, 1, pos) + newname + copytext(objective.explanation_text, pos + length)
+						objective.explanation_text = copytext(objective.explanation_text, 1, position) + newname + copytext(objective.explanation_text, position + length)
 
 	return 1
 
