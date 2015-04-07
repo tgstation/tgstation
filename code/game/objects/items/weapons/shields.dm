@@ -110,3 +110,38 @@
 	if(ismob(loc))
 		loc:update_icons()
 	..()
+
+/obj/item/weapon/shield/riot/proto
+	name = "Prototype Shield"
+	desc = "Doubles as a sled!"
+	icon_state = "protoshield"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/shields.dmi', "right_hand" = 'icons/mob/in-hand/right/shields.dmi')
+	IsShield()
+		return 1
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/spear))
+			if(cooldown < world.time - 25)
+				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+				cooldown = world.time
+		else
+			..()
+
+
+/obj/item/weapon/shield/riot/joe
+	name = "Sniper Shield"
+	desc = "Very useful for close-quarters sniping, regardless of how stupid that idea is."
+	icon_state = "joeshield"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/shields.dmi', "right_hand" = 'icons/mob/in-hand/right/shields.dmi')
+	IsShield()
+		return 1
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/spear))
+			if(cooldown < world.time - 25)
+				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+				cooldown = world.time
+		else
+			..()

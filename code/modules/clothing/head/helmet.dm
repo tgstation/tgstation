@@ -117,3 +117,64 @@
 	icon_state = "richard"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	body_parts_covered = FULL_HEAD
+
+/obj/item/clothing/head/helmet/megahelmet
+	name = "DRN-001 Helmet"
+	desc = "The helmet of the DRN-001 model. A simple, sturdy blue helmet."
+	icon_state = "megahelmet"
+	flags = FPRINT
+	body_parts_covered = HEAD|EARS
+	item_state = "megahelmet"
+	flags_inv = HIDEEARS|HIDEHAIR
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/protohelmet
+	name = "Prototype Helmet"
+	desc = "Shiny red helmet with white accents and a built in shaded visor that does absolutely nothing, nothing but look rad as hell."
+	icon_state = "protohelmet"
+	flags = FPRINT
+	body_parts_covered = HEAD|EYES|EARS
+	item_state = "protohelmet"
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/breakhelmet
+	name = "Broken Helmet"
+	desc = "The product of twelve years of work by an eccentric and brilliant loner. A helmet belonging to the perfect man; an unbeatable machine."
+	icon_state = "breakhelmet"
+	flags = FPRINT
+	body_parts_covered = FULL_HEAD
+	item_state = "breakhelmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEHAIR|HIDEEYES
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/megaxhelmet
+	name = "Maverick Hunter Helmet"
+	desc = "Heavily armored upgrade to the DRN-001 model's helmet, now comes with a pointless red crystal thing!"
+	icon_state = "megaxhelmet"
+	flags = FPRINT
+	body_parts_covered = HEAD|EARS
+	item_state = "megaxhelmet"
+	flags_inv = HIDEEARS|HIDEHAIR
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/volnutthelmet
+	name = "Digouter Helmet"
+	desc = "A sturdy helmet, fortified to protect from falling rocks or buster shots"
+	icon_state = "volnutthelmet"
+	flags = FPRINT
+	body_parts_covered = HEAD|EARS
+	item_state = "volnutthelmet"
+	armor = list(melee = 50, bullet = 40, laser = 40,energy = 40, bomb = 5, bio = 0, rad = 0)
+	flags_inv = HIDEEARS|HIDEHAIR
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/joehelmet
+	name = "Sniper Helmet"
+	desc = "Helmet belonging to one of the many mass produced 'Joe' type robots."
+	icon_state = "joehelmet"
+	flags = FPRINT
+	body_parts_covered = FULL_HEAD
+	item_state = "joehelmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEHAIR|HIDEEYES
+	siemens_coefficient = 1
