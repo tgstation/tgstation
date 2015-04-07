@@ -109,9 +109,9 @@
 #define STAGE_FIVE 9
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_SPACEMAX 7
+#define ZLEVEL_SPACEMAX 6
+#define ZLEVEL_DEEPSPACE 6
 #define ZLEVEL_MINING 5
-#define ZLEVEL_SPACEMIN 3
 #define ZLEVEL_ABANDONNEDTSAT 3
 #define ZLEVEL_CENTCOM 2
 #define ZLEVEL_STATION 1
