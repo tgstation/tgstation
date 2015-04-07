@@ -576,6 +576,7 @@
 /obj/item/clothing/mask/gas/virusclown_hat/equipped(var/mob/user, var/slot)
 	if (slot == slot_wear_mask)
 		canremove = 0		//curses!
+		can_flip = 0   //no pushing the mask up off your face
 	..()
 
 
