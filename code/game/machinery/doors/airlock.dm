@@ -925,14 +925,14 @@ About the new airlock wires panel:
 		if( beingcrowbarred && (density && welded && !operating && src.p_open && (!hasPower()) && !src.locked) )
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("<span class='warning'>[user] removes the electronics from the airlock assembly.</span>", \
-								 "You start to remove electronics from the airlock assembly...")
+								 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 			if(do_after(user,40))
 				if(src.loc)
 					if(src.doortype)
 						new src.doortype(src.loc)
 
 					if(emagged)
-						user << "<span class='warning'>You discard the damaged electronics.</span>"
+						user << "<span class='notice'>You discard the damaged electronics.</span>"
 						qdel(src)
 						return
 					user << "<span class='notice'>You remove the airlock electronics.</span>"

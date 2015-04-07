@@ -105,7 +105,7 @@ obj/structure/windoor_assembly/Destroy()
 						return
 					for(var/obj/machinery/door/window/WD in src.loc)
 						if(WD.dir == src.dir)
-							user << "<span class='warning'>There is already a windoor in that location.</span>"
+							user << "<span class='warning'>There is already a windoor in that location!</span>"
 							return
 					user << "<span class='notice'>You secure the windoor assembly.</span>"
 					src.anchored = 1
@@ -178,7 +178,7 @@ obj/structure/windoor_assembly/Destroy()
 					if(!src || src.state != "02")
 						return
 
-					user << "<span class='notice'>You cut the windoor wires!</span>"
+					user << "<span class='notice'>You cut the windoor wires.</span>"
 					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
@@ -246,7 +246,7 @@ obj/structure/windoor_assembly/Destroy()
 					if(src.loc && src.electronics)
 
 						density = 1 //Shouldn't matter but just incase
-						user << "<span class='notice'>You finish the windoor!</span>"
+						user << "<span class='notice'>You finish the windoor.</span>"
 
 						if(secure)
 							var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(src.loc)

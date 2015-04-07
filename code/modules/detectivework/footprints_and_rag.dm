@@ -31,8 +31,8 @@
 /obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/user as mob,proximity)
 	if(!proximity) return
 	if(istype(A) && src in user)
-		user.visible_message("[user] starts to wipe down [A] with [src]...")
+		user.visible_message("<span class='notice'>[user] starts to wipe down [A] with [src].</span>", "<span class='notice'>You start to wipe down [A] with [src].</span>")
 		if(do_after(user,30))
-			user.visible_message("[user] finishes wiping off the [A]!")
+			user.visible_message("<span class='notice'>[user] finishes wiping off the [A]!</span>", "<span class='notice'>You finish wiping off the [A].</span>")
 			A.clean_blood()
 	return

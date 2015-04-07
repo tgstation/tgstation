@@ -573,11 +573,11 @@
 /obj/machinery/power/apc/emag_act(mob/user as mob)
 	if(!emagged && !malfhack)
 		if(opened)
-			user << "You must close the cover to swipe an ID card."
+			user << "<span class='warning'>You must close the cover to swipe an ID card!</span>"
 		else if(wiresexposed)
-			user << "You must close the panel first"
+			user << "<span class='warning'>You must close the panel first!</span>"
 		else if(stat & (BROKEN|MAINT))
-			user << "Nothing happens."
+			user << "<span class='notice'>Nothing happens.</span>"
 		else
 			flick("apc-spark", src)
 			if (do_after(user,6))

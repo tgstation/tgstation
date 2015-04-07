@@ -153,7 +153,7 @@
 			hud.name = "disarm/kill"
 		else
 			if(state < GRAB_UPGRADING)
-				assailant.visible_message("<span class='danger'>You start to tighten your grip on [affecting]'s neck...</span>")
+				assailant.visible_message("<span class='danger'>[assailant] start to tighten \his grip on [affecting]'s neck!</span>", "<span class='danger'>You start to tighten your grip on [affecting]'s neck...</span>")
 				hud.icon_state = "disarm/kill1"
 				state = GRAB_UPGRADING
 				if(do_after(assailant, UPGRADE_KILL_TIMER))
@@ -173,7 +173,7 @@
 					affecting.losebreath += 1
 				else
 					if(assailant)
-						assailant.visible_message("<span class='warning'>You're unable to tighten your grip on [affecting]'s neck!</span>")
+						assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>", "<span class='warning'>You're unable to tighten your grip on [affecting]'s neck!</span>")
 						hud.icon_state = "disarm/kill"
 						state = GRAB_NECK
 
@@ -208,7 +208,7 @@
 				if(!do_mob(user, affecting)||!do_after(user, 30)) return
 			else
 				if(!do_mob(user, affecting)||!do_after(user, 100)) return
-			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
+			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>", "<span class='danger'>You devour [affecting]!</span>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)
 			qdel(src)

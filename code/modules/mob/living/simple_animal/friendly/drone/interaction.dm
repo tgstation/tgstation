@@ -44,7 +44,7 @@
 								if(G)
 									G << "<span class='boldnotice'>DRONE NETWORK: </span><span class='ghostalert'>You were reactivated by [D]!</span>"
 							else
-								D << "<span class='notice'>You need to remain still to reactivate [src].</span>"
+								D << "<span class='warning'>You need to remain still to reactivate [src]!</span>"
 
 						if("Cannibalize")
 							if(D.health < D.maxHealth)
@@ -55,9 +55,9 @@
 									new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
 									qdel(src)
 								else
-									D << "<span class='notice'>You need to remain still to cannibalize [src].</span>"
+									D << "<span class='warning'>You need to remain still to cannibalize [src]!</span>"
 							else
-								D << "<span class='notice'>You're already in perfect condition!</span>"
+								D << "<span class='warning'>You're already in perfect condition!</span>"
 						if("Nothing")
 							return
 
@@ -69,7 +69,7 @@
 			..()
 			return
 		if(user.get_active_hand())
-			user << "<span class='notice'>Your hands are full.</span>"
+			user << "<span class='warning'>Your hands are full!</span>"
 			return
 		src << "<span class='warning'>[user] is trying to pick you up!</span>"
 		if(buckled)
@@ -98,9 +98,9 @@
 				adjustBruteLoss(-repair)
 				visible_message("<span class='notice'>[user] tightens [src == user ? "their" : "[src]'s"] loose screws!</span>")
 			else
-				user << "<span class='notice'>You need to remain still to tighten [src]'s screws.</span>"
+				user << "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>"
 		else
-			user << "<span class='notice'>[src]'s screws can't get any tighter!</span>"
+			user << "<span class='warning'>[src]'s screws can't get any tighter!</span>"
 	else
 		..()
 

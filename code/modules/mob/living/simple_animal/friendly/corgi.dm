@@ -127,11 +127,11 @@
 
 	if (istype(O, /obj/item/weapon/razor))
 		if (shaved)
-			user << "<span class='warning'>You can't shave this corgi, it's already been shaved.</span>"
+			user << "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O]...</span>")
+		user.visible_message("<span class='warning'>[user] starts to shave [src] using \the [O]!</span>", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50))
-			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O].</span>")
+			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O].</span>", "<span class='notice'>You shave [src]'s hair using \the [O].</span>")
 			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
 			shaved = 1
 			icon_state = "[initial(icon_living)]_shaved"

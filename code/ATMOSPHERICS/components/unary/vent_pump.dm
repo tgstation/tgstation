@@ -278,11 +278,11 @@
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				if(!welded)
-					user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
+					user.visible_message("<span class='warning'>[user] welds the vent shut.</span>", "<span class='notice'>You weld the vent shut.</span>", "You hear welding.")
 					welded = 1
 					update_icon()
 				else
-					user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
+					user.visible_message("<span class='warning'>[user] unwelds the vent.</span>", "<span class='notice'>You unweld the vent.</span>", "You hear welding.")
 					welded = 0
 					update_icon()
 			return 1
@@ -314,13 +314,13 @@
 	if(!L.ventcrawler || !isliving(L) || !Adjacent(L))
 		return
 	if(L.stat)
-		L << "You must be conscious to do this!"
+		L << "<span class='warning'>You must be conscious to do this!</span>"
 		return
 	if(L.lying)
-		L << "You can't vent crawl while you're stunned!"
+		L << "<span class='warning'>You can't vent crawl while you're stunned!</span>"
 		return
 	if(welded)
-		L << "That vent is welded shut!"
+		L << "<span class='warning'>That vent is welded shut!</span>"
 		return
 
 	var/list/vents = list()

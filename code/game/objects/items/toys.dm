@@ -414,7 +414,7 @@
 					graf_rot = 270
 				else
 					graf_rot = 0
-		user << "You start drawing a [temp] on the [target.name]..."
+		user << "<span class='notice'>You start drawing a [temp] on the [target.name]...</span>"
 		if(instant || do_after(user, 50))
 			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
 			user << "You finish drawing [temp]."
@@ -428,7 +428,7 @@
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
 	var/huffable = istype(src,/obj/item/toy/crayon/spraycan)
 	if(M == user)
-		user << "You take a [huffable ? "huff" : "bite"] of the [src.name]. Delicious!"
+		user << "<span class='notice'>You take a [huffable ? "huff" : "bite"] of the [src.name]. Delicious!</span>"
 		user.nutrition += 5
 		if(uses)
 			uses -= 5

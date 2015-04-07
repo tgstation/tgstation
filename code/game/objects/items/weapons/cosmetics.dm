@@ -46,7 +46,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.lip_style)	//if they already have lipstick on
-			user << "<span class='notice'>You need to wipe off the old lipstick first!</span>"
+			user << "<span class='warning'>You need to wipe off the old lipstick first!</span>"
 			return
 		if(H == user)
 			user.visible_message("<span class='notice'>[user] does their lips with \the [src].</span>", \
@@ -62,7 +62,7 @@
 				H.lip_style = colour
 				H.update_body()
 	else
-		user << "<span class='notice'>Where are the lips on that?</span>"
+		user << "<span class='warning'>Where are the lips on that?</span>"
 
 //you can wipe off lipstick with paper!
 /obj/item/weapon/paper/attack(mob/M, mob/user)
@@ -122,7 +122,7 @@
 
 			if(H == user) //shaving yourself
 				user.visible_message("<span class='notice'>[user] starts to shave their facial hair with [src].</span>", \
-									 "<span class='notice'>You take a moment to shave your facial hair with [src].</span>")
+									 "<span class='notice'>You take a moment to shave your facial hair with [src]...</span>")
 				if(do_after(user, 50))
 					user.visible_message("<span class='notice'>[user] shaves his facial hair clean with [src].</span>", \
 										 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
@@ -142,7 +142,7 @@
 				user << "<span class='notice'>The headgear is in the way.</span>"
 				return
 			if(H.hair_style == "Bald" || H.hair_style == "Balding Hair" || H.hair_style == "Skinhead")
-				user << "<span class='notice'>There is not enough hair left to shave!</span>"
+				user << "<span class='warning'>There is not enough hair left to shave!</span>"
 				return
 
 			if(H == user) //shaving yourself

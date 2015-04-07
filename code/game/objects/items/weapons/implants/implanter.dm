@@ -20,14 +20,14 @@
 	if(!iscarbon(M))
 		return
 	if(user && imp)
-		M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
+		M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>", "<span class='notice'>You are attemping to implant [M]...</span>")
 
 		var/turf/T = get_turf(M)
 		if(T && (M == user || do_after(user, 50)))
 			if(user && M && (get_turf(M) == T) && src && imp)
 				M.visible_message("<span class='warning'>[user] has implanted [M].</span>")
 				add_logs(user, M, "implanted", object="[name]")
-				user << "<span class='notice'>You implanted the implant into [M].</span>"
+				user << "<span class='notice'>You implant the implant into [M].</span>"
 				if(imp.implanted(M))
 					imp.loc = M
 					imp.imp_in = M

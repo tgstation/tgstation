@@ -44,7 +44,7 @@
 				user.do_attack_animation(src)
 				playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
 			if(W.force < 15)
-				user << "<span class = 'warning'> The cabinet's protective glass glances off the hit.</span>"
+				user << "<span class = 'warning'> The cabinet's protective glass glances off the hit!</span>"
 			else
 				src.hitstaken++
 				if(src.hitstaken == 4)
@@ -57,12 +57,12 @@
 	if (istype(O, /obj/item/weapon/twohanded/fireaxe) && src.localopened)
 		if(!fireaxe)
 			if(O:wielded)
-				user << "<span class = 'warning'> Unwield the axe first.</span>"
+				user << "<span class = 'warning'> Unwield the axe first!</span>"
 				return
 			fireaxe = O
 			user.drop_item()
 			src.contents += O
-			user << "<span class = 'caution'> You place the fire axe back in the [src.name].</span>"
+			user << "<span class = 'notice'> You place the fire axe back in the [src.name].</span>"
 			update_icon()
 		else
 			if(src.smashed)

@@ -162,14 +162,14 @@
 		if (!destroyed)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
-				user << "<span class='warning'>You need at least two sheets of glass for that.</span>"
+				user << "<span class='warning'>You need at least two sheets of glass for that!</span>"
 				return
 			var/dir_to_set = SOUTHWEST
 			if(!anchored)
-				user << "<span class='warning'>[src] needs to be fastened to the floor first.</span>"
+				user << "<span class='warning'>[src] needs to be fastened to the floor first!</span>"
 				return
 			for(var/obj/structure/window/WINDOW in loc)
-				user << "<span class='warning'>There is already a window there.</span>"
+				user << "<span class='warning'>There is already a window there!</span>"
 				return
 			user << "<span class='notice'>You start placing the window...</span>"
 			if(do_after(user,20))

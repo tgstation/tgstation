@@ -230,7 +230,7 @@
 			flick("bigscanner1", src)
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>There is already something in [src].</span>"
+			user << "<span class='warning'>There is already something in [src]!</span>"
 
 	else if(istype(O, /obj/item/weapon/photo))
 		if(copier_empty())
@@ -241,7 +241,7 @@
 			flick("bigscanner1", src)
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>There is already something in [src].</span>"
+			user << "<span class='warning'>There is already something in [src]!</span>"
 
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 0)
@@ -251,7 +251,7 @@
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
+			user << "<span class='warning'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
 
 	else if(istype(O, /obj/item/weapon/wrench))
 		if(isinspace())

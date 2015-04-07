@@ -163,7 +163,7 @@
 					if( d_state == 4 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 5
 						src.icon_state = "r_wall-5"
-						user << "<span class='notice'>You remove the bolts which you thought were anchoring the support rods.</span>"
+						user << "<span class='notice'>You remove the bolts anchoring the support rods.</span>"
 				return 1
 
 		if(5)

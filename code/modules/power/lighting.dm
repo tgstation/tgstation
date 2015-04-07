@@ -36,7 +36,7 @@
 		return
 	var/turf/loc = get_turf(usr)
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='danger'>[src.name] cannot be placed on this spot.</span>"
+		usr << "<span class='warning'>[src.name] cannot be placed on this spot!</span>"
 		return
 	usr << "<span class='notice'>You start attaching [src] to the wall...</span>"
 	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)

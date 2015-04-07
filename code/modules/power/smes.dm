@@ -84,7 +84,7 @@
 				user << "<span class='notice'>Terminal found.</span>"
 				break
 		if(!terminal)
-			user << "<span class='alert'>No power source found.</span>"
+			user << "<span class='warning'>No power source found!</span>"
 			return
 		stat &= ~BROKEN
 		update_icon()
@@ -101,22 +101,22 @@
 			return
 
 		if(terminal) //is there already a terminal ?
-			user << "<span class='alert'>This SMES already have a power terminal!</span>"
+			user << "<span class='warning'>This SMES already have a power terminal!</span>"
 			return
 
 		if(!panel_open) //is the panel open ?
-			user << "<span class='alert'>You must open the maintenance panel first!</span>"
+			user << "<span class='warning'>You must open the maintenance panel first!</span>"
 			return
 
 		var/turf/T = get_turf(user)
 		if (T.intact) //is the floor plating removed ?
-			user << "<span class='alert'>You must first remove the floor plating!</span>"
+			user << "<span class='warning'>You must first remove the floor plating!</span>"
 			return
 
 
 		var/obj/item/stack/cable_coil/C = I
 		if(C.amount < 10)
-			user << "<span class='alert'>You need more wires.</span>"
+			user << "<span class='warning'>You need more wires!</span>"
 			return
 
 		user << "<span class='notice'>You start building the power terminal...</span>"
@@ -132,7 +132,7 @@
 
 			C.use(10)
 			user.visible_message(\
-				"<span class='alert'>[user.name] has build a power terminal!</span>",\
+				"<span class='warning'>[user.name] has build a power terminal!</span>",\
 				"You build the power terminal.")
 
 			//build the terminal and link it to the network
