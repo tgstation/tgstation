@@ -78,7 +78,7 @@
 	"}
 
 /obj/machinery/power/emitter/proc/update_beam()
-	if(active)
+	if(active && powered)
 		if(!beam)
 			beam = new (loc)
 			beam.dir=dir
@@ -122,7 +122,7 @@
 	..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && get_powernet() && avail(active_power_usage))
+	if (powered && get_powernet() && avail(active_power_usage))
 		icon_state = "emitter_+a"
 	else
 		icon_state = "emitter"
@@ -190,15 +190,14 @@
 	if(((last_shot + fire_delay) <= world.time) && (active == 1)) //It's currently activated and it hasn't processed in a bit
 		if(!active_power_usage || avail(active_power_usage)) //Doesn't require power or powernet has enough supply
 			add_load(active_power_usage) //Drain it then bitch
-
 			if(!powered) //Yay its powered
 				powered = 1
 				update_icon()
+				update_beam()
 				investigation_log(I_SINGULO,"regained power and turned <font color='green'>on</font>")
 		else
 			if(powered) //Fuck its not anymore
-				powered = 0
-				active = 0 //Whelp time to kill it then
+				powered = 0 //Whelp time to kill it then
 				update_beam() //Update its beam and icon
 				update_icon()
 				investigation_log(I_SINGULO,"lost power and turned <font color='red'>off</font>")
