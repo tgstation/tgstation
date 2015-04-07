@@ -493,7 +493,7 @@
 	icon_state = "mug_empty"
 	isGlass = 0
 	amount_per_transfer_from_this = 10
-	volume = 50
+	volume = 30
 	g_amt = 500
 
 	on_reagent_change()
