@@ -21,6 +21,12 @@
 		icon_state = "pizzabox_bomb"
 		timer_set = 1
 		timer = (input(user, "Set a timer, from one second to ten seconds.", "Timer", "[timer]") as num) * 10
+		if(!user.canUseTopic(src))
+			timer_set = 0
+			name = "pizza box"
+			desc = "A box suited for pizzas."
+			icon_state = "pizzabox1"
+			return
 		timer = Clamp(timer, 10, 100)
 		icon_state = "pizzabox1"
 		user << "<span class='notice'>You set the timer to [timer / 10] before activating the payload and closing \the [src]."
@@ -55,6 +61,8 @@
 	if(istype(I, /obj/item/weapon/wirecutters) && primed)
 		user << "<span class='danger'>Oh God, what wire do you cut?!</span>"
 		var/chosen_wire = input(user, "OH GOD OH GOD", "WHAT WIRE?!") in wires
+		if(!user.canUseTopic(src))
+			return
 		playsound(src, 'sound/items/Wirecutter.ogg', 50, 1, 1)
 		user.visible_message("<span class='warning'>[user] cuts the [chosen_wire] wire!</span>", "<span class='danger'>You cut the [chosen_wire] wire!</span>")
 		sleep(5)
@@ -73,7 +81,7 @@
 			return
 	if(istype(I, /obj/item/weapon/wirecutters) && disarmed)
 		if(!in_range(user, src))
-			user << "<span class='warning'>You can's see the box well enough to cut the wires out.</span>"
+			user << "<span class='warning'>You can't see the box well enough to cut the wires out.</span>"
 			return
 		user.visible_message("<span class='notice'>[user] starts removing the payload and wires from \the [src].</span>")
 		if(do_after(user, 40))

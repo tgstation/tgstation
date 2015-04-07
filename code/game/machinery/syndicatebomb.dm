@@ -279,9 +279,6 @@
 	w_class = 2
 
 /obj/item/weapon/bombcore/miniature/detonate()
-	if(adminlog)
-		message_admins(adminlog)
-		log_game(adminlog)
 	explosion(src.loc,1,2,4,flame_range = 2) //Identical to a minibomb
 	qdel(src)
 
