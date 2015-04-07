@@ -355,6 +355,7 @@ client/proc/one_click_antag()
 		var/list/spawnpoints = deathsquadspawn
 		while(numagents && candidates.len)
 			if (numagents > spawnpoints.len)
+				numagents--
 				continue // This guy's unlucky, not enough spawn points, we skip him.
 			var/spawnloc = spawnpoints[numagents]
 			var/mob/dead/observer/chosen_candidate = pick(candidates)
@@ -469,7 +470,8 @@ client/proc/one_click_antag()
 		var/numagents = min(7,candidates.len) //How many officers to spawn
 		var/list/spawnpoints = emergencyresponseteamspawn
 		while(numagents && candidates.len)
-			if (candidates.len > spawnpoints.len)
+			if (numagents > spawnpoints.len)
+				numagents--
 				continue // This guy's unlucky, not enough spawn points, we skip him.
 			var/spawnloc = spawnpoints[numagents]
 			var/mob/dead/observer/chosen_candidate = pick(candidates)
