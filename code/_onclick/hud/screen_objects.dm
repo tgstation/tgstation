@@ -134,6 +134,9 @@
 					return 1
 				else
 					var/obj/item/clothing/mask/M = C.wear_mask
+					if( !(M.flags & MASKINTERNALS) )
+						C << "<span class='warning'>You need an internals mask blahblahblah !</span>"
+						return
 					if(M.mask_adjusted) // if mask on face but pushed down
 						M.adjustmask(C) // automatically adjust it back
 					if(istype(C.l_hand, /obj/item/weapon/tank))
