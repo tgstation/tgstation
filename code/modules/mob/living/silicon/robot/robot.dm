@@ -303,7 +303,6 @@
 			module_sprites["Marina-CB"] = "marinaCB"
 			module_sprites["Squadbot"] = "squats"
 			module_sprites["#41"] = "servbot-combat"
-			module_sprites["#32"] = "servbot-combat2"
 			speed = -1
 
 	//Custom_sprite check and entry
