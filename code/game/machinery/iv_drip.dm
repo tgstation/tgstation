@@ -145,6 +145,8 @@
 				update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
+	if (!ishuman(user))
+		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
 		attached = null

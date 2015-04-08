@@ -5,11 +5,11 @@
 	icon_state = "red"
 	item_state = "toolbox_red"
 	flags = CONDUCT
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 7
-	w_class = 4.0
+	w_class = 4
 	origin_tech = "combat=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
@@ -25,6 +25,7 @@
 /obj/item/weapon/storage/toolbox/emergency/New()
 	..()
 	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/weapon/weldingtool/mini(src)
 	new /obj/item/weapon/extinguisher/mini(src)
 	if(prob(50))
 		new /obj/item/device/flashlight(src)
@@ -70,18 +71,17 @@
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"
-	force = 15.0
-	throwforce = 18.0
+	force = 15
+	throwforce = 18
 
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
-	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/screwdriver(src, "red")
 	new /obj/item/weapon/wrench(src)
-	new /obj/item/weapon/weldingtool(src)
-	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
-	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/weapon/weldingtool/largetank(src)
+	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/stack/cable_coil(src, 30, "red")
+	new /obj/item/weapon/wirecutters(src, "red")
 	new /obj/item/device/multitool(src)
 
 /obj/item/weapon/storage/toolbox/drone
@@ -91,6 +91,7 @@
 
 /obj/item/weapon/storage/toolbox/drone/New()
 	..()
+	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)

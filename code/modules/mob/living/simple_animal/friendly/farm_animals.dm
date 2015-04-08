@@ -25,6 +25,7 @@
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	environment_smash = 0
+	stop_automated_movement_when_pulled = 1
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/New()
@@ -44,9 +45,9 @@
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
 
-		if(stat == CONSCIOUS)
-			if(udder && prob(5))
-				udder.add_reagent("milk", rand(5, 10))
+	if(stat == CONSCIOUS)
+		if(udder && prob(5))
+			udder.add_reagent("milk", rand(5, 10))
 
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
@@ -103,6 +104,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	attacktext = "kicks"
+	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 50
 	var/datum/reagents/udder = null
 

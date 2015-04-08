@@ -5221,7 +5221,7 @@
 "bWu" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plasteel{tag = "icon-warningcorner (WEST)"; icon_state = "warningcorner"; dir = 8},/area/toxins/misc_lab)
 "bWv" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor/plasteel{tag = "icon-warningcorner (EAST)"; icon_state = "warningcorner"; dir = 4},/area/toxins/misc_lab)
 "bWw" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
-"bWx" = (/obj/structure/closet/crate,/obj/item/clothing/under/color/lightpurple,/obj/item/weapon/spacecash/c200,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
+"bWx" = (/obj/structure/closet/crate,/obj/item/clothing/under/color/lightpurple,/obj/item/stack/spacecash/c200,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bWy" = (/obj/machinery/atmospherics/unary/portables_connector/visible{dir = 4},/obj/machinery/portable_atmospherics/canister,/turf/simulated/floor/plating,/area/maintenance/aft)
 "bWz" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 4},/turf/simulated/floor/plating,/area/maintenance/aft)
 "bWA" = (/obj/machinery/atmospherics/binary/pump{dir = 8; name = "Mix to Port"; on = 0},/obj/machinery/light/small,/turf/simulated/floor/plating,/area/maintenance/aft)

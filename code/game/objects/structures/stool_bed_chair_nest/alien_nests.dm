@@ -60,8 +60,7 @@
 		M.pixel_x = initial(M.pixel_x)
 		M.pixel_y = initial(M.pixel_y)
 		if(M.lying)
-			var/lying_pixel_y_offset = -6
-			M.pixel_y += lying_pixel_y_offset
+			M.pixel_y = M.lying_pixel_offset
 		overlays.Cut()
 
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob, params)

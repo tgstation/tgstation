@@ -159,7 +159,7 @@ Code:
 	return 1
 
 /obj/item/device/assembly/signaler/reciever/describe()
-	return "The radio reciever is [on?"on":"off"]."
+	return "The radio receiver is [on?"on":"off"]."
 
 /obj/item/device/assembly/signaler/reciever/receive_signal(datum/signal/signal)
 	if(!on) return
