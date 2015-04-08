@@ -37,7 +37,10 @@
 		if(welded)
 			overlays += "welded"
 	else
-		overlays += "[icon_state]_open"
+		if(icon_door)
+			overlays += "[icon_door]_open"
+		else
+			overlays += "[icon_state]_open"
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
