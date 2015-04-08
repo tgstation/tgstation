@@ -59,7 +59,13 @@
 		/obj/item/toy/gasha/minislime,
 		/obj/item/toy/gasha/AI,
 		/obj/item/toy/gasha/AI/malf,
-		/obj/item/toy/gasha/minibutt)
+		/obj/item/toy/gasha/minibutt,
+		/obj/item/toy/gasha/newcop,
+		/obj/item/toy/gasha/jani,
+		/obj/item/toy/gasha/miner,
+		/obj/item/toy/gasha/clown,
+		/obj/item/toy/gasha/goliath,
+		/obj/item/toy/gasha/basilisk)
 
 	var/obj/item/I = new capsule_prize(M)
 	M.u_equip(src)

@@ -977,6 +977,36 @@
 	desc = "Includes small pieces, not for children under or above the age of 5"
 	icon_state = "greytide"
 
+/obj/item/toy/gasha/newcop
+	name = "toy newcop"
+	desc = "Mildly explosive."
+	icon_state = "newcop"
+
+/obj/item/toy/gasha/jani
+	name = "toy janitor"
+	desc = "cleanliness is next to godliness!"
+	icon_state = "jani"
+
+/obj/item/toy/gasha/miner
+	name = "toy miner"
+	desc = "Walk softly, and carry a ton of monsters."
+	icon_state = "miner"
+
+/obj/item/toy/gasha/clown
+	name = "toy clown"
+	desc = "HONK"
+	icon_state = "clown"
+
+/obj/item/toy/gasha/goliath
+	name = "toy goliath"
+	desc = "Now with fully articulated tentacles!"
+	icon_state = "goliath"
+
+/obj/item/toy/gasha/basilisk
+	name = "toy basilisk"
+	desc = "The eye has a strange shine to it"
+	icon_state = "basilisk"
+
 /obj/item/toy/gasha/corgitoy
 	name = "plush corgi"
 	desc = "Perfect for the pet owner on a tight budget!"
