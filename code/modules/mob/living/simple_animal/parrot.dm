@@ -55,6 +55,7 @@
 	attacktext = "chomps"
 	friendly = "grooms"
 	mob_size = MOB_SIZE_SMALL
+	flying = 1
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created

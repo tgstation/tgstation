@@ -488,7 +488,7 @@
 "jt" = (/obj/item/stack/medical/bruise_pack,/turf/simulated/floor/plasteel/airless{icon_state = "damaged2"},/area/derelict/medical)
 "ju" = (/obj/item/stack/medical/ointment,/turf/simulated/floor/plasteel/airless{icon_state = "damaged3"},/area/derelict/medical)
 "jv" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor/plating/airless,/area/derelict/medical)
-"jw" = (/obj/structure/closet/l3closet/general,/turf/simulated/floor/plating/airless,/area/space)
+"jw" = (/obj/structure/closet/l3closet,/turf/simulated/floor/plating/airless,/area/space)
 "jx" = (/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/space)
 "jy" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/space,/area/space)
 "jz" = (/obj/structure/window/reinforced{dir = 1},/turf/space,/area/space)
