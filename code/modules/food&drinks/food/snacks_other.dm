@@ -188,3 +188,35 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
 	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 	filling_color = "#BA55D3"
+////////////////////////////////ICE CREAM///////////////////////////////////
+/obj/item/weapon/reagent_containers/food/snacks/icecream
+	name = "ice cream"
+	desc = "Delicious ice cream."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "icecream_cone"
+	list_reagents = list("nutriment" = 6, "sugar" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/icecream/New()
+	..()
+	update_icon()
+
+/obj/item/weapon/reagent_containers/food/snacks/icecream/update_icon()
+	overlays.Cut()
+	var/image/filling = image('icons/obj/kitchen.dmi', src, "icecream_color")
+	filling.icon += mix_color_from_reagents(reagents.reagent_list)
+	overlays += filling
+	filling_color = mix_color_from_reagents(reagents.reagent_list)
+
+/obj/item/weapon/reagent_containers/food/snacks/icecream/icecreamcone
+	name = "ice cream cone"
+	desc = "Delicious ice cream."
+	icon_state = "icecream_cone"
+	volume = 500
+	list_reagents = list("nutriment" = 6, "sugar" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/icecream/icecreamcup
+	name = "chocolate ice cream cone"
+	desc = "Delicious ice cream."
+	icon_state = "icecream_cup"
+	volume = 500
+	list_reagents = list("nutriment" = 6, "sugar" = 2)
