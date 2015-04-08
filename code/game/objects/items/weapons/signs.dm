@@ -7,6 +7,7 @@
 	attack_verb = list("bashed","smacked")
 
 	var/label = ""
+	var/last_wave = 0
 
 /obj/item/weapon/picket_sign/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
@@ -18,11 +19,13 @@
 	..()
 
 /obj/item/weapon/picket_sign/attack_self(mob/living/carbon/human/user)
-	if(label)
-		user.visible_message("<span class='warning'>[user] waves around \the \"[label]\" sign.</span>")
-	else
-		user.visible_message("<span class='warning'>[user] waves around blank sign.</span>")
-	user.changeNext_move(CLICK_CD_MELEE)
+	if( last_wave + 20 < world.time )
+		last_wave = world.time
+		if(label)
+			user.visible_message("<span class='warning'>[user] waves around \the \"[label]\" sign.</span>")
+		else
+			user.visible_message("<span class='warning'>[user] waves around blank sign.</span>")
+		user.changeNext_move(CLICK_CD_MELEE)
 
 /datum/table_recipe/picket_sign
 	name = "Picket Sign"
