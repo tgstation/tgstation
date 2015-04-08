@@ -6,6 +6,7 @@
 	armor = list(melee = 50, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	siemens_coefficient = 0.6
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
+	heat_protection = HEAD
 	flags = FPRINT  | PLASMAGUARD
 	var/obj/machinery/camera/camera
 	species_restricted = list("exclude","Vox")
@@ -31,8 +32,7 @@
 	desc = "A suit worn by members of the NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_commander"
 	item_state = "suit-command"
-	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_storage,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen)
+	w_class = 4
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	flags = FPRINT  | PLASMAGUARD
@@ -43,6 +43,7 @@
 	/obj/item/weapon/gun/energy/taser, /obj/item/weapon/melee/baton, /obj/item/weapon/gun/energy/gun)
 	siemens_coefficient = 0.6
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	species_restricted = list("exclude","Vox")
 
 //Commander
