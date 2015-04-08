@@ -1491,7 +1491,9 @@
 	else					src.see_invisible = SEE_INVISIBLE_LIVING
 	if((src.species.default_mutations.len > 0) || (src.species.default_blocks.len > 0))
 		src.do_deferred_species_setup = 1
-	spawn()	src.update_icons()
+	spawn()
+		src.dna.species = new_species_name
+		src.update_icons()
 	src.species.handle_post_spawn(src)
 	return 1
 
