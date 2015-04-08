@@ -16,7 +16,7 @@
 	friendly = "nudges"
 	pass_flags = PASSTABLE
 	ventcrawler = 2
-	mob_size = MOB_SIZE_SMALL
+	mob_size = MOB_SIZE_TINY
 
 /mob/living/simple_animal/butterfly/New()
 	..()

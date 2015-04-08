@@ -101,7 +101,7 @@
 		var/mob/living/L = AM
 		if(L.buckled || L.mob_size > max_mob_size) //buckled mobs and mobs too big for the container don't get inside closets.
 			return 0
-		if(L.mob_size > 0)
+		if(L.mob_size > MOB_SIZE_TINY) //decently sized mobs take more space than objects.
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)
 				mobs_stored++
