@@ -1037,6 +1037,31 @@
 	desc = "Cluck."
 	icon_state = "pomf"
 
+/obj/item/toy/gasha/engi
+	name = "toy engineer"
+	desc = "Probably better at setting up power than the real thing!"
+	icon_state = "engi"
+
+/obj/item/toy/gasha/atmos
+	name = "toy atmos-tech"
+	desc = "Can withstand high temperatures without melting!"
+	icon_state = "atmos"
+
+/obj/item/toy/gasha/sec
+	name = "toy security"
+	desc = "Won't search you on code green!"
+	icon_state = "sec"
+
+/obj/item/toy/gasha/plasman
+	name = "toy plasmaman"
+	desc = "All of the undending agony of the real thing, but in tiny plastic form!"
+	icon_state = "plasman"
+
+/obj/item/toy/gasha/shard
+	name = "toy supermatter shard"
+	desc = "Nowhere near as explosive as the real one."
+	icon_state = "shard"
+
 /obj/item/toy/gasha/corgitoy
 	name = "plush corgi"
 	desc = "Perfect for the pet owner on a tight budget!"

@@ -71,7 +71,12 @@
 		/obj/item/toy/gasha/hunter,
 		/obj/item/toy/gasha/nurse,
 		/obj/item/toy/gasha/alium,
-		/obj/item/toy/gasha/pomf)
+		/obj/item/toy/gasha/pomf,
+		/obj/item/toy/gasha/engi,
+		/obj/item/toy/gasha/atmos,
+		/obj/item/toy/gasha/sec,
+		/obj/item/toy/gasha/plasman,
+		/obj/item/toy/gasha/shard)
 
 	var/obj/item/I = new capsule_prize(M)
 	M.u_equip(src)
