@@ -303,13 +303,11 @@
 	anchored = 1
 	density = 0
 	layer = 5
+	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
 	var/list/mutations = list()
-
-/obj/effect/spacevine/New()
-	return
 
 /obj/effect/spacevine/Destroy()
 	for(var/datum/spacevine_mutation/SM in mutations)
