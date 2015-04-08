@@ -161,7 +161,7 @@
 
 ///process()
 ///Called by the gameticker
-/datum/game_mode/proc/process()
+/datum/game_mode/process()
 	return 0
 
 
