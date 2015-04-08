@@ -129,7 +129,7 @@ obj/item/projectile/kinetic/New()
 	if(range <= 0)
 		new /obj/item/effect/kinetic_blast(src.loc)
 		for(var/turf/T in range(1, src.loc))
-			if(istype(T, /turf/simulated/mineral))
+			if(istype(T, /turf/simulated/mineral) && prob(80))
 				var/turf/simulated/mineral/M = T
 				M.gets_drilled(firer)
 		qdel(src)
@@ -223,7 +223,7 @@ obj/item/projectile/kinetic/New()
 	damage = 15
 
 /obj/item/projectile/plasma/adv/on_hit(var/atom/target)
-	if(!ismob(target) && !istype(target, /turf/simulated/mineral))
+	if(!ismob(target) && !istype(target, /turf/simulated/mineral) && !istype(target, /obj/structure/closet))
 		target.ex_act(3)
 		power -= 10
 		if(range > 0 && power > 0 && (!target || !target.density))
@@ -231,5 +231,6 @@ obj/item/projectile/kinetic/New()
 	return ..()
 
 /obj/item/projectile/plasma/adv/mech
+	damage = 10
 	range = 12
 	power = 18
