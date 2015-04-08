@@ -257,7 +257,7 @@
 		world << "<B>The self-destruction of [station_name()] killed everyone on board!</B>"
 
 	else if ( station_captured &&  malf_dead && !station_was_nuked)
-		feedback_set_details("round_end_result","halfwin - AI killed, staff lost control")
+		feedback_set_details("round_end_result","draw - AI killed, staff lost control")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>The AI has been killed!</B> However, the staff have lost control of [station_name()]."
 
@@ -267,8 +267,8 @@
 		world << "<B>The AI has chosen not to detonate the station!</B>"
 
 	else if (!station_captured &&                station_was_nuked)
-		feedback_set_details("round_end_result","halfwin - everyone killed by nuke")
-		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
+		feedback_set_details("round_end_result","draw - everyone killed by nuke")
+		world << "<FONT size = 3><B>Draw</B></FONT>"
 		world << "<B>Everyone was killed by the nuclear blast!</B>"
 
 	else if (!station_captured &&  malf_dead && !station_was_nuked)
@@ -282,12 +282,12 @@
 		world << "<b>The malfunctioning AI has left the station's z-level and was disconnected from its systems!</b> The crew are victorious."
 
 	else if (!station_captured && !malf_dead && !station_was_nuked && crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - evacuated")
+		feedback_set_details("round_end_result","win - AI win - evacuated")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>Nanotrasen has lost control of [station_name()]! All surviving personnel will be fired.</B>"
 
 	else if (!station_captured && !malf_dead && !station_was_nuked && !crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - interrupted")
+		feedback_set_details("round_end_result","draw - interrupted")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>Round was mysteriously interrupted!</B>"
 	..()
