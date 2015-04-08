@@ -948,3 +948,91 @@
 		spawn(20)
 			spamcheck = 0
 		return
+
+
+/obj/item/toy/gasha
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "greyshirt"
+	var/cooldown = 0
+
+/obj/item/toy/gasha/attack_self(mob/user as mob)
+	if(cooldown < world.time - 8)
+		user << "<span class='notice'>You play with [src].</span>"
+		cooldown = world.time
+
+/obj/item/toy/gasha/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(cooldown < world.time - 8)
+			user << "<span class='notice'>You play with [src].</span>"
+			cooldown = world.time
+			return
+	..()
+
+/obj/item/toy/gasha/greyshirt
+	name = "toy greyshirt"
+	desc = "Now with kung-fu grip action!"
+
+/obj/item/toy/gasha/greytide
+	name = "toy greytide"
+	desc = "Includes small pieces, not for children under or above the age of 5"
+	icon_state = "greytide"
+
+/obj/item/toy/gasha/corgitoy
+	name = "plush corgi"
+	desc = "Perfect for the pet owner on a tight budget!"
+	icon_state = "corgitoy"
+
+/obj/item/toy/gasha/borertoy
+	name = "Mini Borer"
+	desc = "Probably not something you should be playing with"
+	icon_state = "borertoy"
+
+/obj/item/toy/gasha/minislime
+	name = "Pygmy Grey Slime"
+	desc = "If you experience a tingling sensation in your hands, please stop playing with your pygmy slime immediately."
+	icon_state = "minislime"
+
+/obj/item/toy/gasha/AI/attack_self(mob/user as mob)
+	if(cooldown < world.time - 8)
+		user << "<span class='notice'>You play with [src].</span>"
+		playsound(user, 'sound/vox/doop.wav', 20, 1)
+		cooldown = world.time
+
+/obj/item/toy/gasha/AI/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(cooldown < world.time - 8)
+			user << "<span class='notice'>You play with [src].</span>"
+			playsound(user, 'sound/vox/doop.wav', 20, 1)
+			cooldown = world.time
+			return
+	..()
+
+/obj/item/toy/gasha/AI
+	name = "Mini AI"
+	desc = "Does not open doors."
+	icon_state = "AI"
+
+/obj/item/toy/gasha/AI/malf
+	name = "Mini Malf"
+	desc = "May be a bad influence for cyborgs"
+	icon_state = "malfAI"
+
+/obj/item/toy/gasha/minibutt/attack_self(mob/user as mob)
+	if(cooldown < world.time - 8)
+		user << "<span class='notice'>You play with [src].</span>"
+		playsound(user, 'sound/misc/fart.ogg', 20, 1)
+		cooldown = world.time
+
+/obj/item/toy/gasha/minibutt/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(cooldown < world.time - 8)
+			user << "<span class='notice'>You play with [src].</span>"
+			playsound(user, 'sound/misc/fart.ogg', 20, 1)
+			cooldown = world.time
+			return
+	..()
+
+/obj/item/toy/gasha/minibutt
+	name = "mini-buttbot"
+	desc = "Made from real gnome butts!"
+	icon_state = "minibutt"
