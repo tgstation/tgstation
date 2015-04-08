@@ -1,4 +1,3 @@
-
 /obj/item/clothing/head/helmet/space/ert
 	name = "emergency response team helmet"
 	desc = "A helmet worn by members of the NanoTrasen Emergency Response Team. Armoured, space ready and fire resistant."
