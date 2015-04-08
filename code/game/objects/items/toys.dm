@@ -955,19 +955,6 @@
 	icon_state = "greyshirt"
 	var/cooldown = 0
 
-/obj/item/toy/gasha/attack_self(mob/user as mob)
-	if(cooldown < world.time - 8)
-		user << "<span class='notice'>You play with [src].</span>"
-		cooldown = world.time
-
-/obj/item/toy/gasha/attack_hand(mob/user as mob)
-	if(loc == user)
-		if(cooldown < world.time - 8)
-			user << "<span class='notice'>You play with [src].</span>"
-			cooldown = world.time
-			return
-	..()
-
 /obj/item/toy/gasha/greyshirt
 	name = "toy greyshirt"
 	desc = "Now with kung-fu grip action!"
@@ -1079,14 +1066,12 @@
 
 /obj/item/toy/gasha/AI/attack_self(mob/user as mob)
 	if(cooldown < world.time - 8)
-		user << "<span class='notice'>You play with [src].</span>"
 		playsound(user, 'sound/vox/doop.wav', 20, 1)
 		cooldown = world.time
 
 /obj/item/toy/gasha/AI/attack_hand(mob/user as mob)
 	if(loc == user)
 		if(cooldown < world.time - 8)
-			user << "<span class='notice'>You play with [src].</span>"
 			playsound(user, 'sound/vox/doop.wav', 20, 1)
 			cooldown = world.time
 			return
@@ -1104,14 +1089,12 @@
 
 /obj/item/toy/gasha/minibutt/attack_self(mob/user as mob)
 	if(cooldown < world.time - 8)
-		user << "<span class='notice'>You play with [src].</span>"
 		playsound(user, 'sound/misc/fart.ogg', 20, 1)
 		cooldown = world.time
 
 /obj/item/toy/gasha/minibutt/attack_hand(mob/user as mob)
 	if(loc == user)
 		if(cooldown < world.time - 8)
-			user << "<span class='notice'>You play with [src].</span>"
 			playsound(user, 'sound/misc/fart.ogg', 20, 1)
 			cooldown = world.time
 			return
