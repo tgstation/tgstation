@@ -142,15 +142,3 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	anchored = 1
-/obj/effect/decal/cleanable/chem_pile/New()
-	..()
-	SSobj.processing |= src
-
-/obj/effect/decal/cleanable/chem_pile/Destroy()
-	SSobj.processing.Remove(src)
-	..()
-
-/obj/effect/decal/cleanable/chem_pile/process()
-	if(reagents)
-		reagents.reagent_on_tick()
-	return

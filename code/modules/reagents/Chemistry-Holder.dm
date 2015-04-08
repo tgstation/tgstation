@@ -17,7 +17,7 @@ datum/reagents
 
 datum/reagents/New(maximum=100)
 	maximum_volume = maximum
-
+	SSobj.processing |= src
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
 		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -53,6 +53,7 @@ datum/reagents/New(maximum=100)
 
 datum/reagents/Destroy()
 	..()
+	SSobj.processing.Remove(src)
 	for(var/datum/reagent/R in reagent_list)
 		qdel(R)
 	reagent_list.Cut()
@@ -260,7 +261,7 @@ datum/reagents/proc/metabolize(var/mob/M)
 	last_tick++
 	update_total()
 
-datum/reagents/proc/reagent_on_tick()
+datum/reagents/process()
 	for(var/datum/reagent/R in reagent_list)
 		R.on_tick()
 	return

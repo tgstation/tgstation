@@ -196,7 +196,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
-	reagents.reagent_on_tick()
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
