@@ -375,8 +375,6 @@
 /mob/living/carbon/handle_regular_hud_updates()
 	if(!client)	return 0
 
-	update_action_buttons()
-
 	if(damageoverlay)
 		if(damageoverlay.overlays)
 			damageoverlay.overlays = list()
