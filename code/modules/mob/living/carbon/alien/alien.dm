@@ -12,6 +12,7 @@
 	ventcrawler = 2
 	languages = ALIEN
 	verb_say = "hisses"
+	lying_pixel_offset = 0
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -157,10 +158,6 @@
 
 /mob/living/carbon/alien/getTrail()
 	return "xltrails"
-
-/mob/living/carbon/alien/cuff_break(obj/item/I, mob/living/carbon/C)
-	playsound(C, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when breaking free.
-	..()
 
 /mob/living/carbon/alien/verb/nightvisiontoggle()
 	set name = "Toggle Night Vision"

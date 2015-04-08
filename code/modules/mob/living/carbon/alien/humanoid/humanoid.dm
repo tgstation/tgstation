@@ -4,6 +4,7 @@
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
+	var/alt_icon = 'icons/mob/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
@@ -117,3 +118,7 @@
 
 /mob/living/carbon/alien/humanoid/reagent_check(var/datum/reagent/R)
 	return 0
+
+/mob/living/carbon/alien/humanoid/cuff_resist(obj/item/I)
+	playsound(src, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when starting to break free
+	..(I, cuff_break = 1)

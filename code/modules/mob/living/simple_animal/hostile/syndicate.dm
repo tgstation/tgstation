@@ -11,13 +11,13 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "punches"
+	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "harm"
 	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
 	var/weapon1
@@ -48,6 +48,7 @@
 	weapon1 = /obj/item/weapon/melee/energy/sword/saber/red
 	weapon2 = /obj/item/weapon/shield/energy
 	attacktext = "slashes"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
 	status_flags = 0
 
 /mob/living/simple_animal/hostile/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
@@ -130,7 +131,8 @@
 	faction = list("syndicate")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	mob_size = MOB_SIZE_SMALL
+	mob_size = MOB_SIZE_TINY
+	flying
 
 /mob/living/simple_animal/hostile/viscerator/death(gibbed)
 	..(gibbed)

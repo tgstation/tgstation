@@ -57,7 +57,7 @@
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
 	set category = "Preferences"
-	set desc = "Toggle hearing a notification when admin PMs are recieved"
+	set desc = "Toggle hearing a notification when admin PMs are received"
 	if(!holder)	return
 	prefs.toggles ^= SOUND_ADMINHELP
 	prefs.save_preferences()
