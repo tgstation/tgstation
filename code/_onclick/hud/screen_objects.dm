@@ -130,15 +130,15 @@
 				icon_state = "internal0"
 			else
 				if(!istype(C.wear_mask, /obj/item/clothing/mask))
-					C << "<span class='warning'>You are not wearing a mask!</span>"
+					C << "<span class='warning'>You are not wearing an internals mask!</span>"
 					return 1
 				else
 					var/obj/item/clothing/mask/M = C.wear_mask
-					if( !(M.flags & MASKINTERNALS) )
-						C << "<span class='warning'>You need an internals mask blahblahblah !</span>"
-						return
 					if(M.mask_adjusted) // if mask on face but pushed down
-						M.adjustmask(C) // automatically adjust it back
+						M.adjustmask(C) // adjust it back
+					if( !(M.flags & MASKINTERNALS) )
+						C << "<span class='warning'>You are not wearing an internals mask!</span>"
+						return
 					if(istype(C.l_hand, /obj/item/weapon/tank))
 						C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
 						C.internal = C.l_hand
