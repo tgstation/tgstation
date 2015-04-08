@@ -65,7 +65,11 @@
 		/obj/item/toy/gasha/miner,
 		/obj/item/toy/gasha/clown,
 		/obj/item/toy/gasha/goliath,
-		/obj/item/toy/gasha/basilisk)
+		/obj/item/toy/gasha/basilisk,
+		/obj/item/toy/gasha/mommi,
+		/obj/item/toy/gasha/guard,
+		/obj/item/toy/gasha/hunter,
+		/obj/item/toy/gasha/nurse)
 
 	var/obj/item/I = new capsule_prize(M)
 	M.u_equip(src)

@@ -974,7 +974,7 @@
 
 /obj/item/toy/gasha/greytide
 	name = "toy greytide"
-	desc = "Includes small pieces, not for children under or above the age of 5"
+	desc = "Includes small pieces, not for children under or above the age of 5."
 	icon_state = "greytide"
 
 /obj/item/toy/gasha/newcop
@@ -1004,8 +1004,27 @@
 
 /obj/item/toy/gasha/basilisk
 	name = "toy basilisk"
-	desc = "The eye has a strange shine to it"
+	desc = "The eye has a strange shine to it."
 	icon_state = "basilisk"
+
+/obj/item/toy/gasha/mommi
+	name = "toy MoMMI"
+	desc = "*ping"
+	icon_state = "mommi"
+
+/obj/item/toy/gasha/guard
+	name = "toy guard spider"
+	desc = "Miniature giant spider, or just 'spider' for short."
+	icon_state = "guard"
+
+/obj/item/toy/gasha/hunter
+	name = "toy hunter spider"
+	desc = "As creepy looking as the real thing, but with 80% less chance of killing you."
+	icon_state = "hunter"
+
+/obj/item/toy/gasha/nurse
+	name = "toy nurse spider"
+	desc = "Not exactly what most people are hoping for when they hear 'nurse'."
 
 /obj/item/toy/gasha/corgitoy
 	name = "plush corgi"
