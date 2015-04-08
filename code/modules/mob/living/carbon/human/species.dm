@@ -92,9 +92,6 @@
 
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 
-	if(!config.mutant_colors)
-		H.dna.mutant_color = default_color
-
 	if(MUTCOLORS in specflags)
 		var/image/spec_base
 		var/icon_state_string = "[id]_"
@@ -128,10 +125,7 @@
 
 			if(hair_color)
 				if(hair_color == "mutcolor")
-					if(!config.mutant_colors)
-						img_facial_s.color = "#" + default_color
-					else
-						img_facial_s.color = "#" + H.dna.mutant_color
+					img_facial_s.color = "#" + H.dna.mutant_color
 				else
 					img_facial_s.color = "#" + hair_color
 			else
@@ -159,10 +153,7 @@
 
 			if(hair_color)
 				if(hair_color == "mutcolor")
-					if(!config.mutant_colors)
-						img_hair_s.color = "#" + default_color
-					else
-						img_hair_s.color = "#" + H.dna.mutant_color
+					img_hair_s.color = "#" + H.dna.mutant_color
 				else
 					img_hair_s.color = "#" + hair_color
 			else
@@ -251,9 +242,6 @@
 		icon_state_string += "[g]_s"
 	else
 		icon_state_string += "_s"
-
-	if(!config.mutant_colors)
-		H.dna.mutant_color = default_color
 
 	for(var/layer in relevent_layers)
 		for(var/bodypart in bodyparts_to_add)

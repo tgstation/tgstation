@@ -108,7 +108,6 @@
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
-	var/mutant_colors = 0
 
 	var/no_summon_guns		//No
 	var/no_summon_magic		//Fun
@@ -472,8 +471,6 @@
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
-				if("mutant_colors")
-					config.mutant_colors			= 1
 				if("assistant_cap")
 					config.assistant_cap			= text2num(value)
 				if("starlight")
