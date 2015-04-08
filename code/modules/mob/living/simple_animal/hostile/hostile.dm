@@ -35,8 +35,8 @@
 /mob/living/simple_animal/hostile/Life()
 
 	. = ..()
-	if(!.)
-		walk(src, 0)
+	if(!.) //dead
+		walk(src, 0) //stops walking
 		return 0
 	if(ranged)
 		ranged_cooldown--
@@ -49,8 +49,7 @@
 			if(HOSTILE_STANCE_IDLE)
 				if(environment_smash)
 					EscapeConfinement()
-				var/new_target = FindTarget()
-				GiveTarget(new_target)
+				FindTarget()
 
 			if(HOSTILE_STANCE_ATTACK)
 				MoveToTarget()
@@ -93,6 +92,7 @@
 			Targets += A
 			continue
 	Target = PickTarget(Targets)
+	GiveTarget(Target)
 	return Target //We now have a target
 
 /mob/living/simple_animal/hostile/proc/Found(var/atom/A)//This is here as a potential override to pick a specific target if available
@@ -193,12 +193,10 @@
 			target = null
 		if(stance == HOSTILE_STANCE_IDLE)//If we took damage while idle, immediately attempt to find the source of it so we find a living target
 			Aggro()
-			var/new_target = FindTarget()
-			GiveTarget(new_target)
+			FindTarget()
 		if(stance == HOSTILE_STANCE_ATTACK)//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			if(target != null && prob(40))
-				var/new_target = FindTarget()
-				GiveTarget(new_target)
+				FindTarget()
 
 /mob/living/simple_animal/hostile/proc/AttackTarget()
 

@@ -10,7 +10,6 @@
 	response_disarm = "flails at"
 	response_harm = "hits"
 	speak_chance = 0
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 15
 	health = 15
 	see_in_dark = 10
