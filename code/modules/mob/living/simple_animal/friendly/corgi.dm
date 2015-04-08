@@ -1,6 +1,7 @@
 //Corgi
 /mob/living/simple_animal/pet
 	icon = 'icons/mob/pets.dmi'
+	mob_size = MOB_SIZE_SMALL
 	var/obj/item/clothing/tie/petcollar/pcollar = null
 	var/image/collar = null
 	var/image/pettag = null

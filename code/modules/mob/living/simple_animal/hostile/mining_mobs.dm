@@ -129,6 +129,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "barrels into"
+	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "help"
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
@@ -229,6 +230,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "lashes out at"
+	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
 	ranged_cooldown_cap = 0
@@ -303,6 +305,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 2
 	attacktext = "slashes"
+	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	environment_smash = 0
 	pass_flags = PASSTABLE
@@ -339,6 +342,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "pulverizes"
+	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
 	idle_vision_range = 5

@@ -84,10 +84,18 @@
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
 		return
 
+	else if(istype(target, /obj/effect/decal/cleanable)) //stops splashing while scooping up fluids
+		return
+
 	else if(reagents.total_volume)
 		user << "<span class='notice'>You splash the solution onto [target].</span>"
 		reagents.reaction(target, TOUCH)
-		reagents.clear_reagents()
+		if(istype(target, /turf/simulated/floor))
+			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/chem_pile(target)
+			reagents.trans_to(reagentdecal, volume)
+			reagentdecal.color = mix_color_from_reagents(reagentdecal.reagents.reagent_list)
+		else
+			reagents.clear_reagents()
 
 /obj/item/weapon/reagent_containers/glass/attackby(var/obj/item/I, mob/user as mob, params)
 	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
