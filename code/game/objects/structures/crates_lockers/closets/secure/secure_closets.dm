@@ -4,7 +4,7 @@
 	density = 1
 	opened = 0
 	locked = 1
-	icon_door = "secure"
+	icon_state = "secure"
 	wall_mounted = 0 //never solid (You can always pass over it)
 	health = 200
 
