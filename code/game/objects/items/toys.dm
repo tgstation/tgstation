@@ -978,7 +978,7 @@
 	icon_state = "greytide"
 
 /obj/item/toy/gasha/newcop
-	name = "toy newcop"
+	name = "toy nuke-op"
 	desc = "Mildly explosive."
 	icon_state = "newcop"
 
@@ -1025,6 +1025,17 @@
 /obj/item/toy/gasha/nurse
 	name = "toy nurse spider"
 	desc = "Not exactly what most people are hoping for when they hear 'nurse'."
+	icon_state = "nurse"
+
+/obj/item/toy/gasha/alium
+	name = "toy alien"
+	desc = "Has a great smile."
+	icon_state = "alium"
+
+/obj/item/toy/gasha/pomf
+	name = "toy chicken"
+	desc = "Cluck."
+	icon_state = "pomf"
 
 /obj/item/toy/gasha/corgitoy
 	name = "plush corgi"
