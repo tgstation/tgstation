@@ -620,6 +620,7 @@
 #include "code\game\objects\items\mountable_frames\lights.dm"
 #include "code\game\objects\items\mountable_frames\lightswitch.dm"
 #include "code\game\objects\items\mountable_frames\mountables.dm"
+#include "code\game\objects\items\mountable_frames\newscaster.dm"
 #include "code\game\objects\items\mountable_frames\wallmed.dm"
 #include "code\game\objects\items\mountable_frames\posters\poster.dm"
 #include "code\game\objects\items\robot\robot_designs.dm"
