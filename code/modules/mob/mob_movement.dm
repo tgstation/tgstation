@@ -240,7 +240,7 @@
 	//if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
 	//	if(!mob.Process_Spacemove(0))	return 0
 
-	if((istype(mob.loc, /turf/space)) || ((mob.areaMaster.has_gravity == 0) && (!istype(mob.loc, /obj/spacepod))))  // last section of if statement prevents spacepods being unable to move when the gravity goes down
+	if((istype(mob.loc, /turf/space)) || ((mob.areaMaster && mob.areaMaster.has_gravity == 0) && (!istype(mob.loc, /obj/spacepod))))  // last section of if statement prevents spacepods being unable to move when the gravity goes down
 		if(!mob.Process_Spacemove(0))
 			return 0
 

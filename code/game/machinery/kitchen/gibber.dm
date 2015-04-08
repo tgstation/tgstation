@@ -243,9 +243,9 @@ obj/machinery/gibber/New()
 		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 
-	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
-	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
-	log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]</b>")
+	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <B>[key_name(user)]</B>" //One shall not simply gib a mob unnoticed!
+	user.attack_log += "\[[time_stamp()]\] Gibbed <B>[key_name(src.occupant)]</B>"
+	log_attack("<B>[key_name(user)]</B> gibbed <B>[key_name(src.occupant)]</B>")
 
 	if(!iscarbon(user))
 		src.occupant.LAssailant = null
@@ -306,8 +306,8 @@ obj/machinery/gibber/New()
 		victim.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 
-	victim.attack_log += "\[[time_stamp()]\] Was auto-gibbed by <b>[src]</b>" //One shall not simply gib a mob unnoticed!
-	log_attack("\[[time_stamp()]\] <b>[src]</b> auto-gibbed <b>[victim]/[victim.ckey]</b>")
+	victim.attack_log += "\[[time_stamp()]\] Was auto-gibbed by <B>[src]</B>" //One shall not simply gib a mob unnoticed!
+	log_attack("<B>[src]</B> auto-gibbed <B>[key_name(victim)]</B>")
 	victim.death(1)
 	if(ishuman(victim) || ismonkey(victim) || isalien(victim))
 		var/obj/item/organ/brain/B = new(src.loc)

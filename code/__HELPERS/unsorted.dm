@@ -174,59 +174,78 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 
-//This will update a mob's name, real_name, mind.name, data_core records, pda and id
-//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
-/mob/proc/fully_replace_character_name(var/oldname,var/newname)
-	if(!newname)	return 0
+/**
+ * This will update a mob's name, real_name, mind.name, data_core records, pda and id.
+ * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records. ~Carn
+ */
+/mob/proc/fully_replace_character_name(oldname, newname)
+	if (!newname)
+		return 0
+
 	real_name = newname
+
 	name = newname
-	if(mind)
+
+	if (mind)
 		mind.name = newname
-	if(dna)
+
+	if (dna)
 		dna.real_name = real_name
 
-	if(oldname)
-		//update the datacore records! This is goig to be a bit costly.
-		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
-			var/datum/data/record/R = find_record("name", oldname, L)
+	if (oldname)
+		/*
+		 * Update the datacore records!
+		 * This is going to be a bit costly.
+		 */
+		for (var/list/L in list(data_core.general, data_core.medical, data_core.security,data_core.locked))
+			if (L)
+				var/datum/data/record/R = find_record("name", oldname, L)
 
-			if(R)
-				R.fields["name"] = newname
+				if (R)
+					R.fields["name"] = newname
 
-		//update our pda and id if we have them on our person
-		var/list/searching = GetAllContents(searchDepth = 3)
-		var/search_id = 1
-		var/search_pda = 1
+		// update our pda and id if we have them on our person
+		var/search_id = TRUE
 
-		for(var/A in searching)
-			if( search_id && istype(A,/obj/item/weapon/card/id) )
-				var/obj/item/weapon/card/id/ID = A
-				if(ID.registered_name == oldname)
+		var/search_pda = TRUE
+
+		for (var/object in get_contents_in_object(src, /atom/movable))
+			if (search_id && istype(object, /obj/item/weapon/card/id))
+				var/obj/item/weapon/card/id/ID = object
+
+				if (ID.registered_name == oldname)
 					ID.registered_name = newname
 					ID.name = "[newname]'s ID Card ([ID.assignment])"
-					if(!search_pda)	break
-					search_id = 0
 
-			else if( search_pda && istype(A,/obj/item/device/pda) )
-				var/obj/item/device/pda/PDA = A
-				if(PDA.owner == oldname)
+					if (!search_pda)
+						break
+
+					search_id = FALSE
+			else if (search_pda && istype(object, /obj/item/device/pda))
+				var/obj/item/device/pda/PDA = object
+
+				if (PDA.owner == oldname)
 					PDA.owner = newname
 					PDA.name = "PDA-[newname] ([PDA.ownjob])"
-					if(!search_id)	break
-					search_pda = 0
 
-		//Fixes renames not being reflected in objective text
-		var/list/O = (typesof(/datum/objective)  - /datum/objective)
+					if (!search_id)
+						break
+
+					search_pda = FALSE
+
+		// fixes renames not being reflected in objective text
 		var/length
-		var/pos
-		for(var/datum/objective/objective in O)
-			if(objective.target != mind) continue
-			length = length(oldname)
-			pos = findtextEx(objective.explanation_text, oldname)
-			objective.explanation_text = copytext(objective.explanation_text, 1, pos)+newname+copytext(objective.explanation_text, pos+length)
+		var/position
+
+		for (var/datum/mind/mind in ticker.minds)
+			if (mind)
+				for (var/datum/objective/objective in mind.objectives)
+					if (objective && objective.target == mind)
+						length = length(oldname)
+						position = findtextEx(objective.explanation_text, oldname)
+						objective.explanation_text = copytext(objective.explanation_text, 1, position) + newname + copytext(objective.explanation_text, position + length)
+
 	return 1
-
-
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
 //Last modified by Carn
@@ -610,17 +629,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		flick(flick_anim, animation)
 	sleep(max(sleeptime, 15))
 	animation.loc = null
-
-//Will return the contents of an atom recursivly to a depth of 'searchDepth'
-/atom/proc/GetAllContents(searchDepth = 5)
-	var/list/toReturn = list()
-
-	for(var/atom/part in contents)
-		toReturn += part
-		if(part.contents.len && searchDepth)
-			toReturn += part.GetAllContents(searchDepth - 1)
-
-	return toReturn
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(var/atom/source, var/atom/target, var/length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.

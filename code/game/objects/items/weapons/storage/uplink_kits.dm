@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/box/syndicate/
 	New()
 		..()
-		var/tagname = pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "psycho" = 1, "hotline" = 1))
+		var/tagname = pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1, "smoothoperator" = 1, "psycho" = 1, "hotline" = 1, "balloon" = 0.1))
 		switch (tagname)
 			if("bloodyspai")
 				new /obj/item/clothing/under/chameleon(src)
@@ -92,6 +92,16 @@
 				new /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver(src)
 				new /obj/item/weapon/storage/pill_bottle/hyperzine(src)
 				new /obj/item/weapon/card/id/syndicate(src)
+
+
+			if("balloon")
+				new /obj/item/toy/syndicateballoon(src)
+				new /obj/item/toy/syndicateballoon(src)
+				new /obj/item/toy/syndicateballoon(src)
+				new /obj/item/toy/syndicateballoon(src)
+				new /obj/item/toy/syndicateballoon(src)
+				new /obj/item/toy/syndicateballoon(src)
+				new /obj/item/toy/syndicateballoon(src)
 		tag = tagname
 
 

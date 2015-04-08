@@ -207,6 +207,7 @@
 			module_sprites["Default"] = "robot"
 			module_sprites["Marina-SD"] = "marinaSD"
 			module_sprites["Sleek"] = "sleekstandard"
+			module_sprites["#11"] = "servbot"
 			speed = 0
 
 		if("Service")
@@ -220,6 +221,7 @@
 			module_sprites["R2-D2"] = "r2d2"
 			module_sprites["Marina-SV"] = "marinaSV"
 			module_sprites["Sleek"] = "sleekservice"
+			module_sprites["#27"] = "servbot-service"
 			speed = 0
 
 		if("Miner")
@@ -233,6 +235,7 @@
 			module_sprites["Wall-A"] = "wall-a"
 			module_sprites["Marina-MN"] = "marinaMN"
 			module_sprites["Sleek"] = "sleekminer"
+			module_sprites["#31"] = "servbot-miner"
 			speed = -1
 
 		if("Medical")
@@ -247,6 +250,7 @@
 			module_sprites["Marina-MD"] = "marina"
 			module_sprites["Eve"] = "eve"
 			module_sprites["Sleek"] = "sleekmedic"
+			module_sprites["#17"] = "servbot-medi"
 			speed = -2
 
 		if("Security")
@@ -258,6 +262,7 @@
 			module_sprites["Bloodhound"] = "bloodhound"
 			module_sprites["Securitron"] = "securitron"
 			module_sprites["Marina-SC"] = "marinaSC"
+			module_sprites["#9"] = "servbot-sec"
 			src << "<span class='warning'><big><b>Just a reminder, by default you do not follow space law, you follow your lawset</b></big></span>"
 			speed = 0
 
@@ -273,6 +278,7 @@
 			module_sprites["Wall-E"] = "wall-e"
 			module_sprites["Marina-EN"] = "marinaEN"
 			module_sprites["Sleek"] = "sleekengineer"
+			module_sprites["#25"] = "servbot-engi"
 			speed = -2
 
 		if("Janitor")
@@ -284,6 +290,7 @@
 			module_sprites["HAN-D"] = "han-d"
 			module_sprites["Marina-JN"] = "marinaJN"
 			module_sprites["Sleek"] = "sleekjanitor"
+			module_sprites["#29"] = "servbot-jani"
 			speed = -1
 
 		if("Combat")
@@ -295,6 +302,8 @@
 			module_sprites["Mr. Gutsy"] = "mrgutsy"
 			module_sprites["Marina-CB"] = "marinaCB"
 			module_sprites["Squadbot"] = "squats"
+			module_sprites["#41"] = "servbot-combat"
+			module_sprites["#32"] = "servbot-combat2"
 			speed = -1
 
 	//Custom_sprite check and entry
