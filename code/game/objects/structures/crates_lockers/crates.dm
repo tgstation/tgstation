@@ -12,7 +12,7 @@
 	var/sound_effect_close = 'sound/machines/click.ogg'
 
 /obj/structure/closet/crate/update_icon()
-	if(!opened)
+	if(opened)
 		icon_state = "[icon_crate]open"
 	else
 		icon_state = icon_crate
