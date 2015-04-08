@@ -558,3 +558,19 @@
 //Return a lattice to allow plating building, return 0 for error message, return -1 for silent fail.
 /turf/proc/canBuildPlating()
 	return BUILD_SILENT_FAILURE
+
+/////////////////////////////////////////////////////
+
+/turf/proc/spawn_powerup()
+	spawn(5)
+		var/powerup = pick(
+			50;/obj/structure/powerup/bombup,
+			50;/obj/structure/powerup/fire,
+			50;/obj/structure/powerup/skate,
+			10;/obj/structure/powerup/kick,
+			10;/obj/structure/powerup/line,
+			10;/obj/structure/powerup/power,
+			10;/obj/structure/powerup/skull,
+			5;/obj/structure/powerup/full,
+			)
+		new powerup(src)
