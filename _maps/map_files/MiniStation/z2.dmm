@@ -339,7 +339,7 @@
 "kq" = (/obj/machinery/computer/libraryconsole/bookmanagement,/obj/structure/table/wood,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "kr" = (/obj/machinery/vending/magivend,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "ks" = (/obj/machinery/vending/snack,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
-"kt" = (/obj/structure/closet{icon_closed = "cabinet_closed"; icon_opened = "cabinet_open"; icon_state = "cabinet_closed"},/obj/item/weapon/storage/backpack/satchel,/turf/unsimulated/floor{dir = 9; icon_state = "carpetside"},/area/wizard_station)
+"kt" = (/obj/structure/closet/cabinet,/obj/item/weapon/storage/backpack/satchel,/turf/unsimulated/floor{dir = 9; icon_state = "carpetside"},/area/wizard_station)
 "ku" = (/obj/structure/mirror{pixel_y = 28},/turf/unsimulated/floor{dir = 1; icon_state = "carpetside"},/area/wizard_station)
 "kv" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/wiz,/turf/unsimulated/floor{dir = 5; icon_state = "carpetside"},/area/wizard_station)
 "kw" = (/turf/unsimulated/wall,/area/tdome)
