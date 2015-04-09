@@ -1,0 +1,6 @@
+author: PJB3005
+
+delete-after: True
+
+changes:
+  - rscadd: Ports the procedural map generator from /tg/, credits to RemieRichards for actually making the thing.
