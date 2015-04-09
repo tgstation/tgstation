@@ -742,6 +742,11 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=togglenarsie'>Toggle Nar-Sie's behaviour</A><BR>
 			<A href='?src=\ref[src];secretsfun=fakealerts'>Trigger a fake alert</A><BR>
 			<A href='?src=\ref[src];secretsfun=fakebooms'>Adds in some Micheal Bay to the shift without major destruction</A><BR>
+			<A href='?src=\ref[src];secretsfun=massbomber'>Turn every players into Bomberman</A><BR>
+			<A href='?src=\ref[src];secretsfun=bomberhurt'>Make Bomberman Bombs actually hurt players</A><BR>
+			<A href='?src=\ref[src];secretsfun=bomberdestroy'>Make Bomberman Bombs actually destroy stuff</A><BR>
+			<A href='?src=\ref[src];secretsfun=bombernohurt'>Make Bomberman Bombs harmless to players(default)</A><BR>
+			<A href='?src=\ref[src];secretsfun=bombernodestroy'>Make Bomberman Bombs harmless to the environnement(default)</A><BR>
 			<BR>
 			<B>Final Solutions</B><BR>
 			<I>(Warning, these will end the round!)</I><BR>

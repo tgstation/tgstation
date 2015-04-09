@@ -34,6 +34,7 @@ var/list/directional = list(
 	/obj/machinery/light,
 	/obj/machinery/door/airlock/multi_tile,
 	/obj/machinery/camera,
+	/obj/structure/bomberflame,
 	)
 
 var/list/exception = list(

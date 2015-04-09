@@ -564,7 +564,9 @@ Pressure: [env.return_pressure()]"}
 		"emergency rescue team",
 		"nanotrasen representative",
 		"nanotrasen officer",
-		"nanotrasen captain"
+		"nanotrasen captain",
+		"Bomberman",
+		"Bomberman(arena)",
 		)
 	var/dostrip = input("Do you want to strip [M] before equipping them? (0=no, 1=yes)", "STRIPTEASE") as null|anything in list(0,1)
 	if(isnull(dostrip))
@@ -952,6 +954,37 @@ Pressure: [env.return_pressure()]"}
 			W.assignment = "Admiral"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("Bomberman")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/darkblue(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/purple(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/bomberman(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/bomberman(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/purple(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/weapon/bomberman/(M), slot_s_store)
+		if("Bomberman(arena)")	//they have a random color, cannot remove their clothes, and their initial speed is slightly lowered by their suit.
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/darkblue(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/purple(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/bomberman(M), slot_head)
+			var/obj/item/clothing/suit/space/bomberman/bombsuit = new /obj/item/clothing/suit/space/bomberman(M)
+			M.equip_to_slot_or_del(bombsuit, slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/purple(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/weapon/bomberman/(M), slot_s_store)
+			bombsuit.slowdown = 1
+			var/list/randomhexes = list(
+				"7",
+				"8",
+				"9",
+				"a",
+				"b",
+				"c",
+				"d",
+				"e",
+				"f",
+				)
+			M.color = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
+			for(var/obj/item/clothing/C in M)
+				C.canremove = 0
+			M.name = "Bomberman #[rand(1,999)]"
 
 	M.regenerate_icons()
 
@@ -1317,6 +1350,68 @@ client/proc/delete_all_adminbus()
 
 	for(var/obj/structure/stool/bed/chair/vehicle/adminbus/AB in world)
 		AB.Adminbus_Deletion()
+
+client/proc/delete_all_bomberman()
+	set name = "Remove all that Bomberman shit"
+	set desc = "4th wall ointment."
+	set category = "Fun"
+
+	if(alert(usr, "Remove all Bomberman-related objects in the game world?", "Remove Bomberman", "Yes", "No") != "Yes")
+		return
+
+	for(var/obj/structure/bomberflame/O in world)
+		qdel(O)
+
+	for(var/obj/structure/bomberman/O in world)
+		qdel(O)
+
+	for(var/obj/item/weapon/bomberman/O in world)
+		if(istype(O.loc, /mob/living/carbon/))
+			var/mob/living/carbon/C = O.loc
+			C.u_equip(O)
+			O.loc = C.loc
+			O.dropped(C)
+		qdel(O)
+
+	for(var/obj/item/clothing/suit/space/bomberman/O in world)
+		if(istype(O.loc, /mob/living/carbon/))
+			var/mob/living/carbon/C = O.loc
+			C.u_equip(O)
+			O.loc = C.loc
+			O.dropped(C)
+		qdel(O)
+
+	for(var/obj/item/clothing/head/helmet/space/bomberman/O in world)
+		if(istype(O.loc, /mob/living/carbon/))
+			var/mob/living/carbon/C = O.loc
+			C.u_equip(O)
+			O.loc = C.loc
+			O.dropped(C)
+		qdel(O)
+
+	for(var/obj/structure/softwall/O in world)
+		qdel(O)
+
+	for(var/turf/unsimulated/wall/bomberman/T in world)
+		T.ChangeTurf(/turf/simulated/wall)
+
+
+	for(var/obj/structure/powerup/O in world)
+		qdel(O)
+
+client/proc/create_bomberman_arena()
+	set name = "Create a Bomberman Arena"
+	set desc = "4th wall ointment."
+	set category = "Fun"
+
+	var/list/arena_sizes = list(
+		"screensized",
+		"saturntenplayers",
+		)
+	var/arena_type = input("What size for the arena?", "Arena Construction") in arena_sizes
+	var/turf/T = get_turf(src.mob)
+	var/datum/bomberman_arena/A = new /datum/bomberman_arena(T,arena_type,src.mob)
+	arenas += A
 
 client/proc/mob_list()
 	set name = "show mob list"

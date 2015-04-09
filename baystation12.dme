@@ -909,6 +909,7 @@
 #include "code\modules\awaymissions\maploader\reader.dm"
 #include "code\modules\awaymissions\maploader\swapmaps.dm"
 #include "code\modules\awaymissions\maploader\writer.dm"
+#include "code\modules\bomberman\bomberman.dm"
 #include "code\modules\client\client defines.dm"
 #include "code\modules\client\client procs.dm"
 #include "code\modules\client\preferences.dm"
