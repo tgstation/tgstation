@@ -3,5 +3,4 @@ author: phil235
 delete-after: True
 
 changes: 
-  - tweak: "flying animals no longer triggers mouse traps, bear traps or mines."
- 
+  - tweak: "Flying animals no longer triggers mouse traps, bear traps or mines."

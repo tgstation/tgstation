@@ -1,0 +1,10 @@
+author: RemieRichards
+
+delete-after: True
+
+changes: 
+  - tweak: "Ninja stars are summoned to your hand to be thrown rather than automatically targetting nearby mobs."
+  - rscadd: "Added Sword Recall: pulls your katana towards you, hitting mobs in the way. Free if within sight, cost scales with distance otherwise."
+  - rscadd: "Enemies can be electrocuted by a ninja as the cost of his energy, stunning and injuring them."
+  - rscdel: "Removed SpiderOS, functions moved to status panel."
+  - bugfix: "Fixed energy nets not anchoring target, katana emag spam and sound delay."
