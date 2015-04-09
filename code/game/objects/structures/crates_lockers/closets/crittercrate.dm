@@ -2,8 +2,6 @@
 	name = "critter crate"
 	desc = "A crate designed for safe transport of animals. Only openable from the the outside."
 	icon_state = "critter"
-	icon_opened = "critteropen"
-	icon_closed = "critter"
 	var/already_opened = 0
 	var/content_mob = null
 	var/amount = 1

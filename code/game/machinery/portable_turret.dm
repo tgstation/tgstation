@@ -298,9 +298,7 @@
 	else
 		//if the turret was attacked with the intention of harming it:
 		user.changeNext_move(CLICK_CD_MELEE)
-		health -= I.force * 0.5
-		if(health <= 0)
-			die()
+		take_damage(I.force * 0.5)
 		if(I.force * 0.5 > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
 			if(!attacked && !emagged)
 				attacked = 1
@@ -308,6 +306,32 @@
 					sleep(60)
 					attacked = 0
 		..()
+
+/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M as mob)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	if(M.melee_damage_upper == 0)
+		return
+	if(!(stat & BROKEN))
+		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
+		add_logs(M, src, "attacked", admin=0)
+		take_damage(M.melee_damage_upper)
+	else
+		M << "<span class='danger'>That object is useless to you.</span>"
+	return
+
+/obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	if(!(stat & BROKEN))
+		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
+		add_logs(M, src, "attacked", admin=0)
+		take_damage(15)
+	else
+		M << "\green That object is useless to you."
+	return
+
 
 /obj/machinery/porta_turret/emag_act(user as mob)
 	if(!emagged)
@@ -328,15 +352,16 @@
 				sleep(60)
 				attacked = 0
 
+	var/damage_dealt = 0
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		health -= Proj.damage
+		damage_dealt = Proj.damage
 
 	..()
 
-	if(prob(45) && Proj.damage > 0)
-		spark_system.start()
-	if(health <= 0)
-		die()	//the death process :(
+	if(damage_dealt)
+		if(prob(45))
+			spark_system.start()
+		take_damage(damage_dealt)
 
 	if(lasercolor == "b" && disabled == 0)
 		if(istype(Proj, /obj/item/projectile/lasertag/redtag))
@@ -372,8 +397,14 @@
 
 /obj/machinery/porta_turret/ex_act(severity, target)
 	if(severity >= 3)	//turret dies if an explosion touches it!
-		qdel(src)
+		die()
 	else
+		qdel(src)
+
+
+/obj/machinery/porta_turret/proc/take_damage(damage)
+	health -= damage
+	if(health <= 0)
 		die()
 
 /obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0

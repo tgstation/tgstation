@@ -71,6 +71,15 @@
 	begin_month = FEBRUARY
 	end_day = 15 //1 day extra
 
+
+/datum/holiday/birthday
+	name = "Birthday of Space Station 13"
+	begin_day = 16
+	begin_month = FEBRUARY
+
+/datum/holiday/birthday/greet()
+	return "Say 'Happy Birthday' to Space Station 13, first publicly playable on February 16th, 2003!"
+
 /datum/holiday/random_kindness
 	name = "Random Acts of Kindness Day"
 	begin_day = 17
@@ -93,7 +102,7 @@
 	name = APRIL_FOOLS
 	begin_day = 1
 	begin_month = APRIL
-	end_day = 8 //7 days extra so everyone can enjoy the festivities
+	end_day = 2 //1 day extra only because this shit just gets annoying fast
 
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"

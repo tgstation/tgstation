@@ -186,7 +186,9 @@
 
 	// lipstick
 	if(H.lip_style && LIPS in specflags)
-		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]_s", "layer" = -BODY_LAYER)
+		var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]_s", "layer" = -BODY_LAYER)
+		lips.color = H.lip_color
+		standing	+= lips
 
 	// eyes
 	if(EYECOLOR in specflags)

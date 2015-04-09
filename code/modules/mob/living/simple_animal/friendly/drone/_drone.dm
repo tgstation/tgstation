@@ -23,6 +23,7 @@
 	wander = 0
 	speed = 0
 	ventcrawler = 2
+	density = 0
 	pass_flags = PASSTABLE | PASSMOB
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
