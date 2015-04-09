@@ -34,30 +34,28 @@
 			L += get_contents(D.wrapped)
 	return L
 
-/datum/theft_objective/proc/check_completion(var/datum/mind/owner)
-	if(!owner.current)
-		return 0
-	var/list/all_items = list()
-	if(isliving(owner.current))
-		all_items = owner.current.get_contents()
-	if(areas.len)
-		for(var/areatype in areas)
-			var/area/area = locate(areatype)
-			for(var/obj/O in area)
-				all_items += O
-				all_items += get_contents(O)
-	if(all_items.len)
-		for(var/obj/I in all_items) //Check for items
-			if(istype(I, typepath))
-				//Stealing the cheap autoinjector doesn't count
-				if(istype(I, /obj/item/weapon/reagent_containers/hypospray/autoinjector))
-					continue
-				if(areas.len)
-					if(!is_type_in_list(get_area_master(I),areas))
-						continue
-				return 1
-	return 0
+/datum/theft_objective/proc/check_completion(datum/mind/owner)
+	if (owner && owner.current)
+		var/all_items = new/list()
 
+		if (isliving(owner.current))
+			all_items += get_contents_in_object(owner.current)
+
+		owner = null
+
+		for (var/area_type in areas)
+			all_items += get_contents_in_object(locate(area_type), /obj)
+
+		for (var/obj/O in all_items)
+			if (istype(O, typepath))
+				if (istype(O, /obj/item/weapon/reagent_containers/hypospray/autoinjector)) // stealing the cheap autoinjector doesn't count
+					continue
+
+				if (areas.len)
+					if (is_type_in_list(get_area_master(O), areas))
+						return 1
+
+	return 0
 
 /datum/theft_objective/traitor/antique_laser_gun
 	name = "the captain's antique laser gun"

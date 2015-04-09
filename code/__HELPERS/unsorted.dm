@@ -209,7 +209,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 		var/search_pda = TRUE
 
-		for (var/object in get_contents_in_object(src, /atom/movable))
+		for (var/object in get_contents_in_object(src))
 			if (search_id && istype(object, /obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/ID = object
 

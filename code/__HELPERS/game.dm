@@ -133,7 +133,7 @@
 /proc/recursive_hear_check(atom/O)
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
-	var/list/found_atoms = list()
+	var/found_atoms = list()
 
 	while (processing_list.len)
 		var/atom/A = processing_list[1]
@@ -153,7 +153,7 @@
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
 	var/list/processed_list = new/list()
-	var/list/found_atoms = new/list()
+	var/found_atoms = new/list()
 
 	while (processing_list.len)
 		var/atom/A = processing_list[1]
@@ -232,7 +232,7 @@
 
 	return hear
 
-/proc/get_contents_in_object(atom/O, type_path)
+/proc/get_contents_in_object(atom/O, type_path = /atom/movable)
 	if (O)
 		return recursive_type_check(O, type_path) - O
 	else
