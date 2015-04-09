@@ -551,9 +551,8 @@ Sorry Giacom. Please don't be mad :(
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
 
-	if(update_slimes)
-		for(var/mob/living/simple_animal/slime/M in view(1,src))
-			M.UpdateFeed(src)
+	for(var/mob/living/simple_animal/slime/M in oview(1,src))
+		M.UpdateFeed(src)
 
 /mob/living/proc/makeTrail(var/turf/T, var/mob/living/M)
 	if(ishuman(M))

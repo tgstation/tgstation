@@ -107,7 +107,7 @@
 
 
 /mob/living/carbon/monkey/handle_changeling()
-	if(mind)
+	if(mind && hud_used)
 		if(mind.changeling)
 			mind.changeling.regenerate()
 			hud_used.lingchemdisplay.invisibility = 0
