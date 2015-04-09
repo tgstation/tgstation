@@ -73,7 +73,7 @@
 
 	library_catalog.initialize()
 
-	copy_logs() // Just copy the logs.
+	spawn() copy_logs() // Just copy the logs.
 	if(config && config.log_runtimes)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD")]-runtime.log")
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
