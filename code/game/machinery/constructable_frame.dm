@@ -5,7 +5,7 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
 	density = 1
-	anchored = 0
+	anchored = 1
 	use_power = 0
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/list/components = null
@@ -84,7 +84,7 @@
 				if(WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
-										"You start to disassemble the frame...", "You hear welding and clanking.")
+										"<span class='notice'>You start to disassemble the frame...</span>", "You hear welding and clanking.")
 					var oldloc = src.loc
 					if(do_after(user, 40))
 						if( !WT.isOn() )
@@ -95,7 +95,7 @@
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
 						M.add_fingerprint(user)
 						qdel(src)
-			if(istype(P, /obj/item/weapon/wrench) && state == 1 && state == 2)
+			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				var oldloc = src.loc
@@ -106,6 +106,16 @@
 					anchored = !anchored
 
 		if(2)
+			if(istype(P, /obj/item/weapon/wrench))
+				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				var oldloc = src.loc
+				if(do_after(user, 40))
+					if(src.loc!=oldloc)
+						return
+					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+					anchored = !anchored
+
 			if(istype(P, /obj/item/weapon/circuitboard))
 				if(!anchored)
 					user << "<span class='warning'>The frame needs to be secured first!</span>"
