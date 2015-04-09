@@ -13,7 +13,6 @@
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
-	var/losspertick = 5
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
@@ -45,24 +44,8 @@
 		else
 			return 0
 
-/obj/item/weapon/melee/baton/proc/update_process()
-	if(status)
-		SSobj.processing |= src
-	else
-		SSobj.processing.Remove(src)
 
-/obj/item/weapon/melee/baton/process()
-	if(bcell)
-		if(bcell.charge < hitcost)
-			status = 0
-			update_icon()
-		if(status)
-			if(isrobot(loc))
-				var/mob/living/silicon/robot/R = loc
-				if(R && R.cell)
-					R.cell.use(losspertick)
-			else
-				bcell.use(losspertick)
+
 
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
@@ -71,7 +54,6 @@
 		icon_state = "[initial(name)]_nocell"
 	else
 		icon_state = "[initial(name)]"
-	update_process()
 
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()

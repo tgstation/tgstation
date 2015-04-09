@@ -18,7 +18,8 @@
 	move_to_delay = 0
 	environment_smash = 0
 	mouse_opacity = 2
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	mob_size = MOB_SIZE_SMALL
 	flying = 1
 
 	//Spaceborn beings don't get hurt by space

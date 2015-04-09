@@ -11,6 +11,10 @@
 	var/sound_effect_open = 'sound/machines/click.ogg'
 	var/sound_effect_close = 'sound/machines/click.ogg'
 
+/obj/structure/closet/crate/New()
+	..()
+	update_icon()
+
 /obj/structure/closet/crate/update_icon()
 	if(opened)
 		icon_state = "[icon_crate]open"
@@ -107,25 +111,21 @@
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."
 	name = "weapons crate"
-	icon = 'icons/obj/storage.dmi'
 	icon_crate = "weaponcrate"
 
 /obj/structure/closet/crate/secure/plasma
 	desc = "A secure plasma crate."
 	name = "plasma crate"
-	icon = 'icons/obj/storage.dmi'
 	icon_crate = "plasmacrate"
 
 /obj/structure/closet/crate/secure/gear
 	desc = "A secure gear crate."
 	name = "gear crate"
-	icon = 'icons/obj/storage.dmi'
 	icon_crate = "secgearcrate"
 
 /obj/structure/closet/crate/secure/hydrosec
 	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
 	name = "secure hydroponics crate"
-	icon = 'icons/obj/storage.dmi'
 	icon_crate = "hydrosecurecrate"
 
 /obj/structure/closet/crate/secure/New()
@@ -145,20 +145,16 @@
 
 /obj/structure/closet/crate/open()
 	playsound(src.loc, sound_effect_open, 15, 1, -3)
-
 	dump_contents()
-
-	update_icon()
 	src.opened = 1
+	update_icon()
 	return 1
 
 /obj/structure/closet/crate/close()
 	playsound(src.loc, sound_effect_close, 15, 1, -3)
-
 	take_contents()
-
-	update_icon()
 	src.opened = 0
+	update_icon()
 	return 1
 
 /obj/structure/closet/crate/insert(var/atom/movable/AM, var/include_mobs = 0)

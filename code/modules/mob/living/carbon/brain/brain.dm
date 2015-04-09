@@ -6,6 +6,7 @@
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/alert = null
+	has_limbs = 0
 
 /mob/living/carbon/brain/New()
 	create_reagents(1000)

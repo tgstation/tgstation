@@ -158,6 +158,7 @@
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps")
 	emote_see = list("pecks at the ground","flaps its tiny wings")
+	density = 0
 	speak_chance = 2
 	turns_per_move = 2
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
@@ -169,7 +170,7 @@
 	health = 1
 	ventcrawler = 2
 	var/amount_grown = 0
-	pass_flags = PASSTABLE | PASSGRILLE
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 
 /mob/living/simple_animal/chick/New()
@@ -200,6 +201,7 @@ var/global/chicken_count = 0
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks")
 	emote_see = list("pecks at the ground","flaps its wings viciously")
+	density = 0
 	speak_chance = 2
 	turns_per_move = 3
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
@@ -216,7 +218,8 @@ var/global/chicken_count = 0
 	var/eggsFertile = TRUE
 	var/body_color
 	var/icon_prefix = "chicken"
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB
+	mob_size = MOB_SIZE_SMALL
 	var/list/feedMessages = list("It clucks happily.","It clucks happily.")
 	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 	var/list/validColors = list("brown","black","white")
