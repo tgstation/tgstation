@@ -109,7 +109,6 @@
 /obj/item/weapon/storage/box/syringes
 	name = "box of syringes"
 	desc = "A box full of syringes."
-	desc = "A biohazard alert warning is printed on the box"
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/syringes/New()
@@ -121,6 +120,21 @@
 	new /obj/item/weapon/reagent_containers/syringe( src )
 	new /obj/item/weapon/reagent_containers/syringe( src )
 	new /obj/item/weapon/reagent_containers/syringe( src )
+
+/obj/item/weapon/storage/box/lethalsyringes
+	name = "box of lethal injection syringes"
+	desc = "A box full of syringes."
+	icon_state = "syringe"
+
+/obj/item/weapon/storage/box/lethalsyringes/New()
+	..()
+	new /obj/item/weapon/reagent_containers/syringe/lethal(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal(src)
+	new /obj/item/weapon/reagent_containers/syringe/lethal(src)
 
 /obj/item/weapon/storage/box/medipens
 	name = "box of medipens"

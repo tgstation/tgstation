@@ -617,3 +617,10 @@ datum/reagent/consumable/ethanol/silencer/on_mob_life(var/mob/living/M as mob)
 		M.heal_organ_damage(1,1)
 	..()
 	return
+
+datum/reagent/consumable/ethanol/moonshine_2
+	name = "Moonshine"
+	id = "moonshine_2"
+	description = "You aren't entirely sure what this is, nor if it's a wise idea to drink it. Even a seasoned alcoholic would be terrified of something like this."
+	color = "#664300" // rgb: 102, 67, 0
+	boozepwr = 2 //pretty damn effective

@@ -46,3 +46,6 @@
 	name = "scientist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_tox"
+
+/obj/item/clothing/suit/toggle/labcoat/syndicate
+	armor = list(melee = 40, bullet = 10, laser = 15, energy = 0, bomb = 5, bio = 50, rad = 5)

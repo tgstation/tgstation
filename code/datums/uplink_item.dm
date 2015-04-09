@@ -1,6 +1,6 @@
 var/list/uplink_items = list()
 
-/proc/get_uplink_items()
+/proc/get_uplink_items(var/mob/M)
 	// If not already initialized..
 	if(!uplink_items.len)
 
@@ -48,6 +48,7 @@ var/list/uplink_items = list()
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list() //Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/surplus = 100 //Chance of being included in the surplus crate (when pick() selects it)
+	var/jobs = list() //The specific job of the traitor item
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	if(item)
@@ -346,13 +347,6 @@ var/list/uplink_items = list()
 	cost = 1
 	surplus = 50
 
-/datum/uplink_item/stealthy_weapons/traitor_chem_bottle
-	name = "Poison Kit"
-	desc = "An assortment of nasty chemicals."
-	item = /obj/item/weapon/storage/box/syndie_kit/chemical
-	cost = 6
-	surplus = 50
-
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. \
@@ -556,13 +550,6 @@ var/list/uplink_items = list()
 	cost = 11
 	excludefrom = list(/datum/game_mode/traitor/double_agents)
 
-/datum/uplink_item/device_tools/rad_laser
-	name = "Radioactive Microlaser"
-	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a powerful burst of radiation, which, after a short delay, can incapitate all but the most protected of humanoids. \
-	It has two settings: intensity, which controls the power of the radiation, and wavelength, which controls how long the radiation delay is."
-	item = /obj/item/device/rad_laser
-	cost = 6
-
 /datum/uplink_item/device_tools/syndicate_detonator
 	name = "Syndicate Detonator"
 	desc = "The Syndicate Detonator is a companion device to the Syndicate Bomb. Simply press the included button and an encrypted radio frequency will instruct all live syndicate bombs to detonate. \
@@ -660,6 +647,12 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
 
+// POINTLESS BADASSERY
+
+/datum/uplink_item/badass
+	category = "(Pointless) Badassery"
+	surplus = 0
+
 /datum/uplink_item/badass/random/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 
 	var/list/buyable_items = get_uplink_items()
@@ -713,3 +706,71 @@ var/list/uplink_items = list()
 	for(var/item in bought_items)
 		new item(C)
 		U.purchase_log += "<BIG>\icon[item]</BIG>"
+
+// JOB-SPECIFIC
+
+/datum/uplink_item/job_medsci
+	category = "Job-Specific Items: Medical/Science"
+	surplus = 0
+
+/datum/uplink_item/job_medsci/armored_labcoat
+	name = "Armored Labcoat"
+	desc = "A standard labcoat made of prototype materials embedded with chamelium. It functions identically to a regular labcoat but is more protective.\n\nJobs: All medical staff, all science staff"
+	cost = 3
+	item = /obj/item/clothing/suit/toggle/labcoat/syndicate
+	jobs = list("Medical Doctor", "Chemist", "Geneticist", "Chief Medical Officer", "Virologist", "Scientist", "Research Director", "Roboticist")
+
+/datum/uplink_item/job_medsci/stim_medipen
+	name = "Syndicate Medipen"
+	desc = "A red-and-black medipen loaded with a large recuperative cocktail. It still has the drawbacks of a regular medipen in that it cannot be refilled. Jobs: All medical staff"
+	cost = 10
+	item = /obj/item/weapon/reagent_containers/hypospray/medipen/syndicate
+	jobs = list("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer")
+
+/datum/uplink_item/job_medsci/rad_laser
+	name = "Radioactive Microlaser"
+	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a powerful burst of radiation, which, after a short delay, can incapitate all but the most protected of humanoids. \
+	It has two settings: intensity, which controls the power of the radiation, and wavelength, which controls how long the radiation delay is. Jobs: All medical staff"
+	item = /obj/item/device/rad_laser
+	cost = 6
+	jobs = list("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer")
+
+/datum/uplink_item/job_medsci/traitor_chem_bottle
+	name = "Poison Kit"
+	desc = "An assortment of deadly chemical solutions. Comes with a large variety, each fitting into their own niche. Jobs: Chemist"
+	item = /obj/item/weapon/storage/box/syndie_kit/chemical
+	cost = 6
+	jobs = list("Chemist")
+
+/datum/uplink_item/job_medsci/what_have_i_done
+	name = "Chlorine Trifluoride Foam Grenade"
+	desc = "A terrifying grenade that causes a gigantic area to be blanketed in chlorine trifluoride, designed to exterminate life. It is highly recommended you flee the scene before it goes off. \
+	Jobs: Chemist"
+	item = /obj/item/weapon/grenade/chem_grenade/clf3
+	cost = 11 //No way someone's getting more than one of these monsters
+	jobs = list("Chemist")
+
+/datum/uplink_item/job_medsci/lethal_syringes
+	name = "Box of Lethal Syringes"
+	desc = "A box full of empty lethal injection syringes. These syringes hold almost four times as much liquid as their standard counterparts. Ideal for syringe gun use. Jobs: Chemist"
+	item = /obj/item/weapon/storage/box/lethalsyringes
+	cost = 8
+	jobs = list("Chemist")
+
+/datum/uplink_item/job_medsci/syringe_gun
+	name = "Syringe Gun"
+	desc = "We literally just pilfered this from another station. If someone grabs the other ones, then you can have this one. Jobs: Chemist"
+	item = /obj/item/weapon/gun/syringe
+	cost = 1
+	jobs = list("Chemist")
+
+/datum/uplink_item/job_serv
+	category = "Job-Specific Items: Civilian"
+	surplus = 0
+
+/datum/uplink_item/job_serv/moonshine
+	name = "Flask of Moonshine"
+	desc = "An extremely powerful alcoholic drink. Gets people shitfaced in a few seconds. Jobs: Bartender"
+	item = /obj/item/weapon/reagent_containers/food/drinks/moonshine
+	cost = 5
+	jobs = list("Bartender")
