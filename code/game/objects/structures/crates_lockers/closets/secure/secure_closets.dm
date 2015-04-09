@@ -1,22 +1,20 @@
 /obj/structure/closet/secure_closet
 	name = "secure locker"
 	desc = "It's an immobile card-locked storage unit."
-	density = 1
-	opened = 0
 	locked = 1
 	icon_state = "secure"
-	wall_mounted = 0 //never solid (You can always pass over it)
 	health = 200
 
 /obj/structure/closet/secure_closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
 	..()
-	if(!broken)
-		if(locked)
-			overlays += "locked"
+	if(!opened)
+		if(!broken)
+			if(locked)
+				overlays += "locked"
+			else
+				overlays += "unlocked"
 		else
-			overlays += "unlocked"
-	else
-		overlays += "off"
+			overlays += "off"
 
 /obj/structure/closet/secure_closet/examine(mob/user)
 	..()
