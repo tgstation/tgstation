@@ -47,6 +47,11 @@
 /mob/living/silicon/ai/proc/upgrade_turrets()
 	set category = "Malfunction"
 	set name = "Upgrade Turrets"
+
+	if(src.stat == DEAD)
+		src <<"You cannot upgrade turrets while you're dead!"
+		return
+
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
 	for(var/obj/machinery/porta_turret/turret in machines)
 		if(turret.ai) //Make sure only the AI's turrets are affected.
@@ -67,8 +72,8 @@
 	set category = "Malfunction"
 	set name = "Initiate Hostile Lockdown"
 
-	if(src.stat == 2)
-		src <<"You cannot begin a lockdown because you are dead!"
+	if(src.stat == DEAD)
+		src <<"You cannot begin a lockdown while you are dead!"
 		return
 
 	if(malf_cooldown)
@@ -105,8 +110,8 @@
 	set category = "Malfunction"
 	set name = "Disable Lockdown"
 
-	if(src.stat == 2)
-		src <<"You cannot disable lockdown because you are dead!"
+	if(src.stat == DEAD)
+		src <<"You cannot disable lockdown while you are dead!"
 		return
 	if(malf_cooldown)
 		return
@@ -141,6 +146,11 @@
 /mob/living/silicon/ai/proc/disable_rcd()
 	set category = "Malfunction"
 	set name = "Disable RCDs"
+
+	if(src.stat == DEAD)
+		src <<"You cannot disable RCDs while you are dead!"
+		return
+
 	for(var/datum/AI_Module/large/disable_rcd/rcdmod in current_modules)
 		if(rcdmod.uses > 0)
 			rcdmod.uses --
@@ -165,6 +175,10 @@
 	set name = "Override Thermal Sensors"
 	set category = "Malfunction"
 
+	if(src.stat == DEAD)
+		src <<"You cannot override thermal sensors while you are dead!"
+		return
+
 	for(var/obj/machinery/firealarm/F in world)
 		if(F.z != ZLEVEL_STATION)
 			continue
@@ -185,6 +199,10 @@
 /mob/living/silicon/ai/proc/break_air_alarms()
 	set name = "Disable Air Alarm Safeties"
 	set category = "Malfunction"
+
+	if(src.stat == DEAD)
+		src <<"You cannot override air alarm safeties while you are dead!"
+		return
 
 	for(var/obj/machinery/alarm/A in world)
 		if(A.z != ZLEVEL_STATION)
@@ -207,6 +225,11 @@
 /mob/living/silicon/ai/proc/overload_machine(obj/machinery/M as obj in world)
 	set name = "Overload Machine"
 	set category = "Malfunction"
+
+	if(src.stat == DEAD)
+		src <<"You cannot overload machines while you are dead!"
+		return
+
 	if (istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
@@ -233,6 +256,11 @@
 /mob/living/silicon/ai/proc/override_machine(obj/machinery/M as obj in world)
 	set name = "Override Machine"
 	set category = "Malfunction"
+
+	if(src.stat == DEAD)
+		src <<"You cannot override machines while you are dead!"
+		return
+
 	if (istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
@@ -269,6 +297,10 @@
 
 	if(PCT.uses < 1)
 		src << "Out of uses."
+		return
+
+	if(src.stat == DEAD)
+		src <<"You cannot make a robotic factory while you are dead!"
 		return
 
 	var/sure = alert(src, "Make sure the room it is in is big enough, there is camera vision and that there is a 1x3 area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
@@ -319,6 +351,11 @@
 /mob/living/silicon/ai/proc/blackout()
 	set category = "Malfunction"
 	set name = "Blackout"
+
+	if(src.stat == DEAD)
+		src <<"You cannot blackout while you are dead!"
+		return
+
 	for(var/datum/AI_Module/small/blackout/blackout in current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
@@ -341,6 +378,11 @@
 /mob/living/silicon/ai/proc/reactivate_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
+
+	if(src.stat == DEAD)
+		src <<"You cannot fix cameras while you are dead!"
+		return
+
 	if (istype (C, /obj/machinery/camera))
 		for(var/datum/AI_Module/small/reactivate_camera/camera in current_modules)
 			if(camera.uses > 0)
@@ -365,6 +407,11 @@
 /mob/living/silicon/ai/proc/upgrade_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
+
+	if(src.stat == DEAD)
+		src <<"You cannot upgrade cameras while you are dead!"
+		return
+
 	if(istype(C))
 		var/datum/AI_Module/small/upgrade_camera/UC = locate(/datum/AI_Module/small/upgrade_camera) in current_modules
 		if(UC)
@@ -438,6 +485,10 @@
 	if(!isAI(usr))
 		return
 	var/mob/living/silicon/ai/A = usr
+
+	if(A.stat == DEAD)
+		A <<"You are already dead!" //Omae Wa Mou Shindeiru
+		return
 
 	for(var/datum/AI_Module/AM in possible_modules)
 		if (href_list[AM.mod_pick_name])
