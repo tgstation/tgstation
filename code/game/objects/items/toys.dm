@@ -948,3 +948,159 @@
 		spawn(20)
 			spamcheck = 0
 		return
+
+
+/obj/item/toy/gasha
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "greyshirt"
+	var/cooldown = 0
+
+/obj/item/toy/gasha/greyshirt
+	name = "toy greyshirt"
+	desc = "Now with kung-fu grip action!"
+
+/obj/item/toy/gasha/greytide
+	name = "toy greytide"
+	desc = "Includes small pieces, not for children under or above the age of 5."
+	icon_state = "greytide"
+
+/obj/item/toy/gasha/newcop
+	name = "toy nuke-op"
+	desc = "Mildly explosive."
+	icon_state = "newcop"
+
+/obj/item/toy/gasha/jani
+	name = "toy janitor"
+	desc = "cleanliness is next to godliness!"
+	icon_state = "jani"
+
+/obj/item/toy/gasha/miner
+	name = "toy miner"
+	desc = "Walk softly, and carry a ton of monsters."
+	icon_state = "miner"
+
+/obj/item/toy/gasha/clown
+	name = "toy clown"
+	desc = "HONK"
+	icon_state = "clown"
+
+/obj/item/toy/gasha/goliath
+	name = "toy goliath"
+	desc = "Now with fully articulated tentacles!"
+	icon_state = "goliath"
+
+/obj/item/toy/gasha/basilisk
+	name = "toy basilisk"
+	desc = "The eye has a strange shine to it."
+	icon_state = "basilisk"
+
+/obj/item/toy/gasha/mommi
+	name = "toy MoMMI"
+	desc = "*ping"
+	icon_state = "mommi"
+
+/obj/item/toy/gasha/guard
+	name = "toy guard spider"
+	desc = "Miniature giant spider, or just 'spider' for short."
+	icon_state = "guard"
+
+/obj/item/toy/gasha/hunter
+	name = "toy hunter spider"
+	desc = "As creepy looking as the real thing, but with 80% less chance of killing you."
+	icon_state = "hunter"
+
+/obj/item/toy/gasha/nurse
+	name = "toy nurse spider"
+	desc = "Not exactly what most people are hoping for when they hear 'nurse'."
+	icon_state = "nurse"
+
+/obj/item/toy/gasha/alium
+	name = "toy alien"
+	desc = "Has a great smile."
+	icon_state = "alium"
+
+/obj/item/toy/gasha/pomf
+	name = "toy chicken"
+	desc = "Cluck."
+	icon_state = "pomf"
+
+/obj/item/toy/gasha/engi
+	name = "toy engineer"
+	desc = "Probably better at setting up power than the real thing!"
+	icon_state = "engi"
+
+/obj/item/toy/gasha/atmos
+	name = "toy atmos-tech"
+	desc = "Can withstand high temperatures without melting!"
+	icon_state = "atmos"
+
+/obj/item/toy/gasha/sec
+	name = "toy security"
+	desc = "Won't search you on code green!"
+	icon_state = "sec"
+
+/obj/item/toy/gasha/plasman
+	name = "toy plasmaman"
+	desc = "All of the undending agony of the real thing, but in tiny plastic form!"
+	icon_state = "plasman"
+
+/obj/item/toy/gasha/shard
+	name = "toy supermatter shard"
+	desc = "Nowhere near as explosive as the real one."
+	icon_state = "shard"
+
+/obj/item/toy/gasha/corgitoy
+	name = "plush corgi"
+	desc = "Perfect for the pet owner on a tight budget!"
+	icon_state = "corgitoy"
+
+/obj/item/toy/gasha/borertoy
+	name = "Mini Borer"
+	desc = "Probably not something you should be playing with"
+	icon_state = "borertoy"
+
+/obj/item/toy/gasha/minislime
+	name = "Pygmy Grey Slime"
+	desc = "If you experience a tingling sensation in your hands, please stop playing with your pygmy slime immediately."
+	icon_state = "minislime"
+
+/obj/item/toy/gasha/AI/attack_self(mob/user as mob)
+	if(cooldown < world.time - 8)
+		playsound(user, 'sound/vox/doop.wav', 20, 1)
+		cooldown = world.time
+
+/obj/item/toy/gasha/AI/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(cooldown < world.time - 8)
+			playsound(user, 'sound/vox/doop.wav', 20, 1)
+			cooldown = world.time
+			return
+	..()
+
+/obj/item/toy/gasha/AI
+	name = "Mini AI"
+	desc = "Does not open doors."
+	icon_state = "AI"
+
+/obj/item/toy/gasha/AI/malf
+	name = "Mini Malf"
+	desc = "May be a bad influence for cyborgs"
+	icon_state = "malfAI"
+
+/obj/item/toy/gasha/minibutt/attack_self(mob/user as mob)
+	if(cooldown < world.time - 8)
+		playsound(user, 'sound/misc/fart.ogg', 20, 1)
+		cooldown = world.time
+
+/obj/item/toy/gasha/minibutt/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(cooldown < world.time - 8)
+			playsound(user, 'sound/misc/fart.ogg', 20, 1)
+			cooldown = world.time
+			return
+	..()
+
+/obj/item/toy/gasha/minibutt
+	name = "mini-buttbot"
+	desc = "Made from real gnome butts!"
+	icon_state = "minibutt"
