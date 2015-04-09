@@ -380,18 +380,18 @@
 	if(A_bosses.len || A_gangsters.len)
 		if(winner)
 			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [num_ganga] members!</b>"
-		world << "<br><font size=2><b>The [gang_name("A")] Gang Boss was:</b></font>"
+		world << "<br>The [gang_name("A")] Gang Boss was:"
 		gang_membership_report(A_bosses)
-		world << "<br><font size=2><b>The [gang_name("A")] Gangsters were:</b></font>"
+		world << "<br>The [gang_name("A")] Gangsters were:"
 		gang_membership_report(A_gangsters)
 		world << "<br>"
 
 	if(B_bosses.len || B_gangsters.len)
 		if(winner)
 			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [num_gangb] members!</b>"
-		world << "<br><font size=2><b>The [gang_name("B")] Gang Boss was:</b></font>"
+		world << "<br>The [gang_name("B")] Gang Boss was:"
 		gang_membership_report(B_bosses)
-		world << "<br><font size=2><b>The [gang_name("B")] Gangsters were:</b></font>"
+		world << "<br>The [gang_name("B")] Gangsters were:"
 		gang_membership_report(B_gangsters)
 		world << "<br>"
 
