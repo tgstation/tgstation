@@ -234,7 +234,11 @@
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
 	revolutionaries += rev_mind
-	rev_mind.current.Paralyse(5)
+	if(iscarbon(rev_mind.current))
+		var/mob/living/carbon/carbon_mob = rev_mind.current
+		carbon_mob.silent = max(carbon_mob.silent, 5)
+		carbon_mob.flash_eyes(1, 1)
+	rev_mind.current.Stun(5)
 	rev_mind.current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
 	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"
 	rev_mind.special_role = "Revolutionary"
