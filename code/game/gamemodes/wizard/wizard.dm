@@ -294,7 +294,7 @@
 //To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(var/mob/M as mob)
 	for(var/spell/spell_to_remove in src.spell_list)
-		del(spell_to_remove)
+		remove_spell(spell_to_remove)
 
 // Does this clothing slot count as wizard garb? (Combines a few checks)
 /proc/is_wiz_garb(var/obj/item/clothing/C)
