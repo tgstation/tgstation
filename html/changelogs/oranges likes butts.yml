@@ -1,6 +1,0 @@
-author: optimumtact
-
-delete-after: True
-
-changes: 
-  - bugfix: "Mimes can't use megaphone without breaking their vow anymore."
