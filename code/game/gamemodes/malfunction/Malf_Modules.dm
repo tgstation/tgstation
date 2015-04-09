@@ -48,7 +48,7 @@
 	set category = "Malfunction"
 	set name = "Upgrade Turrets"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
@@ -71,7 +71,7 @@
 	set category = "Malfunction"
 	set name = "Initiate Hostile Lockdown"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	if(malf_cooldown)
@@ -108,7 +108,7 @@
 	set category = "Malfunction"
 	set name = "Disable Lockdown"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 	if(malf_cooldown)
 		return
@@ -144,7 +144,7 @@
 	set category = "Malfunction"
 	set name = "Disable RCDs"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	for(var/datum/AI_Module/large/disable_rcd/rcdmod in current_modules)
@@ -171,7 +171,7 @@
 	set name = "Override Thermal Sensors"
 	set category = "Malfunction"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	for(var/obj/machinery/firealarm/F in world)
@@ -195,7 +195,7 @@
 	set name = "Disable Air Alarm Safeties"
 	set category = "Malfunction"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	for(var/obj/machinery/alarm/A in world)
@@ -220,7 +220,7 @@
 	set name = "Overload Machine"
 	set category = "Malfunction"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	if (istype(M, /obj/machinery))
@@ -250,7 +250,7 @@
 	set name = "Override Machine"
 	set category = "Malfunction"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	if (istype(M, /obj/machinery))
@@ -291,7 +291,7 @@
 		src << "Out of uses."
 		return
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	var/sure = alert(src, "Make sure the room it is in is big enough, there is camera vision and that there is a 1x3 area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
@@ -343,7 +343,7 @@
 	set category = "Malfunction"
 	set name = "Blackout"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	for(var/datum/AI_Module/small/blackout/blackout in current_modules)
@@ -369,7 +369,7 @@
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	if (istype (C, /obj/machinery/camera))
@@ -397,7 +397,7 @@
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
 
-	if(!checkStat())
+	if(!canUseTopic())
 		return
 
 	if(istype(C))
@@ -431,12 +431,6 @@
 						src << "<span class='notice'>This camera is already upgraded!</span>"
 			else
 				src << "<span class='notice'>Out of uses.</span>"
-
-/mob/living/silicon/ai/proc/checkStat()
-	if(src.stat == DEAD)
-		src <<"You cannot use your powers while you are dead!"
-		return null
-	return 1
 
 /datum/module_picker
 	var/temp = null
