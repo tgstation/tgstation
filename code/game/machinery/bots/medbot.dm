@@ -40,7 +40,6 @@
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 	bot_type = MED_BOT
-	bot_filter = RADIO_MEDBOT
 
 /obj/machinery/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
@@ -104,7 +103,6 @@
 		else
 			botcard.access = botcard_access
 		prev_access = botcard.access
-		add_to_beacons(bot_filter)
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()

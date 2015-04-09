@@ -48,8 +48,6 @@
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/control_freq = 1447		// bot control frequency
 
-	var/bot_filter 				// The radio filter the bot uses to identify itself on the network.
-
 	var/bot_type = 0 //The type of bot it is, for radio control.
 	#define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
 	#define MULE_BOT			2	// MULEbots
@@ -103,19 +101,19 @@
 	set_custom_texts()
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
+	spawn(5)
+		add_to_beacons()
 
 /obj/machinery/bot/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,beacon_freq)
-		if(bot_filter)
-			radio_controller.remove_object(src,control_freq)
+		radio_controller.remove_object(src,control_freq)
 	..()
 
-/obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.
+/obj/machinery/bot/proc/add_to_beacons() //Master radio control for bots. Must be placed in the bot's local New() to support map spawned bots.
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-		if(bot_filter)
-			radio_controller.add_object(src, control_freq, filter = bot_filter)
+		radio_controller.add_object(src, control_freq)
 
 
 /obj/machinery/bot/proc/explode()
@@ -703,8 +701,6 @@ obj/machinery/bot/proc/start_patrol()
 
 // send a radio signal with multiple data key/values
 /obj/machinery/bot/proc/post_signal_multiple(var/freq, var/list/keyval)
-	if(!z || z != 1) //Bot control will only work on station.
-		return
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
 	if(!frequency) return
@@ -718,8 +714,6 @@ obj/machinery/bot/proc/start_patrol()
 //	world << "sent [key],[keyval[key]] on [freq]"
 	if(signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-	else if(signal.data["type"] == bot_type)
-		frequency.post_signal(src, signal, filter = bot_filter)
 	else
 		frequency.post_signal(src, signal)
 
@@ -731,7 +725,8 @@ obj/machinery/bot/proc/start_patrol()
 	"type" = bot_type,
 	"name" = name,
 	"loca" = get_area(src),	// area
-	"mode" = mode
+	"mode" = mode,
+	"sect" = z	// z-level, or "sector"
 	)
 	post_signal_multiple(control_freq, kv)
 

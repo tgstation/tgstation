@@ -23,7 +23,6 @@ var/global/mulebot_count = 0
 	beacon_freq = 1400
 	control_freq = 1447
 	bot_type = MULE_BOT
-	bot_filter = RADIO_MULEBOT
 	blood_DNA = list()
 
 	suffix = ""
@@ -71,8 +70,6 @@ var/global/mulebot_count = 0
 	cell.maxcharge = 2000
 
 	spawn(5)	// must wait for map loading to finish
-		add_to_beacons(bot_filter)
-
 		mulebot_count += 1
 		if(!suffix)
 			suffix = "#[mulebot_count]"
@@ -883,8 +880,6 @@ obj/machinery/bot/mulebot/bot_reset()
 		//world << "sent [key],[keyval[key]] on [freq]"
 	if (signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-	else if (signal.data["type"] == MULE_BOT)
-		frequency.post_signal(src, signal, filter = RADIO_MULEBOT)
 	else
 		frequency.post_signal(src, signal)
 

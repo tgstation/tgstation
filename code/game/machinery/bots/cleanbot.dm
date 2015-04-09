@@ -40,7 +40,6 @@
 	var/next_dest_loc
 	radio_frequency = SERV_FREQ //Service
 	bot_type = CLEAN_BOT
-	bot_filter = RADIO_CLEANBOT
 
 /obj/machinery/bot/cleanbot/New()
 	..()
@@ -50,9 +49,6 @@
 	var/datum/job/janitor/J = new/datum/job/janitor
 	botcard.access = J.get_access()
 	prev_access = botcard.access
-
-	spawn(5)
-		add_to_beacons(bot_filter)
 
 /obj/machinery/bot/cleanbot/turn_on()
 	..()
