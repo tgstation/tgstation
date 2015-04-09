@@ -220,7 +220,7 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/gang/check_finished()
-	if(finished && !config.continuous_round_gang) //Check for Gang Boss death
+	if(finished && !config.continuous["gang"]) //Check for Gang Boss death
 		return 1
 	return ..() //Check for evacuation/nuke
 

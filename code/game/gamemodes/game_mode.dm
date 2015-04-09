@@ -150,9 +150,12 @@
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you feel that the round should not continue, <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or think the round should end <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
-	spawn(rand(1800,4200)) //somewhere between 3 and 7 minutes from now
+	spawn(rand(1200,3000)) //somewhere between 2 and 5 minutes from now
+		if(!config.midround_antag[ticker.mode.config_tag])
+			round_converted = 0
+			return 1
 		for(var/mob/living/carbon/human/H in antag_canadates)
 			replacementmode.make_antag_chance(H)
 		round_converted = 2
