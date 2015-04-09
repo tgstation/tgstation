@@ -2,10 +2,9 @@
 	name = "closet"
 	desc = "It's a basic storage unit."
 	icon = 'icons/obj/closet.dmi'
-	icon_state = "closed"
+	icon_state = "generic"
 	density = 1
-	var/icon_closed = "closed"
-	var/icon_opened = "open"
+	var/icon_door = null
 	var/opened = 0
 	var/welded = 0
 	var/locked = 0
@@ -14,15 +13,31 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
-	var/max_mob_size = 1 //Biggest mob_size accepted by the container
+	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
+
+/obj/structure/closet/New()
+	..()
+	update_icon()
 
 /obj/structure/closet/initialize()
 	..()
 	if(!opened)		// if closed, any item at the crate's loc is put in the contents
 		take_contents()
+
+/obj/structure/closet/update_icon()
+	overlays.Cut()
+	if(!opened)
+		if(icon_door)
+			overlays += "[icon_door]_door"
+		else
+			overlays += "[icon_state]_door"
+		if(welded)
+			overlays += "welded"
+	else
+		overlays += "[icon_state]_open"
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -68,13 +83,13 @@
 
 	src.dump_contents()
 
-	src.icon_state = src.icon_opened
 	src.opened = 1
 	if(istype(src, /obj/structure/closet/body_bag))
 		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
 	else
 		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	density = 0
+	update_icon()
 	return 1
 
 /obj/structure/closet/proc/insert(var/atom/movable/AM)
@@ -86,7 +101,7 @@
 		var/mob/living/L = AM
 		if(L.buckled || L.mob_size > max_mob_size) //buckled mobs and mobs too big for the container don't get inside closets.
 			return 0
-		if(L.mob_size > 0)
+		if(L.mob_size > MOB_SIZE_TINY) //decently sized mobs take more space than objects.
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)
 				mobs_stored++
@@ -112,13 +127,13 @@
 
 	take_contents()
 
-	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))
 		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
 	else
 		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	density = 1
+	update_icon()
 	return 1
 
 /obj/structure/closet/proc/toggle()
@@ -155,7 +170,7 @@
 
 
 /obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(src.opened)
+	if(opened)
 		if(istype(W, /obj/item/weapon/grab))
 			if(src.large)
 				var/obj/item/weapon/grab/G = W
@@ -173,13 +188,13 @@
 				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 				if(do_after(user,40,5,1))
-					if( !src.opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
+					if( !opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 						return
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					new /obj/item/stack/sheet/metal(src.loc)
 					visible_message("<span class='notice'>[user] has cut \the [src] apart with \the [WT].</span>", "You hear welding.")
 					qdel(src)
-			return
+				return
 
 		if(isrobot(user))
 			return
@@ -187,25 +202,25 @@
 		if(user.drop_item())
 			W.Move(loc)
 
-	else if(istype(W, /obj/item/stack/packageWrap))
-		return
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
-			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
-			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-			if(do_after(user,40,5,1))
-				if(src.opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
-					return
-				playsound(loc, 'sound/items/welder.ogg', 50, 1)
-				welded = !welded
-				user << "<span class='notice'>You [welded ? "welded [src] shut":"unwelded [src]"].</span>"
-				update_icon()
-				user.visible_message("<span class='warning'>[user.name] has [welded ? "welded [src] shut":"unwelded [src]"].</span>")
-		return
-	else if(!place(user, W))
-		src.attack_hand(user)
-	return
+	else
+		if(istype(W, /obj/item/stack/packageWrap))
+			return
+		if(istype(W, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.remove_fuel(0,user))
+				user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
+				playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+				if(do_after(user,40,5,1))
+					if(opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
+						return
+					playsound(loc, 'sound/items/welder.ogg', 50, 1)
+					welded = !welded
+					user << "<span class='notice'>You [welded ? "welded [src] shut":"unwelded [src]"].</span>"
+					update_icon()
+					user.visible_message("<span class='warning'>[user.name] has [welded ? "welded [src] shut":"unwelded [src]"].</span>")
+				return
+		if(!place(user, W))
+			src.attack_hand(user)
 
 /obj/structure/closet/proc/place(var/mob/user, var/obj/item/I)
 	return 0
@@ -274,15 +289,6 @@
 		src.attack_hand(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
-
-/obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
-	overlays.Cut()
-	if(!opened)
-		icon_state = icon_closed
-		if(welded)
-			overlays += "welded"
-	else
-		icon_state = icon_opened
 
 // Objects that try to exit a locker by stepping were doing so successfully,
 // and due to an oversight in turf/Enter() were going through walls.  That

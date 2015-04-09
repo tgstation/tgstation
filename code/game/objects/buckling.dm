@@ -34,7 +34,7 @@
 	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || (buckle_requires_restraints && !M.restrained()))
 		return 0
 
-	if (istype(M, /mob/living/carbon/slime) || istype(M, /mob/living/simple_animal/slime))
+	if (isslime(M))
 		return 0
 
 	M.buckled = src
@@ -42,6 +42,7 @@
 	buckled_mob = M
 	M.update_canmove()
 	post_buckle_mob(M)
+	M.throw_alert("buckled", new_master = src)
 	return 1
 
 /obj/proc/unbuckle_mob()
@@ -50,6 +51,7 @@
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_canmove()
+		buckled_mob.clear_alert("buckled")
 		buckled_mob = null
 
 		post_buckle_mob(.)

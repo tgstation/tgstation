@@ -85,11 +85,11 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/hologram/holopad/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/machinery/hologram/holopad/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(speaker && masters.len && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				raw_message = master.lang_treat(speaker, message_langs, raw_message)
+				raw_message = master.lang_treat(speaker, message_langs, raw_message, spans)
 				var/name_used = speaker.GetVoice()
 				var/rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
 				master.show_message(rendered, 2)

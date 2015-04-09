@@ -7,7 +7,6 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
-	cancable = 1
 
 /turf/unsimulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
@@ -18,3 +17,11 @@
 
 /turf/unsimulated/floor/attack_paw(user as mob)
 	return src.attack_hand(user)
+
+
+/turf/unsimulated/floor/grass
+	icon_state = "grass1"
+
+/turf/unsimulated/floor/grass/New()
+	..()
+	icon_state = "grass[rand(1,4)]"

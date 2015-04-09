@@ -21,9 +21,9 @@
 	icon_state = "wrench"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5.0
-	throwforce = 7.0
-	w_class = 2.0
+	force = 5
+	throwforce = 7
+	w_class = 2
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
@@ -43,9 +43,9 @@
 	icon_state = "screwdriver"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5.0
-	w_class = 1.0
-	throwforce = 5.0
+	force = 5
+	w_class = 1
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	g_amt = 0
@@ -58,8 +58,11 @@
 						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 	return(BRUTELOSS)
 
-/obj/item/weapon/screwdriver/New()
-	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
+/obj/item/weapon/screwdriver/New(loc, var/param_color = null)
+	if(!param_color)
+		param_color = pick("red","blue","purple","brown","green","cyan","yellow")
+
+	switch(param_color)
 		if ("red")
 			icon_state = "screwdriver2"
 			item_state = "screwdriver"
@@ -113,8 +116,9 @@
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/Wirecutter.ogg'
 
-/obj/item/weapon/wirecutters/New()
-	if(prob(50))
+/obj/item/weapon/wirecutters/New(loc, var/param_color = null)
+	..()
+	if((!param_color && prob(50)) || param_color == "yellow")
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
 
@@ -157,6 +161,7 @@
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
+	var/change_icons = 1
 
 /obj/item/weapon/weldingtool/New()
 	..()
@@ -166,18 +171,21 @@
 	return
 
 /obj/item/weapon/weldingtool/proc/update_torch()
+	overlays.Cut()
 	if(welding)
-		src.overlays = 0
-		overlays += "["-won"]"
+		overlays += "[initial(icon_state)]-on"
 		item_state = "welder1"
 	else
 		item_state = "welder"
 
 /obj/item/weapon/weldingtool/update_icon()
-	src.overlays = 0
-	var/ratio = get_fuel() / max_fuel
-	ratio = Ceiling(ratio*4) * 25
-	icon_state = "[initial(icon_state)][ratio]"
+	if(change_icons)
+		var/ratio = get_fuel() / max_fuel
+		ratio = Ceiling(ratio*4) * 25
+		if(ratio == 100)
+			icon_state = initial(icon_state)
+		else
+			icon_state = "[initial(icon_state)][ratio]"
 	update_torch()
 	return
 
@@ -269,15 +277,15 @@
 	return reagents.get_reagent_amount("fuel")
 
 
-//Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
-/obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/M = null)
+//Removes fuel from the welding tool. If a mob is passed, it will try to flash the mob's eyes. This should probably be renamed to use()
+/obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/living/M = null)
 	if(!welding || !check_fuel())
 		return 0
 	if(get_fuel() >= amount)
 		reagents.remove_reagent("fuel", amount)
 		check_fuel()
 		if(M)
-			eyecheck(M)
+			M.flash_eyes(2)
 		return 1
 	else
 		if(M)
@@ -308,6 +316,7 @@
 //Toggles the welder off and on
 /obj/item/weapon/weldingtool/proc/toggle(mob/user, message = 0)
 	if(!status)
+		user << "<span class='notice'>[src] can't be turned on while unsecured.</span>"
 		return
 	welding = !welding
 	if(welding)
@@ -316,7 +325,7 @@
 			force = 15
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
-			icon_state = "welder1"
+			update_icon()
 			SSobj.processing |= src
 		else
 			user << "<span class='notice'>You need more fuel.</span>"
@@ -329,45 +338,7 @@
 		force = 3
 		damtype = "brute"
 		hitsound = "swing_hit"
-		icon_state = "welder"
-
-
-
-//Decides whether or not to damage a player's eyes based on what they're wearing as protection
-//Note: This should probably be moved to mob
-/obj/item/weapon/weldingtool/proc/eyecheck(mob/user)
-	if(!iscarbon(user))
-		return 1
-	var/mob/living/carbon/C = user
-	var/safety = C.eyecheck()
-
-	switch(safety)
-		if(1)
-			usr << "<span class='warning'>Your eyes sting a little.</span>"
-			user.eye_stat += rand(1, 2)
-			if(user.eye_stat > 12)
-				user.eye_blurry += rand(3, 6)
-		if(0)
-			usr << "<span class='warning'>Your eyes burn.</span>"
-			user.eye_stat += rand(2, 4)
-			if(user.eye_stat > 10)
-				user.eye_blurry += rand(4, 10)
-		if(-1)
-			usr << "<span class='warning'>Your thermals intensify the welder's glow. Your eyes itch and burn severely!</span>"
-			user.eye_blurry += rand(12, 20)
-			user.eye_stat += rand(12, 16)
-	if(user.eye_stat > 10 && safety < 2)
-		user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
-	if (prob(user.eye_stat - 25 + 1))
-		user << "<span class='warning'>You go blind!</span>"
-		user.disabilities |= BLIND
-	else if(prob(user.eye_stat - 15 + 1))
-		user << "<span class='warning'>You go blind!</span>"
-		user.eye_blind = 5
-		user.eye_blurry = 5
-		user.disabilities |= NEARSIGHT
-		spawn(100)
-			user.disabilities &= ~NEARSIGHT
+		update_icon()
 
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)
@@ -397,18 +368,28 @@
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
+	icon_state = "indwelder"
 	max_fuel = 40
-	m_amt = 70
 	g_amt = 60
 	origin_tech = "engineering=2"
 
 /obj/item/weapon/weldingtool/largetank/cyborg
 
-/obj/item/weapon/weldingtool/largetank/cyborg/flamethrower_screwdriver()
+/obj/item/weapon/weldingtool/largetank/flamethrower_screwdriver()
 	return
 
-/obj/item/weapon/weldingtool/largetank/cyborg/flamethrower_rods()
+
+/obj/item/weapon/weldingtool/mini
+	name = "emergency welding tool"
+	icon_state = "miniwelder"
+	max_fuel = 10
+	m_amt = 30
+	g_amt = 10
+	change_icons = 0
+
+/obj/item/weapon/weldingtool/mini/flamethrower_screwdriver()
 	return
+
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded welding tool"
@@ -462,9 +443,9 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/crowbar/red
-	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
+	force = 8
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"

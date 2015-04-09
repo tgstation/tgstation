@@ -439,6 +439,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	attack_verb = null
 	var/lit = 0
 
+/obj/item/weapon/lighter/grayscale
+	name = "cheap lighter"
+	desc ="A cheap-as-free lighter."
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "lighter-off"
+	item_state = "lighter-off"
+	icon_on = "lighter-on"
+	icon_off = "lighter-off"
+
+/obj/item/weapon/lighter/grayscale/New()
+	var/icon/overlay = new /icon('icons/obj/cigarettes.dmi',"lighter-overlay")
+	overlay.ColorTone(color2hex(randomColor(1)))
+	overlays += overlay
+
 /obj/item/weapon/lighter/zippo
 	name = "\improper Zippo lighter"
 	desc = "The zippo."
@@ -446,6 +460,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "zippo"
 	icon_on = "zippoon"
 	icon_off = "zippo"
+
+/obj/item/weapon/lighter/update_icon()
+	icon_state = lit ? icon_on : icon_off
 
 /obj/item/weapon/lighter/random
 	New()
@@ -458,8 +475,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(user.r_hand == src || user.l_hand == src)
 		if(!lit)
 			lit = 1
-			icon_state = icon_on
-			item_state = icon_on
+			update_icon()
 			force = 5
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
@@ -478,8 +494,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			SSobj.processing |= src
 		else
 			lit = 0
-			icon_state = icon_off
-			item_state = icon_off
+			update_icon()
 			hitsound = "swing_hit"
 			force = 0
 			attack_verb = null //human_defense.dm takes care of it

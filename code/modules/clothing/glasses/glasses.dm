@@ -4,7 +4,7 @@
 	icon_state = "meson"
 	item_state = "meson"
 	origin_tech = "magnets=2;engineering=2"
-	darkness_view = 1
+	darkness_view = 2
 	vision_flags = SEE_TURFS
 	invis_view = SEE_INVISIBLE_MINIMUM
 
@@ -14,6 +14,17 @@
 	icon_state = "nvgmeson"
 	item_state = "nvgmeson"
 	darkness_view = 8
+
+/obj/item/clothing/glasses/meson/gar
+	name = "gar mesons"
+	icon_state = "garm"
+	item_state = "garm"
+	desc = "Do the impossible, see the invisible!"
+	force = 10
+	throwforce = 10
+	throw_speed = 4
+	attack_verb = list("sliced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
@@ -78,6 +89,44 @@
 	flash_protect = 1
 	tint = 1
 
+/obj/item/clothing/glasses/sunglasses/garb
+	desc = "Go beyond impossible and kick reason to the curb!"
+	name = "black gar glasses"
+	icon_state = "garb"
+	item_state = "garb"
+	force = 10
+	throwforce = 10
+	throw_speed = 4
+	attack_verb = list("sliced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/clothing/glasses/sunglasses/garb/supergarb
+	desc = "Believe in us humans."
+	name = "black giga gar glasses"
+	icon_state = "supergarb"
+	item_state = "garb"
+	force = 12
+	throwforce = 12
+
+/obj/item/clothing/glasses/sunglasses/gar
+	desc = "Just who the hell do you think I am?!"
+	name = "gar glasses"
+	icon_state = "gar"
+	item_state = "gar"
+	force = 10
+	throwforce = 10
+	throw_speed = 4
+	attack_verb = list("sliced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/clothing/glasses/sunglasses/gar/supergar
+	desc = "We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!"
+	name = "giga gar glasses"
+	icon_state = "supergar"
+	item_state = "gar"
+	force = 12
+	throwforce = 12
+
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
 	desc = "Protects the eyes from welders; approved by the mad scientist association."
@@ -124,7 +173,7 @@
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
 	invis_view = 2
-	flash_protect = -1
+	flash_protect = 0
 
 	emp_act(severity)
 		if(istype(src.loc, /mob/living/carbon/human))
@@ -143,6 +192,7 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
 	origin_tech = "magnets=3;syndicate=4"
+	flash_protect = -1
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "Thermoncle"
@@ -155,3 +205,28 @@
 	desc = "An eyepatch with built-in thermal optics."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
+
+/obj/item/clothing/glasses/cold
+	name = "cold goggles"
+	desc = "A pair of goggles meant for low temperatures."
+	icon_state = "cold"
+	item_state = "cold"
+
+obj/item/clothing/glasses/heat
+	name = "heat goggles"
+	desc = "A pair of goggles meant for high temperatures."
+	icon_state = "heat"
+	item_state = "heat"
+
+obj/item/clothing/glasses/orange
+	name = "orange glasses"
+	desc = "A sweet pair of orange shades."
+	icon_state = "orangeglasses"
+	item_state = "orangeglasses"
+
+obj/item/clothing/glasses/red
+	name = "red glasses"
+	desc = "A sweet pair of red shades."
+	icon_state = "redglasses"
+	item_state = "redglasses"
+

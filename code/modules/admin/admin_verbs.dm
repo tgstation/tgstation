@@ -20,7 +20,6 @@ var/list/admin_verbs_default = list(
 	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_admin = list(
-	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
@@ -83,7 +82,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
-	/client/proc/forceEvent
+	/client/proc/forceEvent,
+	/client/proc/bluespace_artillery
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -118,7 +118,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/callproc_datum,
 	/client/proc/SDQL2_query,
 	/client/proc/test_movable_UI,
-	/client/proc/test_snap_UI
+	/client/proc/test_snap_UI,
+	/client/proc/debugNatureMapGenerator
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -318,22 +319,13 @@ var/list/admin_verbs_hideable = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "<span class='userdanger'>Invisimin off. Invisibility reset.</span>"
+			mob << "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>"
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
 			mob << "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"
 
-
-/client/proc/player_panel()
-	set name = "Player Panel"
-	set category = "Admin"
-	if(holder)
-		holder.player_panel_old()
-	feedback_add_details("admin_verb","PP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
 /client/proc/player_panel_new()
-	set name = "Player Panel New"
+	set name = "Player Panel"
 	set category = "Admin"
 	if(holder)
 		holder.player_panel_new()

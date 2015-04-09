@@ -5,14 +5,15 @@
 /mob/living/carbon/alien
 	name = "alien"
 	voice_name = "alien"
-	say_message = "hisses"
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2
 	languages = ALIEN
-	nightvision = 1
+	verb_say = "hisses"
+	lying_pixel_offset = 0
+	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
 
@@ -50,7 +51,7 @@
 /mob/living/carbon/alien/proc/getPlasma()
 	return storedPlasma
 
-/mob/living/carbon/alien/eyecheck()
+/mob/living/carbon/alien/check_eye_prot()
 	return 2
 
 /mob/living/carbon/alien/getToxLoss()
@@ -90,22 +91,19 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360.15)
 		//Body temperature is too hot.
-		fire_alert = max(fire_alert, 1)
+		throw_alert("alien_fire")
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
-				fire_alert = max(fire_alert, 2)
 			if(400 to 460)
 				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-				fire_alert = max(fire_alert, 2)
 			if(460 to INFINITY)
 				if(on_fire)
 					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
-					fire_alert = max(fire_alert, 2)
 				else
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-					fire_alert = max(fire_alert, 2)
-	return
+	else
+		clear_alert("alien_fire")
 
 
 /mob/living/carbon/alien/ex_act(severity, target)
@@ -161,10 +159,6 @@
 /mob/living/carbon/alien/getTrail()
 	return "xltrails"
 
-/mob/living/carbon/alien/cuff_break(obj/item/I, mob/living/carbon/C)
-	playsound(C, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when breaking free.
-	..()
-
 /mob/living/carbon/alien/verb/nightvisiontoggle()
 	set name = "Toggle Night Vision"
 	set category = "Alien"
@@ -188,7 +182,7 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/obj/item/alien_embryo/A = locate() in C
+				var/obj/item/body_egg/alien_embryo/A = locate() in C
 				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 				client.images += I
 	return

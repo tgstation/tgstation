@@ -11,7 +11,6 @@
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
-	var/can_change_color = 1
 
 
 /obj/effect/blob/New(loc)
@@ -43,10 +42,8 @@
 
 /obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
-	var/damage = Clamp(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
-	if(damage)
-		health -= damage
-		update_icon()
+	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
+	take_damage(damage, BURN)
 
 /obj/effect/blob/proc/Life()
 	return
@@ -92,8 +89,8 @@
 		if(!B)
 			expand(T,1,a_color)//No blob here so try and expand
 			return
-		if(B.can_change_color)
-			B.color = a_color
+		B.adjustcolors(a_color)
+
 		B.Pulse((pulse+1),get_dir(src.loc,T), a_color)
 		return
 	return
@@ -133,21 +130,12 @@
 
 /obj/effect/blob/ex_act(severity, target)
 	..()
-	var/damage = 150
-	health -= ((damage/brute_resist) - (severity * 5))
-	update_icon()
-	return
-
+	var/damage = 150 - 20 * severity
+	take_damage(damage, BRUTE)
 
 /obj/effect/blob/bullet_act(var/obj/item/projectile/Proj)
 	..()
-	switch(Proj.damage_type)
-	 if(BRUTE)
-		 health -= (Proj.damage/brute_resist)
-	 if(BURN)
-		 health -= (Proj.damage/fire_resist)
-
-	update_icon()
+	take_damage(Proj.damage, Proj.damage_type)
 	return 0
 
 /obj/effect/blob/Crossed(var/mob/living/L)
@@ -160,18 +148,9 @@
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [W]!</span>")
-	var/damage = 0
-	switch(W.damtype)
-		if("fire")
-			damage = (W.force / max(src.fire_resist,1))
-			if(istype(W, /obj/item/weapon/weldingtool))
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		if("brute")
-			damage = (W.force / max(src.brute_resist,1))
-
-	health -= damage
-	update_icon()
-	return
+	if(W.damtype == BURN)
+		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+	take_damage(W.force, W.damtype)
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M as mob)
 	M.changeNext_move(CLICK_CD_MELEE)
@@ -179,12 +158,28 @@
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>\The [M] has attacked the [src.name]!</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	take_damage(damage, BRUTE)
+	return
+
+/obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+	visible_message("<span class='danger'>[M] has slashed the [src.name]!</span>")
+	var/damage = rand(15, 30)
+	take_damage(damage, BRUTE)
+	return
+
+/obj/effect/blob/proc/take_damage(damage, damage_type)
 	if(!damage) // Avoid divide by zero errors
 		return
-	damage /= max(src.brute_resist, 1)
+	switch(damage_type)
+		if(BRUTE)
+			damage /= max(brute_resist, 1)
+		if(BURN)
+			damage /= max(fire_resist, 1)
 	health -= damage
 	update_icon()
-	return
 
 /obj/effect/blob/proc/change_to(var/type)
 	if(!ispath(type))
@@ -197,6 +192,8 @@
 	qdel(src)
 
 /obj/effect/blob/proc/adjustcolors(var/a_color)
+	if(a_color)
+		color = a_color
 	return
 
 /obj/effect/blob/normal

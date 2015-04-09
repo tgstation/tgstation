@@ -19,11 +19,11 @@
 	var/input
 	var/output
 	var/time = 40
-	proc/process(loc, what)
-		if (src.output && loc)
-			new src.output(loc)
-		if (what)
-			qdel(what) // Note to self: Make this safer
+/datum/food_processor_process/proc/process_food(loc, what)
+	if (src.output && loc)
+		new src.output(loc)
+	if (what)
+		qdel(what) // Note to self: Make this safer
 
 	/* objs */
 /datum/food_processor_process/meat
@@ -53,7 +53,7 @@
 
 
 /datum/food_processor_process/mob/slime/process(loc, what)
-	var/mob/living/carbon/slime/S = what
+	var/mob/living/simple_animal/slime/S = what
 	var/C = S.cores
 	if(S.stat != DEAD)
 		S.loc = loc
@@ -64,7 +64,7 @@
 		feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
 	..()
 
-/datum/food_processor_process/mob/slime/input = /mob/living/carbon/slime
+/datum/food_processor_process/mob/slime/input = /mob/living/simple_animal/slime
 /datum/food_processor_process/mob/slime/output = null
 
 /datum/food_processor_process/mob/monkey/process(loc, what)

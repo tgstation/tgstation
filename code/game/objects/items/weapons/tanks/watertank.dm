@@ -2,7 +2,7 @@
 /obj/item/weapon/watertank
 	name = "backpack water tank"
 	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
 	w_class = 4.0
@@ -106,7 +106,7 @@
 /obj/item/weapon/reagent_containers/spray/mister
 	name = "water mister"
 	desc = "A mister nozzle attached to a water tank."
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
 	w_class = 4.0
@@ -165,7 +165,7 @@
 /obj/item/weapon/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"
 	desc = "A janitorial spray nozzle attached to a watertank, designed to clean up large messes."
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
 	amount_per_transfer_from_this = 5
@@ -203,7 +203,7 @@
 /obj/item/weapon/extinguisher/mini/nozzle
 	name = "extinguisher nozzle"
 	desc = "A heavy duty nozzle attached to a firefighter's backpack tank."
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "atmos_nozzle"
 	item_state = "nozzleatmos"
 	safety = 0
@@ -290,7 +290,7 @@
 		if(!Adj|| !istype(target, /turf))
 			return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/effect/foam/metal/F = new /obj/effect/effect/foam/metal(get_turf(target))
+			var/obj/effect/effect/foam/metal/F = PoolOrNew(/obj/effect/effect/foam/metal, get_turf(target))
 			F.amount = 0
 			metal_synthesis_cooldown++
 			spawn(100)
@@ -309,7 +309,7 @@
 	pass_flags = PASSTABLE
 
 /obj/effect/nanofrost_container/proc/Smoke()
-	new /obj/effect/effect/freezing_smoke(src.loc, 6, 1)
+	PoolOrNew(/obj/effect/effect/freezing_smoke, list(loc, 6, 1))
 	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)
 	F.color = "#B2FFFF"
 	F.name = "nanofrost residue"
@@ -332,7 +332,7 @@
 /obj/effect/effect/freezing_smoke/New(loc, var/amt, var/blast)
 	..()
 	spawn(100+rand(10,30))
-		delete()
+		qdel(src)
 	amount = amt
 	if(amount)
 		var/datum/effect/effect/system/freezing_smoke_spread/F = new /datum/effect/effect/system/freezing_smoke_spread
@@ -377,7 +377,7 @@
 	var/i = 0
 	for(i=0, i<number, i++)
 		spawn(0)
-			var/obj/effect/effect/freezing_smoke/smoke = new /obj/effect/effect/freezing_smoke(location, 0, 0)
+			var/obj/effect/effect/freezing_smoke/smoke = PoolOrNew(/obj/effect/effect/freezing_smoke, list(location, 0, 0))
 			smoke.amount = 0
 			var/direction = pick(alldirs)
 			for(i=0, i<rand(1,3), i++)
@@ -386,7 +386,7 @@
 			spawn(150+rand(10,30))
 				if(smoke)
 					fadeOut(smoke)
-					smoke.delete()
+					qdel(smoke)
 
 #undef EXTINGUISHER
 #undef NANOFROST

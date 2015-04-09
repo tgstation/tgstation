@@ -353,8 +353,10 @@ client/proc/one_click_antag()
 		//Pick the lucky players
 		var/numagents = min(5,candidates.len) //How many commandos to spawn
 		var/list/spawnpoints = deathsquadspawn
-		while(numagents && spawnpoints.len && candidates.len)
-			var/spawnloc = spawnpoints[1]
+		while(numagents && candidates.len)
+			if (numagents > spawnpoints.len)
+				continue // This guy's unlucky, not enough spawn points, we skip him.
+			var/spawnloc = spawnpoints[numagents]
 			var/mob/dead/observer/chosen_candidate = pick(candidates)
 			candidates -= chosen_candidate
 			if(!chosen_candidate.key)
@@ -396,10 +398,12 @@ client/proc/one_click_antag()
 			if(numagents == 1)
 				message_admins("The deathsquad has spawned with the mission: [mission].")
 			log_game("[key_name(Commando)] has been selected as a Death Commando")
-			spawnpoints -= spawnloc
 			numagents--
 
-		return 1
+		if (numagents == candidates.len)
+			return 0 // No one got spawned!
+		else
+			return 1
 
 	return
 
@@ -418,7 +422,7 @@ client/proc/one_click_antag()
 
 	for(var/mob/living/carbon/human/applicant in player_list)
 		if(applicant.client.prefs.be_special & BE_GANG)
-			if(applicant.stat == CONSCIOUS)
+			if(!applicant.stat)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
 						if(!jobban_isbanned(applicant, "gangster") && !jobban_isbanned(applicant, "Syndicate"))
@@ -432,7 +436,6 @@ client/proc/one_click_antag()
 		candidates.Remove(H)
 		H = pick(candidates)
 		H.mind.make_Gang("B")
-		candidates.Remove(H)
 		return 1
 
 	return 0
@@ -465,8 +468,10 @@ client/proc/one_click_antag()
 		//Pick the (un)lucky players
 		var/numagents = min(7,candidates.len) //How many officers to spawn
 		var/list/spawnpoints = emergencyresponseteamspawn
-		while(numagents && spawnpoints.len && candidates.len)
-			var/spawnloc = spawnpoints[1]
+		while(numagents && candidates.len)
+			if (candidates.len > spawnpoints.len)
+				continue // This guy's unlucky, not enough spawn points, we skip him.
+			var/spawnloc = spawnpoints[numagents]
 			var/mob/dead/observer/chosen_candidate = pick(candidates)
 			candidates -= chosen_candidate
 			if(!chosen_candidate.key)
@@ -481,13 +486,22 @@ client/proc/one_click_antag()
 				if(1)
 					ERTOperative.real_name = "Commander [pick(lastname)]"
 					equip_emergencyresponsesquad(ERTOperative, "commander")
-				if(2 || 5)
+				if(2)
 					ERTOperative.real_name = "Security Officer [pick(lastname)]"
 					equip_emergencyresponsesquad(ERTOperative, "sec")
-				if(3 || 6)
+				if(3)
 					ERTOperative.real_name = "Medical Officer [pick(lastname)]"
 					equip_emergencyresponsesquad(ERTOperative, "med")
-				if(4 || 7)
+				if(4)
+					ERTOperative.real_name = "Engineer [pick(lastname)]"
+					equip_emergencyresponsesquad(ERTOperative, "eng")
+				if(5)
+					ERTOperative.real_name = "Security Officer [pick(lastname)]"
+					equip_emergencyresponsesquad(ERTOperative, "sec")
+				if(6)
+					ERTOperative.real_name = "Medical Officer [pick(lastname)]"
+					equip_emergencyresponsesquad(ERTOperative, "med")
+				if(7)
 					ERTOperative.real_name = "Engineer [pick(lastname)]"
 					equip_emergencyresponsesquad(ERTOperative, "eng")
 			ERTOperative.key = chosen_candidate.key
@@ -516,10 +530,12 @@ client/proc/one_click_antag()
 			if(numagents == 1)
 				message_admins("The emergency response team has spawned with the mission: [mission].")
 			log_game("[key_name(ERTOperative)] has been selected as an Emergency Response Officer")
-			spawnpoints -= spawnloc
 			numagents--
 
-		return 1
+		if (numagents == candidates.len)
+			return 0 // No one got spawned!
+		else
+			return 1
 
 	return
 

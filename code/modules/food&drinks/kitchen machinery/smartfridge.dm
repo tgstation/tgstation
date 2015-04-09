@@ -186,7 +186,7 @@
 // ----------------------------
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack_on"
 	use_power = 1
 	idle_power_usage = 5

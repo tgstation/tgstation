@@ -3,7 +3,7 @@
 	real_name = "alien larva"
 	icon_state = "larva0"
 	pass_flags = PASSTABLE | PASSMOB
-	mob_size = 0
+	mob_size = MOB_SIZE_SMALL
 
 	maxHealth = 25
 	health = 25
@@ -36,17 +36,6 @@
 
 //can't equip anything
 /mob/living/carbon/alien/larva/attack_ui(slot_id)
-	return
-
-/mob/living/carbon/alien/larva/attack_slime(mob/living/carbon/slime/M as mob)
-
-	..()
-	var/damage = rand(5, 35)
-	if(M.is_adult)
-		damage = rand(20, 40)
-	adjustBruteLoss(damage)
-	add_logs(M, src, "attacked", admin=0)
-	updatehealth()
 	return
 
 /mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user)

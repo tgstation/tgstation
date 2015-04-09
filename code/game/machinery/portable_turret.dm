@@ -51,6 +51,8 @@
 	var/shot_sound 			//what sound should play when the turret fires
 	var/eshot_sound			//what sound should play when the emagged turret fires
 
+	var/faction = "neutral"
+
 	var/datum/effect/effect/system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
 /obj/machinery/porta_turret/New()
@@ -296,9 +298,7 @@
 	else
 		//if the turret was attacked with the intention of harming it:
 		user.changeNext_move(CLICK_CD_MELEE)
-		health -= I.force * 0.5
-		if(health <= 0)
-			die()
+		take_damage(I.force * 0.5)
 		if(I.force * 0.5 > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
 			if(!attacked && !emagged)
 				attacked = 1
@@ -306,6 +306,32 @@
 					sleep(60)
 					attacked = 0
 		..()
+
+/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M as mob)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	if(M.melee_damage_upper == 0)
+		return
+	if(!(stat & BROKEN))
+		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
+		add_logs(M, src, "attacked", admin=0)
+		take_damage(M.melee_damage_upper)
+	else
+		M << "<span class='danger'>That object is useless to you.</span>"
+	return
+
+/obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	if(!(stat & BROKEN))
+		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
+		add_logs(M, src, "attacked", admin=0)
+		take_damage(15)
+	else
+		M << "\green That object is useless to you."
+	return
+
 
 /obj/machinery/porta_turret/emag_act(user as mob)
 	if(!emagged)
@@ -326,15 +352,16 @@
 				sleep(60)
 				attacked = 0
 
+	var/damage_dealt = 0
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		health -= Proj.damage
+		damage_dealt = Proj.damage
 
 	..()
 
-	if(prob(45) && Proj.damage > 0)
-		spark_system.start()
-	if(health <= 0)
-		die()	//the death process :(
+	if(damage_dealt)
+		if(prob(45))
+			spark_system.start()
+		take_damage(damage_dealt)
 
 	if(lasercolor == "b" && disabled == 0)
 		if(istype(Proj, /obj/item/projectile/lasertag/redtag))
@@ -370,8 +397,14 @@
 
 /obj/machinery/porta_turret/ex_act(severity, target)
 	if(severity >= 3)	//turret dies if an explosion touches it!
-		qdel(src)
+		die()
 	else
+		qdel(src)
+
+
+/obj/machinery/porta_turret/proc/take_damage(damage)
+	health -= damage
+	if(health <= 0)
 		die()
 
 /obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0
@@ -410,62 +443,49 @@
 		return
 
 	var/list/targets = list()			//list of primary targets
-	var/list/secondarytargets = list()	//targets that are least important
+	var/turretview = view(7, src)
 
-	if(check_anomalies)	//if its set to check for xenos/carps, check for non-mob "crittersssss"(And simple_animals)
-		for(var/mob/living/simple_animal/C in view(7, src))
-			if(!C.stat)
+	if(check_anomalies)	//if it's set to check for xenos/simpleanimals
+		for(var/mob/living/simple_animal/SA in turretview)
+			if(!SA.stat && (!SA.has_unlimited_silicon_privilege || !(faction in SA.faction)) ) //don't target dead animals or NT maint drones.
+				targets += SA
+
+	for(var/mob/living/carbon/C in turretview)	//loops through all carbon-based lifeforms in view(7)
+		if(emagged && C.stat != DEAD)	//if emagged, every living carbon is a target.
+			targets += C
+			continue
+
+		if(C.stat || C.handcuffed || C.lying)	//if the perp is handcuffed or lying or dead/dying, no need to bother really
+			continue
+
+		if(ai)	//If it's set to attack all nonsilicons, target them!
+			targets += C
+			continue
+
+		if(istype(C, /mob/living/carbon/human))	//if the target is a human, analyze threat level
+			if(assess_perp(C) >= 4)
 				targets += C
 
-	for(var/mob/living/carbon/C in view(7,src))	//loops through all living carbon-based lifeforms in view(12)
-		if(istype(C, /mob/living/carbon/alien) && check_anomalies) //git those fukken xenos
-			if(!C.stat)	//if it's dead/dying, there's no need to keep shooting at it.
-				targets += C
-
-		else
-			if(emagged)	//if emagged, HOLY SHIT EVERYONE IS DANGEROUS beep boop beep
-				targets += C
-			else
-				if(C.stat || C.handcuffed)	//if the perp is handcuffed or dead/dying, no need to bother really
-					continue				//move onto next potential victim!
-
-				var/dst = get_dist(src, C)	//if it's too far away, why bother?
-				if(dst > 7)
-					continue
-
-				if(ai)	//If it's set to attack all nonsilicons, target them!
-					if(C.lying)
-						if(lasercolor)
-							continue
-						else
-							secondarytargets += C
-							continue
-					else
+		else if(check_anomalies)
+			if(!(faction in C.faction))
+				for(var/F in C.faction) //We target carbons without the portaturret's faction and who also have alien or slime faction.
+					if(F == "alien" || F == "slime")
 						targets += C
-						continue
+						break
 
-				if(istype(C, /mob/living/carbon/human))	//if the target is a human, analyze threat level
-					if(assess_perp(C) < 4)
-						continue	//if threat level < 4, keep going
-
-				else if(istype(C, /mob/living/carbon/monkey))
-					continue	//Don't target monkeys or borgs/AIs you dumb shit
-
-				if(C.lying)		//if the perp is lying down, it's still a target but a less-important target
-					secondarytargets += C
-					continue
-
-				targets += C	//if the perp has passed all previous tests, congrats, it is now a "shoot-me!" nominee
+	for(var/obj/mecha/M in turretview)
+		if(M.occupant)
+			if(ai || emagged) // we target all occupied mechs if we're emagged or set to attack all non silicons.
+				targets += M
 
 	if(!tryToShootAt(targets))
-		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
-			spawn()
-				popDown() // no valid targets, close the cover
+		spawn()
+			popDown() // no valid targets, close the cover
 
 
-/obj/machinery/porta_turret/proc/tryToShootAt(var/list/mob/living/targets)
+/obj/machinery/porta_turret/proc/tryToShootAt(var/list/atom/movable/targets)
 	while(targets.len > 0)
-		var/mob/living/M = pick(targets)
+		var/atom/movable/M = pick(targets)
 		targets -= M
 		if(target(M))
 			return 1
@@ -558,10 +578,10 @@
 	return threatcount
 
 
-/obj/machinery/porta_turret/proc/target(var/mob/living/target)
+/obj/machinery/porta_turret/proc/target(var/atom/movable/target)
 	if(disabled)
 		return
-	if(target && (target.stat != DEAD) && (!(target.lying) || emagged))
+	if(target)
 		spawn()
 			popUp()				//pop the turret up if it's not already up.
 		dir = get_dir(src, target)	//even if you can't shoot, follow the target
@@ -570,7 +590,7 @@
 		return 1
 	return
 
-/obj/machinery/porta_turret/proc/shootAt(var/mob/living/target)
+/obj/machinery/porta_turret/proc/shootAt(var/atom/movable/target)
 	if(!emagged)	//if it hasn't been emagged, it has to obey a cooldown rate
 		if(last_fired || !raised)	//prevents rapid-fire shooting, unless it's been emagged
 			return

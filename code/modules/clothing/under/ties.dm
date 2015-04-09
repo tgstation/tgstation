@@ -145,7 +145,7 @@
 
 /obj/item/clothing/tie/medal/gold/heroism
 	name = "medal of exceptional heroism"
-	desc = "An extremely rare golden medal awarded only by Centcom. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
+	desc = "An extremely rare golden medal awarded only by Centcom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
 ////////////
 //Armbands//
@@ -277,3 +277,13 @@
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
 	item_color = "stripedbluescarf"
+
+/obj/item/clothing/tie/petcollar //don't really wear this though please c'mon seriously guys
+	name = "pet collar"
+	icon_state = "petcollar"
+	item_color = "petcollar"
+	var/tagname = null
+
+/obj/item/clothing/tie/petcollar/attack_self(mob/user as mob)
+	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
+	name = "[initial(name)] - [tagname]"

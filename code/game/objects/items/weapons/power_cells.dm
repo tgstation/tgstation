@@ -45,9 +45,9 @@
 	..()
 	charge = 0
 
-/obj/item/weapon/stock_parts/cell/pulse //40 pulse shots
+/obj/item/weapon/stock_parts/cell/pulse //80 pulse shots
 	name = "pulse rifle power cell"
-	maxcharge = 8000
+	maxcharge = 16000
 	rating = 3
 	chargerate = 1500
 
@@ -113,7 +113,7 @@
 	name = "potato battery"
 	desc = "A rechargable starch based power cell."
 	origin_tech = "powerstorage=1"
-	icon = 'icons/obj/power.dmi' //'icons/obj/harvest.dmi'
+	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato_cell" //"potato_battery"
 	charge = 100
 	maxcharge = 300

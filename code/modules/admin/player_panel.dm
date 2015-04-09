@@ -229,8 +229,6 @@
 				if(iscarbon(M)) //Carbon stuff
 					if(ishuman(M))
 						M_job = M.job
-					else if(isslime(M))
-						M_job = "slime"
 					else if(ismonkey(M))
 						M_job = "Monkey"
 					else if(isalien(M)) //aliens
@@ -254,6 +252,8 @@
 				else if(isanimal(M)) //simple animals
 					if(iscorgi(M))
 						M_job = "Corgi"
+					else if(isslime(M))
+						M_job = "slime"
 					else
 						M_job = "Animal"
 
@@ -304,70 +304,12 @@
 
 	usr << browse(dat, "window=players;size=600x480")
 
-//The old one
-/datum/admins/proc/player_panel_old()
-	if(!check_rights())
-		return
-	var/dat = "<html><head><title>Player Menu</title></head>"
-	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th></tr></B>"
-	//add <th>IP:</th> to this if wanting to add back in IP checking
-	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
-	var/list/mobs = sortmobs()
-
-	for(var/mob/M in mobs)
-		if(!M.ckey)	continue
-
-		dat += "<tr><td>[M.name]</td>"
-		if(isAI(M))
-			dat += "<td>AI</td>"
-		else if(isrobot(M))
-			dat += "<td>Cyborg</td>"
-		else if(ishuman(M))
-			dat += "<td>[M.real_name]</td>"
-		else if(istype(M, /mob/living/silicon/pai))
-			dat += "<td>pAI</td>"
-		else if(istype(M, /mob/new_player))
-			dat += "<td>New Player</td>"
-		else if(isobserver(M))
-			dat += "<td>Ghost</td>"
-		else if(ismonkey(M))
-			dat += "<td>Monkey</td>"
-		else if(isalien(M))
-			dat += "<td>Alien</td>"
-		else
-			dat += "<td>Unknown</td>"
-
-
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.mind && H.mind.assigned_role)
-				dat += "<td>[H.mind.assigned_role]</td>"
-		else
-			dat += "<td>NA</td>"
-
-
-		dat += {"<td>[(M.client ? "[M.client]" : "No client")]</td>
-		<td align=center><A HREF='?_src_=holder;adminplayeropts=\ref[M]'>X</A></td>
-		<td align=center><A href='?priv_msg=[M.ckey]'>PM</A></td>
-		"}
-		switch(is_special_character(M))
-			if(0)
-				dat += {"<td align=center><A HREF='?_src_=holder;traitor=\ref[M]'>Traitor?</A></td>"}
-			if(1)
-				dat += {"<td align=center><A HREF='?_src_=holder;traitor=\ref[M]'><font color=red>Traitor?</font></A></td>"}
-			if(2)
-				dat += {"<td align=center><A HREF='?_src_=holder;traitor=\ref[M]'><font color=red><b>Traitor?</b></font></A></td>"}
-
-	dat += "</table></body></html>"
-
-	usr << browse(dat, "window=players;size=640x480")
-
-
-
 /datum/admins/proc/check_antagonists()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 		dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
+		if(ticker.mode.replacementmode)
+			dat += "Replacement Game Mode: <B>[ticker.mode.replacementmode.name]</B><BR>"
 		dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
 		dat += "<B>Emergency shuttle</B><BR>"
 		if(SSshuttle.emergency.mode < SHUTTLE_CALL)
@@ -379,6 +321,7 @@
 				dat += "<a href='?_src_=holder;call_shuttle=2'>Send Back</a><br>"
 			else
 				dat += "ETA: <a href='?_src_=holder;edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+		dat += "<a href='?_src_=holder;end_round=\ref[usr]'>End Round Now</a><br>"
 		dat += "<a href='?_src_=holder;delay_round_end=1'>[ticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
 		if(ticker.mode.syndicates.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"

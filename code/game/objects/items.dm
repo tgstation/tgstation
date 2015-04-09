@@ -4,6 +4,10 @@
 	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+
+	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
+	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
+
 	var/hitsound = null
 	var/throwhitsound = null
 	var/w_class = 3.0
@@ -33,13 +37,13 @@
 	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
-	var/reflect_chance = 0 //This var dictates what % of a time an object will reflect an energy based weapon's shot
 	var/strip_delay = 40
 	var/put_on_delay = 20
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
+	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
@@ -48,9 +52,15 @@
 	var/hooded = 0
 
 	//So items can have custom embedd values
+	//Because customisation is king
 	var/embed_chance = EMBED_CHANCE
 	var/embedded_fall_chance = EMBEDDED_ITEM_FALLOUT
 	var/embedded_pain_chance = EMBEDDED_PAIN_CHANCE
+	var/embedded_pain_multiplier = EMBEDDED_PAIN_MULTIPLIER  //The coefficient of multiplication for the damage this item does while embedded (this*w_class)
+	var/embedded_fall_pain_multiplier = EMBEDDED_FALL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when falling out of a limb (this*w_class)
+	var/embedded_impact_pain_multiplier = EMBEDDED_IMPACT_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when first embedded (this*w_class)
+	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
+	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
 
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
@@ -233,7 +243,7 @@
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/talk_into(mob/M as mob, text)
+/obj/item/proc/talk_into(mob/M, input, channel, spans)
 	return
 
 /obj/item/proc/dropped(mob/user as mob)
@@ -305,8 +315,7 @@
 	return 0
 
 /obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-	if(prob(reflect_chance))
-		return 1
+	return 0
 
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
@@ -328,7 +337,7 @@
 		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
+	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
 		user << "<span class='danger'>You cannot locate any eyes on this creature!</span>"
 		return
 
@@ -417,16 +426,19 @@
 
 
 /obj/item/throw_impact(A)
-	if(istype(A, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = A
-		if(can_embed(src))
-			if(prob(embed_chance))
-				var/obj/item/organ/limb/L = pick(H.organs)
-				L.embedded_objects |= src
-				add_blood(H)//it embedded itself in you, of course it's bloody!
-				loc = H
-				L.take_damage(w_class*5)
-				H.visible_message("<span class='danger'>\the [name] embeds itself in [H]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [name] embeds itself in your [L.getDisplayName()]!</span>")
-				return
+	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if(istype(A, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = A
+			if(can_embed(src))
+				if(prob(embed_chance))
+					var/obj/item/organ/limb/L = pick(H.organs)
+					L.embedded_objects |= src
+					add_blood(H)//it embedded itself in you, of course it's bloody!
+					loc = H
+					L.take_damage(w_class*embedded_impact_pain_multiplier)
+					H.visible_message("<span class='danger'>\the [name] embeds itself in [H]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [name] embeds itself in your [L.getDisplayName()]!</span>")
+					return
 
+	//Reset regardless of if we hit a human.
+	throw_speed = initial(throw_speed) //explosions change this.
 	..()

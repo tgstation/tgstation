@@ -14,8 +14,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI",											//7
 	"cultist" = /datum/game_mode/cult,				//8
 	"blob" = /datum/game_mode/blob,					//9
-	"monkey" = /datum/game_mode/monkey,				//10
-	"gangster" = /datum/game_mode/gang				//11
+	"ninja",										//10
+	"monkey" = /datum/game_mode/monkey,				//11
+	"gangster" = /datum/game_mode/gang				//12
 )
 
 
@@ -36,6 +37,7 @@ datum/preferences
 	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
+	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
 	var/allow_midround_antag = 1
 
@@ -175,44 +177,63 @@ datum/preferences
 					dat += "<b>Species:</b> Human<BR>"
 
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
-				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 				dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
 
+				if(pref_species.use_skintones)
 
-				dat += "</td><td valign='top' width='21%'>"
+					dat += "</td><td valign='top' width='21%'>"
 
-				dat += "<h3>Hair Style</h3>"
+					dat += "<h3>Skin Tone</h3>"
 
-				dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
-				dat += "<a href='?_src_=prefs;preference=previous_hair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hair_style;task=input'>&gt;</a><BR>"
-				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
+
+					dat += "</td>"
+
+				if(HAIR in pref_species.specflags)
+
+					dat += "<td valign='top' width='21%'>"
+
+					dat += "<h3>Hair Style</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=previous_hair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hair_style;task=input'>&gt;</a><BR>"
+					dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 
 
-				dat += "</td><td valign='top' width='21%'>"
+					dat += "</td><td valign='top' width='21%'>"
 
-				dat += "<h3>Facial Hair Style</h3>"
+					dat += "<h3>Facial Hair Style</h3>"
 
-				dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
-				dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
+					dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 
+					dat += "</td>"
 
-				dat += "</td><td valign='top' width='21%'>"
+				if(EYECOLOR in pref_species.specflags)
 
-				dat += "<h3>Eye Color</h3>"
+					dat += "<td valign='top' width='21%'>"
 
-				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
+					dat += "<h3>Eye Color</h3>"
 
-				dat += "</td><td valign='top' width='21%'>"
+					dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
-				dat += "<h3>Alien Color</h3>"  // even if choosing your mutantrace is off, this is here in case you gain one during a round
+					dat += "</td>"
 
-				dat += "<span style='border: 1px solid #161616; background-color: #[mutant_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+				if(MUTCOLORS in pref_species.specflags)
 
-				dat += "</td></tr></table>"
+					dat += "<td valign='top' width='21%'>"
+
+					dat += "<h3>Alien Color</h3>"
+
+					dat += "<span style='border: 1px solid #161616; background-color: #[mutant_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+
+					dat += "</td>"
+
+				dat += "</tr></table>"
 
 
 			if (1) // Game Preferences
@@ -221,11 +242,12 @@ datum/preferences
 				dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
 				dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
-				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
-				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
-				dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(toggles & CHAT_GHOSTWHISPER) ? "Nearest Creatures" : "All Speech"]</a><br>"
-				dat += "<b>Ghost pda:</b> <a href='?_src=prefs;preference=ghost_pda'>[(toggles & CHAT_GHOSTPDA) ? "Nearest Creatures" : "All Messages"]</a><br>"
-				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
+				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
+				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
+				dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(chat_toggles & CHAT_GHOSTWHISPER) ? "Nearest Creatures" : "All Speech"]</a><br>"
+				dat += "<b>Ghost radio:</b> <a href='?_src=prefs;preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "Yes" : "No"]</a><br>"
+				dat += "<b>Ghost pda:</b> <a href='?_src=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "Nearest Creatures" : "All Messages"]</a><br>"
+				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
 				if(config.allow_Metadata)
 					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
@@ -780,19 +802,22 @@ datum/preferences
 							user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 					if("ghost_ears")
-						toggles ^= CHAT_GHOSTEARS
+						chat_toggles ^= CHAT_GHOSTEARS
 
 					if("ghost_sight")
-						toggles ^= CHAT_GHOSTSIGHT
+						chat_toggles ^= CHAT_GHOSTSIGHT
 
 					if("ghost_whispers")
-						toggles ^= CHAT_GHOSTWHISPER
+						chat_toggles ^= CHAT_GHOSTWHISPER
+
+					if("ghost_radio")
+						chat_toggles ^= CHAT_GHOSTRADIO
 
 					if("ghost_pda")
-						toggles ^= CHAT_GHOSTPDA
+						chat_toggles ^= CHAT_GHOSTPDA
 
 					if("pull_requests")
-						toggles ^= CHAT_PULLR
+						chat_toggles ^= CHAT_PULLR
 
 					if("allow_midround_antag")
 						toggles ^= MIDROUND_ANTAG
@@ -864,11 +889,5 @@ datum/preferences
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
-		/*
-		//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-		if(character.gender in list(PLURAL, NEUTER))
-			if(isliving(src)) //Ghosts get neuter by default
-				message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-				character.gender = MALE
-		*/
-
+		character.update_body()
+		character.update_hair()

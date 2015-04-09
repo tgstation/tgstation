@@ -237,7 +237,7 @@
 	..()
 	modules += new /obj/item/borg/sight/meson(src)
 	emag = new /obj/item/borg/stun(src)
-	modules += new /obj/item/weapon/storage/bag/ore(src)
+	modules += new /obj/item/weapon/storage/bag/ore/cyborg(src)
 	modules += new /obj/item/weapon/pickaxe/drill/cyborg(src)
 	modules += new /obj/item/weapon/shovel(src)
 	modules += new /obj/item/device/flashlight/lantern(src)

@@ -53,7 +53,7 @@
 	id = "plant"
 	default_color = "59CE00"
 	specflags = list(MUTCOLORS,EYECOLOR)
-	attack_verb = "slice"
+	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.25
@@ -157,7 +157,7 @@
 	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	hair_color = "mutcolor"
 	hair_alpha = 150
-	ignored_by = list(/mob/living/carbon/slime)
+	ignored_by = list(/mob/living/simple_animal/slime)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	var/recently_changed = 1
@@ -279,6 +279,7 @@
 	// 2spooky
 	name = "Spooky Scary Skeleton"
 	id = "skeleton"
+	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/skeleton
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
@@ -310,3 +311,9 @@
 			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
 
 	return list2text(message_list, " ")
+
+/datum/species/cosmetic_zombie
+	name = "Human"
+	id = "zombie"
+	sexes = 0
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/zombie

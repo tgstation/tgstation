@@ -11,7 +11,7 @@
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
-	mymob.pullin.icon_state = "pull0"
+	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_drone_pull
 	adding += mymob.pullin
 

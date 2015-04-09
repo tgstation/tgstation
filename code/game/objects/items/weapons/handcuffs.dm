@@ -1,3 +1,7 @@
+
+/obj/item/weapon/restraints
+	var/breakouttime = 600
+
 //Handcuffs
 
 /obj/item/weapon/restraints/handcuffs
@@ -14,7 +18,7 @@
 	throw_range = 5
 	m_amt = 500
 	origin_tech = "materials=1"
-	var/breakouttime = 600 //Deciseconds = 60s = 1 minute
+	breakouttime = 600 //Deciseconds = 60s = 1 minute
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
@@ -44,6 +48,7 @@
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user)
 	if(!target.handcuffed)
 		user.drop_item()
+		//target.throw_alert("handcuffed", src) // Can't do this because escaping cuffs isn't standardized. Also zipties.
 		if(trashtype)
 			target.handcuffed = new trashtype(target)
 			qdel(src)
@@ -143,7 +148,7 @@
 	w_class = 3.0
 	origin_tech = "materials=1"
 	slowdown = 7
-	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
+	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
 /obj/item/weapon/restraints/legcuffs/beartrap
 	name = "bear trap"
@@ -168,26 +173,29 @@
 
 /obj/item/weapon/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed && isturf(src.loc))
-		if( (iscarbon(AM) || isanimal(AM)) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
+		if(isliving(AM))
 			var/mob/living/L = AM
-			armed = 0
-			icon_state = "beartrap0"
-			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
-			L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
-					"<span class='userdanger'>You trigger \the [src]!</span>")
-
-			if(ishuman(AM))
-				var/mob/living/carbon/H = AM
-				if(H.lying)
-					H.apply_damage(20,BRUTE,"chest")
-				else
-					H.apply_damage(20,BRUTE,(pick("l_leg", "r_leg")))
-				if(!H.legcuffed) //beartrap can't cuff you leg if there's already a beartrap or legcuffs.
-					H.legcuffed = src
-					src.loc = H
-					H.update_inv_legcuffed(0)
-					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-
-			else
-				L.apply_damage(20,BRUTE)
+			var/snap = 0
+			var/def_zone = "chest"
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				snap = 1
+				if(!C.lying)
+					def_zone = pick("l_leg", "r_leg")
+					if(!C.legcuffed) //beartrap can't cuff your leg if there's already a beartrap or legcuffs.
+						C.legcuffed = src
+						src.loc = C
+						C.update_inv_legcuffed(0)
+						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
+			else if(isanimal(L))
+				var/mob/living/simple_animal/SA = L
+				if(!SA.flying && SA.mob_size > MOB_SIZE_TINY)
+					snap = 1
+			if(snap)
+				armed = 0
+				icon_state = "beartrap0"
+				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
+						"<span class='userdanger'>You trigger \the [src]!</span>")
+				L.apply_damage(20,BRUTE, def_zone)
 	..()

@@ -1,9 +1,11 @@
 
 #define SKINTYPE_MONKEY 1
 #define SKINTYPE_ALIEN 2
+#define SKINTYPE_BEAR 3
 
 #define MEATTYPE_MONKEY 1
 #define MEATTYPE_ALIEN 2
+#define MEATTYPE_BEAR 3
 
 //////Kitchen Spike
 
@@ -55,6 +57,20 @@
 			qdel(G)
 		else
 			user << "<span class='danger'>The spike already has something on it, finish collecting its meat first!</span>"
+	else if(istype(G.affecting, /mob/living/simple_animal/hostile/bear))
+		if(src.occupied == 0)
+			src.icon_state = "spikebloodybearz"
+			src.occupied = 1
+			src.meat = 5
+			src.meattype = MEATTYPE_BEAR
+			src.skin = 1
+			src.skintype = SKINTYPE_BEAR
+			for(var/mob/O in viewers(src, null))
+				O.show_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
+			qdel(G.affecting)
+			qdel(G)
+		else
+			user << "<span class='danger'>The spike already has something on it, finish collecting its meat first!</span>"
 	else
 		user << "<span class='danger'>They are too big for the spike, try something smaller!</span>"
 		return
@@ -98,9 +114,27 @@
 				usr << "You remove the last piece of meat from the alien!"
 				src.icon_state = "spike"
 				src.occupied = 0
+		else if(src.meattype == MEATTYPE_BEAR && src.skintype == SKINTYPE_BEAR)
+			if(src.skin >= 1)
+				src.skin--
+				new /obj/item/clothing/head/bearpelt(src.loc)
+				user << "You remove the hide from the bear!"
+			else if(src.meat > 1)
+				src.meat--
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/bear(src.loc )
+				usr << "You remove some meat from the bear."
+			else if(src.meat == 1)
+				src.meat--
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/bear(src.loc)
+				usr << "You remove the last piece of meat from the bear!"
+				src.icon_state = "spike"
+				src.occupied = 0
+
 
 #undef SKINTYPE_MONKEY
 #undef SKINTYPE_ALIEN
+#undef SKINTYPE_BEAR
 
 #undef MEATTYPE_MONKEY
 #undef MEATTYPE_ALIEN
+#undef MEATTYPE_BEAR

@@ -53,7 +53,11 @@
 
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 
-/obj/item/clothing/suit/toggle/attack_self()
+/obj/item/clothing/suit/toggle/AltClick()
+	..()
+	suit_toggle()
+
+/obj/item/clothing/suit/toggle/proc/suit_toggle()
 	set src in usr
 
 	if(!can_use(usr))
@@ -68,10 +72,17 @@
 		src.suittoggled = 1
 	usr.update_inv_wear_suit()
 
+/obj/item/clothing/suit/toggle/examine(mob/user)
+	..()
+	user << "Alt-click on [src] to toggle the [togglename]."
+
 //Hardsuit toggle code
 
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
+	if(!jetpack)
+		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack
+		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()

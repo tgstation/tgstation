@@ -14,6 +14,14 @@
 	item_state = "w_suit"
 	can_adjust = 0
 
+/obj/item/clothing/under/patriotsuit
+	name = "Patriotic Suit"
+	desc = "Motorcycle not included."
+	icon_state = "ek"
+	item_state = "ek"
+	item_color = "ek"
+	can_adjust = 0
+
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
@@ -84,7 +92,6 @@
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
-	can_adjust = 0
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
@@ -92,7 +99,6 @@
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
-	can_adjust = 0
 
 /obj/item/clothing/under/space
 	name = "\improper NASA jumpsuit"
@@ -447,7 +453,7 @@
 	item_state = "plaid_red"
 	item_color = "plaid_red"
 	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = 0
+	can_adjust = 1
 
 /obj/item/clothing/under/plaid_skirt/blue
 	name = "blue plaid skirt"
@@ -462,3 +468,10 @@
 	icon_state = "plaid_purple"
 	item_state = "plaid_purple"
 	item_color = "plaid_purple"
+
+/obj/item/clothing/under/jester
+	name = "jester suit"
+	desc = "A jolly dress, well suited to entertain your master, nuncle."
+	icon_state = "jester"
+	item_color = "jester"
+	can_adjust = 0

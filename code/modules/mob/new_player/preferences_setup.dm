@@ -23,6 +23,21 @@
 	del(preview_icon_side)
 	var/icon/preview_icon = null
 
+	if(job_engsec_high) //cyborg/AI check, put first to avoid so much unneeded blending
+		switch(job_engsec_high)
+			if(AI)
+				preview_icon = new /icon('icons/mob/AI.dmi', "AI")
+
+			if(CYBORG)
+				preview_icon = new /icon('icons/mob/robots.dmi', "robot")
+
+		if(preview_icon) //We're busting out!
+			preview_icon_front = new(preview_icon, dir = SOUTH)
+			preview_icon_side = new(preview_icon, dir = WEST)
+
+			del(preview_icon)
+			return
+
 	var/g = "m"
 	if(gender == FEMALE)	g = "f"
 
@@ -64,6 +79,20 @@
 		var/icon/facial_s = new/icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
 		facial_s.Blend("#[facial_hair_color]", ICON_MULTIPLY)
 		eyes_s.Blend(facial_s, ICON_OVERLAY)
+
+	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	var/icon_state_string = "[pref_species.id]_"
+
+	if(pref_species.sexes)
+		icon_state_string += "[g]_s"
+	else
+		icon_state_string += "_s"
+
+	for(var/layer in relevent_layers)
+		for(var/bodypart in pref_species.mutant_bodyparts)
+			var/icon/part = new/icon("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[icon_state_string]_[bodypart]_[layer]")
+			part.Blend("#[mutant_color]", ICON_MULTIPLY)
+			preview_icon.Blend(part, ICON_OVERLAY)
 
 	var/icon/clothes_s = null
 	if(job_civilian_low & ASSISTANT)//This gives the preview icon clothes depending on which job(if any) is set to 'high'

@@ -150,25 +150,6 @@
 		adjustOxyLoss(max(175 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
-
-/mob/living/carbon/slime/verb/suicide()
-	set hidden = 1
-	if(!canSuicide())
-		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
-	if(!canSuicide())
-		return
-	if(confirm == "Yes")
-		suiciding = 1
-		visible_message("<span class='danger'>[src] is growing dull and lifeless. It looks like it's lost the will to live.</span>", \
-						"<span class='userdanger'>[src] is growing dull and lifeless. It looks like it's lost the will to live.</span>")
-		setOxyLoss(100)
-		adjustBruteLoss(100 - getBruteLoss())
-		setToxLoss(100)
-		setCloneLoss(100)
-
-		updatehealth()
-
 /mob/living/simple_animal/verb/suicide()
 	set hidden = 1
 	if(!canSuicide())

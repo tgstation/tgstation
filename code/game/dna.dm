@@ -114,6 +114,12 @@
 			message = M.say_mod(message)
 		return message
 
+/datum/dna/proc/mutations_get_spans()
+	var/list/spans = list()
+	for(var/datum/mutation/human/M in mutations)
+		spans |= M.get_spans()
+	return spans
+
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor)
 	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
 		return
@@ -295,7 +301,7 @@
 
 //////////////////////////////////////////////////////////// Monkey Block
 	if(M)
-		M.update_icon = 1	//queue a full icon update at next life() call
+		M.regenerate_icons()
 	return 1
 /////////////////////////// DNA MISC-PROCS
 
@@ -557,6 +563,8 @@
 			else
 				viable_occupant = null
 				occupant_status += "<span class='bad'>Invalid DNA structure</span></div></div>"
+			if (viable_occupant && viable_occupant.stat == DEAD)
+				viable_occupant = null // No editing the dead.
 		else
 			occupant_status += "<span class='bad'>No subject detected</span></div></div>"
 

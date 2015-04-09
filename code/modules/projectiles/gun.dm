@@ -17,6 +17,7 @@
 	throw_range = 5
 	force = 5.0
 	origin_tech = "combat=1"
+	needs_permit = 1
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -32,6 +33,11 @@
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
 	var/semicd = 0						//cooldown handler
 	var/heavy_weapon = 0
+
+	var/unique_rename = 0 //allows renaming with a pen
+	var/unique_reskin = 0 //allows one-time reskinning
+	var/reskinned = 0 //whether or not the gun has been reskinned
+	var/list/options = list()
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -150,7 +156,7 @@
 		if(pin.pin_auth(user) || pin.emagged)
 			return 1
 		else
-			user << "<span class='warning'>INVALID USER.</span>"
+			pin.auth_fail(user)
 			return 0
 	else
 		user << "<span class='notice'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
@@ -251,6 +257,11 @@
 				S.update_brightness(user)
 				update_icon()
 				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
+
+	if(unique_rename)
+		if(istype(A, /obj/item/weapon/pen))
+			rename_gun(user)
+
 	..()
 	return
 
@@ -305,3 +316,32 @@
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+
+
+/obj/item/weapon/gun/attack_hand(mob/user as mob)
+	if(unique_reskin && !reskinned && loc == user)
+		reskin_gun(user)
+		return
+	..()
+
+/obj/item/weapon/gun/proc/reskin_gun(var/mob/M)
+	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
+
+	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
+		if(options[choice] == null)
+			return
+		if(sawn_state == SAWN_OFF)
+			icon_state = options[choice] + "-sawn"
+		else
+			icon_state = options[choice]
+		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
+		reskinned = 1
+		return
+
+/obj/item/weapon/gun/proc/rename_gun(var/mob/M)
+	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
+
+	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
+		name = input
+		M << "You name the gun [input]. Say hello to your new friend."
+		return

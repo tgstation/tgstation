@@ -135,11 +135,11 @@ var/list/sacrificed = list()
 					return 1		*/
 			else
 				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-				M << "<span class='userdanger'>And not a single fuck was given, exterminate the cult at all costs.</span>"
+				M << "<span class='boldannounce'>And not a single fuck was given, exterminate the cult at all costs.</span>"
 				if(ticker.mode.name == "cult")
 					if(M.mind == ticker.mode.sacrifice_target)
 						for(var/mob/living/carbon/human/cultist in cultsinrange)
-							cultist << "<span class='h2.userdanger'>The Chosen One!! <BR>KILL THE CHOSEN ONE!!! </span>"
+							cultist << "<span class='h2.boldannounce'>The Chosen One!! <BR>KILL THE CHOSEN ONE!!! </span>"
 				return 0
 		else
 			for(var/mob/living/carbon/human/cultist in cultsinrange)
@@ -703,7 +703,7 @@ var/list/sacrificed = list()
 			if(prob(30))
 				ticker.mode.grant_runeword(usr)
 		stone_or_gib(M)
-	for(var/mob/victim in src.loc)			//TO-DO: Move the shite above into the mob's own sac_act - see /mob/living/simple_animal/corgi/sac_act for an example
+	for(var/mob/victim in src.loc)			//TO-DO: Move the shite above into the mob's own sac_act - see /mob/living/simple_animal/pet/corgi/sac_act for an example
 		victim.sac_act(src, victim)			//Sacrifice procs are now seperate per mob, this allows us to allow sacrifice on as many mob types as we want without making an already clunky system worse
 /*	for(var/mob/living/carbon/alien/A)
 		for(var/mob/K in cultsinrange)
@@ -823,7 +823,8 @@ var/list/sacrificed = list()
 		))
 			user << "<span class='danger'>The [cultist] is already free.</span>"
 			return
-		cultist.buckled = null
+		if(cultist.buckled)
+			cultist.buckled.unbuckle_mob()
 		if (cultist.handcuffed)
 			cultist.handcuffed.loc = cultist.loc
 			cultist.handcuffed = null

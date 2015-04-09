@@ -73,13 +73,14 @@
 	flick("closing", src)
 	icon_state = "closed"
 	SetOpacity(1)
+	sleep(5)
+	density = 1
+	sleep(5)
 	air_update_turf(1)
 	update_freelook_sight()
 	sleep(5)
 	crush()
-	density = 1
 	sleep(5)
-
 	operating = 0
 
 

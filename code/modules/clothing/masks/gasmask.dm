@@ -45,7 +45,6 @@
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
 	action_button_name = "HALT!"
 	icon_state = "sechailer"
-	var/cooldown = 0
 	var/aggressiveness = 2
 	ignore_maskadjust = 0
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
@@ -218,35 +217,6 @@
 /obj/item/clothing/mask/gas/voice/attack_self(mob/user)
 	vchange = !vchange
 	user << "<span class='notice'>The voice changer is now [vchange ? "on" : "off"]!</span>"
-
-/obj/item/clothing/mask/gas/voice/space_ninja
-	name = "ninja mask"
-	desc = "A close-fitting mask that acts both as an air filter and a post-modern fashion statement."
-	icon_state = "s-ninja"
-	item_state = "s-ninja_mask"
-	vchange = 1
-	strip_delay = 120
-
-/obj/item/clothing/mask/gas/voice/space_ninja/speechModification(message)
-	if(voice == "Unknown")
-		if(copytext(message, 1, 2) != "*")
-			var/list/temp_message = text2list(message, " ")
-			var/list/pick_list = list()
-			for(var/i = 1, i <= temp_message.len, i++)
-				pick_list += i
-			for(var/i=1, i <= abs(temp_message.len/3), i++)
-				var/H = pick(pick_list)
-				if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
-				temp_message[H] = ninjaspeak(temp_message[H])
-				pick_list -= H
-			message = list2text(temp_message, " ")
-			message = replacetext(message, "o", "?")
-			message = replacetext(message, "p", "?")
-			message = replacetext(message, "l", "?")
-			message = replacetext(message, "s", "?")
-			message = replacetext(message, "u", "?")
-			message = replacetext(message, "b", "?")
-	return message
 
 
 /obj/item/clothing/mask/gas/clown_hat

@@ -38,17 +38,22 @@
 	points = 1
 	refined_type = /obj/item/stack/sheet/glass
 
-/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
+/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
-	for(var/i = 0,i < 1,i++)
-		var/obj/item/stack/sheet/mineral/sandstone/S = new (user.loc)
-		for (var/obj/item/weapon/ore/glass/G in user.loc)
-			if(S.amount < S.max_amount)
-				S.amount++
-				qdel(G)
-			else
-				i--
-				break
+	var/sandAmt = 1
+	for(var/obj/item/weapon/ore/glass/G in user.loc) // The sand on the floor
+		sandAmt += 1
+		qdel(G)
+	while(sandAmt > 0)
+		var/obj/item/stack/sheet/mineral/sandstone/SS = new /obj/item/stack/sheet/mineral/sandstone(user.loc)
+		if(sandAmt >= SS.max_amount)
+			SS.amount = SS.max_amount
+		else
+			SS.amount = sandAmt
+			for(var/obj/item/stack/sheet/mineral/sandstone/SA in user.loc)
+				if(SA != SS && SA.amount < SA.max_amount)
+					SA.attackby(SS, user) //we try to transfer all old unfinished stacks to the new stack we created.
+		sandAmt -= SS.max_amount
 	qdel(src)
 	return
 
@@ -113,28 +118,51 @@
 	var/primed = 0
 	var/det_time = 100
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
+	var/attacher = "UNKNOWN"
+	var/datum/wires/explosive/gibtonite/wires
 
 /obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator))
+	if(!wires && istype(I, /obj/item/device/assembly/igniter))
+		user.visible_message("<span class='warning'>[user] attaches [I] to [src]!</span>")
+		wires = new(src)
+		attacher = key_name(user)
+		qdel(I)
+		overlays += "Gibtonite_igniter"
+		return
+
+	if(wires && !primed)
+		if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler))
+			wires.Interact(user)
+			return
+
+	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator) || I.force >= 10)
 		GibtoniteReaction(user)
 		return
-	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && primed)
-		primed = 0
-		user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
-		icon_state = "Gibtonite ore"
-		quality = 1
-		return
+	if(primed)
+		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
+			primed = 0
+			user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
+			icon_state = "Gibtonite ore"
+			quality = 1
+			return
 	..()
 
+/obj/item/weapon/twohanded/required/gibtonite/attack_self(user)
+	if(wires)
+		wires.Interact(user)
+	else
+		..()
+
 /obj/item/weapon/twohanded/required/gibtonite/bullet_act(var/obj/item/projectile/P)
-	if(istype(P, /obj/item/projectile/kinetic))
-		GibtoniteReaction(P.firer)
+	GibtoniteReaction(P.firer)
 	..()
 
 /obj/item/weapon/twohanded/required/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
 
-/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by_explosive = 0)
+
+
+/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		primed = 1
@@ -144,13 +172,18 @@
 		var/notify_admins = 0
 		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
 			notify_admins = 1
+
 		if(notify_admins)
-			if(triggered_by_explosive)
+			if(triggered_by == 1)
 				message_admins("An explosion has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			else if(triggered_by == 2)
+				message_admins("A signal has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>. Igniter attacher: [attacher]")
 			else
 				message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-		if(triggered_by_explosive)
+		if(triggered_by == 1)
 			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+		else if(triggered_by == 2)
+			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [attacher].")
 		else
 			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>")
 			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")

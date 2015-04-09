@@ -29,7 +29,8 @@
 	var/pre_setup_before_jobs = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/datum/mind/sacrifice_target = null
-	var/round_converted = 0
+	var/list/datum/game_mode/replacementmode = null
+	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
 
@@ -89,20 +90,37 @@
 ///make_antag_chance()
 ///Handles late-join antag assignments
 /datum/game_mode/proc/make_antag_chance(var/mob/living/carbon/human/character)
+	if(replacementmode && round_converted == 2)
+		replacementmode.make_antag_chance(character)
 	return
 
 ///convert_roundtype()
 ///Allows rounds to basically be "rerolled" should the initial premise fall through
 /datum/game_mode/proc/convert_roundtype()
-	var/list/datum/game_mode/runnable_modes = config.get_runnable_modes()
+	var/living_crew = 0
+
+	for(var/mob/Player in mob_list)
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+			living_crew++
+	if(living_crew / joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
+		message_admins("Convert_roundtype failed due to too many dead people. Limit is [config.midround_antag_life_check * 100]% living crew")
+		return 0
+
+	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew)
+	var/list/datum/game_mode/usable_modes = list()
 	for(var/datum/game_mode/G in runnable_modes)
-		if(!G.reroll_friendly)	del(G)
+		if(G.reroll_friendly)
+			usable_modes += G
+		else
+			del(G)
 
 	SSshuttle.emergencyNoEscape = 0 //Time to get the fuck out of here
 
-	if(!runnable_modes)	return 0
+	if(!usable_modes)
+		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
+		return 0
 
-	var/list/datum/game_mode/replacementmode = pickweight(runnable_modes)
+	replacementmode = pickweight(usable_modes)
 
 	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out
 		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE)
@@ -111,12 +129,8 @@
 			if(SSshuttle.emergency.timeLeft(1) < initial(SSshuttle.emergencyCallTime)*0.5)
 				return 1
 
-	var/living_crew = 0
-
-	for(var/mob/Player in mob_list)
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
-			living_crew++
-	if(living_crew / joined_player_list.len <= 0.7) //If a lot of the player base died, we start fresh
+	if(world.time >= (config.midround_antag_time_check * 600))
+		message_admins("Convert_roundtype failed due to round length. Limit is [config.midround_antag_time_check] minutes.")
 		return 0
 
 	var/list/antag_canadates = list()
@@ -126,8 +140,8 @@
 			antag_canadates += H
 
 	if(!antag_canadates)
-		message_admins("The roundtype has been converted, antagonists may have been created")
-		return 1
+		message_admins("Convert_roundtype failed due to no antag canadates.")
+		return 0
 
 	antag_canadates = shuffle(antag_canadates)
 
@@ -136,17 +150,18 @@
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
 
+	message_admins("The roundtype will be converted. If you feel that the round should not continue, <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
+
 	spawn(rand(1800,4200)) //somewhere between 3 and 7 minutes from now
 		for(var/mob/living/carbon/human/H in antag_canadates)
 			replacementmode.make_antag_chance(H)
-
+		round_converted = 2
 		message_admins("The roundtype has been converted, antagonists may have been created")
-
 	return 1
 
 ///process()
 ///Called by the gameticker
-/datum/game_mode/proc/process()
+/datum/game_mode/process()
 	return 0
 
 
@@ -345,7 +360,7 @@ proc/display_roundstart_logout_report()
 				continue //AFK client
 			if(L.stat)
 				if(L.suiciding)	//Suicider
-					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<span class='userdanger'>Suicide</span>)\n"
+					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<span class='boldannounce'>Suicide</span>)\n"
 					continue //Disconnected client
 				if(L.stat == UNCONSCIOUS)
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (Dying)\n"
@@ -359,17 +374,17 @@ proc/display_roundstart_logout_report()
 			if(D.mind && D.mind.current == L)
 				if(L.stat == DEAD)
 					if(L.suiciding)	//Suicider
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='userdanger'>Suicide</span>)\n"
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>Suicide</span>)\n"
 						continue //Disconnected client
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (Dead)\n"
 						continue //Dead mob, ghost abandoned
 				else
 					if(D.can_reenter_corpse)
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='userdanger'>This shouldn't appear.</span>)\n"
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>This shouldn't appear.</span>)\n"
 						continue //Lolwhat
 					else
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='userdanger'>Ghosted</span>)\n"
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>Ghosted</span>)\n"
 						continue //Ghosted while alive
 
 

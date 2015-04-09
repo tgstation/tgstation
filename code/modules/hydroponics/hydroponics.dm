@@ -1,6 +1,6 @@
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = 1
 	anchored = 1			// anchored == 2 means the hoses are screwed in place
@@ -28,7 +28,7 @@
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
 /obj/machinery/hydroponics/constructable/New()
@@ -242,30 +242,33 @@ obj/machinery/hydroponics/update_icon()
 	UpdateDescription()
 
 	if(planted)
+		var/image/I
 		if(dead)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-dead")
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-dead")
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
+				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
 			else
-				overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-harvest")
+				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-harvest")
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages ) // Make sure it won't crap out due to HERPDERP 6 stages only
-			overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
 			lastproduce = age //Cheating by putting this here, it means that it isn't instantly ready to harvest
 		else
-			overlays += image('icons/obj/hydroponics.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
+		I.layer = MOB_LAYER + 0.1
+		overlays += I
 
 		if(waterlevel <= 10)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_lowwater3")
+			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3")
 		if(nutrilevel <= 2)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_lownutri3")
+			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3")
 		if(health <= (myseed.endurance / 2))
-			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_lowhealth3")
+			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3")
 		if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_alert3")
+			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3")
 		if(harvest)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state = "over_harvest3")
+			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3")
 
 	if(istype(myseed,/obj/item/seeds/glowshroom))
 		SetLuminosity(round(myseed.potency / 10))
@@ -402,7 +405,8 @@ obj/machinery/hydroponics/proc/mutatepest()
 
 obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 
-	myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
+	if(myseed)
+		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
 	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
@@ -842,7 +846,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 			podman.ckey = ckey_holder
 		podman.gender = blood_gender
 		podman.faction |= factions
-		hardset_dna(podman,null,null,podman.real_name,blood_type,/datum/species/plant/pod)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		if(!mutant_color)
+			mutant_color = "#59CE00"
+		hardset_dna(podman,null,null,podman.real_name,blood_type,/datum/species/plant/pod,mutant_color)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two
@@ -945,7 +951,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	density = 0
 	use_power = 0
@@ -958,18 +964,18 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 
 	if(planted)
 		if(dead)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-dead")
+			overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-dead")
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-grow[myseed.growthstages]")
+				overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-grow[myseed.growthstages]")
 			else
-				overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-harvest")
+				overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-harvest")
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages )
-			overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-grow[round(t_growthstate)]")
+			overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-grow[round(t_growthstate)]")
 			lastproduce = age
 		else
-			overlays += image('icons/obj/hydroponics.dmi', icon_state= "[myseed.species]-grow[myseed.growthstages]")
+			overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-grow[myseed.growthstages]")
 
 	if(istype(myseed,/obj/item/seeds/glowshroom))
 		SetLuminosity(round(myseed.potency/10))

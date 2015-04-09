@@ -27,7 +27,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
 	var/last_text //No text spamming
-	var/last_honk //Also no honk spamming that's bad too
+	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
@@ -301,6 +301,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if (cartridge)
 					if (cartridge.access_clown)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png> Honk Synthesizer</a></li>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=Trombone'><img src=pda_honk.png> Sad Trombone</a></li>"
 					if (cartridge.access_manifest)
 						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 					if(cartridge.access_status_display)
@@ -557,9 +558,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else if((!isnull(cartridge)) && (cartridge.access_engine))
 					scanmode = 4
 			if("Honk")
-				if ( !(last_honk && world.time < last_honk + 20) )
+				if ( !(last_noise && world.time < last_noise + 20) )
 					playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
-					last_honk = world.time
+					last_noise = world.time
+			if("Trombone")
+				if ( !(last_noise && world.time < last_noise + 20) )
+					playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1)
+					last_noise = world.time
 			if("Gas Scan")
 				if(scanmode == 5)
 					scanmode = 0
@@ -809,15 +814,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					t = Gibberish(t, signal.data["compression"] + 50)
 
 	if(useMS && useTC) // only send the message if it's stable
-		if(useTC != 2) // Does our recepient have a broadcaster on their level?
-			U << "ERROR: Cannot reach recepient."
+		if(useTC != 2) // Does our recipient have a broadcaster on their level?
+			U << "ERROR: Cannot reach recipient."
 			return
 		useMS.send_pda_message("[P.owner]","[owner]","[t]")
 
 		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
 		for(var/mob/M in player_list)
-			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTPDA))
+			if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
 
 		if (!P.silent)
@@ -840,9 +845,23 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		U << "<span class='notice'>ERROR: Server isn't responding.</span>"
 
+/obj/item/device/pda/AltClick()
+	..()
+
+	if(issilicon(usr))
+		return
+
+	if(can_use(usr))
+		if(id)
+			remove_id()
+		else
+			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
+	else
+		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
-	set name = "Remove id"
+	set name = "Eject ID"
 	set src in usr
 
 	if(issilicon(usr))
@@ -859,7 +878,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/verb/verb_remove_pen()
 	set category = "Object"
-	set name = "Remove pen"
+	set name = "Remove Pen"
 	set src in usr
 
 	if(issilicon(usr))

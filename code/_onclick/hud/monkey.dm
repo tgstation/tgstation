@@ -74,6 +74,15 @@
 	adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
+	inv_box.name = "head"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "head"
+	inv_box.screen_loc = ui_monkey_head
+	inv_box.slot_id = slot_head
+	inv_box.layer = 19
+	adding += inv_box
+
+	inv_box = new /obj/screen/inventory()
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
@@ -86,33 +95,8 @@
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
-	mymob.oxygen = new /obj/screen()
-	mymob.oxygen.icon_state = "oxy0"
-	mymob.oxygen.name = "oxygen"
-	mymob.oxygen.screen_loc = ui_oxygen
-
-	mymob.pressure = new /obj/screen()
-	mymob.pressure.icon_state = "pressure0"
-	mymob.pressure.name = "pressure"
-	mymob.pressure.screen_loc = ui_pressure
-
-	mymob.toxin = new /obj/screen()
-	mymob.toxin.icon_state = "tox0"
-	mymob.toxin.name = "toxin"
-	mymob.toxin.screen_loc = ui_toxin
-
 	mymob.internals = new /obj/screen/internals()
 	mymob.internals.screen_loc = ui_internal
-
-	mymob.fire = new /obj/screen()
-	mymob.fire.icon_state = "fire0"
-	mymob.fire.name = "fire"
-	mymob.fire.screen_loc = ui_fire
-
-	mymob.bodytemp = new /obj/screen()
-	mymob.bodytemp.icon_state = "temp1"
-	mymob.bodytemp.name = "body temperature"
-	mymob.bodytemp.screen_loc = ui_temp
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon_state = "health0"
@@ -121,7 +105,7 @@
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
-	mymob.pullin.icon_state = "pull0"
+	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 
 	lingchemdisplay = new /obj/screen/ling/chems()
@@ -164,5 +148,5 @@
 	using.screen_loc = ui_pull_resist
 	adding += using
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other

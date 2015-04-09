@@ -38,7 +38,7 @@
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = 0
-	var/doortype = null
+	var/doortype = /obj/structure/door_assembly/door_assembly_0
 	var/justzap = 0
 	var/safe = 1
 	normalspeed = 1
@@ -1028,11 +1028,11 @@ About the new airlock wires panel:
 		if( !hasPower() || isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) )
 			return
 	if(safe)
-		if(locate(/mob/living) in get_turf(src))
-		//	playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)	//THE BUZZING IT NEVER STOPS	-Pete
-			spawn (60)
-				autoclose()
-			return
+		for(var/atom/movable/M in get_turf(src))
+			if(M.density && M != src) //something is blocking the door
+				spawn (60)
+					autoclose()
+				return
 
 	if(forced < 2)
 		if(emagged)

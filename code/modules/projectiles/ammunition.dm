@@ -34,6 +34,25 @@
 		BB = new projectile_type(src)
 	return
 
+/obj/item/ammo_casing/attackby(obj/item/ammo_box/box as obj, mob/user as mob, params)
+	if (!istype(box, /obj/item/ammo_box))
+		return
+	if(isturf(src.loc))
+		var/boolets = 0
+		for(var/obj/item/ammo_casing/bullet in src.loc)
+			if (box.stored_ammo.len >= box.max_ammo)
+				break
+			if (bullet.BB)
+				if (box.give_round(bullet, 0))
+					boolets++
+			else
+				continue
+		if (boolets > 0)
+			box.update_icon()
+			user << "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>"
+		else
+			user << "<span class='notice'>You fail to collect anything.</span>"
+
 //Boxes of ammo
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
@@ -55,7 +74,6 @@
 	var/caliber
 	var/multiload = 1
 
-
 /obj/item/ammo_box/New()
 	for(var/i = 1, i <= max_ammo, i++)
 		stored_ammo += new ammo_type(src)
@@ -72,7 +90,8 @@
 		return b
 
 /obj/item/ammo_box/proc/give_round(var/obj/item/ammo_casing/R, var/replace_spent = 0)
-	if(!R || (R.caliber != caliber))
+	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
+	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
 		return 0
 
 	if (stored_ammo.len < max_ammo)
