@@ -132,7 +132,7 @@ datum/design/bluespacebodybag
 	name = "Thermals implant"
 	desc = "These cybernetic eyes will give you Thermal vision. Vertical slit pupil included."
 	id = "ci-thermals"
-	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5, "magnets" = 5, "syndicate" = 4)
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5, "magnets" = 5, "syndicate" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 600, "$gold" = 600, "$plasma" = 1000, "$diamond" = 2000)
 	build_path = /obj/item/cybernetic_implant/eyes/thermals
