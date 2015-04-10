@@ -5,7 +5,6 @@
 	school = "evocation"
 	charge_type = Sp_RECHARGE
 	charge_max = 150
-	charge_counter = 0
 	spell_flags = 0
 	invocation = "H'NK!"
 	invocation_type = SpI_SHOUT
@@ -19,7 +18,7 @@
 	hud_state = "wiz_shoes"
 
 
-/spell/targeted/shoesnatch/cast(list/targets, mob/user = usr)
+/spell/targeted/shoesnatch/cast(list/targets, mob/user = user)
 	..()
 	for(var/mob/living/carbon/human/target in targets)
 		var /obj/old_shoes = target.shoes
@@ -29,4 +28,4 @@
 			target.drop_from_inventory(old_shoes)
 			target.visible_message(	"<span class='danger'>[target]'s shoes suddenly vanish!</span>", \
 									"<span class='danger'>Your shoes suddenly vanish!</span>")
-			usr.put_in_active_hand(old_shoes)
+			user.put_in_active_hand(old_shoes)
