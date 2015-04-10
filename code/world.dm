@@ -211,6 +211,9 @@
 		s["admins"] = admins
 
 		return list2params(s)
+	else if (findtext(T,"notes:"))
+		var/notekey = copytext(T, 7)
+		return list2params(exportnotes(notekey))
 
 
 /world/Reboot(reason)

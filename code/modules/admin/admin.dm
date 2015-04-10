@@ -310,7 +310,30 @@ var/global/floorIsLava = 0
 	if(!infos || !infos.len) return 0
 	else return 1
 
+/proc/exportnotes(var/key as text)
+	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+	var/list/infos
+	info >> infos
+	var/list/noteslist = list()
+	if(!infos)
+		return list("1" = "No notes found for [key]")
+	else
+		var/i = 0
 
+		for(var/datum/player_info/I in infos)
+			i += 1
+			if(!I.timestamp)
+				I.timestamp = "Pre-4/3/2012"
+			if(!I.rank)
+				I.rank = "N/A"
+			/*noteslist["note:[i]"] = "[I.content]"
+			noteslist["author:[i]"] = "[I.author]"
+			noteslist["rank:[i]"] = "[I.rank]"
+			noteslist["timestamp:[i]"] = "[I.timestamp]"*/
+			noteslist["[i]"] = "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font>"
+	if(!noteslist.len)
+		noteslist["1"] = "No notes found for [key]"
+	return noteslist
 /datum/admins/proc/show_player_info(var/key as text)
 	set category = "Admin"
 	set name = "Show Player Info"
