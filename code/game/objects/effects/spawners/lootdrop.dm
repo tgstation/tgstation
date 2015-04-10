@@ -118,3 +118,24 @@
 				/obj/item/weapon/relic = 3,
 				"" = 11
 				)
+
+/obj/effect/spawner/lootdrop/cyberimplants_op
+	lootdoubles = 0
+	loot = list(/obj/item/cybernetic_implant/chest/reviver = 1, /obj/item/cybernetic_implant/chest/nutriment/plus = 1,
+				/obj/item/cybernetic_implant/eyes/thermals = 2, /obj/item/cybernetic_implant/eyes/xray = 1,
+				/obj/item/cybernetic_implant/brain/anti_drop = 1, /obj/item/cybernetic_implant/brain/anti_stun = 1)
+
+/obj/effect/spawner/lootdrop/cyberimplants_op/New()
+	var/probability = rand(1,100)
+	if(probability < 50)
+		lootcount = 1
+		return ..()
+	if(probability < 75)
+		lootcount = 2
+		return ..()
+	if(probability < 95)
+		lootcount = 3
+		return ..()
+	else
+		lootcount = 4
+		return ..()
