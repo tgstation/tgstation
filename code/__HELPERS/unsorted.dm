@@ -795,6 +795,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/delayfraction = round(delay/numticks)
 	var/atom/Uloc = user.loc
 	var/holding = user.get_active_hand()
+	var/holdingnull = 1 //User is not holding anything
+	if(holding)
+		holdingnull = 0 //User is holding a tool of some kind
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
@@ -804,9 +807,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
 			return 0 // Target no longer exists or has moved
 
-		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
-			if(!holding)
-				return 0
+		if(needhand)
+			//This might seem like an odd check, but you can still need a hand even when it's empty
+			//i.e the hand is used to insert some item/tool into the construction
+			if(!holdingnull) 
+				if(!holding)
+					return 0
 			if(user.get_active_hand() != holding)
 				return 0
 
