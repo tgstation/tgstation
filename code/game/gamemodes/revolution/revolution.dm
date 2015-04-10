@@ -213,7 +213,7 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
-	if(config.continuous_round_rev)
+	if(config.continuous["revolution"])
 		if(finished != 0)
 			SSshuttle.emergencyNoEscape = 0
 		return ..()
