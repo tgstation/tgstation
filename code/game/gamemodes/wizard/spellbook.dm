@@ -72,7 +72,7 @@
 			<A href='byond://?src=\ref[src];spell_choice=frenchcurse'>The French Curse</A> (30)<BR>
 			<I>This spell silences sombody adjacent to you, and curses them with an unremovable Mime costume.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=shoesnatch'>Shoe Snatching Charm</A> (15)<BR>
-			<I>This spell will remove your victim's shoes and materialize them in your hands.</I><BR>
+			<I>This spell will remove your victim's shoes and materialize them in your hands. This spell does not recquire robes to cast.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>
 			<I>This spell will curse a person to immediately turn into an unmoving statue. The effect will eventually wear off if the statue is not destroyed.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=arsenath'>Butt-Bot's Revenge</A> (50)<BR>
