@@ -4,7 +4,7 @@
 	set desc = "Shows a high scale rendering of the current map in your browser."
 	set hidden = 1
 
-	if(!renders_url || renders_url == "")
+	if(!config.renders_url || config.renders_url == "")
 		src << "<span class='danger'>The Map Renders url has not been set in the server configuration.</span>"
 		return
 	if(alert("This will open the map render(s) in your browser. Are you sure?",,"Yes","No")=="No")
@@ -12,11 +12,11 @@
 	if(map)
 		switch(map.nameShort)
 			if("meta")
-				src << link("[renders_url]/metaclub/")
+				src << link("[config.renders_url]/metaclub/")
 			if("deff")
-				src << link("[renders_url]/defficiency/")
+				src << link("[config.renders_url]/defficiency/")
 			if("box")
-				src << link("[renders_url]/tgstation/")
+				src << link("[config.renders_url]/tgstation/")
 			else
 				src << "<span class='warning'>No map render for [map.nameLong], bug Pomf about it!</span>"
 	return
