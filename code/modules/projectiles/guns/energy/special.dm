@@ -125,44 +125,9 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/emproof"
 	needs_permit = 0 // Aparently these are safe to carry? I'm sure Golliaths would disagree.
 	var/overheat = 0
+	var/overheat_time = 16
 	var/recent_reload = 1
-	var/range_add = 0
-	var/overheat_time = 20
-	upgrades = list("diamond" = 0, "screwdriver" = 0, "plasma" = 0)
 	unique_rename = 1
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/newshot()
-	..()
-	if(chambered && chambered.BB)
-		var/obj/item/projectile/kinetic/charge = chambered.BB
-		charge.range += range_add
-
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/weapon/screwdriver) && upgrades["screwdriver"] < 3)
-		upgrades["screwdriver"]++
-		overheat_time -= 1
-		user << "<span class='info'>You tweak [src]'s thermal exchanger.</span>"
-
-
-	else if(istype(W, /obj/item/stack))
-		var/obj/item/stack/S = W
-
-		if(istype(S, /obj/item/stack/sheet/mineral/diamond) && upgrades["diamond"] < 3)
-			upgrades["diamond"]++
-			overheat_time -= 3
-			user << "<span class='info'>You upgrade [src]'s thermal exchanger with diamonds.</span>"
-			S.use(1)
-
-		if(istype(S, /obj/item/stack/sheet/mineral/plasma) && upgrades["plasma"] < 2)
-			upgrades["plasma"]++
-			range_add++
-			user << "<span class='info'>You upgrade [src]'s accelerating chamber with plasma.</span>"
-			if(prob(5 * (range_add + 1) * (range_add + 1)) && power_supply)
-				power_supply.rigged = 1 // This is dangerous!
-			S.use(1)
-
-	..()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1
@@ -170,6 +135,7 @@
 		overheat = 0
 		recent_reload = 0
 	..()
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
@@ -196,6 +162,7 @@
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	unique_rename = 0
+	overheat_time = 20
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
@@ -213,65 +180,36 @@
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
-	force = 15
-	damtype = "fire"
 	modifystate = -1
 	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=2;engineering=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
 	flags = CONDUCT | OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	can_charge = 0
-	var/volume = 15
 
-/obj/item/weapon/gun/energy/plasmacutter/New()
+/obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()
-	create_reagents(volume)
-
-/obj/item/weapon/gun/energy/plasmacutter/newshot()
-	if (!ammo_type || !reagents)	return
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-
-	var/amount = shot.e_cost / 100
-
-	if(!reagents.get_reagent_amount("plasma") >= amount)
-		return
-
-	reagents.remove_reagent("plasma", amount)
-	chambered = shot
-	chambered.newshot()
-	return
-
-/obj/item/weapon/gun/energy/plasmacutter/examine()
-	..()
-	usr << "Has [reagents.get_reagent_amount("plasma")] unit\s of plasma left."
-	return
+	if(power_supply)
+		user <<"<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>"
 
 /obj/item/weapon/gun/energy/plasmacutter/attackby(var/obj/item/A, var/mob/user)
-	if(reagents.maximum_volume > reagents.total_volume)
-		if(istype(A, /obj/item/stack/sheet/mineral/plasma))
-			var/obj/item/stack/sheet/S = A
-			S.use(1)
-			reagents.add_reagent("plasma", 20)
-			user << "<span class='info'>You refill [src] with [S]. [reagents.get_reagent_amount("plasma")] units of plasma left.</span>"
-		if(istype(A, /obj/item/weapon/ore/plasma))
-			qdel(A)
-			reagents.add_reagent("plasma", 10)
-			user << "<span class='info'>You refill [src] with [A]. [reagents.get_reagent_amount("plasma")] units of plasma left.</span>"
-		if(istype(A, /obj/item/weapon/storage/bag/ore))
-			if(locate(/obj/item/weapon/ore/plasma) in A)
-				attackby(locate(/obj/item/weapon/ore/plasma) in A, user)
-	..()
-
-/obj/item/weapon/gun/energy/plasmacutter/charged/New()
-	..()
-	reagents.add_reagent("plasma", volume)
+	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
+		var/obj/item/stack/sheet/S = A
+		S.use(1)
+		power_supply.give(1000)
+		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+	else if(istype(A, /obj/item/weapon/ore/plasma))
+		qdel(A)
+		power_supply.give(500)
+		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+	else
+		..()
 
 /obj/item/weapon/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
 	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=3;engineering=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
-	volume = 25
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
