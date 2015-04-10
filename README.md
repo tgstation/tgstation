@@ -21,7 +21,7 @@ This will take a while to download, but it provides an easier method for updatin
 
 Keep in mind that we have multiple branches for various purposes.
 
-* *master* - "stable" code, used on the main server.
+* *master* - "stable" code, it was used on the main server until we realized we like living on the edge  :sunglasses:.
 * *Bleeding-Edge* - The latest unstable code.  _Please do any development against this branch!_
 
 ### INSTALLATION
