@@ -795,6 +795,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/delayfraction = round(delay/numticks)
 	var/atom/Uloc = user.loc
 	var/holding = user.get_active_hand()
+	var/holdingnull = 1
+	if(holding)
+		holdingnull = 0
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
@@ -805,8 +808,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 0 // Target no longer exists or has moved
 
 		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
-			if(!holding)
-				return 0
+			if(!holdingnull)
+				if(!holding)
+					return 0
 			if(user.get_active_hand() != holding)
 				return 0
 
