@@ -15,6 +15,12 @@
 	if(name == "alien")
 		name = text("alien ([rand(1, 1000)])")
 	real_name = name
+
+	AddAbility(new/obj/effect/proc_holder/alien/plant(null))
+	AddAbility(new/obj/effect/proc_holder/alien/whisper(null))
+	AddAbility(new/obj/effect/proc_holder/alien/transfer(null))
+	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
+
 	..()
 
 /mob/living/carbon/alien/humanoid/movement_delay()
