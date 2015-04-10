@@ -270,3 +270,5 @@ RESPAWN_AS_MOMMI
 ##
 ##  Do NOT share this, it's like a password.
 #MEDIA_SECRET_KEY youshouldchangethisbro
+
+RENDERS_URL http://ss13.pomf.se/img/map-renders
