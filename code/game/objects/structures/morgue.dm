@@ -323,7 +323,7 @@
 			return
 
 	else
-		var/inside = get_contents_in_object(src, /atom/movable)
+		var/inside = get_contents_in_object(src)
 
 		if (locate(/obj/item/weapon/disk/nuclear) in inside)
 			user << "<SPAN CLASS='warning'>You get the feeling that you shouldn't cremate one of the items in the cremator.</SPAN>"
