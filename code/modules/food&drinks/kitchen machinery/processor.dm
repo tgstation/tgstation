@@ -48,11 +48,11 @@
 
 
 /* mobs */
-/datum/food_processor_process/mob/process(loc, what)
+/datum/food_processor_process/mob/process_food(loc, what)
 	..()
 
 
-/datum/food_processor_process/mob/slime/process(loc, what)
+/datum/food_processor_process/mob/slime/process_food(loc, what)
 	var/mob/living/simple_animal/slime/S = what
 	var/C = S.cores
 	if(S.stat != DEAD)
@@ -67,7 +67,7 @@
 /datum/food_processor_process/mob/slime/input = /mob/living/simple_animal/slime
 /datum/food_processor_process/mob/slime/output = null
 
-/datum/food_processor_process/mob/monkey/process(loc, what)
+/datum/food_processor_process/mob/monkey/process_food(loc, what)
 	var/mob/living/carbon/monkey/O = what
 	if (O.client) //grief-proof
 		O.loc = loc
@@ -154,7 +154,7 @@
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 		use_power(500)
 		sleep(P.time)
-		P.process(src.loc, O)
+		P.process_food(src.loc, O)
 		src.processing = 0
 	src.visible_message("<span class='notice'>\the [src] finished processing.</span>")
 
