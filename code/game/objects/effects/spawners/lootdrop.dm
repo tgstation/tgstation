@@ -120,6 +120,7 @@
 				)
 
 /obj/effect/spawner/lootdrop/cyberimplants_op
+	name = "cybernetic implants spawner"
 	lootdoubles = 0
 	loot = list(/obj/item/cybernetic_implant/chest/reviver = 1, /obj/item/cybernetic_implant/chest/nutriment/plus = 1,
 				/obj/item/cybernetic_implant/eyes/thermals = 2, /obj/item/cybernetic_implant/eyes/xray = 1,
