@@ -668,7 +668,7 @@
 			if(istype(H.back, /obj/item/weapon/tank/jetpack))
 				J = H.back
 			if(istype(H.wear_suit,/obj/item/clothing/suit/space/hardsuit)) //copypasta but faster implementation currently
-				var/obj/item/clothing/suit/space/hardsuit/engine/C = H.wear_suit
+				var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
 				P = C.jetpack
 			if(J)
 				if(J.allow_thrust(0.01, H))
