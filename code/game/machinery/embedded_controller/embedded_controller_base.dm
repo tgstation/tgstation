@@ -14,7 +14,7 @@ datum/computer/file/embedded_program/proc/receive_user_command(command)
 datum/computer/file/embedded_program/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
 	return null
 
-datum/computer/file/embedded_program/proc/process()
+datum/computer/file/embedded_program/process()
 	return 0
 
 obj/machinery/embedded_controller

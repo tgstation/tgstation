@@ -1,6 +1,7 @@
 //Corgi
 /mob/living/simple_animal/pet
 	icon = 'icons/mob/pets.dmi'
+	mob_size = MOB_SIZE_SMALL
 	var/obj/item/clothing/tie/petcollar/pcollar = null
 	var/image/collar = null
 	var/image/pettag = null
@@ -53,7 +54,7 @@
 	emote_see = list("shakes its head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi
 	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "bops"
@@ -524,6 +525,8 @@
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
 	shaved = 0
+	density = 0
+	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
 //puppies cannot wear anything.

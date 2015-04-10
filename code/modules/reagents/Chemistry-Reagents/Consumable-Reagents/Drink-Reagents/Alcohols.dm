@@ -617,3 +617,10 @@ datum/reagent/consumable/ethanol/silencer/on_mob_life(var/mob/living/M as mob)
 		M.heal_organ_damage(1,1)
 	..()
 	return
+
+datum/reagent/consumable/ethanol/drunkenblumpkin
+	name = "Drunken Blumpkin"
+	id = "drunkenblumpkin"
+	description = "A weird mix of whiskey and blumpkin juice."
+	color = "#1EA0FF" // rgb: 102, 67, 0
+	boozepwr = 35
