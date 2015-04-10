@@ -323,6 +323,7 @@ var/global/list/paint_variants = list(
 
 /obj/item/weapon/tile_painter/Destroy() //do I even have to do that
 	selected = null
+	..() // FUCKING DUMB
 
 /obj/item/weapon/tile_painter/attack_self(mob/user as mob)
 	show_menu(user)
