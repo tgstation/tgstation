@@ -1,6 +1,6 @@
 # vgstation
 
-[Website](http://ss13.undo.it) - [Code](http://github.com/d3athrow/vgstation13/) - [IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation)
+[Website](http://ss13.pomf.se) - [Code](http://github.com/d3athrow/vgstation13/) - [IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation)
 
 ---
  
