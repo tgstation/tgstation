@@ -140,8 +140,8 @@
 	icon_dead = "blobbernaut_dead"
 	health = 240
 	maxHealth = 240
-	melee_damage_lower = 10
-	melee_damage_upper = 10
+	melee_damage_lower = 0
+	melee_damage_upper = 0
 	attacktext = "hits"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	minbodytemp = 0
