@@ -27,7 +27,7 @@
 
 	/* objs */
 /datum/food_processor_process/meat
-	input = /obj/item/weapon/reagent_containers/food/snacks/meat
+	input = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
 /datum/food_processor_process/potato
@@ -45,6 +45,18 @@
 /datum/food_processor_process/spaghetti
 	input = /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	output = /obj/item/weapon/reagent_containers/food/snacks/spaghetti
+
+/datum/food_processor_process/corn
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
+	output = /obj/item/weapon/reagent_containers/food/snacks/tortilla
+
+/datum/food_processor_process/parsnip
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
+	output = /obj/item/weapon/reagent_containers/food/snacks/roastparsnip
+
+/datum/food_processor_process/sweetpotato
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato
+	output = /obj/item/weapon/reagent_containers/food/snacks/yakiimo
 
 
 /* mobs */
