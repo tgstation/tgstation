@@ -16,6 +16,7 @@
 	robust_searching = 1
 	stat_attack = 2
 	environment_smash = 0
+	speak_emote = list("squeaks")
 	var/datum/mind/origin
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(var/mob/living/carbon/human/victim)
