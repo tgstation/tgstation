@@ -115,7 +115,7 @@
 				dat += "<BR>Effective quality rating of machine components : [ratingpool/componentamount].<BR>"
 		else
 			dat += "No components detected. Please ensure the scanning unit is still functional.<BR>" //Shouldn't happen
-		dat += "<BR><I>Note : You will be returned to the input screen shortly after this window is closed.</I>"
+		dat += "<BR><I>Note : You will be returned to the input menu shortly.</I>"
 
 		user.visible_message("<span class='notice'>[user] looks at \the [src]'s HUD as it starts a full data scan on \the [M].</span>", \
 		"<span class='notice'>You take a closer look at \the [src]'s HUD as it starts data scanning \the [M].</span>")
@@ -124,7 +124,7 @@
 			onclose(user, "componentanal")
 
 			spawn(30)
-				component_interaction(user, M)
+				component_interaction(M, user)
 			return
 		else
 			user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
@@ -141,28 +141,28 @@
 			//Yes, an istype list. We don't have helpers for this, and this coder is not that sharp
 			if(istype(P, /obj/item/weapon/stock_parts/capacitor))
 				for(var/obj/item/weapon/stock_parts/capacitor/R in componentstorage)
-					if(R.rating > P.rating && P.loc != src) //Kind of a hack, but makes sure we don't replace components that already were
+					if(R.rating > P.rating && P in M.component_parts) //Kind of a hack, but makes sure we don't replace components that already were
 						sleep(10) //One second per component
 						perform_indiv_replace(P, R, M)
 						//Do not break in case we find even better
 			if(istype(P, /obj/item/weapon/stock_parts/scanning_module))
 				for(var/obj/item/weapon/stock_parts/scanning_module/R in componentstorage)
-					if(R.rating > P.rating && P.loc != src)
+					if(R.rating > P.rating && P in M.component_parts)
 						sleep(10) //One second per component
 						perform_indiv_replace(P, R, M)
 			if(istype(P, /obj/item/weapon/stock_parts/manipulator))
 				for(var/obj/item/weapon/stock_parts/manipulator/R in componentstorage)
-					if(R.rating > P.rating && P.loc != src)
+					if(R.rating > P.rating && P in M.component_parts)
 						sleep(10) //One second per component
 						perform_indiv_replace(P, R, M)
 			if(istype(P, /obj/item/weapon/stock_parts/micro_laser))
 				for(var/obj/item/weapon/stock_parts/micro_laser/R in componentstorage)
-					if(R.rating > P.rating && P.loc != src)
+					if(R.rating > P.rating && P in M.component_parts)
 						sleep(10) //One second per component
 						perform_indiv_replace(P, R, M)
 			if(istype(P, /obj/item/weapon/stock_parts/matter_bin))
 				for(var/obj/item/weapon/stock_parts/matter_bin/R in componentstorage)
-					if(R.rating > P.rating && P.loc != src)
+					if(R.rating > P.rating && P in M.component_parts)
 						sleep(10) //One second per component
 						perform_indiv_replace(P, R, M)
 			//Good thing there's only a few stock parts types
@@ -172,7 +172,7 @@
 		"<span class='notice'>You pull \the [src] out of \the [M] as a message flashes on its HUD stating it has finished remplacing components and will return to the input screen shortly.</span>")
 
 		spawn(30)
-			component_interaction(user, M)
+			component_interaction(M, user)
 
 //So we don't copy the same thing a thousand fucking times
 /obj/item/device/component_exchanger/proc/perform_indiv_replace(var/obj/item/weapon/stock_parts/P, var/obj/item/weapon/stock_parts/R, var/obj/machinery/M)
@@ -215,7 +215,7 @@
 			dat += "Currently loaded with [componentstorage.len] out of [maxcomponents] possible components.<BR>"
 		else
 			dat += "No components detected. Please check the component container or insert a component for testing.<BR>"
-		dat += "<BR><I>Note : You will be returned to the input screen shortly after this window is closed.</I>"
+		dat += "<BR><I>Note : You will be returned to the input menu shortly.</I>"
 
 		user.visible_message("<span class='notice'>[user] looks at \the [src]'s HUD as it starts a full data scan on its component container.</span>", \
 		"<span class='notice'>You take a closer look at \the [src]'s HUD as it starts data scanning its component container.</span>")
