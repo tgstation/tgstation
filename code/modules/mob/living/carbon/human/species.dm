@@ -703,6 +703,8 @@
 //////////////////
 
 /datum/species/proc/spec_attack_hand(var/mob/living/carbon/human/M, var/mob/living/carbon/human/H)
+	if(!istype(M)) //sanity check for drones.
+		return
 	if((M != H) && H.check_shields(0, M.name))
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
@@ -715,29 +717,8 @@
 				if(H != M)
 					add_logs(M, H, "shaked")
 				return 1
-
-			//CPR
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "<span class='notice'>Remove your mask!</span>"
-				return 0
-			if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "<span class='notice'>Remove their mask!</span>"
-				return 0
-
-			if(H.cpr_time < world.time + 30)
-				add_logs(M, H, "CPRed")
-				M.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>", \
-								"<span class='notice'>You try to perform CPR on [H]. Hold still!</span>")
-				if(!do_mob(M, H))
-					M << "<span class='warning'>You fail to perform CPR on [H]!</span>"
-					return 0
-				if((H.health >= -99 && H.health <= 0))
-					H.cpr_time = world.time
-					var/suff = min(H.getOxyLoss(), 7)
-					H.adjustOxyLoss(-suff)
-					H.updatehealth()
-					M.visible_message("[M] performs CPR on [H]!")
-					H << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
+			else
+				M.do_cpr(H)
 
 		if("grab")
 			H.grabbedby(M)

@@ -138,9 +138,6 @@
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
 
-/mob/living/carbon/alien/SpeciesCanConsume()
-	return 1 // Aliens can eat, and they can be fed food/drink
-
 /mob/living/carbon/alien/Stat()
 	..()
 
