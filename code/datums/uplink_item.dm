@@ -117,16 +117,24 @@ var/list/uplink_items = list()
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun that fires .45 rounds with a 20-round magazine and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
 	cost = 14
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 40
+
+/datum/uplink_item/dangerous/smg/unrestricted
+	item = /obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
+	gamemodes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/carbine
 	name = "M-90gl Carbine"
 	desc = "A fully-loaded three-round burst carbine that uses 30-round 5.56mm magazines with a togglable underslung 40mm grenade launcher."
 	item = /obj/item/weapon/gun/projectile/automatic/m90
 	cost = 18
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 50
+
+/datum/uplink_item/dangerous/carbine/unrestricted
+	item = /obj/item/weapon/gun/projectile/automatic/m90/unrestricted
+	gamemodes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
@@ -176,7 +184,7 @@ var/list/uplink_items = list()
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r/toy
 	cost = 12
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
 /datum/uplink_item/dangerous/foammachinegun
@@ -293,7 +301,7 @@ var/list/uplink_items = list()
 	desc = "A box of 4 additional 40mm HE grenades for use the M-90gl's underbarrel grenade launcher. Your teammates will thank you to not shoot these down small hallways."
 	item = /obj/item/ammo_box/a40mm
 	cost = 4
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
 	name = "Box Magazine - 7.62x51mm"
@@ -308,7 +316,7 @@ var/list/uplink_items = list()
 	desc = "A box of 40 Donksoft foam riot darts, for reloading any compatible foam dart gun. Don't forget to share!"
 	item = /obj/item/ammo_box/foambox/riot
 	cost = 10
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
 // STEALTHY WEAPONS
@@ -322,7 +330,7 @@ var/list/uplink_items = list()
 	desc = "A box of throwing stars with a high chance of embedding themselves in people's limbs."
 	item = /obj/item/weapon/storage/box/throwing_stars
 	cost = 6
-	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun (with Stun Darts)"
@@ -330,6 +338,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
 	cost = 10
 	surplus = 10
+	excludefrom = list(/datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/sleepy_pen
 	name = "Sleepy Pen"
