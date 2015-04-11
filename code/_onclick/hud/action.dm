@@ -165,6 +165,15 @@
 	UpdateIcon()
 	usr.update_action_buttons()
 
+
+/obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(var/mob/living/user)
+	if(isalien(user))
+		icon_state = "bg_alien"
+	else
+		icon_state = "bg_default"
+	UpdateIcon()
+	return
+
 /obj/screen/movable/action_button/hide_toggle/UpdateIcon()
 	overlays.Cut()
 	var/image/img = image(icon,src,hidden?"show":"hide")
