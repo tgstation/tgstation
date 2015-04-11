@@ -462,6 +462,24 @@
 					dat += "<tr><td><i>Traitor not found!</i></td></tr>"
 			dat += "</table>"
 
+		if(ticker.mode.shadows.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Shadowlings</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.shadows)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
+			dat += "</table>"
+
+		if(ticker.mode.thralls.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Shadowling Thralls</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.thralls)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
+			dat += "</table>"
+
 		if(istype(ticker.mode, /datum/game_mode/blob))
 			var/datum/game_mode/blob/mode = ticker.mode
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
