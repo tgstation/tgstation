@@ -287,7 +287,7 @@
 		unEquip(I,TRUE)
 	update_hands = 1
 	
-/mob/living/carbon/human/interactive/targetRange(var/towhere)
+/mob/living/carbon/human/interactive/proc/targetRange(var/towhere)
 	return get_dist(get_turf(towhere), get_turf(src))
 
 /mob/living/carbon/human/interactive/Life()
