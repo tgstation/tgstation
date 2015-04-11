@@ -115,35 +115,29 @@
 			traitor_prob += 50
 
 
-		if(traitorcount < max_traitors)
+		if (traitorcount < max_traitors)
 			//message_admins("Number of Traitors is below maximum.  Rolling for new Traitor.")
 			//message_admins("The probability of a new traitor is [traitor_prob]%")
 
-			if(prob(traitor_prob))
+			if (prob(traitor_prob))
 				message_admins("Making a new Traitor.")
-				if(!possible_traitors.len)
-					message_admins("No potential traitors.  Cancelling new traitor.")
-					traitorcheckloop()
-					return
-				var/mob/living/newtraitor = pick(possible_traitors)
-				//message_admins("[newtraitor.real_name] is the new Traitor.")
 
-				forge_traitor_objectives(newtraitor.mind)
+				if (possible_traitors.len > 0)
+					var/mob/living/traitor_body = pick(possible_traitors)
 
-				if(istype(newtraitor, /mob/living/silicon))
-					add_law_zero(newtraitor)
+					if (traitor_body)
+						var/datum/mind/traitor_mind = newtraitor.mind
+
+						if (traitor_mind)
+							log_game("[key_name(traitor_body)] has been auto traitor'ed.")
+							traitor_body = null
+							forge_traitor_objectives(traitor_mind)
+							finalize_traitor(traitor_mind)
+							newtraitor << "<SPAN CLASS='danger'><CENTER></BIG>ATTENTION</BIG></CENTER></SPAN><BR><CENTER>It is time to pay your debt to the [syndicate_name()].</CENTER>"
+							greet_traitor(traitor_mind)
 				else
-					equip_traitor(newtraitor)
+					message_admins("No potential traitors.  Cancelling new traitor.")
 
-				traitors += newtraitor.mind
-				newtraitor << "\red <B>ATTENTION:</B> \black It is time to pay your debt to the Syndicate..."
-				newtraitor << "<B>You are now a traitor.</B>"
-				newtraitor.mind.special_role = "traitor"
-				var/obj_count = 1
-				newtraitor << "\blue Your current objectives:"
-				for(var/datum/objective/objective in newtraitor.mind.objectives)
-					newtraitor << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-					obj_count++
 			//else
 				//message_admins("No new traitor being added.")
 		//else
