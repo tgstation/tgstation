@@ -49,10 +49,6 @@
 	if(crit_fail)
 		user << "<span class = 'warning'>The Bluespace generator isn't working.</span>"
 		return
-	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
-		user << "<span class = 'warning'>The Bluespace interfaces of the two devices conflict and malfunction.</span>"
-		del(W)
-		return
 	//BoH+BoH=Singularity, WAS commented out
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 		investigation_log(I_SINGULO,"has become a singularity. Caused by [user.key]")
