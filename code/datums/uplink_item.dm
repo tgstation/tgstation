@@ -370,8 +370,8 @@ var/list/uplink_items = list()
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
 	desc = "Just add water to make your very own hostile to everything space carp. It looks just like a plushie."
-	item = /obj/item/dehy_carp
-	cost = 7
+	item = /obj/item/toy/carpplushie/dehy_carp
+	cost = 3
 
 // STEALTHY TOOLS
 

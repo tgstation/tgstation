@@ -245,6 +245,10 @@ datum/reagent/water
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	var/cooling_temperature = 2
 
+/*
+ *	Water reaction to turf
+ */
+
 datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
@@ -264,20 +268,28 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 			qdel(hotspot)
 	return
 
+/*
+ *	Water reaction to an object
+ */
+
 datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
+	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
 			cube.Expand()
+
+	// Dehydrated carp
+	if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
+		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
+		dehy.Swell() // Makes a carp
+
 	return
 
-datum/reagent/water/reaction_obj(var/obj/O, var/volume)
-	src = null
-	if(istype(O,/obj/item/dehy_carp))
-		var/obj/item/dehy_carp/dehy = O
-		dehy.Swell() // Makes a carp
-		return
+/*
+ *	Water reaction to a mob
+ */
 
 datum/reagent/water/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	if(!istype(M, /mob/living))
