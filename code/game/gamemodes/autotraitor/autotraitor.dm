@@ -120,7 +120,7 @@
 			//message_admins("The probability of a new traitor is [traitor_prob]%")
 
 			if (prob(traitor_prob))
-				message_admins("Making a new Traitor.")
+				message_admins("AUTOTRAITOR: making someone traitor")
 
 				if (possible_traitors.len > 0)
 					var/mob/living/traitor_body = pick(possible_traitors)
@@ -130,6 +130,7 @@
 
 						if (traitor_mind)
 							log_game("[key_name(traitor_body)] has been auto traitor'ed.")
+							message_admins("AUTOTRAITOR: [key_name_admin(traitor_body)] has been auto traitor'ed"]
 							traitor_body << "<SPAN CLASS='danger'><CENTER><BIG>ATTENTION</BIG></CENTER></SPAN><BR><CENTER>It is time to pay your debt to the [syndicate_name()].</CENTER>"
 							traitor_body = null
 							traitors += traitor_mind
@@ -138,7 +139,7 @@
 							finalize_traitor(traitor_mind)
 							greet_traitor(traitor_mind)
 				else
-					message_admins("No potential traitors.  Cancelling new traitor.")
+					message_admins("AUTOTRAITOR: no potential traitors, mission is kill")
 
 			//else
 				//message_admins("No new traitor being added.")
@@ -146,8 +147,6 @@
 			//message_admins("Number of Traitors is at maximum.  Not making a new Traitor.")
 
 		traitorcheckloop()
-
-
 
 /datum/game_mode/traitor/autotraitor/latespawn(mob/living/carbon/human/character)
 	..()
