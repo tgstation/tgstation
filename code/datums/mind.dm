@@ -841,11 +841,11 @@ datum/mind
 							A.show_laws()
 				if ("traitor")
 					if(!(src in ticker.mode.traitors))
+						log_admin("[key_name(usr)] has traitor'ed [key_name(current)].")
 						ticker.mode.traitors += src
 						special_role = "traitor"
-						ticker.mode.greet_traitor(src)
 						ticker.mode.finalize_traitor(src)
-						log_admin("[key_name(usr)] has traitor'ed [key_name(current)].")
+						ticker.mode.greet_traitor(src)
 				if ("autoobjectives")
 					ticker.mode.forge_traitor_objectives(src)
 					usr << "\blue The objectives for traitor [key] have been generated. You can edit them and anounce manually."
