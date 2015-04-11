@@ -3,6 +3,7 @@
 
 /obj/machinery/gashapon
 	name = "Gashapon Machine"
+	desc = "Insert coin, recieve capsule!"
 	icon = 'icons/obj/gashapon.dmi'
 	icon_state = "gashapon"
 	anchored = 1
@@ -76,7 +77,17 @@
 		/obj/item/toy/gasha/atmos,
 		/obj/item/toy/gasha/sec,
 		/obj/item/toy/gasha/plasman,
-		/obj/item/toy/gasha/shard)
+		/obj/item/toy/gasha/shard,
+		/obj/item/toy/gasha/mime,
+		/obj/item/toy/gasha/captain,
+		/obj/item/toy/gasha/comdom,
+		/obj/item/toy/gasha/shade,
+		/obj/item/toy/gasha/wraith,
+		/obj/item/toy/gasha/juggernaut,
+		/obj/item/toy/gasha/artificer,
+		/obj/item/toy/gasha/harvester,
+		/obj/item/toy/gasha/skub,
+		/obj/item/toy/gasha/fingerbox)
 
 	var/obj/item/I = new capsule_prize(M)
 	M.u_equip(src)
