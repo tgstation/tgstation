@@ -26,6 +26,7 @@
 		/obj/structure/table,
 		/obj/structure/closet,
 		/obj/structure/sink,
+		/obj/structure/centrifuge/,
 		/obj/item/weapon/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
 		/obj/machinery/dna_scannernew,
