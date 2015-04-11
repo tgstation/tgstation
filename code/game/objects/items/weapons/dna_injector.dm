@@ -363,3 +363,15 @@
 	New()
 		..()
 		remove_mutations.Add(mutations_list[ELVIS])
+
+/obj/item/weapon/dnainjector/clwunescapemut
+	name = "\improper DNA injector (Clwunescape)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[CLWUNESCAPE])
+
+/obj/item/weapon/dnainjector/anticlwunescape
+	name = "\improper DNA injector (Anti-Clwunescape)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[CLWUNESCAPE])

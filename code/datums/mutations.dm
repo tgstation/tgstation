@@ -1,4 +1,6 @@
 /var/global/list/mutations_list = list()
+var/thanks_tobba = 'icons/fonts/runescape_uf.ttf'
+
 
 /datum/mutation/
 
@@ -399,6 +401,15 @@
 
 /datum/mutation/human/wacky/get_spans()
 	return list(SPAN_SANS)
+
+/datum/mutation/human/clwunescape
+	name = "Clwunescape"
+	quality = MINOR_NEGATIVE
+	text_gain_indication = "<span class='clwunescape'>You feel an urge to fight space dragons.</span>"
+	text_lose_indication = "<span class='notice'>The urge to fight space dragons passes.</span>"
+
+/datum/mutation/human/clwunescape/get_spans()
+	return list(SPAN_CLWUNESCAPE)
 
 /datum/mutation/human/mute
 	name = "Mute"
