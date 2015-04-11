@@ -3,4 +3,4 @@ author: kingofkosmos
 delete-after: True
 
 changes: 
-  - rscadd: "Girder disassembly method changed: only dislodged girders can be disassembled by using a welder."
+  - wip: "Girder and machine frame construction protocols has been changed. They can now be secured/unsecured with a wrench and disassembled with a welder."
