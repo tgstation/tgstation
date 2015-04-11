@@ -133,7 +133,7 @@
 
 			building=1
 			update_icon()
-			user.drop_item(src)
+			user.drop_item(O, src)
 			mmi.icon = null
 			mmi.invisibility = 101
 			spawn(50)

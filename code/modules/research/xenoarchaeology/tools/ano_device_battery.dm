@@ -40,7 +40,7 @@
 	if(istype(I, /obj/item/weapon/anobattery))
 		if(!inserted_battery)
 			user << "\blue You insert the battery."
-			user.drop_item(src)
+			user.drop_item(I, src)
 			inserted_battery = I
 			UpdateSprite()
 	else

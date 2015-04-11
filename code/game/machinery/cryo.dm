@@ -262,7 +262,7 @@
 			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
 			return
 		beaker =  G
-		user.drop_item(src)
+		user.drop_item(G, src)
 		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
 	if(..())
 		return

@@ -306,7 +306,7 @@
 		return
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
 		if (isnull(coin))
-			user.drop_item(src)
+			user.drop_item(W, src)
 			coin = W
 			user << "<span class='notice'>You insert a coin into [src].</span>"
 		else
@@ -315,7 +315,7 @@
 		return
 	else if(istype(W, /obj/item/voucher))
 		if(can_accept_voucher(W, user))
-			user.drop_item(src)
+			user.drop_item(W, src)
 			user << "<span class='notice'>You insert [W] into [src].</span>"
 			return voucher_act(W, user)
 		else
@@ -1020,7 +1020,7 @@
 				usr << "You begin to insert \the [C] into \the [src]."
 				if(do_after(user, 10))
 					usr << "<span class='notice'>You secure \the [C]!</span>"
-					user.drop_item(src)
+					user.drop_item(C, src)
 					_circuitboard=C
 					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 					build++

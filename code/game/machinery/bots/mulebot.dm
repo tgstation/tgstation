@@ -122,7 +122,7 @@ var/global/mulebot_count = 0
 
 	else if(istype(I,/obj/item/weapon/cell) && open && !cell)
 		var/obj/item/weapon/cell/C = I
-		user.drop_item(src)
+		user.drop_item(C, src)
 		cell = C
 		updateDialog()
 	else if(istype(I,/obj/item/weapon/screwdriver))
@@ -302,7 +302,7 @@ var/global/mulebot_count = 0
 				if(open && !cell)
 					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
-						usr.drop_item(src)
+						usr.drop_item(C, src)
 						cell = C
 						C.add_fingerprint(usr)
 

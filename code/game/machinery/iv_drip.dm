@@ -72,7 +72,7 @@
 			user << "There is already a reagent container loaded!"
 			return
 
-		user.drop_item(src)
+		user.drop_item(W, src)
 		src.beaker = W
 		user << "You attach \the [W] to \the [src]."
 		src.update_icon()

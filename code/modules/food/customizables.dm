@@ -85,7 +85,7 @@
 		user << "<span class='warning'>How about no.</span>"
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
-		user.drop_item(src)
+		user.drop_item(I, src)
 		src.ingredients += S
 		S.reagents.trans_to(src,S.reagents.total_volume)
 		src.update()
@@ -286,7 +286,7 @@
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		if(src.ingredients.len < src.ingMax)
 			var/obj/item/weapon/reagent_containers/food/snacks/S = I
-			user.drop_item(src)
+			user.drop_item(I, src)
 			user << "<span class='notice'>You add the [S.name] to the [src.name].</span>"
 			S.reagents.trans_to(src,S.reagents.total_volume)
 			src.ingredients += S

@@ -104,7 +104,7 @@
 			bottom_open = 0
 	else if(bottom_open && item.w_class <= 3.0)
 		stored_item = item
-		user.drop_item()
+		user.drop_item(item)
 		max_w_class = 3.0 - stored_item.w_class
 		item.loc = null //null space here we go - to stop it showing up in the briefcase
 		user << "You place \the [item] into the false bottom of the briefcase."

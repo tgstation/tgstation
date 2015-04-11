@@ -128,7 +128,7 @@
 			var/obj/item/weapon/storage/bag/B = I
 			if(B.contents.len == 0)
 				user << "<span class='notice'> You throw away the empty [B].</span>"
-				user.drop_item(src)
+				user.drop_item(I, src)
 				return
 			user << "<span class='notice'> You empty the [B].</span>"
 			for(var/obj/item/O in B.contents)
@@ -157,23 +157,10 @@
 			return
 
 		if(!I)	return
-		if(!isMoMMI(user))
-			user.drop_item()
-		else
-			var/mob/living/silicon/robot/mommi/M = user
-			if(is_type_in_list(I,M.module.modules))
-				user << "\red You can't throw away what's attached to you."
-				return
-			else
-				M.drop_item()
-		if(I)
-			I.loc = src
 
-		user << "You place \the [I] into the [src]."
-		for(var/mob/M in viewers(src))
-			if(M == user)
-				continue
-			M.show_message("[user.name] places \the [I] into the [src].", 3)
+		if(user.drop_item(I, src))
+
+			user.visible_message("[user.name] places \the [I] into the [src].", "You place \the [I] into the [src].")
 
 		update()
 

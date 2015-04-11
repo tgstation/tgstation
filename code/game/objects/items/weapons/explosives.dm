@@ -74,7 +74,7 @@
 		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
 
 	if(do_after(user, 50) && in_range(user, target))
-		user.drop_item()
+		user.drop_item(src)
 		src.target = target
 		loc = null
 		if (ismob(target))

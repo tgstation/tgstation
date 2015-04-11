@@ -160,9 +160,9 @@
 	user.visible_message("<span class='notice'>[user] puts [what] into [src].</span>", \
 		"You put [what] into the [src].")
 	if(what == user.get_active_hand())
-		user.drop_item(src)
+		user.drop_item(what, src)
 	else
-		user.drop_item()
+		user.drop_item(O)
 		what.loc = src
 	return
 

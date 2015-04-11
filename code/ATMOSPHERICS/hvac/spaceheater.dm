@@ -59,7 +59,7 @@
 				// insert cell
 				var/obj/item/weapon/cell/C = usr.get_active_hand()
 				if(istype(C))
-					user.drop_item(src)
+					user.drop_item(C, src)
 					cell = C
 					C.add_fingerprint(usr)
 
@@ -142,7 +142,7 @@
 				if(panel_open && !cell)
 					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
-						usr.drop_item(src)
+						usr.drop_item(C, src)
 						cell = C
 						C.add_fingerprint(usr)
 

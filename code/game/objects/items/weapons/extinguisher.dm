@@ -94,7 +94,7 @@
 		if(isrobot(user) && !isMoMMI(user)) // MoMMI's can but borgs can't
 			user << "You're a robot. No."
 			return
-		user.drop_item(src)
+		user.drop_item(W, src)
 		user << "You cram \the [W] into the nozzle of \the [src]."
 		message_admins("[user]/[user.ckey] has crammed \a [W] into a [src].")
 

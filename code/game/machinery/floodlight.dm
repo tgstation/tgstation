@@ -75,7 +75,7 @@
 			if(cell)
 				user << "There is a power cell already installed."
 			else
-				user.drop_item(src)
+				user.drop_item(W, src)
 				cell = W
 				user << "You insert the power cell."
 	updateicon()

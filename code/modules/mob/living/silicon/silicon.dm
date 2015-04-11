@@ -103,15 +103,6 @@
 			for(var/i = 1; i < alarm_types_clear.len; i++)
 				alarm_types_clear[i] = 0
 
-/mob/living/silicon/drop_item()
-	return
-
-/mob/living/silicon/drop_l_hand()
-	return
-
-/mob/living/silicon/drop_r_hand()
-	return
-
 /mob/living/silicon/emp_act(severity)
 	if(flags & INVULNERABLE)
 		return

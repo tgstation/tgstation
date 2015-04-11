@@ -1292,12 +1292,12 @@ var/global/list/organ_damage_overlays = list(
 				spawn()
 					animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
 					animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
-					
+
 					pixel_x_diff = rand(-amplitude, amplitude)
 					pixel_y_diff = rand(-amplitude, amplitude)
 					animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
 					animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
-					
+
 					pixel_x_diff = rand(-amplitude, amplitude)
 					pixel_y_diff = rand(-amplitude, amplitude)
 					animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)

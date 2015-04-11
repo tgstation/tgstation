@@ -298,7 +298,7 @@ BLIND     // can't see anything
 	if(istype(I, /obj/item/clothing/accessory))
 		var/obj/item/clothing/accessory/A = I
 		if(can_attach_accessory(A))
-			user.drop_item(src)
+			user.drop_item(I, src)
 			accessories.Add(A)
 			A.on_attached(src, user)
 			if(istype(loc, /mob/living/carbon/human))

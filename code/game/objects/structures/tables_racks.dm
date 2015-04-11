@@ -363,9 +363,6 @@
 			destroy()
 		return
 
-	if(isrobot(user))
-		return
-
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
@@ -376,7 +373,7 @@
 			O.show_message("\blue The [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
 		destroy()
 
-	if(user.drop_item(src.loc))
+	if(user.drop_item(W, src.loc))
 		if(W.loc == src.loc && params_list.len)
 			var/clamp_x = clicked.Width() / 2
 			var/clamp_y = clicked.Height() / 2
@@ -612,7 +609,7 @@
 		return
 	if(isrobot(user))
 		return
-	user.drop_item()
+	user.drop_item(O)
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
@@ -625,7 +622,7 @@
 		return
 	if(isrobot(user))
 		return
-	user.drop_item(src.loc)
+	user.drop_item(W, src.loc)
 	return 1
 
 /obj/structure/rack/meteorhit(obj/O as obj)

@@ -22,7 +22,7 @@
 			if (contents.len >= max_butts)
 				user << "This ashtray is full."
 				return
-			user.drop_item(src)
+			user.drop_item(W, src)
 			var/obj/item/clothing/mask/cigarette/cig = W
 			if(istype(cig, /obj/item/weapon/cigbutt))
 				user << "You drop the [cig] into [src]."

@@ -11,7 +11,7 @@
 
 /obj/machinery/gashapon/attackby(var/obj/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/weapon/coin/))
-		user.drop_item(src)
+		user.drop_item(O, src)
 		user.visible_message("[user] puts a coin into [src] and turns the knob.", "You put a coin into [src] and turn the knob.")
 		src.visible_message("[src] clicks softly.")
 		sleep(rand(10,15))

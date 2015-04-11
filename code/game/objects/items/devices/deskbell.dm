@@ -320,7 +320,7 @@
 						code = 0
 					else
 						code = S.code
-					user.drop_item()
+					user.drop_item(W)
 					del(W)
 					has_signaler = 1
 					update_icon()

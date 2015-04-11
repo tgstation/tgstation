@@ -168,8 +168,7 @@
 		else
 			var/atom_name = used_atom.name
 			if(permanence || (Co_KEEP in given_step))
-				user.drop_item(holder)
-				used_atom.loc = holder
+				user.drop_item(used_atom, holder)
 				used_atoms.Add(list("[steps.Find(given_step)]" = used_atom))
 			else
 				qdel(used_atom)
@@ -334,8 +333,7 @@
 		else
 			var/atom_name = used_atom.name
 			if(permanence || (Co_KEEP in given_step))
-				user.drop_item(holder)
-				used_atom.loc = holder
+				user.drop_item(used_atom, holder)
 				if(!("[index][diff == FORWARD ? "+" : "-"]" in used_atoms))
 					used_atoms.Add(list("[index][diff == FORWARD ? "+" : "-"]" = list()))
 				used_atoms["[index][diff == FORWARD ? "+" : "-"]"] += used_atom

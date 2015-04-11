@@ -24,8 +24,7 @@
 		src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
 		src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 
-		user.drop_item()
-		posibrain.loc = src
+		user.drop_item(posibrain, src)
 
 		name = "Machine-Man Interface: [brainmob.real_name]"
 		icon_state = "mami_full"

@@ -228,7 +228,7 @@
 
 						var/obj/item/device/radio/headset/headset_to_add = item_to_add
 
-						usr.drop_item(src)
+						usr.drop_item(headset_to_add, src)
 						src.ears = headset_to_add
 						usr << "You fit the headset onto [src]."
 
@@ -317,8 +317,8 @@
 			icon_state = "parrot_fly"
 			drop_held_item(0)
 	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
-		del(O)
-		user.drop_item()
+		user.drop_item(O)
+		qdel(O)
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
 		user << "\blue [src] eagerly devours the cracker."

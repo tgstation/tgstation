@@ -55,7 +55,7 @@
 /obj/structure/dispenser/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/tank/oxygen) || istype(I, /obj/item/weapon/tank/air) || istype(I, /obj/item/weapon/tank/anesthetic))
 		if(oxygentanks < 10)
-			user.drop_item(src)
+			user.drop_item(I, src)
 			oxytanks.Add(I)
 			oxygentanks++
 			user << "<span class='notice'>You put [I] in [src].</span>"
@@ -65,7 +65,7 @@
 		return
 	if(istype(I, /obj/item/weapon/tank/plasma))
 		if(plasmatanks < 10)
-			user.drop_item(src)
+			user.drop_item(I, src)
 			platanks.Add(I)
 			plasmatanks++
 			user << "<span class='notice'>You put [I] in [src].</span>"

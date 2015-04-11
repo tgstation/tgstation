@@ -79,7 +79,7 @@
 
 	if ((( istype(O, /obj/item/weapon) ) || user.get_active_hand() == O))
 
-		user.drop_item()
+		user.drop_item(O)
 		if (O.loc != src.loc)
 			step(O, get_dir(O, src))
 		return
@@ -170,5 +170,5 @@
 			del(W)
 			return
 	if(isrobot(user)) return
-	user.drop_item(src.loc)
+	user.drop_item(W, src.loc)
 	return

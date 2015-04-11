@@ -26,7 +26,7 @@
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
-		usr.drop_item(src)
+		usr.drop_item(O, src)
 		scan = O
 		user << "You insert [O]."
 	..()
@@ -239,7 +239,7 @@ What a mess.*/
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if (istype(I, /obj/item/weapon/card/id))
-						usr.drop_item(src)
+						usr.drop_item(I, src)
 						scan = I
 
 			if("Log Out")

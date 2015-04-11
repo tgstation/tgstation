@@ -28,7 +28,7 @@
 		return
 	has_suit = S
 	if(user)
-		user.drop_item(has_suit)
+		user.drop_item(S, has_suit)
 		user << "<span class='notice'>You attach [src] to [has_suit].</span>"
 		src.add_fingerprint(user)
 	else

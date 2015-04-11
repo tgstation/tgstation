@@ -222,7 +222,7 @@
 			if((M_CLUMSY in H.mutations) && prob(50))
 				H <<"\red You smack yourself in the face while swinging the [src]!"
 				H.Stun(2)
-				H.drop_item()
+				H.drop_item(src)
 				return
 	if (!thrown_from && usr) //if something hasn't set it already (like a mech does when it launches)
 		thrown_from = usr //then the user must have thrown it
@@ -374,14 +374,14 @@
 		if(I.w_class) //if it has a defined weight
 			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
 				if(weight1 == null)
-					user.drop_item(src)
+					user.drop_item(I, src)
 					weight1 = I
 					user.show_message("<span class='notice'>You tie [weight1] to the [src].</span>")
 					update_icon()
 					//del(I)
 					return
 				if(weight2 == null) //just in case
-					user.drop_item(src)
+					user.drop_item(I, src)
 					weight2 = I
 					user.show_message("<span class='notice'>You tie [weight2] to the [src].</span>")
 					update_icon()
@@ -429,8 +429,7 @@
 				IED = null
 				return
 			if(2,3)
-				user.drop_item(src)
-				I.loc = src
+				user.drop_item(I, src)
 				var/turf/bombturf = get_turf(src)
 				var/area/A = get_area(bombturf)
 				var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has rigged a beartrap with an IED at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."

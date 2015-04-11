@@ -191,7 +191,7 @@
 	if(istype(W, /obj/item/device/multitool))
 		update_multitool_menu(user)
 		return 1
-	user.drop_item(src.loc)
+	user.drop_item(W, src.loc)
 	return 0
 
 /obj/machinery/conveyor/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)

@@ -174,7 +174,7 @@
 		if ( get_total_ferts() >= Max_Fertilizers )
 			user << "The fertilizer storage is full!"
 			return
-		user.drop_item(src)
+		user.drop_item(W, src)
 		user << "You insert [W]."
 		flick("farmbot_hatch",src)
 		src.updateUsrDialog()
