@@ -132,6 +132,8 @@
 							log_game("[key_name(traitor_body)] has been auto traitor'ed.")
 							traitor_body << "<SPAN CLASS='danger'><CENTER><BIG>ATTENTION</BIG></CENTER></SPAN><BR><CENTER>It is time to pay your debt to the [syndicate_name()].</CENTER>"
 							traitor_body = null
+							traitors += traitor_mind
+							traitor_mind.special_role = "traitor"
 							forge_traitor_objectives(traitor_mind)
 							finalize_traitor(traitor_mind)
 							greet_traitor(traitor_mind)
