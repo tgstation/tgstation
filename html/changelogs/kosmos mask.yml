@@ -1,6 +1,0 @@
-author: kingofkosmos
-delete-after: true
-
-changes: 
-  - rscadd: "Activating internals with an adjusted breath mask will automatically push it up to normal state."
-  - tweak: "Masks can now be adjusted when buckled to a chair."
