@@ -1,8 +1,0 @@
-author: phil235
-delete-after: true
-
-changes: 
-  - rscadd: "Adding 40+ new food and drink recipes, mostly using the newest plants. Notably rice recipes, burritos, nachos, salads, pizzas."
-  - tweak: "Opening the tablecrafting window can now also be done by dragging the mouse from any food (that's on a table) onto you."
-  - rscadd: "The kitchen cabinet starts with one rice pack.
-  - tweak: "Glasses with unknown reagent will no longer be always brown but will take the color of their reagents."
