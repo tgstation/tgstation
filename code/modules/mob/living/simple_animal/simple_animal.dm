@@ -57,7 +57,7 @@
 
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
-	var/flying = 0 //whether it's flying or touching the ground.
+
 
 /mob/living/simple_animal/New()
 	..()
@@ -387,6 +387,7 @@
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
+	lying = 1
 	if(!gibbed)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
 	..()
@@ -431,7 +432,8 @@
 /mob/living/simple_animal/revive()
 	health = maxHealth
 	icon_state = icon_living
-	density = initial(density)
+	lying = 0
+	density = 1
 	update_canmove()
 	..()
 
@@ -462,7 +464,7 @@
 
 // Harvest an animal's delicious byproducts
 /mob/living/simple_animal/proc/harvest(mob/living/user, sharpness = 1)
-	user << "<span class='notice'>You begin to butcher [src].</span>"
+	user << "<span class='notice'>You begin to butcher [src]...</span>"
 	playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 	if(do_mob(user, src, 80/sharpness))
 		visible_message("<span class='notice'>[user] butchers [src].</span>")
@@ -482,12 +484,3 @@
 		return
 	else
 		..()
-
-/mob/living/simple_animal/update_canmove()
-	if(paralysis || stunned || weakened || stat || resting || buckled)
-		drop_r_hand()
-		drop_l_hand()
-		canmove = 0
-	else
-		canmove = 1
-	return canmove

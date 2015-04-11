@@ -3,8 +3,9 @@
 	name = "fire axe cabinet"
 	desc = "There is small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
 	var/obj/item/weapon/twohanded/fireaxe/fireaxe = new/obj/item/weapon/twohanded/fireaxe
-	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe1000"
+	icon_closed = "fireaxe1000"
+	icon_opened = "fireaxe1100"
 	anchored = 1
 	density = 0
 	wall_mounted = 1
@@ -23,11 +24,11 @@
 
 	if (isrobot(user) || src.locked)
 		if(istype(O, /obj/item/device/multitool))
-			user << "<span class = 'caution'> Resetting circuitry...</span>"
+			user << "<span class = 'caution'> You start to reset the circuitry...</span>"
 			playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
 			if(do_after(user, 20))
 				src.locked = 0
-				user << "<span class = 'caution'> You disable the locking modules.</span>"
+				user << "<span class = 'notice'> You disable the locking modules.</span>"
 				update_icon()
 			return
 		else if(istype(O, /obj/item/weapon))
@@ -43,7 +44,7 @@
 				user.do_attack_animation(src)
 				playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
 			if(W.force < 15)
-				user << "<span class = 'warning'> The cabinet's protective glass glances off the hit.</span>"
+				user << "<span class = 'warning'> The cabinet's protective glass glances off the hit!</span>"
 			else
 				src.hitstaken++
 				if(src.hitstaken == 4)
@@ -56,12 +57,12 @@
 	if (istype(O, /obj/item/weapon/twohanded/fireaxe) && src.localopened)
 		if(!fireaxe)
 			if(O:wielded)
-				user << "<span class = 'warning'> Unwield the axe first.</span>"
+				user << "<span class = 'warning'> Unwield the axe first!</span>"
 				return
 			fireaxe = O
 			user.drop_item()
 			src.contents += O
-			user << "<span class = 'caution'> You place the fire axe back in the [src.name].</span>"
+			user << "<span class = 'notice'> You place the fire axe back in the [src.name].</span>"
 			update_icon()
 		else
 			if(src.smashed)
@@ -84,11 +85,11 @@
 				spawn(10) update_icon()
 				return
 			else
-				user << "<span class = 'caution'> Resetting circuitry...</span>"
+				user << "<span class = 'caution'> You start to reset the circuitry...</span>"
 				playsound(user, 'sound/machines/lockenable.ogg', 50, 1)
 				if(do_after(user, 20))
 					src.locked = 1
-					user << "<span class = 'caution'> You re-enable the locking modules.</span>"
+					user << "<span class = 'notice'> You re-enable the locking modules.</span>"
 				return
 		else
 			localopened = !localopened

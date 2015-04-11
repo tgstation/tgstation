@@ -48,10 +48,6 @@
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return
-	if(ishuman(target))
-		var/mob/living/carbon/human/humantarget = target
-		if (!humantarget.can_inject(user, 1))
-			return
 	add_logs(user, target, "attempted to inject", object="[name]")
 
 	if(target != user)

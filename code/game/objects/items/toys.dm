@@ -135,7 +135,7 @@
 
 	if (istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
-			user << "<span class='notice'>It's already fully loaded!</span>"
+			user << "<span class='warning'>It's already fully loaded!</span>"
 			return 1
 		if (A.amount_left <= 0)
 			user << "<span class='danger'>There are no more caps!</span>"
@@ -414,7 +414,7 @@
 					graf_rot = 270
 				else
 					graf_rot = 0
-		user << "You start drawing a [temp] on the [target.name]."
+		user << "<span class='notice'>You start drawing a [temp] on the [target.name]...</span>"
 		if(instant || do_after(user, 50))
 			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
 			user << "You finish drawing [temp]."
@@ -428,7 +428,7 @@
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
 	var/huffable = istype(src,/obj/item/toy/crayon/spraycan)
 	if(M == user)
-		user << "You take a [huffable ? "huff" : "bite"] of the [src.name]. Delicious!"
+		user << "<span class='notice'>You take a [huffable ? "huff" : "bite"] of the [src.name]. Delicious!</span>"
 		user.nutrition += 5
 		if(uses)
 			uses -= 5
@@ -745,7 +745,7 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user,
 			user.visible_message("<span class='notice'>[user] puts their hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
 			qdel(C)
 		else
-			user << "<span class='notice'>You can't mix cards from other decks.</span>"
+			user << "<span class='warning'>You can't mix cards from other decks!</span>"
 		if(cards.len > 26)
 			src.icon_state = "deck_[deckstyle]_full"
 		else if(cards.len > 10)
@@ -770,7 +770,7 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user,
 					M.put_in_r_hand(src)
 				usr << "<span class='notice'>You pick up the deck.</span>"
 	else
-		usr << "<span class='notice'>You can't reach it from here.</span>"
+		usr << "<span class='warning'>You can't reach it from here!</span>"
 
 
 
@@ -884,7 +884,7 @@ obj/item/toy/cards/singlecard/examine(mob/user)
 		if(cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
 			cardUser.visible_message("<span class='notice'>[cardUser] checks \his card.</span>", "<span class='notice'>The card reads: [src.cardname]</span>")
 		else
-			cardUser << "<span class='notice'>You need to have the card in your hand to check it.</span>"
+			cardUser << "<span class='warning'>You need to have the card in your hand to check it!</span>"
 
 
 obj/item/toy/cards/singlecard/verb/Flip()
@@ -924,7 +924,7 @@ obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
 			qdel(C)
 			qdel(src)
 		else
-			user << "<span class='notice'>You can't mix cards from other decks.</span>"
+			user << "<span class='warning'>You can't mix cards from other decks!</span>"
 
 	if(istype(I, /obj/item/toy/cards/cardhand/))
 		var/obj/item/toy/cards/cardhand/H = I
@@ -941,7 +941,7 @@ obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
 				H.icon_state = "[deckstyle]_hand3"
 			qdel(src)
 		else
-			user << "<span class='notice'>You can't mix cards from other decks.</span>"
+			user << "<span class='warning'>You can't mix cards from other decks!</span>"
 
 
 obj/item/toy/cards/singlecard/attack_self(mob/user)

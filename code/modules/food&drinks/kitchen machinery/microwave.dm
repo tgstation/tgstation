@@ -60,23 +60,23 @@
 		if(src.broken == 2 && istype(O, /obj/item/weapon/wirecutters)) // If it's broken and they're using a screwdriver
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the microwave.</span>", \
-				"<span class='notice'>You start to fix part of the microwave.</span>" \
+				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
 			if (do_after(user,20))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the microwave.</span>", \
-					"<span class='notice'>You have fixed part of the microwave.</span>" \
+					"<span class='notice'>You fix a part of the microwave.</span>" \
 				)
 				src.broken = 1 // Fix it a bit
 		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool)) // If it's broken and they're doing the wrench
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the microwave.</span>", \
-				"<span class='notice'>You start to fix part of the microwave.</span>" \
+				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
 			if (do_after(user,20))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the microwave.</span>", \
-					"<span class='notice'>You have fixed the microwave.</span>" \
+					"<span class='notice'>You fix a the microwave.</span>" \
 				)
 				src.icon_state = "mw"
 				src.broken = 0 // Fix it!
@@ -93,7 +93,7 @@
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			user.visible_message( \
 				"<span class='notice'>[user]  has cleaned  the microwave.</span>", \
-				"<span class='notice'>You have cleaned the microwave.</span>" \
+				"<span class='notice'>You clean the microwave.</span>" \
 			)
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
@@ -109,12 +109,12 @@
 		var/obj/item/weapon/soap/P = O
 		user.visible_message( \
 			"<span class='notice'>[user] starts to clean the microwave.</span>", \
-			"<span class='notice'>You start to clean the microwave.</span>" \
+			"<span class='notice'>You start to clean the microwave...</span>" \
 		)
 		if (do_after(user, P.cleanspeed))
 			user.visible_message( \
 				"<span class='notice'>[user]  has cleaned  the microwave.</span>", \
-				"<span class='notice'>You have cleaned the microwave.</span>" \
+				"<span class='notice'>You clean the microwave.</span>" \
 			)
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure

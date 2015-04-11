@@ -125,7 +125,6 @@
 				C.confused = max(C.confused, 3)
 				C.Weaken(3)
 			C.lip_style = "spray_face"
-			C.lip_color = colour
 			C.update_body()
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		..()

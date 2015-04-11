@@ -67,11 +67,11 @@ for reference:
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/stack/sheet/mineral/wood))
 		if (src.health < src.maxhealth)
-			visible_message("<span class='danger'>[user] begins to repair \the [src]!</span>")
+			visible_message("<span class='danger'>[user] begins to repair \the [src]!</span>", "<span class='notice'>You begin to repair \the [src]...</span>")
 			if(do_after(user,20))
 				src.health = src.maxhealth
 				W:use(1)
-				visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
+				visible_message("<span class='danger'>[user] repairs \the [src]!</span>", "<span class='notice'>You succesfully repair \the [src].</span>")
 				return
 		else
 			return

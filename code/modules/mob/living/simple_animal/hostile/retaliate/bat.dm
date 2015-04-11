@@ -10,6 +10,7 @@
 	response_disarm = "flails at"
 	response_harm = "hits"
 	speak_chance = 0
+	stop_automated_movement_when_pulled = 0
 	maxHealth = 15
 	health = 15
 	see_in_dark = 10
@@ -22,8 +23,7 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	environment_smash = 0
 	ventcrawler = 2
-	mob_size = MOB_SIZE_TINY
-	flying = 1
+	mob_size = MOB_SIZE_SMALL
 	var/max_co2 = 0 //to be removed once metastation map no longer use those for Sgt Araneus
 	var/min_oxy = 0
 	var/max_tox = 0

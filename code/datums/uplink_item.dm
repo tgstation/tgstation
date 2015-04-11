@@ -367,13 +367,6 @@ var/list/uplink_items = list()
 	cost = 3
 	surplus = 10
 
-/datum/uplink_item/stealthy_weapons/pizza_bomb
-	name = "Pizza Bomb"
-	desc = "A pizza box with a bomb taped inside of it. The timer needs to be set by opening the box; afterwards, opening the box again will trigger the detonation."
-	item = /obj/item/device/pizza_bomb
-	cost = 4
-	surplus = 8
-
 // STEALTHY TOOLS
 
 /datum/uplink_item/stealthy_tools

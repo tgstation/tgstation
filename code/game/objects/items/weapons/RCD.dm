@@ -110,7 +110,7 @@ RCD
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/R = W
 		if((matter + R.ammoamt) > max_matter)
-			user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
+			user << "<span class='warning'>The RCD cant hold any more matter-units!</span>"
 			return
 		user.drop_item()
 		qdel(W)
@@ -161,7 +161,7 @@ RCD
 		if(1)
 			if(istype(A, /turf/space))
 				if(useResource(1, user))
-					user << "Building Floor..."
+					user << "<span class='notice'>Building floor...</span>"
 					activate()
 					A:ChangeTurf(/turf/simulated/floor/plating)
 					return 1
@@ -169,7 +169,7 @@ RCD
 
 			if(istype(A, /turf/simulated/floor))
 				if(checkResource(3, user))
-					user << "Building Wall ..."
+					user << "<span class='notice'>Building a wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(!useResource(3, user)) return 0
@@ -188,7 +188,7 @@ RCD
 							break
 
 					if(door_check)
-						user << "Building Airlock..."
+						user << "<span class='notice'>Building an airlock...</span>"
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							if(!useResource(10, user)) return 0
@@ -202,7 +202,7 @@ RCD
 							return 1
 						return 0
 					else
-						user << "There is another door here!"
+						user << "<span class='warning'>There is another door here!</span>"
 						return 0
 				return 0
 
@@ -211,7 +211,7 @@ RCD
 				if(istype(A, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
 				if(checkResource(5, user))
-					user << "Deconstructing Wall..."
+					user << "<span class='notice'>Deconstructing the wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 40))
 						if(!useResource(5, user)) return 0
@@ -222,7 +222,7 @@ RCD
 
 			if(istype(A, /turf/simulated/floor))
 				if(checkResource(5, user))
-					user << "Deconstructing Floor..."
+					user << "<span class='notice'>Deconstructing the floor...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50))
 						if(!useResource(5, user)) return 0
@@ -233,7 +233,7 @@ RCD
 
 			if(istype(A, /obj/machinery/door/airlock))
 				if(checkResource(20, user))
-					user << "Deconstructing Airlock..."
+					user << "<span class='notice'>Deconstructing the airlock...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50))
 						if(!useResource(20, user)) return 0

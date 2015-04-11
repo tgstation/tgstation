@@ -68,46 +68,24 @@
 
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to perform surgery on [target].</span>")
+	user.visible_message("<span class='notice'>[user] begins to perform surgery on [target].</span>", "<span class='notice'>You begin to perform surgery on [target]...</span>")
 
 
 /datum/surgery_step/proc/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] succeeds!</span>")
+	user.visible_message("<span class='notice'>[user] succeeds!</span>", "<span class='notice'>You succeed!</span>")
 	return 1
 
 /datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.apply_damage(75,"brute","[target_zone]")
-		user.visible_message("<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!")
+		user.visible_message("<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open!")
 	return 1
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='warning'>[user] screws up!</span>")
+	user.visible_message("<span class='warning'>[user] screws up!</span>", "<span class='warning'>You screw up!</span>")
 	return 0
 
-/datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(locate(/datum/surgery_step/saw) in surgery.steps)
-		var/limb_type
-		switch(target_zone)
-			if("head")
-				limb_type = /obj/item/organ/limb/head
-			if("chest")
-				limb_type = /obj/item/organ/limb/chest
-			if("l_arm")
-				limb_type = /obj/item/organ/limb/l_arm
-			if("r_arm")
-				limb_type = /obj/item/organ/limb/r_arm
-			if("l_leg")
-				limb_type = /obj/item/organ/limb/l_leg
-			if("r_leg")
-				limb_type = /obj/item/organ/limb/r_leg
-			else
-				return
-		var/obj/item/organ/limb/limb = target.getlimb(limb_type)
-		if(limb)
-			limb.heal_damage(45,0,0)
-	return ..()
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
 	return 1

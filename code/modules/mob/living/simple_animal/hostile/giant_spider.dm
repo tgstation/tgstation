@@ -33,11 +33,12 @@
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/spider
 	meat_amount = 2
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "hits"
+	stop_automated_movement_when_pulled = 0
 	maxHealth = 200
 	health = 200
 	melee_damage_lower = 15
@@ -47,8 +48,6 @@
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	ventcrawler = 2
-	attacktext = "bites"
-	attack_sound = 'sound/weapons/bite.ogg'
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse

@@ -427,7 +427,7 @@
 		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
-		user << "<span class='danger'>You start picking.</span>"
+		user << "<span class='danger'>You start picking...</span>"
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed))
@@ -547,7 +547,7 @@
 			user << "<span class='danger'>This area has already been dug.</span>"
 			return
 
-		user << "<span class='danger'>You start digging.</span>"
+		user << "<span class='danger'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(20)
@@ -566,7 +566,7 @@
 			user << "<span class='danger'>This area has already been dug.</span>"
 			return
 
-		user << "<span class='danger'>You start digging.</span>"
+		user << "<span class='danger'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(P.digspeed)

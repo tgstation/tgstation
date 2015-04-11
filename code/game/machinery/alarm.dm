@@ -834,7 +834,7 @@ table tr:first-child th:first-child { border: none;}
 		if(1)
 			if(istype(W, /obj/item/weapon/crowbar))
 				user.visible_message("<span class='warning'>[user.name] removes the electronics from [src.name].</span>",\
-									"You start prying out the circuit.")
+									"<span class='notice'>You start prying out the circuit...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if (do_after(user, 20))
 					if (buildstage == 1)
@@ -851,7 +851,7 @@ table tr:first-child th:first-child { border: none;}
 					user << "<span class='warning'>You need five lengths of cable to wire the fire alarm.</span>"
 					return
 				user.visible_message("<span class='warning'>[user.name] wires the air alarm.</span>", \
-									"You start wiring the air alarm.")
+									"<span class='notice'>You start wiring the air alarm...</span>")
 				if (do_after(user, 20))
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)
@@ -867,7 +867,7 @@ table tr:first-child th:first-child { border: none;}
 				return
 		if(0)
 			if(istype(W, /obj/item/weapon/airalarm_electronics))
-				user << "You insert the circuit!"
+				user << "<span class='notice'>You insert the circuit.</span>"
 				buildstage = 1
 				update_icon()
 				user.drop_item()
@@ -875,7 +875,7 @@ table tr:first-child th:first-child { border: none;}
 				return
 
 			if(istype(W, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You detach \the [src] from the wall!</span>"
+				user << "<span class='notice'>You detach \the [src] from the wall.</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				new /obj/item/alarm_frame( user.loc )
 				qdel(src)
@@ -1094,7 +1094,7 @@ FIRE ALARM
 				else if(istype(W, /obj/item/weapon/crowbar))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					user.visible_message("<span class='warning'>[user.name] removes the electronics from [src.name].</span>", \
-										"You start prying out the circuit.")
+										"<span class='notice'>You start prying out the circuit...</span>")
 					if(do_after(user, 20))
 						if(buildstage == 1)
 							if(stat & BROKEN)

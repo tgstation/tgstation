@@ -176,14 +176,6 @@
 
 /datum/chemical_reaction/blackpowder_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
 	sleep(rand(50,100))
-	blackpowder_detonate(holder, created_volume)
-	return
-
-/datum/reagent/blackpowder/on_ex_act()
-	blackpowder_detonate(holder, volume)
-	return
-
-/proc/blackpowder_detonate(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	var/ex_severe = round(created_volume / 100)
 	var/ex_heavy = round(created_volume / 42)
@@ -191,6 +183,7 @@
 	var/ex_flash = round(created_volume / 8)
 	explosion(T,ex_severe,ex_heavy,ex_light,ex_flash, 1)
 	return
+
 /datum/reagent/flash_powder
 	name = "Flash Powder"
 	id = "flash_powder"
@@ -435,18 +428,9 @@ datum/reagent/cryostylane
 datum/reagent/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 1)
-		M.bodytemperature -= 30
+		M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
 	..()
 	return
-
-datum/reagent/cryostylane/on_tick()
-	if(holder.has_reagent("oxygen"))
-		holder.remove_reagent("oxygen", 1)
-		holder.chem_temp -= 10
-		holder.handle_reactions()
-	..()
-	return
-
 
 datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
 	if(volume >= 5)
@@ -473,14 +457,6 @@ datum/reagent/pyrosium
 datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 1)
-		M.bodytemperature += 30
-	..()
-	return
-
-datum/reagent/pyrosium/on_tick()
-	if(holder.has_reagent("oxygen"))
-		holder.remove_reagent("oxygen", 1)
-		holder.chem_temp += 10
-		holder.handle_reactions()
+		M.bodytemperature += 30 * TEMPERATURE_DAMAGE_COEFFICIENT
 	..()
 	return

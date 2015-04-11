@@ -86,7 +86,7 @@
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
-					"<span class='notice'>You have fastened \the [src]. Now it can dispense pipes.</span>", \
+					"<span class='notice'>You fasten \the [src]. Now it can dispense pipes.</span>", \
 					"You hear ratchet.")
 				anchored = 1
 				stat &= MAINT
@@ -99,7 +99,7 @@
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
-					"<span class='notice'>You have unfastened \the [src]. Now it can be pulled somewhere else.</span>", \
+					"<span class='notice'>You unfasten \the [src]. Now it can be pulled somewhere else.</span>", \
 					"You hear ratchet.")
 				anchored = 0
 				stat |= ~MAINT

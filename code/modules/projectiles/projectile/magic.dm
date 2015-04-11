@@ -11,7 +11,6 @@
 	icon_state = "pulse1_bl"
 
 /obj/item/projectile/magic/death/on_hit(var/target)
-	. = ..()
 	if(ismob(target))
 		var/mob/M = target
 		M.death(0)
@@ -32,7 +31,6 @@
 	..()
 
 /obj/item/projectile/magic/fireball/on_hit(var/target)
-	. = ..()
 	var/turf/T = get_turf(target)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 	if(ismob(target)) //multiple flavors of pain
@@ -48,8 +46,8 @@
 	flag = "magic"
 
 /obj/item/projectile/magic/resurrection/on_hit(var/mob/living/carbon/target)
-	. = ..()
-	if(ismob(target))
+
+	if(istype(target,/mob))
 		var/old_stat = target.stat
 		target.revive()
 		target.suiciding = 0
@@ -74,7 +72,6 @@
 	var/outer_tele_radius = 6
 
 /obj/item/projectile/magic/teleport/on_hit(var/mob/target)
-	. = ..()
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -96,7 +93,6 @@
 	flag = "magic"
 
 /obj/item/projectile/magic/door/on_hit(var/atom/target)
-	. = ..()
 	var/atom/T = target.loc
 	if(isturf(target) && target.density)
 		CreateDoor(target)
@@ -120,7 +116,6 @@
 	flag = "magic"
 
 /obj/item/projectile/magic/change/on_hit(var/atom/change)
-	. = ..()
 	wabbajack(change)
 
 proc/wabbajack(mob/living/M)

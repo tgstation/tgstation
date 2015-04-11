@@ -222,7 +222,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(tableclimber && tableclimber != user)
 		tableclimber.Weaken(2)
-		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You've been knocked off the table", "You see [tableclimber.name] get knocked off the table</span>")
+		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You're knocked off the table", "You see [tableclimber.name] get knocked off the table</span>")
 
 
 /obj/structure/table/attack_tk() // no telehulk sorry
@@ -345,7 +345,7 @@
 		return
 
 	if(destroy_type == TBL_DISASSEMBLE)
-		user << "<span class='notice'>Now disassembling [src].</span>"
+		user << "<span class='notice'>You start disassembling [src]...</span>"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			new frame(src.loc)
@@ -355,7 +355,7 @@
 			return
 
 	if(destroy_type == TBL_DECONSTRUCT)
-		user << "<span class='notice'>Now deconstructing [src].</span>"
+		user << "<span class='notice'>You start deconstructing [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40))
 			for(var/i = 1, i <= framestackamount, i++)
@@ -374,7 +374,7 @@
 /obj/structure/table/proc/climb_table(mob/user)
 	src.add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
-								"<span class='notice'>You start climbing onto [src].</span>")
+								"<span class='notice'>You start climbing onto [src]...</span>")
 	var/climb_time = 20
 	if(user.restrained()) //Table climbing takes twice as long when restrained.
 		climb_time *= 2
@@ -454,18 +454,18 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				user << "<span class='notice'>Now weakening the reinforced table</span>"
+				user << "<span class='notice'>You start weakening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>Table weakened</span>"
+					user << "<span class='notice'>You weaken the table.</span>"
 					src.status = 1
 			else
-				user << "<span class='notice'>Now strengthening the reinforced table</span>"
+				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>Table strengthened</span>"
+					user << "<span class='notice'>You strengthen the table.</span>"
 					src.status = 2
 			return
 	..()
@@ -615,7 +615,7 @@
 	return
 
 /obj/item/weapon/rack_parts/attack_self(mob/user as mob)
-	user << "<span class='notice'>Constructing rack...</span>"
+	user << "<span class='notice'>You start constructing a rack...</span>"
 	if (do_after(user, 50))
 		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
 		R.add_fingerprint(user)

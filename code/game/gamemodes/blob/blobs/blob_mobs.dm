@@ -140,8 +140,8 @@
 	icon_dead = "blobbernaut_dead"
 	health = 240
 	maxHealth = 240
-	melee_damage_lower = 20
-	melee_damage_upper = 20
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	attacktext = "hits"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	minbodytemp = 0
@@ -149,6 +149,13 @@
 	force_threshold = 10
 	environment_smash = 3
 	mob_size = MOB_SIZE_LARGE
+
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
+	..()
+	if(isliving(target))
+		if(overmind)
+			overmind.blob_reagent_datum.reaction_mob(target, TOUCH)
 
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/blob_act()

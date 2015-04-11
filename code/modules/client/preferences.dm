@@ -722,10 +722,13 @@ datum/preferences
 						if(result)
 							var/newtype = roundstart_species[result]
 							pref_species = new newtype()
-							if(mutant_color == "#000")
+							if(!config.mutant_colors || mutant_color == "#000")
 								mutant_color = pref_species.default_color
 
 					if("mutant_color")
+						if(!config.mutant_colors)
+							user << "<span class='danger'>Alien colors are disabled.</span>"
+							return
 						var/new_mutantcolor = input(user, "Choose your character's alien skin color:", "Character Preference") as color|null
 						if(new_mutantcolor)
 							var/temp_hsv = RGBtoHSV(new_mutantcolor)

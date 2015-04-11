@@ -142,7 +142,7 @@
 	metal = metaltype
 
 /datum/effect/effect/system/foam_spread/start()
-	var/obj/effect/effect/foam/foundfoam = locate() in location
+	var/obj/effect/effect/foam/foundfoam = locate()
 	if(foundfoam)//If there was already foam where we start, we add our foaminess to it.
 		foundfoam.amount += amount
 	else

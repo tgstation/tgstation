@@ -20,10 +20,7 @@
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(var/mob/living/carbon/human/victim)
 	var/obj/item/body_egg/changeling_egg/egg = new(victim)
-	if(origin)
-		egg.owner = origin
-	else if(mind) // Let's make this a feature
-		egg.owner = mind
+	egg.owner = origin
 	victim.internal_organs += egg
 	visible_message("<span class='notice'>[src] lays an egg in a [victim]!</span>")
 
@@ -44,7 +41,6 @@
 	desc = "Twitching and disgusting"
 	var/datum/mind/owner
 	var/time
-	var/used
 
 /obj/item/body_egg/changeling_egg/egg_process()
 	//Changeling eggs grow in dead people
@@ -53,17 +49,11 @@
 		Pop()
 
 obj/item/body_egg/changeling_egg/proc/Pop()
-	if(!used)
-		var/mob/living/carbon/monkey/M = new(affected_mob.loc)
-		if(owner)
-			owner.transfer_to(M)
-			owner.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
-			M.key = owner.key
-		if(ishuman(affected_mob))
-			var/mob/living/carbon/human/H = affected_mob
-			H.internal_organs.Remove(src)
-		affected_mob.gib()
-		used = 1
+	var/mob/living/carbon/monkey/M = new(affected_mob.loc)
+	owner.transfer_to(M)
+	owner.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+	M.key = owner.key
+	affected_mob.gib()
 	qdel(src)
 
 #undef EGG_INCUBATION_TIME

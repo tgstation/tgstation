@@ -781,36 +781,28 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return 1
 
-/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null)
-	if(!user)
+/proc/do_after(mob/user, delay, numticks = 5, needhand = 1)
+	if(!user || isnull(user))
 		return 0
-
 	if(numticks == 0)
 		return 0
 
-	var/atom/Tloc = null
-	if(target)
-		Tloc = target.loc
-
 	var/delayfraction = round(delay/numticks)
-	var/atom/Uloc = user.loc
+	var/turf/T = user.loc
 	var/holding = user.get_active_hand()
-	var/holdingnull = 1 //User is not holding anything
+	var/holdingnull = 1
 	if(holding)
-		holdingnull = 0 //User is holding a tool of some kind
+		holdingnull = 0
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
-		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
+
+
+		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == T))
 			return 0
 
-		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
-			return 0 // Target no longer exists or has moved
-
-		if(needhand)
-			//This might seem like an odd check, but you can still need a hand even when it's empty
-			//i.e the hand is used to insert some item/tool into the construction
-			if(!holdingnull) 
+		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
+			if(!holdingnull)
 				if(!holding)
 					return 0
 			if(user.get_active_hand() != holding)
@@ -1480,11 +1472,11 @@ var/list/WALLITEMS = list(
 
 /obj/proc/atmosanalyzer_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/target = src)
 	var/obj/icon = target
-	user.visible_message("<span class='danger'>[user] has used the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("<span class='danger'>[user] has used the analyzer on \icon[icon] [target].</span>", "<span class='danger'>[user] has used the analyzer on \icon[icon] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	user << "<span class='notice'>Results of analysis of \icon[icon] [target].</span>"
+	user << "<span class='notice'>Results of analysis of \icon[icon] [target]:</span>"
 	if(total_moles>0)
 		var/o2_concentration = air_contents.oxygen/total_moles
 		var/n2_concentration = air_contents.nitrogen/total_moles
@@ -1494,15 +1486,15 @@ var/list/WALLITEMS = list(
 		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 
 		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
-		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)]</span>%"
-		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)]%</span>"
-		user << "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>"
-		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)]%</span>"
+		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)] %</span>"
+		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)] %</span>"
+		user << "<span class='notice'>CO2: [round(co2_concentration*100)] %</span>"
+		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)] %</span>"
 		if(unknown_concentration>0.01)
-			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)]%</span>"
-		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)]&deg;C</span>"
+			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)] %</span>"
+		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
-		user << "<span class='notice'>[target] is empty!</span>"
+		user << "<span class='notice'>[target] is empty.</span>"
 	return
 
 /proc/check_target_facings(mob/living/initator, mob/living/target)

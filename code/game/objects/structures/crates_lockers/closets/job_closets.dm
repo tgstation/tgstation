@@ -3,7 +3,6 @@
  *		Bartender
  *		Janitor
  *		Lawyer
- *		Coffin
  */
 
 /*
@@ -12,7 +11,8 @@
 /obj/structure/closet/gmcloset
 	name = "formal closet"
 	desc = "It's a storage unit for formal clothing."
-	icon_door = "black"
+	icon_state = "black"
+	icon_closed = "black"
 
 /obj/structure/closet/gmcloset/New()
 	..()
@@ -37,7 +37,8 @@
 /obj/structure/closet/chefcloset
 	name = "\proper chef's closet"
 	desc = "It's a storage unit for foodservice garments and mouse traps."
-	icon_door = "black"
+	icon_state = "black"
+	icon_closed = "black"
 
 /obj/structure/closet/chefcloset/New()
 	..()
@@ -64,7 +65,8 @@
 /obj/structure/closet/jcloset
 	name = "custodial closet"
 	desc = "It's a storage unit for janitorial clothes and gear."
-	icon_door = "mixed"
+	icon_state = "mixed"
+	icon_closed = "mixed"
 
 /obj/structure/closet/jcloset/New()
 	..()
@@ -89,10 +91,10 @@
 /obj/structure/closet/lawcloset
 	name = "legal closet"
 	desc = "It's a storage unit for courtroom apparel and items."
-	icon_door = "blue"
+	icon_state = "blue"
+	icon_closed = "blue"
 
 /obj/structure/closet/lawcloset/New()
-	..()
 	new /obj/item/clothing/under/lawyer/female(src)
 	new /obj/item/clothing/under/lawyer/black(src)
 	new /obj/item/clothing/under/lawyer/red(src)
@@ -104,8 +106,3 @@
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)
-
-/obj/structure/closet/coffin
-	name = "coffin"
-	desc = "It's a burial receptacle for the dearly departed."
-	icon_state = "coffin"

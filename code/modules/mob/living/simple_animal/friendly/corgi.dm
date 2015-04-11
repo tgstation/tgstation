@@ -1,7 +1,6 @@
 //Corgi
 /mob/living/simple_animal/pet
 	icon = 'icons/mob/pets.dmi'
-	mob_size = MOB_SIZE_SMALL
 	var/obj/item/clothing/tie/petcollar/pcollar = null
 	var/image/collar = null
 	var/image/pettag = null
@@ -54,7 +53,7 @@
 	emote_see = list("shakes its head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "bops"
@@ -128,11 +127,11 @@
 
 	if (istype(O, /obj/item/weapon/razor))
 		if (shaved)
-			user << "<span class='warning'>You can't shave this corgi, it's already been shaved.</span>"
+			user << "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>")
+		user.visible_message("<span class='warning'>[user] starts to shave [src] using \the [O]!</span>", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50))
-			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O]. </span>")
+			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O].</span>", "<span class='notice'>You shave [src]'s hair using \the [O].</span>")
 			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
 			shaved = 1
 			icon_state = "[initial(icon_living)]_shaved"
@@ -525,8 +524,6 @@
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
 	shaved = 0
-	density = 0
-	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
 //puppies cannot wear anything.

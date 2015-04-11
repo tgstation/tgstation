@@ -34,7 +34,7 @@
 				log_game("[key_name(user)] has recalled the shuttle with a recaller.")
 				message_admins("[key_name_admin(user)] has recalled the shuttle with a recaller.", 1)
 				if(!SSshuttle.cancelEvac(user))
-					loc << "<span class='info'>\icon[src]No response received. Emergency shuttle cannot be recalled at this time.</span>"
+					loc << "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>"
 				return
 
 		user << "<span class='info'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>"

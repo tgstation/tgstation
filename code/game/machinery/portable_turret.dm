@@ -253,7 +253,7 @@
 		if(istype(I, /obj/item/weapon/crowbar))
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
-			user << "<span class='notice'>You begin prying the metal coverings off.</span>"
+			user << "<span class='notice'>You begin prying the metal coverings off...</span>"
 			sleep(20)
 			if(prob(70))
 				user << "<span class='notice'>You remove the turret and salvage some components.</span>"
@@ -267,7 +267,7 @@
 				if(prob(50))
 					new /obj/item/device/assembly/prox_sensor(loc)
 			else
-				user << "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>"
+				user << "<span class='warning'>You remove the turret but did not manage to salvage anything!</span>"
 			qdel(src)
 
 	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
@@ -298,7 +298,9 @@
 	else
 		//if the turret was attacked with the intention of harming it:
 		user.changeNext_move(CLICK_CD_MELEE)
-		take_damage(I.force * 0.5)
+		health -= I.force * 0.5
+		if(health <= 0)
+			die()
 		if(I.force * 0.5 > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
 			if(!attacked && !emagged)
 				attacked = 1
@@ -307,35 +309,9 @@
 					attacked = 0
 		..()
 
-/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M as mob)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper == 0)
-		return
-	if(!(stat & BROKEN))
-		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
-		take_damage(M.melee_damage_upper)
-	else
-		M << "<span class='danger'>That object is useless to you.</span>"
-	return
-
-/obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(!(stat & BROKEN))
-		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
-		take_damage(15)
-	else
-		M << "\green That object is useless to you."
-	return
-
-
 /obj/machinery/porta_turret/emag_act(user as mob)
 	if(!emagged)
-		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
+		user << "<span class='warning'>You short out [src]'s threat assessment circuits!</span>"
 		visible_message("[src] hums oddly...")
 		emagged = 1
 		iconholder = 1
@@ -352,16 +328,15 @@
 				sleep(60)
 				attacked = 0
 
-	var/damage_dealt = 0
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		damage_dealt = Proj.damage
+		health -= Proj.damage
 
 	..()
 
-	if(damage_dealt)
-		if(prob(45))
-			spark_system.start()
-		take_damage(damage_dealt)
+	if(prob(45) && Proj.damage > 0)
+		spark_system.start()
+	if(health <= 0)
+		die()	//the death process :(
 
 	if(lasercolor == "b" && disabled == 0)
 		if(istype(Proj, /obj/item/projectile/lasertag/redtag))
@@ -397,14 +372,8 @@
 
 /obj/machinery/porta_turret/ex_act(severity, target)
 	if(severity >= 3)	//turret dies if an explosion touches it!
-		die()
-	else
 		qdel(src)
-
-
-/obj/machinery/porta_turret/proc/take_damage(damage)
-	health -= damage
-	if(health <= 0)
+	else
 		die()
 
 /obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0
@@ -680,7 +649,7 @@
 					build_step = 2
 					icon_state = "turret_frame2"
 				else
-					user << "<span class='warning'>You need two sheets of metal to continue construction.</span>"
+					user << "<span class='warning'>You need two sheets of metal to continue construction!</span>"
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
@@ -703,14 +672,15 @@
 				if(!WT.isOn())
 					return
 				if(WT.get_fuel() < 5) //uses up 5 fuel.
-					user << "<span class='notice'>You need more fuel to complete this task.</span>"
+					user << "<span class='warning'>You need more fuel to complete this task!</span>"
 					return
 
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
+				user << "<span class='notice'>You begin to remove the turret's interior metal armor...</span>"
 				if(do_after(user, 20))
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 1
-					user << "You remove the turret's interior metal armor."
+					user << "<span class='notice'>You remove the turret's interior metal armor.</span>"
 					new /obj/item/stack/sheet/metal( loc, 2)
 					return
 
@@ -765,7 +735,7 @@
 					user << "<span class='notice'>You add some metal armor to the exterior frame.</span>"
 					build_step = 7
 				else
-					user << "<span class='warning'>You need two sheets of metal to continue construction.</span>"
+					user << "<span class='warning'>You need two sheets of metal to continue construction!</span>"
 				return
 
 			else if(istype(I, /obj/item/weapon/screwdriver))
@@ -779,9 +749,10 @@
 				var/obj/item/weapon/weldingtool/WT = I
 				if(!WT.isOn()) return
 				if(WT.get_fuel() < 5)
-					user << "<span class='notice'>You need more fuel to complete this task.</span>"
+					user << "<span class='warning'>You need more fuel to complete this task!</span>"
 
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
+				user << "<span class='notice'>You begin to weld the turret's armor down...</span>"
 				if(do_after(user, 30))
 					if(!src || !WT.remove_fuel(5, user))
 						return
@@ -1069,7 +1040,7 @@ Status: []<BR>"},
 	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
 			if(emagged)
-				user << "<span class='notice'>The turret control is unresponsive.</span>"
+				user << "<span class='warning'>The turret control is unresponsive!</span>"
 				return
 
 			locked = !locked
@@ -1086,7 +1057,7 @@ Status: []<BR>"},
 
 /obj/machinery/turretid/emag_act(mob/user as mob)
 	if(!emagged)
-		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
+		user << "<span class='danger'>You short out the turret controls' access analysis module!</span>"
 		emagged = 1
 		locked = 0
 		if(user.machine==src)
@@ -1101,7 +1072,7 @@ Status: []<BR>"},
 /obj/machinery/turretid/attack_hand(mob/user as mob)
 	if ( get_dist(src, user) > 0 )
 		if ( !issilicon(user) )
-			user << "<span class='notice'>You are too far away.</span>"
+			user << "<span class='warning'>You are too far away!</span>"
 			user.unset_machine()
 			user << browse(null, "window=turretid")
 			return

@@ -466,8 +466,6 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/holymelon/add_juice()
 	if(..())
-		reagents.add_reagent("nutriment", 1 + round((potency / 15), 1))
-		reagents.add_reagent("vitamin", 1 + round((potency / 25), 1))
 		reagents.add_reagent("holywater", 1 + round((potency / 6), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
@@ -495,7 +493,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
 	seed = /obj/item/seeds/blumpkinseed
 	name = "blumpkin"
-	desc = "The pumpkin's toxic sibling."
+	desc = "When you're making a mess this blumpkin's there to clean you up."
 	icon_state = "blumpkin"
 	filling_color = "#87CEFA"
 
@@ -834,7 +832,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user as mob)
 	if(awakening || istype(user.loc,/turf/space))
 		return
-	user << "<span class='notice'>You begin to awaken the Killer Tomato.</span>"
+	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
 	awakening = 1
 
 	spawn(30)

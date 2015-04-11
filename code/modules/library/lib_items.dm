@@ -35,12 +35,14 @@
 	switch(state)
 		if(0)
 			if(istype(I, /obj/item/weapon/wrench))
+				user << "<span class='notice'>You start to wrench the frame into place...</span>"
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				if(do_after(user, 20))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(I, /obj/item/weapon/crowbar))
+				user << "<span class='notice'>You start to pry the frame apart...</span>"
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 				if(do_after(user, 20))
 					user << "<span class='notice'>You pry the frame apart.</span>"
@@ -251,7 +253,7 @@
 					user << "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
 
 	else if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You begin to carve out [title].</span>"
+		user << "<span class='notice'>You begin to carve out [title]...</span>"
 		if(do_after(user, 30))
 			user << "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>"
 			var/obj/item/weapon/storage/book/B = new

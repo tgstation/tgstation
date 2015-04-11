@@ -36,9 +36,9 @@
 		return
 	var/turf/loc = get_turf(usr)
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='danger'>[src.name] cannot be placed on this spot.</span>"
+		usr << "<span class='warning'>[src.name] cannot be placed on this spot!</span>"
 		return
-	usr << "Attaching [src] to the wall."
+	usr << "<span class='notice'>You start attaching [src] to the wall...</span>"
 	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
 	var/constrdir = usr.dir
 	var/constrloc = usr.loc
@@ -54,8 +54,8 @@
 	newlight.fingerprintshidden = src.fingerprintshidden
 	newlight.fingerprintslast = src.fingerprintslast
 
-	usr.visible_message("[usr.name] attaches [src] to the wall.", \
-		"You attach [src] to the wall.")
+	usr.visible_message("<span class='warning'>[usr.name] attaches [src] to the wall.</span>", \
+		"<span class='notice'>You attach [src] to the wall.</span>")
 	qdel(src)
 
 /obj/item/light_fixture_frame/small
@@ -99,20 +99,20 @@
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			usr << "You begin deconstructing [src]."
+			usr << "<span class='notice'>You begin deconstructing [src]...</span>"
 			if (!do_after(usr, 30))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-			user.visible_message("[user.name] deconstructs [src].", \
-				"You deconstruct [src].", "You hear a noise.")
+			user.visible_message("<span class='warning'>[user.name] deconstructs [src]!</span>", \
+				"<span class='notice'>You deconstruct [src].</span>", "You hear a noise.")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
 			qdel(src)
 		if (src.stage == 2)
-			usr << "You have to remove the wires first."
+			usr << "<span class='warning'>You have to remove the wires first!</span>"
 			return
 
 		if (src.stage == 3)
-			usr << "You have to unscrew the case first."
+			usr << "<span class='warning'>You have to unscrew the case first!</span>"
 			return
 
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -124,8 +124,8 @@
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
 		new /obj/item/stack/cable_coil(get_turf(src.loc), 1, "red")
-		user.visible_message("[user.name] removes the wiring from [src].", \
-			"You remove the wiring from [src].", "You hear a noise.")
+		user.visible_message("<span class='warning'>[user.name] removes the wiring from [src].</span>", \
+			"<span class='notice'>You remove the wiring from [src].</span>", "You hear a noise.")
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
@@ -139,10 +139,10 @@
 				if("bulb")
 					src.icon_state = "bulb-construct-stage2"
 			src.stage = 2
-			user.visible_message("[user.name] adds wires to [src].", \
-				"You add wires to [src].")
+			user.visible_message("<span class='warning'>[user.name] adds wires to [src].</span>", \
+				"<span class='notice'>You add wires to [src].</span>")
 		else
-			user << "<span class='warning'>You need one length of cable to wire [src]."
+			user << "<span class='warning'>You need one length of cable to wire [src]!"
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -153,8 +153,8 @@
 				if("bulb")
 					src.icon_state = "bulb-empty"
 			src.stage = 3
-			user.visible_message("[user.name] closes [src]'s casing.", \
-				"You close [src]'s casing.", "You hear a noise.")
+			user.visible_message("<span class='warning'>[user.name] closes [src]'s casing.</span>", \
+				"<span class='notice'>You close [src]'s casing.</span>", "You hear a noise.")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 
 			switch(fixture_type)
@@ -341,7 +341,7 @@
 	// attempt to insert light
 	if(istype(W, /obj/item/weapon/light))
 		if(status != LIGHT_EMPTY)
-			user << "There is a [fitting] already inserted."
+			user << "<span class='warning'>There is a [fitting] already inserted!</span>"
 			return
 		else
 			src.add_fingerprint(user)
@@ -409,7 +409,7 @@
 			qdel(src)
 			return
 
-		user << "You stick \the [W] into the light socket!"
+		user << "<span class='danger'>You stick \the [W] into the light socket!</span>"
 		if(has_power() && (W.flags & CONDUCT))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)

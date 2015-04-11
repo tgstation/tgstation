@@ -23,7 +23,6 @@
 	status_flags = 0
 	faction = list("cult")
 	status_flags = CANPUSH
-	flying = 1
 
 
 /mob/living/simple_animal/shade/death()

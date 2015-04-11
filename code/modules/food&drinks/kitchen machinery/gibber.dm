@@ -91,10 +91,10 @@
 		user << "<span class='danger'>Subject may not have abiotic items on.</span>"
 		return
 
-	user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>")
+	user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>", "<span class='notice'>You start to put [G.affecting] into the gibber...</span>")
 	src.add_fingerprint(user)
 	if(do_after(user, 30) && G && G.affecting && !occupant)
-		user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>")
+		user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>", "<span class='notice'>You stuff [G.affecting] into the gibber.</span>")
 		var/mob/M = G.affecting
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
@@ -136,16 +136,16 @@
 	var/sourcetotalreagents = src.occupant.reagents.total_volume
 	var/totalslabs = 3
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/allmeat[totalslabs]
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/allmeat[totalslabs]
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
 		if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
 		else
-			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
+			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/human
 	for (var/i=1 to totalslabs)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/newmeat = new typeofmeat
+		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new typeofmeat
 		newmeat.name = sourcename + newmeat.name
 		newmeat.subjectname = sourcename
 		newmeat.subjectjob = sourcejob

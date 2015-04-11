@@ -405,7 +405,7 @@ var/global/list/pipeID2State = list(
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
-		"<span class='notice'>You have fastened \the [src].</span>", \
+		"<span class='notice'>You fasten \the [src].</span>", \
 		"You hear ratchet.")
 
 	qdel(src)	// remove the pipe item
@@ -435,5 +435,5 @@ var/global/list/pipeID2State = list(
 		return 1
 	new/obj/machinery/meter( src.loc )
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You have fastened the meter to the pipe.</span>"
+	user << "<span class='notice'>You fasten the meter to the pipe.</span>"
 	qdel(src)

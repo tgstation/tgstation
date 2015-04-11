@@ -374,20 +374,13 @@ datum/reagent/consumable/flour
 datum/reagent/consumable/flour/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(!istype(T, /turf/space))
-		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
-		reagentdecal.reagents.add_reagent("flour", volume)
+		new /obj/effect/decal/cleanable/flour(T)
 
 datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
-
-datum/reagent/consumable/bluecherryjelly
-	name = "Blue Cherry Jelly"
-	id = "bluecherryjelly"
-	description = "Blue and tastier kind of cherry jelly."
-	color = "#00F0FF"
 
 datum/reagent/consumable/rice
 	name = "Rice"

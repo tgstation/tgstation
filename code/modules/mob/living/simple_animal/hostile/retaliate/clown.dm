@@ -14,6 +14,7 @@
 	emote_see = list("honks")
 	speak_chance = 1
 	a_intent = "harm"
+	stop_automated_movement_when_pulled = 0
 	maxHealth = 75
 	health = 75
 	speed = 0

@@ -65,7 +65,7 @@ Note: you can set the datum's defined processing_interval to some integer to set
 //used for smoothing out the cost values so they don't fluctuate wildly
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
 
-/datum/controller/game_controller/process()
+/datum/controller/game_controller/proc/process()
 	if(!Failsafe)	new /datum/controller/failsafe()
 	spawn(0)
 		var/timer = world.time

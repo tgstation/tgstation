@@ -368,55 +368,5 @@
 					A.screen_loc = ui_action_slot4
 				if(5)
 					A.screen_loc = ui_action_slot5
-				if(6)
-					A.screen_loc = ui_action_slot6
-				if(7)
-					A.screen_loc = ui_action_slot7
-				if(8)
-					A.screen_loc = ui_action_slot8
-				if(9)
-					A.screen_loc = ui_action_slot9
-				if(10)
-					A.screen_loc = ui_action_slot10
-				if(11)
-					A.screen_loc = ui_action_slot11
-				if(12)
-					A.screen_loc = ui_action_slot12
-				if(13)
-					A.screen_loc = ui_action_slot13
-				if(14)
-					A.screen_loc = ui_action_slot14
-				if(15)
-					A.screen_loc = ui_action_slot15
-				if(16)
-					A.screen_loc = ui_action_slot16
-				if(17)
-					A.screen_loc = ui_action_slot17
-				if(18)
-					A.screen_loc = ui_action_slot18
-				if(19)
-					A.screen_loc = ui_action_slot19
-				if(20)
-					A.screen_loc = ui_action_slot20
-				if(21)
-					A.screen_loc = ui_action_slot21
-				if(22)
-					A.screen_loc = ui_action_slot22
-				if(23)
-					A.screen_loc = ui_action_slot23
-				if(24)
-					A.screen_loc = ui_action_slot24
-				if(25)
-					A.screen_loc = ui_action_slot25
-				if(26)
-					A.screen_loc = ui_action_slot26
-				if(27)
-					A.screen_loc = ui_action_slot27
-				if(28)
-					A.screen_loc = ui_action_slot28
-				if(29)
-					A.screen_loc = ui_action_slot29
-				if(30)
-					A.screen_loc = ui_action_slot30
-					break //30 slots available, so no more can be added.
+					break //5 slots available, so no more can be added.
 			num++

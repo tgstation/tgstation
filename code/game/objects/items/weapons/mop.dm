@@ -43,11 +43,11 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	A = null
 
 	if(istype(turf))
-		user.visible_message("<span class='warning'>[user] begins to clean \the [turf] with [src].</span>")
+		user.visible_message("<span class='warning'>[user] begins to clean \the [turf] with [src].</span>", "<span class='notice'>You begin to clean \the [turf] with [src]...</span>", "You hear sloshing.")
 
 		if(do_after(user, mopspeed))
 			clean(turf)
-			user << "<span class='notice'>You have finished mopping!</span>"
+			user << "<span class='notice'>You finish mopping.</span>"
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)

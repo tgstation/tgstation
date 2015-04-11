@@ -32,6 +32,7 @@
 	var/cameraFollow = null
 
 	var/tod = null // Time of death
+	var/update_slimes = 1
 
 	var/on_fire = 0 //The "Are we on fire?" var
 	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
@@ -40,6 +41,5 @@
 	var/floating = 0
 	var/mob_size = MOB_SIZE_HUMAN
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
+
 	var/list/image/staticOverlays = list()
-	var/lying_pixel_offset = 0 //offset for pixel_y when the mob is lying down.
-	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)

@@ -18,7 +18,6 @@
 	melee_damage_upper = 1
 	attack_same = 2
 	attacktext = "chomps"
-	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("mushroom")
 	environment_smash = 0
 	stat_attack = 2

@@ -34,7 +34,9 @@
 	name = "body bag"
 	desc = "A plastic bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
-	icon_state = "bodybag"
+	icon_state = "bodybag_closed"
+	icon_closed = "bodybag_closed"
+	icon_opened = "bodybag_open"
 	var/foldedbag_path = /obj/item/bodybag
 	density = 0
 	mob_storage_capacity = 2
@@ -82,6 +84,13 @@
 		qdel(src)
 
 
+/obj/structure/closet/body_bag/update_icon()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened
+
+
 // Bluespace bodybag
 
 /obj/item/bodybag/bluespace
@@ -96,7 +105,9 @@
 	name = "bluespace body bag"
 	desc = "A bluespace body bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
-	icon_state = "bluebodybag"
+	icon_state = "bluebodybag_closed"
+	icon_closed = "bluebodybag_closed"
+	icon_opened = "bluebodybag_open"
 	foldedbag_path = /obj/item/bodybag/bluespace
 	density = 0
 	mob_storage_capacity = 15

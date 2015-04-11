@@ -38,8 +38,6 @@
 
 	update_gravity(mob_has_gravity())
 
-	update_pulling()
-
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
@@ -77,11 +75,6 @@
 /mob/living/proc/handle_stomach()
 	return
 
-/mob/living/proc/update_pulling()
-	if(pulling)
-		if(incapacitated())
-			stop_pulling()
-
 //This updates the health and status of the mob (conscious, unconscious, dead)
 /mob/living/proc/handle_regular_status_updates()
 
@@ -103,14 +96,14 @@
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 	if(paralysis)
-		paralysis = max(paralysis-1,0)
+		AdjustParalysis(-1)
 	if(stunned)
-		stunned = max(stunned-1,0)
+		AdjustStunned(-1)
 		if(!stunned)
 			update_icons()
 
 	if(weakened)
-		weakened = max(weakened-1,0)
+		AdjustWeakened(-1)
 		if(!weakened)
 			update_icons()
 

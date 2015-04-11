@@ -106,7 +106,7 @@ BLIND     // can't see anything
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/proc/adjustmask(var/mob/user)
 	if(!ignore_maskadjust)
-		if(user.incapacitated())
+		if(!user.canmove || user.stat || user.restrained())
 			return
 		if(src.mask_adjusted == 1)
 			src.icon_state = initial(icon_state)
@@ -128,7 +128,6 @@ BLIND     // can't see anything
 			if(adjusted_flags)
 				slot_flags = adjusted_flags
 		usr.update_inv_wear_mask()
-
 
 
 

@@ -21,9 +21,9 @@
 	icon_state = "wrench"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5
-	throwforce = 7
-	w_class = 2
+	force = 5.0
+	throwforce = 7.0
+	w_class = 2.0
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
@@ -43,9 +43,9 @@
 	icon_state = "screwdriver"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5
-	w_class = 1
-	throwforce = 5
+	force = 5.0
+	w_class = 1.0
+	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
 	g_amt = 0
@@ -58,11 +58,8 @@
 						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 	return(BRUTELOSS)
 
-/obj/item/weapon/screwdriver/New(loc, var/param_color = null)
-	if(!param_color)
-		param_color = pick("red","blue","purple","brown","green","cyan","yellow")
-
-	switch(param_color)
+/obj/item/weapon/screwdriver/New()
+	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
 		if ("red")
 			icon_state = "screwdriver2"
 			item_state = "screwdriver"
@@ -116,9 +113,8 @@
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/Wirecutter.ogg'
 
-/obj/item/weapon/wirecutters/New(loc, var/param_color = null)
-	..()
-	if((!param_color && prob(50)) || param_color == "yellow")
+/obj/item/weapon/wirecutters/New()
+	if(prob(50))
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
 
@@ -161,7 +157,6 @@
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
-	var/change_icons = 1
 
 /obj/item/weapon/weldingtool/New()
 	..()
@@ -171,21 +166,18 @@
 	return
 
 /obj/item/weapon/weldingtool/proc/update_torch()
-	overlays.Cut()
 	if(welding)
-		overlays += "[initial(icon_state)]-on"
+		src.overlays = 0
+		overlays += "["-won"]"
 		item_state = "welder1"
 	else
 		item_state = "welder"
 
 /obj/item/weapon/weldingtool/update_icon()
-	if(change_icons)
-		var/ratio = get_fuel() / max_fuel
-		ratio = Ceiling(ratio*4) * 25
-		if(ratio == 100)
-			icon_state = initial(icon_state)
-		else
-			icon_state = "[initial(icon_state)][ratio]"
+	src.overlays = 0
+	var/ratio = get_fuel() / max_fuel
+	ratio = Ceiling(ratio*4) * 25
+	icon_state = "[initial(icon_state)][ratio]"
 	update_torch()
 	return
 
@@ -325,7 +317,7 @@
 			force = 15
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
-			update_icon()
+			icon_state = "welder1"
 			SSobj.processing |= src
 		else
 			user << "<span class='notice'>You need more fuel.</span>"
@@ -338,7 +330,7 @@
 		force = 3
 		damtype = "brute"
 		hitsound = "swing_hit"
-		update_icon()
+		icon_state = "welder"
 
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)
@@ -368,28 +360,18 @@
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
-	icon_state = "indwelder"
 	max_fuel = 40
+	m_amt = 70
 	g_amt = 60
 	origin_tech = "engineering=2"
 
 /obj/item/weapon/weldingtool/largetank/cyborg
 
-/obj/item/weapon/weldingtool/largetank/flamethrower_screwdriver()
+/obj/item/weapon/weldingtool/largetank/cyborg/flamethrower_screwdriver()
 	return
 
-
-/obj/item/weapon/weldingtool/mini
-	name = "emergency welding tool"
-	icon_state = "miniwelder"
-	max_fuel = 10
-	m_amt = 30
-	g_amt = 10
-	change_icons = 0
-
-/obj/item/weapon/weldingtool/mini/flamethrower_screwdriver()
+/obj/item/weapon/weldingtool/largetank/cyborg/flamethrower_rods()
 	return
-
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded welding tool"
@@ -443,9 +425,9 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/crowbar/red
+	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
-	force = 8
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"

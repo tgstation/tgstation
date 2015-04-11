@@ -20,7 +20,7 @@
 			return
 
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
-			var/obj/item/weapon/stock_parts/cell/CELL = I
+			var/obj/item/weapon/stock_parts/cell/CELL
 			if(CELL.maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
 				U << "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>"
 				if (n_gloves && n_gloves.candrain && do_after(U,s_delay))

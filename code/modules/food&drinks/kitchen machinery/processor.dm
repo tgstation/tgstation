@@ -19,15 +19,15 @@
 	var/input
 	var/output
 	var/time = 40
-/datum/food_processor_process/proc/process_food(loc, what)
-	if (src.output && loc)
-		new src.output(loc)
-	if (what)
-		qdel(what) // Note to self: Make this safer
+	proc/process(loc, what)
+		if (src.output && loc)
+			new src.output(loc)
+		if (what)
+			qdel(what) // Note to self: Make this safer
 
 	/* objs */
 /datum/food_processor_process/meat
-	input = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
+	input = /obj/item/weapon/reagent_containers/food/snacks/meat
 	output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
 /datum/food_processor_process/potato
@@ -46,25 +46,13 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	output = /obj/item/weapon/reagent_containers/food/snacks/spaghetti
 
-/datum/food_processor_process/corn
-	input = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
-	output = /obj/item/weapon/reagent_containers/food/snacks/tortilla
-
-/datum/food_processor_process/parsnip
-	input = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
-	output = /obj/item/weapon/reagent_containers/food/snacks/roastparsnip
-
-/datum/food_processor_process/sweetpotato
-	input = /obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato
-	output = /obj/item/weapon/reagent_containers/food/snacks/yakiimo
-
 
 /* mobs */
-/datum/food_processor_process/mob/process_food(loc, what)
+/datum/food_processor_process/mob/process(loc, what)
 	..()
 
 
-/datum/food_processor_process/mob/slime/process_food(loc, what)
+/datum/food_processor_process/mob/slime/process(loc, what)
 	var/mob/living/simple_animal/slime/S = what
 	var/C = S.cores
 	if(S.stat != DEAD)
@@ -79,7 +67,7 @@
 /datum/food_processor_process/mob/slime/input = /mob/living/simple_animal/slime
 /datum/food_processor_process/mob/slime/output = null
 
-/datum/food_processor_process/mob/monkey/process_food(loc, what)
+/datum/food_processor_process/mob/monkey/process(loc, what)
 	var/mob/living/carbon/monkey/O = what
 	if (O.client) //grief-proof
 		O.loc = loc
@@ -166,7 +154,7 @@
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 		use_power(500)
 		sleep(P.time)
-		P.process_food(src.loc, O)
+		P.process(src.loc, O)
 		src.processing = 0
 	src.visible_message("<span class='notice'>\the [src] finished processing.</span>")
 

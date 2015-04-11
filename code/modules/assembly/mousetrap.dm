@@ -104,10 +104,8 @@
 				triggered(H)
 				H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 								  "<span class='warning'>You accidentally step on [src]</span>")
-		else if(isanimal(AM))
-			var/mob/living/simple_animal/SA = AM
-			if(!SA.flying)
-				triggered(AM)
+		else if(ismouse(AM))
+			triggered(AM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
 			triggered(AM)
 	..()
