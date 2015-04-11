@@ -250,9 +250,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		changelingID = "[honorific] [rand(1,999)]"
 
 /datum/changeling/proc/regenerate()
-	chem_charges = min(max(0, chem_charges+chem_recharge_rate), chem_storage)
+	chem_charges = Clamp(chem_charges + chem_recharge_rate, 0, chem_storage)
 	geneticdamage = max(0, geneticdamage-1)
-
 
 /datum/changeling/proc/GetDNA(var/dna_owner)
 	var/datum/dna/chosen_dna
