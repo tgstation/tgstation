@@ -1,0 +1,4 @@
+author: BestName
+delete-after: True
+changes: 
+  - tweak: Bags of Holding will once again cause a catastrophe if placed inside another BoH.
