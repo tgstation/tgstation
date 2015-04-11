@@ -1425,6 +1425,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 //*************************************************************************************
 /obj/item/weapon/electrolyzer
 	name = "Electrolyzer"
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "chemg_wired"
 	item_state = "chemg_wired"
 	desc = "A refurbished grenade-casing jury rigged to split simple chemicals."
@@ -1432,6 +1433,27 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	force = 2.0
 	var/list/beakers = new/list()
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
+	var/list/allowed_reactions = list(/datum/chemical_reaction/water, /datum/chemical_reaction/creatine,
+	/datum/chemical_reaction/discount, /datum/chemical_reaction/peptobismol, /datum/chemical_reaction/phalanximine,
+	/datum/chemical_reaction/stoxin, /datum/chemical_reaction/sterilizine, /datum/chemical_reaction/inaprovaline,
+	/datum/chemical_reaction/anti_toxin, /datum/chemical_reaction/mutagen, /datum/chemical_reaction/tramadol,
+	/datum/chemical_reaction/oxycodone, /datum/chemical_reaction/sacid, /datum/chemical_reaction/thermite,
+	/datum/chemical_reaction/lexorin, /datum/chemical_reaction/space_drugs, /datum/chemical_reaction/lube,
+	/datum/chemical_reaction/pacid, /datum/chemical_reaction/synaptizine, /datum/chemical_reaction/hyronalin,
+	/datum/chemical_reaction/arithrazine, /datum/chemical_reaction/impedrezene, /datum/chemical_reaction/kelotane,
+	/datum/chemical_reaction/virus_food, /datum/chemical_reaction/leporazine, /datum/chemical_reaction/cryptobiolin,
+	/datum/chemical_reaction/tricordrazine, /datum/chemical_reaction/alkysine, /datum/chemical_reaction/dexalin,
+	/datum/chemical_reaction/dermaline, /datum/chemical_reaction/dexalinp, /datum/chemical_reaction/bicaridine,
+	/datum/chemical_reaction/hyperzine, /datum/chemical_reaction/ryetalyn, /datum/chemical_reaction/cryoxadone,
+	/datum/chemical_reaction/clonexadone, /datum/chemical_reaction/spaceacillin, /datum/chemical_reaction/imidazoline,
+	/datum/chemical_reaction/inacusiate, /datum/chemical_reaction/ethylredoxrazine, /datum/chemical_reaction/glycerol,
+	/datum/chemical_reaction/sodiumchloride, /datum/chemical_reaction/chloralhydrate, /datum/chemical_reaction/zombiepowder,
+	/datum/chemical_reaction/rezadone, /datum/chemical_reaction/mindbreaker, /datum/chemical_reaction/lipozine,
+	/datum/chemical_reaction/condensedcapsaicin, /datum/chemical_reaction/surfactant, /datum/chemical_reaction/foaming_agent,
+	/datum/chemical_reaction/ammonia, /datum/chemical_reaction/diethylamine, /datum/chemical_reaction/space_cleaner,
+	/datum/chemical_reaction/plantbgone, /datum/chemical_reaction/doctor_delight, /datum/chemical_reaction/neurotoxin,
+	/datum/chemical_reaction/toxins_special, /datum/chemical_reaction/goldschlager, /datum/chemical_reaction/patron,
+	/datum/chemical_reaction/Cream, /datum/chemical_reaction/soysauce, /datum/chemical_reaction/)
 
 /obj/item/weapon/electrolyzer/attack_self(mob/user as mob)
 	if(beakers.len)
@@ -1443,10 +1465,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/item/weapon/electrolyzer/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(iswirecutter(W))
 		if(beakers.len)
-			user << "<span class='warning'> The electrolyzer contains beakers!</span>"
+			user << "<span class='warning'>The electrolyzer contains beakers!</span>"
 			return
 		else
-			user << "<span class='notice'> You disassemble the electrolyzer.</span>"
+			user << "<span class='notice'>You disassemble the electrolyzer.</span>"
 			var/turf/T = get_turf(src)
 			new /obj/item/stack/cable_coil(T,2)
 			new /obj/item/weapon/grenade/chem_grenade(T)
@@ -1455,28 +1477,28 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	else if(is_type_in_list(W, allowed_containers))
 		var/obj/item/weapon/reagent_containers/glass/G = W
 		if(G.reagents.reagent_list.len > 1)
-			user << "<span class='warning'> That mixture is too complex!</span>"
+			user << "<span class='warning'>That mixture is too complex!</span>"
 			return
 		if(beakers.len == 2)
-			user << "<span class='warning'> The grenade can not hold more containers.</span>"
+			user << "<span class='warning'>The grenade can not hold more containers.</span>"
 			return
 		else if(beakers.len == 1)
 			var/obj/item/weapon/reagent_containers/glass/other = beakers[1]
 			if(other.reagents.total_volume && !G.reagents.total_volume) //We already have one inserted beaker. It must occupy slot 1. Is it empty or active?
-				user << "<span class='notice'> You add \the [G] to the electrolyzer as the empty container.</span>"
-				insert_beaker(G)
+				user << "<span class='notice'>You add \the [G] to the electrolyzer as the empty container.</span>"
+				insert_beaker(G,user)
 			else if(!other.reagents.total_volume && G.reagents.total_volume)
-				user << "<span class='notice'> You add \the [G] to the electrolyzer as the active container.</span>"
-				insert_beaker(G)
+				user << "<span class='notice'>You add \the [G] to the electrolyzer as the active container.</span>"
+				insert_beaker(G,user)
 			else
-				user << "<span class='warning'> The electrolyzer requires one active beaker and one empty beaker!</span>"
+				user << "<span class='warning'>The electrolyzer requires one active beaker and one empty beaker!</span>"
 				return
 		else
-			user << "<span class='notice'> You add \the [G] to the electrolyzer as the [G.reagents.total_volume ? "active" : "empty"] container.</span>"
-			insert_beaker(G)
+			user << "<span class='notice'>You add \the [G] to the electrolyzer as the [G.reagents.total_volume ? "active" : "empty"] container.</span>"
+			insert_beaker(G,user)
 	else if(istype(W, /obj/item/weapon/cell))
 		if(beakers.len < 2)
-			user << "<span class='warning'> The electrolyzer requires one active beaker and one empty beaker!</span>"
+			user << "<span class='warning'>The electrolyzer requires one active beaker and one empty beaker!</span>"
 			return
 		var/obj/item/weapon/cell/C = W
 		var/obj/item/weapon/reagent_containers/active = null
@@ -1484,22 +1506,25 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		var/datum/chemical_reaction/unreaction = null
 		for(var/obj/item/weapon/reagent_containers/B in beakers)
 			if(B.reagents.reagent_list.len > 1) //This only fires if their power ran out with a first cell and they try electrolyzing again without removing the old mix
-				user << "<span class='warning'> That mixture is too complex!</span>"
+				user << "<span class='warning'>That mixture is too complex!</span>"
 				return
 			else if(B.reagents.reagent_list.len == 1)
 				active = B
 			else if (!B.reagents.reagent_list.len)
 				empty = B
 			else
-				user << "<span class='warning'> An error has occured. Your beaker had between 0 and 1 reagents. Please report this message.</span>"
+				user << "<span class='warning'>An error has occured. Your beaker had between 0 and 1 reagents. Please report this message.</span>"
 		if(!active || !empty)
-			user << "<span class='warning'> There must be both an empty and active beaker.</span>"
+			user << "<span class='warning'>There must be both an empty and active beaker.</span>"
 			return
-		for(var/datum/chemical_reaction/R in chemical_reactions_list)
-			if(R.result == active.reagents.get_master_reagent_id())
-				unreaction = R
+		var/datum/reagent/target = active.reagents.reagent_list[1] //Should only have one thing anyway
+		for(var/R in allowed_reactions)
+			var/datum/chemical_reaction/check = new R
+			if(check.id == target.id)
+				unreaction = check
+				break
 		if(!unreaction)
-			user << "<span class='notice'> The system didn't react...</span>"
+			user << "<span class='notice'>The system didn't react...</span>"
 			return
 		var/total_reactions = round(active.reagents.total_volume / unreaction.result_amount)
 		var/primary = 1
@@ -1518,13 +1543,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		..()
 
 /obj/item/weapon/electrolyzer/proc/insert_beaker(obj/item/weapon/W as obj, mob/user as mob)
-	user.drop_item()
 	W.loc = src
 	beakers += W
+	user.drop_item(W)
 
 
 /obj/structure/centrifuge
-	name = "toilet"
+	name = "suspicious toilet"
 	desc = "This toilet is a cleverly disguised improvised centrifuge."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "toilet11"
@@ -1535,7 +1560,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/structure/centrifuge/examine(mob/user)
 	..()
-	user << "<span class='info'>It contains [cans.len] empty containers [beaker ? "and an active container!" : "."]</span>"
+	user << "<span class='info'>It contains [cans.len] empty containers[beaker ? " and an active container!" : "."]</span>"
 
 /obj/structure/centrifuge/attackby(obj/item/weapon/reagent_containers/W as obj, mob/user as mob)
 	if(iscrowbar(W))
@@ -1543,20 +1568,21 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		T.open = 1
 		T.cistern = 1
 		new /obj/item/stack/rods(get_turf(src), 2)
-		user << "<span class='notice'> You pry out the rods, destroying the filter.</span>"
+		user << "<span class='notice'>You pry out the rods, destroying the filter.</span>"
 		qdel(src)
 	if(W.is_open_container())
 		if(!W.reagents.total_volume)
 			W.loc = src
 			cans += W
-			user << "<span class='notice'> You add a passive container. It now contains [cans.len].</span>"
+			user.drop_item(src)
+			user << "<span class='notice'>You add a passive container. It now contains [cans.len].</span>"
 		else
 			if(!beaker)
-				user << "<span class='notice'> You insert an active container.</span>"
+				user << "<span class='notice'>You insert an active container.</span>"
 				src.beaker =  W
 				user.drop_item(src)
 			else
-				user << "<span class='warning'> There is already an active container.</span>"
+				user << "<span class='warning'>There is already an active container.</span>"
 		return
 	else
 		..()
@@ -1569,23 +1595,26 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(beaker)
 			beaker.loc = src.loc
 			beaker = null
-		user << "<span class='notice'> You remove everything from the centrifuge.</span>"
+		user << "<span class='notice'>You remove everything from the centrifuge.</span>"
 	else
-		user << "<span class='warning'> There is nothing to eject!</span>"
+		user << "<span class='warning'>There is nothing to eject!</span>"
 
-/obj/structure/centrifuge/verb/flush(mob/user as mob)
-	user << "<span class='notice'> The [src] groans as it spits out containers.</span>"
+/obj/structure/centrifuge/verb/flush()
+	set name = "Flush"
+	set category = "Object"
+	set src in view(1)
+	usr << "<span class='notice'>The [src] groans as it spits out containers.</span>"
 	while(cans.len>0 && beaker.reagents.reagent_list.len>0)
 		var/obj/item/weapon/reagent_containers/C = cans[1]
-		beaker.reagents.trans_id_to(C,beaker.reagents.reagent_list[1],50)
+		var/datum/reagent/R = beaker.reagents.reagent_list[1]
+		beaker.reagents.trans_id_to(C,R.id,50)
 		C.loc = src.loc
 		cans -= C
 		if(!cans.len)
-			user << "<span class='warning'> With no remaining containers, the rest of the concoction swirls down the drain...</span>"
+			usr << "<span class='warning'>With no remaining containers, the rest of the concoction swirls down the drain...</span>"
 			beaker.reagents.clear_reagents()
-			return
 		if(!beaker.reagents.reagent_list.len)
-			user << "<span class='notice'> The empty container plops out.</span>"
+			usr << "<span class='notice'>The now-empty active container plops out.</span>"
 			beaker.loc = src.loc
 			beaker = null
 			return
@@ -1594,47 +1623,46 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	name = "mortar"
 	desc = "This is a reinforced bowl, used for crushing reagents. Ooga booga Rockstop."
 	icon = 'icons/obj/food.dmi'
-	icon_state = "soup"
+	icon_state = "mortar"
 	flags = FPRINT  | OPENCONTAINER
 	volume = 50
-
+	amount_per_transfer_from_this = 5
 	//We want the all-in-one grinder audience
 
 	var/list/blend_items = list (
-		/obj/item/stack/sheet/metal           = list("iron" = 20),
-		/obj/item/stack/sheet/mineral/plasma  = list("plasma" = 20),
-		/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),
-		/obj/item/stack/sheet/mineral/clown   = list("banana" = 20),
-		/obj/item/stack/sheet/mineral/silver  = list("silver" = 20),
-		/obj/item/stack/sheet/mineral/gold    = list("gold" = 20),
-		/obj/item/weapon/grown/nettle         = list("sacid" = 0),
-		/obj/item/weapon/grown/deathnettle    = list("pacid" = 0),
-		/obj/item/stack/sheet/charcoal        = list("charcoal" = 20),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list("rice" = -5),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = list("plasticide" = 5),
-		/obj/item/seeds = list("blackpepper" = 5),
-		/obj/item/weapon/rocksliver = list("ground_rock" = 30),
+		/obj/item/stack/sheet/metal           = list("iron",20),
+		/obj/item/stack/sheet/mineral/plasma  = list("plasma",20),
+		/obj/item/stack/sheet/mineral/uranium = list("uranium",20),
+		/obj/item/stack/sheet/mineral/clown   = list("banana",20),
+		/obj/item/stack/sheet/mineral/silver  = list("silver",20),
+		/obj/item/stack/sheet/mineral/gold    = list("gold",20),
+		/obj/item/weapon/grown/nettle         = list("sacid",0),
+		/obj/item/weapon/grown/deathnettle    = list("pacid",0),
+		/obj/item/stack/sheet/charcoal        = list("charcoal",20),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk",1),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup",2),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil",3),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour",5),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list("rice",5),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly",1),
+		/obj/item/seeds = list("blackpepper",5),
+		/obj/item/weapon/rocksliver = list("ground_rock",30),
 
-		//!Put all recipes above this!
-		/obj/item/weapon/reagent_containers/food = list()
+		//Recipes must include both variables!
+		/obj/item/weapon/reagent_containers/food = list("generic",0)
 	)
 
 	var/list/juice_items = list (
-		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list("banana" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list("potato" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = list("lemonjuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/orange = list("orangejuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = list("limejuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list("poisonberryjuice" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice",0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice",0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice",0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list("banana",0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list("potato",0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = list("lemonjuice",0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/orange = list("orangejuice",0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = list("limejuice",0),
+		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice",0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list("poisonberryjuice",0),
 	)
 
 
@@ -1662,19 +1690,19 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		new /obj/item/trash/bowl(user.loc)
 		return
 	if (crushable)
-		user << "<span class ='warning'> There's already something inside!</span>"
+		user << "<span class ='warning'>There's already something inside!</span>"
 		return 1
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
-		user << "<span class ='warning'> You can't grind that!</span>"
+		user << "<span class ='warning'>You can't grind that!</span>"
 		return ..()
 
-	user.before_take_item(O)
+	user.drop_item(O)
 	O.loc = src
 	crushable = O
-	src.updateUsrDialog()
 	return 0
 
 /obj/item/weapon/reagent_containers/mortar/attack_hand(mob/user as mob)
+	if(user.get_inactive_hand() != src) return ..()
 	if(crushable)
 		crushable.loc = src.loc
 		user.put_in_active_hand(crushable)
@@ -1683,10 +1711,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/item/weapon/reagent_containers/mortar/attack_self(mob/user as mob)
 	if(!crushable)
+		user << "<span class='notice'>There is nothing to be crushed.</span>"
 		return
 	if (reagents.total_volume >= volume)
+		user << "<span class='warning'>There is no more space inside!</span>"
 		return
 	if(is_type_in_list(crushable, juice_items))
+		user << "<span class='notice'>You smash the contents into juice!</span>"
 		var/id = null
 		for(var/i in juice_items)
 			if(istype(crushable, i))
@@ -1698,32 +1729,36 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			juiceable.potency = 0
 		reagents.add_reagent(id[1], min(round(5*sqrt(juiceable.potency)), volume - reagents.total_volume))
 	else if(is_type_in_list(crushable, blend_items))
+		user << "<span class='notice'>You grind the contents into dust!</span>"
 		var/id = null
 		var/space = volume - reagents.total_volume
 		for(var/i in blend_items)
 			if(istype(crushable, i))
 				id = blend_items[i]
+				break
 		if(!id)
 			return
 		if(istype(crushable, /obj/item/weapon/reagent_containers/food/snacks)) //Most growable food
-			if(id[1] == 0)
-				reagents.add_reagent(id,min(round(crushable.reagents.get_reagent_amount("nutriment")), space))
+			if(id[1] == "generic")
+				crushable.reagents.trans_to(src,crushable.reagents.total_volume)
 			else
-				reagents.add_reagent(id,min(round(crushable.reagents.get_reagent_amount("nutriment")*abs(id[1])), space))
+				reagents.add_reagent(id[1],min(id[2], space))
 		else if(istype(crushable, /obj/item/stack/sheet) || istype(crushable, /obj/item/seeds)) //Most mineral sheets, plus black pepper
-			reagents.add_reagent(id,min(id[1], space))
+			reagents.add_reagent(id[1],min(id[2], space))
 		else if(istype(crushable, /obj/item/weapon/grown)) //Nettle and death nettle
-			if (id[1] == 0) //Should always be true
-				if (crushable.reagents != null && crushable.reagents.has_reagent(id[1]))
-					reagents.add_reagent(id,min(crushable.reagents.get_reagent_amount(id), space))
-			else
-				reagents.add_reagent(id,min(id[1], space))
+			crushable.reagents.trans_to(src,crushable.reagents.total_volume)
 		else if(istype(crushable, /obj/item/weapon/rocksliver)) //Xenoarch
 			var/obj/item/weapon/rocksliver/R = crushable
-			reagents.add_reagent(id,min(id[1], space), R.geological_data)
+			reagents.add_reagent(id[1],min(id[2], space), R.geological_data)
 		else
-			user << "<span class ='warning'> I dunno what this is.</span>"
+			user << "<span class ='warning'>An error was encountered. Report this message.</span>"
 			return
+	else
+		user << "<span class='notice'>You smash the contents into nothingness.</span>"
 	qdel(crushable)
 	crushable = null
 	return
+
+/obj/item/weapon/reagent_containers/mortar/examine(mob/user)
+	..()
+	user << "<span class='info'>It has [crushable ? "an unground [crushable] inside." : "nothing to be crushed."]</span>"

@@ -51,11 +51,13 @@
 		user << "<span class='notice'>You add the rods to the toilet.</span>"
 		R.use(2)
 		state++
+		return
 	if(open && cistern && state && istype(I,/obj/item/weapon/paper))
 		user << "<span class='notice'>You create a filter with the paper and insert it.</span>"
 		new /obj/structure/centrifuge(src.loc)
 		qdel(I)
 		qdel(src)
+		return
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)

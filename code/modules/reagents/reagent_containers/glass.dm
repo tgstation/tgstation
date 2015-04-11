@@ -30,6 +30,7 @@
 		/obj/machinery/atmospherics/unary/cryo_cell,
 		/obj/machinery/dna_scannernew,
 		/obj/item/weapon/grenade/chem_grenade,
+		/obj/item/weapon/electrolyzer,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/storage/secure/safe,
