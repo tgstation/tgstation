@@ -87,7 +87,13 @@
 		/obj/item/toy/gasha/artificer,
 		/obj/item/toy/gasha/harvester,
 		/obj/item/toy/gasha/skub,
-		/obj/item/toy/gasha/fingerbox)
+		/obj/item/toy/gasha/fingerbox,
+		/obj/item/toy/gasha/cattoy,
+		/obj/item/toy/gasha/parrottoy,
+		/obj/item/toy/gasha/beartoy,
+		/obj/item/toy/gasha/carptoy,
+		/obj/item/toy/gasha/monkeytoy,
+		/obj/item/toy/gasha/huggertoy)
 
 	var/obj/item/I = new capsule_prize(M)
 	M.u_equip(src)

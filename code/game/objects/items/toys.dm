@@ -1094,6 +1094,35 @@
 	desc = "Perfect for the pet owner on a tight budget!"
 	icon_state = "corgitoy"
 
+/obj/item/toy/gasha/cattoy
+	name = "plush cat"
+	desc = "Marginally less affectionate than an actual cat."
+	icon_state = "cattoy"
+
+/obj/item/toy/gasha/parrottoy
+	name = "plush parrot"
+	desc = "All the fun of a real parrot, without the obnoxious talking!"
+	icon_state = "parrottoy"
+
+/obj/item/toy/gasha/beartoy
+	name = "plush bear"
+	desc = "HOO, HA! HOO, HA!"
+	icon_state = "beartoy"
+
+/obj/item/toy/gasha/carptoy
+	name = "plush carp"
+	desc = "Can not be used as a distraction during a space carp attack."
+	icon_state = "carptoy"
+/obj/item/toy/gasha/monkeytoy
+	name = "plush monkey"
+	desc = "Slightly less likely to throw poop than the real one."
+	icon_state = "monkeytoy"
+
+/obj/item/toy/gasha/huggertoy
+	name = "toy facehugger"
+	desc = "Cannot be worn as a mask, unfortunately."
+	icon_state = "huggertoy"
+
 /obj/item/toy/gasha/borertoy
 	name = "Mini Borer"
 	desc = "Probably not something you should be playing with"
