@@ -158,7 +158,7 @@ datum/design/bluespacebodybag
 	build_path = /obj/item/cybernetic_implant/brain/anti_stun
 	category = list("Medical Designs")
 
-/datum/design/cyberimp_nutriment
+/*/datum/design/cyberimp_nutriment
 	name = "Nutriment pump implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	id = "ci-nutriment"
@@ -174,13 +174,4 @@ datum/design/bluespacebodybag
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 6)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$gold" = 500, "$uranium" = 750)
-	category = list("Medical Designs")
-
-/datum/design/cyberimp_reviver
-	name = "Reviver implant"
-	desc = "This implant will automatically deliver a therapeutic dose of electrical energy to your heart if it ever stops beating, and inject you with nanites. A second chance!"
-	id = "ci-reviver"
-	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 6)
-	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 500, "$gold" = 1000, "$uranium" = 1000, "$diamond" = 2000)
-	category = list("Medical Designs")
+	category = list("Medical Designs")*/

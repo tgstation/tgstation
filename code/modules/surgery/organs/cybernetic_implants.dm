@@ -266,7 +266,7 @@
 	name = "Nutriment pump implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "chest_implant"
-	implant_color = "#F968B5"
+	implant_color = "#00AA00"
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
 	var/nutriment_amount = 30
@@ -297,7 +297,7 @@
 	name = "Nutriment pump implant PLUS"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	icon_state = "chest_implant"
-	implant_color = "#FF0044"
+	implant_color = "#006607"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	nutriment_amount = 50
 	poison_amount = 10
@@ -308,66 +308,3 @@
 		return
 	owner.reagents.add_reagent("????",poison_amount / severity) //food poisoning
 	owner << "<span class='notice'>You feel like your insides are burning.</span>"
-
-/obj/item/cybernetic_implant/chest/heart/reviver
-	name = "Reviver implant"
-	desc = "This implant will automatically deliver a therapeutic dose of electrical energy to your heart if it ever stops beating, and inject nanites into your bloodstream. A second chance!"
-	icon_state = "chest_implant"
-	implant_color = "#FF8000"
-	var/defibrillating = 0
-	var/recharge_time = 0
-	origin_tech = "materials=7;programming=3;biotech=4"
-
-/obj/item/cybernetic_implant/chest/heart/reviver/function()
-	if(istype(owner,/mob/living/carbon/human))
-		recharge_time = world.time + 2000
-		SSobj.processing |= src
-
-/obj/item/cybernetic_implant/chest/heart/reviver/process()
-	if(defibrillating)
-		return
-	if(!owner)
-		SSobj.processing.Remove(src)
-		qdel(src)
-		return
-	if(world.time < recharge_time)
-		return
-	if(owner.stat != DEAD)
-		return
-
-	defibrillating = 1
-	spawn(600)
-		if(owner.stat == DEAD)
-			owner.visible_message("<span class='warning'>[owner]'s body convulses by itself.")
-			playsound(owner, "bodyfall", 50, 1)
-			playsound(owner, 'sound/machines/defib_zap.ogg', 50, 1, -1)
-			dead_mob_list -= owner
-			living_mob_list |= list(owner)
-			owner.stat = UNCONSCIOUS
-			owner.reagents.add_reagent("nanites",10)
-			var/mob/living/carbon/human/H = owner
-			var/amount = BLOOD_VOLUME_OKAY - H.vessel.total_volume
-			H.vessel.add_reagent("blood", amount)
-			H.vessel.update_total()
-			owner.heart_attack = 0
-			owner.emote("gasp")
-			add_logs(owner, owner, "revived", object="defibrillator implant")
-			recharge_time = world.time + 20000
-		defibrillating = 0
-
-/obj/item/cybernetic_implant/chest/heart/reviver/emp_act(severity)
-	if(!owner)
-		return
-	if(recharge_time < world.time)
-		recharge_time = world.time + (2000 / severity)
-	else
-		recharge_time += 2000 / severity
-
-	if(prob(60/severity))
-		playsound(owner, 'sound/machines/defib_saftyOff.ogg', 50, 1, -1)
-		spawn(30)
-			playsound(owner, 'sound/machines/defib_zap.ogg', 50, 1, -1)
-			owner.heart_attack = 1
-			if(owner.stat == CONSCIOUS)
-				owner.Weaken(5)
-				owner.visible_message("<span class = 'userdanger'>[owner] clutches at their chest as if their heart stopped!</span>")

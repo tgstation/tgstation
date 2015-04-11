@@ -33,7 +33,7 @@
 	var/removednutriment = target.nutrition
 	target.nutrition = NUTRITION_LEVEL_WELL_FED
 	removednutriment -= 450 //whatever was removed goes into the meat
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/newmeat = new
 	newmeat.name = "fatty meat"
 	newmeat.desc = "Extremely fatty tissue taken from a patient."
 	newmeat.reagents.add_reagent ("nutriment", (removednutriment / 15)) //To balance with nutriment_factor of nutriment

@@ -11,12 +11,7 @@
 
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
-	icon_state = "miningsec1"
-	icon_closed = "miningsec"
-	icon_locked = "miningsec1"
-	icon_opened = "miningsecopen"
-	icon_broken = "miningsecbroken"
-	icon_off = "miningsecoff"
+	icon_state = "mining"
 	req_access = list(access_mining)
 
 /obj/structure/closet/secure_closet/miner/New()
@@ -84,7 +79,7 @@
 	hitsound = 'sound/weapons/drill.ogg'
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	desc = "An electric mining drill for the especially scrawny."
-	var/drillcost = 50 //80 mineral walls by default
+	var/drillcost = 15 //666 mineral walls by default
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 
 /obj/item/weapon/pickaxe/drill/New() //this one starts with a cell pre-installed.
@@ -110,16 +105,18 @@
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
 			update_icon()
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		if(bcell)
-			bcell.updateicon()
-			bcell.loc = get_turf(src.loc)
-			bcell = null
-			user << "<span class='notice'>You remove the cell from [src].</span>"
-			update_icon()
-			return
+	else
 		..()
-	return
+
+/obj/item/weapon/pickaxe/drill/attack_self(mob/user)
+	if(bcell)
+		bcell.updateicon()
+		bcell.loc = get_turf(src.loc)
+		bcell = null
+		user << "<span class='notice'>You remove the cell from [src].</span>"
+		update_icon()
+	else
+		user << "<span class='notice'>There is no cell in [src].</span>"
 
 /obj/item/weapon/pickaxe/drill/examine(mob/user)
 	..()
@@ -147,21 +144,21 @@
 /obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
-	digspeed = 8 //it's a fast drill with a relatively low power cost. what more could you ask for?
+	digspeed = 10 //it's a fast drill with a relatively low power cost. what more could you ask for?
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
-	drillcost = 75 //66 mineral walls by default, but very quickly
+	drillcost = 25 //400 mineral walls by default, but very quickly
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	digspeed = 4 //the epitome of powertools. high power consumption, extremely fast mining, laughs at puny walls
+	digspeed = 5 //the epitome of powertools. high power consumption, extremely fast mining, laughs at puny walls
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
-	drillcost = 100
+	drillcost = 30 //333 mineral walls by default, but very quickly
 
 /*****************************Shovel********************************/
 
@@ -195,8 +192,4 @@
 /obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "miningcar"
-	density = 1
-	icon_opened = "miningcaropen"
-	icon_closed = "miningcar"
+	icon_crate = "miningcar"

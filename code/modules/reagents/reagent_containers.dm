@@ -77,3 +77,14 @@
 
 			return 0
 	return 1
+
+/obj/item/weapon/reagent_containers/ex_act()
+	if(reagents)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			R.on_ex_act()
+	..()
+
+/obj/item/weapon/reagent_containers/fire_act()
+	reagents.chem_temp += 30
+	reagents.handle_reactions()
+	..()

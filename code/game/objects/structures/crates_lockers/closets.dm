@@ -2,10 +2,9 @@
 	name = "closet"
 	desc = "It's a basic storage unit."
 	icon = 'icons/obj/closet.dmi'
-	icon_state = "closed"
+	icon_state = "generic"
 	density = 1
-	var/icon_closed = "closed"
-	var/icon_opened = "open"
+	var/icon_door = null
 	var/opened = 0
 	var/welded = 0
 	var/locked = 0
@@ -19,10 +18,29 @@
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
+/obj/structure/closet/New()
+	..()
+	update_icon()
+
 /obj/structure/closet/initialize()
 	..()
 	if(!opened)		// if closed, any item at the crate's loc is put in the contents
 		take_contents()
+
+/obj/structure/closet/update_icon()
+	overlays.Cut()
+	if(!opened)
+		if(icon_door)
+			overlays += "[icon_door]_door"
+		else
+			overlays += "[icon_state]_door"
+		if(welded)
+			overlays += "welded"
+	else
+		if(icon_door)
+			overlays += "[icon_door]_open"
+		else
+			overlays += "[icon_state]_open"
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -68,13 +86,13 @@
 
 	src.dump_contents()
 
-	src.icon_state = src.icon_opened
 	src.opened = 1
 	if(istype(src, /obj/structure/closet/body_bag))
 		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
 	else
 		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	density = 0
+	update_icon()
 	return 1
 
 /obj/structure/closet/proc/insert(var/atom/movable/AM)
@@ -86,7 +104,7 @@
 		var/mob/living/L = AM
 		if(L.buckled || L.mob_size > max_mob_size) //buckled mobs and mobs too big for the container don't get inside closets.
 			return 0
-		if(L.mob_size > 0)
+		if(L.mob_size > MOB_SIZE_TINY) //decently sized mobs take more space than objects.
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)
 				mobs_stored++
@@ -112,13 +130,13 @@
 
 	take_contents()
 
-	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))
 		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
 	else
 		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	density = 1
+	update_icon()
 	return 1
 
 /obj/structure/closet/proc/toggle()
@@ -274,15 +292,6 @@
 		src.attack_hand(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
-
-/obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
-	overlays.Cut()
-	if(!opened)
-		icon_state = icon_closed
-		if(welded)
-			overlays += "welded"
-	else
-		icon_state = icon_opened
 
 // Objects that try to exit a locker by stepping were doing so successfully,
 // and due to an oversight in turf/Enter() were going through walls.  That

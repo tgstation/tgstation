@@ -93,7 +93,6 @@
 	name = "chawanmushi"
 	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
 	icon_state = "chawanmushi"
-	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bonus_reagents = list("vitamin" = 1)
 	list_reagents = list("nutriment" = 5)
 	filling_color = "#FFE4E1"
@@ -156,7 +155,7 @@
 	filling_color = "#CD853F"
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
-	name = "\improper Warm Donk-pocket"
+	name = "warm Donk-pocket"
 	desc = "The heated food of choice for the seasoned traitor."
 	bonus_reagents = list("omnizine" = 3)
 	list_reagents = list("nutriment" = 4, "omnizine" = 3)
@@ -234,3 +233,35 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#FFE4C4"
+
+/obj/item/weapon/reagent_containers/food/snacks/oatmealcookie
+	name = "oatmeal cookie"
+	desc = "The best of both cookie and oat"
+	icon_state = "oatmealcookie"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	filling_color = "#D2691E"
+
+/obj/item/weapon/reagent_containers/food/snacks/raisincookie
+	name = "raisin cookie"
+	desc = "Why would you put raisins on a cookie?"
+	icon_state = "raisincookie"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	filling_color = "#F0E68C"
+
+/obj/item/weapon/reagent_containers/food/snacks/cherrycupcake
+	name = "cherry cupcake"
+	desc = "A sweet cupcake with cherry bits."
+	icon_state = "cherrycupcake"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	filling_color = "#F0E68C"
+
+/obj/item/weapon/reagent_containers/food/snacks/bluecherrycupcake
+	name = "blue cherry cupcake"
+	desc = "Blue cherries inside a delicious cupcake"
+	icon_state = "bluecherrycupcake"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
+	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	filling_color = "#F0E68C"

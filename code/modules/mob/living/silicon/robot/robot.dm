@@ -8,6 +8,7 @@
 	var/sight_mode = 0
 	var/custom_name = ""
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
+	has_limbs = 1
 
 //Hud stuff
 
