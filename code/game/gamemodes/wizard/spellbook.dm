@@ -31,7 +31,7 @@
 	if(temp)
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
 	else
-r
+
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\wizard\spellbook.dm:22: dat = "<B>The Book of Spells:</B><BR>"
 		dat = {"<B>The Book of Spells:</B><BR>
