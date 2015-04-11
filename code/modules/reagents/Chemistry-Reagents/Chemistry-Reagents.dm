@@ -373,7 +373,28 @@ datum/reagent/unstableslimetoxin
 	id = "unstablemutationtoxin"
 	description = "An unstable and unpredictable corruptive toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	metabolization_rate = 5 * REAGENTS_METABOLISM //Very high, so it goes away quickly even if it doesn't react in the mob
+	metabolization_rate = INFINITY //So it instantly removes all of itself
+
+datum/reagent/unstableslimetoxin/on_mob_life(var/mob/living/carbon/human/H as mob)
+	..()
+	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
+	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.Weaken(3)
+	sleep(30)
+	var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow)
+	var/list/possible_morphs = typesof(/datum/species/) - blacklisted_species
+	var/datum/species/mutation = pick(possible_morphs)
+	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
+		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
+		H.dna.species = new mutation()
+		H.regenerate_icons()
+		if(mutation == /datum/species/slime)
+			H.faction |= "slime"
+		else
+			H.faction -= "slime"
+	else
+		H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
+	return 1
 
 datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"

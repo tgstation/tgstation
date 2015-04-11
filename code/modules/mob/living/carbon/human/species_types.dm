@@ -17,24 +17,7 @@
 		H.reagents.del_reagent(chem.type)
 		H.faction |= "slime"
 		return 1
-	if(chem.id == "unstablemutationtoxin")
-		H.reagents.del_reagent(chem.type)
-		H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
-		H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-		H.Weaken(3)
-		sleep(30)
-		var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow)
-		var/list/possible_morphs = typesof(/datum/species/) - blacklisted_species
-		var/datum/species/mutation = pick(possible_morphs)
-		if(prob(90) && mutation)
-			H << "<span class='danger'>The pain subsides, and you slowly realize you are no longer human...</span>"
-			H.dna.species = new mutation()
-			H.regenerate_icons()
-			if(mutation == /datum/species/slime)
-				H.faction |= "slime"
-		else
-			H << "<span class='danger'>The pain vanishes suddenly, and you feel as normal as ever...</span>"
-		return 1
+
 /*
  LIZARDPEOPLE
 */
