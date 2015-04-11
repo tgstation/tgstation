@@ -15,6 +15,16 @@
 	open = round(rand(0, 1))
 	update_icon()
 
+/obj/structure/toilet/initialize()
+	for(var/obj/item/I in src.loc)
+		if(I.w_class > 3)
+			continue
+		if(w_items + I.w_class > 5)
+			break
+		I.loc = src
+		w_items += I.w_class
+	..()
+
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	if(swirlie)
