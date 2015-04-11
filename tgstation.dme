@@ -548,6 +548,7 @@
 #include "code\game\objects\items\bodybag.dm"
 #include "code\game\objects\items\candle.dm"
 #include "code\game\objects\items\crayons.dm"
+#include "code\game\objects\items\dehy_carp.dm"
 #include "code\game\objects\items\documents.dm"
 #include "code\game\objects\items\holotape.dm"
 #include "code\game\objects\items\latexballoon.dm"
