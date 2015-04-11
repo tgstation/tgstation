@@ -126,7 +126,7 @@
 					var/mob/living/traitor_body = pick(possible_traitors)
 
 					if (traitor_body)
-						var/datum/mind/traitor_mind = newtraitor.mind
+						var/datum/mind/traitor_mind = traitor_body.mind
 
 						if (traitor_mind)
 							log_game("[key_name(traitor_body)] has been auto traitor'ed.")
