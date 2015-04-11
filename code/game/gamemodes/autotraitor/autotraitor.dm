@@ -130,10 +130,10 @@
 
 						if (traitor_mind)
 							log_game("[key_name(traitor_body)] has been auto traitor'ed.")
+							traitor_body << "<SPAN CLASS='danger'><CENTER></BIG>ATTENTION</BIG></CENTER></SPAN><BR><CENTER>It is time to pay your debt to the [syndicate_name()].</CENTER>"
 							traitor_body = null
 							forge_traitor_objectives(traitor_mind)
 							finalize_traitor(traitor_mind)
-							newtraitor << "<SPAN CLASS='danger'><CENTER></BIG>ATTENTION</BIG></CENTER></SPAN><BR><CENTER>It is time to pay your debt to the [syndicate_name()].</CENTER>"
 							greet_traitor(traitor_mind)
 				else
 					message_admins("No potential traitors.  Cancelling new traitor.")
