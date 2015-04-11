@@ -1083,6 +1083,7 @@
 				start that you can't be human. No, you are a shadowling, a harbringer of the shadows! Your alien abilities have been unlocked from within, and you may both commune with your allies and use \
 				a chrysalis to reveal your true form. You are to ascend at all costs.</b></span>"
 				src.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
+				src.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
 				current.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 			if("thrall")
 				if(!ishuman(current))
