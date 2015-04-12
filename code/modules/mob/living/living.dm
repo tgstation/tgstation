@@ -300,15 +300,6 @@
 				L += get_contents(D.wrapped)
 		return L
 
-/mob/living/check_contents_for(A)
-	var/list/L = src.get_contents()
-
-	for(var/obj/B in L)
-		if(B.type == A)
-			return B
-	return 0
-
-
 /mob/living/proc/can_inject()
 	return 1
 
