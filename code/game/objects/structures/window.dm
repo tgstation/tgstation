@@ -16,20 +16,25 @@
 	var/disassembled = 0
 	var/wtype = "glass"
 	var/fulltile = 0
-	var/obj/item/stack/rods/storedrods
-	var/obj/item/weapon/shard/storedshard
+	var/list/storeditems = list()
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
 /obj/structure/window/New(Loc,re=0)
 	..()
 	health = maxhealth
-	if(re)	reinf = re
-	storedshard = new/obj/item/weapon/shard(src)
+	if(re)
+		reinf = re
+	storeditems.Add(new/obj/item/weapon/shard(src))
+	if(fulltile)
+		storeditems.Add(new/obj/item/weapon/shard(src))
 	ini_dir = dir
 	if(reinf)
 		state = 2*anchored
-		storedrods = new/obj/item/stack/rods(src)
+		var/obj/item/stack/rods/R = new/obj/item/stack/rods(src)
+		storeditems.Add(R)
+		if(fulltile)
+			R.add(1)
 
 	air_update_turf(1)
 	update_nearby_icons()
@@ -123,9 +128,7 @@
 	..(user, 1)
 	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 	user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
-	storedshard.add_fingerprint(user)
-	if(storedrods)
-		storedrods.add_fingerprint(user)
+	add_fingerprint(user)
 	hit(50)
 	return 1
 
@@ -279,29 +282,23 @@
 	return 1
 
 /obj/structure/window/proc/hit(var/damage, var/sound_effect = 1)
-	if(reinf) damage *= 0.5
+	if(reinf)
+		damage *= 0.5
 	health = max(0, health - damage)
 	update_nearby_icons()
 	if(sound_effect)
 		playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	if(health <= 0)
-		if(dir == SOUTHWEST)
-			var/index = null
-			index = 0
-			while(index < 2)
-				spawnfragments()
-				index++
-		else
-			spawnfragments()
+		spawnfragments()
 		return
 
 /obj/structure/window/proc/spawnfragments()
+	if(!loc) //if already qdel'd somehow, we do nothing
+		return
 	var/turf/T = loc
-	storedshard.loc = T
-	transfer_fingerprints_to(storedshard)
-	if(storedrods)
-		storedrods.loc = T
-		transfer_fingerprints_to(storedrods)
+	for(var/obj/item/I in storeditems)
+		I.loc = T
+		transfer_fingerprints_to(I)
 	qdel(src)
 	update_nearby_icons()
 

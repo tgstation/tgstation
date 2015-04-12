@@ -118,6 +118,8 @@
 	return
 
 /obj/structure/grille/Deconstruct()
+	if(!loc) //if already qdel'd somehow, we do nothing
+		return
 	transfer_fingerprints_to(stored)
 	var/turf/T = loc
 	stored.loc = T

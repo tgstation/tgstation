@@ -838,9 +838,6 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/activate_hand(var/selhand)
 	return
 
-/mob/proc/SpeciesCanConsume()
-	return 0
-
 /mob/proc/Jitter(amount)
 	jitteriness = max(jitteriness,amount,0)
 
