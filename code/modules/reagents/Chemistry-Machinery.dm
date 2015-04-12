@@ -1453,7 +1453,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	/datum/chemical_reaction/ammonia, /datum/chemical_reaction/diethylamine, /datum/chemical_reaction/space_cleaner,
 	/datum/chemical_reaction/plantbgone, /datum/chemical_reaction/doctor_delight, /datum/chemical_reaction/neurotoxin,
 	/datum/chemical_reaction/toxins_special, /datum/chemical_reaction/goldschlager, /datum/chemical_reaction/patron,
-	/datum/chemical_reaction/Cream, /datum/chemical_reaction/soysauce, /datum/chemical_reaction/)
+	/datum/chemical_reaction/Cream, /datum/chemical_reaction/soysauce)
 
 /obj/item/weapon/electrolyzer/attack_self(mob/user as mob)
 	if(beakers.len)
@@ -1538,7 +1538,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				primary = 0
 			else
 				empty.reagents.add_reagent(E, unreaction.required_reagents[E]*total_reactions)
-		user << "<span class='warning'> The system electrolyzes!</span>"
+		user << "<span class='warning'>The system electrolyzes!</span>"
 	else
 		..()
 
@@ -1610,14 +1610,14 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		beaker.reagents.trans_id_to(C,R.id,50)
 		C.loc = src.loc
 		cans -= C
-		if(!cans.len)
-			usr << "<span class='warning'>With no remaining containers, the rest of the concoction swirls down the drain...</span>"
-			beaker.reagents.clear_reagents()
-		if(!beaker.reagents.reagent_list.len)
-			usr << "<span class='notice'>The now-empty active container plops out.</span>"
-			beaker.loc = src.loc
-			beaker = null
-			return
+	if(!cans.len&&beaker.reagents.reagent_list.len)
+		usr << "<span class='warning'>With no remaining containers, the rest of the concoction swirls down the drain...</span>"
+		beaker.reagents.clear_reagents()
+	if(!beaker.reagents.reagent_list.len)
+		usr << "<span class='notice'>The now-empty active container plops out.</span>"
+		beaker.loc = src.loc
+		beaker = null
+		return
 
 /obj/item/weapon/reagent_containers/mortar
 	name = "mortar"
