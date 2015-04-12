@@ -603,9 +603,13 @@ var/global/list/arenas = list()
 /datum/bomberman_spawn
 	var/turf/spawnpoint = null
 	var/availability = 0
+	var/mob/living/carbon/human/player = null
+	var/datum/player_mind = null
 
 /datum/bomberman_arena
 	var/name = "Bomberman Arena"
+	var/status = ARENA_SETUP
+	var/shape = ""
 	var/area/arena = null
 	var/area/under = null
 	var/turf/center = null		//middle of the arena.
@@ -625,131 +629,254 @@ var/global/list/arenas = list()
 	name += " #[rand(1,999)]"
 	open(size,user)
 	arenas += src
+	status = ARENA_AVAILABLE
+
+	shape = size
+	for(var/datum/bomberman_spawn/S in spawns)
+		var/obj/structure/planner/P = new /obj/structure/planner(S.spawnpoint, src)
+		planners += P
 
 /datum/bomberman_arena/proc/open(var/size,mob/user)
+	var/x = 1
+	var/y = 1
+	var/w = 1
+	var/h = 1
 	switch(size)
 		if("screensized")
-			if(planner(size,user))
-				var/obj/machinery/camera/C = new /obj/machinery/camera(center)
-				cameras += C
-				C.name = name
-				C.c_tag = name
-				C.network = list(
-					"thunder",	//entertainment monitors
-					"SS13",		//security monitors
-					)
-
-				var/obj/structure/planner/pencil = new /obj/structure/planner(center)
-				pencil.x -= 7
-				pencil.y -=	7
-				var/x = pencil.x
-				var/y = pencil.y
-				var/w = 14
-				var/h = 14
-				var/turf/T = null
-
-				under = get_area(pencil)
-
-				while (pencil.y <= (y+h))	//placing the Hard Walls and floors
-					pencil.x = x
-					while(pencil.x <= (x+w))
-						T = pencil.loc
-						if((pencil.y == y) || (pencil.y == (y+h)))
-							T.ChangeTurf(/turf/unsimulated/wall/bomberman)
-							T.opacity = 1
-							turfs += T
-						else if((pencil.x == x) || (pencil.x == (x+w)))
-							T.ChangeTurf(/turf/unsimulated/wall/bomberman)
-							T.opacity = 1
-							turfs += T
-						else if((((pencil.x - x)%2) == 0) && (((pencil.y - y)%2) == 0))
-							T.ChangeTurf(/turf/unsimulated/wall/bomberman)
-							turfs += T
-						else
-							T.ChangeTurf(/turf/simulated/floor/plating)
-							turfs += T
-						pencil.x++
-					sleep(2)	//giving the game some time to process to avoid unbearable lag spikes when we create an arena, plus it looks cool.
-					pencil.y++
-
-				pencil.x = x
-				pencil.y = y	//placing the Spawns
-				pencil.x++
-				pencil.y++
-				T = pencil.loc
-				var/datum/bomberman_spawn/sp1 = new/datum/bomberman_spawn()
-				sp1.spawnpoint = T
-				spawns += sp1
-				pencil.x = x+w-1
-				T = pencil.loc
-				var/datum/bomberman_spawn/sp2 = new/datum/bomberman_spawn()
-				sp2.spawnpoint = T
-				spawns += sp2
-				pencil.y = y+h-1
-				T = pencil.loc
-				var/datum/bomberman_spawn/sp3 = new/datum/bomberman_spawn()
-				sp3.spawnpoint = T
-				spawns += sp3
-				pencil.x = x+1
-				T = pencil.loc
-				var/datum/bomberman_spawn/sp4 = new/datum/bomberman_spawn()
-				sp4.spawnpoint = T
-				spawns += sp4
-
-				pencil.x = x
-				pencil.y = y
-				while (pencil.y <= (y+h))	//placing the Soft Walls
-					pencil.x = x
-					while(pencil.x <= (x+w))
-						T = pencil.loc
-						if(istype(T, /turf/simulated/floor/plating))
-							if(prob(60))
-								T = pencil.loc
-								var/obj/structure/softwall/W = new /obj/structure/softwall(T)
-								swalls += W
-						pencil.x++
-					sleep(2)	//giving the game some time to process to avoid unbearable lag spikes when we create a large arena, plus it looks cool.
-					pencil.y++
-
-				qdel(pencil)	//RIP sweet prince
-
-				for (var/datum/bomberman_spawn/S in spawns)	//removing the soft walls near the spawns
-					for (var/obj/structure/softwall/W in range(S.spawnpoint,1))
-						swalls -= W
-						qdel(W)
-
-
-				//now we just need to add a thunderdome jukebox to every map
-				var/area/A = new
-				A.name = name
-				A.tagbase = "[A.type]_[md5(name)]"
-				A.tag = "[A.type]/[md5(name)]"
-				A.master = A
-				A.power_equip = 0
-				A.power_light = 0
-				A.power_environ = 0
-				A.always_unpowered = 0
-				A.jammed = SUPER_JAMMED	//lol telesci
-				A.addSorted()
-				arena = A
-
-				spawn(0)
-					A.contents.Add(turfs)
-					for(var/turf/F in turfs)
-						for(var/atom/movable/AM in F)
-							AM.areaMaster = get_area_master(F)
-
-
-
-				message_admins("[key_name_admin(user.mind)] created a \"[size]\" Bomberman arena at [center.loc.name] ([center.x],[center.y],[center.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[center.x];Y=[center.y];Z=[center.z]'>JMP</A>)")
-				log_game("[key_name_admin(user.mind)] created a \"[size]\" Bomberman arena at [center.loc.name] ([center.x],[center.y],[center.z]) ")
-			else
-				qdel(src)
+			w = 14
+			h = 14
 
 		if("saturntenplayers")
-			qdel(src)
+			w = 38
+			h = 22
 
-/datum/bomberman_arena/proc/reset()
+	if(planner(size,user))
+		var/obj/machinery/camera/C = new /obj/machinery/camera(center)
+		cameras += C
+		C.name = name
+		C.c_tag = name
+		C.network = list(
+			"thunder",	//entertainment monitors
+			"SS13",		//security monitors
+			)
+
+		var/obj/structure/planner/pencil = new /obj/structure/planner(center, src)
+		pencil.x -= (w/2)
+		pencil.y -=	(h/2)
+		x = pencil.x
+		y = pencil.y
+		var/turf/T = null
+
+		under = get_area(pencil)
+
+		while (pencil.y <= (y+h))	//placing the Hard Walls and floors
+			pencil.x = x
+			while(pencil.x <= (x+w))
+				T = pencil.loc
+				if((pencil.y == y) || (pencil.y == (y+h)))
+					T.ChangeTurf(/turf/unsimulated/wall/bomberman)
+					T.opacity = 1
+					turfs += T
+				else if((pencil.x == x) || (pencil.x == (x+w)))
+					T.ChangeTurf(/turf/unsimulated/wall/bomberman)
+					T.opacity = 1
+					turfs += T
+				else if((((pencil.x - x)%2) == 0) && (((pencil.y - y)%2) == 0))
+					T.ChangeTurf(/turf/unsimulated/wall/bomberman)
+					turfs += T
+				else
+					T.ChangeTurf(/turf/simulated/floor/plating)
+					turfs += T
+				pencil.x++
+			sleep(2)	//giving the game some time to process to avoid unbearable lag spikes when we create an arena, plus it looks cool.
+			pencil.y++
+
+		pencil.x = x
+		pencil.y = y	//placing the Spawns
+		pencil.x++
+		pencil.y++
+		T = pencil.loc
+		var/datum/bomberman_spawn/sp1 = new/datum/bomberman_spawn()
+		sp1.spawnpoint = T
+		spawns += sp1
+		pencil.x = x+w-1
+		T = pencil.loc
+		var/datum/bomberman_spawn/sp2 = new/datum/bomberman_spawn()
+		sp2.spawnpoint = T
+		spawns += sp2
+		pencil.y = y+h-1
+		T = pencil.loc
+		var/datum/bomberman_spawn/sp3 = new/datum/bomberman_spawn()
+		sp3.spawnpoint = T
+		spawns += sp3
+		pencil.x = x+1
+		T = pencil.loc
+		var/datum/bomberman_spawn/sp4 = new/datum/bomberman_spawn()
+		sp4.spawnpoint = T
+		spawns += sp4
+
+		if(size == "saturntenplayers")
+			pencil.x = x + 10
+			pencil.y = y + 7
+			T = pencil.loc
+			var/datum/bomberman_spawn/sp5 = new/datum/bomberman_spawn()
+			sp5.spawnpoint = T
+			spawns += sp5
+			pencil.x = x + 10
+			pencil.y = y + 15
+			T = pencil.loc
+			var/datum/bomberman_spawn/sp6 = new/datum/bomberman_spawn()
+			sp6.spawnpoint = T
+			spawns += sp6
+			pencil.x = x + 19
+			pencil.y = y + 1
+			T = pencil.loc
+			var/datum/bomberman_spawn/sp7 = new/datum/bomberman_spawn()
+			sp7.spawnpoint = T
+			spawns += sp7
+			pencil.x = x + 19
+			pencil.y = y + h - 1
+			T = pencil.loc
+			var/datum/bomberman_spawn/sp8 = new/datum/bomberman_spawn()
+			sp8.spawnpoint = T
+			spawns += sp8
+			pencil.x = x + 28
+			pencil.y = y + 7
+			T = pencil.loc
+			var/datum/bomberman_spawn/sp9 = new/datum/bomberman_spawn()
+			sp9.spawnpoint = T
+			spawns += sp9
+			pencil.x = x + 28
+			pencil.y = y + 15
+			T = pencil.loc
+			var/datum/bomberman_spawn/sp10 = new/datum/bomberman_spawn()
+			sp10.spawnpoint = T
+			spawns += sp10
+
+		pencil.x = x
+		pencil.y = y
+		while (pencil.y <= (y+h))	//placing the Soft Walls
+			pencil.x = x
+			while(pencil.x <= (x+w))
+				T = pencil.loc
+				if(istype(T, /turf/simulated/floor/plating))
+					if(prob(60))
+						T = pencil.loc
+						var/obj/structure/softwall/W = new /obj/structure/softwall(T)
+						swalls += W
+				pencil.x++
+			sleep(2)	//giving the game some time to process to avoid unbearable lag spikes when we create a large arena, plus it looks cool.
+			pencil.y++
+
+		qdel(pencil)	//RIP sweet prince
+
+		for (var/datum/bomberman_spawn/S in spawns)	//removing the soft walls near the spawns
+			for (var/obj/structure/softwall/W in range(S.spawnpoint,1))
+				swalls -= W
+				qdel(W)
+			S.availability = 1
+
+
+		//now we just need to add a thunderdome jukebox to every map
+		var/area/A = new
+		A.name = name
+		A.tagbase = "[A.type]_[md5(name)]"
+		A.tag = "[A.type]/[md5(name)]"
+		A.master = A
+		A.power_equip = 0
+		A.power_light = 0
+		A.power_environ = 0
+		A.always_unpowered = 0
+		A.jammed = SUPER_JAMMED	//lol telesci
+		A.addSorted()
+		arena = A
+
+		spawn(0)
+			A.contents.Add(turfs)
+			for(var/turf/F in turfs)
+				for(var/atom/movable/AM in F)
+					AM.areaMaster = get_area_master(F)
+
+
+
+		message_admins("[key_name_admin(user.mind)] created a \"[size]\" Bomberman arena at [center.loc.name] ([center.x],[center.y],[center.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[center.x];Y=[center.y];Z=[center.z]'>JMP</A>)")
+		log_game("[key_name_admin(user.mind)] created a \"[size]\" Bomberman arena at [center.loc.name] ([center.x],[center.y],[center.z]) ")
+	else
+		qdel(src)
+
+
+
+/datum/bomberman_arena/proc/spawn_player(var/turf/T)
+	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
+	M.name = "Bomberman #[rand(1,999)]"
+	M.real_name = name
+	var/list/randomhexes = list(
+		"7",
+		"8",
+		"9",
+		"a",
+		"b",
+		"c",
+		"d",
+		"e",
+		"f",
+		)
+	M.color = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
+
+/datum/bomberman_arena/proc/dress_player(var/mob/living/carbon/human/M)
+	M.equip_to_slot_or_del(new /obj/item/clothing/under/darkblue(M), slot_w_uniform)
+	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/purple(M), slot_shoes)
+	M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/bomberman(M), slot_head)
+	var/obj/item/clothing/suit/space/bomberman/bombsuit = new /obj/item/clothing/suit/space/bomberman(M)
+	M.equip_to_slot_or_del(bombsuit, slot_wear_suit)
+	M.equip_to_slot_or_del(new /obj/item/clothing/gloves/purple(M), slot_gloves)
+	var/obj/item/weapon/bomberman/B = new/obj/item/weapon/bomberman(M)
+	tools += B
+	M.equip_to_slot_or_del(B, slot_s_store)
+	bombsuit.slowdown = 1
+	for(var/obj/item/clothing/C in M)
+		C.canremove = 0
+
+/datum/bomberman_arena/proc/start(var/list/minds)
+	status = ARENA_INGAME
+	var/i=1
+	for(var/datum/bomberman_spawn/S in spawns)
+		var/datum/mind/p_mind = S.player_mind
+		p_mind = minds[i]
+		var/mob/living/carbon/human/M = spawn_player(S.spawnpoint)
+		S.player = M
+		dress_player(S.player)
+		S.player.canmove = 0
+		p_mind.transfer_to(S.player)
+		players += S.player_mind
+		S.availability = 0
+		i++
+	sleep(20)
+	for(var/datum/bomberman_spawn/S in spawns)
+		S.player.canmove = 1
+
+/datum/bomberman_arena/proc/reset(var/remove_players=1)
+	status = ARENA_SETUP
+
+	if(!remove_players)
+		for(var/datum/bomberman_spawn/S in spawns)
+			if(S.player_mind)
+				if(S.player)
+					S.player.revive(1)
+					S.player.canmove = 0
+					S.player.loc = S.spawnpoint
+				else	//if the player got gibbed
+					var/mob/living/carbon/human/M = spawn_player(S.spawnpoint)
+					var/datum/mind/p_mind = S.player_mind
+					S.player = M
+					dress_player(S.player)
+					S.player.canmove = 0
+					p_mind.transfer_to(S.player)
+	else
+		for(var/mob/M in players)
+			qdel(M)
+		players = list()
+
 	for(var/obj/structure/softwall/W in swalls)
 		qdel(W)
 	swalls = list()
@@ -758,17 +885,22 @@ var/global/list/arenas = list()
 		qdel(T)
 	tools = list()
 
-	for(var/mob/M in players)
-		qdel(M)
-	players = list()
 
-	var/obj/structure/planner/pencil = new /obj/structure/planner(center)
-	pencil.x -= 7
-	pencil.y -=	7
+	var/obj/structure/planner/pencil = new /obj/structure/planner(center, src)
+	var/w = 1
+	var/h = 1
+	switch(shape)
+		if("screensized")
+			w = 14
+			h = 14
+
+		if("saturntenplayers")
+			w = 38
+			h = 22
+	pencil.x -= (w/2)
+	pencil.y -=	(h/2)
 	var/x = pencil.x
 	var/y = pencil.y
-	var/w = 14
-	var/h = 14
 	var/turf/T = null
 
 	sleep(50)	//waiting a moment, in case there are bombs waiting to explode in the arena
@@ -793,7 +925,21 @@ var/global/list/arenas = list()
 			swalls -= W
 			qdel(W)
 
-/datum/bomberman_arena/proc/close()
+		S.player = null
+		S.availability = 1
+
+	if(!remove_players)
+		for(var/datum/bomberman_spawn/S in spawns)
+			S.player.canmove = 1
+		status = ARENA_INGAME
+	else
+		status = ARENA_AVAILABLE
+
+/datum/bomberman_arena/proc/close(var/open_space=1)
+	status = ARENA_SETUP
+	for (var/obj/structure/planner/P in planners)
+		qdel(P)
+
 	for(var/obj/machinery/camera/C in cameras)
 		qdel(C)
 	cameras = list()
@@ -814,7 +960,7 @@ var/global/list/arenas = list()
 	for(var/turf/T in turfs)
 		for(var/atom/movable/AM in T)
 			AM.areaMaster = get_area_master(T)
-		if(under.name == "Space")
+		if(open_space && (under.name == "Space"))
 			T.ChangeTurf(/turf/space)
 		else
 			T.ChangeTurf(/turf/simulated/floor/plating)
@@ -827,7 +973,7 @@ var/global/list/arenas = list()
 	switch(size)
 		if("screensized")
 			for(var/turf/T in range(center,7))
-				var/obj/structure/planner/P = new /obj/structure/planner(T)
+				var/obj/structure/planner/P = new /obj/structure/planner(T, src)
 				if(P.loc)
 					planners += P
 			if(planners.len == 225)
@@ -837,7 +983,28 @@ var/global/list/arenas = list()
 			else
 				user << "<span class='warning'>Part of the arena was outside the Z-Level.</span>"
 		if("saturntenplayers")
-			choice = 0
+			var/obj/structure/planner/pencil = new /obj/structure/planner(center, src)
+			pencil.x -= 19
+			pencil.y -= 11
+			var/x = pencil.x
+			var/y = pencil.y
+			var/w = 38
+			var/h = 22
+			var/turf/T = null
+			while (pencil.y <= (y+h))
+				pencil.x = x
+				while(pencil.x <= (x+w))
+					T = pencil.loc
+					var/obj/structure/planner/P = new /obj/structure/planner(T, src)
+					if(P.loc)
+						planners += P
+					pencil.x++
+				pencil.y++
+			qdel(pencil)
+			if(planners.len == 897)
+				var/achoice = alert(user, "All those green tiles (that only ghosts can see) will be part of the arena. Do you want to proceed?","Arena Creation", "Confirm","Cancel")
+				if(achoice=="Confirm")
+					choice = 1
 	for (var/obj/structure/planner/P in planners)
 		qdel(P)
 	return	choice
@@ -849,6 +1016,11 @@ var/global/list/arenas = list()
 	density = 0
 	anchored = 1
 	invisibility = 60
+	var/datum/bomberman_arena/arena = null
+
+/obj/structure/planner/New(turf/loc,var/a)
+	..()
+	arena = a
 
 /obj/structure/planner/ex_act(severity)
 	return

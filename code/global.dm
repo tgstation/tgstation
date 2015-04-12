@@ -358,3 +358,7 @@ var/global/obj/item/device/radio/intercom/universe/announcement_intercom = new
 
 //used by jump-to-area etc. Updated by area/updateName()
 var/list/sortedAreas = list()
+
+
+var/global/list/volunteer_gladiators = list()
+var/global/list/never_gladiators = list()

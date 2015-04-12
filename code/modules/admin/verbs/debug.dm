@@ -1401,7 +1401,7 @@ client/proc/delete_all_bomberman()
 
 client/proc/create_bomberman_arena()
 	set name = "Create a Bomberman Arena"
-	set desc = "4th wall ointment."
+	set desc = "Create a customizable Bomberman-type arena."
 	set category = "Fun"
 
 	var/list/arena_sizes = list(
@@ -1412,6 +1412,100 @@ client/proc/create_bomberman_arena()
 	var/turf/T = get_turf(src.mob)
 	var/datum/bomberman_arena/A = new /datum/bomberman_arena(T,arena_type,src.mob)
 	arenas += A
+
+client/proc/control_bomberman_arena()
+	set name = "Arena Control Panel"
+	set desc = "Control or Remove an existing Bomberman-type arena."
+	set category = "Fun"
+
+	var/datum/bomberman_arena/arena_target = input("Which arena do you wish to control?", "Arena Control Panel") in arenas
+	usr << "Arena Control Panel: [arena_target]"
+	var/arena_status = ""
+	switch(arena_target.status)
+		if(ARENA_SETUP)
+			arena_status = "SETUP"
+		if(ARENA_AVAILABLE)
+			arena_status = "AVAILABLE"
+		if(ARENA_INGAME)
+			arena_status = "IN-GAME"
+	usr << "status: [arena_status]"
+	if(arena_status == "AVAILABLE")
+		var/i = 0
+		for(var/datum/bomberman_spawn/S in arena_target.spawns)
+			if(S.availability)
+				i++
+		usr << "available spawn points: [i]"
+	if(arena_status == "IN-GAME")
+		var/j = "players: "
+		for(var/datum/bomberman_spawn/S in arena_target.spawns)
+			j += "[S.player.name], "
+		usr << "[j]"
+
+	var/list/choices = list(
+		"CANCEL",
+		"Close Arena(space)",
+		"Close Arena(floors)",
+		"Reset Arena",
+		"Recruit Gladiators (among the observers)",
+		)
+
+	if(arena_status == "AVAILABLE")
+		choices += "Start a new game!"
+
+	if(arena_status == "IN-GAME")
+		choices += "Restart Game (with same players)"
+
+
+	var/datum/bomberman_arena/choice = input("Which action do you wish to take?", "Arena Control Panel") in choices
+	switch(choice)
+		if("CANCEL")
+			return
+		if("Close Arena(space)")
+			arena_target.close()
+		if("Close Arena(floors)")
+			arena_target.close(0)
+		if("Reset Arena")
+			arena_target.reset()
+		if("Recruit Gladiators (among the observers)")
+			spawn()
+				for(var/mob/dead/observer/D in player_list)
+					if(!(D.mind in never_gladiators))
+						var/glad_choices = list(
+							"Sure!",
+							"No Thanks.",
+							"Never.",
+							)
+						var/glad = input(D,"Do you wish to fight for honour and glory in the Arena?", "Gladiator Recruitment") in glad_choices
+						switch(glad)
+							if("Sure!")
+								volunteer_gladiators += D.mind
+								log_admin("[D] volunteered to become a gladiator")
+								message_admins("[D] volunteered to become a gladiator")
+							if("No Thanks.")
+								log_admin("[D] declined to become a gladiator")
+								message_admins("[D] declined to become a gladiator")
+								return
+							if("Never.")
+								log_admin("[D] wishes to never become a gladiator")
+								message_admins("[D] wishes to never become a gladiator")
+								never_gladiators += D.mind
+		if("Restart Game (with same players)")
+			arena_target.reset(0)
+		if("Start a new game!")
+			var/i = 0
+			for(var/datum/bomberman_spawn/S in arena_target.spawns)
+				i++
+			if(i < volunteer_gladiators.len)
+				usr << "There aren't enough volunteer gladiators to have a proper game..."
+			else
+				var/list/new_challengers = list()
+				while(new_challengers.len < i)
+					var/datum/mind/A = input("Pick the players you wish to choose", "Gladiator Recruitment") in volunteer_gladiators
+					volunteer_gladiators -= A
+					new_challengers += A
+				arena_target.start(new_challengers)
+
+
 
 client/proc/mob_list()
 	set name = "show mob list"
