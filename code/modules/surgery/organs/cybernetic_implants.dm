@@ -295,7 +295,7 @@
 
 /obj/item/cybernetic_implant/chest/nutriment/plus
 	name = "Nutriment pump implant PLUS"
-	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
+	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	icon_state = "chest_implant"
 	implant_color = "#006607"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
@@ -365,3 +365,23 @@
 		owner.heart_attack = 1
 		spawn(600 / severity)
 			owner.heart_attack = 0
+
+
+//BOX O' IMPLANTS
+
+/obj/item/weapon/storage/box/cyber_implants
+	name = "boxed cybernetic implants"
+	desc = "A sleek, sturdy box."
+	icon_state = "cyber_implants"
+	var/list/boxed = list(/obj/item/cybernetic_implant/eyes/xray,/obj/item/cybernetic_implant/eyes/thermals,
+						/obj/item/cybernetic_implant/brain/anti_drop, /obj/item/cybernetic_implant/brain/anti_stun,
+						/obj/item/cybernetic_implant/chest/nutriment/plus, /obj/item/cybernetic_implant/chest/reviver)
+	var/amount = 5
+
+/obj/item/weapon/storage/box/cyber_implants/New()
+	..()
+	var/i
+	var/implant
+	for(i = 0, i < amount, i++)
+		implant = pick(boxed)
+		new implant(src)
