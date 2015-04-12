@@ -343,15 +343,15 @@
 				if(user.a_intent == I_HURT)
 					if (prob(15))	M.Weaken(5)
 					M.apply_damage(8,def_zone = "head")
-					visible_message("\red [G.assailant] slams [G.affecting]'s face against \the [src]!")
+					visible_message("<span class='warning'>[G.assailant] slams [G.affecting]'s face against \the [src]!</span>")
 					playsound(get_turf(src), 'sound/weapons/tablehit1.ogg', 50, 1)
 				else
-					user << "\red You need a better grip to do that!"
+					user << "<span class='warning'>You need a better grip to do that!</span>"
 					return
 			else
 				G.affecting.loc = src.loc
 				G.affecting.Weaken(5)
-				visible_message("\red [G.assailant] puts [G.affecting] on \the [src].")
+				visible_message("<span class='warning'>[G.assailant] puts [G.affecting] on \the [src].</span>")
 			del(W)
 			return
 
@@ -363,9 +363,6 @@
 			destroy()
 		return
 
-	if(isrobot(user))
-		return
-
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
@@ -373,10 +370,10 @@
 		playsound(get_turf(src), 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(get_turf(src), "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
-			O.show_message("\blue The [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
+			O.show_message("<span class='notice'>The [src] was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear [src] coming apart.</span>", 2)
 		destroy()
 
-	if(user.drop_item(src.loc))
+	if(user.drop_item(W, src.loc))
 		if(W.loc == src.loc && params_list.len)
 			var/clamp_x = clicked.Width() / 2
 			var/clamp_y = clicked.Height() / 2
@@ -545,18 +542,18 @@
 			return ..()
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				user << "\blue Now weakening the reinforced table"
+				user << "<span class='notice'>Now weakening the reinforced table</span>"
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table weakened"
+					user << "<span class='notice'>Table weakened</span>"
 					src.status = 1
 			else
-				user << "\blue Now strengthening the reinforced table"
+				user << "<span class='notice'>Now strengthening the reinforced table</span>"
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table strengthened"
+					user << "<span class='notice'>Table strengthened</span>"
 					src.status = 2
 			return
 		return
@@ -612,7 +609,7 @@
 		return
 	if(isrobot(user))
 		return
-	user.drop_item()
+	user.drop_item(O)
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
@@ -625,7 +622,7 @@
 		return
 	if(isrobot(user))
 		return
-	user.drop_item(src.loc)
+	user.drop_item(W, src.loc)
 	return 1
 
 /obj/structure/rack/meteorhit(obj/O as obj)

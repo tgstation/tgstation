@@ -24,7 +24,7 @@
 
 	//Seems about right
 	//if(handcuffed || legcuffed)
-		//src << "\red You cannot evolve when you are cuffed."
+		//src << "<span class='warning'>You cannot evolve when you are cuffed.</span>"
 
 	if(amount_grown >= max_grown)	//TODO ~Carn
 		//green is impossible to read, so i made these blue and changed the formatting slightly

@@ -184,7 +184,7 @@
 /* The cart has very grippy tires and or magnets to keep it from slipping when on a good surface
 	//Check to see if we slipped
 	if(prob(Process_Spaceslipping(5)))
-		src << "\blue <B>You slipped!</B>"
+		src << "<span class='notice'><B>You slipped!</B></span>"
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0

@@ -31,7 +31,7 @@
 			user << "<span class='warning'>\The [I] is too small for \the [src]</span>"
 			return 0
 	user << "<span class='notice'>You stealthily place \the [src] onto \the [A]</span>"
-	user.drop_item(A)
+	user.drop_item(src, A)
 	active = 1
 	camera_bugs += src
 	return 1

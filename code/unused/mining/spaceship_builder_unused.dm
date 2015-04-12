@@ -121,13 +121,13 @@
 		return
 
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
 	if (istype(W, /obj/item/stack/sheet/metal))
 
 		var/obj/item/stack/sheet/metal/M = W
-		user << "\blue You insert all the metal into the machine."
+		user << "<span class='notice'>You insert all the metal into the machine.</span>"
 		metal_amount += M.amount * 100
 		del(M)
 

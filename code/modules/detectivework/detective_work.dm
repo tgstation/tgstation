@@ -168,7 +168,7 @@ obj/machinery/computer/forensic_scanning
 						I.icon_state = "evidenceobj"
 					else
 						scanning = I
-						M.drop_item(src)
+						M.drop_item(I, src)
 				else
 					usr << "Invalid Object Rejected."
 			if("card")  //Processing a fingerprint card.
@@ -181,15 +181,15 @@ obj/machinery/computer/forensic_scanning
 					if(!card.fingerprints)
 						card.fingerprints = list()
 					if(card.amount > 1 || !card.fingerprints.len)
-						usr << "\red ERROR: No prints/too many cards."
+						usr << "<span class='warning'>ERROR: No prints/too many cards.</span>"
 						if(card.loc == src)
 							card.loc = src.loc
 						card = null
 						return
-					M.drop_item(src)
+					M.drop_item(I, src)
 					process_card()
 				else
-					usr << "\red Invalid Object Rejected."
+					usr << "<span class='warning'>Invalid Object Rejected.</span>"
 			if("database") //Viewing all records in each database
 				canclear = 1
 				if(href_list["delete_record"])
@@ -658,7 +658,7 @@ obj/machinery/computer/forensic_scanning
 				usr << "No match found."
 			del(card)
 		else
-			usr << "\red ERROR: No prints/too many cards."
+			usr << "<span class='warning'>ERROR: No prints/too many cards.</span>"
 			if(card.loc == src)
 				card.loc = src.loc
 			card = null

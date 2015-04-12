@@ -25,7 +25,7 @@
 	var/dat = "<B>Bluespace Artillery Control:</B><BR>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\awaymissions\bluespaceartillery.dm:26: dat += "Locked on<BR>"
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\awaymissions<span class='warning'>spaceartillery.dm:26: dat += </span>"Locked on<BR>"
 	dat += {"Locked on<BR>
 		<B>Charge progress: [reload]/180:</B><BR>
 		<A href='byond://?src=\ref[src];fire=1'>Open Fire</A><BR>

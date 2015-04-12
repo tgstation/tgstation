@@ -686,7 +686,7 @@
 	//if((M_CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*
-		M << "\red You stab yourself in the eye."
+		M << "<span class='warning'>You stab yourself in the eye.</span>"
 		M.sdisabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)

@@ -65,12 +65,12 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 			S.heal_damage(0, 15, 0, 1)
 
 			if(user != M)
-				user.visible_message("\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
-				"\red You repair some burn damage on your [S.display_name]",\
+				user.visible_message("<span class='warning'>\The [user] repairs some burn damage on their [S.display_name] with \the [src]</span>",\
+				"<span class='warning'>You repair some burn damage on your [S.display_name]</span>",\
 				"You hear wires being cut.")
 			else
-				user.visible_message("\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
-				"\red You repair some burn damage on your [S.display_name]",\
+				user.visible_message("<span class='warning'>\The [user] repairs some burn damage on their [S.display_name] with \the [src]</span>",\
+				"<span class='warning'>You repair some burn damage on your [S.display_name]</span>",\
 				"You hear wires being cut.")
 		else
 			user << "Nothing to fix!"

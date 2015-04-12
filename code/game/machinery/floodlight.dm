@@ -50,7 +50,7 @@
 	if (ishuman(user))
 		if(on)
 			on = 0
-			user << "\blue You turn off the light"
+			user << "<span class='notice'>You turn off the light</span>"
 			SetLuminosity(0)
 		else
 			if(!cell)
@@ -58,7 +58,7 @@
 			if(cell.charge <= 0)
 				return
 			on = 1
-			user << "\blue You turn on the light"
+			user << "<span class='notice'>You turn on the light</span>"
 			SetLuminosity(brightness_on)
 
 		updateicon()
@@ -75,7 +75,7 @@
 			if(cell)
 				user << "There is a power cell already installed."
 			else
-				user.drop_item(src)
+				user.drop_item(W, src)
 				cell = W
 				user << "You insert the power cell."
 	updateicon()

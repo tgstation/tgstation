@@ -23,11 +23,11 @@
 
 		if(!tank_one)
 			tank_one = item
-			user.drop_item(src)
+			user.drop_item(item, src)
 			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
 		else if(!tank_two)
 			tank_two = item
-			user.drop_item(src)
+			user.drop_item(item, src)
 			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
 
 		update_icon()

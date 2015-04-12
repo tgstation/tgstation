@@ -41,7 +41,7 @@
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
-					emote(pick("\red splats the [M]!","\red toys with the [M]","worries the [M]"))
+					emote(pick("<span class='warning'>splats the [M]!</span>","<span class='warning'>toys with the [M]</span>","worries the [M]"))
 					movement_target = null
 					stop_automated_movement = 0
 					break

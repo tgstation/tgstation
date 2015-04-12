@@ -461,14 +461,14 @@
 			user << "<span class='notice'>[src] is already rigged!</span>"
 			return
 		user  << "<span class='notice'>You rig [src].</span>"
-		user.drop_item()
+		user.drop_item(W)
 		del(W)
 		rigged = 1
 		return
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)
 			user  << "<span class='notice'>You attach [W] to [src].</span>"
-			user.drop_item(src.loc)
+			user.drop_item(W, src.loc)
 			return
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(rigged)

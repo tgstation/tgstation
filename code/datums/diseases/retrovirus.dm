@@ -33,55 +33,55 @@
 			if(restcure)
 /*
 				if(affected_mob.sleeping && prob(30))  //removed until sleeping is fixed
-					affected_mob << "\blue You feel better."
+					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
 */
 				if(affected_mob.lying && prob(30))  //changed FROM prob(20) until sleeping is fixed
-					affected_mob << "\blue You feel better."
+					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
 			if (prob(8))
-				affected_mob << "\red Your head hurts."
+				affected_mob << "<span class='warning'>Your head hurts.</span>"
 			if (prob(9))
 				affected_mob << "You feel a tingling sensation in your chest."
 			if (prob(9))
-				affected_mob << "\red You feel angry."
+				affected_mob << "<span class='warning'>You feel angry.</span>"
 		if(2)
 			if(restcure)
 /*
 				if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed
-					affected_mob << "\blue You feel better."
+					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
 */
 				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					affected_mob << "\blue You feel better."
+					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
 			if (prob(8))
-				affected_mob << "\red Your skin feels loose."
+				affected_mob << "<span class='warning'>Your skin feels loose.</span>"
 			if (prob(10))
 				affected_mob << "You feel very strange."
 			if (prob(4))
-				affected_mob << "\red You feel a stabbing pain in your head!"
+				affected_mob << "<span class='warning'>You feel a stabbing pain in your head!</span>"
 				affected_mob.Paralyse(2)
 			if (prob(4))
-				affected_mob << "\red Your stomach churns."
+				affected_mob << "<span class='warning'>Your stomach churns.</span>"
 		if(3)
 			if(restcure)
 /*
 				if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed
-					affected_mob << "\blue You feel better."
+					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
 */
 				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
-					affected_mob << "\blue You feel better."
+					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
 			if (prob(10))
-				affected_mob << "\red Your entire body vibrates."
+				affected_mob << "<span class='warning'>Your entire body vibrates.</span>"
 
 			if (prob(35))
 				if(prob(50))
@@ -93,12 +93,12 @@
 			if(restcure)
 /*
 				if(affected_mob.sleeping && prob(10))  //removed until sleeping is fixed
-					affected_mob << "\blue You feel better."
+					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
 */
 				if(affected_mob.lying && prob(5))  //changed FROM prob(5) until sleeping is fixed
-					affected_mob << "\blue You feel better."
+					affected_mob << "<span class='notice'>You feel better.</span>"
 					cure()
 					return
 			if (prob(60))

@@ -1597,6 +1597,7 @@
 #include "code\modules\spells\targeted\horsemask.dm"
 #include "code\modules\spells\targeted\mind_transfer.dm"
 #include "code\modules\spells\targeted\shift.dm"
+#include "code\modules\spells\targeted\shoesnatch.dm"
 #include "code\modules\spells\targeted\subjugate.dm"
 #include "code\modules\spells\targeted\targeted.dm"
 #include "code\modules\spells\targeted\projectile\dumbfire.dm"

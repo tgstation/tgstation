@@ -48,7 +48,7 @@ rcd light flash thingy on matter drain
 	for(var/mob/living/silicon/ai/ai in player_list)
 		ai.fire_res_on_core = 1
 	src.verbs -= /mob/living/silicon/ai/proc/fireproof_core
-	src << "\red Core fireproofed."
+	src << "<span class='warning'>Core fireproofed.</span>"
 
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
@@ -105,7 +105,7 @@ rcd light flash thingy on matter drain
 			if(overload.uses > 0)
 				overload.uses --
 				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
+					V.show_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>", 2)
 				spawn(50)
 					explosion(get_turf(M), -1, 1, 2, 3) //C4 Radius + 1 Dest for the machine
 					qdel(M)

@@ -69,7 +69,7 @@ var/global/list/rad_collectors = list()
 		if(src.P)
 			user << "<span class='warning'>A plasma tank is already loaded.</span>"
 			return 1
-		user.drop_item(src)
+		user.drop_item(W, src)
 		src.P = W
 		update_icons()
 	else if(istype(W, /obj/item/weapon/crowbar))

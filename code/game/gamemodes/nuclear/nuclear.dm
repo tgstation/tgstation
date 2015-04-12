@@ -196,7 +196,7 @@
 
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
 	if (you_are)
-		syndicate.current << "\blue You are a [syndicate_name()] agent!"
+		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
 		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -236,7 +236,7 @@
 	if(istype(synd_mob.species, /datum/species/vox))
 		synd_mob.equip_or_collect(new /obj/item/clothing/mask/breath/vox(synd_mob), slot_wear_mask)
 		synd_mob.equip_to_slot_or_del(new/obj/item/weapon/tank/nitrogen(synd_mob), slot_r_hand)
-		synd_mob << "\blue You are now running on nitrogen internals from the [slot_r_hand] in your right hand. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only."
+		synd_mob << "<span class='notice'>You are now running on nitrogen internals from the [slot_r_hand] in your right hand. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only.</span>"
 		synd_mob.internal = synd_mob.get_item_by_slot(tank_slot)
 		if (synd_mob.internals)
 			synd_mob.internals.icon_state = "internal1"

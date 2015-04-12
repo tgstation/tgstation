@@ -185,7 +185,7 @@
 				var/obj/item/weapon/card/id/I = C.get_active_hand()
 				if(istype(I))
 					if(check_access(I))
-						C.drop_item(src)
+						C.drop_item(I, src)
 						auth = I
 						create_log("has logged in.", usr)
 			else
@@ -201,7 +201,7 @@
 		return
 
 	if(!auth && !issilicon(usr) && !emagged)
-		usr << "\red ACCESS DENIED."
+		usr << "<span class='warning'>ACCESS DENIED.</span>"
 		return
 
 	if(href_list["viewserver"])
@@ -291,7 +291,7 @@
 	if(!emagged)
 		playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "\blue You you disable the security protocols"
+		user << "<span class='notice'>You you disable the security protocols</span>"
 	src.updateUsrDialog()
 	return 1
 /obj/machinery/computer/telecomms/traffic/proc/canAccess(var/mob/user)

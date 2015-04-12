@@ -201,7 +201,7 @@
 /datum/game_mode/proc/greet_vampire(var/datum/mind/vampire, var/you_are=1)
 	var/dat
 	if (you_are)
-		dat = "<B>\red You are a Vampire! \black</br></B>"
+		dat = "<B><span class='warning'>You are a Vampire!</br></B></span>"
 	dat += {"To bite someone, target the head and use harm intent with an empty hand. Drink blood to gain new powers.
 You are weak to holy things and starlight. Don't go into space and avoid the Chaplain, the chapel and especially Holy Water."}
 	vampire.current << dat
@@ -319,7 +319,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		bloodtotal = src.mind.vampire.bloodtotal
 		bloodusable = src.mind.vampire.bloodusable
 		if(!H.vessel.get_reagent_amount("blood"))
-			src << "\red They've got no blood left to give."
+			src << "<span class='warning'>They've got no blood left to give.</span>"
 			break
 		if(H.stat < 2) //alive
 			blood = min(10, H.vessel.get_reagent_amount("blood"))// if they have less than 10 blood, give them the remnant else they get 10 blood
@@ -365,7 +365,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		vamp.powers |= VAMP_BATS
 		vamp.powers |= VAMP_SCREAM
 		// Commented out until we can figured out a way to stop this from spamming.
-		//src << "\blue Your rejuvination abilities have improved and will now heal you over time when used."
+		//src << "<span class='notice'>Your rejuvination abilities have improved and will now heal you over time when used.</span>"
 
 	// TIER 3.5 (/vg/)
 	if(vamp.bloodtotal >= 250)
@@ -503,7 +503,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	update_vampire_icons_removed(vampire_mind)
 	vampire_mind.current.unsubLife(src)
 	//world << "Removed [vampire_mind.current.name] from vampire shit"
-	vampire_mind.current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were enthralled until now.</B></FONT>"
+	vampire_mind.current << "<span class='danger'><FONT size = 3>The fog clouding your mind clears. You remember nothing from the moment you were enthralled until now.</FONT></span>"
 
 /mob/living/carbon/human/proc/check_sun()
 

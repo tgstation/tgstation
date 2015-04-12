@@ -43,7 +43,7 @@
 
 /obj/machinery/mommi_spawner/attack_ghost(var/mob/dead/observer/user as mob)
 	if(building)
-		user << "\red \The [src] is busy building something already."
+		user << "<span class='warning'>\The [src] is busy building something already.</span>"
 		return 1
 
 	var/timedifference = world.time - user.client.time_died_as_mouse
@@ -54,7 +54,7 @@
 		return
 	/*
 	if(!mmi.brainmob)
-		user << "\red \The [mmi] appears to be devoid of any soul."
+		user << "<span class='warning'>\The [mmi] appears to be devoid of any soul.</span>"
 		return 1
 	if(!mmi.brainmob.key)
 		var/ghost_can_reenter = 0
@@ -68,19 +68,19 @@
 			return TRUE
 
 	if(mmi.brainmob.stat == DEAD)
-		user << "\red Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud."
+		user << "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>"
 		return TRUE
 
 	if(mmi.brainmob.mind in ticker.mode.head_revolutionaries)
-		user << "\red \The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi]."
+		user << "<span class='warning'>\The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi].</span>"
 		return TRUE
 	*/
 	if(jobban_isbanned(user, "MoMMI"))
-		user << "\red \The [src] lets out an annoyed buzz."
+		user << "<span class='warning'>\The [src] lets out an annoyed buzz.</span>"
 		return TRUE
 
 	if(metal < metalPerMoMMI)
-		user << "\red \The [src] doesn't have enough metal to complete this task."
+		user << "<span class='warning'>\The [src] doesn't have enough metal to complete this task.</span>"
 		return 1
 
 	if(alert(user, "Do you wish to be turned into a MoMMI at this position?", "Confirm", "Yes", "No") != "Yes") return
@@ -99,10 +99,10 @@
 		if(istype(O,/obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = O
 			if(building)
-				user << "\red \The [src] is busy building something already."
+				user << "<span class='warning'>\The [src] is busy building something already.</span>"
 				return 1
 			if(!mmi.brainmob)
-				user << "\red \The [mmi] appears to be devoid of any soul."
+				user << "<span class='warning'>\The [mmi] appears to be devoid of any soul.</span>"
 				return 1
 			if(!mmi.brainmob.key)
 				var/ghost_can_reenter = 0
@@ -116,24 +116,24 @@
 					return TRUE
 
 			if(mmi.brainmob.stat == DEAD)
-				user << "\red Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud."
+				user << "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>"
 				return TRUE
 
 			if(mmi.brainmob.mind in ticker.mode.head_revolutionaries)
-				user << "\red \The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi]."
+				user << "<span class='warning'>\The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi].</span>"
 				return TRUE
 
 			if(jobban_isbanned(mmi.brainmob, "Cyborg"))
-				user << "\red \The [src] lets out an annoyed buzz and rejects \the [mmi]."
+				user << "<span class='warning'>\The [src] lets out an annoyed buzz and rejects \the [mmi].</span>"
 				return TRUE
 
 			if(metal < metalPerMoMMI)
-				user << "\red \The [src] doesn't have enough metal to complete this task."
+				user << "<span class='warning'>\The [src] doesn't have enough metal to complete this task.</span>"
 				return TRUE
 
 			building=1
 			update_icon()
-			user.drop_item(src)
+			user.drop_item(O, src)
 			mmi.icon = null
 			mmi.invisibility = 101
 			spawn(50)

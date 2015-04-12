@@ -105,7 +105,7 @@
 /obj/machinery/recharge_station/attackby(var/obj/item/W, var/mob/living/user)
 	if(is_type_in_list(W, acceptable_upgradeables))
 		if(!(locate(W.type) in upgrade_holder))
-			user.drop_item(src)
+			user.drop_item(W, src)
 			upgrade_holder.Add(W)
 			user << "<span class='notice'>You add \the [W] to \the [src].</span>"
 			return

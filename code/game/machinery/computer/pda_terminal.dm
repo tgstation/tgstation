@@ -65,7 +65,7 @@
 		return ..()
 
 	if(!pda_device)
-		user.drop_item(src)
+		user.drop_item(user_pda, src)
 		pda_device = user_pda
 		update_icon()
 
@@ -130,7 +130,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/device/pda))
-					usr.drop_item(src)
+					usr.drop_item(I, src)
 					pda_device = I
 			update_icon()
 

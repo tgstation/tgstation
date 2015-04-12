@@ -28,7 +28,7 @@
 
 /obj/item/clothing/mask/happy/pickup(mob/user as mob)
 	flick("happiest_flash", src)
-	user << "<span class=warning>\b The mask's eyesockets briefly flash with a foreboding red glare.</span>"
+	user << "<span class=warning><B>The mask's eyesockets briefly flash with a foreboding red glare.</span></B>"
 
 /obj/item/clothing/mask/happy/OnMobLife(var/mob/living/carbon/human/wearer)
 	var/mob/living/carbon/human/W = wearer

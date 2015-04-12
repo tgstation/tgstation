@@ -76,7 +76,7 @@ var/const/tk_maxrange = 15
 
 
 	dropped(mob/user as mob)
-		if(focus && user && loc != user && loc != user.loc) // drop_item() gets called when you tk-attack a table/closet with an item
+		if(focus && user && loc != user && loc != user.loc) // drop_item(null, ) gets called when you tk-attack a table/closet with an item
 			if(focus.Adjacent(loc))
 				focus.loc = loc
 
@@ -123,7 +123,7 @@ var/const/tk_maxrange = 15
 			if(8 to tk_maxrange)
 				user.next_move += 10
 			else
-				user << "\blue Your mind won't reach that far."
+				user << "<span class='notice'>Your mind won't reach that far.</span>"
 				return*/
 		if(d > tk_maxrange)
 			user << "<span class='warning'>Your mind won't reach that far.</span>"

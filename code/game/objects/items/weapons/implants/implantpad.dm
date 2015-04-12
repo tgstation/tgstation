@@ -42,7 +42,7 @@
 		..()
 		if(istype(C, /obj/item/weapon/implantcase))
 			if(!( src.case ))
-				user.drop_item(src)
+				user.drop_item(C, src)
 				src.case = C
 		else
 			return

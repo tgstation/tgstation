@@ -34,14 +34,14 @@
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
 		if (!ishuman(M))
-			user << "\red [M] is not human and cannot have the fingerprints."
+			user << "<span class='warning'>[M] is not human and cannot have the fingerprints.</span>"
 			return 0
 		if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
-			user << "\blue No fingerprints found on [M]"
+			user << "<span class='notice'>No fingerprints found on [M]</span>"
 			return 0
 		else
 			if (src.amount < 1)
-				user << text("\blue Fingerprints scanned on [M]. Need more cards to print.")
+				user << text("<span class='notice'>Fingerprints scanned on [M]. Need more cards to print.</span>")
 			else
 				src.amount--
 				var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user.loc )
@@ -50,17 +50,17 @@
 				F.icon_state = "fingerprint1"
 				F.name = text("FPrintC- '[M.name]'")
 
-				user << "\blue Done printing."
-			user << "\blue [M]'s Fingerprints: [md5(M.dna.uni_identity)]"
+				user << "<span class='notice'>Done printing.</span>"
+			user << "<span class='notice'>[M]'s Fingerprints: [md5(M.dna.uni_identity)]</span>"
 		if ( !M.blood_DNA || !M.blood_DNA.len )
-			user << "\blue No blood found on [M]"
+			user << "<span class='notice'>No blood found on [M]</span>"
 			if(M.blood_DNA)
 				del(M.blood_DNA)
 		else
-			user << "\blue Blood found on [M]. Analysing..."
+			user << "<span class='notice'>Blood found on [M]. Analysing...</span>"
 			spawn(15)
 				for(var/blood in M.blood_DNA)
-					user << "\blue Blood type: [M.blood_DNA[blood]]\nDNA: [blood]"
+					user << "<span class='notice'>Blood type: [M.blood_DNA[blood]]\nDNA: [blood]</span>"
 		return
 
 	proc/extract_fingerprints(var/atom/A)
@@ -116,17 +116,17 @@
 		//General
 		if (fingerprints_found.len == 0 && blood_DNA_found.len == 0 && fibers_found.len == 0)
 			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-			"\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!",\
+			"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [A]!</span>",\
 			"You hear a faint hum of electrical equipment.")
 			return 0
 
 		if(add_data(A,blood_DNA_found,fingerprints_found,fibers_found))
-			user << "\blue Object already in internal memory. Consolidating data..."
+			user << "<span class='notice'>Object already in internal memory. Consolidating data...</span>"
 			return
 
 		//PRINTS
 		if(fingerprints_found.len>0)
-			user << "\blue Isolated [fingerprints_found.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
+			user << "<span class='notice'>Isolated [fingerprints_found.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.</span>"
 			playsound(get_turf(src), 'sound/items/detscan.ogg', 50, 1)
 
 			var/list/complete_prints = list()
@@ -136,23 +136,23 @@
 					complete_prints += print
 
 			if(complete_prints.len < 1)
-				user << "\blue &nbsp;&nbsp;No intact prints found"
+				user << "<span class='notice'>&nbsp;&nbsp;No intact prints found</span>"
 			else
-				user << "\blue &nbsp;&nbsp;Found [complete_prints.len] intact prints"
+				user << "<span class='notice'>&nbsp;&nbsp;Found [complete_prints.len] intact prints</span>"
 				for(var/i in complete_prints)
-					user << "\blue &nbsp;&nbsp;&nbsp;&nbsp;[i]"
+					user << "<span class='notice'>&nbsp;&nbsp;&nbsp;&nbsp;[i]</span>"
 
 		//FIBERS
 		if(fibers_found.len)
-			user << "\blue Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
+			user << "<span class='notice'>Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.</span>"
 			playsound(get_turf(src), 'sound/items/detscan.ogg', 50, 1)
 
 		//Blood
 		if (blood_DNA_found.len)
-			user << "\blue Blood found on [A]. Analysing..."
+			user << "<span class='notice'>Blood found on [A]. Analysing...</span>"
 			spawn(15)
 				for(var/blood in blood_DNA_found)
-					user << "Blood type: \red [blood_DNA_found[blood]] \t \black DNA: \red [blood]"
+					user << "Blood type: <span class='warning'>[blood_DNA_found[blood]] \t </span>DNA: <span class='warning'>[blood]</span>"
 
 		if(prob(80) || !fingerprints_found.len)
 			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
@@ -221,7 +221,7 @@
 		var/list/customfiber = list()
 		var/list/customblood = list()
 		if(forging)
-			user << "\red You are already forging evidence"
+			user << "<span class='warning'>You are already forging evidence</span>"
 			return 0
 		clear_forgery()
 		//fingerprint loop
@@ -252,9 +252,9 @@
 			customblood[blood] = bloodtype
 		forging = 0
 		if(!customprints.len && !customfiber.len)
-			user << "\blue No forgery saved."
+			user << "<span class='notice'>No forgery saved.</span>"
 			return
-		user << "\blue Forgery saved and will be tied to the next applicable scanned item."
+		user << "<span class='notice'>Forgery saved and will be tied to the next applicable scanned item.</span>"
 		custom_forgery[1] = customprints ? customprints.Copy() : null
 		custom_forgery[2] = customfiber ? customfiber.Copy() : null
 		custom_forgery[3] = customblood ? customblood.Copy() : null
@@ -299,16 +299,16 @@
 		if (fingerprints_found.len == 0 && blood_DNA_found.len == 0 && fibers_found.len == 0)
 			if(!custom_finger.len && !custom_fiber.len && !custom_blood.len)
 				user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-				"\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!",\
+				"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [A]!</span>",\
 				"You hear a faint hum of electrical equipment.")
 				return 0
 			else
 				user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-				"\blue Unable to locate any fingerprints, materials, fibers, or blood on [A], loading custom forgery instead.",\
+				"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [A], loading custom forgery instead.</span>",\
 				"You hear a faint hum of electrical equipment.")
 
 		if(add_data(A,blood_DNA_found,fingerprints_found,fibers_found))
-			user << "\blue Object already in internal memory. Consolidating data..."
+			user << "<span class='notice'>Object already in internal memory. Consolidating data...</span>"
 			return
 
 
@@ -317,42 +317,42 @@
 			if(A.fingerprints)
 				del(A.fingerprints)
 		if(custom_finger.len)
-			user << "\blue Isolated [custom_finger.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
-			user << "\blue &nbsp;&nbsp;Found [custom_finger.len] intact prints"
+			user << "<span class='notice'>Isolated [custom_finger.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.</span>"
+			user << "<span class='notice'>&nbsp;&nbsp;Found [custom_finger.len] intact prints</span>"
 			for(var/i in custom_finger)
-				user << "\blue &nbsp;&nbsp;&nbsp;&nbsp;[i]"
+				user << "<span class='notice'>&nbsp;&nbsp;&nbsp;&nbsp;[i]</span>"
 		else if(fingerprints_found.len)
-			user << "\blue Isolated [A.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
+			user << "<span class='notice'>Isolated [A.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.</span>"
 			var/list/complete_prints = list()
 			for(var/i in fingerprints_found)
 				var/print = fingerprints_found[i]
 				if(stringpercent(print) <= FINGERPRINT_COMPLETE)
 					complete_prints += print
 			if(complete_prints.len < 1)
-				user << "\blue &nbsp;&nbsp;No intact prints found"
+				user << "<span class='notice'>&nbsp;&nbsp;No intact prints found</span>"
 			else
-				user << "\blue &nbsp;&nbsp;Found [complete_prints.len] intact prints"
+				user << "<span class='notice'>&nbsp;&nbsp;Found [complete_prints.len] intact prints</span>"
 				for(var/i in complete_prints)
-					user << "\blue &nbsp;&nbsp;&nbsp;&nbsp;[i]"
+					user << "<span class='notice'>&nbsp;&nbsp;&nbsp;&nbsp;[i]</span>"
 
 		//FIBERS
 		if(custom_fiber.len)
-			user << "\blue Forged Fibers/Materials Data Found: Scan with Hi-Res Forensic Scanner to retrieve."
+			user << "<span class='notice'>Forged Fibers/Materials Data Found: Scan with Hi-Res Forensic Scanner to retrieve.</span>"
 		else if(fibers_found.len)
-			user << "\blue Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
+			user << "<span class='notice'>Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.</span>"
 
 
 		//Blood
 		if(custom_blood.len)
-			user << "\blue Forged Blood found. Analysing..."
+			user << "<span class='notice'>Forged Blood found. Analysing...</span>"
 			spawn(15)
 				for(var/blood in custom_blood)
-					user << "Blood type: \red [custom_blood[blood]] \t \black DNA: \red [blood]"
+					user << "Blood type: <span class='warning'>[custom_blood[blood]] \t </span>DNA: <span class='warning'>[blood]</span>"
 		else if (blood_DNA_found.len)
-			user << "\blue Blood found on [A]. Analysing..."
+			user << "<span class='notice'>Blood found on [A]. Analysing...</span>"
 			spawn(15)
 				for(var/blood in blood_DNA_found)
-					user << "Blood type: \red [blood_DNA_found[blood]] \t \black DNA: \red [blood]"
+					user << "Blood type: <span class='warning'>[blood_DNA_found[blood]] \t </span>DNA: <span class='warning'>[blood]</span>"
 		return
 
 	add_data(var/atom/A, var/list/blood_DNA_found,var/list/fingerprints_found,var/list/fibers_found)

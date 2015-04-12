@@ -243,7 +243,7 @@ Pressure: [env.return_pressure()]"}
 			return M:Alienize()
 
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
-		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into an alien.", 1)
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [key_name(M)] into an alien.</span>", 1)
 	else
 		alert("Invalid mob")
 
@@ -260,7 +260,7 @@ Pressure: [env.return_pressure()]"}
 			feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 			return M:slimeize()
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
-		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a slime.", 1)
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [key_name(M)] into a slime.</span>", 1)
 	else
 		alert("Invalid mob")
 
@@ -326,28 +326,28 @@ Pressure: [env.return_pressure()]"}
 			return
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
-				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground."
+				M << "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.</span>"
 				new /obj/item/weapon/tome(M.loc)
 			else
-				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie."
+				M << "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>"
 			var/glimpse=pick("1","2","3","4","5","6","7","8")
 			switch(glimpse)
 				if("1")
-					M << "\red You remembered one thing from the glimpse... [cultwords["travel"]] is travel..."
+					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["travel"]] is travel...</span>"
 				if("2")
-					M << "\red You remembered one thing from the glimpse... [cultwords["blood"]] is blood..."
+					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["blood"]] is blood...</span>"
 				if("3")
-					M << "\red You remembered one thing from the glimpse... [cultwords["join"]] is join..."
+					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["join"]] is join...</span>"
 				if("4")
-					M << "\red You remembered one thing from the glimpse... [cultwords["hell"]] is Hell..."
+					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["hell"]] is Hell...</span>"
 				if("5")
-					M << "\red You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy..."
+					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy...</span>"
 				if("6")
-					M << "\red You remembered one thing from the glimpse... [cultwords["technology"]] is technology..."
+					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["technology"]] is technology...</span>"
 				if("7")
-					M << "\red You remembered one thing from the glimpse... [cultwords["self"]] is self..."
+					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["self"]] is self...</span>"
 				if("8")
-					M << "\red You remembered one thing from the glimpse... [cultwords["see"]] is see..."
+					M << "<span class='warning'>You remembered one thing from the glimpse... [cultwords["see"]] is see...</span>"
 
 			if(M.mind)
 				M.mind.special_role = "Cultist"
@@ -417,7 +417,7 @@ Pressure: [env.return_pressure()]"}
 		alert("Invalid mob")
 	feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(src)] has granted [M.key] full access.")
-	message_admins("\blue [key_name_admin(usr)] has granted [M.key] full access.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] has granted [M.key] full access.</span>", 1)
 
 /client/proc/cmd_assume_direct_control(var/mob/M in mob_list)
 	set category = "Admin"
@@ -431,7 +431,7 @@ Pressure: [env.return_pressure()]"}
 		else
 			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
 			ghost.ckey = M.ckey
-	message_admins("\blue [key_name_admin(usr)] assumed direct control of [M].", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] assumed direct control of [M].</span>", 1)
 	log_admin("[key_name(usr)] assumed direct control of [M].")
 	var/mob/adminmob = src.mob
 	M.ckey = src.ckey
@@ -989,7 +989,7 @@ Pressure: [env.return_pressure()]"}
 	M.regenerate_icons()
 
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
-	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..</span>", 1)
 	return
 
 /client/proc/startSinglo()
@@ -1002,7 +1002,7 @@ Pressure: [env.return_pressure()]"}
 		return
 
 	log_admin("[key_name(usr)] set up the singulo.")
-	message_admins("\blue [key_name_admin(usr)] set up the singulo.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] set up the singulo.</span>", 1)
 
 	for(var/obj/machinery/power/emitter/E in world)
 		if(E.anchored)
@@ -1058,7 +1058,7 @@ Pressure: [env.return_pressure()]"}
 		return
 
 	log_admin("[key_name(usr)] haxed the powergrid with magic SMES.")
-	message_admins("\blue [key_name_admin(usr)] haxed the powergrid with magic SMES.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] haxed the powergrid with magic SMES.</span>", 1)
 
 	for(var/obj/machinery/power/smes/SMES in world)
 		var/turf/T=SMES.loc
@@ -1083,7 +1083,7 @@ Pressure: [env.return_pressure()]"}
 		return
 
 	log_admin("[key_name(usr)] haxed atmos.")
-	message_admins("\blue [key_name_admin(usr)] haxed atmos.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] haxed atmos.</span>", 1)
 
 	for(var/obj/machinery/atmospherics/binary/pump/P in world)
 		//if(p.name == "Air to Distro")
@@ -1144,7 +1144,7 @@ Pressure: [env.return_pressure()]"}
 	for(var/key in type_instances)
 		F << "[key],[type_instances[key]]"
 
-	usr << "\blue Dumped to [F]"
+	usr << "<span class='notice'>Dumped to [F]</span>"
 
 /client/proc/cmd_admin_find_bad_blood_tracks()
 	set category = "Debug"
@@ -1169,7 +1169,7 @@ Pressure: [env.return_pressure()]"}
 		dat += "--------------------------------------"
 		F << dat
 
-	usr << "\blue Dumped to [F]"
+	usr << "<span class='notice'>Dumped to [F]</span>"
 
 #ifdef PROFILE_MACHINES
 /client/proc/cmd_admin_dump_macprofile()
@@ -1184,7 +1184,7 @@ Pressure: [env.return_pressure()]"}
 		var/ns = machine_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to [F]"
+	usr << "<span class='notice'>Dumped to [F]</span>"
 	var/FF = file("data/logs/profiling/[date_string]_object_profiling.csv")
 	fdel(FF)
 	FF << "type,nanoseconds"
@@ -1192,7 +1192,7 @@ Pressure: [env.return_pressure()]"}
 		var/ns = object_profiling[typepath]
 		FF << "[typepath],[ns]"
 
-	usr << "\blue Dumped to [FF]."
+	usr << "<span class='notice'>Dumped to [FF].</span>"
 
 
 /client/proc/cmd_admin_dump_machine_type_list()
@@ -1215,7 +1215,7 @@ Pressure: [env.return_pressure()]"}
 		var/count = machineinstances[T]
 		F << "[T],[count]"
 
-	usr << "\blue Dumped to [F]."
+	usr << "<span class='notice'>Dumped to [F].</span>"
 	F =file("data/logs/profiling/[date_string]_power_machine_instances.csv")
 	fdel(F)
 	F << "type,count"
@@ -1228,7 +1228,7 @@ Pressure: [env.return_pressure()]"}
 		var/count = machineinstances[T]
 		F << "[T],[count]"
 
-	usr << "\blue Dumped to [F]."
+	usr << "<span class='notice'>Dumped to [F].</span>"
 #endif
 
 /client/proc/cmd_admin_dump_delprofile()
@@ -1243,7 +1243,7 @@ Pressure: [env.return_pressure()]"}
 		var/ns = del_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to [F]."
+	usr << "<span class='notice'>Dumped to [F].</span>"
 	F =file("data/logs/profiling/[date_string]_gdel_profiling.csv")
 	fdel(F)
 	F << "type,soft deletes"
@@ -1251,7 +1251,7 @@ Pressure: [env.return_pressure()]"}
 		var/ns = gdel_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to [F]."
+	usr << "<span class='notice'>Dumped to [F].</span>"
 
 	F =file("data/logs/profiling/[date_string]_ghdel_profiling.csv")
 	fdel(F)
@@ -1260,7 +1260,7 @@ Pressure: [env.return_pressure()]"}
 		var/ns = ghdel_profiling[typepath]
 		F << "[typepath],[ns]"
 
-	usr << "\blue Dumped to [F]."
+	usr << "<span class='notice'>Dumped to [F].</span>"
 
 /client/proc/gib_money()
 	set category = "Fun"
@@ -1276,7 +1276,7 @@ var/global/blood_virus_spreading_disabled = 0
 	set category = "Debug"
 	set name = "Disable Blood Virus Spreading"
 
-	//usr << "\red Proc disabled."
+	//usr << "<span class='warning'>Proc disabled.</span>"
 
 	blood_virus_spreading_disabled = !blood_virus_spreading_disabled
 	if(blood_virus_spreading_disabled)
@@ -1311,7 +1311,7 @@ var/global/blood_virus_spreading_disabled = 0
 		return
 	if(ishuman(M))
 		return M:Cluwneize()
-		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a cluwne.", 1)
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [key_name(M)] into a cluwne.</span>", 1)
 		feedback_add_details("admin_verb","MKCLU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(src)] has cluwne-ified [M.key].")
 	else

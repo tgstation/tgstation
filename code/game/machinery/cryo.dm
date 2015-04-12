@@ -1,3 +1,10 @@
+var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_full"),\
+												"good" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_good"),\
+												"average" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_average"),\
+												"bad" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_bad"),\
+												"worse" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_worse"),\
+												"crit" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_crit"),\
+												"dead" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_dead"))
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -91,6 +98,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
+	update_icon()
 	if(!node)
 		return
 	if(!on)
@@ -262,7 +270,7 @@
 			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
 			return
 		beaker =  G
-		user.drop_item(src)
+		user.drop_item(G, src)
 		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
 	if(..())
 		return
@@ -284,8 +292,31 @@
 	return
 
 /obj/machinery/atmospherics/unary/cryo_cell/update_icon()
+	overlays.len = 0
 	if(on)
 		if(occupant)
+			if(occupant.stat == DEAD || !occupant.has_brain())
+				overlays += cryo_health_indicator["dead"]
+			else
+				if(occupant.health >= occupant.maxHealth)
+					overlays += cryo_health_indicator["full"]
+				else
+					if(occupant.health < config.health_threshold_crit)
+						overlays += cryo_health_indicator["crit"]
+					else
+						switch((occupant.health / occupant.maxHealth) * 100) // Get a ratio of health to work with
+							if(100 to INFINITY) // No idea how we got here with the check above...
+								overlays += cryo_health_indicator["full"]
+							if(75 to 100)
+								overlays += cryo_health_indicator["good"]
+							if(50 to 75)
+								overlays += cryo_health_indicator["average"]
+							if(25 to 50)
+								overlays += cryo_health_indicator["bad"]
+							if(1 to 25)
+								overlays += cryo_health_indicator["worse"]
+							else //Shouldn't ever happen.
+								overlays += cryo_health_indicator["dead"]
 			icon_state = "cell-occupied"
 			return
 		icon_state = "cell-on"

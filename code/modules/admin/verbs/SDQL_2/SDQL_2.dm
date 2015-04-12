@@ -18,7 +18,7 @@
 /client/proc/SDQL2_query(query_text as message)
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
-		message_admins("\red ERROR: Non-admin [usr.key] attempted to execute a SDQL query!")
+		message_admins("<span class='warning'>ERROR: Non-admin [usr.key] attempted to execute a SDQL query!</span>")
 		log_admin("Non-admin [usr.key] attempted to execute a SDQL query!")
 
 	if(!query_text || length(query_text) < 1)
@@ -287,7 +287,7 @@
 				if("or", "||")
 					result = (result || val)
 				else
-					usr << "\red SDQL2: Unknown op [op]"
+					usr << "<span class='warning'>SDQL2: Unknown op [op]</span>"
 					result = null
 		else
 			result = val
@@ -392,7 +392,7 @@
 
 		else if(char == "'")
 			if(word != "")
-				usr << "\red SDQL2: You have an error in your SDQL syntax, unexpected ' in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again."
+				usr << "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unexpected ' in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again.</span>"
 				return null
 
 			word = "'"
@@ -412,7 +412,7 @@
 					word += char
 
 			if(i > len)
-				usr << "\red SDQL2: You have an error in your SDQL syntax, unmatched ' in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again."
+				usr << "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unmatched ' in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again.</span>"
 				return null
 
 			query_list += "[word]'"
@@ -420,7 +420,7 @@
 
 		else if(char == "\"")
 			if(word != "")
-				usr << "\red SDQL2: You have an error in your SDQL syntax, unexpected \" in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again."
+				usr << "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unexpected \" in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again.</span>"
 				return null
 
 			word = "\""
@@ -440,7 +440,7 @@
 					word += char
 
 			if(i > len)
-				usr << "\red SDQL2: You have an error in your SDQL syntax, unmatched \" in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again."
+				usr << "<span class='warning'>SDQL2: You have an error in your SDQL syntax, unmatched \" in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again.</span>"
 				return null
 
 			query_list += "[word]\""

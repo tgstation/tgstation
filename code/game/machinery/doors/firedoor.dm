@@ -267,7 +267,7 @@
 		return
 		// End anti-shitter system
 		/*
-		user.visible_message("\red \The [src] opens for \the [user]",\
+		user.visible_message("<span class='warning'>\The [src] opens for \the [user]</span>",\
 		"\The [src] opens after you acknowledge the consequences.",\
 		"You hear a beep, and a door opening.")
 		*/

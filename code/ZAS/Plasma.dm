@@ -59,7 +59,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		if(zas_settings.Get(/datum/ZAS_Setting/SKIN_BURNS))
 			if(!pl_head_protected() || !pl_suit_protected())
 				burn_skin(0.75)
-				if(prob(20)) src << "\red Your skin burns!"
+				if(prob(20)) src << "<span class='warning'>Your skin burns!</span>"
 				updatehealth()
 
 		//Burn eyes if exposed.
@@ -72,7 +72,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		if(zas_settings.Get(/datum/ZAS_Setting/GENETIC_CORRUPTION))
 			if(rand(1,10000) < zas_settings.Get(/datum/ZAS_Setting/GENETIC_CORRUPTION))
 				randmutb(src)
-				src << "\red High levels of toxins cause you to spontaneously mutate."
+				src << "<span class='warning'>High levels of toxins cause you to spontaneously mutate.</span>"
 				domutcheck(src,null)
 
 
@@ -86,7 +86,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		E.damage += 2.5
 		eye_blurry = min(eye_blurry+1.5,50)
 		if (prob(max(0,E.damage - 15) + 1) && !eye_blind)
-			src << "\red You are blinded!"
+			src << "<span class='warning'>You are blinded!</span>"
 			eye_blind += 20
 
 /mob/living/carbon/human/proc/pl_head_protected()

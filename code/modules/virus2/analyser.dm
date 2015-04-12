@@ -32,10 +32,10 @@
 		var/mob/living/carbon/c = user
 		if(!dish)
 			dish = I
-			c.drop_item(src)
+			c.drop_item(I, src)
 			for(var/mob/M in viewers(src))
 				if(M == user)	continue
-				M.show_message("\blue [user.name] inserts the [dish.name] in the [src.name]", 3)
+				M.show_message("<span class='notice'>[user.name] inserts the [dish.name] in the [src.name]</span>", 3)
 		else
 			user << "There is already a dish inserted"
 	return

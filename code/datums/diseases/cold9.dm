@@ -16,7 +16,7 @@
 		if(2)
 			affected_mob.bodytemperature -= 10
 			if(prob(1) && prob(10))
-				affected_mob << "\blue You feel better."
+				affected_mob << "<span class='notice'>You feel better.</span>"
 				cure()
 				return
 			if(prob(1))
@@ -24,9 +24,9 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				affected_mob << "<span class='warning'>Your throat feels sore.</span>"
 			if(prob(5))
-				affected_mob << "\red You feel stiff."
+				affected_mob << "<span class='warning'>You feel stiff.</span>"
 		if(3)
 			affected_mob.bodytemperature -= 20
 			if(prob(1))
@@ -34,6 +34,6 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				affected_mob << "<span class='warning'>Your throat feels sore.</span>"
 			if(prob(10))
-				affected_mob << "\red You feel stiff."
+				affected_mob << "<span class='warning'>You feel stiff.</span>"

@@ -61,7 +61,7 @@
 
 	if (istype(W, /obj/item/device/measuring_tape))
 		var/obj/item/device/measuring_tape/P = W
-		user.visible_message("<span class='notice>[user] extends [P] towards [src].","\blue You extend [P] towards [src].</span>")
+		user.visible_message("<span class='notice>[user] extends [P] towards [src].","<span class='notice'>You extend [P] towards [src].</span></span>")
 		if(do_after(user,40))
 			user << "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*src.excavation_level]cm.</span>"
 		return

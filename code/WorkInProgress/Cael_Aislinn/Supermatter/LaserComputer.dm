@@ -51,7 +51,7 @@
 	var/obj/machinery/engine/laser/laser = src.laser[1]
 
 	if(!laser)
-		t += "\red No laser found"
+		t += "<span class='warning'>No laser found</span>"
 	else
 
 

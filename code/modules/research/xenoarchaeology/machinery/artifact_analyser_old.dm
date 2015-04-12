@@ -289,7 +289,7 @@
 		P.name = "Artifact Analysis Report #[scan_num]"
 		P.info = r
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\icon[src] \blue The [src.name] prints a sheet of paper", 3)
+			O.show_message("\icon[src] <span class='notice'>The [src.name] prints a sheet of paper</span>", 3)
 		use_power(10)
 
 	if(href_list["close"])

@@ -91,7 +91,7 @@
 		user << "There is already something in the pot."
 	else
 		full = I
-		user.drop_item(src)
+		user.drop_item(I, src)
 		full.loc = src
 		user.visible_message("<span class='notice'>[user] stuffs something into the pot.</span>","You stuff \the [full] into the [src].")
 

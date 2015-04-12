@@ -51,7 +51,7 @@ log transactions
 	if(linked_db && ( (linked_db.stat & NOPOWER) || !linked_db.activated ) )
 		linked_db = null
 		authenticated_account = null
-		src.visible_message("\red \icon[src] [src] buzzes rudely, \"Connection to remote database lost.\"")
+		src.visible_message("<span class='warning'>\icon[src] [src] buzzes rudely, \"Connection to remote database lost.\"</span>")
 		updateDialog()
 
 	if(ticks_left_timeout > 0)
@@ -91,7 +91,7 @@ log transactions
 	if(istype(I, /obj/item/weapon/card))
 		var/obj/item/weapon/card/id/idcard = I
 		if(!held_card)
-			usr.drop_item(src)
+			usr.drop_item(idcard, src)
 			held_card = idcard
 			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
 				authenticated_account = null
@@ -122,7 +122,7 @@ log transactions
 
 /obj/machinery/atm/attack_hand(mob/user as mob)
 	if(istype(user, /mob/living/silicon))
-		user << "\red Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005."
+		user << "<span class='warning'>Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005.</span>"
 		return
 	if(get_dist(src,user) <= 1)
 		//check to see if the user has low security enabled
@@ -277,11 +277,11 @@ log transactions
 									T.time = worldtime2text()
 									failed_account.transaction_log.Add(T)
 							else
-								usr << "\red \icon[src] Incorrect pin/account combination entered, [max_pin_attempts - number_incorrect_tries] attempts remaining."
+								usr << "<span class='warning'>\icon[src] Incorrect pin/account combination entered, [max_pin_attempts - number_incorrect_tries] attempts remaining.</span>"
 								previous_account_number = tried_account_num
 								playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
 						else
-							usr << "\red \icon[src] incorrect pin/account combination entered."
+							usr << "<span class='warning'>\icon[src] incorrect pin/account combination entered.</span>"
 							number_incorrect_tries = 0
 					else
 						playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
@@ -297,7 +297,7 @@ log transactions
 						T.time = worldtime2text()
 						authenticated_account.transaction_log.Add(T)
 
-						usr << "\blue \icon[src] Access granted. Welcome user '[authenticated_account.owner_name].'"
+						usr << "<span class='notice'>\icon[src] Access granted. Welcome user '[authenticated_account.owner_name].'</span>"
 
 					previous_account_number = tried_account_num
 			if("withdrawal")
@@ -310,7 +310,7 @@ log transactions
 
 						//remove the money
 						if(amount > 10000) // prevent crashes
-							usr << "\blue The ATM's screen flashes, 'Maximum single withdrawl limit reached, defaulting to 10,000.'"
+							usr << "<span class='notice'>The ATM's screen flashes, 'Maximum single withdrawl limit reached, defaulting to 10,000.'</span>"
 							amount = 10000
 						authenticated_account.money -= amount
 						withdraw_arbitrary_sum(amount)
@@ -366,7 +366,7 @@ log transactions
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if (istype(I, /obj/item/weapon/card/id))
-						usr.drop_item(src)
+						usr.drop_item(I, src)
 						held_card = I
 			if("logout")
 				authenticated_account = null
@@ -391,7 +391,7 @@ log transactions
 			if(I)
 				authenticated_account = linked_db.attempt_account_access(I.associated_account_number)
 				if(authenticated_account)
-					human_user << "\blue \icon[src] Access granted. Welcome user '[authenticated_account.owner_name].'"
+					human_user << "<span class='notice'>\icon[src] Access granted. Welcome user '[authenticated_account.owner_name].'</span>"
 
 					//create a transaction log entry
 					var/datum/transaction/T = new()

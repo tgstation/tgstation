@@ -1049,10 +1049,79 @@
 	desc = "Nowhere near as explosive as the real one."
 	icon_state = "shard"
 
+/obj/item/toy/gasha/mime
+	name = "toy mime"
+	desc = "..."
+	icon_state = "mime"
+
+/obj/item/toy/gasha/captain
+	name = "toy captain"
+	desc = "Though some say the captain should always go down with his ship, captains on NT stations tend to be the first on escape shuttles whenever the time comes."
+	icon_state = "captain"
+
+/obj/item/toy/gasha/comdom
+	name = "toy comdom"
+	desc = "WE GOT THE VALIDS AI CALL THE SHUTTLE"
+	icon_state = "comdom"
+
+/obj/item/toy/gasha/shade
+	name = "toy shade"
+	desc = "Eternal torment in cute plastic form!"
+	icon_state = "shade"
+
+/obj/item/toy/gasha/wraith
+	name = "toy wraith"
+	desc = "Not the most subtle of constructs, overly fond of teleporting into walls."
+	icon_state = "wraith"
+
+/obj/item/toy/gasha/juggernaut
+	name = "toy juggernaut"
+	desc = "Big fists to leave big holes in the side of the station."
+	icon_state = "juggernaut"
+
+/obj/item/toy/gasha/artificer
+	name = "toy artificer"
+	desc = "Sort of like a MoMMI, if MoMMIs hated their own existence."
+	icon_state = "artificer"
+
+/obj/item/toy/gasha/harvester
+	name = "toy harvester"
+	desc = "Harvesters tend to have a bad habit of violently stabbing anyone they meet"
+	icon_state = "harvester"
+
 /obj/item/toy/gasha/corgitoy
 	name = "plush corgi"
 	desc = "Perfect for the pet owner on a tight budget!"
 	icon_state = "corgitoy"
+
+/obj/item/toy/gasha/cattoy
+	name = "plush cat"
+	desc = "Marginally less affectionate than an actual cat."
+	icon_state = "cattoy"
+
+/obj/item/toy/gasha/parrottoy
+	name = "plush parrot"
+	desc = "All the fun of a real parrot, without the obnoxious talking!"
+	icon_state = "parrottoy"
+
+/obj/item/toy/gasha/beartoy
+	name = "plush bear"
+	desc = "HOO, HA! HOO, HA!"
+	icon_state = "beartoy"
+
+/obj/item/toy/gasha/carptoy
+	name = "plush carp"
+	desc = "Can not be used as a distraction during a space carp attack."
+	icon_state = "carptoy"
+/obj/item/toy/gasha/monkeytoy
+	name = "plush monkey"
+	desc = "Slightly less likely to throw poop than the real one."
+	icon_state = "monkeytoy"
+
+/obj/item/toy/gasha/huggertoy
+	name = "toy facehugger"
+	desc = "Cannot be worn as a mask, unfortunately."
+	icon_state = "huggertoy"
 
 /obj/item/toy/gasha/borertoy
 	name = "Mini Borer"
@@ -1104,3 +1173,27 @@
 	name = "mini-buttbot"
 	desc = "Made from real gnome butts!"
 	icon_state = "minibutt"
+
+/obj/item/toy/gasha/skub
+	name = "Skub"
+	desc = "It's just Skub."
+	icon_state = "skub"
+
+
+/obj/item/toy/gasha/fingerbox/attack_self(mob/user as mob)
+	if(cooldown < world.time - 8)
+		playsound(user, 'sound/weapons/switchblade.ogg', 20, 1)
+		cooldown = world.time
+
+/obj/item/toy/gasha/fingerbox/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(cooldown < world.time - 8)
+			playsound(user, 'sound/weapons/switchblade.ogg', 20, 1)
+			cooldown = world.time
+			return
+	..()
+
+/obj/item/toy/gasha/fingerbox
+	name = "fingerbox"
+	desc = "A high quality fingerbox."
+	icon_state = "fingerbox"

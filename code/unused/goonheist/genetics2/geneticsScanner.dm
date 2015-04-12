@@ -112,18 +112,18 @@ var/list/genescanner_addresses = list()
 		set src in oview(1)
 
 		if(!iscarbon(usr))
-			usr << "\red <B>The scanner supports only carbon based lifeforms.</B>"
+			usr << "<span class='warning'><B>The scanner supports only carbon based lifeforms.</B></span>"
 			return
 
 		if (usr.stat != 0)
 			return
 
 		if (src.occupant)
-			usr << "\blue <B>The scanner is already occupied!</B>"
+			usr << "<span class='notice'><B>The scanner is already occupied!</B></span>"
 			return
 
 		if (src.locked)
-			usr << "\red <B>You need to unlock the scanner first.</B>"
+			usr << "<span class='warning'><B>You need to unlock the scanner first.</B></span>"
 			return
 
 		usr.pulling = null
@@ -144,15 +144,15 @@ var/list/genescanner_addresses = list()
 			return
 
 		if (src.occupant)
-			user << "\red <B>The scanner is already occupied!</B>"
+			user << "<span class='warning'><B>The scanner is already occupied!</B></span>"
 			return
 
 		if (src.locked)
-			usr << "\red <B>You need to unlock the scanner first.</B>"
+			usr << "<span class='warning'><B>You need to unlock the scanner first.</B></span>"
 			return
 
 		if(!iscarbon(G.affecting))
-			user << "\blue <B>The scanner supports only carbon based lifeforms.</B>"
+			user << "<span class='notice'><B>The scanner supports only carbon based lifeforms.</B></span>"
 			return
 
 		var/mob/M = G.affecting
@@ -177,7 +177,7 @@ var/list/genescanner_addresses = list()
 		if (usr.stat != 0)
 			return
 		if (src.locked)
-			usr << "\red <b>The scanner door is locked!</b>"
+			usr << "<span class='warning'><b>The scanner door is locked!</b></span>"
 			return
 
 		src.go_out()
@@ -191,7 +191,7 @@ var/list/genescanner_addresses = list()
 		if (usr.stat != 0)
 			return
 		if (usr == src.occupant)
-			usr << "\red <b>You can't reach the scanner lock from the inside.</b>"
+			usr << "<span class='warning'><b>You can't reach the scanner lock from the inside.</b></span>"
 			return
 
 		playsound(src.loc, 'click.ogg', 50, 1)
@@ -199,12 +199,12 @@ var/list/genescanner_addresses = list()
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
 			if (src.occupant)
-				src.occupant << "\red You hear the scanner's lock slide out of place."
+				src.occupant << "<span class='warning'>You hear the scanner's lock slide out of place.</span>"
 		else
 			src.locked = 1
 			usr.visible_message("<b>[usr]</b> locks the scanner.")
 			if (src.occupant)
-				src.occupant << "\red You hear the scanner's lock click into place."
+				src.occupant << "<span class='warning'>You hear the scanner's lock click into place.</span>"
 
 	proc/go_out()
 		if (!src.occupant)

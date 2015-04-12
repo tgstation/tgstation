@@ -61,12 +61,12 @@
 		if(buckled_mob.buckled == src)
 			if(buckled_mob != user)
 				buckled_mob.visible_message(\
-					"\blue [buckled_mob.name] was unbuckled by [user.name]!",\
+					"<span class='notice'>[buckled_mob.name] was unbuckled by [user.name]!</span>",\
 					"You were unbuckled from [src] by [user.name].",\
 					"You hear metal clanking")
 			else
 				buckled_mob.visible_message(\
-					"\blue [buckled_mob.name] unbuckled \himself!",\
+					"<span class='notice'>[buckled_mob.name] unbuckled \himself!</span>",\
 					"You unbuckle yourself from [src].",\
 					"You hear metal clanking")
 			unbuckle()

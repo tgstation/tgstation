@@ -151,7 +151,7 @@
 				media_frequency = newfreq
 				connect_frequency()
 			else
-				usr << "\red Invalid FM frequency. (90.0, 200.0)"
+				usr << "<span class='warning'>Invalid FM frequency. (90.0, 200.0)</span>"
 
 /obj/machinery/media/transmitter/broadcast/process()
 	if(stat & (NOPOWER|BROKEN))

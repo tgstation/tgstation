@@ -66,7 +66,7 @@
 			adjustToxLoss(-50)
 			alien_invis = 1.0
 			update_icons()
-			src << "\green You are now invisible."
+			src << "<span class='good'>You are now invisible.</span>"
 			visible_message("<span class='danger'>\The [src] fades into the surroundings!</span>", "<span class='alien'>You are now invisible</span>")
 			spawn(250)
 				if(!isnull(src)) //Don't want the game to runtime error when the mob no-longer exists.

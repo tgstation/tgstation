@@ -120,16 +120,16 @@
 					return
 
 			if(C.imprinted != "empty")
-				U << "\red <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!"
+				U << "<span class='danger'>Capture failed!: </span>The soul stone has already been imprinted with [C.imprinted]'s mind!"
 			else
 				if (T.stat == CONSCIOUS)
-					U << "\red <b>Capture failed!</b>: \black Kill or maim the victim first!"
+					U << "<span class='danger'>Capture failed!: </span>Kill or maim the victim first!"
 				else if(T.isInCrit() || T.stat == DEAD)
 					if(T.client == null)
-						U << "\red <b>Capture failed!</b>: \black The soul has already fled it's mortal frame."
+						U << "<span class='danger'>Capture failed!: </span>The soul has already fled it's mortal frame."
 					else
 						if(C.contents.len)
-							U << "\red <b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room."
+							U << "<span class='danger'>Capture failed!: </span>The soul stone is full! Use or free an existing soul to make room."
 						else
 							for(var/obj/item/W in T)
 								T.drop_from_inventory(W)
@@ -154,7 +154,7 @@
 							C.icon_state = "soulstone2"
 							C.name = "Soul Stone: [S.real_name]"
 							S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
-							U << "\blue <b>Capture successful!</b>: \black [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
+							U << "<span class='notice'><b>Capture successful!</b>: </span>[T.real_name]'s soul has been ripped from their body and stored within the soul stone."
 							U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."
 							C.imprinted = "[S.name]"
 							var/ref = "\ref[U.mind]"
@@ -172,13 +172,13 @@
 			var/mob/living/simple_animal/shade/T = target
 			var/obj/item/device/soulstone/C = src
 			if (T.stat == DEAD)
-				U << "\red <b>Capture failed!</b>: \black The shade has already been banished!"
+				U << "<span class='danger'>Capture failed!: </span>The shade has already been banished!"
 			else
 				if(C.contents.len)
-					U << "\red <b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room."
+					U << "<span class='danger'>Capture failed!: </span>The soul stone is full! Use or free an existing soul to make room."
 				else
 					if(T.name != C.imprinted)
-						U << "\red <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!"
+						U << "<span class='danger'>Capture failed!: </span>The soul stone has already been imprinted with [C.imprinted]'s mind!"
 					else
 						T.loc = C //put shade in stone
 						T.status_flags |= GODMODE
@@ -186,7 +186,7 @@
 						T.health = T.maxHealth
 						C.icon_state = "soulstone2"
 						T << "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form"
-						U << "\blue <b>Capture successful!</b>: \black [T.name]'s has been recaptured and stored within the soul stone."
+						U << "<span class='notice'><b>Capture successful!</b>: </span>[T.name]'s has been recaptured and stored within the soul stone."
 		if("CONSTRUCT")
 			var/obj/structure/constructshell/T = target
 			var/obj/item/device/soulstone/C = src
@@ -252,7 +252,7 @@
 					ticker.mode.update_necro_icons_added(Z.mind)
 					ticker.mode.risen.Add(Z.mind)
 			else
-				U << "<span class='warning'><b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!</span>"
+				U << "<span class='warning'><b>Creation failed!</b>: The soul stone is empty! Go kill someone!</span>"
 	ticker.mode.update_all_necro_icons()
 	if(deleteafter)
 		for(var/atom/A in src)//we get rid of the empty shade once we've transferred its mind to the construct, so it isn't dropped on the floor when the soulstone is destroyed.

@@ -19,7 +19,7 @@
 		if(!SK.status)
 			user << "<span class='notice'>[SK] is not ready to be attached!</span>"
 			return
-		user.drop_item()
+		user.drop_item(W)
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		E.dir = dir
@@ -102,13 +102,13 @@
 		if(!M.weakened)	//Spam prevention
 			if(M == usr)
 				M.visible_message(\
-					"\blue [M.name] has no butt, and slides right out of [src]!",\
+					"<span class='notice'>[M.name] has no butt, and slides right out of [src]!</span>",\
 					"Having no butt, you slide right out of the [src]",\
 					"You hear metal clanking")
 
 			else
 				M.visible_message(\
-					"\blue [M.name] has no butt, and slides right out of [src]!",\
+					"<span class='notice'>[M.name] has no butt, and slides right out of [src]!</span>",\
 					"Having no butt, you slide right out of the [src]",\
 					"You hear metal clanking")
 

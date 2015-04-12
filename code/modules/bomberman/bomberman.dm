@@ -52,9 +52,7 @@
 			new /obj/structure/bomberman(T, power, destroy_environnement, hurt_players, src, user.dir)
 
 /obj/item/weapon/bomberman/proc/cure(var/disease)
-	world << "making a cure() for [disease]"
 	spawn(400)
-		world << "curing [disease]"
 		switch(disease)
 			if("Low Power Disease")
 				small_bomb = 0

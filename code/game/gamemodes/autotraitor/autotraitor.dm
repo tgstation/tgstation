@@ -186,10 +186,10 @@
 				forge_traitor_objectives(character.mind)
 				equip_traitor(character)
 				traitors += character.mind
-				character << "\red <B>You are the traitor.</B>"
+				character << "<span class='warning'><B>You are the traitor.</B></span>"
 				character.mind.special_role = "traitor"
 				var/obj_count = 1
-				character << "\blue Your current objectives:"
+				character << "<span class='notice'>Your current objectives:</span>"
 				for(var/datum/objective/objective in character.mind.objectives)
 					character << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 					obj_count++

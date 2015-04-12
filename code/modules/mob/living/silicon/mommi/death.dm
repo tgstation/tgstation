@@ -20,9 +20,7 @@
 		var/obj/item/found = locate(tool_state) in src.module.modules
 		if(!found && tool_state != src.module.emag)
 			var/obj/item/TS = tool_state
-			drop_item()
-			if(TS && TS.loc)
-				TS.loc = src.loc
+			drop_item(TS)
 	spawn(15)
 		if(animation)	del(animation)
 		if(src)			del(src)

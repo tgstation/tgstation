@@ -8,7 +8,7 @@ var/global/PROFILING_VERBS = list(
 	set name = "Disable all scrubbers"
 
 	disable_scrubbers = !disable_scrubbers
-	world << "\red Scrubbers are now <b>[disable_scrubbers?"OFF":"ON"]</b>."
+	world << "<span class='warning'>Scrubbers are now <b>[disable_scrubbers?"OFF":"ON"]</b>.</span>"
 */
 
 #define gen_disable_proc(TYPE,LABEL) \
@@ -16,7 +16,7 @@ var/global/PROFILING_VERBS = list(
 	set category = "Debug"; \
 	set name = "Disable all "+LABEL; \
 	disable_##TYPE = !disable_##TYPE; \
-	world << "\red "+LABEL+" are now <b>[disable_##TYPE?"OFF":"ON"]</b>."; \
+	world << "<span class='warning'></span>"+LABEL+" are now <b>[disable_##TYPE?"OFF":"ON"]</b>."; \
 	}
 
 gen_disable_proc(scrubbers,"Scrubbers")
