@@ -35,6 +35,9 @@
 	if(isnull(module_active))
 		return
 
+	if(module_active:loc != src)
+		src << "<span class='warning'>Can't store something you're not holding!</span>"
+		return
 	if(module_state_1 == module_active)
 		uneq_module(module_state_1)
 		module_state_1 = null
