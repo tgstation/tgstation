@@ -179,9 +179,9 @@ atom/proc/SetLuminosity(new_luminosity, trueLum = FALSE)
 	if (trueLuminosity < 1)
 		luminosity = 0
 	else if (trueLuminosity <= 100)
-		luminosity = min((ismob(src) ? 7 : 100), sqrtTable[trueLuminosity])
+		luminosity = sqrtTable[trueLuminosity]
 	else
-		luminosity = min((ismob(src) ? 7 : 100), sqrt(trueLuminosity))
+		luminosity = sqrt(trueLuminosity)
 
 atom/proc/AddLuminosity(delta_luminosity)
 	if(delta_luminosity > 0)
