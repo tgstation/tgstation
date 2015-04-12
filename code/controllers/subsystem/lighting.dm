@@ -34,9 +34,7 @@ var/datum/subsystem/lighting/SSlighting
 //		A.luminosity = 1
 
 	for(var/datum/light_source/thing in changed_lights)
-		if(!thing || !thing.check())
-			continue
-		qdel(thing)
+		thing.check()
 	changed_lights.Cut()
 
 	changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
@@ -58,9 +56,8 @@ var/datum/subsystem/lighting/SSlighting
 //		A.luminosity = 1
 
 	for(var/datum/light_source/thing in changed_lights)
-		if(!thing || !thing.check())
-			continue
-		qdel(thing)
+		thing.add_effect()
+		thing.changed = 0
 	changed_lights.Cut()
 
 	var/z_start = 1

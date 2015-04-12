@@ -62,8 +62,6 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-	if(light)
-		light.changed()
 	return 1
 
 /atom/movable/Del()
