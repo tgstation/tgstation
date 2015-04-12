@@ -24,11 +24,12 @@
 /obj/item/device/atomic_disassembler/emag_act(mob/user)
 	..()
 	if(!emagged)
-		user << "<span class='warning'>You disable the safety restrictions on the P.A.D.D.!</span>"
+		user << "<span class='warning'>You disable the safety restrictions on \the [src]!</span>"
 		force = 20 //Disassembling them... ATOMICALLY!
 		damtype = "clone"
 		hitsound = 'sound/weapons/blade1.ogg'
 		emagged = 1
+	return
 
 /obj/item/device/atomic_disassembler/examine(mob/user)
 	..()
@@ -38,11 +39,12 @@
 		if(canister.stored_matter < canister.matter_cap)
 			user << "<span class='notice'>A small digital display on the canister reads: \"[canister.stored_matter]UCM\".</span>"
 		else
-			user << "<span class='notice'>A small digital display on the canister reads: \"!![canister.stored_matter]UCM - CAPACITY REACHED\".</span>"
+			user << "<span class='notice'>A small digital display on the canister reads: \"[canister.stored_matter]UCM - CAPACITY REACHED\".</span>"
 
 /obj/item/device/atomic_disassembler/proc/assign_items()
 	blacklisted_items = list(/obj/item/weapon/stock_parts/cell)
-	really_blacklisted_items = list(/obj/item/weapon/reagent_containers/glass)
+	really_blacklisted_items = list(/obj/item/weapon/reagent_containers/glass, \
+									/obj/item/weapon/disk/nuclear)
 	return 1
 
 /obj/item/device/atomic_disassembler/attackby(var/obj/item/W as obj,var/mob/living/user as mob, params)
@@ -63,8 +65,14 @@
 	if(!power_cell)
 		user << "<span class='warning'>\The [src] requires a power cell.</span>"
 		return
+	if(power_cell.charge <= 0)
+		user << "<span class='warning'>\The [src]'s power cell is out of charge.</span>"
+		return
 	if(!canister)
 		user << "<span class='warning'>\The [src] will not function without a compressed matter canister.</span>"
+		return
+	if(canister.stored_matter == canister.matter_cap)
+		user << "<span class='warning'>\The [src]'s matter canister is full - replace it.</span>"
 		return
 	if(istype(W, /obj/item/device/atomic_disassembler))
 		var/boom = alert(user, "This probably isn't wise...", "Ignore the warning labels?", "Yes", "No")
@@ -88,7 +96,12 @@
 		user.visible_message("<span class='notice'>[user] feeds \the [W] into \the [src]'s atomization field.</span>", \
 							 "<span class='info'>\The [W] has been broken down.</span>")
 		canister.update_matter(10 * W.w_class)
+		power_cell.charge -= 10 * W.w_class
+		if(power_cell.charge < 0)
+			power_cell.charge = 0
+		power_cell.update_icon()
 		playsound(src, 'sound/effects/EMPulse.ogg', 25, 1)
+		user.drop_item()
 		qdel(W)
 
 /obj/item/device/atomic_disassembler/verb/eject_power_cell()
@@ -135,7 +148,7 @@
 	if(stored_matter < matter_cap)
 		user << "<span class='notice'>A small digital display reads: \"[stored_matter]UCM\".</span>"
 	else
-		user << "<span class='notice'>A small digital display reads: \"!![stored_matter]UCM - CAPACITY REACHED\".</span>"
+		user << "<span class='notice'>A small digital display reads: \"[stored_matter]UCM - CAPACITY REACHED\".</span>"
 
 /obj/item/device/compressed_matter_canister/proc/update_matter(var/matter_amt)
 	stored_matter += matter_amt
