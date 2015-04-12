@@ -162,7 +162,7 @@
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
-	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
+	traitor.current << "<SPAN CLASS='danger'><CENTER><BIG>You are a traitor!</BIG></CENTER></SPAN>"
 	traitor.current << sound('sound/voice/syndicate intro.ogg')
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)

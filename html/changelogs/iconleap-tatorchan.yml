@@ -1,0 +1,6 @@
+author: iconleap
+
+delete-after: True
+
+changes: 
+  - bugfix: Fixes admin manual traitor to give uplink and codewords.

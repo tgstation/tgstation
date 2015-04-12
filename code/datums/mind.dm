@@ -829,7 +829,7 @@ datum/mind
 
 		else if (href_list["traitor"])
 			switch(href_list["traitor"])
-				if("clear")
+				if ("clear")
 					if(src in ticker.mode.traitors)
 						ticker.mode.traitors -= src
 						special_role = null
@@ -839,20 +839,14 @@ datum/mind
 							var/mob/living/silicon/ai/A = current
 							A.set_zeroth_law("")
 							A.show_laws()
-
-
-				if("traitor")
+				if ("traitor")
 					if(!(src in ticker.mode.traitors))
+						log_admin("[key_name(usr)] has traitor'ed [key_name(current)].")
 						ticker.mode.traitors += src
 						special_role = "traitor"
-						current << "<SPAN CLASS='danger'><CENTER><BIG>You are a traitor!</BIG></CENTER></SPAN>"
-						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
-						if(isAI(current))
-							var/mob/living/silicon/ai/A = current
-							call(/datum/game_mode/proc/add_law_zero)(A)
-							A.show_laws()
-
-				if("autoobjectives")
+						ticker.mode.finalize_traitor(src)
+						ticker.mode.greet_traitor(src)
+				if ("autoobjectives")
 					ticker.mode.forge_traitor_objectives(src)
 					usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
 
