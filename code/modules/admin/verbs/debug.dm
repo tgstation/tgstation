@@ -1495,7 +1495,7 @@ client/proc/control_bomberman_arena()
 			var/i = 0
 			for(var/datum/bomberman_spawn/S in arena_target.spawns)
 				i++
-			if(i < volunteer_gladiators.len)
+			if(i > volunteer_gladiators.len)
 				usr << "There aren't enough volunteer gladiators to have a proper game..."
 			else
 				var/list/new_challengers = list()
