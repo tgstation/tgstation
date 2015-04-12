@@ -258,6 +258,8 @@
 				else
 					H.equip_or_collect(new /obj/item/clothing/under/rank/clown(H), slot_w_uniform)
 					H.equip_or_collect(new /obj/item/clothing/shoes/clown_shoes(H), slot_shoes)
+		H.real_name = pick(clown_names)
+		H.rename_self("clown")
 		return 1
 
 
@@ -299,6 +301,7 @@
 			H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
 		H.add_spell(new /spell/aoe_turf/conjure/forcewall/mime, "grey_spell_ready")
 		H.miming = 1
+		H.rename_self("mime")
 		return 1
 
 
