@@ -47,7 +47,7 @@
 			spawn(2) SaySomething(pick(seperate))
 	if(prob(30))
 		for(var/mob/O in viewers(src))
-			O.show_message("\blue [src] hums for bit then stops...", 1)
+			O.show_message("<span class='notice'>[src] hums for bit then stops...</span>", 1)
 
 /*/obj/item/weapon/talkingcrystal/proc/debug()
 	//set src in view()
@@ -105,5 +105,5 @@
 			listening|=M
 
 	for(var/mob/M in listening)
-		M << "<b>[src]</b> reverberates, \blue\"[msg]\""
+		M << "<b>[src]</b> reverberates, <span class='warning'>\"[msg]\"</span>"
 	lastsaid = world.timeofday + rand(300,800)

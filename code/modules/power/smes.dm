@@ -109,7 +109,7 @@
 
 			CC.use(10)
 			user.visible_message(\
-				"\red [user.name] has added cables to the SMES!",\
+				"<span class='warning'>[user.name] has added cables to the SMES!</span>",\
 				"You added cables the SMES.")
 			terminal.connect_to_network()
 			src.stat = 0
@@ -291,7 +291,7 @@
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		if(!istype(usr, /mob/living/silicon/ai))
-			usr << "\red You don't have the dexterity to do this!"
+			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return
 
 //world << "[href] ; [href_list[href]]"
@@ -335,9 +335,9 @@
 /obj/machinery/power/smes/proc/ion_act()
 	if(src.z == 1)
 		if(prob(1)) //explosion
-			world << "\red SMES explosion in [src.loc.loc]"
+			world << "<span class='warning'>SMES explosion in [src.loc.loc]</span>"
 			for(var/mob/M in viewers(src))
-				M.show_message("\red The [src.name] is making strange noises!", 3, "\red You hear sizzling electronics.", 2)
+				M.show_message("<span class='warning'>The [src.name] is making strange noises!</span>", 3, "<span class='warning'>You hear sizzling electronics.</span>", 2)
 			sleep(10*pick(4,5,6,7,10,14))
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
@@ -347,7 +347,7 @@
 			del(src)
 			return
 		if(prob(15)) //Power drain
-			world << "\red SMES power drain in [src.loc.loc]"
+			world << "<span class='warning'>SMES power drain in [src.loc.loc]</span>"
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
@@ -356,7 +356,7 @@
 			else
 				emp_act(2)
 		if(prob(5)) //smoke only
-			world << "\red SMES smoke in [src.loc.loc]"
+			world << "<span class='warning'>SMES smoke in [src.loc.loc]</span>"
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
 			smoke.attach(src)

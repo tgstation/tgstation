@@ -173,10 +173,10 @@
 		O.find_target()
 
 /datum/game_mode/heist/proc/greet_vox(const/datum/mind/raider)
-	raider.current << {"\blue <B>You are a Vox Raider, fresh from the Shoal!</b>
+	raider.current << {"<span class='notice'><B>You are a Vox Raider, fresh from the Shoal!</b>
 The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.
 Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.
-Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to turn on your nitrogen internals!"}
+Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to turn on your nitrogen internals!</span>"}
 
 	var/obj_count = 0
 
@@ -230,7 +230,7 @@ Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to 
 		else
 			win_msg += "<B>The Vox Raiders were repelled!</B>"
 
-	world << "\red <FONT size = 3><B>[win_type] [win_group] victory!</B></FONT><br>[win_msg]"
+	world << "<span class='danger'><FONT size = 3>[win_type] [win_group] victory!</FONT><br>[win_msg]</span>"
 
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 

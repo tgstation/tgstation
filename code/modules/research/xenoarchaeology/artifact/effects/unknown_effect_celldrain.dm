@@ -10,7 +10,7 @@
 			var/mob/living/silicon/robot/R = user
 			for (var/obj/item/weapon/cell/D in R.contents)
 				D.charge = max(D.charge - rand() * 100, 0)
-				R << "\blue SYSTEM ALERT: Energy drain detected!"
+				R << "<span class='notice'>SYSTEM ALERT: Energy drain detected!</span>"
 			return 1
 
 		return 1
@@ -25,7 +25,7 @@
 		for (var/mob/living/silicon/robot/M in mob_list)
 			for (var/obj/item/weapon/cell/D in M.contents)
 				D.charge = max(D.charge - 50,0)
-				M << "\red SYSTEM ALERT: Energy drain detected!"
+				M << "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>"
 	return 1
 
 /datum/artifact_effect/celldrain/DoEffectPulse()
@@ -38,5 +38,5 @@
 		for (var/mob/living/silicon/robot/M in mob_list)
 			for (var/obj/item/weapon/cell/D in M.contents)
 				D.charge = max(D.charge - rand() * 150,0)
-				M << "\red SYSTEM ALERT: Energy drain detected!"
+				M << "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>"
 	return 1

@@ -16,16 +16,16 @@
 		if(2)
 /*
 			if(affected_mob.sleeping && prob(40))  //removed until sleeping is fixed
-				affected_mob << "\blue You feel better."
+				affected_mob << "<span class='notice'>You feel better.</span>"
 				cure()
 				return
 */
 			if(affected_mob.lying && prob(40))  //changed FROM prob(10) until sleeping is fixed
-				affected_mob << "\blue You feel better."
+				affected_mob << "<span class='notice'>You feel better.</span>"
 				cure()
 				return
 			if(prob(1) && prob(5))
-				affected_mob << "\blue You feel better."
+				affected_mob << "<span class='notice'>You feel better.</span>"
 				cure()
 				return
 			if(prob(1))
@@ -33,22 +33,22 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				affected_mob << "<span class='warning'>Your throat feels sore.</span>"
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				affected_mob << "<span class='warning'>Mucous runs down the back of your throat.</span>"
 		if(3)
 /*
 			if(affected_mob.sleeping && prob(25))  //removed until sleeping is fixed
-				affected_mob << "\blue You feel better."
+				affected_mob << "<span class='notice'>You feel better.</span>"
 				cure()
 				return
 */
 			if(affected_mob.lying && prob(25))  //changed FROM prob(5) until sleeping is fixed
-				affected_mob << "\blue You feel better."
+				affected_mob << "<span class='notice'>You feel better.</span>"
 				cure()
 				return
 			if(prob(1) && prob(1))
-				affected_mob << "\blue You feel better."
+				affected_mob << "<span class='notice'>You feel better.</span>"
 				cure()
 				return
 			if(prob(1))
@@ -56,9 +56,9 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				affected_mob << "<span class='warning'>Your throat feels sore.</span>"
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				affected_mob << "<span class='warning'>Mucous runs down the back of your throat.</span>"
 			if(prob(1) && prob(50))
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
 					var/datum/disease/Flu = new /datum/disease/flu(0)

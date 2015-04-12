@@ -83,7 +83,7 @@
 				var/C = S.cores
 				if(S.stat != DEAD)
 					S.loc = loc
-					S.visible_message("\blue [C] crawls free of the processor!")
+					S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
 					return
 				for(var/i = 1, i <= C, i++)
 					new S.coretype(loc)

@@ -420,15 +420,15 @@ var/global/list/organ_damage_overlays = list(
 				custom_pain("Your head feels numb and painful.")
 		if(getBrainLoss() >= 15)
 			if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
-				src << "\red It becomes hard to see for some reason."
+				src << "<span class='warning'>It becomes hard to see for some reason.</span>"
 				eye_blurry = 10
 		if(getBrainLoss() >= 35)
 			if(7 <= rn && rn <= 9) if(hand && get_active_hand())
-				src << "\red Your hand won't respond properly, you drop what you're holding."
+				src << "<span class='warning'>Your hand won't respond properly, you drop what you're holding.</span>"
 				drop_item()
 		if(getBrainLoss() >= 50)
 			if(10 <= rn && rn <= 12) if(!lying)
-				src << "\red Your legs won't respond properly, you fall down."
+				src << "<span class='warning'>Your legs won't respond properly, you fall down.</span>"
 				resting = 1
 
 /mob/living/carbon/human/proc/handle_stasis_bag()
@@ -459,7 +459,7 @@ var/global/list/organ_damage_overlays = list(
 		if (radiation > 100)
 			radiation = 100
 			Weaken(10)
-			src << "\red You feel weak."
+			src << "<span class='warning'>You feel weak.</span>"
 			emote("collapse")
 
 		if (radiation < 0)
@@ -492,7 +492,7 @@ var/global/list/organ_damage_overlays = list(
 					if(prob(5))
 						radiation -= 5
 						Weaken(3)
-						src << "\red You feel weak."
+						src << "<span class='warning'>You feel weak.</span>"
 						emote("collapse")
 					updatehealth()
 
@@ -502,7 +502,7 @@ var/global/list/organ_damage_overlays = list(
 					damage = 1
 					/*
 					if(prob(1))
-						src << "\red You mutate!"
+						src << "<span class='warning'>You mutate!</span>"
 						randmutb(src)
 						domutcheck(src,null)
 						emote("gasp")
@@ -1063,7 +1063,7 @@ var/global/list/organ_damage_overlays = list(
 	if(species.flags & CAN_BE_FAT)
 		if(M_FAT in mutations)
 			if(overeatduration < 100)
-				src << "\blue You feel fit again!"
+				src << "<span class='notice'>You feel fit again!</span>"
 				mutations.Remove(M_FAT)
 				update_mutantrace(0)
 				update_mutations(0)
@@ -1071,7 +1071,7 @@ var/global/list/organ_damage_overlays = list(
 				update_inv_wear_suit()
 		else
 			if(overeatduration > 500)
-				src << "\red You suddenly feel blubbery!"
+				src << "<span class='warning'>You suddenly feel blubbery!</span>"
 				mutations.Add(M_FAT)
 				update_mutantrace(0)
 				update_mutations(0)
@@ -1600,18 +1600,18 @@ var/global/list/organ_damage_overlays = list(
 				isRemoteObserve = 1
 				// Is he unconscious or dead?
 				if(remoteview_target.stat!=CONSCIOUS)
-					src << "\red Your psy-connection grows too faint to maintain!"
+					src << "<span class='warning'>Your psy-connection grows too faint to maintain!</span>"
 					isRemoteObserve = 0
 
 				// Does he have psy resist?
 				if(M_PSY_RESIST in remoteview_target.mutations)
-					src << "\red Your mind is shut out!"
+					src << "<span class='warning'>Your mind is shut out!</span>"
 					isRemoteObserve = 0
 
 				// Not on the station or mining?
 				var/turf/temp_turf = get_turf(remoteview_target)
 				if((temp_turf.z != 1 && temp_turf.z != 5) || remoteview_target.stat!=CONSCIOUS)
-					src << "\red Your psy-connection grows too faint to maintain!"
+					src << "<span class='warning'>Your psy-connection grows too faint to maintain!</span>"
 					isRemoteObserve = 0
 			if(!isRemoteObserve && client && !client.adminobs && !iscamera(client.eye))
 				remoteview_target = null

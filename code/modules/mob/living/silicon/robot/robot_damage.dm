@@ -79,11 +79,11 @@
 		cell.charge -= cost
 		if(cell.charge <= 0)
 			cell.charge = 0
-			src << "\red Your shield has overloaded!"
+			src << "<span class='warning'>Your shield has overloaded!</span>"
 		else
 			brute -= absorb_brute
 			burn -= absorb_burn
-			src << "\red Your shield absorbs some of the impact!"
+			src << "<span class='warning'>Your shield absorbs some of the impact!</span>"
 
 	var/datum/robot_component/armour/A = get_armour()
 	if(A)
@@ -124,11 +124,11 @@
 		cell.charge -= cost
 		if(cell.charge <= 0)
 			cell.charge = 0
-			src << "\red Your shield has overloaded!"
+			src << "<span class='warning'>Your shield has overloaded!</span>"
 		else
 			brute -= absorb_brute
 			burn -= absorb_burn
-			src << "\red Your shield absorbs some of the impact!"
+			src << "<span class='warning'>Your shield absorbs some of the impact!</span>"
 
 	var/datum/robot_component/armour/A = get_armour()
 	if(A)

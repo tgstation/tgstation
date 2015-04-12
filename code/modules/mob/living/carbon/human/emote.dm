@@ -584,9 +584,9 @@
 					for(var/mob/M in view(1))
 						if(M != src)
 							if(!miming)
-								visible_message("\red <b>[src]</b> farts in <b>[M]</b>'s face!")
+								visible_message("<span class='danger'><b>[src]</b> farts in [M]'s face!</span>")
 							else
-								visible_message("\red <b>[src]</b> silently farts in <b>[M]</b>'s face!")
+								visible_message("<span class='danger'><b>[src]</b> silently farts in [M]'s face!</span>")
 						else
 							continue
 

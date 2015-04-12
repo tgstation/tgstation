@@ -131,10 +131,10 @@
 			var/count = 1
 			for(var/datum/objective/objective in borer.objectives)
 				if(objective.check_completion())
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+					world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='good'><B>Success</B></span>"
 					feedback_add_details("borer_objective","[objective.type]|SUCCESS")
 				else
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+					world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='warning'>Failed</span>"
 					feedback_add_details("borer_objective","[objective.type]|FAIL")
 					borerwin = 0
 				count++

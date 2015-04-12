@@ -94,7 +94,7 @@
 							return
 
 						if(prob(50))
-							src.visible_message("\blue You hear something squeezing through the ventilation ducts.",2)
+							src.visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
 						sleep(travel_time)
 
 						if(!exit_vent || exit_vent.welded)

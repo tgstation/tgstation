@@ -84,7 +84,7 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		src << text("\blue You are now hiding.")
+		src << text("<span class='notice'>You are now hiding.</span>")
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
@@ -92,7 +92,7 @@
 		*/
 	else
 		layer = MOB_LAYER
-		src << text("\blue You have stopped hiding.")
+		src << text("<span class='notice'>You have stopped hiding.</span>")
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
@@ -130,7 +130,7 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			M << "\blue \icon[src] Squeek!"
+			M << "<span class='notice'>\icon[src] Squeek!</span>"
 			M << 'sound/effects/mousesqueek.ogg'
 	..()
 

@@ -20,9 +20,9 @@
 		if(B.feral < 0)
 			caught_bees += B.strength
 			del(B)
-			user.visible_message("\blue [user] nets some bees.","\blue You net up some of the becalmed bees.")
+			user.visible_message("<span class='notice'>[user] nets some bees.</span>","<span class='notice'>You net up some of the becalmed bees.</span>")
 		else
-			user.visible_message("\red [user] swings at some bees, they don't seem to like it.","\red You swing at some bees, they don't seem to like it.")
+			user.visible_message("<span class='warning'>[user] swings at some bees, they don't seem to like it.</span>","<span class='warning'>You swing at some bees, they don't seem to like it.</span>")
 			B.feral = 5
 			B.target = user
 

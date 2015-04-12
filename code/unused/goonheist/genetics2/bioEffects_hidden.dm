@@ -144,7 +144,7 @@
 	OnAdd()
 		owner:mutantrace = new /datum/mutantrace/premature_clone(owner)
 		if (!istype(owner.loc, /obj/machinery/clonepod))
-			owner << "\red Your genes feel...disorderly."
+			owner << "<span class='warning'>Your genes feel...disorderly.</span>"
 		return
 
 	OnRemove()
@@ -158,12 +158,12 @@
 
 		if (outOfPod)
 			if (prob(6))
-				owner.visible_message("\red [owner.name] suddenly and violently vomits!")
+				owner.visible_message("<span class='warning'>[owner.name] suddenly and violently vomits!</span>")
 				playsound(owner.loc, 'splat.ogg', 50, 1)
 				new /obj/decal/cleanable/vomit(owner.loc)
 
 			else if (prob(2))
-				owner.visible_message("\red [owner.name] vomits blood!")
+				owner.visible_message("<span class='warning'>[owner.name] vomits blood!</span>")
 				playsound(owner.loc, 'splat.ogg', 50, 1)
 				new /obj/decal/cleanable/blood(owner.loc)
 				random_brute_damage(owner, rand(5,8))

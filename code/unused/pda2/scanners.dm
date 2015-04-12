@@ -36,13 +36,13 @@
 			if(!istype(C))
 				return
 
-			var/dat = "\blue Analyzing Results for [C]:\n"
-			dat += "\blue \t Overall Status: [C.stat > 1 ? "dead" : "[C.health]% healthy"]\n"
-			dat += "\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]\n"
-			dat += "\blue \t Key: Suffocation/Toxin/Burns/Brute\n"
-			dat += "\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)"
+			var/dat = "<span class='notice'>Analyzing Results for [C]:\n</span>"
+			dat += "<span class='notice'>\t Overall Status: [C.stat > 1 ? "dead" : "[C.health]% healthy"]\n</span>"
+			dat += "<span class='notice'>\t Damage Specifics: [C.getOxyLoss() > 50 ? "<span class='bad'>" : "<span class='notice'>"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "<span class='bad'>" : "<span class='notice'>"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "<span class='bad'>" : "<span class='notice'>"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "<span class='bad'>" : "<span class='notice'>"][C.getBruteLoss()]\n</span>"
+			dat += "<span class='notice'>\t Key: Suffocation</span>/Toxin</span>/Burns</span>/Brute\n</span>"
+			dat += "<span class='notice'>\t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
 			if(C.virus)
-				dat += "\red \n<b>Warning Virus Detected.</b>\nName: [C.virus.name].\nType: [C.virus.spread].\nStage: [C.virus.stage]/[C.virus.max_stages].\nPossible Cure: [C.virus.cure]"
+				dat += "<span class='danger'>\nWarning Virus Detected.\nName: [C.virus.name].\nType: [C.virus.spread].\nStage: [C.virus.stage]/[C.virus.max_stages].\nPossible Cure: [C.virus.cure]</span>"
 
 			return dat
 
@@ -59,23 +59,23 @@
 			if(istype(A,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = A
 				if (!istype(H.dna, /datum/dna) || !isnull(H.gloves))
-					dat += "\blue Unable to scan [A]'s fingerprints.\n"
+					dat += "<span class='notice'>Unable to scan [A]'s fingerprints.\n</span>"
 				else
-					dat += "\blue [H]'s Fingerprints: [md5(H.dna.uni_identity)]\n"
+					dat += "<span class='notice'>[H]'s Fingerprints: [md5(H.dna.uni_identity)]\n</span>"
 				if ( !(H.blood_DNA.len) )
-					dat += "\blue No blood found on [H]\n"
+					dat += "<span class='notice'>No blood found on [H]\n</span>"
 				else
 					for(var/i = 1, i < H.blood_DNA.len, i++)
 						var/list/templist = H.blood_DNA[i]
-						user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
+						user << "<span class='notice'>Blood type: [templist[2]]\nDNA: [templist[1]]</span>"
 
 			if (!A.fingerprints)
-				dat += "\blue Unable to locate any fingerprints on [A]!\n"
+				dat += "<span class='notice'>Unable to locate any fingerprints on [A]!\n</span>"
 			else
 				var/list/L = params2list(A:fingerprints)
-				dat += "\blue Isolated [L.len] fingerprints.\n"
+				dat += "<span class='notice'>Isolated [L.len] fingerprints.\n</span>"
 				for(var/i in L)
-					dat += "\blue \t [i]\n"
+					dat += "<span class='notice'>\t [i]\n</span>"
 
 			return dat
 
@@ -92,12 +92,12 @@
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
-					dat += "\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.\n"
+					dat += "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.\n</span>"
 					for (var/datum/reagent/re in A.reagents.reagent_list)
-						dat += "\blue \t [re] - [re.volume]\n"
+						dat += "<span class='notice'>\t [re] - [re.volume]\n</span>"
 				else
-					dat = "\blue No active chemical agents found in [A]."
+					dat = "<span class='notice'>No active chemical agents found in [A].</span>"
 			else
-				dat = "\blue No significant chemical agents found in [A]."
+				dat = "<span class='notice'>No significant chemical agents found in [A].</span>"
 
 			return dat

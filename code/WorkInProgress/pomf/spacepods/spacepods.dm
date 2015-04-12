@@ -313,11 +313,11 @@
 	if (usr.stat || !ishuman(usr))
 		return
 	if (src.occupant)
-		usr << "\blue <B>The [src.name] is already occupied!</B>"
+		usr << "<span class='notice'><B>The [src.name] is already occupied!</B></span>"
 		return
 /*
 	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
+		usr << "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>"
 		return
 */
 	for(var/mob/living/carbon/slime/M in range(1,usr))
@@ -326,7 +326,7 @@
 			return
 //	usr << "You start climbing into [src.name]"
 
-	visible_message("\blue [usr] starts to climb into [src.name]")
+	visible_message("<span class='notice'>[usr] starts to climb into [src.name]</span>")
 
 	if(enter_after(40,usr))
 		if(!src.occupant)

@@ -44,36 +44,36 @@
 			return //if you're unconscious or dead, no dicking with your armor. --NEO
 
 		if(!istype(user))
-			user << "\red This suit was engineered for human use only."
+			user << "<span class='warning'>This suit was engineered for human use only.</span>"
 			return
 
 		if(user.wear_suit!=src)
-			user << "\red The suit functions best if you are inside of it."
+			user << "<span class='warning'>The suit functions best if you are inside of it.</span>"
 			return
 
 		if(helmrequired && !istype(user.head, /obj/item/clothing/head/powered))
-			user << "\red Helmet missing, unable to initiate power-on procedure."
+			user << "<span class='warning'>Helmet missing, unable to initiate power-on procedure.</span>"
 			return
 
 		if(glovesrequired && !istype(user.gloves, /obj/item/clothing/gloves/powered))
-			user << "\red Gloves missing, unable to initiate power-on procedure."
+			user << "<span class='warning'>Gloves missing, unable to initiate power-on procedure.</span>"
 			return
 
 		if(shoesrequired && !istype(user.shoes, /obj/item/clothing/shoes/powered))
-			user << "\red Shoes missing, unable to initiate power-on procedure."
+			user << "<span class='warning'>Shoes missing, unable to initiate power-on procedure.</span>"
 			return
 
 		if(active)
-			user << "\red The suit is already on, you can't turn it on twice."
+			user << "<span class='warning'>The suit is already on, you can't turn it on twice.</span>"
 			return
 
 		if(!power || !power.checkpower())
-			user << "\red Powersource missing or depleted."
+			user << "<span class='warning'>Powersource missing or depleted.</span>"
 			return
 
 		verbs -= /obj/item/clothing/suit/powered/proc/poweron
 
-		user << "\blue Suit interlocks engaged."
+		user << "<span class='notice'>Suit interlocks engaged.</span>"
 		if(helmrequired)
 			helm = user.head
 			helm.canremove = 0
@@ -98,7 +98,7 @@
 			servos.toggle()
 			sleep(20)
 
-		user << "\blue All systems online."
+		user << "<span class='notice'>All systems online.</span>"
 		active = 1
 		power.process()
 
@@ -125,7 +125,7 @@
 		verbs -= /obj/item/clothing/suit/powered/proc/poweroff
 
 		if(sudden)
-			user << "\red Your armor loses power!"
+			user << "<span class='warning'>Your armor loses power!</span>"
 
 		if(servos)
 			servos.toggle(sudden)
@@ -143,7 +143,7 @@
 			sleep(delay)
 
 		if(!sudden)
-			usr << "\blue Suit interlocks disengaged."
+			usr << "<span class='notice'>Suit interlocks disengaged.</span>"
 			if(helm)
 				helm.canremove = 1
 				helm = null
@@ -158,7 +158,7 @@
 		sleep(delay)
 
 		if(!sudden)
-			usr << "\blue All systems disengaged."
+			usr << "<span class='notice'>All systems disengaged.</span>"
 
 		active = 0
 		verbs += /obj/item/clothing/suit/powered/proc/poweron
@@ -170,24 +170,24 @@
 			switch(W.type)
 				if(/obj/item/stack/sheet/mineral/plasma)
 					if(fuel < 50)
-						user << "\blue You feed some refined plasma into the armor's generator."
+						user << "<span class='notice'>You feed some refined plasma into the armor's generator.</span>"
 						power:fuel += 25
 						W:amount--
 						if (W:amount <= 0)
 							del(W)
 						return
 					else
-						user << "\red The generator already has plenty of plasma."
+						user << "<span class='warning'>The generator already has plenty of plasma.</span>"
 						return
 
 				if(/obj/item/weapon/ore/plasma) //raw plasma has impurities, so it doesn't provide as much fuel. --NEO
 					if(fuel < 50)
-						user << "\blue You feed some plasma into the armor's generator."
+						user << "<span class='notice'>You feed some plasma into the armor's generator.</span>"
 						power:fuel += 15
 						del(W)
 						return
 					else
-						user << "\red The generator already has plenty of plasma."
+						user << "<span class='warning'>The generator already has plenty of plasma.</span>"
 						return
 
 		..()
@@ -209,21 +209,21 @@
 		var/mob/living/carbon/human/user = usr
 
 		if(!istype(user))
-			user << "\red This helmet is not rated for nonhuman use."
+			user << "<span class='warning'>This helmet is not rated for nonhuman use.</span>"
 			return
 
 		if(user.head != src)
-			user << "\red Can't engage the seals without wearing the helmet."
+			user << "<span class='warning'>Can't engage the seals without wearing the helmet.</span>"
 			return
 
 		if(!user.wear_suit || !istype(user.wear_suit,/obj/item/clothing/suit/powered))
-			user << "\red This helmet can only couple with powered armor."
+			user << "<span class='warning'>This helmet can only couple with powered armor.</span>"
 			return
 
 		var/obj/item/clothing/suit/powered/armor = user.wear_suit
 
 		if(!armor.atmoseal || !istype(armor.atmoseal, /obj/item/powerarmor/atmoseal/optional))
-			user << "\red This armor's atmospheric seals are missing or incompatible."
+			user << "<span class='warning'>This armor's atmospheric seals are missing or incompatible.</span>"
 			return
 
 		armor.atmoseal:helmtoggle(0,1)

@@ -516,10 +516,10 @@
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
 			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ) && !isMoMMI(R))
-				usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+				usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 				return
 		else
-			usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+			usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 			return
 
 	if(href_list["remove_coin"])
@@ -530,7 +530,7 @@
 		coin.loc = get_turf(src)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
-		usr << "\blue You remove the [coin] from the [src]"
+		usr << "<span class='notice'>You remove the [coin] from the [src]</span>"
 		coin = null
 	usr.set_machine(src)
 
@@ -539,7 +539,7 @@
 		//testing("vend: [href]")
 
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
-			usr << "\red Access denied." //Unless emagged of course
+			usr << "<span class='warning'>Access denied.</span>" //Unless emagged of course
 			flick(src.icon_deny,src)
 			return
 
@@ -596,7 +596,7 @@
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user, by_voucher = 0)
 	if (!allowed(user) && !emagged && wires.IsIndexCut(VENDING_WIRE_IDSCAN)) //For SECURE VENDING MACHINES YEAH
-		user << "\red Access denied." //Unless emagged of course
+		user << "<span class='warning'>Access denied.</span>" //Unless emagged of course
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
@@ -719,7 +719,7 @@
 		return 0
 	spawn(0)
 		throw_item.throw_at(target, 16, 3)
-	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
+	src.visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 	return 1
 
 /obj/machinery/vending/update_icon()

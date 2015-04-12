@@ -118,8 +118,8 @@
 			src.take_organ_damage(10)
 			Stun(rand(1,5))
 	flick("noise", src:flash)
-	src << "\red <B>*BZZZT*</B>"
-	src << "\red Warning: Electromagnetic pulse detected."
+	src << "<span class='warning'><B>*BZZZT*</B></span>"
+	src << "<span class='warning'>Warning: Electromagnetic pulse detected.</span>"
 	..()
 
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)

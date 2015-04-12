@@ -33,7 +33,7 @@
 			var/req=mommi_assembly_parts[t]
 			if(cc<req)
 				var/temppart = new t(src)
-				user << "\red You're short [req-cc] [temppart]\s."
+				user << "<span class='warning'>You're short [req-cc] [temppart]\s.</span>"
 				del(temppart)
 				return TRUE
 		if(!istype(loc,/turf))

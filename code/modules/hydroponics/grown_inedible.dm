@@ -132,7 +132,7 @@
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	plantname = "deathnettle"
-	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
+	desc = "The <span class='danger'>glowingnettle incites <span class='warning'>rage\black in you just from looking at it!</span></span>"
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
@@ -151,7 +151,7 @@
 			force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='warning'><b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b></span>"
 		return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
@@ -165,12 +165,12 @@
 			user.take_organ_damage(0,force)
 		if(prob(50))
 			user.Paralyse(5)
-			user << "\red You are stunned by the Deathnettle when you try picking it up!"
+			user << "<span class='warning'>You are stunned by the Deathnettle when you try picking it up!</span>"
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return
 	if(istype(M, /mob/living))
-		M << "\red You are stunned by the powerful acid of the Deathnettle!"
+		M << "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>"
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")

@@ -56,7 +56,7 @@
 	if(usr.stat)
 		return
 	if(emagged == 1)
-		usr << "\red The tape recorder makes a scratchy noise."
+		usr << "<span class='warning'>The tape recorder makes a scratchy noise.</span>"
 		return
 	icon_state = "taperecorderrecording"
 	if(timerecorded < 3600 && playing == 0)
@@ -83,7 +83,7 @@
 	if(usr.stat)
 		return
 	if(emagged == 1)
-		usr << "\red The tape recorder makes a scratchy noise."
+		usr << "<span class='warning'>The tape recorder makes a scratchy noise.</span>"
 		return
 	if(recording == 1)
 		recording = 0
@@ -127,7 +127,7 @@
 	if(usr.stat)
 		return
 	if(emagged == 1)
-		usr << "\red The tape recorder makes a scratchy noise."
+		usr << "<span class='warning'>The tape recorder makes a scratchy noise.</span>"
 		return
 	if(recording == 1)
 		usr << "<span class='notice'>You can't playback when recording!</span>"
@@ -186,7 +186,7 @@
 	if(usr.stat)
 		return
 	if(emagged == 1)
-		usr << "\red The tape recorder makes a scratchy noise."
+		usr << "<span class='warning'>The tape recorder makes a scratchy noise.</span>"
 		return
 	if(!canprint)
 		usr << "<span class='notice'>The recorder can't print that fast!</span>"
@@ -211,11 +211,11 @@
 		if(usr.stat)
 			return
 		if(emagged == 1)
-			usr << "\red The tape recorder makes a scratchy noise."
+			usr << "<span class='warning'>The tape recorder makes a scratchy noise.</span>"
 			return
 		icon_state = "taperecorderrecording"
 		if(timerecorded < 3600 && playing == 0)
-			usr << "\blue Recording started."
+			usr << "<span class='notice'>Recording started.</span>"
 			recording = 1
 			timestamp+= timerecorded
 			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording started."
@@ -228,7 +228,7 @@
 			icon_state = "taperecorderidle"
 			return
 		else
-			usr << "\red Either your tape recorder's memory is full, or it is currently playing back its memory."
+			usr << "<span class='warning'>Either your tape recorder's memory is full, or it is currently playing back its memory.</span>"
 	else
 		if(usr.stat)
 			usr << "Not when you're incapacitated."
@@ -237,7 +237,7 @@
 			recording = 0
 			timestamp+= timerecorded
 			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording stopped."
-			usr << "\blue Recording stopped."
+			usr << "<span class='notice'>Recording stopped.</span>"
 			icon_state = "taperecorderidle"
 			return
 		else if(playing == 1)
@@ -248,5 +248,5 @@
 			icon_state = "taperecorderidle"
 			return
 		else
-			usr << "\red Stop what?"
+			usr << "<span class='warning'>Stop what?</span>"
 			return

@@ -23,11 +23,11 @@
 			if(prob(8))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your muscles ache."
+				affected_mob << "<span class='warning'>Your muscles ache.</span>"
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(1))
-				affected_mob << "\red Your stomach hurts."
+				affected_mob << "<span class='warning'>Your stomach hurts.</span>"
 				if(prob(20))
 					affected_mob.adjustToxLoss(2)
 					affected_mob.updatehealth()
@@ -42,7 +42,7 @@
 				src.original_dna["UI"] = affected_mob.dna.UI.Copy()
 				src.original_dna["SE"] = affected_mob.dna.SE.Copy()
 
-				affected_mob << "\red You don't feel like yourself.."
+				affected_mob << "<span class='warning'>You don't feel like yourself..</span>"
 				var/list/newUI=strain_data["UI"]
 				var/list/newSE=strain_data["SE"]
 				affected_mob.UpdateAppearance(newUI.Copy())
@@ -65,5 +65,5 @@
 		affected_mob.dna.UpdateSE()
 		affected_mob.real_name = original_dna["name"]
 
-		affected_mob << "\blue You feel more like yourself."
+		affected_mob << "<span class='notice'>You feel more like yourself.</span>"
 	..()

@@ -136,11 +136,11 @@
 					equip_traitor(newtraitor)
 
 				traitors += newtraitor.mind
-				newtraitor << "\red <B>ATTENTION:</B> \black It is time to pay your debt to the Syndicate..."
+				newtraitor << "<span class='warning'><B>ATTENTION:</B> </span>It is time to pay your debt to the Syndicate..."
 				newtraitor << "<B>You are now a traitor.</B>"
 				newtraitor.mind.special_role = "traitor"
 				var/obj_count = 1
-				newtraitor << "\blue Your current objectives:"
+				newtraitor << "<span class='notice'>Your current objectives:</span>"
 				for(var/datum/objective/objective in newtraitor.mind.objectives)
 					newtraitor << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 					obj_count++
@@ -191,10 +191,10 @@
 				forge_traitor_objectives(character.mind)
 				equip_traitor(character)
 				traitors += character.mind
-				character << "\red <B>You are the traitor.</B>"
+				character << "<span class='warning'><B>You are the traitor.</B></span>"
 				character.mind.special_role = "traitor"
 				var/obj_count = 1
-				character << "\blue Your current objectives:"
+				character << "<span class='notice'>Your current objectives:</span>"
 				for(var/datum/objective/objective in character.mind.objectives)
 					character << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 					obj_count++

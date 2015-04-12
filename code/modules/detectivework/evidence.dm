@@ -79,7 +79,7 @@ obj/item/weapon/evidencebag/attackby(obj/item/weapon/W as obj, mob/living/user a
 		var/new_label = sanitize(trim(input("What should the new label be", "") as null|text))
 		if(new_label)
 			name = "bag ([new_label])"
-			user << "\blue You write on the label of the bag."
+			user << "<span class='notice'>You write on the label of the bag.</span>"
 	else
 		..(W, user)
 

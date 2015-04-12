@@ -40,11 +40,11 @@
 			var/engraving_name = sanitize(input(usr, "Depicted on the wall is an image of ...","Engraving"))
 			var/engraving = sanitize(input(usr, "Enter the details of your engraving.","Engraving"))
 
-			user.visible_message("\blue [user.name] starts engraving something on the [W.name].", "\blue You start engraving an image of [engraving_name] on the [W.name].")
+			user.visible_message("<span class='notice'>[user.name] starts engraving something on the [W.name].</span>", "<span class='notice'>You start engraving an image of [engraving_name] on the [W.name].</span>")
 			if(do_after(user, 60))
 				if( !istype(W, /turf/simulated/wall) || !user || !src || !W ) return
 				if( W.rotting )
-					user.visible_message("\red The [W.name] crumbles under [user.name]'s touch!", "\red The [W.name] crumbles under your touch!")
+					user.visible_message("<span class='warning'>The [W.name] crumbles under [user.name]'s touch!</span>", "<span class='warning'>The [W.name] crumbles under your touch!</span>")
 					W.dismantle_wall()
 					return
 
@@ -59,7 +59,7 @@
 						W.engraving_quality = "an exceptionally designed"
 					if(10)
 						W.engraving_quality = "a masterfully designed"
-						user << "\red It's a masterpiece!"
+						user << "<span class='warning'>It's a masterpiece!</span>"
 
 				engraving = {"Depicted on the wall is [W.engraving_quality] image of [engraving_name][(use_name ? " by [user.real_name]" : "")]. [engraving]"}
 
@@ -68,4 +68,4 @@
 
 				W.overlays += engraving_overlay
 				W.engraving = engraving
-				user.visible_message("\blue [user.name] finishes engraving [W.engraving_quality] image of [engraving_name].", "\blue You finish engraving on the [W.name].")
+				user.visible_message("<span class='notice'>[user.name] finishes engraving [W.engraving_quality] image of [engraving_name].</span>", "<span class='notice'>You finish engraving on the [W.name].</span>")

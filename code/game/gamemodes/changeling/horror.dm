@@ -57,15 +57,15 @@
 		return
 	for(var/obj/machinery/door/D in T)
 		if(D.density)
-			D.visible_message("\red \The [D]'s motors whine as several great tendrils begin trying to force it open!")
+			D.visible_message("<span class='warning'>\The [D]'s motors whine as several great tendrils begin trying to force it open!</span>")
 			if(do_after(H,50) && prob(50))
 				D.open(1)
-				D.visible_message("\red [H.name] forces \the [D] open!")
+				D.visible_message("<span class='warning'>[H.name] forces \the [D] open!</span>")
 
 				// Open firedoors, too.
 				for(var/obj/machinery/door/firedoor/FD in D.loc)
 					if(FD && FD.density)
 						FD.open(1)
 			else
-				usr << "\red You fail to open \the [D]."
+				usr << "<span class='warning'>You fail to open \the [D].</span>"
 			return

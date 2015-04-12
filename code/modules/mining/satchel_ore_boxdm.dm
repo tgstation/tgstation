@@ -29,7 +29,7 @@
 				S.remove_from_storage(O,T) //This will remove the item.
 				materials.addAmount(O.material, 1)
 				qdel(O)
-		user << "\blue You empty \the [W] into the box."
+		user << "<span class='notice'>You empty \the [W] into the box.</span>"
 	return
 
 /obj/structure/ore_box/attack_hand(mob/user as mob)
@@ -54,7 +54,7 @@
 			for(var/i=0;i<mat.stored;i++)
 				new mat.oretype(get_turf(src))
 			mat.stored=0
-		usr << "\blue You empty the box"
+		usr << "<span class='notice'>You empty the box</span>"
 	src.updateUsrDialog()
 	return
 

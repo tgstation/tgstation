@@ -57,7 +57,7 @@ code\game\dna\genes\goon_powers.dm
 	spell_flags = Z2NOCAST | NEEDSCLOTHES | INCLUDEUSER
 	invocation = "BIRUZ BENNAR"
 	invocation_type = SpI_SHOUT
-	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
+	message = "<span class='notice'>You feel strong! You feel a pressure building behind your eyes!</span>"
 	range = 0
 	max_targets = 1
 

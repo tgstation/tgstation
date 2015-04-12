@@ -278,9 +278,9 @@
 				user.drop_item(W, src)
 				wash_state = 3
 			else
-				user << "\blue You can't put the item in right now."
+				user << "<span class='notice'>You can't put the item in right now.</span>"
 		else
-			user << "\blue The washing machine is full."
+			user << "<span class='notice'>The washing machine is full.</span>"
 	update_icon()
 
 /obj/machinery/washing_machine/attack_hand(mob/user as mob)
@@ -300,7 +300,7 @@
 			crayon = null
 			wash_state = 1
 		if(5)
-			user << "\red The [src] is busy."
+			user << "<span class='warning'>The [src] is busy.</span>"
 		if(6)
 			wash_state = 7
 		if(7)

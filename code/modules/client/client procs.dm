@@ -301,7 +301,7 @@
 	set desc = "Re-send resources for NanoUI. May help those with NanoUI issues."
 	set category = "Preferences"
 
-	usr << "\blue Re-sending NanoUI resources.  This may result in lag."
+	usr << "<span class='notice'>Re-sending NanoUI resources.  This may result in lag.</span>"
 	nanomanager.send_resources(src)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be

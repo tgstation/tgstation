@@ -30,7 +30,7 @@
 	// Make sure we're not picking up something that's in our factory-supplied toolbox.
 	//if(is_type_in_list(W,src.module.modules))
 	//if(is_in_modules(W))
-		//src << "\red Picking up something that's built-in to you seems a bit silly."
+		//src << "<span class='warning'>Picking up something that's built-in to you seems a bit silly.</span>"
 		//return 0
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
@@ -332,7 +332,7 @@
 	if(W == tool_state)
 		// Don't allow the MoMMI to equip tools to their head. I mean, they cant anyways, but stop them here
 		if(is_in_modules(tool_state))
-			src << "\red You cannot equip a module to your head."
+			src << "<span class='warning'>You cannot equip a module to your head.</span>"
 			return 0
 		// Remove the item in the MoMMI's claw from their HuD
 		if (client)
@@ -364,7 +364,7 @@
 			if (client)
 				client.screen += head_state
 		else
-			src << "\red You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
+			src << "<span class='warning'>You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>"
 			return 0
 	// Set the item layer and update the MoMMI's icons
 	W.layer = 20

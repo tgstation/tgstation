@@ -51,7 +51,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						user << "\red You need more fuel to complete this task."
+						user << "<span class='warning'>You need more fuel to complete this task.</span>"
 						return
 
 					user.visible_message("[user] starts cutting loose the anchoring bolt covers on [src].", "You start cutting loose the anchoring bolt covers with [O]...")
@@ -176,7 +176,7 @@ var/bomb_set
 	if (!usr.canmove || usr.stat || usr.restrained())
 		return
 	if (!ishuman(usr))
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 	if (istype(src.loc, /turf))
 		usr.set_machine(src)
@@ -319,7 +319,7 @@ var/bomb_set
 				CallHook("Reboot",list())
 
 				if (watchdog.waiting)
-					world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
+					world << "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>"
 					watchdog.signal_ready()
 					return
 				sleep(300)

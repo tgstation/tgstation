@@ -138,11 +138,11 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 				return // keep movin'.
 			stop_automated_movement = 1
 			walk(src,0)
-			D.visible_message("\red \The [D]'s motors whine as four arachnid claws begin trying to force it open!")
+			D.visible_message("<span class='warning'>\The [D]'s motors whine as four arachnid claws begin trying to force it open!</span>")
 			spawn(50)
 				if(CanOpenDoor(D) && prob(25))
 					D.open(1)
-					D.visible_message("\red \The [src] forces \the [D] open!")
+					D.visible_message("<span class='warning'>\The [src] forces \the [D] open!</span>")
 
 					// Open firedoors, too.
 					for(var/obj/machinery/door/firedoor/FD in D.loc)
@@ -162,7 +162,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 		var/mob/living/L = target
 		if(L.reagents)
 			if(prob(poison_per_bite))
-				src.visible_message("\red \the [src] injects a powerful toxin!")
+				src.visible_message("<span class='warning'>\the [src] injects a powerful toxin!</span>")
 				L.reagents.add_reagent(poison_type, poison_per_bite)
 
 /mob/living/simple_animal/hostile/giant_spider/Life()

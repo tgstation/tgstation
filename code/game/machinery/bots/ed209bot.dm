@@ -231,7 +231,7 @@ Auto Patrol: []"},
 		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+				O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -320,7 +320,7 @@ Auto Patrol: []"},
 					if(declare_arrests)
 						var/area/location = get_area(src)
 						broadcast_security_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] suspect <b>[target]</b> in <b>[location]</b>", src)
-					visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
+					visible_message("<span class='warning'><B>[src.target] has been stunned by [src]!</B></span>")
 
 					mode = SECBOT_PREP_ARREST
 					src.anchored = 1
@@ -353,7 +353,7 @@ Auto Patrol: []"},
 				if (!src.target.handcuffed && !src.arrest_type)
 					playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
-					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
+					visible_message("<span class='warning'><B>[src] is trying to put handcuffs on [src.target]!</B></span>")
 
 					spawn(60)
 						if (get_dist(src, src.target) <= 1)
@@ -789,7 +789,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)

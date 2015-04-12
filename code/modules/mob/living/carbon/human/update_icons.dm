@@ -531,7 +531,7 @@ var/global/list/damage_icon_parts = list()
 			if(w_uniform.flags&ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
-				src << "\red You burst out of \the [w_uniform]!"
+				src << "<span class='warning'>You burst out of \the [w_uniform]!</span>"
 				drop_from_inventory(w_uniform)
 				return
 		else

@@ -153,7 +153,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			getFromPool(/obj/item/stack/cable_coil, T, 1, l_color)
 
 		for(var/mob/O in viewers(src, null))
-			O.show_message("\red [user] cuts the cable.", 1)
+			O.show_message("<span class='warning'>[user] cuts the cable.</span>", 1)
 
 		//investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 

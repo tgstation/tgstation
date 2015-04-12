@@ -346,10 +346,10 @@
 		return
 
 	if(busy)
-		M << "\red Someone's already washing here."
+		M << "<span class='warning'>Someone's already washing here.</span>"
 		return
 
-	usr << "\blue You start washing your hands."
+	usr << "<span class='notice'>You start washing your hands.</span>"
 
 	busy = 1
 	sleep(40)
@@ -361,7 +361,7 @@
 	if(ishuman(M))
 		M:update_inv_gloves()
 	for(var/mob/V in viewers(src, null))
-		V.show_message("\blue [M] washes their hands using \the [src].")
+		V.show_message("<span class='notice'>[M] washes their hands using \the [src].</span>")
 
 /obj/structure/sink/mop_act(obj/item/weapon/mop/M, mob/user)
 	if(busy) return 1
@@ -380,7 +380,7 @@
 
 /obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
 	if(busy)
-		user << "\red Someone's already washing here."
+		user << "<span class='warning'>Someone's already washing here.</span>"
 		return
 
 	if(istype(O, /obj/item/weapon/mop)) return
@@ -388,7 +388,7 @@
 	if (istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user.visible_message("\blue [user] fills the [RG] using \the [src].","\blue You fill the [RG] using \the [src].")
+		user.visible_message("<span class='notice'>[user] fills the [RG] using \the [src].</span>","<span class='notice'>You fill the [RG] using \the [src].</span>")
 		return
 
 	else if (istype(O, /obj/item/weapon/melee/baton))
@@ -405,7 +405,7 @@
 				B.deductcharge(1)
 			user.visible_message( \
 				"[user] was stunned by his wet [O].", \
-				"\red You have wet \the [O], it shocks you!")
+				"<span class='warning'>You have wet \the [O], it shocks you!</span>")
 			return
 
 	var/turf/location = user.loc
@@ -414,7 +414,7 @@
 	var/obj/item/I = O
 	if(!I || !istype(I,/obj/item)) return
 
-	usr << "\blue You start washing \the [I]."
+	usr << "<span class='notice'>You start washing \the [I].</span>"
 
 	busy = 1
 	sleep(40)
@@ -426,8 +426,8 @@
 
 	O.clean_blood()
 	user.visible_message( \
-		"\blue [user] washes \a [I] using \the [src].", \
-		"\blue You wash \a [I] using \the [src].")
+		"<span class='notice'>[user] washes \a [I] using \the [src].</span>", \
+		"<span class='notice'>You wash \a [I] using \the [src].</span>")
 
 
 /obj/structure/sink/kitchen

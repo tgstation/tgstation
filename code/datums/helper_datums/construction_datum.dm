@@ -159,10 +159,10 @@
 		else if(istype(used_atom,/obj/item/weapon/weldingtool) && !(Co_TAKE in given_step))
 			var/obj/item/weapon/weldingtool/welder=used_atom
 			if(!welder.isOn())
-				user << "\blue You tap \the [holder] with your unlit welder.  [pick("Ding","Dong")]."
+				user << "<span class='notice'>You tap \the [holder] with your unlit welder.  [pick("Ding","Dong")].</span>"
 				return 0
 			if(!welder.remove_fuel(amount,user))
-				user << "\red You don't have enough fuel!"
+				user << "<span class='warning'>You don't have enough fuel!</span>"
 				return 0
 		//generic things
 		else
