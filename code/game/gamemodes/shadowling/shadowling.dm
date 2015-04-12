@@ -114,6 +114,7 @@ Made by Xhuis
 /datum/game_mode/proc/greet_shadow(var/datum/mind/shadow)
 	shadow.current << "<b>Currently, you are disguised as an employee aboard [world.name].</b>"
 	shadow.current << "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>"
+	shadow.current << "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>"
 	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>"
 
 
@@ -131,17 +132,25 @@ Made by Xhuis
 	var/mob/living/carbon/human/S = shadow_mind.current
 	shadow_mind.current.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 	shadow_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
-	shadow_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
-	if(shadow_mind.assigned_role == "Clown")
-		S << "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>"
-		S.dna.remove_mutation(CLOWNMUT)
+	spawn(0)
+		shadow_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
+		update_shadow_icons_added(shadow_mind)
+		if(shadow_mind.assigned_role == "Clown")
+			S << "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>"
+			S.dna.remove_mutation(CLOWNMUT)
 
 /datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
 	if (!istype(new_thrall_mind))
 		return 0
 	if(!(new_thrall_mind in thralls))
+		update_shadow_icons_added(new_thrall_mind)
 		thralls += new_thrall_mind
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
+		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b>: Ascend to your true form by use of the Ascendance ability. \
+		This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
+		new_thrall_mind.current << "<b>The objectives of your shadowlings:</b>: Ascend to your true form by use of the Ascendance ability. \
+		This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
+		new_thrall_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		return 1
 
 
@@ -187,15 +196,14 @@ Made by Xhuis
 /datum/game_mode/proc/auto_declare_completion_shadowling()
 	var/text = ""
 	if(shadows.len)
-		text += "<br><font size=2><b>The shadowlings were:</b></font>"
+		text += "<br><font size=3><b>The shadowlings were:</b></font>"
 		for(var/datum/mind/shadow in shadows)
 			text += printplayer(shadow)
+		text += "<br>"
 		if(thralls.len)
-			text += "<br><font size=2><b>The thralls were:</b></font>"
+			text += "<br><font size=3><b>The thralls were:</b></font>"
 			for(var/datum/mind/thrall in thralls)
 				text += printplayer(thrall)
-	else
-		world << "<font size=3>Round-end code broke! Please report this and its circumstances on GitHub at https://github.com/tgstation/-tg-station/issues</font>"
 	text += "<br>"
 	world << text
 
@@ -225,7 +233,7 @@ Made by Xhuis
 			if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
 			else						light_amount =  10
 		if(light_amount > 2) //Rapid death while in the light, countered by...
-			H.take_overall_damage(0,6)
+			H.take_overall_damage(0,10)
 			H << "<span class='userdanger'>The light burns you!</span>"
 			H << 'sound/weapons/sear.ogg'
 		else if (light_amount < 2)  //...extreme benefits while in the dark
@@ -233,3 +241,13 @@ Made by Xhuis
 			H.adjustToxLoss(-3)
 			H.SetWeakened(0)
 			H.SetStunned(0)
+
+/datum/game_mode/proc/update_shadow_icons_added(datum/mind/shadow_mind)
+	var/datum/atom_hud/antag/shadow_hud = huds[ANTAG_HUD_SHADOW]
+	shadow_hud.join_hud(shadow_mind.current)
+	set_antag_hud(shadow_mind.current, ((shadow_mind in shadows) ? "shadowling" : "thrall"))
+
+/datum/game_mode/proc/update_shadow_icons_removed(datum/mind/shadow_mind) //This should never actually occur, but it's here anyway.
+	var/datum/atom_hud/antag/shadow_hud = huds[ANTAG_HUD_SHADOW]
+	shadow_hud.leave_hud(shadow_mind.current)
+	set_antag_hud(shadow_mind.current, null)

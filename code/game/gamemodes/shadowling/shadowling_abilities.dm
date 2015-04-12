@@ -21,7 +21,7 @@
 		usr.visible_message("<span class='warning'><b>[usr]'s eyes flash a blinding red!</b></span>")
 		target.visible_message("<span class='danger'>[target] freezes in place, their eyes glazing over...</span>")
 		if(in_range(target, usr))
-			target << "<span class='userdanger'>Your gaze is forcibly drawn into [src]'s eyes, and you are mesmerized by the heavenly lights...</span>"
+			target << "<span class='userdanger'>Your gaze is forcibly drawn into [usr]'s eyes, and you are mesmerized by the heavenly lights...</span>"
 		else //Only alludes to the shadowling if the target is close by
 			target << "<span class='userdanger'>Red lights suddenly dance in your vision, and you are mesmerized by the heavenly lights...</span>"
 		target.Stun(10)
@@ -56,6 +56,20 @@
 		for(var/obj/item/device/pda/P in orange(5, usr))
 			P.fon = 0
 			P.SetLuminosity(0) //failsafe
+		for(var/obj/effect/glowshroom/G in orange(3, usr)) //Smaller radius
+			qdel(G)
+		for(var/mob/living/carbon/human/H in T.contents)
+			for(var/obj/item/device/flashlight/F in H)
+				if(is_type_in_list(F, blacklisted_lights))
+					F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
+					return
+				F.on = 0
+				F.visible_message("<span class='danger'>[F] gutters and falls dark.</span>")
+				F.update_brightness()
+			for(var/obj/item/device/pda/P in H)
+				P.fon = 0
+				P.SetLuminosity(0) //failsafe
+			H.luminosity = 0 //This is required with the object-based lighting
 
 
 
@@ -183,8 +197,6 @@
 		target.adjustOxyLoss(-200) //In case the shadowling was choking them out
 		ticker.mode.add_thrall(target.mind)
 		target.mind.special_role = "Thrall"
-		var/datum/mind/thrall_mind = target.mind
-		thrall_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind //Lets thralls hive-chat
 
 
 
