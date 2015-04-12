@@ -16,7 +16,7 @@
 			if(istype(AC, /obj/item/ammo_casing/a357) && !perfect && prob(70 - (getAmmo() * 10)))	//minimum probability of 10, maximum of 60
 				M << "<span class='danger'>[src] blows up in your face.</span>"
 				M.take_organ_damage(0,20)
-				M.drop_item()
+				M.drop_item(src)
 				qdel(src)
 				return 0
 		return 1

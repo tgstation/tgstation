@@ -79,7 +79,7 @@
 						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "<span class='notice'>You add the circuit board to the frame.</span>"
 						circuit = P
-						user.drop_item(src)
+						user.drop_item(B, src)
 						icon_state = "box_2"
 						build_state = 3
 						components = list()
@@ -183,7 +183,7 @@
 											break
 										else
 											user << "<span class='warning'>You do not have enough [P]!</span>"
-									user.drop_item(src)
+									user.drop_item(P, src)
 									components += P
 									req_components[I]--
 									update_desc()

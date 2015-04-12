@@ -62,7 +62,7 @@
 				user << "<span class='warning'>\The [name] blinks red as you try to insert the cell!</span>"
 				return
 
-			user.drop_item(src)
+			user.drop_item(W, src)
 			cell = W
 			user.visible_message("[user] inserts a cell into the [src].", "You insert a cell into the [src].")
 		update_icon()

@@ -49,7 +49,7 @@
 					usr << "You begin to insert \the [C] into \the [src]."
 					if(do_after(user, 10))
 						usr << "\blue You secure \the [C]!"
-						user.drop_item(src)
+						user.drop_item(C, src)
 						_circuitboard=C
 						playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 						build++

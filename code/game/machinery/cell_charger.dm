@@ -78,7 +78,7 @@
 				user << "<span class='warning'>[src] blinks red as you try to insert the cell!</span>"
 				return
 
-			user.drop_item(src)
+			user.drop_item(W, src)
 			charging = W
 			user.visible_message("<span class='notice'>[user] inserts a cell into [src].</span>", "<span class='notice'>You insert a cell into [src].</span>")
 			chargelevel = -1

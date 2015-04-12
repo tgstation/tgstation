@@ -33,7 +33,7 @@
 /obj/machinery/cooking/icemachine/takeIngredient(var/obj/item/I,mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers/glass))
 		if(!src.beaker)
-			user.drop_item(src)
+			user.drop_item(I, src)
 			src.beaker = I
 			. = 1
 			user << "<span class='notice'>You add the [I.name] to the [src.name].</span>"

@@ -37,7 +37,7 @@
 					user << "<span class='warning'>Their hands are full.</span>"
 					return
 				else
-					user.drop_item()
+					user.drop_item(I)
 					src.put_in_hands(I)
 				I.loc = src
 				I.layer = 20

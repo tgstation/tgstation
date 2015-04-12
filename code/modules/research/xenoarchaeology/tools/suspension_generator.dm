@@ -131,7 +131,7 @@
 	else if(href_list["insertcard"])
 		var/obj/item/I = usr.get_active_hand()
 		if (istype(I, /obj/item/weapon/card))
-			usr.drop_item(src)
+			usr.drop_item(I, src)
 			auth_card = I
 			if(attempt_unlock(I))
 				usr << "<span class='info'>You insert [I], the console flashes \'<i>Access granted.</a>\'</span>"
@@ -215,7 +215,7 @@
 			if(cell)
 				user << "<span class='warning'>There is a power cell already installed.</span>"
 			else
-				user.drop_item(src)
+				user.drop_item(W, src)
 				cell = W
 				user << "<span class='info'>You insert the power cell.</span>"
 				if(anchored)

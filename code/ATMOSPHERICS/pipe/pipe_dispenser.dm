@@ -126,7 +126,7 @@
 	src.add_fingerprint(usr)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter) || istype(W, /obj/item/pipe_gsensor))
 		usr << "\blue You put [W] back to [src]."
-		user.drop_item()
+		user.drop_item(W, src)
 		if(istype(W, /obj/item/pipe))
 			returnToPool(W)
 		else

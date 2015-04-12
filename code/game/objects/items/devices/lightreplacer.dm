@@ -85,7 +85,7 @@
 				return
 			G.amount = remaining
 			if(!G.amount)
-				user.drop_item()
+				user.drop_item(G)
 				del(G)
 			AddUses(increment)
 			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
@@ -97,7 +97,7 @@
 			if(uses < max_uses)
 				AddUses(1)
 				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
-				user.drop_item()
+				user.drop_item(L)
 				del(L)
 				return
 		else

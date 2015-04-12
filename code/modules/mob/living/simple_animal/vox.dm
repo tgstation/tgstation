@@ -114,7 +114,7 @@
 
 /mob/living/simple_animal/vox/armalis/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O,/obj/item/vox/armalis_armour))
-		user.drop_item(src)
+		user.drop_item(O, src)
 		armour = O
 		speed = 1
 		maxHealth += 200
@@ -123,7 +123,7 @@
 		regenerate_icons()
 		return
 	if(istype(O,/obj/item/vox/armalis_amp))
-		user.drop_item(src)
+		user.drop_item(O, src)
 		amp = O
 		visible_message("\blue [src] is quickly outfitted in [O] by [user].","\blue You quickly outfit [src] in [O].")
 		regenerate_icons()

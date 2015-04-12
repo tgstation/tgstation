@@ -267,7 +267,7 @@
 		copying = 0
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			user.drop_item(src)
+			user.drop_item(O, src)
 			copy = O
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			flick("bigscanner1", src)
@@ -276,7 +276,7 @@
 			user << "<span class='notice'>There is already something in [src].</span>"
 	else if(istype(O, /obj/item/weapon/photo))
 		if(copier_empty())
-			user.drop_item(src)
+			user.drop_item(O, src)
 			photocopy = O
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			flick("bigscanner1", src)
@@ -285,7 +285,7 @@
 			user << "<span class='notice'>There is already something in [src].</span>"
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 0)
-			user.drop_item()
+			user.drop_item(O)
 			qdel(O)
 			toner = 40
 			user << "<span class='notice'>You insert [O] into [src].</span>"

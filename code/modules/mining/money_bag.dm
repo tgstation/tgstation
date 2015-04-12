@@ -37,7 +37,7 @@
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W
 		user << "\blue You add the [C.name] into the bag."
-		usr.drop_item(src)
+		usr.drop_item(W, src)
 	if (istype(W, /obj/item/weapon/moneybag))
 		var/obj/item/weapon/moneybag/C = W
 		for (var/obj/O in C.contents)

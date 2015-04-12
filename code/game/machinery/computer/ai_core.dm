@@ -45,7 +45,7 @@
 				user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 				icon_state = "1"
 				circuit = P
-				user.drop_item(src)
+				user.drop_item(P, src)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You screw the circuit board into place.</span>"
@@ -137,7 +137,7 @@
 					ticker.mode.remove_cultist(P:brainmob.mind, 1)
 					ticker.mode.remove_revolutionary(P:brainmob.mind, 1)
 
-				user.drop_item(src)
+				user.drop_item(P, src)
 				brain = P
 				usr << "Added [P]."
 				icon_state = "3b"

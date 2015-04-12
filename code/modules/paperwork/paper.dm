@@ -286,7 +286,7 @@
 			user << "<span class='notice'>This paper already has a photo attached.</span>"
 			return
 		img = P
-		user.drop_item(src)
+		user.drop_item(P, src)
 		user << "<span class='notice'>You attach the photo to the piece of paper.</span>"
 	add_fingerprint(user)
 	return

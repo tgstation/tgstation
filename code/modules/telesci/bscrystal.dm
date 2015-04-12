@@ -16,7 +16,7 @@
 
 /obj/item/bluespace_crystal/attack_self(var/mob/user)
 	blink_mob(user)
-	user.drop_item()
+	user.drop_item(src)
 	user.visible_message("<span class='notice'>[user] crushes the [src]!</span>")
 	qdel(src)
 

@@ -81,7 +81,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return*/
 		busy = 1
 		loaded_item = O
-		user.drop_item(src)
+		user.drop_item(O, src)
 		user << "\blue You add the [O.name] to the machine!"
 		flick("d_analyzer_la", src)
 		spawn(10)

@@ -34,16 +34,16 @@
 
 /obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item(src)
+		user.drop_item(O, src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/tome))
-		user.drop_item(src)
+		user.drop_item(O, src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/spellbook))
-		user.drop_item(src)
+		user.drop_item(O, src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/storage/bible))
-		user.drop_item(src)
+		user.drop_item(O, src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/wrench))
 		user << "<span class='notice'> Now disassembling bookcase</span>"
@@ -213,7 +213,7 @@
 	if(carved)
 		if(!store)
 			if(W.w_class < 3)
-				user.drop_item(src)
+				user.drop_item(W, src)
 				store = W
 				user << "<span class='notice'>You put [W] in [title].</span>"
 				return

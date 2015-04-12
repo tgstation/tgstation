@@ -185,10 +185,9 @@
 				oldhat = hat
 				hat = null
 			hat = H
-			usr.drop_item()
-			hat.loc = src
+			usr.drop_item(hat, src)
 			regenerate_icons()
-			if (hat)
+			if (oldhat)
 				usr.put_in_hands(oldhat)
 	else
 		if(hat)
@@ -204,8 +203,7 @@
 				olduniform = uniform
 				uniform = null
 			uniform = C
-			usr.drop_item()
-			uniform.loc = src
+			usr.drop_item(uniform, src)
 			regenerate_icons()
 			if (olduniform)
 				usr.put_in_hands(olduniform)

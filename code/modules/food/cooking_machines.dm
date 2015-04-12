@@ -169,7 +169,7 @@ var/global/ingredientLimit = 10
 		return
 	if(. == "valid")
 		if(src.foodChoices) . = src.foodChoices[(input("Select production.") in src.foodChoices)]
-		user.drop_item(src)
+		user.drop_item(I, src)
 		src.ingredient = I
 		spawn() src.cook(.)
 		user << "<span class='notice'>You add the [I.name] to the [src.name].</span>"

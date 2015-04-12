@@ -92,7 +92,7 @@
 	else if(!prints_prosthetics && istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		visible_message("<span class='notice'>\The [src] processes \the [W].</span>")
 		stored_matter += 50
-		user.drop_item()
+		user.drop_item(W)
 		qdel(W)
 		return
 	// Steel for matter.
@@ -100,7 +100,7 @@
 		var/obj/item/stack/sheet/metal/M = W
 		visible_message("<span class='notice'>\The [src] processes \the [W].</span>")
 		stored_matter += M.amount * 10
-		user.drop_item()
+		user.drop_item(M)
 		returnToPool(M)
 		return
 	else if(istype(W, /obj/item/weapon/wrench))

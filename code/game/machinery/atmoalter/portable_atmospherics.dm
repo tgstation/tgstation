@@ -88,7 +88,7 @@
 		if (src.holding)
 			return
 		var/obj/item/weapon/tank/T = W
-		user.drop_item(src)
+		user.drop_item(T, src)
 		src.holding = T
 		update_icon()
 		return

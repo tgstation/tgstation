@@ -649,7 +649,7 @@
 		if(!seed)
 
 			var/obj/item/seeds/S = O
-			user.drop_item()
+			user.drop_item(S)
 
 			if(!S.seed)
 				user << "The packet seems to be empty. You throw it away."
@@ -707,7 +707,7 @@
 	else if ( istype(O, /obj/item/weapon/plantspray) )
 
 		var/obj/item/weapon/plantspray/spray = O
-		user.drop_item()
+		user.drop_item(spray)
 		toxins += spray.toxicity
 		pestlevel -= spray.pest_kill_str
 		weedlevel -= spray.weed_kill_str
@@ -733,7 +733,7 @@
 		if(seed)
 			user << "<span class='alert'>[src] is already occupied!</span>"
 		else
-			user.drop_item()
+			user.drop_item(O)
 			qdel(O)
 
 			var/obj/machinery/apiary/A = new(src.loc)

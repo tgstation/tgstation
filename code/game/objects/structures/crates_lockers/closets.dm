@@ -284,10 +284,7 @@
 			del(src)
 			return
 
-		if(isrobot(user))
-			return
-
-		user.drop_item(src.loc)
+		user.drop_item(W, src.loc)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return

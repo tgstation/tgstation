@@ -172,7 +172,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		else
 			user << "\red Machine cannot accept disks in that format."
 			return
-		user.drop_item(src)
+		user.drop_item(D, src)
 		user << "\blue You add the disk to the machine!"
 	src.updateUsrDialog()
 	return

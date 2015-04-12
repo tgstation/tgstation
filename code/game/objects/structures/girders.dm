@@ -250,7 +250,7 @@
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
 		if(P.pipe_type in list(0, 1, 5))	//Simple pipes, simple bends, and simple manifolds.
-			user.drop_item(src.loc)
+			user.drop_item(P, src.loc)
 			user.visible_message("<span class='warning'>[user] fits \the [P] into \the [src]</span>", \
 			"<span class='notice'>You fit \the [P] into \the [src]</span>")
 	else

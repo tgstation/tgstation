@@ -137,7 +137,7 @@ obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 			user << "\red You must remove the [held_container] first."
 		else
 			user << "\blue You put the [W] into the [src]."
-			user.drop_item(src)
+			user.drop_item(W, src)
 			held_container = W
 			updateDialog()
 
@@ -147,8 +147,7 @@ obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 			user << "\red You must remove the [fuel_container] first."
 		else
 			user << "\blue You put the [fuel_container] into the [src]."
-			user.drop_item(W)
-			fuel_container.loc = src
+			user.drop_item(W, src)
 			fuel_container = W
 			updateDialog()*/
 	else

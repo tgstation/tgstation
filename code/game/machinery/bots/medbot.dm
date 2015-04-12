@@ -214,7 +214,7 @@
 			user << "<span class='notice'>There is already a beaker loaded.</span>"
 			return
 
-		user.drop_item(src)
+		user.drop_item(W, src)
 		src.reagent_glass = W
 		user << "<span class='notice'>You insert [W].</span>"
 		src.updateUsrDialog()
@@ -589,7 +589,7 @@
 		switch(build_step)
 			if(0)
 				if(istype(W, /obj/item/device/healthanalyzer))
-					user.drop_item()
+					user.drop_item(W)
 					qdel(W)
 					src.build_step++
 					user << "<span class='notice'>You add the health sensor to [src].</span>"
@@ -598,7 +598,7 @@
 
 			if(1)
 				if(isprox(W))
-					user.drop_item()
+					user.drop_item(W)
 					qdel(W)
 					src.build_step++
 					user << "<span class='notice'>You complete the Medibot! Beep boop.</span>"

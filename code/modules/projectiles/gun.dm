@@ -77,7 +77,7 @@
 			if ((M_CLUMSY in M.mutations) && prob(50))
 				M << "<span class='danger'>[src] blows up in your face.</span>"
 				M.take_organ_damage(0,20)
-				M.drop_item()
+				M.drop_item(src)
 				qdel(src)
 				return
 

@@ -234,7 +234,7 @@ var/global/chicken_count = 0
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
 			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
-			user.drop_item()
+			user.drop_item(O)
 			qdel(O)
 			eggsleft += rand(1, 4)
 			//world << eggsleft
