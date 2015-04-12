@@ -1,0 +1,7 @@
+author: xxalpha
+
+delete-after: True
+
+changes:
+  - rscadd: "Added an Exosuit Mining Scanner to the robotics fabricator."
+  - tweak: "Buffed Ripley's movement and drilling speed in low pressure environments."
