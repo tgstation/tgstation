@@ -380,7 +380,7 @@ proc/populate_seed_list()
 						source_turf.visible_message("<span class='notice'>\The [display_name] sprouts a bevy of flowers!</span>")
 						if(prob(degree*2))
 							flower_colour = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
-						source_turf.visible_message("<span class='notice'>\The [display_name]'s flowers <font=[flower_colour]>changes colour</font>!</span>")
+						source_turf.visible_message("<span class='notice'>\The [display_name]'s flowers <font='[flower_colour]'>changes colour</font>!</span>")
 					else
 						source_turf.visible_message("<span class='notice'>\The [display_name]'s flowers wither and fall off.</span>")
 	return
