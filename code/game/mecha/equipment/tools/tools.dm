@@ -176,6 +176,48 @@
 			return 1
 	return 0
 
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	name = "exosuit mining scanner"
+	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
+	icon_state = "mecha_analyzer"
+	origin_tech = "materials=3;engineering=2"
+	equip_cooldown = 30
+	var/scanning = 0
+
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/New()
+	SSobj.processing |= src
+
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/process()
+	if(!loc)
+		SSobj.processing.Remove(src)
+		qdel(src)
+	if(scanning)
+		return
+	if(istype(loc,/obj/mecha/working))
+		var/obj/mecha/working/mecha = loc
+		if(!mecha.occupant)
+			return
+		var/mob/occupant = mecha.occupant
+
+		scanning = 1
+		var/turf/t = get_turf(src)
+		var/list/L = list()
+		var/turf/simulated/mineral/M
+		for(M in range(7, t))
+			if(M.scan_state)
+				L += M
+		if(L.len)
+			if(occupant.client)
+				for(M in L)
+					var/turf/T = get_turf(M)
+					var/image/I = image('icons/turf/mining.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+					occupant.client.images += I
+					spawn(30)
+						if(occupant.client)
+							occupant.client.images -= I
+		spawn(equip_cooldown)
+			scanning = 0
+
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	name = "exosuit extinguisher"
 	desc = "Equipment for engineering exosuits. A rapid-firing high capacity fire extinguisher."
