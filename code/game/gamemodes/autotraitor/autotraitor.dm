@@ -115,43 +115,38 @@
 			traitor_prob += 50
 
 
-		if(traitorcount < max_traitors)
+		if (traitorcount < max_traitors)
 			//message_admins("Number of Traitors is below maximum.  Rolling for new Traitor.")
 			//message_admins("The probability of a new traitor is [traitor_prob]%")
 
-			if(prob(traitor_prob))
-				message_admins("Making a new Traitor.")
-				if(!possible_traitors.len)
-					message_admins("No potential traitors.  Cancelling new traitor.")
-					traitorcheckloop()
-					return
-				var/mob/living/newtraitor = pick(possible_traitors)
-				//message_admins("[newtraitor.real_name] is the new Traitor.")
+			if (prob(traitor_prob))
+				message_admins("AUTOTRAITOR: making someone traitor")
 
-				forge_traitor_objectives(newtraitor.mind)
+				if (possible_traitors.len > 0)
+					var/mob/living/traitor_body = pick(possible_traitors)
 
-				if(istype(newtraitor, /mob/living/silicon))
-					add_law_zero(newtraitor)
+					if (traitor_body)
+						var/datum/mind/traitor_mind = traitor_body.mind
+
+						if (traitor_mind)
+							log_game("[key_name(traitor_body)] has been auto traitor'ed.")
+							message_admins("AUTOTRAITOR: making [key_name_admin(traitor_body)] a traitor")
+							traitor_body << "<SPAN CLASS='danger'><CENTER><BIG>ATTENTION</BIG></CENTER></SPAN><BR><CENTER>It is time to pay your debt to the [syndicate_name()].</CENTER>"
+							traitor_body = null
+							traitors += traitor_mind
+							traitor_mind.special_role = "traitor"
+							forge_traitor_objectives(traitor_mind)
+							finalize_traitor(traitor_mind)
+							greet_traitor(traitor_mind)
 				else
-					equip_traitor(newtraitor)
+					message_admins("AUTOTRAITOR: no potential traitors, mission is kill")
 
-				traitors += newtraitor.mind
-				newtraitor << "<span class='warning'><B>ATTENTION:</B> </span>It is time to pay your debt to the Syndicate..."
-				newtraitor << "<B>You are now a traitor.</B>"
-				newtraitor.mind.special_role = "traitor"
-				var/obj_count = 1
-				newtraitor << "<span class='notice'>Your current objectives:</span>"
-				for(var/datum/objective/objective in newtraitor.mind.objectives)
-					newtraitor << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-					obj_count++
 			//else
 				//message_admins("No new traitor being added.")
 		//else
 			//message_admins("Number of Traitors is at maximum.  Not making a new Traitor.")
 
 		traitorcheckloop()
-
-
 
 /datum/game_mode/traitor/autotraitor/latespawn(mob/living/carbon/human/character)
 	..()
