@@ -1567,6 +1567,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		var/obj/structure/toilet/T = new /obj/structure/toilet(src.loc)
 		T.open = 1
 		T.cistern = 1
+		T.dir = src.dir
+		T.update_icon()
 		new /obj/item/stack/rods(get_turf(src), 2)
 		user << "<span class='notice'>You pry out the rods, destroying the filter.</span>"
 		qdel(src)
@@ -1603,7 +1605,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	set name = "Flush"
 	set category = "Object"
 	set src in view(1)
-	usr << "<span class='notice'>The [src] groans as it spits out containers.</span>"
+	usr << "<span class='notice'>The \the [src] groans as it spits out containers.</span>"
 	while(cans.len>0 && beaker.reagents.reagent_list.len>0)
 		var/obj/item/weapon/reagent_containers/C = cans[1]
 		var/datum/reagent/R = beaker.reagents.reagent_list[1]
@@ -1695,7 +1697,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
 		user << "<span class ='warning'>You can't grind that!</span>"
 		return ..()
-
+	if(istype(O, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src)
+		var/obj/item/stack/sheet/S = O
+		S.use(1)
+		crushable = M
+		return 0
 	user.drop_item(O)
 	O.loc = src
 	crushable = O
@@ -1761,4 +1768,4 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/item/weapon/reagent_containers/mortar/examine(mob/user)
 	..()
-	user << "<span class='info'>It has [crushable ? "an unground [crushable] inside." : "nothing to be crushed."]</span>"
+	user << "<span class='info'>It has [crushable ? "an unground \the [crushable] inside." : "nothing to be crushed."]</span>"

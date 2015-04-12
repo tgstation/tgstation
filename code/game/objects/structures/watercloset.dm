@@ -1,4 +1,6 @@
 //todo: toothbrushes, and some sort of "toilet-filthinator" for the hos
+#define NORODS 0
+#define RODSADDED 1
 
 /obj/structure/toilet
 	name = "toilet"
@@ -45,14 +47,14 @@
 	icon_state = "toilet[open][cistern]"
 
 /obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
-	if(open && cistern && !state && istype(I,/obj/item/stack/rods)) //State = 0 if no rods
+	if(open && cistern && state == NORODS && istype(I,/obj/item/stack/rods)) //State = 0 if no rods
 		var/obj/item/stack/rods/R = I
 		if(R.amount < 2) return
 		user << "<span class='notice'>You add the rods to the toilet, creating flood avenues.</span>"
 		R.use(2)
-		state++ //State 0 -> 1
+		state = RODSADDED //State 0 -> 1
 		return
-	if(open && cistern && state && istype(I,/obj/item/weapon/paper)) //State = 1 if rods are added
+	if(open && cistern && state == RODSADDED && istype(I,/obj/item/weapon/paper)) //State = 1 if rods are added
 		user << "<span class='notice'>You create a filter with the paper and insert it.</span>"
 		var/obj/structure/centrifuge/C = new /obj/structure/centrifuge(src.loc)
 		C.dir = src.dir
