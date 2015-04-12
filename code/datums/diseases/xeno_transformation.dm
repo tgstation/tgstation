@@ -53,8 +53,7 @@
 			affected_mob.updatehealth()
 			if(prob(40))
 				if(gibbed != 0) return 0
-				var/turf/T = find_loc(affected_mob)
-				gibs(T)
+				gibs(affected_mob)
 				gibbed = 1
 				affected_mob:Alienize()
 

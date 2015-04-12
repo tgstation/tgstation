@@ -126,14 +126,6 @@
 		src.id = t
 	return
 
-/proc/find_loc(obj/R as obj)
-	if (!R)	return null
-	var/turf/T = R.loc
-	while(!istype(T, /turf))
-		T = T.loc
-		if(!T || istype(T, /area))	return null
-	return T
-
 /obj/machinery/teleport
 	name = "teleport"
 	icon = 'icons/obj/stationobjs.dmi'
