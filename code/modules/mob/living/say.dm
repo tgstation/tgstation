@@ -99,7 +99,7 @@ var/list/department_radio_keys = list(
 	if(!message) return
 
 	if(silent)
-		src << "\red You can't speak while silenced."
+		src << "<span class='warning'>You can't speak while silenced.</span>"
 		return
 
 	var/message_mode = get_message_mode(message)

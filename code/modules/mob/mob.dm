@@ -294,7 +294,7 @@
 							if(EQUIP_FAILACTION_DROP)
 								W.loc=get_turf(src) // I think.
 						return
-					drop_item()
+					drop_item(W)
 					if(!(put_in_active_hand(wearing)))
 						equip_to_slot(wearing, slot, redraw_mob)
 						switch(act_on_fail)
@@ -1221,8 +1221,7 @@ var/list/slot_equipment_priority = list( \
 		if(ishuman(src))
 			layer = 3.9
 		density = 0
-		drop_l_hand()
-		drop_r_hand()
+		drop_hands()
 	else
 		if(ishuman(src))
 			layer = 4

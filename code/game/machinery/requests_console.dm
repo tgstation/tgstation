@@ -395,7 +395,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				announceAuth = 1
 			else
 				announceAuth = 0
-				user << "\red You are not authorized to send announcements."
+				user << "<span class='warning'>You are not authorized to send announcements.</span>"
 			updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)

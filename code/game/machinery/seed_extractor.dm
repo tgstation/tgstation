@@ -60,7 +60,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 	// Fruits and vegetables.
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O, /obj/item/weapon/grown))
 
-		user.drop_item()
+		user.drop_item(O)
 
 		var/datum/seed/new_seed_type
 		if(istype(O, /obj/item/weapon/grown))
@@ -93,7 +93,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		var/obj/item/F = O
 		if(F.nonplant_seed_type)
 			user << "<span class='notice'>You extract some seeds from the [F.name].</span>"
-			user.drop_item()
+			user.drop_item(O)
 			var/t_amount = 0
 			var/t_max = rand(1,4)
 			while(t_amount < t_max)

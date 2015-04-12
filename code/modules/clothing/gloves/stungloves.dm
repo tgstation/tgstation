@@ -21,7 +21,7 @@
 		if(!wired)
 			user << "<span class='notice'>[src] need to be wired first.</span>"
 		else if(!cell)
-			user.drop_item(src)
+			user.drop_item(W, src)
 			cell = W
 			user << "<span class='notice'>You attach a cell to [src].</span>"
 			update_icon()

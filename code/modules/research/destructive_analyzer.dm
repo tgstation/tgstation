@@ -65,24 +65,24 @@ Note: Must be placed within 3 tiles of the R&D Console
 			if(isMoMMI(user))
 				var/mob/living/silicon/robot/mommi/mommi = user
 				if(mommi.is_in_modules(O,permit_sheets=1))
-					user << "\red You cannot insert something that is part of you."
+					user << "<span class='warning'>You cannot insert something that is part of you.</span>"
 					return
 			else
 				return
 		if(!O.origin_tech)
-			user << "\red This doesn't seem to have a tech origin!"
+			user << "<span class='warning'>This doesn't seem to have a tech origin!</span>"
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
-			user << "\red You cannot deconstruct this item!"
+			user << "<span class='warning'>You cannot deconstruct this item!</span>"
 			return
 		/*if(O.reliability < 90 && O.crit_fail == 0)
-			usr << "\red Item is neither reliable enough or broken enough to learn from."
+			usr << "<span class='warning'>Item is neither reliable enough or broken enough to learn from.</span>"
 			return*/
 		busy = 1
 		loaded_item = O
-		user.drop_item(src)
-		user << "\blue You add the [O.name] to the machine!"
+		user.drop_item(O, src)
+		user << "<span class='notice'>You add the [O.name] to the machine!</span>"
 		flick("d_analyzer_la", src)
 		spawn(10)
 			icon_state = "d_analyzer_l"

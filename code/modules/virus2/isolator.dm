@@ -19,7 +19,7 @@
 		return
 
 	src.beaker =  B
-	user.drop_item(src)
+	user.drop_item(B, src)
 	if(istype(B,/obj/item/weapon/reagent_containers/syringe))
 		user << "You add the syringe to the machine!"
 		src.updateUsrDialog()
@@ -40,7 +40,7 @@
 				break
 		// /vg/: Try to fix isolators
 		if(!Blood)
-			usr << "\red ERROR: Unable to locate blood within the beaker.  Bug?"
+			usr << "<span class='warning'>ERROR: Unable to locate blood within the beaker.  Bug?</span>"
 			testing("Unable to locate blood in [beaker]!")
 			return
 		var/list/virus = virus_copylist(Blood.data["virus2"])

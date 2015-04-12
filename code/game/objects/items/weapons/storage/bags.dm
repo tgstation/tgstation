@@ -67,7 +67,7 @@
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] puts the [src.name] over \his head and tightens the handles around \his neck! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='warning'><b>[user] puts the [src.name] over \his head and tightens the handles around \his neck! It looks like \he's trying to commit suicide.</b></span>"
 		return(OXYLOSS)
 
 // -----------------------------
@@ -148,7 +148,7 @@
 			current += S.amount
 		if(capacity == current)//If it's full, you're done
 			if(!stop_messages)
-				usr << "\red The snatcher is full."
+				usr << "<span class='warning'>The snatcher is full.</span>"
 			return 0
 		return 1
 

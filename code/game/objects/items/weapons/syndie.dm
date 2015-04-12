@@ -71,12 +71,12 @@
 				pr_open = 1
 				switch(alert(user, "What would you like to do?", "Lighter", "Press the button.", "Close the lighter."))
 					if("Press the button.")
-						user << "\red You press the button."
+						user << "<span class='warning'>You press the button.</span>"
 						flick("c-4detonator_click", src)
 						if(src.bomb)
 							src.bomb.detonate()
 							log_admin("[user.real_name]([user.ckey]) has triggered [src.bomb] with [src].")
-							message_admins("\red [user.real_name]([user.ckey]) has triggered [src.bomb] with [src].")
+							message_admins("<span class='warning'>[user.real_name]([user.ckey]) has triggered [src.bomb] with [src].</span>")
 
 					if("Close the lighter.")
 						src.icon_state = "c-4detonator_0"

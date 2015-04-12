@@ -180,7 +180,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			new src.type_butt(location)
 			processing_objects.Remove(src)
 			user << "<span class='warning'>Half of the [name] dissolves with a nasty fizzle.</span>"
-			user.drop_item()
+			user.drop_item(src)
 			qdel(src)
 			return
 		var/transfered = glass.reagents.trans_to(src, chem_volume)

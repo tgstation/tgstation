@@ -491,7 +491,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			var/obj/machinery/atmospherics/pipe/P = A
 			if(!(paint_color in P.available_colors))
-				user << "\red This [P] can't be painted [paint_color]. Available colors: [english_list(P.available_colors)]"
+				user << "<span class='warning'>This [P] can't be painted [paint_color]. Available colors: [english_list(P.available_colors)]</span>"
 				return 0
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			P._color = paint_color

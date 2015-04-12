@@ -163,7 +163,7 @@
 	if(!istype(L) || L.buckled)
 		return
 	if(L.abiotic())
-		user << "\red <B>Subject cannot have abiotic items on.</B>"
+		user << "<span class='warning'><B>Subject cannot have abiotic items on.</B></span>"
 		return
 	for(var/mob/living/carbon/slime/M in range(1,L))
 		if(M.Victim == L)
@@ -191,7 +191,7 @@
 		return 1
 	else if(istype(item, /obj/item/weapon/crowbar))
 		if (occupant)
-			user << "\red You cannot disassemble this [src], it's occupado."
+			user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
 			return
 		if (opened)
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
@@ -207,11 +207,11 @@
 			return 1
 	else if(istype(item, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "\red A beaker is already loaded into the machine."
+			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
 			return
 
 		beaker = item
-		user.drop_item(src)
+		user.drop_item(beaker, src)
 		user.visible_message("[user] adds \a [item] to \the [src]!", "You add \a [item] to \the [src]!")
 		return
 	if(istype(item, /obj/item/weapon/grab)) //sanity checks, you chucklefucks
@@ -219,10 +219,10 @@
 		if (!ismob(G.affecting))
 			return
 		if (src.occupant)
-			user << "\blue <B>The scanner is already occupied!</B>"
+			user << "<span class='notice'><B>The scanner is already occupied!</B></span>"
 			return
 		if (G.affecting.abiotic())
-			user << "\blue <B>Subject cannot have abiotic items on.</B>"
+			user << "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>"
 			return
 		if(G.affecting.buckled)
 			return
@@ -343,7 +343,7 @@
 	..()
 	if (istype(O, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!src.disk)
-			user.drop_item(src)
+			user.drop_item(O, src)
 			src.disk = O
 			user << "You insert [O]."
 			nanomanager.update_uis(src) // update all UIs attached to src()

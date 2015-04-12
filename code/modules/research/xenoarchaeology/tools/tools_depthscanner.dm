@@ -25,7 +25,7 @@
 	var/material = "unknown"
 
 /obj/item/device/depth_scanner/proc/scan_atom(var/mob/user, var/atom/A)
-	user.visible_message("\blue [user] scans [A], the air around them humming gently.")
+	user.visible_message("<span class='notice'>[user] scans [A], the air around them humming gently.</span>")
 	if(istype(A,/turf/unsimulated/mineral))
 		var/turf/unsimulated/mineral/M = A
 		if(M.finds.len || M.artifact_find)
@@ -54,7 +54,7 @@
 			positive_locations.Add(D)
 
 			for(var/mob/L in range(src, 1))
-				L << "\blue \icon[src] [src] pings."
+				L << "<span class='notice'>\icon[src] [src] pings.</span>"
 
 	else if(istype(A,/obj/structure/boulder))
 		var/obj/structure/boulder/B = A
@@ -73,7 +73,7 @@
 			positive_locations.Add(D)
 
 			for(var/mob/L in range(src, 1))
-				L << "\blue \icon[src] [src] pings [pick("madly","wildly","excitedly","crazily")]!."
+				L << "<span class='notice'>\icon[src] [src] pings [pick("madly","wildly","excitedly","crazily")]!.</span>"
 
 /obj/item/device/depth_scanner/attack_self(var/mob/user as mob)
 	return src.interact(user)

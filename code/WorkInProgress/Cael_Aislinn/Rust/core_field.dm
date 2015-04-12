@@ -142,13 +142,13 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	//have a max of 1000 moles suspended
 	if(held_plasma.toxins < transfer_ratio * 1000)
 		var/moles_covered = environment.return_pressure()*volume_covered/(environment.temperature * R_IDEAL_GAS_EQUATION)
-		//world << "\blue moles_covered: [moles_covered]"
+		//world << "<span class='notice'>moles_covered: [moles_covered]</span>"
 		//
 		var/datum/gas_mixture/gas_covered = environment.remove(moles_covered)
 		var/datum/gas_mixture/plasma_captured = new /datum/gas_mixture()
 		//
 		plasma_captured.toxins = round(gas_covered.toxins * transfer_ratio)
-		//world << "\blue[plasma_captured.toxins] moles of plasma captured"
+		//world << "<span class='warning'>[plasma_captured.toxins] moles of plasma captured</span>"
 		plasma_captured.temperature = gas_covered.temperature
 		plasma_captured.update_values()
 		//
@@ -327,7 +327,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			//pick one of the unprocessed reacting reagents randomly
 			var/cur_primary_reactant = pick(primary_reactant_pool)
 			primary_reactant_pool.Remove(cur_primary_reactant)
-			//world << "\blue	primary reactant chosen: [cur_primary_reactant]"
+			//world << "<span class='notice'>primary reactant chosen: [cur_primary_reactant]</span>"
 
 			//grab all the possible reactants to have a reaction with
 			var/list/possible_secondary_reactants = reactants_reacting_pool.Copy()
@@ -343,12 +343,12 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 					continue
 				var/datum/fusion_reaction/cur_reaction = get_fusion_reaction(cur_primary_reactant, cur_secondary_reactant)
 				if(cur_reaction)
-					//world << "\blue	secondary reactant: [cur_secondary_reactant], [reaction_products.len]"
+					//world << "<span class='notice'>secondary reactant: [cur_secondary_reactant], [reaction_products.len]</span>"
 					possible_reactions.Add(cur_reaction)
 
 			//if there are no possible reactions here, abandon this primary reactant and move on
 			if(!possible_reactions.len)
-				//world << "\blue	no reactions"
+				//world << "<span class='notice'>no reactions</span>"
 				continue
 
 			//split up the reacting atoms between the possible reactions

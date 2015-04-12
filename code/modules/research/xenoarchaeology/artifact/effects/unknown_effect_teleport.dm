@@ -10,7 +10,7 @@
 		for(var/turf/simulated/floor/T in orange(user, 50))
 			randomturfs.Add(T)
 		if(randomturfs.len > 0)
-			user << "\red You are suddenly zapped away elsewhere!"
+			user << "<span class='warning'>You are suddenly zapped away elsewhere!</span>"
 			if (user.buckled)
 				user.buckled.unbuckle()
 
@@ -31,7 +31,7 @@
 				for(var/turf/simulated/floor/T in orange(M, 30))
 					randomturfs.Add(T)
 				if(randomturfs.len > 0)
-					M << "\red You are displaced by a strange force!"
+					M << "<span class='warning'>You are displaced by a strange force!</span>"
 					if(M.buckled)
 						M.buckled.unbuckle()
 
@@ -52,7 +52,7 @@
 				for(var/turf/simulated/floor/T in orange(M, 15))
 					randomturfs.Add(T)
 				if(randomturfs.len > 0)
-					M << "\red You are displaced by a strange force!"
+					M << "<span class='warning'>You are displaced by a strange force!</span>"
 
 					var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 					sparks.set_up(3, 0, get_turf(M))

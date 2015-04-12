@@ -146,13 +146,13 @@
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opening)
-		user << "\red You must wait until the door has stopped moving."
+		user << "<span class='warning'>You must wait until the door has stopped moving.</span>"
 		return
 
 	if(density)
 		var/turf/T = get_turf(src)
 		if(T.density)
-			user << "\red The wall is blocked!"
+			user << "<span class='warning'>The wall is blocked!</span>"
 			return
 		if(istype(W, /obj/item/weapon/screwdriver))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
@@ -174,7 +174,7 @@
 					T.attackby(W,user)
 				del(src)
 	else
-		user << "\blue You can't reach, close it first!"
+		user << "<span class='notice'>You can't reach, close it first!</span>"
 
 	if( istype(W, /obj/item/weapon/pickaxe) )
 		var/obj/item/weapon/pickaxe/used_pick = W
@@ -270,7 +270,7 @@
 
 /obj/structure/falserwall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opening)
-		user << "\red You must wait until the door has stopped moving."
+		user << "<span class='warning'>You must wait until the door has stopped moving.</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))

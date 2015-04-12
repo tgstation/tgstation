@@ -10,7 +10,7 @@
 			var/mob/living/silicon/robot/R = user
 			for (var/obj/item/weapon/cell/D in R.contents)
 				D.charge += rand() * 100 + 50
-				R << "\blue SYSTEM ALERT: Large energy boost detected!"
+				R << "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>"
 			return 1
 
 /datum/artifact_effect/cellcharge/DoEffectAura()
@@ -23,7 +23,7 @@
 		for (var/mob/living/silicon/robot/M in mob_list)
 			for (var/obj/item/weapon/cell/D in M.contents)
 				D.charge += 25
-				M << "\blue SYSTEM ALERT: Energy boost detected!"
+				M << "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>"
 		return 1
 
 /datum/artifact_effect/cellcharge/DoEffectPulse()
@@ -36,5 +36,5 @@
 		for (var/mob/living/silicon/robot/M in mob_list)
 			for (var/obj/item/weapon/cell/D in M.contents)
 				D.charge += rand() * 100
-				M << "\blue SYSTEM ALERT: Energy boost detected!"
+				M << "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>"
 		return 1

@@ -123,7 +123,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	infos += P
 	info << infos
 
-	message_admins("\blue [key_name_admin(usr)] has edited [key]'s notes.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has edited [key]'s notes.</span>")
 	log_admin("[key_name(usr)] has edited [key]'s notes.")
 
 	del info
@@ -148,7 +148,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	infos.Remove(item)
 	info << infos
 
-	message_admins("\blue [key_name_admin(usr)] deleted one of [key]'s notes.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] deleted one of [key]'s notes.</span>")
 	log_admin("[key_name(usr)] deleted one of [key]'s notes.")
 
 	del info

@@ -273,6 +273,6 @@
 	set name = "Psionic Message (15)"
 	set desc = "Give a psionic message to all creatures on and around the station."
 
-	world << "\red Your vision becomes cloudy, and your mind becomes clear."
+	world << "<span class='warning'>Your vision becomes cloudy, and your mind becomes clear.</span>"
 	spawn(5)
 	world << "<span class='blob'>[message]</span>"

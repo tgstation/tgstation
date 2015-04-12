@@ -3,6 +3,7 @@
 
 /obj/machinery/gashapon
 	name = "Gashapon Machine"
+	desc = "Insert coin, recieve capsule!"
 	icon = 'icons/obj/gashapon.dmi'
 	icon_state = "gashapon"
 	anchored = 1
@@ -11,7 +12,7 @@
 
 /obj/machinery/gashapon/attackby(var/obj/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/weapon/coin/))
-		user.drop_item(src)
+		user.drop_item(O, src)
 		user.visible_message("[user] puts a coin into [src] and turns the knob.", "You put a coin into [src] and turn the knob.")
 		src.visible_message("[src] clicks softly.")
 		sleep(rand(10,15))
@@ -76,7 +77,23 @@
 		/obj/item/toy/gasha/atmos,
 		/obj/item/toy/gasha/sec,
 		/obj/item/toy/gasha/plasman,
-		/obj/item/toy/gasha/shard)
+		/obj/item/toy/gasha/shard,
+		/obj/item/toy/gasha/mime,
+		/obj/item/toy/gasha/captain,
+		/obj/item/toy/gasha/comdom,
+		/obj/item/toy/gasha/shade,
+		/obj/item/toy/gasha/wraith,
+		/obj/item/toy/gasha/juggernaut,
+		/obj/item/toy/gasha/artificer,
+		/obj/item/toy/gasha/harvester,
+		/obj/item/toy/gasha/skub,
+		/obj/item/toy/gasha/fingerbox,
+		/obj/item/toy/gasha/cattoy,
+		/obj/item/toy/gasha/parrottoy,
+		/obj/item/toy/gasha/beartoy,
+		/obj/item/toy/gasha/carptoy,
+		/obj/item/toy/gasha/monkeytoy,
+		/obj/item/toy/gasha/huggertoy)
 
 	var/obj/item/I = new capsule_prize(M)
 	M.u_equip(src)

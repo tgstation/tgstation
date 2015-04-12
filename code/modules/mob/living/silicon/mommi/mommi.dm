@@ -78,7 +78,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	// Sanity check
 	if(connected_ai && keeper)
-		world << "\red ASSERT FAILURE: connected_ai && keeper in mommi.dm"
+		world << "<span class='warning'>ASSERT FAILURE: connected_ai && keeper in mommi.dm</span>"
 
 
 /mob/living/silicon/robot/mommi/choose_icon()
@@ -173,7 +173,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			updatehealth()
 			add_fingerprint(user)
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
+				O.show_message(text("<span class='warning'>[user] has fixed some of the dents on [src]!</span>"), 1)
 		else
 			user << "Need more welding fuel!"
 			return
@@ -184,7 +184,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		updatehealth()
 		coil.use(1)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
+			O.show_message(text("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>"), 1)
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(stat == DEAD)
@@ -210,7 +210,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		else if(cell)
 			user << "There is a power cell already installed."
 		else
-			user.drop_item(src)
+			user.drop_item(W, src)
 			cell = W
 			user << "You insert the power cell."
 //			chargecount = 0
@@ -251,26 +251,26 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				user << "You [ locked ? "lock" : "unlock"] [src]'s interface."
 				updateicon()
 			else
-				user << "\red Access denied."
+				user << "<span class='warning'>Access denied.</span>"
 */
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			usr << "You must access the borgs internals!"
+			user << "You must access the borgs internals!"
 		else if(!src.module && U.require_module)
-			usr << "The borg must choose a module before he can be upgraded!"
+			user << "The borg must choose a module before he can be upgraded!"
 		else if(U.locked)
-			usr << "The upgrade is locked and cannot be used yet!"
+			user << "The upgrade is locked and cannot be used yet!"
 		else
 			if(istype(U, /obj/item/borg/upgrade/reset))
-				usr << "<span class='warning'>No.</span>"
+				user << "<span class='warning'>No.</span>"
 				return
 			if(U.action(src))
-				usr << "You apply the upgrade to [src]!"
-				usr.drop_item(src)
+				user << "You apply the upgrade to [src]!"
+				user.drop_item(U, src)
 			else
-				usr << "Upgrade error!"
+				user << "Upgrade error!"
 
 	else if(istype(W, /obj/item/device/camera_bug))
 		help_shake_act(user)
@@ -305,27 +305,24 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				if (randn <= 25)
 					weakened = 3
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					visible_message("\red <B>[user] has pushed [src]!</B>")
+					visible_message("<span class='warning'><B>[user] has pushed [src]!</B></span>")
 					var/obj/item/found = locate(tool_state) in src.module.modules
 					if(!found)
 						var/obj/item/TS = tool_state
-						drop_item()
+						drop_item(TS)
 						if(TS && TS.loc)
-							TS.loc = src.loc
-							visible_message("\red <B>[src]'s robotic arm loses grip on what it was holding")
+							visible_message("<span class='warning'><B>[src]'s robotic arm loses grip on what it was holding</span>")
 					return
 				if(randn <= 50)//MoMMI's robot arm is stronger than a human's, but not by much
 					var/obj/item/found = locate(tool_state) in src.module.modules
 					if(!found)
 						var/obj/item/TS = tool_state
-						drop_item()
-						if(TS && TS.loc)
-							TS.loc = src.loc
+						drop_item(TS)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						visible_message("\red <B>[user] has disarmed [src]!</B>")
+						visible_message("<span class='warning'><B>[user] has disarmed [src]!</B></span>")
 					else
 						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-						visible_message("\red <B>[user] attempted to disarm [src]!</B>")
+						visible_message("<span class='warning'><B>[user] attempted to disarm [src]!</B></span>")
 					return
 			if (I_HELP)
 				help_shake_act(user)
@@ -333,7 +330,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 /mob/living/silicon/robot/mommi/installed_modules()
 	if(weapon_lock)
-		src << "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]"
+		src << "<span class='warning'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>"
 		return
 
 	if(!module)

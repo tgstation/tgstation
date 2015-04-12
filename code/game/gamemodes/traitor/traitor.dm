@@ -201,12 +201,12 @@
 	//Begin code phrase.
 	killer << "The Syndicate provided you with the following information on how to identify their agents:"
 	if(prob(80))
-		killer << "\red Code Phrase: \black [syndicate_code_phrase]"
+		killer << "<span class='warning'>Code Phrase: </span>[syndicate_code_phrase]"
 		killer.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 	else
 		killer << "Unfortunately, the Syndicate did not provide you with a code phrase."
 	if(prob(80))
-		killer << "\red Code Response: \black [syndicate_code_response]"
+		killer << "<span class='warning'>Code Response: </span>[syndicate_code_response]"
 		killer.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 	else
 		killer << "Unfortunately, the Syndicate did not provide you with a code response."
@@ -321,12 +321,12 @@
 	if(!safety)//If they are not a rev. Can be added on to.
 		traitor_mob << "The Syndicate provided you with the following information on how to identify other agents:"
 		if(prob(80))
-			traitor_mob << "\red Code Phrase: \black [syndicate_code_phrase]"
+			traitor_mob << "<span class='warning'>Code Phrase: </span>[syndicate_code_phrase]"
 			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 		else
 			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code phrase."
 		if(prob(80))
-			traitor_mob << "\red Code Response: \black [syndicate_code_response]"
+			traitor_mob << "<span class='warning'>Code Response: </span>[syndicate_code_response]"
 			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 		else
 			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
@@ -400,4 +400,4 @@
 	traitor_mind.special_role = null
 	update_traitor_icons_removed(traitor_mind)
 	//world << "Removed [traitor_mind.current.name] from traitor shit"
-	traitor_mind.current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now.(You don't remember who implanted you)</B></FONT>"
+	traitor_mind.current << "<span class='danger'><FONT size = 3>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now.(You don't remember who implanted you)</FONT></span>"

@@ -47,7 +47,7 @@ LINEN BINS
 //todo: sharp thing code/game/objects/objs.dm
 
 /obj/item/weapon/bedsheet/attack_self(mob/user as mob)
-	user.drop_item()
+	user.drop_item(src)
 	if(layer == initial(layer))
 		layer = 5
 	else
@@ -157,12 +157,12 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/bedsheet))
-		user.drop_item(src)
+		user.drop_item(I, src)
 		sheets.Add(I)
 		amount++
 		user << "<span class='notice'>You put [I] in [src].</span>"
 	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		user.drop_item(src)
+		user.drop_item(I, src)
 		hidden = I
 		user << "<span class='notice'>You hide [I] among the sheets.</span>"
 

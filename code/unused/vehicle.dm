@@ -143,7 +143,7 @@
 		A.loc = src.loc
 		for(var/mob/O in view(src, null))
 			if ((O.client && !(O.blinded)))
-				O << text("\blue <B> [] unloads [] from []!</B>", usr, A, src)
+				O << text("<span class='notice'><B> [] unloads [] from []!</B></span>", usr, A, src)
 
 		if (ismob(A))
 			var/mob/M = A
@@ -173,7 +173,7 @@
 
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O << text("\blue <B> [] loads [] into []!</B>", H, H.pulling, src)
+						O << text("<span class='notice'><B> [] loads [] into []!</B></span>", H, H.pulling, src)
 
 				H.stop_pulling()
 

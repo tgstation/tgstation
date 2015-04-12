@@ -75,7 +75,7 @@
 		owner.radiation = max(owner.radiation, 20)
 		for(var/mob/living/L in range(1, owner))
 			if(L == owner) continue
-			L << "\red You are enveloped by a soft green glow emanating from [owner]."
+			L << "<span class='warning'>You are enveloped by a soft green glow emanating from [owner].</span>"
 			L.radiation += 5
 		return
 
@@ -170,7 +170,7 @@
 
 	OnLife()
 		if (prob(1) && owner:paralysis < 1)
-			owner:visible_message("\red <B>[owner] starts having a seizure!", "\red You have a seizure!")
+			owner:visible_message("<span class='warning'><B>[owner] starts having a seizure!</span>", "<span class='warning'>You have a seizure!</span>")
 			owner:paralysis = max(2, owner:paralysis)
 			owner:Jitter(100)
 		return
@@ -343,9 +343,9 @@
 			owner.bioHolder.AddEffect("thermal_resist",2)
 			owner.bioHolder.RemoveEffect("fire_resist")
 			owner.bioHolder.RemoveEffect("cold_resist")
-			owner << "\blue Your thermal resistances merge into one!"
+			owner << "<span class='notice'>Your thermal resistances merge into one!</span>"
 		else
-			owner << "\blue You feel cold."
+			owner << "<span class='notice'>You feel cold.</span>"
 		return
 
 	OnMobDraw()
@@ -368,9 +368,9 @@
 			owner.bioHolder.AddEffect("thermal_resist",1)
 			owner.bioHolder.RemoveEffect("fire_resist")
 			owner.bioHolder.RemoveEffect("cold_resist")
-			owner << "\blue Your thermal resistances merge into one!"
+			owner << "<span class='notice'>Your thermal resistances merge into one!</span>"
 		else
-			owner << "\blue You feel warm."
+			owner << "<span class='notice'>You feel warm.</span>"
 		return
 
 	OnMobDraw()
@@ -390,10 +390,10 @@
 	OnRemove()
 		if (src.variant == 1)
 			owner.bioHolder.AddEffect("cold_resist")
-			owner << "\red You feel warm."
+			owner << "<span class='warning'>You feel warm.</span>"
 		else if (src.variant == 2)
 			owner.bioHolder.AddEffect("fire_resist")
-			owner << "\red You feel cold."
+			owner << "<span class='warning'>You feel cold.</span>"
 		return
 
 	OnMobDraw()
@@ -527,7 +527,7 @@
 	OnLife()
 		if (owner:health <= 25)
 			timeLeft = 1
-			owner << "\red You suddenly feel very weak."
+			owner << "<span class='warning'>You suddenly feel very weak.</span>"
 			owner:weakened = 3
 			owner:emote("collapse")
 
@@ -634,9 +634,9 @@
 				if (C == owner)
 					continue
 				if (src.variant == 2)
-					C << "\red [src.personalized_stink]"
+					C << "<span class='warning'>[src.personalized_stink]</span>"
 				else
-					C << "\red [stinkString()]"
+					C << "<span class='warning'>[stinkString()]</span>"
 
 /datum/bioEffect/consumed
 	name = "Consumed"

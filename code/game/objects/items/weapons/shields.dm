@@ -22,7 +22,7 @@
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		viewers(user) << "<span class='warning'><b>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
 		return (BRUTELOSS)
 
 	IsShield()
@@ -73,7 +73,7 @@
 	var/active = 0
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</b>"
+		viewers(user) << "<span class='warning'><b>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</b></span>"
 		return (BRUTELOSS)
 
 
@@ -96,10 +96,10 @@
 /obj/item/weapon/cloaking_device/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
-		user << "\blue The cloaking device is now active."
+		user << "<span class='notice'>The cloaking device is now active.</span>"
 		src.icon_state = "shield1"
 	else
-		user << "\blue The cloaking device is now inactive."
+		user << "<span class='notice'>The cloaking device is now inactive.</span>"
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
 	return

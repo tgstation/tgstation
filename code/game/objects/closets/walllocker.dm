@@ -94,7 +94,7 @@
 			usr << "<span class='notice'>You put \the [G] in \the [src].</span>"
 			defib = G
 			update_icon()
-			user.drop_item(src)
+			user.drop_item(G, src)
 			return
 	return
 

@@ -219,7 +219,7 @@
 	if(robotic)
 		return
 
-	user << "\blue You take an experimental bite out of \the [src]."
+	user << "<span class='notice'>You take an experimental bite out of \the [src].</span>"
 	var/datum/reagent/blood = reagents.reagent_list["blood"]
 	blood_splatter(src,blood,1)
 

@@ -285,7 +285,7 @@
 				var/damage = rand(1, 3)
 				for(var/mob/O in viewers(src, null))
 					if((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
+						O.show_message(text("<span class='warning'><B>[M.name] has bit []!</B></span>", src), 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else

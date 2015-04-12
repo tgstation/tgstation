@@ -44,7 +44,7 @@
 /mob/living/simple_animal/crab/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/wirecutters))
 		if(prob(50))
-			user << "\red \b This kills the crab."
+			user << "<span class='warning'><B>This kills the crab.</span></B>"
 			health -= 20
 			Die()
 		else

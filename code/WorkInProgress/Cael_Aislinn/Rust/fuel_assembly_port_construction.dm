@@ -49,35 +49,35 @@
 				user << "You begin removing the circuitboard" //lpeters - fixed grammar issues
 				if(do_after(user, 50))
 					user.visible_message(\
-						"\red [user.name] has removed the circuitboard from [src.name]!",\
-						"\blue You remove the circuitboard.")
+						"<span class='warning'>[user.name] has removed the circuitboard from [src.name]!</span>",\
+						"<span class='notice'>You remove the circuitboard.</span>")
 					has_electronics = 0
 					new /obj/item/weapon/module/rust_fuel_port(loc)
 					has_electronics &= ~1
 			else
 				opened = 0
 				icon_state = "port0"
-				user << "\blue You close the maintenance cover."
+				user << "<span class='notice'>You close the maintenance cover.</span>"
 		else
 			if(cur_assembly)
-				user << "\red You cannot open the cover while there is a fuel assembly inside."
+				user << "<span class='warning'>You cannot open the cover while there is a fuel assembly inside.</span>"
 			else
 				opened = 1
-				user << "\blue You open the maintenance cover."
+				user << "<span class='notice'>You open the maintenance cover.</span>"
 				icon_state = "port2"
 		return
 
 	else if (istype(W, /obj/item/stack/cable_coil) && opened && !(has_electronics & 2))
 		var/obj/item/stack/cable_coil/C = W
 		if(C.amount < 10)
-			user << "\red You need more wires."
+			user << "<span class='warning'>You need more wires.</span>"
 			return
 		user << "You start adding cables to the frame..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20) && C.amount >= 10)
 			C.use(10)
 			user.visible_message(\
-				"\red [user.name] has added cables to the port frame!",\
+				"<span class='warning'>[user.name] has added cables to the port frame!</span>",\
 				"You add cables to the port frame.")
 			has_electronics &= 2
 		return
@@ -88,7 +88,7 @@
 		if(do_after(user, 50))
 			new /obj/item/stack/cable_coil(loc,10)
 			user.visible_message(\
-				"\red [user.name] cut the cabling inside the port.",\
+				"<span class='warning'>[user.name] cut the cabling inside the port.</span>",\
 				"You cut the cabling inside the port.")
 			has_electronics &= ~2
 		return
@@ -105,7 +105,7 @@
 	else if (istype(W, /obj/item/weapon/weldingtool) && opened && !has_electronics)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
-			user << "\blue You need more welding fuel to complete this task."
+			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 		user << "You start welding the port frame..."
 		playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
@@ -113,9 +113,9 @@
 			if(!src || !WT.remove_fuel(3, user)) return
 			new /obj/item/mounted/frame/rust_fuel_assembly_port(loc)
 			user.visible_message(\
-				"\red [src] has been cut away from the wall by [user.name].",\
+				"<span class='warning'>[src] has been cut away from the wall by [user.name].</span>",\
 				"You detached the port frame.",\
-				"\red You hear welding.")
+				"<span class='warning'>You hear welding.</span>")
 			del(src)
 		return
 

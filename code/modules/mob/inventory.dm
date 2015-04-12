@@ -130,61 +130,30 @@
 		return 1
 	return 0
 
+//Drops the item in our hand - you can specify an item and a location to drop to
+/mob/proc/drop_item(var/obj/item/to_drop, var/atom/Target)
+	if(!to_drop) //if we're not told to drop something specific
+		to_drop = get_active_hand() //drop what we're currently holding
 
-//Drops the item in our left hand
-/mob/proc/drop_l_hand(var/atom/Target)
-	if(l_hand)
-		if(client)	client.screen -= l_hand
-		l_hand.layer = initial(l_hand.layer)
+	if(!to_drop) //still nothing to drop?
+		return 0 //bail
 
-		if(Target)	l_hand.loc = Target
-		else		l_hand.loc = loc
+	if(!Target)
+		Target = src.loc
 
-		var/turf/T = get_turf(l_hand)
-		if(isturf(T) && l_hand.loc == T)
-			T.Entered(l_hand)
+	remove_from_mob(to_drop) //clean out any refs
 
-		l_hand.dropped(src)
-		if(l_hand)
-			l_hand.layer = initial(l_hand.layer)
-			l_hand = null
-		update_inv_l_hand()
+	to_drop.forceMove(Target) //calls the Entered procs
+
+	to_drop.dropped(src)
+
+	if(to_drop && to_drop.loc)
 		return 1
 	return 0
 
-//Drops the item in our right hand
-/mob/proc/drop_r_hand(var/atom/Target)
-	if(r_hand)
-		if(client)	client.screen -= r_hand
-		r_hand.layer = initial(r_hand.layer)
-
-		if(Target)	r_hand.loc = Target
-		else		r_hand.loc = loc
-
-		var/turf/T = get_turf(r_hand)
-		if(istype(T) && r_hand.loc == T)
-			T.Entered(r_hand)
-
-		r_hand.dropped(src)
-		if(r_hand)
-			r_hand.layer = initial(r_hand.layer)
-			r_hand = null
-		update_inv_r_hand()
-		return 1
-	return 0
-
-//Drops the item in our active hand.
-/mob/proc/drop_item(var/atom/Target)
-	if(hand)	return drop_l_hand(Target)
-	else		return drop_r_hand(Target)
-
-
-
-
-
-
-
-
+/mob/proc/drop_hands(var/atom/Target) //drops both items
+	drop_item(get_active_hand(), Target)
+	drop_item(get_inactive_hand(), Target)
 
 //TODO: phase out this proc
 /mob/proc/before_take_item(var/obj/item/W)	//TODO: what is this?

@@ -16,7 +16,7 @@
 			if(istype(AC, /obj/item/ammo_casing/a357) && !perfect && prob(70 - (getAmmo() * 10)))	//minimum probability of 10, maximum of 60
 				M << "<span class='danger'>[src] blows up in your face.</span>"
 				M.take_organ_damage(0,20)
-				M.drop_item()
+				M.drop_item(src)
 				qdel(src)
 				return 0
 		return 1
@@ -154,7 +154,7 @@
 /obj/item/weapon/gun/projectile/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
 
 	if(!getAmmo())
-		user.visible_message("\red *click*", "\red *click*")
+		user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
 
@@ -165,7 +165,7 @@
 
 				var/obj/item/ammo_casing/AC = loaded[1]
 				if(!process_chambered())
-					user.visible_message("\red *click*", "\red *click*")
+					user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
 					playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 					return
 				if(!in_chamber)

@@ -130,7 +130,7 @@ var/soft_dels = 0
 	garbageCollector.del_everything = !garbageCollector.del_everything
 	world << "<b>GC: qdel turned [garbageCollector.del_everything ? "off" : "on"].</b>"
 	log_admin("[key_name(usr)] turned qdel [garbageCollector.del_everything ? "off" : "on"].")
-	message_admins("\blue [key_name(usr)] turned qdel [garbageCollector.del_everything ? "off" : "on"].", 1)
+	message_admins("<span class='notice'>[key_name(usr)] turned qdel [garbageCollector.del_everything ? "off" : "on"].</span>", 1)
 
 /*/client/var/running_find_references
 

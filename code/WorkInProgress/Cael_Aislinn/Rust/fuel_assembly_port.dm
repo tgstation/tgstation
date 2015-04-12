@@ -15,12 +15,12 @@
 /obj/machinery/rust_fuel_assembly_port/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I,/obj/item/weapon/fuel_assembly) && !opened)
 		if(cur_assembly)
-			user << "\red There is already a fuel rod assembly in there!"
+			user << "<span class='warning'>There is already a fuel rod assembly in there!</span>"
 		else
 			cur_assembly = I
-			user.drop_item(src)
+			user.drop_item(I, src)
 			icon_state = "port1"
-			user << "\blue You insert [I] into [src]. Touch the panel again to insert [I] into the injector."
+			user << "<span class='notice'>You insert [I] into [src]. Touch the panel again to insert [I] into the injector.</span>"
 
 /obj/machinery/rust_fuel_assembly_port/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -29,16 +29,16 @@
 
 	if(cur_assembly)
 		if(try_insert_assembly())
-			user << "\blue \icon[src] [src] inserts it's fuel rod assembly into an injector."
+			user << "<span class='notice'>\icon[src] [src] inserts it's fuel rod assembly into an injector.</span>"
 		else
 			if(eject_assembly())
-				user << "\red \icon[src] [src] ejects it's fuel assembly. Check the fuel injector status."
+				user << "<span class='warning'>\icon[src] [src] ejects it's fuel assembly. Check the fuel injector status.</span>"
 			else if(try_draw_assembly())
-				user << "\blue \icon[src] [src] draws a fuel rod assembly from an injector."
+				user << "<span class='notice'>\icon[src] [src] draws a fuel rod assembly from an injector.</span>"
 	else if(try_draw_assembly())
-		user << "\blue \icon[src] [src] draws a fuel rod assembly from an injector."
+		user << "<span class='notice'>\icon[src] [src] draws a fuel rod assembly from an injector.</span>"
 	else
-		user << "\red \icon[src] [src] was unable to draw a fuel rod assembly from an injector."
+		user << "<span class='warning'>\icon[src] [src] was unable to draw a fuel rod assembly from an injector.</span>"
 
 /obj/machinery/rust_fuel_assembly_port/proc/try_insert_assembly()
 	var/success = 0

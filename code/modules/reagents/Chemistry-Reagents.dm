@@ -115,7 +115,7 @@
 /datum/reagent/slimejelly/on_mob_life(var/mob/living/M as mob,var/alien)
 	if(M.dna.mutantrace != "slime" || !istype(M, /mob/living/carbon/slime))
 		if(prob(10))
-			M << "\red Your insides are burning!"
+			M << "<span class='warning'>Your insides are burning!</span>"
 			M.adjustToxLoss(rand(20,60)*REM)
 	if(prob(40))
 		M.heal_organ_damage(5*REM,0)
@@ -269,11 +269,11 @@
 		if(H.species.name=="Grey")
 			if(method == TOUCH)
 				if(H.wear_mask)
-					H << "\red Your mask protects you from the water!"
+					H << "<span class='warning'>Your mask protects you from the water!</span>"
 					return
 
 				if(H.head)
-					H << "\red Your helmet protects you from the water!"
+					H << "<span class='warning'>Your helmet protects you from the water!</span>"
 					return
 				if(!M.unacidable)
 					if(prob(15) && volume >= 30)
@@ -516,7 +516,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/human = M
 		if(human.dna.mutantrace == null)
-			M << "\red Your flesh rapidly mutates!"
+			M << "<span class='warning'>Your flesh rapidly mutates!</span>"
 			human.dna.mutantrace = "slime"
 			human.update_mutantrace()
 	..()
@@ -710,7 +710,7 @@
 						return
 
 					if(H.head)
-						H << "<span class='warning'>\red Your helmet protects you from the holy water!</span>"
+						H << "<span class='warning'><span class='warning'>Your helmet protects you from the holy water!</span></span>"
 						return
 					if(!M.unacidable)
 						if(prob(15) && volume >= 30)
@@ -1010,18 +1010,18 @@
 				if(!H.wear_mask.unacidable)
 					del (H.wear_mask)
 					H.update_inv_wear_mask()
-					H << "\red Your mask melts away but protects you from the acid!"
+					H << "<span class='warning'>Your mask melts away but protects you from the acid!</span>"
 				else
-					H << "\red Your mask protects you from the acid!"
+					H << "<span class='warning'>Your mask protects you from the acid!</span>"
 				return
 
 			if(H.head && !istype(H.head, /obj/item/weapon/reagent_containers/glass/bucket))
 				if(prob(15) && !H.head.unacidable)
 					del(H.head)
 					H.update_inv_head()
-					H << "\red Your helmet melts away but protects you from the acid"
+					H << "<span class='warning'>Your helmet melts away but protects you from the acid</span>"
 				else
-					H << "\red Your helmet protects you from the acid!"
+					H << "<span class='warning'>Your helmet protects you from the acid!</span>"
 				return
 
 		else if(ismonkey(M))
@@ -1030,9 +1030,9 @@
 				if(!MK.wear_mask.unacidable)
 					del (MK.wear_mask)
 					MK.update_inv_wear_mask()
-					MK << "\red Your mask melts away but protects you from the acid!"
+					MK << "<span class='warning'>Your mask melts away but protects you from the acid!</span>"
 				else
-					MK << "\red Your mask protects you from the acid!"
+					MK << "<span class='warning'>Your mask protects you from the acid!</span>"
 				return
 
 		if(!M.unacidable)
@@ -1064,7 +1064,7 @@
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
 			for(var/mob/M in viewers(5, O))
-				M << "\red \the [O] melts."
+				M << "<span class='warning'>\the [O] melts.</span>"
 			del(O)
 
 /datum/reagent/pacid
@@ -1093,18 +1093,18 @@
 				if(!H.wear_mask.unacidable)
 					del (H.wear_mask)
 					H.update_inv_wear_mask()
-					H << "\red Your mask melts away but protects you from the acid!"
+					H << "<span class='warning'>Your mask melts away but protects you from the acid!</span>"
 				else
-					H << "\red Your mask protects you from the acid!"
+					H << "<span class='warning'>Your mask protects you from the acid!</span>"
 				return
 
 			if(H.head && !istype(H.head, /obj/item/weapon/reagent_containers/glass/bucket))
 				if(prob(15) && !H.head.unacidable)
 					del(H.head)
 					H.update_inv_head()
-					H << "\red Your helmet melts away but protects you from the acid"
+					H << "<span class='warning'>Your helmet melts away but protects you from the acid</span>"
 				else
-					H << "\red Your helmet protects you from the acid!"
+					H << "<span class='warning'>Your helmet protects you from the acid!</span>"
 				return
 
 			if(!H.unacidable)
@@ -1119,9 +1119,9 @@
 				if(!MK.wear_mask.unacidable)
 					del (MK.wear_mask)
 					MK.update_inv_wear_mask()
-					MK << "\red Your mask melts away but protects you from the acid!"
+					MK << "<span class='warning'>Your mask melts away but protects you from the acid!</span>"
 				else
-					MK << "\red Your mask protects you from the acid!"
+					MK << "<span class='warning'>Your mask protects you from the acid!</span>"
 				return
 
 			if(!MK.unacidable)
@@ -1144,7 +1144,7 @@
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
 			for(var/mob/M in viewers(5, O))
-				M << "\red \the [O] melts."
+				M << "<span class='warning'>\the [O] melts.</span>"
 			del(O)
 
 /datum/reagent/glycerol
@@ -1549,7 +1549,7 @@
 			for(var/obj/effect/E in W) if(E.name == "Wallrot") del E
 
 			for(var/mob/O in viewers(W, null))
-				O.show_message(text("\blue The fungi are completely dissolved by the solution!"), 1)
+				O.show_message(text("<span class='notice'>The fungi are completely dissolved by the solution!</span>"), 1)
 
 /datum/reagent/toxin/plantbgone/reaction_obj(var/obj/O, var/volume)
 	if(istype(O,/obj/effect/alien/weeds/))

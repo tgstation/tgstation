@@ -531,7 +531,7 @@ var/global/list/damage_icon_parts = list()
 			if(w_uniform.flags&ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
-				src << "\red You burst out of \the [w_uniform]!"
+				src << "<span class='warning'>You burst out of \the [w_uniform]!</span>"
 				drop_from_inventory(w_uniform)
 				return
 		else
@@ -806,8 +806,7 @@ var/global/list/damage_icon_parts = list()
 
 		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
 			drop_from_inventory(handcuffed)
-			drop_l_hand()
-			drop_r_hand()
+			drop_hands()
 
 		var/obj/item/I = wear_suit
 		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
@@ -902,8 +901,7 @@ var/global/list/damage_icon_parts = list()
 /mob/living/carbon/human/update_inv_handcuffed(var/update_icons=1)
 	overlays -= obj_overlays[HANDCUFF_LAYER]
 	if(handcuffed)
-		drop_r_hand()
-		drop_l_hand()
+		drop_hands()
 		stop_pulling()	//TODO: should be handled elsewhere
 		var/obj/Overlays/O = obj_overlays[HANDCUFF_LAYER]
 		O.icon = 'icons/mob/mob.dmi'
@@ -948,7 +946,8 @@ var/global/list/damage_icon_parts = list()
 		overlays += O
 		obj_overlays[R_HAND_LAYER] = O
 		//overlays_standing[R_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
-		if (handcuffed) drop_r_hand()
+		if (handcuffed)
+			drop_item(r_hand)
 	//else
 		//overlays_standing[R_HAND_LAYER] = null
 	if(update_icons)   update_icons()
@@ -967,7 +966,8 @@ var/global/list/damage_icon_parts = list()
 		overlays += O
 		obj_overlays[L_HAND_LAYER] = O
 		//overlays_standing[L_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
-		if (handcuffed) drop_l_hand()
+		if (handcuffed)
+			drop_item(l_hand)
 	//else
 		//overlays_standing[L_HAND_LAYER] = null
 	if(update_icons)   update_icons()

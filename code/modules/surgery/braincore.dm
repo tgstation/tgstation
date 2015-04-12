@@ -27,13 +27,13 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] has cut through [target]'s skull open with \the [tool].",		\
-		"\blue You have cut through [target]'s skull open with \the [tool].")
+		user.visible_message("<span class='notice'>[user] has cut through [target]'s skull open with \the [tool].</span>",		\
+		"<span class='notice'>You have cut through [target]'s skull open with \the [tool].</span>")
 		target.brain_op_stage = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, cracking [target]'s skull with \the [tool]!" , \
-		"\red Your hand slips, cracking [target]'s skull with \the [tool]!" )
+		user.visible_message("<span class='warning'>[user]'s hand slips, cracking [target]'s skull with \the [tool]!</span>" , \
+		"<span class='warning'>Your hand slips, cracking [target]'s skull with \the [tool]!</span>" )
 		target.apply_damage(max(10, tool.force), BRUTE, "head")
 
 /datum/surgery_step/brain/cut_brain
@@ -55,13 +55,13 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] separates connections to [target]'s brain with \the [tool].",	\
-		"\blue You separate connections to [target]'s brain with \the [tool].")
+		user.visible_message("<span class='notice'>[user] separates connections to [target]'s brain with \the [tool].</span>",	\
+		"<span class='notice'>You separate connections to [target]'s brain with \the [tool].</span>")
 		target.brain_op_stage = 3
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
-		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
 		target.apply_damage(50, BRUTE, "head", 1)
 
 /datum/surgery_step/brain/saw_spine
@@ -82,8 +82,8 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] separates [target]'s brain from \his spine with \the [tool].",	\
-		"\blue You separate [target]'s brain from spine with \the [tool].")
+		user.visible_message("<span class='notice'>[user] separates [target]'s brain from \his spine with \the [tool].</span>",	\
+		"<span class='notice'>You separate [target]'s brain from spine with \the [tool].</span>")
 
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -100,8 +100,8 @@
 		target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
-		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
 		target.apply_damage(30, BRUTE, "head", 1)
 		if (ishuman(user))
 			user:bloody_body(target)
@@ -131,14 +131,14 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] takes out all bone chips out of [target]'s brain with \the [tool].",	\
-		"\blue You take out all bone chips out of [target]'s brain with \the [tool].")
+		user.visible_message("<span class='notice'>[user] takes out all bone chips out of [target]'s brain with \the [tool].</span>",	\
+		"<span class='notice'>You take out all bone chips out of [target]'s brain with \the [tool].</span>")
 		target.brain_op_stage = 3
 
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, jabbing \the [tool] in [target]'s brain!", \
-		"\red Your hand slips, jabbing \the [tool] in [target]'s brain!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, jabbing \the [tool] in [target]'s brain!</span>", \
+		"<span class='warning'>Your hand slips, jabbing \the [tool] in [target]'s brain!</span>")
 		target.apply_damage(30, BRUTE, "head", 1)
 
 /datum/surgery_step/brain/hematoma
@@ -159,16 +159,16 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] mends hematoma in [target]'s brain with \the [tool].",	\
-		"\blue You mend hematoma in [target]'s brain with \the [tool].")
+		user.visible_message("<span class='notice'>[user] mends hematoma in [target]'s brain with \the [tool].</span>",	\
+		"<span class='notice'>You mend hematoma in [target]'s brain with \the [tool].</span>")
 		var/datum/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
 		if (sponge)
 			sponge.damage = 0
 
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, bruising [target]'s brain with \the [tool]!", \
-		"\red Your hand slips, bruising [target]'s brain with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, bruising [target]'s brain with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, bruising [target]'s brain with \the [tool]!</span>")
 		target.apply_damage(20, BRUTE, "head", 1)
 
 //////////////////////////////////////////////////////////////////
@@ -197,13 +197,13 @@
 		"You start cutting [target]'s flesh with \the [tool].")
 
 	end_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] cuts [target]'s flesh with \the [tool].",	\
-		"\blue You cut [target]'s flesh with \the [tool], exposing the cores")
+		user.visible_message("<span class='notice'>[user] cuts [target]'s flesh with \the [tool].</span>",	\
+		"<span class='notice'>You cut [target]'s flesh with \the [tool], exposing the cores</span>")
 		target.brain_op_stage = 1
 
 	fail_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, tearing [target]'s flesh with \the [tool]!", \
-		"\red Your hand slips, tearing [target]'s flesh with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, tearing [target]'s flesh with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, tearing [target]'s flesh with \the [tool]!</span>")
 
 /datum/surgery_step/slime/cut_innards
 	allowed_tools = list(
@@ -223,13 +223,13 @@
 		"You start cutting [target]'s silky innards apart with \the [tool].")
 
 	end_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] cuts [target]'s innards apart with \the [tool], exposing the cores",	\
-		"\blue You cut [target]'s innards apart with \the [tool], exposing the cores")
+		user.visible_message("<span class='notice'>[user] cuts [target]'s innards apart with \the [tool], exposing the cores</span>",	\
+		"<span class='notice'>You cut [target]'s innards apart with \the [tool], exposing the cores</span>")
 		target.brain_op_stage = 2
 
 	fail_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, tearing [target]'s innards with \the [tool]!", \
-		"\red Your hand slips, tearing [target]'s innards with \the [tool]!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, tearing [target]'s innards with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, tearing [target]'s innards with \the [tool]!</span>")
 
 /datum/surgery_step/slime/saw_core
 	allowed_tools = list(
@@ -249,8 +249,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		target.cores--
-		user.visible_message("\blue [user] cuts out one of [target]'s cores with \the [tool].",,	\
-		"\blue You cut out one of [target]'s cores with \the [tool]. [target.cores] cores left.")
+		user.visible_message("<span class='notice'>[user] cuts out one of [target]'s cores with \the [tool].</span>",,	\
+		"<span class='notice'>You cut out one of [target]'s cores with \the [tool]. [target.cores] cores left.</span>")
 
 		if(target.cores >= 0)
 			new target.coretype(target.loc)
@@ -260,5 +260,5 @@
 
 
 	fail_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, failing to cut core out!", \
-		"\red Your hand slips, failing to cut core out!")
+		user.visible_message("<span class='warning'>[user]'s hand slips, failing to cut core out!</span>", \
+		"<span class='warning'>Your hand slips, failing to cut core out!</span>")

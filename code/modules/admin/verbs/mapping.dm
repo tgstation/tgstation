@@ -331,7 +331,7 @@ var/global/prevent_airgroup_regroup = 0
 	set category = "Mapping"
 	set name = "Regroup All Airgroups Attempt"
 
-	usr << "\red Proc disabled."
+	usr << "<span class='warning'>Proc disabled.</span>"
 
 	/*prevent_airgroup_regroup = 0
 	for(var/datum/air_group/AG in air_master.air_groups)
@@ -342,7 +342,7 @@ var/global/prevent_airgroup_regroup = 0
 	set category = "Mapping"
 	set name = "Kill pipe processing"
 
-	usr << "\red Proc disabled."
+	usr << "<span class='warning'>Proc disabled.</span>"
 
 	/*pipe_processing_killed = !pipe_processing_killed
 	if(pipe_processing_killed)
@@ -354,7 +354,7 @@ var/global/prevent_airgroup_regroup = 0
 	set category = "Mapping"
 	set name = "Kill air processing"
 
-	usr << "\red Proc disabled."
+	usr << "<span class='warning'>Proc disabled.</span>"
 
 	/*air_processing_killed = !air_processing_killed
 	if(air_processing_killed)
@@ -369,7 +369,7 @@ var/global/say_disabled = 0
 	set category = "Mapping"
 	set name = "Disable all communication verbs"
 
-	usr << "\red Proc disabled."
+	usr << "<span class='warning'>Proc disabled.</span>"
 
 	/*say_disabled = !say_disabled
 	if(say_disabled)
@@ -386,7 +386,7 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 	set category = "Mapping"
 	set name = "Disable all movement"
 
-	usr << "\red Proc disabled."
+	usr << "<span class='warning'>Proc disabled.</span>"
 
 	/*movement_disabled = !movement_disabled
 	if(movement_disabled)

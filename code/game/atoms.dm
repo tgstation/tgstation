@@ -438,7 +438,7 @@ its easier to just keep the beam vertical.
 	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/reagent_containers/spray)) && !(istype(W, /obj/item/weapon/packageWrap)) && !istype(W, /obj/item/device/detective_scanner))
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << "\red <B>[src] has been hit by [user] with [W]</B>"
+				O << "<span class='warning'><B>[src] has been hit by [user] with [W]</B></span>"
 	return
 */
 /atom/proc/add_hiddenprint(mob/living/M as mob)

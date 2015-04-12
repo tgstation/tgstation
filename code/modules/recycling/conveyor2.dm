@@ -191,7 +191,7 @@
 	if(istype(W, /obj/item/device/multitool))
 		update_multitool_menu(user)
 		return 1
-	user.drop_item(src.loc)
+	user.drop_item(W, src.loc)
 	return 0
 
 /obj/machinery/conveyor/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
@@ -348,7 +348,7 @@
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
 	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
-		usr << "\red Nope."
+		usr << "<span class='warning'>Nope.</span>"
 		return 0
 	if(position == 0)
 		if(last_pos < 0)
@@ -383,10 +383,10 @@
 		update_multitool_menu(user)
 		return 1
 	if(istype(W, /obj/item/weapon/wrench))
-		user << "\blue Deconstructing \the [src]..."
+		user << "<span class='notice'>Deconstructing \the [src]...</span>"
 		if(do_after(user,50))
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
-			user << "\blue You disassemble \the [src]."
+			user << "<span class='notice'>You disassemble \the [src].</span>"
 			var/turf/T=get_turf(src)
 			new /obj/item/device/assembly/signaler(T)
 			new /obj/item/stack/rods(T,1)
@@ -401,7 +401,7 @@
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/oneway/attack_hand(mob/user)
 	if(isobserver(usr) && !canGhostWrite(user,src,"toggled"))
-		usr << "\red Nope."
+		usr << "<span class='warning'>Nope.</span>"
 		return 0
 	if(position == 0)
 		position = convdir
