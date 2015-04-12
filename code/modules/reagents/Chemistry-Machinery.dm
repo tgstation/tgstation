@@ -243,7 +243,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 		else if(!panel_open)
 			src.beaker =  D
-			user.drop_item(src)
+			user.drop_item(D, src)
 			user << "You add the beaker to the machine!"
 			nanomanager.update_uis(src) // update all UIs attached to src
 			return 1
@@ -388,7 +388,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			user << "A beaker is already loaded into the machine."
 			return
 		src.beaker = B
-		user.drop_item(src)
+		user.drop_item(B, src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		update_icon()
@@ -401,7 +401,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 
 		src.loaded_pill_bottle = B
-		user.drop_item(src)
+		user.drop_item(B, src)
 		user << "You add the pill bottle into the dispenser slot!"
 		src.updateUsrDialog()
 		return 1
@@ -965,7 +965,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 
 		src.beaker =  I
-		user.drop_item(src)
+		user.drop_item(I, src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
@@ -1106,7 +1106,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return 0
 		else
 			src.beaker =  O
-			user.drop_item(src)
+			user.drop_item(O, src)
 			update_icon()
 			src.updateUsrDialog()
 			return 1
@@ -1545,7 +1545,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/item/weapon/electrolyzer/proc/insert_beaker(obj/item/weapon/W as obj, mob/user as mob)
 	W.loc = src
 	beakers += W
-	user.drop_item(W)
+	user.drop_item(W, src)
 
 
 /obj/structure/centrifuge
@@ -1576,13 +1576,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(!W.reagents.total_volume)
 			W.loc = src
 			cans += W
-			user.drop_item(src)
+			user.drop_item(W, src)
 			user << "<span class='notice'>You add a passive container. It now contains [cans.len].</span>"
 		else
 			if(!beaker)
 				user << "<span class='notice'>You insert an active container.</span>"
 				src.beaker =  W
-				user.drop_item(src)
+				user.drop_item(W, src)
 			else
 				user << "<span class='warning'>There is already an active container.</span>"
 		return
@@ -1590,7 +1590,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		..()
 
 /obj/structure/centrifuge/attack_hand(mob/user as mob)
-	if(cans || beaker)
+	if(cans.len || beaker)
 		for(var/obj/item/O in cans)
 			O.loc = src.loc
 			cans -= O
@@ -1703,8 +1703,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		S.use(1)
 		crushable = M
 		return 0
-	user.drop_item(O)
-	O.loc = src
+	user.drop_item(O, src)
 	crushable = O
 	return 0
 
