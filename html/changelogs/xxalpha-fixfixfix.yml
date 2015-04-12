@@ -1,0 +1,10 @@
+author: xxalpha
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added a new Reviver implant: now it revives you from unconsciousness rather than death."
+  - rscadd: "Added cybernetic implants and a cybernetic implants bundle to the Nuke Ops uplink."
+  - bugfix: "Fixed Nutriment pump implant printing."
+  - tweak: "Health Analyzers now have the ability to detect cybernetic implants."
+  - tweak: "X-Ray implants are now much harder to unlock."
