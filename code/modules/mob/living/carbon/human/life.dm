@@ -634,10 +634,6 @@ var/global/list/organ_damage_overlays = list(
 			internals.icon_state = "internal0"
 	return null
 
-	// USED IN DEATHWHISPERS
-/mob/living/carbon/human/proc/isInCrit()
-	// Health is in deep shit and we're not already dead
-	return health <= config.health_threshold_crit && stat != 2
 
 /mob/living/carbon/human/proc/handle_breath(var/datum/gas_mixture/breath)
 	if((status_flags & GODMODE) || (flags & INVULNERABLE))
