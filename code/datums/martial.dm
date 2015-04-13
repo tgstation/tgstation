@@ -271,6 +271,7 @@
 	return
 
 /obj/item/weapon/storage/belt/champion/wrestling
+	name = "Wrestling Belt"
 	var/datum/martial_art/old = null
 
 /obj/item/weapon/storage/belt/champion/wrestling/equipped(mob/user, slot)
@@ -298,9 +299,11 @@
 	var/used = 0
 
 /obj/item/weapon/plasma_fist_scroll/attack_self(mob/user as mob)
-	if(!ishuman(user) || used)
+	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = user
-	H.martial_art = new/datum/martial_art/plasma_fist
-	used = 1
-	desc += "It looks like it's magic was used up."
+	if(!used)
+		var/mob/living/carbon/human/H = user
+		H.martial_art = new/datum/martial_art/plasma_fist
+		H << "<span class='notice'>You learn the PLASMA FIST style</span>"
+		used = 1
+		desc += "It looks like it's magic was used up."
