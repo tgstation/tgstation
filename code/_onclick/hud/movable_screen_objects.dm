@@ -10,7 +10,7 @@
 
 /obj/screen/movable
 	var/snap2grid = FALSE
-
+	var/moved = FALSE
 
 //Snap Screen Object
 //Tied to the grid, snaps to the nearest turf
@@ -43,6 +43,7 @@
 		var/pix_Y = text2num(screen_loc_Y[2]) - 16
 		screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
 
+	moved = TRUE
 
 
 //Debug procs

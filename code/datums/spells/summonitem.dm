@@ -13,6 +13,8 @@
 
 	var/obj/marked_item
 
+	action_icon_state = "summons"
+
 /obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets)
 	for(var/mob/living/user in targets)
 		var/list/hand_items = list(user.get_active_hand(),user.get_inactive_hand())

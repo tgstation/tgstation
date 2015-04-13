@@ -143,9 +143,9 @@
 				santa_objective.completed = 1 //lets cut our santas some slack.
 				santa_objective.owner = santa.mind
 				santa.mind.objectives += santa_objective
-				santa.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents
+				santa.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents)
 				var/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/telespell = new(santa)
 				telespell.clothes_req = 0 //santa robes aren't actually magical.
-				santa.mind.spell_list += telespell //does the station have chimneys? WHO KNOWS!
+				santa.mind.AddSpell(telespell) //does the station have chimneys? WHO KNOWS!
 
 				santa << "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>"

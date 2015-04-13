@@ -153,7 +153,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	*/
 
 	for(var/datum/disease/D in src.viruses)
-		B.data["viruses"] += new D.type(0, D, 1)
+		B.data["viruses"] += D.Copy()
 
 	B.data["blood_DNA"] = copytext(src.dna.unique_enzymes,1,0)
 	if(src.resistances&&src.resistances.len)

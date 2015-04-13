@@ -9,6 +9,7 @@
 	severity = HARMFUL
 	stage_prob = 10
 	visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
+	disease_flags = CURABLE
 	var/list/stage1 = list("You feel unremarkable.")
 	var/list/stage2 = list("You feel boring.")
 	var/list/stage3 = list("You feel utterly plain.")
@@ -202,7 +203,7 @@
 				var/mob/living/carbon/human/human = affected_mob
 				if(human.dna && human.dna.species.id != "slime")
 					human.dna.species = new /datum/species/slime()
-					human.update_icons()
+					human.regenerate_icons()
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"

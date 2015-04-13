@@ -123,7 +123,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.head && H.head.flags & HEADCOVERSMOUTH)
+		if(H.is_mouth_covered(head_only = 1))
 			H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
 								"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
 			Die()
@@ -239,7 +239,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/mob/living/carbon/C = M
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(H.head && H.head.flags & HEADCOVERSMOUTH)
+		if(H.is_mouth_covered(head_only = 1))
 			return 0
 		return 1
 	return 0

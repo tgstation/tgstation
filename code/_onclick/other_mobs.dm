@@ -42,6 +42,10 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_ranged_attack(src, A)
 
+	var/turf/T = A
+	if(istype(T) && get_dist(src,T) <= 1)
+		src.Move_Pulled(T)
+
 /*
 	Animals & All Unspecified
 */
