@@ -57,6 +57,14 @@
 
 	var/datum/bomberman_arena/arena = null
 
+
+/obj/item/weapon/bomberman/New()
+	..()
+	if(bomberman_hurt)
+		hurt_players = 1
+	if(bomberman_destroy)
+		destroy_environnement = 1
+
 /obj/item/weapon/bomberman/attack_self(mob/user)
 	var/turf/T = get_turf(src)
 	if(bomblimit && !no_bomb)
@@ -142,6 +150,13 @@
 	destroy_environnement = destroy
 	hurt_players = hurt
 	parent = dispenser
+
+	if(!parent.arena && bomberman_hurt)
+		hurt_players = 1
+	if(!parent.arena && bomberman_destroy)
+		destroy_environnement = 1
+
+
 	if(line_dir)
 		var/turf/T1 = get_turf(src)
 		step(src,line_dir)
@@ -875,6 +890,9 @@ var/global/list/arenas = list()
 	if(violence)
 		B.hurt_players = 1
 		B.bombpower = 2
+	else
+		B.hurt_players = 0
+	B.destroy_environnement = 0
 	M.equip_to_slot_or_del(B, slot_s_store)
 	bombsuit.slowdown = 1
 	for(var/obj/item/clothing/C in M)
