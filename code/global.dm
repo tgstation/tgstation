@@ -361,4 +361,5 @@ var/list/sortedAreas = list()
 
 
 var/global/list/volunteer_gladiators = list()
+var/global/list/ready_gladiators = list()
 var/global/list/never_gladiators = list()

@@ -1356,6 +1356,8 @@ client/proc/delete_all_bomberman()
 	set desc = "4th wall ointment."
 	set category = "Fun"
 
+	if(!check_rights(R_FUN)) return
+
 	if(alert(usr, "Remove all Bomberman-related objects in the game world?", "Remove Bomberman", "Yes", "No") != "Yes")
 		return
 
@@ -1404,9 +1406,11 @@ client/proc/create_bomberman_arena()
 	set desc = "Create a customizable Bomberman-type arena."
 	set category = "Fun"
 
+	if(!check_rights(R_FUN)) return
+
 	var/list/arena_sizes = list(
-		"screensized",
-		"saturntenplayers",
+		"15x15 (4 players)",
+		"39x23 (10 players)",
 		)
 	var/arena_type = input("What size for the arena?", "Arena Construction") in arena_sizes
 	var/turf/T = get_turf(src.mob)
@@ -1417,6 +1421,8 @@ client/proc/control_bomberman_arena()
 	set name = "Arena Control Panel"
 	set desc = "Control or Remove an existing Bomberman-type arena."
 	set category = "Fun"
+
+	if(!check_rights(R_FUN)) return
 
 	var/datum/bomberman_arena/arena_target = input("Which arena do you wish to control?", "Arena Control Panel") in arenas
 	usr << "Arena Control Panel: [arena_target]"
@@ -1429,6 +1435,8 @@ client/proc/control_bomberman_arena()
 		if(ARENA_INGAME)
 			arena_status = "IN-GAME"
 	usr << "status: [arena_status]"
+	usr << "violence mode: [arena_target.violence ? "ON" : "OFF"]"
+	usr << "opacity mode: [arena_target.opacity ? "ON" : "OFF"]"
 	if(arena_status == "AVAILABLE")
 		var/i = 0
 		for(var/datum/bomberman_spawn/S in arena_target.spawns)
@@ -1445,8 +1453,11 @@ client/proc/control_bomberman_arena()
 		"CANCEL",
 		"Close Arena(space)",
 		"Close Arena(floors)",
-		"Reset Arena",
+		"Reset Arena (remove players)",
 		"Recruit Gladiators (among the observers)",
+		"Toggle Violence",
+		"Toggle Opacity",
+		"Force Start",
 		)
 
 	if(arena_status == "AVAILABLE")
@@ -1464,7 +1475,7 @@ client/proc/control_bomberman_arena()
 			arena_target.close()
 		if("Close Arena(floors)")
 			arena_target.close(0)
-		if("Reset Arena")
+		if("Reset Arena (remove players)")
 			arena_target.reset()
 		if("Recruit Gladiators (among the observers)")
 			spawn()
@@ -1491,6 +1502,21 @@ client/proc/control_bomberman_arena()
 								never_gladiators += D.mind
 		if("Restart Game (with same players)")
 			arena_target.reset(0)
+		if("Force Start")
+			var/list/new_challengers = list()
+			for(var/datum/bomberman_spawn/S in arena_target.spawns)
+				if(S.player_mind)
+					new_challengers += S.player_mind
+			if(new_challengers.len > 1)
+				arena_target.start(new_challengers)
+		if("Toggle Violence")
+			arena_target.violence = !arena_target.violence
+		if("Toggle Opacity")
+			arena_target.opacity = !arena_target.opacity
+			for(var/obj/structure/softwall/L in arena_target.swalls)
+				L.opacity = arena_target.opacity
+			for(var/turf/unsimulated/wall/bomberman/L in arena_target.turfs)
+				L.opacity = arena_target.opacity
 		if("Start a new game!")
 			var/i = 0
 			for(var/datum/bomberman_spawn/S in arena_target.spawns)
