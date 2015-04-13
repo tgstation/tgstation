@@ -1,3 +1,6 @@
+#define LIGHT_DAM_THRESHOLD 4
+#define LIGHT_DAMAGE_TAKEN 10
+
 /*
 
 SHADOWLING: A gamemode based on previously-run events
@@ -184,11 +187,11 @@ Made by Xhuis
 
 /datum/game_mode/shadowling/declare_completion()
 	if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
-		world << "<font size=3 color=green><b>The shadowlings have ascended and taken over the station!</FONT></b></span>"
+		world << "<span class='greentext'><b>The shadowlings have ascended and taken over the station!</b></span>"
 	else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
-		world << "<span class='danger'><font size=3><b>The shadowlings have been killed by the crew!</b></FONT></span>"
+		world << "<span class='redtext'><b>The shadowlings have been killed by the crew!</b></span>"
 	else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
-		world << "<span class='danger'><font size=3><b>The crew has escaped the station before the shadowlings could ascend!</b></FONT></span>"
+		world << "<span class='redtext'><b>The crew has escaped the station before the shadowlings could ascend!</b></span>"
 	..()
 	return 1
 
@@ -196,12 +199,12 @@ Made by Xhuis
 /datum/game_mode/proc/auto_declare_completion_shadowling()
 	var/text = ""
 	if(shadows.len)
-		text += "<br><font size=3><b>The shadowlings were:</b></font>"
+		text += "<br><span class='big'><b>The shadowlings were:</b></span>"
 		for(var/datum/mind/shadow in shadows)
 			text += printplayer(shadow)
 		text += "<br>"
 		if(thralls.len)
-			text += "<br><font size=3><b>The thralls were:</b></font>"
+			text += "<br><span class='big'><b>The thralls were:</b></span>"
 			for(var/datum/mind/thrall in thralls)
 				text += printplayer(thrall)
 	text += "<br>"
@@ -232,8 +235,8 @@ Made by Xhuis
 		if(A)
 			if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
 			else						light_amount =  10
-		if(light_amount > 4) //Not complete blackness - they can live in very small light levels plus starlight
-			H.take_overall_damage(0,10)
+		if(light_amount > LIGHT_DAM_THRESHOLD) //Not complete blackness - they can live in very small light levels plus starlight
+			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
 			H << "<span class='userdanger'>The light burns you!</span>"
 			H << 'sound/weapons/sear.ogg'
 		else if (light_amount < 2)
