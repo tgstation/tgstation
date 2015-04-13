@@ -146,7 +146,7 @@ Made by Xhuis
 		update_shadow_icons_added(new_thrall_mind)
 		thralls += new_thrall_mind
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
-		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b>: Ascend to your true form by use of the Ascendance ability. \
+		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> Ascend to your true form by use of the Ascendance ability. \
 		This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
 		new_thrall_mind.current << "<b>The objectives of your shadowlings:</b>: Ascend to your true form by use of the Ascendance ability. \
 		This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
