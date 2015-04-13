@@ -130,7 +130,7 @@
 	desc = "An integrated electric mining drill."
 	var/warned = 0
 
-/obj/item/weapon/pickaxe/drill/attack_self(mob/user)
+/obj/item/weapon/pickaxe/drill/cyborg/attack_self(mob/user)
 	return //can't remove the drill's cell
 
 /obj/item/weapon/pickaxe/drill/cyborg/proc/use_robot_power(var/mob/living/silicon/robot/R)
