@@ -174,7 +174,7 @@
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 
-	if((config.continuous["wizard"] && !config.midround_antag["wizard"]) || round_converted == 1 || !wizards) //No reason to waste resources
+	if(round_converted == 1 || !wizards) //No reason to waste resources
 		return ..() //Check for evacuation/nuke
 
 	for(var/datum/mind/wizard in wizards)
@@ -185,18 +185,19 @@
 		if(traitor.current.stat != DEAD)
 			return ..()
 
-	if(!config.continuous["wizard"] || !config.midround_antag["wizard"])
+	if(!config.continuous["wizard"])
 		return 1
 
-	else
+	if(SSevent.wizardmode) //If summon events was active, turn it off
+		SSevent.toggleWizardmode()
+		SSevent.resetFrequency()
+
+	if(config.midround_antag["wizard"])
 		round_converted = convert_roundtype()
 		if(!round_converted)
 			finished = 1
 			return 1
-		else
-			if(SSevent.wizardmode) //If summon events was active, turn it off
-				SSevent.toggleWizardmode()
-				SSevent.resetFrequency()
+
 	return ..()
 
 /datum/game_mode/wizard/declare_completion()
