@@ -110,8 +110,8 @@ var/datum/global_hud/global_hud = new()
 	var/list/other
 	var/list/obj/screen/hotkeybuttons
 
-	var/list/obj/screen/item_action/item_action_list = list()	//Used for the item action ui buttons.
-
+	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
+	var/action_buttons_hidden = 0
 
 datum/hud/New(mob/owner)
 	mymob = owner
@@ -243,8 +243,6 @@ datum/hud/New(mob/owner)
 				mymob.client.screen -= other
 			if(hotkeybuttons)
 				mymob.client.screen -= hotkeybuttons
-			if(item_action_list)
-				mymob.client.screen -= item_action_list
 
 			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
 			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
@@ -269,8 +267,6 @@ datum/hud/New(mob/owner)
 				mymob.client.screen -= other
 			if(hotkeybuttons)
 				mymob.client.screen -= hotkeybuttons
-			if(item_action_list)
-				mymob.client.screen -= item_action_list
 
 			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
 			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.

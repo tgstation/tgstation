@@ -12,6 +12,8 @@
 	range = 0
 	cast_sound = null
 
+	action_icon_state = "mime"
+	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
 	if(usr && usr.mind)
@@ -34,6 +36,9 @@
 	charge_max = 3000
 	range = -1
 	include_user = 1
+
+	action_icon_state = "mime"
+	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/targeted/mime/speak/Click()
 	if(!usr)
