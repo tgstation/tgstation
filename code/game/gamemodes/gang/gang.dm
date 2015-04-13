@@ -174,14 +174,6 @@
 
 	. = 0
 
-	var/spray = mob.equip_in_one_of_slots(SC,slots)
-
-	if (!spray)
-		mob << "Your Syndicate benefactors were unfortunately unable to get you some spraypaint."
-	else
-		mob << "The Spraypaint in your [spray] will help you spread your message of unrest."
-		mob.update_icons()
-
 	var/where2 = mob.equip_in_one_of_slots(recaller, slots)
 	if (!where2)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a Recaller."
@@ -196,6 +188,7 @@
 		mob << "The <b>flash</b> in your [where] will help you to persuade the crew to work for you."
 		. += 1
 
+	mob.equip_in_one_of_slots(SC,slots)
 	mob.update_icons()
 
 	return .
