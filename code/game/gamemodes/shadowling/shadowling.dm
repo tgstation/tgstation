@@ -232,13 +232,15 @@ Made by Xhuis
 		if(A)
 			if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
 			else						light_amount =  10
-		if(light_amount > 2) //Rapid death while in the light, countered by...
+		if(light_amount > 4) //Not complete blackness - they can live in very small light levels plus starlight
 			H.take_overall_damage(0,10)
 			H << "<span class='userdanger'>The light burns you!</span>"
 			H << 'sound/weapons/sear.ogg'
-		else if (light_amount < 2)  //...extreme benefits while in the dark
-			H.heal_overall_damage(5,3)
-			H.adjustToxLoss(-3)
+		else if (light_amount < 2)
+			H.heal_overall_damage(5,5)
+			H.adjustToxLoss(-5)
+			H.adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
+			H.adjustCloneLoss(-1)
 			H.SetWeakened(0)
 			H.SetStunned(0)
 

@@ -85,6 +85,7 @@
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
+			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
 
 
 
