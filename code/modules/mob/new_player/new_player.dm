@@ -355,6 +355,7 @@
 		character.equip_to_slot_or_del(new /obj/item/weapon/bomberman/(character), slot_s_store)
 		character.update_icons()
 		character << "<span class='notice'>Tip: Use the BBD in your suit's pocket to place bombs.</span>"
+		character << "<span class='notice'>Try to keep your BBD and escape this hell hole alive!</span>"
 
 	ticker.mode.latespawn(character)
 

@@ -2786,6 +2786,7 @@
 						M << "Wait...what?"
 						spawn(50)
 							M << "<span class='notice'>Tip: Use the BBD in your suit's pocket to place bombs.</span>"
+							M << "<span class='notice'>Try to keep your BBD and escape this hell hole alive!</span>"
 
 				message_admins("[key_name_admin(usr)] turned everyone into Bomberman!")
 				log_admin("[key_name_admin(usr)] turned everyone into Bomberman!")

@@ -151,9 +151,9 @@
 	hurt_players = hurt
 	parent = dispenser
 
-	if(!parent.arena && bomberman_hurt)
+	if((!parent || !parent.arena) && bomberman_hurt)
 		hurt_players = 1
-	if(!parent.arena && bomberman_destroy)
+	if((!parent || !parent.arena) && bomberman_destroy)
 		destroy_environnement = 1
 
 
@@ -629,6 +629,11 @@
 	permeability_coefficient = 0.01
 	allowed = list(/obj/item/weapon/bomberman/)
 	pressure_resistance = 40 * ONE_ATMOSPHERE
+	var/never_removed = 1
+
+/obj/item/clothing/suit/space/bomberman/dropped(mob/user as mob)
+	..()
+	never_removed = 0
 
 /obj/item/clothing/head/helmet/space/bomberman
 	name = "Bomberman head"
@@ -639,6 +644,11 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	body_parts_covered = FULL_HEAD
 	siemens_coefficient = 0
+	var/never_removed = 1
+
+/obj/item/clothing/head/helmet/space/bomberman/dropped(mob/user as mob)
+	..()
+	never_removed = 0
 
 ///////////////////////////////ARENA BUILDER///////////////////////////
 
