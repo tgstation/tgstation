@@ -266,7 +266,8 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	H.martial_art = old
+	if(H.get_item_by_slot(slot_gloves) == src)
+		H.martial_art = old
 	return
 
 /obj/item/weapon/storage/belt/champion/wrestling
@@ -285,7 +286,8 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	H.martial_art = old
+	if(H.get_item_by_slot(slot_gloves) == src)
+		H.martial_art = old
 	return
 
 /obj/item/weapon/plasma_fist_scroll
