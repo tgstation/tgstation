@@ -701,6 +701,9 @@ var/global/list/arenas = list()
 	var/w = 1
 	var/h = 1
 	switch(size)
+		if("15x13 (2 players)")
+			w = 14
+			h = 12
 		if("15x15 (4 players)")
 			w = 14
 			h = 14
@@ -757,21 +760,30 @@ var/global/list/arenas = list()
 		pencil.x++
 		pencil.y++
 		T = pencil.loc
-		var/datum/bomberman_spawn/sp1 = new/datum/bomberman_spawn()
-		sp1.spawnpoint = T
-		spawns += sp1
+
+		if(!(size == "15x13 (2 players)"))
+			var/datum/bomberman_spawn/sp1 = new/datum/bomberman_spawn()
+			sp1.spawnpoint = T
+			spawns += sp1
+
 		pencil.x = x+w-1
 		T = pencil.loc
+
 		var/datum/bomberman_spawn/sp2 = new/datum/bomberman_spawn()
 		sp2.spawnpoint = T
 		spawns += sp2
+
 		pencil.y = y+h-1
 		T = pencil.loc
-		var/datum/bomberman_spawn/sp3 = new/datum/bomberman_spawn()
-		sp3.spawnpoint = T
-		spawns += sp3
+
+		if(!(size == "15x13 (2 players)"))
+			var/datum/bomberman_spawn/sp3 = new/datum/bomberman_spawn()
+			sp3.spawnpoint = T
+			spawns += sp3
+
 		pencil.x = x+1
 		T = pencil.loc
+
 		var/datum/bomberman_spawn/sp4 = new/datum/bomberman_spawn()
 		sp4.spawnpoint = T
 		spawns += sp4
@@ -930,8 +942,10 @@ var/global/list/arenas = list()
 		S.availability = 0
 		if(violence)
 			S.player << "Violence Mode activated! Bombs hurt players! Suits offer no protections! Initial Flame Range increased!"
+		if(S.player.client)
+			S.player.client << sound('sound/bomberman/start.ogg')
 		i++
-	sleep(20)
+	sleep(40)
 	for(var/datum/bomberman_spawn/S in spawns)
 		S.player.canmove = 1
 
@@ -984,6 +998,10 @@ var/global/list/arenas = list()
 	var/w = 1
 	var/h = 1
 	switch(shape)
+		if("15x13 (2 players)")
+			w = 14
+			h = 12
+
 		if("15x15 (4 players)")
 			w = 14
 			h = 14
@@ -997,7 +1015,7 @@ var/global/list/arenas = list()
 	var/y = pencil.y
 	var/turf/T = null
 
-	sleep(50)	//waiting a moment, in case there are bombs waiting to explode in the arena
+	sleep(40)	//waiting a moment, in case there are bombs waiting to explode in the arena
 
 	while (pencil.y <= (y+h))	//replacing the Soft Walls
 		pencil.x = x
@@ -1080,6 +1098,30 @@ var/global/list/arenas = list()
 /datum/bomberman_arena/proc/planner(var/size,mob/user)
 	var/choice = 0
 	switch(size)
+		if("15x13 (2 players)")
+			var/obj/structure/planner/pencil = new /obj/structure/planner(center, src)
+			var/w = 14
+			var/h = 12
+			pencil.x -= (w/2)
+			pencil.y -= (h/2)
+			var/x = pencil.x
+			var/y = pencil.y
+			var/turf/T = null
+			while (pencil.y <= (y+h))
+				pencil.x = x
+				while(pencil.x <= (x+w))
+					T = pencil.loc
+					var/obj/structure/planner/P = new /obj/structure/planner(T, src)
+					if(P.loc)
+						planners += P
+					pencil.x++
+				pencil.y++
+			qdel(pencil)
+			if(planners.len == 195)
+				var/achoice = alert(user, "All those green tiles (that only ghosts can see) will be part of the arena. Do you want to proceed?","Arena Creation", "Confirm","Cancel")
+				if(achoice=="Confirm")
+					choice = 1
+
 		if("15x15 (4 players)")
 			for(var/turf/T in range(center,7))
 				var/obj/structure/planner/P = new /obj/structure/planner(T, src)
@@ -1093,12 +1135,12 @@ var/global/list/arenas = list()
 				user << "<span class='warning'>Part of the arena was outside the Z-Level.</span>"
 		if("39x23 (10 players)")
 			var/obj/structure/planner/pencil = new /obj/structure/planner(center, src)
-			pencil.x -= 19
-			pencil.y -= 11
-			var/x = pencil.x
-			var/y = pencil.y
 			var/w = 38
 			var/h = 22
+			pencil.x -= (w/2)
+			pencil.y -= (h/2)
+			var/x = pencil.x
+			var/y = pencil.y
 			var/turf/T = null
 			while (pencil.y <= (y+h))
 				pencil.x = x

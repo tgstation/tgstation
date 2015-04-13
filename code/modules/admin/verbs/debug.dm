@@ -1409,6 +1409,7 @@ client/proc/create_bomberman_arena()
 	if(!check_rights(R_FUN)) return
 
 	var/list/arena_sizes = list(
+		"15x13 (2 players)",
 		"15x15 (4 players)",
 		"39x23 (10 players)",
 		)
