@@ -278,7 +278,7 @@
 	beakers += B2
 
 
-/obj/item/weapon/grenade/chem_grenade/
+/obj/item/weapon/grenade/chem_grenade/incendiary
 	name = "incendiary grenade"
 	desc = "Used for clearing rooms of living things."
 	stage = READY
