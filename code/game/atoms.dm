@@ -20,7 +20,7 @@
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
-
+	var/allow_spin = 1
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)
