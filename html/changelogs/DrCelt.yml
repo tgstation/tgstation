@@ -1,0 +1,5 @@
+author:DrCelt
+delete-after: True
+  -bugfix: Finally fixed the issue where a new station account could bankrupt central command
+  -tweak: The Station Account is now worth 5000, in line with all the departments. 
+  -tweak: PINs are now 4 digits & Account Numbers are now 5 digits.
