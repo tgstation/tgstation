@@ -571,7 +571,7 @@
 "kY" = (/obj/machinery/door_control{id = "nukeop_ready"; name = "mission launch control"; pixel_x = -26; pixel_y = 0; req_access_txt = "151"},/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
 "kZ" = (/obj/machinery/computer/telecrystals/uplinker,/turf/unsimulated/floor{tag = "icon-podhatch (SOUTHWEST)"; icon_state = "podhatch"; dir = 10},/area/syndicate_mothership)
 "la" = (/obj/structure/urinal{pixel_y = 28},/turf/unsimulated/floor{icon_state = "freezerfloor"; dir = 2},/area/syndicate_mothership)
-"lb" = (/obj/structure/toilet{pixel_y = 8},/obj/structure/window/reinforced/tinted{dir = 8; icon_state = "twindow"},/obj/machinery/door/window{name = "Tactical Toilet"; opacity = 1},/turf/unsimulated/floor{icon_state = "freezerfloor"; dir = 2},/area/syndicate_mothership)
+"lb" = (/obj/structure/toilet{pixel_y = 8},/obj/structure/window/reinforced/tinted{dir = 8; icon_state = "twindow"},/obj/machinery/door/window{name = "Tactical Toilet"; opacity = 1},/obj/item/slimepotion2,/turf/unsimulated/floor{icon_state = "freezerfloor"; dir = 2},/area/syndicate_mothership)
 "lc" = (/obj/structure/table/reinforced,/obj/item/weapon/pen,/turf/unsimulated/floor{tag = "icon-darkred"; icon_state = "darkred"; dir = 2},/area/centcom/evac)
 "ld" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/turf/unsimulated/floor{tag = "icon-darkred"; icon_state = "darkred"; dir = 2},/area/centcom/evac)
 "le" = (/obj/structure/table/reinforced,/turf/unsimulated/floor{tag = "icon-darkred (SOUTHWEST)"; icon_state = "darkred"; dir = 10},/area/centcom/evac)
