@@ -3,6 +3,7 @@
 /datum/artifact_effect/cellcharge
 	effecttype = "cellcharge"
 	effect_type = 3
+	var/next_message
 
 /datum/artifact_effect/cellcharge/DoEffectTouch(var/mob/user)
 	if(user)
@@ -23,7 +24,10 @@
 		for (var/mob/living/silicon/robot/M in mob_list)
 			for (var/obj/item/weapon/cell/D in M.contents)
 				D.charge += 25
-				M << "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>"
+				if(world.time >= next_message)
+					M << "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>"
+		if(world.time >= next_message)
+			next_message = world.time + 100
 		return 1
 
 /datum/artifact_effect/cellcharge/DoEffectPulse()
