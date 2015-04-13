@@ -1,8 +1,0 @@
-author: AnturK
-
-delete-after: True
-
-changes: 
-  - rscadd: "Spacemen have learned the basics of martial arts: Boxing, unleash it's power by wearing Boxing Gloves."
-  - rscadd: "While boxing you can't grab or disarm, but you hit harder with a knockout chance that scales off stamina damage above 50."
-  - rscadd: "Rumors have been heard of powerful martial styles avaliable only to the gods themselves."
