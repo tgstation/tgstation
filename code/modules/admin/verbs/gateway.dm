@@ -20,7 +20,14 @@
 
 	log_admin("[usr] has loaded the away mission [mapname]")
 	message_admins("[usr] has loaded the away mission [mapname]")
+	var/z_level = world.maxz + 1
 	loadAwayMission(mapname, 1)
+
+	for(var/atom/movable/AM in world)
+		if(AM.z == z_level)
+			AM.initialize()
+
+	SSlighting.Initialize(world.timeofday, z_level)
 
 	var/obj/machinery/gateway/centerstation/gateway = locate() in world //cri
 	var/obj/machinery/gateway/centeraway/gatewayaway = locate() in world //double cri
