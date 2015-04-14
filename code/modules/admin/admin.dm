@@ -863,3 +863,35 @@ proc/kick_clients_in_lobby(var/message, var/kick_only_afk = 0)
 			kicked_client_names.Add("[C.ckey]")
 			del(C)
 	return kicked_client_names
+
+
+/datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
+
+	//this is the exact two check rights checks required to edit a ckey with vv.
+	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+		return 0
+
+	if (!frommob.ckey)
+		return 0
+
+	var/question = ""
+	if (tomob.ckey)
+		question = "This mob already has a user ([tomob.ckey]) in control of it! "
+	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
+
+	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	if (ask != "Yes")
+		return 1
+
+	if (tomob.ckey)
+		var/mob/dead/observer/ghost = new/mob/dead/observer(tomob,1)
+		ghost.ckey = tomob.ckey
+
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
+	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
+	feedback_add_details("admin_verb","CGD")
+
+	tomob.ckey = frommob.ckey
+	qdel(frommob)
+
+	return 1
