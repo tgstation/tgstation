@@ -135,9 +135,12 @@
 			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O]. </span>")
 			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
 			shaved = 1
-			icon_state = "[initial(icon_living)]_shaved"
 			icon_living = "[initial(icon_living)]_shaved"
 			icon_dead = "[initial(icon_living)]_shaved_dead"
+			if(stat == CONSCIOUS)
+				icon_state = icon_living
+			else
+				icon_state = icon_dead
 		return
 	..()
 
