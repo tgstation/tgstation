@@ -146,7 +146,7 @@ datum
 
 			setup()
 				set background = 1
-				world << "<span class='warning'><B>Processing Geometry...</span></B>"
+				world << "<span class='danger'>Processing Geometry...</span>"
 				sleep(1)
 
 				var/start_time = world.timeofday
@@ -156,7 +156,7 @@ datum
 						assemble_group_turf(S)
 					S.update_air_properties()
 
-				world << "<span class='warning'><B>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span></B>"
+				world << "<span class='danger'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>"
 
 			assemble_group_turf(turf/simulated/base)
 

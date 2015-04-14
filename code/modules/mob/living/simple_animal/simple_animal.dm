@@ -442,7 +442,7 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='warning'><B>[src] has been attacked with the [O] by [user]. </span></B>")
+					M.show_message("<span class='danger'>[src] has been attacked with the [O] by [user]. </span>")
 		else
 			usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
 			for(var/mob/M in viewers(src, null))

@@ -66,9 +66,9 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
-			visible_message("<span class='warning'><B>[src] has been attacked with [O] by [user]. </span></B>")
+			visible_message("<span class='danger'>[src] has been attacked with [O] by [user]. </span>")
 		else
-			visible_message("<span class='warning'><B>[src] blocks [O] with its shield! </span></B>")
+			visible_message("<span class='danger'>[src] blocks [O] with its shield! </span>")
 	else
 		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
 		visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
