@@ -30,6 +30,7 @@ var/list/ai_list = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
+	var/obj/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = 1 //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	var/obj/item/device/pda/ai/aiPDA = null
@@ -41,6 +42,7 @@ var/list/ai_list = list()
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
+	var/can_dominate_mechs = 0
 
 	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click()
 	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
@@ -425,6 +427,14 @@ var/list/ai_list = list()
 	if (href_list["botrefresh"]) //Refreshes the bot control panel.
 		botcall()
 		return
+
+	if (href_list["ai_take_control"]) //Mech domination
+		var/obj/mecha/M = locate(href_list["ai_take_control"])
+		if(controlled_mech)
+			src << "You are already loaded into an onboard computer!"
+			return
+		if(M)
+			transfer_ai("MECHA","HACK",M, usr) //See ai_core.dm for the AI transference procs.
 
 	else if (href_list["faketrack"])
 		var/mob/target = locate(href_list["track"]) in mob_list

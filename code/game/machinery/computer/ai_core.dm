@@ -210,7 +210,7 @@ If adding stuff to this, don't forget that an AI need to cancel_camera() wheneve
 That prevents a few funky behaviors.
 */
 //What operation to perform based on target, what ineraction to perform based on object used, target itself, user. The object used is src and calls this proc.
-/obj/item/proc/transfer_ai(var/choice as text, var/interaction as text, var/target, var/mob/U as mob)
+atom/proc/transfer_ai(var/choice as text, var/interaction as text, var/target, var/mob/U as mob)
 	if(istype(src, /obj/item/device/aicard))
 		var/obj/item/device/aicard/icard = src
 		if(icard.flush)
@@ -248,6 +248,51 @@ That prevents a few funky behaviors.
 						T.cancel_camera()
 						T << "You have been downloaded to a mobile storage device. Remote device connection severed."
 						U << "<span class='boldnotice'>Transfer successful</span>: [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+
+		if("MECHA") //Transfer from core or card to mech. Proc is called by mech.
+			var/obj/mecha/M = target
+			var/mob/living/silicon/ai/AI
+			switch(interaction)
+				if("HACK") //Called by AI mob on the mech.
+					AI = src
+					new /obj/structure/AIcore/deactivated(AI.loc)
+					if(M.occupant) //Oh, I am sorry, were you using that?
+						AI << "<span class='warning'>Pilot detected. Forced ejection initated!"
+						M.occupant << "<span class='danger'>You have been forcibly ejected!</span>!
+						M.go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
+				if("AICARD") //Using an AI card on a mech.
+					var/obj/item/device/aicard/C = src
+					AI = locate(/mob/living/silicon/ai) in C
+					if(!AI)
+						U << "<span class='warning'>There is no AI currently installed on this device.</span>"
+						return
+					else
+						if(AI.stat || !AI.client)
+							U << "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>"
+							return
+						else if(M.occupant || M.dna) //Normal AIs cannot steal mechs!
+							U << "<span class='warning'>Access denied. [M.name] is [M.occupant ? "currently occupied" : "secured with a DNA lock"]."
+							return
+						AI.control_disabled = 0
+						AI.radio_enabled = 1
+						C.icon_state = "aicard"
+						C.name = "intelliCard"
+						C.overlays.Cut()
+						U << "<span class='boldnotice'>Permament transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+			AI.aiRestorePowerRoutine = 0
+			AI.loc = M
+			M.occupant = AI
+			M.icon_state = initial(M.icon_state)
+			playsound(M, 'sound/machines/windowdoor.ogg', 50, 1)
+			if(!M.hasInternalDamage())
+				M.occupant << sound('sound/mecha/nominal.ogg',volume=50)
+			AI.cancel_camera()
+			AI.controlled_mech = M
+			AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
+			AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
+			AI << "[interaction == "HACK" ? "<span class='announce'>Takeover of [M.name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
+			: "<span class='notice'>You have been permanently uploaded to a mech's onboard computer."]"
+			AI << "<span class='boldnotice'>Use Middle-Mouse to interact with the station electronics. Clicking normally now activates the mech's functions and equipment.</span>"
 
 		if("INACTIVE")//Inactive AI object.
 			var/obj/structure/AIcore/deactivated/T = target

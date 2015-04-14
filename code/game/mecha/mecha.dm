@@ -96,7 +96,10 @@
 /obj/mecha/Destroy()
 	go_out()
 	for(var/mob/M in src) //Let's just be ultra sure
-		M.Move(loc)
+		if(isAI(M))
+			M.gib() //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. Forever.
+		else
+			M.Move(loc)
 
 	if(prob(30))
 		explosion(get_turf(loc), 0, 0, 1, 3)
@@ -776,22 +779,23 @@ obj/mecha/proc/can_use(mob/user)
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
 
+	else if(istype(W, /obj/item/device/aicard))
+		W.transfer_ai("MECHA","AICARD",src,user) //Continued in ai_core.dm
+
 	else if(!(W.flags&NOBLUDGEON))
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
 	return
 
-/*
 /obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
-	if(!istype(user, /mob/living/silicon/ai))
+	if(!isAI(user))
 		return
-	var/output = {"<b>Assume direct control over [src]?</b>
-						<a href='?src=\ref[src];ai_take_control=\ref[user];duration=3000'>Yes</a><br>
-						"}
-	user << browse(output, "window=mecha_attack_ai")
-	return
-*/
-
-
+	if(user.can_dominate_mechs) //Nothing like a big, red link to make the player feel powerful!
+		examine(user) //Get diagnostic information!
+		var/obj/item/mecha_parts/mecha_tracking/B = locate(/obj/item/mecha_parts/mecha_tracking) in src
+		if(B)
+			user << "<span class='danger'>Warning: Tracking Beacon detected. Beacon Data:"
+			user << "[B.get_mecha_info()]"
+		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
@@ -1088,7 +1092,7 @@ obj/mecha/proc/can_use(mob/user)
 	go_out()
 
 
-/obj/mecha/proc/go_out()
+/obj/mecha/proc/go_out(var/forced)
 	if(!src.occupant) return
 	var/atom/movable/mob_container
 	if(ishuman(occupant))
@@ -1098,6 +1102,10 @@ obj/mecha/proc/can_use(mob/user)
 	else if(istype(occupant, /mob/living/carbon/brain))
 		var/mob/living/carbon/brain/brain = occupant
 		mob_container = brain.container
+	else if(isAI(occupant) && forced) //This should only happen if there are multiple AIs in a round, and at least one is Malf.
+		occupant.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+		occupant = null
+		return
 	else
 		return
 	if(mob_container.forceMove(src.loc))//ejecting mob container
@@ -1519,6 +1527,9 @@ var/year_integer = text2num(year) // = 2013???
 	if(href_list["dna_lock"])
 		if(usr != src.occupant)	return
 		if(src.occupant)
+			if(!occupant.dna.unique_enzymes)
+				occupant << "<span class='danger'> You do noth ave any DNA!</span>"
+				return
 			src.dna = src.occupant.dna.unique_enzymes
 			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
 		return
@@ -1549,54 +1560,6 @@ var/year_integer = text2num(year) // = 2013???
 		return
 	*/
 
-
-
-/*
-
-	if (href_list["ai_take_control"])
-		var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"])
-		var/duration = text2num(href_list["duration"])
-		var/mob/living/silicon/ai/O = new /mob/living/silicon/ai(src)
-		var/cur_occupant = src.occupant
-		O.invisibility = 0
-		O.canmove = 1
-		O.name = AI.name
-		O.real_name = AI.real_name
-		O.anchored = 1
-		O.aiRestorePowerRoutine = 0
-		O.control_disabled = 1 // Can't control things remotely if you're stuck in a card!
-		O.laws = AI.laws
-		O.stat = AI.stat
-		O.oxyloss = AI.getOxyLoss()
-		O.fireloss = AI.getFireLoss()
-		O.bruteloss = AI.getBruteLoss()
-		O.toxloss = AI.toxloss
-		O.updatehealth()
-		src.occupant = O
-		if(AI.mind)
-			AI.mind.transfer_to(O)
-		AI.name = "Inactive AI"
-		AI.real_name = "Inactive AI"
-		AI.icon_state = "ai-empty"
-		spawn(duration)
-			AI.name = O.name
-			AI.real_name = O.real_name
-			if(O.mind)
-				O.mind.transfer_to(AI)
-			AI.control_disabled = 0
-			AI.laws = O.laws
-			AI.oxyloss = O.getOxyLoss()
-			AI.fireloss = O.getFireLoss()
-			AI.bruteloss = O.getBruteLoss()
-			AI.toxloss = O.toxloss
-			AI.updatehealth()
-			qdel(O)
-			if (!AI.stat)
-				AI.icon_state = "ai"
-			else
-				AI.icon_state = "ai-crash"
-			src.occupant = cur_occupant
-*/
 	return
 
 ///////////////////////

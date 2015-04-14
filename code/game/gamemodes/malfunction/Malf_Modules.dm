@@ -157,6 +157,27 @@
 			src << "<span class='warning>RCD-disabling pulse emitted.</span>"
 		else src << "<span class='notice'>Out of uses.</span>"
 
+/datum/AI_Module/large/mecha_domination
+	module_name = "Viral Mech Domination"
+	mod_pick_name = "mechhack"
+	description = "Hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. Once uploaded to the mech, it is impossible to leave.\
+	Do not allow the mech to leave the station's vicinity or allow it to be destroyed."
+	cost = 30
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/mech_takeover
+
+/mob/living/silicon/ai/proc/mech_takeover()
+	set name = "Compile Mecha Virus"
+	set category = "Malfunction"
+	set desc = "Target a mech by clicking it. Click the appropriate command when ready."
+	if(stat)
+		return
+	can_dominate_mechs = 1 //Yep. This is all it does. Honk!
+	src << "Virus package compiled. Select a target mech at any time.<b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>"
+	verbs -= /mob/living/silicon/ai/proc/mech_takeover
+
+
 /datum/AI_Module/large/break_fire_alarms
 	module_name = "Thermal Sensor Override"
 	mod_pick_name = "burnpigs"
