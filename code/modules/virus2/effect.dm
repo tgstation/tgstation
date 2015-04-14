@@ -123,6 +123,17 @@
 			if(h.set_species("Tajaran"))
 				h.regenerate_icons()
 
+/datum/disease2/effect/voxpox
+	name = "Vox Pox"
+	stage = 4
+	badness = 2
+/datum/disease2/effect/voxpox/activate(var/mob/living/carbon/mob,var/multiplier)
+	if(istype(mob,/mob/living/carbon/human))
+		var/mob/living/carbon/human/h = mob
+		if(h.species.name != "Vox")
+			if(h.set_species("Vox"))
+				h.regenerate_icons()
+
 /datum/disease2/effect/suicide
 	name = "Suicidal Syndrome"
 	stage = 4
@@ -321,6 +332,14 @@
 
 
 
+/datum/disease2/effect/delightful
+	name = "Delightful Effect"
+	stage = 4
+/datum/disease2/effect/delightful/activate(var/mob/living/carbon/mob,var/multiplier)
+	mob << "<span class = 'notice'> You feel delightful!</span>"
+	if (mob.reagents.get_reagent_amount("doctorsdelight") < 1)
+		mob.reagents.add_reagent("doctorsdelight", 1)
+
 
 
 /datum/disease2/effect/spawn
@@ -443,6 +462,12 @@
 	stage = 3
 /datum/disease2/effect/giggle/activate(var/mob/living/carbon/mob,var/multiplier)
 	mob.say("*giggle")
+
+/datum/disease2/effect/chickenpox
+	name = "Chicken Pox"
+	stage = 3
+/datum/disease2/effect/chickenpox/activate(var/mob/living/carbon/mob,var/multiplier)
+	mob.say(pick("BAWWWK!", "BAAAWWK!", "CLUCK!", "CLUCK CLUCK!", "BAAAAWWWK BAWK BAAAWWK!"))
 
 /datum/disease2/effect/confusion
 	name = "Topographical Cretinism"
