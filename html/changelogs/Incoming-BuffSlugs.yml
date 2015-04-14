@@ -1,0 +1,6 @@
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - rscadd: "Changeling head slugs have been given player control, ventcrawling, and a short escape period after egg laying."
