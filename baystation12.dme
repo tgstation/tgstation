@@ -1478,6 +1478,7 @@
 #include "code\modules\research\server.dm"
 #include "code\modules\research\mechanic\blueprint.dm"
 #include "code\modules\research\mechanic\blueprinter.dm"
+#include "code\modules\research\mechanic\component_exchanger.dm"
 #include "code\modules\research\mechanic\device_analyser.dm"
 #include "code\modules\research\mechanic\flatpack.dm"
 #include "code\modules\research\mechanic\flatpacker.dm"
