@@ -67,10 +67,7 @@
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to add cables to the frame...</span>"
-					var oldloc = src.loc
-					if(do_after(user, 20))
-						if(src.loc!=oldloc)
-							return
+					if(do_after(user, 20, target = src))
 						if(C.get_amount() >= 5 && state == 1)
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"
@@ -85,11 +82,8 @@
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 										"<span class='notice'>You start to disassemble the frame...</span>", "You hear welding and clanking.")
-					var oldloc = src.loc
-					if(do_after(user, 40))
+					if(do_after(user, 40, target = src))
 						if( !WT.isOn() )
-							return
-						if(src.loc!=oldloc)
 							return
 						user << "<span class='notice'>You disassemble the frame.</span>"
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
@@ -98,10 +92,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				var oldloc = src.loc
-				if(do_after(user, 40))
-					if(src.loc!=oldloc)
-						return
+				if(do_after(user, 40, target = src))
 					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 					anchored = !anchored
 
@@ -109,10 +100,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				var oldloc = src.loc
-				if(do_after(user, 40))
-					if(src.loc!=oldloc)
-						return
+				if(do_after(user, 40, target = src))
 					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 					anchored = !anchored
 

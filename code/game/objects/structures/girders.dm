@@ -20,11 +20,8 @@
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 			user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
 								"<span class='notice'>You start to disassemble the girder...</span>", "You hear welding and clanking.")
-			var/oldloc = src.loc
-			if(do_after(user, 40))
+			if(do_after(user, 40, target = src))
 				if( !WT.isOn() )
-					return
-				if(src.loc!=oldloc)
 					return
 				user << "<span class='notice'>You disassemble the girder.</span>"
 				var/obj/item/stack/sheet/metal/M = new (loc, 2)
@@ -37,10 +34,7 @@
 			return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		user << "<span class='notice'>You start securing the girder...</span>"
-		var/oldloc = src.loc
-		if(do_after(user, 40))
-			if(src.loc!=oldloc)
-				return
+		if(do_after(user, 40, target = src))
 			user << "<span class='notice'>You secure the girder.</span>"
 			var/obj/structure/girder/G = new (loc)
 			transfer_fingerprints_to(G)
@@ -48,9 +42,7 @@
 
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user << "<span class='notice'>You start slicing apart the girder...</span>"
-		if(do_after(user,30))
-			if(!src.loc)
-				return
+		if(do_after(user, 30, target = src))
 			user << "<span class='notice'>You slice apart the girder.</span>"
 			var/obj/item/stack/sheet/metal/M = new (loc, 2)
 			M.add_fingerprint(user)
@@ -70,18 +62,14 @@
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == GIRDER_REINF)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user << "<span class='notice'>You start unsecuring support struts...</span>"
-		if(do_after(user,40))
-			if(!src.loc)
-				return
+		if(do_after(user, 40, target = src))
 			user << "<span class='notice'>You unsecure the support struts.</span>"
 			state = GIRDER_REINF_STRUTS
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == GIRDER_REINF_STRUTS)
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		user << "<span class='notice'>You start removing support struts...</span>"
-		if(do_after(user,40))
-			if(!src.loc)
-				return
+		if(do_after(user, 40, target = src))
 			user << "<span class='notice'>You remove the support struts.</span>"
 			new /obj/item/stack/sheet/plasteel(get_turf(src))
 			var/obj/structure/girder/G = new (loc)
@@ -91,9 +79,7 @@
 	else if(istype(W, /obj/item/weapon/wrench) && state == GIRDER_NORMAL && anchored )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		user << "<span class='notice'>You start unsecuring the girder...</span>"
-		if(do_after(user, 40))
-			if(!src.loc)
-				return
+		if(do_after(user, 40, target = src))
 			user << "<span class='notice'>You unsecure the girder.</span>"
 			var/obj/structure/girder/displaced/D = new (loc)
 			transfer_fingerprints_to(D)
@@ -109,19 +95,18 @@
 
 			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
 				if(!anchored)
-					if (S.use(2))
-						user << "<span class='notice'>You start building a false wall...</span>"
-						var/oldloc = src.loc
-						if(do_after(user, 20))
-							if(src.loc!=oldloc)
-								return
+					if(S.get_amount() < 2)
+						user << "<span class='warning'>You need two sheets of metal to create a false wall!</span>"
+						return
+					user << "<span class='notice'>You start building a false wall...</span>"
+					if(do_after(user, 20, target = src))
+						if(!src.loc || !S || S.amount < 2)
+							return
+						S.use(2)
 						user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
 						var/obj/structure/falsewall/F = new (loc)
 						transfer_fingerprints_to(F)
 						qdel(src)
-					else
-						user << "<span class='warning'>You need two sheets of metal to create a false wall!</span>"
-						return
 				else
 					if(S.get_amount() < 2)
 						user << "<span class='warning'>You need two sheets of metal to finish a wall!</span>"
@@ -145,16 +130,15 @@
 					if(S.amount < 2)
 						user << "<span class='warning'>You need at least two sheets to create a false wall!</span>"
 						return
-					S.use(2)
 					user << "<span class='notice'>You start building a reinforced false wall...</span>"
-					var/oldloc = src.loc
-					if(do_after(user, 20))
-						if(src.loc!=oldloc)
+					if(do_after(user, 20, target = src))
+						if(!src.loc || !S || S.amount < 2)
 							return
-					user << "<span class='notice'>You create a reinforced false wall. Push on it to open or close the passage.</span>"
-					var/obj/structure/falsewall/reinforced/FW = new (loc)
-					transfer_fingerprints_to(FW)
-					qdel(src)
+						S.use(2)
+						user << "<span class='notice'>You create a reinforced false wall. Push on it to open or close the passage.</span>"
+						var/obj/structure/falsewall/reinforced/FW = new (loc)
+						transfer_fingerprints_to(FW)
+						qdel(src)
 				else
 					if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
 						if(S.amount < 1) return ..()
@@ -173,7 +157,7 @@
 					else
 						if(S.amount < 1) return ..()
 						user << "<span class='notice'>You start reinforcing the girder...</span>"
-						if (do_after(user,60))
+						if (do_after(user, 60))
 							if(!src.loc || !S || S.amount < 1)
 								return
 							S.use(1)
@@ -187,7 +171,7 @@
 			var/M = S.sheettype
 			if(!anchored)
 				if(S.amount < 2)
-					user << "<span class='warning'>You need at least two sheets to create a false wall.</span>"
+					user << "<span class='warning'>You need at least two sheets to create a false wall!</span>"
 					return
 				S.use(2)
 				user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
@@ -198,7 +182,7 @@
 			else
 				if(S.amount < 2) return ..()
 				user << "<span class='notice'>You start adding plating...</span>"
-				if (do_after(user,40))
+				if (do_after(user, 40))
 					if(!src.loc || !S || S.amount < 2)
 						return
 					S.use(2)
@@ -315,7 +299,7 @@
 
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user << "<span class='notice'>You start slicing apart the girder...</span>"
-		if(do_after(user,30))
+		if(do_after(user, 30))
 			user << "<span class='notice'>You slice apart the girder.</span>"
 			var/obj/effect/decal/remains/human/R = new (get_turf(src))
 			transfer_fingerprints_to(R)
