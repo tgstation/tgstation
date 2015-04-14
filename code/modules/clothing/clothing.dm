@@ -43,6 +43,7 @@
 	var/vision_flags = 0
 	var/darkness_view = 2//Base human is 2
 	var/invis_view = SEE_INVISIBLE_LIVING
+	var/scan_vision = 0
 	var/emagged = 0
 	var/list/icon/current = list() //the current hud icons
 	strip_delay = 20

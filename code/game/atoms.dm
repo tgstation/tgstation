@@ -98,6 +98,9 @@
 /atom/proc/is_open_container()
 	return flags & OPENCONTAINER
 
+/atom/proc/is_transparent_container()
+	return flags & TRANSPARENT
+
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
 	proc/can_subract_container()
@@ -245,12 +248,19 @@ its easier to just keep the beam vertical.
 	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
-		user << "It contains:"
-		if(reagents.reagent_list.len)
-			for(var/datum/reagent/R in reagents.reagent_list)
-				user << "[R.volume] units of [R.name]"
+		if(get_dist(user, src) <= 1 || is_transparent_container())
+			user << "It contains:"
+			if(reagents.reagent_list.len)
+				var/obj/item/clothing/glasses/G = user.get_item_by_slot(slot_glasses)
+				if(G && (G.scan_vision & SCAN_CHEMICAL) && get_dist(user, src) <= 1)
+					for(var/datum/reagent/R in reagents.reagent_list)
+						user << "[R.volume] units of [R.name]"
+				else
+					user << "[reagents.total_volume] units of something" // Would like to add RGBcode of the content some day.
+			else
+				user << "Nothing."
 		else
-			user << "Nothing."
+			user << "<span class='notice'>It is too far away.</span>"
 
 /atom/proc/relaymove()
 	return

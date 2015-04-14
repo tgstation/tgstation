@@ -28,9 +28,10 @@
 
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
-	desc = "A pair of snazzy goggles used to protect against chemical spills."
+	desc = "A pair of advanced chemistry goggles used to scan chemicals and protect against chemical spills."
 	icon_state = "purple"
 	item_state = "glasses"
+	scan_vision = SCAN_CHEMICAL
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
