@@ -17,7 +17,7 @@
 			H << "<span class='warning'>You are unable to equip that.</span>"
 
 /mob/living/carbon/human/get_all_slots()
-	return (get_head_slots() || get_body_slots()) //the || is list unification
+	. = get_head_slots() | get_body_slots()
 
 /mob/living/carbon/human/proc/get_body_slots()
 	return list(

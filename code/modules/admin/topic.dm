@@ -2215,46 +2215,50 @@
 				for(var/obj/machinery/computer/prison_shuttle/PS in world)
 					PS.allowedtocall = !(PS.allowedtocall)
 					message_admins("<span class='notice'>[key_name_admin(usr)] toggled status of prison shuttle to [PS.allowedtocall].</span>", 1)
-			if("prisonwarp")
-				if(!ticker)
+			if ("prisonwarp")
+				if (!ticker)
 					alert("The game hasn't started yet!", null, null, null, null, null)
 					return
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","PW")
+
+				feedback_inc("admin_secrets_fun_used", 1)
+
+				feedback_add_details("admin_secrets_fun_used", "PW")
+
 				message_admins("<span class='notice'>[key_name_admin(usr)] teleported all players to the prison station.</span>", 1)
-				for(var/mob/living/carbon/human/H in mob_list)
-					var/turf/loc = find_loc(H)
-					var/security = 0
-					if(loc.z > 1 || prisonwarped.Find(H))
-//don't warp them if they aren't ready or are already there
-						continue
-					H.Paralyse(5)
-					if(H.wear_id)
-						var/obj/item/weapon/card/id/id = H.get_idcard()
-						for(var/A in id.access)
-							if(A == access_security)
-								security++
-					if(!security)
-						//strip their stuff before they teleport into a cell :downs:
-						for(var/obj/item/weapon/W in H)
-							if(istype(W, /datum/organ/external))
-								continue
-								//don't strip organs
-							H.u_equip(W)
-							if (H.client)
-								H.client.screen -= W
-							if (W)
-								W.loc = H.loc
-								W.dropped(H)
-								W.layer = initial(W.layer)
-						//teleport person to cell
-						H.loc = pick(prisonwarp)
-						H.equip_to_slot_or_del(new /obj/item/clothing/under/color/prisoner(H), slot_w_uniform)
-						H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), slot_shoes)
-					else
-						//teleport security person
-						H.loc = pick(prisonsecuritywarp)
-					prisonwarped += H
+
+				var/security
+
+				for (var/mob/living/carbon/human/H in mob_list)
+					if (H)
+						if (H in prisonwarped) // don't warp them if they aren't ready or are already there
+							continue
+
+						security = FALSE
+
+						H.Paralyse(5)
+
+						if (H.wear_id)
+							var/obj/item/weapon/card/id/id = H.get_idcard()
+
+							for (var/A in id.access)
+								if (A == access_security)
+									security = TRUE
+									break
+
+						if (!security)
+							// strip their stuff before they teleport into a cell :downs:
+							for (var/obj/item/I in H.get_all_slots())
+								H.drop_from_inventory(I)
+
+							H.loc = pick(prisonwarp) // teleport person to cell
+
+							H.equip_to_slot_or_del(new /obj/item/clothing/under/color/prisoner(H), slot_w_uniform)
+
+							H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), slot_shoes)
+						else
+							H.loc = pick(prisonsecuritywarp) // teleport security person
+
+						prisonwarped += H
 			if("traitor_all")
 				if(!ticker)
 					alert("The game hasn't started yet!")

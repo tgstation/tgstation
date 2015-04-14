@@ -327,7 +327,9 @@ var/bomb_set
 				world.Reboot()
 				return
 	return
-
+/**
+ * NOTE: Don't change it to Destroy().
+ */
 /obj/item/weapon/disk/nuclear/Del()
 	if(blobstart.len > 0)
 		var/picked_turf = get_turf(pick(blobstart))
