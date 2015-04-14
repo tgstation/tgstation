@@ -159,4 +159,5 @@
 			sleep(50)
 			if(!ticker.mode.shadowling_ascended)
 				SSshuttle.emergency.request(null, 0.3)
+			ticker.mode.shadowling_ascended = 1
 			qdel(usr)
