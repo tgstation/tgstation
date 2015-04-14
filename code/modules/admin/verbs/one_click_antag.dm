@@ -566,8 +566,14 @@ client/proc/one_click_antag()
 
 	if(candidates.len >= 2)
 		//Oh god why we can't have static functions
-		var/teams_finished = round(ticker.mode.abductors.len / 2)
+		var/teams_finished = 0
+		if(ticker.mode.config_tag == "abductor")
+			var/datum/game_mode/abduction/A = ticker.mode
+			teams_finished = A.teams
+		else
+			teams_finished = round(ticker.mode.abductors.len / 2)
 		var/number =  teams_finished + 1
+
 		var/datum/game_mode/abduction/temp = new
 
 		var/agent_mind = pick(candidates)
@@ -591,6 +597,10 @@ client/proc/one_click_antag()
 		temp.make_abductor_team(number)
 		temp.post_setup_team(number)
 		ticker.mode.abductors += temp.abductors
+		if(ticker.mode.config_tag == "abductor")
+			var/datum/game_mode/abduction/A = ticker.mode
+			A.teams += 1
+
 		return 1
 	else
 		return
