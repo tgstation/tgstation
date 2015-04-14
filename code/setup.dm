@@ -1121,3 +1121,4 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define ARENA_SETUP 0		//under construction/resetting the arena
 #define ARENA_AVAILABLE 1	//arena is ready for a new game
 #define ARENA_INGAME 2		//a game is currently being played in the arena
+#define ARENA_ENDGAME 3		//a game just finished and the arena is about to reset
