@@ -937,7 +937,12 @@ var/global/list/arenas = list()
 		dress_player(M)
 		M.canmove = 0
 		S.player = M
-		p_mind.transfer_to(S.player)
+		var/mob/dead/observer/D = null
+		for(var/mob/dead/observer/O in observers)
+			if(O.ckey == p_mind.key)
+				D = O
+		if(!D)	continue
+		M.key = D.ckey
 		players += S.player_mind
 		S.availability = 0
 		if(violence)
@@ -945,22 +950,35 @@ var/global/list/arenas = list()
 		if(S.player.client)
 			S.player.client << sound('sound/bomberman/start.ogg')
 		i++
+
+	for(var/obj/machinery/computer/security/telescreen/entertainment/E in machines)
+		E.visible_message("\icon[E] \The [E] brightens as it appears that a round is starting in [name].")
+		flick("entertainment_arena",E)
+
 	sleep(40)
 	for(var/datum/bomberman_spawn/S in spawns)
 		S.player.canmove = 1
 
 /datum/bomberman_arena/proc/end()
 	if(tools.len > 1)	return
+	if(status == ARENA_ENDGAME)	return
+	status = ARENA_ENDGAME
 	for(var/obj/item/weapon/bomberman/W in tools)
 		W.hurt_players = 1	//FINISH THEM!
-	for(var/mob/M in players)
-		M << "Resetting arena in 30 seconds"
+	for(var/datum/mind/M in players)
+		M.current << "Resetting arena in 30 seconds"
 	sleep(300)
 	reset()
 
 
 /datum/bomberman_arena/proc/reset(var/remove_players=1)
 	status = ARENA_SETUP
+
+	for(var/obj/structure/powerup/P in arena.contents)
+		qdel(P)
+
+	for(var/obj/item/clothing/C in arena.contents)
+		qdel(C)
 
 	for(var/obj/structure/planner/spawnpoint/P in planners)
 		P.icon_state = "planner"
