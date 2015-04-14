@@ -1024,6 +1024,7 @@ var/global/list/organ_damage_overlays = list(
 			total_plasmaloss += zas_settings.Get(/datum/ZAS_Setting/CONTAMINATION_LOSS)
 		I.OnMobLife(src)
 	if(status_flags & GODMODE)	return 0	//godmode
+	if(species.name=="Plasmaman") return 0 //plasmaman shouldn't be hurt by plasma contaminated clothes
 	adjustToxLoss(total_plasmaloss)
 
 	if(species.flags & REQUIRE_LIGHT)

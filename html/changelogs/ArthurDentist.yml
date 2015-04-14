@@ -1,2 +1,3 @@
 author: ArthurDentist
-changes: []
+changes: 
+  - bugfix: Plasmamen no longer take damage from contaminated clothing
