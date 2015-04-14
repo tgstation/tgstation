@@ -515,3 +515,17 @@
 	icon_state = "darkholme"
 	item_state = "darkholme"
 	_color = "darkholme"
+
+/obj/item/clothing/under/gokugidown
+	name = "Turtle Hermit Undershirt"
+	desc = "Something seems oddly familiar about this outfit..."
+	icon_state = "gokugidown"
+	item_state = "gokugidown"
+	_color = "gokugidown"
+
+/obj/item/clothing/under/gokugi
+	name = "Turtle Hermit Outfit"
+	desc = "An outfit from one trained by the great Turtle Hermit"
+	icon_state = "gokugi"
+	item_state = "gokugi"
+	_color = "gokugi"
