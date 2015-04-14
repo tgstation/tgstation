@@ -239,7 +239,7 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Muton")
-	eyeprot = 2
+	eyeprot = 1
 
 	cold_breath_protection = 230
 

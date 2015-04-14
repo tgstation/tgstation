@@ -126,6 +126,7 @@ datum/mind
 			Factions and special roles:<br>"}
 		// END AUTOFIX
 		var/list/sections = list(
+			"hasborer",
 			"revolution",
 			"cult",
 			"wizard",
@@ -139,6 +140,16 @@ datum/mind
 		var/text = ""
 
 		if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey) || istype(current, /mob/living/simple_animal/construct))
+			/mob/living/simple_animal/borer
+			/** HAS BORER **/
+			text = "Has Borer"
+			text = "<i><b>[text]</b></i>: "
+			var/mob/living/simple_animal/borer/B = current.has_brain_worms()
+			if(B)
+				text += "<span class='danger'>[formatPlayerPanel(B,B.ckey)]</span>"
+			else
+				text += "NO"
+			sections["hasborer"] = text
 			/** REVOLUTION ***/
 			text = "revolution"
 			if (ticker.mode.config_tag=="revolution")

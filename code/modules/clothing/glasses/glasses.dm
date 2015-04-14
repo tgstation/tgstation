@@ -104,7 +104,7 @@
 	item_state = "welding-g"
 	action_button_name = "Toggle Welding Goggles"
 	var/up = 0
-	eyeprot = 2
+	eyeprot = 3
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/welding/proc/getMask()

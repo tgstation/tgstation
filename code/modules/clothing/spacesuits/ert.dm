@@ -11,6 +11,7 @@
 	var/obj/machinery/camera/camera
 	species_restricted = list("exclude","Vox")
 	pressure_resistance = 200 * ONE_ATMOSPHERE
+	eyeprot = 3
 
 /obj/item/clothing/head/helmet/space/ert/attack_self(mob/user)
 	if(camera)
