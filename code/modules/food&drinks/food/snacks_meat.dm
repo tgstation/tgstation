@@ -98,14 +98,6 @@
 	..()
 	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 
-/obj/item/weapon/reagent_containers/food/snacks/wingfangchu
-	name = "wing fang chu"
-	desc = "A savory dish of alien wing wang in soy."
-	icon_state = "wingfangchu"
-	trash = /obj/item/weapon/reagent_containers/glass/bowl
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
-	list_reagents = list("nutriment" = 6, "vitamin" = 2)
-
 /obj/item/weapon/reagent_containers/food/snacks/kebab
 	trash = /obj/item/stack/rods
 	icon_state = "kebab"
