@@ -78,7 +78,7 @@
 "bx" = (/obj/structure/closet/secure_closet/freezer/fridge,/turf/simulated/floor/plasteel{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/awaymission/wwmines)
 "by" = (/turf/simulated/floor/plasteel{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/awaymission/wwmines)
 "bz" = (/mob/living/simple_animal/hostile/syndicate/ranged,/turf/simulated/floor/plasteel{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/awaymission/wwmines)
-"bA" = (/obj/structure/closet{icon_closed = "cabinet_closed"; icon_opened = "cabinet_open"; icon_state = "cabinet_closed"},/turf/simulated/floor/wood,/area/awaymission/wwmines)
+"bA" = (/obj/structure/closet{icon_state = "cabinet_closed"},/turf/simulated/floor/wood,/area/awaymission/wwmines)
 "bB" = (/obj/structure/stool/bed,/turf/simulated/floor/wood,/area/awaymission/wwmines)
 "bC" = (/obj/structure/table/wood,/obj/item/weapon/gun/projectile,/turf/simulated/floor/wood,/area/awaymission/wwmines)
 "bD" = (/obj/structure/table/wood,/turf/simulated/floor/wood,/area/awaymission/wwmines)
