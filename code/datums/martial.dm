@@ -135,6 +135,7 @@
 
 
 /datum/martial_art/wrestling/proc/Suplex(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	add_logs(A, D, "suplexed")
 	D.visible_message("<span class='danger'>[A] suplexes [D]!</span>", \
 								"<span class='userdanger'>[A] suplexes [D]!</span>")
 	D.forceMove(A.loc)
