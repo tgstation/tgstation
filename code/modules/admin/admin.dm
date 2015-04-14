@@ -883,7 +883,7 @@ proc/kick_clients_in_lobby(var/message, var/kick_only_afk = 0)
 	if (ask != "Yes")
 		return 1
 
-	ghostize(tomob,0)
+	tomob.ghostize(0)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
 	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
