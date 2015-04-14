@@ -2770,6 +2770,7 @@
 				feedback_add_details("admin_secrets_fun_used","BBM")
 				var/choice = alert("Dress every player like Bomberman and give them BBDs?","Bomberman Mode Activation","Confirm","Cancel")
 				if(choice=="Confirm")
+					bomberman_mode = 1
 					world << sound('sound/bomberman/start.ogg')
 					for(var/mob/living/carbon/human/M in player_list)
 						if(M.wear_suit)
@@ -2789,6 +2790,7 @@
 						M << "Wait...what?"
 						spawn(50)
 							M << "<span class='notice'>Tip: Use the BBD in your suit's pocket to place bombs.</span>"
+							M << "<span class='notice'>Try to keep your BBD and escape this hell hole alive!</span>"
 
 				message_admins("[key_name_admin(usr)] turned everyone into Bomberman!")
 				log_admin("[key_name_admin(usr)] turned everyone into Bomberman!")
@@ -2797,8 +2799,10 @@
 				feedback_add_details("admin_secrets_fun_used","BBH")
 				var/choice = alert("Activate Cuban Pete mode? Note that newly spawned BBD will still have player damage deactivated.","Activating Bomberman Bombs Player Damage","Confirm","Cancel")
 				if(choice=="Confirm")
+					bomberman_hurt = 1
 					for(var/obj/item/weapon/bomberman/B in world)
-						B.hurt_players = 1
+						if(!B.arena)
+							B.hurt_players = 1
 				message_admins("[key_name_admin(usr)] enabled the player damage of the Bomberman Bomb Dispensers currently in the world. Cuban Pete approves.")
 				log_admin("[key_name_admin(usr)] enabled the player damage of the Bomberman Bomb Dispensers currently in the world. Cuban Pete approves.")
 			if("bomberdestroy")
@@ -2806,8 +2810,10 @@
 				feedback_add_details("admin_secrets_fun_used","BBD")
 				var/choice = alert("Activate Michael Bay mode? Note that newly spawned BBD will still have environnement damage deactivated.","Activating Bomberman Bombs Environnement Damage","Confirm","Cancel")
 				if(choice=="Confirm")
+					bomberman_destroy = 1
 					for(var/obj/item/weapon/bomberman/B in world)
-						B.destroy_environnement = 1
+						if(!B.arena)
+							B.destroy_environnement = 1
 				message_admins("[key_name_admin(usr)] enabled the environnement damage of the Bomberman Bomb Dispensers currently in the world. Michael Bay approves.")
 				log_admin("[key_name_admin(usr)] enabled the environnement damage of the Bomberman Bomb Dispensers currently in the world. Michael Bay approves.")
 			if("bombernohurt")
@@ -2815,8 +2821,10 @@
 				feedback_add_details("admin_secrets_fun_used","BBNH")
 				var/choice = alert("Disable Cuban Pete mode.","Disable Bomberman Bombs Player Damage","Confirm","Cancel")
 				if(choice=="Confirm")
+					bomberman_hurt = 0
 					for(var/obj/item/weapon/bomberman/B in world)
-						B.hurt_players = 0
+						if(!B.arena)
+							B.hurt_players = 0
 				message_admins("[key_name_admin(usr)] disabled the player damage of the Bomberman Bomb Dispensers currently in the world.")
 				log_admin("[key_name_admin(usr)] disabled the player damage of the Bomberman Bomb Dispensers currently in the world.")
 			if("bombernodestroy")
@@ -2824,8 +2832,10 @@
 				feedback_add_details("admin_secrets_fun_used","BBND")
 				var/choice = alert("Disable Michael Bay mode?","Disable Bomberman Bombs Environnement Damage","Confirm","Cancel")
 				if(choice=="Confirm")
+					bomberman_destroy = 0
 					for(var/obj/item/weapon/bomberman/B in world)
-						B.destroy_environnement = 0
+						if(!B.arena)
+							B.destroy_environnement = 0
 				message_admins("[key_name_admin(usr)] disabled the environnement damage of the Bomberman Bomb Dispensers currently in the world.")
 				log_admin("[key_name_admin(usr)] disabled the environnement damage of the Bomberman Bomb Dispensers currently in the world.")
 		if(usr)

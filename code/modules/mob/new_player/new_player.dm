@@ -338,6 +338,25 @@
 	character.loc = pick(latejoin)
 	character.store_position()
 
+	if(bomberman_mode)
+		character.client << sound('sound/bomberman/start.ogg')
+		if(character.wear_suit)
+			var/obj/item/O = character.wear_suit
+			character.u_equip(O)
+			O.loc = character.loc
+			O.dropped(character)
+		if(character.head)
+			var/obj/item/O = character.head
+			character.u_equip(O)
+			O.loc = character.loc
+			O.dropped(character)
+		character.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/bomberman(character), slot_head)
+		character.equip_to_slot_or_del(new /obj/item/clothing/suit/space/bomberman(character), slot_wear_suit)
+		character.equip_to_slot_or_del(new /obj/item/weapon/bomberman/(character), slot_s_store)
+		character.update_icons()
+		character << "<span class='notice'>Tip: Use the BBD in your suit's pocket to place bombs.</span>"
+		character << "<span class='notice'>Try to keep your BBD and escape this hell hole alive!</span>"
+
 	ticker.mode.latespawn(character)
 
 	//ticker.mode.latespawn(character)

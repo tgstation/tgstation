@@ -110,6 +110,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/delete_all_adminbus,
 	/client/proc/delete_all_bomberman,
 	/client/proc/create_bomberman_arena,
+	/client/proc/control_bomberman_arena,
 	/client/proc/gib_money, // /vg/
 	/client/proc/smissmas,
 	)
