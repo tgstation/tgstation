@@ -490,3 +490,7 @@ var/const/GALOSHES_DONT_HELP = 8
 				update_inv_legcuffed(0)
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
+
+/mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
+	if( (!mask_only && head && (head.flags & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)) )
+		return 1

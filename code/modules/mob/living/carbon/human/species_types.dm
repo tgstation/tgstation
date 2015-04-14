@@ -317,3 +317,29 @@
 	id = "zombie"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
+
+
+/datum/species/abductor
+	name = "Abductor"
+	id = "abductor"
+	darksight = 3
+	say_mod = "gibbers"
+	sexes = 0
+	invis_sight = SEE_INVISIBLE_LEVEL_ONE
+	specflags = list(NOBLOOD,NOBREATH)
+	var/scientist = 0 // vars to not pollute spieces list with castes
+	var/agent = 0
+	var/team = 1
+
+/datum/species/abductor/handle_speech(message)
+	//Hacks
+	var/mob/living/carbon/human/user = usr
+	for(var/mob/living/carbon/human/H in mob_list)
+		if(H.dna.species.id != "abductor")
+			continue
+		else
+			var/datum/species/abductor/target_spec = H.dna.species
+			if(target_spec.team == team)
+				H << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+				//return - technically you can add more aliens to a team
+	return ""

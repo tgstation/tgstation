@@ -138,9 +138,6 @@
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
 
-/mob/living/carbon/alien/SpeciesCanConsume()
-	return 1 // Aliens can eat, and they can be fed food/drink
-
 /mob/living/carbon/alien/Stat()
 	..()
 
@@ -154,6 +151,16 @@
 /mob/living/carbon/alien/proc/AddAbility(var/obj/effect/proc_holder/alien/A)
 	abilities.Add(A)
 	A.on_gain(src)
+	if(A.has_action)
+		if(!A.action)
+			A.action = new/datum/action/spell_action/alien
+			A.action.target = A
+			A.action.name = A.name
+			A.action.button_icon = A.action_icon
+			A.action.button_icon_state = A.action_icon_state
+			A.action.background_icon_state = A.action_background_icon_state
+		A.action.Grant(src)
+
 
 /mob/living/carbon/alien/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/alien/A in abilities)

@@ -8,6 +8,12 @@
 
 				if(locate(S.type) in M.surgeries)
 					continue
+				if(S.user_species_restricted)
+					if(!istype(user, /mob/living/carbon/human))
+						continue
+					var/mob/living/carbon/human/doc = user
+					if(!(doc.dna.species.id in S.user_species_ids))
+						continue
 				if(S.target_must_be_dead && M.stat != DEAD)
 					continue
 				if(S.target_must_be_fat && !(M.disabilities & FAT))
@@ -70,13 +76,13 @@ proc/get_location_modifier(mob/M)
 	var/eyesmouth_covered	= 0	//based on flags
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		for(var/obj/item/clothing/I in list(C.back, C.wear_mask))
+		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))
 			covered_locations |= I.body_parts_covered
 			face_covered |= I.flags_inv
 			eyesmouth_covered |= I.flags
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.head, H.ears))
+			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.ears))
 				covered_locations |= I.body_parts_covered
 				face_covered |= I.flags_inv
 				eyesmouth_covered |= I.flags
@@ -89,7 +95,7 @@ proc/get_location_modifier(mob/M)
 			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
 				return 0
 		if("mouth")
-			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH)
+			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
 				return 0
 		if("chest")
 			if(covered_locations & CHEST)

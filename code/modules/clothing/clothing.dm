@@ -92,7 +92,6 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
-	var/alloweat = 0
 	strip_delay = 40
 	put_on_delay = 40
 	var/mask_adjusted = 0

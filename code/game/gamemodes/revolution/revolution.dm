@@ -146,18 +146,15 @@
 		"left hand" = slot_l_hand,
 		"right hand" = slot_r_hand,
 	)
-	var/spray = mob.equip_in_one_of_slots(R,slots)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	if (!spray)
-		mob << "The Syndicate were unfortunately unable to get you some spraypaint."
-	else
-		mob << "The Spraypaint in your [spray] will help you spread your message of unrest and revolution."
-		mob.update_icons()
+	mob.equip_in_one_of_slots(R,slots)
+
+	mob.update_icons()
+
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
 	else
 		mob << "The flash in your [where] will help you to persuade the crew to join your cause."
-		mob.update_icons()
 		return 1
 
 /////////////////////////////////

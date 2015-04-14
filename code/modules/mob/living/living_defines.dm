@@ -43,3 +43,4 @@
 	var/list/image/staticOverlays = list()
 	var/lying_pixel_offset = 0 //offset for pixel_y when the mob is lying down.
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
+	var/list/datum/action/actions = list()

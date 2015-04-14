@@ -626,6 +626,14 @@ Please contact me on #coderbus IRC. ~Carnie x
 	var/standing	= image("icon"=female_clothing_icons["[t_color]_s"], "layer"=-layer)
 	return(standing)
 
+/mob/living/carbon/human/proc/get_overlays_copy(var/list/unwantedLayers)
+	var/list/out = new
+	for(var/i=1;i<=TOTAL_LAYERS;i++)
+		if(overlays_standing[i])
+			if(i in unwantedLayers)
+				continue
+			out += overlays_standing[i]
+	return out
 
 //Human Overlays Indexes/////////
 #undef SPECIES_LAYER

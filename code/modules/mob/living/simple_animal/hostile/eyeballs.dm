@@ -13,6 +13,7 @@
 	response_harm = "hits"
 	maxHealth = 45
 	health = 45
+	speak_emote = list("telepathically cries")
 
 	harm_intent_damage = 15
 	melee_damage_lower = 20
