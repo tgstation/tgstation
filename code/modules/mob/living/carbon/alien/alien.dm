@@ -12,7 +12,6 @@
 	ventcrawler = 2
 	languages = ALIEN
 	verb_say = "hisses"
-	lying_pixel_offset = 0
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -204,6 +203,10 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/canBeHandcuffed()
 	return 1
+
+/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
+	return initial(pixel_y)
+
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2
