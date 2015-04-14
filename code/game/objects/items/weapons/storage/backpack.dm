@@ -55,8 +55,7 @@
 		message_admins("[src] has become a singularity. Caused by [user.key]")
 		user << "<span class = 'danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
 		del(W)
-		var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
-		singulo.energy = 300 //should make it a bit bigger~
+		new /obj/machinery/singularity (get_turf(src))
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
 		del(src)
