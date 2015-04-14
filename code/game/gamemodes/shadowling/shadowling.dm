@@ -1,4 +1,5 @@
 #define LIGHT_DAM_THRESHOLD 4
+#define LIGHT_HEAL_THRESHOLD 2
 #define LIGHT_DAMAGE_TAKEN 10
 
 /*
@@ -239,7 +240,7 @@ Made by Xhuis
 			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
 			H << "<span class='userdanger'>The light burns you!</span>"
 			H << 'sound/weapons/sear.ogg'
-		else if (light_amount < 2)
+		else if (light_amount < LIGHT_HEAL_THRESHOLD)
 			H.heal_overall_damage(5,5)
 			H.adjustToxLoss(-5)
 			H.adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
