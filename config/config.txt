@@ -191,3 +191,6 @@ NOTIFY_NEW_PLAYER_AGE 0
 
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG
+
+## Uncomment to have a random away mission loaded at roundstart.
+#ROUNDSTART_AWAYMISSIONS

@@ -96,36 +96,35 @@
 "bR" = (/obj/structure/table,/obj/machinery/light/small,/obj/item/weapon/paper{info = "X X O<br>X O X<br>O X"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/example)
 "bS" = (/obj/structure/piano,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/example)
 "bT" = (/obj/machinery/light/small,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/example)
-"bU" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/validsalad,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/example)
-"bV" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"bW" = (/obj/structure/table,/obj/item/device/analyzer,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"bX" = (/obj/structure/table,/obj/item/weapon/rack_parts,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"bY" = (/obj/structure/table,/obj/item/device/toner,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"bZ" = (/obj/structure/table,/obj/item/weapon/wirecutters,/obj/item/stack/cable_coil/yellow,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"ca" = (/obj/structure/table,/obj/item/weapon/wrench,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cb" = (/obj/machinery/vending/assist,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cc" = (/obj/structure/ladder{id = "example"},/turf/simulated/floor/plating,/area/awaymission/example)
-"cd" = (/obj/structure/filingcabinet,/obj/item/weapon/paper{info = "Todo: write up a lawsuit for Ted, fuck what the pamphlets say, nothing good is gonna come out of that gate. Ted'll thank me later, I'll bet."; name = "documents"},/turf/simulated/floor/plasteel,/area/awaymission/example)
-"ce" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen/blue,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cf" = (/obj/machinery/photocopier,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cg" = (/obj/structure/table,/obj/item/weapon/screwdriver,/obj/item/weapon/hand_labeler,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel,/area/awaymission/example)
-"ch" = (/obj/structure/stool/bed/chair/office/dark{dir = 4},/turf/simulated/floor/plasteel,/area/awaymission/example)
-"ci" = (/obj/structure/table,/obj/item/weapon/paper/pamphlet,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cj" = (/obj/machinery/door/airlock,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"ck" = (/turf/simulated/floor/plasteel{dir = 4; icon_state = "yellow"},/area/awaymission/example)
-"cl" = (/obj/item/weapon/paper{info = "Hey Ted, remind me to take Angeline out some time before I ship out. You know how bad my memory is, so don't get all high and mighty with me. READ THIS."; name = "note"},/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cm" = (/obj/machinery/door/airlock/glass,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cn" = (/obj/structure/noticeboard{pixel_y = 32},/obj/item/weapon/paper{info = "Remember, friday is David Bowie night! You guys had better fucking <i>be there!</i>"; name = "friday night"},/obj/item/weapon/cigbutt,/turf/simulated/floor/plasteel{icon_state = "yellowcorner"},/area/awaymission/example)
-"co" = (/obj/item/trash/pistachios,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cp" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cq" = (/obj/effect/landmark{name = "awaystart"},/obj/item/device/assembly/mousetrap/armed,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cr" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cs" = (/obj/effect/landmark{name = "awaystart"},/obj/machinery/light_construct/small{tag = "icon-bulb-construct-stage1 (WEST)"; icon_state = "bulb-construct-stage1"; dir = 8},/turf/simulated/floor/plasteel,/area/awaymission/example)
-"ct" = (/obj/effect/landmark{name = "awaystart"},/obj/item/weapon/mop,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cu" = (/obj/structure/closet,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cv" = (/obj/structure/table,/obj/item/weapon/stock_parts/cell/high,/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cw" = (/obj/structure/stool,/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plasteel,/area/awaymission/example)
-"cx" = (/obj/structure/mopbucket,/obj/machinery/light_construct/small{dir = 4},/turf/simulated/floor/plasteel,/area/awaymission/example)
+"bU" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"bV" = (/obj/structure/table,/obj/item/device/analyzer,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"bW" = (/obj/structure/table,/obj/item/weapon/rack_parts,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"bX" = (/obj/structure/table,/obj/item/device/toner,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"bY" = (/obj/structure/table,/obj/item/weapon/wirecutters,/obj/item/stack/cable_coil/yellow,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"bZ" = (/obj/structure/table,/obj/item/weapon/wrench,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"ca" = (/obj/machinery/vending/assist,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cb" = (/obj/structure/ladder{id = "example"},/turf/simulated/floor/plating,/area/awaymission/example)
+"cc" = (/obj/structure/filingcabinet,/obj/item/weapon/paper{info = "Todo: write up a lawsuit for Ted, fuck what the pamphlets say, nothing good is gonna come out of that gate. Ted'll thank me later, I'll bet."; name = "documents"},/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cd" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen/blue,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"ce" = (/obj/machinery/photocopier,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cf" = (/obj/structure/table,/obj/item/weapon/screwdriver,/obj/item/weapon/hand_labeler,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cg" = (/obj/structure/stool/bed/chair/office/dark{dir = 4},/turf/simulated/floor/plasteel,/area/awaymission/example)
+"ch" = (/obj/structure/table,/obj/item/weapon/paper/pamphlet,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"ci" = (/obj/machinery/door/airlock,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cj" = (/turf/simulated/floor/plasteel{dir = 4; icon_state = "yellow"},/area/awaymission/example)
+"ck" = (/obj/item/weapon/paper{info = "Hey Ted, remind me to take Angeline out some time before I ship out. You know how bad my memory is, so don't get all high and mighty with me. READ THIS."; name = "note"},/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cl" = (/obj/machinery/door/airlock/glass,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cm" = (/obj/structure/noticeboard{pixel_y = 32},/obj/item/weapon/paper{info = "Remember, friday is David Bowie night! You guys had better fucking <i>be there!</i>"; name = "friday night"},/obj/item/weapon/cigbutt,/turf/simulated/floor/plasteel{icon_state = "yellowcorner"},/area/awaymission/example)
+"cn" = (/obj/item/trash/pistachios,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"co" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cp" = (/obj/effect/landmark{name = "awaystart"},/obj/item/device/assembly/mousetrap/armed,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cq" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cr" = (/obj/effect/landmark{name = "awaystart"},/obj/machinery/light_construct/small{tag = "icon-bulb-construct-stage1 (WEST)"; icon_state = "bulb-construct-stage1"; dir = 8},/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cs" = (/obj/effect/landmark{name = "awaystart"},/obj/item/weapon/mop,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"ct" = (/obj/structure/closet,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cu" = (/obj/structure/table,/obj/item/weapon/stock_parts/cell/high,/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cv" = (/obj/structure/stool,/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plasteel,/area/awaymission/example)
+"cw" = (/obj/structure/mopbucket,/obj/machinery/light_construct/small{dir = 4},/turf/simulated/floor/plasteel,/area/awaymission/example)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -173,19 +172,19 @@ aaaaaaaaaaabbsabbsabacaQacabbtbubtbtbtabaabvaaabbtbtbtabaaabacaQacabaaaaaaaaaaaa
 aaaaaaaaababbwabbxabacaQacabbtbybzbtbAabbpbqbrabbBbtbCabaaabacaQacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaabbDbEbFbEbGacaQacabbHbIbzbtbtbJbKbLbMbNbtbtbOabaaabacaQacababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaabbDbEbEbEabacaQacabbtbybzbtbtbtbtbtbtbtbtbtbPabaaabacaQacbQabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaababababababacaQaCabbtbRbzbtbtbSbzbTbKbUbMbtbAabaaabbjaQacbVabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaababababababacaQaCabbtbRbzbtbtbSbzbTbKbLbMbtbAabaaabbjaQacbUabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaabacaQacabababababababababababababababababacaQacababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaQacabaIbWbXacbYbZcacbabccawabcdcecfabaNaQacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaQacabcgacacacacacacaCabawaJabchciaccjckaQacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaQacabaIacacacacacacacabawawabacaDclabbkaQacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaQacababcmbpbqbqbrcmababaMababababababacaQacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabbjaQacaccnaOaPacacaNaOaPacacacacacacacacacaQaCabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaabacaQacabaIbVbWacbXbYbZcaabcbawabcccdceabaNaQacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaabacaQacabcfacacacacacacaCabawaJabcgchaccicjaQacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaabacaQacabaIacacacacacacacabawawabacaDckabbkaQacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaabacaQacababclbpbqbqbrclababaMababababababacaQacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaabbjaQacaccmaOaPacacaNaOaPacacacacacacacacacaQaCabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaabacaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacacacacacaDacbkblbmacaDacacacaccoaDacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabababababababababcjabababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcpcpcqcpcrabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcscpctcpcuabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcvcwcpcxababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaabacacacacacaDacbkblbmacaDacacacaccnaDacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaabababababababababciabababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcococpcocqabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcrcocscoctabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcucvcocwababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

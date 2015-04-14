@@ -101,7 +101,8 @@ var/list/admin_verbs_server = list(
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/toggle_random_events,
-	/client/proc/panicbunker
+	/client/proc/panicbunker,
+	/client/proc/admin_activate_gateway
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
