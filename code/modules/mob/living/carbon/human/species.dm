@@ -241,7 +241,8 @@
 	for(var/layer in relevent_layers)
 		for(var/bodypart in bodyparts_to_add)
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[icon_state_string]_[bodypart]_[layer]", "layer" =- layer)
-			I.color = "#[H.dna.mutant_color]"
+			if(!(H.disabilities & HUSK))
+				I.color = "#[H.dna.mutant_color]"
 			standing += I
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()
