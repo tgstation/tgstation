@@ -93,8 +93,9 @@
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				if(do_after(user, 40, target = src))
-					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
-					anchored = !anchored
+					if(state == 1)
+						user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+						anchored = !anchored
 
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
