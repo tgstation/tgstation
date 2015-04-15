@@ -61,9 +61,8 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 		verbs -= /mob/dead/observer/verb/possess
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
-
-
 	..()
+
 /mob/dead/observer/Destroy()
 	if (ghostimage)
 		ghost_darkness_images -= ghostimage
@@ -350,6 +349,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	dat += data_core.get_manifest()
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
+
+//this is called when a ghost is drag clicked to something.
+/mob/dead/observer/MouseDrop(atom/over)
+	if(!usr || !over) return
+	if (isobserver(usr) && usr.client.holder && isliving(over))
+		if (usr.client.holder.cmd_ghost_drag(src,over))
+			return
+
+	return ..()
 
 /mob/dead/observer/Topic(href, href_list)
 	if(href_list["follow"])
