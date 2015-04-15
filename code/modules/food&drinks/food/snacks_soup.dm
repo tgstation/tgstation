@@ -44,6 +44,14 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
 	list_reagents = list("nutriment" = 2, "blood" = 10, "water" = 5, "vitamin" = 4)
 
+/obj/item/weapon/reagent_containers/food/snacks/soup/wingfangchu
+	name = "wing fang chu"
+	desc = "A savory dish of alien wing wang in soy."
+	icon_state = "wingfangchu"
+	trash = /obj/item/weapon/reagent_containers/glass/bowl
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
+	list_reagents = list("nutriment" = 6, "soysauce" = 5, "vitamin" = 2)
+
 /obj/item/weapon/reagent_containers/food/snacks/soup/clownstears
 	name = "clown's tears"
 	desc = "Not very funny."
