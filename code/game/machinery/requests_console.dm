@@ -379,7 +379,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(null)	//skip
 		else
 			var/name = reject_bad_text(input(usr,"Name:","Name this department.","Public") as null|text)
-			set_department(name,href_list["setDepartment"])
+			set_department(name,text2num(href_list["setDepartment"]))
 
 	updateUsrDialog()
 	return
@@ -393,33 +393,27 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 					//deconstruction and hacking
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
-	/
 	if (istype(O, /obj/item/weapon/crowbar))
 		if(open)
 			open = 0
 			icon_state="req_comp0"
 		else
 			open = 1
-			if(hackState == 0)
+			if(!hackState)
 				icon_state="req_comp_open"
-			else if(hackState == 1)
+			else
 				icon_state="req_comp_rewired"
 	if (istype(O, /obj/item/weapon/screwdriver))
 		if(open)
-			if(prob(50))
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-				electrocute_mob(user, get_area(src), src)
-			if(hackState == 0)
+			if(!hackState)
 				hackState = 1
 				icon_state="req_comp_rewired"
-			else if(hackState == 1)
+			else
 				hackState = 0
 				icon_state="req_comp_open"
 		else
 			user << "You can't do much with that."
-	if(iswrench(O) && open && department == 0)
+	if(iswrench(O) && open && !departmentType)
 		user.visible_message("<span class='notice'>[user] disassembles the [src]!</span>", "<span class='notice'>You disassemble the [src]</span>")
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 		new /obj/item/stack/sheet/metal (src.loc,2)
@@ -428,11 +422,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if (istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
 		if(screen == 5)
 			var/obj/item/weapon/card/id/ID = O.GetID()
-			if (access_engine_equip in ID.access || hackState == 1)
+			if (hackState || ID.access.Find(access_engine_equip))
 				announceAuth = 1
 			else
 				announceAuth = 0
-				user << "\red You are not authorized to configure this panel."
+				user << "<span class='warning'>You are not authorized to configure this panel.</span>"
 			updateUsrDialog()
 		if(screen == 9)
 			var/obj/item/weapon/card/id/ID = O.GetID()
@@ -440,11 +434,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			updateUsrDialog()
 		if(screen == 10)
 			var/obj/item/weapon/card/id/ID = O.GetID()
-			if (access_RC_announce in ID.access || hackState == 1)
+			if (hackState || ID.access.Find(access_RC_announce))
 				announceAuth = 1
 			else
 				announceAuth = 0
-				user << "\red You are not authorized to send announcements."
+				user << "<span class='warning'>You are not authorized to send announcements.</span>"
 			updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)
