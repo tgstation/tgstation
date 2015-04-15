@@ -138,7 +138,7 @@
 	desc = "Alien science is 90% dissections 10% probings."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gizmo_scan"
-	item_state = "pen"
+	item_state = "silencer"
 	var/mode = GIZMO_SCAN
 	var/mob/living/marked = null
 	var/obj/machinery/abductor/console/console
@@ -216,7 +216,7 @@
 	desc = "Device used to break communication equipment"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "silencer"
-	item_state = "pen"
+	item_state = "gizmo"
 
 /obj/item/device/abductor/silencer/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
@@ -292,6 +292,8 @@
 /obj/item/weapon/gun/energy/decloner/alien
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = /obj/item/device/firing_pin/alien
+	icon_state = "alienpistol"
+	item_state = "alienpistol"
 
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
@@ -320,8 +322,8 @@ Congratulations! You are now trained for xenobiology research!"}
 	name = "Advanced Baton"
 	var/mode = BATON_STUN
 	icon = 'icons/obj/abductor.dmi'
-	icon_state = "baton_stun"
-	item_state = "baton"
+	icon_state = "wonderprod"
+	item_state = "wonderprod"
 	slot_flags = SLOT_BELT
 	force = 7
 	w_class = 3
@@ -344,11 +346,11 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/abductor_baton/update_icon()
 	switch(mode)
 		if(BATON_STUN)
-			icon_state = "baton_stun"
+			icon_state = "wonderprod"
 		if(BATON_SLEEP)
-			icon_state = "baton_sleep"
+			icon_state = "wonderprod"
 		if(BATON_CUFF)
-			icon_state = "baton_cuff"
+			icon_state = "wonderprod"
 
 /obj/item/weapon/abductor_baton/proc/IsAbductor(var/mob/living/user)
 	if(!ishuman(user))
@@ -466,3 +468,14 @@ Congratulations! You are now trained for xenobiology research!"}
 			user <<"<span class='warning'>The baton is in restrain mode.</span>"
 
 
+obj/item/weapon/scalpel/alien
+	name = "alien scalpel"
+	icon = 'icons/obj/abductor.dmi'
+
+obj/item/weapon/hemostat/alien
+	name = "alien hemostat"
+	icon = 'icons/obj/abductor.dmi'
+
+obj/item/weapon/retractor/alien
+	name = "alien retractor"
+	icon = 'icons/obj/abductor.dmi'
