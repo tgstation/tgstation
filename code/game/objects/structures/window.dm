@@ -415,6 +415,10 @@
 		hit(round(exposed_volume / 100), 0)
 	..()
 
+/obj/structure/window/AltClick(var/mob/living/L)
+	var/turf/T = get_turf(src)
+	T.AltClick(L)
+
 
 /obj/structure/window/reinforced
 	name = "reinforced window"
