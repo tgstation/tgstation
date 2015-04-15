@@ -864,7 +864,8 @@ proc/kick_clients_in_lobby(var/message, var/kick_only_afk = 0)
 			del(C)
 	return kicked_client_names
 
-
+//returns 1 to let the dragdrop code know we are trapping this event
+//returns 0 if we don't plan to trap the event
 /datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
@@ -881,6 +882,9 @@ proc/kick_clients_in_lobby(var/message, var/kick_only_afk = 0)
 
 	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
 	if (ask != "Yes")
+		return 1
+
+	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
 		return 1
 
 	tomob.ghostize(0)
