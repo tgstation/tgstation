@@ -67,7 +67,7 @@
 	#define BOT_SUMMON			6	// summoned by PDA
 	#define BOT_CLEANING 		7	// cleaning (cleanbots)
 	#define BOT_REPAIRING		8	// repairing hull breaches (floorbots)
-	#define BOT_MOVING			9	// for clean/floor bots, when moving.
+	#define BOT_MOVING			9	// for clean/floor/med bots, when moving.
 	#define BOT_HEALING			10	// healing people (medbots)
 	#define BOT_RESPONDING		11	// responding to a call from the AI
 	#define BOT_LOADING			12	// loading/unloading
