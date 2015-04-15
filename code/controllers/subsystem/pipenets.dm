@@ -9,14 +9,20 @@ var/datum/subsystem/pipenets/SSpipe
 /datum/subsystem/pipenets/New()
 	NEW_SS_GLOBAL(SSpipe)
 
-/datum/subsystem/pipenets/Initialize()
+/datum/subsystem/pipenets/Initialize(time, z_level = 0)
 	set background = BACKGROUND_ENABLED
 
 	//is it possible to combine all these procs into initialize() ??
 	for(var/obj/machinery/atmospherics/M in world)
+		if(z_level > 0 && M.z != z_level)
+			continue
+
 		M.build_network()
 
 	for(var/obj/machinery/atmospherics/unary/U in world)
+		if(z_level > 0 && U.z != z_level)
+			continue
+
 		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
 			var/obj/machinery/atmospherics/unary/vent_pump/V = U
 			V.broadcast_status()

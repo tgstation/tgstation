@@ -29,8 +29,8 @@ var/datum/subsystem/air/SSair
 	sleeptoxin_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="sleeping_agent"}()
 
 
-/datum/subsystem/air/Initialize()
-	setup_allturfs()
+/datum/subsystem/air/Initialize(time, z_level = 0)
+	setup_allturfs(z_level)
 	..()
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
@@ -103,8 +103,11 @@ var/datum/subsystem/air/SSair
 				add_to_active(S)
 
 
-/datum/subsystem/air/proc/setup_allturfs()
+/datum/subsystem/air/proc/setup_allturfs(z_level = 0)
 	for(var/turf/simulated/T in world)
+		if(z_level > 0 && T.z != z_level)
+			continue
+
 		T.CalculateAdjacentTurfs()
 		if(!T.blocks_air)
 			if(T.air.check_tile_graphic())
