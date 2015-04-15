@@ -37,12 +37,20 @@
 			DeactivateStealth()
 			armor = combat_armor
 			icon_state = "vest_combat"
+			if(istype(loc, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = loc
+				H.update_inv_wear_suit()
 			return
 		if(VEST_COMBAT)// TO STEALTH
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
+			if(istype(loc, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = loc
+				H.update_inv_wear_suit()
 			return
+
+
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(var/datum/icon_snapshot/entry)
 	disguise = entry
@@ -295,6 +303,9 @@
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
 
+/obj/item/weapon/gun/energy/decloner/alien/update_icon() // No charge levels
+	return
+
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
 	info = {"<b>Dissection for Dummies</b><br>
@@ -415,7 +426,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	if(L.stunned)
 		L.SetSleeping(60)
 	L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
-							"<span class='userdanger'>You suddennly feel very drowsy!</span>")
+							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 	add_logs(user, L, "put to sleep")
@@ -449,7 +460,7 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/restraints/handcuffs/energy/used
 	desc = "Energy Discharge"
 
-/obj/item/weapon/restraints/handcuffs/cable/zipties/energy/used/dropped(mob/user)
+/obj/item/weapon/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user] cuffs break in a discharge of energy!</span>", \
 							"<span class='userdanger'>[user] cuffs break in a discharge of energy!</span>")
 	var/datum/effect/effect/system/spark_spread/S = new
@@ -479,3 +490,9 @@ obj/item/weapon/hemostat/alien
 obj/item/weapon/retractor/alien
 	name = "alien retractor"
 	icon = 'icons/obj/abductor.dmi'
+
+/obj/item/clothing/head/helmet/abductor
+	name = "Agent Headgear"
+	desc = "Abducting with style. Spiky style."
+	icon_state = "alienhelmet"
+	item_state = "alienhelmet"
