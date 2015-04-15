@@ -473,6 +473,19 @@ datum/chemical_reaction/pestkiller
 /datum/chemical_reaction/slimemutate/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
+//Mutated Green
+/datum/chemical_reaction/slimemutate_unstable
+	name = "Unstable Mutation Toxin"
+	id = "unstablemutationtoxin"
+	result = "unstablemutationtoxin"
+	required_reagents = list("radium" = 1)
+	result_amount = 1
+	required_other = 1
+	required_container = /obj/item/slime_extract/green
+	mix_message = "<span class='info'>The mixture rapidly expands and contracts, its appearance shifting into a sickening green.</span>"
+/datum/chemical_reaction/slimemutate_unstable/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+
 //Metal
 /datum/chemical_reaction/slimemetal
 	name = "Slime Metal"
