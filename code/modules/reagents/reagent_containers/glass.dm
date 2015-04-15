@@ -238,6 +238,17 @@
 	if(isprox(D))
 		user << "<span class='notice'>You add [D] to [src].</span>"
 		qdel(D)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/mop))
+		if(reagents.total_volume < 1)
+			user << "[src] is out of water!</span>"
+		else
+			reagents.trans_to(O, 5)
+			user << "<span class='notice'>You wet [O] in [src].</span>"
+			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+	else if(isprox(O))
+		user << "<span class='notice'>You add [O] to [src].</span>"
+
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.unEquip(src)
 		qdel(src)
