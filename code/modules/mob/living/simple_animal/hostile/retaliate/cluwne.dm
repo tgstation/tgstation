@@ -259,7 +259,7 @@
 		health -= damage
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='warning'><B>[src] has been attacked with the [O] by [user].</B></span>")
+				M.show_message("<span class='danger'>[src] has been attacked with the [O] by [user].</span>")
 	*/
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/Bump(atom/movable/AM as mob|obj, yes)

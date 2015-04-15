@@ -712,7 +712,7 @@ datum/mind
 						ticker.mode.wizards += src
 						special_role = "Wizard"
 						//ticker.mode.learn_basic_spells(current)
-						current << "<B><span class='warning'>You are the Space Wizard!</B></span>"
+						current << "<span class='danger'>You are the Space Wizard!</span>"
 						ticker.mode.update_wizard_icons_added(src)
 						log_admin("[key_name_admin(usr)] has wizard'ed [current].")
 				if("lair")

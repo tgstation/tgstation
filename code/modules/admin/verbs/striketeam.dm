@@ -76,7 +76,7 @@ var/global/sent_strike_team = 0
 				new_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code].</span>")
 			new_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[input].</span>")
 
-			new_commando << "<span class='notice'>You are a Special Ops. [!leader_selected?"commando":"<B>LEADER</B>"] in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: <span class='warning'><B>[input]</B></span></span>"
+			new_commando << "<span class='notice'>You are a Special Ops. [!leader_selected?"commando":"<B>LEADER</B>"] in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: <span class='danger'>[input]</span></span>"
 
 			commando_number--
 

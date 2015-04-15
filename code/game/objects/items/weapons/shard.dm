@@ -64,8 +64,8 @@
 	return
 
 /obj/item/weapon/shard/suicide_act(mob/user)
-		viewers(user) << pick("<span class='warning'><b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b></span>", \
-							"<span class='warning'><b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b></span>")
+		viewers(user) << pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS)
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)

@@ -16,7 +16,7 @@ emp_act
 			if(!(def_zone in list("chest", "groin")))
 				reflectchance /= 2
 			if(prob(reflectchance))
-				visible_message("<span class='warning'><B>The [P.name] gets reflected by [src]'s [wear_suit.name]!</B></span>")
+				visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s [wear_suit.name]!</span>")
 
 				// Find a turf near or on the original location to bounce to
 				if(P.starting)
@@ -104,17 +104,17 @@ emp_act
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("<span class='warning'><B>[src] blocks [attack_text] with the [l_hand.name]!</B></span>")
+			visible_message("<span class='danger'>[src] blocks [attack_text] with the [l_hand.name]!</span>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("<span class='warning'><B>[src] blocks [attack_text] with the [r_hand.name]!</B></span>")
+			visible_message("<span class='danger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
 		if(I.IsShield() && (prob(35)))
-			visible_message("<span class='warning'><B>The reactive teleport system flings [src] clear of [attack_text]!</B></span>")
+			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = new/list()
 			for(var/turf/T in orange(6))
 				if(istype(T,/turf/space)) continue
@@ -196,9 +196,9 @@ emp_act
 		return
 
 	if(istype(I.attack_verb, /list) && I.attack_verb.len)
-		visible_message("<span class='warning'><B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B></span>")
+		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</span>")
 	else
-		visible_message("<span class='warning'><B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B></span>")
+		visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>")
 
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	if(armor >= 2)	return 0
@@ -226,7 +226,7 @@ emp_act
 			if("head")//Harder to score a stun but if you do it lasts a bit longer
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
-					visible_message("<span class='warning'><B>[src] has been knocked unconscious!</B></span>")
+					visible_message("<span class='danger'>[src] has been knocked unconscious!</span>")
 					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
 
@@ -244,7 +244,7 @@ emp_act
 			if("chest")//Easier to score a stun but lasts less time
 				if(prob((I.force + 10)))
 					apply_effect(5, WEAKEN, armor)
-					visible_message("<span class='warning'><B>[src] has been knocked down!</B></span>")
+					visible_message("<span class='danger'>[src] has been knocked down!</span>")
 
 				if(bloody)
 					bloody_body(src)

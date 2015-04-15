@@ -74,7 +74,7 @@
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
 	for(var/mob/living/silicon/ai/M in world)
 		M.add_ion_law(extra_law)
-		M << "<span class='warning'></span>" + extra_law
+		M << "<span class='danger'></span>" + extra_law
 
 /datum/game_mode/epidemic/proc/announce_to_kill_crew()
 	var/intercepttext = {"<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</FONT><HR>
@@ -195,10 +195,10 @@
 	for(var/mob/M in world)
 		if(M.client)
 			M << 'sound/machines/Alarm.ogg'
-	world << "<span class='warning'><b>Incoming missile detected.. Impact in 10..</b></span>"
+	world << "<span class='danger'>Incoming missile detected.. Impact in 10..</span>"
 	for (var/i=9 to 1 step -1)
 		sleep(10)
-		world << "<span class='warning'><b>[i]..</b></span>"
+		world << "<span class='danger'>[i]..</span>"
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)

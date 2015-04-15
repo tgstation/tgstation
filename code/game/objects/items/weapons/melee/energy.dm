@@ -4,8 +4,8 @@
 	heat_production = 3500
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	viewers(user) << pick("<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>", \
-						"<span class='warning'><b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
+	viewers(user) << pick("<span class='danger'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
+						"<span class='danger'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/is_hot()
@@ -33,7 +33,7 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b></span>"
+		viewers(user) << "<span class='danger'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword

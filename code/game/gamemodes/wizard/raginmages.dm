@@ -10,7 +10,7 @@
 
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Ragin' Mages!</B>"
-	world << "<B>The <span class='warning'>Space Wizard Federation is pissed, help defeat all the space wizards!</B></span>"
+	world << "<B>The <span class='danger'>Space Wizard Federation is pissed, help defeat all the space wizards!</span>"
 
 /datum/game_mode/wizard/raginmages/post_setup()
 	var/playercount = 0
@@ -23,7 +23,7 @@
 
 /datum/game_mode/wizard/raginmages/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
-		wizard.current << "<B><span class='warning'>You are the Space Wizard!</B></span>"
+		wizard.current << "<span class='danger'>You are the Space Wizard!</span>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
 
 	var/obj_count = 1

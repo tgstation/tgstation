@@ -13,7 +13,7 @@
 	fire_fuel = 2
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is farting lightly on the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
+		viewers(user) << "<span class='danger'>[user] is farting lightly on the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (user.death(1))
 
 
@@ -102,7 +102,7 @@
 		if ((istype(M, /mob/living/carbon/human) && prob(60)))
 			bless(M)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] heals [] with the power of [src.deity_name]!</B></span>", user, M), 1)
+				O.show_message(text("<span class='danger'>[] heals [] with the power of [src.deity_name]!</span>", user, M), 1)
 			M << "<span class='warning'>May the power of [src.deity_name] compel you to be healed!</span>"
 			playsound(get_turf(src), "punch", 25, 1, -1)
 		else
@@ -110,11 +110,11 @@
 				M.adjustBrainLoss(10)
 				M << "<span class='warning'>You feel dumber.</span>"
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("<span class='warning'><B>[] beats [] over the head with []!</B></span>", user, M, src), 1)
+				O.show_message(text("<span class='danger'>[] beats [] over the head with []!</span>", user, M, src), 1)
 			playsound(get_turf(src), "punch", 25, 1, -1)
 	else if(M.stat == 2)
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='warning'><B>[] smacks []'s lifeless corpse with [].</B></span>", user, M, src), 1)
+			O.show_message(text("<span class='danger'>[] smacks []'s lifeless corpse with [].</span>", user, M, src), 1)
 		playsound(get_turf(src), "punch", 25, 1, -1)
 	return
 

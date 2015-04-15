@@ -82,7 +82,7 @@ Refactored AI modules by N3X15
 		var/mob/M=target
 		// This seems redundant.  Revisit. - N3X
 		if(src.modflags & HIDE_SENDER)
-			target << "<span class='warning'><b>\[REDACTED\]</b> </span>has uploaded a change to the laws you must follow, using \a [name]. From now on: "
+			target << "<span class='danger'>\[REDACTED\] </span>has uploaded a change to the laws you must follow, using \a [name]. From now on: "
 		else
 			target << "[senderName] has uploaded a change to the laws you must follow, using \a [name]. From now on: "
 		targetName="[fmtSubject(M)])"

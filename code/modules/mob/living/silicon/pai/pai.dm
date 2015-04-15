@@ -204,7 +204,7 @@
 				playsound(get_turf(src), 'sound/weapons/slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has slashed at []!</B></span>", M, src), 1)
+						O.show_message(text("<span class='danger'>[] has slashed at []!</span>", M, src), 1)
 				if(prob(8))
 					flick("noise", src.flash)
 				src.adjustBruteLoss(damage)
@@ -213,7 +213,7 @@
 				playsound(get_turf(src), 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] took a swipe at []!</B></span>", M, src), 1)
+						O.show_message(text("<span class='danger'>[] took a swipe at []!</span>", M, src), 1)
 	return
 
 ///mob/living/silicon/pai/attack_hand(mob/living/carbon/M as mob)

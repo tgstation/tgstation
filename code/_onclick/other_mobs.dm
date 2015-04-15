@@ -105,7 +105,7 @@
 	if(prob(75))
 		ML.apply_damage(rand(1,3), BRUTE, dam_zone, armor)
 		for(var/mob/O in viewers(ML, null))
-			O.show_message("<span class='warning'><B>[name] has bit [ML]!</B></span>", 1)
+			O.show_message("<span class='danger'>[name] has bit [ML]!</span>", 1)
 		if(armor >= 2) return
 		if(ismonkey(ML))
 			for(var/datum/disease/D in viruses)
@@ -113,7 +113,7 @@
 					ML.contract_disease(D,1,0)
 	else
 		for(var/mob/O in viewers(ML, null))
-			O.show_message("<span class='warning'><B>[src] has attempted to bite [ML]!</B></span>", 1)
+			O.show_message("<span class='danger'>[src] has attempted to bite [ML]!</span>", 1)
 
 /*
 	Aliens

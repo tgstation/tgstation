@@ -64,7 +64,7 @@
 		user.update_inv_r_hand()
 
 /obj/item/weapon/fireaxe/suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is smashing \himself in the head with the [src.name]! It looks like \he's commit suicide!</b></span>"
+		viewers(user) << "<span class='danger'>[user] is smashing \himself in the head with the [src.name]! It looks like \he's commit suicide!</span>"
 		return (BRUTELOSS)
 
 /obj/item/weapon/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)

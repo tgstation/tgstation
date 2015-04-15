@@ -180,7 +180,7 @@
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
-		user.visible_message("*click click*", "<span class='warning'><b>*click*</b></span>")
+		user.visible_message("*click click*", "<span class='danger'>*click*</span>")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	else
 		src.visible_message("*click click*")
@@ -223,7 +223,7 @@
 	if (src.process_chambered())
 		//Point blank shooting if on harm intent or target we were targeting.
 		if(user.a_intent == I_HURT)
-			user.visible_message("<span class='warning'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
+			user.visible_message("<span class='danger'> \The [user] fires \the [src] point blank at [M]!</span>")
 			in_chamber.damage *= 1.3
 			src.Fire(M,user,0,0,1)
 			return

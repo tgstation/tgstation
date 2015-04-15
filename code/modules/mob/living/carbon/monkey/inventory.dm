@@ -36,28 +36,28 @@
 				return
 		for(var/mob/O in viewers(target, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'><B>[] is trying to put a [] on []</B></span>", source, item, target), 1)
+				O.show_message(text("<span class='danger'>[] is trying to put a [] on []</span>", source, item, target), 1)
 	else
 		var/message = null
 		switch(place)
 			if("mask")
 				if(istype(target.wear_mask, /obj/item/clothing)&&!target.wear_mask:canremove)
-					message = text("<span class='warning'><B>[] fails to take off \a [] from []'s body!</B></span>", source, target.wear_mask, target)
+					message = text("<span class='danger'>[] fails to take off \a [] from []'s body!</span>", source, target.wear_mask, target)
 				else
-					message = text("<span class='warning'><B>[] is trying to take off \a [] from []'s head!</B></span>", source, target.wear_mask, target)
+					message = text("<span class='danger'>[] is trying to take off \a [] from []'s head!</span>", source, target.wear_mask, target)
 			if("l_hand")
-				message = text("<span class='warning'><B>[] is trying to take off a [] from []'s left hand!</B></span>", source, target.l_hand, target)
+				message = text("<span class='danger'>[] is trying to take off a [] from []'s left hand!</span>", source, target.l_hand, target)
 			if("r_hand")
-				message = text("<span class='warning'><B>[] is trying to take off a [] from []'s right hand!</B></span>", source, target.r_hand, target)
+				message = text("<span class='danger'>[] is trying to take off a [] from []'s right hand!</span>", source, target.r_hand, target)
 			if("back")
-				message = text("<span class='warning'><B>[] is trying to take off a [] from []'s back!</B></span>", source, target.back, target)
+				message = text("<span class='danger'>[] is trying to take off a [] from []'s back!</span>", source, target.back, target)
 			if("handcuff")
-				message = text("<span class='warning'><B>[] is trying to unhandcuff []!</B></span>", source, target)
+				message = text("<span class='danger'>[] is trying to unhandcuff []!</span>", source, target)
 			if("internal")
 				if (target.internal)
-					message = text("<span class='warning'><B>[] is trying to remove []'s internals</B></span>", source, target)
+					message = text("<span class='danger'>[] is trying to remove []'s internals</span>", source, target)
 				else
-					message = text("<span class='warning'><B>[] is trying to set on []'s internals.</B></span>", source, target)
+					message = text("<span class='danger'>[] is trying to set on []'s internals.</span>", source, target)
 			else
 		for(var/mob/M in viewers(target, null))
 			M.show_message(message, 1)

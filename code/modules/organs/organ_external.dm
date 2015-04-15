@@ -1067,11 +1067,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return
 	if(type == "brute")
 		owner.visible_message("<span class='warning'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
-		"<span class='warning'><b>Your face becomes unrecognizible mangled mess!</b></span>",	\
+		"<span class='danger'>Your face becomes unrecognizible mangled mess!</span>",	\
 		"<span class='warning'>You hear a sickening crack.</span>")
 	else
 		owner.visible_message("<span class='warning'>[owner]'s face melts away, turning into mangled mess!</span>",	\
-		"<span class='warning'><b>Your face melts off!</b></span>",	\
+		"<span class='danger'>Your face melts off!</span>",	\
 		"<span class='warning'>You hear a sickening sizzle.</span>")
 	disfigured = 1
 

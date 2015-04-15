@@ -28,13 +28,13 @@ mob/living/carbon/proc/pain(var/partname, var/amount, var/force, var/burning = 0
 	if(burning)
 		switch(amount)
 			if(1 to 10)
-				msg = "<span class='warning'><b>Your [partname] burns.</b></span>"
+				msg = "<span class='danger'>Your [partname] burns.</span>"
 			if(11 to 90)
 				flash_weak_pain()
-				msg = "<span class='warning'><b><font size=2>Your [partname] burns badly!</font></b></span>"
+				msg = "<span class='danger'><font size=2>Your [partname] burns badly!</font></span>"
 			if(91 to 10000)
 				flash_pain()
-				msg = "<span class='warning'><b><font size=3>OH GOD! Your [partname] is on fire!</font></b></span>"
+				msg = "<span class='danger'><font size=3>OH GOD! Your [partname] is on fire!</font></span>"
 	else
 		switch(amount)
 			if(1 to 10)
@@ -64,7 +64,7 @@ mob/living/carbon/human/proc/custom_pain(var/message, var/flash_strength)
 		return
 	if(analgesic)
 		return
-	var/msg = "<span class='warning'><b>[message]</b></span>"
+	var/msg = "<span class='danger'>[message]</span>"
 	if(flash_strength >= 1)
 		msg = "<span class='danger'><font size=3>[message]</font></span>"
 

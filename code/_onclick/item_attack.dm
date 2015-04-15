@@ -155,7 +155,7 @@ obj/item/proc/get_clamped_volume()
 
 		if(!showname && user)
 			if(user.client)
-				user << "<span class='warning'><B>You attack [M] with [src]. </B></span>"
+				user << "<span class='danger'>You attack [M] with [src]. </span>"
 
 
 

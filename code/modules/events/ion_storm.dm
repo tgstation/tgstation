@@ -51,7 +51,7 @@
 	for (var/mob/living/silicon/ai/target in mob_list)
 		if(target.mind.special_role == "traitor")
 			continue
-		target << "<span class='warning'><b>You have detected a change in your laws information:</b></span>"
+		target << "<span class='danger'>You have detected a change in your laws information:</span>"
 		target << law
 		target.add_ion_law(law)
 

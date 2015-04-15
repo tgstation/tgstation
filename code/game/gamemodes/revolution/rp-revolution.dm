@@ -286,9 +286,9 @@ mob/living/carbon/human/proc
 		set name = "Rev-Convert"
 		if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 			if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-				src << "<span class='warning'><b>[M] is already be a revolutionary!</b></span>"
+				src << "<span class='danger'>[M] is already be a revolutionary!</span>"
 			else if(src.mind in ticker.mode:get_unconvertables())
-				src << "<span class='warning'><b>[M] cannot be a revolutionary!</b></span>"
+				src << "<span class='danger'>[M] cannot be a revolutionary!</span>"
 			else
 				if(world.time < M.mind.rev_cooldown)
 					src << "<span class='warning'>Wait five seconds before reconversion attempt.</span>"
@@ -303,5 +303,5 @@ mob/living/carbon/human/proc
 					src << "<span class='notice'><b>[M] joins the revolution!</b></span>"
 				else if(choice == "No!")
 					M << "<span class='warning'>You reject this traitorous cause!</span>"
-					src << "<span class='warning'><b>[M] does not support the revolution!</b></span>"
+					src << "<span class='danger'>[M] does not support the revolution!</span>"
 				M.mind.rev_cooldown = world.time+50

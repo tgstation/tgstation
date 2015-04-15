@@ -23,12 +23,12 @@
 			return
 
 		if(M == user)
-			user.visible_message("<span class='warning'><b>[user.name] injects \himself with [src]!</b></span>")
+			user.visible_message("<span class='danger'>[user.name] injects \himself with [src]!</span>")
 			src.injected(user,user)
 		else
-			user.visible_message("<span class='warning'><b>[user.name] is trying to inject [M.name] with [src]!</b></span>")
+			user.visible_message("<span class='danger'>[user.name] is trying to inject [M.name] with [src]!</span>")
 			if (do_mob(user,M,30))
-				user.visible_message("<span class='warning'><b>[user.name] injects [M.name] with [src].</b></span>")
+				user.visible_message("<span class='danger'>[user.name] injects [M.name] with [src].</span>")
 				src.injected(M, user)
 			else
 				user << "<span class='warning'>You failed to inject [M.name].</span>"

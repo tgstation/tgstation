@@ -7,11 +7,11 @@
 		if (src.getBruteLoss() < 75)
 			user << text("<span class='warning'>[src.name] looks slightly dented</span>")
 		else
-			user << text("<span class='warning'><B>[src.name] looks severely dented!</B></span>")
+			user << text("<span class='danger'>[src.name] looks severely dented!</span>")
 	if (src.getFireLoss())
 		if (src.getFireLoss() < 75)
 			user << text("<span class='warning'>[src.name] looks slightly burnt!</span>")
 		else
-			user << text("<span class='warning'><B>[src.name] looks severely burnt!</B></span>")
+			user << text("<span class='danger'>[src.name] looks severely burnt!</span>")
 	if (src.stat == 1)
 		user << text("<span class='warning'>[src.name] doesn't seem to be responding.</span>")

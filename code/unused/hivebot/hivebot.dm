@@ -159,7 +159,7 @@
 				if(prob(20))
 					for(var/mob/M in viewers(src, null))
 						if(M.client)
-							M << M << "<span class='warning'><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>"
+							M << M << "<span class='danger'>[src] fails to push [tmob]'s fat ass out of the way.</span>"
 					src.now_pushing = 0
 					//src.unlock_medal("That's No Moon, That's A Gourmand!", 1)
 					return*/
@@ -220,7 +220,7 @@
 		*/
 			playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("<span class='warning'><B>[] has slashed at []!</B></span>", M, src), 1)
+				O.show_message(text("<span class='danger'>[] has slashed at []!</span>", M, src), 1)
 			if(prob(8))
 				flick("noise", src.flash)
 			src.adjustBruteLoss(damage)
@@ -228,7 +228,7 @@
 		else
 			playsound(src.loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("<span class='warning'><B>[] took a swipe at []!</B></span>", M, src), 1)
+				O.show_message(text("<span class='danger'>[] took a swipe at []!</span>", M, src), 1)
 			return
 
 	else if (M.a_intent == "disarm")
@@ -240,11 +240,11 @@
 				spawn(5) step(src,get_dir(M,src))
 				playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
-					O.show_message(text("<span class='warning'><B>[] has pushed back []!</B></span>", M, src), 1)
+					O.show_message(text("<span class='danger'>[] has pushed back []!</span>", M, src), 1)
 			else
 				playsound(src.loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
-					O.show_message(text("<span class='warning'><B>[] attempted to push back []!</B></span>", M, src), 1)
+					O.show_message(text("<span class='danger'>[] attempted to push back []!</span>", M, src), 1)
 	return
 
 /mob/living/silicon/hivebot/attack_hand(mob/user)

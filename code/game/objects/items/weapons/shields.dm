@@ -22,7 +22,7 @@
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
+		viewers(user) << "<span class='danger'>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
 
 	IsShield()
@@ -73,7 +73,7 @@
 	var/active = 0
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</b></span>"
+		viewers(user) << "<span class='danger'>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
 
 

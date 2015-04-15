@@ -112,10 +112,10 @@
 
 	put_mob(mob/living/carbon/M as mob)
 		if(!iscarbon(M))
-			usr << "<span class='warning'><B>The [src.name] cannot hold this!</B></span>"
+			usr << "<span class='danger'>The [src.name] cannot hold this!</span>"
 			return
 		if(src.occupant)
-			usr << "<span class='warning'><B>The [src.name] is already occupied!</B></span>"
+			usr << "<span class='danger'>The [src.name] is already occupied!</span>"
 			return
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE

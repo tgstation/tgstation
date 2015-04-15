@@ -201,7 +201,7 @@
 /datum/game_mode/proc/greet_vampire(var/datum/mind/vampire, var/you_are=1)
 	var/dat
 	if (you_are)
-		dat = "<B><span class='warning'>You are a Vampire!</br></B></span>"
+		dat = "<span class='danger'>You are a Vampire!</br></span>"
 	dat += {"To bite someone, target the head and use harm intent with an empty hand. Drink blood to gain new powers.
 You are weak to holy things and starlight. Don't go into space and avoid the Chaplain, the chapel and especially Holy Water."}
 	vampire.current << dat

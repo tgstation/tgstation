@@ -233,7 +233,7 @@ var/global/loopModeNames=list(
 		usr << "<span class='warning'>You don't see anything to mess with.</span>"
 		return
 	if(stat & BROKEN && playlist!=null)
-		user.visible_message("<span class='warning'><b>[user.name] smacks the side of \the [src.name].</b></span>","<span class='warning'>You hammer the side of \the [src.name].</span>")
+		user.visible_message("<span class='danger'>[user.name] smacks the side of \the [src.name].</span>","<span class='warning'>You hammer the side of \the [src.name].</span>")
 		stat &= ~BROKEN
 		playlist=null
 		playing=emagged

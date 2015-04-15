@@ -67,7 +67,7 @@
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] puts the [src.name] over \his head and tightens the handles around \his neck! It looks like \he's trying to commit suicide.</b></span>"
+		viewers(user) << "<span class='danger'>[user] puts the [src.name] over \his head and tightens the handles around \his neck! It looks like \he's trying to commit suicide.</span>"
 		return(OXYLOSS)
 
 // -----------------------------

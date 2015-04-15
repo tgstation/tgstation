@@ -54,7 +54,7 @@
 		M.Stun(8)
 		M.Weaken(8)
 		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
+			if (O.client)	O.show_message("<span class='danger'>[M] has been beaten with \the [src] by [user]!</span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 	else
 		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1, -1)
 		M.Stun(5)
@@ -69,7 +69,7 @@
 		src.add_fingerprint(user)
 
 		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
+			if (O.client)	O.show_message("<span class='danger'>[M] has been stunned with \the [src] by [user]!</span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 
 //Telescopic baton
 /obj/item/weapon/melee/telebaton
@@ -145,7 +145,7 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [target.name] ([target.ckey])</font>")
 			log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 			src.add_fingerprint(user)
-			target.visible_message("<span class='warning'><B>[target] has been stunned with \the [src] by [user]!</B></span>")
+			target.visible_message("<span class='danger'>[target] has been stunned with \the [src] by [user]!</span>")
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else

@@ -69,7 +69,7 @@
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/minihoe))
 		if(health > 0)
-			user << "<span class='warning'><b>You begin to dislodge the apiary from the tray, the bees don't like that.</b></span>"
+			user << "<span class='danger'>You begin to dislodge the apiary from the tray, the bees don't like that.</span>"
 			angry_swarm(user)
 		else
 			user << "<span class='notice'>You begin to dislodge the dead apiary from the tray.</span>"

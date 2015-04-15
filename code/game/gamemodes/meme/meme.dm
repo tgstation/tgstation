@@ -127,7 +127,7 @@
 
 /datum/game_mode/proc/greet_meme(var/datum/mind/meme, var/you_are=1)
 	if (you_are)
-		meme.current << "<B><span class='warning'>You are a meme!</B></span>"
+		meme.current << "<span class='danger'>You are a meme!</span>"
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in meme.objectives)

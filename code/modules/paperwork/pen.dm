@@ -193,7 +193,7 @@ var/paperwork_library
 		return style.Format(text,src,user,P)
 
 /obj/item/weapon/pen/suicide_act(mob/user)
-	viewers(user) << "<span class='warning'><b>[user]is jamming the [src.name]into \his ear! It looks like \he's trying to commit suicide.</b></span>"
+	viewers(user) << "<span class='danger'>[user]is jamming the [src.name]into \his ear! It looks like \he's trying to commit suicide.</span>"
 	return(OXYLOSS)
 
 /obj/item/weapon/pen/blue

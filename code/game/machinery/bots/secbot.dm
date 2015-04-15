@@ -211,7 +211,7 @@ Auto Patrol: []"},
 		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
+				O.show_message("<span class='danger'>[src] buzzes oddly!</span>", 1)
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -279,7 +279,7 @@ Auto Patrol: []"},
 						if(declare_arrests)
 							var/area/location = get_area(src)
 							broadcast_security_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] suspect <b>[target]</b> in <b>[location]</b>", src)
-						//visible_message("<span class='warning'><B>[src.target] has been stunned by [src]!</B></span>")
+						//visible_message("<span class='danger'>[src.target] has been stunned by [src]!</span>")
 
 						mode = SECBOT_PREP_ARREST
 						src.anchored = 1
@@ -290,7 +290,7 @@ Auto Patrol: []"},
 						if(world.time > next_harm_time)
 							next_harm_time = world.time + 15
 							playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
-							visible_message("<span class='warning'><B>[src] beats [src.target] with the stun baton!</B></span>")
+							visible_message("<span class='danger'>[src] beats [src.target] with the stun baton!</span>")
 							src.icon_state = "secbot-c"
 							spawn(2)
 								src.icon_state = "secbot[src.on]"
@@ -326,7 +326,7 @@ Auto Patrol: []"},
 				if(!C.handcuffed && !src.arrest_type)
 					playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
-					visible_message("<span class='warning'><B>[src] is trying to put handcuffs on [src.target]!</B></span>")
+					visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>")
 
 					spawn(60)
 						if(Adjacent(target))
@@ -759,7 +759,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
-	src.visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)

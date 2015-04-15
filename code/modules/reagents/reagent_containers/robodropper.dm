@@ -40,7 +40,7 @@
 						if(reagents.has_reagent(bad_reagent))
 							badshit += reagents_to_log[bad_reagent]
 					if(badshit.len)
-						var/hl="<span class='warning'><b>([english_list(badshit)])</b></span>"
+						var/hl="<span class='danger'>([english_list(badshit)])</span>"
 						message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 						log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
 
@@ -56,7 +56,7 @@
 						trans = src.reagents.trans_to(safe_thing, amount_per_transfer_from_this)
 
 						for(var/mob/O in viewers(world.view, user))
-							O.show_message(text("<span class='warning'><B>[] tries to squirt something into []'s eyes, but fails!</B></span>", user, target), 1)
+							O.show_message(text("<span class='danger'>[] tries to squirt something into []'s eyes, but fails!</span>", user, target), 1)
 						spawn(5)
 							src.reagents.reaction(safe_thing, TOUCH)
 
@@ -69,7 +69,7 @@
 
 
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("<span class='warning'><B>[] squirts something into []'s eyes!</B></span>", user, target), 1)
+					O.show_message(text("<span class='danger'>[] squirts something into []'s eyes!</span>", user, target), 1)
 				src.reagents.reaction(target, TOUCH)
 
 				var/mob/M = target

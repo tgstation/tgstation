@@ -162,7 +162,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	if(flag && istype(target,/obj/machinery/portable_atmospherics/hydroponics))
 		var/obj/machinery/portable_atmospherics/hydroponics/tray = target
 		if(process_chambered())
-			user.visible_message("<span class='warning'><b> \The [user] fires \the [src] into \the [tray]!</b></span>")
+			user.visible_message("<span class='danger'> \The [user] fires \the [src] into \the [tray]!</span>")
 			Fire(target,user)
 		return
 

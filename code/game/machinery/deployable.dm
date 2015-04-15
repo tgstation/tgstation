@@ -85,7 +85,7 @@ for reference:
 					src.health -= W.force * 0.75
 				else
 			if (src.health <= 0)
-				visible_message("<span class='warning'><B>The barricade is smashed apart!</B></span>")
+				visible_message("<span class='danger'>The barricade is smashed apart!</span>")
 				new /obj/item/stack/sheet/wood(get_turf(src, 5))
 				del(src)
 			..()
@@ -93,13 +93,13 @@ for reference:
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				visible_message("<span class='warning'><B>The barricade is blown apart!</B></span>")
+				visible_message("<span class='danger'>The barricade is blown apart!</span>")
 				qdel(src)
 				return
 			if(2.0)
 				src.health -= 25
 				if (src.health <= 0)
-					visible_message("<span class='warning'><B>The barricade is blown apart!</B></span>")
+					visible_message("<span class='danger'>The barricade is blown apart!</span>")
 					new /obj/item/stack/sheet/wood(get_turf(src))
 					new /obj/item/stack/sheet/wood(get_turf(src))
 					new /obj/item/stack/sheet/wood(get_turf(src))
@@ -107,7 +107,7 @@ for reference:
 				return
 
 	meteorhit()
-		visible_message("<span class='warning'><B>The barricade is smashed apart!</B></span>")
+		visible_message("<span class='danger'>The barricade is smashed apart!</span>")
 		new /obj/item/stack/sheet/wood(get_turf(src))
 		new /obj/item/stack/sheet/wood(get_turf(src))
 		new /obj/item/stack/sheet/wood(get_turf(src))
@@ -117,7 +117,7 @@ for reference:
 	blob_act()
 		src.health -= 25
 		if (src.health <= 0)
-			visible_message("<span class='warning'><B>The blob eats through the barricade!</B></span>")
+			visible_message("<span class='danger'>The blob eats through the barricade!</span>")
 			del(src)
 		return
 
@@ -267,7 +267,7 @@ for reference:
 		return 0
 
 /obj/machinery/deployable/barrier/proc/explode()
-	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
+	visible_message("<span class='danger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	/*	var/obj/item/stack/rods/ =*/

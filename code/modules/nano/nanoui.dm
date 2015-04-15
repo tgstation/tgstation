@@ -508,7 +508,7 @@ nanoui is used to open and update nano browser uis
 		if(!newz || isnull(newz))
 			return 0
 		if(newz < 1 || newz > 6 || newz == 2)
-			usr << "<span class='warning'><b>Unable to establish a connection</b></span>"
+			usr << "<span class='danger'>Unable to establish a connection</span>"
 			return 0
 		if(newz != map_z_level)
 			set_map_z_level(newz)

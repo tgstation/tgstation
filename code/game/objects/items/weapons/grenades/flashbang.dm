@@ -27,7 +27,7 @@
 			S.active = 0										// -- Polymorph
 			S.icon_state = "shield0"
 
-	M << "<span class='warning'><B>BANG</B></span>"
+	M << "<span class='danger'>BANG</span>"
 	playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
 
 //Checking for protections

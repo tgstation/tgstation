@@ -163,7 +163,7 @@
 	if(!istype(L) || L.buckled)
 		return
 	if(L.abiotic())
-		user << "<span class='warning'><B>Subject cannot have abiotic items on.</B></span>"
+		user << "<span class='danger'>Subject cannot have abiotic items on.</span>"
 		return
 	for(var/mob/living/carbon/slime/M in range(1,L))
 		if(M.Victim == L)

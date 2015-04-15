@@ -64,9 +64,9 @@
 				if(L)
 					L.NotTargeted(src)
 			del(target)
-			usr.visible_message("<span class='warning'><b>[usr] turns \the [src] on [M]!</b></span>")
+			usr.visible_message("<span class='danger'>[usr] turns \the [src] on [M]!</span>")
 		else
-			usr.visible_message("<span class='warning'><b>[usr] aims \a [src] at [M]!</b></span>")
+			usr.visible_message("<span class='danger'>[usr] aims \a [src] at [M]!</span>")
 		M.Targeted(src)
 
 //HE MOVED, SHOOT HIM!
@@ -162,7 +162,7 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 	if(!targeted_by) targeted_by = list()
 	targeted_by += I
 	I.lock_time = world.time + 20 //Target has 2 second to realize they're targeted and stop (or target the opponent).
-	src << "((<span class='warning'><b>Your character is being targeted. They have 2 seconds to stop any click or move actions.</b> </span>While targeted, they may \
+	src << "((<span class='danger'>Your character is being targeted. They have 2 seconds to stop any click or move actions. </span>While targeted, they may \
 	drag and drop items in or into the map, speak, and click on interface buttons. Clicking on the map objects (floors and walls are fine), their items \
 	 (other than a weapon to de-target), or moving will result in being fired upon. <span class='warning'>The aggressor may also fire manually, </span>\
 	 so try not to get on their bad side.\black ))"
@@ -312,7 +312,7 @@ client/verb/AllowTargetMove()
 						M << "<span class='warning'>Your move intent is now set to walk, as your targeter permits it.</span>"
 						M.set_m_intent("walk")
 				else
-					M << "<span class='warning'><b>Your character will now be shot if they move.</b></span>"
+					M << "<span class='danger'>Your character will now be shot if they move.</span>"
 
 mob/living/proc/set_m_intent(var/intent)
 	if (intent != "walk" && intent != "run")
@@ -345,7 +345,7 @@ client/verb/AllowTargetRun()
 				if(target_can_run)
 					M << "Your character may now <b>run</b> at the discretion of their targeter."
 				else
-					M << "<span class='warning'><b>Your character will now be shot if they run.</b></span>"
+					M << "<span class='danger'>Your character will now be shot if they run.</span>"
 
 client/verb/AllowTargetClick()
 	set hidden=1
@@ -369,4 +369,4 @@ client/verb/AllowTargetClick()
 				if(target_can_click)
 					M << "Your character may now <b>use items</b> at the discretion of their targeter."
 				else
-					M << "<span class='warning'><b>Your character will now be shot if they use items.</b></span>"
+					M << "<span class='danger'>Your character will now be shot if they use items.</span>"

@@ -399,7 +399,7 @@ var/list/admin_verbs_mod = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "<span class='warning'><b>Invisimin off. Invisibility reset.</b></span>"
+			mob << "<span class='danger'>Invisimin off. Invisibility reset.</span>"
 			mob.icon_state = "ghost"
 			mob.icon = 'icons/mob/human.dmi'
 			mob.update_icons()

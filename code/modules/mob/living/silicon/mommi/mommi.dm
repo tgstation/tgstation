@@ -305,7 +305,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				if (randn <= 25)
 					weakened = 3
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					visible_message("<span class='warning'><B>[user] has pushed [src]!</B></span>")
+					visible_message("<span class='danger'>[user] has pushed [src]!</span>")
 					var/obj/item/found = locate(tool_state) in src.module.modules
 					if(!found)
 						var/obj/item/TS = tool_state
@@ -319,10 +319,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 						var/obj/item/TS = tool_state
 						drop_item(TS)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						visible_message("<span class='warning'><B>[user] has disarmed [src]!</B></span>")
+						visible_message("<span class='danger'>[user] has disarmed [src]!</span>")
 					else
 						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-						visible_message("<span class='warning'><B>[user] attempted to disarm [src]!</B></span>")
+						visible_message("<span class='danger'>[user] attempted to disarm [src]!</span>")
 					return
 			if (I_HELP)
 				help_shake_act(user)

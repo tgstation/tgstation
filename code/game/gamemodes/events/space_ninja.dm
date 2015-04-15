@@ -725,7 +725,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		U.incorporeal_move = 0
 		kamikaze = 0
 		k_unlock = 0
-		U << "<span class='notice'>Disengaging mode...\n\black<b>CODE NAME</b>: <span class='warning'><b>KAMIKAZE</b></span></span>"
+		U << "<span class='notice'>Disengaging mode...\n\black<b>CODE NAME</b>: <span class='danger'>KAMIKAZE</span></span>"
 
 //=======//AI VERBS//=======//
 

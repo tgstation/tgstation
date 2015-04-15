@@ -94,7 +94,7 @@
 /obj/effect/alien/resin/hitby(AM as mob|obj)
 	..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message("<span class='warning'><B>[src] was hit by [AM].</B></span>", 1)
+		O.show_message("<span class='danger'>[src] was hit by [AM].</span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10

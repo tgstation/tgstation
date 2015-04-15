@@ -81,7 +81,7 @@ var/global/sent_syndicate_strike_team = 0
 				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code].</span>")
 			new_syndicate_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[input].</span>")
 
-			new_syndicate_commando << "<span class='notice'>You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: <span class='warning'><B>[input]</B></span></span>"
+			new_syndicate_commando << "<span class='notice'>You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: <span class='danger'>[input]</span></span>"
 
 			syndicate_commando_number--
 

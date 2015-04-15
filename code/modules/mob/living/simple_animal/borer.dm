@@ -302,8 +302,8 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	if(!host || host.stat==DEAD || !src || controlling)
 		return
 
-	src << "<span class='warning'><B>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</B></span>"
-	host << "<span class='warning'><B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B></span>"
+	src << "<span class='danger'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>"
+	host << "<span class='danger'>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</span>"
 
 	host_brain.ckey = host.ckey
 	host_brain.name = host.real_name

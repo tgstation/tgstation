@@ -719,7 +719,7 @@
 		return 0
 	spawn(0)
 		throw_item.throw_at(target, 16, 3)
-	src.visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
+	src.visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return 1
 
 /obj/machinery/vending/update_icon()

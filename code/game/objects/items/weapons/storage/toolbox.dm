@@ -18,7 +18,7 @@
 	attack_verb = list("robusted")
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is [pick("stoving","robusting")] \his head in with the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
+		viewers(user) << "<span class='danger'>[user] is [pick("stoving","robusting")] \his head in with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
 
 

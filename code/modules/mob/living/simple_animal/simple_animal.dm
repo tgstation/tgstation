@@ -367,7 +367,7 @@
 
 		if(I_HURT, I_DISARM)
 			var/damage = rand(15, 30)
-			visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
+			visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
 			adjustBruteLoss(damage)
 
 	return
@@ -382,7 +382,7 @@
 		else
 
 			var/damage = rand(5, 10)
-			visible_message("<span class='warning'><B>[L] bites [src]!</B></span>")
+			visible_message("<span class='danger'>[L] bites [src]!</span>")
 
 			if(stat != DEAD)
 				adjustBruteLoss(damage)
@@ -396,7 +396,7 @@
 
 	if(M.Victim) return // can't attack while eating!
 
-	visible_message("<span class='warning'><B>[M.name] glomps [src]!</B></span>")
+	visible_message("<span class='danger'>[M.name] glomps [src]!</span>")
 
 	var/damage = rand(1, 3)
 

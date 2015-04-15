@@ -188,7 +188,7 @@
 	if(user) user << "<span class='warning'>You short out [src]'s plant identifier circuits.</span>"
 	spawn(0)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
+			O.show_message("<span class='danger'>[src] buzzes oddly!</span>", 1)
 	flick("farmbot_broke", src)
 	src.emagged = 1
 	src.on = 1
@@ -200,7 +200,7 @@
 
 /obj/machinery/bot/farmbot/explode()
 	src.on = 0
-	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
+	visible_message("<span class='danger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/minihoe(Tsec)
@@ -394,7 +394,7 @@
 		spawn(0)
 			fert.loc = src.loc
 			fert.throw_at(target, 16, 3)
-		src.visible_message("<span class='warning'><b>[src] launches [fert.name] at [target.name]!</b></span>")
+		src.visible_message("<span class='danger'>[src] launches [fert.name] at [target.name]!</span>")
 		flick("farmbot_broke", src)
 		spawn (FARMBOT_EMAG_DELAY)
 			mode = 0
@@ -428,13 +428,13 @@
 			mode = 0
 
 		if ( prob(30) ) // better luck next time little guy
-			src.visible_message("<span class='warning'><b>[src] swings wildly at [target] with a minihoe, missing completely!</b></span>")
+			src.visible_message("<span class='danger'>[src] swings wildly at [target] with a minihoe, missing completely!</span>")
 
 		else // yayyy take that weeds~
 			var/attackVerb = pick("slashed", "sliced", "cut", "clawed")
 			var /mob/living/carbon/human/human = target
 
-			src.visible_message("<span class='warning'><B>[src] [attackVerb] [human]!</B></span>")
+			src.visible_message("<span class='danger'>[src] [attackVerb] [human]!</span>")
 			var/damage = 15
 			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 			var/datum/organ/external/affecting = human.get_organ(ran_zone(dam_zone))

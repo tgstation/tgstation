@@ -419,7 +419,7 @@
 		if (istype(M,/mob/living/carbon/human/))
 			var/mob/living/carbon/human/H = M
 
-			H.visible_message("<span class='warning'><b>[H.name]'s flesh melts right off! Holy shit!</b></span>")
+			H.visible_message("<span class='danger'>[H.name]'s flesh melts right off! Holy shit!</span>")
 			//if (H.gender == "female")
 			//	playsound(H.loc, 'female_fallscream.ogg', 50, 0)
 			//else
@@ -435,6 +435,6 @@
 			//H.decomp_stage = 4
 			H.gib(1)
 		else
-			M.visible_message("<span class='warning'><b>[usr.name] melts into a pile of bloody viscera!</b></span>")
+			M.visible_message("<span class='danger'>[usr.name] melts into a pile of bloody viscera!</span>")
 			M.gib(1)
 

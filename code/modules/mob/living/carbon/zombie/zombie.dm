@@ -143,10 +143,10 @@
 				if(distance <= 1 && !istype(src.wear_mask, /obj/item/clothing/mask))
 					if(prob(25))
 						for(var/mob/O in viewers(world.view,src))
-							O.show_message("<span class='warning'><B>[src] has attempted to bite [src.target]!</B></span>", 1, "<span class='warning'>You hear struggling.</span>", 2)
+							O.show_message("<span class='danger'>[src] has attempted to bite [src.target]!</span>", 1, "<span class='warning'>You hear struggling.</span>", 2)
 					else
 						for(var/mob/O in viewers(world.view,src))
-							O.show_message("<span class='warning'><B>[src.target] has been bitten by [src]!</B></span>", 1, "<span class='warning'>You hear struggling.</span>", 2)
+							O.show_message("<span class='danger'>[src.target] has been bitten by [src]!</span>", 1, "<span class='warning'>You hear struggling.</span>", 2)
 						var/mob/living/carbon/human/T = target
 						T.bruteloss += rand(1,7)
 						var/datum/organ/external/affecting
@@ -181,10 +181,10 @@
 						A.attack(src.target, src)
 					else if(prob(25))
 						for(var/mob/O in viewers(world.view,src))
-							O.show_message("<span class='warning'><B>[src] has attempted to claw [src.target]!</B></span>", 1, "<span class='warning'>You hear struggling.</span>", 2)
+							O.show_message("<span class='danger'>[src] has attempted to claw [src.target]!</span>", 1, "<span class='warning'>You hear struggling.</span>", 2)
 					else
 						for(var/mob/O in viewers(world.view,src))
-							O.show_message("<span class='warning'><B>[src.target] has been clawed by [src]!</B></span>", 1, "<span class='warning'>You hear struggling.</span>", 2)
+							O.show_message("<span class='danger'>[src.target] has been clawed by [src]!</span>", 1, "<span class='warning'>You hear struggling.</span>", 2)
 						var/mob/living/carbon/human/T = target
 						T.bruteloss += rand(1,7)
 						var/datum/organ/external/affecting

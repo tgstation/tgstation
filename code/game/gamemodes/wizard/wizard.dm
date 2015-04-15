@@ -23,7 +23,7 @@
 
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Wizard!</B>"
-	world << "<B>There is a <span class='warning'>SPACE WIZARD on the station. You can't let him achieve his objective!</B></span>"
+	world << "<B>There is a <span class='danger'>SPACE WIZARD on the station. You can't let him achieve his objective!</span>"
 
 
 /datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
@@ -50,7 +50,7 @@
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	if(wizardstart.len == 0)
-		wizard.current << "<B><span class='warning'>A starting location for you could not be found, please report this bug!</B></span>"
+		wizard.current << "<span class='danger'>A starting location for you could not be found, please report this bug!</span>"
 		return 0
 	return 1
 
@@ -146,7 +146,7 @@
 
 /datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
-		wizard.current << "<B><span class='warning'>You are the Space Wizard!</B></span>"
+		wizard.current << "<span class='danger'>You are the Space Wizard!</span>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
 
 	var/obj_count = 1

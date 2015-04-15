@@ -18,7 +18,7 @@
 	"It's mesmerizing to behold.")
 
 /obj/structure/crystal/Destroy()
-	src.visible_message("<span class='warning'><b>[src] shatters!</b></span>")
+	src.visible_message("<span class='danger'>[src] shatters!</span>")
 	if(prob(75))
 		getFromPool(/obj/item/weapon/shard/plasma, loc)
 	if(prob(50))

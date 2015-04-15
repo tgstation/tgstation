@@ -79,7 +79,7 @@
 	if(prob(65))
 		src.health -= Proj.damage
 	else
-		visible_message("<span class='warning'><B>[src] blocks [Proj] with its shield!</B></span>")
+		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
 	return 0
 
 

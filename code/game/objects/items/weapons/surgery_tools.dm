@@ -27,7 +27,7 @@
 	origin_tech = "materials=1;biotech=1"
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
+		viewers(user) << "<span class='danger'>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
 
 
@@ -150,7 +150,7 @@ LOOK FOR SURGERY.DM*/
 	attack_verb = list("attacked", "pinched")
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
+		viewers(user) << "<span class='danger'>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
 
 
@@ -293,7 +293,7 @@ LOOK FOR SURGERY.DM*/
 	attack_verb = list("burnt")
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is burning \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
+		viewers(user) << "<span class='danger'>[user] is burning \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
 	is_hot()
 		return 1
@@ -394,8 +394,8 @@ LOOK FOR SURGERY.DM*/
 	attack_verb = list("drilled")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("<span class='warning'><b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b></span>", \
-							"<span class='warning'><b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b></span>")
+		viewers(user) << pick("<span class='danger'>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='danger'>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS)
 
 /*
@@ -422,9 +422,9 @@ LOOK FOR SURGERY.DM*/
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
-							"<span class='warning'><b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
-							"<span class='warning'><b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b></span>")
+		viewers(user) << pick("<span class='danger'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='danger'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='danger'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
 		return (BRUTELOSS)
 
 /*
@@ -728,7 +728,7 @@ LOOK FOR SURGERY.DM*/
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is sawing \his head in two with the [src.name]! It looks like \he's  trying to commit suicide!</b></span>"
+		viewers(user) << "<span class='danger'>[user] is sawing \his head in two with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
 
 
@@ -893,7 +893,7 @@ LOOK FOR SURGERY.DM*/
 	throwforce = 1.0
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is eating the [src.name]! It looks like \he's  trying to commit suicide!</b></span>" //Don't eat glue kids.
+		viewers(user) << "<span class='danger'>[user] is eating the [src.name]! It looks like \he's  trying to commit suicide!</span>" //Don't eat glue kids.
 		return (TOXLOSS)
 
 

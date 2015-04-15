@@ -189,7 +189,7 @@
 
 	switch(jitteriness)
 		if(JITTER_HIGH to INFINITY)
-			msg += "<span class='warning'><B>[t_He] [t_is] convulsing violently!</B></span>\n"
+			msg += "<span class='danger'>[t_He] [t_is] convulsing violently!</span>\n"
 		if(JITTER_MEDIUM to JITTER_HIGH)
 			msg += "<span class='warning'>[t_He] [t_is] extremely jittery.</span>\n"
 		if(1 to JITTER_MEDIUM)
@@ -255,7 +255,7 @@
 		if(temp)
 			if(temp.status & ORGAN_DESTROYED)
 				is_destroyed["[temp.display_name]"] = 1
-				wound_flavor_text["[temp.display_name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [temp.display_name].</b></span>\n"
+				wound_flavor_text["[temp.display_name]"] = "<span class='danger'>[t_He] is missing [t_his] [temp.display_name].</span>\n"
 				continue
 			if(temp.status & ORGAN_PEG)
 				if(!(temp.brute_dam + temp.burn_dam))
@@ -400,11 +400,11 @@
 	else if(is_bleeding["right foot"])
 		display_shoes = 1
 	if(display_chest)
-		msg += "<span class='warning'><b>[src] has blood soaking through from under [t_his] clothing!</b></span>\n"
+		msg += "<span class='danger'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
 	if(display_shoes)
-		msg += "<span class='warning'><b>[src] has blood running from [t_his] shoes!</b></span>\n"
+		msg += "<span class='danger'>[src] has blood running from [t_his] shoes!</span>\n"
 	if(display_gloves)
-		msg += "<span class='warning'><b>[src] has blood running from under [t_his] gloves!</b></span>\n"
+		msg += "<span class='danger'>[src] has blood running from under [t_his] gloves!</span>\n"
 
 	for(var/implant in get_visible_implants(1))
 		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of [t_his] flesh!</span>\n"

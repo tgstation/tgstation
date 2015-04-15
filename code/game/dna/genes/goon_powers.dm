@@ -335,9 +335,9 @@
 			// Bullshit, but prevents being able to instagib someone.
 			user << "<span class='warning'> You try to put their [limb] in your mouth, but it's too big to fit!</span>"
 			return 0
-		usr.visible_message("<span class='warning'> <b>[usr] begins stuffing [the_item]'s [limb.display_name] into [m_his] gaping maw!</b></span>")
+		usr.visible_message("<span class='danger'>[usr] begins stuffing [the_item]'s [limb.display_name] into [m_his] gaping maw!</span>")
 		if(!do_mob(user,the_item,EAT_MOB_DELAY))
-			user << "<span class='warning'> You were interrupted before you could eat [the_item]!</span>"
+			user << "<span class='warning'>You were interrupted before you could eat [the_item]!</span>"
 		else
 			user.visible_message("<span class='warning'>[user] eats \the [limb].</span>")
 			limb.droplimb("override" = 1, "spawn_limb" = 0)

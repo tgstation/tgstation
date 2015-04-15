@@ -385,7 +385,7 @@ var/global/datum/controller/occupations/job_master
 				H.mind.store_memory(remembered_info)
 
 			spawn(0)
-				H << "<span class='warning'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>"
+				H << "<span class='danger'>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</span>"
 
 		var/alt_title = null
 		if(H.mind)

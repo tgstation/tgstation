@@ -298,7 +298,7 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("<span class='warning'><B>The [M.name] has glomped []!</B></span>", src), 1)
+				O.show_message(text("<span class='danger'>The [M.name] has glomped []!</span>", src), 1)
 
 		var/damage = rand(1, 3)
 		attacked += 5
@@ -354,7 +354,7 @@
 				//playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[M.name] has attacked [src]!</B></span>"), 1)
+						O.show_message(text("<span class='danger'>[M.name] has attacked [src]!</span>"), 1)
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -443,7 +443,7 @@
 					G.cell.use(2500)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message("<span class='warning'><B>[src] has been touched with the stun gloves by [M]!</B></span>", 1, "<span class='warning'>You hear someone fall.</span>", 2)
+							O.show_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", 1, "<span class='warning'>You hear someone fall.</span>", 2)
 					return
 				else
 					M << "<span class='warning'>Not enough charge! </span>"
@@ -494,7 +494,7 @@
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has punched []!</B></span>", M, src), 1)
+						O.show_message(text("<span class='danger'>[] has punched []!</span>", M, src), 1)
 
 				adjustBruteLoss(damage)
 				updatehealth()
@@ -502,7 +502,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has attempted to punch []!</B></span>", M, src), 1)
+						O.show_message(text("<span class='danger'>[] has attempted to punch []!</span>", M, src), 1)
 	return
 
 
@@ -532,18 +532,18 @@
 					damage = rand(20, 40)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has attacked [name]!</B></span>", M), 1)
+							O.show_message(text("<span class='danger'>[] has attacked [name]!</span>", M), 1)
 				else
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("<span class='warning'><B>[] has wounded [name]!</B></span>", M), 1)
+							O.show_message(text("<span class='danger'>[] has wounded [name]!</span>", M), 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has attempted to lunge at [name]!</B></span>", M), 1)
+						O.show_message(text("<span class='danger'>[] has attempted to lunge at [name]!</span>", M), 1)
 
 		if (I_GRAB)
 			if (M == src)
@@ -569,7 +569,7 @@
 			if(prob(95))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has tackled [name]!</B></span>", M), 1)
+						O.show_message(text("<span class='danger'>[] has tackled [name]!</span>", M), 1)
 
 				if(Victim)
 					Victim = null
@@ -595,7 +595,7 @@
 				drop_item()
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='warning'><B>[] has disarmed [name]!</B></span>", M), 1)
+						O.show_message(text("<span class='danger'>[] has disarmed [name]!</span>", M), 1)
 			adjustBruteLoss(damage)
 			updatehealth()
 	return

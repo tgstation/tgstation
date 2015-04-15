@@ -144,7 +144,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 				else
 					organ_msg+="/0"
 				if(org.status & ORGAN_BLEEDING)
-					organ_msg+="<span class='warning'><b>\[BLEEDING\]</b></span>"
+					organ_msg+="<span class='danger'>\[BLEEDING\]</span>"
 				if(org.status & ORGAN_PEG)
 					organ_msg+="<span class='notice'><b>\[WOOD DETECTED?\]</b></span>"
 				if(org.status & ORGAN_ROBOT)
@@ -158,7 +158,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 	BU = M.getFireLoss() > 50 ? 	"<font color='#FFA500'><b>Severe burn damage detected</b></font>" 			:	"Subject burn injury status O.K"
 	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" 		: 	"Subject brute-force injury status O.K"
 	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected<span class='warning'></span></span>" 	: 	"Subject bloodstream oxygen level normal"
+		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected<span class='danger'></span></span>" 	: 	"Subject bloodstream oxygen level normal"
 	user.show_message("[OX] | [TX] | [BU] | [BR]")
 	if (istype(M, /mob/living/carbon))
 		if(M:reagents.total_volume > 0)

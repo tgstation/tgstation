@@ -232,7 +232,7 @@
 		if(user) user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='warning'><B>[src] buzzes oddly!</B></span>", 1)
+				O.show_message("<span class='danger'>[src] buzzes oddly!</span>", 1)
 		flick("medibot_spark", src)
 		src.patient = null
 		if(user) src.oldpatient = user
@@ -443,7 +443,7 @@
 		return
 	else
 		src.icon_state = "medibots"
-		visible_message("<span class='warning'><B>[src] is trying to inject [src.patient]!</B></span>")
+		visible_message("<span class='danger'>[src] is trying to inject [src.patient]!</span>")
 		spawn(30)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
@@ -451,7 +451,7 @@
 					src.reagent_glass.reagents.reaction(src.patient, 2)
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
-				visible_message("<span class='warning'><B>[src] injects [src.patient] with the syringe!</B></span>")
+				visible_message("<span class='danger'>[src] injects [src.patient] with the syringe!</span>")
 
 			src.icon_state = "medibot[src.on]"
 			src.currently_healing = 0
@@ -475,7 +475,7 @@
 
 /obj/machinery/bot/medbot/explode()
 	src.on = 0
-	visible_message("<span class='warning'><B>[src] blows apart!</B></span>", 1)
+	visible_message("<span class='danger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)

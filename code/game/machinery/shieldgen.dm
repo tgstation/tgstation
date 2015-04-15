@@ -108,7 +108,7 @@
 
 /obj/machinery/shield/hitby(AM as mob|obj)
 	//Let everyone know we've been hit!
-	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
+	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 
 	//Super realistic, resource-intensive, real-time damage calculations.
 	var/tforce = 0

@@ -66,7 +66,7 @@
 		M.loc = src.loc
 		for(var/mob/N in viewers(src, null))
 			if(N.client)
-				N.show_message(text("<span class='warning'><B>[M] bursts out of [src]!</B></span>"), 2)
+				N.show_message(text("<span class='danger'>[M] bursts out of [src]!</span>"), 2)
 	. = ..()
 
 /mob/living/carbon/proc/share_contact_diseases(var/mob/M)
@@ -196,7 +196,7 @@
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].",status=="OK"?"<span class='notice'></span>":"<span class='warning'></span>",org.display_name,status),1)
+				src.show_message(text("\t []My [] is [].",status=="OK"?"<span class='notice'></span>":"<span class='danger'></span>",org.display_name,status),1)
 			if((SKELETON in H.mutations) && (!H.w_uniform) && (!H.wear_suit))
 				H.play_xylophone()
 		else if(lying) // /vg/: For hugs. This is how update_icon figgers it out, anyway.  - N3X15
@@ -596,8 +596,8 @@
 
 	if(B.controlling)
 		if(rptext)
-			src << "<span class='warning'><B>You withdraw your probosci, releasing control of [B.host_brain]</B></span>"
-			B.host_brain << "<span class='warning'><B>Your vision swims as the alien parasite releases control of your body.</B></span>"
+			src << "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain]</span>"
+			B.host_brain << "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>"
 		B.ckey = ckey
 		B.controlling = 0
 	if(B.host_brain.ckey)
@@ -622,8 +622,8 @@
 		return
 
 	if(B.host_brain.ckey)
-		src << "<span class='warning'><B>You send a punishing spike of psychic agony lancing into your host's brain.</B></span>"
-		B.host_brain << "<span class='warning'><B><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></B></span>"
+		src << "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>"
+		B.host_brain << "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>"
 
 //Check for brain worms in head.
 /mob/proc/has_brain_worms()
@@ -651,8 +651,8 @@
 			// No spaceghoasts.
 			src << "<span class='warning'>Your young are not ready yet.</span>"
 		else
-			src << "<span class='warning'><B>Your host twitches and quivers as you rapidly excrete several larvae from your sluglike body.</B></span>"
-			visible_message("<span class='warning'><B>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</B></span>")
+			src << "<span class='danger'>Your host twitches and quivers as you rapidly excrete several larvae from your sluglike body.</span>"
+			visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
 			B.chemicals -= 100
 
 			B.numChildren++

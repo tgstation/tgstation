@@ -46,14 +46,14 @@ effective or pretty fucking useless.
 				M.Weaken(rand(10,20))
 				if(prob(25))
 					M.Stun(rand(5,10))
-				M << "<span class='warning'><b>You feel a tremendous, paralyzing wave flood your mind.</b></span>"
+				M << "<span class='danger'>You feel a tremendous, paralyzing wave flood your mind.</span>"
 				if(!iscarbon(user))
 					M.LAssailant = null
 				else
 					M.LAssailant = user
 
 			else
-				M << "<span class='warning'><b>You feel a sudden, electric jolt travel through your head.</b></span>"
+				M << "<span class='danger'>You feel a sudden, electric jolt travel through your head.</span>"
 
 	playsound(get_turf(src), 'sound/misc/interference.ogg', 50, 1)
 	user << "<span class='notice'>You trigger [src].</span>"
