@@ -33,7 +33,7 @@
 		eyeobj.user = user
 		eyeobj.name = "Camere Eye ([user.name])"
 		L.remote_view = 1
-		L.remote_eye = eyeobj
+		L.remote_control = eyeobj
 		L.client.perspective = EYE_PERSPECTIVE
 		if(!eyeobj.initialized)
 			for(var/obj/machinery/camera/C in cameranet.cameras)
@@ -65,24 +65,23 @@
 		if(user.client)
 			user.client.eye = src
 
-/client/proc/CameraMove(n, direct, var/mob/living/carbon/user)
-
-	var/initial = initial(user.remote_eye.sprint)
+/mob/camera/aiEye/remote/relaymove(mob/user,direct)
+	var/initial = initial(sprint)
 	var/max_sprint = 50
 
-	if(user.remote_eye.cooldown && user.remote_eye.cooldown < world.timeofday) // 3 seconds
-		user.remote_eye.sprint = initial
+	if(cooldown && cooldown < world.timeofday) // 3 seconds
+		sprint = initial
 
-	for(var/i = 0; i < max(user.remote_eye.sprint, initial); i += 20)
-		var/turf/step = get_turf(get_step(user.remote_eye, direct))
+	for(var/i = 0; i < max(sprint, initial); i += 20)
+		var/turf/step = get_turf(get_step(src, direct))
 		if(step)
-			user.remote_eye.setLoc(step)
+			src.setLoc(step)
 
-	user.remote_eye.cooldown = world.timeofday + 5
-	if(user.remote_eye.acceleration)
-		user.remote_eye.sprint = min(user.remote_eye.sprint + 0.5, max_sprint)
+	cooldown = world.timeofday + 5
+	if(acceleration)
+		sprint = min(sprint + 0.5, max_sprint)
 	else
-		user.remote_eye.sprint = initial
+		sprint = initial
 
 /datum/action/camera_off
 	name = "End Camera View"
@@ -93,10 +92,11 @@
 	if(!target || !iscarbon(target))
 		return
 	var/mob/living/carbon/C = target
+	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	C.remote_view = 0
-	C.remote_eye.origin.current_user = null
-	C.remote_eye.origin.jump_action.Remove(C)
-	C.remote_eye = null
+	remote_eye.origin.current_user = null
+	remote_eye.origin.jump_action.Remove(C)
+	C.remote_control = null
 	if(C.client)
 		C.client.perspective = MOB_PERSPECTIVE
 		C.client.eye = src
@@ -112,7 +112,8 @@
 	if(!target || !iscarbon(target))
 		return
 	var/mob/living/carbon/C = target
-	var/obj/machinery/computer/camera_advanced/origin = C.remote_eye.origin
+	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
 
 	var/list/L = list()
 
@@ -132,4 +133,4 @@
 	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
 	var/obj/machinery/camera/final = T[camera]
 	if(final)
-		C.remote_eye.setLoc(get_turf(final))
+		remote_eye.setLoc(get_turf(final))

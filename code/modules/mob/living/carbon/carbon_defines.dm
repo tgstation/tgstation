@@ -26,4 +26,3 @@
 	has_limbs = 1
 
 	var/remote_view = 0
-	var/mob/camera/aiEye/remote/remote_eye = null
