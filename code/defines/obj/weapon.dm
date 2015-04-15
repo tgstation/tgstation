@@ -341,6 +341,8 @@
 
 /obj/item/weapon/legcuffs/bolas/cable/attackby(var/obj/O, mob/user)
 	if(istype(O, /obj/item))
+		if(istype(O, /obj/item/weapon/gift) || istype(O,/obj/item/smallDelivery))
+			return
 		var/obj/item/I = O
 		if(istype(O, /obj/item/weapon/legcuffs/bolas)) //don't stack into infinity
 			return
@@ -373,14 +375,14 @@
 				return
 		if(I.w_class) //if it has a defined weight
 			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
-				if(weight1 == null)
+				if(!weight1)
 					user.drop_item(I, src)
 					weight1 = I
 					user.show_message("<span class='notice'>You tie [weight1] to the [src].</span>")
 					update_icon()
 					//del(I)
 					return
-				if(weight2 == null) //just in case
+				if(!weight2) //just in case
 					user.drop_item(I, src)
 					weight2 = I
 					user.show_message("<span class='notice'>You tie [weight2] to the [src].</span>")

@@ -108,6 +108,7 @@
 		/obj/item/weapon/gift,//real presents are given directly
 		/obj/item/weapon/winter_gift,
 		/obj/item/weapon/evidencebag,
+		/obj/item/weapon/legcuffs/bolas,
 		)
 
 /obj/item/weapon/packageWrap/afterattack(var/obj/target as obj, mob/user as mob)
