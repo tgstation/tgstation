@@ -74,6 +74,7 @@
 		var/obj/item/weapon/electrolyzer/E = new /obj/item/weapon/electrolyzer
 		user.before_take_item(src)
 		user.put_in_hands(E)
+		qdel(src)
 	else if(istype(W,/obj/item/weapon/screwdriver) && path != 2)
 		if(stage == 1)
 			path = 1

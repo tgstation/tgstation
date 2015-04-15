@@ -1590,6 +1590,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		..()
 
 /obj/structure/centrifuge/attack_hand(mob/user as mob)
+	add_fingerprint(user)
 	if(cans.len || beaker)
 		for(var/obj/item/O in cans)
 			O.loc = src.loc
@@ -1605,7 +1606,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	set name = "Flush"
 	set category = "Object"
 	set src in view(1)
-	usr << "<span class='notice'>The \the [src] groans as it spits out containers.</span>"
+	add_fingerprint(user)
+	usr << "<span class='notice'>\The [src] groans as it spits out containers.</span>"
 	while(cans.len>0 && beaker.reagents.reagent_list.len>0)
 		var/obj/item/weapon/reagent_containers/C = cans[1]
 		var/datum/reagent/R = beaker.reagents.reagent_list[1]
@@ -1708,6 +1710,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return 0
 
 /obj/item/weapon/reagent_containers/mortar/attack_hand(mob/user as mob)
+	add_fingerprint(user)
 	if(user.get_inactive_hand() != src) return ..()
 	if(crushable)
 		crushable.loc = src.loc
