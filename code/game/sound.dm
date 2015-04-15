@@ -1,4 +1,4 @@
-/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1)
+/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1, var/environmentOverride)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -17,10 +17,10 @@
 		if(get_dist(M, turf_source) <= world.view + extrarange)
 			var/turf/T = get_turf(M)
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround, environmentOverride)
 
 
-/atom/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
+/atom/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, var/environmentOverride)
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
@@ -71,12 +71,29 @@
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
+
+	var/area/A = get_area(src)
+	S.environment = A.soundEnvironment
+
+	if(!isnull(environmentOverride))//Two of the byond presets are -1 and 0.
+		S.environment = environmentOverride
+
 	src << S
 
-/mob/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
+
+/mob/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, var/environmentOverride)
 	if(!client || ear_deaf > 0)
 		return
-	..()
+
+	var/finalEnvironment = SOUND_ENV_DEFAULT
+	if(druggy) //far out d00d
+		finalEnvironment = SOUND_ENV_DRUGGED
+
+	if(!isnull(environmentOverride))
+		finalEnvironment = environmentOverride
+
+	..(turf_source, soundin, vol, vary, frequency, falloff, surround, finalEnvironment)
+
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return
