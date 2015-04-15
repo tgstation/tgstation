@@ -112,6 +112,10 @@
 		if(L.incorporeal_move)	//Move though walls
 			Process_Incorpmove(direct)
 			return 0
+	if(iscarbon(mob))
+		var/mob/living/carbon/C = mob
+		if(C.remote_view)
+			return CameraMove(n,direct,mob)
 
 	if(Process_Grab())	return
 
