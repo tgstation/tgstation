@@ -535,28 +535,31 @@
 			else
 				diag = null
 			if ((get_dist(src, pulling) > 1 || diag))
-				if (isliving(pulling))
-					var/mob/living/M = pulling
-					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
-						if (prob(75))
-							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
-								visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
-								qdel(G)
-						else
-							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
-							ok = 0
-					if (ok)
-						var/atom/movable/t = M.pulling
-						M.stop_pulling()
-						pulling.Move(T, get_dir(pulling, T))
-						if(M)
-							M.start_pulling(t)
+				if(isturf(pulling.loc))
+					if (isliving(pulling))
+						var/mob/living/M = pulling
+						var/ok = 1
+						if (locate(/obj/item/weapon/grab, M.grabbed_by))
+							if (prob(75))
+								var/obj/item/weapon/grab/G = pick(M.grabbed_by)
+								if (istype(G, /obj/item/weapon/grab))
+									visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
+									qdel(G)
+							else
+								ok = 0
+							if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
+								ok = 0
+						if (ok)
+							var/atom/movable/t = M.pulling
+							M.stop_pulling()
+							pulling.Move(T, get_dir(pulling, T))
+							if(M)
+								M.start_pulling(t)
+					else
+						if (pulling)
+							pulling.Move(T, get_dir(pulling, T))
 				else
-					if (pulling)
-						pulling.Move(T, get_dir(pulling, T))
+					stop_pulling()
 	else
 		stop_pulling()
 		. = ..()

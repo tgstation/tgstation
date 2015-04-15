@@ -516,6 +516,8 @@
 		return
 	if (!pulling.Adjacent(src))
 		return
+	if(!isturf(pulling.loc))
+		return
 	if (A == loc && pulling.density)
 		return
 	if (!Process_Spacemove(get_dir(pulling.loc, A)))
