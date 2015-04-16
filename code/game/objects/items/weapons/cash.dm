@@ -38,12 +38,11 @@ var/global/list/moneytypes = list(
 	if(amount > 1)
 		setGender(PLURAL)
 		..()
-		user << "It is a stack holding [amount] chips."
+		user << "It's a stack holding [amount] chips."
 		user << "<span class='info'>It's worth [worth*amount] credits.</span>"
 	else
 		setGender(NEUTER)
 		..()
-		user << "<span class='info'>It's worth [worth] credit.</span>"
 
 /obj/item/weapon/spacecash/update_icon()
 	icon_state = "cash[worth]"
