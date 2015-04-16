@@ -56,7 +56,6 @@ client/proc/one_click_antag()
 		temp.restricted_jobs += temp.protected_jobs
 
 	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
 		if(applicant.client.desires_role(ROLE_TRAITOR))
@@ -67,16 +66,22 @@ client/proc/one_click_antag()
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
 
-	if(candidates.len)
-		var/numTratiors = min(candidates.len, 3)
+	if (candidates.len)
+		candidates = shuffle(candidates)
 
-		for(var/i = 0, i<numTratiors, i++)
-			H = pick(candidates)
-			H.mind.make_Tratior()
-			candidates.Remove(H)
+		var/mob/living/carbon/human/candidate
+
+		for (var/i = 1 to min(candidates.len, 3))
+			candidate = pick_n_take(candidates)
+
+			if (candidate)
+				var/datum/mind/candidate_mind = candidate.mind
+
+				if (candidate_mind)
+					if (candidate_mind.make_traitor())
+						log_admin("[key_name(owner)] has traitor'ed [key_name(candidate)] via create antagonist verb.")
 
 		return 1
-
 
 	return 0
 

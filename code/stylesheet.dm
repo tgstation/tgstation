@@ -62,6 +62,10 @@ h1.alert, h2.alert		{color: #000000;}
 .rough					{font-family: 'Trebuchet MS', cursive, sans-serif;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}
 .interface				{color: #330033;}
+.big					{font-size: 150%;}
+.bold					{font-weight: bold;}
+.center					{text-align: center;}
+.red					{color: #FF0000;}
 /* /vg/ */
 .good					{color: green;}
 .average				{color: #FF8000;}

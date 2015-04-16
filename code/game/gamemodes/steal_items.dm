@@ -35,30 +35,25 @@
 	return L
 
 /datum/theft_objective/proc/check_completion(datum/mind/owner)
-	//testing("Checking completion for [src.name] ([typepath])")
 	if (owner && owner.current)
-		//testing("Mind datum([owner]) and mob([owner.current]) is good.")
-		var/list/all_items = new/list()
+		var/all_items = new/list()
 
 		if (isliving(owner.current))
 			all_items += get_contents_in_object(owner.current)
-		//testing("Got [all_items.len] objects in [owner.current]")
 
-		if(areas && areas.len)
-			for (var/area_type in areas)
-				all_items += get_contents_in_object(locate(area_type), /obj)
-		//testing("Starting to check the list for [typepath]")
+		for (var/area_type in areas)
+			all_items += get_contents_in_object(locate(area_type), /obj)
+
 		for (var/obj/O in all_items)
-			//testing("Checking [O]([O.type])")
+
 			if (istype(O, typepath))
-				//testing("[O] matched our type of [typepath]")
 				if (istype(O, /obj/item/weapon/reagent_containers/hypospray/autoinjector)) // stealing the cheap autoinjector doesn't count
-					//testing("[O] wasn't good enough for us though so skipping...")
 					continue
 
 				if (areas.len)
 					if (!is_type_in_list(get_area_master(O), areas))
 						continue
+
 				return 1
 
 	return 0

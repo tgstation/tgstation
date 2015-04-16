@@ -162,14 +162,18 @@
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
-	traitor.current << "<SPAN CLASS='danger'><CENTER><BIG>You are a traitor!</BIG></CENTER></SPAN>"
-	traitor.current << sound('sound/voice/syndicate intro.ogg')
-	var/obj_count = 1
-	for(var/datum/objective/objective in traitor.objectives)
-		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
-	return
+	traitor.current << {"
+	<SPAN CLASS='big bold center red'>You are now a traitor!</SPAN>
+	"}
 
+	traitor.current << sound('sound/voice/syndicate intro.ogg')
+
+	var/obj_count = 1
+
+	for (var/datum/objective/objective in traitor.objectives)
+		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+
+		obj_count++
 
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
