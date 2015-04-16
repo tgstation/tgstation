@@ -1089,29 +1089,30 @@
 			xylophone=0
 	return
 
-/mob/living/carbon/human/proc/vomit(hairball=0)
+/mob/living/carbon/human/proc/vomit(hairball = 0)
 	if(!lastpuke)
 		lastpuke = 1
-		src << "<spawn class='warning'>You feel nauseous..."
+		src << "<spawn class='warning'>You feel nauseous...</span>"
 		spawn(150)	//15 seconds until second warning
-			src << "<spawn class='warning'>You feel like you are about to throw up!"
-			spawn(100)	//and you have 10 more for mad dash to the bucket
+			src << "<spawn class='danger'>You feel like you are about to throw up!</span>"
+			spawn(100)	//And you have 10 more seconds to move it to the bathrooms
 				Stun(5)
 
 				if(hairball)
-					src.visible_message("<span class='warning'>[src] hacks up a hairball!</span>","<span class='warning'>You hack up a hairball!</span>")
+					src.visible_message("<span class='warning'>[src] hacks up a hairball!</span>","<span class='danger'>You hack up a hairball!</span>")
 				else
-					src.visible_message("<span class='warning'>[src] throws up!</span>","<span class='warning'>You throw up!</span>")
+					src.visible_message("<span class='warning'>[src] throws up!</span>","<span class='danger'>You throw up!</span>")
 				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 				var/turf/location = loc
-				if (istype(location, /turf/simulated))
+				if(istype(location, /turf/simulated))
 					location.add_vomit_floor(src, 1)
 
 				if(!hairball)
 					nutrition -= 40
 					adjustToxLoss(-3)
-				spawn(350)	//wait 35 seconds before next volley
+
+				spawn(350)	//Wait 35 seconds before next volley
 					lastpuke = 0
 
 /mob/living/carbon/human/proc/morph()

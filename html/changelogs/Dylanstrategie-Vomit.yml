@@ -1,0 +1,5 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - bugfix: Fix broken span in vomit-messages fucking up the chat for the session
+  - tweak: Vomit viral symptom now uses identical messages than regular vomiting, to avoid powergaymen
