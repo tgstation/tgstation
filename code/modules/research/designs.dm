@@ -2473,7 +2473,7 @@ k
 /datum/design/component_exchanger
 	name = "Rapid Machinery Component Exchanger"
 	desc = "A device that allows to quickly replace machinery components, useful for upgrading."
-	id = "deviceanalyser"
+	id = "componentexchanger"
 	req_tech = list("magnets"=2, "engineering"=4, "materials"=5, "programming"=3)
 	build_type = PROTOLATHE
 	materials = list("$iron" = 500, "$glass" = 1000, "$gold" = 200, "$silver" = 200)
