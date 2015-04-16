@@ -1,6 +1,0 @@
-author: AnturK
-
-delete-after: True
-
-changes: 
-  - rscadd: "Many changes have been made to shadowling. The full change list can be found at https://github.com/tgstation/-tg-station/pull/8927"
