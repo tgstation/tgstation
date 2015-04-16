@@ -213,7 +213,7 @@
 	if(distance <= 3)
 		if(!has_brain())
 			msg += "<font color='blue'><b>[t_He] has had [t_his] brain removed.</b></font>\n"
-	if (src.stat)
+	if (src.stat || (status_flags & FAKEDEATH))
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == 2 || src.health < config.health_threshold_crit || status_flags & FAKEDEATH) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
@@ -222,7 +222,7 @@
 				O.show_message("[user] checks [src]'s pulse.", 1)
 		spawn(15)
 			if(distance <= 1 && user.stat != 1)
-				if(pulse == PULSE_NONE)
+				if(pulse == PULSE_NONE || (status_flags & FAKEDEATH))
 					user << "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>"
 				else
 					user << "<span class='deadsay'>[t_He] has a pulse!</span>"

@@ -13,7 +13,7 @@
 	set name = "Toggle Magboots"
 	set category = "Object"
 	set src in usr
-	if(usr.stat)
+	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 	if(src.magpulse)
 		src.flags &= ~NOSLIP

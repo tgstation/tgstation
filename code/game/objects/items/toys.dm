@@ -848,7 +848,7 @@
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return
 	if(!flipped)
 		src.flipped = 1

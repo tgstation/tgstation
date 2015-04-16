@@ -262,7 +262,7 @@ var/global/list/nlist = list( \
 	set name = "Rotate Pipe"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained() )
+	if ( usr.stat || usr.restrained()  || (usr.status_flags & FAKEDEATH))
 		return
 
 	src.dir = turn(src.dir, -90)

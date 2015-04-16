@@ -154,7 +154,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained())
+	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return
 
 	if(src.victim)

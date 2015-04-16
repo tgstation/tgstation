@@ -832,7 +832,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr || usr.stat || usr.restrained())
+	if(!usr || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return
 
 	closed_system = !closed_system

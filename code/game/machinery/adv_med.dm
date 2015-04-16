@@ -83,7 +83,7 @@
 	set category = "Object"
 	set name = "Eject Body Scanner"
 
-	if(usr.stat != 0)
+	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -94,7 +94,7 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if(usr.stat != 0)
+	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	if(src.occupant)
 		usr << "<span class='notice'>\The [src] is already occupied!</span>"

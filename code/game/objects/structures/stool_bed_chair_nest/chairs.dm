@@ -86,7 +86,7 @@
 		return
 
 	if(!config.ghost_interaction && !blessed)
-		if(usr.stat || usr.restrained())
+		if(usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 			return
 
 	spin()

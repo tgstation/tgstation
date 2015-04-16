@@ -86,7 +86,7 @@
 
 /mob/living/silicon/hive_mainframe/verb/deploy_to()
 
-	if(usr.stat == 2)
+	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't deploy because you are dead!"
 		return
 

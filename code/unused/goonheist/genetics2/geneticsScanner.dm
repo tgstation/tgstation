@@ -115,7 +115,7 @@ var/list/genescanner_addresses = list()
 			usr << "<span class='danger'>The scanner supports only carbon based lifeforms.</span>"
 			return
 
-		if (usr.stat != 0)
+		if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 			return
 
 		if (src.occupant)
@@ -174,7 +174,7 @@ var/list/genescanner_addresses = list()
 		set name = "Eject Occupant"
 		set src in oview(1)
 
-		if (usr.stat != 0)
+		if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 			return
 		if (src.locked)
 			usr << "<span class='danger'>The scanner door is locked!</span>"
@@ -188,7 +188,7 @@ var/list/genescanner_addresses = list()
 		set name = "Scanner Lock"
 		set src in oview(1)
 
-		if (usr.stat != 0)
+		if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 			return
 		if (usr == src.occupant)
 			usr << "<span class='danger'>You can't reach the scanner lock from the inside.</span>"

@@ -34,7 +34,7 @@
 	//	return
 
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label the [src]?", "[src] Labelling", null)  as text), 1, MAX_NAME_LEN)
-	if((loc == usr && usr.stat == 0))
+	if((loc == usr && !usr.stat && !(usr.status_flags & FAKEDEATH)))
 		name = "[src][(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 	return

@@ -655,7 +655,7 @@ var/list/slot_equipment_priority = list( \
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
+	if(!src || usr.stat || (usr.status_flags & FAKEDEATH) || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
 
 	if(istype(A, /obj/effect/decal/point))
@@ -1447,3 +1447,29 @@ var/list/slot_equipment_priority = list( \
 
 mob/proc/assess_threat()
 	return 0
+
+/mob/verb/ohno()
+	set category = "Mob"
+	set name = "give oh no"
+	if(!(/mob/proc/ohno2 in verbs))
+		verbs += /mob/proc/ohno2
+
+/mob/proc/ohno2()
+	set category = "Mob"
+	set name = "take away uhoh verb"
+	verbs -= /mob/verb/uhoh
+
+/mob/verb/uhoh()
+	set category = "Mob"
+	set name = "uh oh"
+	if(/mob/verb/uhoh in verbs)
+		usr << "Uh oh you have the verb still"
+	else
+		usr << "You dont have it, how are you using this."
+
+/mob/verb/checkem()
+	set category = "Mob"
+	set name = "check em"
+	usr << "You [!(/mob/verb/ohno in verbs) ? "\red don't" : "\green do"] have /mob/verb/ohno in your verbs."
+	usr << "You [!(/mob/proc/ohno2 in verbs) ? "\red don't" : "\green do"] have /mob/proc/ohno2 in your verbs."
+	usr << "You [!(/mob/verb/uhoh in verbs) ? "\red don't" : "\green do"] have /mob/verb/uhoh in your verbs."

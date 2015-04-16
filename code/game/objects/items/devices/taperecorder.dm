@@ -53,7 +53,7 @@
 	set name = "Start Recording"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 	if(emagged == 1)
 		usr << "<span class='warning'>The tape recorder makes a scratchy noise.</span>"
@@ -80,7 +80,7 @@
 	set name = "Stop"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 	if(emagged == 1)
 		usr << "<span class='warning'>The tape recorder makes a scratchy noise.</span>"
@@ -104,7 +104,7 @@
 	set name = "Clear Memory"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 	if(emagged == 1)
 		usr << "<span class='warning'>The tape recorder makes a scratchy noise.</span>"
@@ -124,7 +124,7 @@
 	set name = "Playback Memory"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 	if(emagged == 1)
 		usr << "<span class='warning'>The tape recorder makes a scratchy noise.</span>"
@@ -183,7 +183,7 @@
 	set name = "Print Transcript"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 	if(emagged == 1)
 		usr << "<span class='warning'>The tape recorder makes a scratchy noise.</span>"

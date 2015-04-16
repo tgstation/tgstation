@@ -1335,7 +1335,7 @@
 		return
 	usr.delayNextMove(20)
 
-	if(usr.stat == 1)
+	if(usr.stat == 1 || (usr.status_flags & FAKEDEATH))
 		usr << "You are unconcious and cannot do that!"
 		return
 
@@ -1446,7 +1446,7 @@
 	set src in view(1)
 	var/self = 0
 
-	if(usr.stat == 1 || usr.restrained() || !isliving(usr)) return
+	if(usr.stat == 1 || usr.restrained() || !isliving(usr) || (usr.status_flags & FAKEDEATH)) return
 
 	if(usr == src)
 		self = 1
