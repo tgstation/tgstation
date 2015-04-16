@@ -96,6 +96,7 @@
 		if(type & 2 && (sdisabilities & DEAF || ear_deaf)) //Hearing related //We can't hear what the person is saying. Too bad
 			if(!(alt))
 				src << "<span class='notice'>You can almost hear someone talking.</span>" //Well, not THAT deaf
+				return //And that does it
 			else
 				msg = alt
 				type = alt_type
@@ -110,8 +111,10 @@
 				return //We can't see it, we're a bit too dying over here
 			else //Hey look someone passed an alternative message
 				src << "<span class='notice'>You can almost hear someone talking.</span>" //Now we can totally not hear it!
+				return //And we're good
 		else //This is not an emote
 			src << "<span class='notice'>You can almost hear someone talking.</span>" //The sweet silence of death
+			return //All we ever needed to hear
 	else //We're fine
 		src << msg //Send it
 	return
