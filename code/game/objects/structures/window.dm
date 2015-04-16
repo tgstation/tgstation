@@ -238,7 +238,7 @@
 					"<span class='danger'>You slam \the [M] into \the [src]!</span>")
 				if(GRAB_NECK to GRAB_KILL)
 					M.Weaken(5) //Almost certainly shoved head or face-first, you're going to need a bit for the lights to come back on
-					M.apply_damage(30) //That got to fucking hurt, you were basically flung into a window, most likely a shattered one at that
+					M.apply_damage(20) //That got to fucking hurt, you were basically flung into a window, most likely a shattered one at that
 					health -= 20 //Window won't like that
 					visible_message("<span class='danger'>\The [user] crushes \the [M] into \the [src]!</span>", \
 					"<span class='danger'>You crush \the [M] into \the [src]!</span>")
