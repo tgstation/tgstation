@@ -79,30 +79,41 @@
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
-	if(!client)	return
+	//Because the person who made this is a fucking idiot, let's clarify. 1 is sight-related messages (aka emotes in general), 2 is hearing-related (aka HEY DUMBFUCK I'M TALKING TO YOU)
+
+	if(!client) //We dun goof
+		return
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
-	if (type)
-		if(type & 1 && (sdisabilities & BLIND || blinded || paralysis) )//Vision related
-			if (!( alt ))
+	if(type)
+		if(type & 1 && (sdisabilities & BLIND || blinded || paralysis)) //Vision related //We can't see all those emotes no-one ever does !
+			if(!(alt))
 				return
 			else
 				msg = alt
 				type = alt_type
-		if (type & 2 && (sdisabilities & DEAF || ear_deaf))//Hearing related
-			if (!( alt ))
-				return
+		if(type & 2 && (sdisabilities & DEAF || ear_deaf)) //Hearing related //We can't hear what the person is saying. Too bad
+			if(!(alt))
+				src << "<span class='notice'>You can almost hear someone talking.</span>" //Well, not THAT deaf
 			else
 				msg = alt
 				type = alt_type
-				if ((type & 1 && sdisabilities & BLIND))
+				if((type & 1 && sdisabilities & BLIND)) //Since the alternative is sight-related, make sure we can see. Go figure why there isn't such a check in the clause above
 					return
-	// Added voice muffling for Issue 41.
-	if(stat == UNCONSCIOUS || sleeping > 0)
-		src << "<I>... You can almost hear someone talking ...</I>"
-	else
-		src << msg
+	//Added voice muffling for Issue 41.
+	//This has been changed to only work with audible messages, because you can't hear a frown
+	//This blocks "audible" emotes like gasping and screaming, but that's such a small loss. Who wants to hear themselves gasping to death ? I don't
+	if(stat == UNCONSCIOUS || sleeping > 0) //No-one's home
+		if(type & 1) //This is an emote
+			if(!(alt)) //No alternative message
+				return //We can't see it, we're a bit too dying over here
+			else //Hey look someone passed an alternative message
+				src << "<span class='notice'>You can almost hear someone talking.</span>" //Now we can totally not hear it!
+		else //This is not an emote
+			src << "<span class='notice'>You can almost hear someone talking.</span>" //The sweet silence of death
+	else //We're fine
+		src << msg //Send it
 	return
 
 // Show a message to all mobs in sight of this one
