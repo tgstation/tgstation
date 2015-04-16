@@ -113,6 +113,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/control_bomberman_arena,
 	/client/proc/gib_money, // /vg/
 	/client/proc/smissmas,
+	/client/proc/achievement,
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -903,3 +904,43 @@ var/list/admin_verbs_mod = list(
 			verbs -= /client/proc/readmin
 			return
 		usr << "query.nextrow() failed"
+
+/client/proc/achievement()
+	set name = "Give Achievement"
+	set category = "Fun"
+
+	if(!check_rights(R_FUN))	return
+
+	var/achoice = "Cancel"
+
+	if(!player_list.len)
+		usr << "player list is empty!"
+		return
+
+	var/mob/winner = input("Who's a winner?", "Achievement Winner") in player_list
+	var/name = input("What will you call your achievement?", "Achievement Winner", "New Achievement")
+	var/desc = input("What description will you give it?, what shall we call you?", "Achievement Description", "You Win")
+
+	if(istype(winner, /mob/living))
+		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
+
+	var/glob = alert("Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", "No!","Yes!")
+
+	if(achoice == "Confirm")
+		var/obj/item/weapon/reagent_containers/food/drinks/golden_cup/C = new(get_turf(winner))
+		C.name = name
+		C.desc = desc
+		winner.put_in_hands(C)
+		winner.update_icons()
+
+	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
+
+	if(glob == "No!")
+		winner.client << sound('sound/misc/achievement.ogg')
+	else
+		world  << sound('sound/misc/achievement.ogg')
+		world << "<span class='danger'>\icon[cup] [winner.name] wins \"[name]\"!</span>"
+
+	winner << "<span class='danger'>Congratulations!</span>"
+
+	achievements += "[winner.key] as [winner.name] won \"[name]\"! \"[desc]\""

@@ -242,12 +242,14 @@
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
 	if(wizards.len)
-		var/text = "<br><font size=3><b>the wizards/witches were:</b></font>"
+		var/icon/logo = icon('icons/mob/mob.dmi', "wizard-logo")
+		var/text = "<br>\icon[logo] <font size=3><b>the wizards/witches were:</b></font> \icon[logo]"
 
 		for(var/datum/mind/wizard in wizards)
 
-			text += "<br><b>[wizard.key]</b> was <b>[wizard.name]</b> ("
 			if(wizard.current)
+				var/icon/flat = getFlatIcon(wizard.current)
+				text += "<br>\icon[flat] <b>[wizard.key]</b> was <b>[wizard.name]</b> ("
 				if(wizard.current.stat == DEAD)
 					text += "died"
 				else
@@ -255,6 +257,8 @@
 				if(wizard.current.real_name != wizard.name)
 					text += " as <b>[wizard.current.real_name]</b>"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] <b>[wizard.key]</b> was <b>[wizard.name]</b> ("
 				text += "body destroyed"
 			text += ")"
 
@@ -280,7 +284,8 @@
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1
 				for(var/spell/S in wizard.current.spell_list)
-					text += "[S.name]"
+					var/icon/spellicon = icon('icons/mob/screen_spells.dmi', S.hud_state)
+					text += "<br>\icon[spellicon] [S.name]"
 					if(wizard.current.spell_list.len > i)
 						text += ", "
 					i++

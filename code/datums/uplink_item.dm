@@ -80,9 +80,9 @@ var/list/uplink_items = list()
 		if(ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
-			U.purchase_log += "[user] ([user.ckey]) bought [name] for [cost]."
+			U.purchase_log += "[user] ([user.ckey]) bought \icon[I] [name] for [cost]."
 			if(user.mind)
-				user.mind.uplink_items_bought += bundlename
+				user.mind.uplink_items_bought += "\icon[I] [bundlename]"
 				user.mind.spent_TC += cost
 		U.interact(user)
 
