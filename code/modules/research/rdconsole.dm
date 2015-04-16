@@ -113,14 +113,20 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
-	for(var/obj/machinery/r_n_d/D in area_contents(areaMaster)) //any machine in the room, just for funsies
-		if(D.linked_console != null || D.disabled || D.panel_open)
+	if(!isarea(areaMaster) || areaMaster.type == /area)
+		say("Unable to process synchronization")
+		return
+
+
+	for(var/obj/machinery/r_n_d/D in rnd_machines) //any machine in the room, just for funsies
+		if(D.linked_console != null || D.disabled || D.panel_open || !D.areaMaster || (D.areaMaster != areaMaster))
 			continue
 		if(D.type in research_machines)
 			linked_machines += D
 			D.linked_console = src
 			D.update_icon()
 	for(var/obj/machinery/r_n_d/D in linked_machines)
+		if(linked_lathe && linked_destroy && linked_imprinter) break // stop if we have all of our linked
 		switch(D.type)
 			if(/obj/machinery/r_n_d/fabricator/protolathe)
 				if(!linked_lathe)

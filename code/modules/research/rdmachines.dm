@@ -1,5 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
+var/global/list/rnd_machines = list()
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 /obj/machinery/r_n_d
 	name = "R&D Device"
@@ -32,6 +32,7 @@
 	var/research_flags //see setup.dm for details of these
 
 /obj/machinery/r_n_d/New()
+	rnd_machines |= src
 	..()
 	wires["Red"] = 0
 	wires["Blue"] = 0
@@ -62,6 +63,10 @@
 			if(O)
 				output=O
 				break
+
+/obj/machinery/r_n_d/Destroy()
+	rnd_machines -= src
+	..()
 
 /obj/machinery/r_n_d/update_icon()
 	overlays.len = 0
