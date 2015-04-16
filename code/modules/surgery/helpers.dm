@@ -8,6 +8,12 @@
 
 				if(locate(S.type) in M.surgeries)
 					continue
+				if(S.user_species_restricted)
+					if(!istype(user, /mob/living/carbon/human))
+						continue
+					var/mob/living/carbon/human/doc = user
+					if(!(doc.dna.species.id in S.user_species_ids))
+						continue
 				if(S.target_must_be_dead && M.stat != DEAD)
 					continue
 				if(S.target_must_be_fat && !(M.disabilities & FAT))

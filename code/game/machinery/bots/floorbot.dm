@@ -45,13 +45,11 @@
 	var/nagged = 0 //Prevents the Floorbot nagging more than once per refill.
 	var/max_targets = 50
 	var/turf/target
-	var/turf/oldtarget
 	var/oldloc = null
 	req_one_access = list(access_construction, access_robotics)
 	var/targetdirection
 	radio_frequency = ENG_FREQ //Engineering channel
 	bot_type = FLOOR_BOT
-	bot_filter = RADIO_FLOORBOT
 	var/process_type //Determines what to do when process_scan() recieves a target. See process_scan() for details.
 	#define HULL_BREACH		1
 	#define BRIDGE_MODE		2
@@ -67,9 +65,6 @@
 	botcard.access = J.get_access()
 	prev_access = botcard.access
 
-	spawn(5)
-		add_to_beacons(bot_filter)
-
 /obj/machinery/bot/floorbot/turn_on()
 	. = ..()
 	updateicon()
@@ -83,7 +78,6 @@
 /obj/machinery/bot/floorbot/bot_reset()
 	..()
 	target = null
-	oldtarget = null
 	oldloc = null
 	ignore_list = list()
 	nagged = 0
@@ -209,11 +203,11 @@
 
 	if(amount <= 0 && !target) //Out of tiles! We must refill!
 		if(eattiles) //Configured to find and consume floortiles!
-			target = scan(/obj/item/stack/tile/plasteel, oldtarget)
+			target = scan(/obj/item/stack/tile/plasteel)
 			process_type = null
 
 		if(!target && maketiles) //We did not manage to find any floor tiles! Scan for metal stacks and make our own!
-			target = scan(/obj/item/stack/sheet/metal, oldtarget)
+			target = scan(/obj/item/stack/sheet/metal)
 			process_type = null
 			return
 		else
@@ -232,24 +226,24 @@
 				target = T
 
 			else //Find a space tile farther way!
-				target = scan(/turf/space, oldtarget)
+				target = scan(/turf/space)
 			process_type = BRIDGE_MODE
 
 		if(!target)
 			process_type = HULL_BREACH //Ensures the floorbot does not try to "fix" space areas or shuttle docking zones.
-			target = scan(/turf/space, oldtarget)
+			target = scan(/turf/space)
 
 		if(!target && replacetiles) //Finds a floor without a tile and gives it one.
 			process_type = REPLACE_TILE //The target must be the floor and not a tile. The floor must not already have a floortile.
-			target = scan(/turf/simulated/floor, oldtarget)
+			target = scan(/turf/simulated/floor)
 
 		if(!target && fixfloors) //Repairs damaged floors and tiles.
 			process_type = FIX_TILE
-			target = scan(/turf/simulated/floor, oldtarget)
+			target = scan(/turf/simulated/floor)
 
 	if(!target && emagged == 2) //We are emagged! Time to rip up the floors!
 		process_type = TILE_EMAG
-		target = scan(/turf/simulated/floor, oldtarget)
+		target = scan(/turf/simulated/floor)
 
 
 	if(!target)
@@ -261,11 +255,6 @@
 			if(mode == BOT_PATROL)
 				bot_patrol()
 
-	if(!target)
-		if(loc != oldloc)
-			oldtarget = null
-		return
-
 	if(target)
 		if(path.len == 0)
 			if(!istype(target, /turf/))
@@ -276,12 +265,10 @@
 
 			if(!bot_move(target))
 				add_to_ignore(target)
-				oldtarget = target
 				target = null
 				mode = BOT_IDLE
 				return
 		else if( !bot_move(target) )
-			oldtarget = target
 			target = null
 			mode = BOT_IDLE
 			return

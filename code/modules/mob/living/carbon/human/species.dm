@@ -1,12 +1,5 @@
 // This code handles different species in the game.
 
-#define SPECIES_LAYER			26
-#define BODY_BEHIND_LAYER		25
-#define BODY_LAYER				24
-#define BODY_ADJ_LAYER			23
-#define HAIR_LAYER				9
-#define BODY_FRONT_LAYER		2
-
 #define TINT_IMPAIR 2
 #define TINT_BLIND 3
 
@@ -248,7 +241,8 @@
 	for(var/layer in relevent_layers)
 		for(var/bodypart in bodyparts_to_add)
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[icon_state_string]_[bodypart]_[layer]", "layer" =- layer)
-			I.color = "#[H.dna.mutant_color]"
+			if(!(H.disabilities & HUSK))
+				I.color = "#[H.dna.mutant_color]"
 			standing += I
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()
@@ -788,10 +782,10 @@
 				var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
 				var/randn = rand(1, 100)
 				if(randn <= 25)
-					H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee"))
 					playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					H.visible_message("<span class='danger'>[M] has pushed [H]!</span>",
 									"<span class='userdanger'>[M] has pushed [H]!</span>")
+					H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 					H.forcesay(hit_appends)
 					return
 
@@ -1278,13 +1272,6 @@
 		H.fire_stacks = 0
 		H.AddLuminosity(-3)
 		H.update_fire()
-
-#undef SPECIES_LAYER
-#undef BODY_BEHIND_LAYER
-#undef BODY_LAYER
-#undef BODY_ADJ_LAYER
-#undef HAIR_LAYER
-#undef BODY_FRONT_LAYER
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

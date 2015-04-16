@@ -410,9 +410,9 @@
 /datum/chemical_reaction/napalm
 	name = "Napalm"
 	id = "napalm"
-	result = null
-	required_reagents = list("aluminium" = 1, "plasma" = 1, "sacid" = 1 )
-	result_amount = 1
+	result = "napalm"
+	required_reagents = list("sugar" = 1, "fuel" = 1, "ethanol" = 1 )
+	result_amount = 3
 
 datum/reagent/cryostylane
 	name = "Cryostylane"

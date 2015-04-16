@@ -1138,9 +1138,9 @@
 	if(..())
 		for(var/mob/living/carbon/M in view(EG.chassis))
 			if(istype(M,/mob/living/carbon/human))
-				M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
+				M.irradiate(EG.rad_per_cycle*3)
 			else
-				M.radiation += EG.rad_per_cycle
+				M.irradiate(EG.rad_per_cycle)
 	return 1
 
 

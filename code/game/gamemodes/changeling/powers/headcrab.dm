@@ -8,9 +8,15 @@
 /obj/effect/proc_holder/changeling/headcrab/sting_action(var/mob/user)
 	explosion(get_turf(user),0,0,2,0,silent=1)
 	var/turf = get_turf(user)
+	var/client/C
+	if(user.client)
+		C = user.client
 	spawn(5) // So it's not killed in explosion
 		var/mob/living/simple_animal/hostile/headcrab/crab = new(turf)
 		crab.origin = user.mind
+		if(C)
+			crab.key = C.key
+			crab << "<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>"
 	user.gib()
 	feedback_add_details("changeling_powers","LR")
 	return 1

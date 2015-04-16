@@ -96,14 +96,6 @@
 	tools = list(/obj/item/weapon/lighter)
 	result = /obj/item/weapon/reagent_containers/food/snacks/bearsteak
 
-/datum/table_recipe/wingfangchu
-	name = "Wingfangchu"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/xeno = 2
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
-
 /datum/table_recipe/enchiladas
 	name = "Enchiladas"
 	reqs = list(
