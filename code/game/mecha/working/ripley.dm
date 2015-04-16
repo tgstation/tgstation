@@ -120,6 +120,9 @@
 	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
 		qdel(B)
 
+	var/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/scanner = new /obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	scanner.attach(src)
+
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)
 		return 0

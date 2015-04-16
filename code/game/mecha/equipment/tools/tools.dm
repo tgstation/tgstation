@@ -197,24 +197,10 @@
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
-		var/mob/occupant = mecha.occupant
-
+		var/list/occupant = list()
+		occupant |= mecha.occupant
 		scanning = 1
-		var/turf/t = get_turf(src)
-		var/list/L = list()
-		var/turf/simulated/mineral/M
-		for(M in range(7, t))
-			if(M.scan_state)
-				L += M
-		if(L.len)
-			if(occupant.client)
-				for(M in L)
-					var/turf/T = get_turf(M)
-					var/image/I = image('icons/turf/mining.dmi', loc = T, icon_state = M.scan_state, layer = 18)
-					occupant.client.images += I
-					spawn(30)
-						if(occupant.client)
-							occupant.client.images -= I
+		mineral_scan_pulse(occupant,get_turf(loc))
 		spawn(equip_cooldown)
 			scanning = 0
 
