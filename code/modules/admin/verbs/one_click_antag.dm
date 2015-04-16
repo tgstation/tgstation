@@ -294,8 +294,9 @@ client/proc/one_click_antag()
 			else
 				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code)
 			spawnpos++
-
-	return 1
+		return 1
+	else
+		return 0
 
 
 
@@ -522,7 +523,7 @@ client/proc/one_click_antag()
 	else
 		return
 
-/datum/admins/proc/getCandidates(var/Question, var/jobbanType, var/datum/game_mode/nuclear/gametypeCheck)
+/datum/admins/proc/getCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	if (!Question)
