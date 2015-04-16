@@ -88,6 +88,14 @@ log transactions
 				break
 
 /obj/machinery/atm/attackby(obj/item/I as obj, mob/user as mob)
+	if(iswrench(I))
+		user.visible_message("<span class='notice'>[user] begins to take apart the [src]!</span>", "<span class='notice'>You start to take apart the [src]</span>")
+		if(do_after(user, 40))
+			user.visible_message("<span class='notice'>[user] disassembles the [src]!</span>", "<span class='notice'>You disassemble the [src]</span>")
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
+			new /obj/item/stack/sheet/metal (src.loc,4)
+			qdel(src)
+			return
 	if(istype(I, /obj/item/weapon/card))
 		var/obj/item/weapon/card/id/idcard = I
 		if(!held_card)

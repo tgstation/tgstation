@@ -159,18 +159,18 @@
 
 /obj/item/weapon/card/emag/attack()
 	return
-	
+
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
 	var/atom/A = target
 	if(!proximity) return
 	A.emag_act(user)
-		
+
 /obj/item/weapon/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
-	var/access = list()
+	var/list/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
 	slot_flags = SLOT_ID
 
