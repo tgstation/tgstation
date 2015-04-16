@@ -919,7 +919,7 @@ var/list/admin_verbs_mod = list(
 
 	var/mob/winner = input("Who's a winner?", "Achievement Winner") in player_list
 	var/name = input("What will you call your achievement?", "Achievement Winner", "New Achievement")
-	var/desc = input("What description will you give it?, what shall we call you?", "Achievement Description", "You Win")
+	var/desc = input("What description will you give it?", "Achievement Description", "You Win")
 
 	if(istype(winner, /mob/living))
 		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
@@ -932,6 +932,8 @@ var/list/admin_verbs_mod = list(
 		C.desc = desc
 		winner.put_in_hands(C)
 		winner.update_icons()
+	else
+		winner << "<span class='danger'>You win [name]! [desc]</span>"
 
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 
