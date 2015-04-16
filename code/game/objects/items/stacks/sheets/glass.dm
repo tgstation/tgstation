@@ -20,6 +20,8 @@
 	var/sname = "glass"
 	var/shard_type = /obj/item/weapon/shard
 
+	siemens_coefficient = 0 //does not conduct
+
 /obj/item/stack/sheet/glass/attack_self(mob/user as mob)
 	construct_window(user)
 

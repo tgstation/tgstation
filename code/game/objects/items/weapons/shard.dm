@@ -15,6 +15,7 @@
 	g_amt = 3750
 	w_type = RECYK_GLASS
 	melt_temperature = MELTPOINT_GLASS
+	siemens_coefficient = 0 //no conduct
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	var/glass = /obj/item/stack/sheet/glass/glass
 
