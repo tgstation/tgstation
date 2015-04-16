@@ -1606,7 +1606,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	set name = "Flush"
 	set category = "Object"
 	set src in view(1)
-	add_fingerprint(user)
+	add_fingerprint(usr)
 	usr << "<span class='notice'>\The [src] groans as it spits out containers.</span>"
 	while(cans.len>0 && beaker.reagents.reagent_list.len>0)
 		var/obj/item/weapon/reagent_containers/C = cans[1]
@@ -1650,7 +1650,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list("rice",5),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly",1),
 		/obj/item/seeds = list("blackpepper",5),
-		/obj/item/weapon/rocksliver = list("ground_rock",30),
+		/obj/item/device/flashlight/flare     = list("sulfur",10),
+		/obj/item/stack/cable_coil            = list("copper", 10),
+		/obj/item/weapon/cell                 = list("lithium", 10),
+		/obj/item/clothing/head/butt          = list("mercury", 10),
+		/obj/item/weapon/rocksliver           = list("ground_rock",30),
 
 		//Recipes must include both variables!
 		/obj/item/weapon/reagent_containers/food = list("generic",0)
@@ -1699,11 +1703,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
 		user << "<span class ='warning'>You can't grind that!</span>"
 		return ..()
-	if(istype(O, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src)
-		var/obj/item/stack/sheet/S = O
+	if(istype(O, /obj/item/stack/))
+		var/obj/item/stack/N = new O.type(src, amount=1)
+		var/obj/item/stack/S = O
 		S.use(1)
-		crushable = M
+		crushable = N
 		return 0
 	user.drop_item(O, src)
 	crushable = O
@@ -1752,7 +1756,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				crushable.reagents.trans_to(src,crushable.reagents.total_volume)
 			else
 				reagents.add_reagent(id[1],min(id[2], space))
-		else if(istype(crushable, /obj/item/stack/sheet) || istype(crushable, /obj/item/seeds)) //Most mineral sheets, plus black pepper
+		else if(istype(crushable, /obj/item/stack/sheet) || istype(crushable, /obj/item/seeds) || /obj/item/device/flashlight/flare || /obj/item/stack/cable_coil || /obj/item/weapon/cell || /obj/item/clothing/head/butt) //Generic processes
 			reagents.add_reagent(id[1],min(id[2], space))
 		else if(istype(crushable, /obj/item/weapon/grown)) //Nettle and death nettle
 			crushable.reagents.trans_to(src,crushable.reagents.total_volume)
