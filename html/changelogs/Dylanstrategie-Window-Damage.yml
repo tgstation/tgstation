@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - tweak: Damage from slamming someone into a window with a full grab is now 20 brute, down from 30 brute
