@@ -162,7 +162,8 @@
 	if(what == user.get_active_hand())
 		user.drop_item(what, src)
 	else
-		user.drop_item(O)
+		if(O.loc == user)
+			user.drop_item(O)
 		what.loc = src
 	return
 
