@@ -183,8 +183,8 @@
 	name = "antihol"
 	id = "antihol"
 	result = "antihol"
-	required_reagents = list("ethanol" = 1, "charcoal" = 1)
-	result_amount = 2
+	required_reagents = list("ethanol" = 1, "charcoal" = 1, "copper" = 1)
+	result_amount = 3
 
 /datum/chemical_reaction/cryoxadone
 	name = "Cryoxadone"

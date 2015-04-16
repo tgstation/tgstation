@@ -44,18 +44,20 @@ datum/reagent/thermite/on_mob_life(var/mob/living/M as mob)
 /datum/reagent/clf3/reaction_turf(var/turf/simulated/T, var/volume)
 	if(istype(T, /turf/simulated/floor/plating))
 		var/turf/simulated/floor/plating/F = T
-		if(prob(1))
+		if(prob(1 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ChangeTurf(/turf/space)
 	if(istype(T, /turf/simulated/floor/))
 		var/turf/simulated/floor/F = T
 		if(prob(volume/10))
 			F.make_plating()
+		else if(prob(volume))
+			F.burn_tile()
 		if(istype(F, /turf/simulated/floor/))
 			new /obj/effect/hotspot(F)
 	if(istype(T, /turf/simulated/wall/))
 		var/turf/simulated/wall/W = T
 		if(prob(volume/10))
-			W.ChangeTurf(/turf/simulated/floor)
+			W.ChangeTurf(/turf/simulated/floor/plating)
 
 /datum/reagent/clf3/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(method == TOUCH && isliving(M))
