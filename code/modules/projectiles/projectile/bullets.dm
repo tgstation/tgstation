@@ -14,6 +14,12 @@
 			return 1
 		return 0
 
+/obj/item/projectile/bullet/dart
+	name = "shotgun dart"
+	damage = 5
+	damage_type = TOX
+	weaken = 5
+
 /obj/item/projectile/bullet/weakbullet
 	icon_state = "bbshell"
 	damage = 10
