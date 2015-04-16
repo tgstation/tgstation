@@ -17,7 +17,7 @@
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=2;engineering=4;materials=5;programming=3"
 	var/list/componentstorage = list()
-	var/maxcomponents = 10
+	var/maxcomponents = 20
 	var/emagged = 0 //So we can emag it for "improved" functionality
 
 //Do a quick check-up of what is loaded
