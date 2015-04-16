@@ -943,7 +943,7 @@ var/global/list/arenas = list()
 				D = O
 		if(!D)	continue
 		M.key = D.ckey
-		players += S.player_mind
+		players += M
 		S.availability = 0
 		if(violence)
 			S.player << "Violence Mode activated! Bombs hurt players! Suits offer no protections! Initial Flame Range increased!"
@@ -957,16 +957,20 @@ var/global/list/arenas = list()
 
 	sleep(40)
 	for(var/datum/bomberman_spawn/S in spawns)
-		S.player.canmove = 1
+		if(S.player)
+			S.player.canmove = 1
 
 /datum/bomberman_arena/proc/end()
 	if(tools.len > 1)	return
 	if(status == ARENA_ENDGAME)	return
 	status = ARENA_ENDGAME
+	var/mob/living/winner = null
 	for(var/obj/item/weapon/bomberman/W in tools)
 		W.hurt_players = 1	//FINISH THEM!
-	for(var/datum/mind/M in players)
-		M.current << "Resetting arena in 30 seconds"
+		if(istype(W.loc, /mob/living))
+			winner = W.loc
+	for(var/mob/living/M in players)
+		M << "[winner ? "[winner.key] as [winner.name] wins this round! " : ""]Resetting arena in 30 seconds."
 	sleep(300)
 	reset()
 
@@ -998,9 +1002,9 @@ var/global/list/arenas = list()
 					S.player.canmove = 0
 					p_mind.transfer_to(S.player)
 	else
-		for(var/datum/mind/M in players)
-			if(M.current)
-				qdel(M.current)
+		for(var/mob/living/M in players)
+			if(M)
+				del(M)	//qdel doesn't work nicely with mobs
 		players = list()
 
 	for(var/obj/structure/softwall/W in swalls)
@@ -1085,9 +1089,9 @@ var/global/list/arenas = list()
 		qdel(T)
 	tools = list()
 
-	for(var/datum/mind/M in players)
-		if(M.current)
-			qdel(M.current)
+	for(var/mob/living/M in players)
+		if(M)
+			del(M)	//qdel doesn't work nicely with mobs
 	players = list()
 
 	under.contents.Add(turfs)

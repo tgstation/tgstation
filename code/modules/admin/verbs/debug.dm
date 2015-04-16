@@ -1425,6 +1425,10 @@ client/proc/control_bomberman_arena()
 
 	if(!check_rights(R_FUN)) return
 
+	if(!arenas.len)
+		usr << "There are no arenas in the world!"
+		return
+
 	var/datum/bomberman_arena/arena_target = input("Which arena do you wish to control?", "Arena Control Panel") in arenas
 	usr << "Arena Control Panel: [arena_target]"
 	var/arena_status = ""
@@ -1435,19 +1439,24 @@ client/proc/control_bomberman_arena()
 			arena_status = "AVAILABLE"
 		if(ARENA_INGAME)
 			arena_status = "IN-GAME"
+		if(ARENA_ENDGAME)
+			arena_status = "END-GAME"
 	usr << "status: [arena_status]"
 	usr << "violence mode: [arena_target.violence ? "ON" : "OFF"]"
 	usr << "opacity mode: [arena_target.opacity ? "ON" : "OFF"]"
+	if(arena_status == "SETUP")
+		usr << "Arena Under Construction"
 	if(arena_status == "AVAILABLE")
 		var/i = 0
 		for(var/datum/bomberman_spawn/S in arena_target.spawns)
 			if(S.availability)
 				i++
 		usr << "available spawn points: [i]"
-	if(arena_status == "IN-GAME")
+	if((arena_status == "IN-GAME") || (arena_status == "END-GAME"))
 		var/j = "players: "
 		for(var/datum/bomberman_spawn/S in arena_target.spawns)
-			j += "[S.player.name], "
+			if(S.player)
+				j += "[S.player.name], "
 		usr << "[j]"
 
 	var/list/choices = list(
@@ -1474,8 +1483,12 @@ client/proc/control_bomberman_arena()
 			return
 		if("Close Arena(space)")
 			arena_target.close()
+			if(arena_target in arenas)
+				arenas -= arena_target
 		if("Close Arena(floors)")
 			arena_target.close(0)
+			if(arena_target in arenas)
+				arenas -= arena_target
 		if("Reset Arena (remove players)")
 			arena_target.reset()
 		if("Recruit Gladiators (among the observers)")
