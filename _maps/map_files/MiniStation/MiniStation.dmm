@@ -36,7 +36,7 @@
 "aJ" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/structure/table/reinforced,/turf/simulated/floor/plasteel,/area/bridge)
 "aK" = (/obj/structure/table/reinforced,/obj/item/weapon/folder/yellow,/obj/item/weapon/disk/nuclear,/turf/simulated/floor/plasteel,/area/bridge)
 "aL" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 2; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor/plasteel,/area/bridge)
-"aM" = (/obj/structure/closet/fireaxecabinet{pixel_x = 32},/turf/simulated/floor/plasteel,/area/bridge)
+"aM" = (/obj/structure/fireaxecabinet{pixel_x = 32},/turf/simulated/floor/plasteel,/area/bridge)
 "aN" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel,/area/bridge)
 "aO" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel,/area/bridge)
 "aP" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/secure/briefcase,/obj/item/device/flash,/obj/item/device/flash,/turf/simulated/floor/plasteel,/area/bridge)
