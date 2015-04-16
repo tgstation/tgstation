@@ -1,5 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - bugfix: Fix Component Exchanger sharing its design ID with the Device Analyzer (and thus being unresearchable, or replacing it when its tech level is reached first)
-  - tweak: Component Exchanger storage now has a size of 20 instead of 10
