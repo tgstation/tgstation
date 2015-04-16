@@ -1,4 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - bugfix: Fix dart shots not behaving correctly. They still do shit-all damage, but now they inherit from bullets, not electrodes
