@@ -50,6 +50,7 @@
 	cooldown_low = 20
 	cooldown_high = 40
 	uses = -1
+	icon_state = "health"
 
 obj/item/gland/heals/activate()
 	host << "<span class='notice'>You feel weird.</span>"
@@ -61,6 +62,7 @@ obj/item/gland/heals/activate()
 	cooldown_low = 60
 	cooldown_high = 120
 	uses = -1
+	icon_state = "slime"
 
 obj/item/gland/slime/activate()
 	host << "<span class='notice'>You feel weird.</span>"
@@ -83,6 +85,7 @@ obj/item/gland/slime/activate()
 	cooldown_low = 30
 	cooldown_high = 30
 	uses = -1
+	icon_state = "mindshock"
 
 /obj/item/gland/mindshock/activate()
 	host << "<span class='notice'>You feel weird.</span>"
@@ -98,6 +101,7 @@ obj/item/gland/slime/activate()
 	cooldown_low = 120
 	cooldown_high = 180
 	uses = 5
+	icon_state = "species"
 
 /obj/item/gland/pop/activate()
 	host << "<span class='notice'>You feel weird.</span>"
@@ -110,6 +114,7 @@ obj/item/gland/slime/activate()
 	cooldown_low = 180
 	cooldown_high = 240
 	uses = 1
+	icon_state = "vent"
 
 /obj/item/gland/ventcrawling/activate()
 	host << "<span class='notice'>You feel weird.</span>"
@@ -122,6 +127,7 @@ obj/item/gland/slime/activate()
 	cooldown_low = 180
 	cooldown_high = 240
 	uses = 1
+	icon_state = "viral"
 
 /obj/item/gland/viral/activate()
 	var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
@@ -137,6 +143,7 @@ obj/item/gland/slime/activate()
 	cooldown_low = 90
 	cooldown_high = 160
 	uses = 5
+	icon_state = "emp"
 
 /obj/item/gland/emp/activate()
 	empulse(get_turf(host), 2, 5, 1)
@@ -146,6 +153,7 @@ obj/item/gland/slime/activate()
 	cooldown_low = 90
 	cooldown_high = 160
 	uses = 10
+	icon_state = "spider"
 
 /obj/item/gland/spiderman/activate()
 	if(uses == initial(uses))
@@ -156,6 +164,7 @@ obj/item/gland/slime/activate()
 	cooldown_low = 60
 	cooldown_high = 90
 	uses = -1
+	icon_state = "egg"
 
 /obj/item/gland/egg/activate()
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(host.loc)

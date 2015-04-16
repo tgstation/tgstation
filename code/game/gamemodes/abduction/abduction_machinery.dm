@@ -1,3 +1,6 @@
+/obj/machinery/abductor
+	var/team = 0
+
 /obj/machinery/abductor/console
 	name = "Abductor console"
 	desc = "Ship command center."
@@ -5,7 +8,6 @@
 	icon_state = "console"
 	density = 1
 	anchored = 1.0
-	var/team = 0
 	var/obj/item/device/abductor/gizmo/gizmo
 	var/obj/item/clothing/suit/armor/abductor/vest/vest
 	var/obj/machinery/abductor/experiment/experiment
@@ -82,8 +84,8 @@
 	return
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	if(gizmo!=null && pad!=null)
-		pad.Retrieve(gizmo.marked,gizmo.prepared)
+	if(gizmo!=null && pad!=null && gizmo.marked)
+		pad.Retrieve(gizmo.marked)
 	return
 
 /obj/machinery/abductor/console/proc/TeleporterSend()
@@ -110,6 +112,18 @@
 		vest.SetDisguise(chosen)
 	return
 
+/obj/machinery/abductor/console/proc/Initialize()
+
+	for(var/obj/machinery/abductor/pad/p in machines)
+		if(p.team == team)
+			pad = p
+			break
+
+	for(var/obj/machinery/abductor/experiment/e in machines)
+		if(e.team == team)
+			experiment = e
+			e.console = src
+
 /obj/machinery/abductor/console/proc/AddSnapshot(var/mob/living/carbon/human/target)
 	var/datum/icon_snapshot/entry = new
 	entry.name = target.name
@@ -133,6 +147,8 @@
 	var/area/teleport_target
 
 /obj/machinery/abductor/proc/IsAbductor(var/mob/living/carbon/human/H)
+	if(!H.dna)
+		return 0
 	return H.dna.species.id == "abductor"
 
 /obj/machinery/abductor/proc/IsAgent(var/mob/living/carbon/human/H)
@@ -188,12 +204,11 @@
 		spawn(0)
 			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
-/obj/machinery/abductor/pad/proc/Retrieve(var/mob/living/carbon/human/target,var/forced)
+/obj/machinery/abductor/pad/proc/Retrieve(var/mob/living/carbon/human/target)
 	flick("alien-pad", src)
-	if(IsAbductor(target) || forced)
-		spawn(0)
-			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
-		Warp(target)
+	spawn(0)
+		anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
+	Warp(target)
 
 /obj/machinery/abductor/experiment
 	name = "Experimental machinery"
@@ -203,7 +218,6 @@
 	density = 0
 	anchored = 1
 	state_open = 1
-	var/team = 0
 	var/points = 0
 	var/list/history = new
 	var/flash = " - || - "
@@ -230,7 +244,10 @@
 		..()
 
 /obj/machinery/abductor/experiment/close_machine(mob/target)
-	if(state_open && !panel_open && !IsAbductor(target))
+	for(var/mob/living/carbon/C in loc)
+		if(IsAbductor(C))
+			return
+	if(state_open && !panel_open)
 		..(target)
 
 /obj/machinery/abductor/experiment/proc/dissection_icon(var/mob/living/carbon/human/H)
@@ -334,6 +351,10 @@
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "<span class='bad'>Specimen Deceased</span>"
+	var/obj/item/gland/GlandTest = locate() in H
+	if(!GlandTest)
+		say("Experimental dissection not detected!")
+		return "<span class='bad'>No glands detected!</span>"
 	if(H.mind != null || H.ckey != null)
 		history += H
 		say("Processing Specimen...")

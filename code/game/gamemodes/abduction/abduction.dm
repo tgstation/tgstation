@@ -19,7 +19,7 @@
 	world << "<B>The current game mode is - Abduction!</B>"
 
 /datum/game_mode/abduction/pre_setup()
-	var/teams = max(1, min(max_teams,round(num_players()/config.abductor_scaling_coeff)))
+	teams = max(1, min(max_teams,round(num_players()/config.abductor_scaling_coeff)))
 	var/possible_teams = max(1,round(antag_candidates.len / 2))
 	teams = min(teams,possible_teams)
 
@@ -215,10 +215,9 @@
 		console.vest = V
 		V.flags |= NODROP
 	agent.equip_to_slot_or_del(V, slot_wear_suit)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/melee/baton/loaded(agent), slot_in_backpack)
+	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), slot_belt)
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), slot_in_backpack)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(agent), slot_in_backpack)
 
 
 /datum/game_mode/abduction/proc/equip_scientist(var/mob/living/carbon/human/scientist,var/team_number)
@@ -266,10 +265,27 @@
 			world << "<b>Team Members : [agent.name]([agent.ckey]),[scientist.name]([scientist.ckey])</b>"
 		else
 			world << "<font size = 3 color='red'><b>[team_name] team failed its mission! </b></font>"
-			world << "<b>Team Members : [agent.name]([agent.ckey]),[scientist.name]([scientist.ckey])</b>"
+			world << "<b>Team Members</b>: [agent.name]([agent.ckey])<br>[scientist.name]([scientist.ckey])"
+
+		world << "<b>Abductees:</b>"
+		display_abductees(console)
+
 	..()
 	return 1
 
+/datum/game_mode/abduction/proc/display_abductees(var/obj/machinery/abductor/console/console)
+	var/list/mob/living/abductees = console.experiment.history
+	for(var/mob/living/abductee in abductees)
+		if(!abductee.mind)
+			continue
+		world << "[abductee.name]([abductee.ckey]))"
+		var/count = 1
+		for(var/datum/objective/objective in abductee.mind.objectives)
+			if(objective.check_completion())
+				world << "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
+			else
+				world << "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
+			count++
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
 	if(abductors.len)
@@ -282,17 +298,15 @@
 // TODO: Split into seperate landmarks for prettier ships
 /obj/effect/landmark/abductor
 	var/team = 1
+
 /obj/effect/landmark/abductor/console/New()
 	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
-	var/pad_loc = get_step(c,EAST)
-	var/obj/machinery/abductor/pad/p = new /obj/machinery/abductor/pad(pad_loc)
-	var/experiment_loc = get_step(c,WEST)
-	var/obj/machinery/abductor/experiment/e = new /obj/machinery/abductor/experiment(experiment_loc)
 	c.team = team
-	c.pad = p
-	c.experiment = e
-	e.console = c
+
+	spawn(5) // I'd do this properly when i got some time, temporary hack for mappers
+		c.Initialize()
 	qdel(src)
+
 
 /obj/effect/landmark/abductor/agent
 /obj/effect/landmark/abductor/scientist
