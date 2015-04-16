@@ -67,6 +67,14 @@
 		icon_state = initial(icon_state) +"_ass"
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
+	else if(istype(W,/obj/item/stack/cable_coil/) && !beakers.len)
+		var/obj/item/stack/cable_coil/coil = W
+		if(coil.amount < 2) return
+		coil.use(2)
+		var/obj/item/weapon/electrolyzer/E = new /obj/item/weapon/electrolyzer
+		user.before_take_item(src)
+		user.put_in_hands(E)
+		qdel(src)
 	else if(istype(W,/obj/item/weapon/screwdriver) && path != 2)
 		if(stage == 1)
 			path = 1

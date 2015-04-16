@@ -55,6 +55,11 @@
 	icon_state = "soup"
 
 /obj/item/trash/bowl/attackby(obj/item/I,mob/user)
+	if(istype(I,/obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/S = I
+		S.use(1)
+		new/obj/item/weapon/reagent_containers/mortar(get_turf(src))
+		qdel(src)
 	if(istype(I,/obj/item/weapon/shard) || istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		new/obj/item/weapon/reagent_containers/food/snacks/customizable/soup(get_turf(src),I)
 		qdel(src)

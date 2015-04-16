@@ -1153,6 +1153,7 @@
 		..()
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("bustanut", 6)
+		reagents.add_reagent("sodiumchloride", 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
