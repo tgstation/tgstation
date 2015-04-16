@@ -120,7 +120,7 @@
 	name = "shotgun darts"
 	desc = "A dart for use in shotguns."
 	icon_state = "blshell"
-	projectile_type = "/obj/item/projectile/energy/dart"
+	projectile_type = "/obj/item/projectile/bullet/dart"
 	m_amt = 12500
 	w_type = RECYK_METAL
 

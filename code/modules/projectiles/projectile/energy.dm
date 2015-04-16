@@ -28,15 +28,6 @@
 	damage_type = CLONE
 	irradiate = 40
 
-
-/obj/item/projectile/energy/dart
-	name = "dshell"
-	icon_state = "toxin"
-	damage = 5
-	damage_type = TOX
-	weaken = 5
-
-
 /obj/item/projectile/energy/bolt
 	name = "bolt"
 	icon_state = "cbbolt"
@@ -55,7 +46,7 @@
 	name = "plasma"
 	icon_state = "plasma"
 	var/knockdown_chance = 0
-	
+
 /obj/item/projectile/energy/plasma/on_hit(var/atom/target, var/blocked = 0)
 	if (..(target, blocked))
 		var/mob/living/L = target
