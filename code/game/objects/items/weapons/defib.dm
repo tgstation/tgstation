@@ -257,7 +257,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/compact/combat/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/defibrillator/compact/combat/loaded/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()
