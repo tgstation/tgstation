@@ -1,0 +1,5 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - bugfix: General unfucking of floodlights. They should now work correctly, although in the meantime they cannot be built and are only found on the Derelict
+  - tweak: Floodlights must be bolted down to work, use a wrench
