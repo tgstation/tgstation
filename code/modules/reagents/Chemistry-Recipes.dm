@@ -186,6 +186,13 @@ datum
 			required_reagents = list("hydrogen" = 2, "oxygen" = 1)
 			result_amount = 1
 
+		sacid
+			name = "Sulphuric Acid"
+			id = "sacid"
+			result = "sacid"
+			required_reagents = list("sulphur" = 2, "oxygen" = 3, "water" = 2)
+			result_amount = 2
+
 		thermite
 			name = "Thermite"
 			id = "thermite"
