@@ -173,12 +173,7 @@ var/const/RADIO_CHAT = "3" //deprecated
 var/const/RADIO_ATMOSIA = "4"
 var/const/RADIO_NAVBEACONS = "5"
 var/const/RADIO_AIRLOCK = "6"
-var/const/RADIO_SECBOT = "7"
-var/const/RADIO_MULEBOT = "8"
 var/const/RADIO_MAGNETS = "9"
-var/const/RADIO_CLEANBOT = "10"
-var/const/RADIO_FLOORBOT = "11"
-var/const/RADIO_MEDBOT = "12"
 
 /datum/radio_frequency
 
