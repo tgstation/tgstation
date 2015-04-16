@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - imageadd: Fix some beaker types not having lid sprites, or having incorrect ones
