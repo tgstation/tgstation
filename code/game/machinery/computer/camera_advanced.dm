@@ -54,6 +54,8 @@
 	var/mob/living/carbon/human/user = null
 	var/obj/machinery/computer/camera_advanced/origin
 	var/initialized = 0
+	var/visible_icon = 0
+	var/image/user_image = null
 
 /mob/camera/aiEye/remote/setLoc(var/T)
 	if(user)
@@ -63,6 +65,10 @@
 		loc = T
 		cameranet.visibility(src)
 		if(user.client)
+			if(visible_icon)
+				user.client.images -= user_image
+				user_image = image(icon,loc,icon_state,FLY_LAYER)
+				user.client.images += user_image
 			user.client.eye = src
 
 /mob/camera/aiEye/remote/relaymove(mob/user,direct)
@@ -96,10 +102,11 @@
 	C.remote_view = 0
 	remote_eye.origin.current_user = null
 	remote_eye.origin.jump_action.Remove(C)
-	C.remote_control = null
 	if(C.client)
 		C.client.perspective = MOB_PERSPECTIVE
 		C.client.eye = src
+		C.client.images -= remote_eye.user_image
+	C.remote_control = null
 	C.unset_machine()
 	src.Remove(C)
 
