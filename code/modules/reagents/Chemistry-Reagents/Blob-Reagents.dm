@@ -197,3 +197,7 @@ datum/reagent/blob/spacedrugs/reaction_mob(var/mob/living/M as mob, var/method=T
 					step_away(X,pull)
 				else
 					X.throw_at(pull)
+
+
+
+

@@ -130,3 +130,6 @@
 /mob/living/carbon/alien/humanoid/cuff_resist(obj/item/I)
 	playsound(src, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when starting to break free
 	..(I, cuff_break = 1)
+
+/mob/living/carbon/alien/humanoid/check_ear_prot()
+	return 1

@@ -495,3 +495,7 @@ var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
 	if( (!mask_only && head && (head.flags & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)) )
 		return 1
+
+/mob/living/carbon/check_ear_prot()
+	if(head && (head.flags & HEADBANGPROTECT))
+		return 1

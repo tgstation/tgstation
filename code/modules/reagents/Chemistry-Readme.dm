@@ -11,7 +11,7 @@ Structure: ///////////////////          //////////////////////////
 		   							      |          |          |
 		   							      V          V          V
 
-		   							         reagents (datums)	    	Reagents. I.e. Water , antitoxins or mercury.
+		   							         reagents (datums)	    	Reagents. I.e. Water , cryoxadone or mercury.
 
 
 Random important notes:
@@ -198,7 +198,7 @@ About Recipes:
 			of that reagent. The handle_reaction proc can detect mutiples of the same recipes
 			so for most cases you want to set the required amount to 1.
 
-		required_catalysts (Added May 2011)
+		required_catalysts
 			This is a list of the ids of the required catalysts.
 			Functionally similar to required_reagents, it is a list of reagents that are required
 			for the reaction. However, unlike required_reagents, catalysts are NOT consumed.
@@ -215,6 +215,9 @@ About Recipes:
 		required_other
 			Basically like a reagent's data variable. You can set extra requirements for a
 			reaction with this.
+
+		required_temp
+			This is the required temperature.
 
 
 About the Tools:
@@ -243,5 +246,21 @@ About the Tools:
 			If it's 0, you'll need to write your own custom reagent
 			transfer code since you will not be able to use the standard
 			tools to manipulate it.
+
+*/
+
+
+
+
+/*  GOON CHEMS README:
+
+	Credit goes to Cogwerks, and all the other goonstation coders
+	for the original idea and implementation of this over at goonstation.
+
+	THE REQUESTED DON'T PORT LIST: IF YOU PORT THESE THE GOONS WILL MURDER US IN OUR SLEEP SO PLEASE DON'T KTHX - Iamgoofball
+	Any of the Secret Chems
+	Goon in-joke chems (Eg. Cat Drugs, Hairgrownium)
+	Liquid Electricity
+	Rajajajah
 
 */

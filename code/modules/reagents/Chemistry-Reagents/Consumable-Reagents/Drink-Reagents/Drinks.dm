@@ -1,8 +1,4 @@
 
-#define REM REAGENTS_EFFECT_MULTIPLIER
-
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
@@ -454,6 +450,12 @@ datum/reagent/consumable/blumpkinjuice
 	description = "Juiced from real blumpkin."
 	color = "#00BFFF"
 
+datum/reagent/consumable/triple_citrus
+	name = "Triple Citrus"
+	id = "triple_citrus"
+	description = "A solution."
+	color = "#C8A5DC"
+
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
@@ -562,7 +564,3 @@ datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 			if(prob(30)) M.adjustToxLoss(2)
 	..()
 	return
-
-
-// Undefine the alias for REAGENTS_EFFECT_MULTIPLER
-#undef REM
