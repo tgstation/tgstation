@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - imageadd: Recovered Xeno Helmet sprite. It was accidentally pruned out during a clean-up in the head.dmi file (lying sprites are useless)
