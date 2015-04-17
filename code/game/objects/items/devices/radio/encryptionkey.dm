@@ -122,7 +122,7 @@
 /obj/item/device/encryptionkey/headset_cent
 	name = "centcom radio encryption key"
 	desc = "An encryption key for a radio headset.  To access the centcom channel, use :y."
-	icon_state = "com_cypherkey"
+	icon_state = "cent_cypherkey"
 	centcom = 1
 	channels = list("Centcom" = 1)
 
