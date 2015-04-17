@@ -53,7 +53,7 @@
 	updateDamage()
 	update_icon()
 
-/obj/effect/nanohive/ex_act(var/severity, var/target)
+/mob/living/simple_animal/hostile/nanoswarm/ex_act(var/severity, var/target)
 	health = max(0,health - severity*10)
 	..()
 
@@ -179,6 +179,6 @@
 	if(health <= 0)
 		icon_state = "nanohive_broken"
 
-/obj/effect/nanohive/ex_act(var/severity, var/target)
+/obj/structure/nanohive/ex_act(var/severity, var/target)
 	health = max(0,health - severity*10)
 	..()
