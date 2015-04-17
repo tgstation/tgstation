@@ -235,10 +235,11 @@
 		planted = 1
 		for(var/i = 0, i < 120, i++)
 			sleep(10)
+			var/mob/living/carbon/human/M = target
 			user.essence += rand(0.3, 0.5) //Not a huge amount of essence; at the least it's 36 and at the most it's 60
-			M.adjustStaminaLoss(1)
+			target.adjustStaminaLoss(1)
 			if(prob(3))
-				M << "<span class='warning'>You feel sapped.</span>" //Letting the target know that they're not bugged and losing stamina 4nr
+				target << "<span class='warning'>You feel sapped.</span>" //Letting the target know that they're not bugged and losing stamina 4nr
 		planted = 0
 		user << "<span class='info'>The energies siphoning [target] have fallen dormant. You will need to plant a new seed.</span>"
 

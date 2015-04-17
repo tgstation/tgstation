@@ -119,10 +119,7 @@
 /mob/living/simple_animal/revenant/proc/change_essence_amount(var/essence_amt, var/silent = 0, var/source = null, var/mob/living/simple_animal/revenant/user = usr)
 	if(!essence_amt)
 		return
-	if(mode)
-		user.essence -= essence_amt
-	else
-		user.essence += essence_amt
+	user.essence += essence_amt
 	if(!silent)
 		if(essence_amt >= 0)
 			user << "<span class='info'>Gained [essence_amt]E from [source].</span>"
