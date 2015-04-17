@@ -192,6 +192,7 @@
 	icon_state = "cent_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_com
+	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
 
 /obj/item/device/radio/headset/headset_cent/commander
 	keyslot = new /obj/item/device/encryptionkey/heads/captain
@@ -284,6 +285,9 @@
 
 		if(keyslot2.syndie)
 			src.syndie = 1
+
+		if (keyslot2.centcom)
+			centcom = 1
 
 
 	for(var/ch_name in channels)

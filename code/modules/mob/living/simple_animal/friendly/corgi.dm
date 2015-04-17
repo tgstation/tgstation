@@ -209,7 +209,7 @@
 					//The objects that corgis can wear on their backs.
 					var/list/allowed_types = list(
 						/obj/item/clothing/suit/armor/vest,
-						/obj/item/clothing/suit/space/deathsquad,
+						/obj/item/clothing/suit/space/hardsuit/deathsquad,
 						/obj/item/device/radio,
 						/obj/item/device/radio/off,
 						/obj/item/clothing/suit/cardborg,
@@ -385,7 +385,7 @@
 				desc = "Can actually be trusted to not run off on his own."
 				valid = 1
 
-			if(/obj/item/clothing/head/helmet/space/deathsquad)
+			if(/obj/item/clothing/head/helmet/space/hardsuit/deathsquad)
 				name = "Trooper [real_name]"
 				desc = "That's not red paint. That's real corgi blood."
 				valid = 1
