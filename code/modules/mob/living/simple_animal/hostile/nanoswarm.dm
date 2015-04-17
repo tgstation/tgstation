@@ -46,6 +46,17 @@
 	health = 0
 	update_icon()
 
+/mob/living/simple_animal/hostile/nanoswarm/fire_act()
+	health = max(0,health - 25)
+	powerStored = max(0,powerStored - 500)
+	upgradeLevel = max(0,upgradeLevel - 1)
+	updateDamage()
+	update_icon()
+
+/obj/effect/nanohive/ex_act(var/severity, var/target)
+	health = max(0,health - severity*10)
+	..()
+
 /mob/living/simple_animal/hostile/nanoswarm/proc/update_icon()
 	..()
 	if(health > 0)
@@ -159,8 +170,15 @@
 	spawn(interval)
 		spawnNano()
 
+/obj/structure/nanohive/fire_act()
+	health = max(0,health - 25)
+
 /obj/structure/nanohive/emp_act(var/severity)
 	if(health > 0)
-		health -= severity*10
+		health -= max(0,severity*10)
 	if(health <= 0)
 		icon_state = "nanohive_broken"
+
+/obj/effect/nanohive/ex_act(var/severity, var/target)
+	health = max(0,health - severity*10)
+	..()
