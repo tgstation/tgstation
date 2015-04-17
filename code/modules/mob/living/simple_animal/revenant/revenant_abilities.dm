@@ -104,8 +104,8 @@
 		return
 	for(var/mob/living/M in targets)
 		spawn(0)
-			var/msg = stripped_input(usr, "What do you wish to tell \the [M.name]?.", null, "")
-			usr << "<span class='info'><b>You transmit to [M.name]:</b> [msg]</span>"
+			var/msg = stripped_input(usr, "What do you wish to tell [M]?", null, "")
+			usr << "<span class='info'><b>You transmit to [M]:</b> [msg]</span>"
 			M << "<span class='deadsay'><b>Suddenly a strange voice resonates in your head...</b></span><i> [msg]</I>"
 
 
@@ -151,12 +151,17 @@
 						M.Beam(L,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 						M.electrocute_act(25, "[L.name]")
 						playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+	user.revealed = 1
+	user.invisibility = 0
+	spawn(30)
+		user.revealed = 0
+		user.invisibility = INVISIBILITY_OBSERVER
 
 
 //Life Tap: Drains one 'strike' to gain 50E
 /obj/effect/proc_holder/spell/targeted/revenant_life_tap
 	name = "Unlock: Life Tap (25E)"
-	desc = "Draws from your own life tool to gain more essence. Can only be cast three times."
+	desc = "Draws from your own life pool to gain more essence. Can only be cast three times."
 	panel = "Revenant Abilities (Locked)"
 	charge_max = 600
 	clothes_req = 0
@@ -230,9 +235,10 @@
 		planted = 1
 		for(var/i = 0, i < 120, i++)
 			sleep(10)
-			user.essence++ //Drains 120 essence total
-			if(prob(1))
-				target << "You feel a curious draining sensation."
+			user.essence += rand(0.3, 0.5) //Not a huge amount of essence; at the least it's 36 and at the most it's 60
+			M.adjustStaminaLoss(1)
+			if(prob(3))
+				M << "<span class='warning'>You feel sapped.</span>" //Letting the target know that they're not bugged and losing stamina 4nr
 		planted = 0
 		user << "<span class='info'>The energies siphoning [target] have fallen dormant. You will need to plant a new seed.</span>"
 
@@ -276,6 +282,11 @@
 		if(prob(20) && !M.stat)
 			M.Weaken(2)
 			M.visible_message("<span class='warning'>[M] clutches at their head!</span>")
+		user.revealed = 1
+		user.invisibility = 0
+		spawn(10)
+			user.revealed = 0
+			user.invisibility = INVISIBILITY_OBSERVER
 
 
 //Mind Blast: A big-hitting damage ability.
@@ -316,3 +327,8 @@
 		M.emote("scream")
 		M.Weaken(4)
 		M << 'sound/effects/mind_blast.ogg'
+		user.revealed = 1
+		user.invisibility = 0
+		spawn(30)
+			user.revealed = 0
+			user.invisibility = INVISIBILITY_OBSERVER

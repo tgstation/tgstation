@@ -43,7 +43,7 @@
 			strikes--
 			src << "<span class='boldannounce'>Your essence has dropped below critical levels. You barely manage to save yourself - [strikes ? "you can't keep this up!" : "next time, it's death."]</span>"
 		else if(strikes <= 0)
-			src << "<span class='warning'><b>NO! No... it's too late, you can feel yourself fading...</b></span>"
+			src << "<span class='userdanger'><b>NO! No... it's too late, you can feel yourself fading...</b></span>"
 			src.notransform = 1
 			src.revealed = 1
 			src.invisibility = 0
@@ -55,10 +55,10 @@
 	maxHealth = essence * 2
 	if(!revealed)
 		health = maxHealth //Heals to full when not revealed
-	if(essence < essence_regen_cap && essence_regen)
-		essence += 1
+	if(essence_regen && !inhibited) //While inhibited, essence will not regenerate
+		essence = max(essence_regen_cap, essence + 1)
 
-/mob/living/simple_animal/hostile/carp/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/revenant/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Mainly to prevent the no-grav effect
 
 /mob/living/simple_animal/revenant/say(message)
@@ -97,12 +97,11 @@
 	..()
 	if(istype(W, /obj/item/weapon/nullrod))
 		src.visible_message("<b>The revenant</b> screeches and flails!", \
-							"<span class='userdanger'>The null rod invokes agony in you! You feel your essence draining away!</span>")
+							"<span class='boldannounce'>The null rod invokes agony in you! You feel your essence draining away!</span>")
 		src.essence -= 25 //hella effective
-		if(prob(5))
-			src.visible_message("<span class='warning'><b>The revenant is torn apart by the null rod!</b></span>")
-			playsound(src, 'sound/effects/supermatter.ogg', 100, 1)
-			src.death()
+		src.inhibited = 1
+		spawn(30)
+			src.inhibited = 0
 
 
 
@@ -117,7 +116,7 @@
 
 
 
-/mob/living/simple_animal/revenant/proc/change_essence_amount(var/essence_amt, var/mode = 0, var/silent = 0, var/source = null, var/mob/living/simple_animal/revenant/user = usr)
+/mob/living/simple_animal/revenant/proc/change_essence_amount(var/essence_amt, var/silent = 0, var/source = null, var/mob/living/simple_animal/revenant/user = usr)
 	//Mode 1 is essence subtracted, mode 0 is essence added
 	//Example use: revenant.change_essence_amount(25, 0, 0, "the debug") would tell him "Gained 25E from the debug."
 	if(!essence_amt)
@@ -127,8 +126,8 @@
 	else
 		user.essence += essence_amt
 	if(!silent)
-		if(source)
-			user << "<span class='info'>[mode ? "Lost" : "Gained"] [essence_amt]E from [source].</span>"
+		if(essence_amt >= 0)
+			user << "<span class='info'>Gained [essence_amt]E from [source].</span>"
 		else
-			user << "<span class='info'>[mode ? "Lost" : "Gained"] [essence_amt]E.</span>"
+			user << "<span class='info'>Lost [essence_amt]E.</span>"
 	return 1
