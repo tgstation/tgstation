@@ -42,6 +42,10 @@
 	var/floorConvert = /turf/simulated/floor/nano
 	var/wallConvert = /turf/simulated/wall/nano
 
+/mob/living/simple_animal/hostile/nanoswarm/emp_act(var/severity)
+	health = 0
+	update_icon()
+
 /mob/living/simple_animal/hostile/nanoswarm/proc/update_icon()
 	..()
 	if(health > 0)
@@ -127,3 +131,36 @@
 
 		if(istype(t,/turf/simulated/wall))
 			t.ChangeTurf(wallConvert)
+
+
+
+//nanoswarm hives
+/obj/structure/nanohive
+	name = "nanohive"
+	desc = "The surface crawls with a sickly, silver sheen"
+	icon_state = "nanohive"
+	var/maxBots = 5
+	var/curBots = 0
+	var/interval = 30
+	var/health = 100
+
+/obj/structure/nanohive/proc/spawnNano()
+	if(health <= 0)
+		return
+	else
+		for(var/turf/T in oview(1))
+			if(curBots < maxBots)
+				curBots++
+				new /mob/living/simple_animal/hostile/nanoswarm(T)
+		spawn(interval)
+			spawnNano()
+
+/obj/structure/nanohive/New()
+	spawn(interval)
+		spawnNano()
+
+/obj/structure/nanohive/emp_act(var/severity)
+	if(health > 0)
+		health -= severity
+	if(health <= 0)
+		icon_state = "nanohive_broken"

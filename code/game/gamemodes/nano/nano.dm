@@ -3,7 +3,7 @@
 	config_tag = "nano"
 	required_players = 15
 	var/startDelay = 1500
-	var/maxBots = 25
+	var/maxBots = 5
 	var/list/nanobots = list()
 
 
@@ -19,14 +19,16 @@
 /datum/game_mode/nano/proc/spawnBots()
 	for(var/obj/effect/landmark/A in landmarks_list)
 		if(nanobots.len < maxBots)
-			nanobots += new /mob/living/simple_animal/hostile/nanoswarm(get_turf(A))
+			nanobots += new /obj/structure/nanohive(get_turf(A))
 
 /datum/game_mode/nano/process()
-	for(var/mob/living/simple_animal/hostile/nanoswarm/NS in nanobots)
+	..()
+	for(var/obj/structure/nanohive/NS in nanobots)
 		if(NS.health <= 0)
 			nanobots -= NS
 	if(nanobots.len <= 0)
-		spawnBots()
+		world << "<font size=6 color='red'><b>All hives have been destroyed, victory!</b></font>"
+		ticker.force_ending = 1
 
 
 /datum/game_mode/nano/declare_completion()
@@ -39,7 +41,7 @@
 			if(player.onCentcom())
 				text += "<br><b><font size=2>[player.real_name] escaped to the safety of Centcom.</font></b>"
 			else
-				text += "<br><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
+				text += "<br><font size=1>[player.real_name] survived but is stranded in a hellish nano-topia.</font>"
 
 
 	if(survivors)
