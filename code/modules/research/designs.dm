@@ -392,3 +392,17 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	materials = list("$metal" = 2000, "$glass" = 1000)
 	build_path = /obj/item/weapon/holosign_creator
 	category = list("Equipement")
+
+/////////////////////////////////////////
+////////////Equipment Upgrade Kits///////
+/////////////////////////////////////////
+
+/datum/design/euk_antiacid
+	name = "Anti-Acid Equipment Upgrade Kit"
+	desc = "Used to plate an item in gold to resist acid."
+	id = "euk_antiacid"
+	req_tech = list("materials" = 5, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 1500, "$glass" = 750, "$gold" = 6000, "facid" = 50)
+	build_path = /obj/item/weapon/upgradekit/antiacid
+	category = list("Equipement") //Someone please teach me how to spell!
