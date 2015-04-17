@@ -1,0 +1,6 @@
+author: phil235
+
+delete-after: True
+
+changes: 
+  - rscdel: "Nerfs kinetic accelerator and plasma cutters. Plasma cutter is no longer in the mining vendor. Reduces the drilling cost of all drills."

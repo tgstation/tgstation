@@ -68,7 +68,7 @@
 	name = "Soylent green"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 2,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/human = 2
+		/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
 
@@ -210,3 +210,36 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chococornet
+
+/datum/table_recipe/oatmealcookie
+	name = "Oatmeal cookie"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/oat = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/oatmealcookie
+
+/datum/table_recipe/raisincookie
+	name = "Raisin cookie"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/oat = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/raisincookie
+
+/datum/table_recipe/cherrycupcake
+	name = "Cherry cupcake"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cherrycupcake
+
+/datum/table_recipe/bluecherrycupcake
+	name = "Blue cherry cupcake"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/bluecherrycupcake

@@ -8,6 +8,7 @@
 	volume = 50
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
+	overlays.Cut()
 	if (reagents.reagent_list.len > 0)
 		switch(reagents.get_master_reagent_id())
 			if("beer")
@@ -442,8 +443,39 @@
 				icon_state = "toxinsspecialglass"
 				name = "Toxins Special"
 				desc = "Whoah, this thing is on FIRE"
+			if("chocolatepudding")
+				icon_state = "chocolatepudding"
+				name = "Chocolate Pudding"
+				desc = ""
+			if("vanillapudding")
+				icon_state = "vanillapudding"
+				name = "Vanilla Pudding"
+				desc = "Whoah, this thing is on FIRE"
+			if("cherryshake")
+				icon_state = "cherryshake"
+				name = "Cherry Shake"
+				desc = "A cherry flavored milkshake."
+			if("bluecherryshake")
+				icon_state = "bluecherryshake"
+				name = "Blue Cherry Shake"
+				desc = "An exotic blue milkshake."
+			if("drunkenblumpkin")
+				icon_state = "drunkenblumpkin"
+				name = "Drunken Blumpkin"
+				desc = "A drink for the drunks."
+			if("pumpkin_latte")
+				icon_state = "pumpkin_latte"
+				name = "Pumpkin Latte"
+				desc = "A mix of coffee and pumpkin juice."
+			if("gibbfloats")
+				icon_state = "gibbfloats"
+				name = "Gibbfloat"
+				desc = "Dr. Gibb with ice cream on top."
 			else
 				icon_state ="glass_brown"
+				var/image/I = image(icon, "glassoverlay")
+				I.color = mix_color_from_reagents(reagents.reagent_list)
+				overlays += I
 				name = "Glass of ..what?"
 				desc = "You can't really tell what this is."
 	else
@@ -546,3 +578,16 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
 	list_reagents = list("cola" = 50)
 
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(var/obj/item/I, mob/user as mob, params)
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
+		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
+		if(reagents)
+			if(reagents.total_volume >= reagents.maximum_volume)
+				user << "<span class='notice'>[src] is full.</span>"
+			else
+				user << "<span class='notice'>You break [E] in [src].</span>"
+				reagents.add_reagent("eggyolk", 5)
+				qdel(E)
+			return
+	else
+		..()

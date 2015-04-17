@@ -21,6 +21,8 @@
 		name = "alien larva ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
+	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
+	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
 	..()
 
 //This needs to be fixed

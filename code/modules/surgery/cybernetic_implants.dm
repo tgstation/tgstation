@@ -63,10 +63,6 @@
 		if(full < MAX_CHEST_IMPLANT)
 			full = 0
 
-		if(istype(implant,/obj/item/cybernetic_implant/chest/heart))
-			if(locate(/obj/item/cybernetic_implant/chest/heart) in target.internal_organs)
-				full = 1
-
 		insert(user,target,implant,target_zone,full)
 		return 1
 

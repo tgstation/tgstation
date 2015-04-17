@@ -8,14 +8,14 @@
 	name = "Human burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain/human = 1
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/human
 
 /datum/table_recipe/burger
 	name = "Burger"
 	reqs = list(
-			/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain = 1,
+			/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 1,
 			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 
@@ -40,7 +40,7 @@
 /datum/table_recipe/xenoburger
 	name = "Xeno burger"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/xeno = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/xeno = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
@@ -48,7 +48,7 @@
 datum/table_recipe/bearger
 	name = "Bearger"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/bear = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/bear = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/bearger
@@ -96,7 +96,7 @@ datum/table_recipe/bearger
 /datum/table_recipe/redburger
 	name = "Red burger"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 1,
 		/obj/item/toy/crayon/red = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
@@ -105,7 +105,7 @@ datum/table_recipe/bearger
 /datum/table_recipe/orangeburger
 	name = "Orange burger"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 1,
 		/obj/item/toy/crayon/orange = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
@@ -114,7 +114,7 @@ datum/table_recipe/bearger
 /datum/table_recipe/yellowburger
 	name = "Yellow burger"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 1,
 		/obj/item/toy/crayon/yellow = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
@@ -123,7 +123,7 @@ datum/table_recipe/bearger
 /datum/table_recipe/greenburger
 	name = "Green burger"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 1,
 		/obj/item/toy/crayon/green = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
@@ -132,7 +132,7 @@ datum/table_recipe/bearger
 /datum/table_recipe/blueburger
 	name = "Blue burger"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 1,
 		/obj/item/toy/crayon/blue = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
@@ -141,7 +141,7 @@ datum/table_recipe/bearger
 /datum/table_recipe/purpleburger
 	name = "Purple burger"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 1,
 		/obj/item/toy/crayon/purple = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
@@ -165,7 +165,7 @@ datum/table_recipe/bearger
 /datum/table_recipe/bigbiteburger
 	name = "Big bite burger"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain = 3,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 3,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/bigbite
@@ -175,7 +175,7 @@ datum/table_recipe/bearger
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 5,
 		/datum/reagent/consumable/blackpepper = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 4,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 3,
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 2,
@@ -199,3 +199,19 @@ datum/table_recipe/bearger
 			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/cherry
+
+/datum/table_recipe/fivealarmburger
+	name = "Five alarm burger"
+	reqs = list(
+			/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili = 2,
+			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm
+
+/datum/table_recipe/ratburger
+	name = "Rat burger"
+	reqs = list(
+			/obj/item/trash/deadmouse = 1,
+			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/rat

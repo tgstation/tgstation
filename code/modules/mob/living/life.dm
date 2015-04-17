@@ -38,6 +38,8 @@
 
 	update_gravity(mob_has_gravity())
 
+	update_pulling()
+
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
@@ -74,6 +76,11 @@
 
 /mob/living/proc/handle_stomach()
 	return
+
+/mob/living/proc/update_pulling()
+	if(pulling)
+		if(incapacitated())
+			stop_pulling()
 
 //This updates the health and status of the mob (conscious, unconscious, dead)
 /mob/living/proc/handle_regular_status_updates()

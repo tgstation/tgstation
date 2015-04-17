@@ -40,23 +40,47 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	var/list/masters = list()//List of AIs that use the holopad
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
+	var/temp = ""
 
 /obj/machinery/hologram/holopad/attack_hand(var/mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
-	if(alert(user,"Would you like to request an AI's presence?",,"Yes","No") == "Yes")
-		if(!Adjacent(user)) //also prevents request spam!
-			user << "<span class='notice'>You are too far from the holopad.</span>"
-			return
-		if(last_request + 200 < world.time) //don't spam the AI with requests you jerk!
+	if(user.stat || stat & (NOPOWER|BROKEN))
+		return
+	user.set_machine(src)
+	var/dat
+	if(temp)
+		dat = temp
+	else
+		dat = "<A href='?src=\ref[src];AIrequest=1'>request an AI's presence.</A>"
+
+	var/datum/browser/popup = new(user, "holopad", name, 300, 130)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+
+/obj/machinery/hologram/holopad/Topic(href, href_list)
+	if(..())
+		return
+	if (href_list["AIrequest"])
+		if(last_request + 200 < world.time)
 			last_request = world.time
-			user << "<span class='notice'>You request an AI's presence.</span>"
+			temp = "You requested an AI's presence.<BR>"
+			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 			var/area/area = get_area(src)
 			for(var/mob/living/silicon/ai/AI in living_mob_list)
-				if(!AI.client)	continue
+				if(!AI.client)
+					continue
 				AI << "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>"
 		else
-			user << "<span class='notice'>A request for AI presence was already sent recently.</span>"
+			temp = "A request for AI presence was already sent recently.<BR>"
+			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+
+	else if(href_list["mainmenu"])
+		temp = ""
+
+	updateUsrDialog()
+	add_fingerprint(usr)
 
 /obj/machinery/hologram/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
