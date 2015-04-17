@@ -146,6 +146,9 @@
 			if (prob(20))
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."))
 
+/datum/disease/transformation/robot/evil
+	name = "Nano-Robotic Transformation"
+	new_form = /mob/living/silicon/robot/nanoborg
 
 /datum/disease/transformation/xeno
 

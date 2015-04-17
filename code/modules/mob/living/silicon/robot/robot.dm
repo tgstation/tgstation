@@ -1029,6 +1029,24 @@
 	module = new /obj/item/weapon/robot_module/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
 
+/mob/living/silicon/robot/nanoborg
+	icon_state = "robot_old"
+	lawupdate = 0
+	scrambledcodes = 1
+	modtype = "Synd"
+	faction = list("nano")
+	designation = "Nanoborg"
+	req_access = list(access_syndicate)
+
+/mob/living/silicon/robot/nanoborg/New(loc)
+	..()
+	icon_state = pick("captainborg","ceborg","hosborg","cmoborg","ceborg","rdborg")
+	cell.maxcharge = 15000
+	cell.charge = 15000
+	radio = new /obj/item/device/radio/borg/syndicate(src)
+	module = new /obj/item/weapon/robot_module/syndicate(src)
+	laws = new /datum/ai_laws/antimov()
+
 /mob/living/silicon/robot/proc/notify_ai(var/notifytype, var/oldname, var/newname)
 	if(!connected_ai)
 		return
