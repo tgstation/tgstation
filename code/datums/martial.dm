@@ -138,7 +138,8 @@
 	name = "Drunken Brawling"
 
 /datum/martial_art/drunk_brawling/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(prob(70))
+	var/grab_failure = prob(70)
+	if(grab_failure)
 		A.visible_message("<span class='warning'>[A] tries to grab ahold of [D], but fails!</span>", \
 							"<span class='warning'>You fail to grab ahold of [D]!</span>")
 		return 1
@@ -152,41 +153,46 @@
 /datum/martial_art/drunk_brawling/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	add_logs(A, D, "punched")
 	A.do_attack_animation(D)
-
 	var/atk_verb = pick("jab","uppercut","overhand punch","drunken right hook","drunken left hook")
+	var/attack_failure = prob(50)
+	var/weak_hit = prob(90)
+	var/attack_sound = 'sound/weapons/punch1.ogg'
 
-	var/damage = rand(0,6)
+	if(A.dna)
+		attack_sound = A.dna.species.attack_sound
+		if(attack_failure)
+			attack_sound = A.dna.species.miss_sound
+	else
+		if(attack_failure)
+			attack_sound = 'sound/weapons/punchmiss.ogg'
 
-	if(atk_verb == "uppercut")
-		if(prob(90))
-			damage = 0
-		else //10% chance to do a massive amount of damage
-			damage = 14
+	playsound(D.loc, attack_sound, 25, 1, -1)
 
-	if(prob(50)) //they are drunk, they aren't going to land half of their hits
-		damage = 0
 
-	if(!damage)
-		playsound(D.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-		D.visible_message("<span class='warning'>[A] has attempted to hit [D] with a [atk_verb]!</span>")
+	if(attack_failure)
+		D.visible_message("<span class='warning'>[A] has attempted to strike [D] with a [atk_verb]!</span>")
 		return 1 //returns 1 so that they actually miss and don't switch to attackhand damage
 
-	var/obj/item/organ/external/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
+	var/damage = rand(1,6)
+	if(atk_verb == "uppercut")
+		if(!weak_hit)
+			damage = 14
+	if(A.dna)
+		damage += A.dna.species.punchmod
+
+	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
-	playsound(D.loc, 'sound/weapons/punch1.ogg', 25, 1, -1)
-
-
-	D.visible_message("<span class='danger'>[A] has hit [D] with a [atk_verb]!</span>", \
-								"<span class='userdanger'>[A] has hit [D] with a [atk_verb]!</span>")
+	D.visible_message("<span class='danger'>[A] has struck [D] with a [atk_verb]!</span>", \
+								"<span class='userdanger'>[A] has struck [D] with a [atk_verb]!</span>")
 
 	D.apply_damage(damage, BRUTE, null, armor_block)
 	D.apply_effect(damage, STAMINA, armor_block)
 	if(D.getStaminaLoss() > 50)
 		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)
 		if((D.stat != DEAD) && prob(knockout_prob))
-			D.visible_message("<span class='danger'>[A] has knocked [D] out with a haymaker!</span>", \
-								"<span class='userdanger'>[A] has knocked [D] out with a haymaker!</span>")
+			D.visible_message("<span class='danger'>[A] has knocked [D] out with a [atk_verb]!</span>", \
+								"<span class='userdanger'>[A] has knocked [D] out with a [atk_verb]!</span>")
 			D.apply_effect(10,WEAKEN,armor_block)
 			D.SetSleeping(5)
 			D.forcesay(hit_appends)
