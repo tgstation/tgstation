@@ -9,14 +9,15 @@
 		return 1
 	if(!blob_cores.len) // blob is dead
 		if(config.continuous["blob"])
-			if(config.midround_antag["blob"])
-				round_converted = convert_roundtype()
-				if(!round_converted)
-					return 1
 			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 				SSshuttle.emergency.mode = SHUTTLE_DOCKED
 				SSshuttle.emergency.timer = world.time
 				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+
+			if(config.midround_antag["blob"])
+				round_converted = convert_roundtype()
+				if(!round_converted)
+					return 1
 			return ..()
 		return 1
 	if(station_was_nuked)//Nuke went off

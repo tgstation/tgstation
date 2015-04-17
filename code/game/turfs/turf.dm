@@ -126,8 +126,7 @@
 /turf/proc/ChangeTurf(var/path)
 	if(!path)			return
 	if(path == type)	return src
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/old_opacity = opacity
+
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
@@ -135,18 +134,6 @@
 	if(istype(W, /turf/simulated))
 		W:Assimilate_Air()
 		W.RemoveLattice()
-
-	W.lighting_lumcount += old_lumcount
-	if(old_lumcount != W.lighting_lumcount)	//light levels of the turf have changed. We need to shift it to another lighting-subarea
-		W.lighting_changed = 1
-		SSlighting.changed_turfs += W
-
-	if(old_opacity != W.opacity)			//opacity has changed. Need to update surrounding lights
-		if(W.lighting_lumcount)				//unless we're being illuminated, don't bother (may be buggy, hard to test)
-			W.UpdateAffectingLights()
-
-	for(var/turf/space/S in range(W,1))
-		S.update_starlight()
 
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()

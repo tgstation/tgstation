@@ -15,10 +15,11 @@
 		var/obj/item/weapon/tank/jetpack/J = back
 		if((movement_dir || J.stabilization_on) && J.allow_thrust(0.01, src))
 			return 1
-	if(istype(wear_suit, /obj/item/clothing/suit/space/hardsuit/engine) && isturf(loc)) //Second check is so you can't use a jetpack in a mech
-		var/obj/item/clothing/suit/space/hardsuit/engine/C = wear_suit
-		if((movement_dir || C.jetpack.stabilization_on) && C.jetpack.allow_thrust(0.01, src))
-			return 1
+	if(istype(wear_suit, /obj/item/clothing/suit/space/hardsuit) && isturf(loc)) //Second check is so you can't use a jetpack in a mech
+		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
+		if(C.jetpack)
+			if((movement_dir || C.jetpack.stabilization_on) && C.jetpack.allow_thrust(0.01, src))
+				return 1
 
 	return 0
 

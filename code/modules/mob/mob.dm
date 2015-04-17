@@ -731,6 +731,8 @@ var/list/slot_equipment_priority = list( \
 		else
 			statpanel(listed_turf.name, null, listed_turf)
 			for(var/atom/A in listed_turf)
+				if(!A.mouse_opacity)
+					continue
 				if(A.invisibility > see_invisible)
 					continue
 				statpanel(listed_turf.name, null, A)
@@ -788,6 +790,12 @@ var/list/slot_equipment_priority = list( \
 			fall(ko)
 	canmove = !(ko || resting || stunned || buckled)
 	density = !lying
+	if(lying)
+		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
+			layer = MOB_LAYER - 0.2 //so mob lying always appear behind standing mobs
+	else
+		if(layer == MOB_LAYER - 0.2)
+			layer = initial(layer)
 	update_transform()
 	lying_prev = lying
 	return canmove
@@ -837,9 +845,6 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/activate_hand(var/selhand)
 	return
-
-/mob/proc/SpeciesCanConsume()
-	return 0
 
 /mob/proc/Jitter(amount)
 	jitteriness = max(jitteriness,amount,0)
@@ -946,4 +951,17 @@ var/list/slot_equipment_priority = list( \
 	return
 
 /mob/proc/setEarDamage()
+	return
+
+/mob/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+	mob_spell_list += spell
+	if(!spell.action)
+		spell.action = new/datum/action/spell_action
+		spell.action.target = spell
+		spell.action.name = spell.name
+		spell.action.button_icon = spell.action_icon
+		spell.action.button_icon_state = spell.action_icon_state
+		spell.action.background_icon_state = spell.action_background_icon_state
+	if(isliving(src))
+		spell.action.Grant(src)
 	return

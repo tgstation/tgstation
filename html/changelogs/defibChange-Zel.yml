@@ -1,7 +1,0 @@
-author: Zelacks
-
-delete-after: True
-
-changes: 
-  - tweak: "Defibs no longer have a minimum damage requirement for a successful revive. Patients will have 150 total damage on a successful revive."
-  - tweak: "Additional feedback is given for several failure states of the defib."

@@ -80,6 +80,7 @@
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
 	transfer_antag_huds(new_character)					//inherit the antag HUDs from this mind (TODO: move this to a possible antag datum)
+	transfer_actions(new_character)
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
@@ -1057,6 +1058,7 @@
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")
+				ticker.mode.update_shadow_icons_removed(src)
 				src.spell_list = null
 				if(src in ticker.mode.shadows)
 					ticker.mode.shadows -= src
@@ -1082,9 +1084,8 @@
 				current << "<span class='deadsay'><b>You notice a brightening around you. No, it isn't that. The shadows grow, darken, swirl. The darkness has a new welcome for you, and you realize with a \
 				start that you can't be human. No, you are a shadowling, a harbringer of the shadows! Your alien abilities have been unlocked from within, and you may both commune with your allies and use \
 				a chrysalis to reveal your true form. You are to ascend at all costs.</b></span>"
-				src.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
-				src.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
-				current.verbs += /mob/living/carbon/human/proc/shadowling_hatch
+				ticker.mode.finalize_shadowling(src)
+				ticker.mode.update_shadow_icons_added(src)
 			if("thrall")
 				if(!ishuman(current))
 					usr << "<span class='warning'>This only works on humans!</span>"
@@ -1096,7 +1097,6 @@
 				current << "<span class='danger'>You may use the Hivemind Commune ability to communicate with your fellow enlightened ones.</span>"
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
-				src.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
@@ -1372,6 +1372,37 @@
 	ticker.mode.forge_gang_objectives(src, gang)
 	ticker.mode.greet_gang(src)
 	ticker.mode.equip_gang(current)
+
+
+
+/datum/mind/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+	spell_list += spell
+	if(!spell.action)
+		spell.action = new/datum/action/spell_action
+		spell.action.target = spell
+		spell.action.name = spell.name
+		spell.action.button_icon = spell.action_icon
+		spell.action.button_icon_state = spell.action_icon_state
+		spell.action.background_icon_state = spell.action_background_icon_state
+	spell.action.Grant(current)
+	return
+/datum/mind/proc/transfer_actions(var/mob/living/new_character)
+	if(current && current.actions)
+		for(var/datum/action/A in current.actions)
+			A.Grant(new_character)
+	transfer_mindbound_actions(new_character)
+
+/datum/mind/proc/transfer_mindbound_actions(var/mob/living/new_character)
+	for(var/obj/effect/proc_holder/spell/spell in spell_list)
+		if(!spell.action) // Unlikely but whatever
+			spell.action = new/datum/action/spell_action
+			spell.action.target = spell
+			spell.action.name = spell.name
+			spell.action.button_icon = spell.action_icon
+			spell.action.button_icon_state = spell.action_icon_state
+			spell.action.background_icon_state = spell.action_background_icon_state
+		spell.action.Grant(new_character)
+	return
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

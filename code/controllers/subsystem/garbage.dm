@@ -82,7 +82,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 // Return true if the the GC controller should allow the object to continue existing. (Useful if pooling objects.)
 /datum/proc/Destroy()
 	//del(src)
-	return
+	tag = null
+	return 0
 
 /datum/var/gc_destroyed //Time when this object was destroyed.
 

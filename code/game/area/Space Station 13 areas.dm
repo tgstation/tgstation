@@ -194,8 +194,7 @@ proc/process_ghost_teleport_locs()
 
 /area/asteroid/artifactroom/New()
 	..()
-	lighting_use_dynamic = 1
-	InitializeLighting()
+	SetDynamicLighting()
 
 /area/planet/clown
 	name = "\improper Clown Planet"
@@ -246,9 +245,12 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	has_gravity = 1
 
-
-
-
+//Abductors
+/area/abductor_ship
+	name = "\improper Abductor Ship"
+	icon_state = "yellow"
+	requires_power = 0
+	has_gravity = 1
 
 
 //PRISON

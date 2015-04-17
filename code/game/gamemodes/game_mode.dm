@@ -229,6 +229,7 @@
 		if(BE_GANG)			roletext="gangster"
 		if(BE_CULTIST)		roletext="cultist"
 		if(BE_MONKEY)		roletext="monkey"
+		if(BE_ABDUCTOR)		roletext="abductor"
 
 
 	// Ultimate randomizing code right here

@@ -1038,6 +1038,18 @@ obj/item/toy/cards/deck/syndicate
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
 	w_class = 2.0
+	attack_verb = list("bitten", "eaten", "fin slapped")
+	var/bitesound = 'sound/weapons/bite.ogg'
+
+// Attack mob
+/obj/item/toy/carpplushie/attack(mob/M as mob, mob/user as mob)
+	playsound(loc, bitesound, 20, 1)	// Play bite sound in local area
+	return ..()
+
+// Attack self
+/obj/item/toy/carpplushie/attack_self(mob/user as mob)
+	playsound(src.loc, bitesound, 20, 1)
+	return ..()
 
 /*
  * Toy big red button

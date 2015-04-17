@@ -6,7 +6,7 @@
 
 	anchored = 0
 	density = 0
-	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
+	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
 	var/datum/wires/syndicatebomb/wires = null

@@ -57,9 +57,7 @@
 
 
 /datum/station_state/proc/count()
-	for(var/turf/T in world)
-		if(T.z != ZLEVEL_STATION)
-			continue
+	for(var/turf/T in block(locate(1,1,1), locate(world.maxx,world.maxy,1)))
 
 		if(istype(T,/turf/simulated/floor))
 			if(!(T:burnt))
@@ -79,19 +77,16 @@
 			else
 				src.r_wall += 1
 
-	for(var/obj/O in world)
-		if(O.z != ZLEVEL_STATION)
-			continue
 
-		if(istype(O, /obj/structure/window))
-			src.window += 1
-		else if(istype(O, /obj/structure/grille) && (!O:destroyed))
-			src.grille += 1
-		else if(istype(O, /obj/machinery/door))
-			src.door += 1
-		else if(istype(O, /obj/machinery))
-			src.mach += 1
-	return
+		for(var/obj/O in T.contents)
+			if(istype(O, /obj/structure/window))
+				src.window += 1
+			else if(istype(O, /obj/structure/grille) && (!O:destroyed))
+				src.grille += 1
+			else if(istype(O, /obj/machinery/door))
+				src.door += 1
+			else if(istype(O, /obj/machinery))
+				src.mach += 1
 
 
 /datum/station_state/proc/score(var/datum/station_state/result)

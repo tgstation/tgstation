@@ -277,7 +277,7 @@
 
 	update_icon()
 	if(on)
-		if(luminosity != brightness)
+		if(!light || light.radius != brightness)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
@@ -295,11 +295,11 @@
 		use_power = 1
 		SetLuminosity(0)
 
-	active_power_usage = (luminosity * 10)
+	active_power_usage = (brightness * 10)
 	if(on != on_gs)
 		on_gs = on
 		if(on)
-			static_power_used = luminosity * 20 //20W per unit luminosity
+			static_power_used = brightness * 20 //20W per unit luminosity
 			addStaticPower(static_power_used, STATIC_LIGHT)
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
