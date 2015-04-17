@@ -113,12 +113,12 @@
 			NS.powerStored += shared
 
 		if(H)
-			var/ableToInject = 0
+			var/injectResist = 0
 			if(H.head && H.head.flags & THICKMATERIAL)
-				ableToInject++
+				injectResist++
 			if(H.wear_suit && H.wear_suit.flags & THICKMATERIAL)
-				ableToInject++
-			if(ableToInject < 2)
+				injectResist++
+			if(injectResist < 2)
 				H << "<span class='danger'>You feel a thousand tiny little pricks sizzle across your skin</span>"
 				H.AddDisease(new /datum/disease/transformation/robot/evil)
 
@@ -161,6 +161,6 @@
 
 /obj/structure/nanohive/emp_act(var/severity)
 	if(health > 0)
-		health -= severity
+		health -= severity*10
 	if(health <= 0)
 		icon_state = "nanohive_broken"
