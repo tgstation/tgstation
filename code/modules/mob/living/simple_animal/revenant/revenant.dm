@@ -117,8 +117,6 @@
 
 
 /mob/living/simple_animal/revenant/proc/change_essence_amount(var/essence_amt, var/silent = 0, var/source = null, var/mob/living/simple_animal/revenant/user = usr)
-	//Mode 1 is essence subtracted, mode 0 is essence added
-	//Example use: revenant.change_essence_amount(25, 0, 0, "the debug") would tell him "Gained 25E from the debug."
 	if(!essence_amt)
 		return
 	if(mode)

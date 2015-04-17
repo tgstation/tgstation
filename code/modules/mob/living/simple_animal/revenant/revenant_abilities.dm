@@ -62,7 +62,7 @@
 			target.death(0)
 			target.visible_message("<span class='warning'>[target] gently slumps back onto the ground.</span>")
 			user.icon_state = "revenant_idle"
-			user.change_essence_amount(essence_drained * 5, 0, 0, target)
+			user.change_essence_amount(essence_drained * 5, 0, target)
 			user << "<span class='info'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
 			user.revealed = 0
 			user.notransform = 0
@@ -189,7 +189,7 @@
 			target << "<span class='warning'>Your life force has grown too weak to life tap again.</span>"
 		target.strikes--
 		target << "<span class='info'>You convert your own life into energy.[target.strikes ? "" : " This is the last time you can do this."]</span>"
-		target.change_essence_amount(50, 0, 0, "your life pool")
+		target.change_essence_amount(50, 0, "your life pool")
 
 
 //Seed of Draining: Plants a 'seed' in the target that will slowly siphon essence silently from them.
