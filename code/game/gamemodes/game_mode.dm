@@ -114,8 +114,6 @@
 		else
 			del(G)
 
-	SSshuttle.emergencyNoEscape = 0 //Time to get the fuck out of here
-
 	if(!usable_modes)
 		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
 		return null
