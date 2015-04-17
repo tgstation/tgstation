@@ -595,7 +595,7 @@ var/global/list/organ_damage_overlays = list(
 	if(species.name=="Plasmaman")
 
 		// Check if we're wearing our biosuit and mask.
-		if (!istype(wear_suit,/obj/item/clothing/suit/space/plasmaman) || !istype(head,/obj/item/clothing/head/helmet/space/plasmaman))
+		if (!(istype(wear_suit,/obj/item/clothing/suit/space/plasmaman) || istype(wear_suit,/obj/item/clothing/suit/space/bomberman)) || !(istype(head,/obj/item/clothing/head/helmet/space/plasmaman) || istype(head,/obj/item/clothing/head/helmet/space/bomberman)))
 			//testing("Plasmaman [src] leakin'.  coverflags=[cover_flags]")
 			// OH FUCK HE LEAKIN'.
 			// This was OP.

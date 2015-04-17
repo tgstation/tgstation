@@ -629,6 +629,7 @@
 	permeability_coefficient = 0.01
 	allowed = list(/obj/item/weapon/bomberman/)
 	pressure_resistance = 40 * ONE_ATMOSPHERE
+	species_restricted = list("exclude")
 	var/never_removed = 1
 
 /obj/item/clothing/suit/space/bomberman/dropped(mob/user as mob)
@@ -644,6 +645,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	body_parts_covered = FULL_HEAD
 	siemens_coefficient = 0
+	species_restricted = list("exclude")
 	var/never_removed = 1
 
 /obj/item/clothing/head/helmet/space/bomberman/dropped(mob/user as mob)
