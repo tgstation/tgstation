@@ -253,6 +253,10 @@ datum/reagent/water
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	var/cooling_temperature = 2
 
+/*
+ *	Water reaction to turf
+ */
+
 datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
@@ -272,13 +276,28 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 			qdel(hotspot)
 	return
 
+/*
+ *	Water reaction to an object
+ */
+
 datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
+	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
 			cube.Expand()
+
+	// Dehydrated carp
+	if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
+		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
+		dehy.Swell() // Makes a carp
+
 	return
+
+/*
+ *	Water reaction to a mob
+ */
 
 datum/reagent/water/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	if(!istype(M, /mob/living))
@@ -375,6 +394,34 @@ datum/reagent/slimetoxin
 	id = "mutationtoxin"
 	description = "A corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
+
+datum/reagent/unstableslimetoxin
+	name = "Unstable Mutation Toxin"
+	id = "unstablemutationtoxin"
+	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	metabolization_rate = INFINITY //So it instantly removes all of itself
+
+datum/reagent/unstableslimetoxin/on_mob_life(var/mob/living/carbon/human/H as mob)
+	..()
+	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
+	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.Weaken(3)
+	sleep(30)
+	var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow)
+	var/list/possible_morphs = typesof(/datum/species/) - blacklisted_species
+	var/datum/species/mutation = pick(possible_morphs)
+	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
+		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
+		H.dna.species = new mutation()
+		H.regenerate_icons()
+		if(mutation == /datum/species/slime)
+			H.faction |= "slime"
+		else
+			H.faction -= "slime"
+	else
+		H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
+	return 1
 
 datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"

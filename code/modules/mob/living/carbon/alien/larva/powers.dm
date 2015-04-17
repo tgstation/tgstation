@@ -3,6 +3,8 @@
 	desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	plasma_cost = 0
 
+	action_icon_state = "alien_hide"
+
 /obj/effect/proc_holder/alien/hide/fire(var/mob/living/carbon/alien/user)
 	if(user.stat != CONSCIOUS)
 		return
@@ -22,6 +24,8 @@
 	name = "Evolve"
 	desc = "Evolve into a fully grown Alien."
 	plasma_cost = 0
+
+	action_icon_state = "alien_evolve_larva"
 
 /obj/effect/proc_holder/alien/larva_evolve/fire(var/mob/living/carbon/alien/user)
 	if(!islarva(user))

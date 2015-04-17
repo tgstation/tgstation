@@ -119,7 +119,7 @@
 					var/mob/living/carbon/human/H = mob
 					H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
 				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
-				mob.apply_effect(rads, IRRADIATE)
+				mob.irradiate(rads)
 
 			explode()
 
@@ -181,7 +181,7 @@
 
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
-		l.apply_effect(rads, IRRADIATE)
+		l.irradiate(rads)
 
 	power -= (power/500)**3
 
@@ -248,7 +248,7 @@
 
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
-		user.apply_effect(150, IRRADIATE)
+		user.irradiate(150)
 
 
 /obj/machinery/power/supermatter_shard/Bumped(atom/AM as mob|obj)
@@ -283,7 +283,7 @@
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	for(var/mob/living/L in range(10))
 		var/rads = 500 * sqrt( 1 / (get_dist(L, src) + 1) )
-		L.apply_effect(rads, IRRADIATE)
+		L.irradiate(rads)
 		investigate_log("has irradiated [L] after consuming [AM].", "supermatter")
 		if(L in view())
 			L.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\

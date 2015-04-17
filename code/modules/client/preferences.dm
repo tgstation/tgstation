@@ -16,7 +16,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"blob" = /datum/game_mode/blob,					//9
 	"ninja",										//10
 	"monkey" = /datum/game_mode/monkey,				//11
-	"gangster" = /datum/game_mode/gang				//12
+	"gangster" = /datum/game_mode/gang,				//12
+	"shadowling" = /datum/game_mode/shadowling,		//13
+	"abductor" = /datum/game_mode/abduction			//14
 )
 
 

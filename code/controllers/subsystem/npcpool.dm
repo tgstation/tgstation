@@ -110,7 +110,7 @@ var/datum/subsystem/npcpool/SSbp
 	if(needsHelp_non.len)
 		for(var/obj/machinery/bot/B in needsHelp_non)
 			if(canBeUsed_non.len)
-				var/obj/machinery/bot/candidate = pick(canBeUsed_non.len)
+				var/obj/machinery/bot/candidate = pick(canBeUsed_non)
 				candidate.call_bot(B,get_turf(B),FALSE)
 				canBeUsed_non -= B
 				needsHelp_non -= candidate

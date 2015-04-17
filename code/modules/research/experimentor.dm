@@ -288,7 +288,7 @@
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='notice'>[src] malfunctions, melting [exp_on] and leaking radiation!.</span>")
 			for(var/mob/living/m in oview(1, src))
-				m.apply_effect(25,IRRADIATE)
+				m.irradiate(25)
 				investigate_log("Experimentor has irradiated [m]", "experimentor") //One entry per person so we know what was irradiated.
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))

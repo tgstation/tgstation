@@ -172,7 +172,7 @@
 /datum/game_mode/malfunction/check_finished()
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
-	if((config.continuous["malfunction"] && !config.midround_antag["malfunction"]) || round_converted == 1) //No reason to waste resources
+	if(round_converted == 1) //No reason to waste resources
 		return ..() //Check for evacuation/nuke
 	if (station_captured && !to_nuke_or_not_to_nuke)
 		return 1
@@ -186,7 +186,11 @@
 			malf_mode_declared = 0
 			if(get_security_level() == "delta")
 				set_security_level("red")
-			round_converted = convert_roundtype()
+			if(config.midround_antag["malfunction"])
+				round_converted = convert_roundtype()
+				if(!round_converted)
+					return 1
+			return ..()
 		else
 			return 1
 	return ..() //check for shuttle and nuke

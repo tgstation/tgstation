@@ -68,9 +68,8 @@
 	else
 		density = 0
 		icon_state = "down"
-		M.pixel_y = initial(M.pixel_y)
-		if(M.lying)
-			M.pixel_y = M.lying_pixel_offset
+		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
+		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 
 
 /obj/item/roller

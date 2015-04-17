@@ -91,6 +91,8 @@
 				if(istype(A, /obj/item))
 					var/atom/movable/B = A
 					B.loc = I
+					B.pixel_x = initial(B.pixel_x)
+					B.pixel_y = initial(B.pixel_y)
 				else
 					if(!I.reagents)
 						I.reagents = new /datum/reagents()

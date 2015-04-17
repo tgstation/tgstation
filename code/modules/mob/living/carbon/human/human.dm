@@ -665,11 +665,10 @@
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
-	apply_effect(current_size * 3, IRRADIATE)
+	irradiate(current_size * 3)
 	if(mob_negates_gravity())
 		return
 	..()
-
 
 
 /mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
@@ -728,6 +727,34 @@
 				w_uniform.add_fingerprint(M)
 
 			..()
+
+
+/mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
+	if(C.stat == DEAD)
+		src << "<span class='warning'>[C.name] is dead!</span>"
+		return
+	if(is_mouth_covered())
+		src << "<span class='notice'>Remove your mask!</span>"
+		return 0
+	if(C.is_mouth_covered())
+		src << "<span class='notice'>Remove their mask!</span>"
+		return 0
+
+	if(C.cpr_time < world.time + 30)
+		add_logs(src, C, "CPRed")
+		visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
+						"<span class='notice'>You try to perform CPR on [C.name]. Hold still!</span>")
+		if(!do_mob(src, C))
+			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
+			return 0
+
+		if(C.health <= config.health_threshold_crit)
+			C.cpr_time = world.time
+			var/suff = min(C.getOxyLoss(), 7)
+			C.adjustOxyLoss(-suff)
+			C.updatehealth()
+			visible_message("<span class='notice'>[src] performs CPR on [C.name]!</span>")
+			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 
 /mob/living/carbon/human/generateStaticOverlay()

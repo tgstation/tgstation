@@ -16,7 +16,7 @@
 	see_in_dark = 6
 	species = /mob/living/simple_animal/pet/cat
 	childtype = /mob/living/simple_animal/pet/cat/kitten
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"

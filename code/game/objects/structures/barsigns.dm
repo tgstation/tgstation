@@ -142,55 +142,55 @@
 /datum/barsign/maltesefalcon
 	name = "Maltese Falcon"
 	icon = "maltesefalcon"
-	desc = "The Maltese Falcon, Space Bar and Grill"
+	desc = "The Maltese Falcon, Space Bar and Grill."
 
 
 /datum/barsign/thebark
 	name = "The Bark"
 	icon = "thebark"
-	desc = "Ian's bar of choice"
+	desc = "Ian's bar of choice."
 
 
 /datum/barsign/harmbaton
 	name = "The Harmbaton"
 	icon = "theharmbaton"
-	desc = "A great dining experience for both security members and assistants"
+	desc = "A great dining experience for both security members and assistants."
 
 
 /datum/barsign/thesingulo
 	name = "The Singulo"
 	icon = "thesingulo"
-	desc = "Where people go that'd rather not be called by their name"
+	desc = "Where people go that'd rather not be called by their name."
 
 
 /datum/barsign/thedrunkcarp
 	name = "The Drunk Carp"
 	icon = "thedrunkcarp"
-	desc = "Don't drink and Swim"
+	desc = "Don't drink and swim."
 
 
 /datum/barsign/scotchservinwill
 	name = "Scotch Servin Willy's"
 	icon = "scotchservinwill"
-	desc = "Willy sure moved up in the world from clown to bartender"
+	desc = "Willy sure moved up in the world from clown to bartender."
 
 
 /datum/barsign/officerbeersky
 	name = "Officer Beersky's"
 	icon = "officerbeersky"
-	desc = "Man eat a dong, these drinks are great"
+	desc = "Man eat a dong, these drinks are great."
 
 
 /datum/barsign/thecavern
 	name = "The Cavern"
 	icon = "thecavern"
-	desc = "Fine drinks while listening to some fine tunes"
+	desc = "Fine drinks while listening to some fine tunes."
 
 
 /datum/barsign/theouterspess
 	name = "The Outer Spess"
 	icon = "theouterspess"
-	desc = "This bar isn't actually located in outer space"
+	desc = "This bar isn't actually located in outer space."
 
 
 /datum/barsign/slipperyshots
@@ -268,6 +268,10 @@
 	icon = "thealenath"
 	desc = "All right, buddy. I think you've had EI NATH. Time to get a cab."
 
+/datum/barsign/thealohasnackbar
+	name = "The Aloha Snackbar"
+	icon = "alohasnackbar"
+	desc = "A tasteful, inoffensive tiki bar sign."
 
 
 /datum/barsign/hiddensigns

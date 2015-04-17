@@ -97,7 +97,7 @@
 
 // Chops off each leg with a 50/50 chance of harvesting one, until finally calling
 // default harvest action
-/mob/living/simple_animal/hostile/poison/giant_spider/harvest()
+/mob/living/simple_animal/hostile/poison/giant_spider/harvest(mob/living/user, sharpness = 1)
 	if(butcher_state > 0)
 		butcher_state--
 		icon_state = icon_dead + "[butcher_state]"
