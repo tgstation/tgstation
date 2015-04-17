@@ -220,7 +220,7 @@
 
 /obj/structure/table/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(tableclimber)
+	if(tableclimber && tableclimber != user)
 		tableclimber.Weaken(2)
 		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You've been knocked off the table", "You see [tableclimber.name] get knocked off the table</span>")
 
@@ -312,16 +312,6 @@
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(isrobot(user))
-		return
-
-	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread()
-		SS.set_up(5, 0, src.loc)
-		SS.start()
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		user.visible_message("<span class='notice'>The [src.name] was sliced apart by [user]!</span>")
-		table_destroy(1)
 		return
 
 	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;

@@ -9,7 +9,7 @@
 	maxHealth = 30
 	health = 30
 	see_in_dark = 3
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/killertomato
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/killertomato
 	meat_amount = 1
 	response_help  = "prods"
 	response_disarm = "pushes aside"
@@ -17,16 +17,10 @@
 	melee_damage_lower = 8
 	melee_damage_upper = 12
 	attacktext = "slams"
+	attack_sound = 'sound/weapons/punch1.ogg'
 	ventcrawler = 2
 	faction = list("plants")
 
-	min_oxy = 5
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 5
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 150
 	maxbodytemp = 500

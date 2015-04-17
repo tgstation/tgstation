@@ -17,7 +17,7 @@ datum/reagents
 
 datum/reagents/New(maximum=100)
 	maximum_volume = maximum
-
+	SSobj.processing |= src
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
 		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -50,6 +50,16 @@ datum/reagents/New(maximum=100)
 					chemical_reactions_list[id] = list()
 				chemical_reactions_list[id] += D
 				break // Don't bother adding ourselves to other reagent ids, it is redundant.
+
+datum/reagents/Destroy()
+	..()
+	SSobj.processing.Remove(src)
+	for(var/datum/reagent/R in reagent_list)
+		qdel(R)
+	reagent_list.Cut()
+	reagent_list = null
+	if(my_atom && my_atom.reagents == src)
+		my_atom.reagents = null
 
 datum/reagents/proc/remove_any(var/amount=1)
 	var/total_transfered = 0
@@ -251,6 +261,11 @@ datum/reagents/proc/metabolize(var/mob/M)
 	last_tick++
 	update_total()
 
+datum/reagents/process()
+	for(var/datum/reagent/R in reagent_list)
+		R.on_tick()
+	return
+
 datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
 	for(var/datum/reagent/R in reagent_list)
 		R.on_move (A, Running)
@@ -356,19 +371,18 @@ datum/reagents/proc/isolate_reagent(var/reagent)
 			update_total()
 
 datum/reagents/proc/del_reagent(var/reagent)
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
-			reagent_list -= A
-			del(A)
+			if(istype(my_atom, /mob/living))
+				var/mob/living/M = my_atom
+				R.on_mob_delete(M)
+			qdel(R)
+			reagent_list -= R
 			update_total()
 			my_atom.on_reagent_change()
 			check_ignoreslow(my_atom)
 			check_gofast(my_atom)
 			check_goreallyfast(my_atom)
-			return 0
-
-
 	return 1
 
 datum/reagents/proc/check_ignoreslow(var/mob/M)
@@ -380,7 +394,7 @@ datum/reagents/proc/check_ignoreslow(var/mob/M)
 
 datum/reagents/proc/check_gofast(var/mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("hotline"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
@@ -532,12 +546,6 @@ datum/reagents/proc/remove_all_type(var/reagent_type, var/amount, var/strict = 0
 
 	return has_removed_reagent
 
-datum/reagents/proc/delete()
-	for(var/datum/reagent/R in reagent_list)
-		R.holder = null
-	if(my_atom)
-		my_atom.reagents = null
-
 			//two helper functions to preserve data across reactions (needed for xenoarch)
 datum/reagents/proc/get_data(var/reagent_id)
 	for(var/datum/reagent/D in reagent_list)
@@ -578,6 +586,6 @@ datum/reagents/proc/copy_data(var/datum/reagent/current_reagent)
 // Max vol is maximum volume of holder
 atom/proc/create_reagents(var/max_vol)
 	if(reagents)
-		reagents.delete()
+		qdel(reagents)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src

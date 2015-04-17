@@ -19,19 +19,18 @@
 	gender = NEUTER
 	health = 30
 	maxHealth = 30
-	heat_damage_per_tick = 0
-	cold_damage_per_tick = 0
 	unsuitable_atmos_damage = 0
 	wander = 0
 	speed = 0
 	ventcrawler = 2
+	density = 0
 	pass_flags = PASSTABLE | PASSMOB
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	languages = DRONE
-	mob_size = 0
+	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	staticOverlays = list()
 	var/staticChoice = "static"
@@ -94,8 +93,8 @@
 		pickVisualAppearence()
 
 
-/mob/living/simple_animal/drone/Die()
-	..()
+/mob/living/simple_animal/drone/death(gibbed)
+	..(gibbed)
 	drop_l_hand()
 	drop_r_hand()
 	if(internal_storage)
@@ -117,15 +116,6 @@
 
 	if(stat == DEAD)
 		user << "<span class='notice'>The drone's LED screen shows a BSOD, Blue screen of Death!</span>"
-
-
-/mob/living/simple_animal/drone/Move()
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull"
-		else
-			pullin.icon_state = "pull0"
-	..()
 
 
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
@@ -181,3 +171,9 @@
 					L -= I
 		if(cleared)
 			src << "--- [class] alarm in [A.name] has been cleared."
+
+/mob/living/simple_animal/drone/check_eye_prot()
+	return 2
+
+/mob/living/simple_animal/drone/handle_temperature_damage()
+	return

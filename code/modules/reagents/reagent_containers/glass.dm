@@ -80,13 +80,22 @@
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.	//gee thanks noize
+	//NINJACODE
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
+		return
+
+	else if(istype(target, /obj/effect/decal/cleanable)) //stops splashing while scooping up fluids
 		return
 
 	else if(reagents.total_volume)
 		user << "<span class='notice'>You splash the solution onto [target].</span>"
 		reagents.reaction(target, TOUCH)
-		reagents.clear_reagents()
+		if(istype(target, /turf/simulated/floor))
+			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/chem_pile(target)
+			reagents.trans_to(reagentdecal, volume)
+			reagentdecal.color = mix_color_from_reagents(reagentdecal.reagents.reagent_list)
+		else
+			reagents.clear_reagents()
 
 /obj/item/weapon/reagent_containers/glass/attackby(var/obj/item/I, mob/user as mob, params)
 	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
@@ -101,6 +110,17 @@
 				reagents.handle_reactions()
 			else
 				user << "<span class='warning'>[src] is already hotter than [I].</span>"
+
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
+		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
+		if(reagents)
+			if(reagents.total_volume >= reagents.maximum_volume)
+				user << "<span class='notice'>[src] is full.</span>"
+			else
+				user << "<span class='notice'>You break [E] in [src].</span>"
+				reagents.add_reagent("eggyolk", 5)
+				qdel(E)
+			return
 	..()
 
 

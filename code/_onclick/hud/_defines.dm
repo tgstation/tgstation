@@ -17,13 +17,6 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-//Upper left action buttons, displayed when you pick up an item that has this enabled.
-#define ui_action_slot1 "WEST  :6, NORTH-1:26"
-#define ui_action_slot2 "WEST+1:8, NORTH-1:26"
-#define ui_action_slot3 "WEST+2:10,NORTH-1:26"
-#define ui_action_slot4 "WEST+3:12,NORTH-1:26"
-#define ui_action_slot5 "WEST+4:14,NORTH-1:26"
-
 //Lower left, persistant menu
 #define ui_inventory "WEST:6,SOUTH:5"
 
@@ -54,6 +47,7 @@
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"	//borgs
 #define ui_borg_album "CENTER+4:21,SOUTH:5"		//borgs
 
+#define ui_monkey_head "CENTER-4:13,SOUTH:5"	//monkey
 #define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
 #define ui_monkey_back "CENTER-2:15,SOUTH:5"	//monkey
 

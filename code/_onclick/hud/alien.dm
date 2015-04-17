@@ -15,8 +15,10 @@
 	icon_state = "nightvision1"
 
 /obj/screen/alien/nightvision/Click()
-	var/mob/living/carbon/alien/humanoid/A = usr
-	A.nightvisiontoggle()
+	var/mob/living/carbon/alien/A = usr
+	var/obj/effect/proc_holder/alien/nightvisiontoggle/T = locate() in A.abilities
+	if(T)
+		T.fire(A)
 
 
 /datum/hud/proc/alien_hud()
@@ -106,7 +108,7 @@
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen_alien.dmi'
-	mymob.pullin.icon_state = "pull0"
+	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 
 //begin indicators

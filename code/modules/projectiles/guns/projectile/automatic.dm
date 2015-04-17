@@ -88,6 +88,9 @@
 	burst_size = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
+/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
+	pin = /obj/item/device/firing_pin
+
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
 	..()
 	update_icon()
@@ -107,7 +110,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "syndicate LMG"
-	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the reciever below the designation."
+	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = 5
@@ -174,6 +177,9 @@
 	burst_size = 3
 	fire_delay = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
+
+/obj/item/weapon/gun/projectile/automatic/m90/unrestricted
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/automatic/m90/New()
 	..()

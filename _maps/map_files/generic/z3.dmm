@@ -124,7 +124,7 @@
 "cE" = (/obj/structure/sign/securearea,/turf/simulated/wall/r_wall,/area/tcommsat/chamber)
 "cF" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cG" = (/obj/item/weapon/paper/crumpled,/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
-"cH" = (/obj/item/weapon/syntiflesh{name = "Cuban Pete-Meat"},/obj/item/weapon/spacecash,/turf/simulated/floor/engine,/area/tcommsat/chamber)
+"cH" = (/obj/item/weapon/syntiflesh{name = "Cuban Pete-Meat"},/obj/item/stack/spacecash,/turf/simulated/floor/engine,/area/tcommsat/chamber)
 "cI" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cJ" = (/obj/structure/table,/obj/item/weapon/storage/fancy/cigarettes,/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cK" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)

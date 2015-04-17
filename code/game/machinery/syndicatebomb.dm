@@ -6,7 +6,7 @@
 
 	anchored = 0
 	density = 0
-	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
+	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
 	var/datum/wires/syndicatebomb/wires = null
@@ -273,6 +273,14 @@
 
 /obj/item/weapon/bombcore/badmin/explosion/detonate()
 	explosion(get_turf(src),HeavyExplosion,MediumExplosion,LightExplosion, flame_range = Flames)
+
+/obj/item/weapon/bombcore/miniature
+	name = "small bomb core"
+	w_class = 2
+
+/obj/item/weapon/bombcore/miniature/detonate()
+	explosion(src.loc,1,2,4,flame_range = 2) //Identical to a minibomb
+	qdel(src)
 
 ///Syndicate Detonator (aka the big red button)///
 

@@ -1,5 +1,26 @@
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
+#define JANUARY		1
+#define FEBRUARY	2
+#define MARCH		3
+#define APRIL		4
+#define MAY			5
+#define JUNE		6
+#define JULY		7
+#define AUGUST		8
+#define SEPTEMBER	9
+#define OCTOBER		10
+#define NOVEMBER	11
+#define DECEMBER	12
+
+//Select holiday names -- If you test for a holiday in the code, make the holiday's name a define and test for that instead
+#define NEW_YEAR				"New Year"
+#define VALENTINES				"Valentine's Day"
+#define APRIL_FOOLS				"April Fool's Day"
+#define EASTER					"Easter"
+#define HALLOWEEN				"Halloween"
+#define CHRISTMAS				"Christmas"
+#define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
 #define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
@@ -75,6 +96,12 @@
 #define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
 //used by canUseTopic()
 
+//Sizes of mobs, used by mob/living/var/mob_size
+#define MOB_SIZE_TINY 0
+#define MOB_SIZE_SMALL 1
+#define MOB_SIZE_HUMAN 2
+#define MOB_SIZE_LARGE 3
+
 //singularity defines
 #define STAGE_ONE 1
 #define STAGE_TWO 3
@@ -108,3 +135,26 @@
 #define PEN_FONT "Verdana"
 #define CRAYON_FONT "Comic Sans MS"
 #define SIGNFONT "Times New Roman"
+
+
+//NPC DEFINES
+#define INTERACTING 2
+#define TRAVEL 4
+#define FIGHTING 8
+
+//TRAITS
+
+#define TRAIT_ROBUST 2
+#define TRAIT_UNROBUST 4
+#define TRAIT_SMART 8
+#define TRAIT_DUMB 16
+#define TRAIT_MEAN 32
+#define TRAIT_FRIENDLY 64
+#define TRAIT_THIEVING 128
+
+//defines
+#define MAX_RANGE_FIND 32
+#define MIN_RANGE_FIND 16
+#define FUZZY_CHANCE_HIGH 85
+#define FUZZY_CHANCE_LOW 50
+#define CHANCE_TALK 15

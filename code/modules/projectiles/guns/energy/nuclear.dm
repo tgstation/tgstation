@@ -13,7 +13,7 @@
 	update_icon()
 
 /obj/item/weapon/gun/energy/gun/hos
-	desc = "This is a modern recreation of the antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time, its also expensive."
+	desc = "This is a expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
 	item_state = null
 	force = 10
@@ -29,6 +29,7 @@
 	modifystate = 0
 	can_flashlight = 0
 	pin = null
+	can_charge = 0
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()
@@ -61,14 +62,14 @@
 				M << "<span class='danger'>Your gun feels pleasantly warm for a moment.</span>"
 			else
 				M << "<span class='danger'>You feel a warm sensation.</span>"
-			M.apply_effect(rand(3,120), IRRADIATE)
+			M.irradiate(rand(3,120))
 		lightfail = 1
 	else
 		for (var/mob/living/M in range(rand(1,4),src)) //Big failure, TIME FOR RADIATION BITCHES
 			if (src in M.contents)
 				M << "<span class='danger'>Your gun's reactor overloads!</span>"
 			M << "<span class='danger'>You feel a wave of heat wash over you.</span>"
-			M.apply_effect(300, IRRADIATE)
+			M.irradiate(300)
 		crit_fail = 1 //break the gun so it stops recharging
 		SSobj.processing.Remove(src)
 		update_icon()

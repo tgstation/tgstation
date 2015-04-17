@@ -1,5 +1,9 @@
 var/datum/subsystem/objects/SSobj
 
+/datum/proc/process()
+	SSobj.processing.Remove(src)
+	return 0
+
 /datum/subsystem/objects
 	name = "Objects"
 	priority = 12

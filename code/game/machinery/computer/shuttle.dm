@@ -87,12 +87,12 @@
 		return prob(60)
 
 	var/obj/structure/stool/bed/B = A
-	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	if (istype(A, /obj/structure/stool/bed) && (B.buckled_mob || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
 		return 0
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime))	//If your not laying down, or a small creature, no pass.
+		if(!M.lying && !ismonkey(M) && !isslime(M))	//If your not laying down, or a small creature, no pass.
 			return 0
 	return ..()
 
@@ -132,6 +132,9 @@
 	icon_state = "supply"
 	req_access = list(access_cargo)
 	circuit = /obj/item/weapon/circuitboard/supplycomp
+	verb_say = "flashes"
+	verb_ask = "flashes"
+	verb_exclaim = "flashes"
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/hacked = 0
@@ -150,6 +153,9 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
 	circuit = /obj/item/weapon/circuitboard/ordercomp
+	verb_say = "flashes"
+	verb_ask = "flashes"
+	verb_exclaim = "flashes"
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/last_viewed_group = "categories"

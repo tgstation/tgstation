@@ -181,7 +181,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.update_icon()
-						Console.luminosity = 1
+						Console.SetLuminosity(1)
 				newmessagepriority = 0
 				update_icon()
 				var/messageComposite = ""
@@ -317,7 +317,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 							else		// Normal priority
 								Console.createmessage(src, "Message from [department]", sending, 1, 1)
 						screen = 6
-						Console.luminosity = 2
+						Console.SetLuminosity(2)
 
 				switch(priority)
 					if(2)
@@ -369,12 +369,12 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 
-/obj/machinery/say_quote(var/text)
-	var/ending = copytext(text, length(text) - 2)
+/obj/machinery/say_quote(var/input, list/spans)
+	var/ending = copytext(input, length(input) - 2)
 	if (ending == "!!!")
-		return "blares, \"[text]\""
+		return "blares, \"attach_spans(input, spans)\""
 
-	return "beeps, \"[text]\""
+	return ..()
 
 /obj/machinery/requests_console/proc/createmessage(source, title, message, priority, paper)
 	var/linkedsender
@@ -431,7 +431,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(src.loc)
 				slip.info = "<b>From:</b> [unlinkedsender]<BR>[message]"
 				slip.name = "Message - [unlinkedsender]"
-	src.luminosity = 2
+	SetLuminosity(2)
 
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob, params)
 	if (istype(O, /obj/item/weapon/crowbar))

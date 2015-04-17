@@ -1,24 +1,3 @@
-#define INTERACTING 2
-#define TRAVEL 4
-#define FIGHTING 8
-
-//TRAITS
-
-#define TRAIT_ROBUST 2
-#define TRAIT_UNROBUST 4
-#define TRAIT_SMART 8
-#define TRAIT_DUMB 16
-#define TRAIT_MEAN 32
-#define TRAIT_FRIENDLY 64
-#define TRAIT_THIEVING 128
-
-//defines
-#define MAX_RANGE_FIND 32
-#define MIN_RANGE_FIND 16
-#define FUZZY_CHANCE_HIGH 85
-#define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 15
-
 /*
 	NPC VAR EXPLANATIONS (for modules and other things)
 
@@ -69,6 +48,7 @@
 	var/obj/item/other_hand
 	var/TRAITS = 0
 	var/datum/job/myjob
+	faction = list("station")
 	//trait vars
 	var/robustness = 50
 	var/smartness = 50
@@ -79,6 +59,31 @@
 	//modules
 	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter")
 
+//botPool funcs
+/mob/living/carbon/human/interactive/proc/takeDelegate(var/mob/living/carbon/human/interactive/from,var/doReset=TRUE)
+	eye_color = "red"
+	if(from == src)
+		return FALSE
+	TARGET = from.TARGET
+	LAST_TARGET = from.LAST_TARGET
+	retal = from.retal
+	retal_target = from.retal_target
+	doing = from.doing
+	//
+	timeout = 0
+	inactivity_period = 0
+	interest = 100
+	//
+	if(doReset)
+		from.TARGET = null
+		from.LAST_TARGET = null
+		from.retal = 0
+		from.retal_target = null
+		from.doing = 0
+	return TRUE
+
+//end pool funcs
+
 /mob/living/carbon/human/interactive/proc/random()
 	//this is here because this has no client/prefs/brain whatever.
 	underwear = random_underwear(gender)
@@ -87,7 +92,7 @@
 	facial_hair_style = random_facial_hair_style(gender)
 	hair_color = random_short_color()
 	facial_hair_color = hair_color
-	eye_color = random_eye_color()
+	eye_color = "blue"
 	age = rand(AGE_MIN,AGE_MAX)
 	ready_dna(src,random_blood_type())
 	//job handling
@@ -105,6 +110,12 @@
 	..()
 	retal = 1
 	retal_target = user
+
+/mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
+	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
+	if(potentialAssault)
+		attacked_by(P,potentialAssault)
+	..()
 
 /mob/living/carbon/human/interactive/New()
 	..()
@@ -131,31 +142,31 @@
 	zone_sel.selecting = "chest"
 	if(prob(10)) //my x is augmented
 		//arms
-		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
-			del(R)
+			qdel(R)
 			organs += new /obj/item/organ/limb/robot/r_arm
 		else
 			var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in organs
-			del(L)
+			qdel(L)
 			organs += new /obj/item/organ/limb/robot/l_arm
 		//legs
-		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
-			del(R)
+			qdel(R)
 			organs += new /obj/item/organ/limb/robot/r_leg
 		else
 			var/obj/item/organ/limb/l_leg/L = locate(/obj/item/organ/limb/l_leg) in organs
-			del(L)
+			qdel(L)
 			organs += new /obj/item/organ/limb/robot/l_leg
 		//chest and head
-		if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs
-			del(R)
+			qdel(R)
 			organs += new /obj/item/organ/limb/robot/chest
 		else
 			var/obj/item/organ/limb/head/L = locate(/obj/item/organ/limb/head) in organs
-			del(L)
+			qdel(L)
 			organs += new /obj/item/organ/limb/robot/head
 		for(var/obj/item/organ/limb/LIMB in organs)
 			LIMB.owner = src
@@ -184,6 +195,8 @@
 
 	if(TRAITS & TRAIT_THIEVING)
 		slyness = 75
+
+	SSbp.insertBot(src)
 
 
 /mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M as mob)
@@ -220,10 +233,10 @@
 		toReturn = "Excited"
 	return toReturn
 //END DEBUG
-/mob/living/carbon/human/interactive/proc/isnotfunc()
+/mob/living/carbon/human/interactive/proc/isnotfunc(var/checkDead = TRUE)
 	if(!canmove)
 		return 1
-	if(health <= 0)
+	if(health <= 0 && checkDead)
 		return 1
 	if(restrained())
 		return 1
@@ -273,6 +286,9 @@
 	else
 		unEquip(I,TRUE)
 	update_hands = 1
+	
+/mob/living/carbon/human/interactive/proc/targetRange(var/towhere)
+	return get_dist(get_turf(towhere), get_turf(src))
 
 /mob/living/carbon/human/interactive/Life()
 	..()
@@ -341,14 +357,14 @@
 				//---------TOOLS
 				if(istype(TARGET, /obj/item/weapon))
 					var/obj/item/weapon/W = TARGET
-					if(W.force >= best_force || prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+					if(W.force >= best_force || prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 						if(!l_hand || !r_hand)
 							take_to_slot(W)
 						else
 							insert_into_backpack()
 				//---------FASHION
 				if(istype(TARGET,/obj/item/clothing))
-					if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+					if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 						if(!l_hand || !r_hand)
 							var/obj/item/clothing/C = TARGET
 							take_to_slot(C)
@@ -395,15 +411,15 @@
 		if(nearby.len > 4)
 			//i'm crowded, time to leave
 			TARGET = pick(target_filter(orange(MAX_RANGE_FIND,src)))
-		else if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+		else if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			//chance to chase an item
 			TARGET = locate(/obj/item) in orange(MIN_RANGE_FIND,src)
-		else if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+		else if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 			//chance to leave
 			TARGET = locate(/obj/machinery/door) in orange(MIN_RANGE_FIND,src) // this is a sort of fix for the current pathing.
 		else
 			//else, target whatever, or go to our department
-			if(prob(rand(FUZZY_CHANCE_LOW,FUZZY_CHANCE_HIGH)))
+			if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 				TARGET = pick(target_filter(orange(MIN_RANGE_FIND,src)))
 			else
 				TARGET = pick(get_area_turfs(job2area(myjob)))
@@ -566,7 +582,7 @@
 	if((TARGET && (doing & FIGHTING)) || graytide) // this is a redundancy check
 		var/mob/living/M = TARGET
 		if(istype(M,/mob/living))
-			if(M in range(FUZZY_CHANCE_LOW,src))
+			if(targetRange(M) <= FUZZY_CHANCE_LOW)
 				if(M.health > 1)
 					if(main_hand)
 						if(main_hand.force != 0)
@@ -596,14 +612,14 @@
 										W.attack(TARGET,src)
 							sleep(1)
 					else
-						if(get_dist(src,TARGET) > 2)
+						if(targetRange(TARGET) > 2)
 							tryWalk(TARGET)
 						else
 							if(Adjacent(TARGET))
 								M.attack_hand(src)
 								sleep(1)
 				timeout++
-			else if(timeout >= 10 || M.health <= 1 || !(M in range(14,src)))
+			else if(timeout >= 10 || M.health <= 1 || !(targetRange(M) > 14))
 				doing = doing & ~FIGHTING
 				timeout = 0
 				TARGET = null
@@ -634,12 +650,14 @@
 	New()
 		TRAITS |= TRAIT_ROBUST
 		TRAITS |= TRAIT_MEAN
+		faction = list("bot_angry")
 		..()
 
 /mob/living/carbon/human/interactive/friendly
 	New()
 		TRAITS |= TRAIT_FRIENDLY
 		TRAITS |= TRAIT_UNROBUST
+		faction = list("bot_friendly")
 		..()
 
 /mob/living/carbon/human/interactive/greytide
@@ -648,16 +666,6 @@
 		TRAITS |= TRAIT_MEAN
 		TRAITS |= TRAIT_THIEVING
 		TRAITS |= TRAIT_DUMB
+		faction = list("bot_grey")
 		graytide = 1
 		..()
-
-#undef INTERACTING
-#undef TRAVEL
-#undef FIGHTING
-#undef TRAIT_ROBUST
-#undef TRAIT_UNROBUST
-#undef TRAIT_SMART
-#undef TRAIT_DUMB
-#undef TRAIT_MEAN
-#undef TRAIT_FRIENDLY
-#undef TRAIT_THIEVING

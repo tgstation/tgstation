@@ -74,3 +74,19 @@
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brain
+
+/datum/table_recipe/slimecake
+	name = "Slime cake"
+	reqs = list(
+		/obj/item/slime_extract = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/slimecake
+
+/datum/table_recipe/pumpkinspicecake
+	name = "Pumpkin spice cake"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = 2
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/pumpkinspice

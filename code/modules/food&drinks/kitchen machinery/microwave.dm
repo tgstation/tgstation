@@ -245,7 +245,7 @@
 		for(var/obj/item/weapon/reagent_containers/food/snacks/F in contents)
 			if(F.cooked_type)
 				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (get_turf(src))
-				F.initialize_cooked_food(S)
+				F.initialize_cooked_food(S, efficiency)
 			else
 				new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
 				if(dirty < 100)

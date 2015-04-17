@@ -2,12 +2,7 @@
 	name = "commander's closet"
 	desc = "Emergency Response Team equipment locker."
 	req_access = list(access_cent_captain)
-	icon_state = "capsecure1"
-	icon_closed = "capsecure"
-	icon_locked = "capsecure1"
-	icon_opened = "capsecureopen"
-	icon_broken = "capsecurebroken"
-	icon_off = "capsecureoff"
+	icon_state = "cap"
 
 /obj/structure/closet/secure_closet/ertCom/New()
 	..()
@@ -24,18 +19,12 @@
 		new /obj/item/ammo_box/a357(src)
 		new /obj/item/ammo_box/a357(src)
 		new /obj/item/weapon/gun/projectile/revolver/mateba(src)
-	return
 
 /obj/structure/closet/secure_closet/ertSec
 	name = "security closet"
 	desc = "Emergency Response Team equipment locker."
 	req_access = list(access_cent_specops)
-	icon_state = "hossecure1"
-	icon_closed = "hossecure"
-	icon_locked = "hossecure1"
-	icon_opened = "hossecureopen"
-	icon_broken = "hossecurebroken"
-	icon_off = "hossecureoff"
+	icon_state = "hos"
 
 /obj/structure/closet/secure_closet/ertSec/New()
 	..()
@@ -45,18 +34,12 @@
 	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/shield/riot/tele(src)
-	return
 
 /obj/structure/closet/secure_closet/ertMed
 	name = "medical closet"
 	desc = "Emergency Response Team equipment locker."
 	req_access = list(access_cent_medical)
-	icon_state = "cmosecure1"
-	icon_closed = "cmosecure"
-	icon_locked = "cmosecure1"
-	icon_opened = "cmosecureopen"
-	icon_broken = "cmosecurebroken"
-	icon_off = "cmosecureoff"
+	icon_state = "cmo"
 
 /obj/structure/closet/secure_closet/ertMed/New()
 	..()
@@ -66,20 +49,14 @@
 	new /obj/item/weapon/storage/firstaid/brute(src)
 	new /obj/item/weapon/storage/firstaid/regular(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/defibrillator/compact/combat(src)
+	new /obj/item/weapon/defibrillator/compact/combat/loaded(src)
 	new /obj/machinery/bot/medbot(src)
-	return
 
 /obj/structure/closet/secure_closet/ertEngi
 	name = "engineer closet"
 	desc = "Emergency Response Team equipment locker."
 	req_access = list(access_cent_storage)
-	icon_state = "securece1"
-	icon_closed = "securece"
-	icon_locked = "securece1"
-	icon_opened = "secureceopen"
-	icon_broken = "securecebroken"
-	icon_off = "secureceoff"
+	icon_state = "ce"
 
 /obj/structure/closet/secure_closet/ertEngi/New()
 	..()
@@ -92,4 +69,3 @@
 	new /obj/item/weapon/rcd_ammo/large(src)
 	new /obj/item/weapon/rcd_ammo/large(src)
 	new /obj/item/weapon/rcd_ammo/large(src)
-	return

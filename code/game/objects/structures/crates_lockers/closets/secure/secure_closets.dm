@@ -1,28 +1,46 @@
 /obj/structure/closet/secure_closet
 	name = "secure locker"
 	desc = "It's an immobile card-locked storage unit."
-	icon = 'icons/obj/closet.dmi'
-	icon_state = "secure1"
-	density = 1
-	opened = 0
 	locked = 1
-	icon_closed = "secure"
-	var/icon_locked = "secure1"
-	icon_opened = "secureopen"
-	var/icon_broken = "securebroken"
-	var/icon_off = "secureoff"
-	wall_mounted = 0 //never solid (You can always pass over it)
+	icon_state = "secure"
 	health = 200
+
+/obj/structure/closet/secure_closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
+	..()
+	if(!opened)
+		if(!broken)
+			if(locked)
+				overlays += "locked"
+			else
+				overlays += "unlocked"
+		else
+			overlays += "off"
+
+/obj/structure/closet/secure_closet/examine(mob/user)
+	..()
+	if(broken || opened || !ishuman(user))
+		return //Monkeys don't get a message, nor does anyone ief it's open or emagged
+	else
+		user << "<span class='notice'>Alt-click the locker to [locked ? "unlock" : "lock"] it.</span>"
+
+/obj/structure/closet/secure_closet/AltClick(var/mob/user)
+	..()
+	if(!in_range(src, user))
+		return
+	if(!ishuman(user))
+		user << "<span class='notice'>You have no idea how this thing is supposed to work.</span>"
+		return
+	if(user.stat || !user.canmove || user.restrained() || broken)
+		user << "<span class='notice'>You can't do that right now.</span>"
+		return
+	if(src.opened)
+		return
+	else
+		togglelock(user)
 
 /obj/structure/closet/secure_closet/can_open()
 	if(src.locked || src.welded)
 		return 0
-	return 1
-
-/obj/structure/closet/secure_closet/close()
-	..()
-	if(broken)
-		icon_state = src.icon_off
 	return 1
 
 /obj/structure/closet/secure_closet/emp_act(severity)
@@ -47,10 +65,7 @@
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.eye_blind )))
 				O << "<span class='notice'>[user] has [locked ? null : "un"]locked the locker.</span>"
-		if(src.locked)
-			src.icon_state = src.icon_locked
-		else
-			src.icon_state = src.icon_closed
+		update_icon()
 	else
 		user << "<span class='notice'>Access Denied</span>"
 
@@ -65,18 +80,6 @@
 	if(!src.opened && src.broken)
 		user << "<span class='notice'>The locker appears to be broken.</span>"
 		return
-	else if(istype(W, /obj/item/weapon/melee/energy/blade) && !broken)
-		broken = 1
-		locked = 0
-		desc = "It appears to be broken."
-		icon_state = icon_off
-		flick(icon_broken, src)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		visible_message("<span class='warning'>[user] has sliced the locker open with an energy blade!</span>", "You hear metal being sliced and sparks flying.")
 	else
 		..(W, user)
 
@@ -84,11 +87,14 @@
 	if(!broken)
 		broken = 1
 		locked = 0
-		desc = "It appears to be broken."
-		icon_state = icon_off
-		flick(icon_broken, src)
+		desc += "It appears to be broken."
+		update_icon()
+
 		for(var/mob/O in viewers(user, 3))
 			O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
+		overlays += "sparking"
+		spawn(4) //overlays don't support flick so we have to cheat
+		update_icon()
 
 /obj/structure/closet/secure_closet/relaymove(mob/user as mob)
 	if(user.stat || !isturf(src.loc))
@@ -112,35 +118,3 @@
 
 /obj/structure/closet/secure_closet/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
-
-/obj/structure/closet/secure_closet/verb/verb_togglelock()
-	set src in oview(1) // One square distance
-	set category = "Object"
-	set name = "Toggle Lock"
-
-	if(!usr.canmove || usr.stat || usr.restrained()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
-		return
-
-	if(get_dist(usr, src) != 1)
-		return
-
-	if(src.broken)
-		return
-
-	if (ishuman(usr))
-		if (!opened)
-			togglelock(usr)
-	else
-		usr << "<span class='warning'>This mob type can't use this verb.</span>"
-
-/obj/structure/closet/secure_closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
-	overlays.Cut()
-	if(!opened)
-		if(locked)
-			icon_state = icon_locked
-		else
-			icon_state = icon_closed
-		if(welded)
-			overlays += "welded"
-	else
-		icon_state = icon_opened

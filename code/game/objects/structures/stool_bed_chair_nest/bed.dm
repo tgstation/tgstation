@@ -59,10 +59,8 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	var/const/buckled_pixel_y_offset = 6 //Mobs buckled will have their pixel_y offset by this much
 
-
-/obj/structure/stool/bed/roller/post_buckle_mob(mob/M)
+/obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
 		density = 1
 		icon_state = "up"
@@ -70,9 +68,8 @@
 	else
 		density = 0
 		icon_state = "down"
-		M.pixel_y = initial(M.pixel_y)
-		if(M.lying)
-			M.pixel_y -= buckled_pixel_y_offset
+		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
+		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 
 
 /obj/item/roller

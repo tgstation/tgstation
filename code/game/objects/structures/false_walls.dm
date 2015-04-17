@@ -118,16 +118,15 @@
 	else
 		user << "<span class='warning'>You can't reach, close it first!</span>"
 
-	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter) || istype(W, /obj/item/weapon/melee/energy/blade))
+	if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		dismantle(user)
 
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if(!D.bcell.use(300))
-			user << "<span class='notice'>Your jackhammer doesn't have enough power to break through that wall.</span>"
-			D.update_charge()
+			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
 			return
-		D.update_charge()
+		D.update_icon()
 		D.playDigSound()
 		dismantle(user)
 
@@ -222,7 +221,7 @@
 		if(world.time > last_event+15)
 			active = 1
 			for(var/mob/living/L in range(3,src))
-				L.apply_effect(12,IRRADIATE,0)
+				L.irradiate(12)
 			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
 				T.radiate()
 			last_event = world.time

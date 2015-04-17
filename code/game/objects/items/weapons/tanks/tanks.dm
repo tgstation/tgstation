@@ -102,7 +102,7 @@
 <b>Tank</b><BR>
 <FONT color='blue'><b>Tank Pressure:</b> [air_contents.return_pressure()]</FONT><BR>
 <BR>
-<b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> [distribute_pressure] <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A><BR>
+<b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-5'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> [distribute_pressure] <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=5'>+</A><BR>
 <b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
 "}
 	user << browse(message, "window=tank;size=600x300")

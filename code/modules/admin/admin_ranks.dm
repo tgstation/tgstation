@@ -248,6 +248,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				admin_datums -= adm_ckey
 				D.disassociate()
 
+				updateranktodb(adm_ckey, "player")
 				message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 				log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
 				log_admin_rank_modification(adm_ckey, "Removed")
@@ -288,6 +289,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			var/client/C = directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
 
+			updateranktodb(adm_ckey, new_rank)
 			message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 			log_admin("[key_name(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 			log_admin_rank_modification(adm_ckey, new_rank)
@@ -319,3 +321,13 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			log_admin_permission_modification(adm_ckey, D.rank.rights)
 
 	edit_admin_permissions()
+
+/datum/admins/proc/updateranktodb(ckey,newrank)
+	establish_db_connection()
+	if (!dbcon.IsConnected())
+		return
+	var/sql_ckey = sanitizeSQL(ckey)
+	var/sql_admin_rank = sanitizeSQL(newrank)
+
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
+	query_update.Execute()

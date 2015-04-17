@@ -1,7 +1,8 @@
 //Foxxy
-/mob/living/simple_animal/fox
+/mob/living/simple_animal/pet/fox
 	name = "fox"
 	desc = "It's a fox. I wonder what it says?"
+	icon = 'icons/mob/pets.dmi'
 	icon_state = "fox"
 	icon_living = "fox"
 	icon_dead = "fox_dead"
@@ -12,12 +13,13 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
 
 //Captain fox
-/mob/living/simple_animal/fox/Renault
+/mob/living/simple_animal/pet/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
+	pcollar = /obj/item/clothing/tie/petcollar

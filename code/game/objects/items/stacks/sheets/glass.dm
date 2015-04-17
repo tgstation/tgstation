@@ -62,6 +62,7 @@
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 0
+	if(zero_amount())	return 0
 	var/title = "Sheet-Glass"
 	title += " ([src.get_amount()] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
@@ -111,8 +112,6 @@
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/fulltile( user.loc, 0 )
-			W.dir = SOUTHWEST
-			W.ini_dir = SOUTHWEST
 			W.anchored = 0
 			W.air_update_turf(1)
 			W.add_fingerprint(user)
@@ -212,8 +211,6 @@
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced/fulltile(user.loc, 1)
 			W.state = 0
-			W.dir = SOUTHWEST
-			W.ini_dir = SOUTHWEST
 			W.anchored = 0
 			W.add_fingerprint(user)
 			src.use(2)

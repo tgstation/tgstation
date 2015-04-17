@@ -124,6 +124,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
+	verb_say = "beeps"
+	verb_ask = "beeps"
+	verb_exclaim = "beeps"
 	var/isbroken = 0  //1 if someone banged it with something heavy
 	var/ispowered = 1 //starts powered, changes with power_change()
 	//var/list/datum/feed_channel/channel_list = list() //This list will contain the names of the feed channels. Each name will refer to a data region where the messages of the feed channels are stored.
@@ -860,7 +863,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			user << "You cannot interface with silicon photo uploading"	//gtfo pAIs
 
 		if(targetcam.aipictures.len == 0)
-			usr << "<span class='userdanger'>No images saved</span>"
+			usr << "<span class='boldannounce'>No images saved</span>"
 			return
 		for(var/datum/picture/t in targetcam.aipictures)
 			nametemp += t.fields["name"]
@@ -1082,6 +1085,3 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob, pa
 		say("Attention! Wanted issue distributed!")
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 75, 1)
 	return
-
-/obj/machinery/newscaster/say_quote(text)
-	return "beeps, \"[text]\""

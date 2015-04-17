@@ -9,6 +9,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/restart_timeout = 250				//delay when restarting server
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
+	var/force_ending = 0					//Round was ended by admin intervention
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -46,7 +47,7 @@ var/datum/subsystem/ticker/ticker
 	NEW_SS_GLOBAL(ticker)
 
 	login_music = pickweight(list('sound/ambience/title2.ogg' = 49, 'sound/ambience/title1.ogg' = 49, 'sound/ambience/clown.ogg' = 2)) // choose title music!
-	if(SSevent.holiday == "April Fool's Day")
+	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
 /datum/subsystem/ticker/Initialize()
@@ -91,7 +92,7 @@ var/datum/subsystem/ticker/ticker
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			if(!mode.explosion_in_progress && mode.check_finished())
+			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
 				auto_toggle_ooc(1) // Turn it on
 				declare_completion()
@@ -187,11 +188,13 @@ var/datum/subsystem/ticker/ticker
 
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
-	world << sound('sound/AI/welcome.ogg') // Skie
-	//Holiday Round-start stuff	~Carn
-	if(SSevent.holiday)
+	world << sound('sound/AI/welcome.ogg')
+
+	if(SSevent.holidays)
 		world << "<font color='blue'>and...</font>"
-		world << "<h4>Happy [SSevent.holiday] Everybody!</h4>"
+		for(var/holidayname in SSevent.holidays)
+			var/datum/holiday/holiday = SSevent.holidays[holidayname]
+			world << "<h4>[holiday.greet()]</h4>"
 
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
@@ -381,6 +384,8 @@ var/datum/subsystem/ticker/ticker
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
 			aiPlayer.show_laws(1)
+
+		world << "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "

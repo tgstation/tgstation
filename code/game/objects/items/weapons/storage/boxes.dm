@@ -39,12 +39,11 @@
 		return
 
 	//Close any open UI windows first
-	var/found = close_all()
-	if(!found)	//No user had any windows closed
-		return
+	close_all()
 
 	user << "<span class='notice'>You fold [src] flat.</span>"
 	var/obj/item/I = new foldable(get_turf(src))
+	user.drop_item()
 	user.put_in_hands(I)
 	user.update_inv_l_hand()
 	user.update_inv_r_hand()
@@ -350,7 +349,7 @@
 /obj/item/weapon/storage/box/monkeycubes
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/food.dmi'
 	icon_state = "monkeycubebox"
 	storage_slots = 7
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube)

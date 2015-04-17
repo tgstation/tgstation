@@ -171,6 +171,8 @@
 			if(out.amount >= 1)
 				inp.amount -= out.amount
 				unload_mineral(out)
+			if(inp.amount < 1)
+				stack_list -= text2path(href_list["release"])
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
 	if(href_list["plasteel"])
@@ -239,12 +241,13 @@
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   300),
 		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     400),
 		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                    500),
+		new /datum/data/mining_equipment("GAR mesons",			/obj/item/clothing/glasses/meson/gar,							   500),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  1200),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               1500),
-		new /datum/data/mining_equipment("Space Cash",    		/obj/item/weapon/spacecash/c1000,                    			  2000),
+		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  2000),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   500),
 		)
 
@@ -350,10 +353,8 @@
 			new /obj/item/weapon/stock_parts/cell/high(src.loc)
 		if("Kinetic Accelerator")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
-			new /obj/item/weapon/screwdriver(src.loc)
 		if("Resonator")
 			new /obj/item/weapon/resonator(src.loc)
-			new /obj/item/weapon/screwdriver(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
@@ -375,7 +376,7 @@
 /obj/item/weapon/mining_voucher
 	name = "mining voucher"
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
 	w_class = 1
 
@@ -407,7 +408,7 @@
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
 	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
@@ -467,7 +468,7 @@
 
 /obj/item/weapon/resonator
 	name = "resonator"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
@@ -480,36 +481,23 @@
 	var/fieldlimit = 3
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
+	var/turf/T = get_turf(target)
+	if(locate(/obj/effect/resonance) in T)
+		return
 	if(fieldsactive < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		new /obj/effect/resonance(get_turf(target), creator, burst_time)
+		new /obj/effect/resonance(T, creator, burst_time)
 		fieldsactive++
-		spawn(50)
+		spawn(burst_time)
 			fieldsactive--
 
 /obj/item/weapon/resonator/attack_self(mob/user as mob)
-	CreateResonance(src, user)
-	..()
-
-/obj/item/weapon/resonator/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if(burst_time == 50)
-			burst_time = 30
-			user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
-		else
-			burst_time = 50
-			user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
-
-	else if(istype(W, /obj/item/stack))
-		var/obj/item/stack/S = W
-
-		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
-			if(fieldlimit < 8)
-				fieldlimit++
-				user << "<span class='info'>You upgrade [src]'s field generator with diamonds.</span>"
-				S.use(1)
-			else
-				user << "<span class='info'>The [src.name]'s field generator is at the limit.</span>"
+	if(burst_time == 50)
+		burst_time = 30
+		user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
+	else
+		burst_time = 50
+		user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -568,7 +556,7 @@
 
 /**********************Mining drone**********************/
 
-/mob/living/simple_animal/hostile/mining_drone/
+/mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. A mining scanner can instruct it to drop loose ore. Field repairs can be done with a welder."
 	icon = 'icons/obj/aibots.dmi'
@@ -579,14 +567,7 @@
 	mouse_opacity = 1
 	faction = list("neutral")
 	a_intent = "harm"
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	wander = 0
 	idle_vision_range = 5
@@ -605,6 +586,7 @@
 	ranged_cooldown_cap = 3
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'sound/weapons/Gunshot4.ogg'
+	speak_emote = list("states")
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
 						  /obj/item/weapon/ore/bananium)
@@ -628,7 +610,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/mining_drone/Die()
+/mob/living/simple_animal/hostile/mining_drone/death()
 	..()
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
@@ -787,7 +769,7 @@
 		else
 			for(M in L)
 				var/turf/T = get_turf(M)
-				var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+				var/image/I = image('icons/turf/mining.dmi', loc = T, icon_state = M.scan_state, layer = 18)
 				C.images += I
 				spawn(30)
 					if(C)
@@ -815,7 +797,7 @@
 /obj/item/device/t_scanner/adv_mining_scanner/scan()
 	if(!cooldown)
 		cooldown = 1
-		spawn(60)
+		spawn(35)
 			cooldown = 0
 		var/turf/t = get_turf(src)
 		var/list/mobs = recursive_mob_check(t, 1,0,0)
@@ -832,7 +814,7 @@
 					var/client/C = user.client
 					for(M in L)
 						var/turf/T = get_turf(M)
-						var/image/I = image('icons/turf/walls.dmi', loc = T, icon_state = M.scan_state, layer = 18)
+						var/image/I = image('icons/turf/mining.dmi', loc = T, icon_state = M.scan_state, layer = 18)
 						C.images += I
 						spawn(30)
 							if(C)

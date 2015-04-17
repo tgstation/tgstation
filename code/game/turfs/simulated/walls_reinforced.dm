@@ -29,25 +29,19 @@
 		M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 
 /turf/simulated/wall/r_wall/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
-	if(istype(W, /obj/item/weapon/melee/energy/blade))
-		user << "<span class='notice'>This wall is too thick to slice through. You will need to find a different path.</span>"
-		return 1
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
+	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.powered)
+		if(!D.bcell.use(800))
+			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
 			return 1
-		user << "<span class='notice'>You begin to smash though the reinforced wall.</span>"
+		user << "<span class='notice'>You begin to smash though the [name].</span>"
 		if(do_after(user, 50))
 			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 				return 1
 			if( user.loc == T && user.get_active_hand() == W )
-				if(!D.bcell.use(800))
-					user << "<span class='notice'>Your jackhammer doesn't have enough power to break through that wall.</span>"
-					D.update_charge()
-					return 1
-				D.update_charge()
+				D.update_icon()
 				D.playDigSound()
-				user << "<span class='notice'>Your jackhammer smashes though the last of the reinforced plating.</span>"
+				visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
 				dismantle_wall()
 				return 1
 	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)
@@ -125,7 +119,7 @@
 							user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
 				return 1
 
-			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+			if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
 
 				user << "<span class='notice'>You begin slicing through the metal cover.</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -191,7 +185,7 @@
 							user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
 				return 1
 
-			if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+			if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
 
 				user << "<span class='notice'>You begin slicing through the support rods.</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)

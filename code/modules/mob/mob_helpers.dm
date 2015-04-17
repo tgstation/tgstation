@@ -31,7 +31,7 @@
 	return 0
 
 /proc/isslime(A)
-	if(istype(A, /mob/living/carbon/slime))
+	if(istype(A, /mob/living/simple_animal/slime))
 		return 1
 	return 0
 
@@ -46,7 +46,7 @@
 	return 0
 
 /proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/corgi))
+	if(istype(A, /mob/living/simple_animal/pet/corgi))
 		return 1
 	return 0
 
@@ -56,7 +56,7 @@
 	return 0
 
 /proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/cat))
+	if(istype(A, /mob/living/simple_animal/pet/cat))
 		return 1
 	return 0
 
@@ -286,7 +286,7 @@ proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 fo
 	return returntext
 
 
-/proc/ninjaspeak(n)
+/proc/ninjaspeak(n) //NINJACODE
 /*
 The difference with stutter is that this proc can stutter more than 1 letter
 The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
@@ -441,6 +441,9 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 					return 2
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
+					return 2
+			if("abductor")
+				if(M.mind in ticker.mode.abductors)
 					return 2
 		return 1
 	return 0

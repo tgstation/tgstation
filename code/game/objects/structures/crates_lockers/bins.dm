@@ -1,19 +1,14 @@
 /obj/structure/closet/crate/bin
 	desc = "A trash bin, place your trash here for the janitor to collect."
 	name = "trash bin"
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "largebins"
-	density = 1
+	icon_crate = "largebins"
 	anchored = 1
-	icon_opened = "largebinsopen"
-	icon_closed = "largebins"
 	sound_effect_open = 'sound/effects/bin_open.ogg'
 	sound_effect_close = 'sound/effects/bin_close.ogg'
 	var/animation = "animate_largebins"
 	var/redlight = "largebinr"
 	var/greenlight = "largebing"
 	var/orangelight = "largebino"
-
 
 /obj/structure/closet/crate/bin/New()
 	..()

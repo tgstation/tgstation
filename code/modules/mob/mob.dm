@@ -390,6 +390,8 @@ var/list/slot_equipment_priority = list( \
 
 		src.pulling = AM
 		AM.pulledby = src
+		if(pullin)
+			pullin.update_icon(src)
 		if(ismob(AM))
 			var/mob/M = AM
 			if(!iscarbon(src))
@@ -405,6 +407,8 @@ var/list/slot_equipment_priority = list( \
 	if(pulling)
 		pulling.pulledby = null
 		pulling = null
+		if(pullin)
+			pullin.update_icon(src)
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -727,6 +731,8 @@ var/list/slot_equipment_priority = list( \
 		else
 			statpanel(listed_turf.name, null, listed_turf)
 			for(var/atom/A in listed_turf)
+				if(!A.mouse_opacity)
+					continue
 				if(A.invisibility > see_invisible)
 					continue
 				statpanel(listed_turf.name, null, A)
@@ -767,7 +773,7 @@ var/list/slot_equipment_priority = list( \
 
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
-//Robots and brains have their own version so don't worry about them
+//Robots, animals and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
@@ -784,11 +790,14 @@ var/list/slot_equipment_priority = list( \
 			fall(ko)
 	canmove = !(ko || resting || stunned || buckled)
 	density = !lying
+	if(lying)
+		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
+			layer = MOB_LAYER - 0.2 //so mob lying always appear behind standing mobs
+	else
+		if(layer == MOB_LAYER - 0.2)
+			layer = initial(layer)
 	update_transform()
 	lying_prev = lying
-	if(update_icon) //forces a full overlay update
-		update_icon = 0
-		regenerate_icons()
 	return canmove
 
 
@@ -836,9 +845,6 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/activate_hand(var/selhand)
 	return
-
-/mob/proc/SpeciesCanConsume()
-	return 0
 
 /mob/proc/Jitter(amount)
 	jitteriness = max(jitteriness,amount,0)
@@ -945,4 +951,17 @@ var/list/slot_equipment_priority = list( \
 	return
 
 /mob/proc/setEarDamage()
+	return
+
+/mob/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+	mob_spell_list += spell
+	if(!spell.action)
+		spell.action = new/datum/action/spell_action
+		spell.action.target = spell
+		spell.action.name = spell.name
+		spell.action.button_icon = spell.action_icon
+		spell.action.button_icon_state = spell.action_icon_state
+		spell.action.background_icon_state = spell.action_background_icon_state
+	if(isliving(src))
+		spell.action.Grant(src)
 	return

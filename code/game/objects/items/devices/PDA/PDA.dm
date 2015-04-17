@@ -27,7 +27,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
 	var/last_text //No text spamming
-	var/last_honk //Also no honk spamming that's bad too
+	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
@@ -195,6 +195,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/ai
 	icon_state = "NONE"
 	ttone = "data"
+	fon = 0
 	mode = 5
 	noreturn = 1
 	detonate = 0
@@ -223,6 +224,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/New()
 	..()
+	if(fon)
+		if(!isturf(loc))
+			loc.AddLuminosity(f_lum)
+			SetLuminosity(0)
+		else
+			SetLuminosity(f_lum)
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
@@ -301,6 +308,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if (cartridge)
 					if (cartridge.access_clown)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png> Honk Synthesizer</a></li>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=Trombone'><img src=pda_honk.png> Sad Trombone</a></li>"
 					if (cartridge.access_manifest)
 						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 					if(cartridge.access_status_display)
@@ -310,7 +318,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>"
-						if(istype(cartridge.radio, /obj/item/radio/integrated/floorbot))
+						if(cartridge.access_floorbots)
 							dat += "<li><a href='byond://?src=\ref[src];choice=51'><img src=pda_floorbot.png> Floorbot Access</a></li>"
 						dat += "</ul>"
 					if (cartridge.access_medical)
@@ -318,7 +326,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=44'><img src=pda_medical.png> Medical Records</a></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=Medical Scan'><img src=pda_scanner.png> [scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
-					if(istype(cartridge.radio, /obj/item/radio/integrated/medbot))
+					if(cartridge.access_medbots)
 						dat += "<li><a href='byond://?src=\ref[src];choice=52'><img src=pda_medbot.png> Medibot Access</a></li>"
 						dat += "</ul>"
 					else
@@ -327,7 +335,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"
-					if(istype(cartridge.radio, /obj/item/radio/integrated/beepsky))
+					if(cartridge.access_secbots)
 						dat += "<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>"
 						dat += "</ul>"
 					else	dat += "</ul>"
@@ -342,10 +350,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<h4>Utilities</h4>"
 				dat += "<ul>"
 				if (cartridge)
+					if(cartridge.access_multibots)
+						dat += "<li><a href='byond://?src=\ref[src];choice=54'><img src=pda_medbot.png> Bots Access</a></li>"
 					if (cartridge.access_janitor)
 						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
-						if(istype(cartridge.radio, /obj/item/radio/integrated/cleanbot))
-							dat += "<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_cleanbot.png> Cleanbot Access</a></li>"
+					if(cartridge.access_cleanbots)
+						dat += "<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_cleanbot.png> Cleanbot Access</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
 					if (cartridge.access_newscaster)
@@ -557,9 +567,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else if((!isnull(cartridge)) && (cartridge.access_engine))
 					scanmode = 4
 			if("Honk")
-				if ( !(last_honk && world.time < last_honk + 20) )
+				if ( !(last_noise && world.time < last_noise + 20) )
 					playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
-					last_honk = world.time
+					last_noise = world.time
+			if("Trombone")
+				if ( !(last_noise && world.time < last_noise + 20) )
+					playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1)
+					last_noise = world.time
 			if("Gas Scan")
 				if(scanmode == 5)
 					scanmode = 0
@@ -809,15 +823,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					t = Gibberish(t, signal.data["compression"] + 50)
 
 	if(useMS && useTC) // only send the message if it's stable
-		if(useTC != 2) // Does our recepient have a broadcaster on their level?
-			U << "ERROR: Cannot reach recepient."
+		if(useTC != 2) // Does our recipient have a broadcaster on their level?
+			U << "ERROR: Cannot reach recipient."
 			return
 		useMS.send_pda_message("[P.owner]","[owner]","[t]")
 
 		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
 		for(var/mob/M in player_list)
-			if(isobserver(M) && M.client && (M.client.prefs.toggles & CHAT_GHOSTPDA))
+			if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
 
 		if (!P.silent)

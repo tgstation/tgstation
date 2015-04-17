@@ -16,7 +16,7 @@
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.
 	unacidable = 1 //and no deleting hoomans inside
-	layer = MOB_LAYER //icon draw layer
+	layer = MOB_LAYER - 0.2//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
 	var/can_move = 1
@@ -236,9 +236,9 @@ obj/mecha/proc/can_use(mob/user)
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(speaker == occupant && radio.broadcasting)
-		radio.talk_into(speaker, text)
+		radio.talk_into(speaker, text, , spans)
 	return
 
 ////////////////////////////
@@ -947,7 +947,7 @@ obj/mecha/proc/can_use(mob/user)
 		user << "<span class='warning'>Access denied.</span>"
 		src.log_append_to_last("Permission denied.")
 		return
-	for(var/mob/living/carbon/slime/S in range(1,user))
+	for(var/mob/living/simple_animal/slime/S in range(1,user))
 		if(S.Victim == user)
 			user << "You're too busy getting your life sucked out of you."
 			return

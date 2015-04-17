@@ -44,8 +44,7 @@
 
 				var/list/flashers = list()
 				for(var/mob/living/carbon/human/M in viewers(TO, null))
-					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash) // flash dose faggots
+					if(M.flash_eyes())
 						flashers += M
 
 				var/y_distance = TO.y - FROM.y
@@ -55,8 +54,8 @@
 					if(A.anchored) continue
 
 					var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
-					if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-						A.loc = locate(A.x + x_distance, A.y + y_distance, TO.z)
+					if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
+						A.loc = newloc
 
 					spawn()
 						if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect

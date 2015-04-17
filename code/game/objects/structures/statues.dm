@@ -44,7 +44,7 @@
 									 "<span class='notice'>You have secured the [name]'s bolts!</span>")
 				anchored = 1
 
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user,30))
@@ -57,9 +57,9 @@
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if(!D.bcell.use(D.drillcost))
-			D.update_charge()
+			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
 			return
-		D.update_charge()
+		D.update_icon()
 		if(!src.loc)
 			return
 		user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \
@@ -180,7 +180,7 @@
 		if(world.time > last_event+15)
 			active = 1
 			for(var/mob/living/L in range(3,src))
-				L.apply_effect(12,IRRADIATE,0)
+				L.irradiate(12)
 			last_event = world.time
 			active = null
 			return

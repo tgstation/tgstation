@@ -25,16 +25,6 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	radio_frequency = SEC_FREQ //Security channel
 	bot_type = SEC_BOT
-	bot_filter = RADIO_SECBOT
-
-	//List of weapons that secbots will not arrest for
-	var/safe_weapons = list(\
-		/obj/item/weapon/gun/energy/laser/bluetag,\
-		/obj/item/weapon/gun/energy/laser/redtag,\
-		/obj/item/weapon/gun/energy/laser/practice,\
-		/obj/item/weapon/melee/classic_baton/telescopic,\
-		/obj/item/weapon/gun/energy/kinetic_accelerator)
-
 
 /obj/machinery/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
@@ -67,7 +57,6 @@
 		var/datum/job/detective/J = new/datum/job/detective
 		botcard.access = J.get_access()
 		prev_access = botcard.access
-		add_to_beacons(bot_filter)
 
 
 /obj/machinery/bot/secbot/turn_on()
@@ -188,6 +177,17 @@ Auto Patrol: []"},
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = 0
 		icon_state = "secbot[on]"
+
+/obj/machinery/bot/secbot/bullet_act(var/obj/item/projectile/Proj)
+	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
+			if (!Proj.nodamage && Proj.damage < src.health)
+				threatlevel = Proj.firer.assess_threat(src)
+				threatlevel += 6
+				if(threatlevel >= 4)
+					target = Proj.firer
+					mode = BOT_HUNT
+	..()
 
 /obj/machinery/bot/secbot/bot_process()
 	if (!..())
@@ -350,15 +350,14 @@ Auto Patrol: []"},
 		else
 			continue
 /obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
-	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
-		if(!(slot_item.type in safe_weapons))
-			return 1
+	if(slot_item && slot_item.needs_permit)
+		return 1
 	return 0
 
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
-	visible_message("<span class='userdanger'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
@@ -392,7 +391,14 @@ Auto Patrol: []"},
 		..()
 		return
 
-	if(type != /obj/item/clothing/head/helmet) //Eh, but we don't want people making secbots out of space helmets.
+	if(type != /obj/item/clothing/head/helmet/sec) //Eh, but we don't want people making secbots out of space helmets.
+		return
+
+	if(!helmetCam) //I am so sorry for this. I could not think of a less terrible (and lazy) way.
+		user << "[src] needs to have a camera attached first."
+		return
+	if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
+		user << "The mounted flashlight is in the way, remove it first."
 		return
 
 	if(S.secured)
@@ -458,7 +464,7 @@ Auto Patrol: []"},
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(!build_step)
 			new /obj/item/device/assembly/signaler(get_turf(src))
-			new /obj/item/clothing/head/helmet(get_turf(src))
+			new /obj/item/clothing/head/helmet/sec(get_turf(src))
 			user << "<span class='notice'>You disconnect the signaler from the helmet.</span>"
 			qdel(src)
 

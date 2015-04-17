@@ -57,7 +57,7 @@
 			H.updatehealth()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target
-		visible_message("<span class='userdanger'>SPLAT!</span>")
+		visible_message("<span class='boldannounce'>SPLAT!</span>")
 		M.splat()
 	playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 	armed = 0
@@ -104,8 +104,10 @@
 				triggered(H)
 				H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 								  "<span class='warning'>You accidentally step on [src]</span>")
-		else if(ismouse(AM))
-			triggered(AM)
+		else if(isanimal(AM))
+			var/mob/living/simple_animal/SA = AM
+			if(!SA.flying)
+				triggered(AM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
 			triggered(AM)
 	..()

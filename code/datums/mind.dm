@@ -80,6 +80,7 @@
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
 	transfer_antag_huds(new_character)					//inherit the antag HUDs from this mind (TODO: move this to a possible antag datum)
+	transfer_actions(new_character)
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
@@ -448,6 +449,25 @@
 
 	sections["traitor"] = text
 
+	/** SHADOWLING **/
+	text = "shadowling"
+	if(ticker.mode.config_tag == "shadowling")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(src in ticker.mode.shadows)
+		text += "<b>SHADOWLING</b>|thrall|<a href='?src=\ref[src];shadowling=clear'>human</a>"
+	else if(src in ticker.mode.thralls)
+		text += "shadowling|<b>THRALL</b>|<a href='?src=\ref[src];shadowling=clear'>human</a>"
+	else
+		text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
+
+	if(current && current.client && current.client.prefs.be_special & BE_SHADOWLING)
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+
+	sections["shadowling"] = text
+
 	/** MONKEY ***/
 	if (istype(current, /mob/living/carbon))
 		text = "monkey"
@@ -592,7 +612,7 @@
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type) return
 
 		var/datum/objective/new_objective = null
@@ -650,6 +670,10 @@
 
 			if ("survive")
 				new_objective = new /datum/objective/survive
+				new_objective.owner = src
+
+			if("martyr")
+				new_objective = new /datum/objective/martyr
 				new_objective.owner = src
 
 			if ("nuclear")
@@ -724,14 +748,14 @@
 		switch(href_list["revolution"])
 			if("clear")
 				remove_rev()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary!</FONT></span>"
+				current << "<span class='userdanger'>You have been brainwashed! You are no longer a revolutionary!</span>"
 				message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
 				log_admin("[key_name(usr)] has de-rev'ed [current].")
 			if("rev")
 				if(src in ticker.mode.head_revolutionaries)
 					ticker.mode.head_revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					current << "<span class='userdanger'><FONT size = 3>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</FONT></span>"
+					current << "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>"
 				else if(!(src in ticker.mode.revolutionaries))
 					current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
 				else
@@ -746,9 +770,9 @@
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					current << "<span class='userdanger'><FONT size = 3>You have proved your devotion to revoltion! Yea are a head revolutionary now!</FONT></span>"
+					current << "<span class='userdanger'>You have proved your devotion to revoltion! Yea are a head revolutionary now!</span>"
 				else if(!(src in ticker.mode.head_revolutionaries))
-					current << "<span class='userdanger'><FONT size = 3>You are a member of the revolutionaries' leadership now!</FONT></span>"
+					current << "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>"
 				else
 					return
 				if (ticker.mode.head_revolutionaries.len>0)
@@ -874,7 +898,7 @@
 		switch(href_list["cult"])
 			if("clear")
 				remove_cultist()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a cultist!</FONT></span>"
+				current << "<span class='userdanger'>You have been brainwashed! You are no longer a cultist!</span>"
 				message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
 				log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
@@ -908,14 +932,14 @@
 		switch(href_list["wizard"])
 			if("clear")
 				remove_wizard()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a wizard!</FONT></span>"
+				current << "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>"
 				log_admin("[key_name(usr)] has de-wizard'ed [current].")
 			if("wizard")
 				if(!(src in ticker.mode.wizards))
 					ticker.mode.wizards += src
 					special_role = "Wizard"
 					//ticker.mode.learn_basic_spells(current)
-					current << "<span class='userdanger'>You are the Space Wizard!</span>"
+					current << "<span class='boldannounce'>You are the Space Wizard!</span>"
 					message_admins("[key_name_admin(usr)] has wizard'ed [current].")
 					log_admin("[key_name(usr)] has wizard'ed [current].")
 			if("lair")
@@ -932,7 +956,7 @@
 		switch(href_list["changeling"])
 			if("clear")
 				remove_changeling()
-				current << "<span class='userdanger'><FONT size = 3>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</FONT></span>"
+				current << "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>"
 				message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 				log_admin("[key_name(usr)] has de-changeling'ed [current].")
 			if("changeling")
@@ -940,7 +964,7 @@
 					ticker.mode.changelings += src
 					current.make_changeling()
 					special_role = "Changeling"
-					current << "<span class='userdanger'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>"
+					current << "<span class='boldannounce'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>"
 					message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 					log_admin("[key_name(usr)] has changeling'ed [current].")
 			if("autoobjectives")
@@ -961,7 +985,7 @@
 		switch(href_list["nuclear"])
 			if("clear")
 				remove_nukeop()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a syndicate operative!</FONT></span>"
+				current << "<span class='userdanger'>You have been brainwashed! You are no longer a syndicate operative!</span>"
 				message_admins("[key_name_admin(usr)] has de-nuke op'ed [current].")
 				log_admin("[key_name(usr)] has de-nuke op'ed [current].")
 			if("nuclear")
@@ -1011,7 +1035,7 @@
 		switch(href_list["traitor"])
 			if("clear")
 				remove_traitor()
-				current << "<span class='userdanger'><FONT size = 3>You have been brainwashed! You are no longer a traitor!</FONT></span>"
+				current << "<span class='userdanger'>You have been brainwashed! You are no longer a traitor!</span>"
 				message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
 
@@ -1019,7 +1043,7 @@
 				if(!(src in ticker.mode.traitors))
 					ticker.mode.traitors += src
 					special_role = "traitor"
-					current << "<span class='userdanger'>You are a traitor!</span>"
+					current << "<span class='boldannounce'>You are a traitor!</span>"
 					message_admins("[key_name_admin(usr)] has traitor'ed [current].")
 					log_admin("[key_name(usr)] has traitor'ed [current].")
 					if(isAI(current))
@@ -1030,6 +1054,49 @@
 			if("autoobjectives")
 				ticker.mode.forge_traitor_objectives(src)
 				usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
+
+	else if(href_list["shadowling"])
+		switch(href_list["shadowling"])
+			if("clear")
+				ticker.mode.update_shadow_icons_removed(src)
+				src.spell_list = null
+				if(src in ticker.mode.shadows)
+					ticker.mode.shadows -= src
+					special_role = null
+					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
+					src.spell_list = null
+					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
+					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
+					current.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
+					current.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
+				else if(src in ticker.mode.thralls)
+					ticker.mode.thralls -= src
+					special_role = null
+					current << "<span class='userdanger'>You have been brainwashed! You are no longer a thrall!</span>"
+					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
+					log_admin("[key_name(usr)] has de-thrall'ed [current].")
+			if("shadowling")
+				if(!ishuman(current))
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+				ticker.mode.shadows += src
+				special_role = "shadowling"
+				current << "<span class='deadsay'><b>You notice a brightening around you. No, it isn't that. The shadows grow, darken, swirl. The darkness has a new welcome for you, and you realize with a \
+				start that you can't be human. No, you are a shadowling, a harbringer of the shadows! Your alien abilities have been unlocked from within, and you may both commune with your allies and use \
+				a chrysalis to reveal your true form. You are to ascend at all costs.</b></span>"
+				ticker.mode.finalize_shadowling(src)
+				ticker.mode.update_shadow_icons_added(src)
+			if("thrall")
+				if(!ishuman(current))
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+				ticker.mode.add_thrall(src)
+				special_role = "thrall"
+				current << "<span class='deadsay'>All at once it becomes clear to you. Where others see darkness, you see an ally. You realize that the shadows are not dead and dark as one would think, but \
+				living, and breathing, and <b>eating</b>. Their children, the Shadowlings, are to be obeyed and protected at all costs.</span>"
+				current << "<span class='danger'>You may use the Hivemind Commune ability to communicate with your fellow enlightened ones.</span>"
+				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
+				log_admin("[key_name(usr)] has thrall'ed [current].")
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
@@ -1083,7 +1150,7 @@
 		switch(href_list["silicon"])
 			if("unmalf")
 				remove_malf()
-				current << "<span class='userdanger'><FONT size = 3>You have been patched! You are no longer malfunctioning!</FONT></span>"
+				current << "<span class='userdanger'>You have been patched! You are no longer malfunctioning!</span>"
 				message_admins("[key_name_admin(usr)] has de-malf'ed [current].")
 				log_admin("[key_name(usr)] has de-malf'ed [current].")
 
@@ -1306,6 +1373,37 @@
 	ticker.mode.greet_gang(src)
 	ticker.mode.equip_gang(current)
 
+
+
+/datum/mind/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+	spell_list += spell
+	if(!spell.action)
+		spell.action = new/datum/action/spell_action
+		spell.action.target = spell
+		spell.action.name = spell.name
+		spell.action.button_icon = spell.action_icon
+		spell.action.button_icon_state = spell.action_icon_state
+		spell.action.background_icon_state = spell.action_background_icon_state
+	spell.action.Grant(current)
+	return
+/datum/mind/proc/transfer_actions(var/mob/living/new_character)
+	if(current && current.actions)
+		for(var/datum/action/A in current.actions)
+			A.Grant(new_character)
+	transfer_mindbound_actions(new_character)
+
+/datum/mind/proc/transfer_mindbound_actions(var/mob/living/new_character)
+	for(var/obj/effect/proc_holder/spell/spell in spell_list)
+		if(!spell.action) // Unlikely but whatever
+			spell.action = new/datum/action/spell_action
+			spell.action.target = spell
+			spell.action.name = spell.name
+			spell.action.button_icon = spell.action_icon
+			spell.action.button_icon_state = spell.action_icon_state
+			spell.action.background_icon_state = spell.action_background_icon_state
+		spell.action.Grant(new_character)
+	return
+
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
@@ -1334,7 +1432,7 @@
 	..()
 
 //slime
-/mob/living/carbon/slime/mind_initialize()
+/mob/living/simple_animal/slime/mind_initialize()
 	..()
 	mind.special_role = "slime"
 	mind.assigned_role = "slime"
@@ -1392,7 +1490,7 @@
 	mind.assigned_role = "Animal"
 	mind.special_role = "Animal"
 
-/mob/living/simple_animal/corgi/mind_initialize()
+/mob/living/simple_animal/pet/corgi/mind_initialize()
 	..()
 	mind.assigned_role = "Corgi"
 	mind.special_role = "Corgi"

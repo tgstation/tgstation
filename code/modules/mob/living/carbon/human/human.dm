@@ -73,8 +73,36 @@
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
-		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
-			stat("Energy Charge", round(wear_suit:cell:charge/100))
+
+
+	//NINJACODE
+	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.
+		var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
+		if(statpanel("SpiderOS"))
+			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
+			stat("Current Time:", "[worldtime2text()]")
+			if(SN.s_initialized)
+				//Suit gear
+				stat("Energy Charge:", "[round(SN.cell.charge/100)]%")
+				stat("Smoke Bombs:", "\Roman [SN.s_bombs]")
+				//Ninja status
+				if(dna)
+					stat("Fingerprints:", "[md5(dna.uni_identity)]")
+					stat("Unique Identity:", "[dna.unique_enzymes]")
+				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
+				stat("Nutrition Status:", "[nutrition]")
+				stat("Oxygen Loss:", "[getOxyLoss()]")
+				stat("Toxin Levels:", "[getToxLoss()]")
+				stat("Burn Severity:", "[getFireLoss()]")
+				stat("Brute Trauma:", "[getBruteLoss()]")
+				stat("Radiation Levels:","[radiation] rad")
+				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
+
+				//Virsuses
+				if(viruses.len)
+					stat("Viruses:", null)
+					for(var/datum/disease/D in viruses)
+						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
 
 /mob/living/carbon/human/ex_act(severity, ex_target)
@@ -235,6 +263,8 @@
 	if(istype(MB))
 		MB.RunOver(src)
 
+	spreadFire(AM)
+
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
 /mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, var/safety = 0)
 	if(!safety)
@@ -251,11 +281,11 @@
 			var/obj/item/organ/limb/L = locate(href_list["embedded_limb"])
 			if(!I || !L || I.loc != src) //no item, no limb, or item is not in limb (the person atleast) anymore
 				return
-			var/time_taken = 30*I.w_class
+			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
 			usr.visible_message("<span class='notice'>[usr] attempts to remove [I] from their [L.getDisplayName()]!</span>","<span class='notice'>You attempt to remove [I] from your [L.getDisplayName()], it will take [time_taken/10] seconds.</span>")
 			if(do_after(usr, time_taken, needhand = 1))
 				L.embedded_objects -= I
-				L.take_damage(8*I.w_class)//It hurts to rip it out, get surgery you dingus.
+				L.take_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.loc = get_turf(src)
 				usr.put_in_hands(I)
 				usr.emote("scream")
@@ -494,15 +524,6 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return !(src.stat || src.weakened || src.stunned || src.restrained())
 
-/mob/living/carbon/human/proc/play_xylophone()
-	if(!src.xylophone)
-		visible_message("<span class='notice'>[src] begins playing \his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","You hear a spooky xylophone melody.")
-		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
-		playsound(loc, song, 50, 1, -1)
-		xylophone = 1
-		spawn(1200)
-			xylophone = 0
-
 /mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
@@ -644,18 +665,15 @@
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
-	apply_effect(current_size * 3, IRRADIATE)
+	irradiate(current_size * 3)
 	if(mob_negates_gravity())
 		return
 	..()
 
 
-
-/mob/living/carbon/human/help_shake_act(mob/living/carbon/human/M)
+/mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
 	if(!istype(M))
 		return
-
-	var/mob/living/carbon/human/H = src
 
 	if(health >= 0)
 		if(src == M)
@@ -663,7 +681,7 @@
 				"<span class='notice'>[src] examines \himself.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
-			for(var/obj/item/organ/limb/org in H.organs)
+			for(var/obj/item/organ/limb/org in organs)
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
@@ -693,24 +711,50 @@
 				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
 
 				for(var/obj/item/I in org.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[H];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
+					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
 
-			if(H.blood_max)
+			if(blood_max)
 				src << "<span class='danger'>You are bleeding!</span>"
 			if(staminaloss)
 				if(staminaloss > 30)
 					src << "<span class='info'>You're completely exhausted.</span>"
 				else
 					src << "<span class='info'>You feel fatigued.</span>"
-			if(dna && dna.species.id && dna.species.id == "skeleton" && !H.w_uniform && !H.wear_suit)
-				H.play_xylophone()
 		else
-			if(H.wear_suit)
-				H.wear_suit.add_fingerprint(M)
-			else if(H.w_uniform)
-				H.w_uniform.add_fingerprint(M)
+			if(wear_suit)
+				wear_suit.add_fingerprint(M)
+			else if(w_uniform)
+				w_uniform.add_fingerprint(M)
 
 			..()
+
+
+/mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
+	if(C.stat == DEAD)
+		src << "<span class='warning'>[C.name] is dead!</span>"
+		return
+	if(is_mouth_covered())
+		src << "<span class='notice'>Remove your mask!</span>"
+		return 0
+	if(C.is_mouth_covered())
+		src << "<span class='notice'>Remove their mask!</span>"
+		return 0
+
+	if(C.cpr_time < world.time + 30)
+		add_logs(src, C, "CPRed")
+		visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
+						"<span class='notice'>You try to perform CPR on [C.name]. Hold still!</span>")
+		if(!do_mob(src, C))
+			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
+			return 0
+
+		if(C.health <= config.health_threshold_crit)
+			C.cpr_time = world.time
+			var/suff = min(C.getOxyLoss(), 7)
+			C.adjustOxyLoss(-suff)
+			C.updatehealth()
+			visible_message("<span class='notice'>[src] performs CPR on [C.name]!</span>")
+			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
 
 
 /mob/living/carbon/human/generateStaticOverlay()
@@ -726,4 +770,9 @@
 	staticOverlay.override = 1
 	staticOverlays["letter"] = staticOverlay
 
-
+/mob/living/carbon/human/cuff_resist(obj/item/I)
+	if(dna && dna.check_mutation(HULK))
+		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		..(I, cuff_break = 1)
+	else
+		..()

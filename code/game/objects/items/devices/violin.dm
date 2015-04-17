@@ -19,6 +19,10 @@
 	song = null
 	..()
 
+/obj/item/device/violin/initialize()
+	song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
+	..()
+
 /obj/item/device/violin/attack_self(mob/user as mob)
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='danger'>You don't have the dexterity to do this!</span>"

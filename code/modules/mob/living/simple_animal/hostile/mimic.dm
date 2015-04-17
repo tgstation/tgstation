@@ -20,17 +20,11 @@
 	melee_damage_lower = 8
 	melee_damage_upper = 12
 	attacktext = "attacks"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/weapons/punch1.ogg'
 	var/Attackemote = "growls at"
+	speak_emote = list("creaks")
 
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
 	faction = list("mimic")
@@ -41,9 +35,10 @@
 	if(.)
 		emote("me", 1, "[Attackemote] [.].")
 
-/mob/living/simple_animal/hostile/mimic/Die()
-	..()
-	visible_message("<span class='danger'><b>[src]</b> stops moving!</span>")
+/mob/living/simple_animal/hostile/mimic/death()
+	..(1)
+	visible_message("<span class='danger'>[src] stops moving!</span>")
+	ghostize()
 	qdel(src)
 
 
@@ -57,6 +52,7 @@
 /mob/living/simple_animal/hostile/mimic/crate
 
 	attacktext = "bites"
+	speak_emote = list("clatters")
 
 	stop_automated_movement = 1
 	wander = 0
@@ -107,7 +103,7 @@
 	..()
 	icon_state = initial(icon_state)
 
-/mob/living/simple_animal/hostile/mimic/crate/Die()
+/mob/living/simple_animal/hostile/mimic/crate/death()
 
 	var/obj/structure/closet/crate/C = new(get_turf(src))
 	// Put loot in crate
@@ -144,9 +140,9 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
-		Die()
+		death()
 
-/mob/living/simple_animal/hostile/mimic/copy/Die()
+/mob/living/simple_animal/hostile/mimic/copy/death()
 
 	for(var/atom/movable/M in src)
 		M.loc = get_turf(src)

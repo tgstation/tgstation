@@ -1,18 +1,10 @@
 /mob/living/simple_animal/hostile/asteroid/
 	vision_range = 2
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("mining")
 	environment_smash = 2
 	minbodytemp = 0
-	heat_damage_per_tick = 20
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
@@ -20,6 +12,8 @@
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -72,6 +66,7 @@
 	melee_damage_upper = 12
 	attacktext = "bites into"
 	a_intent = "harm"
+	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
@@ -108,12 +103,12 @@
 		if(3.0)
 			adjustBruteLoss(110)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/Die()
+/mob/living/simple_animal/hostile/asteroid/basilisk/death(gibbed)
 	var/counter
 	for(counter=0, counter<2, counter++)
 		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
 		D.layer = 4.1
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
@@ -135,7 +130,9 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "barrels into"
+	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "help"
+	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
 	search_objects = 1
@@ -204,10 +201,10 @@
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/Die()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/death(gibbed)
 	alerted = 0
 	Reward()
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(var/damage)
 	idle_vision_range = 9
@@ -235,6 +232,8 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "lashes out at"
+	speak_emote = list("telepathically cries")
+	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
 	ranged_cooldown_cap = 0
@@ -253,15 +252,15 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/Die()
+/mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	new /obj/item/asteroid/hivelord_core(src.loc)
 	mouse_opacity = 1
-	..()
+	..(gibbed)
 
 /obj/item/asteroid/hivelord_core
 	name = "hivelord remains"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/food.dmi'
 	icon_state = "boiledrorocore"
 	var/inert = 0
 
@@ -309,6 +308,8 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 2
 	attacktext = "slashes"
+	speak_emote = list("telepathically cries")
+	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	environment_smash = 0
 	pass_flags = PASSTABLE
@@ -318,7 +319,7 @@
 	spawn(100)
 		qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/Die()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
@@ -337,6 +338,7 @@
 	ranged_cooldown = 2 //By default, start the Goliath with his cooldown off so that people can run away quickly on first sight
 	ranged_cooldown_cap = 8
 	friendly = "wails at"
+	speak_emote = list("bellows")
 	vision_range = 4
 	speed = 3
 	maxHealth = 300
@@ -345,11 +347,12 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "pulverizes"
+	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	anchored = 1 //Stays anchored until death as to be unpullable
-	mob_size = 2
+	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
@@ -367,9 +370,9 @@
 	anchored = 1
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Die()
+/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	anchored = 0
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
@@ -434,15 +437,15 @@
 		spawn(50)
 			qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Die()
+/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
 	G.layer = 4.1
-	..()
+	..(gibbed)
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
 	w_class = 3
@@ -463,8 +466,11 @@
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/D = target
 			var/list/damage_absorption = D.damage_absorption
-			if(damage_absorption.["brute"] > 0.3)
-				damage_absorption.["brute"] = max(damage_absorption.["brute"] - 0.1, 0.3)
+			if(damage_absorption["brute"] > 0.3)
+				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
+				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
+				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
+				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				qdel(src)
 				if(D.icon_state == "ripley-open")
@@ -481,3 +487,9 @@
 			else
 				user << "<span class='info'>You can't improve [D] any further.</span>"
 				return
+
+/mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
+	if(bodytemperature < minbodytemp)
+		adjustBruteLoss(2)
+	else if(bodytemperature > maxbodytemp)
+		adjustBruteLoss(20)

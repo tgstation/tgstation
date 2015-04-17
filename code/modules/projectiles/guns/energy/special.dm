@@ -123,43 +123,11 @@
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/emproof"
+	needs_permit = 0 // Aparently these are safe to carry? I'm sure Golliaths would disagree.
 	var/overheat = 0
+	var/overheat_time = 16
 	var/recent_reload = 1
-	var/range_add = 0
-	var/overheat_time = 20
-	upgrades = list("diamond" = 0, "screwdriver" = 0, "plasma" = 0)
-
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/newshot()
-	..()
-	if(chambered && chambered.BB)
-		var/obj/item/projectile/kinetic/charge = chambered.BB
-		charge.range += range_add
-
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/weapon/screwdriver) && upgrades["screwdriver"] < 3)
-		upgrades["screwdriver"]++
-		overheat_time -= 1
-		user << "<span class='info'>You tweak [src]'s thermal exchanger.</span>"
-
-
-	else if(istype(W, /obj/item/stack))
-		var/obj/item/stack/S = W
-
-		if(istype(S, /obj/item/stack/sheet/mineral/diamond) && upgrades["diamond"] < 3)
-			upgrades["diamond"]++
-			overheat_time -= 3
-			user << "<span class='info'>You upgrade [src]'s thermal exchanger with diamonds.</span>"
-			S.use(1)
-
-		if(istype(S, /obj/item/stack/sheet/mineral/plasma) && upgrades["plasma"] < 2)
-			upgrades["plasma"]++
-			range_add++
-			user << "<span class='info'>You upgrade [src]'s accelerating chamber with plasma.</span>"
-			if(prob(5 * (range_add + 1) * (range_add + 1)) && power_supply)
-				power_supply.rigged = 1 // This is dangerous!
-			S.use(1)
+	unique_rename = 1
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1
@@ -167,6 +135,7 @@
 		overheat = 0
 		recent_reload = 0
 	..()
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
@@ -192,6 +161,8 @@
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
+	unique_rename = 0
+	overheat_time = 20
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
@@ -203,6 +174,42 @@
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
+
+/obj/item/weapon/gun/energy/plasmacutter
+	name = "plasma cutter"
+	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	icon_state = "plasmacutter"
+	item_state = "plasmacutter"
+	modifystate = -1
+	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=2;engineering=1"
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
+	flags = CONDUCT | OPENCONTAINER
+	attack_verb = list("attacked", "slashed", "cut", "sliced")
+	can_charge = 0
+
+/obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
+	..()
+	if(power_supply)
+		user <<"<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>"
+
+/obj/item/weapon/gun/energy/plasmacutter/attackby(var/obj/item/A, var/mob/user)
+	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
+		var/obj/item/stack/sheet/S = A
+		S.use(1)
+		power_supply.give(1000)
+		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+	else if(istype(A, /obj/item/weapon/ore/plasma))
+		qdel(A)
+		power_supply.give(500)
+		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+	else
+		..()
+
+/obj/item/weapon/gun/energy/plasmacutter/adv
+	name = "advanced plasma cutter"
+	icon_state = "adv_plasmacutter"
+	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=3;engineering=2"
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
@@ -216,6 +223,7 @@
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	var/charge_tick = 0
 	var/recharge_time = 2.5
+	can_charge = 0
 
 /obj/item/weapon/gun/energy/disabler/cyborg/New()
 	..()

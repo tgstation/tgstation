@@ -40,7 +40,6 @@
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 	bot_type = MED_BOT
-	bot_filter = RADIO_MEDBOT
 
 /obj/machinery/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
@@ -50,6 +49,17 @@
 	treatment_brute = "omnizine"
 	treatment_fire = "omnizine"
 	treatment_tox = "omnizine"
+
+/obj/machinery/bot/medbot/derelict
+	name = "\improper Old Medibot"
+	desc = "Looks like it hasn't been modified since the late 2080s."
+	skin = "bezerk"
+	heal_threshold = 0
+	declare_crit = 0
+	treatment_oxy = "pancuronium"
+	treatment_brute = "pancuronium"
+	treatment_fire = "sodium_thiopental"
+	treatment_tox = "sodium_thiopental"
 
 /obj/item/weapon/firstaid_arm_assembly
 	name = "incomplete medibot assembly."
@@ -93,7 +103,6 @@
 		else
 			botcard.access = botcard_access
 		prev_access = botcard.access
-		add_to_beacons(bot_filter)
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()
@@ -112,6 +121,12 @@
 	oldloc = null
 	last_found = world.time
 	declare_cooldown = 0
+
+/obj/machinery/bot/medbot/proc/soft_reset() //Allows the medibot to still actively perform its medical duties without being completely halted as a hard reset does.
+	path = list()
+	patient = null
+	mode = BOT_IDLE
+	last_found = world.time
 
 /obj/machinery/bot/medbot/set_custom_texts()
 
@@ -260,7 +275,7 @@
 	if (H.stat == 2)
 		return
 
-	if ((H == oldpatient) && (world.time < last_found + 100))
+	if ((H == oldpatient) && (world.time < last_found + 200))
 		return
 
 	if(assess_patient(H))
@@ -295,10 +310,7 @@
 
 	if(frustration > 8)
 		oldpatient = patient
-		patient = null
-		mode = BOT_IDLE
-		last_found = world.time
-		path = list()
+		soft_reset()
 
 	if(!patient)
 		if(!shut_up && prob(1))
@@ -323,21 +335,19 @@
 		last_found = world.time
 
 	else if(stationary_mode && patient) //Since we cannot move in this mode, ignore the patient and wait for another.
-		patient = null
-		mode = BOT_IDLE
-		last_found = world.time
+		soft_reset()
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		spawn(0)
-			path = get_path_to(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
+		path = get_path_to(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
+		mode = BOT_MOVING
+		if(!path.len) //Do not chase a patient we cannot reach.
+			soft_reset()
 
 	if(path.len > 0 && patient)
 		if(!bot_move(patient))
 			oldpatient = patient
-			patient = null
-			mode = BOT_IDLE
-			last_found = world.time
+			soft_reset()
 		return
 
 	if(path.len > 8 && patient)
@@ -479,7 +489,7 @@
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 						reagent_glass.reagents.trans_to(patient,injection_amount) //Inject from beaker instead.
-						reagent_glass.reagents.reaction(patient, 2)
+						reagent_glass.reagents.reaction(patient, INGEST)
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
 				C.visible_message("<span class='danger'>[src] injects [patient] with the syringe!</span>", \
@@ -500,7 +510,7 @@
 
 /obj/machinery/bot/medbot/explode()
 	on = 0
-	visible_message("<span class='userdanger'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)
