@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Removed species restrictions on Bomberman clothes, so Diona can be bombermen as well.
-  - bugfix: Bomberman clothes now protect Plasmamen from combusting.
