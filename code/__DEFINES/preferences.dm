@@ -42,4 +42,5 @@
 #define BE_GANG			4096
 #define BE_SHADOWLING	8192
 #define BE_ABDUCTOR		16384
-#define BE_NANO			32768
+#define BE_REVENANT		32768
+#define BE_NANO			65536
