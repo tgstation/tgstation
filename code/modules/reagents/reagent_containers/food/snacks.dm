@@ -3366,7 +3366,7 @@
 	name = "CORNY DOG"
 	desc = "This is just ridiculous."
 	icon_state = "cornydog"
-	trash = /obj/item/weapon/arrow/rod
+	trash = /obj/item/stack/rods  //no fun allowed
 	New()
 		..()
 		reagents.add_reagent("nutriment", 15)

@@ -1403,13 +1403,6 @@
 //LIVING PUDDI
 //This is a terrible idea.
 
-/datum/recipe/livingpuddi
-	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/gigapuddi,
-		/obj/item/slime_extract/grey
-		)
-	result = /mob/living/simple_animal/puddi
-
 /datum/recipe/livingpuddi/happy
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/gigapuddi/happy,
@@ -1423,6 +1416,14 @@
 		/obj/item/slime_extract/grey
 		)
 	result = /mob/living/simple_animal/puddi/anger
+
+/datum/recipe/livingpuddi
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/gigapuddi,
+		/obj/item/slime_extract/grey
+		)
+	result = /mob/living/simple_animal/puddi
+
 
 // END OF LIVING PUDDI SHIT THAT PROBABLY WON'T WORK
 
