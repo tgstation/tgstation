@@ -2,6 +2,7 @@
 	desc = "A trash bin, place your trash here for the janitor to collect."
 	name = "trash bin"
 	icon_crate = "largebins"
+	icon_state = "largebins"
 	anchored = 1
 	sound_effect_open = 'sound/effects/bin_open.ogg'
 	sound_effect_close = 'sound/effects/bin_close.ogg'

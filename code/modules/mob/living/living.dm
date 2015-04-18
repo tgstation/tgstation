@@ -672,9 +672,7 @@ Sorry Giacom. Please don't be mad :(
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
 	else if(!on && floating)
-		var/final_pixel_y = initial(pixel_y)
-		if(lying && !buckled)
-			final_pixel_y = lying_pixel_offset
+		var/final_pixel_y = get_standard_pixel_y_offset(lying)
 		animate(src, pixel_y = final_pixel_y, time = 10)
 		floating = 0
 
@@ -772,9 +770,7 @@ Sorry Giacom. Please don't be mad :(
 
 
 /mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = initial(pixel_y)
-	if(lying && !buckled)
-		final_pixel_y = lying_pixel_offset
+	var/final_pixel_y = get_standard_pixel_y_offset(lying)
 	..(A, final_pixel_y)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
@@ -782,11 +778,10 @@ Sorry Giacom. Please don't be mad :(
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	var/final_pixel_y = initial(pixel_y)
-	if(lying && !buckled)
-		final_pixel_y = lying_pixel_offset
+	var/final_pixel_x = get_standard_pixel_x_offset(lying)
+	var/final_pixel_y = get_standard_pixel_y_offset(lying)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
-	animate(pixel_x = initial(pixel_x) , pixel_y = final_pixel_y , time = 2)
+	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(var/datum/gas_mixture/environment)
@@ -814,3 +809,9 @@ Sorry Giacom. Please don't be mad :(
 		loc_temp = environment.temperature
 
 	return loc_temp
+
+/mob/living/proc/get_standard_pixel_x_offset(lying = 0)
+	return initial(pixel_x)
+
+/mob/living/proc/get_standard_pixel_y_offset(lying = 0)
+	return initial(pixel_y)
