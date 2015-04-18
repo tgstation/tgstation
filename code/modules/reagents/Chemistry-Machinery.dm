@@ -187,12 +187,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			var/num = input("Enter desired output amount", "Amount", useramount) as num
 			if (num)
 				amount = round(text2num(num), 5)
-				useramount = amount
 				custom = 1
 		else
 			custom = 0
 			amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
 		amount = Clamp(amount, 5, 100) // Since the user can actually type the commands himself, some sanity checking
+		if (custom)
+			useramount = amount
 
 	if(href_list["dispense"])
 		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
