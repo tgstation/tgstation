@@ -160,7 +160,8 @@ obj/item/proc/get_clamped_volume()
 
 
 	if(istype(M, /mob/living/carbon/human))
-		M:attacked_by(src, user, def_zone)
+		var/mob/living/carbon/human/H = M
+		H.attacked_by(src, user, def_zone)
 	else
 		switch(damtype)
 			if("brute")
@@ -168,7 +169,9 @@ obj/item/proc/get_clamped_volume()
 					M.adjustBrainLoss(power)
 
 				else
-
+					if(istype(M, /mob/living/carbon/monkey))
+						var/mob/living/carbon/monkey/K = M
+						power = K.defense(power,def_zone)
 					M.take_organ_damage(power)
 					if (prob(33) && src.force) // Added blood for whacking non-humans too
 						var/turf/location = M.loc
@@ -176,6 +179,9 @@ obj/item/proc/get_clamped_volume()
 							location:add_blood_floor(M)
 			if("fire")
 				if (!(M_RESIST_COLD in M.mutations))
+					if(istype(M, /mob/living/carbon/monkey))
+						var/mob/living/carbon/monkey/K
+						power = K.defense(power,def_zone)
 					M.take_organ_damage(0, power)
 					M << "Aargh it burns!"
 		M.updatehealth()

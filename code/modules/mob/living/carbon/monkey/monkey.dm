@@ -16,9 +16,11 @@
 
 	var/canWearClothes = 1
 	var/canWearHats = 1
+	var/canWearGlasses = 1
 
 	var/obj/item/clothing/monkeyclothes/uniform = null
 	var/obj/item/clothing/head/hat = null
+	var/obj/item/clothing/glasses/glasses = null
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/greaterform = "Human"                  // Used when humanizing a monkey.
@@ -138,11 +140,17 @@
 
 	if(canWearHats)
 		if(hat)
-			dat +=	"<br><b>Headwear:</b> [uniform] (<a href='?src=\ref[src];remove_inv=hat'>Remove</a>)"
+			dat +=	"<br><b>Headwear:</b> [hat] (<a href='?src=\ref[src];remove_inv=hat'>Remove</a>)"
 		else
 			dat +=	"<br><b>Headwear:</b> <a href='?src=\ref[src];add_inv=hat'><font color=grey>Empty</font></a>"
 
 	dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=mask'>		[(wear_mask && !(src.wear_mask.abstract))	? wear_mask	: "<font color=grey>Empty</font>"]</A>"
+
+	if(canWearGlasses)
+		if(glasses)
+			dat +=	"<br><b>Glasses:</b> [glasses] (<a href='?src=\ref[src];remove_inv=glasses'>Remove</a>)"
+		else
+			dat +=	"<br><b>Glasses:</b> <a href='?src=\ref[src];add_inv=glasses'><font color=grey>Empty</font></a>"
 
 	if(canWearClothes)
 		if(uniform)
@@ -213,6 +221,24 @@
 			uniform = null
 			regenerate_icons()
 
+/mob/living/carbon/monkey/proc/wearglasses(var/obj/item/clothing/glasses/G as obj)
+	if(G)
+		if(istype(G))
+			var/obj/item/clothing/glasses/oldglasses = null
+			if(glasses)
+				oldglasses = glasses
+				glasses = null
+			glasses = G
+			usr.drop_item(glasses, src)
+			regenerate_icons()
+			if (oldglasses)
+				usr.put_in_hands(oldglasses)
+	else
+		if(glasses)
+			usr.put_in_hands(glasses)
+			glasses = null
+			regenerate_icons()
+
 /mob/living/carbon/monkey/Topic(href, href_list)
 	..()
 	if (href_list["mach_close"])
@@ -252,6 +278,14 @@
 				else
 					usr << "<span class='warning'>He has no hat to remove</span>"
 					return
+			if("glasses")
+				if(glasses)
+					glasses.loc = src.loc
+					glasses = null
+					regenerate_icons()
+				else
+					usr << "<span class='warning'>He has no glasses to remove</span>"
+					return
 		show_inv(usr)
 	else if(href_list["add_inv"])
 		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
@@ -274,6 +308,12 @@
 					return
 				else
 					wearhat(usr.get_active_hand())
+			if("glasses")
+				if(glasses)
+					usr << "<span class='warning'>He's already wearing something.</span>"
+					return
+				else
+					wearglasses(usr.get_active_hand())
 		show_inv(usr)
 	..()
 	return
@@ -293,6 +333,16 @@
 
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
 
+/mob/living/carbon/monkey/getarmor(var/def_zone, var/type)
+
+	var/armorscore = 0
+	if((def_zone == "head") || (def_zone == "eyes") || (def_zone == "head"))
+		if(hat)
+			armorscore = hat.armor[type]
+	else
+		if(uniform)
+			armorscore = uniform.armor[type]
+	return armorscore
 
 /mob/living/carbon/monkey/attack_paw(mob/M as mob)
 	..()
@@ -315,6 +365,17 @@
 				for(var/mob/O in viewers(src, null))
 					O.show_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>", 1)
 	return
+
+
+/mob/living/carbon/monkey/proc/defense(var/power, var/def_zone)
+	var/armor = run_armor_check(def_zone, "melee", "Your armor has protected your [def_zone].", "Your armor has softened hit to your [def_zone].")
+	if(armor >= 2)	return 0
+	if(!power)	return 0
+
+	var/damage = power
+	if(armor)
+		damage = (damage/(armor+1))
+	return damage
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
 	if (!ticker)
@@ -355,7 +416,11 @@
 
 				playsound(loc, "punch", 25, 1, -1)
 				var/damage = rand(5, 10)
-				if (prob(40))
+				var/dam_zone = ""
+				if(M.zone_sel && M.zone_sel.selecting)
+					dam_zone = M.zone_sel.selecting
+				damage = defense(damage,dam_zone)
+				if ((damage > 5) && prob(40))
 					damage = rand(10, 15)
 					if (paralysis < 5)
 						Paralyse(rand(10, 15))

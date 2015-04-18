@@ -1,0 +1,9 @@
+author: Deity Link
+delete-after: true
+changes:
+  - imageadd: Improved tons of monkey hat sprites
+  - rscadd: Monkeys can now wear glasses (I spent quite some time making their sprites fit them, sadly they can't yet activate HUDs)
+  - rscadd: Added a Medical Doctor Monkey Uniform
+  - rscadd: Added a Monkey-Sized Space Suit (can currently only be spawned by admins)
+  - rscadd: Monkeys wearing this space suit and a space-worthy hat can survive in space (they also need a mask and some oxygen of course)
+  - bugfix: Fixed a bug that sometimes caused monkey in-hand sprites to not update when they drop an item.

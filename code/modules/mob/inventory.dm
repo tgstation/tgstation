@@ -167,16 +167,16 @@
 /mob/proc/u_equip(W as obj)
 	if (W == r_hand)
 		r_hand = null
-		update_inv_r_hand(0)
+		update_inv_r_hand()
 	else if (W == l_hand)
 		l_hand = null
-		update_inv_l_hand(0)
+		update_inv_l_hand()
 	else if (W == back)
 		back = null
-		update_inv_back(0)
+		update_inv_back()
 	else if (W == wear_mask)
 		wear_mask = null
-		update_inv_wear_mask(0)
+		update_inv_wear_mask()
 	return
 
 
