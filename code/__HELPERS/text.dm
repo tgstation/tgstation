@@ -49,7 +49,7 @@
 	var/opentag = 0
 	var/closetag = 0
 
-	while (TRUE)
+	while (length(input))
 		opentag = findtext(input, "<")
 		closetag = findtext(input, ">", opentag + 1)
 
