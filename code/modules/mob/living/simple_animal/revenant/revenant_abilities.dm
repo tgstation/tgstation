@@ -340,7 +340,7 @@
 	name = "Unlock: Hypnotize (15E)"
 	desc = "Causes a target to fall asleep."
 	panel = "Revenant Abilities (Locked)"
-	charge_max = 90
+	charge_max = 900
 	clothes_req = 0
 	range = 3
 	include_user = 1
@@ -354,7 +354,7 @@
 	if(locked && essence_check(15, 1))
 		user << "<span class='info'>You have unlocked Hypnotize!</span>"
 		charge_counter = charge_max
-		name = "Mind Blast (15E)"
+		name = "Hypnotize (15E)"
 		locked = 0
 		panel = "Revenant Abilities"
 		include_user = 0
@@ -367,7 +367,7 @@
 		return
 	for(var/mob/living/carbon/human/M in targets)
 		user << "<span class='info'>You gently influence [M]'s mind toward deep sleep.</span>"
-		M << "<span class='boldannounce'>Tired... <font size=1.5> so</font><font size=1> tired...</font></span>"
+		M << "<span class='boldannounce'>Tired... <font size=1.5> so tired...</font></span>"
 		M.drowsyness += 7
 		spawn(70)
 			M.sleeping += 12
