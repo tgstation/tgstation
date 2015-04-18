@@ -103,13 +103,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='alert'>Newscaster cannot be placed on this spot.</span>"
+		usr << "<span class='warning'>Newscaster cannot be placed on this spot!</span>"
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='alert'>Newscaster cannot be placed in this area.</span>"
+		usr << "<span class='warning'>Newscaster cannot be placed in this area!</span>"
 		return
 	for(var/obj/machinery/newscaster/T in loc)
-		usr << "<span class='alert'>There is another newscaster here.</span>"
+		usr << "<span class='warning'>There is another newscaster here!</span>"
 		return
 	var/obj/machinery/newscaster/N = new(loc)
 	N.pixel_y -= (loc.y - on_wall.y) * 32

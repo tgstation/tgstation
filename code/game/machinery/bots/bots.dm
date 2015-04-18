@@ -256,7 +256,7 @@
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
 				health = min(maxhealth, health+10)
-				user.visible_message("<span class='notice'>[user] repairs [src]!</span>","<span class='notice'>You repair [src].</span>")
+				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
 			else
 				user << "<span class='warning'>The welder must be on for this task!</span>"
 		else

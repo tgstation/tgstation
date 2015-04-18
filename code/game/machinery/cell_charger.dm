@@ -51,7 +51,7 @@
 			user.drop_item()
 			W.loc = src
 			charging = W
-			user.visible_message("<span class='notice'>[user] inserts a cell into the charger.</span>", "<span class='notice'>You insert a cell into the charger.</span>")
+			user.visible_message("[user] inserts a cell into the charger.", "<span class='notice'>You insert a cell into the charger.</span>")
 			chargelevel = -1
 			updateicon()
 	else if(istype(W, /obj/item/weapon/wrench))
@@ -76,7 +76,7 @@
 	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
 
-	user.visible_message("<span class='notice'>[user] removes the cell from the charger.</span>", "<span class='notice'>You remove the cell from the charger.</span>")
+	user.visible_message("[user] removes the cell from the charger.", "<span class='notice'>You remove the cell from the charger.</span>")
 
 	removecell()
 

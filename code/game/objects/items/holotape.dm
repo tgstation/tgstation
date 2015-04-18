@@ -113,8 +113,7 @@
 				P.icon_state = "[P.icon_base]_[dir]"
 			cur = get_step_towards(cur,end)
 
-		usr << "<span class='notice'>You finish project the length of [icon_base] holotape.</span>"
-		user.visible_message("[user] finishes projecting the length of [icon_base] holotape.")
+		user.visible_message("[user] finishes projecting the length of [icon_base] holotape.", "<span class='notice'>You finish projecting the length of [icon_base] holotape.</span>")
 
 		charging = 1
 		spawn(40)

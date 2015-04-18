@@ -640,7 +640,7 @@ About the new airlock wires panel:
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
-									"<span class='userdanger'>[user] headbutts the airlock!</span>")
+									"<span class='userdanger'>You headbutt the airlock!</span>")
 				var/obj/item/organ/limb/affecting = H.get_organ("head")
 				H.Stun(5)
 				H.Weaken(5)
@@ -890,7 +890,7 @@ About the new airlock wires panel:
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.remove_fuel(0,user))
 			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
-							"You begin [welded ? "unwelding":"welding"] the airlock...", \
+							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"You hear welding.")
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			if(do_after(user,40,5,1))

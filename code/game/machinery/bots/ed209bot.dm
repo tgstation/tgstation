@@ -267,7 +267,7 @@ Auto Patrol[]"},
 						var/area/location = get_area(src)
 						speak("[arrest_type ? "Detaining" : "Arresting"] level [threatlevel] scumbag <b>[target]</b> in [location].", radio_frequency)
 					target.visible_message("<span class='danger'>[src] has stunned [target]!</span>",\
-											"<span class='userdanger'>[src] has stunned [target]!</span></span>")
+											"<span class='userdanger'>[src] has stunned you!</span>")
 
 					mode = BOT_PREP_ARREST
 					anchored = 1
@@ -297,7 +297,7 @@ Auto Patrol[]"},
 						mode = BOT_ARREST
 						playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 						target.visible_message("<span class='danger'>[src] is trying to put zipties on [target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put zipties on [target]!</span>")
+											"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
 
 						spawn(60)
 							if( !Adjacent(target) || !isturf(target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.

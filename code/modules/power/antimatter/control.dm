@@ -142,14 +142,14 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		if(!anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			user.visible_message("<span class='warning'>[user.name] secures the [src.name] to the floor.</span>", \
+			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
 				"You hear a ratchet")
 			src.anchored = 1
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			user.visible_message("<span class='warning'>[user.name] unsecures the [src.name].</span>", \
+			user.visible_message("[user.name] unsecures the [src.name].", \
 				"Y<span class='notice'>ou remove the anchor bolts.</span>", \
 				"You hear a ratchet")
 			src.anchored = 0
@@ -168,7 +168,7 @@
 			user.client.screen -= W
 		user.unEquip(W)
 		user.update_icons()
-		user.visible_message("<span class='warning'>[user.name] loads an [W.name] into the [src.name].</span>", \
+		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"<span class='notice'>You load an [W.name].</span>", \
 				"You hear a thunk.")
 		return

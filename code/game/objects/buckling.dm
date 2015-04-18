@@ -74,12 +74,12 @@
 	if(buckle_mob(M))
 		if(M == user)
 			M.visible_message(\
-				"<span class='notice'>[M.name] buckles themselves to [src].</span>",\
+				"[M.name] buckles themselves to [src].",\
 				"<span class='notice'>You buckle yourself to [src].</span>",\
 				"<span class='notice'>You hear metal clanking.</span>")
 		else
 			M.visible_message(\
-				"<span class='danger'>[M.name] is buckled to [src] by [user.name]!</span>",\
+				"<span class='warning'>[M.name] is buckled to [src] by [user.name]!</span>",\
 				"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
 				"<span class='notice'>You heat metal clanking.</span>")
 
@@ -89,7 +89,7 @@
 	if(M)
 		if(M != user)
 			M.visible_message(\
-				"<span class='notice'>[M.name] was unbuckled by [user.name]!</span>",\
+				"[M.name] was unbuckled by [user.name].",\
 				"<span class='notice'>You were unbuckled from [src] by [user.name].</span>",\
 				"<span class='notice'>You hear metal clanking.</span>")
 		else

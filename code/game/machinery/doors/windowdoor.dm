@@ -213,8 +213,8 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-	user.visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", \
-				"<span class='userdanger'>[user] smashes against the [src.name].</span>")
+	user.visible_message("<span class='danger'>[user] smashes against the [src.name]!</span>", \
+				"<span class='userdanger'>You smash against the [src.name]!</span>")
 	take_damage(damage)
 
 /obj/machinery/door/window/attack_alien(mob/living/user as mob)

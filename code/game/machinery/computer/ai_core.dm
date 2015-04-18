@@ -198,7 +198,7 @@
 		A.transfer_ai("INACTIVE","AICARD",src,user)
 	if(istype(A, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src]...</span>", \
+		user.visible_message("[user] [anchored ? "fastens" : "unfastens"] [src].", \
 					 "<span class='notice'>You start to [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor...</span>")
 		switch(anchored)
 			if(0)

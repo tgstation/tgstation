@@ -94,7 +94,7 @@
 			user.Weaken(10)
 			user.burn_skin(shock_damage)
 			user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
-			"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
+			"<span class='userdanger'>You feel a powerful shock course through your body, sending you flying!</span>", \
 			"<span class='danger'>You hear a heavy electrical crack.</span>")
 
 		else if(issilicon(user))

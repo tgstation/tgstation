@@ -236,7 +236,7 @@
 		beaker = I
 		user.drop_item()
 		I.loc = src
-		user.visible_message("<span class='notice'>[user] places [I] in [src].</span>", \
+		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
 
 	if(!(on || occupant || state_open))

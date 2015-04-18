@@ -230,7 +230,7 @@
 	if(sawn_state == SAWN_SAWING)
 		return
 
-	user.visible_message("<span class='warning'>[user] begins to shorten \the [src].</span>", "<span class='notice'>You begin to shorten \the [src]...</span>")
+	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")
 
 	//if there's any live ammo inside the gun, makes it go off
 	if(blow_up(user))
@@ -240,7 +240,7 @@
 	sawn_state = SAWN_SAWING
 
 	if(do_after(user, 30))
-		user.visible_message("<span class='warning'>[user] shortens \the [src]!</span>", "<span class='notice'>You shorten \the [src].</span>")
+		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		icon_state = "[icon_state]-sawn"

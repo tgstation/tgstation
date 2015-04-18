@@ -82,7 +82,7 @@ field_generator power level display
 				user << "<span class='warning'>You are unable to turn off the [src.name] once it is online!</span>"
 				return 1
 			else
-				user.visible_message("<span class='warning'>[user.name] turns on the [src.name].</span>", \
+				user.visible_message("[user.name] turns on the [src.name].", \
 					"<span class='notice'>You turn on the [src.name].</span>", \
 					"You hear heavy droning")
 				turn_on()
@@ -96,21 +96,21 @@ field_generator power level display
 
 /obj/machinery/field/generator/attackby(obj/item/W, mob/user, params)
 	if(active)
-		user << "The [src] needs to be off."
+		user << "<span class='warning'>The [src] needs to be off!</span>"
 		return
 	else if(istype(W, /obj/item/weapon/wrench))
 		switch(state)
 			if(0 && !isinspace())
 				state = 1
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("<span class='warning'>[user.name] secures [src.name] to the floor.</span>", \
+				user.visible_message("[user.name] secures [src.name] to the floor.", \
 					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
 					"You hear ratchet")
 				src.anchored = 1
 			if(1)
 				state = 0
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("<span class='warning'>[user.name] unsecures [src.name] reinforcing bolts from the floor.</span>", \
+				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
 					"You hear ratchet")
 				src.anchored = 0
@@ -126,7 +126,7 @@ field_generator power level display
 			if(1)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("<span class='warning'>[user.name] starts to weld the [src.name] to the floor.</span>", \
+					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"You hear welding")
 					if (do_after(user,20))
@@ -138,7 +138,7 @@ field_generator power level display
 			if(2)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("<span class='warning'>[user.name] starts to cut the [src.name] free from the floor.</span>", \
+					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"You hear welding")
 					if (do_after(user,20))

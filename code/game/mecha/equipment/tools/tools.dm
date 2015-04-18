@@ -1056,7 +1056,7 @@
 		var/result = load_fuel(target)
 		var/message
 		if(isnull(result))
-			message = "<span class='danger'>[fuel] traces in target minimal. [target] cannot be used as fuel.</span>"
+			message = "<span class='warning'>[fuel] traces in target minimal! [target] cannot be used as fuel.</span>"
 		else if(!result)
 			message = "Unit is full."
 		else

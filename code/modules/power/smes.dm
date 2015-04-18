@@ -132,7 +132,7 @@
 
 			C.use(10)
 			user.visible_message(\
-				"<span class='warning'>[user.name] has build a power terminal!</span>",\
+				"[user.name] has built a power terminal.",\
 				"<span class='notice'>You build the power terminal.</span>")
 
 			//build the terminal and link it to the network

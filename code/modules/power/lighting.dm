@@ -36,7 +36,7 @@
 		return
 	var/turf/loc = get_turf(usr)
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='danger'>[src.name] cannot be placed on this spot.</span>"
+		usr << "<span class='warning'>[src.name] cannot be placed on this spot!</span>"
 		return
 	usr << "<span class='notice'>You begin attaching [src] to the wall...</span>"
 	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
@@ -54,7 +54,7 @@
 	newlight.fingerprintshidden = src.fingerprintshidden
 	newlight.fingerprintslast = src.fingerprintslast
 
-	usr.visible_message("<span class='warning'>[usr.name] attaches [src] to the wall.</span>", \
+	usr.visible_message("[usr.name] attaches [src] to the wall.", \
 		"<span class='notice'>You attach [src] to the wall.</span>")
 	qdel(src)
 
@@ -103,7 +103,7 @@
 			if (!do_after(usr, 30))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-			user.visible_message("<span class='warning'>[user.name] deconstructs [src].</span>", \
+			user.visible_message("[user.name] deconstructs [src].", \
 				"<span class='notice'>You deconstruct [src].</span>", "You hear a noise.")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
 			qdel(src)
@@ -124,7 +124,7 @@
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
 		new /obj/item/stack/cable_coil(get_turf(src.loc), 1, "red")
-		user.visible_message("<span class='warning'>[user.name] removes the wiring from [src].</span>", \
+		user.visible_message("[user.name] removes the wiring from [src].", \
 			"<span class='notice'>You remove the wiring from [src].</span>", "You hear a noise.")
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
@@ -153,7 +153,7 @@
 				if("bulb")
 					src.icon_state = "bulb-empty"
 			src.stage = 3
-			user.visible_message("<span class='warning'>[user.name] closes [src]'s casing.</span>", \
+			user.visible_message("[user.name] closes [src]'s casing.", \
 				"<span class='notice'>You close [src]'s casing.</span>", "You hear a noise.")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 
@@ -348,7 +348,7 @@
 			var/obj/item/weapon/light/L = W
 			if(istype(L, light_type))
 				status = L.status
-				user << "You insert the [L.name]."
+				user << "<span class='notice'>You insert the [L.name].</span>"
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness = L.brightness

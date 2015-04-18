@@ -153,19 +153,19 @@
 		return
 	src.add_fingerprint(user)
 	if(user == target)
-		user.visible_message("<span class='warning'>[user] starts climbing into [src].</span>", \
-								"<span class='notice'>[user] starts climbing into [src].</span>")
+		user.visible_message("[user] starts climbing into [src].", \
+								"<span class='notice'>You start climbing into [src]...</span>")
 	else
 		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
-								"<span class='userdanger'>[user] starts putting [target] into [src]!</span>")
+								"<span class='userdanger'>[user] starts putting you into [src]!</span>")
 	if(do_mob(user, target, 20))
 		if (target.client)
 			target.client.perspective = EYE_PERSPECTIVE
 			target.client.eye = src
 		target.loc = src
 		if(user == target)
-			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", \
-									"<span class='notice'>[user] climbs into [src].</span>")
+			user.visible_message("[user] climbs into [src].", \
+									"<span class='notice'>You climb into [src].</span>")
 		else
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", \
 									"<span class='userdanger'>[user] has placed [target] in [src].</span>")

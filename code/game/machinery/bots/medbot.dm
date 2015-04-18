@@ -482,7 +482,7 @@
 		return
 	else
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
-			"<span class='userdanger'>[src] is trying to inject [patient]!</span>")
+			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
 		spawn(30)
 			if ((get_dist(src, patient) <= 1) && (on))
@@ -492,8 +492,8 @@
 						reagent_glass.reagents.reaction(patient, INGEST)
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
-				C.visible_message("<span class='danger'>[src] injects [patient] with the syringe!</span>", \
-					"<span class='userdanger'>[src] injects [patient] with the syringe!</span>")
+				C.visible_message("<span class='danger'>[src] injects [patient] with its syringe!</span>", \
+					"<span class='userdanger'>[src] injects you with its syringe!</span>")
 				patient = null
 
 			mode = BOT_IDLE

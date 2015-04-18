@@ -804,7 +804,7 @@ table tr:first-child th:first-child { border: none;}
 		if(2)
 			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && (wires.wires_status == 27 || wires.wires_status == 31))   //this checks for all wires to be cut, except the syphon wire which is optional.
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "You cut the final wires."
+				user << "<span class='notice'>You cut the final wires.</span>"
 				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil( src.loc )
 				cable.amount = 5
 				buildstage = 1
@@ -814,7 +814,7 @@ table tr:first-child th:first-child { border: none;}
 			if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				panel_open = !panel_open
-				user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
+				user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
 				update_icon()
 				return
 
@@ -822,19 +822,19 @@ table tr:first-child th:first-child { border: none;}
 				return src.attack_hand(user)
 			else if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
-					user << "It does nothing"
+					user << "<span class='warning'>It does nothing!</span>"
 				else
 					if(src.allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 						locked = !locked
 						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>"
 						src.updateUsrDialog()
 					else
-						user << "<span class='warning'>Access denied.</span>"
+						user << "<span class='danger'>Access denied.</span>"
 				return
 		if(1)
 			if(istype(W, /obj/item/weapon/crowbar))
-				user.visible_message("<span class='warning'>[user.name] removes the electronics from [src.name].</span>",\
-									"You start prying out the circuit...")
+				user.visible_message("[user.name] removes the electronics from [src.name].",\
+									"<span class='notice'>You start prying out the circuit...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if (do_after(user, 20))
 					if (buildstage == 1)
@@ -850,8 +850,8 @@ table tr:first-child th:first-child { border: none;}
 				if(cable.get_amount() < 5)
 					user << "<span class='warning'>You need five lengths of cable to wire the fire alarm!</span>"
 					return
-				user.visible_message("<span class='warning'>[user.name] wires the air alarm.</span>", \
-									"You start wiring the air alarm.")
+				user.visible_message("[user.name] wires the air alarm.", \
+									"<span class='notice'>You start wiring the air alarm...</span>")
 				if (do_after(user, 20))
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)
@@ -867,7 +867,7 @@ table tr:first-child th:first-child { border: none;}
 				return
 		if(0)
 			if(istype(W, /obj/item/weapon/airalarm_electronics))
-				user << "You insert the circuit!"
+				user << "<span class='notice'>You insert the circuit.</span>"
 				buildstage = 1
 				update_icon()
 				user.drop_item()
@@ -875,7 +875,7 @@ table tr:first-child th:first-child { border: none;}
 				return
 
 			if(istype(W, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You detach \the [src] from the wall!</span>"
+				user << "<span class='notice'>You detach \the [src] from the wall.</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				new /obj/item/alarm_frame( user.loc )
 				qdel(src)
@@ -896,7 +896,7 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/alarm/emag_act(mob/user as mob)
 	if(!emagged)
 		src.emagged = 1
-		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='warning'>You emag the [src], disabling its safeties.</span>")
+		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		return
 
@@ -945,10 +945,10 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='warning'>Air Alarm cannot be placed on this spot.</span>"
+		usr << "<span class='warning'>Air Alarm cannot be placed on this spot!</span>"
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='warning'>Air Alarm cannot be placed in this area.</span>"
+		usr << "<span class='warning'>Air Alarm cannot be placed in this area!</span>"
 		return
 
 	if(gotwallitem(loc, ndir))
@@ -1025,7 +1025,7 @@ FIRE ALARM
 /obj/machinery/firealarm/emag_act(mob/user as mob)
 	if(!emagged)
 		src.emagged = 1
-		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='warning'>You emag the [src], disabling its thermal sensors.</span>")
+		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its thermal sensors.</span>")
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		return
 
@@ -1056,7 +1056,7 @@ FIRE ALARM
 	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
-		user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
+		user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
 		update_icon()
 		return
 
@@ -1066,9 +1066,9 @@ FIRE ALARM
 				if (istype(W, /obj/item/device/multitool))
 					src.detecting = !( src.detecting )
 					if (src.detecting)
-						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
+						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
 					else
-						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
+						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
 
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
@@ -1093,7 +1093,7 @@ FIRE ALARM
 
 				else if(istype(W, /obj/item/weapon/crowbar))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-					user.visible_message("<span class='warning'>[user.name] removes the electronics from [src.name].</span>", \
+					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
 					if(do_after(user, 20))
 						if(buildstage == 1)
@@ -1112,7 +1112,7 @@ FIRE ALARM
 					update_icon()
 
 				else if(istype(W, /obj/item/weapon/wrench))
-					user.visible_message("<span class='warning'>[user] removes the fire alarm assembly from the wall.</span>", \
+					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
