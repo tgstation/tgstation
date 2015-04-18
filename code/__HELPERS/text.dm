@@ -46,7 +46,6 @@
 
 /proc/strip_html_properly(var/input)
 	// these store the position of < and > respectively
-	. = ""
 	var/opentag = 0
 	var/closetag = 0
 
