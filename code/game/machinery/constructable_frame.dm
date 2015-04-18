@@ -85,10 +85,11 @@
 					if(do_after(user, 40, target = src))
 						if( !WT.isOn() )
 							return
-						user << "<span class='notice'>You disassemble the frame.</span>"
-						var/obj/item/stack/sheet/metal/M = new (loc, 5)
-						M.add_fingerprint(user)
-						qdel(src)
+						if(state == 1)
+							user << "<span class='notice'>You disassemble the frame.</span>"
+							var/obj/item/stack/sheet/metal/M = new (loc, 5)
+							M.add_fingerprint(user)
+							qdel(src)
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
