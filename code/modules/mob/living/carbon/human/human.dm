@@ -290,6 +290,8 @@
 				usr.put_in_hands(I)
 				usr.emote("scream")
 				usr.visible_message("<span class='danger'>[usr] successfully rips [I] out of their [L.getDisplayName()]!</span>","<span class='userdanger'>You successfully remove [I] from your [L.getDisplayName()]!</span>")
+				if(!has_embedded_objects())
+					clear_alert("embeddedobject")
 			return
 
 		if(href_list["item"])
