@@ -60,11 +60,12 @@
 		var/turf/location = get_turf(E.loc)
 		var/area/escape_zone = locate(/area/shuttle/escape/centcom)
 		if(E.stat != 2 && location in escape_zone) // Escapee Scores
-			for (var/obj/item/weapon/card/id/C1 in E.contents) cashscore += C1.money
-			for (var/obj/item/weapon/spacecash/C2 in E.contents) cashscore += C2.worth
-			for (var/obj/item/weapon/storage/S in E.contents)
-				for (var/obj/item/weapon/card/id/C3 in S.contents) cashscore += C3.money
-				for (var/obj/item/weapon/spacecash/C4 in S.contents) cashscore += C4.worth
+			for (var/obj/item/weapon/card/id/C1 in get_contents_in_object(/obj/item/weapon/card/id))
+				cashscore += C1.money
+
+			for (var/obj/item/weapon/spacecash/C2 in get_contents_in_object(/obj/item/weapon/spacecash))
+				cashscore += C2.worth
+
 //			for(var/datum/data/record/Ba in data_core.bank)
 //				if(Ba.fields["name"] == E.real_name) cashscore += Ba.fields["current_money"]
 			if (cashscore > score["richestcash"])
