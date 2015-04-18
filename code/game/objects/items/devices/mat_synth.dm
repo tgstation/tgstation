@@ -111,8 +111,8 @@
 			if(initial(active_material.perunit) < 2000)
 				modifier = MAT_COST_RARE
 			var/tospawn = Clamp(round(input("How many sheets of [material_type] do you want to synthesize? (0 - [matter / modifier])") as num), 0, round(matter / modifier))
-			if(tospawn)
-				var/obj/item/stack/sheet/spawned_sheet = new active_material(get_turf(src))
+			if(tospawn && material_type)
+				var/obj/item/stack/sheet/spawned_sheet = new material_type(get_turf(src))
 				spawned_sheet.amount = tospawn
 				TakeCost(tospawn, modifier, user)
 		else if(matter)

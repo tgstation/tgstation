@@ -161,7 +161,7 @@ BLIND     // can't see anything
 	if(ignore_flip)
 		return
 	else
-		if(!usr.canmove || usr.stat || usr.restrained())
+		if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 			return
 		if(!can_flip)
 			usr << "You try pushing \the [src] out of the way, but it is very uncomfortable and you look like a fool. You push it back into place."
@@ -239,7 +239,7 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Muton")
-	eyeprot = 2
+	eyeprot = 1
 
 	cold_breath_protection = 230
 
@@ -298,7 +298,7 @@ BLIND     // can't see anything
 	if(istype(I, /obj/item/clothing/accessory))
 		var/obj/item/clothing/accessory/A = I
 		if(can_attach_accessory(A))
-			user.drop_item(src)
+			user.drop_item(I, src)
 			accessories.Add(A)
 			A.on_attached(src, user)
 			if(istype(loc, /mob/living/carbon/human))
@@ -421,7 +421,7 @@ BLIND     // can't see anything
 	set category = "Object"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(usr.stat || (usr.status_flags & FAKEDEATH)) return
 
 	if(!accessories.len) return
 	var/obj/item/clothing/accessory/A

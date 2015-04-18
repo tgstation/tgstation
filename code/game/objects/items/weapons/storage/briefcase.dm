@@ -33,7 +33,7 @@
 	//..()
 
 	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "\red The [src] slips out of your hand and hits your head."
+		user << "<span class='warning'>The [src] slips out of your hand and hits your head.</span>"
 		user.take_organ_damage(10)
 		user.Paralyse(2)
 		return
@@ -51,7 +51,7 @@
 		var/mob/H = M
 		// ******* Check
 		if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-			M << "\red The helmet protects you from being hit hard in the head!"
+			M << "<span class='warning'>The helmet protects you from being hit hard in the head!</span>"
 			return
 		var/time = rand(2, 6)
 		if (prob(75))
@@ -60,9 +60,9 @@
 			M.Stun(time)
 		if(M.stat != 2)	M.stat = 1
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall.", 2)
+			O.show_message(text("<span class='danger'>[] has been knocked unconscious!</span>", M), 1, "<span class='warning'>You hear someone fall.</span>", 2)
 	else
-		M << text("\red [] tried to knock you unconcious!",user)
+		M << text("<span class='warning'>[] tried to knock you unconcious!</span>",user)
 		M.eye_blurry += 3
 
 	return
@@ -104,7 +104,7 @@
 			bottom_open = 0
 	else if(bottom_open && item.w_class <= 3.0)
 		stored_item = item
-		user.drop_item()
+		user.drop_item(item)
 		max_w_class = 3.0 - stored_item.w_class
 		item.loc = null //null space here we go - to stop it showing up in the briefcase
 		user << "You place \the [item] into the false bottom of the briefcase."

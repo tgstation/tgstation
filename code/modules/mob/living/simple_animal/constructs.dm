@@ -65,7 +65,7 @@
 	new /obj/item/weapon/ectoplasm (src.loc)
 	for(var/mob/M in viewers(src, null))
 		if((M.client && !( M.blinded )))
-			M.show_message("\red [src] collapses in a shattered heap. ")
+			M.show_message("<span class='warning'>[src] collapses in a shattered heap. </span>")
 	ghostize()
 	del src
 	return
@@ -87,7 +87,7 @@
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M as mob)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
 		if(src.health >= src.maxHealth)
-			M << "\blue [src] has nothing to mend."
+			M << "<span class='notice'>[src] has nothing to mend.</span>"
 			return
 		health = min(maxHealth, health + 5) // Constraining health to maxHealth
 		M.visible_message("[M] mends some of \the <EM>[src]'s</EM> wounds.","You mend some of \the <em>[src]'s</em> wounds.")
@@ -117,12 +117,12 @@
 		adjustBruteLoss(damage)
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+				M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]. </span>")
 	else
-		usr << "\red This weapon is ineffective, it does no damage."
+		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
+				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 
 
@@ -160,16 +160,16 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]. </span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
+					M.show_message("<span class='danger'>[O] bounces harmlessly off of [src]. </span>")
 	else
-		usr << "\red This weapon is ineffective, it does no damage."
+		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
+				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 
 /mob/living/simple_animal/construct/armoured/bullet_act(var/obj/item/projectile/P)
@@ -289,16 +289,16 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]. </span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
+					M.show_message("<span class='danger'>[O] bounces harmlessly off of [src]. </span>")
 	else
-		usr << "\red This weapon is ineffective, it does no damage."
+		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
+				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 
 ////////////////////////Harvester////////////////////////////////
@@ -352,7 +352,7 @@
 	if (istype(usr,/mob/living/simple_animal/constructbehemoth))
 
 		if(usr.energy<300)
-			usr << "\red You do not have enough power stored!"
+			usr << "<span class='warning'>You do not have enough power stored!</span>"
 			return
 
 		if(usr.stat)
@@ -369,7 +369,7 @@
 			if (cultist == usr) //just to be sure.
 				return
 			cultist.loc = usr.loc
-			usr.visible_message("\red [cultist] appears in a flash of red light as [usr] glows with power")*/
+			usr.visible_message("<span class='warning'>[cultist] appears in a flash of red light as [usr] glows with power</span>")*/
 
 ////////////////HUD//////////////////////
 

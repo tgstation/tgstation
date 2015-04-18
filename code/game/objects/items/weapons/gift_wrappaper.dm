@@ -32,7 +32,7 @@
 	w_class = W
 
 /obj/item/weapon/gift/attack_self(mob/user as mob)
-	user.drop_item()
+	user.drop_item(src)
 	if(gift)
 		user.put_in_active_hand(gift)
 		gift.add_fingerprint(user)
@@ -340,7 +340,7 @@
 					return
 
 				src.amount -= a_used
-				user.drop_item()
+				user.drop_item(null, )
 				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )
 				G.size = W.w_class
 				G.w_class = G.size + 1

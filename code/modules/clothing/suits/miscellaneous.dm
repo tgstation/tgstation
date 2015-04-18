@@ -204,7 +204,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return 0
 
 	if(src.icon_state == "suitjacket_blue_open")
@@ -431,3 +431,9 @@
 	blood_overlay_type = "coat"
 	cant_hold = list(/obj/item/weapon/nullrod, /obj/item/weapon/storage/bible)
 	armor = list(melee = 30, bullet = 20, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/maidapron
+	name = "Apron"
+	desc = "Simple white apron."
+	icon_state = "maidapron"
+	item_state = "maidapron"

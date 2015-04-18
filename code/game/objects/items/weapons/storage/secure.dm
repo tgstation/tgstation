@@ -176,7 +176,7 @@
 	//I consider this worthless but it isn't my code so whatever.  Remove or uncomment.
 	/*attack(mob/M as mob, mob/living/user as mob)
 		if ((M_CLUMSY in user.mutations) && prob(50))
-			user << "\red The [src] slips out of your hand and hits your head."
+			user << "<span class='warning'>The [src] slips out of your hand and hits your head.</span>"
 			user.take_organ_damage(10)
 			user.Paralyse(2)
 			return
@@ -193,7 +193,7 @@
 				if (H.stat < 2 && H.health < 50 && prob(90))
 				// ******* Check
 					if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-						H << "\red The helmet protects you from being hit hard in the head!"
+						H << "<span class='warning'>The helmet protects you from being hit hard in the head!</span>"
 						return
 					var/time = rand(2, 6)
 					if (prob(75))
@@ -202,9 +202,9 @@
 						H.Stun(time)
 					if(H.stat != 2)	H.stat = 1
 					for(var/mob/O in viewers(H, null))
-						O.show_message(text("\red <B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.", 2)
+						O.show_message(text("<span class='danger'>[] has been knocked unconscious!</span>", H), 1, "<span class='warning'>You hear someone fall.</span>", 2)
 				else
-					H << text("\red [] tried to knock you unconcious!",user)
+					H << text("<span class='warning'>[] tried to knock you unconcious!</span>",user)
 					H.eye_blurry += 3
 
 		return*/

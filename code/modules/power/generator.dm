@@ -124,7 +124,7 @@
 /obj/machinery/power/generator/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
-		user << "\blue You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor."
+		user << "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>"
 		//use_power = anchored
 		reconnect()
 	else
@@ -203,7 +203,7 @@ Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"}
 	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return
 
 	src.dir = turn(src.dir, 90)
@@ -213,7 +213,7 @@ Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"}
 	set name = "Rotate Generator (Counterclockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return
 
 	src.dir = turn(src.dir, -90)

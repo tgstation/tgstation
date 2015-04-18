@@ -75,19 +75,22 @@ var/global/ingredientLimit = 10
 	..()
 
 /obj/machinery/cooking/New()
-	if(src.foodChoices)
-		src.foodChoices = src.getFoodChoices()
-		var/list/L[src.foodChoices.len]
-		var/obj/item/foodPath
-		for(. in src.foodChoices)
-			foodPath = .
-			L[initial(foodPath.name)] = foodPath
-		src.foodChoices = L
-	if(src.cooks_in_reagents) //if we can cook in something
-		del(src.reagents) //get rid of that
-		reagents = new (cks_max_volume) //maximum volume is set by the machine var
-		reagents.my_atom = src
+	if (ticker)
+		initialize()
+
 	return ..()
+
+/obj/machinery/cooking/initialize()
+	if (foodChoices)
+		var/obj/item/food
+
+		for (var/path in getFoodChoices())
+			food = path
+
+			foodChoices.Add(list(initial(food.name) = path))
+
+	if (cooks_in_reagents) // if we can cook in something
+		create_reagents(cks_max_volume) // maximum volume is set by the machine var
 
 /obj/machinery/cooking/proc/getFoodChoices()
 	return (typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/cook)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/cook))
@@ -169,7 +172,7 @@ var/global/ingredientLimit = 10
 		return
 	if(. == "valid")
 		if(src.foodChoices) . = src.foodChoices[(input("Select production.") in src.foodChoices)]
-		user.drop_item(src)
+		user.drop_item(I, src)
 		src.ingredient = I
 		spawn() src.cook(.)
 		user << "<span class='notice'>You add the [I.name] to the [src.name].</span>"
@@ -223,12 +226,13 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/candy/validateIngredient(var/obj/item/I)
 	. = ..()
-	if((. == "valid") && (!foodNesting))
-		for(. in src.foodChoices)
-			if(findtext(I.name,.))
+
+	if ((. == "valid") && (!foodNesting))
+		for (var/food in foodChoices)
+			if (findtext(I.name, food))
 				. = "It's already candy."
+
 				break
-	return
 
 /obj/machinery/cooking/candy/makeFood(var/foodType)
 	var/old_food = src.ingredient.name

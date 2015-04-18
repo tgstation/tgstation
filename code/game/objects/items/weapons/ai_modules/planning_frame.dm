@@ -54,7 +54,7 @@
 			return
 		if(!module.upload(src.laws,src,user))
 			return
-		//user.drop_item()
+		//user.drop_item(null, )
 		//module.loc=src
 		modules += module.copy() // Instead of a reference
 		user << "<span class='notice'>You insert \the [module] into \the [src], and the device reads the module's contents.</span>"

@@ -62,7 +62,7 @@
 	var/rev_number = 0
 
 	if(!revs_possible || !heads)
-		world << "<B> \red Not enough players for RP revolution game mode. Restarting world in 5 seconds."
+		world << "<B> <span class='warning'>Not enough players for RP revolution game mode. Restarting world in 5 seconds.</span>"
 		sleep(50)
 		world.Reboot()
 		return
@@ -88,7 +88,7 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/obj_count = 1
-		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
+		rev_mind.current << "<span class='notice'>You are a member of the revolutionaries' leadership!</span>"
 		for(var/datum/objective/objective in rev_mind.objectives)
 			rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
@@ -229,9 +229,9 @@
 
 	var/text = ""
 	if(finished == 1)
-		world << "\red <FONT size = 3><B> The heads of staff were relieved of their posts! The revolutionaries win!</B></FONT>"
+		world << "<span class='danger'><FONT size = 3> The heads of staff were relieved of their posts! The revolutionaries win!</FONT></span>"
 	else if(finished == 2)
-		world << "\red <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT>"
+		world << "<span class='danger'><FONT size = 3> The heads of staff managed to stop the revolution!</FONT></span>"
 
 	world << "<FONT size = 2><B>The head revolutionaries were: </B></FONT>"
 	for(var/datum/mind/rev_mind in head_revolutionaries)
@@ -286,22 +286,22 @@ mob/living/carbon/human/proc
 		set name = "Rev-Convert"
 		if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 			if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-				src << "\red <b>[M] is already be a revolutionary!</b>"
+				src << "<span class='danger'>[M] is already be a revolutionary!</span>"
 			else if(src.mind in ticker.mode:get_unconvertables())
-				src << "\red <b>[M] cannot be a revolutionary!</b>"
+				src << "<span class='danger'>[M] cannot be a revolutionary!</span>"
 			else
 				if(world.time < M.mind.rev_cooldown)
-					src << "\red Wait five seconds before reconversion attempt."
+					src << "<span class='warning'>Wait five seconds before reconversion attempt.</span>"
 					return
-				src << "\red Attempting to convert [M]..."
+				src << "<span class='warning'>Attempting to convert [M]...</span>"
 				log_admin("[src]([src.ckey]) attempted to convert [M].")
-				message_admins("\red [src]([src.ckey]) attempted to convert [M].")
+				message_admins("<span class='warning'>[src]([src.ckey]) attempted to convert [M].</span>")
 				var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 				if(choice == "Yes!")
 					ticker.mode:add_revolutionary(M.mind)
-					M << "\blue You join the revolution!"
-					src << "\blue <b>[M] joins the revolution!</b>"
+					M << "<span class='notice'>You join the revolution!</span>"
+					src << "<span class='notice'><b>[M] joins the revolution!</b></span>"
 				else if(choice == "No!")
-					M << "\red You reject this traitorous cause!"
-					src << "\red <b>[M] does not support the revolution!</b>"
+					M << "<span class='warning'>You reject this traitorous cause!</span>"
+					src << "<span class='danger'>[M] does not support the revolution!</span>"
 				M.mind.rev_cooldown = world.time+50

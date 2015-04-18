@@ -146,13 +146,13 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 		if(0)
 			mode = 1
 			charge_cost = 100
-			user << "\red The [src.name] is now set to increase yield."
+			user << "<span class='warning'>The [src.name] is now set to increase yield.</span>"
 			projectile_type = "/obj/item/projectile/energy/florayield"
 			modifystate = "florayield"
 		if(1)
 			mode = 0
 			charge_cost = 100
-			user << "\red The [src.name] is now set to induce mutations."
+			user << "<span class='warning'>The [src.name] is now set to induce mutations.</span>"
 			projectile_type = "/obj/item/projectile/energy/floramut"
 			modifystate = "floramut"
 	update_icon()
@@ -162,7 +162,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	if(flag && istype(target,/obj/machinery/portable_atmospherics/hydroponics))
 		var/obj/machinery/portable_atmospherics/hydroponics/tray = target
 		if(process_chambered())
-			user.visible_message("\red <b> \The [user] fires \the [src] into \the [tray]!</b>")
+			user.visible_message("<span class='danger'> \The [user] fires \the [src] into \the [tray]!</span>")
 			Fire(target,user)
 		return
 
@@ -229,11 +229,11 @@ obj/item/weapon/gun/energy/staff/focus
 obj/item/weapon/gun/energy/staff/focus/attack_self(mob/living/user as mob)
 	if(projectile_type == "/obj/item/projectile/forcebolt")
 		charge_cost = 250
-		user << "\red The [src.name] will now strike a small area."
+		user << "<span class='warning'>The [src.name] will now strike a small area.</span>"
 		projectile_type = "/obj/item/projectile/forcebolt/strong"
 	else
 		charge_cost = 100
-		user << "\red The [src.name] will now strike only a single person."
+		user << "<span class='warning'>The [src.name] will now strike only a single person.</span>"
 		projectile_type = "/obj/item/projectile/forcebolt"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator

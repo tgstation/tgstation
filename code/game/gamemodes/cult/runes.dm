@@ -196,11 +196,11 @@
 			return 1
 		else
 			M << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
-			M << "<span class='warning'><b>And you were able to force it out of your mind. You now know the truth, there's something horrible out there, stop it and its minions at all costs.</b></span>"
+			M << "<span class='danger'>And you were able to force it out of your mind. You now know the truth, there's something horrible out there, stop it and its minions at all costs.</span>"
 			return 0
 
 	usr.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
-	usr.show_message("\red The markings pulse with a small burst of light, then fall dark.", 3, "\red You hear a faint fizzle.", 2)
+	usr.show_message("<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='warning'>You hear a faint fizzle.</span>", 2)
 	usr << "<span class='notice'> You remembered the words correctly, but the rune isn't working. Maybe your ritual is missing something important.</span>"
 
 /////////////////////////////////////////FOURTH RUNE
@@ -350,14 +350,14 @@
 	if(!drain)
 		return fizzle()
 	usr.say ("Yu[pick("'","`")]gular faras desdae. Havas mithum javara. Umathar uf'kal thenar!")
-	usr.visible_message("\red Blood flows from the rune into [usr]!", \
+	usr.visible_message("<span class='warning'>Blood flows from the rune into [usr]!</span>", \
 	"<span class='warning'>The blood starts flowing from the rune and into your frail mortal body. You feel... empowered.</span>", \
 	"<span class='warning'>You hear a liquid flowing.</span>")
 	var/mob/living/user = usr
 	if(user.bhunger)
 		user.bhunger = max(user.bhunger-2*drain,0)
 	if(drain>=50)
-		user.visible_message("\red [user]'s eyes give off eerie red glow!", \
+		user.visible_message("<span class='warning'>[user]'s eyes give off eerie red glow!</span>", \
 		"<span class='warning'>...but it wasn't nearly enough. You crave, crave for more. The hunger consumes you from within.</span>", \
 		"<span class='warning'>You hear a heartbeat.</span>")
 		user.bhunger += drain
@@ -498,7 +498,7 @@
 		if(istype(src,/obj/effect/rune))
 			usr.say("Kla[pick("'","`")]atu barada nikt'o!")
 			for (var/mob/V in viewers(src))
-				V.show_message("\red The rune turns into gray dust, veiling the surrounding runes.", 3)
+				V.show_message("<span class='warning'>The rune turns into gray dust, veiling the surrounding runes.</span>", 3)
 			qdel(src)
 		else
 			usr.whisper("Kla[pick("'","`")]atu barada nikt'o!")
@@ -740,7 +740,7 @@
 		usr.whisper("[input]")
 	for(var/datum/mind/H in ticker.mode.cult)
 		if (H.current)
-			H.current << "<span class='sinister'> \b [input]</span>"//changed from red to purple - Deity Link
+			H.current << "<span class='sinister'> <B>[input]</span></B>"//changed from red to purple - Deity Link
 	qdel(src)
 	return 1
 

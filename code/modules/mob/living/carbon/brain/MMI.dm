@@ -33,7 +33,7 @@
 			var/req=mommi_assembly_parts[t]
 			if(cc<req)
 				var/temppart = new t(src)
-				user << "\red You're short [req-cc] [temppart]\s."
+				user << "<span class='warning'>You're short [req-cc] [temppart]\s.</span>"
 				del(temppart)
 				return TRUE
 		if(!istype(loc,/turf))
@@ -90,8 +90,7 @@
 					user << "<span class='warning'>Why are you sticking robot legs on an empty [src], you idiot?</span>"
 					return TRUE
 				contents += O
-				user.drop_item()
-				O.loc=src
+				user.drop_item(O, src)
 				user << "<span class='notice'>You successfully add \the [O] to the contraption,</span>"
 				return TRUE
 			else if(cc==mommi_assembly_parts[t])
@@ -116,7 +115,7 @@
 		dead_mob_list -= brainmob//Update dem lists
 		living_mob_list += brainmob
 
-		user.drop_item()
+		user.drop_item(O)
 		del(O)
 
 		name = "Man-Machine Interface: [brainmob.real_name]"

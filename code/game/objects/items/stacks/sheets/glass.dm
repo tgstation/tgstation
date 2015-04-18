@@ -20,6 +20,8 @@
 	var/sname = "glass"
 	var/shard_type = /obj/item/weapon/shard
 
+	siemens_coefficient = 0 //does not conduct
+
 /obj/item/stack/sheet/glass/attack_self(mob/user as mob)
 	construct_window(user)
 
@@ -204,10 +206,10 @@
 	if(istype(W,/obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(CC.amount < 5)
-			user << "\b There is not enough wire in this coil. You need 5 lengths."
+			user << "<B>There is not enough wire in this coil. You need 5 lengths.</B>"
 			return
 		CC.use(5)
-		user << "\blue You attach wire to the [name].</span>"
+		user << "<span class='notice'>You attach wire to the [name].</span></span>"
 		new /obj/item/stack/light_w(user.loc)
 		src.use(1)
 	else

@@ -20,7 +20,7 @@ var/global/list/cached_icons = list()
 	var/paint_type = ""
 
 /obj/item/weapon/reagent_containers/glass/paint/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] is taking \his hand and eating the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+	viewers(user) << "<span class='danger'>[user] is taking \his hand and eating the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 	return (TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/reagent_containers/glass/paint/mop_act(obj/item/weapon/mop/M, mob/user)
@@ -29,7 +29,7 @@ var/global/list/cached_icons = list()
 /obj/item/weapon/reagent_containers/glass/paint/afterattack(turf/simulated/target, mob/user , flag)
 	if(istype(target) && reagents.total_volume > 5)
 		for(var/mob/O in viewers(user))
-			O.show_message("\red \The [target] has been splashed with something by [user]!", 1)
+			O.show_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>", 1)
 		spawn(5)
 			reagents.reaction(target, TOUCH)
 			reagents.remove_any(5)

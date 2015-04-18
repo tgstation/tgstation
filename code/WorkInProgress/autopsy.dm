@@ -80,7 +80,7 @@
 	set category = "Object"
 	set src in view(usr, 1)
 	set name = "Print Data"
-	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
+	if(usr.stat || !(istype(usr,/mob/living/carbon/human)) || (usr.status_flags & FAKEDEATH))
 		usr << "No."
 		return
 
@@ -151,7 +151,7 @@
 			scan_data += "<br>"
 
 	for(var/mob/O in viewers(usr))
-		O.show_message("\red \the [src] rattles and prints out a sheet of paper.", 1)
+		O.show_message("<span class='warning'>\the [src] rattles and prints out a sheet of paper.</span>", 1)
 
 	sleep(10)
 
@@ -187,7 +187,7 @@
 		src.wdata = list()
 		src.chemtraces = list()
 		src.timeofdeath = null
-		user << "\red A new patient has been registered.. Purging data for previous patient."
+		user << "<span class='warning'>A new patient has been registered.. Purging data for previous patient.</span>"
 
 	src.timeofdeath = M.timeofdeath
 
@@ -199,7 +199,7 @@
 		usr << "<b>You have to cut the limb open first!</b>"
 		return
 	for(var/mob/O in viewers(M))
-		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.display_name] with \the [src.name]", 1)
+		O.show_message("<span class='warning'>[user.name] scans the wounds on [M.name]'s [S.display_name] with \the [src.name]</span>", 1)
 
 	src.add_data(S)
 

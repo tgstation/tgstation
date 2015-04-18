@@ -104,7 +104,7 @@
 	item_state = "welding-g"
 	action_button_name = "Toggle Welding Goggles"
 	var/up = 0
-	eyeprot = 2
+	eyeprot = 3
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/welding/proc/getMask()
@@ -199,7 +199,7 @@
 	emp_act(severity)
 		if(istype(src.loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/M = src.loc
-			M << "\red The Optical Thermal Scanner overloads and blinds you!"
+			M << "<span class='warning'>The Optical Thermal Scanner overloads and blinds you!</span>"
 			if(M.glasses == src)
 				M.eye_blind = 3
 				M.eye_blurry = 5

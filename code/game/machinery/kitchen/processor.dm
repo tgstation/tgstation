@@ -83,7 +83,7 @@
 				var/C = S.cores
 				if(S.stat != DEAD)
 					S.loc = loc
-					S.visible_message("\blue [C] crawls free of the processor!")
+					S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
 					return
 				for(var/i = 1, i <= C, i++)
 					new S.coretype(loc)
@@ -160,9 +160,10 @@
 	user.visible_message("<span class='notice'>[user] puts [what] into [src].</span>", \
 		"You put [what] into the [src].")
 	if(what == user.get_active_hand())
-		user.drop_item(src)
+		user.drop_item(what, src)
 	else
-		user.drop_item()
+		if(O.loc == user)
+			user.drop_item(O)
 		what.loc = src
 	return
 

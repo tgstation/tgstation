@@ -51,7 +51,7 @@ obj/machinery/gibber/New()
 	if(istype(O,/obj/item/weapon/grab))
 		return handleGrab(O,user)
 	else
-		user << "\red This item is not suitable for the gibber!"
+		user << "<span class='warning'>This item is not suitable for the gibber!</span>"
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
@@ -154,10 +154,10 @@ obj/machinery/gibber/New()
 		user << "<span class='warning'>Subject may not have abiotic items on.</span>"
 		return
 
-	user.visible_message("\red [user] starts to put [G.affecting] into the gibber!")
+	user.visible_message("<span class='warning'>[user] starts to put [G.affecting] into the gibber!</span>")
 	src.add_fingerprint(user)
 	if(do_after(user, 30) && G && G.affecting && !occupant)
-		user.visible_message("\red [user] stuffs [G.affecting] into the gibber!")
+		user.visible_message("<span class='warning'>[user] stuffs [G.affecting] into the gibber!</span>")
 		var/mob/M = G.affecting
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
@@ -181,10 +181,10 @@ obj/machinery/gibber/New()
 		return
 
 	src.add_fingerprint(user)
-	user.visible_message("\red [user.name] starts climbing into the [src].", "\red You start climbing into the [src].")
+	user.visible_message("<span class='warning'>[user.name] starts climbing into the [src].</span>", "<span class='warning'>You start climbing into the [src].</span>")
 
 	if(do_after(user, 30) && user && !occupant && !isnull(src.loc))
-		user.visible_message("\red [user] climbs into the [src]", "\red You climb into the [src].")
+		user.visible_message("<span class='warning'>[user] climbs into the [src]</span>", "<span class='warning'>You climb into the [src].</span>")
 		if(user.client)
 			user.client.perspective = EYE_PERSPECTIVE
 			user.client.eye = src
@@ -197,7 +197,7 @@ obj/machinery/gibber/New()
 	set name = "Empty Gibber"
 	set src in oview(1)
 
-	if (usr.stat != 0)
+	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -221,10 +221,10 @@ obj/machinery/gibber/New()
 	if(src.operating)
 		return
 	if(!src.occupant)
-		visible_message("\red You hear a loud metallic grinding sound.")
+		visible_message("<span class='warning'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	visible_message("\red You hear a loud squelchy grinding sound.")
+	visible_message("<span class='warning'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
 	var/sourcename = src.occupant.real_name
@@ -243,9 +243,9 @@ obj/machinery/gibber/New()
 		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 
-	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
-	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
-	log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]</b>")
+	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <B>[key_name(user)]</B>" //One shall not simply gib a mob unnoticed!
+	user.attack_log += "\[[time_stamp()]\] Gibbed <B>[key_name(src.occupant)]</B>"
+	log_attack("<B>[key_name(user)]</B> gibbed <B>[key_name(src.occupant)]</B>")
 
 	if(!iscarbon(user))
 		src.occupant.LAssailant = null
@@ -272,10 +272,10 @@ obj/machinery/gibber/New()
 	if(src.operating)
 		return
 	if(!victim)
-		visible_message("\red You hear a loud metallic grinding sound.")
+		visible_message("<span class='warning'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	visible_message("\red You hear a loud squelchy grinding sound.")
+	visible_message("<span class='warning'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
 	var/sourcename = victim.real_name
@@ -306,8 +306,8 @@ obj/machinery/gibber/New()
 		victim.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 
-	victim.attack_log += "\[[time_stamp()]\] Was auto-gibbed by <b>[src]</b>" //One shall not simply gib a mob unnoticed!
-	log_attack("\[[time_stamp()]\] <b>[src]</b> auto-gibbed <b>[victim]/[victim.ckey]</b>")
+	victim.attack_log += "\[[time_stamp()]\] Was auto-gibbed by <B>[src]</B>" //One shall not simply gib a mob unnoticed!
+	log_attack("<B>[src]</B> auto-gibbed <B>[key_name(victim)]</B>")
 	victim.death(1)
 	if(ishuman(victim) || ismonkey(victim) || isalien(victim))
 		var/obj/item/organ/brain/B = new(src.loc)

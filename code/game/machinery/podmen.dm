@@ -72,9 +72,9 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 
 
 	if(beingharvested)
-		user << ("\red You can only harvest the pod once!")
+		user << ("<span class='warning'>You can only harvest the pod once!</span>")
 	else
-		user.visible_message("\blue [user] carefully begins to open the pod...","\blue You carefully begin to open the pod...")
+		user.visible_message("<span class='notice'>[user] carefully begins to open the pod...</span>","<span class='notice'>You carefully begin to open the pod...</span>")
 		beingharvested = 1
 
 	//If a sample is injected (and revival is allowed) the plant will be controlled by the original donor.
@@ -175,7 +175,7 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 		// -- End mode specific stuff
 
 
-	podman << "\green <B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B>"
+	podman << "<span class='good'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>"
 	if(source && ckey && podman.ckey == ckey && !ghost)
 		podman << "<B>Memories of a life as [source] drift oddly through a mind unsuited for them, like a skin of oil over a fathomless lake.</B>"
 	podman << "<B>You are now one of the Dionaea, a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>"
@@ -185,5 +185,5 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 		if (newname != "")
 			podman.real_name = newname
 
-	parent.visible_message("\blue The pod disgorges a fully-formed plant creature!")
+	parent.visible_message("<span class='notice'>The pod disgorges a fully-formed plant creature!</span>")
 	parent.update_tray()

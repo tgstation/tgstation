@@ -36,7 +36,7 @@
 				if(istype(W, /obj/item/weapon/screwdriver))
 					usr << "You begin removing screws from \the [src] backplate..."
 					if(do_after(user, 50))
-						usr << "\blue You unscrew \the [src] from the wall."
+						usr << "<span class='notice'>You unscrew \the [src] from the wall.</span>"
 						playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 						new /obj/item/mounted/frame/airlock_controller(get_turf(src))
 						del(src)
@@ -44,12 +44,12 @@
 				if(istype(W, /obj/item/weapon/circuitboard))
 					var/obj/item/weapon/circuitboard/C=W
 					if(C.board_type!="embedded controller")
-						user << "\red You cannot install this type of board into an embedded controller."
+						user << "<span class='warning'>You cannot install this type of board into an embedded controller.</span>"
 						return
 					usr << "You begin to insert \the [C] into \the [src]."
 					if(do_after(user, 10))
-						usr << "\blue You secure \the [C]!"
-						user.drop_item(src)
+						usr << "<span class='notice'>You secure \the [C]!</span>"
+						user.drop_item(C, src)
 						_circuitboard=C
 						playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 						build++
@@ -70,7 +70,7 @@
 						else
 							C=new boardtype(get_turf(src))
 						user.visible_message(\
-							"\red [user.name] has removed \the [C]!",\
+							"<span class='warning'>[user.name] has removed \the [C]!</span>",\
 							"You remove \the [C].")
 					return 1
 				if(istype(W, /obj/item/stack/cable_coil))
@@ -82,7 +82,7 @@
 						build++
 						update_icon()
 						user.visible_message(\
-							"\red [user.name] has added cables to \the [src]!",\
+							"<span class='warning'>[user.name] has added cables to \the [src]!</span>",\
 							"You add cables to \the [src].")
 			if(2) // Circuitboard installed, wired.
 				if(istype(W, /obj/item/weapon/wirecutters))
@@ -90,7 +90,7 @@
 					if(do_after(user, 50))
 						new /obj/item/stack/cable_coil(loc,5)
 						user.visible_message(\
-							"\red [user.name] cut the cables.",\
+							"<span class='warning'>[user.name] cut the cables.</span>",\
 							"You cut the cables.")
 						build--
 						update_icon()
@@ -106,7 +106,7 @@
 						EC.pixel_x=pixel_x
 						EC.pixel_y=pixel_y
 						user.visible_message(\
-							"\red [user.name] has finished \the [src]!",\
+							"<span class='warning'>[user.name] has finished \the [src]!</span>",\
 							"You finish \the [src].")
 						del(src)
 					return 1

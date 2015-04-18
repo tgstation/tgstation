@@ -208,7 +208,7 @@
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("\red <B>[src] was hit by [I].</B>")
+		visible_message("<span class='danger'>[src] was hit by [I].</span>")
 		if (src.health <= 0)
 			getFromPool(shard, loc)
 			getFromPool(/obj/item/stack/cable_coil, src.loc, 2)

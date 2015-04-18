@@ -37,7 +37,7 @@
 			if(user:wear_suit:s_control)
 				user:wear_suit.transfer_ai("AIFIXER","NINJASUIT",src,user)
 			else
-				user << "\red <b>ERROR</b>: \black Remote access channel disabled."
+				user << "<span class='danger'>ERROR: </span>Remote access channel disabled."
 			return
 	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
 

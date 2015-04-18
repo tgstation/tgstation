@@ -101,7 +101,7 @@
 	if (istype(user, /mob/living/silicon/ai) || istype(user, /mob/dead/)) return
 	if (istype(user, /mob/living/silicon/robot))
 		if (get_dist(user, src) > 1)
-			user << "\red You can't reach [src] from here."
+			user << "<span class='warning'>You can't reach [src] from here.</span>"
 			return
 	if(ishuman(user) && istype(user:gloves,/obj/item/clothing/gloves))
 		return ..()

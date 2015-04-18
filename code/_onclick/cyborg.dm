@@ -73,7 +73,7 @@
 
 		var/resolved = W.preattack(A, src, 1, params)
 		if(!resolved)
-			resolved = A.attackby(W,src)
+			resolved = A.attackby(W,src,params)
 			if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
 				delayNextAttack(10)
 			if(!resolved && A && W)
@@ -93,7 +93,7 @@
 			*/
 			var/resolved = W.preattack(A, src, 1, params)
 			if(!resolved)
-				resolved = A.attackby(W,src)
+				resolved = A.attackby(W,src,params)
 				if(ismob(A) || istype(A, /obj/mecha))
 					delayNextAttack(10)
 				if(!resolved && A && W)

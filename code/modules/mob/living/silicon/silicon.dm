@@ -106,12 +106,6 @@
 /mob/living/silicon/drop_item()
 	return
 
-/mob/living/silicon/drop_l_hand()
-	return
-
-/mob/living/silicon/drop_r_hand()
-	return
-
 /mob/living/silicon/generate_static_overlay()
 	return
 
@@ -127,8 +121,8 @@
 			src.take_organ_damage(10)
 			Stun(rand(1,5))
 	flick("noise", src:flash)
-	src << "\red <B>*BZZZT*</B>"
-	src << "\red Warning: Electromagnetic pulse detected."
+	src << "<span class='danger'>*BZZZT*</span>"
+	src << "<span class='warning'>Warning: Electromagnetic pulse detected.</span>"
 	..()
 
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)

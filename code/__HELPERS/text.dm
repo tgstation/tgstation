@@ -45,14 +45,19 @@
 	return t
 
 /proc/strip_html_properly(var/input)
-	var/opentag = 1 //These store the position of < and > respectively.
-	var/closetag = 1
-	while(1)
+	// these store the position of < and > respectively
+	var/opentag = 0
+	var/closetag = 0
+
+	while (length(input))
 		opentag = findtext(input, "<")
-		closetag = findtext(input, ">")
-		if(!closetag || !opentag)
+		closetag = findtext(input, ">", opentag + 1)
+
+		if (!opentag || !closetag)
 			break
-		input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
+
+		input = copytext(input, 1, opentag) + copytext(input, closetag + 1)
+
 	return input
 
 //Removes a few problematic characters

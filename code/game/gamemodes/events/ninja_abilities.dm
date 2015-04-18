@@ -17,21 +17,21 @@ s_cooldown ticks off each second based on the suit recharge proc, in seconds. De
 /obj/item/clothing/suit/space/space_ninja/proc/ninjacost(C = 0,X = 0)
 	var/mob/living/carbon/human/U = affecting
 	if( (U.stat||U.incorporeal_move)&&X!=3 )//Will not return if user is using an adrenaline booster since you can use them when stat==1.
-		U << "\red You must be conscious and solid to do this."//It's not a problem of stat==2 since the ninja will explode anyway if they die.
+		U << "<span class='warning'>You must be conscious and solid to do this.</span>"//It's not a problem of stat==2 since the ninja will explode anyway if they die.
 		return 1
 	else if(C&&cell.charge<C*10)
-		U << "\red Not enough energy."
+		U << "<span class='warning'>Not enough energy.</span>"
 		return 1
 	switch(X)
 		if(1)
 			cancel_stealth()//Get rid of it.
 		if(2)
 			if(s_bombs<=0)
-				U << "\red There are no more smoke bombs remaining."
+				U << "<span class='warning'>There are no more smoke bombs remaining.</span>"
 				return 1
 		if(3)
 			if(a_boost<=0)
-				U << "\red You do not have any more adrenaline boosters."
+				U << "<span class='warning'>You do not have any more adrenaline boosters.</span>"
 				return 1
 	return (s_coold)//Returns the value of the variable which counts down to zero.
 
@@ -56,7 +56,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 
 	if(!ninjacost(,2))
 		var/mob/living/carbon/human/U = affecting
-		U << "\blue There are <B>[s_bombs]</B> smoke bombs remaining."
+		U << "<span class='notice'>There are <B>[s_bombs]</B> smoke bombs remaining.</span>"
 		var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
@@ -97,7 +97,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 			s_coold = 1
 			cell.charge-=(C*10)
 		else
-			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+			U << "<span class='danger'>The VOID-shift device is malfunctioning, teleportation failed.</span>"
 	return
 
 //=======//RIGHT CLICK TELEPORT//=======//
@@ -131,7 +131,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 			s_coold = 1
 			cell.charge-=(C*10)
 		else
-			U << "\red You cannot teleport into solid walls or from solid matter"
+			U << "<span class='warning'>You cannot teleport into solid walls or from solid matter</span>"
 	return
 
 //=======//EM PULSE//=======//
@@ -170,7 +170,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				U.put_in_hands(W)
 				cell.charge-=(C*10)
 			else
-				U << "\red You can only summon one blade. Try dropping an item first."
+				U << "<span class='warning'>You can only summon one blade. Try dropping an item first.</span>"
 		else//Else you can run around with TWO energy blades. I don't know why you'd want to but cool factor remains.
 			if(!U.get_active_hand())
 				var/obj/item/weapon/melee/energy/blade/W = new()
@@ -208,14 +208,14 @@ This could be a lot better but I'm too tired atm.*/
 				return
 			if (targloc == curloc)
 				return
-			var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(U.loc)
+			var/obj/item/projectile/bullet/dart/A = new /obj/item/projectile/bullet/dart(U.loc)
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
 			cell.charge-=(C*10)
 			A.process()
 		else
-			U << "\red There are no targets in view."
+			U << "<span class='warning'>There are no targets in view.</span>"
 	return
 
 //=======//ENERGY NET//=======//
@@ -244,7 +244,7 @@ Must right click on a mob to activate.*/
 				var/obj/effect/energy_net/E = new /obj/effect/energy_net(M.loc)
 				E.layer = M.layer+1//To have it appear one layer above the mob.
 				for(var/mob/O in viewers(U, 3))
-					O.show_message(text("\red [] caught [] with an energy net!", U, M), 1)
+					O.show_message(text("<span class='warning'>[] caught [] with an energy net!</span>", U, M), 1)
 				E.affecting = M
 				E.master = U
 				spawn(0)//Parallel processing.
@@ -286,7 +286,7 @@ Movement impairing would indicate drugs and the like.*/
 		spawn(70)
 			reagents.reaction(U, 2)
 			reagents.trans_id_to(U, "radium", a_transfer)
-			U << "\red You are beginning to feel the after-effect of the injection."
+			U << "<span class='warning'>You are beginning to feel the after-effect of the injection.</span>"
 		a_boost--
 		s_coold = 3
 	return
@@ -309,10 +309,10 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 	var/mob/living/carbon/human/U = affecting
 	if(!U.incorporeal_move)
 		U.incorporeal_move = 2
-		U << "\blue You will now phase through solid matter."
+		U << "<span class='notice'>You will now phase through solid matter.</span>"
 	else
 		U.incorporeal_move = 0
-		U << "\blue You will no-longer phase through solid matter."
+		U << "<span class='notice'>You will no-longer phase through solid matter.</span>"
 	return
 
 //=======//5 TILE TELEPORT/GIB//=======//
@@ -351,7 +351,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 			s_coold = 1
 		else
-			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+			U << "<span class='danger'>The VOID-shift device is malfunctioning, teleportation failed.</span>"
 	return
 
 //=======//TELEPORT BEHIND MOB//=======//
@@ -425,7 +425,7 @@ This is so anime it hurts. But that's the point.*/
 					anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 				s_coold = 1
 			else
-				U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+				U << "<span class='danger'>The VOID-shift device is malfunctioning, teleportation failed.</span>"
 		else
-			U << "\red There are no targets in view."
+			U << "<span class='warning'>There are no targets in view.</span>"
 	return

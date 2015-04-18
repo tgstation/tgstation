@@ -37,7 +37,7 @@
 		var/grabbed = G.affecting
 		if(istype(grabbed, /mob/living/simple_animal/chicken))
 			var/mob/living/simple_animal/chicken/target = grabbed
-			user.drop_item()
+			user.drop_item(G)
 			del(target)
 			user << "<span class='notice'>[emagged ? "Bkaww!" : "You stuff the chicken in the machine."]</span>"
 			playsound(get_turf(src), 'sound/machines/ya_dun_clucked.ogg', 50, 1)
@@ -47,7 +47,7 @@
 
 		else if(istype(grabbed, /mob/living/simple_animal/chick))
 			var/mob/living/simple_animal/chick/target = grabbed
-			user.drop_item()
+			user.drop_item(G)
 			del(target)
 			user << "<span class='notice'>[emagged ? "Bkaww!" : "You stuff the chick in the machine, you monster."]</span>"
 			playsound(get_turf(src), 'sound/machines/ya_dun_clucked.ogg', 50, 1)
@@ -61,7 +61,7 @@
 				if(emagged)
 					user << "<span class='danger'>Bwak! Bwak! Bwak!</span>"
 					playsound(get_turf(src), 'sound/machines/ya_dun_clucked.ogg', 50, 1)
-					user.drop_item()
+					user.drop_item(G)
 					target.canmove = 0
 					target.icon = null
 					target.invisibility = 101

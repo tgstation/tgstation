@@ -19,36 +19,36 @@
 	else if((user.zone_sel.selecting == "l_leg") && (istype(src, /obj/item/robot_parts/l_leg)))
 		limbloc = "l_foot"
 	else
-		user << "\red That doesn't fit there!"
+		user << "<span class='warning'>That doesn't fit there!</span>"
 		return ..()
 
 	var/mob/living/carbon/human/H = M
 	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
 	if(S.status & ORGAN_DESTROYED)
 		if(!(S.status & ORGAN_ATTACHABLE))
-			user << "\red The wound is not ready for a replacement!"
+			user << "<span class='warning'>The wound is not ready for a replacement!</span>"
 			return 0
 		if(M != user)
 			M.visible_message( \
-				"\red [user] is beginning to attach \the [src] where [H]'s [S.display_name] used to be.", \
-				"\red [user] begins to attach \the [src] where your [S.display_name] used to be.")
+				"<span class='warning'>[user] is beginning to attach \the [src] where [H]'s [S.display_name] used to be.</span>", \
+				"<span class='warning'>[user] begins to attach \the [src] where your [S.display_name] used to be.</span>")
 		else
 			M.visible_message( \
-				"\red [user] begins to attach a robotic limb where \his [S.display_name] used to be with [src].", \
-				"\red You begin to attach \the [src] where your [S.display_name] used to be.")
+				"<span class='warning'>[user] begins to attach a robotic limb where \his [S.display_name] used to be with [src].</span>", \
+				"<span class='warning'>You begin to attach \the [src] where your [S.display_name] used to be.</span>")
 
 		if(do_mob(user, H, 100))
 			if(M != user)
 				M.visible_message( \
-					"\red [user] finishes attaching [H]'s new [S.display_name].", \
-					"\red [user] finishes attaching your new [S.display_name].")
+					"<span class='warning'>[user] finishes attaching [H]'s new [S.display_name].</span>", \
+					"<span class='warning'>[user] finishes attaching your new [S.display_name].</span>")
 			else
 				M.visible_message( \
-					"\red [user] finishes attaching \his new [S.display_name].", \
-					"\red You finish attaching your new [S.display_name].")
+					"<span class='warning'>[user] finishes attaching \his new [S.display_name].</span>", \
+					"<span class='warning'>You finish attaching your new [S.display_name].</span>")
 
 			if(H == user && prob(25))
-				user << "\red You mess up!"
+				user << "<span class='warning'>You mess up!</span>"
 				S.take_damage(15)
 
 			S.status &= ~ORGAN_BROKEN

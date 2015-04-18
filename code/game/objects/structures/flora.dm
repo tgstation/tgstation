@@ -91,7 +91,7 @@
 		user << "There is already something in the pot."
 	else
 		full = I
-		user.drop_item(src)
+		user.drop_item(I, src)
 		full.loc = src
 		user.visible_message("<span class='notice'>[user] stuffs something into the pot.</span>","You stuff \the [full] into the [src].")
 
@@ -225,3 +225,25 @@
 /obj/structure/flora/ausbushes/fullgrass/New()
 	..()
 	icon_state = "fullgrass_[rand(1, 3)]"
+
+//a rock is flora according to where the icon file is
+//and now these defines
+/obj/structure/flora/rock
+	name = "rock"
+	desc = "a rock"
+	icon_state = "rock1"
+	icon = 'icons/obj/flora/rocks.dmi'
+	anchored = 1
+
+/obj/structure/flora/rock/New()
+	..()
+	icon_state = "rock[rand(1,5)]"
+
+/obj/structure/flora/rock/pile
+	name = "rocks"
+	desc = "some rocks"
+	icon_state = "rockpile1"
+
+/obj/structure/flora/rock/pile/New()
+	..()
+	icon_state = "rockpile[rand(1,5)]"

@@ -301,7 +301,7 @@
 	set desc = "Re-send resources for NanoUI. May help those with NanoUI issues."
 	set category = "Preferences"
 
-	usr << "\blue Re-sending NanoUI resources.  This may result in lag."
+	usr << "<span class='notice'>Re-sending NanoUI resources.  This may result in lag.</span>"
 	nanomanager.send_resources(src)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
@@ -393,7 +393,7 @@
 	if(display_to_user && !(role_desired & ROLEPREF_PERSIST))
 		if(!(role_desired & ROLEPREF_POLLED))
 			spawn
-				var/answer = alert(src,"[role_desired]\n\nNOTE:  You will only be polled about this role once per round. To change your choice, use Preferences > Setup Special Roles.  The change will take place AFTER this recruiting period.","Role Recruitment", "Yes","No","Never")
+				var/answer = alert(src,"[role_id]\n\nNOTE:  You will only be polled about this role once per round. To change your choice, use Preferences > Setup Special Roles.  The change will take place AFTER this recruiting period.","Role Recruitment", "Yes","No","Never")
 				switch(answer)
 					if("Never")
 						prefs.roles[role_id] = ROLEPREF_NEVER

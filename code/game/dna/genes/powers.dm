@@ -268,7 +268,7 @@
 			M.dna.SetSEState(HULKBLOCK,0)
 			M.update_mutations()		//update our mutation overlays
 			M.update_body()
-			M << "\red You suddenly feel very weak."
+			M << "<span class='warning'>You suddenly feel very weak.</span>"
 			M.Weaken(3)
 			M.emote("collapse")
 */

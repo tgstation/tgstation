@@ -39,26 +39,8 @@
 	gcDestroyed = "Bye, world!"
 	tag = null
 	loc = null
-	var/disk = check_contents_for(/obj/item/weapon/disk/nuclear)
-	if(istype(disk, /obj/item/weapon/disk/nuclear))
-		qdel(disk)
 
 	..()
-
-/atom/proc/check_contents_for(A)
-	set background = 1
-	var/list/L = contents
-
-	for(var/obj/thing in L)
-		if(thing.contents.len)
-			var/finditagain = thing.check_contents_for(A)
-			if(finditagain) L |= finditagain
-
-	for(var/obj/B in L)
-		if(B.type == A)
-			return B
-	return 0
-
 
 /proc/delete_profile(var/type, code = 0)
 	if(!ticker || ticker.current_state < 3) return

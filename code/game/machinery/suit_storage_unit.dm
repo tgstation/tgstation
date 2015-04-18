@@ -241,7 +241,7 @@
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
 	if(..())
 		return 1
-	else 
+	else
 		usr.set_machine(src)
 		if (href_list["toggleUV"])
 			src.toggleUV(usr)
@@ -530,7 +530,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.stat != 0)
+	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	src.eject_occupant(usr)
 	add_fingerprint(usr)
@@ -544,7 +544,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.stat != 0)
+	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	if (!src.isopen)
 		usr << "<font color='red'>The unit's doors are shut.</font>"
@@ -631,7 +631,7 @@
 			user << "<font color='blue'>The unit already contains a suit.</font>"
 			return
 		user << "You load the [S.name] into the storage compartment."
-		user.drop_item(src)
+		user.drop_item(S, src)
 		src.SUIT = S
 		src.update_icon()
 		src.updateUsrDialog()
@@ -644,7 +644,7 @@
 			user << "<font color='blue'>The unit already contains a helmet.</font>"
 			return
 		user << "You load the [H.name] into the storage compartment."
-		user.drop_item(src)
+		user.drop_item(H, src)
 		src.HELMET = H
 		src.update_icon()
 		src.updateUsrDialog()
@@ -657,7 +657,7 @@
 			user << "<font color='blue'>The unit already contains a mask.</font>"
 			return
 		user << "You load the [M.name] into the storage compartment."
-		user.drop_item(src)
+		user.drop_item(M, src)
 		src.MASK = M
 		src.update_icon()
 		src.updateUsrDialog()
@@ -670,7 +670,7 @@
 			user << "<font color='blue'>The unit already contains shoes.</font>"
 			return
 		user << "You load \the [M.name] into the storage compartment."
-		user.drop_item(src)
+		user.drop_item(M, src)
 		src.BOOTS = M
 		src.update_icon()
 		src.updateUsrDialog()

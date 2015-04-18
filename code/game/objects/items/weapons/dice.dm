@@ -100,7 +100,7 @@
 	if(result == 1)
 		user << "<span class='danger'>Rocks fall, you die.</span>"
 		user.gib()
-		user.drop_item(src.loc)
+		user.drop_item(src)
 	else
 		triggered = 1
 		visible_message("<span class='notice'>You hear a quiet click.</span>")

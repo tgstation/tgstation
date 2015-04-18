@@ -53,7 +53,7 @@
 	if(!emagged)
 		locked = 0
 		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
+		user.visible_message("[user.name] emags the [src.name].","<span class='warning'>You short out the lock.</span>")
 		return 1
 	return -1
 /obj/machinery/power/rust_fuel_injector/attackby(obj/item/W, mob/user)
@@ -62,19 +62,19 @@
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
-			user << "\red The lock seems to be broken"
+			user << "<span class='warning'>The lock seems to be broken</span>"
 			return
 		if(src.allowed(user))
 			src.locked = !src.locked
 			user << "The controls are now [src.locked ? "locked." : "unlocked."]"
 		else
-			user << "\red Access denied."
+			user << "<span class='warning'>Access denied.</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/fuel_assembly) && !cur_assembly)
 		if(emergency_insert_ready)
 			cur_assembly = W
-			user.drop_item(src)
+			user.drop_item(W, src)
 			emergency_insert_ready = 0
 			return
 
@@ -164,7 +164,7 @@
 	if( href_list["fuel_usage"] )
 		var/new_usage = text2num(input("Enter new fuel usage (0.01% - 100%)", "Modifying fuel usage", fuel_usage * 100))
 		if(!new_usage)
-			usr << "\red That's not a valid number."
+			usr << "<span class='warning'>That's not a valid number.</span>"
 			return
 		new_usage = max(new_usage, 0.01)
 		new_usage = min(new_usage, 100)
@@ -245,17 +245,17 @@
 
 		break
 	if(success)
-		src.visible_message("\blue \icon[src] a green light flashes on [src].")
+		src.visible_message("<span class='notice'>\icon[src] a green light flashes on [src].</span>")
 		updateDialog()
 	else
-		src.visible_message("\red \icon[src] a red light flashes on [src].")
+		src.visible_message("<span class='warning'>\icon[src] a red light flashes on [src].</span>")
 
 /obj/machinery/power/rust_fuel_injector/verb/rotate_clock()
 	set category = "Object"
 	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return
 
 	src.dir = turn(src.dir, 90)
@@ -265,7 +265,7 @@
 	set name = "Rotate Generator (Counterclockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return
 
 	src.dir = turn(src.dir, -90)

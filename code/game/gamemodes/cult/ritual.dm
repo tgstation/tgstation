@@ -307,7 +307,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 /obj/item/weapon/tome/Topic(href,href_list[])
 	if (src.loc == usr)
 		var/number = text2num(href_list["number"])
-		if (usr.stat|| usr.restrained())
+		if (usr.stat || usr.restrained())
 			return
 		switch(href_list["action"])
 			if("clear")

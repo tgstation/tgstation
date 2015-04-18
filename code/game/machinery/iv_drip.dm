@@ -72,7 +72,7 @@
 			user << "There is already a reagent container loaded!"
 			return
 
-		user.drop_item(src)
+		user.drop_item(W, src)
 		src.beaker = W
 		user << "You attach \the [W] to \the [src]."
 		src.update_icon()
@@ -153,7 +153,7 @@
 		usr << "<span class='warning'>You can't do that.</span>"
 		return
 
-	if(usr.stat)
+	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 
 	mode = !mode

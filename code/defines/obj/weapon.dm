@@ -14,7 +14,7 @@
 	hitsound = 'sound/weapons/ring.ogg'
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='danger'>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>"
 		return(OXYLOSS)
 
 /*/obj/item/weapon/syndicate_uplink
@@ -60,7 +60,7 @@
 	throw_range = 20
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] drops the [src.name] on the ground and steps on it causing \him to crash to the floor, bashing \his head wide open. </b>"
+		viewers(user) << "<span class='danger'>[user] drops the [src.name] on the ground and steps on it causing \him to crash to the floor, bashing \his head wide open. </span>"
 		return(OXYLOSS)
 
 /obj/item/weapon/corncob
@@ -212,7 +212,7 @@
 	var/thrown_from
 
 /obj/item/weapon/legcuffs/bolas/suicide_act(mob/living/user)
-		viewers(user) << "\red <b>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='danger'>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>"
 		return(OXYLOSS)
 
 /obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, throw_range, throw_speed)
@@ -220,9 +220,9 @@
 		if(istype(usr, /mob/living/carbon/human)) //if the user is human
 			var/mob/living/carbon/human/H = usr
 			if((M_CLUMSY in H.mutations) && prob(50))
-				H <<"\red You smack yourself in the face while swinging the [src]!"
+				H <<"<span class='warning'>You smack yourself in the face while swinging the [src]!</span>"
 				H.Stun(2)
-				H.drop_item()
+				H.drop_item(src)
 				return
 	if (!thrown_from && usr) //if something hasn't set it already (like a mech does when it launches)
 		thrown_from = usr //then the user must have thrown it
@@ -268,7 +268,7 @@
 				throw_failed()
 				return
 			else //walking, but uncuffed, or the running prob() failed
-				H << "\blue You stumble over the thrown bolas"
+				H << "<span class='notice'>You stumble over the thrown bolas</span>"
 				step(H, H.dir)
 				H.Stun(1)
 				throw_failed()
@@ -341,6 +341,8 @@
 
 /obj/item/weapon/legcuffs/bolas/cable/attackby(var/obj/O, mob/user)
 	if(istype(O, /obj/item))
+		if(istype(O, /obj/item/weapon/gift) || istype(O,/obj/item/smallDelivery))
+			return
 		var/obj/item/I = O
 		if(istype(O, /obj/item/weapon/legcuffs/bolas)) //don't stack into infinity
 			return
@@ -373,15 +375,15 @@
 				return
 		if(I.w_class) //if it has a defined weight
 			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
-				if(weight1 == null)
-					user.drop_item(src)
+				if(!weight1)
+					user.drop_item(I, src)
 					weight1 = I
 					user.show_message("<span class='notice'>You tie [weight1] to the [src].</span>")
 					update_icon()
 					//del(I)
 					return
-				if(weight2 == null) //just in case
-					user.drop_item(src)
+				if(!weight2) //just in case
+					user.drop_item(I, src)
 					weight2 = I
 					user.show_message("<span class='notice'>You tie [weight2] to the [src].</span>")
 					update_icon()
@@ -407,7 +409,7 @@
 	var/obj/item/weapon/grenade/iedcasing/IED = null
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
@@ -429,8 +431,7 @@
 				IED = null
 				return
 			if(2,3)
-				user.drop_item(src)
-				I.loc = src
+				user.drop_item(I, src)
 				var/turf/bombturf = get_turf(src)
 				var/area/A = get_area(bombturf)
 				var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has rigged a beartrap with an IED at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
@@ -479,7 +480,7 @@
 					for(var/mob/O in viewers(H, null))
 						if(O == H)
 							continue
-						O.show_message("\red <B>[H] steps on \the [src].</B>", 1)
+						O.show_message("<span class='danger'>[H] steps on \the [src].</span>", 1)
 		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
@@ -673,7 +674,7 @@
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (OXYLOSS)
 
 /obj/item/weapon/module

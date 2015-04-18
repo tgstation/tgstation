@@ -94,7 +94,7 @@
 /obj/effect/alien/resin/hitby(AM as mob|obj)
 	..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
+		O.show_message("<span class='danger'>[src] was hit by [AM].</span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
@@ -109,14 +109,14 @@
 /obj/effect/alien/resin/attack_hand()
 	usr.delayNextAttack(10)
 	if (M_HULK in usr.mutations)
-		usr << "\blue You easily destroy the [name]."
+		usr << "<span class='notice'>You easily destroy the [name].</span>"
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] destroys the [name]!", 1)
+			O.show_message("<span class='warning'>[usr] destroys the [name]!</span>", 1)
 		health = 0
 	else
-		usr << "\blue You claw at the [name]."
+		usr << "<span class='notice'>You claw at the [name].</span>"
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] claws at the [name]!", 1)
+			O.show_message("<span class='warning'>[usr] claws at the [name]!</span>", 1)
 		health -= rand(5,10)
 	healthcheck()
 	return
@@ -127,15 +127,15 @@
 /obj/effect/alien/resin/attack_alien()
 	if (islarva(usr))//Safety check for larva. /N
 		return
-	usr << "\green You claw at the [name]."
+	usr << "<span class='good'>You claw at the [name].</span>"
 	for(var/mob/O in oviewers(src))
-		O.show_message("\red [usr] claws at the resin!", 1)
+		O.show_message("<span class='warning'>[usr] claws at the resin!</span>", 1)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	health -= rand(40, 60)
 	if(health <= 0)
-		usr << "\green You slice the [name] to pieces."
+		usr << "<span class='good'>You slice the [name] to pieces.</span>"
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] slices the [name] apart!", 1)
+			O.show_message("<span class='warning'>[usr] slices the [name] apart!</span>", 1)
 	healthcheck()
 	return
 
@@ -146,19 +146,19 @@
 		//Only aliens can stick humans and monkeys into resin walls. Also, the wall must not have a person inside already.
 			if(!affecting)
 				if(G.state<2)
-					user << "\red You need a better grip to do that!"
+					user << "<span class='warning'>You need a better grip to do that!</span>"
 					return
 				G.affecting.loc = src
 				G.affecting.paralysis = 10
 				for(var/mob/O in viewers(world.view, src))
 					if (O.client)
-						O << text("\green [] places [] in the resin wall!", G.assailant, G.affecting)
+						O << text("<span class='good'>[] places [] in the resin wall!</span>", G.assailant, G.affecting)
 				affecting=G.affecting
 				del(W)
 				spawn(0)
 					process()
 			else
-				user << "\red This wall is already occupied."
+				user << "<span class='warning'>This wall is already occupied.</span>"
 		return */
 	user.delayNextAttack(10)
 	var/aforce = W.force
@@ -288,9 +288,9 @@ Alien plants should do something if theres a lot of poison
 /obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
 	user.delayNextAttack(10)
 	if(W.attack_verb && W.attack_verb.len)
-		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='warning'><B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
 	else
-		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='warning'><B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 
 	var/damage = W.force / 4.0
 
@@ -361,7 +361,7 @@ Alien plants should do something if theres a lot of poison
 	if(ticks >= target_strength)
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\green <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B>", 1)
+			O.show_message("<span class='good'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>", 1)
 
 		if(istype(target, /turf/simulated/wall)) // I hate turf code.
 			var/turf/simulated/wall/W = target
@@ -373,13 +373,13 @@ Alien plants should do something if theres a lot of poison
 
 	switch(target_strength - ticks)
 		if(6)
-			visible_message("\green <B>[src.target] is holding up against the acid!</B>")
+			visible_message("<span class='good'><B>[src.target] is holding up against the acid!</B></span>")
 		if(4)
-			visible_message("\green <B>[src.target]\s structure is being melted by the acid!</B>")
+			visible_message("<span class='good'><B>[src.target]\s structure is being melted by the acid!</B></span>")
 		if(2)
-			visible_message("\green <B>[src.target] is struggling to withstand the acid!</B>")
+			visible_message("<span class='good'><B>[src.target] is struggling to withstand the acid!</B></span>")
 		if(0 to 1)
-			visible_message("\green <B>[src.target] begins to crumble under the acid!</B>")
+			visible_message("<span class='good'><B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
 
 /*
@@ -416,14 +416,14 @@ Alien plants should do something if theres a lot of poison
 		if(isalien(user))
 			switch(status)
 				if(BURST)
-					user << "\red You clear the hatched egg."
+					user << "<span class='warning'>You clear the hatched egg.</span>"
 					qdel(src)
 					return
 				if(GROWING)
-					user << "\red The child is not developed yet."
+					user << "<span class='warning'>The child is not developed yet.</span>"
 					return
 				if(GROWN)
-					user << "\red You retrieve the child."
+					user << "<span class='warning'>You retrieve the child.</span>"
 					Burst(0)
 					return
 		else
@@ -451,7 +451,7 @@ Alien plants should do something if theres a lot of poison
 			spawn(15)
 				status = BURST
 				if(!child)
-					src.visible_message("\red The egg bursts apart revealing nothing")
+					src.visible_message("<span class='warning'>The egg bursts apart revealing nothing</span>")
 					status = "GROWN"
 					new /obj/effect/decal/cleanable/blood/xeno(src)
 					var/obj/effect/decal/cleanable/blood/xeno/O = getFromPool(/obj/effect/decal/cleanable/blood/xeno, src)
@@ -478,9 +478,9 @@ Alien plants should do something if theres a lot of poison
 		return
 	user.delayNextAttack(10)
 	if(W.attack_verb && W.attack_verb.len)
-		src.visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		src.visible_message("<span class='warning'><B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
 	else
-		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
+		src.visible_message("<span class='warning'><B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 	var/damage = W.force / 4.0
 
 	if(istype(W, /obj/item/weapon/weldingtool))

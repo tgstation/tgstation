@@ -55,7 +55,7 @@ datum/controller/game_controller/New()
 		job_master = new /datum/controller/occupations()
 		job_master.SetupOccupations()
 		job_master.LoadJobs("config/jobs.txt")
-		world << "\red \b Job setup complete"
+		world << "<span class='danger'>Job setup complete</span>"
 
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
@@ -90,9 +90,9 @@ datum/controller/game_controller/proc/setup()
 	setup_economy()
 	SetupXenoarch()
 	cachedamageicons()
-	world << "\red \b Caching Jukebox playlists..."
+	world << "<span class='danger'>Caching Jukebox playlists...</span>"
 	load_juke_playlists()
-	world << "\red \b Caching Jukebox playlists complete."
+	world << "<span class='danger'>Caching Jukebox playlists complete.</span>"
 	//if(map && map.dorf)
 		//mining_surprises = typesof(/mining_surprise/dorf) - /mining_surprise/dorf
 		//max_secret_rooms += 2
@@ -133,7 +133,7 @@ datum/controller/game_controller/proc/cachedamageicons()
 	del(H)
 
 datum/controller/game_controller/proc/setup_objects()
-	world << "\red \b Initializing objects"
+	world << "<span class='danger'>Initializing objects</span>"
 	sleep(-1)
 	//var/last_init_type = null
 	for(var/atom/movable/object in world)
@@ -143,12 +143,12 @@ datum/controller/game_controller/proc/setup_objects()
 		object.initialize()
 
 
-	world << "\red \b Initializing pipe networks"
+	world << "<span class='danger'>Initializing pipe networks</span>"
 	sleep(-1)
 	for(var/obj/machinery/atmospherics/machine in machines)
 		machine.build_network()
 
-	world << "\red \b Initializing atmos machinery."
+	world << "<span class='danger'>Initializing atmos machinery.</span>"
 	sleep(-1)
 	for(var/obj/machinery/atmospherics/unary/U in machines)
 		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
@@ -158,7 +158,7 @@ datum/controller/game_controller/proc/setup_objects()
 			var/obj/machinery/atmospherics/unary/vent_scrubber/T = U
 			T.broadcast_status()
 
-	world << "\red \b Initializations complete."
+	world << "<span class='danger'>Initializations complete.</span>"
 	sleep(-1)
 
 

@@ -289,7 +289,7 @@
 		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
 			return
 		for(var/mob/M in range(3,src))
-			M.show_message("\b ERROR. Recalibrating projetion apparatus.")
+			M.show_message("<B>ERROR. Recalibrating projetion apparatus.</B>")
 			last_change = world.time
 			return
 
@@ -391,11 +391,11 @@
 	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<GRAB_AGGRESSIVE)
-			user << "\red You need a better grip to do that!"
+			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
+		visible_message("<span class='warning'>[G.assailant] puts [G.affecting] on the table.</span>")
 		qdel(W)
 		return
 
@@ -475,13 +475,13 @@
 		icon_state = "sword[_color]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "\blue [src] is now active."
+		user << "<span class='notice'>[src] is now active.</span>"
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = 2
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "\blue [src] can now be concealed."
+		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
 	return
 
@@ -508,16 +508,16 @@
 	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<GRAB_AGGRESSIVE)
-			user << "\red You need a better grip to do that!"
+			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] dunks [G.affecting] into the [src]!", 3)
+		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
-		user.drop_item(src.loc)
-		visible_message("\blue [user] dunks [W] into the [src]!", 3)
+		user.drop_item(W, src.loc)
+		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
@@ -527,9 +527,9 @@
 			return
 		if(prob(50))
 			I.loc = src.loc
-			visible_message("\blue Swish! \the [I] lands in \the [src].", 3)
+			visible_message("<span class='notice'>Swish! \the [I] lands in \the [src].</span>", 3)
 		else
-			visible_message("\red \the [I] bounces off of \the [src]'s rim!", 3)
+			visible_message("<span class='warning'>\the [I] bounces off of \the [src]'s rim!</span>", 3)
 		return 0
 	else
 		return ..(mover, target, height, air_group)

@@ -134,7 +134,7 @@
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			src << "\blue Now teleporting."
+			src << "<span class='notice'>Now teleporting.</span>"
 			observer.loc = O.loc
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
@@ -156,7 +156,7 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			usr << "\red The round is either not ready, or has already finished..."
+			usr << "<span class='warning'>The round is either not ready, or has already finished...</span>"
 			return
 
 		if(client.prefs.species != "Human")
@@ -173,7 +173,7 @@
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			usr << "\blue There is an administrative lock on entering the game!"
+			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
 			return
 
 		if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
@@ -320,10 +320,10 @@
 	if (src != usr)
 		return 0
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-		usr << "\red The round is either not ready, or has already finished..."
+		usr << "<span class='warning'>The round is either not ready, or has already finished...</span>"
 		return 0
 	if(!enter_allowed)
-		usr << "\blue There is an administrative lock on entering the game!"
+		usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
 		return 0
 	if(!IsJobAvailable(rank))
 		src << alert("[rank] is not available. Please try another.")
@@ -337,6 +337,25 @@
 	EquipCustomItems(character)
 	character.loc = pick(latejoin)
 	character.store_position()
+
+	if(bomberman_mode)
+		character.client << sound('sound/bomberman/start.ogg')
+		if(character.wear_suit)
+			var/obj/item/O = character.wear_suit
+			character.u_equip(O)
+			O.loc = character.loc
+			O.dropped(character)
+		if(character.head)
+			var/obj/item/O = character.head
+			character.u_equip(O)
+			O.loc = character.loc
+			O.dropped(character)
+		character.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/bomberman(character), slot_head)
+		character.equip_to_slot_or_del(new /obj/item/clothing/suit/space/bomberman(character), slot_wear_suit)
+		character.equip_to_slot_or_del(new /obj/item/weapon/bomberman/(character), slot_s_store)
+		character.update_icons()
+		character << "<span class='notice'>Tip: Use the BBD in your suit's pocket to place bombs.</span>"
+		character << "<span class='notice'>Try to keep your BBD and escape this hell hole alive!</span>"
 
 	ticker.mode.latespawn(character)
 
@@ -424,15 +443,10 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 
 	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
-	if(mind)
-		mind.active = 0					//we wish to transfer the key manually
-		if(mind.assigned_role == "Clown")				//give them a clownname if they are a clown
-			new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
-			new_character.rename_self("clown")
-		else if(mind.assigned_role == "Mime")
-			new_character.rename_self("mime")
+	if (mind)
+		mind.active = 0 // we wish to transfer the key manually
 		mind.original = new_character
-		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
+		mind.transfer_to(new_character) // won't transfer key since the mind is not active
 
 	new_character.name = real_name
 	new_character.dna.ready_dna(new_character)

@@ -158,7 +158,7 @@
 		set category = "Object"
 		set src in usr
 
-		if(!usr.canmove || usr.stat || usr.restrained())
+		if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 			return 0
 
 		switch(icon_state)
@@ -188,7 +188,7 @@
 		set category = "Object"
 		set src in usr
 
-		if(!usr.canmove || usr.stat || usr.restrained())
+		if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 			return 0
 
 		switch(icon_state)

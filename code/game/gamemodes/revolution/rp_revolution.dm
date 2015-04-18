@@ -80,7 +80,7 @@
 /datum/game_mode/revolution/rp_revolution/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
+		rev_mind.current << "<span class='notice'>You are a member of the revolutionaries' leadership!</span>"
 	for(var/datum/objective/objective in rev_mind.objectives)
 		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		rev_mind.special_role = "Head Revolutionary"
@@ -108,7 +108,7 @@
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
 	revolutionaries += rev_mind
-	rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT>"
+	rev_mind.current << "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>"
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
 	return 1
@@ -142,10 +142,10 @@
 /datum/game_mode/revolution/rp_revolution/declare_completion()
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - heads overthrown")
-		world << "\red <FONT size = 3><B> The heads of staff were overthrown! The revolutionaries win!</B></FONT>"
+		world << "<span class='danger'><FONT size = 3> The heads of staff were overthrown! The revolutionaries win!</FONT></span>"
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - revolution stopped")
-		world << "\red <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT>"
+		world << "<span class='danger'><FONT size = 3> The heads of staff managed to stop the revolution!</FONT></span>"
 	..()
 	return 1
 
@@ -161,24 +161,24 @@
 	set category = "IC"
 	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-			src << "\red <b>[M] is already be a revolutionary!</b>"
+			src << "<span class='danger'>[M] is already be a revolutionary!</span>"
 		else if(!ticker.mode:is_convertible(M))
-			src << "\red <b>[M] is implanted with a loyalty implant - Remove it first!</b>"
+			src << "<span class='danger'>[M] is implanted with a loyalty implant - Remove it first!</span>"
 		else
 			if(world.time < M.mind.rev_cooldown)
-				src << "\red Wait five seconds before reconversion attempt."
+				src << "<span class='warning'>Wait five seconds before reconversion attempt.</span>"
 				return
-			src << "\red Attempting to convert [M]..."
+			src << "<span class='warning'>Attempting to convert [M]...</span>"
 			log_admin("[src]([src.ckey]) attempted to convert [M].")
-			message_admins("\red [src]([src.ckey]) attempted to convert [M].")
+			message_admins("<span class='warning'>[src]([src.ckey]) attempted to convert [M].</span>")
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
 				ticker.mode:add_revolutionary(M.mind)
-				M << "\blue You join the revolution!"
-				src << "\blue <b>[M] joins the revolution!</b>"
+				M << "<span class='notice'>You join the revolution!</span>"
+				src << "<span class='notice'><b>[M] joins the revolution!</b></span>"
 			else if(choice == "No!")
-				M << "\red You reject this traitorous cause!"
-				src << "\red <b>[M] does not support the revolution!</b>"
+				M << "<span class='warning'>You reject this traitorous cause!</span>"
+				src << "<span class='danger'>[M] does not support the revolution!</span>"
 			M.mind.rev_cooldown = world.time+50
 
 /datum/game_mode/revolution/rp_revolution/process()
@@ -205,7 +205,7 @@
 				update_rev_icons_added(H.mind)
 				H.verbs += /mob/living/carbon/human/proc/RevConvert
 
-				H << "\red Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion."
+				H << "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>"
 				added_heads = 1
 				break
 
@@ -251,4 +251,4 @@
 			rev_obj.target = M.mind
 			rev_obj.explanation_text = "Assassinate, convert or capture [M.real_name], the [M.mind.assigned_role]."
 			rev_mind.objectives += rev_obj
-			rev_mind.current << "\red A new Head of Staff, [M.real_name], the [M.mind.assigned_role] has appeared. Your objectives have been updated."
+			rev_mind.current << "<span class='warning'>A new Head of Staff, [M.real_name], the [M.mind.assigned_role] has appeared. Your objectives have been updated.</span>"

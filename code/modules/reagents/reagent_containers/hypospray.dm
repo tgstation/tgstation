@@ -30,13 +30,13 @@
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M as mob, mob/user as mob)
 	if(!reagents.total_volume)
-		user << "\red [src] is empty."
+		user << "<span class='warning'>[src] is empty.</span>"
 		return
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
-		user << "\blue You inject [M] with [src]."
-		M << "\red You feel a tiny prick!"
+		user << "<span class='notice'>You inject [M] with [src].</span>"
+		M << "<span class='warning'>You feel a tiny prick!</span>"
 		playsound(get_turf(src), 'sound/items/hypospray.ogg', 50, 1)
 
 		src.reagents.reaction(M, INGEST)
@@ -56,7 +56,7 @@
 				M.LAssailant = user
 
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in [src]."
+			user << "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in [src].</span>"
 
 	return
 

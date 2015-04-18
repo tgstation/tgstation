@@ -27,7 +27,7 @@
 	set desc = "Drops the bodytemperature of another person. Currently on cooldown, ironically enough."
 	set category = "Mutant Abilities"
 
-	usr << "\red Your cryokinetic ability is recharging."
+	usr << "<span class='warning'>Your cryokinetic ability is recharging.</span>"
 
 /proc/bioproc_cryokinesis(var/mob/living/carbon/C in view())
 	set name = "Cryokinesis"
@@ -35,7 +35,7 @@
 	set category = "Mutant Abilities"
 
 	if(!iscarbon(C))
-		usr << "\red This will only work on normal organic beings."
+		usr << "<span class='warning'>This will only work on normal organic beings.</span>"
 		return
 
 	if(!can_act(usr)) return
@@ -50,7 +50,7 @@
 	C.bodytemperature = -1500
 	if(C.burning) C.burning = 0
 
-	C.visible_message("\red A cloud of fine ice crystals engulfs [C]!")
+	C.visible_message("<span class='warning'>A cloud of fine ice crystals engulfs [C]!</span>")
 
 	playsound(usr.loc, 'bamf.ogg', 50, 0)
 
@@ -103,7 +103,7 @@
 	set desc = "Eat just about anything! Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "\red Your Matter Eating ability is recharging."
+	usr << "<span class='warning'>Your Matter Eating ability is recharging.</span>"
 
 /proc/bioproc_mattereater()
 	set name = "Eat"
@@ -137,7 +137,7 @@
 			usr.verbs += /proc/bioproc_mattereater
 		usr.verbs -= /proc/bioproc_mattereater_cd
 
-	usr.visible_message("\red [usr] eats [the_item].")
+	usr.visible_message("<span class='warning'>[usr] eats [the_item].</span>")
 	playsound(usr.loc, 'eatfood.ogg', 50, 0)
 
 	qdel(the_item)
@@ -185,7 +185,7 @@
 	set desc = "Leap great distances! Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "\red Your Jumping ability is recharging."
+	usr << "<span class='warning'>Your Jumping ability is recharging.</span>"
 
 /proc/bioproc_jumpy()
 	set name = "Jump"
@@ -194,7 +194,7 @@
 
 	if(!can_act(usr)) return
 	if (istype(usr.loc,/mob/))
-		usr << "\red You can't jump right now!"
+		usr << "<span class='warning'>You can't jump right now!</span>"
 		return
 
 	usr.verbs -= /proc/bioproc_jumpy
@@ -205,7 +205,7 @@
 		usr.verbs -= /proc/bioproc_jumpy_cd
 
 	if (istype(usr.loc,/turf/))
-		usr.visible_message("\red <b>[usr.name]</b> takes a huge leap!")
+		usr.visible_message("<span class='warning'><b>[usr.name]</b> takes a huge leap!</span>")
 		playsound(usr.loc, 'thudswoosh.ogg', 50, 1)
 		var/prevLayer = usr.layer
 		usr.layer = 15
@@ -217,7 +217,7 @@
 			sleep(1)
 
 		if (usr:bioHolder.HasEffect("fat") && prob(66))
-			usr.visible_message("\red <b>[usr.name]</b> crashes due to their heavy weight!")
+			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr.loc, 'zhit.wav', 50, 1)
 			usr.weakened += 10
 			usr.stunned += 5
@@ -226,10 +226,10 @@
 
 	if (istype(usr.loc,/obj/))
 		var/obj/container = usr.loc
-		usr << "\red You leap and slam your head against the inside of [container]! Ouch!"
+		usr << "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>"
 		usr.paralysis += 3
 		usr.weakened += 5
-		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
+		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
 		playsound(usr.loc, 'bang.ogg', 50, 1)
 		var/wiggle = 6
 		while(wiggle > 0)
@@ -274,7 +274,7 @@
 	set desc = "Mimic the appearance of others! Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "\red Your Polymorphing ability is recharging."
+	usr << "<span class='warning'>Your Polymorphing ability is recharging.</span>"
 
 /proc/bioproc_polymorphism(var/mob/M in view())
 	set name = "Polymorph"
@@ -282,7 +282,7 @@
 	set category = "Mutant Abilities"
 
 	if(!ishuman(M))
-		usr << "\red You can only change your appearance to that of another human."
+		usr << "<span class='warning'>You can only change your appearance to that of another human.</span>"
 		return
 
 	if(!ishuman(usr)) return
@@ -298,7 +298,7 @@
 
 	playsound(usr.loc, 'blobattack.ogg', 50, 1)
 
-	usr.visible_message("\red [usr]'s body shifts and contorts.")
+	usr.visible_message("<span class='warning'>[usr]'s body shifts and contorts.</span>")
 
 	spawn(10)
 		if(M && usr)
@@ -339,18 +339,18 @@
 	set category = "Mutant Abilities"
 
 	if(!iscarbon(M))
-		usr << "\red You may only use this on other organic beings."
+		usr << "<span class='warning'>You may only use this on other organic beings.</span>"
 		return
 
 	if(!can_act(usr))
 		return
 
 	if (M:bioHolder.HasEffect("psy_resist"))
-		usr << "\red You can't contact [M.name]'s mind at all!"
+		usr << "<span class='warning'>You can't contact [M.name]'s mind at all!</span>"
 		return
 
 	if(!M.client || M.stat)
-		M << "\red You can't seem to get through to [M.name] mentally."
+		M << "<span class='warning'>You can't seem to get through to [M.name] mentally.</span>"
 		return
 
 	var/msg = input(usr, "Message to [M.name]:","Telepathy")
@@ -397,24 +397,24 @@
 	set category = "Mutant Abilities"
 
 	if(!iscarbon(M))
-		usr << "\red You may only use this on other organic beings."
+		usr << "<span class='warning'>You may only use this on other organic beings.</span>"
 		return
 
 	if(!can_act(usr))
 		return
 
 	if (M:bioHolder.HasEffect("psy_resist"))
-		usr << "\red You can't see into [M.name]'s mind at all!"
+		usr << "<span class='warning'>You can't see into [M.name]'s mind at all!</span>"
 		return
 
 	if (M.stat == 2)
-		usr << "\red [M.name] is dead and cannot have their mind read."
+		usr << "<span class='warning'>[M.name] is dead and cannot have their mind read.</span>"
 		return
 	if (M.health < 0)
-		usr << "\red [M.name] is dying, and their thoughts are too scrambled to read."
+		usr << "<span class='warning'>[M.name] is dying, and their thoughts are too scrambled to read.</span>"
 		return
 
-	usr << "\blue Mind Reading of [M.name]:</b>"
+	usr << "<span class='notice'>Mind Reading of [M.name]:</b></span>"
 	var/pain_condition = M.health
 	// lower health means more pain
 	var/list/randomthoughts = list("what to have for lunch","the future","the past","money",
@@ -429,43 +429,43 @@
 
 	switch(pain_condition)
 		if (81 to INFINITY)
-			usr << "\blue <b>Condition</b>: [M.name] feels good."
+			usr << "<span class='notice'><b>Condition</b>: [M.name] feels good.</span>"
 		if (61 to 80)
-			usr << "\blue <b>Condition</b>: [M.name] is suffering mild pain."
+			usr << "<span class='notice'><b>Condition</b>: [M.name] is suffering mild pain.</span>"
 		if (41 to 60)
-			usr << "\blue <b>Condition</b>: [M.name] is suffering significant pain."
+			usr << "<span class='notice'><b>Condition</b>: [M.name] is suffering significant pain.</span>"
 		if (21 to 40)
-			usr << "\blue <b>Condition</b>: [M.name] is suffering severe pain."
+			usr << "<span class='notice'><b>Condition</b>: [M.name] is suffering severe pain.</span>"
 		else
-			usr << "\blue <b>Condition</b>: [M.name] is suffering excruciating pain."
+			usr << "<span class='notice'><b>Condition</b>: [M.name] is suffering excruciating pain.</span>"
 			thoughts = "haunted by their own mortality"
 
 	switch(M.a_intent)
 		if ("help")
-			usr << "\blue <b>Mood</b>: You sense benevolent thoughts from [M.name]."
+			usr << "<span class='notice'><b>Mood</b>: You sense benevolent thoughts from [M.name].</span>"
 		if ("disarm")
-			usr << "\blue <b>Mood</b>: You sense cautious thoughts from [M.name]."
+			usr << "<span class='notice'><b>Mood</b>: You sense cautious thoughts from [M.name].</span>"
 		if ("grab")
-			usr << "\blue <b>Mood</b>: You sense hostile thoughts from [M.name]."
+			usr << "<span class='notice'><b>Mood</b>: You sense hostile thoughts from [M.name].</span>"
 		if ("harm")
-			usr << "\blue <b>Mood</b>: You sense cruel thoughts from [M.name]."
+			usr << "<span class='notice'><b>Mood</b>: You sense cruel thoughts from [M.name].</span>"
 			for(var/mob/living/L in view(7,M))
 				if (L == M)
 					continue
 				thoughts = "thinking about punching [L.name]"
 				break
 		else
-			usr << "\blue <b>Mood</b>: You sense strange thoughts from [M.name]."
+			usr << "<span class='notice'><b>Mood</b>: You sense strange thoughts from [M.name].</span>"
 
 	if (istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		usr << "\blue <b>Numbers</b>: You sense the number [H.pin] is important to [M.name]."
-	usr << "\blue <b>Thoughts</b>: [M.name] is currently [thoughts]."
+		usr << "<span class='notice'><b>Numbers</b>: You sense the number [H.pin] is important to [M.name].</span>"
+	usr << "<span class='notice'><b>Thoughts</b>: [M.name] is currently [thoughts].</span>"
 
 	if (M:bioHolder.HasEffect("empath"))
-		M << "\red You sense [usr.name] reading your mind."
+		M << "<span class='warning'>You sense [usr.name] reading your mind.</span>"
 	else if (prob(5) || M:bioHolder.HasEffect("training_chaplain"))
-		M << "\red You sense someone intruding upon your thoughts..."
+		M << "<span class='warning'>You sense someone intruding upon your thoughts...</span>"
 	return
 
 ////////////////////////////////////////////////////////////////////////
@@ -498,7 +498,7 @@
 	set desc = "Wreath yourself in burning flames. Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "\red Your Immolation ability is recharging."
+	usr << "<span class='warning'>Your Immolation ability is recharging.</span>"
 
 /proc/bioproc_immolate()
 	set name = "Immolate"
@@ -511,7 +511,7 @@
 		var/mob/living/L = usr
 
 		L.set_burning(100)
-		L.visible_message("\red <b>[L.name]</b> suddenly bursts into flames!")
+		L.visible_message("<span class='warning'><b>[L.name]</b> suddenly bursts into flames!</span>")
 		playsound(L.loc, 'mag_fireballlaunch.ogg', 50, 0)
 
 		usr.verbs -= /proc/bioproc_immolate
@@ -557,7 +557,7 @@
 	if (istype(usr,/mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = usr
 
-		H.visible_message("\red <b>[H.name]'s flesh melts right off! Holy shit!</b>")
+		H.visible_message("<span class='danger'>[H.name]'s flesh melts right off! Holy shit!</span>")
 		if (H.gender == "female")
 			playsound(H.loc, 'female_fallscream.ogg', 50, 0)
 		else
@@ -569,7 +569,7 @@
 		H.decomp_stage = 4
 		H.brain_op_stage = 4
 	else
-		usr.visible_message("\red <b>[usr.name] melts into a pile of bloody viscera!</b>")
+		usr.visible_message("<span class='danger'>[usr.name] melts into a pile of bloody viscera!</span>")
 		usr.gib(1)
 
 	return
@@ -605,7 +605,7 @@
 	set desc = "Unleash a gigantic fart! Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "\red Your Super Fart ability is recharging."
+	usr << "<span class='warning'>Your Super Fart ability is recharging.</span>"
 
 /proc/bioproc_superfart()
 	set name = "Super Fart"
@@ -618,21 +618,21 @@
 		var/mob/living/L = usr
 
 		if (L.stat || !can_act(L))
-			L << "\red You can't do that while incapacitated."
+			L << "<span class='warning'>You can't do that while incapacitated.</span>"
 			return
 
-		L.visible_message("\red <b>[L.name]</b> hunches down and grits their teeth!")
+		L.visible_message("<span class='warning'><b>[L.name]</b> hunches down and grits their teeth!</span>")
 		usr.verbs -= /proc/bioproc_superfart
 		usr.verbs += /proc/bioproc_superfart_cd
 		sleep(30)
 		if (can_act(L))
-			L.visible_message("\red <b>[L.name]</b> unleashes a [pick("tremendous","gigantic","colossal")] fart!")
+			L.visible_message("<span class='warning'><b>[L.name]</b> unleashes a [pick("tremendous","gigantic","colossal")] fart!</span>")
 			playsound(L.loc, 'superfart.ogg', 50, 0)
 			for(var/mob/living/V in range(get_turf(L),6))
 				shake_camera(V,10,5)
 				if (V == L)
 					continue
-				V << "\red You are sent flying!"
+				V << "<span class='warning'>You are sent flying!</span>"
 				V.weakened += 5 // why the hell was this set to 12 christ
 				step_away(V,get_turf(L),15)
 				step_away(V,get_turf(L),15)
@@ -641,7 +641,7 @@
 			 	for(var/turf/T in view(get_turf(L),2))
 			 		new /obj/effects/fart_cloud(T,L)
 		else
-			L << "\red You were interrupted and couldn't fart! Rude!"
+			L << "<span class='warning'>You were interrupted and couldn't fart! Rude!</span>"
 			usr.verbs += /proc/bioproc_superfart
 			usr.verbs -= /proc/bioproc_superfart_cd
 			return
@@ -684,7 +684,7 @@
 	set desc = "Shoot lasers from your eyes. Currently on cooldown."
 	set category = "Mutant Abilities"
 
-	usr << "\red Your Eye Beams ability is recharging."
+	usr << "<span class='warning'>Your Eye Beams ability is recharging.</span>"
 
 /proc/bioproc_eyebeams()
 	set name = "Eye Beams"
@@ -703,7 +703,7 @@
 
 	if (!istype(T,/turf/))
 		return
-	L.visible_message("\red <b>[L.name]</b> shoots eye beams!")
+	L.visible_message("<span class='warning'><b>[L.name]</b> shoots eye beams!</span>")
 	var/datum/projectile/laser/eyebeams/PJ = new /datum/projectile/laser/eyebeams
 	var/obj/projectile/P = unpool("projectile", /obj/projectile)
 	if(!P)	return

@@ -28,7 +28,7 @@
 
 /obj/item/weapon/plastique/suicide_act(var/mob/user)
 	. = (BRUTELOSS)
-	viewers(user) << "\red <b>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</b>"
+	viewers(user) << "<span class='danger'>[user] activates the C4 and holds it above his head! It looks like \he's going out with a bang!</span>"
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -71,16 +71,16 @@
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target:real_name] ([target:ckey])</font>"
 		msg_admin_attack("[user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
+		user.visible_message("<span class='warning'>[user.name] is trying to plant some kind of explosive on [target.name]!</span>")
 
 	if(do_after(user, 50) && in_range(user, target))
-		user.drop_item()
+		user.drop_item(src)
 		src.target = target
 		loc = null
 		if (ismob(target))
 			var/mob/M=target
 			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
-			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
+			user.visible_message("<span class='warning'>[user.name] finished planting an explosive on [target.name]!</span>")
 			playsound(get_turf(src), 'sound/weapons/c4armed.ogg', 60, 1)
 			if(!iscarbon(user))
 				M.LAssailant = null

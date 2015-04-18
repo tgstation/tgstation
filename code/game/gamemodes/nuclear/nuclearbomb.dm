@@ -38,7 +38,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O as obj, mob/user as mob)
 	if (src.extended)
 		if (istype(O, /obj/item/weapon/disk/nuclear))
-			usr.drop_item(src)
+			usr.drop_item(O, src)
 			src.auth = O
 			src.add_fingerprint(user)
 			return
@@ -51,7 +51,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						user << "\red You need more fuel to complete this task."
+						user << "<span class='warning'>You need more fuel to complete this task.</span>"
 						return
 
 					user.visible_message("[user] starts cutting loose the anchoring bolt covers on [src].", "You start cutting loose the anchoring bolt covers with [O]...")
@@ -159,7 +159,7 @@ var/bomb_set
 	set name = "Make Deployable"
 	set src in oview(1)
 
-	if (!usr || usr.stat || usr.lying) return
+	if (!usr || usr.stat || usr.lying || (usr.status_flags & FAKEDEATH)) return
 	if (!ishuman(usr))
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
@@ -176,7 +176,7 @@ var/bomb_set
 	if (!usr.canmove || usr.stat || usr.restrained())
 		return
 	if (!ishuman(usr))
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 	if (istype(src.loc, /turf))
 		usr.set_machine(src)
@@ -188,7 +188,7 @@ var/bomb_set
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/disk/nuclear))
-					usr.drop_item(src)
+					usr.drop_item(I, src)
 					src.auth = I
 		if (src.auth)
 			if (href_list["type"])
@@ -319,7 +319,7 @@ var/bomb_set
 				CallHook("Reboot",list())
 
 				if (watchdog.waiting)
-					world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
+					world << "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>"
 					watchdog.signal_ready()
 					return
 				sleep(300)
@@ -327,7 +327,9 @@ var/bomb_set
 				world.Reboot()
 				return
 	return
-
+/**
+ * NOTE: Don't change it to Destroy().
+ */
 /obj/item/weapon/disk/nuclear/Del()
 	if(blobstart.len > 0)
 		var/picked_turf = get_turf(pick(blobstart))

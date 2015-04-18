@@ -4,18 +4,21 @@
 	set desc = "Shows a high scale rendering of the current map in your browser."
 	set hidden = 1
 
+	if(!config.renders_url || config.renders_url == "")
+		src << "<span class='danger'>The Map Renders url has not been set in the server configuration.</span>"
+		return
 	if(alert("This will open the map render(s) in your browser. Are you sure?",,"Yes","No")=="No")
 		return
 	if(map)
 		switch(map.nameShort)
 			if("meta")
-				src << link("http://ss13.nexisonline.net/img/map-renders/metaclub/")
+				src << link("[config.renders_url]/metaclub/")
 			if("deff")
-				src << link("http://ss13.nexisonline.net/img/map-renders/defficiency/")
+				src << link("[config.renders_url]/defficiency/")
 			if("box")
-				src << link("http://ss13.nexisonline.net/img/map-renders/tgstation/")
+				src << link("[config.renders_url]/tgstation/")
 			else
-				src << "<span class='warning'>No map render for [map.nameLong], bug nexis about it!</span>"
+				src << "<span class='warning'>No map render for [map.nameLong], bug Pomf about it!</span>"
 	return
 
 /client/verb/wiki()
@@ -27,7 +30,7 @@
 			return
 		src << link(config.wikiurl)
 	else
-		src << "\red The wiki URL is not set in the server configuration."
+		src << "<span class='danger'>The wiki URL is not set in the server configuration.</span>"
 	return
 
 /client/verb/forum()
@@ -39,7 +42,7 @@
 			return
 		src << link(config.forumurl)
 	else
-		src << "\red The forum URL is not set in the server configuration."
+		src << "<span class='danger'>The forum URL is not set in the server configuration.</span>"
 	return
 
 #define RULES_FILE "config/rules.html"

@@ -1992,6 +1992,7 @@ k
 	reliability_base = 76
 	build_path = /obj/item/weapon/gun/energy/gun/nuclear
 	locked = 1
+	req_lock_access = list(access_armory)
 
 /datum/design/stunrevolver
 	name = "Stun Revolver"
@@ -2002,6 +2003,8 @@ k
 	materials = list("$iron" = 4000)
 	build_path = /obj/item/weapon/gun/energy/stunrevolver
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/lasercannon
 	name = "Laser Cannon"
@@ -2012,6 +2015,8 @@ k
 	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 2000)
 	build_path = /obj/item/weapon/gun/energy/lasercannon
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/xcomsquaddiearmor
 	name = "Squaddie Armor"
@@ -2040,6 +2045,8 @@ k
 	materials = list("$iron" = 10000, "$glass" = 1000, "$plasma" = 12000, "$uranium" = 4000)
 	build_path = /obj/item/weapon/gun/energy/plasma/pistol
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/xcomplasmarifle
 	name = "Plasma Cannon"
@@ -2050,6 +2057,8 @@ k
 	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 3000, "$plasma" = 28000, "$uranium" = 12000)
 	build_path = /obj/item/weapon/gun/energy/plasma/rifle
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/xcomlightplasmarifle
 	name = "Plasma Rifle"
@@ -2060,6 +2069,8 @@ k
 	materials = list("$iron" = 10000, "$glass" = 1000, "$plasma" = 20000, "$uranium" = 8000)
 	build_path = /obj/item/weapon/gun/energy/plasma/light
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/xcomlaserrifle
 	name = "Laser Rifle"
@@ -2070,6 +2081,8 @@ k
 	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 2000)
 	build_path = /obj/item/weapon/gun/energy/laser/rifle
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/xcomlaserpistol
 	name = "Laser Pistol"
@@ -2080,6 +2093,8 @@ k
 	materials = list("$iron" = 10000, "$glass" = 1000, "$diamond" = 1000)
 	build_path = /obj/item/weapon/gun/energy/laser/pistol
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/xcomar
 	name = "Assault Rifle"
@@ -2090,6 +2105,8 @@ k
 	materials = list("$iron" = 10000, "$glass" = 1000)
 	build_path = /obj/item/weapon/gun/projectile/automatic/xcom
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/decloner
 	name = "Decloner"
@@ -2099,6 +2116,9 @@ k
 	build_type = PROTOLATHE
 	materials = list("$iron" = 5000, "$gold" = 5000,"$uranium" = 10000) //, "mutagen" = 40)
 	build_path = /obj/item/weapon/gun/energy/decloner
+	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/chemsprayer
 	name = "Chem Sprayer"
@@ -2109,6 +2129,8 @@ k
 	materials = list("$iron" = 5000, "$glass" = 1000)
 	reliability_base = 100
 	build_path = /obj/item/weapon/reagent_containers/spray/chemsprayer
+	req_lock_access = list(access_medical, access_cmo)
+
 
 /datum/design/rapidsyringe
 	name = "Rapid Syringe Gun"
@@ -2128,6 +2150,8 @@ k
 	materials = list("$iron" = 5000, "$glass" = 1000, "$uranium" = 1000, "$silver" = 1000)
 	build_path = /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/temp_gun
 	name = "Temperature Gun"
@@ -2137,6 +2161,9 @@ k
 	build_type = PROTOLATHE
 	materials = list("$iron" = 5000, "$glass" = 500, "$silver" = 3000)
 	build_path = /obj/item/weapon/gun/energy/temperature
+	locked = 1
+	req_lock_access = list(access_tox, access_robotics, access_rd)
+
 
 /datum/design/flora_gun
 	name = "Floral Somatoray"
@@ -2176,6 +2203,8 @@ k
 	materials = list("$iron" = 8000, "$silver" = 2000, "$diamond" = 1000)
 	build_path = /obj/item/weapon/gun/projectile/automatic
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/ammo_9mm
 	name = "Ammunition Box (9mm)"
@@ -2407,6 +2436,8 @@ k
 	materials = list("$iron" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/sunglasses/sechud
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /////////////////////////////////////////
 /////////////////Engineering/////////////
@@ -2439,6 +2470,15 @@ k
 	materials = list("$iron" = 500, "$glass" = 1000, "$gold" = 200, "$silver" = 200)
 	build_path = /obj/item/device/device_analyser
 
+/datum/design/component_exchanger
+	name = "Rapid Machinery Component Exchanger"
+	desc = "A device that allows to quickly replace machinery components, useful for upgrading."
+	id = "componentexchanger"
+	req_tech = list("magnets"=2, "engineering"=4, "materials"=5, "programming"=3)
+	build_type = PROTOLATHE
+	materials = list("$iron" = 500, "$glass" = 1000, "$gold" = 200, "$silver" = 200)
+	build_path = /obj/item/device/component_exchanger
+
 /////////////////////////////////////////
 //////////////////Security///////////////
 /////////////////////////////////////////
@@ -2452,6 +2492,8 @@ k
 	materials = list("$iron" = 1500, "$glass" = 2500, "$diamond" = 3750, "$silver" = 1000, "$uranium" = 500)
 	build_path = /obj/item/clothing/suit/armor/laserproof
 	locked = 1
+	req_lock_access = list(access_armory)
+
 
 /datum/design/advancedeod
 	name = "Advanced EOD Suit"

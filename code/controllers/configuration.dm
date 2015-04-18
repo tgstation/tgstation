@@ -160,6 +160,7 @@
 	var/emag_recharge_ticks = 0
 
 	var/map_voting = 0
+	var/renders_url = ""
 
 	var/default_ooc_color = "#002eb8"
 
@@ -519,6 +520,8 @@
 					vgws_base_url = value
 				if("map_voting")
 					map_voting = 1
+				if("renders_url")
+					renders_url = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

@@ -182,7 +182,7 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 		return 1
 	else
 		for(var/mob/M in viewers(src))
-			M.show_message("\red The [src.name] shuts down!")
+			M.show_message("<span class='warning'>The [src.name] shuts down!</span>")
 		turn_off()
 		investigation_log(I_SINGULO,"ran out of power and <font color='red'>deactivated</font>")
 		src.power = 0

@@ -36,28 +36,28 @@
 				return
 		for(var/mob/O in viewers(target, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>[] is trying to put a [] on []</B>", source, item, target), 1)
+				O.show_message(text("<span class='danger'>[] is trying to put a [] on []</span>", source, item, target), 1)
 	else
 		var/message = null
 		switch(place)
 			if("mask")
 				if(istype(target.wear_mask, /obj/item/clothing)&&!target.wear_mask:canremove)
-					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.wear_mask, target)
+					message = text("<span class='danger'>[] fails to take off \a [] from []'s body!</span>", source, target.wear_mask, target)
 				else
-					message = text("\red <B>[] is trying to take off \a [] from []'s head!</B>", source, target.wear_mask, target)
+					message = text("<span class='danger'>[] is trying to take off \a [] from []'s head!</span>", source, target.wear_mask, target)
 			if("l_hand")
-				message = text("\red <B>[] is trying to take off a [] from []'s left hand!</B>", source, target.l_hand, target)
+				message = text("<span class='danger'>[] is trying to take off a [] from []'s left hand!</span>", source, target.l_hand, target)
 			if("r_hand")
-				message = text("\red <B>[] is trying to take off a [] from []'s right hand!</B>", source, target.r_hand, target)
+				message = text("<span class='danger'>[] is trying to take off a [] from []'s right hand!</span>", source, target.r_hand, target)
 			if("back")
-				message = text("\red <B>[] is trying to take off a [] from []'s back!</B>", source, target.back, target)
+				message = text("<span class='danger'>[] is trying to take off a [] from []'s back!</span>", source, target.back, target)
 			if("handcuff")
-				message = text("\red <B>[] is trying to unhandcuff []!</B>", source, target)
+				message = text("<span class='danger'>[] is trying to unhandcuff []!</span>", source, target)
 			if("internal")
 				if (target.internal)
-					message = text("\red <B>[] is trying to remove []'s internals</B>", source, target)
+					message = text("<span class='danger'>[] is trying to remove []'s internals</span>", source, target)
 				else
-					message = text("\red <B>[] is trying to set on []'s internals.</B>", source, target)
+					message = text("<span class='danger'>[] is trying to set on []'s internals.</span>", source, target)
 			else
 		for(var/mob/M in viewers(target, null))
 			M.show_message(message, 1)
@@ -70,7 +70,7 @@
 	if(!source || !target)						return
 	if(source.loc != s_loc)						return
 	if(target.loc != t_loc)						return
-	if(LinkBlocked(s_loc,t_loc))				return
+	if(!source.Adjacent(target))				return
 	if(item && source.get_active_hand() != item)	return
 	if ((source.restrained() || source.stat))	return
 	switch(place)
@@ -89,7 +89,7 @@
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item/clothing/mask))
-					source.drop_item()
+					source.drop_item(item)
 					loc = target
 					item.layer = 20
 					target.wear_mask = item
@@ -107,7 +107,7 @@
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item))
-					source.drop_item()
+					source.drop_item(item)
 					loc = target
 					item.layer = 20
 					target.l_hand = item
@@ -127,7 +127,7 @@
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item))
-					source.drop_item()
+					source.drop_item(item)
 					loc = target
 					item.layer = 20
 					target.r_hand = item
@@ -147,7 +147,7 @@
 				W.add_fingerprint(source)
 			else
 				if ((istype(item, /obj/item) && item.slot_flags & SLOT_BACK ))
-					source.drop_item()
+					source.drop_item(item)
 					loc = target
 					item.layer = 20
 					target.back = item
@@ -165,7 +165,7 @@
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item/weapon/handcuffs))
-					source.drop_item()
+					source.drop_item(item)
 					target.handcuffed = item
 					item.loc = target
 		if("internal")
@@ -228,7 +228,7 @@
 		if(slot_in_backpack)
 			W.loc = src.back
 		else
-			usr << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
+			usr << "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>"
 			return
 
 	W.layer = 20

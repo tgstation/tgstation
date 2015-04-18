@@ -250,6 +250,6 @@ datum/hud/New(mob/owner)
 			hud_used.persistant_inventory_update()
 			update_action_buttons()
 		else
-			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
+			usr << "<span class='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>"
 	else
-		usr << "\red This mob type does not use a HUD."
+		usr << "<span class='warning'>This mob type does not use a HUD.</span>"

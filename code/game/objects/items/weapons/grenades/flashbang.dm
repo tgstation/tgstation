@@ -27,7 +27,7 @@
 			S.active = 0										// -- Polymorph
 			S.icon_state = "shield0"
 
-	M << "\red <B>BANG</B>"
+	M << "<span class='danger'>BANG</span>"
 	playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
 
 //Checking for protections
@@ -81,19 +81,19 @@
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
 		if (E && E.damage >= E.min_bruised_damage)
-			M << "\red Your eyes start to burn badly!"
+			M << "<span class='warning'>Your eyes start to burn badly!</span>"
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
 				if (E.damage >= E.min_broken_damage)
-					M << "\red You can't see anything!"
+					M << "<span class='warning'>You can't see anything!</span>"
 	if (M.ear_damage >= 15)
-		M << "\red Your ears start to ring badly!"
+		M << "<span class='warning'>Your ears start to ring badly!</span>"
 		if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
 			if (prob(M.ear_damage - 10 + 5))
-				M << "\red You can't hear anything!"
+				M << "<span class='warning'>You can't hear anything!</span>"
 				M.sdisabilities |= DEAF
 	else
 		if (M.ear_damage >= 5)
-			M << "\red Your ears start to ring!"
+			M << "<span class='warning'>Your ears start to ring!</span>"
 	M.update_icons()
 
 /obj/effect/effect/smoke/flashbang

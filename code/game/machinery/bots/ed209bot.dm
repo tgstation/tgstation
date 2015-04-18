@@ -231,7 +231,7 @@ Auto Patrol: []"},
 		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+				O.show_message("<span class='danger'>[src] buzzes oddly!</span>", 1)
 		src.target = null
 		if(user) src.oldtarget_name = user.name
 		src.last_found = world.time
@@ -320,7 +320,7 @@ Auto Patrol: []"},
 					if(declare_arrests)
 						var/area/location = get_area(src)
 						broadcast_security_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] suspect <b>[target]</b> in <b>[location]</b>", src)
-					visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
+					visible_message("<span class='danger'>[src.target] has been stunned by [src]!</span>")
 
 					mode = SECBOT_PREP_ARREST
 					src.anchored = 1
@@ -353,7 +353,7 @@ Auto Patrol: []"},
 				if (!src.target.handcuffed && !src.arrest_type)
 					playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
-					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
+					visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>")
 
 					spawn(60)
 						if (get_dist(src, src.target) <= 1)
@@ -789,7 +789,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
@@ -934,7 +934,7 @@ Auto Patrol: []"},
 	switch(build_step)
 		if(0,1)
 			if( istype(W, /obj/item/robot_parts/l_leg) || istype(W, /obj/item/robot_parts/r_leg) )
-				user.drop_item()
+				user.drop_item(W)
 				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the robot leg to [src].</span>"
@@ -952,7 +952,7 @@ Auto Patrol: []"},
 			else if( istype(W, /obj/item/clothing/suit/bluetag) )
 				lasercolor = "b"
 			if( lasercolor || istype(W, /obj/item/clothing/suit/armor/vest) )
-				user.drop_item()
+				user.drop_item(W)
 				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the armor to [src].</span>"
@@ -969,7 +969,7 @@ Auto Patrol: []"},
 					user << "<span class='notice'>You welded the vest to [src].</span>"
 		if(4)
 			if( istype(W, /obj/item/clothing/head/helmet) )
-				user.drop_item()
+				user.drop_item(W)
 				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the helmet to [src].</span>"
@@ -979,7 +979,7 @@ Auto Patrol: []"},
 
 		if(5)
 			if( isprox(W) )
-				user.drop_item()
+				user.drop_item(W)
 				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the prox sensor to [src].</span>"
@@ -1019,7 +1019,7 @@ Auto Patrol: []"},
 			user << "<span class='notice'>You add [W] to [src].</span>"
 			src.item_state = "[lasercolor]ed209_taser"
 			src.icon_state = "[lasercolor]ed209_taser"
-			user.drop_item()
+			user.drop_item(W)
 			qdel(W)
 
 		if(8)
@@ -1039,7 +1039,7 @@ Auto Patrol: []"},
 				user << "<span class='notice'>You complete the ED-209.</span>"
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/ed209(T,created_name,lasercolor)
-				user.drop_item()
+				user.drop_item(W)
 				qdel(W)
 				user.drop_from_inventory(src)
 				qdel(src)

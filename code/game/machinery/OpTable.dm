@@ -47,8 +47,8 @@
 
 /obj/machinery/optable/attack_paw(mob/user as mob)
 	if ((M_HULK in usr.mutations))
-		usr << text("\blue You destroy the operating table.")
-		visible_message("\red [usr] destroys the operating table!")
+		usr << text("<span class='notice'>You destroy the operating table.</span>")
+		visible_message("<span class='warning'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		del(src)
 	if (!( locate(/obj/machinery/optable, user.loc) ))
@@ -60,8 +60,8 @@
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
 	if (M_HULK in usr.mutations)
-		usr << text("\blue You destroy the table.")
-		visible_message("\red [usr] destroys the operating table!")
+		usr << text("<span class='notice'>You destroy the table.</span>")
+		visible_message("<span class='warning'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		del(src)
 	return
@@ -79,7 +79,7 @@
 
 	if ((( istype(O, /obj/item/weapon) ) || user.get_active_hand() == O))
 
-		user.drop_item()
+		user.drop_item(O)
 		if (O.loc != src.loc)
 			step(O, get_dir(O, src))
 		return
@@ -106,7 +106,7 @@
 			L.client.eye = src
 		L.resting = 1
 		L.loc = src.loc
-		visible_message("\red [L] has been laid on the operating table by [user].", 3)
+		visible_message("<span class='warning'>[L] has been laid on the operating table by [user].</span>", 3)
 		for(var/obj/OO in src)
 			OO.loc = src.loc
 		src.add_fingerprint(user)
@@ -133,7 +133,7 @@
 	if (C == user)
 		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
 	else
-		visible_message("\red [C] has been laid on the operating table by [user].", 3)
+		visible_message("<span class='warning'>[C] has been laid on the operating table by [user].</span>", 3)
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
@@ -154,11 +154,11 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained())
+	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return
 
 	if(src.victim)
-		usr << "\blue <B>The table is already occupied!</B>"
+		usr << "<span class='notice'><B>The table is already occupied!</B></span>"
 		return
 
 	take_victim(usr,usr)
@@ -170,5 +170,5 @@
 			del(W)
 			return
 	if(isrobot(user)) return
-	user.drop_item(src.loc)
+	user.drop_item(W, src.loc)
 	return

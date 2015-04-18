@@ -306,7 +306,7 @@
 		return
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
 		if (isnull(coin))
-			user.drop_item(src)
+			user.drop_item(W, src)
 			coin = W
 			user << "<span class='notice'>You insert a coin into [src].</span>"
 		else
@@ -315,7 +315,7 @@
 		return
 	else if(istype(W, /obj/item/voucher))
 		if(can_accept_voucher(W, user))
-			user.drop_item(src)
+			user.drop_item(W, src)
 			user << "<span class='notice'>You insert [W] into [src].</span>"
 			return voucher_act(W, user)
 		else
@@ -516,10 +516,10 @@
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
 			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ) && !isMoMMI(R))
-				usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+				usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 				return
 		else
-			usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+			usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 			return
 
 	if(href_list["remove_coin"])
@@ -530,7 +530,7 @@
 		coin.loc = get_turf(src)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
-		usr << "\blue You remove the [coin] from the [src]"
+		usr << "<span class='notice'>You remove the [coin] from the [src]</span>"
 		coin = null
 	usr.set_machine(src)
 
@@ -539,7 +539,7 @@
 		//testing("vend: [href]")
 
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
-			usr << "\red Access denied." //Unless emagged of course
+			usr << "<span class='warning'>Access denied.</span>" //Unless emagged of course
 			flick(src.icon_deny,src)
 			return
 
@@ -596,7 +596,7 @@
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user, by_voucher = 0)
 	if (!allowed(user) && !emagged && wires.IsIndexCut(VENDING_WIRE_IDSCAN)) //For SECURE VENDING MACHINES YEAH
-		user << "\red Access denied." //Unless emagged of course
+		user << "<span class='warning'>Access denied.</span>" //Unless emagged of course
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
@@ -719,7 +719,7 @@
 		return 0
 	spawn(0)
 		throw_item.throw_at(target, 16, 3)
-	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
+	src.visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return 1
 
 /obj/machinery/vending/update_icon()
@@ -1020,7 +1020,7 @@
 				usr << "You begin to insert \the [C] into \the [src]."
 				if(do_after(user, 10))
 					usr << "<span class='notice'>You secure \the [C]!</span>"
-					user.drop_item(src)
+					user.drop_item(C, src)
 					_circuitboard=C
 					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 					build++
@@ -1225,7 +1225,7 @@
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/circuitboard/airlock = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/circuitboard/air_alarm = 10,/obj/item/weapon/intercom_electronics = 10,/obj/item/weapon/cell/high = 10)
+	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/circuitboard/airlock = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/circuitboard/air_alarm = 10,/obj/item/weapon/intercom_electronics = 10,/obj/item/weapon/cell/high = 10, /obj/item/mounted/frame/newscaster = 10)
 	contraband = list(/obj/item/weapon/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
 
@@ -1289,9 +1289,12 @@
 					/obj/item/clothing/suit/wizrobe/fake = 3,/obj/item/clothing/head/wizard/fake = 3,/obj/item/weapon/staff = 3,/obj/item/clothing/mask/gas/sexyclown = 3,
 					/obj/item/clothing/under/sexyclown = 3,/obj/item/clothing/mask/gas/sexymime = 3,/obj/item/clothing/under/sexymime = 3,/obj/item/clothing/suit/apron/overalls = 3,
 					/obj/item/clothing/head/rabbitears = 3,/obj/item/clothing/head/lordadmiralhat = 3,/obj/item/clothing/suit/lordadmiral = 3,/obj/item/clothing/suit/doshjacket = 3,/obj/item/clothing/under/jester = 3, /obj/item/clothing/head/jesterhat = 3,/obj/item/clothing/shoes/jestershoes = 3, /obj/item/clothing/suit/kefkarobe = 3,
-					/obj/item/clothing/head/helmet/aviatorhelmet = 3,/obj/item/clothing/shoes/aviatorboots = 3, /obj/item/clothing/under/aviatoruniform = 3,/obj/item/clothing/head/libertyhat = 3,/obj/item/clothing/suit/libertycoat = 3, /obj/item/clothing/under/libertyshirt = 3, /obj/item/clothing/shoes/libertyshoes = 3) //Pretty much everything that had a chance to spawn.
+					/obj/item/clothing/head/helmet/aviatorhelmet = 3,/obj/item/clothing/shoes/aviatorboots = 3, /obj/item/clothing/under/aviatoruniform = 3,/obj/item/clothing/head/libertyhat = 3,/obj/item/clothing/suit/libertycoat = 3, /obj/item/clothing/under/libertyshirt = 3, /obj/item/clothing/shoes/libertyshoes = 3,
+					/obj/item/clothing/head/helmet/megahelmet = 3, /obj/item/clothing/under/mega = 3, /obj/item/clothing/gloves/megagloves = 3, /obj/item/clothing/shoes/megaboots =3, /obj/item/clothing/head/helmet/protohelmet = 3, /obj/item/clothing/under/proto =3, /obj/item/clothing/gloves/protogloves =3, /obj/item/clothing/shoes/protoboots =3,
+					/obj/item/clothing/under/roll = 3, /obj/item/clothing/head/maidhat =3, /obj/item/clothing/under/maid = 3, /obj/item/clothing/suit/maidapron = 3) //Pretty much everything that had a chance to spawn.
 	contraband = list(/obj/item/clothing/suit/cardborg = 3,/obj/item/clothing/head/cardborg = 3,/obj/item/clothing/suit/judgerobe = 3,/obj/item/clothing/head/powdered_wig = 3)
-	premium = list(/obj/item/clothing/suit/hgpirate = 3, /obj/item/clothing/head/hgpiratecap = 3, /obj/item/clothing/head/helmet/roman = 3, /obj/item/clothing/head/helmet/roman/legionaire = 3, /obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/weapon/shield/riot/roman = 3,/obj/item/clothing/under/stilsuit = 3)
+	premium = list(/obj/item/clothing/suit/hgpirate = 3, /obj/item/clothing/head/hgpiratecap = 3, /obj/item/clothing/head/helmet/roman = 3, /obj/item/clothing/head/helmet/roman/legionaire = 3, /obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/weapon/shield/riot/roman = 3,/obj/item/clothing/under/stilsuit = 3,
+	/obj/item/clothing/head/helmet/breakhelmet = 3, /obj/item/clothing/head/helmet/joehelmet = 3, /obj/item/clothing/under/joe = 3, /obj/item/clothing/gloves/joegloves = 3, /obj/item/clothing/shoes/joeboots =3, /obj/item/weapon/shield/riot/proto = 3, /obj/item/weapon/shield/riot/joe = 3, /obj/item/clothing/under/darkholme = 3)
 
 	pack = /obj/structure/vendomatpack/autodrobe
 

@@ -139,7 +139,7 @@
 				spawn(rand(4,120) * 10)
 					M.explode()
 				for(var/mob/P in view(7))
-					P.visible_message("\red The missile skids to a halt, vibrating and sparking ominously!")
+					P.visible_message("<span class='warning'>The missile skids to a halt, vibrating and sparking ominously!</span>")
 
 	if(!cur_target)
 		cur_target = get_new_target() //get new target
@@ -252,10 +252,10 @@
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
+				O.show_message(text("<span class='danger'>[] has slashed at []!</span>", M, src), 1)
 		src.health -= 15
 		if (src.health <= 0)
 			src.die()
 	else
-		M << "\green That object is useless to you."
+		M << "<span class='good'>That object is useless to you.</span>"
 	return

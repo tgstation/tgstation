@@ -33,7 +33,7 @@
 			return
 		if (istype(G, /obj/item/weapon/gun/energy/staff))
 			return
-		user.drop_item(src)
+		user.drop_item(G, src)
 		charging = G
 		use_power = 2
 		update_icon()

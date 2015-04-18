@@ -82,7 +82,7 @@
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 			updateDialog()
 		else
-			user << "\red Access denied."
+			user << "<span class='warning'>Access denied.</span>"
 
 /obj/machinery/shield_gen/attack_paw(user as mob)
 	return src.attack_hand(user)

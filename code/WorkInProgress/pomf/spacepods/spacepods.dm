@@ -121,7 +121,7 @@
 		if(battery)
 			user << "<span class='notice'>The pod already has a battery.</span>"
 			return
-		user.drop_item(src)
+		user.drop_item(W, src)
 		battery = W
 		return
 	if(istype(W, /obj/item/device/spacepod_equipment))
@@ -136,7 +136,7 @@
 				return
 			else
 				user << "<span class='notice'>You insert \the [W] into the equipment system.</span>"
-				user.drop_item(equipment_system)
+				user.drop_item(W, equipment_system)
 				equipment_system.weapon_system = W
 				equipment_system.weapon_system.my_atom = src
 				new/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapon_system(src, equipment_system.weapon_system.verb_name, equipment_system.weapon_system.verb_desc) //Yes, it has to be referenced like that. W.verb_name/desc doesn't compile.
@@ -308,16 +308,16 @@
 	set name = "Enter Pod"
 	set src in oview(1)
 
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
 		return
 	if (usr.stat || !ishuman(usr))
 		return
 	if (src.occupant)
-		usr << "\blue <B>The [src.name] is already occupied!</B>"
+		usr << "<span class='notice'><B>The [src.name] is already occupied!</B></span>"
 		return
 /*
 	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
+		usr << "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>"
 		return
 */
 	for(var/mob/living/carbon/slime/M in range(1,usr))
@@ -326,7 +326,7 @@
 			return
 //	usr << "You start climbing into [src.name]"
 
-	visible_message("\blue [usr] starts to climb into [src.name]")
+	visible_message("<span class='notice'>[usr] starts to climb into [src.name]</span>")
 
 	if(enter_after(40,usr))
 		if(!src.occupant)

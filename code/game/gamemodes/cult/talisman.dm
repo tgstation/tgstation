@@ -51,7 +51,7 @@
 				blind()
 				qdel(src)
 			if("runestun")
-				user << "\red To use this talisman, attack your target directly."
+				user << "<span class='warning'>To use this talisman, attack your target directly.</span>"
 				return
 			if("supply")
 				supply()

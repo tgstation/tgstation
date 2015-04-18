@@ -243,7 +243,7 @@ Status: []<BR>"},
 		if(anchored) // you can't turn a turret on/off if it's not anchored/secured
 			on = !on // toggle on/off
 		else
-			usr << "\red It has to be secured first!"
+			usr << "<span class='warning'>It has to be secured first!</span>"
 
 		updateUsrDialog()
 		return
@@ -288,10 +288,10 @@ Status: []<BR>"},
 
 /obj/machinery/porta_turret/emag(mob/user)
 	if(!emagged)
-		user << "\red You short out [src]'s threat assessment circuits."
+		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\red [src] hums oddly...", 1)
+				O.show_message("<span class='warning'>[src] hums oddly...</span>", 1)
 		emagged = 1
 		src.on = 0 // turns off the turret temporarily
 		sleep(60) // 6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
@@ -346,7 +346,7 @@ Status: []<BR>"},
 			locked = !src.locked
 			user << "Controls are now [locked ? "locked." : "unlocked."]"
 		else
-			user << "\red Access denied."
+			user << "<span class='warning'>Access denied.</span>"
 
 	else
 		user.delayNextAttack(10)
@@ -699,7 +699,7 @@ Status: []<BR>"},
 		if(0) // first step
 			if(istype(W, /obj/item/weapon/wrench) && !anchored)
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
-				user << "\blue You secure the external bolts."
+				user << "<span class='notice'>You secure the external bolts.</span>"
 				anchored = 1
 				build_step = 1
 				return
@@ -716,7 +716,7 @@ Status: []<BR>"},
 		if(1)
 			if(istype(W, /obj/item/stack/sheet/metal))
 				if(W:amount>=2) // requires 2 metal sheets
-					user << "\blue You add some metal armor to the interior frame."
+					user << "<span class='notice'>You add some metal armor to the interior frame.</span>"
 					build_step = 2
 					W:amount -= 2
 					icon_state = "turret_frame2"
@@ -735,7 +735,7 @@ Status: []<BR>"},
 		if(2)
 			if(istype(W, /obj/item/weapon/wrench))
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
-				user << "\blue You bolt the metal armor into place."
+				user << "<span class='notice'>You bolt the metal armor into place.</span>"
 				build_step = 3
 				return
 
@@ -743,7 +743,7 @@ Status: []<BR>"},
 				var/obj/item/weapon/weldingtool/WT = W
 				if(!WT.isOn()) return
 				if (WT.get_fuel() < 5) // uses up 5 fuel.
-					user << "\red You need more fuel to complete this task."
+					user << "<span class='warning'>You need more fuel to complete this task.</span>"
 					return
 
 				playsound(get_turf(src), pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
@@ -763,7 +763,7 @@ Status: []<BR>"},
 				var/obj/item/weapon/gun/energy/E = W // typecasts the item to an energy gun
 				installation = W.type // installation becomes W.type
 				gun_charge = E.power_supply.charge // the gun's charge is stored in src.gun_charge
-				user << "\blue You add \the [W] to the turret."
+				user << "<span class='notice'>You add \the [W] to the turret.</span>"
 				build_step = 4
 				qdel(W) // delete the gun :(
 				return
@@ -777,7 +777,7 @@ Status: []<BR>"},
 		if(4)
 			if(isprox(W))
 				build_step = 5
-				user << "\blue You add the prox sensor to the turret."
+				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
 				qdel(W)
 				return
 
@@ -787,7 +787,7 @@ Status: []<BR>"},
 			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 				build_step = 6
-				user << "\blue You close the internal access hatch."
+				user << "<span class='notice'>You close the internal access hatch.</span>"
 				return
 
 			// attack_hand() removes the prox sensor
@@ -795,7 +795,7 @@ Status: []<BR>"},
 		if(6)
 			if(istype(W, /obj/item/stack/sheet/metal))
 				if(W:amount>=2)
-					user << "\blue You add some metal armor to the exterior frame."
+					user << "<span class='notice'>You add some metal armor to the exterior frame.</span>"
 					build_step = 7
 					W:amount -= 2
 					if(W:amount <= 0)
@@ -813,13 +813,13 @@ Status: []<BR>"},
 				var/obj/item/weapon/weldingtool/WT = W
 				if(!WT.isOn()) return
 				if (WT.get_fuel() < 5)
-					user << "\red You need more fuel to complete this task."
+					user << "<span class='warning'>You need more fuel to complete this task.</span>"
 
 				playsound(get_turf(src), pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 30))
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 8
-					user << "\blue You weld the turret's armor down."
+					user << "<span class='notice'>You weld the turret's armor down.</span>"
 
 					// The final step: create a full turret
 					var/obj/machinery/porta_turret/Turret = new/obj/machinery/porta_turret(locate(x,y,z))
@@ -994,7 +994,7 @@ Status: []<BR>"},
 			else
 				Parent_Turret.on=1
 		else
-			usr << "\red It has to be secured first!"
+			usr << "<span class='warning'>It has to be secured first!</span>"
 
 		updateUsrDialog()
 		return
@@ -1018,10 +1018,10 @@ Status: []<BR>"},
 /obj/machinery/porta_turret_cover/attackby(obj/item/W as obj, mob/user as mob)
 
 	if ((istype(W, /obj/item/weapon/card/emag)) && (!Parent_Turret.emagged))
-		user << "\red You short out [Parent_Turret]'s threat assessment circuits."
+		user << "<span class='warning'>You short out [Parent_Turret]'s threat assessment circuits.</span>"
 		spawn(0)
 			for(var/mob/O in hearers(Parent_Turret, null))
-				O.show_message("\red [Parent_Turret] hums oddly...", 1)
+				O.show_message("<span class='warning'>[Parent_Turret] hums oddly...</span>", 1)
 		Parent_Turret.emagged = 1
 		Parent_Turret.on = 0
 		sleep(40)
@@ -1048,7 +1048,7 @@ Status: []<BR>"},
 			user << "Controls are now [Parent_Turret.locked ? "locked." : "unlocked."]"
 			updateUsrDialog()
 		else
-			user << "\red Access denied."
+			user << "<span class='warning'>Access denied.</span>"
 
 	else
 		Parent_Turret.health -= W.force * 0.5

@@ -24,19 +24,19 @@
 		return
 	if (user && src.imp)
 		for (var/mob/O in viewers(M, null))
-			O.show_message("\red [user] is attemping to implant [M].", 1)
+			O.show_message("<span class='warning'>[user] is attemping to implant [M].</span>", 1)
 
 		var/turf/T1 = get_turf(M)
 		if (T1 && ((M == user) || do_after(user, 50)))
 			if(user && M && (get_turf(M) == T1) && src && src.imp)
 				for (var/mob/O in viewers(M, null))
-					O.show_message("\red [M] has been implanted by [user].", 1)
+					O.show_message("<span class='warning'>[M] has been implanted by [user].</span>", 1)
 
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
 				msg_admin_attack("[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-				user.show_message("\red You implanted the implant into [M].")
+				user.show_message("<span class='warning'>You implanted the implant into [M].</span>")
 				if(src.imp.implanted(M, user))
 					src.imp.loc = M
 					src.imp.imp_in = M
@@ -129,7 +129,7 @@
 
 /obj/item/weapon/implanter/compressed/afterattack(var/obj/item/I, mob/user as mob)
 	if(is_type_in_list(I,forbidden_types))
-		user << "\red A red light flickers on the implanter."
+		user << "<span class='warning'>A red light flickers on the implanter.</span>"
 		return
 	if(istype(I) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
@@ -137,7 +137,7 @@
 			if(istype(I,/obj/item/weapon/storage))
 				..()
 				return
-			user << "\red Something is already scanned inside the implant!"
+			user << "<span class='warning'>Something is already scanned inside the implant!</span>"
 			return
 		if(user)
 			user.u_equip(I)

@@ -317,7 +317,7 @@ This function restores all organs.
 				W.add_blood(src)
 				if(ismob(W.loc))
 					var/mob/living/H = W.loc
-					H.drop_item()
+					H.drop_item(W, src)
 				W.loc = src
 */
 	if(istype(used_weapon,/obj/item/projectile/bullet)) //We don't want to use the actual projectile item, so we spawn some shrapnel.

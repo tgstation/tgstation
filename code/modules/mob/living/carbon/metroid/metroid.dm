@@ -76,7 +76,7 @@
 	real_name = name
 	spawn (1)
 		regenerate_icons()
-		src << "\blue Your icons have been generated!"
+		src << "<span class='notice'>Your icons have been generated!</span>"
 	..()
 
 /mob/living/carbon/slime/adult/New()
@@ -258,7 +258,7 @@
 
 		//paralysis += 1
 
-	show_message("\red The blob attacks you!")
+	show_message("<span class='warning'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 
@@ -278,7 +278,7 @@
 		return
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
-			M.show_message(text("\red [] has been hit by []", src, O), 1)
+			M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
 	if (health > 0)
 		adjustBruteLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
 		adjustFireLoss(30)
@@ -298,7 +298,7 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] has glomped []!</B>", src), 1)
+				O.show_message(text("<span class='danger'>The [M.name] has glomped []!</span>", src), 1)
 
 		var/damage = rand(1, 3)
 		attacked += 5
@@ -323,7 +323,7 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+			O.show_message("<span class='warning'><B>[M]</B> [M.attacktext] [src]!</span>", 1)
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -354,7 +354,7 @@
 				//playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has attacked [src]!</B>"), 1)
+						O.show_message(text("<span class='danger'>[M.name] has attacked [src]!</span>"), 1)
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
@@ -376,13 +376,13 @@
 			if(prob(60))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message("\red [M] attempts to wrestle \the [name] off!", 1)
+						O.show_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>", 1)
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message("\red [M] manages to wrestle \the [name] off!", 1)
+						O.show_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>", 1)
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				if(prob(90) && !client)
@@ -404,13 +404,13 @@
 			if(prob(30))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message("\red [M] attempts to wrestle \the [name] off of [Victim]!", 1)
+						O.show_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>", 1)
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message("\red [M] manages to wrestle \the [name] off of [Victim]!", 1)
+						O.show_message("<span class='warning'>[M] manages to wrestle \the [name] off of [Victim]!</span>", 1)
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				if(prob(80) && !client)
@@ -443,10 +443,10 @@
 					G.cell.use(2500)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall.", 2)
+							O.show_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>", 1, "<span class='warning'>You hear someone fall.</span>", 2)
 					return
 				else
-					M << "\red Not enough charge! "
+					M << "<span class='warning'>Not enough charge! </span>"
 					return
 
 	switch(M.a_intent)
@@ -469,7 +469,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+					O.show_message(text("<span class='warning'>[] has grabbed [] passively!</span>", M, src), 1)
 
 		else
 
@@ -494,7 +494,7 @@
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
+						O.show_message(text("<span class='danger'>[] has punched []!</span>", M, src), 1)
 
 				adjustBruteLoss(damage)
 				updatehealth()
@@ -502,7 +502,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
+						O.show_message(text("<span class='danger'>[] has attempted to punch []!</span>", M, src), 1)
 	return
 
 
@@ -520,7 +520,7 @@
 		if (I_HELP)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+					O.show_message(text("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>"), 1)
 
 		if (I_HURT)
 
@@ -532,18 +532,18 @@
 					damage = rand(20, 40)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has attacked [name]!</B>", M), 1)
+							O.show_message(text("<span class='danger'>[] has attacked [name]!</span>", M), 1)
 				else
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has wounded [name]!</B>", M), 1)
+							O.show_message(text("<span class='danger'>[] has wounded [name]!</span>", M), 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
+						O.show_message(text("<span class='danger'>[] has attempted to lunge at [name]!</span>", M), 1)
 
 		if (I_GRAB)
 			if (M == src)
@@ -559,7 +559,7 @@
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
+				O.show_message(text("<span class='warning'>[] has grabbed [name] passively!</span>", M), 1)
 
 		if (I_DISARM)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
@@ -569,7 +569,7 @@
 			if(prob(95))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has tackled [name]!</B>", M), 1)
+						O.show_message(text("<span class='danger'>[] has tackled [name]!</span>", M), 1)
 
 				if(Victim)
 					Victim = null
@@ -595,7 +595,7 @@
 				drop_item()
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
+						O.show_message(text("<span class='danger'>[] has disarmed [name]!</span>", M), 1)
 			adjustBruteLoss(damage)
 			updatehealth()
 	return
@@ -730,10 +730,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	attackby(obj/item/O as obj, mob/user as mob)
 		if(istype(O, /obj/item/weapon/slimesteroid2))
 			if(enhanced == 1)
-				user << "\red This extract has already been enhanced!"
+				user << "<span class='warning'>This extract has already been enhanced!</span>"
 				return ..()
 			if(Uses == 0)
-				user << "\red You can't enhance a used extract!"
+				user << "<span class='warning'>You can't enhance a used extract!</span>"
 				return ..()
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			Uses = 3
@@ -841,13 +841,13 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "\red The potion only works on baby slimes!"
+			user << "<span class='warning'>The potion only works on baby slimes!</span>"
 			return ..()
 		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
-			user << "\red Only baby slimes can be tamed!"
+			user << "<span class='warning'>Only baby slimes can be tamed!</span>"
 			return..()
 		if(M.stat)
-			user << "\red The slime is dead!"
+			user << "<span class='warning'>The slime is dead!</span>"
 			return..()
 		var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
 		pet.icon_state = "[M.colour] baby slime"
@@ -878,10 +878,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	attack(mob/living/carbon/slime/adult/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime/adult))//If target is not a slime.
-			user << "\red The potion only works on adult slimes!"
+			user << "<span class='warning'>The potion only works on adult slimes!</span>"
 			return ..()
 		if(M.stat)
-			user << "\red The slime is dead!"
+			user << "<span class='warning'>The slime is dead!</span>"
 			return..()
 		var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
 		pet.icon_state = "[M.colour] adult slime"
@@ -913,16 +913,16 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "\red The steroid only works on baby slimes!"
+			user << "<span class='warning'>The steroid only works on baby slimes!</span>"
 			return ..()
 		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
-			user << "\red Only baby slimes can use the steroid!"
+			user << "<span class='warning'>Only baby slimes can use the steroid!</span>"
 			return..()
 		if(M.stat)
-			user << "\red The slime is dead!"
+			user << "<span class='warning'>The slime is dead!</span>"
 			return..()
 		if(M.cores == 3)
-			user <<"\red The slime already has the maximum amount of extract!"
+			user <<"<span class='warning'>The slime already has the maximum amount of extract!</span>"
 			return..()
 
 		user <<"You feed the slime the steroid. It now has triple the amount of extract."
@@ -938,10 +938,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	/*afterattack(obj/target, mob/user , flag)
 		if(istype(target, /obj/item/slime_extract))
 			if(target.enhanced == 1)
-				user << "\red This extract has already been enhanced!"
+				user << "<span class='warning'>This extract has already been enhanced!</span>"
 				return ..()
 			if(target.Uses == 0)
-				user << "\red You can't enhance a used extract!"
+				user << "<span class='warning'>You can't enhance a used extract!</span>"
 				return ..()
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			target.Uses = 3
@@ -1108,13 +1108,13 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	proc/volunteer(var/mob/dead/observer/O)
 		if(O in ghosts)
 			ghosts.Remove(O)
-			O << "\red You are no longer signed up to be a golem."
+			O << "<span class='warning'>You are no longer signed up to be a golem.</span>"
 		else
 			if(!check_observer(O))
-				O << "\red You are not eligable."
+				O << "<span class='warning'>You are not eligable.</span>"
 				return
 			ghosts.Add(O)
-			O << "\blue You are signed up to be a golem."
+			O << "<span class='notice'>You are signed up to be a golem.</span>"
 
 
 /mob/living/carbon/slime/has_eyes()
@@ -1207,9 +1207,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	processing_objects.Remove(src)
 	var/turf/T = get_turf(src)
-	src.visible_message("\blue The [name] pulsates and quivers!")
+	src.visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("\blue The [name] bursts open!")
+		src.visible_message("<span class='notice'>The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		del(src)
 

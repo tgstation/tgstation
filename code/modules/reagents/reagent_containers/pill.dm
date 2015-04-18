@@ -81,7 +81,7 @@
 				if(reagents.has_reagent(bad_reagent))
 					badshit += reagents_to_log[bad_reagent]
 			if(badshit.len)
-				var/hl="\red <b>([english_list(badshit)])</b> \black"
+				var/hl="<span class='danger'>([english_list(badshit)])</span>"
 				message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 				log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
 

@@ -429,7 +429,7 @@
 	set name = "Empty Contents"
 	set category = "Object"
 
-	if((!ishuman(usr) && (src.loc != usr)) || usr.stat || usr.restrained())
+	if((!ishuman(usr) && (src.loc != usr)) || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return
 
 	var/turf/T = get_turf(src)

@@ -80,10 +80,10 @@
 
 /obj/machinery/media/tapedeck/attack_hand(var/mob/user)
 	if(stat & NOPOWER)
-		usr << "\red You don't see anything to mess with."
+		usr << "<span class='warning'>You don't see anything to mess with.</span>"
 		return
 	if(stat & BROKEN && playlist!=null)
-		user.visible_message("\red <b>[user.name] smacks the side of \the [src.name].</b>","\red You hammer the side of \the [src.name].")
+		user.visible_message("<span class='danger'>[user.name] smacks the side of \the [src.name].</span>","<span class='warning'>You hammer the side of \the [src.name].</span>")
 		stat &= ~BROKEN
 		playlist=null
 		playing=emagged
@@ -200,23 +200,23 @@
 			loop_mode = JUKEMODE_SHUFFLE
 			emagged = 1
 			playing = 1
-			user.visible_message("\red [user.name] slides something into the [src.name]'s card-reader.","\red You short out the [src.name].")
+			user.visible_message("<span class='warning'>[user.name] slides something into the [src.name]'s card-reader.</span>","<span class='warning'>You short out the [src.name].</span>")
 			update_icon()
 			update_music()
 	else if(istype(W,/obj/item/weapon/wrench))
 		var/un = !anchored ? "" : "un"
-		user.visible_message("\blue [user.name] begins [un]locking \the [src.name]'s casters.","\blue You begin [un]locking \the [src.name]'s casters.")
+		user.visible_message("<span class='notice'>[user.name] begins [un]locking \the [src.name]'s casters.</span>","<span class='notice'>You begin [un]locking \the [src.name]'s casters.</span>")
 		if(do_after(user,30))
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
-			user.visible_message("\blue [user.name] [un]locks \the [src.name]'s casters.","\red You [un]lock \the [src.name]'s casters.")
+			user.visible_message("<span class='notice'>[user.name] [un]locks \the [src.name]'s casters.</span>","<span class='warning'>You [un]lock \the [src.name]'s casters.</span>")
 			playing = emagged
 			update_music()
 			update_icon()
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	if(isobserver(usr) && !isAdminGhost(usr))
-		usr << "\red You can't push buttons when your fingers go right through them, dummy."
+		usr << "<span class='warning'>You can't push buttons when your fingers go right through them, dummy.</span>"
 		return
 
 	if(..()) return 1
@@ -234,7 +234,7 @@
 			if("Save Settings")
 				var/datum/money_account/new_linked_account = get_money_account(text2num(href_list["payableto"]),z)
 				if(!new_linked_account)
-					usr << "\red Unable to link new account. Aborting."
+					usr << "<span class='warning'>Unable to link new account. Aborting.</span>"
 					return
 
 				change_cost = max(0,text2num(href_list["set_change_cost"]))
@@ -250,7 +250,7 @@
 
 	if (href_list["playlist"])
 		if(!check_reload())
-			usr << "\red You must wait 60 seconds between playlist reloads."
+			usr << "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>"
 			return
 		playlist_id=href_list["playlist"]
 		last_reload=world.time
@@ -402,7 +402,7 @@
 /obj/machinery/media/jukebox/superjuke/attackby(obj/item/W, mob/user)
 	// NO FUN ALLOWED.  Emag list is included, anyway.
 	if(istype(W, /obj/item/weapon/card/emag))
-		user << "\red Your [W] refuses to touch \the [src]!"
+		user << "<span class='warning'>Your [W] refuses to touch \the [src]!</span>"
 		return
 	..()
 

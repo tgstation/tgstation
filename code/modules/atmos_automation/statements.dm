@@ -121,6 +121,8 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 		if(!norange)
 			if ((!in_range(parent, usr) || !istype(parent.loc, /turf)) && !istype(usr, /mob/living/silicon))
 				return 1
+	else if(!parent.custom_aghost_alerts)
+		log_adminghost("[key_name(usr)] screwed with [parent] ([href])!")
 	if(href_list["add"])
 		var/new_child=selectValidChildFor(usr)
 		if(!new_child) return 1
@@ -153,8 +155,6 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 			A.OnReset()
 		parent.updateUsrDialog()
 		return 1
-	else if(!parent.custom_aghost_alerts)
-		log_adminghost("[key_name(usr)] screwed with [parent] ([href])!")
 
 	parent.add_fingerprint(usr)
 

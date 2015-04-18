@@ -15,10 +15,13 @@
 	var/icon_locked = "lockbox+l"
 	var/icon_closed = "lockbox"
 	var/icon_broken = "lockbox+b"
+	var/tracked_access = "It doesn't look like it's ever been used."
+
 
 
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/ID = W
 		if(src.broken)
 			user << "<span class='rose'>It appears to be broken.</span>"
 			return
@@ -27,10 +30,12 @@
 			if(src.locked)
 				src.icon_state = src.icon_locked
 				user << "<span class='rose'>You lock the [src.name]!</span>"
+				tracked_access = "The tracker reads: 'Last locked by [ID.registered_name].'"
 				return
 			else
 				src.icon_state = src.icon_closed
 				user << "<span class='rose'>You unlock the [src.name]!</span>"
+				tracked_access = "The tracker reads: 'Last unlocked by [ID.registered_name].'"
 				return
 		else
 			user << "<span class='warning'>Access Denied</span>"
@@ -162,11 +167,10 @@
 	name = "semi-secure lockbox"
 	desc = "A securable locked box. Can't lock anything, but can track whoever used it."
 	req_access = list()
-	var/tracked_access = "It doesn't look like it's ever been used."
 
-/obj/item/weapon/storage/lockbox/unlockable/examine(mob/user)
+/obj/item/weapon/storage/lockbox/examine(mob/user)
 	..()
-	user << tracked_access
+	user << "<span class='info'>tracked_access</span>"
 
 /obj/item/weapon/storage/lockbox/unlockable/attackby(obj/O as obj, mob/user as mob)
 	if (istype(O, /obj/item/weapon/card/id))

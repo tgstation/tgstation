@@ -37,7 +37,7 @@
 			prime()
 			return
 		user.dir = get_dir(user, target)
-		user.drop_item()
+		user.drop_item(null, )
 		var/t = (isturf(target) ? target : target.loc)
 		walk_towards(src, t, 3)
 	return*/

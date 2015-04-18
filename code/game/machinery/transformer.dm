@@ -144,7 +144,7 @@
 
 /obj/machinery/transformer/Topic(href, href_list)
 	if(!isAI(usr))
-		usr << "\red This machine is way above your pay-grade."
+		usr << "<span class='warning'>This machine is way above your pay-grade.</span>"
 		return 0
 	if(!("act" in href_list))
 		return 0

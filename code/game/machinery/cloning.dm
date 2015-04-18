@@ -340,7 +340,7 @@
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "<span class='notice'>\The [src] processes \the [W].</span>"
 		biomass += 50
-		user.drop_item()
+		user.drop_item(W)
 		qdel(W)
 		return
 	else
@@ -362,7 +362,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.stat != 0)
+	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	src.go_out()
 	add_fingerprint(usr)

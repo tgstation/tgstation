@@ -56,7 +56,6 @@ client/proc/one_click_antag()
 		temp.restricted_jobs += temp.protected_jobs
 
 	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
 		if(applicant.client.desires_role(ROLE_TRAITOR))
@@ -67,16 +66,22 @@ client/proc/one_click_antag()
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
 
-	if(candidates.len)
-		var/numTratiors = min(candidates.len, 3)
+	if (candidates.len)
+		candidates = shuffle(candidates)
 
-		for(var/i = 0, i<numTratiors, i++)
-			H = pick(candidates)
-			H.mind.make_Tratior()
-			candidates.Remove(H)
+		var/mob/living/carbon/human/candidate
+
+		for (var/i = 1 to min(candidates.len, 3))
+			candidate = pick_n_take(candidates)
+
+			if (candidate)
+				var/datum/mind/candidate_mind = candidate.mind
+
+				if (candidate_mind)
+					if (candidate_mind.make_traitor())
+						log_admin("[key_name(owner)] has traitor'ed [key_name(candidate)] via create antagonist verb.")
 
 		return 1
-
 
 	return 0
 
@@ -338,7 +343,7 @@ client/proc/one_click_antag()
 				//So they don't forget their code or mission.
 
 
-				new_syndicate_commando << "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>"
+				new_syndicate_commando << "<span class='notice'>You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: <span class='danger'> [input]</span></span>"
 
 				numagents--
 		if(numagents >= 6)
@@ -433,8 +438,8 @@ client/proc/one_click_antag()
 					break
 
 				new_vox.key = theghost.key
-				new_vox << "\blue You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at the Tau Ceti system hosting the NSV Exodus... or was it the Luna? NSS? Utopia? Nobody is really sure, but everyong is raring to start pillaging! Your current goal is: \red<B> [input]</B>"
-				new_vox << "\red Don't forget to turn on your nitrogen internals!"
+				new_vox << "<span class='notice'>You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at the Tau Ceti system hosting the NSV Exodus... or was it the Luna? NSS? Utopia? Nobody is really sure, but everyong is raring to start pillaging! Your current goal is: <span class='danger'> [input]</span></span>"
+				new_vox << "<span class='warning'>Don't forget to turn on your nitrogen internals!</span>"
 
 				raiders--
 			if(raiders > max_raiders)

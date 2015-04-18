@@ -31,7 +31,7 @@
 	set name = "Toggle Chameleon Projector Scanning"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return
 
 	cham_proj_scan = !cham_proj_scan

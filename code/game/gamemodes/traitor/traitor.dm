@@ -162,14 +162,18 @@
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
-	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
-	traitor.current << sound('sound/voice/syndicate intro.ogg')
-	var/obj_count = 1
-	for(var/datum/objective/objective in traitor.objectives)
-		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
-	return
+	traitor.current << {"
+	<SPAN CLASS='big bold center red'>You are now a traitor!</SPAN>
+	"}
 
+	traitor.current << sound('sound/voice/syndicate intro.ogg')
+
+	var/obj_count = 1
+
+	for (var/datum/objective/objective in traitor.objectives)
+		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+
+		obj_count++
 
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
@@ -201,12 +205,12 @@
 	//Begin code phrase.
 	killer << "The Syndicate provided you with the following information on how to identify their agents:"
 	if(prob(80))
-		killer << "\red Code Phrase: \black [syndicate_code_phrase]"
+		killer << "<span class='warning'>Code Phrase: </span>[syndicate_code_phrase]"
 		killer.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 	else
 		killer << "Unfortunately, the Syndicate did not provide you with a code phrase."
 	if(prob(80))
-		killer << "\red Code Response: \black [syndicate_code_response]"
+		killer << "<span class='warning'>Code Response: </span>[syndicate_code_response]"
 		killer.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 	else
 		killer << "Unfortunately, the Syndicate did not provide you with a code response."
@@ -321,12 +325,12 @@
 	if(!safety)//If they are not a rev. Can be added on to.
 		traitor_mob << "The Syndicate provided you with the following information on how to identify other agents:"
 		if(prob(80))
-			traitor_mob << "\red Code Phrase: \black [syndicate_code_phrase]"
+			traitor_mob << "<span class='warning'>Code Phrase: </span>[syndicate_code_phrase]"
 			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 		else
 			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code phrase."
 		if(prob(80))
-			traitor_mob << "\red Code Response: \black [syndicate_code_response]"
+			traitor_mob << "<span class='warning'>Code Response: </span>[syndicate_code_response]"
 			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 		else
 			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
@@ -400,4 +404,4 @@
 	traitor_mind.special_role = null
 	update_traitor_icons_removed(traitor_mind)
 	//world << "Removed [traitor_mind.current.name] from traitor shit"
-	traitor_mind.current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now.(You don't remember who implanted you)</B></FONT>"
+	traitor_mind.current << "<span class='danger'><FONT size = 3>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now.(You don't remember who implanted you)</FONT></span>"

@@ -67,6 +67,14 @@
 		icon_state = initial(icon_state) +"_ass"
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
+	else if(istype(W,/obj/item/stack/cable_coil/) && !beakers.len)
+		var/obj/item/stack/cable_coil/coil = W
+		if(coil.amount < 2) return
+		coil.use(2)
+		var/obj/item/weapon/electrolyzer/E = new /obj/item/weapon/electrolyzer
+		user.before_take_item(src)
+		user.put_in_hands(E)
+		qdel(src)
 	else if(istype(W,/obj/item/weapon/screwdriver) && path != 2)
 		if(stage == 1)
 			path = 1
@@ -103,7 +111,7 @@
 					user << "<span class='warning'> This type of grenade cannot hold more than one slime core.</span>"
 				else
 					user << "<span class='notice'> You add \the [W] to the assembly.</span>"
-					user.drop_item(src)
+					user.drop_item(W, src)
 					beakers += W
 					E = W
 					inserted_cores++
@@ -111,8 +119,7 @@
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else if(W.reagents.total_volume)
 				user << "<span class='notice'> You add \the [W] to the assembly.</span>"
-				user.drop_item()
-				W.loc = src
+				user.drop_item(W, src)
 				beakers += W
 				stage = 1
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
@@ -297,7 +304,7 @@ obj/item/weapon/grenade/chem_grenade/exgrenade/attackby(obj/item/weapon/W as obj
 					user << "<span class='warning'> You cannot fit more than two slime cores in this grenade.</span>"
 				else
 					user << "<span class='notice'> You add \the [W] to the assembly.</span>"
-					user.drop_item(src)
+					user.drop_item(W, src)
 					beakers += W
 					if (E == null)//E = first slime extract, C = second slime extract
 						E = W
@@ -308,7 +315,7 @@ obj/item/weapon/grenade/chem_grenade/exgrenade/attackby(obj/item/weapon/W as obj
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else if(W.reagents.total_volume)
 				user << "<span class='notice'> You add \the [W] to the assembly.</span>"
-				user.drop_item(src)
+				user.drop_item(W, src)
 				beakers += W
 				stage = 1
 				name = "unsecured EX grenade with [beakers.len] containers[detonator?" and detonator":""]"

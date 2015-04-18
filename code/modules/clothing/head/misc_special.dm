@@ -21,7 +21,7 @@
 	g_amt = 1000
 	w_type = RECYK_MISC
 	var/up = 0
-	eyeprot = 2
+	eyeprot = 3
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	body_parts_covered = HEAD|EYES|MOUTH|EARS //using this instead of FULL_HEAD to show how the flags change in the code
@@ -43,7 +43,7 @@
 			src.up = !src.up
 			src.body_parts_covered |= (EYES|MOUTH|EARS)
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
-			eyeprot = 2
+			eyeprot = 3
 			icon_state = initial(icon_state)
 			usr << "You flip the [src] down to protect your eyes."
 		else

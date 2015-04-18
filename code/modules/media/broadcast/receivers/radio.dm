@@ -14,7 +14,7 @@
 
 /obj/machinery/media/receiver/boombox/attack_hand(var/mob/user)
 	if(stat & (NOPOWER|BROKEN))
-		usr << "\red You don't see anything to mess with."
+		usr << "<span class='warning'>You don't see anything to mess with.</span>"
 		return
 	user.set_machine(src)
 	interact(user)
@@ -43,7 +43,7 @@
 
 /obj/machinery/media/receiver/boombox/Topic(href,href_list)
 	if(isobserver(usr) && !isAdminGhost(usr))
-		usr << "\red You can't push buttons when your fingers go right through them, dummy."
+		usr << "<span class='warning'>You can't push buttons when your fingers go right through them, dummy.</span>"
 		return
 	..()
 	if("power" in href_list)
@@ -63,7 +63,7 @@
 				media_frequency = newfreq
 				connect_frequency()
 			else
-				usr << "\red Invalid FM frequency. (90.0, 200.0)"
+				usr << "<span class='warning'>Invalid FM frequency. (90.0, 200.0)</span>"
 	if("set_volume" in href_list)
 		var/vol=volume
 		if(href_list["set_volume"]!="-1")
@@ -78,7 +78,7 @@
 			volume = vol
 			update_music()
 		else
-			usr << "\red Invalid volume."
+			usr << "<span class='warning'>Invalid volume.</span>"
 	updateDialog()
 
 

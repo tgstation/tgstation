@@ -231,3 +231,26 @@
 	icon_state = "libertyshoes"
 	item_state = "libertyshoes"
 
+/obj/item/clothing/shoes/megaboots
+	name = "DRN-001 Boots"
+	desc = "Large armored boots, very weak to large spikes."
+	icon_state = "megaboots"
+	item_state = "megaboots"
+
+/obj/item/clothing/shoes/protoboots
+	name = "Prototype Boots"
+	desc = "Functionally identical to the DRN-001 model's boots, but in red."
+	icon_state = "protoboots"
+	item_state = "protoboots"
+
+/obj/item/clothing/shoes/megaxboots
+	name = "Maverick Hunter boots"
+	desc = "Regardless of how much stronger these boots are than the DRN-001 model's, they're still extremely easy to pierce with a large spike."
+	icon_state = "megaxboots"
+	item_state = "megaxboots"
+
+/obj/item/clothing/shoes/joeboots
+	name = "Sniper Boots"
+	desc = "Nearly identical to the Prototype's boots, except in black."
+	icon_state = "joeboots"
+	item_state = "joeboots"

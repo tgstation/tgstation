@@ -58,7 +58,7 @@
 				if(src.mind in ticker.mode.traitors)
 					ticker.mode.traitors -= src.mind
 					special_role = null
-					current << "\red <FONT size = 3><B>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now..(You don't remember who enslaved you)</B></FONT>"
+					current << "<span class='danger'><FONT size = 3>The fog clouding your mind clears. You remember nothing from the moment you were implanted until now..(You don't remember who enslaved you)</FONT></span>"
 				*/
 
 // Apply connect damage
@@ -321,15 +321,6 @@
 				L += get_contents(D.wrapped)
 		return L
 
-/mob/living/check_contents_for(A)
-	var/list/L = src.get_contents()
-
-	for(var/obj/B in L)
-		if(B.type == A)
-			return B
-	return 0
-
-
 /mob/living/proc/can_inject()
 	return 1
 
@@ -565,28 +556,31 @@
 			else
 				diag = null
 			if ((get_dist(src, pulling) > 1 || diag))
-				if (isliving(pulling))
-					var/mob/living/M = pulling
-					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
-						if (prob(75))
-							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
-								visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
-								qdel(G)
-						else
-							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
-							ok = 0
-					if (ok)
-						var/atom/movable/t = M.pulling
-						M.stop_pulling()
-						pulling.Move(T, get_dir(pulling, T))
-						if(M)
-							M.start_pulling(t)
+				if(isturf(pulling.loc))
+					if (isliving(pulling))
+						var/mob/living/M = pulling
+						var/ok = 1
+						if (locate(/obj/item/weapon/grab, M.grabbed_by))
+							if (prob(75))
+								var/obj/item/weapon/grab/G = pick(M.grabbed_by)
+								if (istype(G, /obj/item/weapon/grab))
+									visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
+									qdel(G)
+							else
+								ok = 0
+							if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
+								ok = 0
+						if (ok)
+							var/atom/movable/t = M.pulling
+							M.stop_pulling()
+							pulling.Move(T, get_dir(pulling, T))
+							if(M)
+								M.start_pulling(t)
+					else
+						if (pulling)
+							pulling.Move(T, get_dir(pulling, T))
 				else
-					if (pulling)
-						pulling.Move(T, get_dir(pulling, T))
+					stop_pulling()
 	else
 		stop_pulling()
 		. = ..()

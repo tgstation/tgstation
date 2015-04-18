@@ -45,7 +45,7 @@
 				user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 				icon_state = "1"
 				circuit = P
-				user.drop_item(src)
+				user.drop_item(P, src)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You screw the circuit board into place.</span>"
@@ -137,7 +137,7 @@
 					ticker.mode.remove_cultist(P:brainmob.mind, 1)
 					ticker.mode.remove_revolutionary(P:brainmob.mind, 1)
 
-				user.drop_item(src)
+				user.drop_item(P, src)
 				brain = P
 				usr << "Added [P]."
 				icon_state = "3b"
@@ -188,7 +188,7 @@
 				if(user:wear_suit:s_control)
 					user:wear_suit:transfer_ai("INACTIVE","NINJASUIT",src,user)
 				else
-					user << "<span class='warning'><b>ERROR</b>:</span> Remote access channel disabled.</span>"
+					user << "<span class='danger'>ERROR:</span> Remote access channel disabled.</span>"
 		return
 
 /*
@@ -206,13 +206,13 @@ That prevents a few funky behaviors.
 					if("AICARD")
 						var/obj/item/device/aicard/C = src
 						if(C.contents.len)//If there is an AI on card.
-							U << "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one."
+							U << "<span class='danger'>Transfer failed:</span> Existing AI found on this terminal. Remove existing AI to install a new one."
 						else
 							if (ticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = ticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
 									if (T.mind == malfai)
-										U << "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled."//Do ho ho ho~
+										U << "<span class='danger'>ERROR:</span> Remote transfer interface disabled."//Do ho ho ho~
 										return
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
 							T.aiRestorePowerRoutine = 0//So the AI initially has power.
@@ -229,16 +229,16 @@ That prevents a few funky behaviors.
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(C.AI)//If there is an AI on card.
-							U << "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one."
+							U << "<span class='danger'>Transfer failed:</span> Existing AI found on this terminal. Remove existing AI to install a new one."
 						else
 							if (ticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = ticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
 									if (T.mind == malfai)
-										U << "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled."
+										U << "<span class='danger'>ERROR:</span> Remote transfer interface disabled."
 										return
 							if(T.stat)//If the ai is dead/dying.
-								U << "<span class='warning'><b>ERROR</b>:</span> [T.name] data core is corrupted. Unable to install."
+								U << "<span class='danger'>ERROR:</span> [T.name] data core is corrupted. Unable to install."
 							else
 								new /obj/structure/AIcore/deactivated(T.loc)
 								T.aiRestorePowerRoutine = 0
@@ -315,11 +315,11 @@ That prevents a few funky behaviors.
 								T.occupant.cancel_camera()
 								T.occupant = null
 							else if (C.contents.len)
-								U << "<span class='warning'><b>ERROR</b>:</span> Artificial intelligence detected on terminal."
+								U << "<span class='danger'>ERROR:</span> Artificial intelligence detected on terminal."
 							else if (T.active)
-								U << "<span class='warning'><b>ERROR</b>:</span> Reconstruction in progress."
+								U << "<span class='danger'>ERROR:</span> Reconstruction in progress."
 							else if (!T.occupant)
-								U << "<span class='warning'><b>ERROR</b>:</span> Unable to locate artificial intelligence."
+								U << "<span class='danger'>ERROR:</span> Unable to locate artificial intelligence."
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(!T.contents.len)
@@ -339,7 +339,7 @@ That prevents a few funky behaviors.
 						else
 							if(!C.AI && T.occupant && !T.active)
 								if (T.occupant.stat)
-									U << "<span class='warning'><b>ERROR</b>:</span> [T.occupant.name] data core is corrupted. Unable to install."
+									U << "<span class='danger'>ERROR:</span> [T.occupant.name] data core is corrupted. Unable to install."
 								else
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
@@ -349,11 +349,11 @@ That prevents a few funky behaviors.
 									T.occupant.cancel_camera()
 									T.occupant = null
 							else if (C.AI)
-								U << "<span class='warning'><b>ERROR</b>:</span> Artificial intelligence detected on terminal."
+								U << "<span class='danger'>ERROR:</span> Artificial intelligence detected on terminal."
 							else if (T.active)
-								U << "<span class='warning'><b>ERROR</b>:</span> Reconstruction in progress."
+								U << "<span class='danger'>ERROR:</span> Reconstruction in progress."
 							else if (!T.occupant)
-								U << "<span class='warning'><b>ERROR</b>:</span> Unable to locate artificial intelligence."
+								U << "<span class='danger'>ERROR:</span> Unable to locate artificial intelligence."
 			if("NINJASUIT")//Ninjasuit
 				var/obj/item/clothing/suit/space/space_ninja/T = target
 				switch(interaction)
@@ -366,7 +366,7 @@ That prevents a few funky behaviors.
 
 							if(A)//If the host AI card is not empty.
 								if(A_T)//If there is an AI on the target card.
-									U << "<span class='warning'><b>ERROR</b>:</span> [A_T.name] already installed. Remove [A_T.name] to install a new one."
+									U << "<span class='danger'>ERROR:</span> [A_T.name] already installed. Remove [A_T.name] to install a new one."
 								else
 									A.loc = C//Throw them into the target card. Since they are already on a card, transfer is easy.
 									C.name = "inteliCard - [A.name]"
@@ -377,7 +377,7 @@ That prevents a few funky behaviors.
 									U << "<span class='notice'><b>SUCCESS</b>:</span> [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory."
 							else//If host AI is empty.
 								if(C.flush)//If the other card is flushing.
-									U << "<span class='warning'><b>ERROR</b>:</span> AI flush is in progress, cannot execute transfer protocol."
+									U << "<span class='danger'>ERROR:</span> AI flush is in progress, cannot execute transfer protocol."
 								else
 									if(A_T&&!A_T.stat)//If there is an AI on the target card and it's not inactive.
 										A_T.loc = T//Throw them into suit.
@@ -389,7 +389,7 @@ That prevents a few funky behaviors.
 										A_T << "You have been uploaded to a mobile storage device."
 										U << "<span class='notice'><b>SUCCESS</b>:</span> [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host."
 									else if(A_T)//If the target AI is dead. Else just go to return since nothing would happen if both are empty.
-										U << "<span class='warning'><b>ERROR</b>:</span> [A_T.name] data core is corrupted. Unable to install."
+										U << "<span class='danger'>ERROR:</span> [A_T.name] data core is corrupted. Unable to install."
 	else
-		U << "<span class='warning'><b>ERROR</b>:</span> AI flush is in progress, cannot execute transfer protocol."
+		U << "<span class='danger'>ERROR:</span> AI flush is in progress, cannot execute transfer protocol."
 	return

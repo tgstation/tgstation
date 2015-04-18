@@ -96,7 +96,7 @@ Class Procs:
 	set background = 1
 	#endif
 
-	world << "\red \b Processing Geometry..."
+	world << "<span class='danger'>Processing Geometry...</span>"
 	sleep(-1)
 
 	var/start_time = world.timeofday
@@ -160,7 +160,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 		#ifdef ZASDBG
 		if(updated != updating.len)
 			tick_progress = "[updating.len - updated] tiles left unupdated."
-			world << "\red [tick_progress]"
+			world << "<span class='warning'>[tick_progress]</span>"
 			. = 0
 		#endif
 

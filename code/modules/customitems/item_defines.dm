@@ -186,7 +186,7 @@ hi
 	attack_self(mob/user)
 		if(user.r_hand == src || user.l_hand == src)
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
+				O.show_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a guy.</span>", user, src), 1)
 		return
 
 /obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch
@@ -293,30 +293,30 @@ hi
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user as mob)
-	user << "\blue You click \the [src] but get no reaction. Must be dead."
+	user << "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>"
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M as mob, mob/user as mob)
 	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
-		user << "\blue You click \the [src] but get no reaction. Must be dead."
+		user << "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>"
 		return
 	if(!reagents.total_volume)
-		user << "\red \The [src] is empty."
+		user << "<span class='warning'>\The [src] is empty.</span>"
 		return
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
 		if (M == user && user.ckey == "nerezza") //Make sure this is being used by the right person, for the right reason (self injection)
-			visible_message("\blue [user] presses their \
+			visible_message("<span class='notice'>[user] presses their </span>\
 				penlight against their skin, quickly clicking the button once.", \
-				"\blue You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.", \
+				"<span class='notice'>You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.</span>", \
 				"You hear a rustle as someone moves nearby, then a sharp click.")
 		if (M != user && user.ckey == "nerezza") //Woah now, you better be careful partner
-			user << "\blue You don't want to contaminate the autoinjector."
+			user << "<span class='notice'>You don't want to contaminate the autoinjector.</span>"
 			return
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src]."
+			user << "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in \the [src].</span>"
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user as mob)
@@ -324,9 +324,9 @@ hi
 	if(user.ckey != "nerezza") return //Only the owner knows how to examine the contents.
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "\blue You examine the penlight closely and see that it has [R.volume] units of [R.name] stored."
+			usr << "<span class='notice'>You examine the penlight closely and see that it has [R.volume] units of [R.name] stored.</span>"
 	else
-		usr << "\blue You examine the penlight closely and see that it is currently empty."
+		usr << "<span class='notice'>You examine the penlight closely and see that it is currently empty.</span>"
 
 //End strange penlight
 
@@ -598,7 +598,7 @@ hi
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return 0
 
 	if(src.icon_state == "jane_sid_suit_down")

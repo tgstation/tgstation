@@ -38,11 +38,11 @@
 			if(!src.imp)	return
 			if(!src.imp.allow_reagents)	return
 			if(src.imp.reagents.total_volume >= src.imp.reagents.maximum_volume)
-				user << "\red [src] is full."
+				user << "<span class='warning'>[src] is full.</span>"
 			else
 				spawn(5)
 					I.reagents.trans_to(src.imp, 5)
-					user << "\blue You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units."
+					user << "<span class='notice'>You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units.</span>"
 		else if (istype(I, /obj/item/weapon/implanter))
 			if (I:imp)
 				if ((src.imp || I:imp.implanted))

@@ -35,7 +35,7 @@
 	if(charged == 1)
 		new /obj/effect/rend(get_turf(usr))
 		charged = 0
-		visible_message("<span class='warning'><B>[src] hums with power as [usr] deals a blow to reality itself!</B></span>")
+		visible_message("<span class='danger'>[src] hums with power as [usr] deals a blow to reality itself!</span>")
 	else
 		user << "<span class='warning'>The unearthly energies that powered the blade are now dormant.</span>"
 
@@ -49,7 +49,7 @@
 	if(charged)
 		new /obj/effect/rend/cow(get_turf(usr))
 		charged = 0
-		visible_message("<span class='warning'><B>[src] hums with power as [usr] deals a blow to hunger itself!</B></span>")
+		visible_message("<span class='danger'>[src] hums with power as [usr] deals a blow to hunger itself!</span>")
 	else
 		user << "<span class='warning'>The unearthly energies that powered the blade are now dormant.</span>"
 
@@ -70,7 +70,7 @@
 
 /obj/effect/rend/cow/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/nullrod))
-		visible_message("<span class='warning'><b>[I] strikes a blow against \the [src], banishing it!</b></span>")
+		visible_message("<span class='danger'>[I] strikes a blow against \the [src], banishing it!</span>")
 		spawn(1)
 			del src
 		return
@@ -93,7 +93,7 @@
 
 /obj/item/weapon/scrying/attack_self(mob/user as mob)
 	user << "<span class='notice'>You can see...everything!</span>"
-	visible_message("<span class='warning'><B>[usr] stares into [src], their eyes glazing over.</B></span>")
+	visible_message("<span class='danger'>[usr] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 	return
 

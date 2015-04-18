@@ -22,7 +22,7 @@
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</b>"
+		viewers(user) << "<span class='danger'>[user] is smashing \his face into the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
 
 	IsShield()
@@ -73,7 +73,7 @@
 	var/active = 0
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</b>"
+		viewers(user) << "<span class='danger'>[user] is putting the [src.name] to their head and activating it! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
 
 
@@ -96,10 +96,10 @@
 /obj/item/weapon/cloaking_device/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
-		user << "\blue The cloaking device is now active."
+		user << "<span class='notice'>The cloaking device is now active.</span>"
 		src.icon_state = "shield1"
 	else
-		user << "\blue The cloaking device is now inactive."
+		user << "<span class='notice'>The cloaking device is now inactive.</span>"
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
 	return
@@ -110,3 +110,38 @@
 	if(ismob(loc))
 		loc:update_icons()
 	..()
+
+/obj/item/weapon/shield/riot/proto
+	name = "Prototype Shield"
+	desc = "Doubles as a sled!"
+	icon_state = "protoshield"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/shields.dmi', "right_hand" = 'icons/mob/in-hand/right/shields.dmi')
+	IsShield()
+		return 1
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/spear))
+			if(cooldown < world.time - 25)
+				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+				cooldown = world.time
+		else
+			..()
+
+
+/obj/item/weapon/shield/riot/joe
+	name = "Sniper Shield"
+	desc = "Very useful for close-quarters sniping, regardless of how stupid that idea is."
+	icon_state = "joeshield"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/shields.dmi', "right_hand" = 'icons/mob/in-hand/right/shields.dmi')
+	IsShield()
+		return 1
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/spear))
+			if(cooldown < world.time - 25)
+				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+				cooldown = world.time
+		else
+			..()

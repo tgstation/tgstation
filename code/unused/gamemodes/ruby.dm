@@ -29,7 +29,7 @@
 	if(istype(ruby))
 		abomination.special_role = "abomination"
 		if(wizardstart.len == 0)
-			wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
+			wizard.current << "<span class='danger'>A starting location for you could not be found, please report this bug!</span>"
 		else
 			var/starting_loc = pick(wizardstart)
 			wizard.current.loc = starting_loc
@@ -74,9 +74,9 @@
 		var/count = 1
 		for(var/datum/objective/objective in traitor.objectives)
 			if(objective.check_completion())
-				world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+				world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='good'><B>Success</B></span>"
 			else
-				world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+				world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='warning'>Failed</span>"
 				traitorwin = 0
 			count++
 
@@ -147,7 +147,7 @@
 		var/datum/game_mode/ruby/rmode = ticker.mode
 		rmode.killed.Add(H)
 		ticker.mode:respawns += 1
-	var/fluffmessage = pick("\red <B>[usr] rips the flesh from [H]'s corpse and plucks their eyes from their sockets!</B>", "\red <B>[usr] does unspeakable things to [H]'s corpse!</B>", "\red <B>[usr] binds [H]'s corpse with their own entrails!</B>")
+	var/fluffmessage = pick("<span class='danger'><B>[usr] rips the flesh from [H]'s corpse and plucks their eyes from their sockets!</B>", "<span class='danger'>[usr] does unspeakable things to [H]'s corpse!</span>", "<span class='warning'>[usr] binds [H]'s corpse with their own entrails!</span></span>")
 	usr.visible_message(fluffmessage)
 	// play sound
 
@@ -192,7 +192,7 @@
 		//if(!H.client) continue
 		candidates.Add(H)
 
-	usr.visible_message(text("\red <B>[usr]'s flesh ripples and parts, revealing dozens of eyes poking from its surface. They all glance wildly around for a few moments before receding again.</B>"))
+	usr.visible_message(text("<span class='danger'>[usr]'s flesh ripples and parts, revealing dozens of eyes poking from its surface. They all glance wildly around for a few moments before receding again.</span>"))
 
 	var/mob/living/carbon/human/H = pick(candidates)
 
@@ -250,7 +250,7 @@
 	set category = "Abomination"
 	set desc = ""
 
-	usr.visible_message(text("\red <B>[usr]'s form warbles and distorts before settling back into its grotesque shape once more.</B>"))
+	usr.visible_message(text("<span class='danger'>[usr]'s form warbles and distorts before settling back into its grotesque shape once more.</span>"))
 	// Play a random spooky sound - maybe cause some visual, non-mechanical effects to appear at random for a few seconds.
 
 	src.verbs -= /client/proc/howl

@@ -30,15 +30,13 @@
 	// Make sure we're not picking up something that's in our factory-supplied toolbox.
 	//if(is_type_in_list(W,src.module.modules))
 	//if(is_in_modules(W))
-		//src << "\red Picking up something that's built-in to you seems a bit silly."
+		//src << "<span class='warning'>Picking up something that's built-in to you seems a bit silly.</span>"
 		//return 0
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		var/obj/item/TS = tool_state
 		if(!is_in_modules(tool_state))
-			drop_item()
-			if(TS && TS.loc)
-				TS.loc = src.loc
+			drop_item(TS)
 		else
 			TS.loc = src.module
 		contents -= tool_state
@@ -100,7 +98,7 @@
 		return drop_item()
 	return 0
 
-/mob/living/silicon/robot/mommi/drop_item(var/atom/Target)
+/mob/living/silicon/robot/mommi/drop_item(var/obj/item/to_drop, var/atom/Target)
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		if(is_in_modules(tool_state))
@@ -137,9 +135,7 @@
 		return
 	if((module_active in src.contents) && !(module_active in src.module.modules) && (module_active != src.module.emag))
 		TS = tool_state
-		drop_item()
-		if(TS && TS.loc)
-			TS.loc = get_turf(src)
+		drop_item(TS)
 	if(sight_state == module_active)
 		TS = sight_state
 		if(istype(sight_state,/obj/item/borg/sight))
@@ -155,8 +151,6 @@
 		TS = tool_state
 		if(!is_in_modules(TS))
 			drop_item()
-			if(TS && TS.loc)
-				TS.loc = get_turf(src)
 		if(istype(tool_state,/obj/item/borg/sight))
 			sight_mode &= ~tool_state:sight_mode
 		if (client)
@@ -216,8 +210,6 @@
 		var/obj/item/TS=tool_state
 		if(!is_in_modules(TS))
 			drop_item()
-			if(TS && TS.loc)
-				TS.loc = get_turf(src)
 		if(istype(tool_state,/obj/item/borg/sight))
 			sight_mode &= ~tool_state:sight_mode
 		if (client)
@@ -340,7 +332,7 @@
 	if(W == tool_state)
 		// Don't allow the MoMMI to equip tools to their head. I mean, they cant anyways, but stop them here
 		if(is_in_modules(tool_state))
-			src << "\red You cannot equip a module to your head."
+			src << "<span class='warning'>You cannot equip a module to your head.</span>"
 			return 0
 		// Remove the item in the MoMMI's claw from their HuD
 		if (client)
@@ -372,7 +364,7 @@
 			if (client)
 				client.screen += head_state
 		else
-			src << "\red You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
+			src << "<span class='warning'>You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>"
 			return 0
 	// Set the item layer and update the MoMMI's icons
 	W.layer = 20

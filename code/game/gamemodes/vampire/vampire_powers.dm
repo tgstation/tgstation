@@ -180,7 +180,7 @@
 	var/mob/living/carbon/C = M.current.vampire_active(50, 0, 1)
 	if(!C) return
 	if(!M.current.vampire_can_reach(C, 1))
-		M.current << "<span class='warning'><b>You cannot touch [C.name] from where you are standing!</b></span>"
+		M.current << "<span class='danger'>You cannot touch [C.name] from where you are standing!</span>"
 		return
 	M.current << "<span class='sinister'>You stealthily infect [C.name] with your diseased touch.</span>"
 	C.help_shake_act(M.current) // i use da colon
@@ -213,7 +213,7 @@
 	var/datum/mind/M = usr.mind
 	if(!M) return
 	if(M.current.vampire_power(0, 1))
-		M.current.visible_message("<span class='warning'><b>[M.current.name]'s eyes emit a blinding flash!</b></span>")
+		M.current.visible_message("<span class='danger'>[M.current.name]'s eyes emit a blinding flash!</span>")
 		//M.vampire.bloodusable -= 10
 		M.current.verbs -= /client/proc/vampire_glare
 		spawn(300)
@@ -274,7 +274,7 @@
 			if(C == M.current) continue
 			if(ishuman(C) && C:is_on_ears(/obj/item/clothing/ears/earmuffs)) continue
 			if(!C.vampire_affected(M)) continue
-			C << "<span class='warning'><font size='3'><b>You hear a ear piercing shriek and your senses dull!</font></b></span>"
+			C << "<span class='danger'><font size='3'>You hear a ear piercing shriek and your senses dull!</font></span>"
 			C.Weaken(8)
 			C.ear_deaf = 20
 			C.stuttering = 20

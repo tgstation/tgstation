@@ -234,7 +234,7 @@
 	return
 
 /atom/proc/AltClick(var/mob/user)
-	if(ishuman(src) && user.Adjacent(src))
+	if(!(isrobot(user)) && ishuman(src) && user.Adjacent(src))
 		src:give_item(user)
 		return
 	var/turf/T = get_turf(src)
@@ -281,7 +281,7 @@
 		nutrition = max(nutrition - rand(1,5),0)
 		handle_regular_hud_updates()
 	else
-		src << "\red You're out of energy!  You need food!"
+		src << "<span class='warning'>You're out of energy!  You need food!</span>"
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)

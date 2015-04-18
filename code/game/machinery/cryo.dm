@@ -1,3 +1,10 @@
+var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_full"),\
+												"good" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_good"),\
+												"average" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_average"),\
+												"bad" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_bad"),\
+												"worse" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_worse"),\
+												"crit" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_crit"),\
+												"dead" = image("icon" = 'icons/obj/cryogenics.dmi', "icon_state" = "moverlay_dead"))
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -91,6 +98,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
+	update_icon()
 	if(!node)
 		return
 	if(!on)
@@ -262,7 +270,7 @@
 			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
 			return
 		beaker =  G
-		user.drop_item(src)
+		user.drop_item(G, src)
 		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
 	if(..())
 		return
@@ -284,8 +292,31 @@
 	return
 
 /obj/machinery/atmospherics/unary/cryo_cell/update_icon()
+	overlays.len = 0
 	if(on)
 		if(occupant)
+			if(occupant.stat == DEAD || !occupant.has_brain())
+				overlays += cryo_health_indicator["dead"]
+			else
+				if(occupant.health >= occupant.maxHealth)
+					overlays += cryo_health_indicator["full"]
+				else
+					if(occupant.health < config.health_threshold_crit)
+						overlays += cryo_health_indicator["crit"]
+					else
+						switch((occupant.health / occupant.maxHealth) * 100) // Get a ratio of health to work with
+							if(100 to INFINITY) // No idea how we got here with the check above...
+								overlays += cryo_health_indicator["full"]
+							if(75 to 100)
+								overlays += cryo_health_indicator["good"]
+							if(50 to 75)
+								overlays += cryo_health_indicator["average"]
+							if(25 to 50)
+								overlays += cryo_health_indicator["bad"]
+							if(1 to 25)
+								overlays += cryo_health_indicator["worse"]
+							else //Shouldn't ever happen.
+								overlays += cryo_health_indicator["dead"]
 			icon_state = "cell-occupied"
 			return
 		icon_state = "cell-on"
@@ -393,7 +424,7 @@
 	set category = "Object"
 	set src in oview(1)
 	if(usr == occupant)//If the user is inside the tube...
-		if (usr.stat == 2)//and he's not dead....
+		if (usr.stat == 2 || (usr.status_flags & FAKEDEATH))//and he's not dead....
 			return
 		usr << "<span class='notice'>Release sequence activated. This will take two minutes.</span>"
 		sleep(1200)
@@ -401,7 +432,7 @@
 			return
 		go_out()//and release him from the eternal prison.
 	else
-		if (usr.stat != 0 || istype(usr, /mob/living/simple_animal))
+		if (usr.stat != 0 || istype(usr, /mob/living/simple_animal) || (usr.status_flags & FAKEDEATH))
 			return
 		go_out()
 	add_fingerprint(usr)
@@ -411,13 +442,13 @@
 	set name = "Move Inside"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || usr.buckled) //are you cuffed, dying, lying, stunned or other
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || usr.buckled || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
 			usr << "You're too busy getting your life sucked out of you."
 			return
-	if (usr.stat != 0 || stat & (NOPOWER|BROKEN))
+	if (usr.stat != 0 || stat & (NOPOWER|BROKEN) || (usr.status_flags & FAKEDEATH))
 		return
 	put_mob(usr)
 	return

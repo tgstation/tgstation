@@ -294,7 +294,7 @@
 							if(EQUIP_FAILACTION_DROP)
 								W.loc=get_turf(src) // I think.
 						return
-					drop_item()
+					drop_item(W)
 					if(!(put_in_active_hand(wearing)))
 						equip_to_slot(wearing, slot, redraw_mob)
 						switch(act_on_fail)
@@ -655,7 +655,7 @@ var/list/slot_equipment_priority = list( \
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
+	if(!src || usr.stat || (usr.status_flags & FAKEDEATH) || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
 
 	if(istype(A, /obj/effect/decal/point))
@@ -1098,7 +1098,7 @@ var/list/slot_equipment_priority = list( \
 			else
 				stat(null, "Garbage Controller is not running.")
 
-			if(processScheduler.getIsRunning())
+			if(processScheduler && processScheduler.getIsRunning())
 				var/datum/controller/process/process
 
 				process = processScheduler.getProcess("vote")
@@ -1221,8 +1221,7 @@ var/list/slot_equipment_priority = list( \
 		if(ishuman(src))
 			layer = 3.9
 		density = 0
-		drop_l_hand()
-		drop_r_hand()
+		drop_hands()
 	else
 		if(ishuman(src))
 			layer = 4
@@ -1425,9 +1424,9 @@ var/list/slot_equipment_priority = list( \
 		return
 
 	if(self)
-		visible_message("<span class='warning'><b>[src] rips [selection] out of their body.</b></span>","<span class='warning'><b>You rip [selection] out of your body.</b></span>")
+		visible_message("<span class='danger'><b>[src] rips [selection] out of their body.</b></span>","<span class='warning'>You rip [selection] out of your body.</span>")
 	else
-		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your body.</b></span>")
+		visible_message("<span class='danger'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'>[usr] rips [selection] out of your body.</span>")
 
 	selection.loc = get_turf(src)
 

@@ -242,7 +242,7 @@
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
-		visible_message("\red [user] destroys the [src]. ")
+		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		del(src)
@@ -284,10 +284,7 @@
 			del(src)
 			return
 
-		if(isrobot(user))
-			return
-
-		user.drop_item(src.loc)
+		user.drop_item(W, src.loc)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
@@ -366,7 +363,7 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return
 
 	if(ishuman(usr) || isMoMMI(usr))

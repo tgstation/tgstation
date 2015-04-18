@@ -15,6 +15,7 @@
 	g_amt = 3750
 	w_type = RECYK_GLASS
 	melt_temperature = MELTPOINT_GLASS
+	siemens_coefficient = 0 //no conduct
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	var/glass = /obj/item/stack/sheet/glass/glass
 
@@ -64,8 +65,8 @@
 	return
 
 /obj/item/weapon/shard/suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS)
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)

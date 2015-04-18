@@ -330,3 +330,10 @@
 	icon_state = "libertyhat"
 	item_state = "libertyhat"
 	flags = FPRINT
+
+/obj/item/clothing/head/maidhat
+	name = "Maid Headband"
+	desc = "Do these even do anything besides look cute?"
+	icon_state = "maidhat"
+	item_state = "maidhat"
+	flags = FPRINT

@@ -68,7 +68,7 @@ var/shuttle_call/shuttle_calls[0]
 		return 1
 
 	if (!(src.z in list(STATION_Z,CENTCOMM_Z)))
-		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		usr << "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!"
 		return
 
 	usr.set_machine(src)
@@ -262,13 +262,13 @@ var/shuttle_call/shuttle_calls[0]
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(centcomm_message_cooldown)
-					usr << "\red Arrays recycling.  Please stand by."
+					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				usr << "\blue Message transmitted."
+				usr << "<span class='notice'>Message transmitted.</span>"
 				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has sent a bluespace message to Centcomm: [input]")
 				centcomm_message_cooldown = 1
 				spawn(300)//10 minute cooldown
@@ -280,13 +280,13 @@ var/shuttle_call/shuttle_calls[0]
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(centcomm_message_cooldown)
-					usr << "\red Arrays recycling.  Please stand by."
+					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
-				usr << "\blue Message transmitted."
+				usr << "<span class='notice'>Message transmitted.</span>"
 				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has sent a bluespace message to the syndicate: [input]")
 				centcomm_message_cooldown = 1
 				spawn(300)//10 minute cooldown
@@ -313,7 +313,7 @@ var/shuttle_call/shuttle_calls[0]
 		return
 
 	if (!(src.z in list(STATION_Z, CENTCOMM_Z)))
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		user << "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!"
 		return
 
 	ui_interact(user)

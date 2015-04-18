@@ -123,7 +123,7 @@
 		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	else
 		usr << "All the leaves have fallen off the nettle from violent whacking."
-		user.drop_item()
+		user.drop_item(src)
 		qdel(src)
 
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
@@ -132,7 +132,7 @@
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	plantname = "deathnettle"
-	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
+	desc = "The <span class='danger'>glowingnettle incites <span class='warning'>rage\black in you just from looking at it!</span></span>"
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
@@ -151,7 +151,7 @@
 			force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='danger'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
@@ -165,12 +165,12 @@
 			user.take_organ_damage(0,force)
 		if(prob(50))
 			user.Paralyse(5)
-			user << "\red You are stunned by the Deathnettle when you try picking it up!"
+			user << "<span class='warning'>You are stunned by the Deathnettle when you try picking it up!</span>"
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return
 	if(istype(M, /mob/living))
-		M << "\red You are stunned by the powerful acid of the Deathnettle!"
+		M << "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>"
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
@@ -192,7 +192,7 @@
 
 	else
 		user << "All the leaves have fallen off the deathnettle from violent whacking."
-		user.drop_item()
+		user.drop_item(src)
 		qdel(src)
 
 /obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
@@ -215,6 +215,6 @@
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large/ritual))
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
-		user.drop_item()
+		user.drop_item(src)
 		qdel(src)
 		return

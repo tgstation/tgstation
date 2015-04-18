@@ -57,7 +57,7 @@
 			if("healing")
 				//caeltodo
 				if (istype(user, /mob/living/carbon/human/))
-					user << "\blue You feel a soothing energy invigorate you."
+					user << "<span class='notice'>You feel a soothing energy invigorate you.</span>"
 
 					var/mob/living/carbon/human/H = user
 					for(var/datum/organ/external/affecting in H.organs)
@@ -82,7 +82,7 @@
 					return 1
 					//
 				if (istype(user, /mob/living/carbon/monkey/))
-					user << "\blue You feel a soothing energy invigorate you."
+					user << "<span class='notice'>You feel a soothing energy invigorate you.</span>"
 					user.adjustOxyLoss(-25)
 					user.adjustToxLoss(-25)
 					user.adjustBruteLoss(-25)
@@ -92,7 +92,7 @@
 				else user << "Nothing happens."
 			if("injure")
 				if (istype(user, /mob/living/carbon/))
-					user << "\red A painful discharge of energy strikes you!"
+					user << "<span class='warning'>A painful discharge of energy strikes you!</span>"
 					user.adjustOxyLoss(rand(5,25))
 					user.adjustToxLoss(rand(5,25))
 					user.adjustBruteLoss(rand(5,25))
@@ -106,7 +106,7 @@
 				else user << "Nothing happens."
 			if("stun")
 				if (istype(user, /mob/living/carbon/))
-					user << "\red A powerful force overwhelms your consciousness."
+					user << "<span class='warning'>A powerful force overwhelms your consciousness.</span>"
 					user.weakened += 45
 					user.stuttering += 45
 					if(prob(50))
@@ -115,14 +115,14 @@
 				else user << "Nothing happens."
 			if("roboheal")
 				if (istype(user, /mob/living/silicon/robot))
-					user << "\blue Your systems report damaged components mending by themselves!"
+					user << "<span class='notice'>Your systems report damaged components mending by themselves!</span>"
 					user.adjustBruteLoss(rand(-10,-30))
 					user.adjustFireLoss(rand(-10,-30))
 					return 1
 				else user << "Nothing happens."
 			if("robohurt")
 				if (istype(user, /mob/living/silicon/robot))
-					user << "\red Your systems report severe damage has been inflicted!"
+					user << "<span class='warning'>Your systems report severe damage has been inflicted!</span>"
 					user.adjustBruteLoss(rand(10,50))
 					user.adjustFireLoss(rand(10,50))
 					return 1
@@ -143,7 +143,7 @@
 						continue
 					randomturfs.Add(T)
 				if(randomturfs.len > 0)
-					user << "\red You are suddenly zapped away elsewhere!"
+					user << "<span class='warning'>You are suddenly zapped away elsewhere!</span>"
 					if (user.buckled)
 						user.buckled.unbuckle()
 					user.loc = pick(randomturfs)
@@ -152,7 +152,7 @@
 					sparks.start()
 				return 1
 			if("sleepy")
-				user << pick("\blue You feel like taking a nap.","\blue You feel a yawn coming on.","\blue You feel a little tired.")
+				user << pick("<span class='notice'>You feel like taking a nap.</span>","<span class='notice'>You feel a yawn coming on.</span>","<span class='notice'>You feel a little tired.</span>")
 				user.drowsyness = min(user.drowsyness + rand(5,25), 50)
 				user.eye_blurry = min(user.eye_blurry + rand(1,3), 50)
 				return 1
@@ -163,7 +163,7 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					if(prob(10)) M << "\blue You feel a soothing energy radiating from something nearby."
+					if(prob(10)) M << "<span class='notice'>You feel a soothing energy radiating from something nearby.</span>"
 					M.adjustBruteLoss(-1)
 					M.adjustFireLoss(-1)
 					M.adjustToxLoss(-1)
@@ -175,7 +175,7 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					if(prob(10)) M << "\red You feel a painful force radiating from something nearby."
+					if(prob(10)) M << "<span class='warning'>You feel a painful force radiating from something nearby.</span>"
 					M.adjustBruteLoss(1)
 					M.adjustFireLoss(1)
 					M.adjustToxLoss(1)
@@ -187,23 +187,23 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					if(prob(10)) M << "\red Energy radiating from the [originator] is making you feel numb."
+					if(prob(10)) M << "<span class='warning'>Energy radiating from the [originator] is making you feel numb.</span>"
 					if(prob(20))
-						M << "\red Your body goes numb for a moment."
+						M << "<span class='warning'>Your body goes numb for a moment.</span>"
 						M.stunned += 2
 						M.weakened += 2
 						M.stuttering += 2
 				return 1
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
-					if(prob(10)) M << "\blue SYSTEM ALERT: Beneficial energy field detected!"
+					if(prob(10)) M << "<span class='notice'>SYSTEM ALERT: Beneficial energy field detected!</span>"
 					M.adjustBruteLoss(-1)
 					M.adjustFireLoss(-1)
 					M.updatehealth()
 				return 1
 			if("robohurt")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
-					if(prob(10)) M << "\red SYSTEM ALERT: Harmful energy field detected!"
+					if(prob(10)) M << "<span class='warning'>SYSTEM ALERT: Harmful energy field detected!</span>"
 					M.adjustBruteLoss(1)
 					M.adjustFireLoss(1)
 					M.updatehealth()
@@ -216,7 +216,7 @@
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge += 10
-						if(prob(10)) M << "\blue SYSTEM ALERT: Energy boosting field detected!"
+						if(prob(10)) M << "<span class='notice'>SYSTEM ALERT: Energy boosting field detected!</span>"
 				return 1
 			if("celldrain")
 				for (var/obj/machinery/power/apc/C in range(src.aurarange,originator))
@@ -227,7 +227,7 @@
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge = max(D.charge-10,0)
-						if(prob(10)) M << "\red SYSTEM ALERT: Energy draining field detected!"
+						if(prob(10)) M << "<span class='warning'>SYSTEM ALERT: Energy draining field detected!</span>"
 				return 1
 			if("planthelper")
 				for (var/obj/machinery/hydroponics/H in range(src.aurarange,originator))
@@ -247,7 +247,7 @@
 			if("sleepy")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(prob(10))
-						M << pick("\blue You feel like taking a nap.","\blue You feel a yawn coming on.","\blue You feel a little tired.")
+						M << pick("<span class='notice'>You feel like taking a nap.</span>","<span class='notice'>You feel a yawn coming on.</span>","<span class='notice'>You feel a little tired.</span>")
 					M.drowsyness = min(M.drowsyness + 1, 25)
 					M.eye_blurry = min(M.eye_blurry + 1, 25)
 				return 1
@@ -260,7 +260,7 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					M << "\blue A wave of energy invigorates you."
+					M << "<span class='notice'>A wave of energy invigorates you.</span>"
 					M.adjustBruteLoss(-5)
 					M.adjustFireLoss(-5)
 					M.adjustToxLoss(-5)
@@ -272,7 +272,7 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					M << "\red A wave of energy causes you great pain!"
+					M << "<span class='warning'>A wave of energy causes you great pain!</span>"
 					M.adjustBruteLoss(5)
 					M.adjustFireLoss(5)
 					M.adjustToxLoss(5)
@@ -286,21 +286,21 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					M << "\red A wave of energy overwhelms your senses!"
+					M << "<span class='warning'>A wave of energy overwhelms your senses!</span>"
 					M.paralysis += 3
 					M.weakened += 4
 					M.stuttering += 4
 				return 1
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
-					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
+					M << "<span class='notice'>SYSTEM ALERT: Structural damage has been repaired by energy pulse!</span>"
 					M.adjustBruteLoss(-10)
 					M.adjustFireLoss(-10)
 					M.updatehealth()
 				return 1
 			if("robohurt")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
-					M << "\red SYSTEM ALERT: Structural damage inflicted by energy pulse!"
+					M << "<span class='warning'>SYSTEM ALERT: Structural damage inflicted by energy pulse!</span>"
 					M.adjustBruteLoss(10)
 					M.adjustFireLoss(10)
 					M.updatehealth()
@@ -313,7 +313,7 @@
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge += 250
-						M << "\blue SYSTEM ALERT: Large energy boost detected!"
+						M << "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>"
 				return 1
 			if("celldrain")
 				for (var/obj/machinery/power/apc/C in range(src.aurarange,originator))
@@ -324,7 +324,7 @@
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge = max(D.charge-500,0)
-						M << "\red SYSTEM ALERT: Severe energy drain detected!"
+						M << "<span class='warning'>SYSTEM ALERT: Severe energy drain detected!</span>"
 				return 1
 			if("planthelper")
 				//makes weeds and shrooms and stuff more potent too
@@ -349,7 +349,7 @@
 							continue
 						randomturfs.Add(T)
 					if(randomturfs.len > 0)
-						M << "\red You are displaced by a strange force!"
+						M << "<span class='warning'>You are displaced by a strange force!</span>"
 						if(M.buckled)
 							M.buckled.unbuckle()
 						M.loc = pick(randomturfs)
@@ -363,7 +363,7 @@
 						continue
 
 					if(prob(30))
-						H << pick("\green You feel a little different.","\green You feel strange.","\green You feel different.")
+						H << pick("<span class='good'>You feel a little different.</span>","<span class='good'>You feel strange.</span>","<span class='good'>You feel different.</span>")
 					//todo
 					if (H.gender == FEMALE)
 						H.setGender(MALE)
@@ -379,7 +379,7 @@
 			if("sleepy")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(prob(30))
-						M << pick("\blue You feel like taking a nap.","\blue You feel a yawn coming on.","\blue You feel a little tired.")
+						M << pick("<span class='notice'>You feel like taking a nap.</span>","<span class='notice'>You feel a yawn coming on.</span>","<span class='notice'>You feel a little tired.</span>")
 					if(prob(50))
 						M.drowsyness = min(M.drowsyness + rand(1,5), 25)
 					if(prob(50))
@@ -393,7 +393,7 @@
 				for (var/mob/living/carbon/M in range(200, originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					M << "\blue Waves of soothing energy wash over you."
+					M << "<span class='notice'>Waves of soothing energy wash over you.</span>"
 					M.adjustBruteLoss(-3)
 					M.adjustFireLoss(-3)
 					M.adjustToxLoss(-3)
@@ -403,7 +403,7 @@
 				return 1
 			if("injure")
 				for (var/mob/living/carbon/human/M in range(200, originator))
-					M << "\red A wave of painful energy strikes you!"
+					M << "<span class='warning'>A wave of painful energy strikes you!</span>"
 					M.adjustBruteLoss(3)
 					M.adjustFireLoss(3)
 					M.adjustToxLoss(3)
@@ -415,21 +415,21 @@
 				for (var/mob/living/carbon/M in range(200, originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					M << "\red A powerful force causes you to black out momentarily."
+					M << "<span class='warning'>A powerful force causes you to black out momentarily.</span>"
 					M.paralysis += 5
 					M.weakened += 8
 					M.stuttering += 8
 				return 1
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(200, originator))
-					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
+					M << "<span class='notice'>SYSTEM ALERT: Structural damage has been repaired by energy pulse!</span>"
 					M.adjustBruteLoss(-5)
 					M.adjustFireLoss(-5)
 					M.updatehealth()
 				return 1
 			if("robohurt")
 				for (var/mob/living/silicon/robot/M in range(200, originator))
-					M << "\red SYSTEM ALERT: Structural damage inflicted by energy pulse!"
+					M << "<span class='warning'>SYSTEM ALERT: Structural damage inflicted by energy pulse!</span>"
 					M.adjustBruteLoss(5)
 					M.adjustFireLoss(5)
 					M.updatehealth()
@@ -442,7 +442,7 @@
 				for (var/mob/living/silicon/robot/M in world)
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge += 100
-						M << "\blue SYSTEM ALERT: Energy boost detected!"
+						M << "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>"
 				return 1
 			if("celldrain")
 				for (var/obj/machinery/power/apc/C in range(200, originator))
@@ -453,7 +453,7 @@
 				for (var/mob/living/silicon/robot/M in world)
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge = max(D.charge-250,0)
-						M << "\red SYSTEM ALERT: Energy drain detected!"
+						M << "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>"
 				return 1
 			if("teleport")
 				for (var/mob/living/M in range(200, originator))
@@ -465,7 +465,7 @@
 							continue
 						randomturfs.Add(T)
 					if(randomturfs.len > 0)
-						M << "\red You are displaced by a strange force!"
+						M << "<span class='warning'>You are displaced by a strange force!</span>"
 						if(M.buckled)
 							M.buckled.unbuckle()
 						M.loc = pick(randomturfs)
@@ -479,7 +479,7 @@
 						continue
 
 					if(prob(30))
-						H << pick("\green You feel a little different.","\green You feel strange.","\green You feel different.")
+						H << pick("<span class='good'>You feel a little different.</span>","<span class='good'>You feel strange.</span>","<span class='good'>You feel different.</span>")
 					//todo
 					if (H.gender == FEMALE)
 						H.setGender(MALE)

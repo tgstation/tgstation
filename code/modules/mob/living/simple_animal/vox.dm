@@ -28,7 +28,7 @@
 	living_mob_list -= src
 	dead_mob_list += src
 	stat = DEAD
-	visible_message("\red <B>[src] shudders violently and explodes!</B>","\red <B>You feel your body rupture!</B>")
+	visible_message("<span class='danger'><B>[src] shudders violently and explodes!</B>","<span class='warning'>You feel your body rupture!</span></span>")
 	explosion(get_turf(loc), -1, -1, 3, 5)
 	src.gib()
 	return
@@ -43,16 +43,16 @@
 			health -= damage
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
+					M.show_message("<span class='danger'>[src] has been attacked with the [O] by [user]. </span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b The [O] bounces harmlessly off of [src]. ")
+					M.show_message("<span class='danger'>The [O] bounces harmlessly off of [src]. </span>")
 	else
-		usr << "\red This weapon is ineffective, it does no damage."
+		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with the [O]. ")
+				M.show_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 /mob/living/simple_animal/vox/armalis/verb/fire_quill(mob/target as mob in oview())
 
@@ -63,10 +63,10 @@
 	if(quills<=0)
 		return
 
-	src << "\red You launch a razor-sharp quill at [target]!"
+	src << "<span class='warning'>You launch a razor-sharp quill at [target]!</span>"
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
-			O << "\red [src] launches a razor-sharp quill at [target]!"
+			O << "<span class='warning'>[src] launches a razor-sharp quill at [target]!</span>"
 
 	var/obj/item/weapon/arrow/quill/Q = new(loc)
 	Q.fingerprintslast = src.ckey
@@ -74,7 +74,7 @@
 	quills--
 
 	spawn(100)
-		src << "\red You feel a fresh quill slide into place."
+		src << "<span class='warning'>You feel a fresh quill slide into place.</span>"
 		quills++
 
 /mob/living/simple_animal/vox/armalis/verb/message_mob()
@@ -99,12 +99,12 @@
 		src << "Not even the armalis can speak to the dead."
 		return
 
-	M << "\blue Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]"
+	M << "<span class='notice'>Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]</span>"
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == "Vox")
 			return
-		H << "\red Your nose begins to bleed..."
+		H << "<span class='warning'>Your nose begins to bleed...</span>"
 		H.drip(1)
 
 /mob/living/simple_animal/vox/armalis/verb/shriek()
@@ -114,18 +114,18 @@
 
 /mob/living/simple_animal/vox/armalis/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O,/obj/item/vox/armalis_armour))
-		user.drop_item(src)
+		user.drop_item(O, src)
 		armour = O
 		speed = 1
 		maxHealth += 200
 		health += 200
-		visible_message("\blue [src] is quickly outfitted in [O] by [user].","\blue You quickly outfit [src] in [O].")
+		visible_message("<span class='notice'>[src] is quickly outfitted in [O] by [user].</span>","<span class='notice'>You quickly outfit [src] in [O].</span>")
 		regenerate_icons()
 		return
 	if(istype(O,/obj/item/vox/armalis_amp))
-		user.drop_item(src)
+		user.drop_item(O, src)
 		amp = O
-		visible_message("\blue [src] is quickly outfitted in [O] by [user].","\blue You quickly outfit [src] in [O].")
+		visible_message("<span class='notice'>[src] is quickly outfitted in [O] by [user].</span>","<span class='notice'>You quickly outfit [src] in [O].</span>")
 		regenerate_icons()
 		return
 	return ..()

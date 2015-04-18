@@ -67,7 +67,7 @@ var/list/genetics_computers = list()
 	if((istype(W, /obj/item/screwdriver)) && ((src.stat & BROKEN) || !src.scanner))
 		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
-			user << "\blue The broken glass falls out."
+			user << "<span class='notice'>The broken glass falls out.</span>"
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			new /obj/item/shard( src.loc )
 			var/obj/item/circuitboard/genetics/M = new /obj/item/circuitboard/genetics( A )
@@ -298,10 +298,10 @@ var/list/genetics_computers = list()
 
 		var/price = genResearch.injector_cost
 		if (genResearch.researchMaterial < price)
-			usr << "\red <b>SCANNER ALERT:</b> Not enough research materials to manufacture an injector."
+			usr << "<span class='warning'><b>SCANNER ALERT:</b> Not enough research materials to manufacture an injector.</span>"
 			return
 		if (!E.can_make_injector)
-			usr << "\red <b>SCANNER ALERT:</b> Cannot make an injector using this gene."
+			usr << "<span class='warning'><b>SCANNER ALERT:</b> Cannot make an injector using this gene.</span>"
 			return
 
 		src.equipment_cooldown("injector")
@@ -432,12 +432,12 @@ var/list/genetics_computers = list()
 			if(href_list["setseq1"])
 				var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq1"])]
 				if (bp.marker == "locked")
-					usr << "\red <b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption."
+					usr << "<span class='warning'><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>"
 					return
 			else if(href_list["setseq2"])
 				var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq2"])]
 				if (bp.marker == "locked")
-					usr << "\red <b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption."
+					usr << "<span class='warning'><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>"
 					return
 
 		var/input = input(usr, "Select:", "GeneTek") as null|anything in list("G", "T", "C", "A", "Swap Pair")
@@ -476,30 +476,30 @@ var/list/genetics_computers = list()
 		var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["themark"])]
 
 		if(bp.marker == "locked")
-			usr << "\blue <b>SCANNER ALERT:</b> Encryption is a [E.lockedDiff]-character code."
+			usr << "<span class='notice'><b>SCANNER ALERT:</b> Encryption is a [E.lockedDiff]-character code.</span>"
 			var/characters = ""
 			for(var/X in E.lockedChars)
 				characters += "[X] "
-			usr << "\blue Possible characters in this code: [characters]"
+			usr << "<span class='notice'>Possible characters in this code: [characters]</span>"
 			var/code = input("Enter decryption code.","Genetic Decryption") as null|text
 			if(!code)
 				return
 			if(lentext(code) != lentext(bp.lockcode))
-				usr << "\red <b>SCANNER ALERT:</b> Invalid code length."
+				usr << "<span class='warning'><b>SCANNER ALERT:</b> Invalid code length.</span>"
 				return
 			if (code == bp.lockcode)
 				var/datum/basePair/bpc = E.dnaBlocks.blockList[text2num(href_list["themark"])]
 				bp.bpp1 = bpc.bpp1
 				bp.bpp2 = bpc.bpp2
 				bp.marker = "green"
-				usr << "\blue <b>SCANNER ALERT:</b> Decryption successful. Base pair unlocked."
+				usr << "<span class='notice'><b>SCANNER ALERT:</b> Decryption successful. Base pair unlocked.</span>"
 			else
 				if (bp.locktries <= 1)
 					bp.lockcode = ""
 					for (var/c = E.lockedDiff, c > 0, c--)
 						bp.lockcode += pick(E.lockedChars)
 					bp.locktries = E.lockedTries
-					usr << "\red <b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has been changed."
+					usr << "<span class='warning'><b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has been changed.</span>"
 				else
 					bp.locktries--
 					var/length = lentext(bp.lockcode)
@@ -526,10 +526,10 @@ var/list/genetics_computers = list()
 							if (lockcode_list[current] <= 0)
 								lockcode_list -= current
 
-					usr << "\red <b>SCANNER ALERT:</b> Decryption failed."
-					usr << "\red [correct_char]/[length] correct characters in entered code."
-					usr << "\red [correct_full]/[length] characters in correct position."
-					usr << "\red Attempts remaining: [bp.locktries]."
+					usr << "<span class='warning'><b>SCANNER ALERT:</b> Decryption failed.</span>"
+					usr << "<span class='warning'>[correct_char]/[length] correct characters in entered code.</span>"
+					usr << "<span class='warning'>[correct_full]/[length] characters in correct position.</span>"
+					usr << "<span class='warning'>Attempts remaining: [bp.locktries].</span>"
 		else
 			switch(bp.marker)
 				if("green")
@@ -580,7 +580,7 @@ var/list/genetics_computers = list()
 		if (sample_sanity_check(sample)) return
 
 		if (!genResearch.addResearch(E))
-			usr << "\red <b>SCANNER ERROR:</b> Unable to begin research."
+			usr << "<span class='warning'><b>SCANNER ERROR:</b> Unable to begin research.</span>"
 		else
 			usr << "<b>SCANNER:</b> Research initiated successfully."
 
@@ -596,7 +596,7 @@ var/list/genetics_computers = list()
 			usr << "<b>SCANNER:</b> Research initiated successfully."
 			usr << link("byond://?src=\ref[src];menu=resopen")
 		else
-			usr << "\red <b>SCANNER ERROR:</b> Unable to begin research."
+			usr << "<span class='warning'><b>SCANNER ERROR:</b> Unable to begin research.</span>"
 		return
 
 	else if(href_list["copyself"])

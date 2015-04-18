@@ -262,7 +262,7 @@ var/global/list/nlist = list( \
 	set name = "Rotate Pipe"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained() )
+	if ( usr.stat || usr.restrained()  || (usr.status_flags & FAKEDEATH))
 		return
 
 	src.dir = turn(src.dir, -90)
@@ -368,7 +368,7 @@ var/global/list/nlist = list( \
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
 		if(M.initialize_directions & pipe_dir)	// matches at least one direction on either type of pipe
-			user << "\red There is already a pipe at that location."
+			user << "<span class='warning'>There is already a pipe at that location.</span>"
 			return 1
 	// no conflicts found
 
@@ -456,7 +456,7 @@ var/global/list/nlist = list( \
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message( \
 			"[user] fastens \the [src].", \
-			"\blue You have fastened \the [src].", \
+			"<span class='notice'>You have fastened \the [src].</span>", \
 			"You hear a ratchet.")
 		returnToPool(src)	// remove the pipe item
 		return 0
@@ -483,11 +483,11 @@ var/global/list/nlist = list( \
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
-		user << "\red You need to fasten it to a pipe"
+		user << "<span class='warning'>You need to fasten it to a pipe</span>"
 		return 1
 	new/obj/machinery/meter( src.loc )
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-	user << "\blue You have fastened the meter to the pipe"
+	user << "<span class='notice'>You have fastened the meter to the pipe</span>"
 	del(src)
 
 
@@ -506,5 +506,5 @@ var/global/list/nlist = list( \
 		return ..()
 	new/obj/machinery/air_sensor( src.loc )
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-	user << "\blue You have fastened the gas sensor"
+	user << "<span class='notice'>You have fastened the gas sensor</span>"
 	del(src)

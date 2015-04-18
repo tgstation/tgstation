@@ -18,15 +18,15 @@
 			return
 
 		if(M == user)
-			user.visible_message("\red <b>[user.name] injects \himself with [src]!</b>")
+			user.visible_message("<span class='danger'>[user.name] injects \himself with [src]!</span>")
 			src.injected(user,user)
 		else
-			user.visible_message("\red <b>[user.name] is trying to inject [M.name] with [src]!</b>")
+			user.visible_message("<span class='danger'>[user.name] is trying to inject [M.name] with [src]!</span>")
 			if (do_mob(user,M,30))
-				user.visible_message("\red <b>[user.name] injects [M.name] with [src].</b>")
+				user.visible_message("<span class='danger'>[user.name] injects [M.name] with [src].</span>")
 				src.injected(user,M)
 			else
-				user << "\red You failed to inject [M.name]."
+				user << "<span class='warning'>You failed to inject [M.name].</span>"
 
 		if(src.uses < 1)
 			src.icon_state = "b0"
@@ -53,7 +53,7 @@
 			if (!istype(ID,/datum/appearanceHolder/))
 				return
 
-			target << "\red Your body changes! You feel completely different!"
+			target << "<span class='warning'>Your body changes! You feel completely different!</span>"
 			ID.gender = pick("male","female")
 			if(ID.gender == "female")
 				target.real_name = pick(first_names_female)

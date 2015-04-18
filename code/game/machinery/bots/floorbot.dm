@@ -311,7 +311,7 @@ var/global/list/floorbot_targets=list()
 				F.break_tile_to_plating()
 			else
 				F.ReplaceWithLattice()
-			visible_message("\red [src] makes an excited booping sound.")
+			visible_message("<span class='warning'>[src] makes an excited booping sound.</span>")
 			spawn(50)
 				src.amount ++
 				src.anchored = 0
@@ -413,7 +413,7 @@ var/global/list/floorbot_targets=list()
 	src.anchored = 1
 	src.icon_state = "floorbot-c"
 	if(istype(target, /turf/space/))
-		visible_message("\red [src] begins to repair the hole")
+		visible_message("<span class='warning'>[src] begins to repair the hole</span>")
 		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
 		src.repairing = 1
 		spawn(50)
@@ -427,7 +427,7 @@ var/global/list/floorbot_targets=list()
 	else
 		var/turf/simulated/floor/F = src.loc
 		if(!F.broken && !F.burnt)
-			visible_message("\red [src] begins to improve the floor.")
+			visible_message("<span class='warning'>[src] begins to improve the floor.</span>")
 			src.repairing = 1
 			spawn(50)
 				F.make_plasteel_floor()
@@ -439,7 +439,7 @@ var/global/list/floorbot_targets=list()
 				src.target = null
 		else
 			if(F.is_plating())
-				visible_message("\red [src] begins to fix dents in the floor.")
+				visible_message("<span class='warning'>[src] begins to fix dents in the floor.</span>")
 				src.repairing = 1
 				spawn(20)
 					src.repairing = 0
@@ -453,7 +453,7 @@ var/global/list/floorbot_targets=list()
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/stack/tile/plasteel/T)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		return
-	visible_message("\red [src] begins to collect tiles.")
+	visible_message("<span class='warning'>[src] begins to collect tiles.</span>")
 	src.repairing = 1
 	spawn(20)
 		if(isnull(T))
@@ -477,7 +477,7 @@ var/global/list/floorbot_targets=list()
 		return
 	if(M.amount < 1)
 		return
-	visible_message("\red [src] begins to create tiles.")
+	visible_message("<span class='warning'>[src] begins to create tiles.</span>")
 	src.repairing = 1
 	spawn(20)
 		if(!M || !get_turf(M))
@@ -671,7 +671,7 @@ var/global/list/floorbot_targets=list()
 
 /obj/machinery/bot/floorbot/explode()
 	src.on = 0
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/storage/toolbox/mechanical/N = new /obj/item/weapon/storage/toolbox/mechanical(Tsec)

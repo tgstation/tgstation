@@ -1055,10 +1055,10 @@
 	var/obj/item/clothing/head/headwear = src.head
 	var/obj/item/clothing/glasses/eyewear = src.glasses
 
-	if (headwear)
+	if (istype(headwear))
 		. += headwear.eyeprot
 
-	if (eyewear)
+	if (istype(eyewear))
 		. += eyewear.eyeprot
 
 	return Clamp(., -1, 2)
@@ -1102,29 +1102,30 @@
 			xylophone=0
 	return
 
-/mob/living/carbon/human/proc/vomit(hairball=0)
+/mob/living/carbon/human/proc/vomit(hairball = 0)
 	if(!lastpuke)
 		lastpuke = 1
-		src << "<spawn class='warning'>You feel nauseous..."
+		src << "<spawn class='warning'>You feel nauseous...</span>"
 		spawn(150)	//15 seconds until second warning
-			src << "<spawn class='warning'>You feel like you are about to throw up!"
-			spawn(100)	//and you have 10 more for mad dash to the bucket
+			src << "<spawn class='danger'>You feel like you are about to throw up!</span>"
+			spawn(100)	//And you have 10 more seconds to move it to the bathrooms
 				Stun(5)
 
 				if(hairball)
-					src.visible_message("<span class='warning'>[src] hacks up a hairball!</span>","<span class='warning'>You hack up a hairball!</span>")
+					src.visible_message("<span class='warning'>[src] hacks up a hairball!</span>","<span class='danger'>You hack up a hairball!</span>")
 				else
-					src.visible_message("<span class='warning'>[src] throws up!</span>","<span class='warning'>You throw up!</span>")
+					src.visible_message("<span class='warning'>[src] throws up!</span>","<span class='danger'>You throw up!</span>")
 				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 				var/turf/location = loc
-				if (istype(location, /turf/simulated))
+				if(istype(location, /turf/simulated))
 					location.add_vomit_floor(src, 1)
 
 				if(!hairball)
 					nutrition -= 40
 					adjustToxLoss(-3)
-				spawn(350)	//wait 35 seconds before next volley
+
+				spawn(350)	//Wait 35 seconds before next volley
 					lastpuke = 0
 
 /mob/living/carbon/human/proc/morph()
@@ -1348,7 +1349,7 @@
 		return
 	usr.delayNextMove(20)
 
-	if(usr.stat == 1)
+	if(usr.stat == 1 || (usr.status_flags & FAKEDEATH))
 		usr << "You are unconcious and cannot do that!"
 		return
 
@@ -1394,9 +1395,9 @@
 		return
 
 	if(self)
-		visible_message("<span class='warning'><b>[src] rips [selection] out of their [affected.display_name] in a welter of blood.</b></span>","<span class='warning'><b>You rip [selection] out of your [affected] in a welter of blood.</b></span>")
+		visible_message("<span class='danger'><b>[src] rips [selection] out of their [affected.display_name] in a welter of blood.</b></span>","<span class='warning'>You rip [selection] out of your [affected] in a welter of blood.</span>")
 	else
-		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s [affected.display_name] in a welter of blood.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your [affected] in a welter of blood.</b></span>")
+		visible_message("<span class='danger'><b>[usr] rips [selection] out of [src]'s [affected.display_name] in a welter of blood.</b></span>","<span class='warning'>[usr] rips [selection] out of your [affected] in a welter of blood.</span>")
 
 	selection.loc = get_turf(src)
 	affected.implants -= selection
@@ -1459,7 +1460,7 @@
 	set src in view(1)
 	var/self = 0
 
-	if(usr.stat == 1 || usr.restrained() || !isliving(usr)) return
+	if(usr.stat == 1 || usr.restrained() || !isliving(usr) || (usr.status_flags & FAKEDEATH)) return
 
 	if(usr == src)
 		self = 1
@@ -1504,7 +1505,9 @@
 	else					src.see_invisible = SEE_INVISIBLE_LIVING
 	if((src.species.default_mutations.len > 0) || (src.species.default_blocks.len > 0))
 		src.do_deferred_species_setup = 1
-	spawn()	src.update_icons()
+	spawn()
+		src.dna.species = new_species_name
+		src.update_icons()
 	src.species.handle_post_spawn(src)
 	return 1
 

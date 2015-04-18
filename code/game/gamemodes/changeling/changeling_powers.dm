@@ -415,7 +415,7 @@
 		var/mob/M = locate(src) in mob_list
 		if(M == src)
 			yes = 1
-	usr << "[yes ? "\blue" : "\red"] You are [yes ? "" : "not "]in the mob list"
+	usr << "[yes ? "<span class='good'>" : "<span class='bad'>"] You are [yes ? "" : "not "]in the mob list</span>"
 	yes = 0
 	if(src in living_mob_list)
 		yes = 1
@@ -423,7 +423,7 @@
 		var/mob/M = locate(src) in living_mob_list
 		if(M == src)
 			yes = 1
-	usr << "[yes ? "\blue" : "\red"] You are [yes ? "" : "not "]in the living mob list"
+	usr << "[yes ? "<span class='good'>" : "<span class='bad'>"] You are [yes ? "" : "not "]in the living mob list</span>"
 
 /mob/proc/changeling_returntolife()
 	set category = "Changeling"

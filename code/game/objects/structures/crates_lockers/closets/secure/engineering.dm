@@ -172,6 +172,7 @@
 		new /obj/item/clothing/under/rank/mechanic(src)
 		new /obj/item/clothing/shoes/white(src)
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
+		//new /obj/item/device/component_exchanger(src)
 		new /obj/item/device/radio/headset/headset_engsci(src)
 		new /obj/item/clothing/suit/storage/hazardvest(src)
 		new /obj/item/device/device_analyser(src)

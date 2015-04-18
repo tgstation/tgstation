@@ -52,7 +52,7 @@
 
 /mob/living/simple_animal/hostile/tree/Die()
 	..()
-	visible_message("\red <b>[src]</b> is hacked into pieces!")
+	visible_message("<span class='warning'><b>[src]</b> is hacked into pieces!</span>")
 	new /obj/item/stack/sheet/wood(loc)
 	del(src)
 
@@ -65,6 +65,6 @@
 	icon_gib = "festivus_pole"
 
 /mob/living/simple_animal/hostile/tree/festivus/Die()
-	visible_message("\red <b>[src]</b> is hacked into pieces!")
+	visible_message("<span class='warning'><b>[src]</b> is hacked into pieces!</span>")
 	new /obj/item/weapon/nullrod(loc)
 	del(src)

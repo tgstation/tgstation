@@ -502,7 +502,7 @@ var/list/mechtoys = list(
 			if(I)
 				account = get_card_account(I)
 			else
-				usr << "\red Please wear an ID with an associated bank account."
+				usr << "<span class='warning'>Please wear an ID with an associated bank account.</span>"
 				return
 		else if(issilicon(usr))
 			idname = usr.real_name
@@ -570,7 +570,7 @@ var/list/mechtoys = list(
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		user << "\red Access Denied."
+		user << "<span class='warning'>Access Denied.</span>"
 		return
 
 	if(..())
@@ -600,14 +600,14 @@ var/list/mechtoys = list(
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
-		user << "\blue Special supplies unlocked."
+		user << "<span class='notice'>Special supplies unlocked.</span>"
 		hacked = 1
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (stat & BROKEN)
-				user << "\blue The broken glass falls out."
+				user << "<span class='notice'>The broken glass falls out.</span>"
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
 				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
@@ -619,7 +619,7 @@ var/list/mechtoys = list(
 				A.anchored = 1
 				del(src)
 			else
-				user << "\blue You disconnect the monitor."
+				user << "<span class='notice'>You disconnect the monitor.</span>"
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
 				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
 				if(can_order_contraband)
@@ -724,7 +724,7 @@ var/list/mechtoys = list(
 			if(I)
 				account = get_card_account(I)
 			else
-				usr << "\red Please wear an ID with an associated bank account."
+				usr << "<span class='warning'>Please wear an ID with an associated bank account.</span>"
 				return
 		else if(issilicon(usr))
 			idname = usr.real_name

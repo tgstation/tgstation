@@ -9,6 +9,11 @@
 	flags = FPRINT
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
+/obj/structure/bigDelivery/attack_robot(mob/user)
+	if(!Adjacent(user))
+		return
+	attack_hand(user)
+
 /obj/structure/bigDelivery/attack_hand(mob/user as mob)
 	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = (get_turf(src.loc))
@@ -103,6 +108,7 @@
 		/obj/item/weapon/gift,//real presents are given directly
 		/obj/item/weapon/winter_gift,
 		/obj/item/weapon/evidencebag,
+		/obj/item/weapon/legcuffs/bolas,
 		)
 
 /obj/item/weapon/packageWrap/afterattack(var/obj/target as obj, mob/user as mob)

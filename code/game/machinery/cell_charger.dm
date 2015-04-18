@@ -78,14 +78,15 @@
 				user << "<span class='warning'>[src] blinks red as you try to insert the cell!</span>"
 				return
 
-			user.drop_item(src)
+			user.drop_item(W, src)
 			charging = W
 			user.visible_message("<span class='notice'>[user] inserts a cell into [src].</span>", "<span class='notice'>You insert a cell into [src].</span>")
 			chargelevel = -1
 		updateicon()
 	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		emagged = 1 //Congratulations, you've done it
-		user << "<span class='warning'>You hear fizzling and you notice a wire turning burning hot. Better not use it anymore</span>"
+		user.visible_message("<span class='warning'>[user] swipes a card into \the [src]'s charging port.</span>", \
+		"<span class='warning'>You hear fizzling coming from \the [src] and a wire turns red hot as you swipe the electromagnetic card. Better not use it anymore.</span>")
 		return
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
@@ -96,6 +97,7 @@
 			s.start()
 			spawn(15)
 				explosion(src.loc, -1, 1, 3, adminlog = 0) //Overload
+				Destroy(src) //It exploded, rip
 			return
 		usr.put_in_hands(charging)
 		charging.add_fingerprint(user)

@@ -61,7 +61,7 @@
 	name = "Unidentified Foreign Body"
 	stage = 4
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob << "\red You feel something tearing its way out of your stomach..."
+		mob << "<span class='warning'>You feel something tearing its way out of your stomach...</span>"
 		mob.adjustToxLoss(10)
 		mob.updatehealth()
 		if(prob(40))
@@ -123,6 +123,17 @@
 			if(h.set_species("Tajaran"))
 				h.regenerate_icons()
 
+/datum/disease2/effect/voxpox
+	name = "Vox Pox"
+	stage = 4
+	badness = 2
+/datum/disease2/effect/voxpox/activate(var/mob/living/carbon/mob,var/multiplier)
+	if(istype(mob,/mob/living/carbon/human))
+		var/mob/living/carbon/human/h = mob
+		if(h.species.name != "Vox")
+			if(h.set_species("Vox"))
+				h.regenerate_icons()
+
 /datum/disease2/effect/suicide
 	name = "Suicidal Syndrome"
 	stage = 4
@@ -130,7 +141,7 @@
 /datum/disease2/effect/suicide/activate(var/mob/living/carbon/mob,var/multiplier)
 	mob.suiciding = 1
 	//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-	viewers(mob) << "\red <b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b>"
+	viewers(mob) << "<span class='danger'>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</span>"
 	mob.adjustOxyLoss(175 - mob.getToxLoss() - mob.getFireLoss() - mob.getBruteLoss() - mob.getOxyLoss())
 	mob.updatehealth()
 	spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
@@ -282,7 +293,7 @@
 
 
 		if(2)
-			//mob << "\red i dont think i need this here"
+			//mob << "<span class='warning'>i dont think i need this here</span>"
 
 			for (var/datum/organ/external/E in H.organs)
 				if(pick(1,0))
@@ -320,6 +331,14 @@
 	mob.emote("me",1,pick("sniffles...", "clears their throat..."))
 
 
+
+/datum/disease2/effect/delightful
+	name = "Delightful Effect"
+	stage = 4
+/datum/disease2/effect/delightful/activate(var/mob/living/carbon/mob,var/multiplier)
+	mob << "<span class = 'notice'> You feel delightful!</span>"
+	if (mob.reagents.get_reagent_amount("doctorsdelight") < 1)
+		mob.reagents.add_reagent("doctorsdelight", 1)
 
 
 
@@ -374,7 +393,7 @@
 	if(prob(10))
 		GM.toxins += 100
 		//GM.temperature = 1500+T0C //should be enough to start a fire
-		mob << "\red You exhale a large plume of toxic gas!"
+		mob << "<span class='warning'>You exhale a large plume of toxic gas!</span>"
 	else
 		GM.toxins += 10
 		GM.temperature = istype(T) ? T.air.temperature : T20C
@@ -443,6 +462,17 @@
 	stage = 3
 /datum/disease2/effect/giggle/activate(var/mob/living/carbon/mob,var/multiplier)
 	mob.say("*giggle")
+
+/datum/disease2/effect/chickenpox
+	name = "Chicken Pox"
+	stage = 3
+/datum/disease2/effect/chickenpox/activate(var/mob/living/carbon/mob,var/multiplier)
+	if (prob(10))
+		mob.say(pick("BAWWWK!", "BAAAWWK!", "CLUCK!", "CLUUUCK!", "BAAAAWWWK!"))
+	if (prob(5))
+		mob.emote("me",1,"vomits up a chicken egg!")
+		playsound(mob.loc, 'sound/effects/splat.ogg', 50, 1)
+		new /obj/item/weapon/reagent_containers/food/snacks/egg(get_turf(mob))
 
 /datum/disease2/effect/confusion
 	name = "Topographical Cretinism"
@@ -576,6 +606,7 @@
 /obj/item/clothing/mask/gas/virusclown_hat/equipped(var/mob/user, var/slot)
 	if (slot == slot_wear_mask)
 		canremove = 0		//curses!
+		can_flip = 0   //no pushing the mask up off your face
 	..()
 
 

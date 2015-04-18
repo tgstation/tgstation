@@ -125,7 +125,7 @@ var/diaryofmeanpeople = null
 var/admin_diary = null
 var/href_logfile = null
 var/station_name = null
-var/game_version = "adsfasdfasdf"
+var/game_version = "veegee"
 var/changelog_hash = ""
 var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)
 
@@ -358,3 +358,11 @@ var/global/obj/item/device/radio/intercom/universe/announcement_intercom = new
 
 //used by jump-to-area etc. Updated by area/updateName()
 var/list/sortedAreas = list()
+
+var/global/bomberman_mode = 0
+var/global/bomberman_hurt = 0
+var/global/bomberman_destroy = 0
+
+var/global/list/volunteer_gladiators = list()
+var/global/list/ready_gladiators = list()
+var/global/list/never_gladiators = list()

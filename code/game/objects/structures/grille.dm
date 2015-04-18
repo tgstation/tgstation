@@ -192,17 +192,12 @@
 			"<span class='notice'>You place \a [WD] on \the [src].</span>")
 		return
 
-	else if(istype(W, /obj/item/weapon/shard))
-		health -= W.force * 0.1 //Turns the base shard into a .5 damage item. If you want to break an electrified grille with that, you're going to EARN IT, ROD. BY. ROD.
-		healthcheck(hitsound = 1)
-		..() //We need to call the rest of the attackby proc
-		return //Don't bother to go any further, we handled everything here
 	switch(W.damtype)
 		if("fire")
 			health -= W.force //Fire-based tools like welding tools are ideal to work through small metal rods !
 		if("brute")
 			health -= W.force * 0.5 //Rod matrices have an innate resistance to brute damage
-	shock(user, 70) //Alright let's have fun
+	shock(user, 100 * W.siemens_coefficient) //Chance of getting shocked is proportional to conductivity
 	healthcheck(hitsound = 1)
 	..()
 	return

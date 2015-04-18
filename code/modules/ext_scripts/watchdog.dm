@@ -11,7 +11,7 @@ var/global/datum/watchdog/watchdog = new
 		return
 	if(fexists(update_signal_file) == 1)
 		waiting=1
-		world << "\blue \[AUTOMATIC ANNOUNCEMENT\] Update received.  Server will restart automatically after the round ends."
+		world << "<span class='notice'>\[AUTOMATIC ANNOUNCEMENT\] Update received.  Server will restart automatically after the round ends.</span>"
 
 /datum/watchdog/proc/signal_ready()
 	var/signal = file(server_signal_file)

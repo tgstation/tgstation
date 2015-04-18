@@ -92,7 +92,7 @@ RCD
 			airlock_type = /obj/machinery/door/airlock
 
 /obj/item/weapon/rcd/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] is using the deconstruct function on the [src.name] on \himself! It looks like \he's  trying to commit suicide!</b>"
+	viewers(user) << "<span class='danger'>[user] is using the deconstruct function on the [src.name] on \himself! It looks like \he's  trying to commit suicide!</span>"
 	return (user.death(1))
 
 /obj/item/weapon/rcd/New()

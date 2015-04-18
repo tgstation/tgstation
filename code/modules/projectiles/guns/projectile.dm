@@ -37,7 +37,7 @@
 /obj/item/weapon/gun/projectile/proc/LoadMag(var/obj/item/ammo_storage/magazine/AM, var/mob/user)
 	if(istype(AM, text2path(mag_type)) && !stored_magazine)
 		if(user)
-			user.drop_item(src)
+			user.drop_item(AM, src)
 			usr << "<span class='notice'>You load the magazine into \the [src].</span>"
 		stored_magazine = AM
 		chamber_round()
@@ -113,7 +113,7 @@
 		if(user.l_hand != src && user.r_hand != src)	//if we're not in his hands
 			user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
 			return
-		user.drop_item(src) //put the silencer into the gun
+		user.drop_item(A, src) //put the silencer into the gun
 		user << "<span class='notice'>You screw [A] onto [src].</span>"
 		silenced = A	//dodgy?
 		w_class = 3
@@ -140,11 +140,11 @@
 		//message_admins("Loading the [src], with [AC], [AC.caliber] and [caliber.len]") //Enable this for testing
 		if(AC.BB && caliber[AC.caliber]) // a used bullet can't be fired twice
 			if(load_method == MAGAZINE && !chambered)
-				user.drop_item(src)
+				user.drop_item(AC, src)
 				chambered = AC
 				num_loaded++
 			else if(getAmmo() < max_shells)
-				user.drop_item(src)
+				user.drop_item(AC, src)
 				loaded += AC
 				num_loaded++
 

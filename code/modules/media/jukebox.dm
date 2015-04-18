@@ -230,10 +230,10 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/attack_hand(var/mob/user)
 	if(stat & NOPOWER)
-		usr << "\red You don't see anything to mess with."
+		usr << "<span class='warning'>You don't see anything to mess with.</span>"
 		return
 	if(stat & BROKEN && playlist!=null)
-		user.visible_message("\red <b>[user.name] smacks the side of \the [src.name].</b>","\red You hammer the side of \the [src.name].")
+		user.visible_message("<span class='danger'>[user.name] smacks the side of \the [src.name].</span>","<span class='warning'>You hammer the side of \the [src.name].</span>")
 		stat &= ~BROKEN
 		playlist=null
 		playing=emagged
@@ -359,20 +359,20 @@ var/global/loopModeNames=list(
 	..()
 	if(istype(W,/obj/item/weapon/card/id))
 		if(!selected_song || screen!=JUKEBOX_SCREEN_PAYMENT)
-			visible_message("\blue The machine buzzes.","\red You hear a buzz.")
+			visible_message("<span class='notice'>The machine buzzes.</span>","<span class='warning'>You hear a buzz.</span>")
 			return
 		var/obj/item/weapon/card/id/I = W
 		if(!linked_account)
-			visible_message("\red The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.","You hear a buzz.")
+			visible_message("<span class='warning'>The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.</span>","You hear a buzz.")
 			return
 		var/datum/money_account/acct = get_card_account(I)
 		if(!acct)
-			visible_message("\red The machine buzzes, and flashes \"NO ACCOUNT\" on the screen.","You hear a buzz.")
+			visible_message("<span class='warning'>The machine buzzes, and flashes \"NO ACCOUNT\" on the screen.</span>","You hear a buzz.")
 			return
 		if(credits_needed > acct.money)
-			visible_message("\red The machine buzzes, and flashes \"NOT ENOUGH FUNDS\" on the screen.","You hear a buzz.")
+			visible_message("<span class='warning'>The machine buzzes, and flashes \"NOT ENOUGH FUNDS\" on the screen.</span>","You hear a buzz.")
 			return
-		visible_message("\blue The machine beeps happily.","You hear a beep.")
+		visible_message("<span class='notice'>The machine beeps happily.</span>","You hear a beep.")
 		acct.charge(credits_needed,linked_account,"Song selection at [areaMaster.name]'s [name].")
 		credits_needed = 0
 
@@ -381,15 +381,15 @@ var/global/loopModeNames=list(
 		attack_hand(user)
 	else if(istype(W,/obj/item/weapon/spacecash))
 		if(!selected_song || screen!=JUKEBOX_SCREEN_PAYMENT)
-			visible_message("\blue The machine buzzes.","\red You hear a buzz.")
+			visible_message("<span class='notice'>The machine buzzes.</span>","<span class='warning'>You hear a buzz.</span>")
 			return
 		if(!linked_account)
-			visible_message("\red The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.","You hear a buzz.")
+			visible_message("<span class='warning'>The machine buzzes, and flashes \"NO LINKED ACCOUNT\" on the screen.</span>","You hear a buzz.")
 			return
 		var/obj/item/weapon/spacecash/C=W
 		credits_held += C.worth*C.amount
 		if(credits_held >= credits_needed)
-			visible_message("\blue The machine beeps happily.","You hear a beep.")
+			visible_message("<span class='notice'>The machine beeps happily.</span>","You hear a beep.")
 			credits_held -= credits_needed
 			credits_needed=0
 			screen=JUKEBOX_SCREEN_MAIN
@@ -412,7 +412,7 @@ var/global/loopModeNames=list(
 		loop_mode = JUKEMODE_SHUFFLE
 		emagged = 1
 		playing = 1
-		user.visible_message("\red [user.name] slides something into the [src.name]'s card-reader.","\red You short out the [src.name].")
+		user.visible_message("<span class='warning'>[user.name] slides something into the [src.name]'s card-reader.</span>","<span class='warning'>You short out the [src.name].</span>")
 		update_icon()
 		update_music()
 		return 1
@@ -431,11 +431,11 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	if(isobserver(usr) && !isAdminGhost(usr))
-		usr << "\red You can't push buttons when your fingers go right through them, dummy."
+		usr << "<span class='warning'>You can't push buttons when your fingers go right through them, dummy.</span>"
 		return
 	if(..()) return 1
 	if(emagged)
-		usr << "\red You touch the bluescreened menu. Nothing happens. You feel dumber."
+		usr << "<span class='warning'>You touch the bluescreened menu. Nothing happens. You feel dumber.</span>"
 		return
 
 	if (href_list["power"])
@@ -445,7 +445,7 @@ var/global/loopModeNames=list(
 
 	if("screen" in href_list)
 		if(isobserver(usr) && !canGhostWrite(usr,src,""))
-			usr << "\red You can't do that."
+			usr << "<span class='warning'>You can't do that.</span>"
 			return
 		screen=text2num(href_list["screen"])
 
@@ -453,11 +453,11 @@ var/global/loopModeNames=list(
 		switch(href_list["act"])
 			if("Save Settings")
 				if(isobserver(usr) && !canGhostWrite(usr,src,"saved settings for"))
-					usr << "\red You can't do that."
+					usr << "<span class='warning'>You can't do that.</span>"
 					return
 				var/datum/money_account/new_linked_account = get_money_account(text2num(href_list["payableto"]),z)
 				if(!new_linked_account)
-					usr << "\red Unable to link new account. Aborting."
+					usr << "<span class='warning'>Unable to link new account. Aborting.</span>"
 					return
 
 				change_cost = max(0,text2num(href_list["set_change_cost"]))
@@ -471,10 +471,10 @@ var/global/loopModeNames=list(
 
 	if (href_list["playlist"])
 		if(isobserver(usr) && !canGhostWrite(usr,src,""))
-			usr << "\red You can't do that."
+			usr << "<span class='warning'>You can't do that.</span>"
 			return
 		if(!check_reload())
-			usr << "\red You must wait 60 seconds between playlist reloads."
+			usr << "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>"
 			return
 		playlist_id=href_list["playlist"]
 		if(isAdminGhost(usr))
@@ -489,7 +489,7 @@ var/global/loopModeNames=list(
 
 	if (href_list["song"])
 		if(isobserver(usr) && !canGhostWrite(usr,src,""))
-			usr << "\red You can't do that."
+			usr << "<span class='warning'>You can't do that.</span>"
 			return
 		selected_song=Clamp(text2num(href_list["song"]),1,playlist.len)
 		if(isAdminGhost(usr))
@@ -502,7 +502,7 @@ var/global/loopModeNames=list(
 				update_music()
 				update_icon()
 		else
-			usr << "\red Swipe card or insert $[num2septext(change_cost)] to set this song."
+			usr << "<span class='warning'>Swipe card or insert $[num2septext(change_cost)] to set this song.</span>"
 			screen = JUKEBOX_SCREEN_PAYMENT
 			credits_needed=change_cost
 
@@ -642,7 +642,7 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/superjuke/attackby(obj/item/W, mob/user)
 	// NO FUN ALLOWED.  Emag list is included, anyway.
 	if(istype(W, /obj/item/weapon/card/emag))
-		user << "\red Your [W] refuses to touch \the [src]!"
+		user << "<span class='warning'>Your [W] refuses to touch \the [src]!</span>"
 		return
 	..()
 

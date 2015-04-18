@@ -46,7 +46,7 @@
 				var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 				if(!W)
 					busy = SPINNING_WEB
-					src.visible_message("\blue \the [src] begins to secrete a sticky substance.")
+					src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 					stop_automated_movement = 1
 					spawn(40)
 						if(busy == SPINNING_WEB)
@@ -61,7 +61,7 @@
 					var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
 					if(!E)
 						busy = LAYING_EGGS
-						src.visible_message("\blue \the [src] begins to lay a cluster of eggs.")
+						src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
 						stop_automated_movement = 1
 						spawn(50)
 							if(busy == LAYING_EGGS)
@@ -108,7 +108,7 @@
 						busy=0
 						stop_automated_movement=0
 					busy = SPINNING_COCOON
-					src.visible_message("\blue \the [src] begins to secrete a sticky substance around \the [cocoon_target].")
+					src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 					stop_automated_movement = 1
 					walk(src,0)
 					spawn(50)
@@ -118,7 +118,7 @@
 									var/obj/machinery/door/D=cocoon_target
 									var/obj/effect/spider/stickyweb/W = locate() in get_turf(cocoon_target)
 									if(!W)
-										src.visible_message("\red \the [src] jams \the [cocoon_target] open with web!")
+										src.visible_message("<span class='warning'>\the [src] jams \the [cocoon_target] open with web!</span>")
 										W=new /obj/effect/spider/stickyweb(cocoon_target.loc)
 										// Jam the door open with webs
 										D.jammed=W
@@ -134,7 +134,7 @@
 											continue
 										large_cocoon = 1
 										fed++
-										src.visible_message("\red \the [src] sticks a proboscis into \the [cocoon_target] and sucks a viscous substance out.")
+										src.visible_message("<span class='warning'>\the [src] sticks a proboscis into \the [cocoon_target] and sucks a viscous substance out.</span>")
 										M.loc = C
 										C.pixel_x = M.pixel_x
 										C.pixel_y = M.pixel_y

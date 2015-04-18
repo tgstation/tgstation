@@ -186,6 +186,13 @@ datum
 			required_reagents = list("hydrogen" = 2, "oxygen" = 1)
 			result_amount = 1
 
+		sacid
+			name = "Sulphuric Acid"
+			id = "sacid"
+			result = "sacid"
+			required_reagents = list("sulphur" = 2, "oxygen" = 3, "water" = 2)
+			result_amount = 2
+
 		thermite
 			name = "Thermite"
 			id = "thermite"
@@ -651,12 +658,12 @@ datum
 
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution violently bubbles!"
+					M << "<span class='warning'>The solution violently bubbles!</span>"
 
 				location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out foam!"
+					M << "<span class='warning'>The solution spews out foam!</span>"
 
 				//world << "Holder volume is [holder.total_volume]"
 				//for(var/datum/reagent/R in holder.reagent_list)
@@ -681,7 +688,7 @@ datum
 				var/location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out a metalic foam!"
+					M << "<span class='warning'>The solution spews out a metalic foam!</span>"
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 1)
@@ -701,7 +708,7 @@ datum
 				var/location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out a metalic foam!"
+					M << "<span class='warning'>The solution spews out a metalic foam!</span>"
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 2)
@@ -1013,12 +1020,12 @@ datum
 
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution violently bubbles!"
+					M << "<span class='warning'>The solution violently bubbles!</span>"
 
 				location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out foam!"
+					M << "<span class='warning'>The solution spews out foam!</span>"
 
 				//world << "Holder volume is [holder.total_volume]"
 				//for(var/datum/reagent/R in holder.reagent_list)
@@ -1377,7 +1384,7 @@ datum
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 				for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
 					M.bodytemperature -= 240
-					M << "\blue You feel a chill!"
+					M << "<span class='notice'>You feel a chill!</span>"
 
 //Orange
 		slimecasp

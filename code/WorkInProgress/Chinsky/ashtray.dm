@@ -22,7 +22,7 @@
 			if (contents.len >= max_butts)
 				user << "This ashtray is full."
 				return
-			user.drop_item(src)
+			user.drop_item(W, src)
 			var/obj/item/clothing/mask/cigarette/cig = W
 			if(istype(cig, /obj/item/weapon/cigbutt))
 				user << "You drop the [cig] into [src]."
@@ -54,7 +54,7 @@
 			die()
 			return
 		if (contents.len)
-			src.visible_message("\red [src] slams into [hit_atom] spilling its contents!")
+			src.visible_message("<span class='warning'>[src] slams into [hit_atom] spilling its contents!</span>")
 		for (var/obj/item/clothing/mask/cigarette/O in contents)
 			contents -= O
 			O.loc = src.loc
@@ -62,7 +62,7 @@
 	return ..()
 
 /obj/item/ashtray/proc/die()
-	src.visible_message("\red [src] shatters spilling its contents!")
+	src.visible_message("<span class='warning'>[src] shatters spilling its contents!</span>")
 	for (var/obj/item/clothing/mask/cigarette/O in contents)
 		contents -= O
 		O.loc = src.loc

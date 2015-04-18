@@ -870,18 +870,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 
 /obj/machinery/newscaster/attackby(obj/item/I as obj, mob/user as mob)
-
-/*	if (istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda) ) //Name verification for channels or messages
-		if(src.screen == 4 || src.screen == 5)
-			if( istype(I, /obj/item/device/pda) )
-				var/obj/item/device/pda/P = I
-				if(P.id)
-					src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
-					src.screen=2
-			else
-				var/obj/item/weapon/card/id/T = I
-				src.scanned_user = text("[T.registered_name] ([T.assignment])")
-				src.screen=2*/  //Obsolete after autorecognition
+	if(isscrewdriver(I) && !(stat & BROKEN))
+		user.visible_message("<span class='notice'>[user] takes down the [src]!</span>", "<span class='notice'>You take down the [src]</span>")
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
+		new /obj/item/mounted/frame/newscaster(src.loc)
+		qdel(src)
+		return
 
 	if ((stat & BROKEN) && (istype(I, /obj/item/stack/sheet/glass/glass)))
 		var/obj/item/stack/sheet/glass/glass/stack = I
@@ -932,7 +926,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
-		user.drop_item(src)
+		user.drop_item(photo, src)
 
 
 

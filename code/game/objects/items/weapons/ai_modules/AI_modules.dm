@@ -48,7 +48,7 @@ Refactored AI modules by N3X15
 /obj/item/weapon/aiModule/attack_ai(mob/user as mob)
 	// Keep MoMMIs from picking them up.
 	if(isMoMMI(user))
-		user << "\red Your firmware prevents you from picking that up!"
+		user << "<span class='warning'>Your firmware prevents you from picking that up!</span>"
 	return
 
 // This prevents modules from being picked up.  Use it, if needed.
@@ -82,7 +82,7 @@ Refactored AI modules by N3X15
 		var/mob/M=target
 		// This seems redundant.  Revisit. - N3X
 		if(src.modflags & HIDE_SENDER)
-			target << "\red <b>\[REDACTED\]</b> \black has uploaded a change to the laws you must follow, using \a [name]. From now on: "
+			target << "<span class='danger'>\[REDACTED\] </span>has uploaded a change to the laws you must follow, using \a [name]. From now on: "
 		else
 			target << "[senderName] has uploaded a change to the laws you must follow, using \a [name]. From now on: "
 		targetName="[fmtSubject(M)])"
@@ -182,5 +182,5 @@ Refactored AI modules by N3X15
 
 /obj/item/weapon/aiModule/keeper/validate(var/datum/ai_laws/laws, var/atom/target, var/mob/sender)
 	..()
-	sender << "\red How the fuck did you get this?"
+	sender << "<span class='warning'>How the fuck did you get this?</span>"
 	return 0

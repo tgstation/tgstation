@@ -65,7 +65,7 @@
 	set name = "Eject ID Card"
 	set src in oview(1)
 
-	if(!usr || usr.stat || usr.lying)	return
+	if(!usr || usr.stat || usr.lying || (usr.status_flags & FAKEDEATH))	return
 
 	if (!ishuman(usr))
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -92,10 +92,10 @@
 		return ..()
 
 	if(!scan && access_change_ids in id_card.access)
-		user.drop_item(src)
+		user.drop_item(id_card, src)
 		scan = id_card
 	else if(!modify)
-		user.drop_item(src)
+		user.drop_item(id_card, src)
 		modify = id_card
 
 	nanomanager.update_uis(src)
@@ -197,7 +197,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item(src)
+					usr.drop_item(I, src)
 					modify = I
 
 		if ("scan")
@@ -213,7 +213,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item(src)
+					usr.drop_item(I, src)
 					scan = I
 
 		if("access")
@@ -249,7 +249,7 @@
 								jobdatum = J
 								break
 						if(!jobdatum)
-							usr << "\red No log exists for this job: [t1]"
+							usr << "<span class='warning'>No log exists for this job: [t1]</span>"
 							return
 
 						access = jobdatum.get_access()

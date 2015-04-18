@@ -1,5 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
+var/global/list/rnd_machines = list()
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 /obj/machinery/r_n_d
 	name = "R&D Device"
@@ -32,6 +32,7 @@
 	var/research_flags //see setup.dm for details of these
 
 /obj/machinery/r_n_d/New()
+	rnd_machines |= src
 	..()
 	wires["Red"] = 0
 	wires["Blue"] = 0
@@ -62,6 +63,10 @@
 			if(O)
 				output=O
 				break
+
+/obj/machinery/r_n_d/Destroy()
+	rnd_machines -= src
+	..()
 
 /obj/machinery/r_n_d/update_icon()
 	overlays.len = 0
@@ -173,7 +178,7 @@
 	if (disabled)
 		return 1
 	if (busy)
-		user << "\red The [src.name] is busy. Please wait for completion of previous operation."
+		user << "<span class='warning'>The [src.name] is busy. Please wait for completion of previous operation.</span>"
 		return 1
 	if (stat)
 		return 1
@@ -189,19 +194,19 @@
 						if(locate(user) in get_step(src,direction))
 							found=1
 					if(!found)
-						user << "\red Cannot set this as the output location; You're too far away."
+						user << "<span class='warning'>Cannot set this as the output location; You're too far away.</span>"
 						return
 					if(istype(output,/obj/machinery/mineral/output))
 						del(output)
 					output=new /obj/machinery/mineral/output(usr.loc)
-					user << "\blue Output set."
+					user << "<span class='notice'>Output set.</span>"
 				if("No")
 					return
 				if("Machine Location")
 					if(istype(output,/obj/machinery/mineral/output))
 						del(output)
 					output=src
-					user << "\blue Output set."
+					user << "<span class='notice'>Output set.</span>"
 		return
 	if (!linked_console && !(istype(src, /obj/machinery/r_n_d/fabricator))) //fabricators get a free pass because they aren't tied to a console
 		user << "\The [src.name] must be linked to an R&D console first!"
@@ -220,11 +225,11 @@
 				if(M.sheettype==O.type)
 					found=1
 			if(!found)
-				user << "\red The protolathe rejects \the [O]."
+				user << "<span class='warning'>The protolathe rejects \the [O].</span>"
 				return 1
 			var/obj/item/stack/sheet/S = O
 			if (TotalMaterials() + S.perunit > max_material_storage)
-				user << "\red The protolathe's material bin is full. Please remove material before adding more."
+				user << "<span class='warning'>The protolathe's material bin is full. Please remove material before adding more.</span>"
 				return 1
 
 			var/obj/item/stack/sheet/stack = O
@@ -251,16 +256,13 @@
 			use_power(max(1000, (3750*amount/10)))
 			var/stacktype = stack.type
 			stack.use(amount)
-			if (do_after(user, 16))
-				user << "\blue You add [amount] sheets to the [src.name]."
-				icon_state = "[base_state]"
-				for(var/id in materials)
-					var/datum/material/material=materials[id]
-					if(stacktype == material.sheettype)
-						material.stored += (amount * material.cc_per_sheet)
-						materials[id]=material
-			else
-				new stacktype(src.loc, amount)
+			user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
+			icon_state = "[base_state]"
+			for(var/id in materials)
+				var/datum/material/material=materials[id]
+				if(stacktype == material.sheettype)
+					material.stored += (amount * material.cc_per_sheet)
+					materials[id]=material
 		else
 			user <<"<span class='notice'>The [src.name] rejects the [O]!</span>"
 		busy = 0

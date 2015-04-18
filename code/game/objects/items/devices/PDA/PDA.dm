@@ -487,7 +487,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Send Message"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't send PDA messages because you are dead!"
 		return
 	var/list/plist = available_pdas()
@@ -503,7 +503,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't do that because you are dead!"
 		return
 	toff = !toff
@@ -514,7 +514,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Toggle Ringer"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't do that because you are dead!"
 		return
 	silent=!silent
@@ -525,7 +525,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Show Message Log"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't do that because you are dead!"
 		return
 	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[tnote]</body></html>"
@@ -656,7 +656,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>
 					<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_clock.png> Current Events</a></li>"}
 				// END AUTOFIX
-				//dat += "<li><a href='byond://?src=\red[src];choice=chatroom'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
+				//dat += "<li><a href='byond://?src=[src];choice=chatroom'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
 
 				dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 
@@ -1246,7 +1246,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(!isnull(P))
 						if (!P.toff && cartridge:honk_charges > 0)
 							cartridge:honk_charges--
-							U.show_message("\blue Virus sent!", 1)
+							U.show_message("<span class='notice'>Virus sent!</span>", 1)
 							P.honkamt = (rand(15,20))
 					else
 						U << "PDA not found."
@@ -1259,7 +1259,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(!isnull(P))
 						if (!P.toff && cartridge:mime_charges > 0)
 							cartridge:mime_charges--
-							U.show_message("\blue Virus sent!", 1)
+							U.show_message("<span class='notice'>Virus sent!</span>", 1)
 							P.silent = 1
 							P.ttone = "silence"
 					else
@@ -1300,15 +1300,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								difficulty += 2
 
 							if(prob(difficulty * 12) || (P.hidden_uplink))
-								U.show_message("\red An error flashes on your [src].", 1)
+								U.show_message("<span class='warning'>An error flashes on your [src].</span>", 1)
 							else if (prob(difficulty * 3))
-								U.show_message("\red Energy feeds back into your [src]!", 1)
+								U.show_message("<span class='warning'>Energy feeds back into your [src]!</span>", 1)
 								U << browse(null, "window=pda")
 								explode()
 								log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
 								message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up", 1)
 							else
-								U.show_message("\blue Success!", 1)
+								U.show_message("<span class='notice'>Success!</span>", 1)
 								log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeded")
 								message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeded", 1)
 								P.explode()
@@ -1500,13 +1500,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else
 			var/obj/item/I = user.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				user.drop_item(src)
+				user.drop_item(I, src)
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.get_active_hand()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
 			var/obj/old_id = id
-			user.drop_item(src)
+			user.drop_item(I, src)
 			id = I
 			user.put_in_hands(old_id)
 	return
@@ -1516,7 +1516,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
-		user.drop_item(src)
+		user.drop_item(C, src)
 		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
@@ -1541,7 +1541,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
-		user.drop_item(src)
+		user.drop_item(C, src)
 		pai = C
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
 		updateUsrDialog()
@@ -1550,7 +1550,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(O)
 			user << "<span class='notice'>There is already a pen in \the [src].</span>"
 		else
-			user.drop_item(src)
+			user.drop_item(C, src)
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
 	return
 
@@ -1563,31 +1563,31 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if(2)
 				if (!istype(C:dna, /datum/dna))
-					user << "\blue No fingerprints found on [C]"
+					user << "<span class='notice'>No fingerprints found on [C]</span>"
 				else if(!istype(C, /mob/living/carbon/monkey))
 					if(!isnull(C:gloves))
-						user << "\blue No fingerprints found on [C]"
+						user << "<span class='notice'>No fingerprints found on [C]</span>"
 				else
-					user << text("\blue [C]'s Fingerprints: [md5(C:dna.uni_identity)]")
+					user << text("<span class='notice'>[C]'s Fingerprints: [md5(C:dna.uni_identity)]</span>")
 				if ( !(C:blood_DNA) )
-					user << "\blue No blood found on [C]"
+					user << "<span class='notice'>No blood found on [C]</span>"
 					if(C:blood_DNA)
 						del(C:blood_DNA)
 				else
-					user << "\blue Blood found on [C]. Analysing..."
+					user << "<span class='notice'>Blood found on [C]. Analysing...</span>"
 					spawn(15)
 						for(var/blood in C:blood_DNA)
-							user << "\blue Blood type: [C:blood_DNA[blood]]\nDNA: [blood]"
+							user << "<span class='notice'>Blood type: [C:blood_DNA[blood]]\nDNA: [blood]</span>"
 
 			if(4)
 				for (var/mob/O in viewers(C, null))
-					O.show_message("\red [user] has analyzed [C]'s radiation levels!", 1)
+					O.show_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>", 1)
 
-				user.show_message("\blue Analyzing Results for [C]:")
+				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
 				if(C.radiation)
-					user.show_message("\green Radiation Level: \black [C.radiation]")
+					user.show_message("<span class='good'>Radiation Level: </span>[C.radiation]")
 				else
-					user.show_message("\blue No radiation detected.")
+					user.show_message("<span class='notice'>No radiation detected.</span>")
 
 /obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 	switch(scanmode)
@@ -1596,13 +1596,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
-					user << "\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found."
+					user << "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>"
 					for (var/re in A.reagents.reagent_list)
-						user << "\blue \t [re]"
+						user << "<span class='notice'>\t [re]</span>"
 				else
-					user << "\blue No active chemical agents found in [A]."
+					user << "<span class='notice'>No active chemical agents found in [A].</span>"
 			else
-				user << "\blue No significant chemical agents found in [A]."
+				user << "<span class='notice'>No significant chemical agents found in [A].</span>"
 
 		if(5)
 			if(atmos_analys)
@@ -1612,7 +1612,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info
-		user << "\blue Paper scanned." //concept of scanning paper copyright brainoblivion 2009
+		user << "<span class='notice'>Paper scanned.</span>" //concept of scanning paper copyright brainoblivion 2009
 
 /obj/item/device/pda/preattack(atom/A as mob|obj|turf|area, mob/user as mob)
 	if (scanmode == 6)
@@ -1626,7 +1626,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if (ismob(loc))
 		var/mob/M = loc
-		M.show_message("\red Your [src] explodes!", 1)
+		M.show_message("<span class='warning'>Your [src] explodes!</span>", 1)
 
 	if(T)
 		T.hotspot_expose(700,125,surfaces=istype(loc,/turf))
@@ -1664,7 +1664,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				src.cartridge:honk_charges++
 
 		M.stop_pulling()
-		M << "\blue You slipped on the PDA!"
+		M << "<span class='notice'>You slipped on the PDA!</span>"
 		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(8)
 		M.Weaken(5)

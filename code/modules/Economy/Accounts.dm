@@ -9,19 +9,18 @@ var/global/list/all_money_accounts = list()
 
 /proc/create_station_account()
 	if(!station_account)
-		next_account_number = rand(111111, 999999)
-
+		next_account_number = rand(11111, 99999)
 		station_account = new()
 		station_account.owner_name = "[station_name()] Station Account"
-		station_account.account_number = rand(111111, 999999)
-		station_account.remote_access_pin = rand(1111, 111111)
-		station_account.money = 75000
+		station_account.account_number = rand(11111, 99999)
+		station_account.remote_access_pin = rand(1111, 9999)
+		station_account.money = 5000
 
 		//create an entry in the account transaction log for when it was created
 		var/datum/transaction/T = new()
 		T.target_name = station_account.owner_name
 		T.purpose = "Account creation"
-		T.amount = 75000
+		T.amount = 5000
 		T.date = "2nd April, [game_year]"
 		T.time = "11:24"
 		T.source_terminal = "Biesel GalaxyNet Terminal #277"
@@ -35,8 +34,8 @@ var/global/list/all_money_accounts = list()
 
 	var/datum/money_account/department_account = new()
 	department_account.owner_name = "[department] Account"
-	department_account.account_number = rand(111111, 999999)
-	department_account.remote_access_pin = rand(1111, 111111)
+	department_account.account_number = rand(11111, 99999)
+	department_account.remote_access_pin = rand(1111, 9999)
 	department_account.money = 5000
 
 	//create an entry in the account transaction log for when it was created
@@ -62,7 +61,7 @@ var/global/list/all_money_accounts = list()
 	//create a new account
 	var/datum/money_account/M = new()
 	M.owner_name = new_owner_name
-	M.remote_access_pin = rand(1111, 111111)
+	M.remote_access_pin = rand(1111, 9999)
 	M.money = starting_funds
 
 	//create an entry in the account transaction log for when it was created
@@ -77,7 +76,7 @@ var/global/list/all_money_accounts = list()
 		T.time = "[rand(0,24)]:[rand(11,59)]"														//prompting everyone to get a new account one day prior.
 		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"								//The point being to partly to justify the transaction history being empty at the beginning of the round.
 
-		M.account_number = rand(111111, 999999)
+		M.account_number = rand(11111, 99999)
 	else
 		T.date = current_date_string
 		T.time = worldtime2text()
@@ -220,8 +219,9 @@ var/global/list/all_money_accounts = list()
 					<input type='hidden' name='src' value='\ref[src]'>
 					<input type='hidden' name='choice' value='finalise_create_account'>
 					<b>Holder name:</b> <input type='text' id='holder_name' name='holder_name' style='width:250px; background-color:white;'><br>
-					<b>Initial funds:</b> <input type='text' id='starting_funds' name='starting_funds' style='width:250px; background-color:white;'> (subtracted from station account)<br>
+					<b>Initial funds:</b> <input type='text' id='starting_funds' name='starting_funds' style='width:250px; background-color:white;'> (subtracted from station account.)<br>
 					<i>New accounts are automatically assigned a secret number and pin, which are printed separately in a sealed package.</i><br>
+					<b>Ensure that the station account has enough money to create the account, or it will not be created</b>
 					<input type='submit' value='Create'><br>
 					</form>"}
 				// END AUTOFIX
@@ -233,7 +233,7 @@ var/global/list/all_money_accounts = list()
 					dat += {"<br>
 						<a href='?src=\ref[src];choice=view_accounts_list;'>Return to accounts list</a><hr>
 						<b>Account number:</b> #[detailed_account_view.account_number]<br>
-						<b>Account holder:</b> [detailed_account_view.owner_name]<br>
+						<b>Account holder:<	/b> [detailed_account_view.owner_name]<br>
 						<b>Account balance:</b> $[detailed_account_view.money]<br>
 						<table border=1 style='width:100%'>
 						<tr>
@@ -278,7 +278,6 @@ var/global/list/all_money_accounts = list()
 							</tr>"}
 						// END AUTOFIX
 					dat += "</table>"
-
 		user << browse(dat,"window=account_db;size=700x650")
 	else
 		user << browse(null,"window=account_db")
@@ -292,7 +291,7 @@ var/global/list/all_money_accounts = list()
 			emag(user)
 			return
 		if(!held_card)
-			usr.drop_item(src)
+			usr.drop_item(O, src)
 			held_card = idcard
 
 			if(access_cent_captain in idcard.access)
@@ -332,32 +331,28 @@ var/global/list/all_money_accounts = list()
 			if("finalise_create_account")
 				var/account_name = href_list["holder_name"]
 				var/starting_funds = max(text2num(href_list["starting_funds"]), 0)
-				create_account(account_name, starting_funds, src)
-				if(starting_funds > 0)
-					//subtract the money
+				if ((station_account.money - starting_funds) > 0)
 					station_account.money -= starting_funds
-
-					//create a transaction log entry
-					var/datum/transaction/T = new()
-					T.target_name = account_name
-					T.purpose = "New account funds initialisation"
-					T.amount = "([starting_funds])"
-					T.date = current_date_string
-					T.time = worldtime2text()
-					T.source_terminal = machine_id
-					station_account.transaction_log.Add(T)
-
-				creating_new_account = 0
+					if(starting_funds >0)
+						//Create a transaction log entry if you need to
+						var/datum/transaction/T = new()
+						T.target_name = account_name
+						T.purpose = "New account funds initialisation"
+						T.amount = "([starting_funds])"
+						T.date = current_date_string
+						T.time = worldtime2text()
+						T.source_terminal = machine_id
+						station_account.transaction_log.Add(T)
+					create_account(account_name, starting_funds, src)
+					creating_new_account = 0
 			if("insert_card")
 				if(held_card)
 					held_card.loc = src.loc
-
 					if(ishuman(usr) && !usr.get_active_hand())
 						usr.put_in_hands(held_card)
 					held_card = null
 					if(access_level < 3)
 						access_level = 0
-
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if(isEmag(I))
@@ -365,7 +360,7 @@ var/global/list/all_money_accounts = list()
 						return
 					if (istype(I, /obj/item/weapon/card/id))
 						var/obj/item/weapon/card/id/C = I
-						usr.drop_item(src)
+						usr.drop_item(C, src)
 						held_card = C
 						if(access_level < 3)
 							if(access_cent_captain in C.access)

@@ -306,6 +306,10 @@
 	O.density = 1
 	O.layer = 5
 
+	var/cultwall = 0
+	if(istype(src, /turf/simulated/wall/cult))
+		cultwall = 1
+
 	src.ChangeTurf(/turf/simulated/floor/plating)
 
 	var/turf/simulated/floor/F = src
@@ -316,7 +320,7 @@
 			qdel(O)
 		return
 	F.burn_tile()
-	F.icon_state = "wall_thermite"
+	F.icon_state = "[cultwall ? "cultwall_thermite" : "wall_thermite"]"
 
 	var/pdiff = performWallPressureCheck(src.loc)
 	if(pdiff)

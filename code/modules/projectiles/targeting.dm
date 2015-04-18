@@ -12,7 +12,7 @@
 	set category = "Object"
 	if(target)
 		stop_aim()
-		usr.visible_message("\blue \The [usr] lowers \the [src]...")
+		usr.visible_message("<span class='notice'>\The [usr] lowers \the [src]...</span>")
 
 //Clicking gun will still lower aim for guns that don't overwrite this
 /obj/item/weapon/gun/attack_self()
@@ -64,9 +64,9 @@
 				if(L)
 					L.NotTargeted(src)
 			del(target)
-			usr.visible_message("\red <b>[usr] turns \the [src] on [M]!</b>")
+			usr.visible_message("<span class='danger'>[usr] turns \the [src] on [M]!</span>")
 		else
-			usr.visible_message("\red <b>[usr] aims \a [src] at [M]!</b>")
+			usr.visible_message("<span class='danger'>[usr] aims \a [src] at [M]!</span>")
 		M.Targeted(src)
 
 //HE MOVED, SHOOT HIM!
@@ -84,7 +84,7 @@
 			if(firing_check == 1)
 				Fire(T,usr, reflex = 1)
 		else if(!told_cant_shoot)
-			M << "\red They can't be hit from here!"
+			M << "<span class='warning'>They can't be hit from here!</span>"
 			told_cant_shoot = 1
 			spawn(30)
 				told_cant_shoot = 0
@@ -162,9 +162,9 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 	if(!targeted_by) targeted_by = list()
 	targeted_by += I
 	I.lock_time = world.time + 20 //Target has 2 second to realize they're targeted and stop (or target the opponent).
-	src << "((\red <b>Your character is being targeted. They have 2 seconds to stop any click or move actions.</b> \black While targeted, they may \
+	src << "((<span class='danger'>Your character is being targeted. They have 2 seconds to stop any click or move actions. </span>While targeted, they may \
 	drag and drop items in or into the map, speak, and click on interface buttons. Clicking on the map objects (floors and walls are fine), their items \
-	 (other than a weapon to de-target), or moving will result in being fired upon. \red The aggressor may also fire manually, \
+	 (other than a weapon to de-target), or moving will result in being fired upon. <span class='warning'>The aggressor may also fire manually, </span>\
 	 so try not to get on their bad side.\black ))"
 
 	if(targeted_by.len == 1)
@@ -309,10 +309,10 @@ client/verb/AllowTargetMove()
 				if(target_can_move)
 					M << "Your character may now <b>walk</b> at the discretion of their targeter."
 					if(!target_can_run && (ishuman(M)))
-						M << "\red Your move intent is now set to walk, as your targeter permits it."
+						M << "<span class='warning'>Your move intent is now set to walk, as your targeter permits it.</span>"
 						M.set_m_intent("walk")
 				else
-					M << "\red <b>Your character will now be shot if they move.</b>"
+					M << "<span class='danger'>Your character will now be shot if they move.</span>"
 
 mob/living/proc/set_m_intent(var/intent)
 	if (intent != "walk" && intent != "run")
@@ -345,7 +345,7 @@ client/verb/AllowTargetRun()
 				if(target_can_run)
 					M << "Your character may now <b>run</b> at the discretion of their targeter."
 				else
-					M << "\red <b>Your character will now be shot if they run.</b>"
+					M << "<span class='danger'>Your character will now be shot if they run.</span>"
 
 client/verb/AllowTargetClick()
 	set hidden=1
@@ -369,4 +369,4 @@ client/verb/AllowTargetClick()
 				if(target_can_click)
 					M << "Your character may now <b>use items</b> at the discretion of their targeter."
 				else
-					M << "\red <b>Your character will now be shot if they use items.</b>"
+					M << "<span class='danger'>Your character will now be shot if they use items.</span>"

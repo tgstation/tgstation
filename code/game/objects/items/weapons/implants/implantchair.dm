@@ -112,10 +112,10 @@
 
 	put_mob(mob/living/carbon/M as mob)
 		if(!iscarbon(M))
-			usr << "\red <B>The [src.name] cannot hold this!</B>"
+			usr << "<span class='danger'>The [src.name] cannot hold this!</span>"
 			return
 		if(src.occupant)
-			usr << "\red <B>The [src.name] is already occupied!</B>"
+			usr << "<span class='danger'>The [src.name] is already occupied!</span>"
 			return
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
@@ -136,7 +136,7 @@
 			if(!imp)	continue
 			if(istype(imp, /obj/item/weapon/implant/loyalty))
 				for (var/mob/O in viewers(M, null))
-					O.show_message("\red [M] has been implanted by the [src.name].", 1)
+					O.show_message("<span class='warning'>[M] has been implanted by the [src.name].</span>", 1)
 
 				if(imp.implanted(M))
 					imp.loc = M
@@ -158,7 +158,7 @@
 			set name = "Eject occupant"
 			set category = "Object"
 			set src in oview(1)
-			if(usr.stat != 0)
+			if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 				return
 			src.go_out(usr)
 			add_fingerprint(usr)
@@ -169,7 +169,7 @@
 			set name = "Move Inside"
 			set category = "Object"
 			set src in oview(1)
-			if(usr.stat != 0 || stat & (NOPOWER|BROKEN))
+			if(usr.stat != 0 || stat & (NOPOWER|BROKEN) || (usr.status_flags & FAKEDEATH))
 				return
 			put_mob(usr)
 			return

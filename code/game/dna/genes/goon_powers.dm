@@ -146,7 +146,7 @@
 	..()
 	for(var/mob/living/carbon/target in targets)
 		if (M_RESIST_COLD in target.mutations)
-			target.visible_message("\red A cloud of fine ice crystals engulfs [target.name], but disappears almost instantly!")
+			target.visible_message("<span class='warning'>A cloud of fine ice crystals engulfs [target.name], but disappears almost instantly!</span>")
 			return
 		var/handle_suit = 0
 		if(ishuman(target))
@@ -155,10 +155,10 @@
 				if(istype(H.wear_suit, /obj/item/clothing/suit/space))
 					handle_suit = 1
 					if(H.internal)
-						H.visible_message("\red A cloud of fine ice crystals engulfs [H]!",
+						H.visible_message("<span class='warning'>A cloud of fine ice crystals engulfs [H]!</span>",
 											"<span class='notice'>A cloud of fine ice crystals cover your [H.head]'s visor.</span>")
 					else
-						H.visible_message("\red A cloud of fine ice crystals engulfs [H]!",
+						H.visible_message("<span class='warning'>A cloud of fine ice crystals engulfs [H]!</span>",
 											"<span class='warning'>A cloud of fine ice crystals cover your [H.head]'s visor and make it into your air vents!.</span>")
 						H.bodytemperature = max(0, H.bodytemperature - 50)
 						H.adjustFireLoss(5)
@@ -167,7 +167,7 @@
 			target.adjustFireLoss(10)
 			target.ExtinguishMob()
 
-			target.visible_message("\red A cloud of fine ice crystals engulfs [target]!")
+			target.visible_message("<span class='warning'>A cloud of fine ice crystals engulfs [target]!</span>")
 
 		new/obj/effects/self_deleting(target.loc, icon('icons/effects/genetics.dmi', "cryokinesis"))
 	return
@@ -335,11 +335,11 @@
 			// Bullshit, but prevents being able to instagib someone.
 			user << "<span class='warning'> You try to put their [limb] in your mouth, but it's too big to fit!</span>"
 			return 0
-		usr.visible_message("<span class='warning'> <b>[usr] begins stuffing [the_item]'s [limb.display_name] into [m_his] gaping maw!</b></span>")
+		usr.visible_message("<span class='danger'>[usr] begins stuffing [the_item]'s [limb.display_name] into [m_his] gaping maw!</span>")
 		if(!do_mob(user,the_item,EAT_MOB_DELAY))
-			user << "<span class='warning'> You were interrupted before you could eat [the_item]!</span>"
+			user << "<span class='warning'>You were interrupted before you could eat [the_item]!</span>"
 		else
-			user.visible_message("\red [user] eats \the [limb].")
+			user.visible_message("<span class='warning'>[user] eats \the [limb].</span>")
 			limb.droplimb("override" = 1, "spawn_limb" = 0)
 			doHeal(user)
 	else
@@ -434,7 +434,7 @@
 
 		if (istype(target.loc,/obj/))
 			var/obj/container = target.loc
-			target << "\red You leap and slam your head against the inside of [container]! Ouch!"
+			target << "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>"
 			target.paralysis += 3
 			target.weakened += 5
 			container.visible_message("<span class='warning'><b>[container]</b> emits a loud thump and rattles a bit.</span>")

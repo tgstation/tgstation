@@ -26,10 +26,12 @@
 		/obj/structure/table,
 		/obj/structure/closet,
 		/obj/structure/sink,
+		/obj/structure/centrifuge/,
 		/obj/item/weapon/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
 		/obj/machinery/dna_scannernew,
 		/obj/item/weapon/grenade/chem_grenade,
+		/obj/item/weapon/electrolyzer,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/storage/secure/safe,
@@ -437,10 +439,10 @@
 
 /obj/item/weapon/reagent_containers/glass/kettle
 	name = "Kettle"
-	desc = "A pot made for holding hot drinks. Can hold up to 50 units."
+	desc = "A pot made for holding hot drinks. Can hold up to 75 units."
 	icon_state = "kettle"
 	m_amt = 200
-	volume = 50
+	volume = 75
 	w_type = RECYK_GLASS
 	amount_per_transfer_from_this = 10
 	flags = FPRINT  | OPENCONTAINER

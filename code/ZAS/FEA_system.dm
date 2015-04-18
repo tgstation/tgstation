@@ -127,7 +127,7 @@ var/datum/controller/air_system/air_master
 	//Outputs: None.
 
 	//set background = 1
-	world << "\red \b Processing Geometry..."
+	world << "<span class='danger'>Processing Geometry...</span>"
 	sleep(-1)
 
 	var/start_time = world.timeofday

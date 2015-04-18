@@ -52,7 +52,7 @@
 		user << "<span class='warning'>You need an empty hand to draw the [holstered]!</span>"
 	else
 		if(user.a_intent == I_HURT)
-			usr.visible_message("\red [user] draws the [holstered], ready to shoot!</span>", \
+			usr.visible_message("<span class='warning'>[user] draws the [holstered], ready to shoot!</span></span>", \
 			"<span class='warning'>You draw the [holstered], ready to shoot!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] draws the [holstered], pointing it at the ground.</span>", \
@@ -66,7 +66,7 @@
 	set category = "Object"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(usr.stat || (usr.status_flags & FAKEDEATH)) return
 
 	var/obj/item/clothing/accessory/holster/H = null
 	if (istype(src, /obj/item/clothing/accessory/holster))
