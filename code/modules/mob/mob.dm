@@ -100,7 +100,7 @@
 			else
 				msg = alt
 				type = alt_type
-				if((type & 1 && sdisabilities & BLIND)) //Since the alternative is sight-related, make sure we can see. Go figure why there isn't such a check in the clause above
+				if(type & 1 && (sdisabilities & BLIND || blinded || paralysis)) //Since the alternative is sight-related, make sure we can see
 					return
 	//Added voice muffling for Issue 41.
 	//This has been changed to only work with audible messages, because you can't hear a frown
