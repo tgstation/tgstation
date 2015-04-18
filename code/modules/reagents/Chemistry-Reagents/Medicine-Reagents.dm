@@ -125,7 +125,6 @@ datum/reagent/medicine/rezadone
 	color = "#669900" // rgb: 102, 153, 0
 
 datum/reagent/medicine/rezadone/on_mob_life(var/mob/living/M as mob)
-	current_cycle++
 	switch(current_cycle)
 		if(1 to 15)
 			M.adjustCloneLoss(-1)
@@ -465,7 +464,6 @@ datum/reagent/medicine/morphine
 	description = "Will allow you to ignore slowdown from equipment and damage. Will eventually knock you out if you take too much. If overdosed it will cause jitteriness, dizziness, force the victim to drop items in their hands and eventually deal toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	var/cycle_count = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	addiction_threshold = 25
@@ -473,9 +471,8 @@ datum/reagent/medicine/morphine
 
 datum/reagent/medicine/morphine/on_mob_life(var/mob/living/M as mob)
 	M.status_flags |= IGNORESLOWDOWN
-	if(cycle_count >= 36)
+	if(current_cycle >= 36)
 		M.sleeping += 3
-	cycle_count++
 	..()
 	return
 
@@ -536,11 +533,9 @@ datum/reagent/medicine/oculine
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	var/cycle_amount = 0
 
 datum/reagent/medicine/oculine/on_mob_life(var/mob/living/M as mob)
-	cycle_amount++
-	if(M.eye_blind > 0 && cycle_amount > 20)
+	if(M.eye_blind > 0 && current_cycle > 20)
 		if(prob(30))
 			M.eye_blind = 0
 		else if(prob(80))

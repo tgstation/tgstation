@@ -102,7 +102,7 @@
 		if (round(amount/3) > 0)
 			light = min (MAX_EX_LIGHT_RANGE, light + round(amount/3))
 
-		if (flash && flashing_factor)
+		if (flashing && flashing_factor)
 			flash += (round(amount/4) * flashing_factor)
 
 		explosion(location, devastation, heavy, light, flash)

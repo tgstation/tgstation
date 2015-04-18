@@ -1,38 +1,80 @@
 
-/datum/chemical_reaction/thermite
-	name = "Thermite"
-	id = "thermite"
-	result = "thermite"
-	required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/explosion_nitroglycerin
-	name = "Nitroglycerin explosion"
-	id = "explosion_nitroglycerin"
-	result = null
+/datum/chemical_reaction/nitroglycerin
+	name = "Nitroglycerin"
+	id = "nitroglycerin"
+	result = "nitroglycerin"
 	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
 	result_amount = 2
 
-/datum/chemical_reaction/explosion_nitroglycerin/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/nitroglycerin/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(holder.has_reagent("stabilizing_agent"))
+		return
+	holder.remove_reagent("nitroglycerin", created_volume)
+	var/location = get_turf(holder.my_atom)
+	var/datum/effect/effect/system/reagents_explosion/e = new()
+	e.set_up(round (created_volume/2, 1), location, 0, 0)
+	e.start()
+	holder.clear_reagents()
+
+/datum/chemical_reaction/nitroglycerin_explosion
+	name = "Nitroglycerin explosion"
+	id = "nitroglycerin_explosion"
+	result = null
+	required_reagents = list("nitroglycerin" = 1)
+	result_amount = 1
+	required_temp = 474
+
+/datum/chemical_reaction/nitroglycerin_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect/effect/system/reagents_explosion/e = new()
 	e.set_up(round(created_volume/2, 1), location, 0, 0)
 	e.start()
 	holder.clear_reagents()
 
-/datum/chemical_reaction/explosion_potassium
+/datum/chemical_reaction/potassium_explosion
 	name = "Explosion"
-	id = "explosion_potassium"
+	id = "potassium_explosion"
 	result = null
 	required_reagents = list("water" = 1, "potassium" = 1)
 	result_amount = 2
 
-/datum/chemical_reaction/explosion_potassium/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/potassium_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect/effect/system/reagents_explosion/e = new()
 	e.set_up(round (created_volume/10, 1), location, 0, 0)
 	e.start()
 	holder.clear_reagents()
+
+/datum/chemical_reaction/blackpowder
+	name = "Black Powder"
+	id = "blackpowder"
+	result = "blackpowder"
+	required_reagents = list("saltpetre" = 1, "charcoal" = 1, "sulfur" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/blackpowder_explosion
+	name = "Black Powder Kaboom"
+	id = "blackpowder_explosion"
+	result = null
+	required_reagents = list("blackpowder" = 1)
+	result_amount = 1
+	required_temp = 474
+	mix_message = "<span class = 'boldannounce'>Sparks start flying around the black powder!</span>"
+
+/datum/chemical_reaction/blackpowder_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
+	sleep(rand(50,100))
+	var/location = get_turf(holder.my_atom)
+	var/datum/effect/effect/system/reagents_explosion/e = new()
+	e.set_up(1 + round(created_volume/6, 1), location, 0, 0)
+	e.start()
+	holder.clear_reagents()
+
+/datum/chemical_reaction/thermite
+	name = "Thermite"
+	id = "thermite"
+	result = "thermite"
+	required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
+	result_amount = 3
 
 /datum/chemical_reaction/emp_pulse
 	name = "EMP Pulse"
@@ -47,8 +89,6 @@
 	// 200 created volume = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
 	empulse(location, round(created_volume / 24), round(created_volume / 14), 1)
 	holder.clear_reagents()
-
-
 
 /datum/chemical_reaction/stabilizing_agent
 	name = "stabilizing_agent"
@@ -122,31 +162,6 @@
 /datum/chemical_reaction/ldm_vortex/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	goonchem_vortex(T, 0, 5, 6)
-
-/datum/chemical_reaction/blackpowder
-	name = "Black Powder"
-	id = "blackpowder"
-	result = "blackpowder"
-	required_reagents = list("saltpetre" = 1, "charcoal" = 1, "sulfur" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/blackpowder_explosion
-	name = "Black Powder Kaboom"
-	id = "blackpowder_explosion"
-	result = null
-	required_reagents = list("blackpowder" = 1)
-	result_amount = 1
-	required_temp = 474
-	mix_message = "<span class = 'boldannounce'>Sparks start flying around the black powder!</span>"
-
-/datum/chemical_reaction/blackpowder_explosion/on_reaction(var/datum/reagents/holder, var/created_volume)
-	sleep(rand(50,100))
-	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/reagents_explosion/e = new()
-	e.set_up(round(created_volume/8, 1), location, 1, 4, message = 0)
-	e.start()
-	holder.clear_reagents()
-
 
 /datum/chemical_reaction/flash_powder
 	name = "Flash powder"

@@ -21,6 +21,12 @@ datum/reagent/thermite/on_mob_life(var/mob/living/M as mob)
 	M.adjustFireLoss(1)
 	..()
 
+datum/reagent/nitroglycerin
+	name = "Nitroglycerin"
+	id = "nitroglycerin"
+	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
+	color = "#808080" // rgb: 128, 128, 128
+
 /datum/reagent/stabilizing_agent
 	name = "Stabilizing Agent"
 	id = "stabilizing_agent"
@@ -90,7 +96,7 @@ datum/reagent/thermite/on_mob_life(var/mob/living/M as mob)
 /datum/reagent/blackpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect/effect/system/reagents_explosion/e = new()
-	e.set_up(round(volume/8, 1), location, 1, 4, message = 0)
+	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)
 	e.start()
 	holder.clear_reagents()
 

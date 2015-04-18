@@ -253,7 +253,6 @@ datum/reagent/toxin/chloralhydrate
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
-	current_cycle++
 	switch(current_cycle)
 		if(1 to 10)
 			M.confused += 2
@@ -280,7 +279,6 @@ datum/reagent/toxin/beer2/on_mob_life(var/mob/living/M as mob)
 		if(51 to INFINITY)
 			M.sleeping += 1
 			M.adjustToxLoss((current_cycle - 50)*REM)
-	current_cycle++
 	..()
 	return
 
@@ -414,7 +412,7 @@ datum/reagent/toxin/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	if(M.brainloss + M.toxloss <= 60)
 		M.adjustBrainLoss(1*REM)
 		M.adjustToxLoss(1*REM)
-	if(current_cycle == 54)
+	if(current_cycle >= 54)
 		M.sleeping += 5
 	..()
 
