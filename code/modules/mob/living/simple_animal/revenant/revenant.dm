@@ -55,11 +55,34 @@
 	maxHealth = essence * 2
 	if(!revealed)
 		health = maxHealth //Heals to full when not revealed
-	if(essence_regen && !inhibited) //While inhibited, essence will not regenerate
-		essence = max(essence_regen_cap, essence + 1)
+	if(essence_regen && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
+		essence++
 
 /mob/living/simple_animal/revenant/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Mainly to prevent the no-grav effect
+
+/mob/living/simple_animal/revenant/ClickOn(var/atom/A, var/params) //Copypaste from ghost code - revenants can't interact with the world directly.
+	if(client.buildmode)
+		build_click(src, client.buildmode, params, A)
+		return
+
+	var/list/modifiers = params2list(params)
+	if(modifiers["middle"])
+		MiddleClickOn(A)
+		return
+	if(modifiers["shift"])
+		ShiftClickOn(A)
+		return
+	if(modifiers["alt"])
+		AltClickOn(A)
+		return
+	if(modifiers["ctrl"])
+		CtrlClickOn(A)
+		return
+
+	if(world.time <= next_move)
+		return
+	A.attack_ghost(src)
 
 /mob/living/simple_animal/revenant/say(message)
 	return 0 //Revenants cannot speak out loud.

@@ -237,7 +237,7 @@
 			sleep(10)
 			var/mob/living/carbon/human/M = target
 			user.essence += rand(0.3, 0.5) //Not a huge amount of essence; at the least it's 36 and at the most it's 60
-			target.adjustStaminaLoss(1)
+			M.adjustStaminaLoss(1)
 			if(prob(3))
 				target << "<span class='warning'>You feel sapped.</span>" //Letting the target know that they're not bugged and losing stamina 4nr
 		planted = 0
@@ -276,10 +276,10 @@
 		return
 	for(var/mob/living/carbon/human/M in targets)
 		user << "<span class='info'>You drive a spike of energy into [M]'s mind!</span>"
-		M << "<span class'boldannounce'>You feel a spike of pain in your head!</span>"
+		M << "<span class='boldannounce'>You feel a spike of pain in your head!</span>"
 		M.apply_damage(12, BRUTE, "head")
 		M.adjustBrainLoss(3)
-		M << 'sound/effects/mind_blast.ogg'
+		//M << 'sound/effects/mind_blast.ogg'
 		if(prob(20) && !M.stat)
 			M.Weaken(2)
 			M.visible_message("<span class='warning'>[M] clutches at their head!</span>")
@@ -322,14 +322,52 @@
 		return
 	for(var/mob/living/carbon/human/M in targets)
 		user << "<span class='info'>You blast [M]'s mind with energy!</span>"
-		M << "<span class'boldannounce'><i>You feel a sudden explosion of agony in your head!</i></span>"
+		M << "<span class='boldannounce'><i>You feel a sudden explosion of agony in your head!</i></span>"
 		M.apply_damage(40, BRUTE, "head")
 		M.adjustBrainLoss(20)
 		M.emote("scream")
 		M.Weaken(4)
-		M << 'sound/effects/mind_blast.ogg'
+		//M << 'sound/effects/mind_blast.ogg'
 		user.revealed = 1
 		user.invisibility = 0
 		spawn(30)
 			user.revealed = 0
 			user.invisibility = INVISIBILITY_OBSERVER
+
+
+//Hypnotize: Makes the target fall asleep, make them vulnerable to draining.
+/obj/effect/proc_holder/spell/targeted/revenant_hypnotize
+	name = "Unlock: Hypnotize (15E)"
+	desc = "Causes a target to fall asleep."
+	panel = "Revenant Abilities (Locked)"
+	charge_max = 90
+	clothes_req = 0
+	range = 3
+	include_user = 1
+	var/locked = 1
+
+/obj/effect/proc_holder/spell/targeted/revenant_hypnotize/cast(list/targets, var/mob/living/simple_animal/revenant/user = usr)
+	if(user.inhibited)
+		user << "<span class='warning'>Something is blocking the use of [src]!</span>"
+		charge_counter = charge_max
+		return
+	if(locked && essence_check(15, 1))
+		user << "<span class='info'>You have unlocked Hypnotize!</span>"
+		charge_counter = charge_max
+		name = "Mind Blast (15E)"
+		locked = 0
+		panel = "Revenant Abilities"
+		include_user = 0
+		return
+	if(locked)
+		charge_counter = charge_max
+		return
+	if(!essence_check(15))
+		charge_counter = charge_max
+		return
+	for(var/mob/living/carbon/human/M in targets)
+		user << "<span class='info'>You gently influence [M]'s mind toward deep sleep.</span>"
+		M << "<span class='boldannounce'>Tired... <font size=1.5> so</font><font size=1> tired...</font></span>"
+		M.drowsyness += 7
+		spawn(70)
+			M.sleeping += 12
