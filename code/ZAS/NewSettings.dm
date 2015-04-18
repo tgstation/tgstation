@@ -283,7 +283,7 @@ var/global/ZAS_Settings/zas_settings = new
 
 // INTERNAL USE ONLY
 /ZAS_Settings/proc/idfrompath(const/path)
-	return copytext(path, strpos(path, "/") + 1)
+	return copytext(path, rfindtext(path, "/") + 1)
 
 // INTERNAL USE ONLY
 /ZAS_Settings/proc/ChangeSetting(var/user,var/id)
