@@ -9,7 +9,6 @@
 		return 1
 	if(!blob_cores.len) // blob is dead
 		if(config.continuous["blob"])
-			SSshuttle.emergencyNoEscape = 0
 			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 				SSshuttle.emergency.mode = SHUTTLE_DOCKED
 				SSshuttle.emergency.timer = world.time

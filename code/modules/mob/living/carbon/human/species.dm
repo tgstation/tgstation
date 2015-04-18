@@ -501,11 +501,6 @@
 		if(!(SEE_OBJS & H.permanent_sight_flags))
 			H.sight &= ~SEE_OBJS
 
-		if(H.remote_view)
-			H.sight |= SEE_TURFS
-			H.sight |= SEE_MOBS
-			H.sight |= SEE_OBJS
-
 		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight

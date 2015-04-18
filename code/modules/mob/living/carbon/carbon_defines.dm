@@ -23,5 +23,3 @@
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
 	has_limbs = 1
-
-	var/remote_view = 0

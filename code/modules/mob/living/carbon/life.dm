@@ -470,10 +470,7 @@
 			sight &= ~SEE_MOBS
 		if(!(SEE_OBJS & permanent_sight_flags))
 			sight &= ~SEE_OBJS
-		if(remote_view)
-			sight |= SEE_TURFS
-			sight |= SEE_MOBS
-			sight |= SEE_OBJS
+
 		see_in_dark = (sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : 2  //Xray flag combo
 		see_invisible = SEE_INVISIBLE_LIVING
 		if(see_override)

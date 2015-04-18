@@ -22,7 +22,6 @@
 
 /obj/structure/closet/syndicate/nuclear/New()
 	..()
-	contents = list()
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)

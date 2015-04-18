@@ -239,9 +239,26 @@ client/proc/one_click_antag()
 /datum/admins/proc/makeNukeTeam()
 
 	var/datum/game_mode/nuclear/temp = new
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for a nuke team being sent in?", "operative", temp)
+	var/list/mob/dead/observer/candidates = list()
 	var/list/mob/dead/observer/chosen = list()
 	var/mob/dead/observer/theghost = null
+	var/time_passed = world.time
+
+	for(var/mob/dead/observer/G in player_list)
+		if(!jobban_isbanned(G, "operative") && !jobban_isbanned(G, "Syndicate"))
+			if(temp.age_check(G.client))
+				spawn(0)
+					switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
+						if("Yes")
+							if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+								return
+							candidates += G
+						if("No")
+							return
+						else
+							return
+
+	sleep(300)
 
 	if(candidates.len)
 		var/numagents = 5
@@ -294,9 +311,8 @@ client/proc/one_click_antag()
 			else
 				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code)
 			spawnpos++
-		return 1
-	else
-		return 0
+
+	return 1
 
 
 
@@ -312,10 +328,29 @@ client/proc/one_click_antag()
 
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
+	var/list/mob/dead/observer/candidates = list()
+	var/time_passed = world.time
 	var/mission = input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "deathsquad", null)
 
-	if(candidates.len >= 2) //Minimum 2 to be considered a squad
+	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
+	for(var/mob/dead/observer/G in player_list)
+		spawn(0)
+			switch(alert(G,"Do you wish to be considered for an elite Nanotrasen strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
+				if("Yes")
+					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+						return
+					candidates += G
+				if("No")
+					return
+				else
+					return
+	sleep(300)
+
+	for(var/mob/dead/observer/G in candidates)
+		if(!G.key)
+			candidates.Remove(G)
+
+	if(candidates.len >= 3) //Minimum 3 to be considered a squad
 		//Pick the lucky players
 		var/numagents = min(5,candidates.len) //How many commandos to spawn
 		var/list/spawnpoints = deathsquadspawn
@@ -409,8 +444,27 @@ client/proc/one_click_antag()
 
 // EMERGENCY RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
+	var/list/mob/dead/observer/candidates = list()
+	var/time_passed = world.time
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for an elite Nanotrasen Emergency Response Team?", "deathsquad", null)
+
+	//Generates a list of officers from active ghosts. Then the user picks which characters to respawn as the officers.
+	for(var/mob/dead/observer/G in player_list)
+		spawn(0)
+			switch(alert(G,"Do you wish to be considered for an elite Nanotrasen Emergency Response Team being sent in?","Please answer in 30 seconds!","Yes","No"))
+				if("Yes")
+					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+						return
+					candidates += G
+				if("No")
+					return
+				else
+					return
+	sleep(300)
+
+	for(var/mob/dead/observer/G in candidates)
+		if(!G.key)
+			candidates.Remove(G)
 
 	if(candidates.len >= 4) //Minimum 4 to be considered a squad
 		//Pick the (un)lucky players
@@ -490,7 +544,25 @@ client/proc/one_click_antag()
 
 //Abductors
 /datum/admins/proc/makeAbductorTeam()
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for an Abductor Team?", "abductor", null)
+	var/list/mob/dead/observer/candidates = list()
+	var/time_passed = world.time
+
+	for(var/mob/dead/observer/G in player_list)
+		spawn(0)
+			switch(alert(G,"Do you wish to be considered for Abductor Team?","Please answer in 30 seconds!","Yes","No"))
+				if("Yes")
+					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+						return
+					candidates += G
+				if("No")
+					return
+				else
+					return
+	sleep(300)
+
+	for(var/mob/dead/observer/G in candidates)
+		if(!G.key)
+			candidates.Remove(G)
 
 	if(candidates.len >= 2)
 		//Oh god why we can't have static functions
@@ -533,39 +605,7 @@ client/proc/one_click_antag()
 	else
 		return
 
-/datum/admins/proc/getCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck)
-	var/list/mob/dead/observer/candidates = list()
-	var/time_passed = world.time
-	if (!Question)
-		Question = "Would you like to be a special role?"
 
-	for(var/mob/dead/observer/G in player_list)
-		if(!G.key || !G.client)
-			continue
-		if (gametypeCheck)
-			if(!gametypeCheck.age_check(G.client))
-				continue
-		if (jobbanType)
-			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
-				continue
-		spawn(0)
-			switch(alert(G,Question,"Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-						return
-					candidates += G
-				if("No")
-					return
-				else
-					return
-	sleep(300)
-
-	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
-	for(var/mob/dead/observer/G in candidates)
-		if(!G.key || !G.client)
-			candidates.Remove(G)
-
-	return candidates
 
 /datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
