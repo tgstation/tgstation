@@ -431,7 +431,7 @@
 				return
 		else if(R in coin_records)
 			if(!coin)
-				usr << "<span class='notice'>You need to insert a coin to get this item.</span>"
+				usr << "<span class='warning'>You need to insert a coin to get this item!</span>"
 				vend_ready = 1
 				return
 			if(coin.string_attached)
@@ -440,11 +440,11 @@
 						usr << "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>"
 						coin = null
 					else
-						usr << "<span class='notice'>You couldn't pull [coin] out because your hands are full.</span>"
+						usr << "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>"
 						qdel(coin)
 						coin = null
 				else
-					usr << "<span class='notice'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all.</span>"
+					usr << "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>"
 					qdel(coin)
 					coin = null
 			else

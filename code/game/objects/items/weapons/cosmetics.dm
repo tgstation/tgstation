@@ -51,10 +51,10 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.is_mouth_covered())
-			user << "<span class='notice'>Remove [ H == user ? "your" : "their" ] mask!</span>"
+			user << "<span class='warning'>Remove [ H == user ? "your" : "their" ] mask!</span>"
 			return
 		if(H.lip_style)	//if they already have lipstick on
-			user << "<span class='notice'>You need to wipe off the old lipstick first!</span>"
+			user << "<span class='warning'>You need to wipe off the old lipstick first!</span>"
 			return
 		if(H == user)
 			user.visible_message("<span class='notice'>[user] does their lips with \the [src].</span>", \
@@ -64,7 +64,7 @@
 			H.update_body()
 		else
 			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
-								 "<span class='notice'>You begin to apply \the [src].</span>")
+								 "<span class='notice'>You begin to apply \the [src]...</span>")
 			if(do_after(user, 20) && do_after(H, 20, 5, 0))	//user needs to keep their active hand, H does not.
 				user.visible_message("<span class='notice'>[user] does [H]'s lips with \the [src].</span>", \
 									 "<span class='notice'>You apply \the [src].</span>")
@@ -88,7 +88,7 @@
 				H.update_body()
 			else
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
-								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
+								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick...</span>")
 				if(do_after(user, 10) && do_after(H, 10, 5, 0))	//user needs to keep their active hand, H does not.
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
@@ -132,7 +132,7 @@
 
 			if(H == user) //shaving yourself
 				user.visible_message("<span class='notice'>[user] starts to shave their facial hair with [src].</span>", \
-									 "<span class='notice'>You take a moment to shave your facial hair with [src].</span>")
+									 "<span class='notice'>You take a moment to shave your facial hair with [src]...</span>")
 				if(do_after(user, 50))
 					user.visible_message("<span class='notice'>[user] shaves his facial hair clean with [src].</span>", \
 										 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
@@ -140,7 +140,7 @@
 			else
 				var/turf/H_loc = H.loc
 				user.visible_message("<span class='warning'>[user] tries to shave [H]'s facial hair with [src].</span>", \
-									 "<span class='notice'>You start shaving [H]'s facial hair.</span>")
+									 "<span class='notice'>You start shaving [H]'s facial hair...</span>")
 				if(do_after(user, 50))
 					if(H_loc == H.loc)
 						user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
@@ -152,12 +152,12 @@
 				user << "<span class='notice'>The headgear is in the way.</span>"
 				return
 			if(H.hair_style == "Bald" || H.hair_style == "Balding Hair" || H.hair_style == "Skinhead")
-				user << "<span class='notice'>There is not enough hair left to shave!</span>"
+				user << "<span class='warning'>There is not enough hair left to shave!</span>"
 				return
 
 			if(H == user) //shaving yourself
 				user.visible_message("<span class='notice'>[user] starts to shave their head with [src].</span>", \
-									 "<span class='notice'>You start to shave your head with [src].</span>")
+									 "<span class='notice'>You start to shave your head with [src]...</span>")
 				if(do_after(user, 50))
 					user.visible_message("<span class='notice'>[user] shaves his head with [src].</span>", \
 										 "<span class='notice'>You finish shaving with [src].</span>")
@@ -165,7 +165,7 @@
 			else
 				var/turf/H_loc = H.loc
 				user.visible_message("<span class='warning'>[user] tries to shave [H]'s head with [src]!</span>", \
-									 "<span class='notice'>You start shaving [H]'s head.</span>")
+									 "<span class='notice'>You start shaving [H]'s head...</span>")
 				if(do_after(user, 50))
 					if(H_loc == H.loc)
 						user.visible_message("<span class='warning'>[user] shaves [H]'s head bald with [src]!</span>", \

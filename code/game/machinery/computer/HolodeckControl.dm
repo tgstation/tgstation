@@ -308,7 +308,7 @@
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='danger'> You need a better grip to do that!</span>"
+			user << "<span class='warning'> You need a better grip to do that!</span>"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
@@ -427,7 +427,7 @@
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='danger'>You need a better grip to do that!</span>"
+			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)

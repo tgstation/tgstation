@@ -17,10 +17,10 @@
 
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	if(!istype(G))
-		user << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>"
+		user << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them!</span>"
 		return
 	if(G.state <= GRAB_NECK)
-		user << "<span class='warning'>We must have a tighter grip to absorb this creature.</span>"
+		user << "<span class='warning'>We must have a tighter grip to absorb this creature!</span>"
 		return
 
 	var/mob/living/carbon/target = G.affecting
@@ -54,7 +54,7 @@
 
 	user << "<span class='notice'>We have absorbed [target]!</span>"
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>")
-	target << "<span class='danger'>You have been absorbed by the changeling!</span>"
+	target << "<span class='danger'>You are absorbed by the changeling!</span>"
 
 	if(!changeling.has_dna(target.dna))
 		changeling.absorb_dna(target, user)

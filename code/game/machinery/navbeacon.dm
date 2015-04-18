@@ -112,7 +112,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open = !open
 
-		user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "You [open ? "open" : "close"] the beacon's cover.")
+		user.visible_message("<span class='warning'>[user] [open ? "opens" : "closes"] the beacon's cover.</span>", "<span class='notice'>You [open ? "open" : "close"] the beacon's cover.</span>")
 
 		updateicon()
 
@@ -120,12 +120,12 @@
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked
-				user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+				user << "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>"
 			else
 				user << "<span class='danger'>Access denied.</span>"
 			updateDialog()
 		else
-			user << "You must open the cover first!"
+			user << "<span class='warning'>You must open the cover first!</span>"
 	return
 
 /obj/machinery/navbeacon/attack_ai(var/mob/user)
@@ -143,7 +143,7 @@
 		return		// prevent intraction when T-scanner revealed
 
 	if(!open && !ai)	// can't alter controls if not open, unless you're an AI
-		user << "The beacon's control cover is closed."
+		user << "<span class='warning'>The beacon's control cover is closed!</span>"
 		return
 
 

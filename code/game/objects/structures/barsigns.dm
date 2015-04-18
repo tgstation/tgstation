@@ -92,7 +92,7 @@
 			user << "<span class='notice'>You replace the burnt wiring.</span>"
 			broken = 0
 		else
-			user << "<span class='warning'>You need at least two lengths of cable.</span>"
+			user << "<span class='warning'>You need at least two lengths of cable!</span>"
 
 
 

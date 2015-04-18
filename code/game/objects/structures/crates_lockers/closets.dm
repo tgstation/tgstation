@@ -231,7 +231,7 @@
 						return
 					playsound(loc, 'sound/items/welder.ogg', 50, 1)
 					welded = !welded
-					user << "<span class='notice'>You [welded ? "welded [src] shut":"unwelded [src]"].</span>"
+					user << "<span class='notice'>You [welded ? "weld [src] shut":"unweld [src]"].</span>"
 					update_icon()
 					user.visible_message("<span class='warning'>[user.name] has [welded ? "welded [src] shut":"unwelded [src]"].</span>")
 				return

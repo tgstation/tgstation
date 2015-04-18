@@ -70,7 +70,7 @@
 			src.overlays = null
 			overlays += image('icons/obj/storage.dmi', icon_locking)
 			locked = 0
-			user << "You short out the lock on [src]."
+			user << "<span class='notice'>You short out the lock on [src].</span>"
 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)

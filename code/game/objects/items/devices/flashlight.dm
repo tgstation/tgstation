@@ -53,7 +53,7 @@
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
-			user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+			user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
@@ -76,9 +76,9 @@
 
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.disabilities & BLIND)	//mob is dead or fully blind
-				user << "<span class='notice'>[M] pupils does not react to the light!</span>"
+				user << "<span class='warning'>[M] pupils don't react to the light!</span>"
 			else if(M.dna.check_mutation(XRAY))	//mob has X-RAY vision
-				user << "<span class='notice'>[M] pupils give an eerie glow!</span>"
+				user << "<span class='danger'>[M] pupils give an eerie glow!</span>"
 			else	//they're okay!
 				if(!M.eye_blind)
 					flick("flash", M.flash)	//flash the affected mob
@@ -111,7 +111,7 @@
 /obj/item/device/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag)
 		if(holo_cooldown)
-			user << "<span class='warning'>[src] is not ready yet.</span>"
+			user << "<span class='warning'>[src] is not ready yet!</span>"
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)

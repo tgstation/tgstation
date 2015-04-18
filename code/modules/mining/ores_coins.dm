@@ -68,7 +68,7 @@
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding)
-			user << "<span class='info'>You can't hit a high enough temperature to smelt [src] properly.</span>"
+			user << "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>"
 	else
 		..()
 
@@ -285,7 +285,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
-			user << "<span class='notice'>There already is a string attached to this coin.</span>"
+			user << "<span class='warning'>There already is a string attached to this coin!</span>"
 			return
 
 		if (CC.use(1))
@@ -293,7 +293,7 @@
 			string_attached = 1
 			user << "<span class='notice'>You attach a string to the coin.</span>"
 		else
-			user << "<span class='warning'>You need one length of cable to attach a string to the coin.</span>"
+			user << "<span class='warning'>You need one length of cable to attach a string to the coin!</span>"
 			return
 
 	else if(istype(W,/obj/item/weapon/wirecutters))

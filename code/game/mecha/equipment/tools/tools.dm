@@ -47,12 +47,12 @@
 						occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 						log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 					else
-						occupant_message("<span class='warning'>You must hold still while handling objects.</span>")
+						occupant_message("<span class='warning'>You must hold still while handling objects!</span>")
 						O.anchored = initial(O.anchored)
 			else
-				occupant_message("<span class='warning'>Not enough room in cargo compartment.</span>")
+				occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
-			occupant_message("<span class='warning'>[target] is firmly secured.</span>")
+			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
@@ -1214,12 +1214,12 @@
 						chassis.occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 						chassis.log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 					else
-						chassis.occupant_message("<span class='warning'>You must hold still while handling objects.</span>")
+						chassis.occupant_message("<span class='warning'>You must hold still while handling objects!</span>")
 						O.anchored = initial(O.anchored)
 			else
-				chassis.occupant_message("<span class='warning'>Not enough room in cargo compartment.</span>")
+				chassis.occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
-			chassis.occupant_message("<span class='warning'>[target] is firmly secured.</span>")
+			chassis.occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target

@@ -133,7 +133,7 @@
 /obj/item/device/abductor/proc/AbductorCheck(var/user)
 	if(IsAbductor(user))
 		return 1
-	user << "<span class='notice'>You can't figure how this works.</span>"
+	user << "<span class='warning'>You can't figure how this works!</span>"
 	return 0
 
 /obj/item/device/abductor/proc/ScientistCheck(var/user)
@@ -155,7 +155,7 @@
 	if(!AbductorCheck(user))
 		return
 	if(!ScientistCheck(user))
-		user << "<span class='notice'>You're not trained to use this</span>"
+		user << "<span class='warning'>You're not trained to use this!</span>"
 		return
 	if(mode == GIZMO_SCAN)
 		mode = GIZMO_MARK
@@ -200,7 +200,7 @@
 
 /obj/item/device/abductor/gizmo/proc/mark(var/atom/target, var/mob/living/user)
 	if(marked == target)
-		user << "<span class='notice'>This specimen is already marked.</span>"
+		user << "<span class='warning'>This specimen is already marked!</span>"
 		return
 	if(istype(target,/mob/living/carbon/human))
 		if(IsAbductor(target))
@@ -211,12 +211,12 @@
 
 /obj/item/device/abductor/gizmo/proc/prepare(var/atom/target, var/mob/living/user)
 	if(get_dist(target,user)>1)
-		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport.</span>"
+		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>"
 		return
-	user << "<span class='notice'>You start preparing the specimen for transport </span>"
+	user << "<span class='notice'>You start preparing the specimen for transport...</span>"
 	if(do_after(user, 100))
 		marked = target
-		user << "<span class='notice'>You finish preparing the specimen for transport </span>"
+		user << "<span class='notice'>You finish preparing the specimen for transport.</span>"
 
 
 /obj/item/device/abductor/silencer

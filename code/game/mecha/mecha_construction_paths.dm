@@ -741,7 +741,7 @@
 				holder.icon_state = "fireripley9"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] starts to install the external armor layer to the [holder].", "You start to install the external armor layer to the [holder].")
+				user.visible_message("[user] starts to install the external armor layer to the [holder].", "You install the external armor layer to the [holder].")
 				holder.icon_state = "fireripley12"
 			else
 				user.visible_message("[user] cuts the internal armor layer from the [holder].", "You cut the internal armor layer from the [holder].")

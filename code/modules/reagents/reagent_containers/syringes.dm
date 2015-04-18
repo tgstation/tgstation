@@ -69,19 +69,19 @@
 					var/mob/living/carbon/human/H = target
 					if(H.dna)
 						if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
-							user << "<span class='notice'>You are unable to locate any blood.</span>"
+							user << "<span class='warning'>You are unable to locate any blood!</span>"
 							return
 				if(reagents.has_reagent("blood"))
-					user << "<span class='notice'>There is already a blood sample in this syringe.</span>"
+					user << "<span class='warning'>There is already a blood sample in this syringe!</span>"
 					return
 				if(istype(target, /mob/living/carbon))	//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
 					if(!check_dna_integrity(T))
-						user << "<span class='notice'>You are unable to locate any blood.</span>"
+						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
 					if(NOCLONE in T.mutations)	//target done been eat, no more blood in him
-						user << "<span class='notice'>You are unable to locate any blood.</span>"
+						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
 					if(target != user)
 						target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
@@ -99,7 +99,7 @@
 						if(H.dna && H.dna.species.exotic_blood && H.reagents.total_volume)
 							target.reagents.trans_to(src, amount)
 						else
-							user << "<span class='notice'>You are unable to locate any blood.</span>"
+							user << "<span class='warning'>You are unable to locate any blood!</span>"
 							return
 					if (B)
 						src.reagents.reagent_list += B
@@ -114,7 +114,7 @@
 					return
 
 				if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))
-					user << "<span class='notice'>You cannot directly remove reagents from [target].</span>"
+					user << "<span class='warning'>You cannot directly remove reagents from [target]!</span>"
 					return
 
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
@@ -132,7 +132,7 @@
 				return
 
 			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
-				user << "<span class='notice'>You cannot directly fill [target].</span>"
+				user << "<span class='warning'>You cannot directly fill [target]!</span>"
 				return
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				user << "<span class='notice'>[target] is full.</span>"

@@ -48,7 +48,7 @@
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(open)
 			if(cell)
-				user << "There is already a power cell inside."
+				user << "<span class='warning'>There is already a power cell inside!</span>"
 				return
 			else
 				// insert cell
@@ -61,7 +61,7 @@
 
 					user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 		else
-			user << "The hatch must be open to insert a power cell."
+			user << "<span class='warning'>The hatch must be open to insert a power cell!</span>"
 			return
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		open = !open

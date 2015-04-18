@@ -29,7 +29,7 @@
 				initiate(user, target, target_zone, tool, surgery)
 				return 1
 			else
-				user << "<span class='notice'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>"
+				user << "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>"
 				return 1	//returns 1 so we don't stab the guy in the dick or wherever.
 	if(isrobot(user) && user.a_intent != "harm") //to save asimov borgs a LOT of heartache
 		return 1

@@ -38,14 +38,14 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(get_amount() < 2)
-			user << "<span class='warning'>You need at least two rods to do this.</span>"
+			user << "<span class='warning'>You need at least two rods to do this!</span>"
 			return
 
 		if(WT.remove_fuel(0,user))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
 			new_item.add_to_stacks(usr)
-			user.visible_message("<span class='warning'>[user.name] shaped [src] into metal with the weldingtool.</span>", \
-						 "<span class='notice'>You shaped [src] into metal with the weldingtool.</span>", \
+			user.visible_message("<span class='warning'>[user.name] shaped [src] into metal with the welding tool.</span>", \
+						 "<span class='notice'>You shape [src] into metal with the welding tool.</span>", \
 						 "<span class='warning'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
@@ -58,9 +58,9 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(amount != 1)
-			user << "<span class='warning'>You must use a single rod.</span>"
+			user << "<span class='warning'>You must use a single rod!</span>"
 		else if(S.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src].</span>"
+			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/kebab(get_turf(src))
 			A.initialize_custom_food(src, S, user)

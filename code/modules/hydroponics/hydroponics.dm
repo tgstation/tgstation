@@ -586,7 +586,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
 			var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
 			if(syr.mode != 1)
-				user << "You can't get any extract out of this plant."		//That. Gives me an idea...
+				user << "<span class='warning'>You can't get any extract out of this plant.</span>"		//That. Gives me an idea...
 				return
 
 		if(!reagent_source.reagents.total_volume)
@@ -713,7 +713,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 
 		if(!anchored && !isinspace())
 			user.visible_message("<span class='notice'>[user] begins to wrench [src] into place.</span>", \
-								"<span class='notice'>You begin to wrench [src] in place.</span>")
+								"<span class='notice'>You begin to wrench [src] in place...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 20))
 				if(anchored)
@@ -723,7 +723,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 									"<span class='notice'>You wrench [src] in place.</span>")
 		else if(anchored)
 			user.visible_message("<span class='notice'>[user] begins to unwrench [src].</span>", \
-								"<span class='notice'>You begin to unwrench [src].</span>")
+								"<span class='notice'>You begin to unwrench [src]...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 20))
 				if(!anchored)
@@ -870,11 +870,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	harvest = 0
 	lastproduce = age
 	if(istype(myseed,/obj/item/seeds/replicapod/))
-		user << "You harvest from the [myseed.plantname]."
+		user << "<span class='notice'>You harvest from the [myseed.plantname].</span>"
 	else if(myseed.getYield() <= 0)
-		user << "<span class='warning'>You fail to harvest anything useful.</span>"
+		user << "<span class='warning'>You fail to harvest anything useful!</span>"
 	else
-		user << "You harvest [myseed.getYield()] items from the [myseed.plantname]."
+		user << "<span class='notice'>You harvest [myseed.getYield()] items from the [myseed.plantname].</span>"
 	if(myseed.oneharvest)
 		qdel(myseed)
 		planted = 0

@@ -234,16 +234,16 @@
 			if(emagged)
 				user << "<span class='warning'>ERROR</span>"
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				user << "<span class='warning'>Please close the access panel before locking it!</span>"
 			else
 				user << "<span class='warning'>Access denied.</span>"
 
 	else if (istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(locked)
-			user << "<span class='notice'>You cannot insert a beaker because the panel is locked.</span>"
+			user << "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>"
 			return
 		if(!isnull(reagent_glass))
-			user << "<span class='notice'>There is already a beaker loaded.</span>"
+			user << "<span class='warning'>There is already a beaker loaded!</span>"
 			return
 
 		user.drop_item()
@@ -264,7 +264,7 @@
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)
-			user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
+			user << "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>"
 		spawn(0)
 			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
@@ -553,7 +553,7 @@
 
 	//Making a medibot!
 	if(contents.len >= 1)
-		user << "<span class='notice'>You need to empty [src] out first.</span>"
+		user << "<span class='warning'>You need to empty [src] out first!</span>"
 		return
 
 	var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
@@ -598,7 +598,7 @@
 					user.drop_item()
 					qdel(W)
 					build_step++
-					user << "<span class='notice'>You complete the Medibot! Beep boop.</span>"
+					user << "<span class='notice'>You complete the Medibot. Beep boop!</span>"
 					var/turf/T = get_turf(src)
 					var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
 					S.skin = skin

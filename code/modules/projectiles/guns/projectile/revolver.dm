@@ -88,31 +88,31 @@
 	..()
 	if(istype(A, /obj/item/weapon/screwdriver))
 		if(magazine.caliber == "38")
-			user << "<span class='notice'>You begin to reinforce the barrel of [src].</span>"
+			user << "<span class='notice'>You begin to reinforce the barrel of [src]...</span>"
 			if(magazine.ammo_count())
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
 			if(do_after(user, 30))
 				if(magazine.ammo_count())
-					user << "<span class='notice'>You can't modify it!</span>"
+					user << "<span class='warning'>You can't modify it!</span>"
 					return
 				magazine.caliber = "357"
 				desc = "The barrel and chamber assembly seems to have been modified."
 				user << "<span class='warning'>You reinforce the barrel of [src]! Now it will fire .357 rounds.</span>"
 		else
-			user << "<span class='notice'>You begin to revert the modifications to [src].</span>"
+			user << "<span class='notice'>You begin to revert the modifications to [src]...</span>"
 			if(magazine.ammo_count())
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
 			if(do_after(user, 30))
 				if(magazine.ammo_count())
-					user << "<span class='notice'>You can't modify it!</span>"
+					user << "<span class='warning'>You can't modify it!</span>"
 					return
 				magazine.caliber = "38"
 				desc = initial(desc)
-				user << "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>"
+				user << "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>"
 
 
 /obj/item/weapon/gun/projectile/revolver/mateba
@@ -191,7 +191,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!spun)
-			user << "<span class='warning'>You need to spin the revolver's chamber first.</span>"
+			user << "<span class='warning'>You need to spin the revolver's chamber first!</span>"
 			return
 
 		spun = 0

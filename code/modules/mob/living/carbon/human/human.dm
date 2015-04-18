@@ -295,7 +295,7 @@
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			if(slot in check_obscured_slots())
-				usr << "<span class='warning'>You can't reach that. Something is covering it.</span>"
+				usr << "<span class='warning'>You can't reach that! Something is covering it.</span>"
 				return
 
 		if(href_list["pockets"])
@@ -309,7 +309,7 @@
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
 				if(pocket_item.flags & NODROP)
-					usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
+					usr << "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
 				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
 			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1) && !(place_item.flags&ABSTRACT))
 				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
@@ -743,7 +743,7 @@
 	if(C.cpr_time < world.time + 30)
 		add_logs(src, C, "CPRed")
 		visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
-						"<span class='notice'>You try to perform CPR on [C.name]. Hold still!</span>")
+						"<span class='notice'>You try to perform CPR on [C.name]... Hold still!</span>")
 		if(!do_mob(src, C))
 			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
 			return 0
@@ -754,7 +754,7 @@
 			C.adjustOxyLoss(-suff)
 			C.updatehealth()
 			visible_message("<span class='notice'>[src] performs CPR on [C.name]!</span>")
-			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
+			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>"
 
 
 /mob/living/carbon/human/generateStaticOverlay()

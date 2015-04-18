@@ -51,7 +51,7 @@
 			box.update_icon()
 			user << "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>"
 		else
-			user << "<span class='notice'>You fail to collect anything.</span>"
+			user << "<span class='warning'>You fail to collect anything!</span>"
 
 //Boxes of ammo
 /obj/item/ammo_box

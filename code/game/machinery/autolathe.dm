@@ -124,7 +124,7 @@
 		user << "<span class=\"alert\">The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>"
 		return 1
 	if (O.m_amt == 0 && O.g_amt == 0)
-		user << "<span class=\"alert\">This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>"
+		user << "<span class=\"alert\">This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials</span>"
 		return 1
 
 	var/amount = 1
@@ -143,7 +143,7 @@
 		stack.use(amount)
 	else
 		if(!user.unEquip(O))
-			user << "<span class='notice'>/the [O] is stuck to your hand, you can't put it in \the [src]!</span>"
+			user << "<span class='warning'>/the [O] is stuck to your hand, you can't put it in \the [src]!</span>"
 		O.loc = src
 	icon_state = "autolathe"
 	busy = 1

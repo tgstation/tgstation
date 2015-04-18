@@ -55,7 +55,7 @@
 
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob, params)
 	if(P.crit_fail)
-		user << "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>"
+		user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
 		return
 	switch(state)
 		if(1)
@@ -222,7 +222,7 @@
 						update_req_desc()
 						return 1
 				if(!success)
-					user << "<span class='danger'>You cannot add that to the machine!</span>"
+					user << "<span class='warning'>You cannot add that to the machine!</span>"
 					return 0
 
 

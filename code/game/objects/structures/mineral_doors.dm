@@ -125,9 +125,9 @@
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
-		user << "You start digging the [name]."
+		user << "You start digging the [name]..."
 		if(do_after(user,digTool.digspeed*hardness) && src)
-			user << "You finished digging."
+			user << "You finish digging."
 			Dismantle()
 	else if(istype(W,/obj/item/weapon)) //not sure, can't not just weapons get passed to this proc?
 		hardness -= W.force/100

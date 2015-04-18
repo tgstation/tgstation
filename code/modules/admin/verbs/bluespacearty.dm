@@ -29,6 +29,6 @@
 		target.Weaken(20)
 		target.stuttering = 20
 
-	target << "You've been hit by bluespace artillery!"
+	target << "You're hit by bluespace artillery!"
 	log_admin("[target.name] has been hit by Bluespace Artillery fired by [usr]")
 	message_admins("[target.name] has been hit by Bluespace Artillery fired by [usr]")

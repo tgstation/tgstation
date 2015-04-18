@@ -17,7 +17,7 @@
 			return
 
 		if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
-			user << "<span class='notice'>You cannot directly fill [target].</span>"
+			user << "<span class='warning'>You cannot directly fill [target]!</span>"
 			return
 
 		var/trans = 0

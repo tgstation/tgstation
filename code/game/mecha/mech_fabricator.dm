@@ -500,7 +500,7 @@
 			default_deconstruction_crowbar(W)
 			return 1
 		else
-			user << "<span class='danger'>You can't load \the [name] while it's opened.</span>"
+			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
 			return 1
 
 	if(istype(W, /obj/item/stack))

@@ -109,10 +109,10 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				user << "<span class='warning'>[src] is wearing too much armor. You can't cause \him any damage.</span>"
+				user << "<span class='warning'>[src] is wearing too much armor! You can't cause \him any damage.</span>"
 				visible_message("<span class='danger'> [user] hits [src] with [O], however [src] is too armored.</span>")
 			else
-				user << "<span class='warning'>[src] is wearing too much armor. You can't reach \his skin.<span>"
+				user << "<span class='warning'>[src] is wearing too much armor! You can't reach \his skin.<span>"
 				visible_message("<span class='notice'>[user] gently taps [src] with [O].</span>")
 			if(health>0 && prob(15))
 				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
@@ -128,9 +128,9 @@
 
 	if (istype(O, /obj/item/weapon/razor))
 		if (shaved)
-			user << "<span class='warning'>You can't shave this corgi, it's already been shaved.</span>"
+			user << "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>")
+		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50))
 			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O]. </span>")
 			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
@@ -221,7 +221,7 @@
 					if( ! ( item_to_add.type in allowed_types ) )
 						usr << "You set [item_to_add] on [src]'s back, but \he shakes it off!"
 						if(!usr.drop_item())
-							usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
+							usr << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
 							return
 						item_to_add.loc = loc
 						if(prob(25))
@@ -250,7 +250,7 @@
 		return
 
 	if(inventory_head)
-		if(user)	user << "<span class='danger'>You can't put more than one hat on [src]!</span>"
+		if(user)	user << "<span class='warning'>You can't put more than one hat on [src]!</span>"
 		return
 	if(!item_to_add)
 		user.visible_message("<span class='notice'>[user] pets [src]</span>","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
@@ -392,7 +392,7 @@
 
 	if(valid)
 		if(user && !user.drop_item())
-			user << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+			user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
 			return 0
 		if(health <= 0)
 			user << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
@@ -406,7 +406,7 @@
 
 	else
 		if(user && !user.drop_item())
-			user << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+			user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
 			return 0
 		user << "You set [item_to_add] on [src]'s head, but \he shakes it off!"
 		item_to_add.loc = loc
@@ -535,7 +535,7 @@
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "<span class='danger'>You can't fit this on [src]</span>"
+		usr << "<span class='warning'>You can't fit this on [src]!</span>"
 		return
 	..()
 

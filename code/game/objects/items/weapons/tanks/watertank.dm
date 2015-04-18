@@ -26,7 +26,7 @@
 	set name = "Toggle Mister"
 	set category = "Object"
 	if (usr.get_item_by_slot(slot_back) != src)
-		usr << "<span class='notice'>The watertank needs to be on your back to use.</span>"
+		usr << "<span class='warning'>The watertank needs to be on your back to use!</span>"
 		return
 	if(usr.incapacitated())
 		return
@@ -40,7 +40,7 @@
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
 			on = 0
-			user << "<span class='notice'>You need a free hand to hold the mister.</span>"
+			user << "<span class='warning'>You need a free hand to hold the mister!</span>"
 			return
 		noz.loc = user
 	else
@@ -271,7 +271,7 @@
 			user << "You need at least 100 units of water to use the nanofrost launcher!"
 			return
 		if(nanofrost_cooldown)
-			user << "Nanofrost launcher is still recharging"
+			user << "Nanofrost launcher is still recharging..."
 			return
 		nanofrost_cooldown = 1
 		R.remove_any(100)
@@ -297,7 +297,7 @@
 				if(src)
 					metal_synthesis_cooldown--
 		else
-			user << "Metal foam mix is still being synthesized."
+			user << "Metal foam mix is still being synthesized..."
 			return
 
 /obj/effect/nanofrost_container

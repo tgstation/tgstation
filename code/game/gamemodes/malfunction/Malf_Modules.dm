@@ -426,11 +426,11 @@
 					if(upgraded)
 						UC.uses --
 						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
-						src << "<span class='notice'>Camera successully upgraded!</span>"
+						src << "<span class='notice'>You successully upgrade the camera.</span>"
 					else
-						src << "<span class='notice'>This camera is already upgraded!</span>"
+						src << "<span class='warning'>This camera is already upgraded!</span>"
 			else
-				src << "<span class='notice'>Out of uses.</span>"
+				src << "<span class='warning'>Out of uses!</span>"
 
 /datum/module_picker
 	var/temp = null

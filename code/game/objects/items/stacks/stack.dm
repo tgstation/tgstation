@@ -122,7 +122,7 @@
 		if(!building_checks(R, multiplier))
 			return
 		if (R.time)
-			usr << "<span class='notice'>Building [R.title] ...</span>"
+			usr << "<span class='notice'>You start building [R.title]...</span>"
 			if (!do_after(usr, R.time))
 				return
 			if(!building_checks(R, multiplier))
@@ -160,15 +160,15 @@
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (src.get_amount() < R.req_amount*multiplier)
 		if (R.req_amount*multiplier>1)
-			usr << "<span class='danger'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
+			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
 		else
-			usr << "<span class='danger'>You haven't got enough [src] to build \the [R.title]!</span>"
+			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
 		return 0
 	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-		usr << "<span class='danger'>There is another [R.title] here!</span>"
+		usr << "<span class='warning'>There is another [R.title] here!</span>"
 		return 0
 	if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
-		usr << "<span class='danger'>\The [R.title] must be constructed on the floor!</span>"
+		usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 		return 0
 	return 1
 

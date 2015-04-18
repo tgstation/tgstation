@@ -442,8 +442,10 @@
 					graf_rot = 270
 				else
 					graf_rot = 0
+		user << "<span class='notice'>You start drawing a [temp] on the [target.name]...</span>"
+			user << "<span class='notice'>You finish drawing [temp].</span>"
 
-		user << "You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]."
+		user << "<span class='notice'>You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]...</span>"
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		if((instant>0) || do_after(user, 50))
@@ -462,24 +464,25 @@
 			else
 				new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
 
-			user << "You finish [instant ? "spraying" : "drawing"] [temp]."
+			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] [temp].</span>"
 			if(instant<0)
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 			if(uses)
 				uses--
 				if(!uses)
-					user << "<span class='danger'>You used up your [src.name]!</span>"
+					user << "<span class='warning'>You used up your [src.name]!</span>"
 					qdel(src)
 	return
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
+		user << "<span class='notice'>You take a [huffable ? "huff" : "bite"] of the [src.name]. Delicious!</span>"
 	if(edible && (M == user))
-		user << "You take a bite of the [src.name]. Delicious!"
+		user << "<span class='notice'>You take a bite of the [src.name]. Delicious!</span>"
 		user.nutrition += 5
 		if(uses)
 			uses -= 5
 			if(uses <= 0)
-				user << "<span class='danger'>There is no more of [src.name] left!</span>"
+				user << "<span class='warning'>There is no more of [src.name] left!</span>"
 				qdel(src)
 	else
 		..()

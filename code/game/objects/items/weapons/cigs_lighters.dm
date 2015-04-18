@@ -373,7 +373,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
 		if(!packeditem)
 			if(G.dry == 1)
-				user << "You stuff [O] into [src]."
+				user << "<span class='notice'>You stuff [O] into [src].</span>"
 				smoketime = 400
 				packeditem = 1
 				name = "[O.name]-packed [initial(name)]"
@@ -381,18 +381,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					O.reagents.trans_to(src, O.reagents.total_volume)
 				qdel(O)
 			else
-				user << "<span class='warning'>It has to be dried first.</span>"
+				user << "<span class='warning'>It has to be dried first!</span>"
 		else
-			user << "<span class='warning'>It is already packed.</span>"
+			user << "<span class='warning'>It is already packed!</span>"
 	else
-		user << "<span class='warning'>You can't put that in the pipe.</span>"
+		user << "<span class='warning'>You can't put that in the pipe!</span>"
 	..()
 
 
 /obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user as mob)
 	var/turf/location = get_turf(user)
 	if(lit)
-		user.visible_message("<span class='notice'>[user] puts out [src].</span>")
+		user.visible_message("<span class='notice'>[user] puts out [src].</span>", "<span class='notice'>You put out [src].</span>")
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
@@ -572,6 +572,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			qdel(target)
 			qdel(src)
 		else
-			user << "<span class='warning'>You need to dry this first.</span>"
+			user << "<span class='warning'>You need to dry this first!</span>"
 	else
 		..()

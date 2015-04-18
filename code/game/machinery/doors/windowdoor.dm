@@ -264,7 +264,7 @@
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(src.density || src.operating)
-			user << "<span class='warning'>You need to open the door to access the maintenance panel.</span>"
+			user << "<span class='warning'>You need to open the door to access the maintenance panel!</span>"
 			return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		src.p_open = !( src.p_open )
@@ -274,8 +274,8 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(p_open && !src.density && !src.operating)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-			user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
-								 "You start to remove electronics from the [src.name].")
+			user.visible_message("[user] removes the electronics from the [src.name].", \
+								 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
 			if(do_after(user,40))
 				if(src.p_open && !src.density && !src.operating && src.loc)
 					var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
@@ -302,7 +302,7 @@
 						qdel(src)
 						return
 
-					user << "<span class='notice'>You removed the airlock electronics!</span>"
+					user << "<span class='notice'>You remove the airlock electronics.</span>"
 
 					var/obj/item/weapon/airlock_electronics/ae
 					if(!electronics)

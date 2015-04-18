@@ -46,7 +46,7 @@
 					return 0
 				if(!w_uniform)
 					if(!disable_warning)
-						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+						src << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return 0
 				if( !(I.slot_flags & SLOT_BELT) )
 					return
@@ -80,7 +80,7 @@
 					return 0
 				if(!w_uniform)
 					if(!disable_warning)
-						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+						src << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return 0
 				if( !(I.slot_flags & SLOT_ID) )
 					return 0
@@ -92,7 +92,7 @@
 					return 0
 				if(!w_uniform)
 					if(!disable_warning)
-						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+						src << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return 0
 				if(I.slot_flags & SLOT_DENYPOCKET)
 					return
@@ -105,7 +105,7 @@
 					return 0
 				if(!w_uniform)
 					if(!disable_warning)
-						src << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+						src << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return 0
 				if(I.slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -119,7 +119,7 @@
 					return 0
 				if(!wear_suit)
 					if(!disable_warning)
-						src << "<span class='danger'>You need a suit before you can attach this [I.name].</span>"
+						src << "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
 					return 0
 				if(!wear_suit.allowed)
 					if(!disable_warning)
@@ -163,7 +163,7 @@
 		var/obj/item/I = H.get_active_hand()
 		var/obj/item/weapon/storage/S = H.get_inactive_hand()
 		if(!I)
-			H << "<span class='notice'>You are not holding anything to equip.</span>"
+			H << "<span class='warning'>You are not holding anything to equip!</span>"
 			return
 		if(H.equip_to_appropriate_slot(I))
 			if(hand)
@@ -183,7 +183,7 @@
 				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))
 					S.handle_item_insertion(I)
 				else
-					H << "<span class='danger'>You are unable to equip that.</span>"
+					H << "<span class='warning'>You are unable to equip that!</span>"
 
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)

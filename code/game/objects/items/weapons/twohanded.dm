@@ -47,7 +47,7 @@
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
 	if(user.get_inactive_hand())
-		user << "<span class='warning'>You need your other hand to be empty</span>"
+		user << "<span class='warning'>You need your other hand to be empty!</span>"
 		return
 	wielded = 1
 	force = force_wielded

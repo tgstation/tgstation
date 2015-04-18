@@ -25,7 +25,7 @@
 /obj/item/device/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	broken = 1
 	icon_state = "[initial(icon_state)]burnt"
-	visible_message("<span class='notice'>The [src.name] burns out!</span>")
+	visible_message("The [src.name] burns out!")
 
 
 /obj/item/device/flash/proc/flash_recharge(var/mob/user)
@@ -71,7 +71,7 @@
 				M.Stun(2)
 				M.visible_message("<span class='disarm'><b>[M]</b> gasps and shields their eyes!</span>")
 		else
-			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
+			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
 	else
 		if(M.flash_eyes())
 			M.confused += power

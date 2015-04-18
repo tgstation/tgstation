@@ -6,7 +6,7 @@
 	density = 1
 
 /obj/structure/largecrate/attack_hand(mob/user as mob)
-	user << "<span class='notice'>You need a crowbar to pry this open!</span>"
+	user << "<span class='warning'>You need a crowbar to pry this open!</span>"
 	return
 
 /obj/structure/largecrate/attackby(obj/item/weapon/W as obj, mob/user as mob, params)

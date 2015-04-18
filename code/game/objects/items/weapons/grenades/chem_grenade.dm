@@ -55,16 +55,16 @@
 				user << "<span class='notice'>You lock the [initial(name)] assembly.</span>"
 				playsound(loc, 'sound/items/Screwdriver.ogg', 25, -3)
 			else
-				user << "<span class='notice'>You need to add at least one beaker before locking the [initial(name)] assembly.</span>"
+				user << "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>"
 		else if(stage == READY && !nadeassembly)
 			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
 			user << "<span class='notice'>You modify the time delay. It's set for [det_time / 10] second\s.</span>"
 		else if(stage == EMPTY)
-			user << "<span class='notice'>You need to add an activation mechanism.</span>"
+			user << "<span class='warning'>You need to add an activation mechanism!</span>"
 
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
 		if(beakers.len == 2)
-			user << "<span class='notice'>[src] can not hold more containers.</span>"
+			user << "<span class='warning'>[src] can not hold more containers!</span>"
 			return
 		else
 			if(I.reagents.total_volume)
@@ -73,7 +73,7 @@
 				I.loc = src
 				beakers += I
 			else
-				user << "<span class='notice'>[I] is empty.</span>"
+				user << "<span class='warning'>[I] is empty!</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/device/assembly_holder))
 		var/obj/item/device/assembly_holder/A = I
@@ -87,7 +87,7 @@
 		assemblyattacher = user.ckey
 
 		stage_change(WIRED)
-		user << "<span class='notice'>You add [A] to the [initial(name)] assembly!</span>"
+		user << "<span class='notice'>You add [A] to the [initial(name)] assembly./span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
@@ -96,7 +96,7 @@
 			stage_change(WIRED)
 			user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
 		else
-			user << "<span class='warning'>You need one length of coil to wire the assembly.</span>"
+			user << "<span class='warning'>You need one length of coil to wire the assembly!</span>"
 			return
 
 	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))

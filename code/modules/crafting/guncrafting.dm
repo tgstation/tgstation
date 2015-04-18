@@ -78,6 +78,6 @@
 			user << "<span class='notice'>You tie the wrapping paper around the stock and the barrel to secure it.</span>"
 			qdel(src)
 		else
-			user << "<span class='warning'>You need at least five feet of wrapping paper to secure the stock.</span>"
+			user << "<span class='warning'>You need at least five feet of wrapping paper to secure the stock!</span>"
 			return
 

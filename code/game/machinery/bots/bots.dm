@@ -128,7 +128,7 @@
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = 0
 		emagged = 1
-		user << "<span class='warning'>You bypass [src]'s controls.</span>"
+		user << "<span class='notice'>You bypass [src]'s controls.</span>"
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = 2
 		remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
@@ -136,7 +136,7 @@
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
-		user << "<span class='notice'>You need to open maintenance panel first.</span>"
+		user << "<span class='warning'>You need to open maintenance panel first!</span>"
 
 /obj/machinery/bot/examine(mob/user)
 	..()
@@ -248,17 +248,17 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
 			if(health >= maxhealth)
-				user << "<span class='warning'>[src] does not need a repair.</span>"
+				user << "<span class='warning'>[src] does not need a repair!</span>"
 				return
 			if(!open)
-				user << "<span class='warning'>Unable to repair with the maintenance panel closed.</span>"
+				user << "<span class='warning'>Unable to repair with the maintenance panel closed!</span>"
 				return
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
 				health = min(maxhealth, health+10)
-				user.visible_message("<span class='notice'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
+				user.visible_message("<span class='notice'>[user] repairs [src]!</span>","<span class='notice'>You repair [src].</span>")
 			else
-				user << "<span class='warning'>The welder must be on for this task.</span>"
+				user << "<span class='warning'>The welder must be on for this task!</span>"
 		else
 			if(W.force) //if force is non-zero
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

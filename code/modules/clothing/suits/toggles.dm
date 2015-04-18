@@ -38,10 +38,10 @@
 		if(ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			if(H.wear_suit != src)
-				H << "You must be wearing [src] to put up the hood."
+				H << "<span class='warning'>You must be wearing [src] to put up the hood!</span>"
 				return
 			if(H.head)
-				H << "You're already wearing something on your head."
+				H << "<span class='warning'>You're already wearing something on your head!</span>"
 				return
 			else
 				H.equip_to_slot_if_possible(hood,slot_head,0,0,1)
@@ -128,18 +128,18 @@
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			if(H.wear_suit != src)
-				H << "You must be wearing [src] to engage the helmet."
+				H << "<span class='warning'>You must be wearing [src] to engage the helmet!</span>"
 				return
 			if(H.head)
-				H << "You're already wearing something on your head."
+				H << "<span class='warning'>You're already wearing something on your head!</span>"
 				return
 			else
-				H << "You engage the helmet on the hardsuit."
+				H << "<span class='notice'>You engage the helmet on the hardsuit.</span>"
 				H.equip_to_slot_if_possible(helmet,slot_head,0,0,1)
 				suittoggled = 1
 				H.update_inv_wear_suit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	else
-		H << "You disengage the helmet on the hardsuit."
+		H << "<span class='notice'>You disengage the helmet on the hardsuit.</span>"
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 		RemoveHelmet()

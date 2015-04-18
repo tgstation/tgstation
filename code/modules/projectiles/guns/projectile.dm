@@ -82,7 +82,7 @@
 				user << "<span class='warning'>[src] already has a suppressor.</span>"
 				return
 		else
-			user << "<span class='warning'>You can't seem to figure out how to fit [S] on [src].</span>"
+			user << "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>"
 			return
 	return 0
 

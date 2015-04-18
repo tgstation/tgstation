@@ -50,7 +50,7 @@
 						add_logs(user, M, "operated", addition="Operation type: [procedure.name]")
 						return 1
 					else
-						user << "<span class='notice'>You need to expose [M]'s [procedure.location] first.</span>"
+						user << "<span class='warning'>You need to expose [M]'s [procedure.location] first!</span>"
 						return 1	//return 1 so we don't slap the guy in the dick with the drapes.
 			else
 				return 1	//once the input menu comes up, cancelling it shouldn't hit the guy with the drapes either.

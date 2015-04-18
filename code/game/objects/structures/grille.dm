@@ -145,7 +145,7 @@
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			anchored = !anchored
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
-								 "<span class='notice'>You have [anchored ? "fastened [src] to" : "unfastened [src] from"] the floor.</span>")
+								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
 			return
 	else if(istype(W, /obj/item/stack/rods) && destroyed)
 		var/obj/item/stack/rods/R = W
@@ -164,16 +164,16 @@
 		if (!destroyed)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
-				user << "<span class='warning'>You need at least two sheets of glass for that.</span>"
+				user << "<span class='warning'>You need at least two sheets of glass for that!</span>"
 				return
 			var/dir_to_set = SOUTHWEST
 			if(!anchored)
-				user << "<span class='warning'>[src] needs to be fastened to the floor first.</span>"
+				user << "<span class='warning'>[src] needs to be fastened to the floor first!</span>"
 				return
 			for(var/obj/structure/window/WINDOW in loc)
-				user << "<span class='warning'>There is already a window there.</span>"
+				user << "<span class='warning'>There is already a window there!</span>"
 				return
-			user << "<span class='notice'>You start placing the window.</span>"
+			user << "<span class='notice'>You start placing the window...</span>"
 			if(do_after(user,20))
 				if(!src.loc || !anchored) //Grille destroyed or unanchored while waiting
 					return

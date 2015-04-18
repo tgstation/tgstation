@@ -204,7 +204,7 @@
 			qdel(src)
 			return
 		else
-			user << "<span class='warning'>You need five lengths of cable to make a potato battery.</span>"
+			user << "<span class='warning'>You need five lengths of cable to make a potato battery!</span>"
 			return
 
 
@@ -834,7 +834,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user as mob)
 	if(awakening || istype(user.loc,/turf/space))
 		return
-	user << "<span class='notice'>You begin to awaken the Killer Tomato.</span>"
+	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
 	awakening = 1
 
 	spawn(30)

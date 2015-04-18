@@ -333,13 +333,13 @@
 		playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 		return
 	if(!wielded)
-		user << "<span class='notice'>You need to wield the paddles in both hands before you can use them on someone!</span>"
+		user << "<span class='warning'>You need to wield the paddles in both hands before you can use them on someone!</span>"
 		return
 	if(cooldown)
-		user << "<span class='notice'>[defib] is recharging.</span>"
+		user << "<span class='warning'>[defib] is recharging!</span>"
 		return
 	if(!ishuman(M))
-		user << "<span class='notice'>The instructions on [defib] don't mention how to revive that...</span>"
+		user << "<span class='warning'>The instructions on [defib] don't mention how to revive that...</span>"
 		return
 	else
 		if(user.a_intent == "harm" && !defib.safety)
@@ -359,7 +359,7 @@
 			defib.cooldowncheck(user)
 			return
 		if(user.zone_sel && user.zone_sel.selecting == "chest")
-			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest.</span>")
+			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest...</span>")
 			busy = 1
 			update_icon()
 			if(do_after(user, 30)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
@@ -434,5 +434,5 @@
 			busy = 0
 			update_icon()
 		else
-			user << "<span class='notice'>You need to target your patient's chest with [src].</span>"
+			user << "<span class='warning'>You need to target your patient's chest with [src].</span>"
 			return

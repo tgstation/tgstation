@@ -160,7 +160,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	if(!cover_open)
-		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
+		user << "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>"
 		return
 	..()
 

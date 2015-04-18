@@ -156,7 +156,7 @@
 		loaded_item = O
 		user.drop_item()
 		O.loc = src
-		user << "<span class='notice'>You add the [O.name] to the machine!</span>"
+		user << "<span class='notice'>You add the [O.name] to the machine.</span>"
 		flick("h_lathe_load", src)
 
 	return

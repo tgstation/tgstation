@@ -253,7 +253,7 @@
 		if(istype(I, /obj/item/weapon/crowbar))
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
-			user << "<span class='notice'>You begin prying the metal coverings off.</span>"
+			user << "<span class='notice'>You begin prying the metal coverings off...</span>"
 			sleep(20)
 			if(prob(70))
 				user << "<span class='notice'>You remove the turret and salvage some components.</span>"
@@ -680,7 +680,7 @@
 					build_step = 2
 					icon_state = "turret_frame2"
 				else
-					user << "<span class='warning'>You need two sheets of metal to continue construction.</span>"
+					user << "<span class='warning'>You need two sheets of metal to continue construction!</span>"
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
@@ -703,7 +703,7 @@
 				if(!WT.isOn())
 					return
 				if(WT.get_fuel() < 5) //uses up 5 fuel.
-					user << "<span class='notice'>You need more fuel to complete this task.</span>"
+					user << "<span class='warning'>You need more fuel to complete this task!</span>"
 					return
 
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
@@ -722,7 +722,7 @@
 					return
 				var/obj/item/weapon/gun/energy/E = I //typecasts the item to an energy gun
 				if(!user.unEquip(I))
-					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
+					user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
 					return
 				installation = I.type //installation becomes I.type
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
@@ -741,9 +741,9 @@
 			if(isprox(I))
 				build_step = 5
 				if(!user.unEquip(I))
-					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
+					user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
 					return
-				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
+				user << "<span class='notice'>You add the proximity sensor to the turret.</span>"
 				qdel(I)
 				return
 
@@ -765,7 +765,7 @@
 					user << "<span class='notice'>You add some metal armor to the exterior frame.</span>"
 					build_step = 7
 				else
-					user << "<span class='warning'>You need two sheets of metal to continue construction.</span>"
+					user << "<span class='warning'>You need two sheets of metal to continue construction!</span>"
 				return
 
 			else if(istype(I, /obj/item/weapon/screwdriver))
@@ -779,7 +779,7 @@
 				var/obj/item/weapon/weldingtool/WT = I
 				if(!WT.isOn()) return
 				if(WT.get_fuel() < 5)
-					user << "<span class='notice'>You need more fuel to complete this task.</span>"
+					user << "<span class='warning'>You need more fuel to complete this task!</span>"
 
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 30))

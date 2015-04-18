@@ -585,7 +585,7 @@ Auto Patrol[]"},
 				if(WT.remove_fuel(0,user))
 					build_step++
 					name = "shielded frame assembly"
-					user << "<span class='notice'>You welded the vest to [src].</span>"
+					user << "<span class='notice'>You weld the vest to [src].</span>"
 		if(4)
 			switch(lasercolor)
 				if("b")
@@ -622,7 +622,7 @@ Auto Patrol[]"},
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
 				if (coil.get_amount() < 1)
-					user << "<span class='warning'>You need one length of cable to wire the ED-209.</span>"
+					user << "<span class='warning'>You need one length of cable to wire the ED-209!</span>"
 					return
 				user << "<span class='notice'>You start to wire [src]...</span>"
 				if (do_after(user, 40))
@@ -659,7 +659,7 @@ Auto Patrol[]"},
 			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
-				user << "<span class='notice'>Now attaching the gun to the frame...</span>"
+				user << "<span class='notice'>You start attaching the gun to the frame...</span>"
 				sleep(40)
 				if(get_turf(user) == T)
 					build_step++

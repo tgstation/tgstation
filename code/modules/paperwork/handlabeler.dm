@@ -16,19 +16,19 @@
 		return		// don't set a label
 
 	if(!labels_left)
-		user << "<span class='notice'>No labels left.</span>"
+		user << "<span class='warning'>No labels left!</span>"
 		return
 	if(!label || !length(label))
-		user << "<span class='notice'>No text set.</span>"
+		user << "<span class='warning'>No text set!</span>"
 		return
 	if(length(A.name) + length(label) > 64)
-		user << "<span class='notice'>Label too big.</span>"
+		user << "<span class='warning'>Label too big!</span>"
 		return
 	if(ishuman(A))
-		user << "<span class='notice'>You can't label humans.</span>"
+		user << "<span class='warning'>You can't label humans!</span>"
 		return
 	if(issilicon(A))
-		user << "<span class='notice'>You can't label cyborgs.</span>"
+		user << "<span class='warning'>You can't label cyborgs!</span>"
 		return
 
 	user.visible_message("<span class='notice'>[user] labels [A] as [label].</span>", \
@@ -45,7 +45,7 @@
 		//Now let them chose the text.
 		var/str = copytext(reject_bad_text(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='notice'>Invalid text.</span>"
+			user << "<span class='warning'>Invalid text!</span>"
 			return
 		label = str
 		user << "<span class='notice'>You set the text to '[str]'.</span>"

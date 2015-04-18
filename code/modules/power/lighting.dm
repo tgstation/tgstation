@@ -38,7 +38,7 @@
 	if (!istype(loc, /turf/simulated/floor))
 		usr << "<span class='danger'>[src.name] cannot be placed on this spot.</span>"
 		return
-	usr << "Attaching [src] to the wall."
+	usr << "<span class='notice'>You begin attaching [src] to the wall...</span>"
 	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
 	var/constrdir = usr.dir
 	var/constrloc = usr.loc
@@ -54,8 +54,8 @@
 	newlight.fingerprintshidden = src.fingerprintshidden
 	newlight.fingerprintslast = src.fingerprintslast
 
-	usr.visible_message("[usr.name] attaches [src] to the wall.", \
-		"You attach [src] to the wall.")
+	usr.visible_message("<span class='warning'>[usr.name] attaches [src] to the wall.</span>", \
+		"<span class='notice'>You attach [src] to the wall.</span>")
 	qdel(src)
 
 /obj/item/light_fixture_frame/small
@@ -99,20 +99,20 @@
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			usr << "You begin deconstructing [src]."
+			usr << "<span class='notice'>You begin deconstructing [src]...</span>"
 			if (!do_after(usr, 30))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-			user.visible_message("[user.name] deconstructs [src].", \
-				"You deconstruct [src].", "You hear a noise.")
+			user.visible_message("<span class='warning'>[user.name] deconstructs [src].</span>", \
+				"<span class='notice'>You deconstruct [src].</span>", "You hear a noise.")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
 			qdel(src)
 		if (src.stage == 2)
-			usr << "You have to remove the wires first."
+			usr << "<span class='warning'>You have to remove the wires first!</span>"
 			return
 
 		if (src.stage == 3)
-			usr << "You have to unscrew the case first."
+			usr << "<span class='warning'>You have to unscrew the case first!</span>"
 			return
 
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -124,8 +124,8 @@
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
 		new /obj/item/stack/cable_coil(get_turf(src.loc), 1, "red")
-		user.visible_message("[user.name] removes the wiring from [src].", \
-			"You remove the wiring from [src].", "You hear a noise.")
+		user.visible_message("<span class='warning'>[user.name] removes the wiring from [src].</span>", \
+			"<span class='notice'>You remove the wiring from [src].</span>", "You hear a noise.")
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
@@ -142,7 +142,7 @@
 			user.visible_message("[user.name] adds wires to [src].", \
 				"You add wires to [src].")
 		else
-			user << "<span class='warning'>You need one length of cable to wire [src]."
+			user << "<span class='warning'>You need one length of cable to wire [src]!</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -153,8 +153,8 @@
 				if("bulb")
 					src.icon_state = "bulb-empty"
 			src.stage = 3
-			user.visible_message("[user.name] closes [src]'s casing.", \
-				"You close [src]'s casing.", "You hear a noise.")
+			user.visible_message("<span class='warning'>[user.name] closes [src]'s casing.</span>", \
+				"<span class='notice'>You close [src]'s casing.</span>", "You hear a noise.")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 
 			switch(fixture_type)
@@ -341,7 +341,7 @@
 	// attempt to insert light
 	if(istype(W, /obj/item/weapon/light))
 		if(status != LIGHT_EMPTY)
-			user << "There is a [fitting] already inserted."
+			user << "<span class='warning'>There is a [fitting] already inserted!</span>"
 			return
 		else
 			src.add_fingerprint(user)
@@ -361,7 +361,7 @@
 				if(on && rigged)
 					explode()
 			else
-				user << "This type of light requires a [fitting]."
+				user << "<span class='warning'>This type of light requires a [fitting]!</span>"
 				return
 
 		// attempt to break the light
@@ -384,7 +384,7 @@
 			broken()
 
 		else
-			user.visible_message("<span class='danger'>[user.name] hits the light.</span>")
+			user.visible_message("<span class='danger'>[user.name] hits the light!</span>")
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
@@ -492,11 +492,11 @@
 			prot = 1
 
 		if(prot > 0)
-			user << "You remove the light [fitting]"
+			user << "<span class='notice'>You remove the light [fitting].</span>"
 		else if(istype(user) && user.dna.check_mutation(TK))
 			user << "You telekinetically remove the light [fitting]."
 		else
-			user << "You try to remove the light [fitting], but you burn your hand on it!"
+			user << "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>"
 
 			var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
 			if(affecting.take_damage( 0, 5 ))		// 5 burn damage
@@ -504,7 +504,7 @@
 			H.updatehealth()
 			return				// if burned, don't remove the light
 	else
-		user << "You remove the light [fitting]."
+		user << "<span class='notice'>You remove the light [fitting].</span>"
 	// create a light tube/bulb item and put it in the user's hand
 	var/obj/item/weapon/light/L = new light_type()
 	L.status = status
@@ -681,7 +681,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 
-		user << "You inject the solution into \the [src]."
+		user << "<span class='notice'>You inject the solution into \the [src].</span>"
 
 		if(S.reagents.has_reagent("plasma", 5))
 

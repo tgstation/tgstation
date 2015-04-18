@@ -86,4 +86,4 @@
 	max_amount = 25
 
 /obj/item/stack/wrapping_paper/attack_self(mob/user)
-	user << "<span class='notice'>You need to use it on a package that has already been wrapped!</span>"
+	user << "<span class='warning'>You need to use it on a package that has already been wrapped!</span>"

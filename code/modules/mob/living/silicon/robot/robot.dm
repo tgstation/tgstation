@@ -400,10 +400,10 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (src == user)
-			user << "<span class='warning'>You lack the reach to be able to repair yourself.</span>"
+			user << "<span class='warning'>You lack the reach to be able to repair yourself!</span>"
 			return 1
 		if (src.health >= src.maxHealth)
-			user << "<span class='warning'>[src] is already in good condition.</span>"
+			user << "<span class='warning'>[src] is already in good condition!</span>"
 			return 1
 		if (WT.remove_fuel(0, user))
 			adjustBruteLoss(-30)
@@ -412,7 +412,7 @@
 			visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
 			return 0
 		else
-			user << "<span class='warning'>The welder must be on for this task.</span>"
+			user << "<span class='warning'>The welder must be on for this task!</span>"
 			return 1
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
@@ -422,31 +422,31 @@
 			updatehealth()
 			visible_message("<span class='notice'>[user] has fixed some of the burnt wires on [src].</span>")
 		else
-			user << "<span class='warning'>You need one length of cable to repair [src].</span>"
+			user << "<span class='warning'>You need one length of cable to repair [src]!</span>"
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
-			user << "You close the cover."
+			user << "<span class='notice'>You close the cover.</span>"
 			opened = 0
 			update_icons()
 		else
 			if(locked)
-				user << "The cover is locked and cannot be opened."
+				user << "<span class='warning'>The cover is locked and cannot be opened!</span>"
 			else
-				user << "You open the cover."
+				user << "<span class='notice'>You open the cover.</span>"
 				opened = 1
 				update_icons()
 
 	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
-			user << "Close the cover first."
+			user << "<span class='warning'>Close the cover first!</span>"
 		else if(cell)
-			user << "There is a power cell already installed."
+			user << "<span class='warning'>There is a power cell already installed!</span>"
 		else
 			user.drop_item()
 			W.loc = src
 			cell = W
-			user << "You insert the power cell."
+			user << "<span class='notice'>You insert the power cell.</span>"
 //			chargecount = 0
 		update_icons()
 
@@ -454,7 +454,7 @@
 		if (wiresexposed)
 			wires.Interact(user)
 		else
-			user << "You can't reach the wiring."
+			user << "<span class='warning'>You can't reach the wiring.</span>"
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
@@ -465,7 +465,7 @@
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
-			user << "Unable to locate a radio."
+			user << "<span class='warning'>Unable to locate a radio!</span>"
 		update_icons()
 
 	else if(istype(W, /obj/item/weapon/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
@@ -482,13 +482,13 @@
 	else if(istype(W, /obj/item/weapon/aiModule))
 		var/obj/item/weapon/aiModule/MOD = W
 		if(!opened)
-			user << "You need access to the robot's insides to do that."
+			user << "<span class='warning'>You need access to the robot's insides to do that!</span>"
 			return
 		if(wiresexposed)
-			user << "You need to close the wire panel to do that."
+			user << "<span class='warning'>You need to close the wire panel to do that!</span>"
 			return
 		if(!cell)
-			user << "You need to install a power cell to do that."
+			user << "<span class='warning'>You need to install a power cell to do that!</span>"
 			return
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
@@ -500,13 +500,13 @@
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
-			user << "Unable to locate a radio."
+			user << "<span class='warning'>Unable to locate a radio!</span>"
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
-			user << "The interface seems slightly damaged"
+			user << "<span class='notice'>The interface seems slightly damaged.</span>"
 		if(opened)
-			user << "You must close the cover to swipe an ID card."
+			user << "<span class='warning'>You must close the cover to swipe an ID card!</span>"
 		else
 			if(allowed(usr))
 				locked = !locked
@@ -518,27 +518,27 @@
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			usr << "You must access the borgs internals!"
+			usr << "<span class='warning'>You must access the borgs internals!</span>"
 		else if(!src.module && U.require_module)
-			usr << "The borg must choose a module before it can be upgraded!"
+			usr << "<span class='warning'>The borg must choose a module before it can be upgraded!</span>"
 		else if(U.locked)
-			usr << "The upgrade is locked and cannot be used yet!"
+			usr << "<span class='warning'>The upgrade is locked and cannot be used yet!</span>"
 		else
 			if(U.action(src))
-				usr << "You apply the upgrade to [src]!"
+				usr << "<span class='notice'>You apply the upgrade to [src].</span>"
 				usr.drop_item()
 				U.loc = src
 			else
-				usr << "Upgrade error!"
+				usr << "<span class='danger'>Upgrade error.</span>"
 
 	else if(istype(W, /obj/item/device/toner))
 		if(toner >= tonermax)
-			usr << "The toner level of [src] is at it's highest level possible"
+			usr << "<span class='warning'>The toner level of [src] is at it's highest level possible!</span>"
 		else
 			toner = 40
 			usr.drop_item()
 			qdel(W)
-			usr << "You fill the toner level of [src] to it's max capacity"
+			usr << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
 
 	else
 		if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.
@@ -550,19 +550,19 @@
 		if(!opened)//Cover is closed
 			if(locked)
 				if(prob(90))
-					user << "You emag the cover lock."
+					user << "<span class='notice'>You emag the cover lock.</span>"
 					locked = 0
 				else
-					user << "You fail to emag the cover lock."
+					user << "<span class='warning'>You fail to emag the cover lock!</span>"
 					if(prob(25))
-						src << "Hack attempt detected."
+						src << "<span class='userdanger'>Hack attempt detected.</span>"
 			else
-				user << "The cover is already unlocked."
+				user << "<span class='warning'>The cover is already unlocked!</span>"
 			return
 		if(opened)//Cover is open
 			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
 			if(wiresexposed)
-				user << "You must close the cover first"
+				user << "<span class='warning'>You must close the cover first!</span>"
 				return
 			else
 				sleep(6)
@@ -599,9 +599,9 @@
 					SetLockdown(0)
 					update_icons()
 				else
-					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
+					user << "<span class='warning'>You fail to [ locked ? "unlock" : "lock"] [src]'s interface!</span>"
 					if(prob(25))
-						src << "Hack attempt detected."
+						src << "<span class='danger'>ALERT: Hack attempt detected.</span>"
 
 /mob/living/silicon/robot/verb/unlock_own_cover()
 	set category = "Robot Commands"
@@ -612,7 +612,7 @@
 			if("Yes")
 				locked = 0
 				update_icons()
-				usr << "You unlock your cover."
+				usr << "<span class='notice'>You unlock your cover.</span>"
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (M.a_intent =="disarm")

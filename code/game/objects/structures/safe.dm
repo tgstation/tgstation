@@ -101,7 +101,7 @@ FLOOR SAFES
 			updateUsrDialog()
 			return
 		else
-			user << "<span class='notice'>You can't [open ? "close" : "open"] [src], the lock is engaged!</span>"
+			user << "<span class='warning'>You can't [open ? "close" : "open"] [src], the lock is engaged!</span>"
 			return
 
 	if(href_list["decrement"])
@@ -147,7 +147,7 @@ FLOOR SAFES
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
 			if(!user.drop_item())
-				user << "<span class='notice'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>"
+				user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>"
 				return
 			I.loc = src
 			user << "<span class='notice'>You put [I] in [src].</span>"
@@ -158,7 +158,7 @@ FLOOR SAFES
 			return
 	else
 		if(istype(I, /obj/item/clothing/tie/stethoscope))
-			user << "Hold [I] in one of your hands while you manipulate the dial."
+			user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
 			return
 
 

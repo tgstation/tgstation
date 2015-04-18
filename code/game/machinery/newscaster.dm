@@ -793,9 +793,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/attackby(obj/item/I as obj, mob/living/user as mob, params)
 
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>"
+		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 60))
+			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 			new /obj/item/newscaster_frame(loc)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			qdel(src)
@@ -823,12 +824,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					audible_message("<span class='danger'>[user.name] forcefully slams the [src.name] with the [I.name]!</span>", null, 5 )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
-			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
+			user << "<span class='warning'>This does nothing!</span>"
 	src.update_icon()
 
 
 /obj/machinery/newscaster/attack_paw(mob/user as mob)
-	user << "<font color='blue'>The newscaster controls are far too complicated for your tiny brain!</font>"
+	user << "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>"
 	return
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)

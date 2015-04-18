@@ -266,7 +266,7 @@ obj/machinery/bot/mulebot/bot_reset()
 					turn_off()
 				else if (cell && !open)
 					if (!turn_on())
-						usr << "<span class='danger'>You can't switch on [src].</span>"
+						usr << "<span class='warning'>You can't switch on [src]!</span>"
 						return
 				else
 					return

@@ -164,9 +164,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 /obj/effect/rune/attack_hand(mob/living/user as mob)		// OH GOD this is horrible
 	if(!iscultist(user))
-		user << "<span class='notice'>You can't mouth the arcane scratchings without fumbling over them.</span>"
+		user << "<span class='warning'>You can't mouth the arcane scratchings without fumbling over them!</span>"
 		return
-	var/message = "<span class='notice'>You are unable to speak the words of the rune.</span>"
+	var/message = "<span class='warning'>You are unable to speak the words of the rune!</span>"
 	if(!user.can_speak(message) && (user.mind && !user.mind.miming))
 		user << message
 		return

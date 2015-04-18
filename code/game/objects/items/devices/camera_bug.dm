@@ -249,11 +249,11 @@
 		var/obj/machinery/camera/C = locate(href_list["view"])
 		if(istype(C))
 			if(!C.can_use())
-				usr << "<span class='danger'>Something's wrong with that camera.  You can't get a feed.</span>"
+				usr << "<span class='warning'>Something's wrong with that camera!  You can't get a feed.</span>"
 				return
 			var/turf/T = get_turf(loc)
 			if(!T || C.z != T.z)
-				usr << "<span class='danger'>You can't get a signal.</span>"
+				usr << "<span class='warning'>You can't get a signal!</span>"
 				return
 			current = C
 			spawn(6)
