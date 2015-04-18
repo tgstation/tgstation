@@ -17,6 +17,7 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/recharged = 0
 	var/custom = 0
+	var/useramount = 30 // Last used amount
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
 	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
@@ -166,7 +167,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 400, 610)
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 390, 630)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -183,17 +184,15 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	if(href_list["amount"])
 		if(href_list["amount"] == "0")
-			var/num = input("Enter desired output amount", "Amount", "30") as num
+			var/num = input("Enter desired output amount", "Amount", useramount) as num
 			if (num)
 				amount = round(text2num(num), 5)
+				useramount = amount
 				custom = 1
 		else
 			custom = 0
 			amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
-		if (amount < 5) // Since the user can actually type the commands himself, some sanity checking
-			amount = 5
-		if (amount > 100)
-			amount = 100
+		amount = Clamp(amount, 5, 100) // Since the user can actually type the commands himself, some sanity checking
 
 	if(href_list["dispense"])
 		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
