@@ -4590,6 +4590,11 @@ var/global/list/chifir_doesnt_remove=list(
 	id = "plasmatea"
 	description = "Probably not the safest beverage."
 
+/datum/reagent/drink/tea/greytea
+	name = "Tide"
+	id = "greytea"
+	description = "This probably shouldn't even be considered tea..."
+
 /datum/reagent/drink/coffee/espresso
 	name = "Espresso"
 	id = "espresso"

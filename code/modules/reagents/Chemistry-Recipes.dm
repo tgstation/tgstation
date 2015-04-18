@@ -2538,3 +2538,9 @@ datum
 			result = "etank"
 			required_reagents = list("coffee" = 1, "iron" = 1, "lithium" = 1, "fuel" = 1, "aluminum" = 1)
 			result_amount = 5
+
+		greytea
+			name = "Tide"
+			id = "greytea"
+			result = "greytea"
+			required_reagents = list("water" = 5, "fuel" = 5)

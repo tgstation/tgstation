@@ -3279,6 +3279,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/omurice/heart
 	icon_state = "omuriceheart"
 
+/obj/item/weapon/reagent_containers/food/snacks/omurice/face
+	icon_state = "omuriceface"
+
 /obj/item/weapon/reagent_containers/food/snacks/muffin/bluespace
 	name = "Bluespace-berry Muffin"
 	desc = "Just like a normal blueberry muffin, except with completely unnecessary floaty things!"
@@ -3349,6 +3352,25 @@
 	desc = "A slice of pumpkin bread."
 	icon_state = "pumpkinbreadslice"
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/corndog
+	name = "Corndog"
+	desc = "Battered hotdog on a stick!"
+	icon_state = "corndog"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/cornydog
+	name = "CORNY DOG"
+	desc = "This is just ridiculous."
+	icon_state = "cornydog"
+	trash = /obj/item/weapon/arrow/rod
+	New()
+		..()
+		reagents.add_reagent("nutriment", 15)
+		bitesize = 5
 
 ////////////////SLIDERS////////////////
 
@@ -3438,3 +3460,26 @@
 
 
 ////////////////SLIDERS END////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/higashikata
+	name = "Higashikata Special"
+	desc = "9 layer parfait, very expensive."
+	icon_state = "higashikata"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("sugar", 10)
+		reagents.add_reagent("ice", 10)
+		reagents.add_reagent("melonjuice", 5)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/sundae
+	name = "Sundae"
+	desc = "A colorful ice cream treat."
+	icon_state = "sundae"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("sugar", 5)
+		reagents.add_reagent("ice", 5)
+		bitesize = 3

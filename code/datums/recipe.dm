@@ -96,6 +96,7 @@
 //Note : Due to changes to no longer wipe nutriments from cooked items, this is the same as make. So from now on this is THE "turn recipe into new thing" proc
 /datum/recipe/proc/make_food(var/obj/container as obj) //Find our recipe machine and let's begin
 	var/obj/result_obj = new result(container) //Spawn the result of our little cuisine in the recipe machine in advance to transfer reagents
+	world << "[result_obj] \ref[result_obj]"
 	for(var/obj/O in (container.contents - result_obj)) //Find all objects (for instance, raw food or beakers) in our machine, excluding the result we just created
 		if(O.reagents) //Little sanity, can't hurt
 			for(var/r_r in reagents_forbidden) //Check forbidden reagents

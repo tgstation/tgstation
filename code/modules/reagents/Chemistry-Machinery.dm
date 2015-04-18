@@ -289,7 +289,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/booze_dispenser
 	name = "Booze Dispenser"
 	icon_state = "booze_dispenser"
-	dispensable_reagents = list("beer", "whiskey", "tequila", "vodka", "vermouth", "rum", "cognac", "wine", "kahlua", "ale", "ice")
+	dispensable_reagents = list("beer", "whiskey", "tequila", "vodka", "vermouth", "rum", "cognac", "wine", "kahlua", "ale", "ice", "water", "gin", "sodawater", "cola", "cream","tomatojuice","orangejuice","limejuice","tonic")
 
 /obj/machinery/chem_dispenser/booze_dispenser/mapping
 	max_energy = 100
