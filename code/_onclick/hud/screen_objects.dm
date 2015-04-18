@@ -569,6 +569,15 @@
 					else if (istype(M.get_active_hand(), /obj/item/clothing/head))
 						M.wearhat(M.get_active_hand())
 
+		if("glasses")
+			if(ismonkey(usr))
+				var/mob/living/carbon/monkey/M = usr
+				if(M.canWearGlasses)
+					if (!M.get_active_hand())
+						M.wearglasses(null)
+					else if (istype(M.get_active_hand(), /obj/item/clothing/glasses))
+						M.wearglasses(M.get_active_hand())
+
 ////////////ADMINBUS HUD ICONS////////////
 		if("Delete Bus")
 			if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/vehicle/adminbus))

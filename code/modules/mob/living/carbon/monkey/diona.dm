@@ -51,6 +51,7 @@
 	var/ready_evolve = 0
 	canWearHats = 0
 	canWearClothes = 0
+	canWearGlasses = 0
 
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M as mob)
 

@@ -151,6 +151,18 @@
 	mymob.m_hat.name = "hat"
 	mymob.m_hat.screen_loc = ui_monkey_hat
 
+	mymob.m_glassesbg = new /obj/screen()
+	mymob.m_glassesbg.icon = ui_style
+	mymob.m_glassesbg.icon_state = "glasses"
+	mymob.m_glassesbg.name = "glasses"
+	mymob.m_glassesbg.screen_loc = ui_monkey_glasses
+
+	mymob.m_glasses = new /obj/screen()
+	mymob.m_glasses.icon = 'icons/obj/clothing/glasses.dmi'
+	mymob.m_glasses.icon_state = "none"
+	mymob.m_glasses.name = "glasses"
+	mymob.m_glasses.screen_loc = ui_monkey_glasses
+
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "mask"
 	inv_box.dir = NORTH
@@ -266,7 +278,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.m_hatbg, mymob.m_hat, mymob.m_suitclothesbg, mymob.m_suitclothes, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.m_hatbg, mymob.m_hat, mymob.m_suitclothesbg, mymob.m_suitclothes, mymob.m_glassesbg, mymob.m_glasses, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 	return
