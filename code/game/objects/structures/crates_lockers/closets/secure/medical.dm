@@ -64,6 +64,8 @@
 	New()
 		..()
 		sleep(2)
+		new /obj/item/clothing/monkeyclothes/doctor (src)
+		new /obj/item/clothing/monkeyclothes/doctor (src)
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/medic(src)
 		else
