@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - bugfix: Fix relativewall_neighbours() ignoring limitations on unfinished reinforced walls by adding more exceptions. Should be fool-proof to relativewall() to boot
