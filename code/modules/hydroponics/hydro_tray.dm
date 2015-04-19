@@ -9,6 +9,8 @@
 	flags = OPENCONTAINER
 	volume = 100
 
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+
 
 	var/draw_warnings = 1 //Set to 0 to stop it from drawing the alert lights.
 
@@ -595,8 +597,11 @@
 
 /obj/machinery/portable_atmospherics/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
-	if (O.is_open_container())
+	if(O.is_open_container())
 		return 0
+
+	if(..())
+		return 1
 
 	if(istype(O, /obj/item/weapon/wirecutters) || istype(O, /obj/item/weapon/scalpel))
 
