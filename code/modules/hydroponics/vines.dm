@@ -326,6 +326,7 @@
 
 	spawn(0)
 		spawn_piece(src.loc)
+		loc = null
 
 	processing_objects.Add(src)
 
@@ -347,7 +348,7 @@
 /obj/effect/plant_controller/process()
 
 	// Space vines exterminated. Remove the controller
-	if(!vines)
+	if(!vines.len)
 		qdel(src)
 		return
 
