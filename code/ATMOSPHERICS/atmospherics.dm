@@ -39,6 +39,12 @@ Pipelines + Other Objects -> Pipe network
 
 	var/pipe_flags = 0
 
+/obj/machinery/atmospherics/Destroy()
+	for(var/mob/living/M in src) //ventcrawling is serious business
+		M.remove_ventcrawl()
+		M.loc = src.loc
+	..()
+
 // Find a connecting /obj/machinery/atmospherics in specified direction.
 /obj/machinery/atmospherics/proc/findConnecting(var/direction)
 	for(var/obj/machinery/atmospherics/target in get_step(src,direction))
@@ -170,3 +176,15 @@ Pipelines + Other Objects -> Pipe network
 		//P.New(loc, make_from=src) //new /obj/item/pipe(loc, make_from=src)
 		qdel(src)
 	return 1
+
+/obj/machinery/atmospherics/relaymove(mob/living/user, direction)
+	var/obj/machinery/atmospherics/target_move = findConnecting(direction)
+	if(target_move)
+		if(is_type_in_list(target_move, ventcrawl_machinery))
+			user.remove_ventcrawl()
+			user.forceMove(target_move.loc)
+		user.loc = target_move
+	else
+		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery)) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
+			user.remove_ventcrawl()
+			user.forceMove(src.loc)
