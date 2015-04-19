@@ -328,6 +328,7 @@
 	var/colourName = "red" //for updateIcon purposes
 	var/dat
 	var/list/validSurfaces = list(/turf/simulated/floor)
+	var/gang = 0 //For marking territory
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
@@ -403,6 +404,29 @@
 			temp = "letter"
 		else if(graffiti.Find(drawtype))
 			temp = "graffiti"
+
+		var/area/territory
+		if(gang)
+			//Check area validity. Reject space, player-created areas, and non-station z-levels.
+			territory = get_area(target)
+			if (territory && (territory.z == ZLEVEL_STATION) && !territory.player_defined && !istype(territory,/area/space))
+
+				//Determine gang affiliation
+				if((user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.A_gang))
+					temp = "[gang_name("A")] gang tag"
+					drawtype = "ganga"
+				else if((user.mind in ticker.mode.B_bosses) || (user.mind in ticker.mode.B_gang))
+					temp = "[gang_name("B")] gang tag"
+					drawtype = "gangb"
+
+				//Check if this area is already tagged by a gang
+				if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
+					for(var/area/RA in territory.related)
+						var/obj/effect/decal/cleanable/crayon/gang/gangtag = locate(/obj/effect/decal/cleanable/crayon/gang) in RA
+						if(gangtag && gangtag.gang)
+							user << "<span class='danger'>Something's wrong... This area has already been tagged by the [gangtag.icon_state] gang! You must get rid of the old tag first, or simply spray over it!</span>"
+							return
+
 		var/graf_rot
 		if(oriented.Find(drawtype))
 			switch(user.dir)
@@ -416,7 +440,27 @@
 					graf_rot = 0
 		user << "You start drawing a [temp] on the [target.name]."
 		if(instant || do_after(user, 50))
-			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
+
+			//Gang functions
+			if(drawtype == "ganga")
+				//Delete any old markings on this tile, including other gang tags
+				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
+					qdel(old_marking)
+				var/obj/effect/decal/cleanable/crayon/gang/newtag = new(target,colour,gang_name("A"),temp,graf_rot)
+				newtag.gang = "A"
+				ticker.mode.A_territory |= territory.type
+				ticker.mode.message_gangtools(ticker.mode.A_bosses,"New territory claimed: [territory]")
+			if(drawtype == "gangb")
+				//Delete any old markings on this tile, including other gang tags
+				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
+					qdel(old_marking)
+				var/obj/effect/decal/cleanable/crayon/gang/newtag = new(target,colour,gang_name("B"),temp,graf_rot)
+				newtag.gang = "B"
+				ticker.mode.B_territory |= territory.type
+				ticker.mode.message_gangtools(ticker.mode.B_bosses,"New territory claimed: [territory]")
+
+			else
+				new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
 			user << "You finish drawing [temp]."
 			if(uses)
 				uses--

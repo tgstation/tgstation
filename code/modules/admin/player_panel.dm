@@ -385,7 +385,7 @@
 					dat += "<tr><td><i>Head not found!</i></td></tr>"
 			dat += "</table>"
 
-		if(ticker.mode.A_bosses.len || ticker.mode.A_gangsters.len)
+		if(ticker.mode.A_bosses.len || ticker.mode.A_gang.len)
 			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("A")] Gang Members</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.A_bosses)
 				var/mob/M = N.current
@@ -394,14 +394,14 @@
 				else
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Boss)</b>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			for(var/datum/mind/N in ticker.mode.A_gangsters)
+			for(var/datum/mind/N in ticker.mode.A_gang)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		if(ticker.mode.B_bosses.len || ticker.mode.B_gangsters.len)
+		if(ticker.mode.B_bosses.len || ticker.mode.B_gang.len)
 			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("B")] Gang Members</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.B_bosses)
 				var/mob/M = N.current
@@ -410,7 +410,7 @@
 				else
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Boss)</b>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			for(var/datum/mind/N in ticker.mode.B_gangsters)
+			for(var/datum/mind/N in ticker.mode.B_gang)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"

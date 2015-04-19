@@ -104,7 +104,7 @@
 		if("Toggle Cap")
 			user << "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>"
 			capped = capped ? 0 : 1
-			icon_state = "spraycan[capped ? "_cap" : ""]"
+			icon_state = "spraycan[gang ? "_gang" : ""][capped ? "_cap" : ""]"
 			update_icon()
 		if("Change Drawing")
 			..()
@@ -140,3 +140,9 @@
 	var/image/I = image('icons/obj/crayons.dmi',icon_state = "[capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 	I.color = colour
 	overlays += I
+
+/obj/item/toy/crayon/spraycan/gang
+	icon_state = "spraycan_gang_cap"
+	desc = "A modified spraycan containing special paint used by gangsters to mark territory."
+	gang = 1
+	instant = 0

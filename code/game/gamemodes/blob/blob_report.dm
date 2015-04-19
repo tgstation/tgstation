@@ -54,6 +54,7 @@
 	var/door = 0
 	var/grille = 0
 	var/mach = 0
+	var/num_territories = 0//Number of total valid territories for gang mode
 
 
 /datum/station_state/proc/count()
@@ -88,6 +89,10 @@
 			else if(istype(O, /obj/machinery))
 				src.mach += 1
 
+	var/list/valid_territories = list()
+	for(var/area/A in block(locate(1,1,1), locate(world.maxx,world.maxy,1)))
+		valid_territories |= A.type
+	num_territories = valid_territories.len - 1 //Minus space
 
 /datum/station_state/proc/score(var/datum/station_state/result)
 	if(!result)	return 0

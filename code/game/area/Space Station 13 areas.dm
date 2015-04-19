@@ -28,6 +28,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	mouse_opacity = 0
 	invisibility = INVISIBILITY_LIGHTING
 	var/lightswitch = 1
+	var/player_defined = 0 //If it was created by players in-game as opposed to existing at compile time
 
 	var/eject = null
 
