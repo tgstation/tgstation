@@ -379,7 +379,7 @@
 			if(weedkiller_reagents[R.id])
 				weedlevel -= weedkiller_reagents[R.id] * reagent_total
 			if(pestkiller_reagents[R.id])
-				pestlevel -= pestkiller_reagents[R.id] * reagent_total
+				pestlevel += pestkiller_reagents[R.id] * reagent_total //Pest reducing reagents have negative pest level
 
 			// Beneficial reagents have a few impacts along with health buffs.
 			if(beneficial_reagents[R.id])
