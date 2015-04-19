@@ -13,7 +13,7 @@
 	time = 64
 
 /datum/surgery_step/xenomorph_removal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to search in [target]'s chest for a xenomorph embryo.</span>", "<span class='notice'>You begin to search in [target]'s chest for a xenomorph embryo...</span>")
+	user.visible_message("[user] begins to search in [target]'s chest for a xenomorph embryo.", "<span class='notice'>You begin to search in [target]'s chest for a xenomorph embryo...</span>")
 
 /datum/surgery_step/xenomorph_removal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(remove_xeno(user, target))
