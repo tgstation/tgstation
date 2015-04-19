@@ -72,7 +72,7 @@
 				P.SetLuminosity(0) //failsafe
 			if(H != usr)
 				H << "<span class='boldannounce'>You feel a chill and are plunged into darkness.</span>"
-			H.luminosity = 0 //This is required with the object-based lighting
+			H.SetLuminosity(0) //This is required with the object-based lighting
 
 
 
