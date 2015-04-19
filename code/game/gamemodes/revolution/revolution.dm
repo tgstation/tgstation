@@ -179,7 +179,7 @@
 			for(var/datum/mind/rev_mind in head_revolutionaries)
 				mark_for_death(rev_mind, head_mind)
 
-	if(max_headrevs < initial(max_headrevs) && max_headrevs < heads.len)
+	if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < heads.len)
 		latejoin_headrev()
 
 ///////////////////////////////
