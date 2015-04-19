@@ -178,10 +178,14 @@
 		return ..() //Check for evacuation/nuke
 
 	for(var/datum/mind/wizard in wizards)
+		if(!wizard.current)
+			continue
 		if(wizard.current.stat != DEAD)
 			return ..()
 
 	for(var/datum/mind/traitor in traitors)
+		if(!traitor.current)
+			continue
 		if(traitor.current.stat != DEAD)
 			return ..()
 
