@@ -44,7 +44,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 		if(WT.remove_fuel(0,user))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
 			new_item.add_to_stacks(usr)
-			user.visible_message("<span class='warning'>[user.name] shaped [src] into metal with the welding tool.</span>", \
+			user.visible_message("[user.name] shaped [src] into metal with the welding tool.", \
 						 "<span class='notice'>You shape [src] into metal with the welding tool.</span>", \
 						 "<span class='warning'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src

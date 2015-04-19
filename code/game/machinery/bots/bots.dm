@@ -142,9 +142,9 @@
 	..()
 	if (health < maxhealth)
 		if (health > maxhealth/3)
-			user << "<span class='danger'>[src]'s parts look loose.</span>"
+			user << "[src]'s parts look loose."
 		else
-			user << "<span class='danger'>[src]'s parts look very loose.</span>"
+			user << "[src]'s parts look very loose!"
 	else
 		user << "[src] is in pristine condition."
 

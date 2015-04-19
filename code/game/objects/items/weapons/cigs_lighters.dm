@@ -479,16 +479,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			force = 5
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
-			attack_verb = list("burnt", "singed")
+			attack_verb = list("burnt", "signed")
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
+				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
 			else
 				if(prob(75))
-					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src].</span>")
+					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
 				else
-					user << "<span class='warning'>You burn yourself while lighting the lighter.</span>"
 					user.adjustFireLoss(5)
-					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src], they however burn their finger in the process.</span>")
+					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
 			user.AddLuminosity(1)
 			SSobj.processing |= src
@@ -499,9 +498,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			force = 0
 			attack_verb = null //human_defense.dm takes care of it
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.")
+				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
 			else
-				user.visible_message("<span class='notice'>[user] quietly shuts off [src].")
+				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
 
 			user.AddLuminosity(-1)
 			SSobj.processing.Remove(src)

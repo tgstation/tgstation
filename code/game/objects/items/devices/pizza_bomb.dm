@@ -67,7 +67,7 @@
 		user.visible_message("<span class='warning'>[user] cuts the [chosen_wire] wire!</span>", "<span class='danger'>You cut the [chosen_wire] wire!</span>")
 		sleep(5)
 		if(chosen_wire == correct_wire)
-			src.audible_message("<span class='warning'>\icon[src] \The [src] suddenly stops beeping and seems lifeless.</span>")
+			src.audible_message("\icon[src] \The [src] suddenly stops beeping and seems lifeless.")
 			user << "<span class='notice'>You did it!</span>"
 			icon_state = "pizzabox_bomb_[correct_wire]"
 			name = "pizza bomb"

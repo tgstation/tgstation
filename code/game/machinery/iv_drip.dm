@@ -64,7 +64,7 @@
 
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(beaker)
-			visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>")
+			usr.visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>", "<span class='notice'>You attach \the [src] to \the [target].</span>")
 			attached = target
 			SSmachine.processing.Add(src)
 			update_icon()

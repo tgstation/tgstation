@@ -454,7 +454,7 @@
 		if (wiresexposed)
 			wires.Interact(user)
 		else
-			user << "<span class='warning'>You can't reach the wiring.</span>"
+			user << "<span class='warning'>You can't reach the wiring!</span>"
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
@@ -475,6 +475,7 @@
 			return
 		else
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			user << "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>"
 			if(do_after(user, 50) && !cell)
 				user.visible_message("<span class='danger'>[user] deconstructs [src]!</span>", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()

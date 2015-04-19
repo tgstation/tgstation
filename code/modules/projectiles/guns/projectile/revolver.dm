@@ -158,7 +158,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user as mob)
 	if(!spun && can_shoot())
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
+		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='notice'>You spin the revolver's chamber.</span>")
 		Spin()
 	else
 		var/num_unloaded = 0
@@ -185,7 +185,7 @@
 			return
 	if(target != user)
 		if(ismob(target))
-			user << "<span class='warning'>A mechanism prevents you from shooting anyone but yourself.</span>"
+			user << "<span class='warning'>A mechanism prevents you from shooting anyone but yourself!</span>"
 		return
 
 	if(ishuman(user))

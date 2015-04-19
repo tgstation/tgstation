@@ -135,7 +135,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if (shock(user, 50))
 			return
-		visible_message("<span class='warning'>[user] cuts the cable.</span>")
+		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 		Deconstruct()
@@ -144,7 +144,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	else if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
-			user << "Not enough cable"
+			user << "<span class='warning'>Not enough cable!</span>"
 			return
 		coil.cable_join(src, user)
 

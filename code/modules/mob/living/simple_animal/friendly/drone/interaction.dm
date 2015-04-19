@@ -32,14 +32,14 @@
 
 								D << "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [src] [pick(faux_problems)].</span>"
 								return
-							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>")
+							D.visible_message("[D] begins to reactivate [src].", "<span class='notice'>You begin to reactivate [src]...</span>")
 							if(do_after(user,30,needhand = 1))
 								health = health_repair_max
 								stat = CONSCIOUS
 								icon_state = icon_living
 								dead_mob_list -= src
 								living_mob_list += src
-								D.visible_message("<span class='notice'>[D] reactivates [src]!</span>")
+								D.visible_message("[D] reactivates [src]!", "<span class='notice'>You reactivate [src].</span>")
 								alert_drones(DRONE_NET_CONNECT)
 								if(G)
 									G << "<span class='boldnotice'>DRONE NETWORK: </span><span class='ghostalert'>You were reactivated by [D]!</span>"
@@ -48,9 +48,9 @@
 
 						if("Cannibalize")
 							if(D.health < D.maxHealth)
-								D.visible_message("<span class='notice'>[D] begins to cannibalize parts from [src].</span>")
+								D.visible_message("[D] begins to cannibalize parts from [src].", "<span class='notice'>You begin to cannibalize parts from [src]...</span>")
 								if(do_after(D, 60,5,0))
-									D.visible_message("<span class='notice'>[D] repairs itself using [src]'s remains!</span>")
+									D.visible_message("[D] repairs itself using [src]'s remains!", "<span class='notice'>You repair yourself using [src]'s remains.</span>")
 									D.adjustBruteLoss(-src.maxHealth)
 									new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
 									qdel(src)
@@ -69,9 +69,9 @@
 			..()
 			return
 		if(user.get_active_hand())
-			user << "<span class='notice'>Your hands are full.</span>"
+			user << "<span class='warning'>Your hands are full!</span>"
 			return
-		src << "<span class='warning'>[user] is trying to pick you up!</span>"
+		src << "<span class='danger'>[user] is trying to pick you up!</span>"
 		if(buckled)
 			user << "<span class='warning'>[src] is buckled to the [buckled.name] and cannot be picked up!</span>"
 			return
@@ -96,11 +96,11 @@
 			if(do_after(user,80))
 				var/repair = health_repair_max - health
 				adjustBruteLoss(-repair)
-				visible_message("<span class='notice'>[user] tightens [src == user ? "their" : "[src]'s"] loose screws!</span>")
+				visible_message("[user] tightens [src == user ? "their" : "[src]'s"] loose screws!", "<span class='notice'>You tighten [src == user ? "their" : "[src]'s"] loose screws.</span>")
 			else
 				user << "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>"
 		else
-			user << "<span class='notice'>[src]'s screws can't get any tighter!</span>"
+			user << "<span class='warning'>[src]'s screws can't get any tighter!</span>"
 	else
 		..()
 

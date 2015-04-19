@@ -386,13 +386,13 @@
 					has_electronics = 0
 					if ((stat & BROKEN) || malfhack)
 						user.visible_message(\
-							"<span class='warning'>[user.name] has broken the power control board inside [src.name]!</span>",\
+							"[user.name] has broken the power control board inside [src.name]!",\
 							"<span class='notice'>You break the charred power control board and remove the remains.</span>",
 							"You hear a crack!")
 						//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 					else
 						user.visible_message(\
-							"<span class='warning'>[user.name] has removed the power control board from [src.name]!</span>",\
+							"[user.name] has removed the power control board from [src.name]!",\
 							"<span class='notice'>You remove the power control board.</span>")
 						new /obj/item/weapon/module/power_control(loc)
 		else if (opened!=2) //cover isn't removed
@@ -472,7 +472,7 @@
 		if(C.get_amount() < 10)
 			user << "<span class='warning'>You need ten lengths of cable for APC!</span>"
 			return
-		user.visible_message("<span class='warning'>[user.name] adds cables to the APC frame.</span>", \
+		user.visible_message("[user.name] adds cables to the APC frame.", \
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20))
@@ -492,7 +492,7 @@
 		terminal.dismantle(user)
 
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
-		user.visible_message("<span class='warning'>[user.name] inserts the power control board into [src].</span>", \
+		user.visible_message("[user.name] inserts the power control board into [src].", \
 							"<span class='notice'>You start to insert the power control board into the frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10))
@@ -508,7 +508,7 @@
 		if (WT.get_fuel() < 3)
 			user << "<span class='warning'>You need more welding fuel to complete this task!</span>"
 			return
-		user.visible_message("<span class='warning'>[user.name] welds [src].</span>", \
+		user.visible_message("[user.name] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"You hear welding.")
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
@@ -517,12 +517,12 @@
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
-					"<span class='warning'>[user.name] has cut [src] apart with [W].</span>",\
+					"[user.name] has cut [src] apart with [W].",\
 					"<span class='notice'>You disassembled the broken APC frame.</span>")
 			else
 				new /obj/item/apc_frame(loc)
 				user.visible_message(\
-					"<span class='warning'>[user.name] has cut [src] from the wall with [W].</span>",\
+					"[user.name] has cut [src] from the wall with [W].",\
 					"<span class='notice'>You cut the APC frame from the wall.</span>")
 			qdel(src)
 			return
@@ -531,7 +531,7 @@
 		if (opened==2)
 			opened = 1
 		user.visible_message(\
-			"<span class='warning'>[user.name] has replaced the damaged APC frontal panel with a new one.</span>",\
+			"[user.name] has replaced the damaged APC frontal panel with a new one.",\
 			"<span class='notice'>You replace the damaged APC frontal panel with a new one.</span>")
 		qdel(W)
 		update_icon()
@@ -539,7 +539,7 @@
 		if (has_electronics)
 			user << "<span class='warning'>You cannot repair this APC until you remove the electronics still inside!</span>"
 			return
-		user.visible_message("<span class='warning'>[user.name] replaces the damaged APC frame with a new one.</span>",\
+		user.visible_message("[user.name] replaces the damaged APC frame with a new one.",\
 							"<span class='notice'>You begin to replace the damaged APC frame...</span>")
 		if(do_after(user, 50))
 			user << "<span class='notice'>You replace the damaged APC frame with a new one.</span>"
@@ -604,7 +604,7 @@
 			cell.updateicon()
 
 			src.cell = null
-			user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>",\
+			user.visible_message("[user.name] removes the power cell from [src.name]!",\
 								 "<span class='notice'>You remove the power cell.</span>")
 			//user << "You remove the power cell."
 			charging = 0

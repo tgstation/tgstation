@@ -395,10 +395,10 @@ Auto Patrol: []"},
 		return
 
 	if(!helmetCam) //I am so sorry for this. I could not think of a less terrible (and lazy) way.
-		user << "[src] needs to have a camera attached first."
+		user << "<span class='warning'>[src] needs to have a camera attached first!</span>"
 		return
 	if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
-		user << "The mounted flashlight is in the way, remove it first."
+		user << "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>"
 		return
 
 	if(S.secured)

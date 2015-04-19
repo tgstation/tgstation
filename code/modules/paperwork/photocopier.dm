@@ -302,18 +302,18 @@
 		return
 	src.add_fingerprint(user)
 	if(target == user)
-		visible_message("<span class='warning'>[user] starts climbing onto the photocopier!</span>")
+		user.visible_message("[user] starts climbing onto the photocopier!", "<span class='notice'>You start climbing onto the photocopier...</span>")
 	else
-		visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier!</span>")
+		user.visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier!</span>", "<span class='notice'>You start putting [target] onto the photocopier...</span>")
 
 	if(do_after(user, 20))
 		if(!target || target.gc_destroyed || gc_destroyed || !Adjacent(target)) //check if the photocopier/target still exists.
 			return
 
 		if(target == user)
-			visible_message("<span class='warning'>[user] climbs onto the photocopier!</span>")
+			user.visible_message("[user] climbs onto the photocopier!", "<span class='notice'>You climb onto the photocopier.</span>")
 		else
-			visible_message("<span class='warning'>[user] puts [target] onto the photocopier!</span>")
+			user.visible_message("<span class='warning'>[user] puts [target] onto the photocopier!</span>", "<span class='notice'>You put [target] onto the photocopier.</span>")
 
 		target.loc = get_turf(src)
 		ass = target

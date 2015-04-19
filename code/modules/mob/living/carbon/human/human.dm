@@ -678,7 +678,7 @@
 	if(health >= 0)
 		if(src == M)
 			visible_message( \
-				"<span class='notice'>[src] examines \himself.", \
+				"[src] examines \himself.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
 			for(var/obj/item/organ/limb/org in organs)
@@ -734,10 +734,10 @@
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
 	if(is_mouth_covered())
-		src << "<span class='notice'>Remove your mask!</span>"
+		src << "<span class='warning'>Remove your mask first!</span>"
 		return 0
 	if(C.is_mouth_covered())
-		src << "<span class='notice'>Remove their mask!</span>"
+		src << "<span class='warning'>Remove their mask first!</span>"
 		return 0
 
 	if(C.cpr_time < world.time + 30)
@@ -753,7 +753,7 @@
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
 			C.updatehealth()
-			visible_message("<span class='notice'>[src] performs CPR on [C.name]!</span>")
+			src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
 			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>"
 
 
