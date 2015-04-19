@@ -467,9 +467,9 @@
 	name = "Chicken Pox"
 	stage = 3
 /datum/disease2/effect/chickenpox/activate(var/mob/living/carbon/mob,var/multiplier)
-	if (prob(10))
+	if (prob(30))
 		mob.say(pick("BAWWWK!", "BAAAWWK!", "CLUCK!", "CLUUUCK!", "BAAAAWWWK!"))
-	if (prob(5))
+	if (prob(15))
 		mob.emote("me",1,"vomits up a chicken egg!")
 		playsound(mob.loc, 'sound/effects/splat.ogg', 50, 1)
 		new /obj/item/weapon/reagent_containers/food/snacks/egg(get_turf(mob))
