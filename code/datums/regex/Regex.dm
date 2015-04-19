@@ -254,7 +254,7 @@ regex
 					when compiling. Until then, separate this from previous text.
 				 */
 				if(92)	// backslash
-					if(modify || index>start+1) return BreakOff(p,first)
+					if((modify || index>start+1) && text2ascii(pattern,index+1) != 47) return BreakOff(p,first)
 					ch2=Advance()
 					if(!ch2) return MarkError(first,index,"Unexpected char:",ch)
 					if(ch2==48)
