@@ -37,7 +37,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			overlays.Cut()
-			usr << "You slice off [src]'s uneven chunks of aluminium and scorch marks."
+			usr << "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>"
 			return
 
 
@@ -59,10 +59,10 @@
 			if(ishuman(user))
 				if(!user.get_active_hand())
 					user.put_in_hands(src)
-					user << "You take the target out of the stake."
+					user << "<span class='notice'>You take the target out of the stake.</span>"
 			else
 				src.loc = get_turf(user)
-				user << "You take the target out of the stake."
+				user << "<span class='notice'>You take the target out of the stake.</span>"
 
 			stake.pinned_target = null
 			return

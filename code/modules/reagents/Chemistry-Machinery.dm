@@ -291,7 +291,7 @@
 		src.beaker = B
 		user.drop_item()
 		B.loc = src
-		user << "You add the beaker to the machine!"
+		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
@@ -620,7 +620,7 @@
 		src.beaker = B
 		user.drop_item()
 		B.loc = src
-		user << "You add the beaker to the machine!"
+		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
@@ -1077,7 +1077,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 						B.remove_from_storage(G, src)
 						holdingitems += G
 						if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
-								user << "You fill the All-In-One grinder to the brim."
+								user << "<span class='notice'>You fill the All-In-One grinder to the brim.</span>"
 								break
 
 				if(!O.contents.len)

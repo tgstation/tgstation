@@ -510,7 +510,7 @@
 		else
 			if(allowed(usr))
 				locked = !locked
-				user << "You [ locked ? "lock" : "unlock"] [src]'s cover."
+				user << "<span class='notice'>You [ locked ? "lock" : "unlock"] [src]'s cover.</span>"
 				update_icons()
 			else
 				user << "<span class='danger'>Access denied.</span>"
@@ -571,7 +571,7 @@
 					SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 					lawupdate = 0
 					connected_ai = null
-					user << "You emag [src]'s interface."
+					user << "<span class='notice'>You emag [src]'s interface.</span>"
 					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
 					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 					clear_supplied_laws()
@@ -666,7 +666,7 @@
 			cell.updateicon()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
-			user << "You remove \the [cell]."
+			user << "<span class='notice'>You remove \the [cell].</span>"
 			cell = null
 			update_icons()
 

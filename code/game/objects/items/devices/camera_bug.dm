@@ -311,7 +311,7 @@
 /obj/item/device/camera_bug/attackby(var/obj/item/W as obj,var/mob/living/user as mob, params)
 	if(istype(W,/obj/item/weapon/screwdriver) && expansion)
 		expansion.loc = get_turf(loc)
-		user << "You unscrew [expansion]."
+		user << "<span class='notice'>You unscrew [expansion].</span>"
 		user.put_in_inactive_hand(expansion)
 		expansion = null
 		bugtype = VANILLA_BUG
@@ -352,7 +352,7 @@
 			user.drop_item()
 			W.loc = src
 			expansion = W
-			user << "You add [W] to [src]."
+			user << "<span class='notice'>You add [W] to [src].</span>"
 			get_cameras() // the tracking code will want to know the new camera list
 			if(bugtype in list(UNIVERSAL_BUG,NETWORK_BUG,ADMIN_BUG))
 				skip_bugcheck = 1

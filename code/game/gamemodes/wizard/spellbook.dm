@@ -18,9 +18,9 @@
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
 		var/obj/item/weapon/antag_spawner/contract/contract = O
 		if(contract.used)
-			user << "The contract has been used, you can't get your points back now."
+			user << "<span class='warning'>The contract has been used, you can't get your points back now!</span>"
 		else
-			user << "You feed the contract back into the spellbook, refunding your points."
+			user << "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>"
 			src.max_uses++
 			src.uses++
 			qdel(O)
@@ -30,11 +30,11 @@
 
 /obj/item/weapon/spellbook/attack_self(mob/user as mob)
 	if(!owner)
-		user << "You bind the spellbook to yourself."
+		user << "<span class='notice'>You bind the spellbook to yourself.</span>"
 		owner = user
 		return
 	if(user != owner)
-		user << "The [name] does not recognize you as it's owner and refuses to open."
+		user << "<span class='warning'>The [name] does not recognize you as it's owner and refuses to open!</span>"
 		return
 	user.set_machine(src)
 	var/dat

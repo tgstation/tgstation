@@ -210,7 +210,7 @@
 		if (item.amount>=item.max_amount)
 			continue
 		oldsrc.attackby(item, usr)
-		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
+		usr << "<span class='notice'>You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s.</span>"
 		if(oldsrc.amount <= 0)
 			break
 	oldsrc.update_icon()

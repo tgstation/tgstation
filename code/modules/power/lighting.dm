@@ -409,7 +409,7 @@
 			qdel(src)
 			return
 
-		user << "You stick \the [W] into the light socket!"
+		user << "<span class='userdanger'>You stick \the [W] into the light socket!</span>"
 		if(has_power() && (W.flags & CONDUCT))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -494,7 +494,7 @@
 		if(prot > 0)
 			user << "<span class='notice'>You remove the light [fitting].</span>"
 		else if(istype(user) && user.dna.check_mutation(TK))
-			user << "You telekinetically remove the light [fitting]."
+			user << "<span class='notice'>You telekinetically remove the light [fitting].</span>"
 		else
 			user << "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>"
 
@@ -529,7 +529,7 @@
 		user << "There is no [fitting] in this light."
 		return
 
-	user << "You telekinetically remove the light [fitting]."
+	user << "<span class='notice'>You telekinetically remove the light [fitting].</span>"
 	// create a light tube/bulb item and put it in the user's hand
 	var/obj/item/weapon/light/L = new light_type()
 	L.status = status

@@ -650,7 +650,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	else if(istype(O, /obj/item/seeds/))
 		if(!planted)
 			user.unEquip(O)
-			user << "You plant [O]."
+			user << "<span class='notice'>You plant [O].</span>"
 			dead = 0
 			myseed = O
 			planted = 1
@@ -737,12 +737,12 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 			if(anchored == 2)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 1
-				user << "You unscrew \the [src]'s hoses."
+				user << "<span class='notice'>You unscrew \the [src]'s hoses.</span>"
 
 			else if(anchored == 1)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 2
-				user << "You screw in \the [src]'s hoses."
+				user << "<span class='notice'>You screw in \the [src]'s hoses.</span>"
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
 				spawn()
@@ -758,7 +758,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	else if(dead)
 		planted = 0
 		dead = 0
-		user << "You remove the dead plant from [src]."
+		user << "<span class='notice'>You remove the dead plant from [src].</span>"
 		qdel(myseed)
 		update_icon()
 	else
@@ -986,5 +986,5 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 /obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	..()
 	if(istype(O, /obj/item/weapon/shovel))
-		user << "You clear up [src]!"
+		user << "<span class='notice'>You clear up [src]!</span>"
 		qdel(src)

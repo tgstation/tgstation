@@ -23,7 +23,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.stabilization_on = !( src.stabilization_on )
-	usr << "You toggle the stabilization [stabilization_on? "on":"off"]."
+	usr << "<span class='notice'>You toggle the stabilization [stabilization_on? "on":"off"].</span>"
 	return
 
 
@@ -41,7 +41,7 @@
 		icon_state = initial(icon_state)
 	//	item_state = initial(item_state)
 		ion_trail.stop()
-	usr << "You toggle the jetpack [on? "on":"off"]."
+	usr << "<span class='notice'>You toggle the jetpack [on? "on":"off"].</span>"
 	return
 
 

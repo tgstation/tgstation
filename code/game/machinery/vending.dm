@@ -246,7 +246,7 @@
 
 	if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		panel_open = !panel_open
-		user << "You [panel_open ? "open" : "close"] the maintenance panel."
+		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
 		overlays.Cut()
 		if(panel_open)
 			overlays += image(icon, "[initial(icon_state)]-panel")
@@ -285,7 +285,7 @@
 /obj/machinery/vending/emag_act(user as mob)
 	if(!emagged)
 		emagged  = 1
-		user << "You short out the product lock on [src]."
+		user << "<span class='notice'>You short out the product lock on [src].</span>"
 
 /obj/machinery/vending/attack_paw(mob/user)
 	return attack_hand(user)

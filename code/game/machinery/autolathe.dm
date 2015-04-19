@@ -150,7 +150,7 @@
 	use_power(max(1000, (m_amt+g_amt)*amount/10))
 	src.m_amount += m_amt * amount
 	src.g_amount += g_amt * amount
-	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe."
+	user << "<span class='notice'>You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.</span>"
 	if (O && O.loc == src)
 		qdel(O)
 	busy = 0

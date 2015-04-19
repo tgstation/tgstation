@@ -263,7 +263,7 @@ obj/item/clothing/head/helmet/bluetaghelm
 
 	var/mob/living/carbon/human/user = usr
 	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]."
+		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>"
 	F.on = !F.on
 	user << "<span class='notice'>You toggle the helmetlight [F.on ? "on":"off"].</span>"
 

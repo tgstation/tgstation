@@ -710,7 +710,7 @@
 				if(do_after(user, 20))
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 1
-					user << "You remove the turret's interior metal armor."
+					user << "<span class='notice'>You remove the turret's interior metal armor.</span>"
 					new /obj/item/stack/sheet/metal( loc, 2)
 					return
 

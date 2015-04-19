@@ -284,7 +284,7 @@
 			++Friends[user]
 		else
 			Friends[user] = 1
-		user << "You feed the slime the plasma. It chirps happily."
+		user << "<span class='notice'>You feed the slime the plasma. It chirps happily.</span>"
 		var/obj/item/stack/sheet/mineral/plasma/S = W
 		S.use(1)
 		return

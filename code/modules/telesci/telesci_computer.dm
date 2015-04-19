@@ -50,7 +50,7 @@
 		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
-	user << "You are too primitive to use this computer."
+	user << "<span class='warning'>You are too primitive to use this computer!</span>"
 	return
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)

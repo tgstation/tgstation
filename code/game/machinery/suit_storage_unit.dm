@@ -531,7 +531,7 @@
 		if(!user.drop_item())
 			user << "<span class='warning'>\The [S] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [S.name] into the suit storage compartment."
+		user << "<span class='notice'>You load the [S.name] into the suit storage compartment.</span>"
 		S.loc = src
 		src.SUIT = S
 		src.update_icon()
@@ -547,7 +547,7 @@
 		if(!user.drop_item())
 			user << "<span class='warning'>\The [H] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [H.name] into the helmet storage compartment."
+		user << "<span class='notice'>You load the [H.name] into the helmet storage compartment.</span>"
 		H.loc = src
 		src.HELMET = H
 		src.update_icon()

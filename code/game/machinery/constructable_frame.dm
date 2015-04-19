@@ -207,7 +207,7 @@
 						if(istype(P, /obj/item/stack/cable_coil))
 							var/obj/item/stack/cable_coil/CP = P
 							if (CP.get_amount() < 1)
-								user << "You need more cable!"
+								user << "<span class='warning'>You need more cable!</span>"
 								return
 							var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 1, CP.item_color)
 							if(CP.use(1))

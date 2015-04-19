@@ -119,7 +119,7 @@
 			user << "<span class='warning'>You need more wires!</span>"
 			return
 
-		user << "You start building the power terminal..."
+		user << "<span class='notice'>You start building the power terminal...</span>"
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		if(do_after(user, 20) && C.amount >= 10)

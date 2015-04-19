@@ -474,7 +474,7 @@
 	return
 
 /obj/machinery/readybutton/attack_paw(mob/user as mob)
-	user << "You are too primitive to use this device"
+	user << "<span class='warning'>You are too primitive to use this device!</span>"
 	return
 
 /obj/machinery/readybutton/New()
@@ -486,7 +486,7 @@
 
 /obj/machinery/readybutton/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		user << "<span class='warning'>This device is not powered!</span>"
 		return
 
 	currentarea = get_area(src.loc)
@@ -494,7 +494,7 @@
 		qdel(src)
 
 	if(eventstarted)
-		usr << "The event has already begun!"
+		usr << "<span class='warning'>The event has already begun!</span>"
 		return
 
 	ready = !ready

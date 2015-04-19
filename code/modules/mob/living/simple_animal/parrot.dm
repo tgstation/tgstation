@@ -232,7 +232,7 @@
 						usr.drop_item()
 						headset_to_add.loc = src
 						src.ears = headset_to_add
-						usr << "You fit the headset onto [src]."
+						usr << "<span class='notice'>You fit the headset onto [src].</span>"
 
 						clearlist(available_channels)
 						for(var/ch in headset_to_add.channels)

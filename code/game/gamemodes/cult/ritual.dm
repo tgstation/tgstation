@@ -670,7 +670,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	//		if(M == user)
 		for(var/entry in words)
 			words[entry] = T.words[entry]
-		user << "You copy the translation notes from your tome."
+		user << "<span class='notice'>You copy the translation notes from your tome.</span>"
 
 
 /obj/item/weapon/tome/examine(mob/user)

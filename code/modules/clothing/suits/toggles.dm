@@ -66,7 +66,7 @@
 	if(!can_use(usr))
 		return 0
 
-	usr << "You toggle [src]'s [togglename]."
+	usr << "<span class='notice'>You toggle [src]'s [togglename].</span>"
 	if(src.suittoggled)
 		src.icon_state = "[initial(icon_state)]"
 		src.suittoggled = 0

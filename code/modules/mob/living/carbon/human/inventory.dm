@@ -123,11 +123,11 @@
 					return 0
 				if(!wear_suit.allowed)
 					if(!disable_warning)
-						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."  //should be src?
+						usr << "<span class='warning'>You somehow have a suit with no defined allowed items for suit storage, stop that!</span>"  //should be src?
 					return 0
 				if(I.w_class > 4)
 					if(!disable_warning)
-						usr << "The [I.name] is too big to attach."  //should be src?
+						usr << "<span class='warning'>The [I.name] is too big to attach!</span>"  //should be src?
 					return 0
 				if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, wear_suit.allowed) )  //ugly and un-polymorphic.
 					return 1

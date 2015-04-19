@@ -861,7 +861,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			else
 				targetcam = R.aicamera
 		else
-			user << "You cannot interface with silicon photo uploading"	//gtfo pAIs
+			user << "<span class='warning'>You cannot interface with silicon photo uploading!</span>"	//gtfo pAIs
 
 		if(targetcam.aipictures.len == 0)
 			usr << "<span class='boldannounce'>No images saved</span>"

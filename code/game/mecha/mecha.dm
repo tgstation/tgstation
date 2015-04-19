@@ -348,15 +348,15 @@ obj/mecha/proc/can_use(mob/user)
 		return
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
-		user << "You climb out from [src]"
+		user << "<span class='notice'>You climb out from [src].</span>"
 		return 0
 	if(connected_port)
 		if(world.time - last_message > 20)
-			src.occupant_message("Unable to move while connected to the air system port")
+			src.occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
 		return 0
 	if(state)
-		occupant_message("<span class='danger'>Maintenance protocols in effect</span>")
+		occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
 		return
 	return domove(direction)
 
@@ -724,7 +724,7 @@ obj/mecha/proc/can_use(mob/user)
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
-			user << "You repair the damaged temperature controller."
+			user << "<span class='notice'>You repair the damaged temperature controller.</span>"
 		else if(state==3 && src.cell)
 			src.cell.forceMove(src.loc)
 			src.cell = null

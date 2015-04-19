@@ -268,10 +268,10 @@
 			return //Safety check so you don't blast yourself trying to refill your tank
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
-			user << "You need at least 100 units of water to use the nanofrost launcher!"
+			user << "<span class='warning'>You need at least 100 units of water to use the nanofrost launcher!</span>"
 			return
 		if(nanofrost_cooldown)
-			user << "Nanofrost launcher is still recharging..."
+			user << "<span class='warning'>Nanofrost launcher is still recharging...</span>"
 			return
 		nanofrost_cooldown = 1
 		R.remove_any(100)
@@ -297,7 +297,7 @@
 				if(src)
 					metal_synthesis_cooldown--
 		else
-			user << "Metal foam mix is still being synthesized..."
+			user << "<span class='warning'>Metal foam mix is still being synthesized...</span>"
 			return
 
 /obj/effect/nanofrost_container

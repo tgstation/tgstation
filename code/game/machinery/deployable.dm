@@ -196,7 +196,7 @@ for reference:
 	if (src.emagged == 0)
 		src.emagged = 1
 		src.req_access = null
-		user << "You break the ID authentication lock on \the [src]."
+		user << "<span class='notice'>You break the ID authentication lock on \the [src].</span>"
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(2, 1, src)
 		s.start()
@@ -204,7 +204,7 @@ for reference:
 		return
 	else if (src.emagged == 1)
 		src.emagged = 2
-		user << "You short out the anchoring mechanism on \the [src]."
+		user << "<span class='notice'>You short out the anchoring mechanism on \the [src].</span>"
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(2, 1, src)
 		s.start()
