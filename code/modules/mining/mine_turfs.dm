@@ -1008,8 +1008,8 @@
 	return BUILD_FAILURE
 
 /turf/unsimulated/floor/asteroid/canBuildPlating()
-	if(locate(/obj/structure/lattice) in contents)
-		return BUILD_FAILURE
 	if(!dug)
 		return BUILD_IGNORE
-	return 0
+	if(locate(/obj/structure/lattice) in contents)
+		return SUCCESS
+	return BUILD_FAILURE
