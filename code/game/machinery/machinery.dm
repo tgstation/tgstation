@@ -488,6 +488,10 @@ Class Procs:
 	if(state == 2 && src.machine_flags & WELD_FIXED)
 		user <<"\The [src] has to be unwelded from the floor first."
 		return -1 //state set to 2, can't do it
+	for(var/obj/machinery/other in loc)
+		if(other.anchored == 1 && other.density == 1 && density)
+			user << "\The [other] is already anchored in this location."
+			return -1 //other machines are already taking up all the space in this location
 	user.visible_message(	"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
 							"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts...")
 	playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
