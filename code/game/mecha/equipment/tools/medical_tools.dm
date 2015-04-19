@@ -254,13 +254,13 @@
 	var/datum/global_iterator/mech_synth/synth
 	range = MELEE|RANGED
 	equip_cooldown = 10
-	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
+	origin_tech = "materials=2;biotech=2;magnets=2;programming=1"
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/New()
 	..()
 	flags |= NOREACT
 	syringes = new
-	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
+	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal","salbutamol"="Salbutamol")
 	processed_reagents = new
 	create_reagents(max_volume)
 	synth = new (list(src),0)
@@ -526,3 +526,6 @@
 		S.reagents.add_reagent(reagent,amount)
 		S.chassis.use_power(energy_drain)
 	return 1
+
+/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/emag_act()	//wipes all those nice healing chems, replaces with some bastardly ones (but not the ultra-lethals)
+	known_reagents = list("formaldehyde"="Formaldehyde","neurotoxin2"="Neurotoxins","lipolicide"="Lipolicide","colorful_reagent"="Indelible Dye")

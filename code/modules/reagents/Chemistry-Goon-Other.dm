@@ -115,7 +115,7 @@ datum/reagent/acetone
 datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
 	id = "colorful_reagent"
-	description = "A solution."
+	description = "A solution to boring palette woes."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -152,7 +152,7 @@ datum/reagent/colorful_reagent/reaction_turf(var/turf/T, var/volume)
 datum/reagent/triple_citrus
 	name = "Triple Citrus"
 	id = "triple_citrus"
-	description = "A solution."
+	description = "A solution to having only 1 type of fruit."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -216,7 +216,7 @@ datum/reagent/corgium
 datum/reagent/hair_dye
 	name = "Quantum Hair Dye"
 	id = "hair_dye"
-	description = "A solution."
+	description = "It's just like one of my japanese animes!"
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
