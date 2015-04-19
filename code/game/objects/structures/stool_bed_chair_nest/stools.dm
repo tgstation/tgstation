@@ -7,6 +7,14 @@
 	flags = FPRINT
 	pressure_resistance = 15
 
+/obj/structure/stool/piano
+	name = "piano stool"
+	desc = "Apply butt. Become Mozart."
+	icon_state = "stool_piano"
+	autoignition_temperature = AUTOIGNITION_WOOD
+	fire_fuel = 3
+	anchored = 0
+
 /obj/structure/stool/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -41,6 +49,14 @@
 		qdel(src)
 	return
 
+/obj/structure/stool/piano/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wrench))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/wood, get_turf(src))
+		M.amount = 1
+		qdel(src)
+	return
+
 /obj/structure/stool/hologram/blob_act()
 	return
 
@@ -56,6 +72,9 @@
 			src.loc = S
 			H.put_in_hands(S)
 			H.visible_message("<span class='warning'>[H] grabs [src] from the floor!</span>", "<span class='warning'>You grab [src] from the floor!</span>")
+
+/obj/structure/stool/piano/MouseDrop(atom/over_object)
+	return
 
 /obj/item/weapon/stool
 	name = "stool"

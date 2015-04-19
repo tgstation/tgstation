@@ -323,6 +323,8 @@
 
 /obj/mecha/Bump(var/atom/obstacle)
 //	src.inertia_dir = null
+	if(src.throwing)
+		src.throwing = 0//so mechas don't get stuck when landing after being sent by a Mass Driver
 	if(istype(obstacle, /obj))
 		var/obj/O = obstacle
 		if(istype(O, /obj/effect/portal)) //derpfix

@@ -5,7 +5,7 @@
 
 /obj/machinery/computer/telecomms/server
 	name = "Telecommunications Server Monitor"
-	icon_state = "comm_logs"
+	icon_state = "comm_serv"
 
 
 	var/screen = 0				// the screen number:

@@ -110,6 +110,9 @@
 /obj/item/weapon/circuitboard/pod
 	name = "Circuit board (Massdriver control)"
 	build_path = "/obj/machinery/computer/pod"
+/obj/item/weapon/circuitboard/pod/deathsquad
+	name = "Circuit board (Deathsquad Massdriver control)"
+	build_path = "/obj/machinery/computer/pod/deathsquad"
 /obj/item/weapon/circuitboard/robotics
 	name = "Circuit board (Robotics Control)"
 	build_path = "/obj/machinery/computer/robotics"

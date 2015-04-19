@@ -608,6 +608,15 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pda_terminal
 
+/datum/design/pod
+	name = "Circuit Design (Mass Driver and Pod Doors Control)"
+	desc = "Allows for the construction of circuit boards used to build a Mass Driver and Pod Doors Control."
+	id = "pod"
+	req_tech = list("programming" = 2,"engineering" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pod
+
 /datum/design/pipedispenser
 	name = "Circuit Design (Pipe Dispenser)"
 	desc = "Allows for the construction of circuit boards used to build a Pipe Dispenser."
