@@ -1011,5 +1011,5 @@
 	if(!dug)
 		return BUILD_IGNORE
 	if(locate(/obj/structure/lattice) in contents)
-		return SUCCESS
+		return BUILD_SUCCESS
 	return BUILD_FAILURE
