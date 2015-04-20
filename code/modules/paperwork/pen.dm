@@ -118,18 +118,24 @@ var/paperwork_library
 
 	
 /datum/writing_style/proc/Format(var/t, var/obj/item/weapon/pen/P, var/mob/user, var/obj/item/weapon/paper/paper)
-	if(paperwork) 
-		t = parse_markdown(t)
-	else
-		if(expressions.len)
-			for(var/key in expressions)
-				var/datum/speech_filter_action/SFA = expressions[key]
-				if(SFA && !SFA.broken)
-					t = SFA.Run(t,user,paper)
-		t = replacetext(t, "\[sign\]", "<font face=\"Times New Roman\"><i>[user.real_name]</i></font>")
-		t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
-	return "<span style=\"[style];color:[P.color]\">[t]</span>"
-	
+	spawn()
+		if(paperwork) 
+			t = parse_markdown(t)
+		else
+			var/count = 0
+			if(expressions.len)
+				for(var/key in expressions)
+					if(count >= 500) break
+					count++
+					var/datum/speech_filter_action/SFA = expressions[key]
+					if(SFA && !SFA.broken)
+						t = SFA.Run(t,user,paper)
+					if(!(count%100))
+						sleep(1) //too much for us.
+			t = replacetext(t, "\[sign\]", "<font face=\"Times New Roman\"><i>[user.real_name]</i></font>")
+			t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+		return "<span style=\"[style];color:[P.color]\">[t]</span>"
+
 /datum/writing_style/pen/New()
 	addReplacement(REG_BBTAG("*"), "<li>")
 	addReplacement(REG_BBTAG("hr"), "<HR>")

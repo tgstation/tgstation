@@ -105,47 +105,55 @@
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
-	while(1) // I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
-		var/istart = 0
-		if(links)
-			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
-		else
-			istart = findtext(info, "<span class=\"paper_field\">", laststart)
-
-		if(istart==0)
-			return // No field found with matching id
-
-		laststart = istart+1
-		locid++
-		if(locid == id)
-			var/iend = 1
+	var/softcount = 0
+	spawn()
+		while(1) // I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
+			if(softcount>50) break
+			if(softcount%25) sleep(1)
+			var/istart = 0
 			if(links)
-				iend = findtext(info_links, "</span>", istart)
+				istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
 			else
-				iend = findtext(info, "</span>", istart)
+				istart = findtext(info, "<span class=\"paper_field\">", laststart)
 
-			//textindex = istart+26
-			textindex = iend
-			break
+			if(istart==0)
+				return // No field found with matching id
 
-	if(links)
-		var/before = copytext(info_links, 1, textindex)
-		var/after = copytext(info_links, textindex)
-		info_links = before + text + after
-	else
-		var/before = copytext(info, 1, textindex)
-		var/after = copytext(info, textindex)
-		info = before + text + after
-		updateinfolinks()
+			softcount++
+			laststart = istart+1
+			locid++
+			if(locid == id)
+				var/iend = 1
+				if(links)
+					iend = findtext(info_links, "</span>", istart)
+				else
+					iend = findtext(info, "</span>", istart)
+
+				//textindex = istart+26
+				textindex = iend
+				break
+
+		if(links)
+			var/before = copytext(info_links, 1, textindex)
+			var/after = copytext(info_links, textindex)
+			info_links = before + text + after
+		else
+			var/before = copytext(info, 1, textindex)
+			var/after = copytext(info, textindex)
+			info = before + text + after
+			updateinfolinks()
 
 /obj/item/weapon/paper/proc/updateinfolinks()
 	info_links = info
 	var/i = 0
-	for(i=1,i<=fields,i++)
-		addtofield(i, "<A href='?src=\ref[src];write=[i]'>write</A> ", 1)
-		addtofield(i, "<A href='?src=\ref[src];help=[i]'>help</A> ", 1)
-	info_links +="<A href='?src=\ref[src];write=end'>write</A> "
-	info_links +="<A href='?src=\ref[src];help=end'>help</A> "
+	spawn()
+		for(i=1,i<=fields,i++)
+			if(i>=50) break //abandon ship
+			if(i%25) sleep(1)
+			addtofield(i, "<A href='?src=\ref[src];write=[i]'>write</A> ", 1)
+			addtofield(i, "<A href='?src=\ref[src];help=[i]'>help</A> ", 1)
+		info_links +="<A href='?src=\ref[src];write=end'>write</A> "
+		info_links +="<A href='?src=\ref[src];help=end'>help</A> "
 
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
@@ -221,26 +229,27 @@
 
 		t = replacetext(t, "\n", "<BR>")
 
-		t = parsepencode(usr,i,t)
+		spawn()
+			t = parsepencode(usr,i,t)
 
-		//Count the fields
-		var/laststart = 1
-		while(1)
-			var/j = findtext(t, "<span class=\"paper_field\">", laststart)
-			if(j==0)
-				break
-			laststart = j+1
-			fields++
+			//Count the fields
+			var/laststart = 1
+			while(1)
+				var/j = findtext(t, "<span class=\"paper_field\">", laststart)
+				if(j==0)
+					break
+				laststart = j+1
+				fields++
 
-		if(id!="end")
-			addtofield(text2num(id), t) // He wants to edit a field, let him.
-		else
-			info += t // Oh, he wants to edit to the end of the file, let him.
-			updateinfolinks()
+			if(id!="end")
+				addtofield(text2num(id), t) // He wants to edit a field, let him.
+			else
+				info += t // Oh, he wants to edit to the end of the file, let him.
+				updateinfolinks()
 
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]") // Update the window
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]") // Update the window
 
-		update_icon()
+			update_icon()
 
 	if(href_list["help"])
 		openhelp(usr)
