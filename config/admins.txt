@@ -81,3 +81,4 @@ lo6a4evskiy = Game Master
 vekter = Game Master
 Ahammer18 = Game Master
 ACCount12 = Game Master
+fayrik = Game Master

@@ -314,6 +314,7 @@ client/proc/one_click_antag()
 /datum/admins/proc/makeDeathsquad()
 	var/mission = input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
 	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "deathsquad", null)
+	var/squadSpawned = 0
 
 	if(candidates.len >= 2) //Minimum 2 to be considered a squad
 		//Pick the lucky players
@@ -366,11 +367,12 @@ client/proc/one_click_antag()
 				message_admins("The deathsquad has spawned with the mission: [mission].")
 			log_game("[key_name(Commando)] has been selected as a Death Commando")
 			numagents--
+			squadSpawned++
 
-		if (numagents == candidates.len)
-			return 0 // No one got spawned!
-		else
+		if (squadSpawned)
 			return 1
+		else
+			return 0
 
 	return
 
@@ -411,6 +413,7 @@ client/proc/one_click_antag()
 /datum/admins/proc/makeEmergencyresponseteam()
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
 	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for an elite Nanotrasen Emergency Response Team?", "deathsquad", null)
+	var/teamSpawned = 0
 
 	if(candidates.len >= 4) //Minimum 4 to be considered a squad
 		//Pick the (un)lucky players
@@ -480,11 +483,12 @@ client/proc/one_click_antag()
 				message_admins("The emergency response team has spawned with the mission: [mission].")
 			log_game("[key_name(ERTOperative)] has been selected as an Emergency Response Officer")
 			numagents--
+			teamSpawned++
 
-		if (numagents == candidates.len)
-			return 0 // No one got spawned!
-		else
+		if (teamSpawned)
 			return 1
+		else
+			return 0
 
 	return
 

@@ -13,7 +13,7 @@ var/list/freqtospan = list(
 	"1353" = "comradio",
 	"1447" = "aiprivradio",
 	"1213" = "syndradio",
-	"1441" = "centcomradio"
+	"1337" = "centcomradio"
 	)
 
 /atom/movable/proc/say(message)
