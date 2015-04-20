@@ -3,8 +3,6 @@
 datum/reagent/drug
 	name = "Drug"
 	id = "drug"
-
-datum/reagent/drug/on_mob_life(var/mob/living/M as mob)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 datum/reagent/drug/space_drugs
