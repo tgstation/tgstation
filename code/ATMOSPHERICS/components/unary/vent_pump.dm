@@ -23,8 +23,6 @@
 	//2: Do not pass internal_pressure_bound
 	//3: Do not pass either
 
-	var/welded = 0
-
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
 

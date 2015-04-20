@@ -21,6 +21,8 @@ Pipelines + Other Objects -> Pipe network
 	var/pipe_color
 	var/obj/item/pipe/stored
 
+	var/welded = 0 //Used on pumps and scrubbers
+
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 

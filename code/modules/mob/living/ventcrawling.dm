@@ -17,8 +17,8 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 
 	if(A)
-		var/obj/machinery/atmospherics/unary/vent_pump/V = A
-		if(!istype(V) || !V.welded)//not a vent, or not welded
+		var/obj/machinery/atmospherics/unary/V = A
+		if(istype(V) && (!V.welded))//Not welded
 			vent_found = V
 
 	if(!vent_found)
@@ -26,7 +26,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 			if(is_type_in_list(machine, ventcrawl_machinery))
 				vent_found = machine
 
-			var/obj/machinery/atmospherics/unary/vent_pump/V = machine
+			var/obj/machinery/atmospherics/unary/V = machine
 			if(istype(V) && V.welded)
 				vent_found = null
 
