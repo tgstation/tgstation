@@ -259,7 +259,7 @@
 */
 			var/obj/machinery/atmospherics/unary/vent_found
 
-			if(clicked_on)
+			if(clicked_on && Adjacent(clicked_on))
 				var/obj/machinery/atmospherics/unary/vent_pump/v = clicked_on
 				if(!istype(v) || !v.welded)
 					vent_found = clicked_on
