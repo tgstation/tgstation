@@ -254,7 +254,7 @@ regex
 					when compiling. Until then, separate this from previous text.
 				 */
 				if(92)	// backslash
-					if((modify || index>start+1) && text2ascii(pattern,index+1) != 47) return BreakOff(p,first)
+					if(modify || index>start+1) return BreakOff(p,first)
 					ch2=Advance()
 					if(!ch2) return MarkError(first,index,"Unexpected char:",ch)
 					if(ch2==48)
@@ -672,8 +672,11 @@ regex
 										if(ch2>=97 && ch2<=102) ch2-=87
 										else break
 								while(p.start<=e)
+							if(ch == 47)
+								goto slash
 							p.pattern=ascii2text(ch)
 							continue
+						slash:
 						p.pattern=copytext(p.pattern,p.start,e)
 					if(5)
 						p.pattern=copytext(p.pattern,p.start,e)
