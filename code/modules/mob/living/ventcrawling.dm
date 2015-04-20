@@ -21,11 +21,6 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 		if(!istype(vent_found) || !vent_found.can_crawl_through())
 			vent_found = null
 
-
-		var/obj/machinery/atmospherics/unary/V = A
-		if(istype(V) && (!V.welded))//Not welded
-			vent_found = V
-
 	if(!vent_found)
 		for(var/obj/machinery/atmospherics/machine in range(1,src))
 			if(is_type_in_list(machine, ventcrawl_machinery))
