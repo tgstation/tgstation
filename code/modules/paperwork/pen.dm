@@ -97,6 +97,8 @@
 							M.Paralyse(5)
 							M.Jitter(500)
 							cooldown(ticker.mode.A_gang.len, )
+							spawn(40)
+								M.jitteriness -= 490
 						else
 							user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 					else if(user.mind in ticker.mode.B_bosses)
@@ -104,6 +106,8 @@
 							M.Paralyse(5)
 							M.Jitter(500)
 							cooldown(ticker.mode.B_gang.len)
+							spawn(40)
+								M.jitteriness -= 490
 						else
 							user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 				else

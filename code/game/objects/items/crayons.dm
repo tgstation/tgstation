@@ -91,15 +91,26 @@
 	desc = "A metallic container containing tasty paint."
 	var/capped = 1
 	instant = 1
+	edible = 0
 	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
 
 /obj/item/toy/crayon/spraycan/New()
 	..()
-	name = "NanoTrasen-brand Rapid Paint Applicator"
+	if(gang)
+		name = "Modified Paint Applicator"
+	else
+		name = "NanoTrasen-brand Rapid Paint Applicator"
 	update_icon()
 
+/obj/item/toy/crayon/spraycan/examine(mob/user)
+	..()
+	if(uses)
+		user << "It has [uses] uses left."
+	else
+		user << "It is empty."
+
 /obj/item/toy/crayon/spraycan/attack_self(mob/living/user as mob)
-	var/choice = input(user,"Spraycan options") in list("Toggle Cap","Change Drawing","Change Color")
+	var/choice = input(user,"Spraycan options") in list("Toggle Cap","Change Drawing","Change Color","Cancel")
 	switch(choice)
 		if("Toggle Cap")
 			user << "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>"
@@ -119,8 +130,9 @@
 		return
 	else
 		if(iscarbon(target))
-			if(uses-10 > 0)
-				uses = uses - 10
+			if(uses)
+				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+				uses = max(0,uses-10)
 				var/mob/living/carbon/human/C = target
 				user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
 				if(C.client)
@@ -132,7 +144,6 @@
 				C.lip_style = "spray_face"
 				C.lip_color = colour
 				C.update_body()
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
@@ -142,7 +153,8 @@
 	overlays += I
 
 /obj/item/toy/crayon/spraycan/gang
+	desc = "A suspicious-looking spraycan modified to use special paint used by gangsters to mark territory."
 	icon_state = "spraycan_gang_cap"
-	desc = "A modified spraycan containing special paint used by gangsters to mark territory."
+	uses = 20
 	gang = 1
-	instant = 0
+	instant = -1

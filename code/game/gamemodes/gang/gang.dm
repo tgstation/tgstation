@@ -9,8 +9,8 @@
 	var/obj/item/device/gangtool/A_tools = list()
 	var/obj/item/device/gangtool/B_tools = list()
 	var/datum/gang_points/gang_points
-	var/list/area/A_territory = list()
-	var/list/area/B_territory = list()
+	var/list/A_territory = list()
+	var/list/B_territory = list()
 
 /datum/game_mode/gang
 	name = "gang war"
@@ -142,8 +142,8 @@
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a Gangtool."
 	else
 		gangtool.register_device(mob)
-		mob << "The <b>Gangtool</b> in your [where] will allow you to purchase items for your gang and prevent the station from evacuating before you can take over. Use it to recall the emergency shuttle from anywhere on the station."
-		mob << "You can also promote your gang members to lieutenant by giving them an unregistered gangtool. Lieutenants cannot be deconverted and are able to use recrtuitment pens and gangtools."
+		mob << "The <b>Gangtool</b> in your [where] will allow you to use your influence to purchase items and prevent the station from evacuating before you can take over. Use it to recall the emergency shuttle from anywhere on the station."
+		mob << "You can also promote your gang members to lieutenant by giving them an unregistered gangtool. Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
 		. += 1
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
@@ -157,7 +157,7 @@
 	if (!where3)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a territory spraycan to start."
 	else
-		mob << "The <b>territory spraycan</b> in your [where3] can be used to claim areas of the station for your gang. The more territory your gang controls, the more supply points you get."
+		mob << "The <b>territory spraycan</b> in your [where3] can be used to claim areas of the station for your gang. The more territory your gang controls, the more influence you get."
 		. += 1
 	mob.update_icons()
 
@@ -167,16 +167,16 @@
 //Checks if the either gang have won or not//
 /////////////////////////////////////////////
 /datum/game_mode/gang/check_win()
-	if(ticker.mode.A_territory.len > (start_state.num_territories / 2))
+	if(A_territory.len > (start_state.num_territories / 2))
 		finished = "A" //Gang A wins
-	else if(ticker.mode.B_territory.len > (start_state.num_territories / 2))
+	else if(B_territory.len > (start_state.num_territories / 2))
 		finished = "B" //Gang B wins
 
 ///////////////////////////////
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/gang/check_finished()
-	if(finished && !config.continuous["gang"])
+	if(finished)
 		return 1
 	return ..() //Check for evacuation/nuke
 
@@ -200,7 +200,7 @@
 		gangster_mind.current.Stun(5)
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
 	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with the special spraycans they provide. Simply spray on any unclaimed area of the station.</font>"
-	gangster_mind.current << "<font color='red'>You can identify your bosses by their brown \"B\" icon.</font>"
+	gangster_mind.current << "<font color='red'>You can identify your bosses by their brown \"G\" icon.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
 	update_gang_icons_added(gangster_mind,gang)
@@ -303,23 +303,9 @@
 		else
 			winner = "Draw"
 
-	var/num_ganga = 0
-	var/list/agang = A_gang + A_bosses
-	for(var/datum/mind/agangster in agang)
-		if(agangster.current)
-			if(agangster.current in living_mob_list)
-				num_ganga++
-
-	var/num_gangb = 0
-	var/list/bgang = B_gang + B_bosses
-	for(var/datum/mind/bgangster in bgang)
-		if(bgangster.current)
-			if(bgangster.current in living_mob_list)
-				num_gangb++
-
 	if(A_bosses.len || A_gang.len)
 		if(winner)
-			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [num_ganga] members!</b>"
+			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((ticker.mode.A_territory.len/start_state.num_territories)*100, 0.1)]% control of the station!</b>"
 		world << "<br>The [gang_name("A")] Gang Bosses were:"
 		gang_membership_report(A_bosses)
 		world << "<br>The [gang_name("A")] Gangsters were:"
@@ -328,7 +314,7 @@
 
 	if(B_bosses.len || B_gang.len)
 		if(winner)
-			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [num_gangb] members!</b>"
+			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((ticker.mode.B_territory.len/start_state.num_territories)*100, 0.1)]% control of the station!</b></b>"
 		world << "<br>The [gang_name("B")] Gang Bosses were:"
 		gang_membership_report(B_bosses)
 		world << "<br>The [gang_name("B")] Gangsters were:"
@@ -370,21 +356,22 @@
 		income()
 
 /datum/gang_points/proc/income()
-	var/A_new = max(100(A + 10 + ticker.mode.A_territory.len))
+	var/A_new = min(100,(A + 10 + ticker.mode.A_territory.len))
 	var/A_message = ""
-	if(A_new > A)
-		A_message += "Your gang has collected [A_new - A] additional supply points from the station."
+	if(A_new != A)
+		A_message += "Your gang has gained [A_new - A] Influence from their presence on station."
 	if(A_new == 100)
-		A_message += "Maximum supply point count reached."
+		A_message += "Maximum influence reached."
 	A = A_new
 	ticker.mode.message_gangtools(ticker.mode.A_tools,A_message)
 
-	var/B_new = max(100,(B + 10 + ticker.mode.B_territory.len))
+	var/B_new = min(100,(B + 10 + ticker.mode.B_territory.len))
 	var/B_message = ""
-	if(B_new > B)
-		B_message += "Your gang has collected [B_new - B] additional supply points from the station. "
+	if(B_new != B)
+		B_message += "Your gang has collected [B_new - B] Influence from their presence on station. "
 	if(B_new == 100)
-		B_message += "Maximum supply point count reached."
+		B_message += "Maximum influence reached."
+	B = B_new
 	ticker.mode.message_gangtools(ticker.mode.B_tools,B_message)
 
 	start()
@@ -394,13 +381,13 @@
 //Sends a message to the boss via his gangtool//
 ////////////////////////////////////////////////
 
-/datum/game_mode/proc/message_gangtools(var/list/gangtools,var/message)
+/datum/game_mode/proc/message_gangtools(var/list/gangtools,var/message,var/beeps=1)
 	if(!gangtools.len || !message)
 		return
 	for(var/obj/item/device/gangtool/tool in gangtools)
 		var/mob/living/mob = get(tool.loc,/mob/living)
-		if(mob)
-			if(mob.mind)
-				playsound(mob.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				if(((tool.gang == "A") && ((mob.mind in A_gang) || (mob.mind in A_bosses))) || ((tool.gang == "B") && ((mob.mind in B_gang) || (mob.mind in B_bosses))))
-					mob << "<span class='notice'>\icon[tool] [message]</span>"
+		if(mob && mob.mind)
+			if(((tool.gang == "A") && ((mob.mind in A_gang) || (mob.mind in A_bosses))) || ((tool.gang == "B") && ((mob.mind in B_gang) || (mob.mind in B_bosses))))
+				mob << "<span class='notice'>\icon[tool] [message]</span>"
+				if(beeps)
+					playsound(mob.loc, 'sound/machines/twobeep.ogg', 50, 1)

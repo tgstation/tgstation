@@ -18,6 +18,8 @@
 	if(!ticker.mode.gang_points)
 		ticker.mode.gang_points = new /datum/gang_points(ticker.mode)
 		ticker.mode.gang_points.start()
+	if(boss)
+		desc += " Looks important."
 
 /obj/item/device/gangtool/attack_self(mob/user)
 	if (!can_use(user))
@@ -32,41 +34,41 @@
 		var/gang_territory = ((gang == "A")? ticker.mode.A_territory.len : ticker.mode.B_territory.len)
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 
-		dat += "<i>Registered as [boss ? "Administrator." : "User."]</i>"
+		dat += "<i>Registered as [boss ? "Administrator." : "User."]</i><br>"
 		dat += "Organization: <B>[(gang == "A")?("[gang_name("A")] Gang"):("[gang_name("B")] Gang")]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B><br>"
-		dat += "Areas Controlled: <B>[gang_territory] ([(gang_territory/start_state.num_territories)*100]% of [station_name()])</B><br>"
+		dat += "Areas Controlled: <B>[gang_territory] ([round((gang_territory/start_state.num_territories)*100, 0.1)]% of station)</B><br>"
 		dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 		dat += "<br>"
-		dat += "Supply Points: <B>[points]</B><br>"
-		dat += "Time until next point collection: <B>[(points >= 100) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
+		dat += "Influence: <B>[points]</B><br>"
+		dat += "Time until Influence grows: <B>[(points >= 100) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<B>Purchase Items:</B><br>"
 
-		if(points >= 30)
-			dat += "(30 SP) <a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
+		if(points >= 25)
+			dat += "(25 Influence) <a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
 		else
-			dat += "(30 SP) 10mm Pistol<br>"
+			dat += "(25 Influence) 10mm Pistol<br>"
 
 		if(points >= 10)
-			dat += "(10 SP) <a href='?src=\ref[src];purchase=ammo'>10mm Ammo</a><br>"
+			dat += "(10 Influence) <a href='?src=\ref[src];purchase=ammo'>10mm Ammo</a><br>"
 		else
-			dat += "(10 SP) 10mm Ammo<br>"
+			dat += "(10 Influence) 10mm Ammo<br>"
 
 		if(points >= 10)
-			dat += "(10 SP) <a href='?src=\ref[src];purchase=spraycan'>Territory Spraycan</a><br>"
+			dat += "(10 Influence) <a href='?src=\ref[src];purchase=spraycan'>Territory Spraycan</a><br>"
 		else
-			dat += "(10 SP) Territory Spraycan<br>"
+			dat += "(10 Influence) Territory Spraycan<br>"
 
 		if(points >= 50)
-			dat += "(50 SP) <a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
+			dat += "(50 Influence) <a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
 		else
-			dat += "(50 SP) Recruitment Pen<br>"
+			dat += "(50 Influence) Recruitment Pen<br>"
 
 		if(boss)
 			if(points >= 40)
-				dat += "(40 SP) <a href='?src=\ref[src];purchase=gangtool'>Promote a Gangster</a><br>"
+				dat += "(40 Influence) <a href='?src=\ref[src];purchase=gangtool'>Unregistered Gangtool</a><br>"
 			else
-				dat += "(40 SP) Promote a Gangster<br>"
+				dat += "(40 Influence) Unregistered Gangtool<br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -86,9 +88,9 @@
 		var/item_type
 		switch(href_list["purchase"])
 			if("pistol")
-				if(points >= 30)
+				if(points >= 25)
 					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
-					points = 30
+					points = 25
 			if("ammo")
 				if(points >= 10)
 					item_type = /obj/item/ammo_box/magazine/m10mm
@@ -114,7 +116,7 @@
 			var/obj/purchased = new item_type(get_turf(usr))
 			var/mob/living/carbon/human/H = usr
 			H.put_in_any_hand_if_possible(purchased)
-			ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "Transaction Confirmed: A [href_list["purchase"]] was purchased by [usr] for [points] SP.")
+			ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "A [href_list["purchase"]] was purchased by [usr] for [points] Influence.")
 
 	else if(href_list["choice"])
 		switch(href_list["choice"])
@@ -128,6 +130,7 @@
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
 	var/promoted
 	if((user.mind in ticker.mode.A_gang) || (user.mind in ticker.mode.A_bosses))
+		ticker.mode.A_tools += src
 		gang = "A"
 		if(!(user.mind in ticker.mode.A_bosses))
 			ticker.mode.remove_gangster(user.mind, 0, 2)
@@ -137,6 +140,7 @@
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("A")] Gang (A)")
 			promoted = 1
 	else if((user.mind in ticker.mode.B_gang) || (user.mind in ticker.mode.B_bosses))
+		ticker.mode.B_tools += src
 		gang = "B"
 		if(!(user.mind in ticker.mode.B_bosses))
 			ticker.mode.remove_gangster(user.mind, 0, 2)
@@ -146,8 +150,9 @@
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("B")] Gang (B)")
 			promoted = 1
 	if(promoted)
+		ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "[user] has been promoted to Lieutenant.")
 		user << "<FONT size=3 color=red><B>You have been promoted to Lieutenant!</B></FONT>"
-		user << "<font color='red'>The <b>Gangtool</b> you registered will allow you to purchase items for your gang and prevent the station from evacuating before your gang can take over. Use it to recall the emergency shuttle from anywhere on the station.</font>"
+		user << "<font color='red'>The <b>Gangtool</b> you registered will allow you to use your gang's influence to purchase items and prevent the station from evacuating before your gang can take over. Use it to recall the emergency shuttle from anywhere on the station.</font>"
 		user << "<font color='red'>You may also now use recruitment pens to grow your gang membership. Use them on unsuspecting crew members to recruit them.</font>"
 	if(!gang)
 		usr << "<span class='warning'>ACCESS DENIED: Unauthorized user.</span>"
@@ -184,14 +189,19 @@
 		return
 	if(!(src in user.contents))
 		return
+
+	var/success
 	if(user.mind)
 		if(gang)
 			if((gang == "A") && (user.mind in ticker.mode.A_bosses))
-				return 1
-			if((gang == "B") && (user.mind in ticker.mode.B_bosses))
-				return 1
+				success = 1
+			else if((gang == "B") && (user.mind in ticker.mode.B_bosses))
+				success = 1
 		else
-			return 1
+			success = 1
+	if(success)
+		return 1
+	user << "<span class='warning'>\icon[src] ACCESS DENIED: Unauthorized user.</span>"
 	return 0
 
 /obj/item/device/gangtool/lt

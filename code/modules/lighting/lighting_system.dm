@@ -239,6 +239,9 @@
 	if(!path || path == type) //Sucks this is here but it would cause problems otherwise.
 		return ..()
 
+	for(var/obj/effect/decal/cleanable/decal in src.contents)
+		qdel(decal)
+
 	if(light)
 		qdel(light)
 

@@ -84,7 +84,7 @@
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
 	start_state = new /datum/station_state()
-	start_state.count()
+	start_state.count(1)
 	return 1
 
 ///make_antag_chance()
