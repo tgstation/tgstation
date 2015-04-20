@@ -220,7 +220,7 @@ datum/reagents/proc/metabolize(var/mob/M)
 		for(var/A in reagent_list)
 			var/datum/reagent/R = A
 			if(M && R)
-				if(M.reagent_check(R) != 1)
+				if(!M.reagent_check(R))
 					if(R.volume >= R.overdose_threshold && !R.overdosed && R.overdose_threshold > 0)
 						R.overdosed = 1
 						M << "<span class = 'userdanger'>You feel like you took too much of [R.name]!</span>"

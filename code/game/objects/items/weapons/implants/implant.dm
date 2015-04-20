@@ -213,7 +213,7 @@
 
 	imp_in.reagents.add_reagent("synaptizine", 10)
 	imp_in.reagents.add_reagent("omnizine", 10)
-	imp_in.reagents.add_reagent("morphine", 10)
+	imp_in.reagents.add_reagent("stimulants", 10)
 
 
 /obj/item/weapon/implant/emp
