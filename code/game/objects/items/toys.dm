@@ -427,6 +427,8 @@
 				if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
 					if(territory_claimed(territory, user))
 						return
+			else
+				user << "<span class='warning'>This area is unsuitable for territory tagging.</span>"
 		/////////////////////////////////////////
 
 		var/graf_rot
