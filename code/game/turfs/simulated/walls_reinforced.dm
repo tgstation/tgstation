@@ -39,8 +39,7 @@
 /turf/simulated/wall/r_wall/relativewall()
 	if(d_state) //We are fucking building
 		return //Fuck off
-	var/junction = findSmoothingNeighbors()
-	icon_state = "[walltype][junction]" // WHY ISN'T THIS IN UPDATE_ICON OR SIMILAR //I KNOW RIGHT
+	..()
 
 /turf/simulated/wall/r_wall/proc/update_icon()
 	if(!d_state) //Are we under construction or deconstruction ?
