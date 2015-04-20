@@ -243,12 +243,12 @@
 	fire_delay = 1
 
 /obj/item/weapon/gun/projectile/automatic/ar
-	name = "arg"
+	name = "ARG"
 	desc = "A robust assault rile used by Nanotrasen fighting forces."
 	icon_state = "arg"
 	item_state = "arg"
 	slot_flags = 0
-	origin_tech = "combat=5;materials=1;syndicate=2"
+	origin_tech = "combat=5;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
