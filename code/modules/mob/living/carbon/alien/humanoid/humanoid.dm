@@ -143,3 +143,6 @@
 		return custom_pixel_x_offset
 	else
 		return initial(pixel_x)
+
+/mob/living/carbon/alien/humanoid/check_ear_prot()
+	return 1

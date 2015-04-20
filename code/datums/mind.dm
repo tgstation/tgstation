@@ -289,12 +289,9 @@
 			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
 
 			var/list/L = current.get_contents()
-			var/obj/item/device/flash/flash = locate() in L
-			if (flash)
-				if(!flash.broken)
-					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
-				else
-					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
+			var/obj/item/device/gangtool/gangtool = locate() in L
+			if (gangtool)
+				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
 			else
 				text += "."
 
@@ -307,21 +304,18 @@
 			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
 
 			var/list/L = current.get_contents()
-			var/obj/item/device/flash/flash = locate() in L
-			if (flash)
-				if(!flash.broken)
-					text += "<br><a href='?src=\ref[src];gang=takeequip'>take</a>."
-				else
-					text += "<br><a href='?src=\ref[src];gang=takeequip'>take</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
+			var/obj/item/device/gangtool/gangtool = locate() in L
+			if (gangtool)
+				text += "<br><a href='?src=\ref[src];gang=takeequip'>take</a>."
 			else
 				text += "."
 
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];gang=autoobjective'>Set to kill all rival gang leaders</a>."
 
-		else if (src in ticker.mode.A_gangsters)
+		else if (src in ticker.mode.A_gang)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A) GANGSTER</B> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else if (src in ticker.mode.B_gangsters)
+		else if (src in ticker.mode.B_gang)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B) GANGSTER</B> <a href='?src=\ref[src];gang=bboss'>boss</a>"
 		else if(isloyal(current))
 			text += "<B>LOYAL</B>|none|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
@@ -824,7 +818,7 @@
 				log_admin("[key_name(usr)] has de-gang'ed [current].")
 
 			if("agang")
-				if(src in ticker.mode.A_gangsters)
+				if(src in ticker.mode.A_gang)
 					return
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.add_gangster(src,"A",0)
@@ -843,7 +837,7 @@
 				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
 
 			if("bgang")
-				if(src in ticker.mode.B_gangsters)
+				if(src in ticker.mode.B_gang)
 					return
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.add_gangster(src,"B",0)
@@ -868,31 +862,21 @@
 
 			if("equip")
 				switch(ticker.mode.equip_gang(current))
-					if(2)
-						usr << "<span class='warning'>Unable to equip flash!</span>"
 					if(1)
-						usr << "<span class='warning'>Unable to equip recaller!</span>"
-					if(0)
-						usr << "<span class='warning'>Unable to equip both flash and recaller!</span>"
+						usr << "<span class='warning'>Unable to equip territory spraycan!</span>"
+					if(2)
+						usr << "<span class='warning'>Unable to equip recruitment pen and spraycan!</span>"
+					if(3)
+						usr << "<span class='warning'>Unable to equip gangtool, pen, and spraycan!</span>"
 
 			if("takeequip")
 				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					usr << "<span class='warning'>Deleting flash failed!</span>"
-				qdel(flash)
-				var/obj/item/device/recaller/recaller = locate() in L
-				if (!recaller)
-					usr << "<span class='warning'>Deleting recaller failed!</span>"
-				qdel(recaller)
-
-			if("repairflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					usr << "<span class='warning'>Repairing flash failed!</span>"
-				else
-					flash.broken = 0
+				for(var/obj/item/weapon/pen/gang/pen in L)
+					qdel(pen)
+				for(var/obj/item/device/gangtool/gangtool in L)
+					qdel(gangtool)
+				for(var/obj/item/toy/crayon/spraycan/gang/SC in L)
+					qdel(SC)
 
 	else if (href_list["cult"])
 		switch(href_list["cult"])

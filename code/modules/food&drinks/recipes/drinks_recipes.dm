@@ -555,3 +555,10 @@
 	result = "gibbfloats"
 	required_reagents = list("dr_gibb" = 5, "ice" = 5, "cream" = 5)
 	result_amount = 15
+
+/datum/chemical_reaction/triple_citrus
+	name = "triple_citrus"
+	id = "triple_citrus"
+	result = "triple_citrus"
+	required_reagents = list("lemonjuice" = 1, "limejuice" = 1, "orangejuice" = 1)
+	result_amount = 5
