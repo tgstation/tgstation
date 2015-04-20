@@ -71,6 +71,14 @@
 	required_reagents = list("soymilk" = 4, "sacid" = 1)
 	result_amount = 5
 
+/datum/chemical_reaction/corn_syrup
+	name = "corn_syrup"
+	id = "corn_syrup"
+	result = "corn_syrup"
+	required_reagents = list("corn_starch" = 1, "sacid" = 1)
+	result_amount = 5
+	required_temp = 374
+
 /datum/chemical_reaction/cheesewheel
 	name = "Cheesewheel"
 	id = "cheesewheel"

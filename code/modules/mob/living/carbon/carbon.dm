@@ -501,3 +501,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		return -6
 	else
 		return initial(pixel_y)
+
+/mob/living/carbon/check_ear_prot()
+	if(head && (head.flags & HEADBANGPROTECT))
+		return 1
