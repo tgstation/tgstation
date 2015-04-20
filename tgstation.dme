@@ -1355,7 +1355,6 @@
 #include "code\modules\reagents\Chemistry-Colours.dm"
 #include "code\modules\reagents\Chemistry-Goon-420BlazeIt.dm"
 #include "code\modules\reagents\Chemistry-Goon-Medicine.dm"
-#include "code\modules\reagents\Chemistry-Goon-Other.dm"
 #include "code\modules\reagents\Chemistry-Goon-Pyrotechnics.dm"
 #include "code\modules\reagents\Chemistry-Goon-Readme.dm"
 #include "code\modules\reagents\Chemistry-Goon-Toxins.dm"

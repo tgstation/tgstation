@@ -87,22 +87,27 @@
 /obj/item/slime_extract/lightpink
 	name = "light pink slime extract"
 	icon_state = "light pink slime extract"
+	origin_tech = "biotech=5" //top tier extract
 
 /obj/item/slime_extract/black
 	name = "black slime extract"
 	icon_state = "black slime extract"
+	origin_tech = "biotech=5" //top tier extract
 
 /obj/item/slime_extract/oil
 	name = "oil slime extract"
 	icon_state = "oil slime extract"
+	origin_tech = "biotech=5" //top tier extract
 
 /obj/item/slime_extract/adamantine
 	name = "adamantine slime extract"
 	icon_state = "adamantine slime extract"
+	origin_tech = "biotech=5" //top tier extract
 
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"
 	icon_state = "bluespace slime extract"
+	origin_tech = "biotech=5" //top tier extract
 
 /obj/item/slime_extract/pyrite
 	name = "pyrite slime extract"
@@ -111,6 +116,7 @@
 /obj/item/slime_extract/cerulean
 	name = "cerulean slime extract"
 	icon_state = "cerulean slime extract"
+	origin_tech = "biotech=5" //top tier extract
 
 /obj/item/slime_extract/sepia
 	name = "sepia slime extract"
@@ -126,6 +132,7 @@
 	name = "docility potion"
 	desc = "A potent chemical mix that nullifies a slime's hunger, causing it to become docile and tame."
 	icon = 'icons/obj/chemical.dmi'
+	origin_tech = "biotech=4"
 	icon_state = "bottle19"
 
 /obj/item/slimepotion/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
@@ -153,6 +160,7 @@
 	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
+	origin_tech = "biotech=5"
 	var/list/not_interested = list()
 	var/being_used = 0
 
@@ -216,6 +224,7 @@
 	name = "slime steroid"
 	desc = "A potent chemical mix that will cause a slime to generate more extract."
 	icon = 'icons/obj/chemical.dmi'
+	origin_tech = "biotech=4"
 	icon_state = "bottle16"
 
 /obj/item/weapon/slimesteroid/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
@@ -241,6 +250,7 @@
 	desc = "A potent chemical mix that will give a slime extract three uses."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
+	origin_tech = "biotech=4"
 
 	/*afterattack(obj/target, mob/user , flag)
 		if(istype(target, /obj/item/slime_extract))

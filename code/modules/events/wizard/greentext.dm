@@ -24,6 +24,7 @@
 	desc = "No one knows what this massive tome does, but it feels <i><font color='green'>desirable</font></i> all the same..."
 	w_class = 4.0
 	icon = 'icons/obj/wizard.dmi'
+	origin_tech = "syndicate=2" // Why would you even try
 	icon_state = "greentext"
 	var/mob/living/last_holder
 	var/mob/living/new_holder

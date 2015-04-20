@@ -6,6 +6,7 @@ DETECTIVE SCANNER
 HEALTH ANALYZER
 GAS ANALYZER
 MASS SPECTROMETER
+SLIME SCANNER
 
 */
 /obj/item/device/t_scanner
@@ -294,6 +295,7 @@ MASS SPECTROMETER
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
+	reliability = 100
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
@@ -306,8 +308,8 @@ MASS SPECTROMETER
 	m_amt = 30
 	g_amt = 20
 	origin_tech = "magnets=2;biotech=2"
+
 	var/details = 0
-	var/recent_fail = 0
 
 /obj/item/device/mass_spectrometer/New()
 	..()
@@ -343,20 +345,13 @@ MASS SPECTROMETER
 			dat += "<br>None"
 		else
 			for(var/R in blood_traces)
-				if(prob(reliability))
-					dat += "<br>[chemical_reagents_list[R]]"
+				dat += "<br>[chemical_reagents_list[R]]"
 
-					if(details)
-						dat += " ([blood_traces[R]] units)"
+				if(details)
+					dat += " ([blood_traces[R]] units)"
 
-					recent_fail = 0
-				else
-					if(recent_fail)
-						crit_fail = 1
-						reagents.clear_reagents()
-						return
-					else
-						recent_fail = 1
+
+
 		dat += "</i>"
 		user << dat
 		reagents.clear_reagents()
@@ -366,7 +361,7 @@ MASS SPECTROMETER
 	name = "advanced mass-spectrometer"
 	icon_state = "adv_spectrometer"
 	details = 1
-	origin_tech = "magnets=4;biotech=2"
+	origin_tech = "magnets=4;biotech=3"
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
