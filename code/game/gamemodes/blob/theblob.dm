@@ -19,10 +19,10 @@
 
 /obj/effect/blob/New(loc)
 	blobs += src
-	var/datum/game_mode/blob/B
-	if(B)
-		if((blobs.len >= B.blobnukeposs) && prob(1))
-			B.stage(2)
+	if(istype(ticker.mode,/datum/game_mode/blob))
+		var/datum/game_mode/blob/blobmode = ticker.mode
+		if((blobs.len >= blobmode.blobnukeposs) && prob(3))
+			blobmode.stage(2)
 	src.dir = pick(1, 2, 4, 8)
 	src.update_icon()
 	..(loc)
