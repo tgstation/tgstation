@@ -122,7 +122,7 @@ datum/design/bluespacebodybag
 	name = "X-Ray implant"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
-	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 6, "magnets" = 5, "plasmatech" = 3)
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 7, "magnets" = 5, "plasmatech" = 3)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 200, "$plasma" = 200, "$uranium" = 500, "$diamond" = 1000)
 	build_path = /obj/item/cybernetic_implant/eyes/xray
@@ -152,7 +152,7 @@ datum/design/bluespacebodybag
 	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	id = "ci-antistun"
-	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 6)
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 7)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 500, "$gold" = 1000)
 	build_path = /obj/item/cybernetic_implant/brain/anti_stun
