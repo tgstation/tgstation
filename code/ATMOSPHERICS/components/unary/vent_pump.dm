@@ -306,5 +306,5 @@
 	..()
 
 
-
-
+/obj/machinery/atmospherics/unary/vent_pump/can_crawl_through()
+	return !welded
