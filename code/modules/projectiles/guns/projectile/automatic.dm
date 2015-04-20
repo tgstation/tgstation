@@ -252,5 +252,5 @@
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
-	burst_size = 4
+	burst_size = 3
 	fire_delay = 1
