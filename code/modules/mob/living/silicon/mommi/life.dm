@@ -196,6 +196,10 @@
 				src.mind.special_role = "traitor"
 				ticker.mode.traitors += src.mind
 
+	if(!can_see_static()) //what lets us avoid the overlay
+		if(static_overlays && static_overlays.len)
+			remove_static_overlays()
+
 	if (src.cells)
 		if (src.cell)
 			var/cellcharge = src.cell.charge/src.cell.maxcharge

@@ -106,6 +106,9 @@
 /mob/living/silicon/drop_item()
 	return
 
+/mob/living/silicon/generate_static_overlay()
+	return
+
 /mob/living/silicon/emp_act(severity)
 	if(flags & INVULNERABLE)
 		return
