@@ -53,7 +53,7 @@ var/list/GPS_list = list()
 	popup.open()
 
 /obj/item/device/gps/examine(mob/user)
-	if (Adjacent(user) || isobserver(user) || issilicon(user))
+	if (Adjacent(user) || isobserver(user))
 		src.attack_self(user)
 	else
 		..()
