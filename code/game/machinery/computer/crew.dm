@@ -77,7 +77,7 @@
 
 		var/turf/pos = get_turf(C)
 
-		if((C) && (C.has_sensor) && (pos) && (pos.z == src.z) && C.sensor_mode)
+		if((C) && (C.has_sensor) && (pos) && (pos.z != CENTCOMM_Z) && C.sensor_mode)
 			if(istype(C.loc, /mob/living/carbon/human))
 
 				var/mob/living/carbon/human/H = C.loc
@@ -143,7 +143,7 @@
 		return
 
 /obj/machinery/computer/crew/proc/is_scannable(const/obj/item/clothing/under/C, const/mob/living/carbon/human/H)
-	if(!istype(H))
+	if(!istype(H) || H.tag == "Landmark")
 		return 0
 
 	if(isnull(track_special_role))
