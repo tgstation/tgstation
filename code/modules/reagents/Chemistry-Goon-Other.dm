@@ -216,7 +216,7 @@ datum/reagent/corgium
 datum/reagent/hair_dye
 	name = "Quantum Hair Dye"
 	id = "hair_dye"
-	description = "A solution"
+	description = "A solution."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
