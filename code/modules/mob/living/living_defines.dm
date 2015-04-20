@@ -56,6 +56,7 @@
 	var/list/last_beamchecks=list() // world.time of the last time a beam was checked (for fractional damage)
 
 	var/list/icon/pipes_shown = list()
+	var/last_played_vent
 
 	//
 	var/list/callOnLife = list() //

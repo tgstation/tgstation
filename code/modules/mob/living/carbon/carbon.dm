@@ -253,16 +253,16 @@
 	if(!stat)
 		if(!lying)
 
+/*
+			if(clicked_on)
+				world << "We start with [clicked_on], and [clicked_on.type]"
+*/
 			var/obj/machinery/atmospherics/unary/vent_found
 
 			if(clicked_on)
-				if(is_type_in_list(clicked_on, ventcrawl_machinery))
-					var/obj/machinery/atmospherics/unary/vent_pump/v = clicked_on
-					if(istype(v))
-						if(!v.welded)
-							vent_found = clicked_on
-					else
-						vent_found = clicked_on
+				var/obj/machinery/atmospherics/unary/vent_pump/v = clicked_on
+				if(!istype(v) || !v.welded)
+					vent_found = clicked_on
 
 			if(!vent_found)
 				for(var/obj/machinery/atmospherics/machine in range(1,src))
@@ -289,7 +289,7 @@
 								src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
 								return
 
-					visible_message("<B>[src] scrambles into the ventilation ducts!</B>")
+					visible_message("<B>[src] scrambles into the ventilation ducts!</B>", "You climb into the ventilation system.")
 
 					loc = vent_found
 					add_ventcrawl(vent_found)
@@ -319,6 +319,9 @@
 		client.images -= current_image
 
 	pipes_shown.len = 0
+
+	if(client)
+		client.eye = src
 
 /mob/living/carbon/clean_blood()
 	. = ..()

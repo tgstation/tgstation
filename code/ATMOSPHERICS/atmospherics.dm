@@ -177,14 +177,29 @@ Pipelines + Other Objects -> Pipe network
 		qdel(src)
 	return 1
 
+#define VENT_SOUND_DELAY 30
+
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
+	if(!(direction & initialize_directions)) //can't go in a way we aren't connecting to
+		return
+
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction)
 	if(target_move)
 		if(is_type_in_list(target_move, ventcrawl_machinery))
 			user.remove_ventcrawl()
-			user.forceMove(target_move.loc)
-		user.loc = target_move
+			user.forceMove(target_move.loc) //handles entering and so on
+			user.visible_message("You hear something squeezing through the ducts.", "You climb out the ventilation system.")
+		else
+			user.loc = target_move
+			user.client.eye = target_move //if we don't do this, Byond only updates the eye every tick - required for smooth movement
+			if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
+				user.last_played_vent = world.time
+				playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
 	else
 		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery)) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
 			user.remove_ventcrawl()
 			user.forceMove(src.loc)
+			user.visible_message("You hear something squeezing through the pipes.", "You climb out the ventilation system.")
+	user.canmove = 0
+	spawn(1)
+		user.canmove = 1

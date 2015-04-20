@@ -573,12 +573,12 @@ mob/living/simple_animal/borer/proc/detach()
 
 	update_verbs(1)
 
-/mob/living/simple_animal/borer/proc/ventcrawl()
+/mob/living/simple_animal/borer/proc/ventcrawl(var/atom/pipe)
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Alien"
 	if(src.canmove)
-		handle_ventcrawl()
+		handle_ventcrawl(pipe)
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/borer/proc/hide()
