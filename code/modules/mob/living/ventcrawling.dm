@@ -52,14 +52,14 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 							failed++
 
 					if(failed)
-						src << "<span class='warning'>You can't crawl around in vents with items!</span>"
+						src << "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>"
 						return
 
 			visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
 			loc = vent_found
 			add_ventcrawl(vent_found)
 	else
-		src << "<span class='warning'>This vent is not connected to anything!</span>"
+		src << "<span class='warning'>This ventilation duct is not connected to anything!</span>"
 
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/unary/starting_machine)
