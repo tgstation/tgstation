@@ -34,6 +34,13 @@
 			if(WALLRODSCUT)
 				user << "It has no outer grille, external reinforced cover or external support rods and the inner reinforced cover is exposed" //And that's terrible
 
+//We need to export this here because we want to handle it differently
+//This took me longer to find this than it should havle
+/turf/simulated/wall/r_wall/relativewall()
+	if(d_state) //We are fucking building
+		return //Fuck off
+	..()
+
 /turf/simulated/wall/r_wall/proc/update_icon()
 	if(!d_state) //Are we under construction or deconstruction ?
 		relativewall() //Well isn't that odd, let's pass this to smoothwall.dm
