@@ -260,18 +260,21 @@
 			var/obj/machinery/atmospherics/unary/vent_found
 
 			if(clicked_on && Adjacent(clicked_on))
-				var/obj/machinery/atmospherics/unary/vent_pump/v = clicked_on
-				if(!istype(v) || !v.welded)
-					vent_found = clicked_on
+				vent_found = clicked_on
+				if(!istype(vent_found) || !vent_found.can_crawl_through())
+					vent_found = null
+
 
 			if(!vent_found)
 				for(var/obj/machinery/atmospherics/machine in range(1,src))
 					if(is_type_in_list(machine, ventcrawl_machinery))
 						vent_found = machine
 
-					var/obj/machinery/atmospherics/unary/vent_pump/v = machine
-					if(istype(v) && v.welded)
+					if(!vent_found.can_crawl_through())
 						vent_found = null
+
+					if(vent_found)
+						break
 
 			if(vent_found)
 				if(vent_found.network && (vent_found.network.normal_members.len || vent_found.network.line_members.len))

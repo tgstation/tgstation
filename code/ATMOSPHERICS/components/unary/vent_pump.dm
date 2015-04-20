@@ -313,6 +313,9 @@
 	</ul>
 	"}
 
+/obj/machinery/atmospherics/unary/vent_pump/can_crawl_through()
+	return !welded
+
 /obj/machinery/atmospherics/unary/vent_pump/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
