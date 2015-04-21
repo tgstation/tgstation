@@ -115,7 +115,7 @@
 		"radium" =         list( -1.5,  0,   0.2 ),
 		"adminordrazine" = list(  1,    1,   1   ),
 		"robustharvest" =  list(  0,    0.2, 0   ),
-		"left4zed" =       list(  0,    0,   0.2 )
+		"left4zed" =       list( -0.1, -0.2, 2   )
 		)
 
 	// Mutagen list specifies minimum value for the mutation to take place, rather
