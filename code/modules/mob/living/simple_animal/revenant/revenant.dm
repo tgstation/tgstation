@@ -61,6 +61,9 @@
 /mob/living/simple_animal/revenant/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Mainly to prevent the no-grav effect
 
+/mob/living/simple_animal/revenant/ex_act(severity, target)
+	return 1 //Immune to the effects of explosions.
+
 /mob/living/simple_animal/revenant/ClickOn(var/atom/A, var/params) //Copypaste from ghost code - revenants can't interact with the world directly.
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
