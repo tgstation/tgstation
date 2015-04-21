@@ -589,11 +589,12 @@
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
-		var/text = "<FONT size = 2><B>The cultists were:</B></FONT>"
+		var/icon/logo = icon('icons/mob/mob.dmi', "cult-logo")
+		var/text = "<br>\icon[logo] <FONT size = 2><B>The cultists were:</B></FONT> \icon[logo]"
 		for(var/datum/mind/cultist in cult)
-
-			text += "<br>[cultist.key] was [cultist.name] ("
 			if(cultist.current)
+				var/icon/flat = getFlatIcon(cultist.current)
+				text += "<br>\icon[flat] [cultist.key] was [cultist.name] ("
 				if(cultist.current.stat == DEAD)
 					text += "died"
 				else
@@ -601,6 +602,8 @@
 				if(cultist.current.real_name != cultist.name)
 					text += " as [cultist.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [cultist.key] was [cultist.name] ("
 				text += "body destroyed"
 			text += ")"
 

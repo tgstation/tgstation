@@ -220,12 +220,14 @@
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
-		var/text = "<FONT size = 2><B>The traitors were:</B></FONT>"
+		var/icon/logo = icon('icons/mob/mob.dmi', "synd-logo")
+		var/text = "\icon[logo] <FONT size = 2><B>The traitors were:</B></FONT> \icon[logo]"
 		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
 
-			text += "<br>[traitor.key] was [traitor.name] ("
 			if(traitor.current)
+				var/icon/flat = getFlatIcon(traitor.current)
+				text += "<br>\icon[flat] [traitor.key] was [traitor.name] ("
 				if(traitor.current.stat == DEAD)
 					text += "died"
 				else
@@ -233,6 +235,8 @@
 				if(traitor.current.real_name != traitor.name)
 					text += " as [traitor.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [traitor.key] was [traitor.name] ("
 				text += "body destroyed"
 			text += ")"
 
@@ -263,9 +267,12 @@
 
 			if(traitor.total_TC)
 				if(traitor.spent_TC)
-					text += "<br><span class='sinister'>TC Remaining : [traitor.total_TC - traitor.spent_TC]/[traitor.total_TC] - The tools used by the [(traitor in implanted) ? "greytide" : special_role_text] were: [list2text(traitor.uplink_items_bought, ", ")]</span>"
+					text += "<br><span class='sinister'>TC Remaining : [traitor.total_TC - traitor.spent_TC]/[traitor.total_TC] - The tools used by the [(traitor in implanted) ? "greytide" : special_role_text] were:"
+					for(var/entry in traitor.uplink_items_bought)
+						text += "<br>[entry]"
+					text += "</span>"
 				else
-					text += "<span class='sinister'>The [(traitor in implanted) ? "greytide" : special_role_text] was a smooth operator this round (did not purchase any uplink items)</span>"
+					text += "<br><span class='sinister'>The [(traitor in implanted) ? "greytide" : special_role_text] was a smooth operator this round<br>(did not purchase any uplink items)</span>"
 
 		world << text
 	return 1

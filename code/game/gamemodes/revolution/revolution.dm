@@ -369,11 +369,13 @@
 	var/list/targets = list()
 
 	if(head_revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
-		var/text = "<FONT size = 2><B>The head revolutionaries were:</B></FONT>"
+		var/icon/logo1 = icon('icons/mob/mob.dmi', "rev_head-logo")
+		var/text = "\icon[logo1] <FONT size = 2><B>The head revolutionaries were:</B></FONT> \icon[logo1]"
 
 		for(var/datum/mind/headrev in head_revolutionaries)
-			text += "<br>[headrev.key] was [headrev.name] ("
 			if(headrev.current)
+				var/icon/flat = getFlatIcon(headrev.current)
+				text += "<br>\icon[flat] [headrev.key] was [headrev.name] ("
 				if(headrev.current.stat == DEAD)
 					text += "died"
 				else if(headrev.current.z != 1)
@@ -383,11 +385,16 @@
 				if(headrev.current.real_name != headrev.name)
 					text += " as [headrev.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [headrev.key] was [headrev.name] ("
 				text += "body destroyed"
 			text += ")"
 			if(headrev.total_TC)
 				if(headrev.spent_TC)
-					text += "<br><span class='sinister'>TC Remaining: [headrev.total_TC - headrev.spent_TC]/[headrev.total_TC] - The tools used by the Head Revolutionary were: [list2text(headrev.uplink_items_bought, ", ")]</span>"
+					text += "<br><span class='sinister'>TC Remaining: [headrev.total_TC - headrev.spent_TC]/[headrev.total_TC] - The tools used by the Head Revolutionary were:"
+					for(var/entry in headrev.uplink_items_bought)
+						text += "<br>[entry]"
+					text += "</span>"
 				else
 					text += "<span class='sinister'>The Head Revolutionary was a smooth operator this round (did not purchase any uplink items)</span>"
 
@@ -397,11 +404,13 @@
 		world << text
 
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
-		var/text = "<FONT size = 2><B>The revolutionaries were:</B></FONT>"
+		var/icon/logo2 = icon('icons/mob/mob.dmi', "rev-logo")
+		var/text = "<br>\icon[logo2] <FONT size = 2><B>The revolutionaries were:</B></FONT> \icon[logo2]"
 
 		for(var/datum/mind/rev in revolutionaries)
-			text += "<br>[rev.key] was [rev.name] ("
 			if(rev.current)
+				var/icon/flat = getFlatIcon(rev.current)
+				text += "<br>\icon[flat] [rev.key] was [rev.name] ("
 				if(rev.current.stat == DEAD)
 					text += "died"
 				else if(rev.current.z != 1)
@@ -411,6 +420,8 @@
 				if(rev.current.real_name != rev.name)
 					text += " as [rev.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [rev.key] was [rev.name] ("
 				text += "body destroyed"
 			text += ")"
 
@@ -418,15 +429,17 @@
 
 
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
-		var/text = "<FONT size = 2><B>The heads of staff were:</B></FONT>"
+		var/icon/logo3 = icon('icons/mob/mob.dmi', "nano-logo")
+		var/text = "\icon[logo3] <FONT size = 2><B>The heads of staff were:</B></FONT> \icon[logo3]"
 
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)
 			var/target = (head in targets)
 			if(target)
 				text += "<font color='red'>"
-			text += "<br>[head.key] was [head.name] ("
 			if(head.current)
+				var/icon/flat = getFlatIcon(head.current)
+				text += "<br>\icon[flat] [head.key] was [head.name] ("
 				if(head.current.stat == DEAD)
 					text += "died"
 				else if(head.current.z != 1)
@@ -436,6 +449,8 @@
 				if(head.current.real_name != head.name)
 					text += " as [head.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [head.key] was [head.name] ("
 				text += "body destroyed"
 			text += ")"
 			if(target)

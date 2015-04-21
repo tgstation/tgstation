@@ -89,12 +89,14 @@
 
 /datum/game_mode/proc/auto_declare_completion_vampire()
 	if(vampires.len)
-		var/text = "<FONT size = 2><B>The vampires were:</B></FONT>"
+		var/icon/logo = icon('icons/mob/mob.dmi', "vampire-logo")
+		var/text = "<br>\icon[logo] <FONT size = 2><B>The vampires were:</B></FONT> \icon[logo]"
 		for(var/datum/mind/vampire in vampires)
 			var/traitorwin = 1
 
-			text += "<br>[vampire.key] was [vampire.name] ("
 			if(vampire.current)
+				var/icon/flat = getFlatIcon(vampire.current)
+				text += "<br>\icon[flat] [vampire.key] was [vampire.name] ("
 				if(vampire.current.stat == DEAD)
 					text += "died"
 				else
@@ -102,6 +104,8 @@
 				if(vampire.current.real_name != vampire.name)
 					text += " as [vampire.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [vampire.key] was [vampire.name] ("
 				text += "body destroyed"
 			text += ")"
 
@@ -124,9 +128,12 @@
 				special_role_text = "antagonist"
 			if(vampire.total_TC)
 				if(vampire.spent_TC)
-					text += "<br><span class='sinister'>TC Remaining: [vampire.total_TC - vampire.spent_TC]/[vampire.total_TC] - The tools used by the Vampire were: [list2text(vampire.uplink_items_bought, ", ")]</span>"
+					text += "<br><span class='sinister'>TC Remaining: [vampire.total_TC - vampire.spent_TC]/[vampire.total_TC] - The tools used by the Vampire were:"
+					for(var/entry in vampire.uplink_items_bought)
+						text += "<br>[entry]"
+					text += "</span>"
 				else
-					text += "<span class='sinister'>The Vampire was a smooth operator this round (did not purchase any uplink items)</span>"
+					text += "<br><span class='sinister'>The Vampire was a smooth operator this round<br>(did not purchase any uplink items)</span>"
 			if(traitorwin)
 				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
 				feedback_add_details("traitor_success","SUCCESS")

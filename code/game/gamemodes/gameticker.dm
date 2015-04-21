@@ -458,66 +458,79 @@ var/global/datum/controller/gameticker/ticker
 	scoreboard()
 
 	if(bomberman_mode)
-		var/icon/bomberhead = icon('icons/obj/clothing/hats.dmi', "bomberman")
-		var/icon/bronze = icon('icons/obj/bomberman.dmi', "bronze")
-		var/icon/silver = icon('icons/obj/bomberman.dmi', "silver")
-		var/icon/gold = icon('icons/obj/bomberman.dmi', "gold")
-		var/icon/platinum = icon('icons/obj/bomberman.dmi', "platinum")
+		bomberman_declare_completion()
 
-		var/list/bronze_tier = list()
-		for (var/mob/living/carbon/M in player_list)
-			if(locate(/obj/item/weapon/bomberman/) in M)
-				bronze_tier += M
-		var/list/silver_tier = list()
-		for (var/mob/M in bronze_tier)
-			if(M.z == map.zCentcomm)
-				silver_tier += M
-				bronze_tier -= M
-		var/list/gold_tier = list()
-		for (var/mob/M in silver_tier)
-			var/turf/T = get_turf(M)
-			if(istype(T.loc, /area/shuttle/escape/centcom))
-				gold_tier += M
-				silver_tier -= M
-		var/list/platinum_tier = list()
-		for (var/mob/living/carbon/human/M in gold_tier)
-			if(istype(M.wear_suit, /obj/item/clothing/suit/space/bomberman) && istype(M.head, /obj/item/clothing/head/helmet/space/bomberman))
-				var/obj/item/clothing/suit/space/bomberman/C1 = M.wear_suit
-				var/obj/item/clothing/head/helmet/space/bomberman/C2 = M.head
-				if(C1.never_removed && C2.never_removed)
-					platinum_tier += M
-					gold_tier -= M
-
-		var/list/special_tier = list()
-		for (var/mob/living/silicon/robot/mommi/M in player_list)
-			if(istype(M.head_state, /obj/item/clothing/head/helmet/space/bomberman) && istype(M.tool_state, /obj/item/weapon/bomberman/))
-				special_tier += M
-
-		var/text = "\icon[bomberhead] <b>Bomberman Mode Results</b> \icon[bomberhead]"
-		if(!platinum_tier.len && !gold_tier.len && !silver_tier.len && !bronze_tier.len)
-			text += "<br><span class='danger'>DRAW!</span>"
-		if(platinum_tier.len)
-			text += "<br>\icon[platinum] <b>Platinum Trophy</b> (never removed his clothes, kept his bomb dispenser until the end, and escaped on the shuttle):"
-			for (var/mob/M in platinum_tier)
-				text += "<br>[M.real_name]"
-		if(gold_tier.len)
-			text += "<br>\icon[gold] <b>Gold Trophy</b> (kept his bomb dispenser until the end, and escaped on the shuttle):"
-			for (var/mob/M in gold_tier)
-				text += "<br>[M.real_name]"
-		if(silver_tier.len)
-			text += "<br>\icon[silver] <b>Silver Trophy</b> (kept his bomb dispenser until the end, and escaped in a pod):"
-			for (var/mob/M in silver_tier)
-				text += "<br>[M.real_name]"
-		if(bronze_tier.len)
-			text += "<br>\icon[bronze] <b>Bronze Trophy</b> (kept his bomb dispenser until the end):"
-			for (var/mob/M in bronze_tier)
-				text += "<br>[M.real_name]"
-		if(special_tier.len)
-			text += "<br><b>Special Mention</b> to those adorable MoMMis:"
-			for (var/mob/M in special_tier)
-				text += "<br>[M]"
-
-
-		world << text
+	if(achievements.len)
+		achievement_declare_completion()
 
 	return 1
+
+/datum/controller/gameticker/proc/bomberman_declare_completion()
+	var/icon/bomberhead = icon('icons/obj/clothing/hats.dmi', "bomberman")
+	var/icon/bronze = icon('icons/obj/bomberman.dmi', "bronze")
+	var/icon/silver = icon('icons/obj/bomberman.dmi', "silver")
+	var/icon/gold = icon('icons/obj/bomberman.dmi', "gold")
+	var/icon/platinum = icon('icons/obj/bomberman.dmi', "platinum")
+
+	var/list/bronze_tier = list()
+	for (var/mob/living/carbon/M in player_list)
+		if(locate(/obj/item/weapon/bomberman/) in M)
+			bronze_tier += M
+	var/list/silver_tier = list()
+	for (var/mob/M in bronze_tier)
+		if(M.z == map.zCentcomm)
+			silver_tier += M
+			bronze_tier -= M
+	var/list/gold_tier = list()
+	for (var/mob/M in silver_tier)
+		var/turf/T = get_turf(M)
+		if(istype(T.loc, /area/shuttle/escape/centcom))
+			gold_tier += M
+			silver_tier -= M
+	var/list/platinum_tier = list()
+	for (var/mob/living/carbon/human/M in gold_tier)
+		if(istype(M.wear_suit, /obj/item/clothing/suit/space/bomberman) && istype(M.head, /obj/item/clothing/head/helmet/space/bomberman))
+			var/obj/item/clothing/suit/space/bomberman/C1 = M.wear_suit
+			var/obj/item/clothing/head/helmet/space/bomberman/C2 = M.head
+			if(C1.never_removed && C2.never_removed)
+				platinum_tier += M
+				gold_tier -= M
+
+	var/list/special_tier = list()
+	for (var/mob/living/silicon/robot/mommi/M in player_list)
+		if(istype(M.head_state, /obj/item/clothing/head/helmet/space/bomberman) && istype(M.tool_state, /obj/item/weapon/bomberman/))
+			special_tier += M
+
+	var/text = "\icon[bomberhead] <b>Bomberman Mode Results</b> \icon[bomberhead]"
+	if(!platinum_tier.len && !gold_tier.len && !silver_tier.len && !bronze_tier.len)
+		text += "<br><span class='danger'>DRAW!</span>"
+	if(platinum_tier.len)
+		text += "<br>\icon[platinum] <b>Platinum Trophy</b> (never removed his clothes, kept his bomb dispenser until the end, and escaped on the shuttle):"
+		for (var/mob/M in platinum_tier)
+			text += "<br>[M.real_name]"
+	if(gold_tier.len)
+		text += "<br>\icon[gold] <b>Gold Trophy</b> (kept his bomb dispenser until the end, and escaped on the shuttle):"
+		for (var/mob/M in gold_tier)
+			text += "<br>[M.real_name]"
+	if(silver_tier.len)
+		text += "<br>\icon[silver] <b>Silver Trophy</b> (kept his bomb dispenser until the end, and escaped in a pod):"
+		for (var/mob/M in silver_tier)
+			text += "<br>[M.real_name]"
+	if(bronze_tier.len)
+		text += "<br>\icon[bronze] <b>Bronze Trophy</b> (kept his bomb dispenser until the end):"
+		for (var/mob/M in bronze_tier)
+			text += "<br>[M.real_name]"
+	if(special_tier.len)
+		text += "<br><b>Special Mention</b> to those adorable MoMMis:"
+		for (var/mob/M in special_tier)
+			text += "<br>[M]"
+
+	world << text
+
+/datum/controller/gameticker/proc/achievement_declare_completion()
+	var/text = "<br><FONT size = 2><B>Additionally, the following players earned achievements:</B></FONT>"
+	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
+	for(var/winner in achievements)
+		text += "<br>\icon[cup] [winner]"
+
+	world << text

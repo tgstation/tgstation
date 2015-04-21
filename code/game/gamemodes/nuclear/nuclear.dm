@@ -339,12 +339,14 @@
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
-		var/text = "<FONT size = 2><B>The syndicate operatives were:</B></FONT>"
+		var/icon/logo = icon('icons/mob/mob.dmi', "nuke-logo")
+		var/text = "<br>\icon[logo] <FONT size = 2><B>The syndicate operatives were:</B></FONT> \icon[logo]"
 
 		for(var/datum/mind/syndicate in syndicates)
 
-			text += "<br>[syndicate.key] was [syndicate.name] ("
 			if(syndicate.current)
+				var/icon/flat = getFlatIcon(syndicate.current)
+				text += "<br>\icon[flat] [syndicate.key] was [syndicate.name] ("
 				if(syndicate.current.stat == DEAD)
 					text += "died"
 				else
@@ -352,17 +354,19 @@
 				if(syndicate.current.real_name != syndicate.name)
 					text += " as [syndicate.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [syndicate.key] was [syndicate.name] ("
 				text += "body destroyed"
 			text += ")"
 		var/obj/item/nuclear_uplink = src:nuclear_uplink
 		if(nuclear_uplink && nuclear_uplink.hidden_uplink)
 			if(nuclear_uplink.hidden_uplink.purchase_log.len)
-				text += "<span class='sinister'>The tools used by the syndicate operatives were: "
+				text += "<br><span class='sinister'>The tools used by the syndicate operatives were: "
 				for(var/entry in nuclear_uplink.hidden_uplink.purchase_log)
 					text += "<br>[entry]TC(s)"
 				text += "</span>"
 			else
-				text += "<span class='sinister'>The nukeops were smooth operators this round (did not purchase any uplink items)</span>"
+				text += "<br><span class='sinister'>The nukeops were smooth operators this round<br>(did not purchase any uplink items)</span>"
 		world << text
 	return 1
 

@@ -366,3 +366,5 @@ var/global/bomberman_destroy = 0
 var/global/list/volunteer_gladiators = list()
 var/global/list/ready_gladiators = list()
 var/global/list/never_gladiators = list()
+
+var/global/list/achievements = list()
