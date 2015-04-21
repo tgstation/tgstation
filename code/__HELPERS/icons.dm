@@ -87,7 +87,8 @@ proc/adjust_brightness(var/color, var/value)
 	RGB[3] = Clamp(RGB[3]+value,0,255)
 	return rgb(RGB[1],RGB[2],RGB[3])
 
-/proc/AverageColor(var/icon/I)
+/proc/AverageColor(var/icon/I, var/accurate = 0)
+//Accurate: Use more accurate color averaging, usually has better results. Thanks to wwjnc
 	var/list/colors = list()
 	for(var/x_pixel = 1 to I.Width())
 		for(var/y_pixel = 1 to I.Height())
@@ -98,7 +99,22 @@ proc/adjust_brightness(var/color, var/value)
 	if(!colors.len)
 		return null
 
-	var/final_average = colors[1]
-	for(var/color in (colors - colors[1]))
-		final_average = BlendRGB(final_average, color, 1)
+	var/list/colorsum = list(0, 0, 0) //Holds the sum of the RGB values to calculate the average
+	var/list/RGB = list(0, 0, 0) //Temp list for each color
+	var/total = colors.len
+	var/final_average
+	if (accurate)
+		for(var/i = 1 to total)
+			RGB = ReadRGB(colors[i])
+			colorsum[1] += RGB[1]*RGB[1]
+			colorsum[2] += RGB[2]*RGB[1]
+			colorsum[3] += RGB[3]*RGB[1]
+		final_average = rgb(sqrt(colorsum[1]/total), sqrt(colorsum[2]/total), sqrt(colorsum[3]/total))
+	else
+		for(var/i = 1 to total)
+			RGB = ReadRGB(colors[i])
+			colorsum[1] += RGB[1]
+			colorsum[2] += RGB[2]
+			colorsum[3] += RGB[3]
+		final_average = rgb(colorsum[1]/total, colorsum[2]/total, colorsum[3]/total)
 	return final_average
