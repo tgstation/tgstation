@@ -290,8 +290,8 @@
 /obj/item/weapon/gun/energy/decloner/alien
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = /obj/item/device/firing_pin/alien
-	icon_state = "alienpistol"
-	item_state = "alienpistol"
+	icon_state = "decloner"
+	item_state = "decloner"
 
 /obj/item/weapon/gun/energy/decloner/alien/update_icon() // No charge levels
 	return
