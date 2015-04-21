@@ -889,7 +889,7 @@
 "re" = (/obj/effect/landmark/abductor/console{team = 4},/turf/unsimulated/floor/bluegrid,/area/abductor_ship)
 "rf" = (/obj/machinery/abductor/pad{team = 4},/turf/unsimulated/floor/bluegrid,/area/abductor_ship)
 "rg" = (/obj/structure/rack,/obj/item/weapon/storage/box/handcuffs,/turf/unsimulated/floor/bluegrid,/area/abductor_ship)
-"rh" = (/obj/structure/rack,/turf/unsimulated/floor/bluegrid,/area/abductor_ship)
+"rh" = (/obj/structure/rack,/obj/item/weapon/gun/energy/taser,/obj/item/clothing/head/helmet,/turf/unsimulated/floor/bluegrid,/area/abductor_ship)
 "ri" = (/turf/unsimulated/floor/bluegrid,/area/abductor_ship)
 "rj" = (/obj/structure/table,/obj/item/weapon/circular_saw,/obj/item/weapon/surgicaldrill,/obj/item/weapon/paper/abductor,/obj/item/weapon/scalpel/alien,/turf/unsimulated/floor/bluegrid,/area/abductor_ship)
 "rk" = (/obj/machinery/abductor/gland_dispenser,/turf/unsimulated/floor/bluegrid,/area/abductor_ship)
