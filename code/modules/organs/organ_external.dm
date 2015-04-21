@@ -89,7 +89,7 @@
 	//If limb took enough damage, try to cut or tear it off
 	if(body_part != UPPER_TORSO && body_part != LOWER_TORSO) //as hilarious as it is, getting hit on the chest too much shouldn't effectively gib you.
 		if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
-			if( (sharp && prob(5 * brute)) || (brute > 20 && prob(2 * brute)) )
+			if( ((sharp || status & ORGAN_PEG) && prob(5 * brute)) || (brute > 20 && prob(2 * brute)) )
 				droplimb(1)
 				return
 
@@ -864,6 +864,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	process_grasp(owner.l_hand, "left hand")
 
 /datum/organ/external/l_arm/generate_dropped_organ(current_organ)
+	if(status & ORGAN_PEG) current_organ = new /obj/item/stack/sheet/wood(owner.loc)
 	if(!current_organ)
 		if(status & ORGAN_ROBOT)
 			current_organ= new /obj/item/robot_parts/l_arm(owner.loc)
@@ -881,6 +882,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	icon_position = LEFT
 
 /datum/organ/external/l_leg/generate_dropped_organ(current_organ)
+	if(status & ORGAN_PEG) current_organ = new /obj/item/stack/sheet/wood(owner.loc)
 	if(!current_organ)
 		if(status & ORGAN_ROBOT)
 			current_organ = new /obj/item/robot_parts/l_leg(owner.loc)
@@ -901,6 +903,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	process_grasp(owner.r_hand, "right hand")
 
 /datum/organ/external/r_arm/generate_dropped_organ(current_organ)
+	if(status & ORGAN_PEG) current_organ = new /obj/item/stack/sheet/wood(owner.loc)
 	if(!current_organ)
 		if(status & ORGAN_ROBOT)
 			current_organ = new /obj/item/robot_parts/r_arm(owner.loc)
@@ -918,6 +921,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	icon_position = RIGHT
 
 /datum/organ/external/r_leg/generate_dropped_organ(current_organ)
+	if(status & ORGAN_PEG) current_organ = new /obj/item/stack/sheet/wood(owner.loc)
 	if(!current_organ)
 		if(status & ORGAN_ROBOT)
 			current_organ = new /obj/item/robot_parts/r_leg(owner.loc)
@@ -938,6 +942,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 						slot_legcuffed)
 
 /datum/organ/external/l_foot/generate_dropped_organ(current_organ)
+	if(status & ORGAN_PEG) current_organ = new /obj/item/stack/sheet/wood(owner.loc)
 	if(!current_organ)
 		if(!(status & ORGAN_ROBOT))
 			current_organ= new /obj/item/weapon/organ/l_foot(owner.loc, owner)
@@ -956,6 +961,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 						slot_legcuffed)
 
 /datum/organ/external/r_foot/generate_dropped_organ(current_organ)
+	if(status & ORGAN_PEG) current_organ = new /obj/item/stack/sheet/wood(owner.loc)
 	if(!current_organ)
 		if(!(status & ORGAN_ROBOT))
 			current_organ= new /obj/item/weapon/organ/r_foot(owner.loc, owner)
@@ -978,6 +984,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	process_grasp(owner.r_hand, "right hand")
 
 /datum/organ/external/r_hand/generate_dropped_organ(current_organ)
+	if(status & ORGAN_PEG) current_organ = new /obj/item/stack/sheet/wood(owner.loc)
 	if(!current_organ)
 		if(!(status & (ORGAN_ROBOT)))
 			current_organ= new /obj/item/weapon/organ/r_hand(owner.loc, owner)
@@ -1000,6 +1007,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	process_grasp(owner.l_hand, "left hand")
 
 /datum/organ/external/l_hand/generate_dropped_organ(current_organ)
+	if(status & ORGAN_PEG) current_organ = new /obj/item/stack/sheet/wood(owner.loc)
 	if(!current_organ)
 		if(!(status & (ORGAN_ROBOT)))
 			current_organ= new /obj/item/weapon/organ/l_hand(owner.loc, owner)
