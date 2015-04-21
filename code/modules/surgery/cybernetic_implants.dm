@@ -45,6 +45,7 @@
 		return 1
 
 //[[[[CHEST]]]]
+
 /datum/surgery/eye_cybernetic_implant/chest
 	name = "torso cybernetic implant"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/cybernetic_implant/chest, /datum/surgery_step/close)
@@ -80,3 +81,4 @@
 		user.drop_item()
 		target.internal_organs |= implant
 		implant.loc = target
+

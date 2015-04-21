@@ -369,3 +369,4 @@
 			if(owner.stat == CONSCIOUS)
 				owner.Weaken(5)
 				owner.visible_message("<span class = 'userdanger'>[owner] clutches at their chest as if their heart stopped!</span>")
+

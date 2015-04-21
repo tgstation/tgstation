@@ -43,6 +43,9 @@ turf/unsimulated/wall/splashscreen
 	density = 1
 	blocks_air = 1
 
+/turf/unsimulated/wall/vault
+	icon_state = "rockvault"
+
 //sub-type to be used for interior shuttle walls
 //won't get an underlay of the destination turf on shuttle move
 /turf/unsimulated/shuttle/wall/interior/copyTurf(turf/T)

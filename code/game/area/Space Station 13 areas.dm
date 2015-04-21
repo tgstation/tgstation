@@ -246,10 +246,12 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	has_gravity = 1
 
-
-
-
-
+//Abductors
+/area/abductor_ship
+	name = "\improper Abductor Ship"
+	icon_state = "yellow"
+	requires_power = 0
+	has_gravity = 1
 
 //PRISON
 /area/prison

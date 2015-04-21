@@ -1,12 +1,5 @@
 // This code handles different species in the game.
 
-#define SPECIES_LAYER			26
-#define BODY_BEHIND_LAYER		25
-#define BODY_LAYER				24
-#define BODY_ADJ_LAYER			23
-#define HAIR_LAYER				9
-#define BODY_FRONT_LAYER		2
-
 #define TINT_IMPAIR 2
 #define TINT_BLIND 3
 
@@ -1290,13 +1283,6 @@
 		H.fire_stacks = 0
 		H.AddLuminosity(-3)
 		H.update_fire()
-
-#undef SPECIES_LAYER
-#undef BODY_BEHIND_LAYER
-#undef BODY_LAYER
-#undef BODY_ADJ_LAYER
-#undef HAIR_LAYER
-#undef BODY_FRONT_LAYER
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
