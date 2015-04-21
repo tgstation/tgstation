@@ -786,6 +786,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	var/y_pos = null
 	var/z_pos = null
 
+var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z","group","contents","air","light","areaMaster","underlays")
 /area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/direction = null)
 	//Takes: Area. Optional: turf type to leave behind.
 	//Returns: Nothing.
@@ -839,8 +840,18 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 					var/old_dir1 = T.dir
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
+					var/image/undlay = image("icon"=B.icon,"icon_state"=B.icon_state,"dir"=B.dir)
+					undlay.overlays = B.overlays.Copy()
 
 					var/turf/X = B.ChangeTurf(T.type)
+					for(var/key in T.vars)
+						if(key in ignored_keys) continue
+						if(istype(T.vars[key],/list))
+							var/list/L = T.vars[key]
+							X.vars[key] = L.Copy()
+						else
+							X.vars[key] = T.vars[key]
+					X.underlays += undlay
 					X.dir = old_dir1
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
