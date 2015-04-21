@@ -24,6 +24,10 @@
 		user.visible_message("<span class='notice'>[user] unlocks [src]'s wheels!</span>")
 		lockedby += "\[[time_stamp()]\] [usr] ([usr.ckey]) - unlocked [src]"
 
+/obj/structure/mopbucket/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/mop))
+		return 0
+	return ..()
 /obj/structure/mopbucket/mop_act(obj/item/weapon/mop/M, mob/user as mob)
 	if (istype(M))
 		if (src.reagents.total_volume >= 1)
