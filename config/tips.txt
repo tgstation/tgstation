@@ -77,3 +77,11 @@ While observing or as a ghost, double click on people, bots, or the singularity 
 Ghosts can click on active teleporters, portals, wormholes, or the gateway to jump to its destination!
 Ghosts can double-click their corpse, or the object containing their corpse (such as the cloning scanner), to re-enter it.
 Ghosts can see inside storage items that have been left on the ground.
+If you click on the command/chat bar to give it full focus you can use control + arrow keys to move the cursor around or scroll through the history of commands. (Control + home/end work too)
+Locked down rogue borgs can be dismantled to return the mmi for placement in a new borg.
+Fore = north, aft = south, starboard = east and port = west.
+Many things that bind you can be resisted out of with the resist button. This includes locked or welded lockers, chairs, handcuffs. When ever stuck, just give it a try!
+You can use . or # instead of : for radio channels. Building this habit reduces the chance of accidentally saying things on common.
+Clicking on a tile with an empty hand while pulling something moves it to that tile. No more getting stuck in maint while dragging something!
+Things that override clicks like decks of cards or paper bins can still be picked up by dragging them to your character. Equipped things that override click can be unequipped by dragging it to an empty hand.
+In the job selection menu, from the lobby, you can use right click on the "Low/Medium/High" priority button to make it cycle backwards.
