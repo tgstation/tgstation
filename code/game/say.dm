@@ -61,8 +61,8 @@ var/list/freqtoname = list(
 	var/endspanpart = "</span>"
 	//Message
 	var/messagepart = "<span class='message'>[lang_treat(speaker, message_langs, raw_message)]</span></span>"
-
-	return "[spanpart1][spanpart2][compose_track_href(speaker, message_langs, raw_message, radio_freq)][namepart]\icon[speaker.GetRadio()][freqpart][compose_job(speaker, message_langs, raw_message, radio_freq)][endspanpart][messagepart]"
+	var/trackingpart = compose_track_href(speaker, message_langs, raw_message, radio_freq)
+	return "[spanpart1][spanpart2][trackingpart][namepart][trackingpart ? "</a>" : ""]\icon[speaker.GetRadio()][freqpart][compose_job(speaker, message_langs, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""

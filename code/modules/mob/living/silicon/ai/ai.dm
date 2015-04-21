@@ -403,6 +403,13 @@ var/list/ai_list = list()
 
 		return
 
+	if (href_list["open"])
+		var/mob/target = locate(href_list["open"])
+		var/mob/living/silicon/ai/A = locate(href_list["open2"])
+		if(A && target)
+			A.open_nearest_door(target)
+		return
+
 	return
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
