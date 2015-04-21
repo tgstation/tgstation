@@ -30,19 +30,26 @@
 /obj/item/weapon/reagent_containers/glass/rag/mop_act(obj/item/weapon/mop/M, mob/user)
 	return 0
 
-/obj/item/weapon/reagent_containers/glass/rag/attack(atom/target as obj|turf|area, mob/user as mob , flag)
-	if(ismob(target) && target.reagents && reagents.total_volume)
-		user.visible_message("<span class='warning'>\The [target] has been smothered with \the [src] by \the [user]!</span>", "<span class='warning'>You smother \the [target] with \the [src]!</span>", "You hear some struggling and muffled cries of surprise")
-		src.reagents.reaction(target, TOUCH)
-		spawn(5) src.reagents.clear_reagents()
-		return
+/obj/item/weapon/reagent_containers/glass/rag/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+	if(user.zone_sel.selecting == "mouth")
+		if(ismob(M) && M.reagents && reagents.total_volume)
+			user.visible_message("<span class='warning'>\The [M] has been smothered with \the [src] by \the [user]!</span>", "<span class='warning'>You smother \the [M] with \the [src]!</span>", "You hear some struggling and muffled cries of surprise")
+			src.reagents.reaction(M, TOUCH)
+			spawn(5) src.reagents.clear_reagents()
+			return
 	else
 		..()
 
-/obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/user as mob)
-	if(istype(A) && src in user)
-		user.visible_message("[user] starts to wipe down [A] with [src]!")
-		if(do_after(user,30))
-			user.visible_message("[user] finishes wiping off the [A]!")
-			A.clean_blood()
+/obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag) return 0 // Not adjacent
+
+	if(reagents.total_volume < 1)
+		user << "<span class='notice'>Your rag is dry!</span>"
+		return
+	user.visible_message("<span class='warning'>[user] begins to wipe down \the [target].</span>", "<span class='notice'>You begin to wipe down \the [target].</span>")
+	if(do_after(user, 50))
+		if(target)
+			target.clean_blood()
+			reagents.remove_any(1)
+			user.visible_message("<span class='notice'>[user] finishes wiping down \the [target].</span>", "<span class='notice'>You have finished wiping down \the [target]!</span>")
 	return
