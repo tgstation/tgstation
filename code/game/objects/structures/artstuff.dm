@@ -51,7 +51,6 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "11x11"
 	var/whichGlobalBackup = 1 //List index
-	var/icon/selfBackup = null //Used so we can still see it in our hands.
 
 /obj/item/weapon/canvas/nineteenXnineteen
 	icon_state = "19x19"
