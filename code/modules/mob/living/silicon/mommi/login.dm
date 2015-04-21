@@ -28,8 +28,9 @@
 		client.images.Add(chosen)
 
 /mob/living/silicon/robot/mommi/proc/remove_static_overlays()
-	for(var/image/I in static_overlays)
-		client.images.Remove(I)
+	if(client)
+		for(var/image/I in static_overlays)
+			client.images.Remove(I)
 	static_overlays.len = 0
 
 /mob/living/silicon/robot/mommi/verb/toggle_statics()
