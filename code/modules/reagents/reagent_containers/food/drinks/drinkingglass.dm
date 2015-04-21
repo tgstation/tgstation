@@ -605,6 +605,10 @@
 					icon_state = "etank"
 					name = "Recharger"
 					desc = "Helps you get back on your feet after a long day of robot maintenance. Can also be used as a substitute for motor oil."
+				if("greytea")
+					icon_state = "greytide"
+					name = "Tide"
+					desc = "This probably shouldn't be considered tea..."
 
 
 

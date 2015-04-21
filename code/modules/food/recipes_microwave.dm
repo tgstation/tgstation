@@ -1400,6 +1400,33 @@
 	reagents = list("milk" = 15, "sodiumchloride" = 5)
 	result = /obj/item/weapon/reagent_containers/food/snacks/gigapuddi/anger
 
+//LIVING PUDDI
+//This is a terrible idea.
+
+/datum/recipe/livingpuddi/happy
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/gigapuddi/happy,
+		/obj/item/slime_extract/grey
+		)
+	result = /mob/living/simple_animal/puddi/happy
+
+/datum/recipe/livingpuddi/anger
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/gigapuddi/anger,
+		/obj/item/slime_extract/grey
+		)
+	result = /mob/living/simple_animal/puddi/anger
+
+/datum/recipe/livingpuddi
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/gigapuddi,
+		/obj/item/slime_extract/grey
+		)
+	result = /mob/living/simple_animal/puddi
+
+
+// END OF LIVING PUDDI SHIT THAT PROBABLY WON'T WORK
+
 /datum/recipe/flan
 	reagents = list("milk" = 5)
 	items = list(
@@ -1417,6 +1444,10 @@
 /datum/recipe/omurice/heart
 	reagents = list("rice" = 5, "ketchup" = 5, "sugar" = 5)
 	result = /obj/item/weapon/reagent_containers/food/snacks/omurice/heart
+
+/datum/recipe/omurice/face
+	reagents = list("rice" = 5, "ketchup" = 5, "sodiumchloride" = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/omurice/face
 
 /datum/recipe/bluespace
 	reagents = list("milk" = 5, "flour" = 5)
@@ -1469,6 +1500,38 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinbread
+
+/datum/recipe/corndog
+	reagents = list("flour" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/sausage,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/corn)
+	result = /obj/item/weapon/reagent_containers/food/snacks/corndog
+
+/datum/recipe/cornydog
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/corn,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/stack/rods)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cornydog
+
+/datum/recipe/higashikata
+	reagents = list("cream" = 20, "watermelonjuice" = 10, "slimejelly" = 10, "ice" = 20, "milk" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice,
+		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice,
+		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice,
+		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice,
+		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/corn
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/higashikata
+
+/datum/recipe/sundae
+	reagents = list("cream" = 10, "ice" = 10, "milk" = 5)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/chocolatebar)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sundae
 
 // Currently Disabled //////////////////////////////////////////
 
