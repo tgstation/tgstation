@@ -241,6 +241,9 @@
 		ticker.mode.update_traitor_icons_added(H.mind) //So the icon actually appears
 	if(("\ref[H.mind]" in ticker.mode.thralls) || (H.mind in ticker.mode.enthralled))
 		ticker.mode.update_vampire_icons_added(H.mind)
+	if(H.mind && H.mind.wizard_spells)
+		for(var/spell/spell_to_add in H.mind.wizard_spells)
+			H.add_spell(spell_to_add)
 
 	// -- End mode specific stuff
 

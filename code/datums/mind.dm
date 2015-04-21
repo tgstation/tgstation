@@ -40,6 +40,7 @@ datum/mind
 
 	var/assigned_role
 	var/special_role
+	var/list/wizard_spells // So we can track our wizmen spells that we learned from the book of magicks.
 
 	var/role_alt_title
 

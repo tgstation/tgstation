@@ -30,6 +30,8 @@
 	if(!spell_masters || !spell_masters.len)
 		return
 
+	if(mind && mind.wizard_spells)
+		mind.wizard_spells.Remove(spell_to_remove)
 	spell_list.Remove(spell_to_remove)
 	for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
 		spell_master.remove_spell(spell_to_remove)
