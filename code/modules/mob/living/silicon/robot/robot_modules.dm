@@ -187,7 +187,7 @@
 	src.modules += new /obj/item/taperoll/atmos(src)
 	src.modules += new /obj/item/taperoll/engineering(src)
 	src.modules += new /obj/item/weapon/tile_painter(src)
-	src.modules += new /obj/item/device/material_synth/robot/cyborg(src)
+	src.modules += new /obj/item/device/material_synth/robot(src)
 
 	var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
 	W.amount = 50
