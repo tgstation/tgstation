@@ -7,7 +7,7 @@
 	antag_flag = BE_ABDUCTOR
 	pre_setup_before_jobs = 1
 	recommended_enemies = 2
-	required_players = 15
+	required_players = 13
 	var/max_teams = 4
 	var/teams = 1
 	var/list/datum/mind/scientists = list()
