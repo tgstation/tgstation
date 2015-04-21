@@ -30,13 +30,14 @@
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
+	var/info 			//Info on the camera about mobs or some shit
 
 	autoignition_temperature = 530 // Kelvin
 	fire_fuel = 1
 
 
 /obj/item/weapon/photo/attack_self(mob/user)
-	user.examination(src)
+	show(user)
 
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
@@ -49,10 +50,10 @@
 
 
 /obj/item/weapon/photo/examine(mob/user)
-	..()
-	if(in_range(user, src))
+	if(Adjacent(user))
 		show(user)
 	else
+		..()
 		user << "<span class='notice'>You can't make out the picture from here.</span>"
 
 
@@ -63,6 +64,8 @@
 		+ "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
 		+ "</body></html>", "window=book;size=192x[scribble ? 400 : 192]")
+	if(info) //Would rather not display a blank line of text
+		user << info
 	onclose(user, "[name]")
 
 
@@ -364,7 +367,7 @@
 	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
 	P.icon = ic
 	P.img = temp
-	P.desc = mobs
+	P.info = mobs
 	P.pixel_x = rand(-10, 10)
 	P.pixel_y = rand(-10, 10)
 
@@ -381,7 +384,7 @@
 	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
 	P.icon = ic
 	P.img = temp
-	P.desc = mobs
+	P.info = mobs
 	P.pixel_x = rand(-10, 10)
 	P.pixel_y = rand(-10, 10)
 
@@ -406,7 +409,7 @@
 	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
 	var/icon = ic
 	var/img = temp
-	var/desc = mobs
+	var/info = mobs
 	var/pixel_x = rand(-10, 10)
 	var/pixel_y = rand(-10, 10)
 
@@ -415,7 +418,7 @@
 		injectblueprints = 1
 		blueprints = 0
 
-	injectaialbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
+	injectaialbum(icon, img, info, pixel_x, pixel_y, injectblueprints)
 
 
 /datum/picture
@@ -423,7 +426,7 @@
 	var/list/fields = list()
 
 
-/obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/info, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	for(var/datum/picture in src.aipictures)
 		numberer++
@@ -431,7 +434,7 @@
 	P.fields["name"] = "Image [numberer]"
 	P.fields["icon"] = icon
 	P.fields["img"] = img
-	P.fields["desc"] = desc
+	P.fields["info"] = info
 	P.fields["pixel_x"] = pixel_x
 	P.fields["pixel_y"] = pixel_y
 	P.fields["blueprints"] = blueprintsinject
@@ -457,12 +460,12 @@
 			break  	// just in case some AI decides to take 10 thousand pictures in a round
 	P.icon = selection.fields["icon"]
 	P.img = selection.fields["img"]
-	P.desc = selection.fields["desc"]
+	P.info = selection.fields["info"]
 	P.pixel_x = selection.fields["pixel_x"]
 	P.pixel_y = selection.fields["pixel_y"]
 
 	P.show(usr)
-	usr << P.desc
+	usr << P.info
 	del P    //so 10 thousdand pictures items are not left in memory should an AI take them and then view them all.
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
