@@ -19,14 +19,35 @@
 	var/obj/item/organ/brain/brain = null //The actual brain
 
 /obj/item/device/mmi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
-			user << "<span class='danger'>There's already a brain in the MMI!</span>"
+			user << "<span class='warning'>There's already a brain in the MMI!</span>"
 			return
 		if(!newbrain.brainmob)
-			user << "<span class='danger'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>"
+			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>"
 			return
+
+		var/mob/living/carbon/brain/B = newbrain.brainmob
+		if(!B.key)
+			var/mob/dead/observer/ghost = B.get_ghost()
+			if(ghost)
+				if(ghost.client)
+					user << "<span class='warning'>The brain's activity spikes for a second then settles down. Next connection attempts may be successful.</span>"
+					ghost << "<span class='ghostalert'>Someone is trying to put your brain in a MMI. Return to your body if you want to!</span> (Verbs -> Ghost -> Re-enter corpse)"
+					ghost << sound('sound/effects/genetics.ogg')
+				else
+					user << "<span class='warning'>The brain seems currently inactive; it might change.</span>"
+			else
+				user << "<span class='warning'>The brain is completely unresponsive; there's no point.</span>"
+			return
+
+		if(!B.client)
+			user << "<span class='warning'>The brain seems currently inactive; it might change.</span>"
+			return
+
+
 		visible_message("<span class='notice'>[user] sticks \a [newbrain] into \the [src]</span>")
 
 		brainmob = newbrain.brainmob

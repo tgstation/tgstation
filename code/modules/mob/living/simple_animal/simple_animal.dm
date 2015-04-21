@@ -98,6 +98,8 @@
 			eye_blind = 0
 		if(eye_blurry)
 			eye_blurry = 0
+		if(eye_stat)
+			eye_stat = 0
 
 	//Ears
 	if(disabilities & DEAF)

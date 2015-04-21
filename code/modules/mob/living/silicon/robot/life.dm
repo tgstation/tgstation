@@ -24,7 +24,8 @@
 	if(cell)
 		if(cell.charge <= 0)
 			uneq_all()
-			stat = UNCONSCIOUS
+			Stun(5)
+			update_icons()
 		else if (cell.charge <= 100)
 			uneq_all()
 			cell.use(1)
@@ -38,7 +39,8 @@
 			cell.use(1)
 	else
 		uneq_all()
-		stat = UNCONSCIOUS
+		Stun(5)
+		update_icons()
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()
@@ -68,7 +70,7 @@
 		if(getOxyLoss() > 50)
 			Paralyse(3)
 
-		if (paralysis || stunned || weakened) //Stunned etc.
+		if(paralysis)
 			stat = UNCONSCIOUS
 
 		use_power()
@@ -80,7 +82,7 @@
 	if (stuttering)
 		stuttering = max(0, stuttering - 1)
 
-	if (druggy)
+	if(druggy)
 		druggy = max(0, druggy - 1)
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
@@ -216,3 +218,11 @@
 	else
 		canmove = 1
 	return canmove
+
+/mob/living/silicon/robot/handle_environment(var/datum/gas_mixture/environment)
+	if(environment.temperature > FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT) //hotter than what a firesuit can handle
+		spark_system.start()
+		adjustFireLoss(4)
+		throw_alert("temp","hot",3)
+	else
+		clear_alert("temp")

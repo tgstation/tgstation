@@ -41,11 +41,9 @@
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(prob(15))
-			L.Weaken(3)
-			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.adjustStaminaLoss(8)
 
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"

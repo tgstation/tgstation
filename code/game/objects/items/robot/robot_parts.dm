@@ -160,32 +160,31 @@
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
-				user << "<span class='danger'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise.</span>"
+				user << "<span class='warning'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise.</span>"
 				return
 			if(!M.brainmob)
-				user << "<span class='danger'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>"
-				return
-			if(!M.brainmob.key)
-				var/ghost_can_reenter = 0
-				if(M.brainmob.mind)
-					for(var/mob/dead/observer/G in player_list)
-						if(G.can_reenter_corpse && G.mind == M.brainmob.mind)
-							ghost_can_reenter = 1
-							break
-				if(!ghost_can_reenter)
-					user << "<span class='notice'>The mmi indicates that their mind is completely unresponsive; there's no point.</span>"
-					return
-
-			if(M.brainmob.stat == DEAD)
-				user << "<span class='danger'>Sticking a dead brain into the frame would sort of defeat the purpose.</span>"
+				user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>"
 				return
 
-			if((M.brainmob.mind in ticker.mode.head_revolutionaries) || (M.brainmob.mind in ticker.mode.A_bosses) || (M.brainmob.mind in ticker.mode.B_bosses))
+			var/mob/living/carbon/brain/BM = M.brainmob
+			if(!BM.key || !BM.mind)
+				user << "<span class='warning'>The mmi indicates that their mind is completely unresponsive; there's no point.</span>"
+				return
+
+			if(!BM.client) //braindead
+				user << "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change.</span>"
+				return
+
+			if(BM.stat == DEAD)
+				user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose.</span>"
+				return
+
+			if((BM.mind in ticker.mode.head_revolutionaries) || (BM.mind in ticker.mode.A_bosses) || (BM.mind in ticker.mode.B_bosses))
 				user << "<span class='danger'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI.</span>"
 				return
 
-			if(jobban_isbanned(M.brainmob, "Cyborg"))
-				user << "<span class='danger'>This MMI does not seem to fit.</span>"
+			if(jobban_isbanned(BM, "Cyborg"))
+				user << "<span class='warning'>This MMI does not seem to fit.</span>"
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
@@ -211,7 +210,7 @@
 				if(ticker.mode.config_tag == "malfunction") //Don't let humans get a cyborg on their side during malf, for balance reasons.
 					O.set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*�&110010</span>")
 
-			M.brainmob.mind.transfer_to(O)
+			BM.mind.transfer_to(O)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, any objectives listed here are null and void, and will be marked as failed. They are simply here for memory purposes.")

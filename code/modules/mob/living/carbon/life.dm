@@ -246,7 +246,9 @@
 
 /mob/living/carbon/proc/handle_heart()
 	return
-/mob/living/carbon/handle_environment(var/datum/gas_mixture/environment)	return
+
+/mob/living/carbon/handle_environment(var/datum/gas_mixture/environment)
+	return
 
 /mob/living/carbon/handle_stomach()
 	spawn(0)
