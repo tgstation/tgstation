@@ -286,7 +286,7 @@
 						src << "<span class='warning'>You didn't choose anything.</span>"
 						return
 
-					if(!do_after(src, 45))
+					if(!do_after(src, 45,,0))
 						return
 
 					if(!src||!selection)
