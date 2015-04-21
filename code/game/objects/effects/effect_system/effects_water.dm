@@ -10,13 +10,21 @@
 
 /obj/effect/effect/water/New()
 	..()
+	//var/turf/T = src.loc
+	//if (istype(T, /turf))
+	//	T.firelevel = 0 //TODO: FIX
 	spawn( 70 )
-		qdel(src)
+		delete()
+		return
+	return
 
 /obj/effect/effect/water/Move(turf/newloc)
+	//var/turf/T = src.loc
+	//if (istype(T, /turf))
+	//	T.firelevel = 0 //TODO: FIX
 	if (--src.life < 1)
-		qdel(src)
-		return 0
+		//SN src = null
+		delete()
 	if(newloc.density)
 		return 0
 	.=..()
@@ -63,7 +71,7 @@ steam.start() -- spawns the effect
 		spawn(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effect/effect/steam/steam = PoolOrNew(/obj/effect/effect/steam, location)
+			var/obj/effect/effect/steam/steam = new /obj/effect/effect/steam(src.location)
 			var/direction
 			if(src.cardinals)
 				direction = pick(cardinal)
@@ -73,7 +81,7 @@ steam.start() -- spawns the effect
 				sleep(5)
 				step(steam,direction)
 			spawn(20)
-				qdel(steam)
+				steam.delete()
 
 
 /////////////////////////////////////////////
@@ -98,12 +106,12 @@ steam.start() -- spawns the effect
 		src.processing = 0
 		spawn(0)
 			if(src.number < 3)
-				var/obj/effect/effect/steam/I = PoolOrNew(/obj/effect/effect/steam, oldposition)
+				var/obj/effect/effect/steam/I = new /obj/effect/effect/steam(src.oldposition)
 				src.number++
 				src.oldposition = get_turf(holder)
 				I.dir = src.holder.dir
 				spawn(10)
-					qdel(I)
+					I.delete()
 					src.number--
 				spawn(2)
 					if(src.on)

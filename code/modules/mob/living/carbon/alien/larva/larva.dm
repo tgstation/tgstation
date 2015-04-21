@@ -4,7 +4,6 @@
 	icon_state = "larva0"
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	density = 0
 
 	maxHealth = 25
 	health = 25
@@ -22,8 +21,6 @@
 		name = "alien larva ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
-	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
-	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
 	..()
 
 //This needs to be fixed
@@ -39,6 +36,17 @@
 
 //can't equip anything
 /mob/living/carbon/alien/larva/attack_ui(slot_id)
+	return
+
+/mob/living/carbon/alien/larva/attack_slime(mob/living/carbon/slime/M as mob)
+
+	..()
+	var/damage = rand(5, 35)
+	if(M.is_adult)
+		damage = rand(20, 40)
+	adjustBruteLoss(damage)
+	add_logs(M, src, "attacked", admin=0)
+	updatehealth()
 	return
 
 /mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user)

@@ -7,13 +7,10 @@
 	origin_tech = "magnets=1"
 	flags = HEAR
 	attachable = 1
-	verb_say = "beeps"
-	verb_ask = "beeps"
-	verb_exclaim = "beeps"
 	var/listening = 0
 	var/recorded = "" //the activation message
 
-/obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(speaker == src)
 		return
 
@@ -30,6 +27,9 @@
 		if(!holder)
 			listening = !listening
 			say("[listening ? "Now" : "No longer"] recording input.")
+
+/obj/machinery/vending/say_quote(text)
+	return "beeps, \"[text]\""
 
 /obj/item/device/assembly/voice/attack_self(mob/user)
 	if(!user)

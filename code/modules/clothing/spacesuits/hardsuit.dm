@@ -1,6 +1,6 @@
-	//Baseline hardsuits
+	//Regular (engineering) hardsuits
 /obj/item/clothing/head/helmet/space/hardsuit
-	name = "hardsuit helmet"
+	name = "engineering hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	icon_state = "hardsuit0-engineering"
 	item_state = "eng_helm"
@@ -10,7 +10,6 @@
 	item_color = "engineering" //Determines used sprites: hardsuit[on]-[color] and hardsuit[on]-[color]2 (lying down sprite)
 	action_button_name = "Toggle Helmet Light"
 	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
-
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -36,7 +35,7 @@
 
 
 /obj/item/clothing/suit/space/hardsuit
-	name = "hardsuit"
+	name = "engineering hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "hardsuit-engineering"
 	item_state = "eng_hardsuit"
@@ -46,42 +45,9 @@
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
 	action_button_name = "Toggle Helmet"
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
-	var/obj/item/weapon/tank/jetpack/suit/jetpack = null
-
-/obj/item/clothing/suit/space/hardsuit/verb/Jetpack()
-	set name = "Toggle Inbuilt Jetpack"
-	set category = "Object"
-	jetpack.toggle()
-
-/obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets()
-	set name = "Toggle Inbuilt Jetpack Stabilization"
-	set category = "Object"
-	jetpack.toggle_rockets()
-
-	//Engineering
-/obj/item/clothing/head/helmet/space/hardsuit/engine
-	name = "engineering hardsuit helmet"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
-	icon_state = "hardsuit0-engineering"
-	item_state = "eng_helm"
-	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
-	item_color = "engineering"
-
-/obj/item/clothing/suit/space/hardsuit/engine
-	name = "engineering hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
-	icon_state = "hardsuit-engineering"
-	item_state = "eng_hardsuit"
-	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
-
-
-/obj/item/clothing/suit/space/hardsuit/engine/New()
-	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
-	..()
 
 	//Atmospherics
-/obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
+/obj/item/clothing/head/helmet/space/hardsuit/atmos
 	name = "atmospherics hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has thermal shielding."
 	icon_state = "hardsuit0-atmospherics"
@@ -91,7 +57,7 @@
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 
-/obj/item/clothing/suit/space/hardsuit/engine/atmos
+/obj/item/clothing/suit/space/hardsuit/atmos
 	name = "atmospherics hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has thermal shielding."
 	icon_state = "hardsuit-atmospherics"
@@ -99,11 +65,11 @@
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 0)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/atmos
 
 
 	//Chief Engineer's hardsuit
-/obj/item/clothing/head/helmet/space/hardsuit/engine/elite
+/obj/item/clothing/head/helmet/space/hardsuit/elite
 	name = "advanced hardsuit helmet"
 	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish."
 	icon_state = "hardsuit0-white"
@@ -113,8 +79,7 @@
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 
-
-/obj/item/clothing/suit/space/hardsuit/engine/elite
+/obj/item/clothing/suit/space/hardsuit/elite
 	icon_state = "hardsuit-white"
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
@@ -122,7 +87,7 @@
 	armor = list(melee = 40, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 90)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/elite
 
 
 	//Mining hardsuit
@@ -134,7 +99,6 @@
 	item_color = "mining"
 	armor = list(melee = 40, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	brightness_on = 7
-
 
 /obj/item/clothing/suit/space/hardsuit/mining
 	icon_state = "hardsuit-mining"
@@ -234,9 +198,6 @@
 	..()
 	flags ^= NODROP
 
-/obj/item/clothing/suit/space/hardsuit/syndi/New()
-	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
-	..()
 
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
@@ -246,7 +207,6 @@
 	icon_state = "hardsuit1-owl"
 	item_state = "s_helmet"
 	item_color = "owl"
-
 
 /obj/item/clothing/suit/space/hardsuit/syndi/owl
 	name = "owl hardsuit"
@@ -270,7 +230,6 @@
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
-
 
 /obj/item/clothing/suit/space/hardsuit/wizard
 	icon_state = "hardsuit-wiz"
@@ -299,7 +258,6 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 
-
 /obj/item/clothing/suit/space/hardsuit/medical
 	icon_state = "hardsuit-medical"
 	name = "medical hardsuit"
@@ -320,7 +278,6 @@
 	item_color = "sec"
 	armor = list(melee = 30, bullet = 15, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50)
 
-
 /obj/item/clothing/suit/space/hardsuit/security
 	icon_state = "hardsuit-sec"
 	name = "security hardsuit"
@@ -336,7 +293,6 @@
 	icon_state = "hardsuit0-hos"
 	item_color = "hos"
 	armor = list(melee = 45, bullet = 25, laser = 30,energy = 10, bomb = 25, bio = 100, rad = 50)
-
 
 /obj/item/clothing/suit/space/hardsuit/security/hos
 	icon_state = "hardsuit-hos"

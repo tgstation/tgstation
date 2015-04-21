@@ -38,7 +38,7 @@
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = 0
-	var/doortype = /obj/structure/door_assembly/door_assembly_0
+	var/doortype = null
 	var/justzap = 0
 	var/safe = 1
 	normalspeed = 1
@@ -215,7 +215,7 @@
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
 	for(var/mob/living/L in range (3,src))
-		L.irradiate(15)
+		L.apply_effect(15,IRRADIATE,0)
 	return
 
 /obj/machinery/door/airlock/plasma

@@ -35,6 +35,15 @@
 	var/shoot_sound = 'sound/weapons/Taser.ogg'
 	radio_frequency = SEC_FREQ
 	bot_type = SEC_BOT
+	bot_filter = RADIO_SECBOT
+
+	//List of weapons that secbots will not arrest for
+	var/safe_weapons = list(\
+		/obj/item/weapon/gun/energy/laser/bluetag,\
+		/obj/item/weapon/gun/energy/laser/redtag,\
+		/obj/item/weapon/gun/energy/laser/practice,\
+		/obj/item/weapon/melee/classic_baton/telescopic,\
+		/obj/item/weapon/gun/energy/kinetic_accelerator)
 
 
 /obj/item/weapon/ed209_assembly
@@ -61,6 +70,8 @@
 		botcard.access = J.get_access()
 		prev_access = botcard.access
 
+
+		add_to_beacons(bot_filter)
 		if(lasercolor)
 			shot_delay = 6//Longer shot delay because JESUS CHRIST
 			check_records = 0//Don't actively target people set to arrest
@@ -194,17 +205,6 @@ Auto Patrol[]"},
 		declare_arrests = 0
 		icon_state = "[lasercolor]ed209[on]"
 		set_weapon()
-
-/obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if (!Proj.nodamage && Proj.damage < src.health)
-				threatlevel = Proj.firer.assess_threat(src)
-				threatlevel += 6
-				if(threatlevel >= 4)
-					target = Proj.firer
-					mode = BOT_HUNT
-	..()
 
 /obj/machinery/bot/ed209/bot_process()
 	if (!..())
@@ -392,8 +392,9 @@ Auto Patrol[]"},
 			continue
 
 /obj/machinery/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
-	if(slot_item && slot_item.needs_permit)
-		return 1
+	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
+		if(!(slot_item.type in safe_weapons))
+			return 1
 	return 0
 
 /* terrible
@@ -406,7 +407,7 @@ Auto Patrol[]"},
 
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message("<span class='userdanger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
@@ -512,7 +513,7 @@ Auto Patrol[]"},
 		pulse2.anchored = 1
 		pulse2.dir = pick(cardinal)
 		spawn(10)
-			qdel(pulse2)
+			pulse2.delete()
 		var/list/mob/living/carbon/targets = new
 		for (var/mob/living/carbon/C in view(12,src))
 			if (C.stat==2)

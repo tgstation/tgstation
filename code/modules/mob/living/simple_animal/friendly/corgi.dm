@@ -1,46 +1,5 @@
 //Corgi
-/mob/living/simple_animal/pet
-	icon = 'icons/mob/pets.dmi'
-	mob_size = MOB_SIZE_SMALL
-	var/obj/item/clothing/tie/petcollar/pcollar = null
-	var/image/collar = null
-	var/image/pettag = null
-
-/mob/living/simple_animal/pet/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(istype(O, /obj/item/clothing/tie/petcollar) && !pcollar)
-		var/obj/item/clothing/tie/petcollar/P = O
-		pcollar = P
-		update_collar()
-		if(P.tagname)
-			name = P.tagname
-		user << "<span class='notice'>You put the [P] around [src]'s neck.</span>"
-		qdel(P)
-	else
-		..()
-
-/mob/living/simple_animal/pet/New()
-	..()
-	if(pcollar)
-		pcollar = new(src)
-		update_collar()
-
-/mob/living/simple_animal/pet/revive()
-	..()
-	update_collar()
-
-/mob/living/simple_animal/pet/death(gibbed)
-	..(gibbed)
-	update_collar()
-
-/mob/living/simple_animal/pet/proc/update_collar()
-	overlays.Cut()
-	collar = image('icons/mob/pets.dmi', src, "[icon_state]collar")
-	pettag = image('icons/mob/pets.dmi', src, "[icon_state]tag")
-	overlays += collar
-	overlays += pettag
-
-
-/mob/living/simple_animal/pet/corgi
+/mob/living/simple_animal/corgi
 	name = "\improper corgi"
 	real_name = "corgi"
 	desc = "It's a corgi."
@@ -54,39 +13,37 @@
 	emote_see = list("shakes its head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
 	see_in_dark = 5
-	childtype = /mob/living/simple_animal/pet/corgi/puppy
-	species = /mob/living/simple_animal/pet/corgi
-	var/shaved = 0
+	childtype = /mob/living/simple_animal/corgi/puppy
+	species = /mob/living/simple_animal/corgi
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
 
-/mob/living/simple_animal/pet/corgi/New()
+/mob/living/simple_animal/corgi/New()
 	..()
 	regenerate_icons()
 
-
-/mob/living/simple_animal/pet/corgi/death(gibbed)
-	..(gibbed)
-	regenerate_icons()
-
-/mob/living/simple_animal/pet/corgi/revive()
+/mob/living/simple_animal/corgi/Die()
 	..()
 	regenerate_icons()
 
-/mob/living/simple_animal/pet/corgi/sac_act(var/obj/effect/rune/R, victim) //Still the best thing in this game
+/mob/living/simple_animal/corgi/revive()
+	..()
+	regenerate_icons()
+
+/mob/living/simple_animal/corgi/sac_act(var/obj/effect/rune/R, victim)
 	usr << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
 	usr.reagents.add_reagent("hell_water", 2)
 	R.stone_or_gib(victim)
 
 
-/mob/living/simple_animal/pet/corgi/show_inv(mob/user as mob)
+/mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	user.set_machine(src)
 	if(user.stat) return
 
@@ -104,7 +61,7 @@
 	onclose(user, "mob[real_name]")
 	return
 
-/mob/living/simple_animal/pet/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(inventory_head && inventory_back)
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
@@ -125,27 +82,11 @@
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					dir = i
 					sleep(1)
-
-	if (istype(O, /obj/item/weapon/razor))
-		if (shaved)
-			user << "<span class='warning'>You can't shave this corgi, it's already been shaved.</span>"
-			return
-		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>")
-		if(do_after(user, 50))
-			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O]. </span>")
-			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
-			shaved = 1
-			icon_living = "[initial(icon_living)]_shaved"
-			icon_dead = "[initial(icon_living)]_shaved_dead"
-			if(stat == CONSCIOUS)
-				icon_state = icon_living
-			else
-				icon_state = icon_dead
-		return
-	..()
+	else
+		..()
 
 
-/mob/living/simple_animal/pet/corgi/Topic(href, href_list)
+/mob/living/simple_animal/corgi/Topic(href, href_list)
 	if(usr.stat) return
 
 	//Removing from inventory
@@ -209,13 +150,13 @@
 					//The objects that corgis can wear on their backs.
 					var/list/allowed_types = list(
 						/obj/item/clothing/suit/armor/vest,
-						/obj/item/clothing/suit/space/hardsuit/deathsquad,
+						/obj/item/clothing/suit/space/deathsquad,
 						/obj/item/device/radio,
 						/obj/item/device/radio/off,
 						/obj/item/clothing/suit/cardborg,
 						/obj/item/weapon/tank/internals/oxygen,
 						/obj/item/weapon/tank/internals/air,
-						/obj/item/weapon/extinguisher,
+						/obj/item/weapon/extinguisher
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -243,7 +184,7 @@
 //Corgis are supposed to be simpler, so only a select few objects can actually be put
 //to be compatible with them. The objects are below.
 //Many  hats added, Some will probably be removed, just want to see which ones are popular.
-/mob/living/simple_animal/pet/corgi/proc/place_on_head(obj/item/item_to_add, var/mob/user as mob)
+/mob/living/simple_animal/corgi/proc/place_on_head(obj/item/item_to_add, var/mob/user as mob)
 
 	if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
 		item_to_add.afterattack(src,user,1)
@@ -385,7 +326,7 @@
 				desc = "Can actually be trusted to not run off on his own."
 				valid = 1
 
-			if(/obj/item/clothing/head/helmet/space/hardsuit/deathsquad)
+			if(/obj/item/clothing/head/helmet/space/deathsquad)
 				name = "Trooper [real_name]"
 				desc = "That's not red paint. That's real corgi blood."
 				valid = 1
@@ -420,7 +361,7 @@
 
 
 //IAN! SQUEEEEEEEEE~
-/mob/living/simple_animal/pet/corgi/Ian
+/mob/living/simple_animal/corgi/Ian
 	name = "Ian"
 	real_name = "Ian"	//Intended to hold the name without altering it.
 	gender = MALE
@@ -431,7 +372,7 @@
 	response_disarm = "bops"
 	response_harm   = "kicks"
 
-/mob/living/simple_animal/pet/corgi/Ian/Life()
+/mob/living/simple_animal/corgi/Ian/Life()
 	..()
 
 	//Feeding, chasing food, FOOOOODDDD
@@ -487,7 +428,7 @@
 
 
 
-/mob/living/simple_animal/pet/corgi/regenerate_icons()
+/mob/living/simple_animal/corgi/regenerate_icons()
 	overlays.Cut()
 
 	if(inventory_head)
@@ -511,7 +452,7 @@
 		overlays += back_icon
 
 	if(facehugger)
-		if(istype(src, /mob/living/simple_animal/pet/corgi/puppy))
+		if(istype(src, /mob/living/simple_animal/corgi/puppy))
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
 		else
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
@@ -520,20 +461,17 @@
 
 
 
-/mob/living/simple_animal/pet/corgi/puppy
+/mob/living/simple_animal/corgi/puppy
 	name = "\improper corgi puppy"
 	real_name = "corgi"
 	desc = "It's a corgi puppy."
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
-	shaved = 0
-	density = 0
-	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
 //puppies cannot wear anything.
-/mob/living/simple_animal/pet/corgi/puppy/Topic(href, href_list)
+/mob/living/simple_animal/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
 		usr << "<span class='danger'>You can't fit this on [src]</span>"
 		return
@@ -541,7 +479,7 @@
 
 
 //LISA! SQUEEEEEEEEE~
-/mob/living/simple_animal/pet/corgi/Lisa
+/mob/living/simple_animal/corgi/Lisa
 	name = "Lisa"
 	real_name = "Lisa"
 	gender = FEMALE
@@ -556,13 +494,13 @@
 	var/puppies = 0
 
 //Lisa already has a cute bow!
-/mob/living/simple_animal/pet/corgi/Lisa/Topic(href, href_list)
+/mob/living/simple_animal/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
 		usr << "<span class='danger'>[src] already has a cute bow!</span>"
 		return
 	..()
 
-/mob/living/simple_animal/pet/corgi/Lisa/Life()
+/mob/living/simple_animal/corgi/Lisa/Life()
 	..()
 
 	make_babies()
@@ -575,13 +513,13 @@
 					dir = i
 					sleep(1)
 
-/mob/living/simple_animal/pet/corgi/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	switch(M.a_intent)
 		if("help")	wuv(1,M)
 		if("harm")	wuv(-1,M)
 
-/mob/living/simple_animal/pet/corgi/proc/wuv(change, mob/M)
+/mob/living/simple_animal/corgi/proc/wuv(change, mob/M)
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD) // Added check to see if this mob (the corgi) is dead to fix issue 2454

@@ -31,9 +31,9 @@
 	..()
 	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-	new /obj/item/stack/spacecash(src)
-	new /obj/item/stack/spacecash(src)
-	new /obj/item/stack/spacecash(src)
+	new /obj/item/weapon/spacecash(src)
+	new /obj/item/weapon/spacecash(src)
+	new /obj/item/weapon/spacecash(src)
 
 /obj/item/weapon/storage/book/bible/attack_self(mob/user)
 	return

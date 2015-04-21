@@ -30,10 +30,8 @@
 		intialBrute = L.getBruteLoss()
 		intialOxy = L.getOxyLoss()
 		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			name = "statue of [H.name]"
-			H.bleedsuppress = 1
-			if(H.gender == "female")
+			name = "statue of [L.name]"
+			if(L.gender == "female")
 				icon_state = "human_female"
 		else if(ismonkey(L))
 			name = "statue of a monkey"
@@ -126,7 +124,6 @@
 		shatter(M)
 
 /obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob, params)
-	user.changeNext_move(CLICK_CD_MELEE)
 	health -= I.force
 	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
 	if(health <= 0)

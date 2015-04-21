@@ -506,7 +506,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/carbon/monkey/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/simple_animal/slime/M in sortmob)
+	for(var/mob/living/carbon/slime/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
@@ -781,36 +781,28 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return 1
 
-/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null)
-	if(!user)
+/proc/do_after(mob/user, delay, numticks = 5, needhand = 1)
+	if(!user || isnull(user))
 		return 0
-
 	if(numticks == 0)
 		return 0
 
-	var/atom/Tloc = null
-	if(target)
-		Tloc = target.loc
-
 	var/delayfraction = round(delay/numticks)
-	var/atom/Uloc = user.loc
+	var/turf/T = user.loc
 	var/holding = user.get_active_hand()
-	var/holdingnull = 1 //User is not holding anything
+	var/holdingnull = 1
 	if(holding)
-		holdingnull = 0 //User is holding a tool of some kind
+		holdingnull = 0
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
-		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
+
+
+		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == T))
 			return 0
 
-		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
-			return 0 // Target no longer exists or has moved
-
-		if(needhand)
-			//This might seem like an odd check, but you can still need a hand even when it's empty
-			//i.e the hand is used to insert some item/tool into the construction
-			if(!holdingnull) 
+		if(needhand)	//Sometimes you don't want the user to have to keep their active hand
+			if(!holdingnull)
 				if(!holding)
 					return 0
 			if(user.get_active_hand() != holding)
@@ -828,6 +820,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //else populates the list first before returning it
 /proc/SortAreas()
 	for(var/area/A in world)
+		if(A.lighting_subarea)
+			continue
 		sortedAreas.Add(A)
 
 	sortTim(sortedAreas, /proc/cmp_name_asc)
@@ -885,6 +879,152 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/x_pos = null
 	var/y_pos = null
 	var/z_pos = null
+
+/area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/direction = null)
+	//Takes: Area. Optional: turf type to leave behind.
+	//Returns: Nothing.
+	//Notes: Attempts to move the contents of one area to another area.
+	//       Movement based on lower left corner. Tiles that do not fit
+	//		 into the new area will not be moved.
+
+	if(!A || !src) return 0
+
+	var/list/turfs_src = get_area_turfs(src.type)
+	var/list/turfs_trg = get_area_turfs(A.type)
+
+	var/src_min_x = 0
+	var/src_min_y = 0
+	for (var/turf/T in turfs_src)
+		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
+		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
+
+	var/trg_min_x = 0
+	var/trg_min_y = 0
+	for (var/turf/T in turfs_trg)
+		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
+		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
+
+	var/list/refined_src = new/list()
+	for(var/turf/T in turfs_src)
+		refined_src += T
+		refined_src[T] = new/datum/coords
+		var/datum/coords/C = refined_src[T]
+		C.x_pos = (T.x - src_min_x)
+		C.y_pos = (T.y - src_min_y)
+
+	var/list/refined_trg = new/list()
+	for(var/turf/T in turfs_trg)
+		refined_trg += T
+		refined_trg[T] = new/datum/coords
+		var/datum/coords/C = refined_trg[T]
+		C.x_pos = (T.x - trg_min_x)
+		C.y_pos = (T.y - trg_min_y)
+
+	var/list/fromupdate = new/list()
+	var/list/toupdate = new/list()
+
+	moving:
+		for (var/turf/T in refined_src)
+			var/datum/coords/C_src = refined_src[T]
+			for (var/turf/B in refined_trg)
+				var/datum/coords/C_trg = refined_trg[B]
+				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
+
+					var/old_dir1 = T.dir
+					var/old_icon_state1 = T.icon_state
+					var/old_icon1 = T.icon
+
+					var/turf/X = new T.type(B)
+					X.dir = old_dir1
+					X.icon_state = old_icon_state1
+					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
+
+
+					// Give the new turf our air, if simulated
+					if(istype(X, /turf/simulated) && istype(T, /turf/simulated))
+						var/turf/simulated/sim = X
+						sim.copy_air_with_tile(T)
+
+					/* Quick visual fix for some weird shuttle corner artefacts when on transit space tiles */
+					if(direction && findtext(X.icon_state, "swall_s"))
+
+						// Spawn a new shuttle corner object
+						var/obj/corner = new()
+						corner.loc = X
+						corner.density = 1
+						corner.anchored = 1
+						corner.icon = X.icon
+						corner.icon_state = replacetext(X.icon_state, "_s", "_f")
+						corner.tag = "delete me"
+						corner.name = "wall"
+
+						// Find a new turf to take on the property of
+						var/turf/nextturf = get_step(corner, direction)
+						if(!nextturf || !istype(nextturf, /turf/space))
+							nextturf = get_step(corner, turn(direction, 180))
+
+
+						// Take on the icon of a neighboring scrolling space icon
+						X.icon = nextturf.icon
+						X.icon_state = nextturf.icon_state
+
+
+					for(var/obj/O in T)
+
+						// Reset the shuttle corners
+						if(O.tag == "delete me")
+							X.icon = 'icons/turf/shuttle.dmi'
+							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
+							X.name = "wall"
+							qdel(O) // prevents multiple shuttle corners from stacking
+							continue
+						if(!istype(O,/obj)) continue
+						O.loc = X
+					for(var/mob/M in T)
+						if(!M.move_on_shuttle)
+							continue
+						M.loc = X
+
+//					var/area/AR = X.loc
+
+//					if(AR.lighting_use_dynamic)							//TODO: rewrite this code so it's not messed by lighting ~Carn
+//						X.opacity = !X.opacity
+//						X.SetOpacity(!X.opacity)
+
+					toupdate += X
+
+					if(turftoleave)
+						var/turf/ttl = new turftoleave(T)
+
+//						var/area/AR2 = ttl.loc
+
+//						if(AR2.lighting_use_dynamic)						//TODO: rewrite this code so it's not messed by lighting ~Carn
+//							ttl.opacity = !ttl.opacity
+//							ttl.sd_SetOpacity(!ttl.opacity)
+
+						fromupdate += ttl
+
+					else
+						T.ChangeTurf(/turf/space)
+
+					refined_src -= T
+					refined_trg -= B
+					continue moving
+
+
+	if(toupdate.len)
+		for(var/turf/simulated/T1 in toupdate)
+			SSair.remove_from_active(T1)
+			T1.CalculateAdjacentTurfs()
+			SSair.add_to_active(T1,1)
+
+	if(fromupdate.len)
+		for(var/turf/simulated/T2 in fromupdate)
+			SSair.remove_from_active(T2)
+			T2.CalculateAdjacentTurfs()
+			SSair.add_to_active(T2,1)
+
+
 
 /proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	if(!original)
@@ -1128,37 +1268,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(T)
 				return T
 
-//Finds the distance between two atoms, in pixels
-/proc/getPixelDistance(var/atom/A, var/atom/B)
-	if(!istype(A)||!istype(B))
-		return 0
-
-	var/_x1 = A.x
-	var/_x2 = B.x
-	var/_y1 = A.y
-	var/_y2 = B.y
-
-	//Ensure _x1 is bigger, simplicity
-	if(_x2 > _x1)
-		var/tx = _x1
-		_x1 = _x2
-		_x2 = tx
-
-	//Ensure _y1 is bigger, simplicity
-	if(_y2 > _y1)
-		var/ty = _y1
-		_y1 = _y2
-		_y2 = ty
-
-	//DY/DX
-	var/dx = _x1 - _x2 + A.pixel_x + B.pixel_x
-	var/dy = _y1 - _y2 + A.pixel_y + B.pixel_y
-
-	//Distance check
-	if(dx == 0 && dy == 0) //No distance, don't bother calculating
-		return 0
-
-	. = sqrt(((dx**2) + (dy**2)))
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1219,7 +1328,7 @@ var/global/list/common_tools = list(
 			return 1000
 		else
 			return 0
-	if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
+	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		return 3800
 	if(istype(W, /obj/item/weapon/melee/energy))
 		var/obj/item/weapon/melee/energy/O = W
@@ -1242,10 +1351,6 @@ var/global/list/common_tools = list(
 	/obj/item/weapon/twohanded/fireaxe,\
 	/obj/item/weapon/hatchet,\
 	/obj/item/weapon/throwing_star,\
-	/obj/item/clothing/glasses/sunglasses/garb,\
-	/obj/item/clothing/glasses/sunglasses/gar,\
-	/obj/item/clothing/glasses/hud/security/sunglasses/gars,\
-	/obj/item/clothing/glasses/meson/gar,\
 	/obj/item/weapon/twohanded/spear)
 
 	//Because is_sharp is used for food or something.

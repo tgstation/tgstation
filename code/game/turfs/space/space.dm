@@ -233,8 +233,3 @@ proc/setup_map_transitions() //listamania
 
 /turf/space/singularity_act()
 	return
-
-/turf/space/can_have_cabling()
-	if(locate(/obj/structure/lattice/catwalk, src))
-		return 1
-	return 0

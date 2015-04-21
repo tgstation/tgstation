@@ -126,7 +126,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 					C.ContractDisease(src)
 
 
-/datum/disease/process()
+/datum/disease/proc/process()
 	if(!holder)
 		SSdisease.processing -= src
 		return
@@ -179,9 +179,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 
 /datum/disease/proc/Copy()
-	var/datum/disease/D = new type()
-	D.strain_data = strain_data.Copy()
-	return D
+	return new type()
 
 
 /datum/disease/proc/GetDiseaseID()

@@ -96,7 +96,7 @@
 "bR" = (/obj/structure/table,/obj/machinery/light/small,/obj/item/weapon/paper{info = "X X O<br>X O X<br>O X"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/example)
 "bS" = (/obj/structure/piano,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/example)
 "bT" = (/obj/machinery/light/small,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/example)
-"bU" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/validsalad,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/example)
+"bU" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/salad/validsalad,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/awaymission/example)
 "bV" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/plasteel,/area/awaymission/example)
 "bW" = (/obj/structure/table,/obj/item/device/analyzer,/turf/simulated/floor/plasteel,/area/awaymission/example)
 "bX" = (/obj/structure/table,/obj/item/weapon/rack_parts,/turf/simulated/floor/plasteel,/area/awaymission/example)

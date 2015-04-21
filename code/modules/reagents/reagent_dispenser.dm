@@ -67,12 +67,12 @@
 			return
 		if(2.0)
 			if (prob(50))
-				PoolOrNew(/obj/effect/effect/water, src.loc)
+				new /obj/effect/effect/water(src.loc)
 				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
-				PoolOrNew(/obj/effect/effect/water, src.loc)
+				new /obj/effect/effect/water(src.loc)
 				qdel(src)
 				return
 		else
@@ -80,7 +80,7 @@
 
 /obj/structure/reagent_dispensers/watertank/blob_act()
 	if(prob(50))
-		PoolOrNew(/obj/effect/effect/water, loc)
+		new /obj/effect/effect/water(src.loc)
 		qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank
@@ -102,7 +102,7 @@
 				return
 			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-			explosion(src.loc,-1,0,2, flame_range = 2)
+			explosion(src.loc,-1,2,5,5, flame_range = 5)
 
 
 /obj/structure/reagent_dispensers/fueltank/blob_act()
@@ -110,7 +110,7 @@
 
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
-	explosion(src.loc,-1,0,2, flame_range = 2)
+	explosion(src.loc,-1,2,5,5, flame_range = 5)
 	if(src)
 		qdel(src)
 

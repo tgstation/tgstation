@@ -32,14 +32,11 @@
 	flick(flick_name, animate)
 
 /mob/living/death(gibbed)
-	eye_blind = max(eye_blind, 1)
 	timeofdeath = world.time
 
 	living_mob_list -= src
 	if(!gibbed)
 		dead_mob_list += src
-	else if(buckled)
-		buckled.unbuckle_mob()
 
 
 /mob/living/proc/setup_animation(var/animation, var/prev_lying)

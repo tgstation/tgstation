@@ -6,7 +6,7 @@ Research Director=1
 Chief Medical Officer=1
 
 Station Engineer=5
-Roboticist=1
+Roboticist=2
 
 Medical Doctor=5
 Geneticist=2
@@ -29,11 +29,11 @@ Detective=1
 Security Officer=5
 
 Assistant=-1
-Atmospheric Technician=4
+Atmospheric Technician=3
 Cargo Technician=3
 Chaplain=1
-Lawyer=2
+Lawyer=1
 Librarian=1
 
 AI=1
-Cyborg=1
+Cyborg=2

@@ -321,8 +321,6 @@
 			for(var/obj/O in T0)
 				if(O.invisibility >= 101)
 					continue
-				if(O == T0.lighting_object)
-					continue
 				O.loc = T1
 
 				//close open doors
@@ -352,13 +350,13 @@
 
 		//air system updates
 		for(var/turf/T1 in L1)
-			T1.redraw_lighting()
+			T1.shift_to_subarea()
 			SSair.remove_from_active(T1)
 			T1.CalculateAdjacentTurfs()
 			SSair.add_to_active(T1,1)
 
 		for(var/turf/T0 in L0)
-			T0.redraw_lighting()
+			T0.shift_to_subarea()
 			SSair.remove_from_active(T0)
 			T0.CalculateAdjacentTurfs()
 			SSair.add_to_active(T0,1)
@@ -518,7 +516,7 @@
 
 	if(href_list["move"])
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
-			if(0)	usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
+			if(0)	usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
 			if(1)	usr << "<span class='warning'>Invalid shuttle requested.</span>"
 			else	usr << "<span class='notice'>Unable to comply.</span>"
 

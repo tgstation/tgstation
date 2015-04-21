@@ -56,8 +56,16 @@
 
 
 /obj/effect/accelerated_particle/proc/toxmob(var/mob/living/M)
-	M.irradiate(energy*6)
+/*	var/radiation = (energy*2) //We don't need to do two multiplications and a single goddamn
+			if(istype(M,/mob/living/carbon/human))
+		if(M:wear_suit) //TODO: check for radiation protection
+			radiation = round(radiation/2,1)
+	if(istype(M,/mob/living/carbon/monkey))
+		if(M:wear_suit) //TODO: check for radiation protection
+			radiation = round(radiation/2,1)*/
+	M.apply_effect((energy*6),IRRADIATE,0)
 	M.updatehealth()
+	//M << "\red You feel odd."
 	return
 
 

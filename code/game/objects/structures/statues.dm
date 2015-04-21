@@ -44,7 +44,7 @@
 									 "<span class='notice'>You have secured the [name]'s bolts!</span>")
 				anchored = 1
 
-	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
+	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user,30))
@@ -180,7 +180,7 @@
 		if(world.time > last_event+15)
 			active = 1
 			for(var/mob/living/L in range(3,src))
-				L.irradiate(12)
+				L.apply_effect(12,IRRADIATE,0)
 			last_event = world.time
 			active = null
 			return

@@ -92,6 +92,7 @@
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
+	can_adjust = 0
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
@@ -99,6 +100,7 @@
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
+	can_adjust = 0
 
 /obj/item/clothing/under/space
 	name = "\improper NASA jumpsuit"
@@ -453,7 +455,7 @@
 	item_state = "plaid_red"
 	item_color = "plaid_red"
 	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = 1
+	can_adjust = 0
 
 /obj/item/clothing/under/plaid_skirt/blue
 	name = "blue plaid skirt"
@@ -468,10 +470,3 @@
 	icon_state = "plaid_purple"
 	item_state = "plaid_purple"
 	item_color = "plaid_purple"
-
-/obj/item/clothing/under/jester
-	name = "jester suit"
-	desc = "A jolly dress, well suited to entertain your master, nuncle."
-	icon_state = "jester"
-	item_color = "jester"
-	can_adjust = 0

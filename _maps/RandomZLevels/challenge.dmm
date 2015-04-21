@@ -76,7 +76,7 @@
 "bx" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel{icon_state = "warning"},/area/awaymission/challenge/main)
 "by" = (/obj/machinery/light{dir = 4},/turf/simulated/floor/plasteel{icon_state = "warning"},/area/awaymission/challenge/main)
 "bz" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/awaymission/challenge/main)
-"bA" = (/obj/item/clothing/gloves/yellow,/turf/simulated/floor/plasteel{dir = 1; icon_state = "warning"},/area/awaymission/challenge/main)
+"bA" = (/obj/item/weapon/restraints/handcuffs/cable/yellow,/turf/simulated/floor/plasteel{dir = 1; icon_state = "warning"},/area/awaymission/challenge/main)
 "bB" = (/obj/structure/window/reinforced{dir = 8},/obj/machinery/power/emitter{active = 1; active_power_usage = 0; anchored = 1; dir = 8; idle_power_usage = 0; locked = 1; name = "Energy Cannon"; req_access_txt = "100"; state = 2; use_power = 0},/turf/simulated/floor/plating/airless,/area/awaymission/challenge/main)
 "bC" = (/obj/structure/window/reinforced{dir = 4},/obj/machinery/power/emitter{active = 1; active_power_usage = 0; anchored = 1; dir = 4; idle_power_usage = 0; locked = 1; name = "Energy Cannon"; req_access_txt = "100"; state = 2; use_power = 0},/turf/simulated/floor/plating/airless,/area/awaymission/challenge/main)
 "bD" = (/obj/item/weapon/storage/firstaid/fire,/turf/simulated/floor/plasteel/airless,/area/awaymission/challenge/main)
@@ -144,37 +144,32 @@
 "cN" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/awaymission/challenge/end)
 "cO" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/awaymission/challenge/end)
 "cP" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/awaymission/challenge/end)
-"cQ" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/machinery/door/poddoor{icon_state = "pdoor1"; id = "challenge"; name = "Gateway Shutters"; p_open = 0},/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
-"cR" = (/obj/machinery/gateway{dir = 9},/turf/simulated/floor/plasteel{tag = "icon-vault (NORTH)"; icon_state = "vault"; dir = 1},/area/awaymission/challenge/end)
-"cS" = (/obj/machinery/gateway{dir = 1},/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/challenge/end)
-"cT" = (/obj/machinery/gateway{dir = 5},/turf/simulated/floor/plasteel{tag = "icon-vault (EAST)"; icon_state = "vault"; dir = 4},/area/awaymission/challenge/end)
-"cU" = (/obj/machinery/light{dir = 4},/obj/machinery/door/poddoor{icon_state = "pdoor1"; id = "challenge"; name = "Gateway Shutters"; p_open = 0},/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
-"cV" = (/obj/machinery/door/poddoor{icon_state = "pdoor1"; id = "challenge"; name = "Gateway Shutters"; p_open = 0},/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
-"cW" = (/obj/machinery/gateway{dir = 8},/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/challenge/end)
-"cX" = (/obj/machinery/gateway/centeraway{calibrated = 0},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
-"cY" = (/obj/machinery/gateway{dir = 4},/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/challenge/end)
-"cZ" = (/obj/machinery/gateway{dir = 10},/turf/simulated/floor/plasteel{tag = "icon-vault (EAST)"; icon_state = "vault"; dir = 4},/area/awaymission/challenge/end)
-"da" = (/obj/machinery/gateway,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/challenge/end)
-"db" = (/obj/machinery/gateway{dir = 6},/turf/simulated/floor/plasteel{tag = "icon-vault (NORTH)"; icon_state = "vault"; dir = 1},/area/awaymission/challenge/end)
-"dc" = (/obj/structure/window/reinforced,/obj/machinery/door/poddoor{icon_state = "pdoor1"; id = "challenge"; name = "Gateway Shutters"; p_open = 0},/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
-"dd" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/machinery/door/poddoor{icon_state = "pdoor1"; id = "challenge"; name = "Gateway Shutters"; p_open = 0},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
-"de" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/turf/space,/area/space)
-"df" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/awaymission/challenge/end)
-"dg" = (/obj/structure/table,/obj/item/weapon/paper/pamphlet,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
-"dh" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
-"di" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
-"dj" = (/obj/structure/table,/obj/machinery/recharger{pixel_y = 4},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
-"dk" = (/obj/structure/table,/obj/item/weapon/implanter/explosive,/obj/item/weapon/implanter/explosive{pixel_y = 4},/obj/item/weapon/implanter/explosive{pixel_y = 8},/obj/item/weapon/implanter/explosive{pixel_y = 12},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
-"dl" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/space,/area/space)
-"dm" = (/obj/machinery/door/airlock/centcom{name = "Gateway Access"; opacity = 1; req_access_txt = "109"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
-"dn" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/awaymission/challenge/end)
-"do" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/mob/living/simple_animal/hostile/syndicate{name = "Syndicate Technician"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
-"dp" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
-"dq" = (/obj/machinery/light,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
-"dr" = (/obj/structure/closet/emcloset,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
-"ds" = (/obj/structure/cable,/obj/machinery/power/smes/magical,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
-"dt" = (/obj/machinery/power/terminal{dir = 8},/obj/structure/cable,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
-"du" = (/obj/structure/closet/l3closet/general,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
+"cQ" = (/obj/machinery/gateway{dir = 9},/turf/simulated/floor/plasteel{tag = "icon-vault (NORTH)"; icon_state = "vault"; dir = 1},/area/awaymission/challenge/end)
+"cR" = (/obj/machinery/gateway{dir = 1},/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/challenge/end)
+"cS" = (/obj/machinery/gateway{dir = 5},/turf/simulated/floor/plasteel{tag = "icon-vault (EAST)"; icon_state = "vault"; dir = 4},/area/awaymission/challenge/end)
+"cT" = (/obj/machinery/gateway{dir = 8},/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/challenge/end)
+"cU" = (/obj/machinery/gateway/centeraway{calibrated = 0},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
+"cV" = (/obj/machinery/gateway{dir = 4},/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/challenge/end)
+"cW" = (/obj/machinery/gateway{dir = 10},/turf/simulated/floor/plasteel{tag = "icon-vault (EAST)"; icon_state = "vault"; dir = 4},/area/awaymission/challenge/end)
+"cX" = (/obj/machinery/gateway,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/challenge/end)
+"cY" = (/obj/machinery/gateway{dir = 6},/turf/simulated/floor/plasteel{tag = "icon-vault (NORTH)"; icon_state = "vault"; dir = 1},/area/awaymission/challenge/end)
+"cZ" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/turf/space,/area/space)
+"da" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/awaymission/challenge/end)
+"db" = (/obj/structure/table,/obj/item/weapon/paper/pamphlet,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
+"dc" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
+"dd" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
+"de" = (/obj/structure/table,/obj/machinery/recharger{pixel_y = 4},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
+"df" = (/obj/structure/table,/obj/item/weapon/implanter/explosive,/obj/item/weapon/implanter/explosive{pixel_y = 4},/obj/item/weapon/implanter/explosive{pixel_y = 8},/obj/item/weapon/implanter/explosive{pixel_y = 12},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
+"dg" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/space,/area/space)
+"dh" = (/obj/machinery/door/airlock/centcom{name = "Gateway Access"; opacity = 1; req_access_txt = "109"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
+"di" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/awaymission/challenge/end)
+"dj" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/mob/living/simple_animal/hostile/syndicate{name = "Syndicate Technician"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
+"dk" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/challenge/end)
+"dl" = (/obj/machinery/light,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
+"dm" = (/obj/structure/closet/emcloset,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
+"dn" = (/obj/structure/cable,/obj/machinery/power/smes/magical,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
+"do" = (/obj/machinery/power/terminal{dir = 8},/obj/structure/cable,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
+"dp" = (/obj/structure/closet/l3closet/general,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
 
 (1,1,1) = {"
 aaaaaaaaaaaaababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -232,13 +227,13 @@ bOcEcdcdcdcdcdcdcdcdcdcdcdcdcdcdcFcdcdcncGbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 bOcncncncdcdcncncncncncncncncncncncdcdcncnbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 bOcHcIcncdcdcncJcHcHcHcHcHcHcHcKcncdcdcncLbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 bOaacmcncdcdcncpcMcNcNcNcNcNcOcmcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bOaacmcncdcdcncpcPcQcRcScTcUcPcmcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bOaacmcncdcdcncpcPcVcWcXcYcVcPcmcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bOaacmcncdcdcncpcPcVcZdadbcVcPcmcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bOaacmcncdcdcncpcPdcdcdddcdccPcmcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bOaacmcncdcdcndedfdgdhdidjdkdfdlcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bOaacmcncdcdcdcodmcdcddicdcddmcocdcdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bOaacmcncFcdcncJdncdcddodpcddncKcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bOaacmcndqcncncpdfdrcndsdtdudfcmcncndqcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bOaacmcncdcdcncpcPcncQcRcScncPcmcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bOaacmcncdcdcncpcPcncTcUcVcncPcmcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bOaacmcncdcdcncpcPcncWcXcYcncPcmcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bOaacmcncdcdcncpcPcncncdcncncPcmcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bOaacmcncdcdcncZdadbdcdddedfdadgcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bOaacmcncdcdcdcodhcdcdddcdcddhcocdcdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bOaacmcncFcdcncJdicdcddjdkcddicKcncdcdcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bOaacmcndlcncncpdadmcndndodpdacmcncndlcncpbOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 bObObObObObObObObObObObObObObObObObObObObObOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}

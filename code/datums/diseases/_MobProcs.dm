@@ -38,7 +38,6 @@
 	DD.holder = src
 	if(DD.disease_flags & CAN_CARRY && prob(5))
 		DD.carrier = 1
-	DD.strain_data = D.strain_data.Copy()
 	DD.affected_mob.med_hud_set_status()
 
 

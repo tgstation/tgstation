@@ -33,23 +33,22 @@
 
 				//Do 175 damage divided by the number of damage types applied.
 				if(damagetype & BRUTELOSS)
-					adjustBruteLoss(200/damage_mod)
+					adjustBruteLoss(175/damage_mod)
 
 				if(damagetype & FIRELOSS)
-					adjustFireLoss(200/damage_mod)
+					adjustFireLoss(175/damage_mod)
 
 				if(damagetype & TOXLOSS)
-					adjustToxLoss(200/damage_mod)
+					adjustToxLoss(175/damage_mod)
 
 				if(damagetype & OXYLOSS)
-					adjustOxyLoss(200/damage_mod)
+					adjustOxyLoss(175/damage_mod)
 
 				//If something went wrong, just do normal oxyloss
 				if(!(damagetype | BRUTELOSS) && !(damagetype | FIRELOSS) && !(damagetype | TOXLOSS) && !(damagetype | OXYLOSS))
-					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+					adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
 				updatehealth()
-				death(0)
 				return
 
 		var/suicide_message = pick("[src] is attempting to bite \his tongue off! It looks like \he's trying to commit suicide.", \
@@ -59,9 +58,8 @@
 
 		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>")
 
-		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
-		death(0)
 
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1
@@ -90,9 +88,8 @@
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		visible_message("<span class='danger'>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</span>")
-		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		adjustOxyLoss(max(175- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
-		death(0)
 
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = 1
@@ -108,7 +105,6 @@
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
-		death(0)
 
 /mob/living/silicon/robot/verb/suicide()
 	set hidden = 1
@@ -124,7 +120,6 @@
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
-		death(0)
 
 /mob/living/silicon/pai/verb/suicide()
 	set category = "pAI Commands"
@@ -152,9 +147,27 @@
 				"<span class='userdanger'>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</span>", \
 				"<span class='notice'>You hear thrashing</span>")
 		//put em at -175
-		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		adjustOxyLoss(max(175 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
-		death(0)
+
+
+/mob/living/carbon/slime/verb/suicide()
+	set hidden = 1
+	if(!canSuicide())
+		return
+	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	if(!canSuicide())
+		return
+	if(confirm == "Yes")
+		suiciding = 1
+		visible_message("<span class='danger'>[src] is growing dull and lifeless. It looks like it's lost the will to live.</span>", \
+						"<span class='userdanger'>[src] is growing dull and lifeless. It looks like it's lost the will to live.</span>")
+		setOxyLoss(100)
+		adjustBruteLoss(100 - getBruteLoss())
+		setToxLoss(100)
+		setCloneLoss(100)
+
+		updatehealth()
 
 /mob/living/simple_animal/verb/suicide()
 	set hidden = 1

@@ -63,7 +63,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	usr.say("[input]")
 	for(var/mob/M in mob_list)
 		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
-			M << "<span class='boldannounce'>[input]</span>"
+			M << "<span class='userdanger'>[input]</span>"
 	return
 
 
@@ -339,106 +339,108 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	throw_range = 5
 	w_class = 2.0
 	var/notedat = ""
-	var/tomedat = ""
 	var/list/words = list("ire" = "ire", "ego" = "ego", "nahlizet" = "nahlizet", "certum" = "certum", "veri" = "veri", "jatkaa" = "jatkaa", "balaq" = "balaq", "mgar" = "mgar", "karazet" = "karazet", "geeri" = "geeri")
 
 
-	tomedat = {"<html>
-				<head>
-				<style>
-				h1 {font-size: 25px; margin: 15px 0px 5px;}
-				h2 {font-size: 20px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {list-style: none; margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				</style>
-				</head>
-				<body>
-				<h1>The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood.</h1>
+var/TOMEDAT = ""
 
-				<i>The book is written in an unknown dialect, there are lots of pictures of various complex geometric shapes. You find some notes in english that give you basic understanding of the many runes written in the book. The notes give you an understanding what the words for the runes should be. However, you do not know how to write all these words in this dialect.</i><br>
-				<i>Below is the summary of the runes.</i> <br>
+proc/update_tome()
+	TOMEDAT = {"<html>
+			<head>
+			<style>
+			h1 {font-size: 25px; margin: 15px 0px 5px;}
+			h2 {font-size: 20px; margin: 15px 0px 5px;}
+			li {margin: 2px 0px 2px 15px;}
+			ul {list-style: none; margin: 5px; padding: 0px;}
+			ol {margin: 5px; padding: 0px 15px;}
+			</style>
+			</head>
+			<body>
+			<h1>The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood.</h1>
 
-				<h2>Contents</h2>
-				<p>
-				<b>Teleport self: </b>Travel Self (word)<br>
-				<b>Teleport other: </b>Travel Other (word)<br>
-				<b>Summon new tome: </b>See Blood Hell<br>
-				<b>Convert a person: </b>Join Blood Self<br>
-				<b>Summon Nar-Sie: </b>Hell Join Self<br>
-				<b>Disable technology: </b>Destroy See Technology<br>
-				<b>Drain blood: </b>Travel Blood Self<br>
-				<b>Raise dead: </b>Blood Join Hell<br>
-				<b>Hide runes: </b>Hide See Blood<br>
-				<b>Reveal hidden runes: </b>Blood See Hide<br>
-				<b>Leave your body: </b>Hell travel self<br>
-				<b>Ghost Manifest: </b>Blood See Travel<br>
-				<b>Imbue a talisman: </b>Hell Technology Join<br>
-				<b>Sacrifice: </b>Hell Blood Join<br>
-				<b>Create a wall: </b>Destroy Travel Self<br>
-				<b>Summon cultist: </b>Join Other Self<br>
-				<b>Free a cultist: </b>Travel technology other<br>
-				<b>Deafen: </b>Hide Other See<br>
-				<b>Blind: </b>Destroy See Other<br>
-				<b>Blood Boil: </b>Destroy See Blood<br>
-				<b>Communicate: </b>Self Other Technology<br>
-				<b>Stun: </b>Join Hide Technology<br>
-				<b>Summon Cultist Armor: </b>Hell Destroy Other<br>
-				<b>See Invisible: </b>See Hell Join<br>
-				</p>
-				<h2>Rune Descriptions</h2>
-				<h3>Teleport self</h3>
-				Teleport rune is a special rune, as it only needs two words, with the third word being destination. Basically, when you have two runes with the same destination, invoking one will teleport you to the other one. If there are more than 2 runes, you will be teleported to a random one. Runes with different third words will create separate networks. You can imbue this rune into a talisman, giving you a great escape mechanism.<br>
-				<h3>Teleport other</h3>
-				Teleport other allows for teleportation for any movable object to another rune with the same third word. <br>
-				<h3>Summon new tome</h3>
-				Invoking this rune summons a new arcane tome.
-				<h3>Convert a person</h3>
-				This rune opens target's mind to the realm of Nar-Sie, which usually results in this person joining the cult. However, some people (mostly the ones who posess high authority) have strong enough will to stay true to their old ideals. <br>
-				<h3>Summon Nar-Sie</h3>
-				The ultimate rune. It summons the Avatar of Nar-Sie himself, tearing a huge hole in reality and consuming everything around it. Summoning it is the final goal of any cult.<br>
-				<h3>Disable Technology</h3>
-				Invoking this rune creates a strong electromagnetic pulse in a small radius, making it basically analogic to an EMP grenade. You can imbue this rune into a talisman, making it a decent defensive item.<br>
-				<h3>Drain Blood</h3>
-				This rune instantly heals you of some brute damage at the expense of a person placed on top of the rune. Whenever you invoke a drain rune, ALL drain runes on the station are activated, draining blood from anyone located on top of those runes. This includes yourself, though the blood you drain from yourself just comes back to you. This might help you identify this rune when studying words. One drain gives up to 25HP per each victim, but you can repeat it if you need more. Draining only works on living people, so you might need to recharge your "Battery" once its empty. Drinking too much blood at once might cause blood hunger.<br>
-				<h3>Raise Dead</h3>
-				This rune allows for the resurrection of any dead person. You will need a dead human body and a living human sacrifice. Make 2 raise dead runes. Put a living non-braindead human on top of one, and a dead body on the other one. When you invoke the rune, the life force of the living human will be transferred into the dead body, allowing a ghost standing on top of the dead body to enter it, instantly and fully healing it. Use other runes to ensure there is a ghost ready to be resurrected.<br>
-				<h3>Hide runes</h3>
-				This rune makes all nearby runes completely invisible. They are still there and will work if activated somehow, but you cannot invoke them directly if you do not see them.<br>
-				<h3>Reveal runes</h3>
-				This rune is made to reverse the process of hiding a rune. It reveals all hidden runes in a rather large area around it.
-				<h3>Leave your body</h3>
-				This rune gently rips your soul out of your body, leaving it intact. You can observe the surroundings as a ghost as well as communicate with other ghosts. Your body takes damage while you are there, so ensure your journey is not too long, or you might never come back.<br>
-				<h3>Manifest a ghost</h3>
-				Unlike the Raise Dead rune, this rune does not require any special preparations or vessels. Instead of using full lifeforce of a sacrifice, it will drain YOUR lifeforce. Stand on the rune and invoke it. If theres a ghost standing over the rune, it will materialise, and will live as long as you dont move off the rune or die. You can put a paper with a name on the rune to make the new body look like that person.<br>
-				<h3>Imbue a talisman</h3>
-				This rune allows you to imbue the magic of some runes into paper talismans. Create an imbue rune, then an appropriate rune beside it. Put an empty piece of paper on the imbue rune and invoke it. You will now have a one-use talisman with the power of the target rune. Using a talisman drains some health, so be careful with it. You can imbue a talisman with power of the following runes: summon tome, reveal, conceal, teleport, tisable technology, communicate, deafen, blind and stun.<br>
-				<h3>Sacrifice</h3>
-				Sacrifice rune allows you to sacrifice a living thing or a body to the Geometer of Blood. Monkeys and dead humans are the most basic sacrifices, they might or might not be enough to gain His favor. A living human is what a real sacrifice should be, however, you will need 3 people chanting the invocation to sacrifice a living person.
-				<h3>Create a wall</h3>
-				Invoking this rune solidifies the air above it, creating an an invisible wall. To remove the wall, simply invoke the rune again.
-				<h3>Summon cultist</h3>
-				This rune allows you to summon a fellow cultist to your location. The target cultist must be unhandcuffed ant not buckled to anything. You also need to have 3 people chanting at the rune to successfully invoke it. Invoking it takes heavy strain on the bodies of all chanting cultists.<br>
-				<h3>Free a cultist</h3>
-				This rune unhandcuffs and unbuckles any cultist of your choice, no matter where he is. Invoking it takes heavy strain on the bodies of all chanting cultists.<br>
-				<h3>Deafen</h3>
-				This rune temporarily deafens all non-cultists around you.<br>
-				<h3>Blind</h3>
-				This rune temporarily blinds all non-cultists around you. Very robust. Use together with the deafen rune to leave your enemies completely helpless.<br>
-				<h3>Blood boil</h3>
-				This rune boils the blood all non-cultists in visible range. The damage is enough to instantly critically hurt any person. You need 3 cultists invoking the rune for it to work. This rune is unreliable and may cause unpredicted effect when invoked. It also drains significant amount of your health when successfully invoked.<br>
-				<h3>Communicate</h3>
-				Invoking this rune allows you to relay a message to all cultists on the station and nearby space objects.
-				<h3>Stun</h3>
-				Unlike other runes, this ons is supposed to be used in talisman form. When invoked directly, it simply releases some dark energy, briefly stunning everyone around. When imbued into a talisman, you can force all of its energy into one person, stunning him so hard he cant even speak. However, effect wears off rather fast.<br>
-				<h3>Equip Armor</h3>
-				When this rune is invoked, either from a rune or a talisman, it will equip the user with the armor of the followers of Nar-Sie. To use this rune to its fullest extent, make sure you are not wearing any form of headgear, armor, gloves or shoes, and make sure you are not holding anything in your hands.<br>
-				<h3>See Invisible</h3>
-				When invoked when standing on it, this rune allows the user to see the the world beyond as long as he does not move.<br>
-				</body>
-				</html>
-				"}
+			<i>The book is written in an unknown dialect, there are lots of pictures of various complex geometric shapes. You find some notes in english that give you basic understanding of the many runes written in the book. The notes give you an understanding what the words for the runes should be. However, you do not know how to write all these words in this dialect.</i><br>
+			<i>Below is the summary of the runes.</i> <br>
 
+			<h2>Contents</h2>
+			<p>
+			<b>Teleport self: </b>Travel Self (word)<br>
+			<b>Teleport other ([ITEMPORT_CULTS]): </b>Travel Other (word)<br>
+			<b>Summon new tome: </b>See Blood Hell<br>
+			<b>Convert a person ([CONVERT_CULTS]): </b>Join Blood Self<br>
+			<b>Summon Nar-Sie ([ELDERGOD_CULTS]): </b>Hell Join Self<br>
+			<b>Disable technology: </b>Destroy See Technology<br>
+			<b>Drain blood: </b>Travel Blood Self<br>
+			<b>Raise dead: </b>Blood Join Hell<br>
+			<b>Hide runes: </b>Hide See Blood<br>
+			<b>Reveal hidden runes: </b>Blood See Hide<br>
+			<b>Leave your body: </b>Hell travel self<br>
+			<b>Ghost Manifest: </b>Blood See Travel<br>
+			<b>Imbue a talisman: </b>Hell Technology Join<br>
+			<b>Sacrifice ([SACRIFICE_CULTS]): </b>Hell Blood Join<br>
+			<b>Create a wall: </b>Destroy Travel Self<br>
+			<b>Summon cultist ([CULTSUMMON_CULTS]): </b>Join Other Self<br>
+			<b>Free a cultist ([FREEDOM_CULTS]): </b>Travel technology other<br>
+			<b>Deafen: </b>Hide Other See<br>
+			<b>Blind: </b>Destroy See Other<br>
+			<b>Blood Boil ([BLOODBOIL_CULTS]): </b>Destroy See Blood<br>
+			<b>Communicate: </b>Self Other Technology<br>
+			<b>Stun: </b>Join Hide Technology<br>
+			<b>Summon Cultist Armor: </b>Hell Destroy Other<br>
+			<b>See Invisible: </b>See Hell Join<br>
+			</p>
+			<h2>Rune Descriptions</h2>
+			<h3>Teleport self</h3>
+			Teleport rune is a special rune, as it only needs two words, with the third word being destination. Basically, when you have two runes with the same destination, invoking one will teleport you to the other one. If there are more than 2 runes, you will be teleported to a random one. Runes with different third words will create separate networks. You can imbue this rune into a talisman, giving you a great escape mechanism.<br>
+			<h3>Teleport other</h3>
+			Teleport other allows for teleportation for any movable object to another rune with the same third word. Requires [ITEMPORT_CULTS] cultists.<br>
+			<h3>Summon new tome</h3>
+			Invoking this rune summons a new arcane tome.
+			<h3>Convert a person</h3>
+			This rune opens target's mind to the realm of Nar-Sie, which usually results in this person joining the cult. However, some people (mostly the ones who posess high authority) have strong enough will to stay true to their old ideals. Requires [CONVERT_CULTS] cultists.<br>
+			<h3>Summon Nar-Sie</h3>
+			The ultimate rune. It summons the Avatar of Nar-Sie himself, tearing a huge hole in reality and consuming everything around it. Summoning it is the final goal of any cult. Requires [ELDERGOD_CULTS].<br>
+			<h3>Disable Technology</h3>
+			Invoking this rune creates a strong electromagnetic pulse in a small radius, making it basically analogic to an EMP grenade. You can imbue this rune into a talisman, making it a decent defensive item.<br>
+			<h3>Drain Blood</h3>
+			This rune instantly heals you of some brute damage at the expense of a person placed on top of the rune. Whenever you invoke a drain rune, ALL drain runes on the station are activated, draining blood from anyone located on top of those runes. This includes yourself, though the blood you drain from yourself just comes back to you. This might help you identify this rune when studying words. One drain gives up to 25HP per each victim, but you can repeat it if you need more. Draining only works on living people, so you might need to recharge your "Battery" once its empty. Drinking too much blood at once might cause blood hunger.<br>
+			<h3>Raise Dead</h3>
+			This rune allows for the resurrection of any dead person. You will need a dead human body and a living human sacrifice. Make 2 raise dead runes. Put a living non-braindead human on top of one, and a dead body on the other one. When you invoke the rune, the life force of the living human will be transferred into the dead body, allowing a ghost standing on top of the dead body to enter it, instantly and fully healing it. Use other runes to ensure there is a ghost ready to be resurrected.<br>
+			<h3>Hide runes</h3>
+			This rune makes all nearby runes completely invisible. They are still there and will work if activated somehow, but you cannot invoke them directly if you do not see them.<br>
+			<h3>Reveal runes</h3>
+			This rune is made to reverse the process of hiding a rune. It reveals all hidden runes in a rather large area around it.
+			<h3>Leave your body</h3>
+			This rune gently rips your soul out of your body, leaving it intact. You can observe the surroundings as a ghost as well as communicate with other ghosts. Your body takes damage while you are there, so ensure your journey is not too long, or you might never come back.<br>
+			<h3>Manifest a ghost</h3>
+			Unlike the Raise Dead rune, this rune does not require any special preparations or vessels. Instead of using full lifeforce of a sacrifice, it will drain YOUR lifeforce. Stand on the rune and invoke it. If theres a ghost standing over the rune, it will materialise, and will live as long as you dont move off the rune or die. You can put a paper with a name on the rune to make the new body look like that person.<br>
+			<h3>Imbue a talisman</h3>
+			This rune allows you to imbue the magic of some runes into paper talismans. Create an imbue rune, then an appropriate rune beside it. Put an empty piece of paper on the imbue rune and invoke it. You will now have a one-use talisman with the power of the target rune. Using a talisman drains some health, so be careful with it. You can imbue a talisman with power of the following runes: summon tome, reveal, conceal, teleport, tisable technology, communicate, deafen, blind and stun.<br>
+			<h3>Sacrifice</h3>
+			Sacrifice rune allows you to sacrifice a living thing or a body to the Geometer of Blood. Monkeys and dead humans are the most basic sacrifices, they might or might not be enough to gain His favor. A living human is what a real sacrifice should be, however, you will need 3 people chanting the invocation to sacrifice a living person. Requires [SACRIFICE_CULTS] cultists.<br>
+			<h3>Create a wall</h3>
+			Invoking this rune solidifies the air above it, creating an an invisible wall. To remove the wall, simply invoke the rune again.
+			<h3>Summon cultist</h3>
+			This rune allows you to summon a fellow cultist to your location. The target cultist must be unhandcuffed ant not buckled to anything. You also need to have 3 people chanting at the rune to successfully invoke it. Invoking it takes heavy strain on the bodies of all chanting cultists. Requires [CULTSUMMON_CULTS] cultists.<br>
+			<h3>Free a cultist</h3>
+			This rune unhandcuffs and unbuckles any cultist of your choice, no matter where he is. Invoking it takes heavy strain on the bodies of all chanting cultists. Requires [FREEDOM_CULTS] cultists.<br>
+			<h3>Deafen</h3>
+			This rune temporarily deafens all non-cultists around you.<br>
+			<h3>Blind</h3>
+			This rune temporarily blinds all non-cultists around you. Very robust. Use together with the deafen rune to leave your enemies completely helpless.<br>
+			<h3>Blood boil</h3>
+			This rune boils the blood all non-cultists in visible range. The damage is enough to instantly critically hurt any person. You need 3 cultists invoking the rune for it to work. This rune is unreliable and may cause unpredicted effect when invoked. It also drains significant amount of your health when successfully invoked. Requires [BLOODBOIL_CULTS] cultists to work.<br>
+			<h3>Communicate</h3>
+			Invoking this rune allows you to relay a message to all cultists on the station and nearby space objects.
+			<h3>Stun</h3>
+			Unlike other runes, this ons is supposed to be used in talisman form. When invoked directly, it simply releases some dark energy, briefly stunning everyone around. When imbued into a talisman, you can force all of its energy into one person, stunning him so hard he cant even speak. However, effect wears off rather fast.<br>
+			<h3>Equip Armor</h3>
+			When this rune is invoked, either from a rune or a talisman, it will equip the user with the armor of the followers of Nar-Sie. To use this rune to its fullest extent, make sure you are not wearing any form of headgear, armor, gloves or shoes, and make sure you are not holding anything in your hands.<br>
+			<h3>See Invisible</h3>
+			When invoked when standing on it, this rune allows the user to see the the world beyond as long as he does not move.<br>
+			</body>
+			</html>
+			"}
+update_tome()
 
 /obj/item/weapon/tome/Topic(href,href_list[])
 	if (src.loc == usr)
@@ -451,7 +453,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			if("read")
 				if(usr.get_active_hand() != src)
 					return
-				usr << browse("[tomedat]", "window=Arcane Tome")
+				usr << browse("[TOMEDAT]", "window=Arcane Tome")
 				return
 			if("change")
 				words[words[number]] = input("Enter the translation for [words[number]]", "Word notes") in engwords
@@ -517,8 +519,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			M.reagents.add_reagent("unholywater",holy2unholy)
 		return
 	M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
-	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>", \
-					"<span class='userdanger'>You feel searing heat inside!</span>")
+	for(var/mob/O in viewers(M, null))
+		O.show_message(text("<span class='userdanger'>[] beats [] with the arcane tome!</span>", user, M), 1)
+	M << "<span class='danger'>You feel searing heat inside!</span>"
 
 
 /obj/item/weapon/tome/attack_self(mob/living/user as mob)
@@ -548,7 +551,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				usr.whisper("[input]")
 				for(var/datum/mind/H in ticker.mode.cult)
 					if (H.current)
-						H.current << "<span class='boldannounce'>[input]</span>"
+						H.current << "<span class='userdanger'>[input]</span>"
 				return
 			if("Notes")
 				if(usr.get_active_hand() != src)

@@ -49,7 +49,7 @@
 	name = "Secbot"
 	result = /obj/machinery/bot/secbot
 	reqs = list(/obj/item/device/assembly/signaler = 1,
-				/obj/item/clothing/head/helmet/sec = 1,
+				/obj/item/clothing/head/helmet = 1,
 				/obj/item/weapon/melee/baton = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
@@ -126,42 +126,6 @@
 				/datum/reagent/glycerol = 5,
 				/datum/reagent/toxin/acid = 5,
 				/datum/reagent/toxin/acid/fluacid = 5,)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-
-/datum/table_recipe/ionslug
-	name = "Ion Scatter Shell"
-	result = /obj/item/ammo_casing/shotgun/ion
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/obj/item/weapon/stock_parts/micro_laser/ultra = 1,
-				/obj/item/weapon/stock_parts/subspace/crystal = 1)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-
-/datum/table_recipe/improvisedslug
-	name = "Improvised Shotgun Shell"
-	result = /obj/item/ammo_casing/shotgun/improvised
-	reqs = list(/obj/item/weapon/grenade/chem_grenade = 1,
-				/obj/item/stack/sheet/metal = 1,
-				/obj/item/stack/cable_coil = 1,
-				/datum/reagent/fuel = 10)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-
-/datum/table_recipe/improvisedslugoverload
-	name = "Overload Improvised Shell"
-	result = /obj/item/ammo_casing/shotgun/improvised/overload
-	reqs = list(/obj/item/ammo_casing/shotgun/improvised = 1,
-				/datum/reagent/blackpowder = 5)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-
-/datum/table_recipe/laserslug
-	name = "Laser Slug Shell"
-	result = /obj/item/ammo_casing/shotgun/laserslug
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/obj/item/weapon/stock_parts/capacitor/adv = 1,
-				/obj/item/weapon/stock_parts/micro_laser/high = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 

@@ -1,7 +1,13 @@
 /obj/structure/closet/secure_closet/engineering_chief
 	name = "\proper chief engineer's locker"
 	req_access = list(access_ce)
-	icon_state = "ce"
+	icon_state = "securece1"
+	icon_closed = "securece"
+	icon_locked = "securece1"
+	icon_opened = "secureceopen"
+	icon_broken = "securecebroken"
+	icon_off = "secureceoff"
+
 
 /obj/structure/closet/secure_closet/engineering_chief/New()
 	..()
@@ -29,12 +35,18 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
+	return
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
 	req_access = list(access_engine_equip)
-	icon_state = "eng"
-	icon_door = "eng_elec"
+	icon_state = "secureengelec1"
+	icon_closed = "secureengelec"
+	icon_locked = "secureengelec1"
+	icon_opened = "toolclosetopen"
+	icon_broken = "secureengelecbroken"
+	icon_off = "secureengelecoff"
+
 
 /obj/structure/closet/secure_closet/engineering_electrical/New()
 	..()
@@ -49,12 +61,20 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/device/multitool(src)
 	new /obj/item/device/multitool(src)
+	return
+
+
 
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
 	req_access = list(access_engine_equip)
-	icon_state = "eng"
-	icon_door = "eng_weld"
+	icon_state = "secureengweld1"
+	icon_closed = "secureengweld"
+	icon_locked = "secureengweld1"
+	icon_opened = "toolclosetopen"
+	icon_broken = "secureengweldbroken"
+	icon_off = "secureengweldoff"
+
 
 /obj/structure/closet/secure_closet/engineering_welding/New()
 	..()
@@ -64,11 +84,20 @@
 	new /obj/item/weapon/weldingtool/largetank(src)
 	new /obj/item/weapon/weldingtool/largetank(src)
 	new /obj/item/weapon/weldingtool/largetank(src)
+	return
+
+
 
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "engineer's locker"
 	req_access = list(access_engine_equip)
-	icon_state = "eng_secure"
+	icon_state = "secureeng1"
+	icon_closed = "secureeng"
+	icon_locked = "secureeng1"
+	icon_opened = "secureengopen"
+	icon_broken = "secureengbroken"
+	icon_off = "secureengoff"
+
 
 /obj/structure/closet/secure_closet/engineering_personal/New()
 	..()
@@ -86,11 +115,18 @@
 	new /obj/item/tapeproj/engineering(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
+	return
 
 /obj/structure/closet/secure_closet/atmospherics
 	name = "\proper atmospheric technician's locker"
 	req_access = list(access_atmospherics)
-	icon_state = "atmos"
+	icon_state = "secureatmos1"
+	icon_closed = "secureatmos"
+	icon_locked = "secureatmos1"
+	icon_opened = "secureatmosopen"
+	icon_broken = "secureatmosbroken"
+	icon_off = "secureatmosoff"
+
 
 /obj/structure/closet/secure_closet/atmospherics/New()
 	..()
@@ -104,3 +140,4 @@
 	new /obj/item/weapon/watertank/atmos(src)
 	new /obj/item/clothing/suit/fire/atmos(src)
 	new /obj/item/clothing/head/hardhat/atmos(src)
+	return

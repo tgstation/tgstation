@@ -1,5 +1,5 @@
 /mob/living/silicon/pai/Life()
-	if (src.stat == DEAD)
+	if (src.stat == 2)
 		return
 	if(src.cable)
 		if(get_dist(src, src.cable) > 1)

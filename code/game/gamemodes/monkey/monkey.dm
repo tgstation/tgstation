@@ -15,7 +15,7 @@
 	var/carriers_to_make = 1
 	var/list/carriers = list()
 
-	var/monkeys_to_win = 0
+	var/monkeys_to_win = 1
 	var/escaped_monkeys = 0
 
 	var/players_per_carrier = 30
@@ -92,8 +92,8 @@
 	if(!check_monkey_victory())
 		feedback_set_details("round_end_result","win - monkey win")
 		feedback_set("round_end_result",escaped_monkeys)
-		world << "<span class='userdanger'>The monkeys have overthrown their captors! Eeek eeeek!!</span>"
+		world << "<span class='userdanger'><FONT size = 3>The monkeys have overthrown their captors! Eeek eeeek!!</FONT></span>"
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the monkeys")
 		feedback_set("round_end_result",escaped_monkeys)
-		world << "<span class='userdanger'>The staff managed to contain the monkey infestation!</span>"
+		world << "<span class='userdanger'><FONT size = 3>The staff managed to contain the monkey infestation!</FONT></span>"

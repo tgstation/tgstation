@@ -93,7 +93,6 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
-	verb_yell = "blares"
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -144,7 +143,7 @@ Class Procs:
 		pulse2.dir = pick(cardinal)
 
 		spawn(10)
-			qdel(pulse2)
+			pulse2.delete()
 	..()
 
 /obj/machinery/proc/open_machine()

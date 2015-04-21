@@ -30,6 +30,7 @@
 	var/activating = 0
 	var/activated = 0
 	var/cooldowntime = 50 //deciseconds
+	var/cooldown = 0
 	var/teleporting = 0
 
 

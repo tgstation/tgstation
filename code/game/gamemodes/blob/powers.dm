@@ -312,25 +312,39 @@
 	set name = "Split consciousness (100) (One use)"
 	set desc = "Expend resources to attempt to produce another sentient overmind"
 
-	if(!blob_nodes || !blob_nodes.len)
-		src << "<span class='warning'>A node is required to birth your offspring...</span>"
-		return
-	var/obj/effect/blob/node/N = locate(/obj/effect/blob) in blob_nodes
-	if(!N)
-		src << "<span class='warning'>A node is required to birth your offspring...</span>"
-		return
 
-	if(!can_buy(100))
-		return
+	var/client/C = null
+	var/list/candidates = get_candidates(BE_BLOB)
+	if(candidates.len)
+		C = pick(candidates)
 
-	verbs -= /mob/camera/blob/verb/split_consciousness //we've used our split_consciousness
-	new /obj/effect/blob/core/ (get_turf(N), 200, null, blob_core.point_rate, "offspring")
-	qdel(N)
+	if(C)
+		if(!blob_nodes || !blob_nodes.len)
+			src << "<span class='warning'>A node is required to birth your offspring...</span>"
+			return
+		var/obj/effect/blob/node/N = locate(/obj/effect/blob) in blob_nodes
+		if(!N)
+			src << "<span class='warning'>A node is required to birth your offspring...</span>"
+			return
 
-	if(ticker && ticker.mode.name == "blob")
-		var/datum/game_mode/blob/BL = ticker.mode
-		BL.blobwincount = initial(BL.blobwincount) * 2
+		if(!can_buy(100))
+			return
 
+		verbs -= /mob/camera/blob/verb/split_consciousness //we've used our split_consciousness
+		var/obj/effect/blob/core/new_core = new(get_turf(N), 200, C, blob_core.point_rate)
+		qdel(N)
+		var/mob/camera/blob/B = new(get_turf(new_core))
+		B.verbs -= /mob/camera/blob/verb/split_consciousness // this was a bad idea to allow you were right remie
+		B.key = C.key
+		B.blob_core = new_core
+		new_core.overmind = B
+
+		if(ticker && ticker.mode.name == "blob")
+			var/datum/game_mode/blob/BL = ticker.mode
+			BL.blobwincount = initial(BL.blobwincount) * 2
+
+	else
+		src << "<span class='warning'>You weren't able to split your consciousness at this time...</span>"
 
 /mob/camera/blob/verb/blob_broadcast()
 	set category = "Blob"

@@ -100,17 +100,17 @@ emp_act
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
-		if(I.IsShield() && (prob(50)))
+		if(I.IsShield() && (prob(35)))
 			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>", \
 							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = new/list()
-			for(var/turf/T in orange(6, src))
+			for(var/turf/T in orange(6))
 				if(istype(T,/turf/space)) continue
 				if(T.density) continue
 				if(T.x>world.maxx-6 || T.x<6)	continue
 				if(T.y>world.maxy-6 || T.y<6)	continue
 				turfs += T
-			if(!turfs.len) turfs += pick(/turf in orange(6, src))
+			if(!turfs.len) turfs += pick(/turf in orange(6))
 			var/turf/picked = pick(turfs)
 			if(!isturf(picked)) return
 			if(buckled)
@@ -398,21 +398,25 @@ emp_act
 			updatehealth()
 
 
-/mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M as mob)
-	if(..()) //successful slime attack
-		var/damage = rand(5, 25)
-		if(M.is_adult)
-			damage = rand(10, 35)
+/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M as mob)
+	..()
+	var/damage = rand(1, 3)
 
-		if(check_shields(damage, "the [M.name]"))
-			return 0
+	if(M.is_adult)
+		damage = rand(10, 35)
+	else
+		damage = rand(5, 25)
 
-		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
+	if(check_shields(damage, "the [M.name]"))
+		return 0
 
-		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
-		var/armor_block = run_armor_check(affecting, "melee")
-		apply_damage(damage, BRUTE, affecting, armor_block)
+	var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 
+	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+	var/armor_block = run_armor_check(affecting, "melee")
+	apply_damage(damage, BRUTE, affecting, armor_block)
+
+	return
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
 	if(M.occupant.a_intent == "harm")

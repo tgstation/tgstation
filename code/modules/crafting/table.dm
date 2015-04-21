@@ -12,17 +12,10 @@
 	check_table()
 	main_loop:
 		for(var/A in R.reqs)
-			var/needed_amount = R.reqs[A]
 			for(var/B in table_contents)
 				if(ispath(B, A))
 					if(table_contents[B] >= R.reqs[A])
 						continue main_loop
-					else
-						needed_amount -= table_contents[B]
-						if(needed_amount <= 0)
-							continue main_loop
-						else
-							continue
 			return 0
 	for(var/A in R.chem_catalysts)
 		if(table_contents[A] < R.chem_catalysts[A])
@@ -83,16 +76,11 @@
 			if(!check_contents(R) || !check_tools(user, R))
 				return 0
 			var/atom/movable/I = new R.result (loc)
-			if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
-				var/obj/item/weapon/reagent_containers/food/snacks/S = I
-				S.create_reagents(S.volume)
 			var/list/parts = del_reqs(R, I)
 			for(var/A in parts)
 				if(istype(A, /obj/item))
 					var/atom/movable/B = A
 					B.loc = I
-					B.pixel_x = initial(B.pixel_x)
-					B.pixel_y = initial(B.pixel_y)
 				else
 					if(!I.reagents)
 						I.reagents = new /datum/reagents()
@@ -127,18 +115,15 @@
 			item_loop:
 				for(var/B in table_contents)
 					if(ispath(B, A))
-						var/item_amount = table_contents[B]
-						while(item_amount > 0)
+						while(amt > 0)
 							I = locate(B) in loc
 							Deletion.Add(I)
 							I.loc = null //remove it from the table loc so that we don't locate the same item every time (will be relocated inside the crafted item in construct_item())
 							amt--
-							item_amount--
 							if(reagenttransfer && istype(I,/obj/item/weapon/reagent_containers))
 								var/obj/item/weapon/reagent_containers/RC = I
 								RC.reagents.trans_to(resultobject, RC.reagents.total_volume)
-							if(amt <= 0)
-								break item_loop
+						break item_loop
 		else
 			var/datum/reagent/RG = new A
 			reagent_loop:
@@ -178,7 +163,7 @@
 	return Deletion
 
 /obj/structure/table/interact(mob/user)
-	if(user.incapacitated() || user.lying || !Adjacent(user))
+	if(user.stat || user.lying || !Adjacent(user))
 		return
 	check_table()
 	if(!table_contents.len)

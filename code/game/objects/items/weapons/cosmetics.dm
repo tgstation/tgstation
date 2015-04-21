@@ -14,9 +14,8 @@
 	colour = "purple"
 
 /obj/item/weapon/lipstick/jade
-	//It's still called Jade, but theres no HTML color for jade, so we use lime.
 	name = "jade lipstick"
-	colour = "lime"
+	colour = "jade"
 
 /obj/item/weapon/lipstick/black
 	name = "black lipstick"
@@ -27,21 +26,17 @@
 	name = "lipstick"
 
 /obj/item/weapon/lipstick/random/New()
-	colour = pick("red","purple","lime","black","green","blue","white")
+	colour = pick("red","purple","jade","black")
 	name = "[colour] lipstick"
 
 
 /obj/item/weapon/lipstick/attack_self(mob/user)
-	overlays.Cut()
 	user << "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>"
 	open = !open
 	if(open)
-		var/image/colored = image("icon"='icons/obj/items.dmi', "icon_state"="lipstick_uncap_color")
-		colored.color = colour
-		icon_state = "lipstick_uncap"
-		overlays += colored
+		icon_state = "[initial(icon_state)]_[colour]"
 	else
-		icon_state = "lipstick"
+		icon_state = initial(icon_state)
 
 /obj/item/weapon/lipstick/attack(mob/M, mob/user)
 	if(!open)	return
@@ -50,17 +45,13 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.is_mouth_covered())
-			user << "<span class='notice'>Remove [ H == user ? "your" : "their" ] mask!</span>"
-			return
 		if(H.lip_style)	//if they already have lipstick on
 			user << "<span class='notice'>You need to wipe off the old lipstick first!</span>"
 			return
 		if(H == user)
 			user.visible_message("<span class='notice'>[user] does their lips with \the [src].</span>", \
 								 "<span class='notice'>You take a moment to apply \the [src]. Perfect!</span>")
-			H.lip_style = "lipstick"
-			H.lip_color = colour
+			H.lip_style = colour
 			H.update_body()
 		else
 			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
@@ -68,8 +59,7 @@
 			if(do_after(user, 20) && do_after(H, 20, 5, 0))	//user needs to keep their active hand, H does not.
 				user.visible_message("<span class='notice'>[user] does [H]'s lips with \the [src].</span>", \
 									 "<span class='notice'>You apply \the [src].</span>")
-				H.lip_style = "lipstick"
-				H.lip_color = colour
+				H.lip_style = colour
 				H.update_body()
 	else
 		user << "<span class='notice'>Where are the lips on that?</span>"

@@ -144,7 +144,7 @@
 	if(try_wallmount(W,user,T) || try_decon(W,user,T) || try_destroy(W,user,T))
 		return
 
-	return
+	return attack_hand(user)
 
 
 /turf/simulated/wall/proc/try_wallmount(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
@@ -190,7 +190,7 @@
 					user << "<span class='notice'>You remove the outer plating.</span>"
 					dismantle_wall()
 					return 1
-	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
+	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*0.6))  // plasma cutter is faster than welding tool

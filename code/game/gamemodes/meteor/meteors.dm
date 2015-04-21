@@ -238,7 +238,7 @@
 	explosion(src.loc, 0, 0, 4, 3, 0)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
 	for(var/mob/living/L in view(5, src))
-		L.irradiate(40)
+		L.apply_effect(40, IRRADIATE)
 
 //Meaty Ore
 /obj/effect/meteor/meaty
@@ -267,7 +267,7 @@
 //Meaty Ore Xeno edition
 /obj/effect/meteor/meaty/xeno
 	color = "#5EFF00"
-	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat/xeno
 	meteorgibs = /obj/effect/gibspawner/xeno
 
 /obj/effect/meteor/meaty/xeno/ram_turf(var/turf/T)

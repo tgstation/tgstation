@@ -33,9 +33,6 @@
 	SSobj.processing.Add(src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
-/obj/effect/effect/foam/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
 
 /obj/effect/effect/foam/metal/New(loc)
 	..()
@@ -48,7 +45,7 @@
 	SSobj.processing.Remove(src)
 	flick("[icon_state]-disolve", src)
 	spawn(5)
-		qdel(src)
+		delete()
 
 
 /obj/effect/effect/foam/process()
@@ -87,7 +84,7 @@
 		if(foundfoam)
 			continue
 
-		var/obj/effect/effect/foam/F = PoolOrNew(/obj/effect/effect/foam, T)
+		var/obj/effect/effect/foam/F = new type(T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
 		F.color = color
@@ -105,7 +102,7 @@
 ///////////////////////////////////////////////
 //FOAM EFFECT DATUM
 /datum/effect/effect/system/foam_spread
-	var/amount = 10		// the size of the foam spread.
+	var/amount = 5		// the size of the foam spread.
 	var/obj/chemholder
 	var/obj/effect/effect/foam/foamtype = /obj/effect/effect/foam
 	var/metal = 0
@@ -117,15 +114,11 @@
 
 /datum/effect/effect/system/foam_spread/New()
 	..()
-	chemholder = PoolOrNew(/obj)
+	chemholder = new/obj()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	chemholder.reagents = R
 	R.my_atom = chemholder
 
-/datum/effect/effect/system/foam_spread/Destroy()
-	qdel(chemholder)
-	chemholder = null
-	return ..()
 
 /datum/effect/effect/system/foam_spread/set_up(amt=5, loca, var/datum/reagents/carry = null)
 	if(istype(loca, /turf/))
@@ -133,7 +126,7 @@
 	else
 		location = get_turf(loca)
 
-	amount = round(sqrt(amt / 2), 1)
+	amount = round(sqrt(amt / 3), 1)
 	carry.copy_to(chemholder, carry.total_volume)
 
 
@@ -142,11 +135,11 @@
 	metal = metaltype
 
 /datum/effect/effect/system/foam_spread/start()
-	var/obj/effect/effect/foam/foundfoam = locate() in location
+	var/obj/effect/effect/foam/foundfoam = locate()
 	if(foundfoam)//If there was already foam where we start, we add our foaminess to it.
 		foundfoam.amount += amount
 	else
-		var/obj/effect/effect/foam/F = PoolOrNew(foamtype, location)
+		var/obj/effect/effect/foam/F = new foamtype(src.location)
 		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume)
 		F.color = foamcolor

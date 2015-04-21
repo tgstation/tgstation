@@ -487,7 +487,7 @@
 
 //Exosuit Equipment
 /datum/design/mech_hydraulic_clamp
-	name = "Exosuit Engineering Equipment (Hydraulic Clamp)"
+	name = "Exosuit Engineering Equipement (Hydraulic Clamp)"
 	id = "mech_hydraulic_clamp"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
@@ -496,7 +496,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_drill
-	name = "Exosuit Engineering Equipment (Drill)"
+	name = "Exosuit Engineering Equipement (Drill)"
 	id = "mech_drill"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill
@@ -505,7 +505,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_extinguisher
-	name = "Exosuit Engineering Equipment (Extinguisher)"
+	name = "Exosuit Engineering Equipement (Extinguisher)"
 	id = "mech_extinguisher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
@@ -514,7 +514,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_cable_layer
-	name = "Exosuit Engineering Equipment (Cable Layer)"
+	name = "Exosuit Engineering Equipement (Cable Layer)"
 	id = "mech_cable_layer"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
@@ -523,7 +523,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_sleeper
-	name = "Exosuit Medical Equipment (Mounted Sleeper)"
+	name = "Exosuit Medical Equipement (Mounted Sleeper)"
 	id = "mech_sleeper"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/sleeper
@@ -532,7 +532,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_syringe_gun
-	name = "Exosuit Medical Equipment (Syringe Gun)"
+	name = "Exosuit Medical Equipement (Syringe Gun)"
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
@@ -541,7 +541,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_generator
-	name = "Exosuit Equipment (Plasma Generator)"
+	name = "Exosuit Equipement (Plasma Generator)"
 	id = "mech_generator"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
@@ -662,16 +662,6 @@
 	build_path = /obj/item/borg/upgrade/ddrill
 	req_tech = list("engineering" = 5, "materials" = 5)
 	materials = list("$metal"=10000, "$diamond"=3750)
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
-/datum/design/borg_upgrade_holding
-	name = "Cyborg Upgrade (Ore Satchel of Holding)"
-	id = "borg_upgrade_holding"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/soh
-	req_tech = list("engineering" = 5, "materials" = 5, "bluespace" = 3)
-	materials = list("$metal" = 10000, "$gold" = 250, "$uranium" = 500)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 

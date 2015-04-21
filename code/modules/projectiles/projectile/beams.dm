@@ -2,7 +2,7 @@
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 20
+	damage = 25
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	flag = "laser"
@@ -17,25 +17,25 @@
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
-	damage = 5
+	damage = 10
 
 
 /obj/item/projectile/beam/heavylaser
 	name = "heavy laser"
 	icon_state = "heavylaser"
-	damage = 40
+	damage = 50
 
 /obj/item/projectile/beam/xray
 	name = "xray beam"
 	icon_state = "xray"
-	damage = 15
+	damage = 20
 	irradiate = 30
 	forcedodge = 1
 
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 36
+	damage = 40
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
@@ -44,20 +44,20 @@
 /obj/item/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"
-	damage = 50
+	damage = 60
 
 /obj/item/projectile/beam/pulse/on_hit(var/atom/target, var/blocked = 0)
-	. = ..()
 	if(istype(target,/turf/)||istype(target,/obj/structure/))
 		target.ex_act(2)
+	..()
 
 /obj/item/projectile/beam/pulse/shot
-	damage = 40
+	damage = 50
 
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
 	icon_state = "emitter"
-	damage = 30
+	damage = 50
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
@@ -77,13 +77,12 @@ obj/item/projectile/beam/emitter/Destroy()
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 
 /obj/item/projectile/lasertag/on_hit(var/atom/target, var/blocked = 0)
-	. = ..()
-	if(ishuman(target))
+	if(istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = target
 		if(istype(M.wear_suit))
 			if(M.wear_suit.type in suit_types)
 				M.adjustStaminaLoss(34)
-
+	return 1
 
 /obj/item/projectile/lasertag/redtag
 	icon_state = "laser"

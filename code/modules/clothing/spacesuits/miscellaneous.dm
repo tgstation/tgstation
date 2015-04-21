@@ -20,7 +20,7 @@
 
 
 	//Death squad armored space suits, not hardsuits!
-/obj/item/clothing/head/helmet/space/hardsuit/deathsquad
+/obj/item/clothing/head/helmet/space/deathsquad
 	name = "deathsquad helmet"
 	desc = "That's not red paint. That's real blood."
 	icon_state = "deathsquad"
@@ -29,12 +29,8 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
-	action_button_name = null
 
-/obj/item/clothing/head/helmet/space/hardsuit/deathsquad/attack_self(mob/user)
-	return
-
-/obj/item/clothing/suit/space/hardsuit/deathsquad
+/obj/item/clothing/suit/space/deathsquad
 	name = "deathsquad suit"
 	desc = "A heavily armored, advanced space suit that protects against most forms of damage."
 	icon_state = "deathsquad"
@@ -45,20 +41,15 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 
-/obj/item/clothing/head/helmet/space/beret
+/obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "officer's beret"
 	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
 	icon_state = "beret_badge"
 	flags = STOPSPRESSUREDMAGE
 	flags_inv = 0
-	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
-	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	unacidable = 1
 
-/obj/item/clothing/suit/space/officer
+/obj/item/clothing/suit/space/deathsquad/officer
 	name = "officer's jacket"
 	desc = "An armored, space-proof jacket used in special operations."
 	icon_state = "detective"
@@ -67,12 +58,6 @@
 	slowdown = 0
 	flags_inv = 0
 	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
-	armor = list(melee = 80, bullet = 80, laser = 50,energy = 50, bomb = 100, bio = 100, rad = 100)
-	slowdown = 1
-	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	unacidable = 1
 
 
 	//NASA Voidsuit
@@ -125,7 +110,6 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	w_class = 3
-	flags_inv = 0
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
@@ -141,58 +125,51 @@
 	item_color = "ert_commander"
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
 	strip_delay = 130
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
 	brightness_on = 7
 
-/obj/item/clothing/suit/space/hardsuit/ert
-	name = "emergency response team suit"
-	desc = "Standard issue command suit for the ERT."
-	icon_state = "ert_command"
-	item_state = "ert_command"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
-	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
-	slowdown = 0
-	strip_delay = 130
-
-	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
 	desc = "Standard issue security helmet for the ERT."
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
 	item_color = "ert_security"
 
-/obj/item/clothing/suit/space/hardsuit/ert/sec
-	desc = "Standard issue security suit for the ERT."
-	icon_state = "ert_security"
-	item_state = "ert_security"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
-
-	//ERT Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
 	desc = "Standard issue engineer helmet for the ERT."
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
 	item_color = "ert_engineer"
 
-/obj/item/clothing/suit/space/hardsuit/ert/engi
-	desc = "Standard issue engineer suit for the ERT."
-	icon_state = "ert_engineer"
-	item_state = "ert_engineer"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
-
-	//ERT Medical
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	desc = "Standard issue medical helmet for the ERT."
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
 	item_color = "ert_medical"
 
-/obj/item/clothing/suit/space/hardsuit/ert/med
+/obj/item/clothing/suit/space/ert
+	name = "emergency response team suit"
+	desc = "Standard issue command suit for the ERT."
+	icon_state = "ert_command"
+	item_state = "ert_command"
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	slowdown = 0
+	strip_delay = 130
+
+/obj/item/clothing/suit/space/ert/sec
+	desc = "Standard issue security suit for the ERT."
+	icon_state = "ert_security"
+	item_state = "ert_security"
+
+/obj/item/clothing/suit/space/ert/engi
+	desc = "Standard issue engineer suit for the ERT."
+	icon_state = "ert_engineer"
+	item_state = "ert_engineer"
+
+/obj/item/clothing/suit/space/ert/med
 	desc = "Standard issue medical suit for the ERT."
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"

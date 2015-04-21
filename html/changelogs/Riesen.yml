@@ -1,0 +1,9 @@
+author: Riesen
+
+delete-after: True
+
+changes:
+	- rscdel: You no longer hear the Chaplain's chosen deity when being spoken to by the gods.
+	- rscdel: Removed telescopic batons from the CE, CMO, and RD.
+	- rscadd: Gave CE his RCD back.
+	- tweak: Standard energy guns now fire electrodes again. Cyborg disablers remain unchanged.

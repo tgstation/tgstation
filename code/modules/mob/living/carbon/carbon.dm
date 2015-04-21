@@ -86,8 +86,6 @@
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='danger'>You hear a heavy electrical crack.</span>" \
 	)
-	if(prob(25) && heart_attack)
-		heart_attack = 0
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
@@ -157,8 +155,6 @@
 /mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0)
 	var/damage = intensity - check_eye_prot()
 	if(..()) // we've been flashed
-		if(weakeyes)
-			Stun(2)
 		switch(damage)
 			if(1)
 				src << "<span class='warning'>Your eyes sting a little.</span>"
@@ -192,13 +188,13 @@
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
 
+/mob/living/carbon/proc/tintcheck()
+	return 0
+
 /mob/living/carbon/proc/eyecheck()
 	var/obj/item/cybernetic_implant/eyes/EFP = locate() in src
 	if(EFP)
 		return EFP.flash_protect
-	return 0
-
-/mob/living/carbon/proc/tintcheck()
 	return 0
 
 /mob/living/carbon/clean_blood()
@@ -294,6 +290,55 @@
 /mob/living/carbon/proc/canBeHandcuffed()
 	return 0
 
+/mob/living/carbon/unEquip(obj/item/I) //THIS PROC DID NOT CALL ..() AND THAT COST ME AN ENTIRE DAY OF DEBUGGING.
+	. = ..() //Sets the default return value to what the parent returns.
+	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
+		return
+
+	if(I == back)
+		back = null
+		update_inv_back(0)
+	else if(I == wear_mask)
+		if(istype(src, /mob/living/carbon/human)) //If we don't do this hair won't be properly rebuilt.
+			return
+		wear_mask = null
+		update_inv_wear_mask(0)
+	else if(I == handcuffed)
+		handcuffed = null
+		if(buckled && buckled.buckle_requires_restraints)
+			buckled.unbuckle_mob()
+		update_inv_handcuffed(0)
+	else if(I == legcuffed)
+		legcuffed = null
+		update_inv_legcuffed(0)
+
+
+/mob/living/carbon/proc/get_temperature(var/datum/gas_mixture/environment)
+	var/loc_temp = T0C
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		loc_temp =  M.return_temperature()
+
+	else if(istype(loc, /obj/structure/transit_tube_pod))
+		loc_temp = environment.temperature
+
+	else if(istype(get_turf(src), /turf/space))
+		var/turf/heat_turf = get_turf(src)
+		loc_temp = heat_turf.temperature
+
+	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		var/obj/machinery/atmospherics/unary/cryo_cell/C = loc
+
+		if(C.air_contents.total_moles() < 10)
+			loc_temp = environment.temperature
+		else
+			loc_temp = C.air_contents.temperature
+
+	else
+		loc_temp = environment.temperature
+
+	return loc_temp
+
 
 /mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
@@ -301,7 +346,6 @@
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
-	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags&ABSTRACT)) 			? head 		: "Nothing"]</A>
 	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>"}
@@ -370,138 +414,9 @@ var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 
-
-/mob/living/carbon/revive()
-	heart_attack = 0
-	..()
-	return
-
 /mob/living/carbon/blob_act()
 	if (stat == DEAD)
 		return
 	else
 		show_message("<span class='userdanger'>The blob attacks!</span>")
 		adjustBruteLoss(10)
-
-/mob/living/carbon/proc/spin(spintime, speed)
-	spawn()
-		var/D = dir
-		while(spintime >= speed)
-			sleep(speed)
-			switch(D)
-				if(NORTH)
-					D = EAST
-				if(SOUTH)
-					D = WEST
-				if(EAST)
-					D = SOUTH
-				if(WEST)
-					D = NORTH
-			dir = D
-			spintime -= speed
-	return
-
-/mob/living/carbon/resist_buckle()
-	if(handcuffed)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
-		visible_message("<span class='warning'>[src] attempts to unbuckle themself!</span>", \
-					"<span class='notice'>You attempt to unbuckle yourself. (This will take around one minute and you need to stay still.)</span>")
-		if(do_after(src, 600, needhand = 0))
-			if(!buckled)
-				return
-			buckled.user_unbuckle_mob(src,src)
-		else
-			if(src && buckled)
-				src << "<span class='warning'>You fail to unbuckle yourself!</span>"
-	else
-		buckled.user_unbuckle_mob(src,src)
-
-/mob/living/carbon/resist_fire()
-	fire_stacks -= 5
-	Weaken(3,1)
-	spin(32,2)
-	visible_message("<span class='danger'>[src] rolls on the floor, trying to put themselves out!</span>", \
-		"<span class='notice'>You stop, drop, and roll!</span>")
-	sleep(30)
-	if(fire_stacks <= 0)
-		visible_message("<span class='danger'>[src] has successfully extinguished themselves!</span>", \
-			"<span class='notice'>You extinguish yourself.</span>")
-		ExtinguishMob()
-	return
-
-/mob/living/carbon/resist_restraints()
-	var/obj/item/I = null
-	if(handcuffed)
-		I = handcuffed
-	else if(legcuffed)
-		I = legcuffed
-	if(I)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
-		cuff_resist(I)
-
-
-/mob/living/carbon/proc/cuff_resist(obj/item/I, var/breakouttime = 600, cuff_break = 0)
-	if(istype(I, /obj/item/weapon/restraints))
-		var/obj/item/weapon/restraints/R = I
-		breakouttime = R.breakouttime
-	var/displaytime = breakouttime / 600
-	if(!cuff_break)
-		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
-		src << "<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, 10, 0))
-			if(I.loc != src || buckled)
-				return
-			visible_message("<span class='danger'>[src] manages to remove [I]!</span>")
-			src << "<span class='notice'>You successfully remove [I].</span>"
-
-			if(handcuffed)
-				handcuffed.loc = loc
-				handcuffed.dropped(src)
-				handcuffed = null
-				if(buckled && buckled.buckle_requires_restraints)
-					buckled.unbuckle_mob()
-				update_inv_handcuffed(0)
-				return
-			if(legcuffed)
-				legcuffed.loc = loc
-				legcuffed = null
-				update_inv_legcuffed(0)
-		else
-			src << "<span class='warning'>You fail to remove [I]!</span>"
-
-	else
-		breakouttime = 50
-		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
-		src << "<span class='notice'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, needhand = 0))
-			if(!I.loc || buckled)
-				return
-			visible_message("<span class='danger'>[src] manages to break [I]!</span>")
-			src << "<span class='notice'>You successfully break [I].</span>"
-			qdel(I)
-
-			if(handcuffed)
-				handcuffed = null
-				update_inv_handcuffed(0)
-				return
-			else
-				legcuffed = null
-				update_inv_legcuffed(0)
-		else
-			src << "<span class='warning'>You fail to break [I]!</span>"
-
-/mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
-	if( (!mask_only && head && (head.flags & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)) )
-		return 1
-
-/mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
-	if(lying)
-		return -6
-	else
-		return initial(pixel_y)
-
-/mob/living/carbon/check_ear_prot()
-	if(head && (head.flags & HEADBANGPROTECT))
-		return 1

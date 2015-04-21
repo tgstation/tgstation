@@ -19,11 +19,12 @@
 	gender = NEUTER
 	health = 30
 	maxHealth = 30
+	heat_damage_per_tick = 0
+	cold_damage_per_tick = 0
 	unsuitable_atmos_damage = 0
 	wander = 0
 	speed = 0
 	ventcrawler = 2
-	density = 0
 	pass_flags = PASSTABLE | PASSMOB
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
@@ -41,6 +42,10 @@
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
 	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
+	// Global because new drones should be rogue, too
+	var/global/uprising = 0
+	// Global for easier badmin manipulation across all current and future drones
+	var/global/uprising_law = "%%ASSUME DIRECT CONTROL OF THE STATION%%"
 	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/health_repair_max = 0 //Drone will only be able to be repaired/reactivated up to this point, defaults to health
@@ -80,11 +85,16 @@
 	qdel(access_card) //Otherwise it ends up on the floor!
 	..()
 
+/mob/living/simple_animal/drone/proc/show_uprising_notification()
+	src << "<B><font size=3 color=red>You are part of the Drone Uprising.</font></B>"
+
 /mob/living/simple_animal/drone/Login()
 	..()
 	update_inv_hands()
 	update_inv_head()
 	update_inv_internal_storage()
+	if(uprising)
+		show_uprising_notification()
 	check_laws()
 
 	updateSeeStaticMobs()
@@ -93,8 +103,8 @@
 		pickVisualAppearence()
 
 
-/mob/living/simple_animal/drone/death(gibbed)
-	..(gibbed)
+/mob/living/simple_animal/drone/Die()
+	..()
 	drop_l_hand()
 	drop_r_hand()
 	if(internal_storage)
@@ -174,6 +184,3 @@
 
 /mob/living/simple_animal/drone/check_eye_prot()
 	return 2
-
-/mob/living/simple_animal/drone/handle_temperature_damage()
-	return

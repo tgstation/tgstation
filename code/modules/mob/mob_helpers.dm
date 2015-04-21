@@ -31,7 +31,7 @@
 	return 0
 
 /proc/isslime(A)
-	if(istype(A, /mob/living/simple_animal/slime))
+	if(istype(A, /mob/living/carbon/slime))
 		return 1
 	return 0
 
@@ -46,7 +46,7 @@
 	return 0
 
 /proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/pet/corgi))
+	if(istype(A, /mob/living/simple_animal/corgi))
 		return 1
 	return 0
 
@@ -56,7 +56,7 @@
 	return 0
 
 /proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/pet/cat))
+	if(istype(A, /mob/living/simple_animal/cat))
 		return 1
 	return 0
 
@@ -441,9 +441,6 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 					return 2
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
-					return 2
-			if("abductor")
-				if(M.mind in ticker.mode.abductors)
 					return 2
 		return 1
 	return 0

@@ -13,7 +13,6 @@ datum/reagent/consumable
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 
 datum/reagent/consumable/on_mob_life(var/mob/living/M as mob)
-	current_cycle++
 	M.nutrition += nutriment_factor
 	holder.remove_reagent(src.id, metabolization_rate)
 
@@ -59,6 +58,7 @@ datum/reagent/consumable/sugar
 datum/reagent/consumable/sugar/overdose_start(var/mob/living/M as mob)
 	M << "<span class = 'userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
 	M.sleeping += 30
+	..()
 	return
 
 datum/reagent/consumable/sugar/overdose_process(var/mob/living/M as mob)
@@ -95,57 +95,26 @@ datum/reagent/consumable/capsaicin
 	color = "#B31008" // rgb: 179, 16, 8
 
 datum/reagent/consumable/capsaicin/on_mob_life(var/mob/living/M as mob)
-	switch(current_cycle)
+	if(!data)
+		data = 1
+	switch(data)
 		if(1 to 15)
 			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent("cryostylane"))
-				holder.remove_reagent("cryostylane", 5)
-			if(isslime(M))
+			if(holder.has_reagent("frostoil"))
+				holder.remove_reagent("frostoil", 5)
+			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature += rand(5,20)
 		if(15 to 25)
 			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(isslime(M))
+			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature += rand(10,20)
 		if(25 to INFINITY)
 			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(isslime(M))
+			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature += rand(15,20)
+	data++
 	..()
 	return
-
-datum/reagent/consumable/frostoil
-	name = "Frost Oil"
-	id = "frostoil"
-	description = "A special oil that noticably chills the body. Extraced from Icepeppers."
-	color = "#B31008" // rgb: 139, 166, 233
-
-datum/reagent/consumable/frostoil/on_mob_life(var/mob/living/M as mob)
-	switch(current_cycle)
-		if(1 to 15)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent("capsaicin"))
-				holder.remove_reagent("capsaicin", 5)
-			if(isslime(M))
-				M.bodytemperature -= rand(5,20)
-		if(15 to 25)
-			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(isslime(M))
-				M.bodytemperature -= rand(10,20)
-		if(25 to INFINITY)
-			M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(prob(1))
-				M.emote("shiver")
-			if(isslime(M))
-				M.bodytemperature -= rand(15,20)
-	..()
-	return
-
-datum/reagent/consumable/frostoil/reaction_turf(var/turf/simulated/T, var/volume)
-	if(volume >= 5)
-		for(var/mob/living/simple_animal/slime/M in T)
-			M.adjustToxLoss(rand(15,30))
-		//if(istype(T))
-		//	T.atmos_spawn_air(SPAWN_COLD)
 
 datum/reagent/consumable/condensedcapsaicin
 	name = "Condensed Capsaicin"
@@ -221,6 +190,42 @@ datum/reagent/consumable/condensedcapsaicin/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
+datum/reagent/consumable/frostoil
+	name = "Frost Oil"
+	id = "frostoil"
+	description = "A special oil that noticably chills the body. Extraced from Icepeppers."
+	color = "#B31008" // rgb: 139, 166, 233
+
+datum/reagent/consumable/frostoil/on_mob_life(var/mob/living/M as mob)
+	if(!data) data = 1
+	switch(data)
+		if(1 to 15)
+			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			if(holder.has_reagent("capsaicin"))
+				holder.remove_reagent("capsaicin", 5)
+			if(istype(M, /mob/living/carbon/slime))
+				M.bodytemperature -= rand(5,20)
+		if(15 to 25)
+			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			if(istype(M, /mob/living/carbon/slime))
+				M.bodytemperature -= rand(10,20)
+		if(25 to INFINITY)
+			M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			if(prob(1))
+				M.emote("shiver")
+			if(istype(M, /mob/living/carbon/slime))
+				M.bodytemperature -= rand(15,20)
+	data++
+	..()
+	return
+
+datum/reagent/consumable/frostoil/reaction_turf(var/turf/simulated/T, var/volume)
+	if(volume >= 5)
+		for(var/mob/living/carbon/slime/M in T)
+			M.adjustToxLoss(rand(15,30))
+		//if(istype(T))
+		//	T.atmos_spawn_air(SPAWN_COLD)
+
 datum/reagent/consumable/sodiumchloride
 	name = "Table Salt"
 	id = "sodiumchloride"
@@ -265,7 +270,9 @@ datum/reagent/mushroomhallucinogen
 
 datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 30)
-	switch(current_cycle)
+	if(!data)
+		data = 1
+	switch(data)
 		if(1 to 5)
 			if (!M.slurring)
 				M.slurring = 1
@@ -288,6 +295,7 @@ datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 			M.druggy = max(M.druggy, 40)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
+	data++
 	..()
 	return
 
@@ -373,20 +381,13 @@ datum/reagent/consumable/flour
 datum/reagent/consumable/flour/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(!istype(T, /turf/space))
-		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
-		reagentdecal.reagents.add_reagent("flour", volume)
+		new /obj/effect/decal/cleanable/flour(T)
 
 datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
-
-datum/reagent/consumable/bluecherryjelly
-	name = "Blue Cherry Jelly"
-	id = "bluecherryjelly"
-	description = "Blue and tastier kind of cherry jelly."
-	color = "#00F0FF"
 
 datum/reagent/consumable/rice
 	name = "Rice"
@@ -409,20 +410,3 @@ datum/reagent/consumable/eggyolk
 	id = "eggyolk"
 	description = "It's full of protein."
 	color = "#FFB500"
-
-datum/reagent/consumable/corn_starch
-	name = "Corn Starch"
-	id = "corn_starch"
-	description = "A slippery solution."
-	color = "#C8A5DC"
-
-datum/reagent/consumable/corn_syrup
-	name = "Corn Syrup"
-	id = "corn_syrup"
-	description = "Decays into sugar."
-	color = "#C8A5DC"
-
-datum/reagent/consumable/corn_syrup/on_mob_life(var/mob/living/M as mob)
-	M.reagents.add_reagent("sugar", 3)
-	M.reagents.remove_reagent("corn_syrup", 1)
-	..()

@@ -17,7 +17,7 @@ datum/reagents
 
 datum/reagents/New(maximum=100)
 	maximum_volume = maximum
-	SSobj.processing |= src
+
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
 		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -50,16 +50,6 @@ datum/reagents/New(maximum=100)
 					chemical_reactions_list[id] = list()
 				chemical_reactions_list[id] += D
 				break // Don't bother adding ourselves to other reagent ids, it is redundant.
-
-datum/reagents/Destroy()
-	..()
-	SSobj.processing.Remove(src)
-	for(var/datum/reagent/R in reagent_list)
-		qdel(R)
-	reagent_list.Cut()
-	reagent_list = null
-	if(my_atom && my_atom.reagents == src)
-		my_atom.reagents = null
 
 datum/reagents/proc/remove_any(var/amount=1)
 	var/total_transfered = 0
@@ -215,31 +205,26 @@ datum/reagents/proc/metabolize(var/mob/M)
 	if(M)
 		chem_temp = M.bodytemperature
 		handle_reactions()
-
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
-		if(!R.holder)
-			continue
-		if(!M)
-			M = R.holder.my_atom
-		if(M && R)
-			if(M.reagent_check(R) != 1)
-				if(R.overdose_threshold)
-					if(R.volume >= R.overdose_threshold && !R.overdosed)
+	if(last_tick == 3)
+		last_tick = 1
+		for(var/A in reagent_list)
+			var/datum/reagent/R = A
+			if(M && R)
+				if(M.reagent_check(R) != 1)
+					if(R.volume >= R.overdose_threshold && !R.overdosed && R.overdose_threshold > 0)
 						R.overdosed = 1
+						M << "<span class = 'userdanger'>You feel like you took too much of [R.name]!</span>"
 						R.overdose_start(M)
-				if(R.addiction_threshold)
-					if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list))
+					if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list) && R.addiction_threshold > 0)
 						var/datum/reagent/new_reagent = new R.type()
 						addiction_list.Add(new_reagent)
-				if(R.overdosed)
-					R.overdose_process(M)
-				if(is_type_in_list(R,addiction_list))
-					for(var/datum/reagent/addicted_reagent in addiction_list)
-						if(istype(R, addicted_reagent))
-							addicted_reagent.addiction_stage = -15 // you're satisfied for a good while.
-				R.on_mob_life(M)
-
+					if(R.overdosed)
+						R.overdose_process(M)
+					if(is_type_in_list(R,addiction_list))
+						for(var/datum/reagent/addicted_reagent in addiction_list)
+							if(istype(R, addicted_reagent))
+								addicted_reagent.addiction_stage = -15 // you're satisfied for a good while.
+					R.on_mob_life(M)
 	if(addiction_tick == 6)
 		addiction_tick = 1
 		for(var/A in addiction_list)
@@ -263,12 +248,8 @@ datum/reagents/proc/metabolize(var/mob/M)
 					M << "<span class = 'notice'>You feel like you've gotten over your need for [R.name].</span>"
 					addiction_list.Remove(R)
 	addiction_tick++
+	last_tick++
 	update_total()
-
-datum/reagents/process()
-	for(var/datum/reagent/R in reagent_list)
-		R.on_tick()
-	return
 
 datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
 	for(var/datum/reagent/R in reagent_list)
@@ -375,18 +356,19 @@ datum/reagents/proc/isolate_reagent(var/reagent)
 			update_total()
 
 datum/reagents/proc/del_reagent(var/reagent)
-	for(var/datum/reagent/R in reagent_list)
+	for(var/A in reagent_list)
+		var/datum/reagent/R = A
 		if (R.id == reagent)
-			if(istype(my_atom, /mob/living))
-				var/mob/living/M = my_atom
-				R.on_mob_delete(M)
-			qdel(R)
-			reagent_list -= R
+			reagent_list -= A
+			del(A)
 			update_total()
 			my_atom.on_reagent_change()
 			check_ignoreslow(my_atom)
 			check_gofast(my_atom)
 			check_goreallyfast(my_atom)
+			return 0
+
+
 	return 1
 
 datum/reagents/proc/check_ignoreslow(var/mob/M)
@@ -398,7 +380,7 @@ datum/reagents/proc/check_ignoreslow(var/mob/M)
 
 datum/reagents/proc/check_gofast(var/mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("hotline"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
@@ -550,6 +532,12 @@ datum/reagents/proc/remove_all_type(var/reagent_type, var/amount, var/strict = 0
 
 	return has_removed_reagent
 
+datum/reagents/proc/delete()
+	for(var/datum/reagent/R in reagent_list)
+		R.holder = null
+	if(my_atom)
+		my_atom.reagents = null
+
 			//two helper functions to preserve data across reactions (needed for xenoarch)
 datum/reagents/proc/get_data(var/reagent_id)
 	for(var/datum/reagent/D in reagent_list)
@@ -590,6 +578,6 @@ datum/reagents/proc/copy_data(var/datum/reagent/current_reagent)
 // Max vol is maximum volume of holder
 atom/proc/create_reagents(var/max_vol)
 	if(reagents)
-		qdel(reagents)
+		reagents.delete()
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src

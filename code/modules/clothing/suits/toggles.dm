@@ -57,9 +57,6 @@
 	..()
 	suit_toggle()
 
-/obj/item/clothing/suit/toggle/ui_action_click()
-	suit_toggle()
-
 /obj/item/clothing/suit/toggle/proc/suit_toggle()
 	set src in usr
 
@@ -83,9 +80,6 @@
 
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
-	if(!jetpack)
-		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack
-		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()

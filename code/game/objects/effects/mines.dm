@@ -13,12 +13,7 @@
 	icon_state = "uglyminearmed"
 
 /obj/effect/mine/Crossed(AM as mob|obj)
-	if(isanimal(AM))
-		var/mob/living/simple_animal/SA = AM
-		if(!SA.flying)
-			Bumped(SA)
-	else
-		Bumped(AM)
+	Bumped(AM)
 
 /obj/effect/mine/Bumped(AM as mob|obj)
 

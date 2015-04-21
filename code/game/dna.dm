@@ -36,19 +36,8 @@
 		destination.dna.uni_identity = uni_identity
 		destination.dna.blood_type = blood_type
 		destination.dna.species = species
-		destination.dna.mutant_color = mutant_color
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations
-
-/datum/dna/proc/copy_dna(var/datum/dna/new_dna)
-	new_dna.unique_enzymes = unique_enzymes
-	new_dna.struc_enzymes = struc_enzymes
-	new_dna.uni_identity = uni_identity
-	new_dna.blood_type = blood_type
-	new_dna.species = new species.type
-	new_dna.mutant_color = mutant_color
-	new_dna.real_name = real_name
-	new_dna.mutations = mutations
 
 /datum/dna/proc/add_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
@@ -124,12 +113,6 @@
 		for(var/datum/mutation/human/M in mutations)
 			message = M.say_mod(message)
 		return message
-
-/datum/dna/proc/mutations_get_spans()
-	var/list/spans = list()
-	for(var/datum/mutation/human/M in mutations)
-		spans |= M.get_spans()
-	return spans
 
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor)
 	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
@@ -574,8 +557,6 @@
 			else
 				viable_occupant = null
 				occupant_status += "<span class='bad'>Invalid DNA structure</span></div></div>"
-			if (viable_occupant && viable_occupant.stat == DEAD)
-				viable_occupant = null // No editing the dead.
 		else
 			occupant_status += "<span class='bad'>No subject detected</span></div></div>"
 

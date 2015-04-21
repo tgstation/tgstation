@@ -109,7 +109,7 @@
 					<div id=\"rightmenu\">[right_part]</div>
 				</div>
 			</body>
-			</html>"} //"
+			</html>"}
 	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	onclose(usr, "pai")
 	temp = null
@@ -252,7 +252,7 @@
 					add_med_hud()
 		if("translator")
 			if(href_list["toggle"])
-				languages = (languages == ALL) ? (HUMAN | ROBOT) : ALL
+				languages = languages == ALL ? HUMAN & ROBOT : ALL
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
@@ -612,7 +612,7 @@
 			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>"
 	while(src.hackprogress < 100)
 		if(src.cable && src.cable.machine && istype(src.cable.machine, /obj/machinery/door) && src.cable.machine == src.hackdoor && get_dist(src, src.hackdoor) <= 1)
-			hackprogress += rand(1, 10)
+			hackprogress += 10
 		else
 			src.temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 			hackprogress = 0
@@ -625,7 +625,7 @@
 		if(hackprogress >= 100)
 			src.hackprogress = 0
 			src.cable.machine:open()
-		sleep(50)			// Update every 5 seconds
+		sleep(15)			// Update every 1.5 seconds
 
 // Digital Messenger
 /mob/living/silicon/pai/proc/pdamessage()

@@ -36,18 +36,12 @@
 	updateallghostimages()
 	..()
 
-/mob/camera/blob/Life()
-	if(!blob_core)
-		qdel(src)
-	..()
-
 /mob/camera/blob/Destroy()
 	if (ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
 		ghostimage = null;
 		updateallghostimages()
-	..()
 
 /mob/camera/blob/Login()
 	..()

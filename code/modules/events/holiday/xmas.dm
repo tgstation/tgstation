@@ -1,6 +1,6 @@
 /datum/round_event_control/treevenge
 	name = "Treevenge (Christmas)"
-	holidayID = CHRISTMAS
+	holidayID = "Xmas"
 	typepath = /datum/round_event/treevenge
 	max_occurrences = 1
 	weight = 20
@@ -17,7 +17,7 @@
 //this is an example of a possible round-start event
 /datum/round_event_control/presents
 	name = "Presents under Trees (Christmas)"
-	holidayID = CHRISTMAS
+	holidayID = "Xmas"
 	typepath = /datum/round_event/presents
 	weight = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
@@ -29,7 +29,7 @@
 		for(var/turf/simulated/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
 				new /obj/item/weapon/a_gift(T)
-	for(var/mob/living/simple_animal/pet/corgi/Ian/Ian in mob_list)
+	for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in machines)
 		Monitor.icon_state = "entertainment_xmas"
@@ -81,7 +81,7 @@
 
 /datum/round_event_control/santa
 	name = "Santa is coming to town! (Christmas)"
-	holidayID = CHRISTMAS
+	holidayID = "Xmas"
 	typepath = /datum/round_event/santa
 	weight = 150
 	max_occurrences = 1
@@ -143,9 +143,9 @@
 				santa_objective.completed = 1 //lets cut our santas some slack.
 				santa_objective.owner = santa.mind
 				santa.mind.objectives += santa_objective
-				santa.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents)
+				santa.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents
 				var/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/telespell = new(santa)
 				telespell.clothes_req = 0 //santa robes aren't actually magical.
-				santa.mind.AddSpell(telespell) //does the station have chimneys? WHO KNOWS!
+				santa.mind.spell_list += telespell //does the station have chimneys? WHO KNOWS!
 
-				santa << "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>"
+				santa << "<span class='userdanger'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>"

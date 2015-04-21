@@ -25,7 +25,7 @@
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
-	allow_spin = 0
+
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
@@ -56,8 +56,8 @@
 	consume(user)
 	return 1
 
-/obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
-	return 0
+/obj/singularity/Process_Spacemove()
+	return 1
 
 /obj/singularity/blob_act(severity)
 	return
@@ -237,6 +237,11 @@
 	if(!move_self)
 		return 0
 
+	// Don't move every tick because lag
+	if(prob(50))
+		return 0
+
+
 	var/movement_dir = pick(alldirs - last_failed_movement)
 
 	if(force_move)
@@ -341,7 +346,7 @@
 		radiation = round(((src.energy-150)/50)*5,1)
 		radiationmin = round((radiation/5),1)//
 	for(var/mob/living/M in view(toxrange, src.loc))
-		M.irradiate(rand(radiationmin,radiation))
+		M.apply_effect(rand(radiationmin,radiation), IRRADIATE)
 		toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
 		M.apply_effect(toxdamage, TOX)
 	return

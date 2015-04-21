@@ -34,7 +34,7 @@
 	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || (buckle_requires_restraints && !M.restrained()))
 		return 0
 
-	if (isslime(M))
+	if (istype(M, /mob/living/carbon/slime) || istype(M, /mob/living/simple_animal/slime))
 		return 0
 
 	M.buckled = src

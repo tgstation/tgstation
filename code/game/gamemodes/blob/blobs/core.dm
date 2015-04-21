@@ -8,9 +8,8 @@
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
 	var/point_rate = 2
-	var/is_offspring = null
 
-/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2, offspring)
+/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2)
 	blob_cores += src
 	SSobj.processing |= src
 	adjustcolors(color) //so it atleast appears
@@ -18,8 +17,6 @@
 		create_overmind(new_overmind)
 	if(overmind)
 		adjustcolors(overmind.blob_reagent_datum.color)
-	if(offspring)
-		is_offspring = 1
 	point_rate = new_rate
 	..(loc, h)
 
@@ -37,7 +34,7 @@
 /obj/effect/blob/core/Destroy()
 	blob_cores -= src
 	if(overmind)
-		overmind.blob_core = null
+		qdel(overmind)
 	SSobj.processing.Remove(src)
 	..()
 
@@ -105,9 +102,6 @@
 		B.blob_core = src
 		src.overmind = B
 		color = overmind.blob_reagent_datum.color
-		spawn(0)
-			if(is_offspring)
-				B.verbs -= /mob/camera/blob/verb/split_consciousness
 		return 1
 	return 0
 

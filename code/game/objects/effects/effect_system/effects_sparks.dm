@@ -14,19 +14,20 @@
 
 /obj/effect/effect/sparks/New()
 	..()
-	flick("sparks", src) // replay the animation
 	playsound(src.loc, "sparks", 100, 1)
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
 	spawn (100)
-		qdel(src)
+		delete()
+	return
 
 /obj/effect/effect/sparks/Destroy()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	return ..()
+	..()
+	return
 
 /obj/effect/effect/sparks/Move()
 	..()
@@ -56,7 +57,7 @@
 		spawn(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effect/effect/sparks/sparks = PoolOrNew(/obj/effect/effect/sparks, location)
+			var/obj/effect/effect/sparks/sparks = new /obj/effect/effect/sparks(src.location)
 			src.total_sparks++
 			var/direction
 			if(src.cardinals)
@@ -67,7 +68,8 @@
 				sleep(5)
 				step(sparks,direction)
 			spawn(20)
-				qdel(sparks)
+				if(sparks) // Might be deleted already
+					sparks.delete()
 				src.total_sparks--
 
 
@@ -99,7 +101,7 @@
 		spawn(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effect/effect/sparks/electricity/sparks = PoolOrNew(/obj/effect/effect/sparks/electricity, location)
+			var/obj/effect/effect/sparks/electricity/sparks = new /obj/effect/effect/sparks/electricity(src.location)
 			src.total_sparks++
 			var/direction
 			if(src.cardinals)
@@ -110,5 +112,6 @@
 				sleep(5)
 				step(sparks,direction)
 			spawn(20)
-				qdel(sparks)
+				if(sparks) // Might be deleted already
+					sparks.delete()
 				src.total_sparks--

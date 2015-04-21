@@ -168,7 +168,8 @@ var/const/tk_maxrange = 15
 	O.icon_state = "nothing"
 	flick("empdisable",O)
 	spawn(5)
-		qdel(O)
+		O.delete()
+	return
 
 
 /obj/item/tk_grab/update_icon()

@@ -17,7 +17,6 @@
 	throw_range = 5
 	force = 5.0
 	origin_tech = "combat=1"
-	needs_permit = 1
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -156,7 +155,7 @@
 		if(pin.pin_auth(user) || pin.emagged)
 			return 1
 		else
-			pin.auth_fail(user)
+			user << "<span class='warning'>INVALID USER.</span>"
 			return 0
 	else
 		user << "<span class='notice'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"

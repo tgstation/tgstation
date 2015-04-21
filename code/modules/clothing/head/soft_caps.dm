@@ -11,31 +11,19 @@
 		src.flipped=0
 		..()
 
-	verb/flipcap()
+	verb/flip()
 		set category = "Object"
 		set name = "Flip cap"
-
-		flip(usr)
-
-
-/obj/item/clothing/head/soft/AltClick(var/mob/user)
-	flip(user)
-
-
-/obj/item/clothing/head/soft/proc/flip(var/mob/user)
-	if(user.canmove && !user.stat && !user.restrained())
-		src.flipped = !src.flipped
-		if(src.flipped)
-			icon_state = "[item_color]soft_flipped"
-			user << "You flip the hat backwards."
-		else
-			icon_state = "[item_color]soft"
-			user << "You flip the hat back in normal position."
-		usr.update_inv_head(0)	//so our mob-overlays update
-
-/obj/item/clothing/head/soft/examine(mob/user)
-	..()
-	user << "<span class='notice'>Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].</span>"
+		set src in usr
+		if(usr.canmove && !usr.stat && !usr.restrained())
+			src.flipped = !src.flipped
+			if(src.flipped)
+				icon_state = "[item_color]soft_flipped"
+				usr << "You flip the hat backwards."
+			else
+				icon_state = "[item_color]soft"
+				usr << "You flip the hat back in normal position."
+			usr.update_inv_head(0)	//so our mob-overlays update
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"

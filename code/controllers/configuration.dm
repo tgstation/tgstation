@@ -92,24 +92,23 @@
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
 	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
-	var/abductor_scaling_coeff = 15 	//how many players per abductor team
 
 	var/traitor_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0 //If security and such can be traitor/cult/other
 	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
 	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
 	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
-	var/list/continuous = list()		// which roundtypes continue if all antagonists die
-	var/list/midround_antag = list() 	// which roundtypes use the midround antagonist system
+	var/continuous_round_rev = 0		// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
+	var/continuous_round_gang = 0
+	var/continuous_round_wiz = 0
+	var/continuous_round_malf = 0
+	var/continuous_round_blob = 0
 	var/midround_antag_time_check = 60  // How late (in minutes) you want the midround antag system to stay on, setting this to 0 will disable the system
 	var/midround_antag_life_check = 0.7 // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
-
-	var/no_summon_guns		//No
-	var/no_summon_magic		//Fun
-	var/no_summon_events	//Allowed
+	var/mutant_colors = 0
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -152,6 +151,7 @@
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
+	var/hook_round_end = 0
 
 	var/assistant_cap = -1
 
@@ -315,6 +315,8 @@
 						global.comms_allowed = 1
 				if("see_own_notes")
 					config.see_own_notes = 1
+				if("hook_round_end")
+					config.hook_round_end = 1
 				if("soft_popcap")
 					config.soft_popcap = text2num(value)
 				if("hard_popcap")
@@ -394,18 +396,16 @@
 					config.sec_start_brig			= 1
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
-				if("continuous")
-					var/mode_name = lowertext(value)
-					if(mode_name in config.modes)
-						config.continuous[mode_name] = 1
-					else
-						diary << "Unknown continuous configuration definition: [mode_name]."
-				if("midround_antag")
-					var/mode_name = lowertext(value)
-					if(mode_name in config.modes)
-						config.midround_antag[mode_name] = 1
-					else
-						diary << "Unknown midround antagonist configuration definition: [mode_name]."
+				if("continuous_round_rev")
+					config.continuous_round_rev		= 1
+				if("continuous_round_gang")
+					config.continuous_round_gang	= 1
+				if("continuous_round_wiz")
+					config.continuous_round_wiz		= 1
+				if("continuous_round_malf")
+					config.continuous_round_malf	= 1
+				if("continuous_round_blob")
+					config.continuous_round_blob	= 1
 				if("midround_antag_time_check")
 					config.midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
@@ -422,8 +422,6 @@
 					config.changeling_scaling_coeff	= text2num(value)
 				if("security_scaling_coeff")
 					config.security_scaling_coeff	= text2num(value)
-				if("abductor_scaling_coeff")
-					config.abductor_scaling_coeff	= text2num(value)
 				if("traitor_objectives_amount")
 					config.traitor_objectives_amount = text2num(value)
 				if("probability")
@@ -473,18 +471,14 @@
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
+				if("mutant_colors")
+					config.mutant_colors			= 1
 				if("assistant_cap")
 					config.assistant_cap			= text2num(value)
 				if("starlight")
 					config.starlight			= 1
 				if("grey_assistants")
 					config.grey_assistants			= 1
-				if("no_summon_guns")
-					config.no_summon_guns			= 1
-				if("no_summon_magic")
-					config.no_summon_magic			= 1
-				if("no_summon_events")
-					config.no_summon_events			= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -558,18 +552,4 @@
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
-	return runnable_modes
-
-datum/configuration/proc/get_runnable_midround_modes(crew)
-	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode))
-		var/datum/game_mode/M = new T()
-		if(!(M.config_tag in modes))
-			qdel(M)
-			continue
-		if(probabilities[M.config_tag]<=0)
-			qdel(M)
-			continue
-		if(M.required_players <= crew)
-			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes

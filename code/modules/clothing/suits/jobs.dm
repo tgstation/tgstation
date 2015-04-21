@@ -61,6 +61,7 @@
 	permeability_coefficient = 0.50
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/weapon/kitchenknife)
+	action_button_name = "Toggle Jacket Sleeves"
 	togglename = "sleeves"
 
 //Cook

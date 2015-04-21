@@ -32,10 +32,7 @@
 /obj/item/weapon/grenade/iedcasing/CheckParts()
 	var/obj/item/weapon/reagent_containers/food/drinks/soda_cans/can = locate() in contents
 	if(can)
-		var/muh_layer = can.layer
-		can.layer = FLOAT_LAYER
 		underlays += can
-		can.layer = muh_layer
 
 
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //

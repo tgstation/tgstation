@@ -1,0 +1,7 @@
+#ayy lmao
+author: Miauw
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added a toggle for ghosts that allows them to hear radio chatter without having to hover near intercoms/over people with headsets."

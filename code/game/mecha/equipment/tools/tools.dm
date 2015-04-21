@@ -211,7 +211,7 @@
 				var/list/the_targets = list(T,T1,T2)
 				spawn(0)
 					for(var/a=0, a<5, a++)
-						var/obj/effect/effect/water/W = PoolOrNew(/obj/effect/effect/water, get_turf(chassis))
+						var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
 						if(!W)
 							return
 						var/turf/my_target = pick(the_targets)
@@ -1138,9 +1138,9 @@
 	if(..())
 		for(var/mob/living/carbon/M in view(EG.chassis))
 			if(istype(M,/mob/living/carbon/human))
-				M.irradiate(EG.rad_per_cycle*3)
+				M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
 			else
-				M.irradiate(EG.rad_per_cycle)
+				M.radiation += EG.rad_per_cycle
 	return 1
 
 

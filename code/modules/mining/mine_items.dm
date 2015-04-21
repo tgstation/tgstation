@@ -11,7 +11,12 @@
 
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
-	icon_state = "mining"
+	icon_state = "miningsec1"
+	icon_closed = "miningsec"
+	icon_locked = "miningsec1"
+	icon_opened = "miningsecopen"
+	icon_broken = "miningsecbroken"
+	icon_off = "miningsecoff"
 	req_access = list(access_mining)
 
 /obj/structure/closet/secure_closet/miner/New()
@@ -45,7 +50,7 @@
 
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -74,12 +79,12 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	item_state = "jackhammer"
-	digspeed = 25 //available from roundstart, faster than a pickaxe but needs recharging or cell replacements
+	digspeed = 30 //available from roundstart, faster than a pickaxe but needs recharging or cell replacements
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	desc = "An electric mining drill for the especially scrawny."
-	var/drillcost = 15 //666 mineral walls by default
+	var/drillcost = 125 //80 mineral walls by default
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 
 /obj/item/weapon/pickaxe/drill/New() //this one starts with a cell pre-installed.
@@ -105,18 +110,16 @@
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
 			update_icon()
-	else
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		if(bcell)
+			bcell.updateicon()
+			bcell.loc = get_turf(src.loc)
+			bcell = null
+			user << "<span class='notice'>You remove the cell from [src].</span>"
+			update_icon()
+			return
 		..()
-
-/obj/item/weapon/pickaxe/drill/attack_self(mob/user)
-	if(bcell)
-		bcell.updateicon()
-		bcell.loc = get_turf(src.loc)
-		bcell = null
-		user << "<span class='notice'>You remove the cell from [src].</span>"
-		update_icon()
-	else
-		user << "<span class='notice'>There is no cell in [src].</span>"
+	return
 
 /obj/item/weapon/pickaxe/drill/examine(mob/user)
 	..()
@@ -127,22 +130,6 @@
 
 /obj/item/weapon/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
-	desc = "An integrated electric mining drill."
-	var/warned = 0
-
-/obj/item/weapon/pickaxe/drill/cyborg/attack_self(mob/user)
-	return //can't remove the drill's cell
-
-/obj/item/weapon/pickaxe/drill/cyborg/proc/use_robot_power(var/mob/living/silicon/robot/R)
-	if(!bcell.use(drillcost))
-		if(!warned)
-			usr << "<span class='danger'>Drill internal battery depleted, power will be drawn from user's power supply.</span>"
-			playsound(src, 'sound/weapons/smg_empty_alarm.ogg',50,1)
-			warned = 1
-		if(!R.cell.use(drillcost))
-			R << "<span class='notice'>You don't have enough charge to drill.</span>"
-			return 0
-	return 1
 
 /obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
@@ -150,7 +137,7 @@
 	digspeed = 10 //it's a fast drill with a relatively low power cost. what more could you ask for?
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
-	drillcost = 25 //400 mineral walls by default, but very quickly
+	drillcost = 150 //66 mineral walls by default, but very quickly
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -160,15 +147,29 @@
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
-	drillcost = 30 //333 mineral walls by default, but very quickly
+	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls.."
+	drillcost = 200
+
+/obj/item/weapon/pickaxe/plasmacutter
+	name = "plasma cutter"
+	icon_state = "plasmacutter"
+	item_state = "gun"
+	w_class = 3 //it is smaller than the pickaxe
+	damtype = "fire"
+	throwforce = 8
+	digspeed = 30 //Mines slightly faster than a normal pickaxe, but doubles as an unlimited-ammo welding tool in some cases such as wall deconstruction
+	digsound = list('sound/weapons/plasma_cutter.ogg')
+	hitsound = 'sound/weapons/plasma_cutter.ogg'
+	origin_tech = "materials=4;plasmatech=3;engineering=3"
+	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+
 
 /*****************************Shovel********************************/
 
 /obj/item/weapon/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "shovel"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -195,5 +196,8 @@
 /obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
-	icon_crate = "miningcar"
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "miningcar"
+	density = 1
+	icon_opened = "miningcaropen"
+	icon_closed = "miningcar"

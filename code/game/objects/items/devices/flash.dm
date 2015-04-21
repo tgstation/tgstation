@@ -60,16 +60,11 @@
 /obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 5, targeted = 1)
 	add_logs(user, M, "flashed", object="[src.name]")
 	if(user && targeted)
-		if(M.weakeyes)
-			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
 		if(M.flash_eyes(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
 			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
-			if(M.weakeyes)
-				M.Stun(2)
-				M.visible_message("<span class='disarm'><b>[M]</b> gasps and shields their eyes!</span>")
 		else
 			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 	else
@@ -113,7 +108,7 @@
 
 /obj/item/device/flash/proc/terrible_conversion_proc(var/mob/M, var/mob/user)
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
-		if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
+		if(user.mind && ((user.mind in ticker.mode.head_revolutionaries) || (user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.B_bosses)))
 			if(M.client)
 				if(M.stat == CONSCIOUS)
 					M.mind_initialize() //give them a mind datum if they don't have one.
@@ -121,6 +116,12 @@
 					if(!isloyal(M))
 						if(user.mind in ticker.mode.head_revolutionaries)
 							if(!ticker.mode.add_revolutionary(M.mind))
+								resisted = 1
+						if(user.mind in ticker.mode.A_bosses)
+							if(!ticker.mode.add_gangster(M.mind,"A"))
+								resisted = 1
+						if(user.mind in ticker.mode.B_bosses)
+							if(!ticker.mode.add_gangster(M.mind,"B"))
 								resisted = 1
 					else
 						resisted = 1

@@ -37,15 +37,6 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/nettle
 
-/datum/table_recipe/wingfangchu
-	name = "Wingfangchu"
-	reqs = list(
-		/obj/item/weapon/reagent_containers/glass/bowl = 1,
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/xeno = 2
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/soup/wingfangchu
-
 /datum/table_recipe/wishsoup
 	name = "Wish soup"
 	reqs = list(
@@ -58,7 +49,7 @@
 	name = "Hot chili"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
@@ -68,7 +59,7 @@
 	name = "Cold chili"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
@@ -159,7 +150,7 @@
 		/datum/reagent/water = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 3,
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 3,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant = 1,
@@ -185,22 +176,5 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/amanitajelly
 
-/datum/table_recipe/sweetpotatosoup
-	name = "Sweet potato soup"
-	reqs = list(
-		/datum/reagent/water = 10,
-		/datum/reagent/consumable/sugar = 5,
-		/obj/item/weapon/reagent_containers/glass/bowl = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato = 2
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato
 
-/datum/table_recipe/redbeetsoup
-	name = "Red beet soup"
-	reqs = list(
-		/datum/reagent/water = 10,
-		/obj/item/weapon/reagent_containers/glass/bowl = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/redbeet = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/soup/beet/red
+

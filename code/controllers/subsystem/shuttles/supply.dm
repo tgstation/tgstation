@@ -303,6 +303,10 @@
 	updateUsrDialog()
 	return
 
+/obj/machinery/computer/ordercomp/say_quote(text)
+	return "flashes, \"[text]\""
+
+
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
 		user << "<span class='warning'>Access Denied.</span>"
@@ -370,7 +374,7 @@
 				investigate_log("[usr.key] has sent the supply shuttle away. Remaining points: [SSshuttle.points]. Shuttle contents:[SSshuttle.sold_atoms]", "cargo")
 		else
 			if(href_list["loan"] && SSshuttle.shuttle_loan)
-				if(!SSshuttle.shuttle_loan.dispatched && SSshuttle.supply.mode == SHUTTLE_IDLE) // Must either be at centcom, or at the station. No redirecting off course!
+				if(!SSshuttle.shuttle_loan.dispatched)
 					SSshuttle.shuttle_loan.loan_shuttle()
 					temp = "The supply shuttle has been loaned to Centcom.<BR><BR><A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 					post_signal("supply")
@@ -526,3 +530,7 @@
 	status_signal.data["command"] = command
 
 	frequency.post_signal(src, status_signal)
+
+
+/obj/machinery/computer/supplycomp/say_quote(text)
+	return "flashes, \"[text]\""

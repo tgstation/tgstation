@@ -36,12 +36,11 @@
 
 		if(istype(C, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
+			H.apply_effect((75), IRRADIATE, 0) // Let the bodies hit the floor
 			if(prob(5))
-				H.irradiate(rand(100, 160))
-			else
-				H.irradiate(rand(15, 75))
-			if(prob(25))
-				if(prob(75))
+				H.apply_effect((rand(100, 150)), IRRADIATE, 0)
+			if(prob(50))
+				if(prob(50))
 					randmutb(H)
 					domutcheck(H, null, 1)
 				else
@@ -50,7 +49,7 @@
 
 		else if(istype(C, /mob/living/carbon/monkey))
 			var/mob/living/carbon/monkey/M = C
-			M.irradiate(rand(15, 75))
+			M.apply_effect((75), IRRADIATE, 0)
 
 
 /datum/round_event/radiation_storm/end()

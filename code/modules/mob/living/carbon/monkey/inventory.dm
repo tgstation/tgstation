@@ -14,12 +14,6 @@
 			if( !(I.slot_flags & SLOT_MASK) )
 				return 0
 			return 1
-		if(slot_head)
-			if(head)
-				return 0
-			if( !(I.slot_flags & SLOT_HEAD) )
-				return 0
-			return 1
 		if(slot_back)
 			if(back)
 				return 0
@@ -49,10 +43,6 @@
 			wear_mask = I
 			I.equipped(src, slot)
 			update_inv_wear_mask(redraw_mob)
-		if(slot_head)
-			head = I
-			I.equipped(src, slot)
-			update_inv_head(redraw_mob)
 		if(slot_handcuffed)
 			handcuffed = I
 			update_inv_handcuffed(redraw_mob)
@@ -80,6 +70,3 @@
 	I.loc = src
 	I.equipped(src, slot)
 	I.layer = 20
-
-
-

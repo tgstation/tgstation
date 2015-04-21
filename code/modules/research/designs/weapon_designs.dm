@@ -166,8 +166,8 @@
 	category = list("Weapons")
 
 /datum/design/reciever
-	name = "Modular Receiver"
-	desc = "A prototype modular receiver and trigger assembly for a variety of firearms."
+	name = "Modular Reciever"
+	desc = "A prototype modular reciever and trigger assembly for a variety of firearms."
 	id = "reciever"
 	req_tech = list("combat" = 5, "materials" = 4)
 	build_type = PROTOLATHE

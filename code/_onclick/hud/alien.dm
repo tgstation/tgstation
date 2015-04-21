@@ -15,10 +15,8 @@
 	icon_state = "nightvision1"
 
 /obj/screen/alien/nightvision/Click()
-	var/mob/living/carbon/alien/A = usr
-	var/obj/effect/proc_holder/alien/nightvisiontoggle/T = locate() in A.abilities
-	if(T)
-		T.fire(A)
+	var/mob/living/carbon/alien/humanoid/A = usr
+	A.nightvisiontoggle()
 
 
 /datum/hud/proc/alien_hud()

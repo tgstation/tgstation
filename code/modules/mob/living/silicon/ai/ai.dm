@@ -234,11 +234,6 @@ var/list/ai_list = list()
 		else
 			stat(null, text("Systems nonfunctional"))
 
-/mob/living/silicon/ai/canUseTopic()
-	if(stat)
-		return
-	return 1
-
 /mob/living/silicon/ai/proc/ai_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += "<A HREF='?src=\ref[src];mach_close=aialerts'>Close</A><BR><BR>"
@@ -788,6 +783,6 @@ var/list/ai_list = list()
 
 	set_autosay()
 
-/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)
+/mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
 	return
 

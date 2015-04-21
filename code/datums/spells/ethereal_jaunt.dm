@@ -13,7 +13,6 @@
 	centcom_cancast = 0 //Prevent people from getting to centcom
 	nonabstract_req = 1
 	var/jaunt_duration = 50 //in deciseconds
-	action_icon_state = "jaunt"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	for(var/mob/living/target in targets)

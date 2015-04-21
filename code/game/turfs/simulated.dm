@@ -23,11 +23,7 @@
 		if(wet_overlay)
 			overlays -= wet_overlay
 			wet_overlay = null
-		var/turf/simulated/floor/F = src
-		if(istype(F))
-			wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
-		else
-			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
+		wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
 		overlays += wet_overlay
 
 	spawn(rand(790, 820)) // Purely so for visual effect

@@ -10,7 +10,8 @@
 	set name = "Check Laws"
 
 	src << "<b>Drone Laws</b>"
-	src << laws
+	src << (uprising ? uprising_law : laws)
+
 
 /mob/living/simple_animal/drone/verb/toggle_light()
 	set category = "Drone"

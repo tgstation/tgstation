@@ -8,7 +8,7 @@
 /obj/item/weapon/reagent_containers/food/condiment
 	name = "condiment container"
 	desc = "Just your average condiment container."
-	icon = 'icons/obj/food/containers.dmi'
+	icon = 'icons/obj/food.dmi'
 	icon_state = "emptycondiment"
 	flags = OPENCONTAINER
 	possible_transfer_amounts = list(1,5,10)
@@ -157,6 +157,7 @@
 /obj/item/weapon/reagent_containers/food/condiment/flour
 	name = "flour sack"
 	desc = "A big bag of flour. Good for baking!"
+	icon = 'icons/obj/food.dmi'
 	icon_state = "flour"
 	item_state = "flour"
 	list_reagents = list("flour" = 30)
@@ -170,13 +171,6 @@
 	list_reagents = list("soymilk" = 50)
 	possible_states = list()
 
-/obj/item/weapon/reagent_containers/food/condiment/rice
-	name = "rice sack"
-	desc = "A big bag of rice. Good for cooking!"
-	icon_state = "rice"
-	item_state = "flour"
-	list_reagents = list("rice" = 30)
-	possible_states = list()
 
 
 

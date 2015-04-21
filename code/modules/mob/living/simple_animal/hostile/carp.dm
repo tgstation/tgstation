@@ -21,15 +21,20 @@
 	melee_damage_upper = 15
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
-	speak_emote = list("gnashes")
 
 	//Space carp aren't affected by cold.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
 	minbodytemp = 0
 	maxbodytemp = 1500
 
 	faction = list("carp")
-	flying = 1
 
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(var/movement_dir = 0)
 	return 1	//No drifting in space for space carp!	//original comments do not steal
@@ -37,7 +42,7 @@
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()
 	if(.)
-		emote("me", 1, "gnashes at [.]!")
+		emote("me", 1, "nashes at [.]!")
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	..()
@@ -52,9 +57,7 @@
 	icon_living = "holocarp"
 	maxbodytemp = INFINITY
 
-/mob/living/simple_animal/hostile/carp/holocarp/death()
-	..(1)
-	ghostize()
+/mob/living/simple_animal/hostile/carp/holocarp/Die()
 	qdel(src)
 	return
 

@@ -17,7 +17,7 @@
 	return // thanks inheritance again
 
 /obj/item/weapon/reagent_containers/pill/patch/canconsume(mob/eater, mob/user)
-	if(!iscarbon(eater))
+	if(!eater.SpeciesCanConsume())
 		return 0
 	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
 

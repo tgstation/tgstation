@@ -1,7 +1,7 @@
 /mob/living/carbon/monkey
 	name = "monkey"
 	voice_name = "monkey"
-	verb_say = "chimpers"
+	say_message = "chimpers"
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
 	gender = NEUTER
@@ -137,6 +137,7 @@
 
 		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			var/damage = 5
 			if(prob(95))
 				Weaken(10)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
@@ -146,6 +147,7 @@
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [name]!</span>")
 			add_logs(M, src, "disarmed", admin=0)
+			adjustBruteLoss(damage)
 			updatehealth()
 	return
 
@@ -156,13 +158,18 @@
 		updatehealth()
 
 
-/mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M as mob)
-	if(..()) //successful slime attack
-		var/damage = rand(5, 35)
-		if(M.is_adult)
-			damage = rand(20, 40)
-		adjustBruteLoss(damage)
-		updatehealth()
+/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)
+	..()
+	var/damage = rand(1, 3)
+
+	if(M.is_adult)
+		damage = rand(20, 40)
+	else
+		damage = rand(5, 35)
+	adjustBruteLoss(damage)
+	updatehealth()
+
+	return
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -241,6 +248,10 @@
 
 	return threatcount
 
+/mob/living/carbon/monkey/SpeciesCanConsume()
+	return 1 // Monkeys can eat, drink, and be forced to do so
+
+
 /mob/living/carbon/monkey/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	if(wear_mask)
 		if(!wear_mask.unacidable)
@@ -251,10 +262,3 @@
 		return
 
 	take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))
-
-/mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
-	if(health < 0 && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.do_cpr(src)
-	else
-		..()

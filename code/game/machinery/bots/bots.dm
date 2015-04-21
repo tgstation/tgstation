@@ -48,6 +48,8 @@
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/control_freq = 1447		// bot control frequency
 
+	var/bot_filter 				// The radio filter the bot uses to identify itself on the network.
+
 	var/bot_type = 0 //The type of bot it is, for radio control.
 	#define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
 	#define MULE_BOT			2	// MULEbots
@@ -67,7 +69,7 @@
 	#define BOT_SUMMON			6	// summoned by PDA
 	#define BOT_CLEANING 		7	// cleaning (cleanbots)
 	#define BOT_REPAIRING		8	// repairing hull breaches (floorbots)
-	#define BOT_MOVING			9	// for clean/floor/med bots, when moving.
+	#define BOT_MOVING			9	// for clean/floor bots, when moving.
 	#define BOT_HEALING			10	// healing people (medbots)
 	#define BOT_RESPONDING		11	// responding to a call from the AI
 	#define BOT_LOADING			12	// loading/unloading
@@ -96,24 +98,23 @@
 /obj/machinery/bot/New()
 	..()
 	SSbot.processing += src //Global bot list
-	SSbp.insertBot(src)
 	botcard = new /obj/item/weapon/card/id(src)
 	set_custom_texts()
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
-	spawn(5)
-		add_to_beacons()
 
 /obj/machinery/bot/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,beacon_freq)
-		radio_controller.remove_object(src,control_freq)
+		if(bot_filter)
+			radio_controller.remove_object(src,control_freq)
 	..()
 
-/obj/machinery/bot/proc/add_to_beacons() //Master radio control for bots. Must be placed in the bot's local New() to support map spawned bots.
+/obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-		radio_controller.add_object(src, control_freq)
+		if(bot_filter)
+			radio_controller.add_object(src, control_freq, filter = bot_filter)
 
 
 /obj/machinery/bot/proc/explode()
@@ -202,7 +203,7 @@
 				usr << "<span class='warning'>[text_hack]</span>"
 				bot_reset()
 			else if(!hacked)
-				usr << "<span class='boldannounce'>[text_dehack_fail]</span>"
+				usr << "<span class='userdanger'>[text_dehack_fail]</span>"
 			else
 				emagged = 0
 				hacked = 0
@@ -322,7 +323,7 @@
 	pulse2.dir = pick(cardinal)
 
 	spawn(10)
-		qdel(pulse2)
+		pulse2.delete()
 	if (on)
 		turn_off()
 	spawn(severity*300)
@@ -374,13 +375,12 @@ obj/machinery/bot/proc/scan(var/scan_type, var/old_target, var/scan_range = DEFA
 	for (var/scan in view (scan_range, src) ) //Search for something in range!
 		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
 			continue //If not, keep searching!
-		if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
-			continue
-		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
-		if( scan_result )
-			final_result = scan_result
-		else
-			continue //The current element failed assessment, move on to the next.
+		if( !(scan in ignore_list) && (scan != old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
+			var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
+			if( scan_result )
+				final_result = scan_result
+			else
+				continue //The current element failed assessment, move on to the next.
 		return final_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
@@ -404,13 +404,8 @@ obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 	if(!dest || !path || path.len == 0) //A-star failed or a path/destination was not set.
 		path = list()
 		return 0
-	dest = get_turf(dest) //We must always compare turfs, so get the turf of the dest var if dest was originally something else.
-	var/turf/last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
-	if(get_turf(src) == dest) //We have arrived, no need to move again.
+	if(get_turf(src) == get_turf(dest)) //We have arrived, no need to move again.
 		return 1
-	else if (dest != last_node) //The path should lead us to our given destination. If this is not true, we must stop.
-		path = list()
-		return 0
 	var/success
 	var/step_count = move_speed ? move_speed : speed //If a value is passed into move_speed, use that instead of the default speed var.
 	if(step_count >= 1 && tries < 4)
@@ -444,7 +439,7 @@ obj/machinery/bot/proc/bot_step(var/dest)
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
 		botcard.access = prev_access
 
-/obj/machinery/bot/proc/call_bot(var/caller, var/turf/waypoint, var/message=TRUE)
+/obj/machinery/bot/proc/call_bot(var/caller, var/turf/waypoint)
 	bot_reset() //Reset a bot before setting it to call mode.
 	var/area/end_area = get_area(waypoint)
 
@@ -461,14 +456,12 @@ obj/machinery/bot/proc/bot_step(var/dest)
 		if(!on)
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		botcard = all_access //Give the bot all-access while under the AI's command.
-		if(message)
-			calling_ai << "<span class='notice'>\icon[src] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>"
+		calling_ai << "<span class='notice'>\icon[src] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>"
 		pathset = 1
 		mode = BOT_RESPONDING
 		tries = 0
 	else
-		if(message)
-			calling_ai << "<span class='danger'>Failed to calculate a valid route. Ensure destination is clear of obstructions and within range.</span>"
+		calling_ai << "<span class='danger'>Failed to calculate a valid route. Ensure destination is clear of obstructions and within range.</span>"
 		calling_ai = null
 		path = list()
 
@@ -707,6 +700,8 @@ obj/machinery/bot/proc/start_patrol()
 
 // send a radio signal with multiple data key/values
 /obj/machinery/bot/proc/post_signal_multiple(var/freq, var/list/keyval)
+	if(!z || z != 1) //Bot control will only work on station.
+		return
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
 	if(!frequency) return
@@ -720,6 +715,8 @@ obj/machinery/bot/proc/start_patrol()
 //	world << "sent [key],[keyval[key]] on [freq]"
 	if(signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
+	else if(signal.data["type"] == bot_type)
+		frequency.post_signal(src, signal, filter = bot_filter)
 	else
 		frequency.post_signal(src, signal)
 
@@ -731,8 +728,7 @@ obj/machinery/bot/proc/start_patrol()
 	"type" = bot_type,
 	"name" = name,
 	"loca" = get_area(src),	// area
-	"mode" = mode,
-	"sect" = z	// z-level, or "sector"
+	"mode" = mode
 	)
 	post_signal_multiple(control_freq, kv)
 

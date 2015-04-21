@@ -23,9 +23,7 @@
 	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
-	var/centcom = 0//Bleh, more dirty booleans
 	var/maxf = 1499
-	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = CONDUCT | HEAR
@@ -60,7 +58,6 @@
 	translate_binary = 0
 	translate_hive = 0
 	syndie = 0
-	centcom = 0
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
@@ -77,9 +74,6 @@
 
 		if(keyslot.syndie)
 			syndie = 1
-
-		if (keyslot.centcom)
-			centcom = 1
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
@@ -138,17 +132,14 @@
 				"}
 	else	//Headsets dont get a mic button, speaker controls both
 		dat += "<b>Power:</b> [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>"
-	if (freqlock)
-		dat += "<b>Frequency:</b> <span class='bad'>LOCKED</span><BR>"
-	else
-		dat += {"
-					<b>Frequency:</b>
-					<A href='byond://?src=\ref[src];freq=-10'>-</A>
-					<A href='byond://?src=\ref[src];freq=-2'>-</A>
-					[format_frequency(frequency)]
-					<A href='byond://?src=\ref[src];freq=2'>+</A>
-					<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-					"}
+	dat += {"
+				<b>Frequency:</b>
+				<A href='byond://?src=\ref[src];freq=-10'>-</A>
+				<A href='byond://?src=\ref[src];freq=-2'>-</A>
+				[format_frequency(frequency)]
+				<A href='byond://?src=\ref[src];freq=2'>+</A>
+				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+				"}
 
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
@@ -207,15 +198,14 @@
 		return
 
 	else if (href_list["freq"])
-		if (!freqlock)
-			var/new_frequency = (frequency + text2num(href_list["freq"]))
-			if (!freerange || (frequency < 1200 || frequency > 1600))
-				new_frequency = sanitize_frequency(new_frequency, maxf)
-			set_frequency(new_frequency)
-			if(hidden_uplink)
-				if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
-					usr << browse(null, "window=radio")
-					return
+		var/new_frequency = (frequency + text2num(href_list["freq"]))
+		if (!freerange || (frequency < 1200 || frequency > 1600))
+			new_frequency = sanitize_frequency(new_frequency, maxf)
+		set_frequency(new_frequency)
+		if(hidden_uplink)
+			if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
+				usr << browse(null, "window=radio")
+				return
 
 	else if (href_list["talk"])
 		broadcasting = text2num(href_list["talk"])
@@ -243,7 +233,7 @@
 /obj/item/device/radio/proc/isWireCut(var/index)
 	return wires.IsIndexCut(index)
 
-/obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
+/obj/item/device/radio/talk_into(atom/movable/M, message, channel)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -283,7 +273,6 @@
 		freq = frequency
 		channel = null
 
-	var/freqnum = text2num(freq) //Why should we call text2num three times when we can just do it here?
 	var/turf/position = get_turf(src)
 
 	//#### Tagging the signal with all appropriate identity values ####//
@@ -339,43 +328,6 @@
 	else
 		jobname = "Unknown"
 
-	/* ###### Centcom channel bypasses all comms relays. ###### */
-
-	if (freqnum == CENTCOM_FREQ && centcom)
-		var/datum/signal/signal = new
-		signal.transmission_method = 2
-		signal.data = list(
-			"mob" = M, 				// store a reference to the mob
-			"mobtype" = M.type, 	// the mob's type
-			"realname" = real_name, // the mob's real name
-			"name" = voice,			// the mob's voice name
-			"job" = jobname,		// the mob's job
-			"key" = mobkey,			// the mob's key
-			"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
-
-			"compression" = 0,		// uncompressed radio signal
-			"message" = message, 	// the actual sent message
-			"radio" = src, 			// stores the radio used for transmission
-			"slow" = 0,
-			"traffic" = 0,
-			"type" = 0,
-			"server" = null,
-			"reject" = 0,
-			"level" = 0,
-			"languages" = languages,
-			"spans" = spans,
-			"verb_say" = M.verb_say,
-			"verb_ask" = M.verb_ask,
-			"verb_exclaim" = M.verb_exclaim,
-			"verb_yell" = M.verb_yell
-			)
-		signal.frequency = freqnum // Quick frequency set
-		Broadcast_Message(M, voicemask,
-				  src, message, voice, jobname, real_name,
-				  4, signal.data["compression"], list(position.z, 0), freq, spans,
-				  verb_say, verb_ask, verb_exclaim, verb_yell)
-		return
-
 	/* ###### Radio headsets can only broadcast through subspace ###### */
 
 	if(subspace_transmission)
@@ -407,12 +359,7 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"languages" = M.languages, //The languages M is talking in.
-			"spans" = spans, //the span classes of this message.
-			"verb_say" = M.verb_say, //the verb used when talking normally
-			"verb_ask" = M.verb_ask, //the verb used when asking
-			"verb_exclaim" = M.verb_exclaim, //the verb used when exclaiming
-			"verb_yell" = M.verb_yell //the verb used when yelling
+			"languages" = M.languages //The languages M is talking in.
 			)
 		signal.frequency = freq
 
@@ -456,15 +403,9 @@
 		"type" = 0,
 		"server" = null,
 		"reject" = 0,
-		"level" = position.z,
-		"languages" = languages,
-		"spans" = spans,
-		"verb_say" = M.verb_say,
-		"verb_ask" = M.verb_ask,
-		"verb_exclaim" = M.verb_exclaim,
-		"verb_yell" = M.verb_yell
+		"level" = position.z
 		)
-	signal.frequency = freqnum // Quick frequency set
+	signal.frequency = text2num(freq) // Quick frequency set
 	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
 		R.receive_signal(signal)
 
@@ -479,15 +420,14 @@
 		// Send a mundane broadcast with limited targets:
 		Broadcast_Message(M, voicemask,
 						  src, message, voice, jobname, real_name,
-						  filter_type, signal.data["compression"], list(position.z), freq, spans,
-						  verb_say, verb_ask, verb_exclaim, verb_yell)
+						  filter_type, signal.data["compression"], list(position.z), freq)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
 	if(radio_freq)
 		return
 	if(broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
-			talk_into(speaker, raw_message, , spans)
+			talk_into(speaker, raw_message)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 
@@ -516,9 +456,6 @@
 			return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
-			return -1
-	if(freq == CENTCOM_FREQ)
-		if (!(src.centcom))
 			return -1
 	if (!on)
 		return -1

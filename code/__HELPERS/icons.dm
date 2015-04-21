@@ -107,7 +107,7 @@ AngleToHue(hue)
     Converts an angle to a hue in the valid range.
 RotateHue(hsv, angle)
     Takes an HSV or HSVA value and rotates the hue forward through red, green, and blue by an angle from 0 to 360.
-    (Rotating red by 60Â° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
+    (Rotating red by 60° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
     as the original, but a different hue.
 GrayScale(rgb)
     Takes an RGB or RGBA color and converts it to grayscale. Returns an RGB or RGBA string.
@@ -689,9 +689,7 @@ The _flatIcons list is a cache for generated icon files.
 	while(TRUE)
 		if(curIndex<=process.len)
 			current = process[curIndex]
-			if(!current)	
-				curIndex++ //Try the next layer
-				continue
+			if(!current)	continue
 			currentLayer = current:layer
 			if(currentLayer<0) // Special case for FLY_LAYER
 				if(currentLayer <= -1000) return flat

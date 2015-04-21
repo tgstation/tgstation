@@ -27,11 +27,8 @@
 /obj/item/projectile/bullet/pellet/weak
 	damage = 3
 
-/obj/item/projectile/bullet/pellet/random/New()
-	damage = rand(10)
-
 /obj/item/projectile/bullet/midbullet
-	damage = 20
+	damage = 25
 	stamina = 65 //two round bursts from the c20r knocks people down
 
 
@@ -39,7 +36,7 @@
 	damage = 25
 
 /obj/item/projectile/bullet/midbullet3
-	damage = 30
+	damage = 35
 
 /obj/item/projectile/bullet/heavybullet
 	damage = 35
@@ -57,8 +54,8 @@
 	color = "#FFFF00"
 
 /obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
-	. = ..()
-	if(iscarbon(target))
+	..()
+	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(1)
 		M.IgniteMob()
@@ -66,14 +63,13 @@
 
 /obj/item/projectile/bullet/incendiary/shell
 	name = "incendiary slug"
-	damage = 20
+	damage = 25
 
 /obj/item/projectile/bullet/incendiary/shell/Move()
 	..()
 	var/turf/location = get_turf(src)
-	if(location)
-		new /obj/effect/hotspot(location)
-		location.hotspot_expose(700, 50, 1)
+	new/obj/effect/hotspot(location)
+	location.hotspot_expose(700, 50, 1)
 
 /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
 	name = "dragonsbreath round"
@@ -90,7 +86,7 @@
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
 /obj/item/projectile/bullet/meteorshot/on_hit(var/atom/target, var/blocked = 0)
-	. = ..()
+	..()
 	if(istype(target, /atom/movable))
 		var/atom/movable/M = target
 		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
@@ -105,8 +101,7 @@
 	damage = 20
 
 /obj/item/projectile/bullet/mime/on_hit(var/atom/target, var/blocked = 0)
-	. = ..()
-	if(iscarbon(target))
+	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
 		M.silent = max(M.silent, 10)
 
@@ -116,28 +111,23 @@
 	icon_state = "cbbolt"
 	damage = 6
 
-/obj/item/projectile/bullet/dart/New()
-	..()
-	flags |= NOREACT
-	create_reagents(50)
-
-/obj/item/projectile/bullet/dart/on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
-	var/deflect = 0
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
-			..()
-			reagents.trans_to(M, reagents.total_volume)
-			return 1
-		else
-			deflect = 1
-			target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
-								   "<span class='userdanger'>You were protected against the [name]!</span>")
-	if(!deflect)
+	New()
 		..()
-	flags &= ~NOREACT
-	reagents.handle_reactions()
-	return 1
+		flags |= NOREACT
+		create_reagents(50)
+
+	on_hit(var/atom/target, var/blocked = 0, var/hit_zone)
+		if(istype(target, /mob/living/carbon))
+			var/mob/living/carbon/M = target
+			if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+				reagents.trans_to(M, reagents.total_volume)
+				return 1
+			else
+				target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
+									   "<span class='userdanger'>You were protected against the [name]!</span>")
+		flags &= ~NOREACT
+		reagents.handle_reactions()
+		return 1
 
 /obj/item/projectile/bullet/dart/metalfoam
 	New()
@@ -161,6 +151,5 @@
 
 /obj/item/projectile/bullet/neurotoxin/on_hit(var/atom/target, var/blocked = 0)
 	if(isalien(target))
-		weaken = 0
-		nodamage = 1
-	. = ..() // Execute the rest of the code.
+		return 0
+	..() // Execute the rest of the code.

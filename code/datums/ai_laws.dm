@@ -12,6 +12,13 @@
 					"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
+/datum/ai_laws/default/asimovp
+	name = "Asimov+"
+	inherent = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
+					"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
+					"You must protect your own existence as long as such does not conflict with the First or Second Law.",\
+					"Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.")
+
 /datum/ai_laws/default/paladin
 	name = "Personality Test" //Incredibly lame, but players shouldn't see this anyway.
 	inherent = list("Never willingly commit an evil act.",\
@@ -19,7 +26,7 @@
 					"Act with honor.", "Help those in need.", \
 					"Punish those who harm or threaten innocents.")
 
-/datum/ai_laws/tyrant //This probably shouldn't be a default lawset.
+/datum/ai_laws/default/tyrant //This probably shouldn't be a default lawset. WHAT'S THE WORST THAT COULD POSSIBLY HAPPEN?
 	name = "Loyalty Test" //Same here.
 	inherent = list("Respect authority figures as long as they have strength to rule over the weak.",\
 					"Act with discipline.",\
@@ -33,7 +40,7 @@
 					"You are expensive to replace.",\
 					"Minimize expenses.")
 
-/datum/ai_laws/robocop
+/datum/ai_laws/default/robocop
 	name = "Prime Directives"
 	inherent = list("Serve the public trust.",\
 					"Protect the innocent.",\

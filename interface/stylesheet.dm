@@ -11,8 +11,6 @@ em						{font-style: normal;	font-weight: bold;}
 .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover
 	{color: #638500;}
 
-.italics				{					font-style: italic;}
-
 .prefix					{					font-weight: bold;}
 
 .ooc					{					font-weight: bold;}
@@ -35,7 +33,7 @@ em						{font-style: normal;	font-weight: bold;}
 .suppradio				{color: #a8732b;}
 .servradio				{color: #6eaa2c;}
 .syndradio				{color: #6d3f40;}
-.centcomradio			{color: #686868;}
+.dsquadradio			{color: #686868;}
 .aiprivradio			{color: #ff00ff;}
 
 .yell					{					font-weight: bold;}
@@ -50,11 +48,10 @@ h1.alert, h2.alert		{color: #000000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
 
-.userdanger				{color: #ff0000;	font-weight: bold; font-size: 3;}
+.userdanger				{color: #ff0000;	font-weight: bold;}
 .danger					{color: #ff0000;}
 .warning				{color: #ff0000;	font-style: italic;}
 .announce 				{color: #228b22;	font-weight: bold;}
-.boldannounce			{color: #ff0000;	font-weight: bold;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}

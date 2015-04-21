@@ -13,15 +13,15 @@
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	meat_amount = 1
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 	density = 0
 	ventcrawler = 2
-	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
+	pass_flags = PASSTABLE | PASSGRILLE
+	mob_size = MOB_SIZE_SMALL
 	var/body_color //brown, gray and white, leave blank for random
 
 /mob/living/simple_animal/mouse/New()
@@ -36,16 +36,14 @@
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
 	src.icon_dead = "mouse_[body_color]_splat"
-	death()
+	Die()
 
-/mob/living/simple_animal/mouse/death(gibbed)
+/mob/living/simple_animal/mouse/Die()
+	..()
 	if(!ckey)
-		..(1)
 		var/obj/item/trash/deadmouse/M = new(src.loc)
-		M.icon_state = icon_dead
+		M.icon_state = src.icon_dead
 		qdel(src)
-	else
-		..(gibbed)
 
 /mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )

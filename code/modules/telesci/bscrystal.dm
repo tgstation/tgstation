@@ -18,7 +18,7 @@
 
 /obj/item/bluespace_crystal/attack_self(var/mob/user)
 	user.visible_message("<span class='notice'>[user] crushes [src]!</span>")
-	PoolOrNew(/obj/effect/effect/sparks, loc)
+	new /obj/effect/effect/sparks(src.loc)
 	playsound(src.loc, "sparks", 50, 1)
 	blink_mob(user)
 	user.drop_item()
@@ -30,7 +30,7 @@
 /obj/item/bluespace_crystal/throw_impact(atom/hit_atom)
 	..()
 	visible_message("<span class='notice'>[src] fizzles and disappears upon impact!</span>")
-	PoolOrNew(/obj/effect/effect/sparks, loc)
+	new /obj/effect/effect/sparks(src.loc)
 	playsound(src.loc, "sparks", 50, 1)
 	if(isliving(hit_atom))
 		blink_mob(hit_atom)

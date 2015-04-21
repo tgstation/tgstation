@@ -39,9 +39,6 @@ It is possible to destroy the net by the occupant or someone else.
 	var/check = 30//30 seconds before teleportation. Could be extended I guess.
 	var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
 	//The person can still try and attack the net when inside.
-
-	M.notransform = 1 //No moving for you!
-
 	while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 30 seconds have not passed.
 		check--
 		sleep(10)
@@ -50,7 +47,6 @@ It is possible to destroy the net by the occupant or someone else.
 		if(!isnull(master))//As long as they still exist.
 			master << "<span class='userdanger'>ERROR</span>: unable to locate \the [mob_name]. Procedure terminated."
 		qdel(src)//Get rid of the net.
-		M.notransform = 0
 		return
 
 	if(!isnull(src))//As long as both net and person exist.
@@ -86,11 +82,11 @@ It is possible to destroy the net by the occupant or someone else.
 
 		if(!isnull(master))//As long as they still exist.
 			master << "<span class='notice'><b>SUCCESS</b>: transport procedure of \the [affecting] complete.</span>"
-		M.notransform = 0
+
+		M.anchored = 0//Important.
 
 	else//And they are free.
 		M << "<span class='notice'>You are free of the net!</span>"
-		M.notransform = 0
 	return
 
 

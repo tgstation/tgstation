@@ -15,7 +15,6 @@
 	var/skin_tone = "caucasian1"	//Skin tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
-	var/lip_color = "white"
 
 	var/age = 30		//Player's age (pure fluff)
 	var/blood_type = "A+"	//Player's bloodtype
@@ -32,6 +31,7 @@
 	var/obj/item/belt = null
 	var/obj/item/gloves = null
 	var/obj/item/glasses = null
+	var/obj/item/head = null
 	var/obj/item/ears = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null
@@ -40,15 +40,13 @@
 
 	var/icon/base_icon_state = "caucasian1_m"
 
+	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc, line 24. I'm sick and tired of missing comments. -Agouri
+
 	var/special_voice = "" // For changing our voice. Used by a symptom.
+
+	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine
 
 	var/blood_max = 0 //how much are we bleeding
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
-
-	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc.
-
-	var/datum/martial_art/martial_art = null
-
-	var/name_override //For temporary visible name changes

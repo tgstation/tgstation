@@ -118,7 +118,7 @@
 	else
 		user << "<span class='warning'>You can't reach, close it first!</span>"
 
-	if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
+	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		dismantle(user)
 
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
@@ -221,7 +221,7 @@
 		if(world.time > last_event+15)
 			active = 1
 			for(var/mob/living/L in range(3,src))
-				L.irradiate(12)
+				L.apply_effect(12,IRRADIATE,0)
 			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
 				T.radiate()
 			last_event = world.time

@@ -1,8 +1,7 @@
 //Cat
-/mob/living/simple_animal/pet/cat
+/mob/living/simple_animal/cat
 	name = "cat"
 	desc = "Kitty!!"
-	icon = 'icons/mob/pets.dmi'
 	icon_state = "cat2"
 	icon_living = "cat2"
 	icon_dead = "cat2_dead"
@@ -14,16 +13,16 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	species = /mob/living/simple_animal/pet/cat
-	childtype = /mob/living/simple_animal/pet/cat/kitten
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
+	species = /mob/living/simple_animal/cat
+	childtype = /mob/living/simple_animal/cat/kitten
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
-/mob/living/simple_animal/pet/cat/Runtime
+/mob/living/simple_animal/cat/Runtime
 	name = "Runtime"
 	desc = "GCAT"
 	icon_state = "cat"
@@ -32,9 +31,8 @@
 	gender = FEMALE
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-	pcollar = /obj/item/clothing/tie/petcollar
 
-/mob/living/simple_animal/pet/cat/Runtime/Life()
+/mob/living/simple_animal/cat/Runtime/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
@@ -69,16 +67,14 @@
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
 
-/mob/living/simple_animal/pet/cat/Proc
+/mob/living/simple_animal/cat/Proc
 	name = "Proc"
 
-/mob/living/simple_animal/pet/cat/kitten
+/mob/living/simple_animal/cat/kitten
 	name = "kitten"
 	desc = "D'aaawwww"
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
 	gender = NEUTER
-	density = 0
-	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
