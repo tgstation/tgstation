@@ -1,3 +1,4 @@
+var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "plasma", "pacid" =  "polytrinic acid", "sacid" =  "sulphuric acid" )
 /obj
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
@@ -15,14 +16,8 @@
 	var/damtype = "brute"
 	var/force = 0
 
-	// What reagents should be logged when transferred TO this object?
-	// Reagent ID => friendly name
-	var/global/list/reagents_to_log = list( \
-		"fuel"  =  "welder fuel", \
-		"plasma"=  "plasma", \
-		"pacid" =  "polytrinic acid", \
-		"sacid" =  "sulphuric acid" \
-	)
+	//Should we alert about reagents that should be logged?
+	var/log_reagents = 1
 
 	var/list/mob/_using // All mobs dicking with us.
 

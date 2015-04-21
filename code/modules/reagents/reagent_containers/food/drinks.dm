@@ -918,9 +918,9 @@
 		user << "<span class='notice'>You transfer [trans] units of the solution to [target].</span>"
 
 		// /vg/: Logging transfers of bad things
-		if(istype(target.reagents_to_log) && target.reagents_to_log.len)
+		if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
 			var/list/badshit=list()
-			for(var/bad_reagent in target.reagents_to_log)
+			for(var/bad_reagent in reagents_to_log)
 				if(reagents.has_reagent(bad_reagent))
 					badshit += reagents_to_log[bad_reagent]
 			if(badshit.len)

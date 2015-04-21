@@ -54,7 +54,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	)
 
 	// Don't log reagent transfers.  They're just spammy.
-	reagents_to_log=0
+	log_reagents=0
 
 	RefreshParts()
 
