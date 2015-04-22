@@ -774,22 +774,14 @@
 		return 1
 
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
-/*	if (istype(W, /obj/item/weapon/wirecutters))
-		stat ^= BROKEN
-		add_fingerprint(user)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span class='warning'>[] has []activated []!</span>", user, (stat&BROKEN) ? "de" : "re", src), 1)
-		update_icon()
-		return
-*/
 	src.add_fingerprint(user)
 
 	switch(buildstage)
 		if(2)
 			if(isscrewdriver(W))  // Opening that Air Alarm up.
-				//user << "You pop the Air Alarm's maintence panel open."
 				wiresexposed = !wiresexposed
-				user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+				user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]."
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				update_icon()
 				return
 
@@ -798,7 +790,9 @@
 			else if(wiresexposed && wires.IsAllCut() && iswirecutter(W))
 				buildstage = 1
 				update_icon()
-				new /obj/item/stack/cable_coil(get_turf(src),5)
+				user.visible_message("<span class='attack'>[user] has cut the wiring from \the [src]!</span>", "You have cut the last of the wiring from \the [src].")
+				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
+				getFromPool(/obj/item/stack/cable_coil, get_turf(user), 5)
 				return
 			if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
@@ -822,26 +816,26 @@
 					wires.UpdateCut(i,1)
 
 				user << "You wire \the [src]!"
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 				coil.use(5)
-
 				buildstage = 2
 				update_icon()
 				first_run()
 				return
 
 			else if(iscrowbar(W))
-				user << "You start prying out the circuit."
+				user << "You start prying out the circuit..."
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-				if(do_after(user,20))
+				if(do_after(user,20) && buildstage == 1)
 					user << "You pry out the circuit!"
-					var/obj/item/weapon/circuitboard/air_alarm/circuit = new /obj/item/weapon/circuitboard/air_alarm()
-					circuit.loc = user.loc
+					new /obj/item/weapon/circuitboard/air_alarm(get_turf(user))
 					buildstage = 0
 					update_icon()
 				return
 		if(0)
 			if(istype(W, /obj/item/weapon/circuitboard/air_alarm))
 				user << "You insert the circuit!"
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 				qdel(W)
 				buildstage = 1
 				update_icon()
@@ -853,7 +847,6 @@
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				qdel(src)
 				return
-
 
 /obj/machinery/alarm/power_change()
 	if(powered(power_channel))
@@ -939,6 +932,8 @@ FIRE ALARM
 
 	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
 		wiresexposed = !wiresexposed
+		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]."
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 		update_icon()
 		return
 
@@ -947,17 +942,16 @@ FIRE ALARM
 			if(2)
 				if (ismultitool(W))
 					src.detecting = !( src.detecting )
-					if (src.detecting)
-						user.visible_message("<span class='attack'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
-					else
-						user.visible_message("<span class='attack'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
+					user.visible_message("<span class='attack'>[user] has [detecting ? "re" : "dis"]connected [src]'s detecting unit!</span>", "You have [detecting ? "re" : "dis"]reconnected [src]'s detecting unit.")
+					playsound(get_turf(src), 'sound/items/healthanalyzer.ogg', 50, 1)
 				if(iswirecutter(W))
-					if(do_after(user,50))
+					user << "You begin to cut the wiring..."
+					playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
+					if (do_after(user, 50) && buildstage == 2 && wiresexposed)
 						buildstage=1
 						user.visible_message("<span class='attack'>[user] has cut the wiring from \the [src]!</span>", "You have cut the last of the wiring from \the [src].")
 						update_icon()
-						new /obj/item/stack/cable_coil(user.loc,5)
-						playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
+						getFromPool(/obj/item/stack/cable_coil, get_turf(user), 5)
 			if(1)
 				if(iscoil(W))
 					var/obj/item/stack/cable_coil/coil = W
@@ -971,16 +965,17 @@ FIRE ALARM
 					update_icon()
 
 				else if(istype(W, /obj/item/weapon/crowbar))
-					user << "You pry out the circuit!"
+					user << "You start prying out the circuit..."
 					playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-					spawn(20)
-						var/obj/item/weapon/circuitboard/fire_alarm/circuit = new /obj/item/weapon/circuitboard/fire_alarm()
-						circuit.loc = user.loc
+					if (do_after(user, 20) && buildstage == 1)
+						user << "You pry out the circuit!"
+						new /obj/item/weapon/circuitboard/fire_alarm(get_turf(user))
 						buildstage = 0
 						update_icon()
 			if(0)
 				if(istype(W, /obj/item/weapon/circuitboard/fire_alarm))
 					user << "You insert the circuit!"
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					qdel(W)
 					buildstage = 1
 					update_icon()
@@ -993,7 +988,6 @@ FIRE ALARM
 		return
 
 	src.alarm()
-	return
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(stat & (NOPOWER|BROKEN))

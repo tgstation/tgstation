@@ -445,12 +445,16 @@
 			if(!src.issuperUV)
 				if(src.HELMET)
 					HELMET.clean_blood()
+					HELMET.decontaminate()
 				if(src.SUIT)
 					SUIT.clean_blood()
+					SUIT.decontaminate()
 				if(src.MASK)
 					MASK.clean_blood()
+					MASK.decontaminate()
 				if(src.BOOTS)
 					BOOTS.clean_blood()
+					BOOTS.decontaminate()
 			else //It was supercycling, destroy everything
 				if(src.HELMET)
 					src.HELMET = null
@@ -468,37 +472,6 @@
 			src.isUV = 0 //Cycle ends
 	src.update_icon()
 	src.updateUsrDialog()
-	return
-
-/*	spawn(200) //Let's clean dat shit after 20 secs  //Eh, this doesn't work
-		if(src.HELMET)
-			HELMET.clean_blood()
-		if(src.SUIT)
-			SUIT.clean_blood()
-		if(src.MASK)
-			MASK.clean_blood()
-		src.isUV = 0 //Cycle ends
-		src.update_icon()
-		src.updateUsrDialog()
-
-	var/i
-	for(i=0,i<4,i++) //Gradually give the guy inside some damaged based on the intensity
-		spawn(50)
-			if(src.OCCUPANT)
-				if(src.issuperUV)
-					OCCUPANT.take_organ_damage(0,40)
-					user << "Test. You gave him 40 damage"
-				else
-					OCCUPANT.take_organ_damage(0,8)
-					user << "Test. You gave him 8 damage"
-	return*/
-
-
-/obj/machinery/suit_storage_unit/proc/cycletimeleft()
-	if(src.cycletime_left >= 1)
-		src.cycletime_left--
-	return src.cycletime_left
-
 
 /obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user as mob)
 	if (src.islocked)
