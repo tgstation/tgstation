@@ -1052,6 +1052,7 @@
  * TODO: What's the default return value?
  */
 /mob/living/carbon/human/eyecheck()
+	. = 0
 	var/obj/item/clothing/head/headwear = src.head
 	var/obj/item/clothing/glasses/eyewear = src.glasses
 
