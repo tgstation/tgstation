@@ -26,6 +26,7 @@
 	speed = 1
 	ventcrawler = 2
 	robust_searching = 1
+	speak_emote = list("squeaks")
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight

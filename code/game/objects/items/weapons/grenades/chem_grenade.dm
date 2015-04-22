@@ -211,9 +211,17 @@
 	reagents.chem_temp = total_temp
 
 /obj/item/weapon/grenade/chem_grenade/proc/can_flood_from(myloc, maxrange)
+	var/turf/myturf = get_turf(myloc)
 	var/list/reachable = list(myloc)
 	for(var/i=1; i<=maxrange; i++)
+		var/list/turflist = list()
 		for(var/turf/T in (orange(i, myloc) - orange(i-1, myloc)))
+			turflist |= T
+		for(var/turf/T in turflist)
+			if( !(get_dir(T,myloc) in cardinal) && (abs(T.x - myturf.x) == abs(T.y - myturf.y) ))
+				turflist.Remove(T)
+				turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
+		for(var/turf/T in turflist)
 			if(T in reachable) continue
 			for(var/turf/NT in orange(1, T))
 				if(!(NT in reachable)) continue
@@ -288,8 +296,8 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("aluminium", 25)
-	B2.reagents.add_reagent("plasma", 25)
+	B1.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("stable_plasma", 25)
 	B2.reagents.add_reagent("sacid", 25)
 
 	beakers += B1

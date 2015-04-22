@@ -146,18 +146,15 @@
 		"left hand" = slot_l_hand,
 		"right hand" = slot_r_hand,
 	)
-	var/spray = mob.equip_in_one_of_slots(R,slots)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	if (!spray)
-		mob << "The Syndicate were unfortunately unable to get you some spraypaint."
-	else
-		mob << "The Spraypaint in your [spray] will help you spread your message of unrest and revolution."
-		mob.update_icons()
+	mob.equip_in_one_of_slots(R,slots)
+
+	mob.update_icons()
+
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
 	else
 		mob << "The flash in your [where] will help you to persuade the crew to join your cause."
-		mob.update_icons()
 		return 1
 
 /////////////////////////////////
@@ -182,7 +179,7 @@
 			for(var/datum/mind/rev_mind in head_revolutionaries)
 				mark_for_death(rev_mind, head_mind)
 
-	if(max_headrevs < initial(max_headrevs) && max_headrevs < heads.len)
+	if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < heads.len)
 		latejoin_headrev()
 
 ///////////////////////////////
@@ -213,7 +210,7 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
-	if(config.continuous_round_rev)
+	if(config.continuous["revolution"])
 		if(finished != 0)
 			SSshuttle.emergencyNoEscape = 0
 		return ..()

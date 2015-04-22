@@ -92,23 +92,20 @@
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
 	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
+	var/abductor_scaling_coeff = 15 	//how many players per abductor team
 
 	var/traitor_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0 //If security and such can be traitor/cult/other
 	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
 	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
 	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
-	var/continuous_round_rev = 0		// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
-	var/continuous_round_gang = 0
-	var/continuous_round_wiz = 0
-	var/continuous_round_malf = 0
-	var/continuous_round_blob = 0
+	var/list/continuous = list()		// which roundtypes continue if all antagonists die
+	var/list/midround_antag = list() 	// which roundtypes use the midround antagonist system
 	var/midround_antag_time_check = 60  // How late (in minutes) you want the midround antag system to stay on, setting this to 0 will disable the system
 	var/midround_antag_life_check = 0.7 // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
-	var/mutant_colors = 0
 
 	var/no_summon_guns		//No
 	var/no_summon_magic		//Fun
@@ -397,16 +394,18 @@
 					config.sec_start_brig			= 1
 				if("gateway_delay")
 					config.gateway_delay			= text2num(value)
-				if("continuous_round_rev")
-					config.continuous_round_rev		= 1
-				if("continuous_round_gang")
-					config.continuous_round_gang	= 1
-				if("continuous_round_wiz")
-					config.continuous_round_wiz		= 1
-				if("continuous_round_malf")
-					config.continuous_round_malf	= 1
-				if("continuous_round_blob")
-					config.continuous_round_blob	= 1
+				if("continuous")
+					var/mode_name = lowertext(value)
+					if(mode_name in config.modes)
+						config.continuous[mode_name] = 1
+					else
+						diary << "Unknown continuous configuration definition: [mode_name]."
+				if("midround_antag")
+					var/mode_name = lowertext(value)
+					if(mode_name in config.modes)
+						config.midround_antag[mode_name] = 1
+					else
+						diary << "Unknown midround antagonist configuration definition: [mode_name]."
 				if("midround_antag_time_check")
 					config.midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
@@ -423,6 +422,8 @@
 					config.changeling_scaling_coeff	= text2num(value)
 				if("security_scaling_coeff")
 					config.security_scaling_coeff	= text2num(value)
+				if("abductor_scaling_coeff")
+					config.abductor_scaling_coeff	= text2num(value)
 				if("traitor_objectives_amount")
 					config.traitor_objectives_amount = text2num(value)
 				if("probability")
@@ -472,8 +473,6 @@
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
-				if("mutant_colors")
-					config.mutant_colors			= 1
 				if("assistant_cap")
 					config.assistant_cap			= text2num(value)
 				if("starlight")

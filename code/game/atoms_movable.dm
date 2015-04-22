@@ -15,6 +15,7 @@
 	var/pass_flags = 0
 	glide_size = 8
 
+
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
 	var/atom/oldloc = loc
@@ -46,10 +47,12 @@
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
-
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
 		return
+
+	if(.)
+		Moved(oldloc, direct)
 
 	last_move = direct
 
@@ -57,6 +60,10 @@
 		if(loc && direct && last_move == direct)
 			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
 				newtonian_move(last_move)
+
+//Called after a successful Move(). By this point, we've already moved
+/atom/movable/proc/Moved(atom/OldLoc, Dir)
+	return 1
 
 /atom/movable/Del()
 	if(isnull(gc_destroyed) && loc)
@@ -68,14 +75,13 @@
 	..()
 
 /atom/movable/Destroy()
+	. = ..()
 	if(reagents)
 		qdel(reagents)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	tag = null
 	loc = null
 	invisibility = 101
-	// Do not call ..()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -96,12 +102,15 @@
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
-		if(loc)
-			loc.Exited(src)
+		var/atom/oldloc = loc
+		if(oldloc)
+			oldloc.Exited(src, destination)
 		loc = destination
-		loc.Entered(src)
-		for(var/atom/movable/AM in loc)
+		destination.Entered(src, oldloc)
+		for(var/atom/movable/AM in destination)
+			if(AM == src)	continue
 			AM.Crossed(src)
+		Moved(oldloc, 0)
 		return 1
 	return 0
 
@@ -159,7 +168,8 @@
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
 	src.throwing = 1
-	SpinAnimation(5, 1)
+	if(target.allow_spin) // turns out 1000+ spinning objects being thrown at the singularity creates lag - Iamgoofball
+		SpinAnimation(5, 1)
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
 	var/dx = (target.x > src.x) ? EAST : WEST

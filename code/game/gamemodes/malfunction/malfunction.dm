@@ -5,7 +5,7 @@
 	name = "AI malfunction"
 	config_tag = "malfunction"
 	antag_flag = BE_MALF
-	required_players = 1
+	required_players = 25
 	required_enemies = 1
 	recommended_enemies = 1
 	pre_setup_before_jobs = 1
@@ -170,12 +170,14 @@
 
 
 /datum/game_mode/malfunction/check_finished()
-	if(round_converted)
-		return ..()
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if(round_converted == 1) //No reason to waste resources
+		return ..() //Check for evacuation/nuke
 	if (station_captured && !to_nuke_or_not_to_nuke)
 		return 1
 	if (is_malf_ai_dead() || !check_ai_loc())
-		if(config.continuous_round_malf)
+		if(config.continuous["malfunction"])
 			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 				SSshuttle.emergency.mode = SHUTTLE_DOCKED
 				SSshuttle.emergency.timer = world.time
@@ -184,7 +186,11 @@
 			malf_mode_declared = 0
 			if(get_security_level() == "delta")
 				set_security_level("red")
-			round_converted = convert_roundtype()
+			if(config.midround_antag["malfunction"])
+				round_converted = convert_roundtype()
+				if(!round_converted)
+					return 1
+			return ..()
 		else
 			return 1
 	return ..() //check for shuttle and nuke

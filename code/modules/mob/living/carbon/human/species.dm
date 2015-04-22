@@ -1,12 +1,5 @@
 // This code handles different species in the game.
 
-#define SPECIES_LAYER			26
-#define BODY_BEHIND_LAYER		25
-#define BODY_LAYER				24
-#define BODY_ADJ_LAYER			23
-#define HAIR_LAYER				9
-#define BODY_FRONT_LAYER		2
-
 #define TINT_IMPAIR 2
 #define TINT_BLIND 3
 
@@ -92,9 +85,6 @@
 
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 
-	if(!config.mutant_colors)
-		H.dna.mutant_color = default_color
-
 	if(MUTCOLORS in specflags)
 		var/image/spec_base
 		var/icon_state_string = "[id]_"
@@ -128,10 +118,7 @@
 
 			if(hair_color)
 				if(hair_color == "mutcolor")
-					if(!config.mutant_colors)
-						img_facial_s.color = "#" + default_color
-					else
-						img_facial_s.color = "#" + H.dna.mutant_color
+					img_facial_s.color = "#" + H.dna.mutant_color
 				else
 					img_facial_s.color = "#" + hair_color
 			else
@@ -159,10 +146,7 @@
 
 			if(hair_color)
 				if(hair_color == "mutcolor")
-					if(!config.mutant_colors)
-						img_hair_s.color = "#" + default_color
-					else
-						img_hair_s.color = "#" + H.dna.mutant_color
+					img_hair_s.color = "#" + H.dna.mutant_color
 				else
 					img_hair_s.color = "#" + hair_color
 			else
@@ -254,13 +238,11 @@
 	else
 		icon_state_string += "_s"
 
-	if(!config.mutant_colors)
-		H.dna.mutant_color = default_color
-
 	for(var/layer in relevent_layers)
 		for(var/bodypart in bodyparts_to_add)
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[icon_state_string]_[bodypart]_[layer]", "layer" =- layer)
-			I.color = "#[H.dna.mutant_color]"
+			if(!(H.disabilities & HUSK))
+				I.color = "#[H.dna.mutant_color]"
 			standing += I
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()
@@ -519,6 +501,11 @@
 		if(!(SEE_OBJS & H.permanent_sight_flags))
 			H.sight &= ~SEE_OBJS
 
+		if(H.remote_view)
+			H.sight |= SEE_TURFS
+			H.sight |= SEE_MOBS
+			H.sight |= SEE_OBJS
+
 		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
@@ -668,7 +655,7 @@
 			if(istype(H.back, /obj/item/weapon/tank/jetpack))
 				J = H.back
 			if(istype(H.wear_suit,/obj/item/clothing/suit/space/hardsuit)) //copypasta but faster implementation currently
-				var/obj/item/clothing/suit/space/hardsuit/engine/C = H.wear_suit
+				var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
 				P = C.jetpack
 			if(J)
 				if(J.allow_thrust(0.01, H))
@@ -697,8 +684,8 @@
 
 			if((H.disabilities & FAT))
 				mspeed += 1.5
-			if(H.bodytemperature < 283.222)
-				mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
+			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+				mspeed += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
 			mspeed += speedmod
 
@@ -715,10 +702,14 @@
 //////////////////
 
 /datum/species/proc/spec_attack_hand(var/mob/living/carbon/human/M, var/mob/living/carbon/human/H)
+	if(!istype(M)) //sanity check for drones.
+		return
 	if((M != H) && H.check_shields(0, M.name))
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
+
+	var/datum/martial_art/attacker_style = M.martial_art
 
 	switch(M.a_intent)
 		if("help")
@@ -727,132 +718,119 @@
 				if(H != M)
 					add_logs(M, H, "shaked")
 				return 1
-
-			//CPR
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "<span class='notice'>Remove your mask!</span>"
-				return 0
-			if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "<span class='notice'>Remove their mask!</span>"
-				return 0
-
-			if(H.cpr_time < world.time + 30)
-				add_logs(M, H, "CPRed")
-				M.visible_message("<span class='notice'>[M] is trying to perform CPR on [H]!</span>", \
-								"<span class='notice'>You try to perform CPR on [H]. Hold still!</span>")
-				if(!do_mob(M, H))
-					M << "<span class='warning'>You fail to perform CPR on [H]!</span>"
-					return 0
-				if((H.health >= -99 && H.health <= 0))
-					H.cpr_time = world.time
-					var/suff = min(H.getOxyLoss(), 7)
-					H.adjustOxyLoss(-suff)
-					H.updatehealth()
-					M.visible_message("[M] performs CPR on [H]!")
-					H << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
+			else
+				M.do_cpr(H)
 
 		if("grab")
-			H.grabbedby(M)
-			return 1
+			if(attacker_style && attacker_style.grab_act(M,H))
+				return 1
+			else
+				H.grabbedby(M)
+				return 1
 
 		if("harm")
-			add_logs(M, H, "punched")
-			M.do_attack_animation(H)
-
-			var/atk_verb = "punch"
-			if(H.lying)
-				atk_verb = "kick"
-			else if(M.dna)
-				atk_verb = M.dna.species.attack_verb
-
-			var/damage = rand(0, 9)
-			if(M.dna)
-				damage += M.dna.species.punchmod
-
-			if(!damage)
-				if(M.dna)
-					playsound(H.loc, M.dna.species.miss_sound, 25, 1, -1)
-				else
-					playsound(H.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-
-				H.visible_message("<span class='warning'>[M] has attempted to [atk_verb] [H]!</span>")
-				return 0
-
-
-			var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = H.run_armor_check(affecting, "melee")
-
-			if(M.dna)
-				playsound(H.loc, M.dna.species.attack_sound, 25, 1, -1)
+			if(attacker_style && attacker_style.harm_act(M,H))
+				return 1
 			else
-				playsound(H.loc, 'sound/weapons/punch1.ogg', 25, 1, -1)
+				add_logs(M, H, "punched")
+				M.do_attack_animation(H)
+
+				var/atk_verb = "punch"
+				if(H.lying)
+					atk_verb = "kick"
+				else if(M.dna)
+					atk_verb = M.dna.species.attack_verb
+
+				var/damage = rand(0, 9)
+				if(M.dna)
+					damage += M.dna.species.punchmod
+
+				if(!damage)
+					if(M.dna)
+						playsound(H.loc, M.dna.species.miss_sound, 25, 1, -1)
+					else
+						playsound(H.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+
+					H.visible_message("<span class='warning'>[M] has attempted to [atk_verb] [H]!</span>")
+					return 0
 
 
-			H.visible_message("<span class='danger'>[M] has [atk_verb]ed [H]!</span>", \
-							"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
+				var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
+				var/armor_block = H.run_armor_check(affecting, "melee")
 
-			H.apply_damage(damage, BRUTE, affecting, armor_block)
-			if((H.stat != DEAD) && damage >= 9)
-				H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
-								"<span class='userdanger'>[M] has weakened [H]!</span>")
-				H.apply_effect(4, WEAKEN, armor_block)
-				H.forcesay(hit_appends)
-			else if(H.lying)
-				H.forcesay(hit_appends)
+				if(M.dna)
+					playsound(H.loc, M.dna.species.attack_sound, 25, 1, -1)
+				else
+					playsound(H.loc, 'sound/weapons/punch1.ogg', 25, 1, -1)
 
+
+				H.visible_message("<span class='danger'>[M] has [atk_verb]ed [H]!</span>", \
+								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
+
+				H.apply_damage(damage, BRUTE, affecting, armor_block)
+				if((H.stat != DEAD) && damage >= 9)
+					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
+									"<span class='userdanger'>[M] has weakened [H]!</span>")
+					H.apply_effect(4, WEAKEN, armor_block)
+					H.forcesay(hit_appends)
+				else if(H.lying)
+					H.forcesay(hit_appends)
 		if("disarm")
-			M.do_attack_animation(H)
-			add_logs(M, H, "disarmed")
+			if(attacker_style && attacker_style.disarm_act(M,H))
+				return 1
+			else
+				M.do_attack_animation(H)
+				add_logs(M, H, "disarmed")
 
-			if(H.w_uniform)
-				H.w_uniform.add_fingerprint(M)
-			var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
-			var/randn = rand(1, 100)
-			if(randn <= 25)
-				H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee"))
-				playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-				H.visible_message("<span class='danger'>[M] has pushed [H]!</span>",
-								"<span class='userdanger'>[M] has pushed [H]!</span>")
-				H.forcesay(hit_appends)
-				return
+				if(H.w_uniform)
+					H.w_uniform.add_fingerprint(M)
+				var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
+				var/randn = rand(1, 100)
+				if(randn <= 25)
+					playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					H.visible_message("<span class='danger'>[M] has pushed [H]!</span>",
+									"<span class='userdanger'>[M] has pushed [H]!</span>")
+					H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
+					H.forcesay(hit_appends)
+					return
 
-			var/talked = 0	// BubbleWrap
+				var/talked = 0	// BubbleWrap
 
-			if(randn <= 60)
-				//BubbleWrap: Disarming breaks a pull
-				if(H.pulling)
-					H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [H.pulling]!</span>")
-					talked = 1
-					H.stop_pulling()
-
-				//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
-				if(istype(H.l_hand, /obj/item/weapon/grab))
-					var/obj/item/weapon/grab/lgrab = H.l_hand
-					if(lgrab.affecting)
-						H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [lgrab.affecting]!</span>")
+				if(randn <= 60)
+					//BubbleWrap: Disarming breaks a pull
+					if(H.pulling)
+						H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [H.pulling]!</span>")
 						talked = 1
-					spawn(1)
-						qdel(lgrab)
-				if(istype(H.r_hand, /obj/item/weapon/grab))
-					var/obj/item/weapon/grab/rgrab = H.r_hand
-					if(rgrab.affecting)
-						H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [rgrab.affecting]!</span>")
-						talked = 1
-					spawn(1)
-						qdel(rgrab)
-				//End BubbleWrap
+						H.stop_pulling()
 
-				if(!talked)	//BubbleWrap
-					if(H.drop_item())
-						H.visible_message("<span class='danger'>[M] has disarmed [H]!</span>", \
-										"<span class='userdanger'>[M] has disarmed [H]!</span>")
-				playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-				return
+					//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
+					if(istype(H.l_hand, /obj/item/weapon/grab))
+						var/obj/item/weapon/grab/lgrab = H.l_hand
+						if(lgrab.affecting)
+							H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [lgrab.affecting]!</span>")
+							talked = 1
+						spawn(1)
+							qdel(lgrab)
+					if(istype(H.r_hand, /obj/item/weapon/grab))
+						var/obj/item/weapon/grab/rgrab = H.r_hand
+						if(rgrab.affecting)
+							H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [rgrab.affecting]!</span>")
+							talked = 1
+						spawn(1)
+							qdel(rgrab)
+					//End BubbleWrap
+
+					if(!talked)	//BubbleWrap
+						if(H.drop_item())
+							H.visible_message("<span class='danger'>[M] has disarmed [H]!</span>", \
+											"<span class='userdanger'>[M] has disarmed [H]!</span>")
+					playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					return
 
 
-			playsound(H, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-			H.visible_message("<span class='danger'>[M] attempted to disarm [H]!</span>", \
-							"<span class='userdanger'>[M] attemped to disarm [H]!</span>")
+				playsound(H, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				H.visible_message("<span class='danger'>[M] attempted to disarm [H]!</span>", \
+								"<span class='userdanger'>[M] attemped to disarm [H]!</span>")
 	return
 
 /datum/species/proc/spec_attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/obj/item/organ/limb/affecting, var/hit_area, var/intent, var/obj/item/organ/limb/target_limb, target_area, var/mob/living/carbon/human/H)
@@ -1165,7 +1143,7 @@
 	return 1
 
 /datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
-	if( (abs(310.15 - breath.temperature) > 50) && !(mutations_list[COLDRES] in H.dna.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
+	if(abs(310.15 - breath.temperature) > 50)
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
 			switch(breath.temperature)
@@ -1184,18 +1162,18 @@
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
 				if(1000 to INFINITY)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, var/mob/living/carbon/human/H)
 	if(!environment)
 		return
 
 	var/loc_temp = H.get_temperature(environment)
-	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]"
 
-	//Body temperature is adjusted in two steps. Firstly your body tries to stabilize itself a bit.
-	if(H.stat != 2)
-		H.stabilize_temperature_from_calories()
+	//Body temperature is adjusted in two steps. First, your body tries to stabilize itself a bit.
+	if(H.stat != DEAD)
+		H.natural_bodytemperature_stabilization()
 
-	//After then, it reacts to the surrounding atmosphere based on your thermal protection
+	//Then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		if(loc_temp < H.bodytemperature)
 			//Place is colder than we are
@@ -1299,13 +1277,6 @@
 		H.fire_stacks = 0
 		H.AddLuminosity(-3)
 		H.update_fire()
-
-#undef SPECIES_LAYER
-#undef BODY_BEHIND_LAYER
-#undef BODY_LAYER
-#undef BODY_ADJ_LAYER
-#undef HAIR_LAYER
-#undef BODY_FRONT_LAYER
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

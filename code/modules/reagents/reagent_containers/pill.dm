@@ -96,7 +96,7 @@
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
-	list_reagents = list("ephedrine" = 10, "ethylredoxrazine" = 10, "coffee" = 30)
+	list_reagents = list("ephedrine" = 10, "antihol" = 10, "coffee" = 30)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/salbutamol
 	name = "salbutamol pill"

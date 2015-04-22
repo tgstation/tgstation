@@ -14,6 +14,8 @@
 	var/ready = 0
 	var/image/halo = null
 
+	action_icon_state = "lightning"
+
 /obj/effect/proc_holder/spell/targeted/lightning/Click()
 	if(!ready)
 		if(cast_check())

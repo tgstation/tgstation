@@ -525,21 +525,19 @@ obj/structure/door_assembly/New()
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user.visible_message("<span class='warning'>[user] installs the electronics into the airlock assembly.</span>", \
 							"You start to install electronics into the airlock assembly.")
-		user.drop_item()
-		W.loc = src
+
 
 		if(do_after(user, 40))
 			if( src.state != 1 )
-				W.loc = src.loc
 				return
+
+			user.drop_item()
+			W.loc = src
 			user << "<span class='notice'> You've installed the airlock electronics.</span>"
 			src.state = 2
 			src.name = "near finished airlock assembly"
 			src.electronics = W
-		else
-			W.loc = src.loc
 
-			//qdel(W)
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)

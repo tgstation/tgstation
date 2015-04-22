@@ -176,6 +176,34 @@
 			return 1
 	return 0
 
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	name = "exosuit mining scanner"
+	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
+	icon_state = "mecha_analyzer"
+	origin_tech = "materials=3;engineering=2"
+	equip_cooldown = 30
+	var/scanning = 0
+
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/New()
+	SSobj.processing |= src
+
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/process()
+	if(!loc)
+		SSobj.processing.Remove(src)
+		qdel(src)
+	if(scanning)
+		return
+	if(istype(loc,/obj/mecha/working))
+		var/obj/mecha/working/mecha = loc
+		if(!mecha.occupant)
+			return
+		var/list/occupant = list()
+		occupant |= mecha.occupant
+		scanning = 1
+		mineral_scan_pulse(occupant,get_turf(loc))
+		spawn(equip_cooldown)
+			scanning = 0
+
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	name = "exosuit extinguisher"
 	desc = "Equipment for engineering exosuits. A rapid-firing high capacity fire extinguisher."
@@ -1138,9 +1166,9 @@
 	if(..())
 		for(var/mob/living/carbon/M in view(EG.chassis))
 			if(istype(M,/mob/living/carbon/human))
-				M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
+				M.irradiate(EG.rad_per_cycle*3)
 			else
-				M.radiation += EG.rad_per_cycle
+				M.irradiate(EG.rad_per_cycle)
 	return 1
 
 

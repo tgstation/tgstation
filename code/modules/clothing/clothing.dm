@@ -92,7 +92,6 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
-	var/alloweat = 0
 	strip_delay = 40
 	put_on_delay = 40
 	var/mask_adjusted = 0
@@ -106,7 +105,7 @@ BLIND     // can't see anything
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/proc/adjustmask(var/mob/user)
 	if(!ignore_maskadjust)
-		if(!user.canmove || user.stat || user.restrained())
+		if(user.incapacitated())
 			return
 		if(src.mask_adjusted == 1)
 			src.icon_state = initial(icon_state)
@@ -128,6 +127,7 @@ BLIND     // can't see anything
 			if(adjusted_flags)
 				slot_flags = adjusted_flags
 		usr.update_inv_wear_mask()
+
 
 
 

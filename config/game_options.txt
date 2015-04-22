@@ -82,28 +82,38 @@ PROBABILITY TRAITORCHAN 4
 PROBABILITY DOUBLE_AGENTS 3
 PROBABILITY NUCLEAR 2
 PROBABILITY REVOLUTION 2
-PROBABILITY GANG 0
+PROBABILITY SHADOWLING 2
+PROBABILITY GANG 2
 PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
 PROBABILITY MALFUNCTION 1
 PROBABILITY BLOB 2
 PROBABILITY RAGINMAGES 2
-PROBABILITY MONKEY 1
+PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
 
-## Uncomment to make rounds which end instantly (Rev, Wizard, Malf) continue until
-## the shuttle is called or the station is nuked.
-## Malf and Rev will let the shuttle be called when the antags/protags are dead.
-#CONTINUOUS_ROUND_REV
-#CONTINUOUS_ROUND_GANG
-#CONTINUOUS_ROUND_WIZ
-#CONTINUOUS_ROUND_MALF
-#CONTINUOUS_ROUND_BLOB
+
+## Toggles for continuous modes.
+## Modes that aren't continuous will end the instant all antagonists are dead.
+## Unlisted modes are not currently supported for noncontinous play
+
+#CONTINUOUS REVOLUTION
+CONTINUOUS WIZARD
+CONTINUOUS MALFUNCTION
+CONTINUOUS BLOB
+
+## Toggles for allowing midround antagonists (aka mulligan antagonists).
+## In modes that are continuous, if all antagonists should die then a new set of antagonists will be created.
+## Only the listed modes are currently supported for this system
+
+MIDROUND_ANTAG WIZARD
+MIDROUND_ANTAG MALFUNCTION
+MIDROUND_ANTAG BLOB
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000
@@ -215,9 +225,6 @@ SILICON_MAX_LAW_AMOUNT 12
 
 ## Uncoment to give players the choice of their species before they join the game
 #JOIN_WITH_MUTANT_RACE
-
-## Uncomment to allow certain species to have custom colors
-#MUTANT_COLORS
 
 ## Assistant slot cap. Set to -1 for unlimited.
 ASSISTANT_CAP -1

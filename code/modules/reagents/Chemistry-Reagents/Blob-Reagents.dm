@@ -81,7 +81,7 @@ datum/reagent/blob/acid
 
 datum/reagent/blob/acid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
-		if(prob(50))		
+		if(prob(50))
 			M.acid_act(5,1,5)
 			if(show_message)
 				M << "<span class = 'userdanger'>The blob's tendrils melt through your equipment!</span>"
@@ -97,7 +97,7 @@ datum/reagent/blob/radioactive_liquid/reaction_mob(var/mob/living/M as mob, var/
 	if(method == TOUCH)
 		if(istype(M, /mob/living/carbon/human))
 			M.apply_damage(10, BRUTE)
-			M.apply_effect(40,IRRADIATE,0) // irradiate the shit out of these fuckers
+			M.irradiate(40)
 			if(prob(33))
 				randmuti(M)
 				if(prob(98))
@@ -147,6 +147,44 @@ datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TO
 				M << "<span class = 'userdanger'>The blob strikes you, and its tendrils explode!</span>"
 			explosion(M.loc, 0, 0, 1, 0, 0)
 
+datum/reagent/blob/omnizine
+	name = "Omnizine"
+	id = "b_omnizine"
+	description = ""
+	color = "#C8A5DC"
+
+datum/reagent/blob/omnizine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	if(method == TOUCH)
+		if(show_message)
+			M << "<span class = 'userdanger'>The blob squirts something at you, and you feel great!</span>"
+		M.reagents.add_reagent("omnizine", 11)
+
+datum/reagent/blob/morphine
+	name = "Morphine"
+	id = "b_morphine"
+	description = ""
+	color = "#335555"
+
+datum/reagent/blob/morphine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	if(method == TOUCH)
+		if(show_message)
+			M << "<span class = 'userdanger'>The blob squirts something at you, and you feel numb!</span>"
+		M.reagents.add_reagent("morphine", 16)
+
+datum/reagent/blob/spacedrugs
+	name = "Space drugs"
+	id = "b_space_drugs"
+	description = ""
+	color = "#60A584"
+
+datum/reagent/blob/spacedrugs/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	if(method == TOUCH)
+		if(show_message)
+			M << "<span class = 'userdanger'>The blob squirts something at you, and you feel funny!</span>"
+		M.reagents.add_reagent("space_drugs", 15)
+		M.apply_damage(10, TOX)
+
+
 /proc/reagent_vortex(var/mob/living/M as mob, var/setting_type)
 	var/turf/pull = get_turf(M)
 	for(var/atom/movable/X in orange(4,pull))
@@ -159,3 +197,7 @@ datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TO
 					step_away(X,pull)
 				else
 					X.throw_at(pull)
+
+
+
+

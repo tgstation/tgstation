@@ -244,7 +244,6 @@
 		new /datum/data/mining_equipment("GAR mesons",			/obj/item/clothing/glasses/meson/gar,							   500),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   800),
-		new /datum/data/mining_equipment("Plasma Cutter", 		/obj/item/weapon/gun/energy/plasmacutter/charged,				   950),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  1200),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               1500),
@@ -345,7 +344,7 @@
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Mining Drill", "Kinetic Accelerator", "Plasma Cutter", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Mining Drill", "Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
 	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
 	switch(selection)
@@ -354,12 +353,8 @@
 			new /obj/item/weapon/stock_parts/cell/high(src.loc)
 		if("Kinetic Accelerator")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
-			new /obj/item/weapon/screwdriver(src.loc)
-		if("Plasma Cutter")
-			new /obj/item/weapon/gun/energy/plasmacutter/charged(src.loc)
 		if("Resonator")
 			new /obj/item/weapon/resonator(src.loc)
-			new /obj/item/weapon/screwdriver(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
@@ -486,36 +481,23 @@
 	var/fieldlimit = 3
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
+	var/turf/T = get_turf(target)
+	if(locate(/obj/effect/resonance) in T)
+		return
 	if(fieldsactive < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		new /obj/effect/resonance(get_turf(target), creator, burst_time)
+		new /obj/effect/resonance(T, creator, burst_time)
 		fieldsactive++
-		spawn(50)
+		spawn(burst_time)
 			fieldsactive--
 
 /obj/item/weapon/resonator/attack_self(mob/user as mob)
-	CreateResonance(src, user)
-	..()
-
-/obj/item/weapon/resonator/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if(burst_time == 50)
-			burst_time = 30
-			user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
-		else
-			burst_time = 50
-			user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
-
-	else if(istype(W, /obj/item/stack))
-		var/obj/item/stack/S = W
-
-		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
-			if(fieldlimit < 8)
-				fieldlimit++
-				user << "<span class='info'>You upgrade [src]'s field generator with diamonds.</span>"
-				S.use(1)
-			else
-				user << "<span class='info'>The [src.name]'s field generator is at the limit.</span>"
+	if(burst_time == 50)
+		burst_time = 30
+		user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
+	else
+		burst_time = 50
+		user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -574,7 +556,7 @@
 
 /**********************Mining drone**********************/
 
-/mob/living/simple_animal/hostile/mining_drone/
+/mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. A mining scanner can instruct it to drop loose ore. Field repairs can be done with a welder."
 	icon = 'icons/obj/aibots.dmi'
@@ -604,6 +586,7 @@
 	ranged_cooldown_cap = 3
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'sound/weapons/Gunshot4.ogg'
+	speak_emote = list("states")
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
 						  /obj/item/weapon/ore/bananium)
@@ -774,23 +757,10 @@
 		cooldown = 1
 		spawn(40)
 			cooldown = 0
-		var/client/C = user.client
-		var/list/L = list()
-		var/turf/simulated/mineral/M
-		for(M in range(7, user))
-			if(M.scan_state)
-				L += M
-		if(!L.len)
-			user << "<span class='info'>[src] reports that nothing was detected nearby.</span>"
-			return
-		else
-			for(M in L)
-				var/turf/T = get_turf(M)
-				var/image/I = image('icons/turf/mining.dmi', loc = T, icon_state = M.scan_state, layer = 18)
-				C.images += I
-				spawn(30)
-					if(C)
-						C.images -= I
+		var/list/mobs = list()
+		mobs |= user
+		mineral_scan_pulse(mobs, get_turf(user))
+
 
 //Debug item to identify all ore spread quickly
 /obj/item/device/mining_scanner/admin
@@ -820,22 +790,24 @@
 		var/list/mobs = recursive_mob_check(t, 1,0,0)
 		if(!mobs.len)
 			return
-		var/list/L = list()
-		var/turf/simulated/mineral/M
-		for(M in range(7, t))
-			if(M.scan_state)
-				L += M
-		if(L.len)
-			for(var/mob/user in mobs)
-				if(user.client)
-					var/client/C = user.client
-					for(M in L)
-						var/turf/T = get_turf(M)
-						var/image/I = image('icons/turf/mining.dmi', loc = T, icon_state = M.scan_state, layer = 18)
-						C.images += I
-						spawn(30)
-							if(C)
-								C.images -= I
+		mineral_scan_pulse(mobs, t)
+
+/proc/mineral_scan_pulse(list/mobs, turf/T, range = world.view)
+	var/list/minerals = list()
+	for(var/turf/simulated/mineral/M in range(range, T))
+		if(M.scan_state)
+			minerals += M
+	if(minerals.len)
+		for(var/mob/user in mobs)
+			if(user.client)
+				var/client/C = user.client
+				for(var/turf/simulated/mineral/M in minerals)
+					var/turf/F = get_turf(M)
+					var/image/I = image('icons/turf/mining.dmi', loc = F, icon_state = M.scan_state, layer = 18)
+					C.images += I
+					spawn(30)
+						if(C)
+							C.images -= I
 
 /**********************Xeno Warning Sign**********************/
 /obj/structure/sign/xeno_warning_mining

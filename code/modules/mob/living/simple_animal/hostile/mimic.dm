@@ -5,7 +5,7 @@
 /mob/living/simple_animal/hostile/mimic
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/crates.dmi'
 	icon_state = "crate"
 	icon_living = "crate"
 
@@ -22,6 +22,7 @@
 	attacktext = "attacks"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	var/Attackemote = "growls at"
+	speak_emote = list("creaks")
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -51,6 +52,7 @@
 /mob/living/simple_animal/hostile/mimic/crate
 
 	attacktext = "bites"
+	speak_emote = list("clatters")
 
 	stop_automated_movement = 1
 	wander = 0
@@ -172,6 +174,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		icon = O.icon
 		icon_state = O.icon_state
 		icon_living = icon_state
+		overlays = O.overlays
 
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
 			health = (anchored * 50) + 50

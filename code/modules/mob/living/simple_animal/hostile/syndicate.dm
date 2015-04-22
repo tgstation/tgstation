@@ -133,6 +133,7 @@
 	minbodytemp = 0
 	mob_size = MOB_SIZE_TINY
 	flying
+	speak_emote = list("states")
 
 /mob/living/simple_animal/hostile/viscerator/death(gibbed)
 	..(gibbed)

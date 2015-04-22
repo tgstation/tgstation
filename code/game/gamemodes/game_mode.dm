@@ -84,7 +84,7 @@
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
 	start_state = new /datum/station_state()
-	start_state.count()
+	start_state.count(1)
 	return 1
 
 ///make_antag_chance()
@@ -113,8 +113,6 @@
 			usable_modes += G
 		else
 			del(G)
-
-	SSshuttle.emergencyNoEscape = 0 //Time to get the fuck out of here
 
 	if(!usable_modes)
 		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
@@ -150,9 +148,12 @@
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you feel that the round should not continue, <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or think the round should end <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
-	spawn(rand(1800,4200)) //somewhere between 3 and 7 minutes from now
+	spawn(rand(1200,3000)) //somewhere between 2 and 5 minutes from now
+		if(!config.midround_antag[ticker.mode.config_tag])
+			round_converted = 0
+			return 1
 		for(var/mob/living/carbon/human/H in antag_canadates)
 			replacementmode.make_antag_chance(H)
 		round_converted = 2
@@ -226,6 +227,7 @@
 		if(BE_GANG)			roletext="gangster"
 		if(BE_CULTIST)		roletext="cultist"
 		if(BE_MONKEY)		roletext="monkey"
+		if(BE_ABDUCTOR)		roletext="abductor"
 
 
 	// Ultimate randomizing code right here

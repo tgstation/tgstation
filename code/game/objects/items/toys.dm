@@ -328,6 +328,8 @@
 	var/colourName = "red" //for updateIcon purposes
 	var/dat
 	var/list/validSurfaces = list(/turf/simulated/floor)
+	var/gang = 0 //For marking territory
+	var/edible = 1
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
@@ -397,12 +399,38 @@
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
+	if(istype(target, /obj/effect/decal/cleanable))
+		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
 		var/temp = "rune"
 		if(letters.Find(drawtype))
 			temp = "letter"
 		else if(graffiti.Find(drawtype))
 			temp = "graffiti"
+
+		////////////////////////// GANG FUNCTIONS
+		var/area/territory
+		var/gangID
+		if(gang)
+			//Check area validity. Reject space, player-created areas, and non-station z-levels.
+			territory = get_area(target)
+			if (territory && (territory.z == ZLEVEL_STATION) && territory.valid_territory)
+				//Determine gang affiliation
+				if((user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.A_gang))
+					temp = "[gang_name("A")] gang tag"
+					gangID = "A"
+				else if((user.mind in ticker.mode.B_bosses) || (user.mind in ticker.mode.B_gang))
+					temp = "[gang_name("B")] gang tag"
+					gangID = "B"
+
+				//Check if this area is already tagged by a gang
+				if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
+					if(territory_claimed(territory, user))
+						return
+			else
+				user << "<span class='warning'>This area is unsuitable for territory tagging.</span>"
+		/////////////////////////////////////////
+
 		var/graf_rot
 		if(oriented.Find(drawtype))
 			switch(user.dir)
@@ -414,10 +442,28 @@
 					graf_rot = 270
 				else
 					graf_rot = 0
-		user << "You start drawing a [temp] on the [target.name]."
-		if(instant || do_after(user, 50))
-			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
-			user << "You finish drawing [temp]."
+
+		user << "You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]."
+		if(instant)
+			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		if((instant>0) || do_after(user, 50))
+
+			//Gang functions
+			if(gangID)
+				//Delete any old markings on this tile, including other gang tags
+				if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
+					if(territory_claimed(territory, user))
+						return
+				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
+					qdel(old_marking)
+				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,temp,graf_rot)
+
+			else
+				new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
+
+			user << "You finish [instant ? "spraying" : "drawing"] [temp]."
+			if(instant<0)
+				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 			if(uses)
 				uses--
 				if(!uses)
@@ -426,9 +472,8 @@
 	return
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
-	var/huffable = istype(src,/obj/item/toy/crayon/spraycan)
-	if(M == user)
-		user << "You take a [huffable ? "huff" : "bite"] of the [src.name]. Delicious!"
+	if(edible && (M == user))
+		user << "You take a bite of the [src.name]. Delicious!"
 		user.nutrition += 5
 		if(uses)
 			uses -= 5
@@ -437,6 +482,17 @@
 				qdel(src)
 	else
 		..()
+
+/obj/item/toy/crayon/proc/territory_claimed(var/area/territory,mob/user)
+	var/occupying_gang
+	if(territory.type in ticker.mode.A_territory)
+		occupying_gang = gang_name("A")
+	if(territory.type in ticker.mode.B_territory)
+		occupying_gang = gang_name("B")
+	if(occupying_gang)
+		user << "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>"
+		return 1
+	return 0
 
 /*
  * Snap pops
@@ -1038,6 +1094,18 @@ obj/item/toy/cards/deck/syndicate
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
 	w_class = 2.0
+	attack_verb = list("bitten", "eaten", "fin slapped")
+	var/bitesound = 'sound/weapons/bite.ogg'
+
+// Attack mob
+/obj/item/toy/carpplushie/attack(mob/M as mob, mob/user as mob)
+	playsound(loc, bitesound, 20, 1)	// Play bite sound in local area
+	return ..()
+
+// Attack self
+/obj/item/toy/carpplushie/attack_self(mob/user as mob)
+	playsound(src.loc, bitesound, 20, 1)
+	return ..()
 
 /*
  * Toy big red button

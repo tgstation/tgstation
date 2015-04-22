@@ -18,10 +18,6 @@
 		if(prob(1))
 			emote(pick("scratch","jump","roll","tail"))
 
-/mob/living/carbon/monkey/calculate_affecting_pressure(var/pressure)
-	..()
-	return pressure
-
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 
 	if (radiation)
@@ -46,23 +42,69 @@
 					emote("gasp")
 		..()
 
+/mob/living/carbon/monkey/handle_breath_temperature(datum/gas_mixture/breath)
+	if(abs(310.15 - breath.temperature) > 50)
+		switch(breath.temperature)
+			if(-INFINITY to 120)
+				adjustFireLoss(3)
+			if(120 to 200)
+				adjustFireLoss(1.5)
+			if(200 to 260)
+				adjustFireLoss(0.5)
+			if(360 to 400)
+				adjustFireLoss(2)
+			if(400 to 1000)
+				adjustFireLoss(3)
+			if(1000 to INFINITY)
+				adjustFireLoss(8)
 
 /mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
-	var/environment_heat_capacity = environment.heat_capacity()
-	if(istype(get_turf(src), /turf/space))
-		var/turf/heat_turf = get_turf(src)
-		environment_heat_capacity = heat_turf.heat_capacity
 
-	if(!on_fire)
-		if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-			var/transfer_coefficient = 1
+	var/loc_temp = get_temperature(environment)
 
-			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
+	if(stat != DEAD)
+		natural_bodytemperature_stabilization()
 
-	if(stat != 2)
-		bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
+	if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
+		if(loc_temp < bodytemperature)
+			bodytemperature += min(((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
+		else
+			bodytemperature += min(((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
+
+	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		switch(bodytemperature)
+			if(360 to 400)
+				throw_alert("temp","hot",1)
+				adjustFireLoss(2)
+			if(400 to 460)
+				throw_alert("temp","hot",2)
+				adjustFireLoss(3)
+			if(460 to INFINITY)
+				throw_alert("temp","hot",3)
+				if(on_fire)
+					adjustFireLoss(8)
+				else
+					adjustFireLoss(3)
+
+	else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+		if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+			switch(bodytemperature)
+				if(200 to 260)
+					throw_alert("temp","cold",1)
+					adjustFireLoss(0.5)
+				if(120 to 200)
+					throw_alert("temp","cold",2)
+					adjustFireLoss(1.5)
+				if(-INFINITY to 120)
+					throw_alert("temp","cold",3)
+					adjustFireLoss(3)
+		else
+			clear_alert("temp")
+
+	else
+		clear_alert("temp")
 
 	//Account for massive pressure differences
 
@@ -84,14 +126,6 @@
 
 	return
 
-/mob/living/carbon/monkey/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-	if(status_flags & GODMODE) return
-	var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-
-	if(exposed_temperature > bodytemperature)
-		adjustFireLoss(20.0*discomfort)
-	else
-		adjustFireLoss(5.0*discomfort)
 
 /mob/living/carbon/monkey/handle_hud_icons()
 
@@ -120,10 +154,8 @@
 		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
 			return 1
 
-///FIRE CODE
 /mob/living/carbon/monkey/handle_fire()
 	if(..())
 		return
-	adjustFireLoss(6)
+	bodytemperature += BODYTEMP_HEATING_MAX
 	return
-//END FIRE CODE

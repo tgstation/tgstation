@@ -257,7 +257,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/compact/combat/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/defibrillator/compact/combat/loaded/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()
@@ -323,8 +323,7 @@
 		return 1
 
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/user)
-	var/tobehealed
-	var/threshold = -config.health_threshold_dead
+	var/halfwaycritdeath = (config.health_threshold_crit + config.health_threshold_dead) / 2
 	var/mob/living/carbon/human/H = M
 
 	if(busy)
@@ -385,20 +384,23 @@
 						H.heart_attack = 0
 						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
 					if(H.stat == 2)
-						var/health = H.health
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 						for(var/obj/item/organ/limb/O in H.organs)
 							total_brute	+= O.brute_dam
 							total_burn	+= O.burn_dam
-						if(H.health <= config.health_threshold_dead && total_burn <= 180 && total_brute <= 180 && !H.suiciding && !ghost && tplus < tlimit && !(NOCLONE in H.mutations))
-							tobehealed = health + threshold
-							tobehealed -= 5 //They get 5 of each type of damage healed so excessive combined damage will not immediately kill them after they get revived
-							H.adjustOxyLoss(tobehealed)
-							H.adjustToxLoss(tobehealed)
-							H.adjustFireLoss(tobehealed)
-							H.adjustBruteLoss(tobehealed)
+						if(total_burn <= 180 && total_brute <= 180 && !H.suiciding && !ghost && tplus < tlimit && !(NOCLONE in H.mutations))
+							//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
+							if (H.health > halfwaycritdeath)
+								H.adjustOxyLoss(H.health - halfwaycritdeath)
+							else
+								var/overall_damage = total_brute + total_burn + H.getToxLoss() + H.getOxyLoss()
+								var/mobhealth = H.health
+								H.adjustOxyLoss((mobhealth - halfwaycritdeath) * (H.getOxyLoss() / overall_damage))
+								H.adjustToxLoss((mobhealth - halfwaycritdeath) * (H.getToxLoss() / overall_damage))
+								H.adjustFireLoss((mobhealth - halfwaycritdeath) * (total_burn / overall_damage))
+								H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage))
 							user.visible_message("<span class='notice'>[defib] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
 							H.stat = 1
@@ -410,12 +412,14 @@
 							defib.deductcharge(revivecost)
 							add_logs(user, M, "revived", object="defibrillator")
 						else
-							if(tplus > tlimit)
-								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return for defibrillation.</span>")
+							if (H.suiciding || (NOCLONE in H.mutations))
+								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>")
+							else if (tplus > tlimit)
+								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return for defibrillation. Further attempts futile.</span>")
 							else if(total_burn >= 180 || total_brute >= 180)
 								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
 							else
-								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed.</span>")
+								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - No soul in patient body. Further attempts may be successful.</span>")
 								if(ghost)
 									ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
 									ghost << sound('sound/effects/genetics.ogg')

@@ -148,7 +148,6 @@
 		return
 	var/area/A = new
 	A.name = str
-	A.tagbase="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
 	//var/ma
 	//ma = A.master ? "[A.master]" : "(null)"
 	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
@@ -156,6 +155,7 @@
 	A.power_light = 0
 	A.power_environ = 0
 	A.always_unpowered = 0
+	A.valid_territory = 0
 	move_turfs_to_area(turfs, A)
 	A.SetDynamicLighting()
 

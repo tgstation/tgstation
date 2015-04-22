@@ -7,7 +7,6 @@
 	var/icon_crate = "crate"
 	icon_state = "crate"
 	req_access = null
-//	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 	var/sound_effect_open = 'sound/machines/click.ogg'
 	var/sound_effect_close = 'sound/machines/click.ogg'
@@ -43,7 +42,13 @@
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of the RCD."
 	name = "\improper RCD crate"
-	icon_crate = "crate"
+
+/obj/structure/closet/crate/rcd/New()
+	..()
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/freezer
 	desc = "A freezer."
@@ -146,13 +151,6 @@
 		overlays += redlight
 	else
 		overlays += greenlight
-
-/obj/structure/closet/crate/rcd/New()
-	..()
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/open()
 	playsound(src.loc, sound_effect_open, 15, 1, -3)

@@ -35,7 +35,6 @@
 	var/shoot_sound = 'sound/weapons/Taser.ogg'
 	radio_frequency = SEC_FREQ
 	bot_type = SEC_BOT
-	bot_filter = RADIO_SECBOT
 
 
 /obj/item/weapon/ed209_assembly
@@ -62,8 +61,6 @@
 		botcard.access = J.get_access()
 		prev_access = botcard.access
 
-
-		add_to_beacons(bot_filter)
 		if(lasercolor)
 			shot_delay = 6//Longer shot delay because JESUS CHRIST
 			check_records = 0//Don't actively target people set to arrest

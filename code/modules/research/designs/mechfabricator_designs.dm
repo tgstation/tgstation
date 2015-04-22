@@ -487,7 +487,7 @@
 
 //Exosuit Equipment
 /datum/design/mech_hydraulic_clamp
-	name = "Exosuit Engineering Equipement (Hydraulic Clamp)"
+	name = "Exosuit Engineering Equipment (Hydraulic Clamp)"
 	id = "mech_hydraulic_clamp"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
@@ -496,7 +496,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_drill
-	name = "Exosuit Engineering Equipement (Drill)"
+	name = "Exosuit Engineering Equipment (Drill)"
 	id = "mech_drill"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill
@@ -504,8 +504,17 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
+/datum/design/mech_mining_scanner
+	name = "Exosuit Engineering Equipement (Mining Scanner)"
+	id = "mech_mscanner"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	materials = list("$metal"=5000,"$glass"=2500)
+	construction_time = 50
+	category = list("Exosuit Equipment")
+
 /datum/design/mech_extinguisher
-	name = "Exosuit Engineering Equipement (Extinguisher)"
+	name = "Exosuit Engineering Equipment (Extinguisher)"
 	id = "mech_extinguisher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
@@ -514,7 +523,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_cable_layer
-	name = "Exosuit Engineering Equipement (Cable Layer)"
+	name = "Exosuit Engineering Equipment (Cable Layer)"
 	id = "mech_cable_layer"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
@@ -523,7 +532,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_sleeper
-	name = "Exosuit Medical Equipement (Mounted Sleeper)"
+	name = "Exosuit Medical Equipment (Mounted Sleeper)"
 	id = "mech_sleeper"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/sleeper
@@ -532,7 +541,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_syringe_gun
-	name = "Exosuit Medical Equipement (Syringe Gun)"
+	name = "Exosuit Medical Equipment (Syringe Gun)"
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
@@ -541,7 +550,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_generator
-	name = "Exosuit Equipement (Plasma Generator)"
+	name = "Exosuit Equipment (Plasma Generator)"
 	id = "mech_generator"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator

@@ -28,6 +28,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	mouse_opacity = 0
 	invisibility = INVISIBILITY_LIGHTING
 	var/lightswitch = 1
+	var/valid_territory = 1 //If it's a valid territory for gangs to claim
 
 	var/eject = null
 
@@ -109,6 +110,7 @@ proc/process_ghost_teleport_locs()
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
+	valid_territory = 0
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 
 
@@ -194,8 +196,7 @@ proc/process_ghost_teleport_locs()
 
 /area/asteroid/artifactroom/New()
 	..()
-	lighting_use_dynamic = 1
-	InitializeLighting()
+	SetDynamicLighting()
 
 /area/planet/clown
 	name = "\improper Clown Planet"
@@ -246,9 +247,12 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	has_gravity = 1
 
-
-
-
+//Abductors
+/area/abductor_ship
+	name = "\improper Abductor Ship"
+	icon_state = "yellow"
+	requires_power = 0
+	has_gravity = 1
 
 
 //PRISON
@@ -344,6 +348,7 @@ proc/process_ghost_teleport_locs()
 //Maintenance
 /area/maintenance
 	ambientsounds = list('sound/ambience/ambimaint1.ogg', 'sound/ambience/ambimaint2.ogg', 'sound/ambience/ambimaint3.ogg', 'sound/ambience/ambimaint4.ogg', 'sound/ambience/ambimaint5.ogg')
+	valid_territory = 0
 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"

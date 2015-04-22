@@ -12,40 +12,56 @@
 			return
 		switch(href_list["makeAntag"])
 			if("1")
-				message_admins("[key_name_admin(usr)] created traitors.")
-				log_admin("[key_name(usr)] created traitors.")
-				if(!src.makeTraitors())
-					usr << "<span class='danger'>Unfortunatly there were no candidates available.</span>"
+				if(src.makeTraitors())
+					message_admins("[key_name_admin(usr)] created traitors.")
+					log_admin("[key_name(usr)] created traitors.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create traitors. Unfortunatly there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create traitors.")
 			if("2")
-				message_admins("[key_name(usr)] created changelings.")
-				log_admin("[key_name(usr)] created changelings.")
-				if(!src.makeChanglings())
-					usr << "<span class='danger'>Unfortunatly there were no candidates available.</span>"
+				if(src.makeChanglings())
+					message_admins("[key_name(usr)] created changelings.")
+					log_admin("[key_name(usr)] created changelings.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create changelings. Unfortunatly there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create changelings.")
 			if("3")
-				message_admins("[key_name(usr)] started a revolution.")
-				log_admin("[key_name(usr)] started a revolution.")
 				if(!src.makeRevs())
-					usr << "<span class='danger'>Unfortunatly there were no candidates available.</span>"
+					message_admins("[key_name(usr)] started a revolution.")
+					log_admin("[key_name(usr)] started a revolution.")
+				else
+					message_admins("[key_name_admin(usr)] tried to start a revolution. Unfortunatly there were no candidates available.")
+					log_admin("[key_name(usr)] failed to start a revolution.")
 			if("4")
-				message_admins("[key_name(usr)] created cultists.")
-				log_admin("[key_name(usr)] created cultists.")
-				if(!src.makeCult())
-					usr << "<span class='danger'>Unfortunatly there were no candidates available.</span>"
+				if(src.makeCult())
+					message_admins("[key_name(usr)] started a cult.")
+					log_admin("[key_name(usr)] started a cult.")
+				else
+					message_admins("[key_name_admin(usr)] tried to start a cult. Unfortunatly there were no candidates available.")
+					log_admin("[key_name(usr)] failed to start a cult.")
 			if("5")
-				message_admins("[key_name(usr)] caused an AI to malfunction.")
-				log_admin("[key_name(usr)] caused an AI to malfunction.")
-				if(!src.makeMalfAImode())
-					usr << "<span class='danger'>Unfortunatly there were no candidates available.</span>"
+				if(src.makeMalfAImode())
+					message_admins("[key_name(usr)] caused an AI to malfunction.")
+					log_admin("[key_name(usr)] caused an AI to malfunction.")
+				else
+					message_admins("[key_name_admin(usr)] tried to cause an AI to malfunction. Unfortunatly there were no candidates available.")
+					log_admin("[key_name(usr)] failed to cause an AI to malfunction.")
 			if("6")
-				message_admins("[key_name(usr)] created a wizard.")
-				log_admin("[key_name(usr)] created a wizard.")
-				if(!src.makeWizard())
-					usr << "<span class='danger'>Unfortunatly there were no candidates available.</span>"
+				message_admins("[key_name(usr)] is creating a wizard...")
+				if(src.makeWizard())
+					message_admins("[key_name(usr)] created a wizard.")
+					log_admin("[key_name(usr)] created a wizard.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a wizard. Unfortunatly there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a wizard.")
 			if("7")
-				message_admins("[key_name(usr)] created a nuke team.")
-				log_admin("[key_name(usr)] created a nuke team.")
-				if(!src.makeNukeTeam())
-					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
+				message_admins("[key_name(usr)] is creating a nuke team...")
+				if(src.makeNukeTeam())
+					message_admins("[key_name(usr)] created a nuke team.")
+					log_admin("[key_name(usr)] created a nuke team.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a nuke team. Unfortunatly there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed to create a nuke team.")
 			if("8")
 				message_admins("[key_name(usr)] spawned a ninja.")
 				log_admin("[key_name(usr)] spawned a ninja.")
@@ -55,27 +71,44 @@
 				log_admin("[key_name(usr)] started an alien infestation.")
 				src.makeAliens()
 			if("10")
-				message_admins("[key_name(usr)] created a death squad.")
-				log_admin("[key_name(usr)] created a death squad.")
-				if(!src.makeDeathsquad())
-					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
+				message_admins("[key_name(usr)] is creating a death squad...")
+				if(src.makeDeathsquad())
+					message_admins("[key_name(usr)] created a death squad.")
+					log_admin("[key_name(usr)] created a death squad.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunatly there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed to create a death squad.")
 			if("11")
 				var/strength = input("Set Blob Strength (1=Weak, 2=Strong, 3=Full)","Set Strength",1) as num
 				message_admins("[key_name(usr)] spawned a blob with strength [strength].")
 				log_admin("[key_name(usr)] spawned a blob with strength [strength].")
 				new/datum/round_event/blob(strength)
 			if("12")
-				message_admins("[key_name(usr)] started a gang war.")
-				log_admin("[key_name(usr)] started a gang war.")
-				if(!src.makeGangsters())
-					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
+				if(src.makeGangsters())
+					message_admins("[key_name(usr)] started a gang war.")
+					log_admin("[key_name(usr)] started a gang war.")
+				else
+					message_admins("[key_name(usr)] tried to start a gang war. Unfortunatly there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed to start a gang war.")
 			if("13")
-				message_admins("[key_name(usr)] created a emergency response team.")
-				log_admin("[key_name(usr)] created a emergency response team.")
-				if(!src.makeEmergencyresponseteam())
-					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
+				message_admins("[key_name(usr)] is creating an emergency response team...")
+				if(src.makeEmergencyresponseteam())
+					message_admins("[key_name(usr)] created an emergency response team.")
+					log_admin("[key_name(usr)] created an emergency response team.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create an emergency response team. Unfortunatly there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed to create an emergency response team.")
+			if("14")
+				message_admins("[key_name(usr)] is creating an abductor team...")
+				if(src.makeAbductorTeam())
+					message_admins("[key_name(usr)] created an abductor team.")
+					log_admin("[key_name(usr)] created an abductor team.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed to create an abductor team.")
 
 	else if(href_list["forceevent"])
+		if(!check_rights(R_FUN))	return
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevent.control
 		if(E)
 			var/datum/round_event/event = E.runEvent()
@@ -220,6 +253,28 @@
 		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds</span>")
 		href_list["secretsadmin"] = "check_antagonist"
+
+	else if(href_list["toggle_continuous"])
+		if(!check_rights(R_ADMIN))	return
+
+		if(!config.continuous[ticker.mode.config_tag])
+			config.continuous[ticker.mode.config_tag] = 1
+		else
+			config.continuous[ticker.mode.config_tag] = 0
+
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [config.continuous[ticker.mode.config_tag] ? "continue if all antagonists die" : "end with the antagonists"].</span>")
+		check_antagonists()
+
+	else if(href_list["toggle_midround_antag"])
+		if(!check_rights(R_ADMIN))	return
+
+		if(!config.midround_antag[ticker.mode.config_tag])
+			config.midround_antag[ticker.mode.config_tag] = 1
+		else
+			config.midround_antag[ticker.mode.config_tag] = 0
+
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [config.midround_antag[ticker.mode.config_tag] ? "use" : "skip"] the midround antag system.</span>")
+		check_antagonists()
 
 	else if(href_list["delay_round_end"])
 		if(!check_rights(R_SERVER))	return
@@ -643,6 +698,18 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=wizard;jobban4=\ref[M]'><font color=red>[replacetext("Wizard", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=wizard;jobban4=\ref[M]'>[replacetext("Wizard", " ", "&nbsp")]</a></td>"
+
+		//Abductor
+		if(jobban_isbanned(M, "abductor") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=abductor;jobban4=\ref[M]'><font color=red>[replacetext("Abductor", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=abductor;jobban4=\ref[M]'>[replacetext("Abductor", " ", "&nbsp")]</a></td>"
+
+		//Deathsquad
+		if(jobban_isbanned(M, "deathsquad") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>[replacetext("Deathsquad", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td>"
 
 /*		//Malfunctioning AI	//Removed Malf-bans because they're a pain to impliment
 		if(jobban_isbanned(M, "malf AI") || isbanned_dept)
