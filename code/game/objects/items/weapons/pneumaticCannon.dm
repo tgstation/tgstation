@@ -44,7 +44,7 @@
 				pressureSetting = 1
 		user << "<span class='notice'>You tweak \the [src]'s pressure output to [pressureSetting].</span>"
 		return
-	if(istype(W, /obj/item/weapon/screwdriver) && tank))
+	if(istype(W, /obj/item/weapon/screwdriver) && tank)
 		user << "<span class='notice'>You disconnect \the [tank] from \the [src].</span>"
 		tank.loc = get_turf(user)
 		tank = null
