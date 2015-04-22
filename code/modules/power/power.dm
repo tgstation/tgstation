@@ -84,16 +84,16 @@
 	if(isnull(areaMaster))
 		return 0						// if not, then not powered.
 
+	if((machine_flags & FIXED2WORK) && !anchored)
+		return 0
+
 	return areaMaster.powered(chan)		// return power status of the area.
 
 // increment the power usage stats for an area
 // defaults to power_channel
 /obj/machinery/proc/use_power(amount, chan = power_channel)
-	if(!src.loc)
+	if(!powered(chan)) //no point in trying if we don't have power
 		return 0
-
-	if(isnull(areaMaster))
-		return
 
 	areaMaster.use_power(amount, chan)
 

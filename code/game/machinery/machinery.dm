@@ -497,6 +497,8 @@ Class Procs:
 	playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 	if(do_after(user, 30))
 		anchored = !anchored
+		if(machine_flags & FIXED2WORK)
+			power_change() //updates us to turn on or off as necessary
 		state = anchored //since these values will match as long as state isn't 2, we can do this safely
 		user.visible_message(	"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"]</span>",
 								"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
