@@ -13,6 +13,7 @@
 	var/boss = 1 //If it has the power to promote gang members
 	var/recalling = 0
 	var/ignore_messages = 0
+	var/promotion_cost = 20
 
 /obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
 	if(!ticker.mode.gang_points)
@@ -72,13 +73,12 @@
 		else
 			dat += "(15 Influence) Switchblade<br>"
 
-		if(points >= 50)
-			dat += "(50 Influence) <a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
+		if(points >= 60)
+			dat += "(60 Influence) <a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
 		else
-			dat += "(50 Influence) Recruitment Pen<br>"
+			dat += "(60 Influence) Recruitment Pen<br>"
 
 		if(boss)
-			var/promotion_cost = max((((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len) * 30)-10,20)
 			if(promotion_cost > 100)
 				dat += "(Maximum Reached) Promote a Gangster<br>"
 			else if(points >= promotion_cost)
@@ -102,7 +102,6 @@
 	if(href_list["purchase"])
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 		var/item_type
-		var/promotion_cost = max((((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len) * 30)-10,20)
 		switch(href_list["purchase"])
 			if("spraycan")
 				if(points >= 10)
@@ -121,13 +120,14 @@
 					item_type = /obj/item/weapon/switchblade
 					points = 15
 			if("pen")
-				if(points >= 50)
+				if(points >= 60)
 					item_type = /obj/item/weapon/pen/gang
-					points = 50
+					points = 60
 			if("gangtool")
 				if(points >= promotion_cost)
 					item_type = /obj/item/device/gangtool/lt
 					points = promotion_cost
+					promotion_cost += 30
 
 		if(item_type)
 			if(gang == "A")
