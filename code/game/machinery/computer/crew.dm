@@ -143,7 +143,7 @@
 		return
 
 /obj/machinery/computer/crew/proc/is_scannable(const/obj/item/clothing/under/C, const/mob/living/carbon/human/H)
-	if(!istype(H) || H.corpse)
+	if(!istype(H) || H.iscorpse)
 		return 0
 
 	if(isnull(track_special_role))
