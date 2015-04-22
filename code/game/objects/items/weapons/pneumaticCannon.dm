@@ -21,9 +21,9 @@
 		return
 	for(var/obj/item/I in loadedItems)
 		spawn(0)
-			user << "It has \the [I] loaded."
+			user << "<span class='info'>It has \the [I] loaded.</span>"
 	if(tank)
-		user << "It has \the [tank] mounted onto it."
+		user << "<span class='notice'>It has \the [tank] mounted onto it.</span>"
 
 
 /obj/item/weapon/pneumatic_cannon/attackby(obj/item/weapon/W, mob/user, params)
@@ -44,6 +44,10 @@
 				pressureSetting = 1
 		user << "<span class='notice'>You tweak \the [src]'s pressure output to [pressureSetting].</span>"
 		return
+	if(istype(W, /obj/item/weapon/screwdriver) && tank))
+		user << "<span class='notice'>You disconnect \the [tank] from \the [src].</span>"
+		tank.loc = get_turf(user)
+		tank = null
 	if(loadedWeightClass >= maxWeightClass)
 		user << "<span class='warning'>\The [src] can't fit any more items.</span>"
 		return
@@ -64,7 +68,7 @@
 
 
 /obj/item/weapon/pneumatic_cannon/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)
-	if(user.a_intent == "harm" && !ishuman(user))
+	if(user.a_intent == "harm" || !ishuman(user))
 		return ..()
 	if(!loadedItems || !loadedWeightClass)
 		user << "<span class='warning'>\The [src] has nothing loaded.</span>"
@@ -82,6 +86,7 @@
 		spawn(0)
 			loadedItems.Remove(ITD)
 			loadedWeightClass -= ITD.w_class
+			ITD.throw_speed = pressureSetting * 2
 			ITD.loc = get_turf(src)
 			ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2)
 	if(pressureSetting >= 3)
@@ -96,3 +101,16 @@
 	w_class = 3
 	maxWeightClass = 10
 	gasPerThrow = 77
+
+/datum/table_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
+	name = "Pneumatic Cannon"
+	result = /obj/item/weapon/pneumatic_cannon/ghetto
+	tools = list(/obj/item/weapon/weldingtool,
+				 /obj/item/weapon/wrench)
+	reqs = list(/obj/item/stack/rods = 4, //Forming the barrel
+				/obj/item/stack/sheet/metal = 4, //Forming the body and internal piston
+				/obj/item/stack/sheet/rglass = 3, //Forming the gas reservoir
+				/obj/item/stack/packageWrap = 8, //Padding the stock
+				/obj/item/pipe = 2, //Forming the gas transfer
+				/obj/item/stack/sheet/glass = 2) //And finally, forming the hatch into the reservoir
+	time = 300
