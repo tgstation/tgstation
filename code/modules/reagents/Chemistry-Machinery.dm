@@ -3,7 +3,7 @@
 #define GAS 3
 
 /obj/machinery/chem_dispenser
-	name = "chem dispenser"
+	name = "Chem Dispenser"
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -160,14 +160,14 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	for (var/re in dispensable_reagents)
 		var/datum/reagent/temp = chemical_reagents_list[re]
 		if(temp)
-			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
+			chemicals.Add(list(list("title" = copytext(temp.name,1,15), "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 390, 630)
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "[src] 5000", 390, 630)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -280,7 +280,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/soda_dispenser
 	name = "Soda Dispenser"
 	icon_state = "soda_dispenser"
-	dispensable_reagents = list("cola", "sodawater", "lemon_lime", "dr_gibb", "spacemountainwind", "ice", "tonic")
+	dispensable_reagents = list("spacemountainwind", "sodawater", "lemon_lime", "dr_gibb", "cola", "ice", "tonic")
 
 /obj/machinery/chem_dispenser/soda_dispenser/mapping
 	max_energy = 100

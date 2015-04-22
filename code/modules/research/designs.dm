@@ -2798,7 +2798,7 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/airlock
 
-/datum/design/airlock
+/datum/design/intercom
 	name = "Circuit Design (Intercom)"
 	desc = "Allows for the construction of circuit boards used to build an intercom."
 	id = "intercom"

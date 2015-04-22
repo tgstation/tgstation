@@ -191,6 +191,10 @@
 				//Stealing the cheap autoinjector doesn't count
 				if(istype(I, /obj/item/weapon/reagent_containers/hypospray/autoinjector))
 					continue
+				if(istype(I,/obj/item/device/aicard))
+					var/obj/item/device/aicard/C = I
+					if(!C.contents.len)
+						continue //Stealing a card with no contents doesn't count
 				if(areas.len)
 					if(!is_type_in_list(get_area_master(I),areas))
 						continue
