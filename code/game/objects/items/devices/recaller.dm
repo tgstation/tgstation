@@ -78,8 +78,10 @@
 			dat += "(50 Influence) Recruitment Pen<br>"
 
 		if(boss)
-			var/promotion_cost = max(((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len) * 20,20)
-			if(points >= promotion_cost)
+			var/promotion_cost = max((((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len) * 30)-10,20)
+			if(promotion_cost > 100)
+				dat += "(Maximum Reached) Promote a Gangster<br>"
+			else if(points >= promotion_cost)
 				dat += "([promotion_cost] Influence) <a href='?src=\ref[src];purchase=gangtool'>Promote a Gangster</a><br>"
 			else
 				dat += "([promotion_cost] Influence) Promote a Gangster<br>"
@@ -100,7 +102,7 @@
 	if(href_list["purchase"])
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 		var/item_type
-		var/promotion_cost = max(((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len) * 20,20)
+		var/promotion_cost = max((((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len) * 30)-10,20)
 		switch(href_list["purchase"])
 			if("spraycan")
 				if(points >= 10)
@@ -136,6 +138,7 @@
 			var/mob/living/carbon/human/H = usr
 			H.put_in_any_hand_if_possible(purchased)
 			ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "A [href_list["purchase"]] was purchased by [usr] for [points] Influence.")
+			log_game("A [href_list["purchase"]] was purchased by [key_name(usr)] for [points] Influence.")
 
 	else if(href_list["choice"])
 		switch(href_list["choice"])
