@@ -16,9 +16,11 @@ var/list/GPS_list = list()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
 	overlays += "working"
+
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
 	..()
+
 /obj/item/device/gps/emp_act(severity)
 	emped = 1
 	overlays -= "working"
@@ -50,19 +52,34 @@ var/list/GPS_list = list()
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
+/obj/item/device/gps/examine(mob/user)
+	if (Adjacent(user) || isobserver(user))
+		src.attack_self(user)
+	else
+		..()
+
 /obj/item/device/gps/Topic(href, href_list)
 	..()
-	if(href_list["tag"] )
+	if(href_list["tag"])
+		if (isobserver(usr))
+			usr << "No way."
+			return
+		if (usr.get_active_hand() != src || usr.stat) //no silicons allowed
+			usr << "<span class = 'caution'>You need to have the GPS in your hand to do that!</span>"
+			return
+
 		var/a = input("Please enter desired tag.", name, gpstag) as text|null
 		if (!a) //what a check
 			return
-		if (usr.get_active_hand() != src || usr.stat)
+
+		if (usr.get_active_hand() != src || usr.stat) //second check in case some chucklefuck drops the GPS while typing the tag
 			usr << "<span class = 'caution'>The GPS needs to be kept in your active hand!</span>"
 			return
 		a = copytext(sanitize(a), 1, 20)
 		if(length(a) != 4)
 			usr << "<span class = 'caution'>The tag must be four letters long!</span>"
 			return
+
 		else
 			gpstag = a
 			name = "global positioning system ([gpstag])"
