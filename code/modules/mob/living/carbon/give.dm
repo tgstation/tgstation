@@ -9,6 +9,9 @@
 
 	if(src.stat == 2 || user.stat == 2 || src.client == null)
 		return
+	if(src.handcuffed)
+		user << "<span class='warning'>Those hands are cuffed right now.</span>"
+		return //Can't receive items while cuffed
 	if(src == user) //Shouldn't happen
 		user << "<span class='warning'>You feel stupider, suddenly.</span>"
 		return
