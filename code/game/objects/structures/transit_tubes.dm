@@ -90,11 +90,28 @@ obj/structure/ex_act(severity)
 		init_dirs()
 
 /obj/structure/transit_tube/Bumped(mob/AM as mob|obj)
-	var/obj/structure/transit_tube/T = locate() in AM.loc
-	if(T)
+	var/obj/structure/transit_tube/tube = locate() in AM.loc
+	if(tube)
 		AM << "<span class='warning'>The tube's support pylons block your way.</span>"
 		return ..()
 	else
+		var/turf/T = get_turf(src)
+		var/list/large_dense = list()
+		for(var/atom/movable/border_obstacle in T)
+			if(border_obstacle.flags&ON_BORDER)
+				if(!border_obstacle.CanPass(AM, AM.loc) && AM != border_obstacle)
+					return ..()
+			else if(border_obstacle != src)
+				large_dense += border_obstacle
+
+		//Then, check the turf itself
+		if (!T.CanPass(AM, T))
+			return ..()
+
+		//Finally, check objects/mobs to block entry that are not on the border
+		for(var/atom/movable/obstacle in large_dense)
+			if(!obstacle.CanPass(AM, AM.loc) && AM != obstacle)
+				return ..()
 		AM.loc = src.loc
 		AM << "<span class='info'>You slip under the tube.</span>"
 
