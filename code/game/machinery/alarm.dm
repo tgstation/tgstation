@@ -792,7 +792,7 @@
 				update_icon()
 				user.visible_message("<span class='attack'>[user] has cut the wiring from \the [src]!</span>", "You have cut the last of the wiring from \the [src].")
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
-				new /obj/item/stack/cable_coil(get_turf(user),5)
+				getFromPool(/obj/item/stack/cable_coil, get_turf(user), 5)
 				return
 			if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
@@ -951,7 +951,7 @@ FIRE ALARM
 						buildstage=1
 						user.visible_message("<span class='attack'>[user] has cut the wiring from \the [src]!</span>", "You have cut the last of the wiring from \the [src].")
 						update_icon()
-						new /obj/item/stack/cable_coil(get_turf(user), 5)
+						getFromPool(/obj/item/stack/cable_coil, get_turf(user), 5)
 			if(1)
 				if(iscoil(W))
 					var/obj/item/stack/cable_coil/coil = W

@@ -125,7 +125,7 @@
 					s.set_up(5, 1, src)
 					s.start()
 					return
-				new /obj/item/stack/cable_coil(loc,10)
+				getFromPool(/obj/item/stack/cable_coil, get_turf(src), 10)
 				user.visible_message(\
 					"<span class='warning'>[user.name] cut the cables and dismantled the power terminal.</span>",\
 					"You cut the cables and dismantle the power terminal.")

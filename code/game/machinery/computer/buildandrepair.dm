@@ -342,15 +342,18 @@
 				src.icon_state = "1"
 				return 1
 			if(istype(P, /obj/item/stack/cable_coil))
-				if(P:amount >= 5)
-					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20) && state == 2)
-						if(P)
-							P:amount -= 5
-							if(!P:amount) del(P)
-							user << "<span class='notice'>You add cables to the frame.</span>"
-							src.state = 3
-							src.icon_state = "3"
+				var/obj/item/stack/cable_coil/C = P
+				if (C.amount < 5)
+					user << "<span class='warning'>You need at least 5 lengths of cable coil for this!</span>"
+					return 1
+
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				if (do_after(user, 20) && state == 2 && C.amount >= 5)
+					C.use(5)
+					user << "<span class='notice'>You add cables to the frame.</span>"
+					src.state = 3
+					src.icon_state = "3"
+
 				return 1
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
@@ -358,19 +361,22 @@
 				user << "<span class='notice'>You remove the cables.</span>"
 				src.state = 2
 				src.icon_state = "2"
-				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
-				A.amount = 5
+				getFromPool(/obj/item/stack/cable_coil, get_turf(src), 5)
 				return 1
 
 			if(istype(P, /obj/item/stack/sheet/glass/glass))
-				if(P:amount >= 2)
-					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20) && state == 3)
-						if(P)
-							P:use(2)
-							user << "<span class='notice'>You put in the glass panel.</span>"
-							src.state = 4
-							src.icon_state = "4"
+				var/obj/item/stack/sheet/glass/glass/G = P
+				if (G.amount < 2)
+					user << "<span class='warning'>You need at least 2 sheets of glass for this!</span>"
+					return 1
+
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				if(do_after(user, 20) && state == 3 && G.amount >= 2)
+					G.use(2)
+					user << "<span class='notice'>You put in the glass panel.</span>"
+					src.state = 4
+					src.icon_state = "4"
+
 				return 1
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
