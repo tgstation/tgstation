@@ -41,7 +41,7 @@
 				var/datum/surgery/S = available_surgeries[P]
 				var/datum/surgery/procedure = new S.type
 				if(procedure)
-					if(get_location_accessible(M, procedure.location))
+					if(get_location_accessible(M, procedure.location) || procedure.ignore_clothes)
 						if(procedure.location == "anywhere") // if location == "anywhere" change location to the surgeon's target, otherwise leave location as is.
 							procedure.location = user.zone_sel.selecting
 						M.surgeries += procedure

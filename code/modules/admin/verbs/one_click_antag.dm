@@ -506,7 +506,11 @@ client/proc/one_click_antag()
 			teams_finished = round(ticker.mode.abductors.len / 2)
 		var/number =  teams_finished + 1
 
-		var/datum/game_mode/abduction/temp = new
+		var/datum/game_mode/abduction/temp
+		if(ticker.mode.config_tag == "abductor")
+			temp = ticker.mode
+		else
+			temp = new
 
 		var/agent_mind = pick(candidates)
 		candidates -= agent_mind
@@ -525,13 +529,14 @@ client/proc/one_click_antag()
 		temp.team_names.len = number
 		temp.scientists[number] = scientist_mind
 		temp.agents[number] = agent_mind
-		temp.abductors = list(agent_mind,scientist_mind)
-		temp.make_abductor_team(number)
+		temp.abductors |= list(agent_mind,scientist_mind)
+		temp.make_abductor_team(number,preset_scientist=scientist_mind,preset_agent=agent_mind)
 		temp.post_setup_team(number)
-		ticker.mode.abductors += temp.abductors
 		if(ticker.mode.config_tag == "abductor")
 			var/datum/game_mode/abduction/A = ticker.mode
 			A.teams += 1
+		else
+			ticker.mode.abductors |= temp.abductors
 
 		return 1
 	else
