@@ -52,6 +52,9 @@
 			if(player.assigned_role == job)
 				possible_traitors -= player
 
+	if(possible_traitors.len < required_enemies) //fixes double agent starting with 1 traitor
+		return 0
+
 	for(var/j = 0, j < num_traitors, j++)
 		if (!possible_traitors.len)
 			break
