@@ -195,6 +195,12 @@
 					var/obj/item/device/aicard/C = I
 					if(!C.contents.len)
 						continue //Stealing a card with no contents doesn't count
+					var/is_at_least_one_alive = 0
+					for(var/mob/living/silicon/ai/A in C)
+						if(A.stat != DEAD)
+							is_at_least_one_alive++
+					if(!is_at_least_one_alive)
+						continue
 				if(areas.len)
 					if(!is_type_in_list(get_area_master(I),areas))
 						continue
