@@ -3,4 +3,14 @@ author: Ikarrus
 delete-after: True
 
 changes: 
-  - wip: "Gang mode has had some considerable work done on it, including a new objective and currency dynamic. Check out the changes on the wiki: <a target=\"_blank\" href=\"https://tgstation13.org/wiki/Gang_War\">Click Here</a>"
+  - wip: "Gang mode has had some considerable work done on it, including a new objective and currency dynamic."
+  - rscadd: "<b>New objective:</b> Claim half the station as territory by tagging it with spray cans supplied to gang bosses, but usable by any member."
+  - wip: "An area can only be tagged by one gang at a time, remove your opponent's tag or spray over it."
+  - rscadd: "<b>New recruitment:</b> Recruiment pens replace flashes, stab people to recruit them."
+  - experiment: "Recruitment is silent, but causes brief seizures and has a cooldown that scales upwards with a gang's size."
+  - rscadd: "<b>New tool:</b> The Gangtool is used by bosses and lieutenants to recall the shuttle and purchase supplies."
+  - rscadd: "Pistols, ammo, spraycans, recruitment pens and additional gangtools can all be bought."
+  - tweak: "Gangtools also alert the user of promotions, purchases and territory changes within the gang."
+  - rscadd: "Lieutenants are promoted from gang members when given their own gangtool; they're immune to deconversion and able to do anything a boss can except promotion."
+  - rscadd: "<b>New currency:</b> Influence is used to purchase with the gangtool and is generated every 5 minutes by each territory owned by the gang."
+  - tweak: "Thermite can be cleaned off walls now."

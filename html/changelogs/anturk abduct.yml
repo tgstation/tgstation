@@ -1,0 +1,9 @@
+author: AnturK
+
+delete-after: True
+
+changes: 
+  - bugfix: "Observers can now see abductor hivemind messages."
+  - rscadd: "Adds advanced baton for abductors: Stun, Sleep and Cuff in one tool."
+  - rscadd: "Abductor agents now have vest cameras."
+  - imageadd: "New sprites for abductors and their gear made by Ausops."
