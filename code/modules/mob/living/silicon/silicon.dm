@@ -117,10 +117,10 @@
 	switch(severity)
 		if(1)
 			src.take_organ_damage(20)
-			Stun(8)
+			Paralyse(8)
 		if(2)
 			src.take_organ_damage(10)
-			Stun(3)
+			Paralyse(3)
 	flick("noise", src:flash)
 	src << "<span class='userdanger'>*BZZZT*</span>"
 	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"

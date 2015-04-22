@@ -228,9 +228,16 @@ var/list/ai_list = list()
 			var/area/borg_area
 			for(var/mob/living/silicon/robot/R in connected_robots)
 				borg_area = get_area(R)
+				var/robot_status = "Normal"
+				if(R.stat || !R.client)
+					robot_status = "OFFLINE"
+				else if(!R.cell)
+					robot_status = "DEPOWERED"
+				else if(R.cell.charge <= 0)
+					robot_status = "DEPOWERED"
 				//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
 				stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
- Module: [R.designation] | Loc: [borg_area.name] | Status: [R.stat || !R.client ? "OFFLINE" : "Normal"]"))
+ 				Module: [R.designation] | Loc: [borg_area.name] | Status: [robot_status]"))
 		else
 			stat(null, text("Systems nonfunctional"))
 

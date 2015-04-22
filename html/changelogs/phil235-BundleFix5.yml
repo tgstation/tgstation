@@ -5,8 +5,8 @@ delete-after: True
 
 changes: 
   - tweak: "Space carps can no longer knock down anyone, but they now deal additional stamina damage to humans."
-  - tweak: "Cyborgs out of power can now talk but cannot move or interact with things. Their lack of power is now also shown upon examination."
+  - tweak: "Cyborgs out of power can now see, move, talk and interact with things but are slowed down. Their lack of power is indicated upon examination. Emp'd cyborgs are now blinded."
   - tweak: "Radiation effects from uranium walls are nerfed to the level of uranium floor."
-  - rscadd: "You can no longer put an inactive brain in a MMI and an inactive MMI in a cyborg shell. Ghosted brains now get an alert when someone tries to put them in a MMI."
+  - rscadd: "You can no longer put an inactive MMI in a cyborg shell. Ghosted brains now get an alert when someone puts their brain in a MMI. You can now examine the MMI to see if its brain is active."
   - tweak: "Cyborgs now get some burn damage when exposed to very hot fires (35,000+ K)"
 

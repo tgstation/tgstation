@@ -24,11 +24,11 @@
 	if(cell)
 		if(cell.charge <= 0)
 			uneq_all()
-			Stun(5)
-			update_icons()
+			speed = 4
 		else if (cell.charge <= 100)
 			uneq_all()
 			cell.use(1)
+			speed = 2
 		else
 			if(module_state_1)
 				cell.use(5)
@@ -37,10 +37,12 @@
 			if(module_state_3)
 				cell.use(5)
 			cell.use(1)
+			speed = 0
 	else
 		uneq_all()
-		Stun(5)
-		update_icons()
+		speed = 4
+
+	update_icons()
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()
@@ -66,9 +68,6 @@
 				if(health < -50)
 					if(uneq_module(module_state_1))
 						src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
-
-		if(getOxyLoss() > 50)
-			Paralyse(3)
 
 		if(paralysis)
 			stat = UNCONSCIOUS
@@ -213,7 +212,7 @@
 		IgniteMob()
 
 /mob/living/silicon/robot/update_canmove()
-	if(paralysis || stunned || weakened || buckled || lockcharge)
+	if(stat || paralysis || stunned || weakened || buckled || lockcharge)
 		canmove = 0
 	else
 		canmove = 1
@@ -226,3 +225,5 @@
 		throw_alert("temp","hot",3)
 	else
 		clear_alert("temp")
+
+

@@ -34,19 +34,8 @@
 			var/mob/dead/observer/ghost = B.get_ghost()
 			if(ghost)
 				if(ghost.client)
-					user << "<span class='warning'>The brain's activity spikes for a second then settles down. Next connection attempts may be successful.</span>"
-					ghost << "<span class='ghostalert'>Someone is trying to put your brain in a MMI. Return to your body if you want to!</span> (Verbs -> Ghost -> Re-enter corpse)"
+					ghost << "<span class='ghostalert'>Someone has put your brain in a MMI. Return to your body!</span> (Verbs -> Ghost -> Re-enter corpse)"
 					ghost << sound('sound/effects/genetics.ogg')
-				else
-					user << "<span class='warning'>The brain seems currently inactive; it might change.</span>"
-			else
-				user << "<span class='warning'>The brain is completely unresponsive; there's no point.</span>"
-			return
-
-		if(!B.client)
-			user << "<span class='warning'>The brain seems currently inactive; it might change.</span>"
-			return
-
 
 		visible_message("<span class='notice'>[user] sticks \a [newbrain] into \the [src]</span>")
 
@@ -170,3 +159,17 @@
 		qdel(brainmob)
 		brainmob = null
 	..()
+
+/obj/item/device/mmi/examine(mob/user)
+	..()
+	if(brainmob)
+		var/mob/living/carbon/brain/B = brainmob
+		if(!B.key || !B.mind || B.stat == DEAD)
+			user << "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
+
+		else if(!B.client)
+			user << "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
+
+		else
+			user << "<span class='notice'>The MMI indicates the brain is active.</span>"
+
