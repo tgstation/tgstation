@@ -22,6 +22,7 @@
 
 	var/volume_rate = 1000 // 120
 	var/panic = 0 //is this scrubber panicked?
+	var/welded = 0
 
 	var/area_uid
 	var/radio_filter_out
@@ -41,6 +42,9 @@
 	var/hidden=""
 	if(level == 1 && istype(loc, /turf/simulated))
 		hidden="h"
+	if(welded)
+		icon_state = "[hidden]weld"
+		return
 	var/suffix=""
 	if(scrub_O2)
 		suffix="1"
@@ -108,6 +112,8 @@
 		return
 	if (!node)
 		return 0 // Let's not shut it off, for now.
+	if(welded)
+		return 0
 	//broadcast_status()
 	if(!on)
 		return 0
@@ -279,10 +285,33 @@
 		stat |= NOPOWER
 	update_icon()
 
+/obj/machinery/atmospherics/unary/vent_scrubber/can_crawl_through()
+	return !welded
+
 /obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/device/multitool))
 		update_multitool_menu(user)
 		return 1
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if (WT.remove_fuel(0,user))
+			user << "<span class='notice'>Now welding the scrubber.</span>"
+			if(do_after(user, 20))
+				if(!src || !WT.isOn()) return
+				playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
+				if(!welded)
+					user.visible_message("[user] welds the scrubber shut.", "You weld the vent scrubber.", "You hear welding.")
+					welded = 1
+					update_icon()
+				else
+					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
+					welded = 0
+					update_icon()
+			else
+				user << "<span class='notice'>The welding tool needs to be on to start this task.</span>"
+		else
+			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			return 1
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
