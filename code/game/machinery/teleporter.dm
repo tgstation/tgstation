@@ -293,7 +293,7 @@
 	if (!com)
 		return
 	if (!com.target)
-		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
+		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
@@ -301,7 +301,7 @@
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
-						M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
+						M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
 						human.dna.species = new /datum/species/fly()
 						human.regenerate_icons()
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)

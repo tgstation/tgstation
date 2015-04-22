@@ -144,14 +144,14 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
-				"You hear a ratchet")
+				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = 1
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user.visible_message("[user.name] unsecures the [src.name].", \
-				"Y<span class='notice'>ou remove the anchor bolts.</span>", \
-				"You hear a ratchet")
+				"Y<span class='notice'>You remove the anchor bolts.</span>", \
+				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = 0
 			disconnect_from_network()
 		else
@@ -170,7 +170,7 @@
 		user.update_icons()
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"<span class='notice'>You load an [W.name].</span>", \
-				"You hear a thunk.")
+				"<span class='italics'>You hear a thunk.</span>")
 		return
 
 	if(W.force >= 20)

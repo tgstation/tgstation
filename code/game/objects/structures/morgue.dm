@@ -164,11 +164,11 @@ var/global/list/crematoriums = new/list()
 		return //don't let you cremate something twice or w/e
 
 	if(contents.len <= 1)
-		audible_message("<span class='danger'>You hear a hollow crackle.</span>")
+		audible_message("<span class='italics'>You hear a hollow crackle.</span>")
 		return
 
 	else
-		audible_message("<span class='danger'>You hear a roar as the crematorium activates.</span>")
+		audible_message("<span class='italics'>You hear a roar as the crematorium activates.</span>")
 
 		locked = 1
 		update_icon()

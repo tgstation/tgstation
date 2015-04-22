@@ -891,7 +891,7 @@ About the new airlock wires panel:
 		if(W.remove_fuel(0,user))
 			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
-							"You hear welding.")
+							"<span class='italics'>You hear welding.</span>")
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			if(do_after(user,40,5,1))
 				if(density && !operating)//Door must be closed to weld.

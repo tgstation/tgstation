@@ -92,7 +92,7 @@ Pipelines + Other Objects -> Pipe network
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
-				"You hear ratchet.")
+				"<span class='italics'>You hear ratchet.</span>")
 			investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
 			Deconstruct()
 	else

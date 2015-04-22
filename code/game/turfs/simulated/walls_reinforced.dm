@@ -41,7 +41,7 @@
 			if( user.loc == T && user.get_active_hand() == W )
 				D.update_icon()
 				D.playDigSound()
-				visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
+				visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 				dismantle_wall()
 				return 1
 	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)

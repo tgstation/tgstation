@@ -15,9 +15,9 @@
 		var/turf/T = get_turf(src)
 		for(var/obj/O in contents)
 			O.loc = T
-		user.visible_message("<span class='notice'>[user] pries \the [src] open.</span>", \
+		user.visible_message("[user] pries \the [src] open.", \
 							 "<span class='notice'>You pry open \the [src].</span>", \
-							 "<span class='notice'>You hear splitting wood.</span>")
+							 "<span class='italics'>You hear splitting wood.</span>")
 		qdel(src)
 	else
 		return attack_hand(user)

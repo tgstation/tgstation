@@ -141,7 +141,7 @@
 			var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
 			if(prob(50))
 				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
-								"<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
 
 			spawn(rand(20,60))
 				loc = exit_vent
@@ -154,7 +154,7 @@
 						return
 
 					if(prob(50))
-						audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+						audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
 					sleep(travel_time)
 
 					if(!exit_vent || exit_vent.welded)

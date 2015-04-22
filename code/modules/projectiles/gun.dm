@@ -91,7 +91,7 @@
 		if(!message)
 			return
 		if(pointblank)
-			user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
+			user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "<span class='italics'>You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!</span>")
 		else
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
@@ -119,7 +119,7 @@
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
 			if (M.disabilities & CLUMSY && prob(40))
-				user << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
+				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
 				process_fire(user,user,0,params)
 				M.drop_item()
 				return

@@ -160,14 +160,14 @@
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
 					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
-					"You hear a ratchet")
+					"<span class='italics'>You hear a ratchet</span>")
 				src.anchored = 1
 			if(1)
 				state = 0
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
-					"You hear a ratchet")
+					"<span class='italics'>You hear a ratchet.</span>")
 				src.anchored = 0
 			if(2)
 				user << "<span class='warning'>The [src.name] needs to be unwelded from the floor!</span>"
@@ -186,7 +186,7 @@
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-						"You hear welding")
+						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 2
@@ -197,7 +197,7 @@
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-						"You hear welding")
+						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 1

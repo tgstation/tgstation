@@ -236,7 +236,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			cultist.say(gibberish)
 		else
 			cultist.whisper(gibberish)
-	visible_message("<span class='danger'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='danger'>You hear a faint fizzle.</span>", 2)
+	visible_message("<span class='danger'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='italics'>You hear a faint fizzle.</span>", 2)
 	return
 
 /obj/effect/rune/proc/check_icon()
@@ -637,8 +637,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					return
 
 				for (var/mob/V in viewers(src))
-					V.show_message("<span class='danger'>[user] slices open a finger and begins to chant and paint symbols on the floor.</span>", 3, "<span class='danger'>You hear chanting.</span>", 2)
-				user << "<span class='danger'>You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.</span>"
+					V.show_message("<span class='danger'>[user] slices open a finger and begins to chant and paint symbols on the floor.</span>", 3, "<span class='italics'>You hear chanting.</span>", 2)
+				user << "<span class='userdanger'>You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.</span>"
 				user.take_overall_damage((rand(9)+1)/10) // 0.1 to 1.0 damage
 				if(do_after(user, 50))
 					if(usr.get_active_hand() != src)

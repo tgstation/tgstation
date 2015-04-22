@@ -46,7 +46,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 			new_item.add_to_stacks(usr)
 			user.visible_message("[user.name] shaped [src] into metal with the welding tool.", \
 						 "<span class='notice'>You shape [src] into metal with the welding tool.</span>", \
-						 "<span class='warning'>You hear welding.</span>")
+						 "<span class='italics'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
 			var/replace = (user.get_inactive_hand()==R)

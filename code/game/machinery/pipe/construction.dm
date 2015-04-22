@@ -406,7 +406,7 @@ var/global/list/pipeID2State = list(
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
-		"You hear ratchet.")
+		"<span class='italics'>You hear ratchet.</span>")
 
 	qdel(src)	// remove the pipe item
 

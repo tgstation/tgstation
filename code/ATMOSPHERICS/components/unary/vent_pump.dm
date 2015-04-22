@@ -278,11 +278,11 @@
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				if(!welded)
-					user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
+					user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
 					welded = 1
 					update_icon()
 				else
-					user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
+					user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
 					welded = 0
 					update_icon()
 			return 1
@@ -363,11 +363,11 @@
 	L.visible_message("<span class='notice'>[L] scrambles into the ventilation ducts!</span>", \
 						"<span class='notice'>You scramble into the ventilation ducts.</span>")
 
-	target_vent.audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+	target_vent.audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
 
 	if(target_vent.welded)		//the vent can be welded while they scrolled through the list.
 		target_vent = src
-		L << "<span class='warning'>The vent you were heading to appears to be welded.</span>"
+		L << "<span class='warning'>The vent you were heading to appears to be welded!</span>"
 	L.loc = target_vent.loc
 	var/area/new_area = get_area(L.loc)
 	if(new_area)

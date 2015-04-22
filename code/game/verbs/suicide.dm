@@ -150,7 +150,7 @@
 		suiciding = 1
 		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</span>", \
-				"<span class='notice'>You hear thrashing</span>")
+				"<span class='italics'>You hear thrashing.</span>")
 		//put em at -175
 		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()

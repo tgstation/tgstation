@@ -65,7 +65,7 @@
 			M.updatehealth()
 			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
 								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
-								"You hear something crack")
+								"<span class='italics'>You hear something crack.</span>")
 			add_logs(chassis.occupant, M, "attacked", object="[name]", addition="(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
@@ -95,7 +95,7 @@
 	chassis.use_power(energy_drain)
 	target.visible_message("<span class='danger'>[chassis] starts to drill [target]</span>", \
 					"<span class='userdanger'>[chassis] starts to drill [target]</span>", \
-					 "You hear drilling.")
+					 "<span class='italics'>You hear drilling.</span>")
 	var/T = chassis.loc
 	var/C = target.loc	//why are these backwards? we may never know -Pete
 	if(do_after_cooldown(target))

@@ -219,13 +219,13 @@
 	if (src.active)
 		user.visible_message("[src] [user] deactivated the shield generator.", \
 			"<span class='notice'>[src] You deactivate the shield generator.</span>", \
-			"You hear heavy droning fade out.")
+			"<span class='italics'>You hear heavy droning fade out.</span>")
 		src.shields_down()
 	else
 		if(anchored)
 			user.visible_message("[src] [user] activated the shield generator.", \
 				"<span class='notice'>[src] You activate the shield generator.</span>", \
-				"You hear heavy droning.")
+				"<span class='italics'>You hear heavy droning.</span>")
 			src.shields_up()
 		else
 			user << "<span class='warning'>The device must first be secured to the floor!</span>"
@@ -363,14 +363,14 @@
 
 		user.visible_message("[user] turned the shield generator off.", \
 			"<span class='notice'>You turn off the shield generator.</span>", \
-			"You hear heavy droning fade out.")
+			"<span class='italics'>You hear heavy droning fade out.</span>")
 		src.cleanup()
 	else
 		src.active = 1
 		icon_state = "Shield_Gen +a"
 		user.visible_message("[user] turned the shield generator on.", \
 			"<span class='notice'>You turn on the shield generator.</span>", \
-			"You hear heavy droning.")
+			"<span class='italics'>You hear heavy droning.</span>")
 	src.add_fingerprint(user)
 
 /obj/machinery/shieldwallgen/process()
@@ -396,7 +396,7 @@
 	if(src.active >= 1)
 		if(src.power == 0)
 			src.visible_message("<span class='danger'>The [src.name] shuts down due to lack of power!</span>", \
-				"You hear heavy droning fade out")
+				"<span class='italics'>You hear heavy droning fade out.</span>")
 			icon_state = "Shield_Gen"
 			src.active = 0
 			src.cleanup(1)

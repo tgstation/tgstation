@@ -272,7 +272,7 @@
 	return 0
 
 /obj/machinery/microwave/proc/start()
-	visible_message("<span class='notice'>The microwave turns on.</span>", "<span class='notice'>You hear a microwave.</span>")
+	visible_message("The microwave turns on.", "<span class='italics'>You hear a microwave humming.</span>")
 	operating = 1
 	icon_state = "mw1"
 	updateUsrDialog()
@@ -298,7 +298,7 @@
 
 /obj/machinery/microwave/proc/muck_finish()
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-	visible_message("<span class='danger'>The microwave gets covered in muck!</span>")
+	visible_message("<span class='warning'>The microwave gets covered in muck!</span>")
 	dirty = 100 // Make it dirty so it can't be used util cleaned
 	icon_state = "mwbloody" // Make it look dirty too
 	operating = 0 // Turn it off again aferwards
@@ -313,7 +313,7 @@
 	s.set_up(2, 1, src)
 	s.start()
 	icon_state = "mwb" // Make it look all busted up and shit
-	visible_message("<span class='danger'>The microwave breaks!</span>") //Let them know they're stupid
+	visible_message("<span class='warning'>The microwave breaks!</span>") //Let them know they're stupid
 	broken = 2 // Make it broken so it can't be used util fixed
 	flags = null //So you can't add condiments
 	operating = 0 // Turn it off again aferwards

@@ -399,7 +399,7 @@ obj/machinery/bot/mulebot/bot_reset()
 // called to load a crate
 /obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
 	if(wires.LoadCheck() && !istype(C,/obj/structure/closet/crate))
-		visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
+		visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 		playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return		// if not emagged, only allow crates to be loaded
 
@@ -593,25 +593,25 @@ obj/machinery/bot/mulebot/bot_reset()
 						blockcount++
 						mode = BOT_BLOCKED
 						if(blockcount == 3)
-							visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
+							visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 							playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 
 						if(blockcount > 10)	// attempt 10 times before recomputing
 							// find new path excluding blocked turf
-							visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
+							visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 							playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 							spawn(2)
 								calc_path(next)
 								if(path.len > 0)
-									visible_message("[src] makes a delighted ping!", "You hear a ping.")
+									visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
 									playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 								mode = BOT_BLOCKED
 							mode = BOT_WAIT_FOR_NAV
 							return
 						return
 				else
-					visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
+					visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 					playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 					//world << "Bad turf."
 					mode = BOT_NAV
@@ -631,11 +631,11 @@ obj/machinery/bot/mulebot/bot_reset()
 				if(path.len > 0)
 					blockcount = 0
 					mode = BOT_BLOCKED
-					visible_message("[src] makes a delighted ping!", "You hear a ping.")
+					visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
 					playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
 				else
-					visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
+					visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 					playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 					mode = BOT_NO_ROUTE
@@ -682,7 +682,7 @@ obj/machinery/bot/mulebot/bot_reset()
 /obj/machinery/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		radio_frequency = SUPP_FREQ //Supply channel
-		visible_message("[src] makes a chiming sound!", "You hear a chime.")
+		visible_message("[src] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>")
 		playsound(loc, 'sound/machines/chime.ogg', 50, 0)
 		reached_target = 1
 

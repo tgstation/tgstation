@@ -388,7 +388,7 @@
 						user.visible_message(\
 							"[user.name] has broken the power control board inside [src.name]!",\
 							"<span class='notice'>You break the charred power control board and remove the remains.</span>",
-							"You hear a crack!")
+							"<span class='italics'>You hear a crack.</span>")
 						//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 					else
 						user.visible_message(\
@@ -510,7 +510,7 @@
 			return
 		user.visible_message("[user.name] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
-							"You hear welding.")
+							"<span class='italics'>You hear welding.</span>")
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 		if(do_after(user, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
@@ -559,7 +559,7 @@
 			opened = 2
 			user.visible_message("<span class='danger'>[user.name] has knocked down the APC cover  with the [W.name]!</span>", \
 				"<span class='danger'>You knock down the APC cover with your [W.name]!</span>", \
-				"You hear bang")
+				"<span class='italics'>You hear bang.</span>")
 			update_icon()
 		else
 			if (istype(user, /mob/living/silicon))
@@ -956,8 +956,8 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				visible_message("<span class='danger'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", \
-								"<span class='danger'>You hear sizzling electronics.</span>")
+				visible_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", \
+								"<span class='italics'>You hear sizzling electronics.</span>")
 
 
 /obj/machinery/power/apc/surplus()

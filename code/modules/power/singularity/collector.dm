@@ -81,14 +81,14 @@ var/global/list/rad_collectors = list()
 			anchored = 1
 			user.visible_message("[user.name] secures the [src.name].", \
 				"<span class='notice'>You secure the external bolts.</span>", \
-				"You hear a ratchet")
+				"<span class='italics'>You hear a ratchet.</span>")
 			connect_to_network()
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			anchored = 0
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"<span class='notice'>You unsecure the external bolts.</span>", \
-				"You hear a ratchet")
+				"<span class='italics'>You hear a ratchet.</span>")
 			disconnect_from_network()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))

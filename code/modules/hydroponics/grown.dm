@@ -806,7 +806,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/proc/squish(atom/target)
 	new splat(src.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
+	src.visible_message("The [src.name] has been squashed.","<span class='italics'>You hear a smack.</span>")
 	for(var/atom/A in get_turf(target))
 		src.reagents.reaction(A)
 
@@ -898,7 +898,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/attack_self(var/mob/user)
 	squish(user)
 	user.drop_item()
-	src.visible_message("<span class='notice'>[user] squashes the [src.name].</span>","<span class='notice'>You hear a smack.</span>")
+	src.visible_message("[user] squashes the [src.name].","<span class='italics'>You hear a smack.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/squish(atom/squishee)

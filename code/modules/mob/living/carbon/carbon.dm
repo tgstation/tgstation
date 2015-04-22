@@ -38,9 +38,9 @@
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
-			audible_message("<span class='danger'>You hear something rumbling inside [src]'s stomach...</span>", \
-						 "<span class='danger'>You hear something rumbling.</span>", 4,\
-						  "<span class='danger'>Something is rumbling inside your stomach!</span>")
+			audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
+						 "<span class='warning'>You hear something rumbling.</span>", 4,\
+						  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -84,7 +84,7 @@
 	src.visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='danger'>You hear a heavy electrical crack.</span>" \
+		"<span class='italics'>You hear a heavy electrical crack.</span>" \
 	)
 	if(prob(25) && heart_attack)
 		heart_attack = 0

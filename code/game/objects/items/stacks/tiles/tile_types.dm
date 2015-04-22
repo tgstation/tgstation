@@ -43,7 +43,7 @@
 				new_item.add_to_stacks(user)
 				user.visible_message("[user.name] shaped [src] into metal with the weldingtool.", \
 							 "<span class='notice'>You shaped [src] into metal with the weldingtool.</span>", \
-							 "You hear welding.")
+							 "<span class='italics'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
 				var/replace = (user.get_inactive_hand()==R)
@@ -57,7 +57,7 @@
 				new_item.add_to_stacks(user)
 				user.visible_message("[user.name] shaped [src] into a sheet with the weldingtool.", \
 							 "<span class='notice'>You shaped [src] into a sheet with the weldingtool.</span>", \
-							 "You hear welding.")
+							 "<span class='italics'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
 				var/replace = (user.get_inactive_hand()==R)

@@ -84,7 +84,7 @@ field_generator power level display
 			else
 				user.visible_message("[user.name] turns on the [src.name].", \
 					"<span class='notice'>You turn on the [src.name].</span>", \
-					"You hear heavy droning")
+					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 
@@ -105,14 +105,14 @@ field_generator power level display
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
 					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
-					"You hear ratchet")
+					"<span class='italics'>You hear ratchet.</span>")
 				src.anchored = 1
 			if(1)
 				state = 0
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
-					"You hear ratchet")
+					"<span class='italics'>You hear ratchet.</span>")
 				src.anchored = 0
 			if(2)
 				user << "<span class='warning'>The [src.name] needs to be unwelded from the floor!</span>"
@@ -128,7 +128,7 @@ field_generator power level display
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-						"You hear welding")
+						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 2
@@ -140,7 +140,7 @@ field_generator power level display
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-						"You hear welding")
+						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 1
@@ -211,7 +211,7 @@ field_generator power level display
 	if(draw_power(round(power_draw/2,1)))
 		return 1
 	else
-		visible_message("<span class='danger'>The [src.name] shuts down!</span>", "You hear something shutting down")
+		visible_message("<span class='danger'>The [src.name] shuts down!</span>", "<span class='italics'>You hear something shutting down.</span>")
 		turn_off()
 		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
 		src.power = 0

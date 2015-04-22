@@ -39,7 +39,7 @@
 	if (num_unloaded)
 		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
-		user << "<span class='notice'>[src] is empty.</span>"
+		user << "<span class='warning'>[src] is empty!</span>"
 
 /obj/item/weapon/gun/projectile/revolver/can_shoot()
 	return get_ammo(0,0)
@@ -77,7 +77,7 @@
 	if(magazine.caliber != initial(magazine.caliber))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
-			user << "<span class='danger'>[src] blows up in your face!</span>"
+			user << "<span class='userdanger'>[src] blows up in your face!</span>"
 			user.take_organ_damage(0,20)
 			user.drop_item()
 			qdel(src)
@@ -91,7 +91,7 @@
 			user << "<span class='notice'>You begin to reinforce the barrel of [src]...</span>"
 			if(magazine.ammo_count())
 				afterattack(user, user)	//you know the drill
-				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
+				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
 				return
 			if(do_after(user, 30))
 				if(magazine.ammo_count())
@@ -99,12 +99,12 @@
 					return
 				magazine.caliber = "357"
 				desc = "The barrel and chamber assembly seems to have been modified."
-				user << "<span class='warning'>You reinforce the barrel of [src]! Now it will fire .357 rounds.</span>"
+				user << "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>"
 		else
 			user << "<span class='notice'>You begin to revert the modifications to [src]...</span>"
 			if(magazine.ammo_count())
 				afterattack(user, user)	//and again
-				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
+				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
 				return
 			if(do_after(user, 30))
 				if(magazine.ammo_count())
@@ -204,9 +204,9 @@
 				var/limb_name = affecting.getDisplayName()
 				if(affecting.name == "head" || affecting.name == "eyes" || affecting.name == "mouth")
 					user.apply_damage(300, BRUTE, affecting)
-					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "You hear a gunshot!")
+					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
 				else
-					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at \his [limb_name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [limb_name]!</span>", "You hear a gunshot!")
+					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at \his [limb_name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [limb_name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")

@@ -104,7 +104,7 @@
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 			user.visible_message("[user.name] deconstructs [src].", \
-				"<span class='notice'>You deconstruct [src].</span>", "You hear a noise.")
+				"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
 			qdel(src)
 		if (src.stage == 2)
@@ -125,7 +125,7 @@
 				src.icon_state = "bulb-construct-stage1"
 		new /obj/item/stack/cable_coil(get_turf(src.loc), 1, "red")
 		user.visible_message("[user.name] removes the wiring from [src].", \
-			"<span class='notice'>You remove the wiring from [src].</span>", "You hear a noise.")
+			"<span class='notice'>You remove the wiring from [src].</span>", "<span class='italics'>You hear clicking.</span>")
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
@@ -140,7 +140,7 @@
 					src.icon_state = "bulb-construct-stage2"
 			src.stage = 2
 			user.visible_message("[user.name] adds wires to [src].", \
-				"You add wires to [src].")
+				"<span class='notice'>You add wires to [src].</span>")
 		else
 			user << "<span class='warning'>You need one length of cable to wire [src]!</span>"
 		return
@@ -154,7 +154,7 @@
 					src.icon_state = "bulb-empty"
 			src.stage = 3
 			user.visible_message("[user.name] closes [src]'s casing.", \
-				"<span class='notice'>You close [src]'s casing.</span>", "You hear a noise.")
+				"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 
 			switch(fixture_type)
@@ -376,7 +376,7 @@
 
 			user.visible_message("<span class='danger'>[user.name] smashed the light!</span>", \
 								"<span class='danger'>You hit the light, and it smashes!</span>", \
-								 "You hear a tinkle of breaking glass")
+								 "<span class='italics'>You hear a tinkle of breaking glass.</span>")
 			if(on && (W.flags & CONDUCT))
 				//if(!user.mutations & COLD_RESISTANCE)
 				if (prob(12))
@@ -390,8 +390,8 @@
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			user.visible_message("<span class='notice'>[user.name] opens [src]'s casing.</span>", \
-				"<span class='notice'>You open [src]'s casing.</span>", "You hear a noise.")
+			user.visible_message("[user.name] opens [src]'s casing.", \
+				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")
 			var/obj/machinery/light_construct/newlight = null
 			switch(fitting)
 				if("tube")
@@ -452,7 +452,7 @@
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user.name] smashed the light!</span>", "You hear a tinkle of breaking glass")
+		visible_message("<span class='danger'>[user.name] smashed the light!</span>", "<span class='italics'>You hear a tinkle of breaking glass.</span>")
 		broken()
 	return
 
@@ -463,7 +463,7 @@
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashed the light!</span>", "You hear a tinkle of breaking glass")
+		visible_message("<span class='danger'>[M.name] smashed the light!</span>", "<span class='italics'>You hear a tinkle of breaking glass.</span>")
 		broken()
 	return
 // attack with hand - remove tube/bulb
@@ -707,7 +707,7 @@
 
 /obj/item/weapon/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		src.visible_message("<span class='danger'>[name] shatters.</span>","<span class='danger'>You hear a small glass object shatter.</span>")
+		src.visible_message("<span class='danger'>[name] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
