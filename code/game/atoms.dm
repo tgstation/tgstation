@@ -106,8 +106,8 @@ var/global/list/ghdel_profiling = list()
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
 	INVOKE_EVENT(on_destroyed, list()) // No args.
-	on_moved.holder = null
-	on_destroyed.holder = null
+	if(on_moved) on_moved.holder = null
+	if(on_destroyed) on_destroyed.holder = null
 	if(istype(beams, /list) && beams.len) beams.len = 0
 	/*if(istype(beams) && beams.len)
 		for(var/obj/effect/beam/B in beams)
