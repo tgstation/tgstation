@@ -26,8 +26,8 @@
 
 /obj/effect/blob/factory/Destroy()
 	if(spores.len)
-		var/mob/living/simple_animal/hostile/blobspore/S
-		S.Die()
+		for(var/mob/living/simple_animal/hostile/blobspore/S in spores)
+			S.Die()
 	..()
 
 /mob/living/simple_animal/hostile/blobspore

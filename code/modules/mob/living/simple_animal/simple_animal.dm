@@ -76,6 +76,17 @@
 
 	languages = ALL
 
+/mob/living/simple_animal/apply_beam_damage(var/obj/effect/beam/B)
+	var/lastcheck=last_beamchecks["\ref[B]"]
+
+	var/damage = ((world.time - lastcheck)/10)  * (B.get_damage()/2)
+
+	// Actually apply damage
+	health -= damage
+
+	// Update check time.
+	last_beamchecks["\ref[B]"]=world.time
+
 /mob/living/simple_animal/rejuvenate(animation = 0)
 	var/turf/T = get_turf(src)
 	if(animation) T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
