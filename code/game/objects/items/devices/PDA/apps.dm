@@ -6,6 +6,7 @@ var/global/list/pda_app_menus = list(
 	102,//Spam Filter
 	103,//Balance Check
 	104,//Station Map
+	105,//Snake II
 	)
 
 /datum/pda_app
@@ -39,7 +40,8 @@ var/global/list/pda_app_menus = list(
 /datum/pda_app/light_upgrade/onInstall()
 	..()
 	pda_device.f_lum = 3
-
+	if(pda_device.fon)
+		pda_device.SetLuminosity(pda_device.f_lum)
 
 /datum/pda_app/spam_filter
 	name = "Spam Filter"
@@ -96,3 +98,107 @@ var/global/list/pda_app_menus = list(
 			else
 				user.unset_machine()
 				user << browse(null, "window=pda")
+
+/datum/pda_app/snake
+	name = "Snake II"
+	desc = "A video game. This old classic from Earth made it all the way to the far reaches of space! Includes station leaderboard."
+	price = 40
+	menu = 105
+	var/volume = 6
+	var/datum/snake_game/snake_game = null
+	var/list/highscores = list()
+	var/ingame = 0
+	var/paused = 0
+	var/labyrinth = 0
+
+/datum/pda_app/snake/onInstall(var/obj/item/device/pda/device)
+	..()
+	for(var/x=1;x<=9;x++)
+		highscores += x
+		highscores[x] = list()
+		var/list/templist = highscores[x]
+		for(var/y=1;y<=8;y++)
+			templist += y
+			templist[y] = 0
+
+	snake_game = new()
+
+/datum/pda_app/snake/proc/game_tick(var/mob/user)
+	snake_game.game_tick(user.dir)
+
+	game_update(user)
+
+	if(snake_game.head.next_full)
+		playsound(get_turf(pda_device), 'sound/misc/pda_snake_eat.ogg', volume * 5, 1)
+
+	if(!paused)
+		if(!snake_game.gameover)
+			var/snakesleep = 10 - (snake_game.level)
+			spawn(snakesleep)
+				game_tick(user)
+		else
+			game_over(user)
+
+
+/datum/pda_app/snake/proc/game_update(var/mob/user)
+	if(istype(user,/mob/living/carbon))
+		var/mob/living/carbon/C = user
+		if(C.machine && istype(C.machine,/obj/item/device/pda))
+			var/obj/item/device/pda/pda_device = C.machine
+			var/turf/user_loc = get_turf(user)
+			var/turf/pda_loc = get_turf(pda_device)
+			if(get_dist(user_loc,pda_loc) <= 1)
+				if(pda_device.mode == 105)
+					pda_device.attack_self(C)
+				else
+					pause(user)
+			else
+				user.unset_machine()
+				user << browse(null, "window=pda")
+				pause(user)
+		else
+			pause(user)
+	else
+		pause(user)
+
+/datum/pda_app/snake/proc/game_over(var/mob/user)
+	playsound(get_turf(pda_device), 'sound/misc/pda_snake_over.ogg', volume * 5, 0)
+	for(var/i=1;i <= 4;i++)
+		for(var/datum/snake/body/B in snake_game.snakeparts)
+			B.flicking = 1
+		snake_game.head.flicking = 1
+		game_update(user)
+		sleep(5)
+		for(var/datum/snake/body/B in snake_game.snakeparts)
+			B.flicking = 0
+		snake_game.head.flicking = 0
+		game_update(user)
+		sleep(5)
+
+	save_score()
+
+	//if(snake_game.snakeparts.len >= 179)
+	//TODO: achievement
+
+	ingame = 0
+
+	game_update(user)
+
+/datum/pda_app/snake/proc/pause(var/mob/user)
+	if(ingame)
+		if(!paused)
+			paused = 1
+		else
+			paused = 0
+			game_tick(user)
+
+/datum/pda_app/snake/proc/save_score()
+	var/list/templist = highscores[snake_game.level]
+	templist[labyrinth+1] = max(templist[labyrinth+1], snake_game.snakescore)
+
+	var/list/leaderlist = snake_station_highscores[snake_game.level]
+	var/list/winnerlist = snake_best_players[snake_game.level]
+
+	if(templist[labyrinth+1] > leaderlist[labyrinth+1])
+		leaderlist[labyrinth+1] = templist[labyrinth+1]
+		winnerlist[labyrinth+1] = pda_device.owner

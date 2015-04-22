@@ -148,6 +148,7 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode.announce()
 
+	init_PDAgames_leaderboard()
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -423,6 +424,23 @@ var/global/datum/controller/gameticker/ticker
 		if(F.name == name)
 			return F
 
+
+/datum/controller/gameticker/proc/init_PDAgames_leaderboard()
+	init_snake_leaderboard()
+
+/datum/controller/gameticker/proc/init_snake_leaderboard()
+	for(var/x=1;x<=9;x++)
+		snake_station_highscores += x
+		snake_station_highscores[x] = list()
+		snake_best_players += x
+		snake_best_players[x] = list()
+		var/list/templist1 = snake_station_highscores[x]
+		var/list/templist2 = snake_best_players[x]
+		for(var/y=1;y<=8;y++)
+			templist1 += y
+			templist1[y] = 0
+			templist2 += y
+			templist2[y] = "none"
 
 /datum/controller/gameticker/proc/declare_completion()
 	var/ai_completions = "<h1>Round End Information</h1><HR>"

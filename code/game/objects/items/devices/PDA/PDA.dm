@@ -1028,6 +1028,142 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							dat += {"<li>[mkr.name] ([mkr.x]/[mkr.y]) <a href='byond://?src=\ref[src];choice=removeMarker;rMark=[mkr.num]'>remove</a></li>"}
 						dat += {"</ul>"}
 
+			if (105)//Snake II
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				dat += {"<h4>Snake II  <a href='byond://?src=\ref[src];choice=snakeVolume;vChange=-1'><b>-</b></a><img src="snake_volume[app.volume].png"/><a href='byond://?src=\ref[src];choice=snakeVolume;vChange=1'><b>+</b></a></h4>"}
+				if(app)
+					dat += {"<br>
+						<div style="position: relative; left: 0; top: 0;">
+						<img src="snake_background.png" style="position: relative; top: 0; left: 0;"/>
+						"}
+					if(!app.ingame)
+						dat += {"<a href='byond://?src=\ref[src];choice=snakeNewGame'><img src="snake_newgame.png" style="position: absolute; top: 50px; left: 100px;"/></a>"}
+						dat += {"<img src="snake_highscore.png" style="position: absolute; top: 90px; left: 50px;"/>"}
+						var/list/templist = app.highscores[app.snake_game.level]
+						var/list/winnerlist = snake_station_highscores[app.snake_game.level]
+						dat += {"<img src="snake_[round(templist[app.labyrinth+1] / 1000) % 10].png" style="position: absolute; top: 90px; left: 210px;"/>"}
+						dat += {"<img src="snake_[round(templist[app.labyrinth+1] / 100) % 10].png" style="position: absolute; top: 90px; left: 226px;"/>"}
+						dat += {"<img src="snake_[round(templist[app.labyrinth+1] / 10) % 10].png" style="position: absolute; top: 90px; left: 242px;"/>"}
+						dat += {"<img src="snake_[templist[app.labyrinth+1] % 10].png" style="position: absolute; top: 90px; left: 258px;"/>"}
+						dat += {"<img src="snake_station.png" style="position: absolute; top: 130px; left: 50px;"/>"}
+						dat += {"<img src="snake_[round(winnerlist[app.labyrinth+1] / 1000) % 10].png" style="position: absolute; top: 130px; left: 178px;"/>"}
+						dat += {"<img src="snake_[round(winnerlist[app.labyrinth+1] / 100) % 10].png" style="position: absolute; top: 130px; left: 194px;"/>"}
+						dat += {"<img src="snake_[round(winnerlist[app.labyrinth+1] / 10) % 10].png" style="position: absolute; top: 130px; left: 210px;"/>"}
+						dat += {"<img src="snake_[winnerlist[app.labyrinth+1] % 10].png" style="position: absolute; top: 130px; left: 226px;"/>"}
+						var/list/snakebestlist = snake_best_players[app.snake_game.level]
+						dat += "<br>(Station Highscore held by <B>[snakebestlist[app.labyrinth+1]]</B>)"
+						dat += "<br>Set speed: "
+						for(var/x=1;x<=9;x++)
+							if(x == app.snake_game.level)
+								dat += "<B>[x]</B>, "
+							else
+								dat += "<a href='byond://?src=\ref[src];choice=snakeLevel;sLevel=[x]'>[x]</a>, "
+						dat += "<br>Set labyrinth: [!app.labyrinth ? "<b>None</b>" : "<a href='byond://?src=\ref[src];choice=snakeLabyrinth;lType=0'>None</a>"], "
+						for(var/x=1;x<=7;x++)
+							if(x == app.labyrinth)
+								dat += "<B>[x]</B>, "
+							else
+								dat += "<a href='byond://?src=\ref[src];choice=snakeLabyrinth;lType=[x]'>[x]</a>, "
+						dat += "<br>Gyroscope (orient yourself to control): "
+						if(app.snake_game.gyroscope)
+							dat += "<a href='byond://?src=\ref[src];choice=snakeGyro;gSet=0'>ON</a>"
+						else
+							dat +="<a href='byond://?src=\ref[src];choice=snakeGyro;gSet=1'>OFF</a>"
+					else
+						if(app.labyrinth)
+							dat += {"<img src="snake_maze[app.labyrinth].png" style="position: absolute; top: 0px; left: 0px;"/>"}
+						for(var/datum/snake/body/B in app.snake_game.snakeparts)
+							var/body_dir = ""
+							if(B.life == 1)
+								switch(B.dir)
+									if(EAST)
+										body_dir = "pda_snake_bodytail_east"
+									if(WEST)
+										body_dir = "pda_snake_bodytail_west"
+									if(NORTH)
+										body_dir = "pda_snake_bodytail_north"
+									if(SOUTH)
+										body_dir = "pda_snake_bodytail_south"
+							else if(B.life > 1)
+								if(B.corner)
+									switch(B.dir)
+										if(EAST)
+											switch(B.corner)
+												if(SOUTH)
+													body_dir = "pda_snake_bodycorner_eastsouth2"
+												if(NORTH)
+													body_dir = "pda_snake_bodycorner_eastnorth2"
+										if(WEST)
+											switch(B.corner)
+												if(SOUTH)
+													body_dir = "pda_snake_bodycorner_westsouth2"
+												if(NORTH)
+													body_dir = "pda_snake_bodycorner_westnorth2"
+										if(NORTH)
+											switch(B.corner)
+												if(EAST)
+													body_dir = "pda_snake_bodycorner_eastnorth"
+												if(WEST)
+													body_dir = "pda_snake_bodycorner_westnorth"
+										if(SOUTH)
+											switch(B.corner)
+												if(EAST)
+													body_dir = "pda_snake_bodycorner_eastsouth"
+												if(WEST)
+													body_dir = "pda_snake_bodycorner_westsouth"
+								else
+									switch(B.dir)
+										if(EAST)
+											body_dir = "pda_snake_body_east"
+										if(WEST)
+											body_dir = "pda_snake_body_west"
+										if(NORTH)
+											body_dir = "pda_snake_body_north"
+										if(SOUTH)
+											body_dir = "pda_snake_body_south"
+
+								if(B.isfull)
+									body_dir += "_full"
+							if(!B.flicking)
+								dat += {"<img src="[body_dir].png" style="position: absolute; top: [(B.y * 16 * -1) + 152]px; left: [B.x * 16 - 16]px;"/>"}
+
+						dat += {"<img src="pda_snake_egg.png" style="position: absolute; top: [(app.snake_game.next_egg.y * 16 * -1) + 152]px; left: [app.snake_game.next_egg.x * 16 - 16]px;"/>"}
+
+						if(app.snake_game.next_bonus.life > 0)
+							dat += {"<img src="pda_snake_bonus[app.snake_game.next_bonus.bonustype].png" style="position: absolute; top: [(app.snake_game.next_bonus.y * 16 * -1) + 152]px; left: [app.snake_game.next_bonus.x * 16 - 8]px;"/>"}
+							dat += {"<img src="pda_snake_bonus[app.snake_game.next_bonus.bonustype].png" style="position: absolute; top: [(180 * -1) + 152]px; left: [280 - 8]px;"/>"}
+							dat += {"<img src="snake_[round(app.snake_game.next_bonus.life / 10) % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [302 - 8]px;"/>"}
+							dat += {"<img src="snake_[app.snake_game.next_bonus.life % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [318 - 8]px;"/>"}
+
+						dat += {"<img src="snake_[round(app.snake_game.snakescore / 1000) % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [2 - 8]px;"/>"}
+						dat += {"<img src="snake_[round(app.snake_game.snakescore / 100) % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [18 - 8]px;"/>"}
+						dat += {"<img src="snake_[round(app.snake_game.snakescore / 10) % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [34 - 8]px;"/>"}
+						dat += {"<img src="snake_[app.snake_game.snakescore % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [50 - 8]px;"/>"}
+
+						var/head_dir = ""
+						switch(app.snake_game.head.dir)
+							if(EAST)
+								head_dir = "pda_snake_head_east"
+							if(WEST)
+								head_dir = "pda_snake_head_west"
+							if(NORTH)
+								head_dir = "pda_snake_head_north"
+							if(SOUTH)
+								head_dir = "pda_snake_head_south"
+						if(app.snake_game.head.open_mouth)
+							head_dir += "_open"
+						if(!app.snake_game.head.flicking)
+							dat += {"<img src="[head_dir].png" style="position: absolute; top: [(app.snake_game.head.y * 16 * -1) + 152]px; left: [app.snake_game.head.x * 16 - 16]px;"/>"}
+						if(app.paused)
+							dat += {"<a href='byond://?src=\ref[src];choice=snakeUnPause'><img src="snake_pause.png" style="position: absolute; top: 50px; left: 128px;"/></a>"}
+					dat += {"</div>"}
+
+					dat += {"<h5>Controls</h5>
+						<a href='byond://?src=\ref[src];choice=snakeUp'><img src="pda_snake_arrow_north.png"></a>
+						<br><a href='byond://?src=\ref[src];choice=snakeLeft'><img src="pda_snake_arrow_west.png"></a>
+						<a href='byond://?src=\ref[src];choice=snakeRight'><img src="pda_snake_arrow_east.png"></a>
+						<br><a href='byond://?src=\ref[src];choice=snakeDown'><img src="pda_snake_arrow_south.png"></a>
+						"}
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
 
@@ -1128,6 +1264,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("104")
 				mode = 104
 
+			if("105")
+				mode = 105
+
 			if("minimapMarker")
 				var/datum/pda_app/station_map/app = locate(/datum/pda_app/station_map) in applications
 				switch(href_list["mMark"])
@@ -1159,6 +1298,51 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/to_remove = text2num(href_list["rMark"])
 				var/datum/minimap_marker/mkr = app.markers[to_remove]
 				del(mkr)
+
+			if("snakeNewGame")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.ingame = 1
+				app.snake_game.game_start()
+				app.game_tick(usr)
+
+			if("snakeUp")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.lastinput = NORTH
+
+			if("snakeLeft")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.lastinput = WEST
+
+			if("snakeRight")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.lastinput = EAST
+
+			if("snakeDown")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.lastinput = SOUTH
+
+			if("snakeUnPause")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.pause(usr)
+
+			if("snakeLabyrinth")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.labyrinth = text2num(href_list["lType"])
+				app.snake_game.set_labyrinth(text2num(href_list["lType"]))
+
+			if("snakeLevel")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.level = text2num(href_list["sLevel"])
+
+			if("snakeGyro")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.gyroscope = text2num(href_list["gSet"])
+
+			if("snakeVolume")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.volume += text2num(href_list["vChange"])
+				app.volume = max(0,app.volume)
+				app.volume = min(6,app.volume)
 
 //MAIN FUNCTIONS===================================
 

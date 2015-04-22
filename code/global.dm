@@ -383,3 +383,8 @@ var/arena_rounds = 0
 var/arena_top_score = 0
 
 var/endgame_info_logged = 0
+
+//PDA games vars
+//Snake II leaderboard
+var/global/list/snake_station_highscores = list()
+var/global/list/snake_best_players = list()
