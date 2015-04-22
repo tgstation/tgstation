@@ -36,7 +36,7 @@
 			user.visible_message("<span class='warning'>\The [M] has been smothered with \the [src] by \the [user]!</span>", "<span class='warning'>You smother \the [M] with \the [src]!</span>", "You hear some struggling and muffled cries of surprise")
 			src.reagents.reaction(M, TOUCH)
 			spawn(5) src.reagents.clear_reagents()
-			return
+			return 1
 	else
 		..()
 
@@ -50,6 +50,10 @@
 	if(do_after(user, 50))
 		if(target)
 			target.clean_blood()
+			if(isturf(target))
+				for(var/obj/effect/O in target)
+					if(istype(O,/obj/effect/rune) || istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay))
+						qdel(O)
 			reagents.remove_any(1)
 			user.visible_message("<span class='notice'>[user] finishes wiping down \the [target].</span>", "<span class='notice'>You have finished wiping down \the [target]!</span>")
 	return
