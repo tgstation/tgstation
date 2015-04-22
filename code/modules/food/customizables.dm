@@ -119,7 +119,7 @@
 			if(S.filling_color != "#FFFFFF")
 				I.color = S.filling_color
 			else
-				I.color = AverageColor(build_composite_icon(S))
+				I.color = AverageColor(build_composite_icon(S), 1, 1)
 			if(src.stackIngredients)
 				I.pixel_x = rand(-1,1)
 				I.pixel_y = (i*2)+1
