@@ -44,13 +44,13 @@
 
 	else if(istype(M, /mob/living/carbon/human)) //user feeding M the condiment. M also being human
 
-		user.visible_message("<span class='danger'>[user] attempts to feed [M] \the [src]</span>", \
+		M.visible_message("<span class='danger'>[user] attempts to feed [M] \the [src]</span>", \
 		"<span class='danger'>[user] attempts to feed you \the [src]</span>")
 
 		if(!do_mob(user, M))
 			return
 
-		user.visible_message("<span class='danger'>[user] feeds [M] \the [src]</span>", \
+		M.visible_message("<span class='danger'>[user] feeds [M] \the [src]</span>", \
 		"<span class='danger'>[user] feeds you \the [src]</span>")
 
 		//Logging shit
@@ -77,7 +77,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , flag)
-
+	if(!flag || ismob(target)) return 0
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume) //Nothing in the dispenser
