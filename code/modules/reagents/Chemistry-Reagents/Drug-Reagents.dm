@@ -36,7 +36,6 @@ datum/reagent/drug/nicotine
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
-	overdose_threshold = 35
 	addiction_threshold = 30
 
 datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
@@ -46,15 +45,6 @@ datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
 	M.AdjustStunned(-1)
 	M.adjustStaminaLoss(-0.5*REM)
 	..()
-	return
-
-datum/reagent/drug/nicotine/overdose_process(var/mob/living/M as mob)
-	if(prob(20))
-		M << "You feel like you smoked too much."
-	M.adjustToxLoss(0.5*REM)
-	M.adjustOxyLoss(0.5*REM)
-	..()
-	return
 
 datum/reagent/drug/crank
 	name = "Crank"
@@ -73,32 +63,30 @@ datum/reagent/drug/crank/on_mob_life(var/mob/living/M as mob)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
 	..()
-	return
+
 datum/reagent/drug/crank/overdose_process(var/mob/living/M as mob)
 	M.adjustBrainLoss(2*REM)
 	M.adjustToxLoss(2*REM)
 	M.adjustBruteLoss(2*REM)
 	..()
-	return
 
 datum/reagent/drug/crank/addiction_act_stage1(var/mob/living/M as mob)
 	M.adjustBrainLoss(5*REM)
 	..()
-	return
+
 datum/reagent/drug/crank/addiction_act_stage2(var/mob/living/M as mob)
 	M.adjustToxLoss(5*REM)
 	..()
-	return
+
 datum/reagent/drug/crank/addiction_act_stage3(var/mob/living/M as mob)
 	M.adjustBruteLoss(5*REM)
 	..()
-	return
+
 datum/reagent/drug/crank/addiction_act_stage4(var/mob/living/M as mob)
 	M.adjustBrainLoss(5*REM)
 	M.adjustToxLoss(5*REM)
 	M.adjustBruteLoss(5*REM)
 	..()
-	return
 
 /datum/reagent/drug/krokodil
 	name = "Krokodil"

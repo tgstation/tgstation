@@ -124,9 +124,6 @@
 				unEquip(r_store)
 				unEquip(l_store)
 
-/mob/living/carbon/alien/humanoid/reagent_check(var/datum/reagent/R)
-	return 0
-
 /mob/living/carbon/alien/humanoid/cuff_resist(obj/item/I)
 	playsound(src, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when starting to break free
 	..(I, cuff_break = 1)
