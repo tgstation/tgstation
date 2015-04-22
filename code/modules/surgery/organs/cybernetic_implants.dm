@@ -333,7 +333,7 @@
 			spawn(30)
 				if(prob(90) && owner.getOxyLoss())
 					owner.adjustOxyLoss(-3)
-					revive_cost += 0.2
+					revive_cost += 0.1
 				if(prob(75) && owner.getBruteLoss())
 					owner.adjustBruteLoss(-1)
 					revive_cost += 0.5

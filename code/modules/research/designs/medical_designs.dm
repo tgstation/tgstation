@@ -122,7 +122,7 @@ datum/design/bluespacebodybag
 	name = "X-Ray implant"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
-	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 7, "magnets" = 5)
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 6, "magnets" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 600, "$gold" = 600, "$plasma" = 1000, "$uranium" = 1000, "$diamond" = 2000)
 	build_path = /obj/item/cybernetic_implant/eyes/xray

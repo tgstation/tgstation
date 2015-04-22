@@ -663,13 +663,13 @@ var/list/uplink_items = list()
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned."
 	item = /obj/item/cybernetic_implant/brain/anti_stun
-	cost = 7
+	cost = 12
 
 /datum/uplink_item/cyber_implants/antidrop
 	name = "Anti-Drop Implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping."
 	item = /obj/item/cybernetic_implant/brain/anti_drop
-	cost = 7
+	cost = 8
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
@@ -687,7 +687,7 @@ var/list/uplink_items = list()
 	name = "Cybernetic Implants Bundle"
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants."
 	item = /obj/item/weapon/storage/box/cyber_implants
-	cost = 25
+	cost = 40
 
 // POINTLESS BADASSERY
 
