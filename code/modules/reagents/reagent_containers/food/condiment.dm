@@ -42,7 +42,7 @@
 		playsound(M.loc,'sound/items/drink.ogg', rand(10, 50), 1)
 		return 1
 
-	else if(istype(M, /mob/living/carbon/human)) //user feeding M the condiment. M also being human
+	else if(istype(M, /mob/living/carbon)) //user feeding M the condiment. M also being carbon
 
 		M.visible_message("<span class='danger'>[user] attempts to feed [M] \the [src]</span>", \
 		"<span class='danger'>[user] attempts to feed you \the [src]</span>")
