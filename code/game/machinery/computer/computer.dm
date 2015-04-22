@@ -109,7 +109,7 @@
 	playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 	user.visible_message(	"[user] begins to unscrew \the [src]'s monitor.",
 							"You begin to unscrew the monitor...")
-	if(do_after(user, 20))
+	if (do_after(user, 20) && circuit)
 		var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 		var/obj/item/weapon/circuitboard/M = new circuit( A )
 		A.circuit = M
@@ -125,8 +125,12 @@
 			user << "<span class='notice'>\icon[src] You disconnect the monitor.</span>"
 			A.state = 4
 			A.icon_state = "4"
+		circuit = null // Used by the busy check to avoid multiple 'You disconnect the monitor' messages
 		Destroy(src)
 		return 1
+	else
+		return 1 // Needed, otherwise the computer UI will pop open
+
 	return
 
 /obj/machinery/computer/attackby(I as obj, user as mob)

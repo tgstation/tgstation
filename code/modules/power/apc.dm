@@ -359,7 +359,7 @@
 				return
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			user << "You are trying to remove the power control board..." //lpeters - fixed grammar issues
-			if(do_after(user, 50))
+			if (do_after(user, 50) && opened && !terminal && has_electronics == 1)
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
 					user.visible_message(\
@@ -449,7 +449,7 @@
 			user << "Nothing happens."
 		else
 			flick("apc-spark", src)
-			if (do_after(user,6))
+			if (do_after(user, 6) && !opened && !wiresexposed && !(stat & (BROKEN|MAINT)) && !emagged)
 				if(prob(50))
 					emagged = 1
 					locked = 0
@@ -457,18 +457,25 @@
 					update_icon()
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
-	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics!=2)
-		if (src.loc:intact)
+	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics != 2)
+		var/turf/T = get_turf(src)
+
+		// APCs are actually on the same tile as their terminal
+		if (T != get_turf(user))
+			user << "<span class='warning'>You can't wire the APC from there!</span>"
+			return
+
+		if (T.intact)
 			user << "<span class='warning'>You must remove the floor plating in front of the APC first.</span>"
 			return
+
 		var/obj/item/stack/cable_coil/C = W
 		if(C.amount < 10)
 			user << "<span class='warning'>You need more wires.</span>"
 			return
 		user << "You start adding cables to the APC frame..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20) && C.amount >= 10)
-			var/turf/T = get_turf(src)
+		if (do_after(user, 20) && !T.intact && opened && !terminal && has_electronics != 2 && C.amount >= 10)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -481,13 +488,14 @@
 				"You add cables to the APC frame.")
 			make_terminal()
 			terminal.connect_to_network()
-	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
-		if (src.loc:intact)
+	else if (istype(W, /obj/item/weapon/wirecutters) && opened && terminal && has_electronics!=2)
+		var/turf/T = get_turf(src)
+		if (T.intact)
 			user << "<span class='warning'>You must remove the floor plating in front of the APC first.</span>"
 			return
 		user << "You begin to cut the cables..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 50))
+		if (do_after(user, 50) && opened && terminal && has_electronics != 2 && !T.intact)
 			if (prob(50) && electrocute_mob(usr, terminal.get_powernet(), terminal))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
@@ -501,7 +509,7 @@
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user << "You trying to insert the power control board into the frame..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 10))
+		if (do_after(user, 10) && opened && has_electronics == 0 && !((stat & BROKEN) || malfhack))
 			has_electronics = 1
 			user << "You place the power control board inside the frame."
 			del(W)
@@ -515,7 +523,7 @@
 			return
 		user << "You start welding the APC frame..."
 		playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50))
+		if (do_after(user, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))

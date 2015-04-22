@@ -81,13 +81,12 @@
 
 			user << "<span class='notice'>You start adding cable to the SMES.</span>"
 			playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
-			if(do_after(user,100))
-				terminal = new /obj/machinery/power/terminal(user.loc)
-				terminal.dir = user.dir
+			if (do_after(user, 100) && panel_open && !terminal && !T.intact)
+				terminal = new /obj/machinery/power/terminal(get_turf(user))
+				terminal.dir = dirs
 				terminal.master = src
 				return 0
 			else
-				user << "<span class='warning'>You moved!</span>"
 				return 1
 
 	user << "<span class='warning'>You can't wire the SMES like that!</span>"
@@ -120,7 +119,7 @@
 				return
 			user << "You begin to cut the cables..."
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-			if(do_after(user, 50))
+			if (do_after(user, 50) && panel_open && terminal && !T.intact)
 				if (prob(50) && electrocute_mob(usr, terminal.get_powernet(), terminal))
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 					s.set_up(5, 1, src)
