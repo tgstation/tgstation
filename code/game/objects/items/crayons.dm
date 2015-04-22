@@ -88,6 +88,7 @@
 
 /obj/item/toy/crayon/spraycan
 	icon_state = "spraycan_cap"
+	item_state = "spraycan"
 	desc = "A metallic container containing tasty paint."
 	var/capped = 1
 	instant = 1
@@ -156,4 +157,5 @@
 	desc = "A suspicious-looking spraycan modified to use special paint used by gangsters to mark territory."
 	icon_state = "spraycan_gang_cap"
 	gang = 1
+	uses = 15
 	instant = -1
