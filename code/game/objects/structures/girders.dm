@@ -23,11 +23,10 @@
 			if(do_after(user, 40, target = src))
 				if( !WT.isOn() )
 					return
-				if(state == 1)
-					user << "<span class='notice'>You disassemble the girder.</span>"
-					var/obj/item/stack/sheet/metal/M = new (loc, 2)
-					M.add_fingerprint(user)
-					qdel(src)
+				user << "<span class='notice'>You disassemble the girder.</span>"
+				var/obj/item/stack/sheet/metal/M = new (loc, 2)
+				M.add_fingerprint(user)
+				qdel(src)
 
 	else if(istype(W, /obj/item/weapon/wrench) && state == GIRDER_DISPLACED)
 		if (!istype(src.loc, /turf/simulated/floor))

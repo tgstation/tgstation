@@ -238,16 +238,7 @@
 	if(reagents)
 		reagents.metabolize(src)
 
-/mob/living/carbon/handle_blood()
-	return
-
-/mob/living/carbon/handle_random_events()
-	return
-
 /mob/living/carbon/proc/handle_heart()
-	return
-
-/mob/living/carbon/handle_environment(var/datum/gas_mixture/environment)
 	return
 
 /mob/living/carbon/handle_stomach()
@@ -505,3 +496,20 @@
 					healths.icon_state = "health6"
 		else
 			healths.icon_state = "health7"
+
+
+//used in human and monkey handle_environment()
+/mob/living/carbon/proc/natural_bodytemperature_stabilization()
+	var/body_temperature_difference = 310.15 - bodytemperature
+	switch(bodytemperature)
+		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
+			if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
+				nutrition -= 2
+			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
+		if(260.15 to 310.15)
+			bodytemperature += max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
+		if(310.15 to 360.15)
+			bodytemperature += min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
+		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
+			//We totally need a sweat system cause it totally makes sense...~
+			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers

@@ -36,13 +36,6 @@
 		else
 			healths.icon_state = "health7"
 
-
-/mob/living/carbon/alien/humanoid/hunter/handle_environment()
-	if(m_intent == "run" || resting)
-		..()
-	else
-		adjustToxLoss(-heal_rate)
-
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
 	. = -1		//hunters are sanic
 	. += ..()	//but they still need to slow down on stun
