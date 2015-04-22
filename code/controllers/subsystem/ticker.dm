@@ -17,6 +17,7 @@ var/datum/subsystem/ticker/ticker
 	var/event = 0
 
 	var/login_music							//music played in pregame lobby
+	var/round_end_sound						//music/jingle played when the world reboots
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
@@ -49,6 +50,8 @@ var/datum/subsystem/ticker/ticker
 	login_music = pickweight(list('sound/ambience/title2.ogg' = 49, 'sound/ambience/title1.ogg' = 49, 'sound/ambience/clown.ogg' = 2)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
+
+	round_end_sound = pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')
 
 /datum/subsystem/ticker/Initialize()
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()

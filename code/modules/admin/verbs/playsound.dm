@@ -36,6 +36,20 @@ var/sound/admin_sound
 	playsound(get_turf(src.mob), S, 50, 0, 0)
 	feedback_add_details("admin_verb","PLS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/set_round_end_sound(S as sound)
+	set category = "Fun"
+	set name = "Set Round End Sound"
+	if(!check_rights(R_SOUNDS))	return
+
+	if(ticker)
+		ticker.round_end_sound = S
+	else
+		return
+
+	log_admin("[key_name(src)] set the round end sound to [S]")
+	message_admins("[key_name_admin(src)] set the round end sound to [S]")
+	feedback_add_details("admin_verb","SRES") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/stop_sounds()
 	set category = "Debug"
 	set name = "Stop Sounds"
