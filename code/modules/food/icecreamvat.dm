@@ -24,8 +24,8 @@
 
 /obj/machinery/cooking/icemachine/proc/generateName(reagentName)
 	. = pick("Mr. ","Mrs. ","Super ","Happy ","Whippy ")
-	. += pick("Whippy ","Slappy ","Creamy ","Dippy ","Swirly ","Swirl ")
-	. += reagentName
+	. += pick("Whippy","Slappy","Creamy","Dippy","Swirly","Swirl")
+	if (reagentName) . += " [reagentName]"
 	return
 
 // Processing //////////////////////////////////////////////////

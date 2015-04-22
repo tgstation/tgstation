@@ -146,7 +146,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W,/obj/item/weapon/pen)) //Renaming food
-		var/n_name = copytext(sanitize(input(user, "What would you like to name this dish?", "Food Renaming", null) as text|null), 1, MAX_NAME_LEN)
+		var/n_name = copytext(sanitize(input(user, "What would you like to name this dish?", "Food Renaming", null) as text|null), 1, MAX_NAME_LEN*3)
 		if(n_name && Adjacent(user) && !user.stat)
 			name = "[n_name]"
 		return
@@ -505,11 +505,13 @@
 	_color = "yellow"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/flour))
-		new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-		user << "You make some dough."
-		del(W)
-		del(src)
+	if (istype(W, /obj/item/weapon/reagent_containers))
+		if(W.reagents.amount_cache.len == 1 && W.reagents.has_reagent("flour", 5))
+			W.reagents.remove_reagent("flour",5)
+			new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
+			user << "You make some dough."
+			qdel(src)
+			return 1
 	else if (istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = W
 		var/clr = C.colourName
@@ -521,15 +523,6 @@
 		user << "<span class='notice'>You colour [src] [clr].</span>"
 		icon_state = "egg-[clr]"
 		_color = clr
-	else
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/flour/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/egg))
-		new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-		user << "You make some dough."
-		del(W)
-		del(src)
 	else
 		..()
 
@@ -2345,7 +2338,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel
 	name = "cheese wheel"
-	desc = "A big wheel of delcious Cheddar."
+	desc = "A big wheel of delicious Cheddar."
 	icon_state = "cheesewheel"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	slices_num = 5
@@ -3004,7 +2997,7 @@
 		reagents.add_reagent("nutriment", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/bun
-	name = "bun"
+	name = "burger bun"
 	desc = "A base for any self-respecting burger."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "bun"
