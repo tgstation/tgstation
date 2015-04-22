@@ -163,13 +163,9 @@
 
 /obj/effect/beam/proc/disconnect(var/re_emit=1)
 	var/obj/effect/beam/_master=get_master()
-	beam_testing("Got [_master] [_master.target ? "our target is [_master.target]" : "our target is none"]")
 	if(_master.target)
-		var/removedm = _master.target.on_moved.Remove(_master.targetMoveKey)
-
-		var/removedd = _master.target.on_destroyed.Remove(_master.targetDestroyKey)
-
-		beam_testing("[removedm ? "Successfully" : "Failed to"] remove key from on_moved; [removedd ? "Successfully" : "Failed to"] remove key from on_destroyed; ")
+		_master.target.on_moved.Remove(_master.targetMoveKey)
+		_master.target.on_destroyed.Remove(_master.targetDestroyKey)
 		_master.target.beam_disconnect(_master)
 		_master.target=null
 		_master.targetMoveKey=null
