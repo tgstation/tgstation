@@ -152,6 +152,11 @@ proc/getFlatIcon(atom/A, dir, cache=1) // 1 = use cache, 2 = override cache, 0 =
 		if(isobserver(A))
 			add.ChangeOpacity(0.5)
 
+		// Apply any color or alpha settings
+		if(I:color || I:alpha != 255)
+			var/rgba = (I:color || "#FFFFFF") + copytext(rgb(0,0,0,I:alpha), 8)
+			add.Blend(rgba, ICON_MULTIPLY)
+
 		// Find the new dimensions of the flat icon to fit the added overlay
 		addX1 = min(flatX1, I:pixel_x+1)
 		addX2 = max(flatX2, I:pixel_x+add.Width())
