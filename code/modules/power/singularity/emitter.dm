@@ -122,7 +122,7 @@
 	..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (powered && get_powernet() && avail(active_power_usage))
+	if (powered && get_powernet() && avail(active_power_usage) && active)
 		icon_state = "emitter_+a"
 	else
 		icon_state = "emitter"

@@ -36,10 +36,10 @@ var/global/list/ghdel_profiling = list()
 	// EVENTS
 	/////////////////////////////
 	// On Destroy()
-	var/event/on_destroyed = new()
+	var/event/on_destroyed
 
 	// When this object moves. (args: loc)
-	var/event/on_moved = new()
+	var/event/on_moved
 
 	var/labeled //Stupid and ugly way to do it, but the alternative would probably require rewriting everywhere a name is read.
 	var/min_harm_label = 0 //Minimum langth of harm-label to be effective. 0 means it cannot be harm-labeled. If any label should work, set this to 1 or 2.
@@ -106,6 +106,8 @@ var/global/list/ghdel_profiling = list()
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
 	INVOKE_EVENT(on_destroyed, list()) // No args.
+	on_moved.holder = null
+	on_destroyed.holder = null
 	if(istype(beams, /list) && beams.len) beams.len = 0
 	/*if(istype(beams) && beams.len)
 		for(var/obj/effect/beam/B in beams)
@@ -117,6 +119,8 @@ var/global/list/ghdel_profiling = list()
 	*/
 
 /atom/New()
+	on_destroyed = new("owner"=src)
+	on_moved = new("owner"=src)
 	. = ..()
 	AddToProfiler()
 

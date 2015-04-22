@@ -18,7 +18,7 @@
 
 #ifdef BEAM_DEBUG
 # warning SOME ASSHOLE FORGOT TO COMMENT BEAM_DEBUG BEFORE COMMITTING
-# define beam_testing(x) testing(x)
+# define beam_testing(x) testing("(Line: [__LINE__]) [x]")
 #else
 # define beam_testing(x)
 #endif
@@ -65,11 +65,18 @@
 		master.target_moved(args)
 		return
 
+	var/event/E = args["event"]
 	if(!targetMoveKey)
 		beam_testing("Uh oh, got a target_moved when we weren't listening for one.")
+		E.handlers.Remove("\ref[src]:target_moved")
 		return
 
 	var/turf/T = args["loc"]
+
+	if(E.holder != target)
+		beam_testing("Received erroneous event, killing")
+		E.handlers.Remove("\ref[src]:target_moved")
+		return
 	beam_testing("Target now at [T.x],[T.y],[T.z]")
 	if(T != targetContactLoc && T != loc)
 		beam_testing("Disconnecting: Target moved.")
@@ -83,10 +90,16 @@
 		master.target_destroyed(args)
 		return
 
+	var/event/E = args["event"]
+
 	if(!targetDestroyKey)
+		E.handlers.Remove("\ref[src]:target_destroyed")
 		beam_testing("Uh oh, got a target_destroyed when we weren't listening for one.")
 		return
 
+	if(E.holder != target)
+		E.handlers.Remove("\ref[src]:target_destroyed")
+		return
 	beam_testing("\ref[src] Disconnecting: \ref[target] Target destroyed.")
 	// Disconnect and re-emit.
 	disconnect()
@@ -150,9 +163,13 @@
 
 /obj/effect/beam/proc/disconnect(var/re_emit=1)
 	var/obj/effect/beam/_master=get_master()
+	beam_testing("Got [_master] [_master.target ? "our target is [_master.target]" : "our target is none"]")
 	if(_master.target)
-		_master.target.on_moved.Remove(_master.targetMoveKey)
-		_master.target.on_destroyed.Remove(_master.targetDestroyKey)
+		var/removedm = _master.target.on_moved.Remove(_master.targetMoveKey)
+
+		var/removedd = _master.target.on_destroyed.Remove(_master.targetDestroyKey)
+
+		beam_testing("[removedm ? "Successfully" : "Failed to"] remove key from on_moved; [removedd ? "Successfully" : "Failed to"] remove key from on_destroyed; ")
 		_master.target.beam_disconnect(_master)
 		_master.target=null
 		_master.targetMoveKey=null
@@ -223,10 +240,12 @@
 
 	if(!stepped)
 		// Reset bumped
+		density = 1
 		bumped=0
 
 		step(src, dir) // Move.
 
+		density = 0
 		if(bumped)
 			//BEAM_DEL(src)
 			qdel(src)

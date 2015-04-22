@@ -13,6 +13,11 @@
  */
 /event
 	var/list/handlers=list() // List of [\ref, Function]
+	var/atom/holder
+
+/event/New(loc, owner)
+	..()
+	holder = owner
 
 /event/proc/Add(var/objectRef,var/procName)
 	var/key="\ref[objectRef]:[procName]"
@@ -20,7 +25,7 @@
 	return key
 
 /event/proc/Remove(var/key)
-	handlers.Remove(handlers[key])
+	return handlers.Remove(key)
 
 /event/proc/Invoke(var/list/args)
 	if(handlers.len==0)
@@ -36,4 +41,5 @@
 		if(objRef == null)
 			handlers.Remove(handler)
 			continue
+		args["event"] = src
 		call(objRef,procName)(args)
