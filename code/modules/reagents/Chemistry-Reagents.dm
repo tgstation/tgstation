@@ -172,8 +172,6 @@
 /datum/reagent/blood/on_update(var/atom/A)
 	if(data["blood_colour"])
 		color = data["blood_colour"]
-	if(data["blood_type"]==null)
-		data["blood_type"] == "A+"
 	return ..()
 
 /datum/reagent/blood/reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place

@@ -84,8 +84,8 @@
 	icon_state = "empty"
 	New()
 		..()
-		blood_type == null
-		remove_reagent("blood", 200)
+		blood_type = null
+		reagents.clear_reagents()
 		update_icon()
 
 /obj/item/weapon/reagent_containers/blood/chemo

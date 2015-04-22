@@ -66,6 +66,7 @@
 			setGender(pick(MALE, FEMALE))
 		dna = new /datum/dna( null )
 		dna.real_name = real_name
+		dna.b_type = pick("A+","A-","AB+","AB-","O+","O-")
 		dna.ResetSE()
 		dna.ResetUI()
 		//dna.uni_identity = "00600200A00E0110148FC01300B009"
