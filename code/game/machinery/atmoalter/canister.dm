@@ -112,7 +112,7 @@
 		if (src.holding)
 			src.holding.loc = src.loc
 			src.holding = null
-
+		INVOKE_EVENT(on_destroyed, list())
 		return 1
 	else
 		return 1
@@ -122,6 +122,8 @@
 		return
 
 	..()
+
+	handle_beams() //emitter beams
 
 	if(valve_open)
 		var/datum/gas_mixture/environment
@@ -438,3 +440,30 @@
 		return 1
 	busy = 0
 	return 0
+
+/obj/machinery/portable_atmospherics/canister/apply_beam_damage(var/obj/effect/beam/B)
+	var/lastcheck=last_beamchecks["\ref[B]"]
+
+	var/damage = ((world.time - lastcheck)/10)  * (B.get_damage()/2)
+
+	// Actually apply damage
+	health -= damage
+
+	// Update check time.
+	last_beamchecks["\ref[B]"]=world.time
+
+// Apply connect damage
+/obj/machinery/portable_atmospherics/canister/beam_connect(var/obj/effect/beam/B)
+	..()
+	last_beamchecks["\ref[B]"]=world.time
+
+/obj/machinery/portable_atmospherics/canister/beam_disconnect(var/obj/effect/beam/B)
+	..()
+	apply_beam_damage(B)
+	last_beamchecks.Remove("\ref[B]") // RIP
+
+/obj/machinery/portable_atmospherics/canister/handle_beams()
+	// New beam damage code (per-tick)
+	for(var/obj/effect/beam/B in beams)
+		apply_beam_damage(B)
+	healthcheck()

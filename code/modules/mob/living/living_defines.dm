@@ -52,9 +52,6 @@
 	//autoignition_temperature=0
 	//fire_fuel=0
 
-	// For beam damage stuff
-	var/list/last_beamchecks=list() // world.time of the last time a beam was checked (for fractional damage)
-
 	//
 	var/list/callOnLife = list() //
 

@@ -78,6 +78,7 @@
 	for(var/atom/movable/AM in src.loc)
 		if(insert(AM) == -1) // limit reached
 			break
+		INVOKE_EVENT(AM.on_moved,list("loc"=src))
 
 /obj/structure/closet/proc/open()
 	if(src.opened)
@@ -86,15 +87,16 @@
 	if(!src.can_open())
 		return 0
 
-	src.dump_contents()
 
 	src.icon_state = src.icon_opened
 	src.opened = 1
+	src.density = 0
+	src.dump_contents()
+	INVOKE_EVENT(on_destroyed, list())
 	if(istype(src, /obj/structure/closet/body_bag))
 		playsound(get_turf(src), 'sound/items/zip.ogg', 15, 1, -3)
 	else
 		playsound(get_turf(src), 'sound/machines/click.ogg', 15, 1, -3)
-	density = 0
 	return 1
 
 /obj/structure/closet/proc/insert(var/atom/movable/AM)
@@ -166,6 +168,8 @@
 	else
 		playsound(get_turf(src), 'sound/machines/click.ogg', 15, 1, -3)
 	density = 1
+	for(var/obj/effect/beam/B in loc)
+		B.Crossed(src)
 	return 1
 
 /obj/structure/closet/proc/toggle()

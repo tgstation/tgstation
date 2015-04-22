@@ -111,9 +111,12 @@
 		return
 	beam_testing("Bumped by [AM]")
 	am_connector=1
-	connect_to(AM)
-	//BEAM_DEL(src)
+	var/obj/effect/beam/OB = master
+	if(!OB) OB = src
 	qdel(src)
+	OB.connect_to(AM)
+	//BEAM_DEL(src)
+	
 
 /obj/effect/beam/proc/get_master()
 	var/master_ref = "\ref[master]"
@@ -137,12 +140,13 @@
 	if(BM.target)
 		beam_testing("\ref[BM] - Disconnecting [BM.target]: target changed.")
 		BM.disconnect(0)
-	AM.beam_connect(BM)
 	BM.target=AM
 	BM.targetMoveKey    = AM.on_moved.Add(BM,    "target_moved")
 	BM.targetDestroyKey = AM.on_destroyed.Add(BM,"target_destroyed")
 	BM.targetContactLoc = AM.loc
 	beam_testing("\ref[BM] - Connected to [AM]")
+	AM.beam_connect(BM)
+
 
 /obj/effect/beam/blob_act()
 	// Act like Crossed.
@@ -190,9 +194,10 @@
 
 	beam_testing(" Connecting!")
 	am_connector=1
-	connect_to(AM)
-	//BEAM_DEL(src)
+	var/obj/effect/beam/OB = master
+	if(!OB) OB = src
 	qdel(src)
+	OB.connect_to(AM)
 
 /obj/effect/beam/proc/HasSource(var/atom/source)
 	return source in sources
@@ -208,22 +213,25 @@
 
 	if(_range==-1)
 #ifdef BEAM_DEBUG
-		var/str_sources=text2list(sources,", ") // This will not work as an embedded statement.
+		var/str_sources=list2text(sources,", ") // This will not work as an embedded statement.
 		beam_testing("\ref[src] - emit(), sources=[str_sources]")
 #endif
 		_range=max_range
 
 	if(next && next.loc)
+		beam_testing("\ref[src] we have next \ref[next]")
 		next.emit(sources,_range-1)
 		return
 
 	if(!loc)
 		//BEAM_DEL(src)
+		beam_testing("\ref[src] no loc")
 		qdel(src)
 		return
 
 	if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 		//BEAM_DEL(src)
+		beam_testing("\ref[src] end of world")
 		qdel(src)
 		return
 
@@ -243,6 +251,7 @@
 
 		density = 0
 		if(bumped)
+			beam_testing("\ref[src] Bumped")
 			//BEAM_DEL(src)
 			qdel(src)
 			return
@@ -250,6 +259,7 @@
 		stepped=1
 
 		if(_range-- < 1)
+			beam_testing("\ref[src] ran out")
 			//BEAM_DEL(src)
 			qdel(src)
 			return
@@ -335,4 +345,7 @@
 	..()
 
 /obj/effect/beam/singularity_pull()
+	return
+
+/obj/effect/beam/ex_act(severity)
 	return

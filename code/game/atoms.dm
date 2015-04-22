@@ -31,7 +31,7 @@ var/global/list/ghdel_profiling = list()
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
 
-	var/list/beams=list()
+	var/list/beams
 
 	// EVENTS
 	/////////////////////////////
@@ -46,14 +46,23 @@ var/global/list/ghdel_profiling = list()
 	var/harm_labeled = 0 //Length of current harm-label. 0 if it doesn't have one.
 	var/list/harm_label_examine //Messages that appears when examining the item if it is harm-labeled. Message in position 1 is if it is harm-labeled but the label is too short to work, while message in position 2 is if the harm-label works.
 	//var/harm_label_icon_state //Makes sense to have this, but I can't sprite. May be added later.
+	var/list/last_beamchecks // timings for beam checks.
 
 /atom/proc/beam_connect(var/obj/effect/beam/B)
+	if(!last_beamchecks) last_beamchecks = list()
+	if(!beams) beams = list()
 	if(!(B in beams))
 		beams.Add(B)
 	return 1
 
 /atom/proc/beam_disconnect(var/obj/effect/beam/B)
 	beams.Remove(B)
+
+/atom/proc/apply_beam_damage(var/obj/effect/beam/B)
+	return 1
+
+/atom/proc/handle_beams()
+	return 1
 
 /atom/proc/throw_impact(atom/hit_atom, var/speed)
 	if(istype(hit_atom,/mob/living))

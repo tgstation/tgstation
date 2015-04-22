@@ -12,8 +12,6 @@
 	var/brute_resist = 4
 	var/fire_resist = 1
 
-	var/list/last_beamchecks=list()
-
 	// A note to the beam processing shit.
 	var/custom_process=0
 
@@ -57,7 +55,7 @@
 		if(!custom_process && src in processing_objects)
 			processing_objects.Remove(src)
 
-/obj/effect/blob/proc/apply_beam_damage(var/obj/effect/beam/B)
+/obj/effect/blob/apply_beam_damage(var/obj/effect/beam/B)
 	var/lastcheck=last_beamchecks["\ref[B]"]
 
 	// Standard damage formula / 2
@@ -69,14 +67,14 @@
 	// Update check time.
 	last_beamchecks["\ref[B]"]=world.time
 
-/obj/effect/blob/proc/process_beams()
+/obj/effect/blob/handle_beams()
 	// New beam damage code (per-tick)
 	for(var/obj/effect/beam/B in beams)
 		apply_beam_damage(B)
 	update_icon()
 
 /obj/effect/blob/process()
-	process_beams()
+	handle_beams()
 	Life()
 	return
 

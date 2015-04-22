@@ -71,7 +71,7 @@
 	apply_beam_damage(B)
 	last_beamchecks.Remove("\ref[B]") // RIP
 
-/mob/living/proc/handle_beams()
+/mob/living/handle_beams()
 	if(flags & INVULNERABLE)
 		return
 	// New beam damage code (per-tick)
@@ -110,7 +110,7 @@
 	else
 		dust()
 
-/mob/living/proc/apply_beam_damage(var/obj/effect/beam/B)
+/mob/living/apply_beam_damage(var/obj/effect/beam/B)
 	var/lastcheck=last_beamchecks["\ref[B]"]
 
 	// Figure out how much damage to deal.

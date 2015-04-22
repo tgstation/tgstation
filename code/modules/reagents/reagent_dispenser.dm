@@ -137,6 +137,18 @@
 
 	return ..()
 
+/obj/structure/reagent_dispensers/fueltank/beam_connect(var/obj/effect/beam/B)
+	..()
+	apply_beam_damage(B)
+
+
+/obj/structure/reagent_dispensers/fueltank/beam_disconnect(var/obj/effect/beam/B)
+	..()
+	apply_beam_damage(B)
+
+/obj/structure/reagent_dispensers/fueltank/apply_beam_damage(var/obj/effect/beam/B)
+	if(isturf(get_turf(src)) && B.get_damage() >= 15)
+		explode()
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
@@ -162,7 +174,7 @@
 	else
 		explosion(src.loc,-1,1,2)
 	if(src)
-		del(src)
+		qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/New()
 	. = ..()

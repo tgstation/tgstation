@@ -254,7 +254,7 @@
 	update_nearby_tiles()
 	//update_freelook_sight()
 
-	if(operating)
+	if(operating == 1)
 		operating = 0
 
 	return 1
