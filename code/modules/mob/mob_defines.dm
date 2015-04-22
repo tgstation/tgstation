@@ -257,3 +257,5 @@
 	var/origin_x = 0
 	var/origin_y = 0
 	var/origin_z = 0
+
+	var/corpse = 0 //Keeps track of whether this was spawned from a landmark or not.
