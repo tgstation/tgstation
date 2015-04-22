@@ -185,12 +185,16 @@
 		if( ckey(clonemind.key)!=R.ckey )
 			return 0
 	else
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/G in player_list)
 			if(G.ckey == R.ckey)
-				if(G.can_reenter_corpse)
-					break
+				if(isobserver(G))
+					if(G:can_reenter_corpse)
+						break
+					else
+						return 0
 				else
-					return 0
+					if(G.mind && G.mind.current.stat != DEAD)
+						return 0
 
 
 	src.heal_level = rand(10,40) //Randomizes what health the clone is when ejected

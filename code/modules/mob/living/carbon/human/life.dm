@@ -1577,8 +1577,22 @@ var/global/list/organ_damage_overlays = list(
 			else
 				client.screen += global_hud.vimpaired
 
-		if(eye_blurry)			client.screen += global_hud.blurry
-		if(druggy)				client.screen += global_hud.druggy
+		if(eye_blurry)
+			if(!istype(global_hud.blurry,/obj/screen))
+				global_hud.blurry = new /obj/screen()
+				global_hud.blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
+				global_hud.blurry.icon_state = "blurry"
+				global_hud.blurry.layer = 17
+				global_hud.blurry.mouse_opacity = 0
+			client.screen += global_hud.blurry
+		if(druggy)
+			if(!istype(global_hud.druggy,/obj/screen))
+				global_hud.druggy = new /obj/screen()
+				global_hud.druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
+				global_hud.druggy.icon_state = "druggy"
+				global_hud.druggy.layer = 17
+				global_hud.druggy.mouse_opacity = 0
+			client.screen += global_hud.druggy
 
 		var/masked = 0
 
