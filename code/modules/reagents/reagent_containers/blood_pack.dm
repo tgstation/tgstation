@@ -16,7 +16,7 @@
 
 /obj/item/weapon/reagent_containers/blood/on_reagent_change()
 	update_icon()
-	if(volume == 0 && name != "Empty Bloodback")
+	if(reagents.total_volume == 0 && name != "Empty Bloodback")
 		name = "Empty Bloodpack"
 		desc = "Empty bloodpacks are good in vampire movies, but bad in hospitals."
 	else if (reagents.reagent_list.len > 0)
@@ -33,7 +33,7 @@
 		else
 			name = "Murky Bloodpack"
 			desc = "A bloodpack filled with mysterious liquid."
-	
+
 /obj/item/weapon/reagent_containers/blood/update_icon()
 	var/percent = round((reagents.total_volume / volume) * 100)
 	switch(percent)
@@ -82,6 +82,11 @@
 	name = "Empty BloodPack"
 	desc = "Seems pretty useless... Maybe if there were a way to fill it?"
 	icon_state = "empty"
+	New()
+		..()
+		blood_type == null
+		remove_reagent("blood", 200)
+		update_icon()
 
 /obj/item/weapon/reagent_containers/blood/chemo
 	name = "Phalanximine IV kit"
