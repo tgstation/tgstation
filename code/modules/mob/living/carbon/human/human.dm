@@ -58,7 +58,7 @@
 	static_overlay.override = 1
 	static_overlays["static"] = static_overlay
 
-	static_overlay = image(icon('icons/effects/effects.dmi', "blank"), loc = src)
+	static_overlay = image(icon('icons/effects/effects.dmi', "blank_human"), loc = src)
 	static_overlay.override = 1
 	static_overlays["blank"] = static_overlay
 

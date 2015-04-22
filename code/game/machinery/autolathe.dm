@@ -168,12 +168,12 @@ var/global/list/autolathe_recipes_hidden = list( \
 	return
 
 /obj/machinery/autolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(stat)
-		return 1
 	if(busy)
 		user << "<span class='warning'>\The [src] is busy. Please wait for the completion of previous operation.</span>"
 		return 1
-	if(..())
+	if(..()) //this has to be above the stat check, because it doesn't require power
+		return 1
+	if(stat & (BROKEN|NOPOWER))
 		return 1
 	if(isrobot(user))
 		if(!isMoMMI(user))
