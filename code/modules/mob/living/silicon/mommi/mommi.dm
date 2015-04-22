@@ -43,6 +43,14 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 /mob/living/silicon/robot/mommi/generate_static_overlay()
 	return
 
+/mob/living/silicon/robot/mommi/examination(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+	if(ismob(A) && src.can_see_static()) //can't examine what you can't catch!
+		usr << "Your vision module can't determine any of [A]'s features."
+		return
+
+	..()
+
+
 /mob/living/silicon/robot/mommi/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
