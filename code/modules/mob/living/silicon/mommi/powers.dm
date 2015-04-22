@@ -1,10 +1,10 @@
-/mob/living/silicon/robot/mommi/verb/ventcrawl()
+/mob/living/silicon/robot/mommi/verb/ventcrawl(var/atom/pipe)
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Robot Commands"
 	var/mob/living/silicon/robot/mommi/R = src
 	if(R.canmove)
-		handle_ventcrawl()
+		handle_ventcrawl(pipe)
 
 
 /mob/living/silicon/robot/mommi/verb/hide()

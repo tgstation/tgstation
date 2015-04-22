@@ -248,83 +248,55 @@
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
 
-/mob/living/proc/handle_ventcrawl() // -- TLE -- Merged by Carn
+/mob/living/proc/handle_ventcrawl(var/atom/clicked_on) // -- TLE -- Merged by Carn
 	diary << "[src] is ventcrawling."
 	if(!stat)
 		if(!lying)
 
-			var/obj/machinery/atmospherics/unary/vent_pump/vent_found
-			for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
-				if(!v.welded)
-					vent_found = v
-				else
-					src << "<span class='warning'>That vent is welded.</span>"
+/*
+			if(clicked_on)
+				world << "We start with [clicked_on], and [clicked_on.type]"
+*/
+			var/obj/machinery/atmospherics/unary/vent_found
+
+			if(clicked_on && Adjacent(clicked_on))
+				vent_found = clicked_on
+				if(!istype(vent_found) || !vent_found.can_crawl_through())
+					vent_found = null
+
+
+			if(!vent_found)
+				for(var/obj/machinery/atmospherics/machine in range(1,src))
+					if(is_type_in_list(machine, ventcrawl_machinery))
+						vent_found = machine
+
+					if(!vent_found.can_crawl_through())
+						vent_found = null
+
+					if(vent_found)
+						break
 
 			if(vent_found)
-				if(vent_found.network&&vent_found.network.normal_members.len)
-					var/list/vents[0]
-					for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in vent_found.network.normal_members)
-						if(temp_vent.loc == loc)
-							continue
-						if(temp_vent.welded)
-							continue
-						var/turf/T = get_turf(temp_vent)
+				if(vent_found.network && (vent_found.network.normal_members.len || vent_found.network.line_members.len))
 
-						if(!T || T.z != loc.z)
-							continue
-
-						var/i = 1
-						var/index = "[T.loc.name]\[[i]\]"
-						while(index in vents)
-							i++
-							index = "[T.loc.name]\[[i]\]"
-						vents[index] = temp_vent
-
-					var/turf/startloc = loc
-					var/obj/selection = input("Select a destination.", "Duct System") as null|anything in sortList(vents)
-					if(!selection)
-						src << "<span class='warning'>You didn't choose anything.</span>"
-						return
-
+					src << "You begin climbing into the ventilation system..."
 					if(!do_after(src, 45,,0))
 						return
 
-					if(!src||!selection)
+					if(!client)
 						return
 
-					if(loc==startloc)
-						if(contents.len && !isrobot(src))
-							for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
-								if(!(isInTypes(carried_item, canEnterVentWith)))
-									src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
-									return
-						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
-						if(target_vent)
-							for(var/mob/O in viewers(src, null))
-								O.show_message(text("<B>[src] scrambles into the ventilation ducts!</B>"), 1)
-							loc = target_vent
+					if(contents.len && !isrobot(src))
+						for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
+							if(!(isInTypes(carried_item, canEnterVentWith)))
+								src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
+								return
 
-							var/travel_time = round(get_dist(loc, target_vent.loc) / 4)
+					visible_message("<B>[src] scrambles into the ventilation ducts!</B>", "You climb into the ventilation system.")
 
-							spawn(travel_time)
+					loc = vent_found
+					add_ventcrawl(vent_found)
 
-								if(!target_vent)	return
-								for(var/mob/O in hearers(target_vent,null))
-									O.show_message("You hear something squeezing through the ventilation ducts.",2)
-
-								sleep(travel_time)
-
-								if(!target_vent)	return
-								if(target_vent.welded)			//the vent can be welded while alien scrolled through the list or travelled.
-									target_vent = vent_found 	//travel back. No additional time required.
-									src << "<span class='warning'>The vent you were heading to appears to be welded.</span>"
-								loc = target_vent.loc
-								var/area/new_area = get_area(loc)
-								if(new_area)
-									new_area.Entered(src)
-
-					else
-						src << "You need to remain still while entering a vent."
 				else
 					src << "This vent is not connected to anything."
 
@@ -338,6 +310,21 @@
 		src << "You must be conscious to do this!"
 	return
 
+/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/unary/starting_machine)
+	for(var/datum/pipeline/pipeline in starting_machine.network.line_members)
+		for(var/atom/A in (pipeline.members || pipeline.edges))
+			var/image/new_image = image(A, A.loc, dir = A.dir)
+			pipes_shown += new_image
+			client.images += new_image
+
+/mob/living/proc/remove_ventcrawl()
+	for(var/image/current_image in pipes_shown)
+		client.images -= current_image
+
+	pipes_shown.len = 0
+
+	if(client)
+		client.eye = src
 
 /mob/living/carbon/clean_blood()
 	. = ..()

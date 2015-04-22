@@ -197,11 +197,11 @@
 	del(src)
 
 //copy paste from alien/larva, if that func is updated please update this one also
-/mob/living/simple_animal/spiderbot/verb/ventcrawl()
+/mob/living/simple_animal/spiderbot/verb/ventcrawl(var/atom/pipe)
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Spiderbot"
-	handle_ventcrawl()
+	handle_ventcrawl(pipe)
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/spiderbot/verb/hide()
