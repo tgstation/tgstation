@@ -34,6 +34,7 @@
 	var/list/datum/mind/necromancer = list() //Those who use a necromancy staff OR soulstone a shade/construct
 	var/list/datum/mind/risen = list() // Those risen by necromancy or soulstone
 	var/eldergod = 1 // Can cultists spawn Nar-Sie? (Set to 0 on cascade or narsie spawn)
+	var/completion_text = ""
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"

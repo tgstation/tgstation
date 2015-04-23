@@ -973,6 +973,15 @@ var/global/list/arenas = list()
 			winner = W.loc
 	for(var/mob/living/M in players)
 		M << "[winner ? "[winner.key] as [winner.name] wins this round! " : ""]Resetting arena in 30 seconds."
+
+	if(winner.key in arena_leaderboard)
+		arena_leaderboard[winner.key] = arena_leaderboard[winner.key] + 1
+	else
+		arena_leaderboard += winner.key
+		arena_leaderboard[winner.key] = 1
+
+	arena_rounds++
+
 	sleep(300)
 	reset()
 

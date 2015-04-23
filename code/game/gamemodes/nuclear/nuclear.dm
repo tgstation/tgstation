@@ -290,72 +290,81 @@
 
 	if      (!disk_rescued &&  station_was_nuked &&          !syndies_didnt_escape)
 		feedback_set_details("round_end_result","win - syndicate nuke")
-		world << "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>"
-		world << "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"
+		completion_text += "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>"
+		completion_text += "<BR><B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"
 
 	else if (!disk_rescued &&  station_was_nuked &&           syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
-		world << "<FONT size = 3><B>Total Annihilation</B></FONT>"
-		world << "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
+		completion_text += "<FONT size = 3><B>Total Annihilation</B></FONT>"
+		completion_text += "<BR><B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 
 	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station")
-		world << "<FONT size = 3><B>Crew Minor Victory</B></FONT>"
-		world << "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't lose the disk!"
+		completion_text += "<FONT size = 3><B>Crew Minor Victory</B></FONT>"
+		completion_text += "<BR><B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't lose the disk!"
 
 	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
-		world << "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
-		world << "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't lose the disk!"
+		completion_text += "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
+		completion_text += "<BR><B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't lose the disk!"
 
 	else if ( disk_rescued                                         && is_operatives_are_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
-		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
-		world << "<B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"
+		completion_text += "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
+		completion_text += "<BR><B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"
 
 	else if ( disk_rescued                                        )
 		feedback_set_details("round_end_result","loss - evacuation - disk secured")
-		world << "<FONT size = 3><B>Crew Major Victory</B></FONT>"
-		world << "<B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
+		completion_text += "<FONT size = 3><B>Crew Major Victory</B></FONT>"
+		completion_text += "<BR><B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
 
 	else if (!disk_rescued                                         && is_operatives_are_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk not secured")
-		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
-		world << "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>"
+		completion_text += "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
+		completion_text += "<BR><B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>"
 
 	else if (!disk_rescued                                         &&  crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - detonation averted")
-		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
-		world << "<B>[syndicate_name()] operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</B> Next time, don't lose the disk!"
+		completion_text += "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
+		completion_text += "<BR><B>[syndicate_name()] operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</B> Next time, don't lose the disk!"
 
 	else if (!disk_rescued                                         && !crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - interrupted")
-		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
-		world << "<B>Round was mysteriously interrupted!</B>"
+		completion_text += "<FONT size = 3><B>Neutral Victory</B></FONT>"
+		completion_text += "<BR><B>Round was mysteriously interrupted!</B>"
 
 	..()
 	return
 
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
+	var/text = ""
 	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
 		var/icon/logo = icon('icons/mob/mob.dmi', "nuke-logo")
-		var/text = "<br>\icon[logo] <FONT size = 2><B>The syndicate operatives were:</B></FONT> \icon[logo]"
+		end_icons += logo
+		var/tempstate = end_icons.len
+		text += {"<br><img src="logo_[tempstate].png"> <FONT size = 2><B>The syndicate operatives were:</B></FONT> <img src="logo_[tempstate].png">"}
 
 		for(var/datum/mind/syndicate in syndicates)
 
 			if(syndicate.current)
-				var/icon/flat = getFlatIcon(syndicate.current)
-				text += "<br>\icon[flat] [syndicate.key] was [syndicate.name] ("
+				var/icon/flat = getFlatIcon(syndicate.current, SOUTH, 1, 1)
+				end_icons += flat
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[syndicate.key]</b> was <b>[syndicate.name]</b> ("}
 				if(syndicate.current.stat == DEAD)
 					text += "died"
+					flat.Turn(90)
+					end_icons[tempstate] = flat
 				else
 					text += "survived"
 				if(syndicate.current.real_name != syndicate.name)
 					text += " as [syndicate.current.real_name]"
 			else
 				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
-				text += "<br>\icon[sprotch] [syndicate.key] was [syndicate.name] ("
+				end_icons += sprotch
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[syndicate.key]</b> was <b>[syndicate.name]</b> ("}
 				text += "body destroyed"
 			text += ")"
 		var/obj/item/nuclear_uplink = src:nuclear_uplink
@@ -366,9 +375,9 @@
 					text += "<br>[entry]TC(s)"
 				text += "</span>"
 			else
-				text += "<br><span class='sinister'>The nukeops were smooth operators this round<br>(did not purchase any uplink items)</span>"
-		world << text
-	return 1
+				text += "<br><span class='sinister'>The nukeops were smooth operators this round (did not purchase any uplink items)</span>"
+		text += "<BR><HR>"
+	return text
 
 
 /proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.

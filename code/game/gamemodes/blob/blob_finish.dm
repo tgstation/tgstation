@@ -13,40 +13,43 @@
 /datum/game_mode/blob/declare_completion()
 	if(blobwincount <= blobs.len)
 		feedback_set_details("round_end_result","loss - blob took over")
-		world << {"<FONT size = 3><B>The blob has taken over the station!</B></FONT>
+		completion_text += {"<br><FONT size = 3><B>The blob has taken over the station!</B></FONT>
 <B>The entire station was consumed by the Blob!</B>"}
 		check_quarantine()
 
 	else if(station_was_nuked)
 		feedback_set_details("round_end_result","halfwin - nuke")
-		world << {"<FONT size = 3><B>Partial Win: The station has been destroyed!</B></FONT>
+		completion_text += {"<br><FONT size = 3><B>Partial Win: The station has been destroyed!</B></FONT>
 <B>Directive 7-12 has been successfully carried out, the Blobs have taken another station but failed to spread any further!</B>"}
 
 	else if(!blob_cores.len)
 		feedback_set_details("round_end_result","win - blob eliminated")
-		world << {"<FONT size = 3><B>The staff has won!</B></FONT>
+		completion_text += {"<br><FONT size = 3><B>The staff has won!</B></FONT>
 <B>The alien organism has been eradicated from the station</B>"}
 
 		var/datum/station_state/end_state = new /datum/station_state()
 		end_state.count()
 		var/percent = round( 100.0 *  start_state.score(end_state), 0.1)
-		world << "<B>The station is [percent]% intact.</B>"
+		completion_text += "<br><B>The station is [percent]% intact.</B>"
 		log_game("Blob mode was won with station [percent]% intact.")
-		world << "<span class='notice'>Rebooting in 30s</span>"
+		completion_text += "<br><span class='notice'>Rebooting in 30s</span>"
 	..()
 	return 1
 
 datum/game_mode/proc/auto_declare_completion_blob()
 	if(istype(ticker.mode,/datum/game_mode/blob) )
+		var/text = ""
 		var/datum/game_mode/blob/blob_mode = src
 		if(blob_mode.infected_crew.len)
-			var/text = "<FONT size = 2><B>The blob[(blob_mode.infected_crew.len > 1 ? "s were" : " was")]:</B></FONT>"
+			text += "<FONT size = 2><B>The blob[(blob_mode.infected_crew.len > 1 ? "s were" : " was")]:</B></FONT>"
 
 			var/icon/logo = icon('icons/mob/blob.dmi', "blob_core")
+			end_icons += logo
+			var/tempstate = end_icons.len
 			for(var/datum/mind/blob in blob_mode.infected_crew)
-				text += "<br>\icon[logo] [blob.key] was [blob.name]"
-			world << text
-		return 1
+				text += {"<br><img src="logo_[tempstate].png"> <b>[blob.key]</b> was <b>[blob.name]</b>"}
+		text += "<BR><HR>"
+		return text
 
 /datum/game_mode/blob/proc/check_quarantine()
 	var/numDead = 0

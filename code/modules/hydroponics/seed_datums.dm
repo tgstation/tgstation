@@ -625,6 +625,8 @@ proc/populate_seed_list()
 				var/obj/item/weapon/grown/current_product = product
 				current_product.plantname = name
 
+			score[stuffharvested] += 1
+
 
 // When the seed in this machine mutates/is modified, the tray seed value
 // is set to a new datum copied from the original. This datum won't actually

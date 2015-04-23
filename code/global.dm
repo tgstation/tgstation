@@ -338,7 +338,10 @@ var/list/score=list(
 	"dmgestname"    = null, // who had the most damage on the shuttle (but was still alive)
 	"dmgestjob"     = null,
 	"dmgestdamage"  = 0,
-	"dmgestkey"     = null
+	"dmgestkey"     = null,
+
+	"arenafights"   = 0,
+	"arenabest"		= null,
 )
 
 // Mostly used for ban systems.
@@ -368,3 +371,10 @@ var/global/list/ready_gladiators = list()
 var/global/list/never_gladiators = list()
 
 var/global/list/achievements = list()
+
+//icons that appear on the Round End pop-up browser
+var/global/list/end_icons = list()
+
+var/global/list/arena_leaderboard = list()
+var/arena_rounds = 0
+var/arena_top_score = 0

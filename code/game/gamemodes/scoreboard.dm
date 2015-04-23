@@ -1,9 +1,15 @@
-/datum/controller/gameticker/proc/scoreboard()
+/datum/controller/gameticker/proc/scoreboard(var/completions)
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
-			call(mode, handler)()
+			completions += "[call(mode, handler)()]"
+
+	if(bomberman_mode)
+		completions += "<br>[bomberman_declare_completion()]"
+
+	if(achievements.len)
+		completions += "<br>[achievement_declare_completion()]"
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
@@ -209,17 +215,30 @@
 	score["crewscore"] -= messpoints
 	score["crewscore"] -= plaguepoints
 
+	score["arenafights"] = arena_rounds
+
+	arena_top_score = 0
+	for(var/x in arena_leaderboard)
+		if(arena_leaderboard[x] > arena_top_score)
+			arena_top_score = arena_leaderboard[x]
+	for(var/x in arena_leaderboard)
+		if(arena_leaderboard[x] == arena_top_score)
+			score["arenabest"] += "[x] "
+
+
 	// Show the score - might add "ranks" later
 	world << "<b>The crew's final score is:</b>"
 	world << "<b><font size='4'>[score["crewscore"]]</font></b>"
+
 	for(var/mob/E in player_list)
-		if(E.client) E.scorestats()
+		if(E.client) E.scorestats(completions)
 	return
 
 
 
-/mob/proc/scorestats()
-	var/dat = {"<B>Round Statistics and Score</B><BR><HR>"}
+/mob/proc/scorestats(var/completions)
+	var/dat = completions
+	dat += {"<BR><h2>Round Statistics and Score</h2>"}
 	if (ticker.mode.name == "nuclear emergency")
 		var/foecount = 0
 		var/crewcount = 0
@@ -322,7 +341,10 @@
 	if (profit > 0) dat += "<B>Station Profit:</B> +[num2text(profit,50)]<BR>"
 	else if (profit < 0) dat += "<B>Station Deficit:</B> [num2text(profit,50)]<BR>"}*/
 	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
-	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR><BR>"}
+	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR>
+	<B>Number of Arena Rounds:</B> [score["arenafights"]]<BR>"}
+	if (arena_top_score)
+		dat += "<B>Best Arena Fighter (won [arena_top_score] rounds!):</B> [score["arenabest"]]<BR>"
 	if (score["escapees"])
 		dat += "<B>Most Battered Escapee:</B> [score["dmgestname"]], [score["dmgestjob"]]: [score["dmgestdamage"]] damage ([score["dmgestkey"]])<BR>"
 	else
@@ -350,5 +372,9 @@
 		if(10000 to 49999) score["rating"] = "The Pride of Science Itself"
 		if(50000 to INFINITY) score["rating"] = "NanoTrasen's Finest"
 	dat += "<B><U>RATING:</U></B> [score["rating"]]"
-	src << browse(dat, "window=roundstats;size=500x600")
+
+	for(var/i=1;i<=end_icons.len;i++)
+		src << browse_rsc(end_icons[i],"logo_[i].png")
+
+	src << browse(dat, "window=roundstats;size=1000x600")
 	return
