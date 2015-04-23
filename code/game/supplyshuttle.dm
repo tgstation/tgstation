@@ -243,22 +243,6 @@ var/list/mechtoys = list(
 
 		return 1
 
-	//To stop things being sent to centcomm which should not be sent to centcomm. Recursively checks for these types.
-	proc/forbidden_atoms_check(atom/A)
-		if(istype(A,/mob/living))
-			return 1
-		if(istype(A,/obj/item/weapon/disk/nuclear))
-			return 1
-		if(istype(A,/obj/machinery/nuclearbomb))
-			return 1
-		if(istype(A,/obj/item/device/radio/beacon))
-			return 1
-
-		for(var/i=1, i<=A.contents.len, i++)
-			var/atom/B = A.contents[i]
-			if(.(B))
-				return 1
-
 	proc/SellObjToOrders(var/atom/A,var/in_crate)
 
 		// Per-unit orders run last so they don't steal shit.
@@ -401,6 +385,20 @@ var/list/mechtoys = list(
 
 		supply_shuttle.shoppinglist.len = 0
 		return
+
+/datum/controller/supply_shuttle/proc/forbidden_atoms_check(atom/A)
+	var/contents = get_contents_in_object(A)
+
+	if (locate(/mob/living) in contents)
+		. = TRUE
+	else if (locate(/obj/item/weapon/disk/nuclear) in contents)
+		. = TRUE
+	else if (locate(/obj/machinery/nuclearbomb) in contents)
+		. = TRUE
+	else if (locate(/obj/item/device/radio/beacon) in contents)
+		. = TRUE
+	else
+		. = FALSE
 
 /obj/item/weapon/paper/manifest
 	name = "Supply Manifest"
