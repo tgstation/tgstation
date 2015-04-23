@@ -87,7 +87,7 @@
 	..()
 	return
 
-/datum/game_mode/proc/auto_declare_completion_vampire()
+/datum/game_mode/proc/vampire_completion()
 	var/text = ""
 	if(vampires.len)
 		var/icon/logo = icon('icons/mob/mob.dmi', "vampire-logo")
@@ -104,6 +104,8 @@
 				text += {"<br><img src="logo_[tempstate].png"> [vampire.key] was [vampire.name] ("}
 				if(vampire.current.stat == DEAD)
 					text += "died"
+					flat.Turn(90)
+					end_icons[tempstate] = flat
 				else
 					text += "survived"
 				if(vampire.current.real_name != vampire.name)
@@ -151,7 +153,7 @@
 	return text
 
 /datum/game_mode/proc/auto_declare_completion_enthralled()
-	var/text = ""
+	var/text = vampire_completion()
 	if(enthralled.len)
 		var/icon/logo = icon('icons/mob/mob.dmi', "thrall-logo")
 		end_icons += logo
@@ -165,6 +167,8 @@
 				text += {"<br><img src="logo_[tempstate].png"> [Mind.key] was [Mind.name] ("}
 				if(Mind.current.stat == DEAD)
 					text += "died"
+					flat.Turn(90)
+					end_icons[tempstate] = flat
 				else
 					text += "survived"
 				if(Mind.current.real_name != Mind.name)
@@ -182,7 +186,10 @@
 					text += "<br><span class='sinister'>TC Remaining: [Mind.total_TC - Mind.spent_TC]/[Mind.total_TC] - The tools used by the Enthralled were: [list2text(Mind.uplink_items_bought, ", ")]</span>"
 				else
 					text += "<span class='sinister'>The Enthralled was a smooth operator this round (did not purchase any uplink items)</span>"
-
+		text += "<BR><HR>"
+	else
+		if(text)
+			text += "<BR><HR>"
 	return text
 
 /datum/game_mode/proc/forge_vampire_objectives(var/datum/mind/vampire)
