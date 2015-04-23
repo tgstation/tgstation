@@ -32,7 +32,7 @@
 			blood_type = target_type
 		else
 			name = "Murky Bloodpack"
-			desc = "A bloodpack filled with mysterious liquid."
+			desc = "A bloodpack that's clearly not filled with blood."
 
 /obj/item/weapon/reagent_containers/blood/update_icon()
 	var/percent = round((reagents.total_volume / volume) * 100)
@@ -94,5 +94,6 @@
 	icon = 'icons/obj/chemopack.dmi'
 	New()
 		..()
+		reagents.clear_reagents()
 		reagents.add_reagent("phalanximine", 200)
 		update_icon()
