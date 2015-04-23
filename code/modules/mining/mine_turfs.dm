@@ -469,6 +469,7 @@
 
 /turf/unsimulated/floor/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
+	world << "Getting called with [W] and [user]"
 	if(!W || !user)
 		return 0
 
@@ -555,20 +556,6 @@
 		A = get_step(src, SOUTH)
 		A.updateMineralOverlays()
 	src.updateMineralOverlays()
-
-/turf/unsimulated/floor/asteroid/Entered(atom/movable/M as mob|obj)
-	..()
-	if(istype(M,/mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = M
-		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_3,R)
-			else
-				return
 
 /turf/unsimulated/mineral/random
 	name = "Mineral deposit"
