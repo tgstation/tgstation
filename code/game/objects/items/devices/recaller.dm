@@ -59,24 +59,24 @@
 			dat += "(10 Influence) Territory Spraycan<br>"
 
 		if(points >= 30)
-			dat += "(25 Influence) <a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
+			dat += "(30 Influence) <a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
 		else
-			dat += "(25 Influence) 10mm Pistol<br>"
+			dat += "(30 Influence) 10mm Pistol<br>"
 
 		if(points >= 10)
 			dat += "(10 Influence) <a href='?src=\ref[src];purchase=ammo'>10mm Ammo</a><br>"
 		else
 			dat += "(10 Influence) 10mm Ammo<br>"
 
-		if(points >= 15)
-			dat += "(15 Influence) <a href='?src=\ref[src];purchase=switchblade'>Switchblade</a><br>"
+		if(points >= 10)
+			dat += "(10 Influence) <a href='?src=\ref[src];purchase=switchblade'>Switchblade</a><br>"
 		else
-			dat += "(15 Influence) Switchblade<br>"
+			dat += "(10 Influence) Switchblade<br>"
 
-		if(points >= 60)
-			dat += "(60 Influence) <a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
+		if(points >= 50)
+			dat += "(50 Influence) <a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
 		else
-			dat += "(60 Influence) Recruitment Pen<br>"
+			dat += "(50 Influence) Recruitment Pen<br>"
 
 		if(boss)
 			if(promotion_cost > 100)
@@ -116,13 +116,13 @@
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					points = 10
 			if("switchblade")
-				if(points >= 15)
+				if(points >= 10)
 					item_type = /obj/item/weapon/switchblade
-					points = 15
+					points = 10
 			if("pen")
-				if(points >= 60)
+				if(points >= 50)
 					item_type = /obj/item/weapon/pen/gang
-					points = 60
+					points = 50
 			if("gangtool")
 				if(points >= promotion_cost)
 					item_type = /obj/item/device/gangtool/lt
