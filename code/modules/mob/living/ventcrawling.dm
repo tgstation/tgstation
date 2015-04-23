@@ -47,9 +47,9 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 				for(var/obj/item/I in contents)
 					var/failed = 0
 					if(istype(I, /obj/item/weapon/implant))
-						var/obj/item/weapon/implant/imp = I
-						if(imp.imp_in != src)
-							failed++
+						continue
+					else
+						failed++
 
 					if(failed)
 						src << "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>"
@@ -81,3 +81,17 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 	if(client)
 		client.eye = src
+
+
+
+//OOP
+/atom/proc/update_pipe_vision()
+	return
+
+/mob/living/update_pipe_vision()
+	if(pipes_shown.len)
+		if(!istype(loc, /obj/machinery/atmospherics))
+			remove_ventcrawl()
+	else
+		if(istype(loc, /obj/machinery/atmospherics))
+			add_ventcrawl(loc)
