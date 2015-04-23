@@ -88,7 +88,7 @@
 		H = agent.current
 		L = agent_landmarks[team_number]
 		H.loc = L.loc
-		H.dna.species = new /datum/species/abductor()
+		hardset_dna(H, null, null, null, null, /datum/species/abductor)
 		S = H.dna.species
 		S.agent = 1
 		S.team = team_number
@@ -102,7 +102,7 @@
 		H = scientist.current
 		L = scientist_landmarks[team_number]
 		H.loc = L.loc
-		H.dna.species = new /datum/species/abductor()
+		hardset_dna(H, null, null, null, null, /datum/species/abductor)
 		S = H.dna.species
 		S.scientist = 1
 		S.team = team_number
@@ -137,7 +137,7 @@
 	H = agent.current
 	L = agent_landmarks[team_number]
 	H.loc = L.loc
-	H.dna.species = new /datum/species/abductor()
+	hardset_dna(H, null, null, null, null, /datum/species/abductor)
 	S = H.dna.species
 	S.agent = 1
 	S.team = team_number
@@ -151,7 +151,7 @@
 	H = scientist.current
 	L = scientist_landmarks[team_number]
 	H.loc = L.loc
-	H.dna.species = new /datum/species/abductor()
+	hardset_dna(H, null, null, null, null, /datum/species/abductor)
 	S = H.dna.species
 	S.scientist = 1
 	S.team = team_number

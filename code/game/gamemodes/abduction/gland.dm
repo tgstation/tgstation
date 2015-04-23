@@ -106,7 +106,7 @@ obj/item/gland/slime/activate()
 /obj/item/gland/pop/activate()
 	host << "<span class='notice'>You feel weird.</span>"
 	var/species = pick(list(/datum/species/lizard,/datum/species/slime,/datum/species/plant/pod,/datum/species/fly))
-	host.dna.species = new species()
+	hardset_dna(host, null, null, null, null, species)
 	host.regenerate_icons()
 	return
 

@@ -12,7 +12,7 @@
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "mutationtoxin")
 		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
-		H.dna.species = new /datum/species/slime()
+		hardset_dna(H, null, null, null, null, /datum/species/slime)
 		H.regenerate_icons()
 		H.reagents.del_reagent(chem.type)
 		H.faction |= "slime"
