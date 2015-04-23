@@ -170,7 +170,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
 	throw_range = 6
 	m_amt = 12000
 	origin_tech = "materials=1"
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	var/extended
 
