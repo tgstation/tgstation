@@ -47,7 +47,7 @@
 	var/d2 = in_dir&12			 // eg. west	  (1+8)&12 (0000 1100) = 8 (0000 1000)
 
 	for(var/d in list(d1,d2))
-		if(!T0.ClickCross(d, border_only = 1))
+		if(!T0.ClickCross(d, border_only = 1) && !(neighbor.flags & ON_BORDER && neighbor.dir == d))
 			continue // could not leave T0 in that direction
 
 		var/turf/T1 = get_step(T0,d)
