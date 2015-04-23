@@ -187,6 +187,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["mutant_color"]		>> mutant_color
+	S["clown_name"]			>> clown_name
+	S["mime_name"]			>> mime_name
 
 	//Jobs
 	S["userandomjob"]		>> userandomjob
@@ -274,6 +276,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]			<< backbag
 	S["species"]			<< pref_species.name
 	S["mutant_color"]		<< mutant_color
+	S["clown_name"]			<< clown_name
+	S["mime_name"]			<< mime_name
 
 	//Jobs
 	S["userandomjob"]		<< userandomjob

@@ -60,6 +60,8 @@ datum/preferences
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/mutant_color = "FFF"			//Mutant race skin color
+	var/clown_name = "Bozo"
+	var/mime_name = "Mime"
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -92,6 +94,8 @@ datum/preferences
 /datum/preferences/New(client/C)
 	blood_type = random_blood_type()
 	ooccolor = normal_ooc_colour
+	clown_name = pick(clown_names)
+	mime_name = pick(mime_names)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -233,6 +237,10 @@ datum/preferences
 
 					dat += "</td>"
 
+				dat += "<h2>Special Names:</h2>"
+				dat += "<a href ='?_src_=prefs;preference=clown_name;task=input'><b>Clown:</b> [clown_name]</a><BR>"
+				dat += "<a href ='?_src_=prefs;preference=mime_name;task=input'><b>Mime:</b> [mime_name]</a><BR>"
+
 				dat += "</tr></table>"
 
 
@@ -302,7 +310,7 @@ datum/preferences
 		dat += "</center>"
 
 		//user << browse(dat, "window=preferences;size=560x560")
-		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 680)
+		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 720)
 		popup.set_content(dat)
 		popup.open(0)
 
@@ -753,6 +761,20 @@ datum/preferences
 						var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 						if(new_backbag)
 							backbag = backbaglist.Find(new_backbag)
+					if("clown_name")
+						var/new_clown_name = reject_bad_name( input(user, "Choose your character's clown name:", "Character Preference")  as text|null )
+						if(new_clown_name)
+							clown_name = new_clown_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
+					if("mime_name")
+						var/new_mime_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
+						if(new_mime_name)
+							mime_name = new_mime_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
 			else
 				switch(href_list["preference"])
 					if("publicity")

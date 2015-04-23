@@ -362,43 +362,72 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
-//Last modified by Carn
+
 /mob/proc/rename_self(var/role, var/allow_numbers=0)
-	spawn(0)
-		var/oldname = real_name
+	var/oldname = real_name
+	var/time_passed = world.time
+	var/newname
+	var/loop = 1
+	var/loop_safety = 0
 
-		var/time_passed = world.time
-		var/newname
+	if(role == "clown" || role == "mime")
+		while(loop && loop_safety < 5)
+			if(role == "clown")
+				if(client && client.prefs.clown_name && !loop_safety)
+					newname = client.prefs.clown_name
+				else
+					newname = pick(clown_names)
 
-		for(var/i=1,i<=3,i++)	//we get 3 attempts to pick a suitable name.
-			newname = input(src,"You are a [role]. Would you like to change your name to something else?", "Name change",oldname) as text
-			if((world.time-time_passed)>300)
-				return	//took too long
-			newname = reject_bad_name(newname,allow_numbers)	//returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
+			if(role == "mime")
+				if(client && client.prefs.mime_name && !loop_safety)
+					newname = client.prefs.mime_name
+				else
+					newname = pick(mime_names)
 
 			for(var/mob/living/M in player_list)
 				if(M == src)
 					continue
 				if(!newname || M.real_name == newname)
-					newname = null
+					loop++ // name is already taken so we roll again
 					break
-			if(newname)
-				break	//That's a suitable name!
-			src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken."
+			loop--
+			loop_safety++
 
-		if(!newname)	//we'll stick with the oldname then
-			return
+		if(newname)
+			fully_replace_character_name(oldname,newname)
+		return
 
-		if(cmptext("ai",role))
-			if(isAI(src))
-				oldname = null//don't bother with the records update crap
+	else
+		spawn(0)
+			for(var/i=1,i<=3,i++)	//we get 3 attempts to pick a suitable name.
+				newname = input(src,"You are a [role]. Would you like to change your name to something else?", "Name change",oldname) as text
+				if((world.time-time_passed)>300)
+					return	//took too long
+				newname = reject_bad_name(newname,allow_numbers)	//returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
 
-		if(cmptext("cyborg",role))
-			if(isrobot(src))
-				var/mob/living/silicon/robot/A = src
-				A.custom_name = newname
+				for(var/mob/living/M in player_list)
+					if(M == src)
+						continue
+					if(!newname || M.real_name == newname)
+						newname = null
+						break
+				if(newname)
+					break	//That's a suitable name!
+				src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken."
 
-		fully_replace_character_name(oldname,newname)
+				if(!newname)	//we'll stick with the oldname then
+					return
+
+			if(cmptext("ai",role))
+				if(isAI(src))
+					oldname = null//don't bother with the records update crap
+
+			if(cmptext("cyborg",role))
+				if(isrobot(src))
+					var/mob/living/silicon/robot/A = src
+					A.custom_name = newname
+
+			fully_replace_character_name(oldname,newname)
 
 
 
