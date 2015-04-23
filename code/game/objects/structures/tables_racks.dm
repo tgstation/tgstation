@@ -307,7 +307,7 @@
 			for(var/obj/item/C in oldContents)
 				C.loc = src.loc
 
-			user.visible_message("<span class='notice'>[user] empties [I] on [src].</span>")
+			user.visible_message("[user] empties [I] on [src].")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
@@ -568,20 +568,20 @@
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
-						 "<span class='warning'>You kick [src].</span>")
+						 "<span class='danger'>You kick [src].</span>")
 	health -= rand(1,2)
 	healthcheck()
 
 /obj/structure/rack/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
-	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
+	visible_message("<span class='warning'>[user] slices [src] apart.</span>")
 	rack_destroy()
 
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		visible_message("<span class='warning'>[user] smashes [src] apart.</span>")
 		rack_destroy()
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
@@ -615,7 +615,7 @@
 	return
 
 /obj/item/weapon/rack_parts/attack_self(mob/user as mob)
-	user << "<span class='notice'>Constructing rack...</span>"
+	user << "<span class='notice'>You start constructing rack...</span>"
 	if (do_after(user, 50))
 		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
 		R.add_fingerprint(user)

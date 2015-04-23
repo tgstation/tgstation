@@ -692,11 +692,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 
 	else if(istype(O, /obj/item/weapon/minihoe))
 		if(weedlevel > 0)
-			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
+			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else
-			user << "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
+			user << "<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>"
 
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		attack_hand(user)
@@ -708,28 +708,28 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 
 	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
 		if(anchored == 2)
-			user << "Unscrew the hoses first!"
+			user << "<span class='warning'>Unscrew the hoses first!</span>"
 			return
 
 		if(!anchored && !isinspace())
-			user.visible_message("<span class='notice'>[user] begins to wrench [src] into place.</span>", \
+			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 20))
 				if(anchored)
 					return
 				anchored = 1
-				user.visible_message("<span class='notice'>[user] wrenches [src] into place.</span>", \
+				user.visible_message("[user] wrenches [src] into place.", \
 									"<span class='notice'>You wrench [src] in place.</span>")
 		else if(anchored)
-			user.visible_message("<span class='notice'>[user] begins to unwrench [src].</span>", \
+			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 20))
 				if(!anchored)
 					return
 				anchored = 0
-				user.visible_message("<span class='notice'>[user] unwrenches [src].</span>", \
+				user.visible_message("[user] unwrenches [src].", \
 									"<span class='notice'>You unwrench [src].</span>")
 
 	else if(istype(O, /obj/item/weapon/screwdriver) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY

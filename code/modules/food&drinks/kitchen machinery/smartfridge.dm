@@ -42,12 +42,12 @@
 		return 0
 
 	if(contents.len >= max_n_of_items)
-		user << "<span class='notice'>\The [src] is full.</span>"
+		user << "<span class='warning'>\The [src] is full!</span>"
 		return 0
 
 	if(accept_check(O))
 		load(O)
-		user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].")
+		user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 		updateUsrDialog()
 		return 1
 
@@ -62,7 +62,7 @@
 				load(G)
 				loaded++
 	else
-		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
+		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
 		return 0
 
@@ -70,15 +70,15 @@
 	// this code follows storage items and trays only.
 	if(loaded)
 		if(contents.len >= max_n_of_items)
-			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
+			user.visible_message("[user] loads \the [src] with \the [O].", \
 							 "<span class='notice'>You fill \the [src] with \the [O].</span>")
 		else
-			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
+			user.visible_message("[user] loads \the [src] with \the [O].", \
 								 "<span class='notice'>You load \the [src] with \the [O].</span>")
 		if(O.contents.len > 0)
-			user << "<span class='notice'>Some items are refused.</span>"
+			user << "<span class='warning'>Some items are refused.</span>"
 	else
-		user << "There is nothing in [O] to put in [src]."
+		user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
 		return 0
 
 	updateUsrDialog()

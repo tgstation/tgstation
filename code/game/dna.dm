@@ -411,7 +411,7 @@
 			return
 
 		locked = 0
-		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
 
 		open_machine()

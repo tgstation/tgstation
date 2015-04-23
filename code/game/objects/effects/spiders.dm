@@ -233,7 +233,7 @@
 	var/breakout_time = 2
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
+	user << "<span class='notice'>You struggle against the tight bonds... (This will take about [breakout_time] minutes.)</span>"
 	visible_message("You see something struggling and writhing in \the [src]!")
 	if(do_after(user,(breakout_time*60*10)))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
@@ -243,7 +243,7 @@
 
 
 /obj/effect/spider/cocoon/Destroy()
-	src.visible_message("<span class='danger'>\The [src] splits open.</span>")
+	src.visible_message("<span class='warning'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	..()

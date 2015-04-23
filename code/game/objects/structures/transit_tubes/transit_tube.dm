@@ -44,7 +44,7 @@ obj/structure/transit_tube/ex_act(severity, target)
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				user << "<span class='warning'>Remove the pod first!</span>"
 				return
-			user.visible_message("<span class='warning'>[user] starts to deattach \the [src]!</span>", "<span class='notice'>You start deattaching the [name]...</span>")
+			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if(do_after(user, 35))
 				user << "<span class='notice'>You deattach the [name].</span>"

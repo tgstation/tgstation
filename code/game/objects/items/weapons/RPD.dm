@@ -536,7 +536,7 @@ var/global/list/RPD_recipes=list(
 		if(EATING_MODE) // Eating pipes
 			// Must click on an actual pipe or meter.
 			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct))
-				user << "<span class='info'>Destroying Pipe...</span>"
+				user << "<span class='notice'>You start destroying pipe...</span>"
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5))
 					activate()
@@ -551,7 +551,7 @@ var/global/list/RPD_recipes=list(
 			if(!(istype(A, /turf)))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
-			user << "<span class='info'>Building Pipes...</span>"
+			user << "<span class='notice'>You start building pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				activate()
@@ -566,7 +566,7 @@ var/global/list/RPD_recipes=list(
 			if(!(istype(A, /turf)))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
-			user << "<span class='info'>Building Meter...</span>"
+			user << "<span class='notice'>You start building meter...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				activate()
@@ -578,7 +578,7 @@ var/global/list/RPD_recipes=list(
 			if(!(istype(A, /turf)))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
-			user << "<span class='info'>Building Pipes...</span>"
+			user << "<span class='notice'>You start building pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 20))
 				var/obj/structure/disposalconstruct/C = new (A, queued_p_type ,queued_p_dir)

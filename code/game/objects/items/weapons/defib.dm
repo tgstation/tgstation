@@ -375,7 +375,7 @@
 					for(var/obj/item/carried_item in H.contents)
 						if(istype(carried_item, /obj/item/clothing/suit/space))
 							if(!defib.combat)
-								user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
+								user.visible_message("<span class='warning'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
 								playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 								busy = 0
 								update_icon()
@@ -429,10 +429,10 @@
 						cooldown = 1
 						defib.cooldowncheck(user)
 					else
-						user.visible_message("<span class='notice'>[defib] buzzes: Patient is not in a valid state. Operation aborted.</span>")
+						user.visible_message("<span class='warning'>[defib] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 			busy = 0
 			update_icon()
 		else
-			user << "<span class='warning'>You need to target your patient's chest with [src].</span>"
+			user << "<span class='warning'>You need to target your patient's chest with [src]!</span>"
 			return

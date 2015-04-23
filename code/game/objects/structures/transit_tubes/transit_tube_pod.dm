@@ -31,7 +31,7 @@
 			for(var/obj/structure/transit_tube/station/T in loc)
 				return
 			if(src.contents.len)
-				user.visible_message("<span class='notice'>[user] empties \the [src].</span>", "<span class='notice'>You empty \the [src].</span>")
+				user.visible_message("[user] empties \the [src].", "<span class='notice'>You empty \the [src].</span>")
 				src.empty()
 				return
 			else

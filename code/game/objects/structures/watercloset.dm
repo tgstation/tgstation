@@ -51,7 +51,7 @@
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 30))
-			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
+			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
 			return
@@ -65,7 +65,7 @@
 			var/mob/living/GM = G.affecting
 			if(G.state >= GRAB_AGGRESSIVE)
 				if(GM.loc != get_turf(src))
-					user << "<span class='notice'>[GM] needs to be on [src].</span>"
+					user << "<span class='warning'>[GM] needs to be on [src]!</span>"
 					return
 				if(!swirlie)
 					if(open)
@@ -372,12 +372,12 @@
 	if(!Adjacent(user)) return		//Person has moved away from the sink
 
 	user.clean_blood()
-	user.visible_message("<span class='notice'>[user] washes their hands in [src].</span>")
+	user.visible_message("[user] washes their hands in [src].", "<span class='notice'>You wash your hands in [src].</span>")
 
 
 /obj/structure/sink/attackby(obj/item/O, mob/user, params)
 	if(busy)
-		user << "<span class='notice'>Someone's already washing here.</span>"
+		user << "<span class='warning'>Someone's already washing here!</span>"
 		return
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
@@ -422,7 +422,7 @@
 
 	O.clean_blood()
 	user.visible_message( \
-		"<span class='notice'>[user] washes [I] using [src].</span>", \
+		"[user] washes [I] using [src].", \
 		"<span class='notice'>You wash [I] using [src].</span>")
 
 

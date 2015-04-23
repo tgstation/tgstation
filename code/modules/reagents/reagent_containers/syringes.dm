@@ -106,7 +106,7 @@
 						src.reagents.update_total()
 						src.on_reagent_change()
 						src.reagents.handle_reactions()
-					user.visible_message("<span class='notice'>[user] takes a blood sample from [target].</span>")
+					user.visible_message("[user] takes a blood sample from [target].")
 
 			else //if not mob
 				if(!target.reagents.total_volume)

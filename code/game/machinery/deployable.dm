@@ -67,11 +67,11 @@ for reference:
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/stack/sheet/mineral/wood))
 		if (src.health < src.maxhealth)
-			visible_message("<span class='danger'>[user] begins to repair \the [src]!</span>")
+			visible_message("[user] begins to repair \the [src]!", "<span class='notice'>You begin to repair \the [src]...</span>")
 			if(do_after(user,20))
 				src.health = src.maxhealth
 				W:use(1)
-				visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
+				visible_message("[user] repairs \the [src]!", "<span class='notice'>You repair \the [src].</span>")
 				return
 		else
 			return
@@ -84,7 +84,7 @@ for reference:
 				src.health -= W.force * 0.75
 			else
 		if (src.health <= 0)
-			visible_message("<span class='danger'>The barricade is smashed apart!</span>")
+			visible_message("<span class='warning'>The barricade is smashed apart!</span>")
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
@@ -94,13 +94,13 @@ for reference:
 /obj/structure/barricade/wooden/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
-			visible_message("<span class='danger'>The barricade is blown apart!</span>")
+			visible_message("<span class='warning'>The barricade is blown apart!</span>")
 			qdel(src)
 			return
 		if(2.0)
 			src.health -= 25
 			if (src.health <= 0)
-				visible_message("<span class='danger'>The barricade is blown apart!</span>")
+				visible_message("<span class='warning'>The barricade is blown apart!</span>")
 				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
@@ -110,7 +110,7 @@ for reference:
 /obj/structure/barricade/wooden/blob_act()
 	src.health -= 25
 	if (src.health <= 0)
-		visible_message("<span class='danger'>The blob eats through the barricade!</span>")
+		visible_message("<span class='warning'>The blob eats through the barricade!</span>")
 		qdel(src)
 	return
 

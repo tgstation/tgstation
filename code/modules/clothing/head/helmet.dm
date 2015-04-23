@@ -235,14 +235,14 @@ obj/item/clothing/head/helmet/bluetaghelm
 		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
 		helmetCam.network = list("SS13")
 		update_icon()
-		user.visible_message("<span class='notice'>[user] attaches [A] to [src]</span>","<span class='notice'>You attach [A] to [src]</span>")
+		user.visible_message("[user] attaches [A] to [src].","<span class='notice'>You attach [A] to [src].</span>")
 		return
 
 	if(istype(A, /obj/item/weapon/crowbar))
 		if(!helmetCam)
 			..()
 			return
-		user.visible_message("<span class='notice'>[user] removes [helmetCam] from [src]</span>","<span class='notice'>You remove [helmetCam] from [src]</span>")
+		user.visible_message("[user] removes [helmetCam] from [src].","<span class='notice'>You remove [helmetCam] from [src].</span>")
 		helmetCam.assembly.loc = get_turf(src)
 		helmetCam.assembly = null
 		qdel(helmetCam)

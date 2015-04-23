@@ -38,15 +38,15 @@
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='notice'>Invalid text.</span>"
+			user << "<span class='warning'>Invalid text!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
+		user.visible_message("[user] labels [src] as [str].")
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(3))
-			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			user.visible_message("[user] wraps the package in festive paper!")
 			giftwrapped = 1
 			if(istype(wrapped, /obj/structure/closet/crate))
 				icon_state = "giftcrate"
@@ -92,9 +92,9 @@
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='notice'>Invalid text.</span>"
+			user << "<span class='warning'>Invalid text!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
+		user.visible_message("[user] labels [src] as [str].")
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
@@ -102,7 +102,7 @@
 		if(WP.use(1))
 			icon_state = "giftcrate[wrapped.w_class]"
 			giftwrapped = 1
-			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			user.visible_message("[user] wraps the package in festive paper!")
 			if(WP.amount <= 0 && !WP.loc) //if we used our last wrapping paper, drop a cardboard tube
 				new /obj/item/weapon/c_tube( get_turf(user) )
 		else
@@ -176,10 +176,10 @@
 			user << "<span class='warning'>You need more paper!</span>"
 			return
 	else
-		user << "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery.</span>"
+		user << "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
 		return
 
-	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
+	user.visible_message("[user] wraps [target].")
 	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on [target]</font>")
 
 	if(amount <= 0 && !src.loc) //if we used our last wrapping paper, drop a cardboard tube

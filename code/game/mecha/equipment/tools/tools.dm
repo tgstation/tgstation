@@ -93,8 +93,8 @@
 			return
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
-	target.visible_message("<span class='danger'>[chassis] starts to drill [target]</span>", \
-					"<span class='userdanger'>[chassis] starts to drill [target]</span>", \
+	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
+					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
 					 "<span class='italics'>You hear drilling.</span>")
 	var/T = chassis.loc
 	var/C = target.loc	//why are these backwards? we may never know -Pete

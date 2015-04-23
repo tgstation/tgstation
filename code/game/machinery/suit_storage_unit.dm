@@ -455,7 +455,7 @@
 			else
 				isopen = 1
 				islocked = 0
-				visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+				visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
 
 		else
 			return

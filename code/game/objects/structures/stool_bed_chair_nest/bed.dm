@@ -92,7 +92,7 @@
 			return
 		if(buckled_mob)
 			return 0
-		visible_message("<span class='notice'>[usr] collapses \the [src.name].</span>")
+		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
 		new/obj/item/roller(get_turf(src))
 		qdel(src)
 		return
@@ -114,7 +114,7 @@
 	if(loaded)
 		var/obj/structure/stool/bed/roller/R = loaded
 		R.loc = user.loc
-		user.visible_message("<span class='notice'>[user] deploys [loaded].</span>")
+		user.visible_message("[user] deploys [loaded].", "<span class='notice'>You deploy [loaded].</span>")
 		loaded = null
 	else
 		user << "<span class='warning'>The dock is empty!</span>"
@@ -124,7 +124,7 @@
 		if(!proximity)
 			return
 		if(loaded)
-			user << "<span class='notice'>You already have a roller bed docked!</span>"
+			user << "<span class='warning'>You already have a roller bed docked!</span>"
 			return
 
 		var/obj/structure/stool/bed/roller/R = target
@@ -133,6 +133,6 @@
 
 		loaded = target
 		target.loc = src
-		user.visible_message("<span class='notice'>[user] collects [loaded].</span>")
+		user.visible_message("[user] collects [loaded].", "<span class='notice'>You collect [loaded].</span>")
 	..()
 

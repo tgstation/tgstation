@@ -45,7 +45,7 @@
 						if(procedure.location == "anywhere") // if location == "anywhere" change location to the surgeon's target, otherwise leave location as is.
 							procedure.location = user.zone_sel.selecting
 						M.surgeries += procedure
-						user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
+						user.visible_message("[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].", "<span class='notice'>You drape [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
 
 						add_logs(user, M, "operated", addition="Operation type: [procedure.name]")
 						return 1

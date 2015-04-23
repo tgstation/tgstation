@@ -147,9 +147,9 @@
 /obj/item/weapon/gun/projectile/revolver/russian/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	var/num_loaded = ..()
 	if(num_loaded)
-		user.visible_message("[user] loads a single bullet into the revolver and spins the chamber.", "<span class='warning'>You load a single bullet into the chamber and spin it.</span>")
+		user.visible_message("[user] loads a single bullet into the revolver and spins the chamber.", "<span class='notice'>You load a single bullet into the chamber and spin it.</span>")
 	else
-		user.visible_message("[user] spins the chamber of the revolver.", "<span class='warning'>You spin the revolver's chamber.</span>")
+		user.visible_message("[user] spins the chamber of the revolver.", "<span class='notice'>You spin the revolver's chamber.</span>")
 	if(get_ammo() > 0)
 		Spin()
 	update_icon()
@@ -158,7 +158,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user as mob)
 	if(!spun && can_shoot())
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='notice'>You spin the revolver's chamber.</span>")
+		user.visible_message("[user] spins the chamber of the revolver.", "<span class='notice'>You spin the revolver's chamber.</span>")
 		Spin()
 	else
 		var/num_unloaded = 0
@@ -170,7 +170,7 @@
 			CB.update_icon()
 			num_unloaded++
 		if (num_unloaded)
-			user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src]!</span>"
+			user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
 		else
 			user << "<span class='notice'>[src] is empty.</span>"
 

@@ -59,23 +59,23 @@
 	if(src.broken > 0)
 		if(src.broken == 2 && istype(O, /obj/item/weapon/wirecutters)) // If it's broken and they're using a screwdriver
 			user.visible_message( \
-				"<span class='notice'>[user] starts to fix part of the microwave.</span>", \
+				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
 			if (do_after(user,20))
 				user.visible_message( \
-					"<span class='notice'>[user] fixes part of the microwave.</span>", \
+					"[user] fixes part of the microwave.", \
 					"<span class='notice'>You fix part of the microwave.</span>" \
 				)
 				src.broken = 1 // Fix it a bit
 		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool)) // If it's broken and they're doing the wrench
 			user.visible_message( \
-				"<span class='notice'>[user] starts to fix part of the microwave.</span>", \
+				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
 			if (do_after(user,20))
 				user.visible_message( \
-					"<span class='notice'>[user] fixes the microwave.</span>", \
+					"[user] fixes the microwave.", \
 					"<span class='notice'>You fix the microwave.</span>" \
 				)
 				src.icon_state = "mw"
@@ -84,7 +84,7 @@
 				src.flags = OPENCONTAINER
 				return 0 //to use some fuel
 		else
-			user << "<span class='danger'>It's broken!</span>"
+			user << "<span class='warning'>It's broken!</span>"
 			return 1
 	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
@@ -92,7 +92,7 @@
 			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			user.visible_message( \
-				"<span class='notice'>[user] has cleaned the microwave.</span>", \
+				"[user] has cleaned the microwave.", \
 				"<span class='notice'>You clean the microwave.</span>" \
 			)
 			src.dirty = 0 // It's clean!
@@ -108,12 +108,12 @@
 	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
 		var/obj/item/weapon/soap/P = O
 		user.visible_message( \
-			"<span class='notice'>[user] starts to clean the microwave.</span>", \
+			"[user] starts to clean the microwave.S", \
 			"<span class='notice'>You start to clean the microwave...</span>" \
 		)
 		if (do_after(user, P.cleanspeed))
 			user.visible_message( \
-				"<span class='notice'>[user] has cleaned the microwave.</span>", \
+				"[user] has cleaned the microwave.", \
 				"<span class='notice'>You clean the microwave.</span>" \
 			)
 			src.dirty = 0 // It's clean!
@@ -150,7 +150,7 @@
 				return 0
 			O.loc = src
 			user.visible_message( \
-				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
+				"[user] has added \the [O] to \the [src].", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
 
 	else

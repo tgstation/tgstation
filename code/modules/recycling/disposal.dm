@@ -134,7 +134,7 @@
 
 	user.drop_item()
 	I.loc = src
-	user.visible_message("<span class='notice'>[user.name] places \the [I] into \the [src].</span>", \
+	user.visible_message("[user.name] places \the [I] into \the [src].", \
 						"<span class='notice'>You place \the [I] into \the [src].</span>")
 
 	update()

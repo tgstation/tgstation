@@ -1527,7 +1527,7 @@ var/year_integer = text2num(year) // = 2013???
 		src.dna = null
 	if(href_list["repair_int_control_lost"])
 		if(usr != src.occupant)	return
-		src.occupant_message("Recalibrating coordination system.")
+		src.occupant_message("Recalibrating coordination system...")
 		src.log_message("Recalibration of coordination system started.")
 		var/T = src.loc
 		if(do_after(100))
@@ -1536,7 +1536,7 @@ var/year_integer = text2num(year) // = 2013???
 				src.occupant_message("<span class='notice'>Recalibration successful.</span>")
 				src.log_message("Recalibration of coordination system finished with 0 errors.")
 			else
-				src.occupant_message("<span class='danger'>Recalibration failed.</span>")
+				src.occupant_message("<span class='warning'>Recalibration failed!</span>")
 				src.log_message("Recalibration of coordination system failed with 1 error.",1)
 
 	//debug
