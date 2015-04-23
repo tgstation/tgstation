@@ -32,7 +32,7 @@
 		var/percent = round( 100.0 *  start_state.score(end_state), 0.1)
 		completion_text += "<br><B>The station is [percent]% intact.</B>"
 		log_game("Blob mode was won with station [percent]% intact.")
-		completion_text += "<br><span class='notice'>Rebooting in 30s</span>"
+		world << "<br><span class='notice'>Rebooting in 30s</span>"
 	..()
 	return 1
 
