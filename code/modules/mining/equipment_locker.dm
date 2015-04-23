@@ -61,7 +61,7 @@
 					continue // Skip slag for now.
 				if(O)
 					process_sheet(O)
-					score[oremined] += 1
+					score["oremined"] += 1
 				else
 					break
 		else
@@ -70,7 +70,7 @@
 				for(var/mat_id in B.materials.storage)
 					var/datum/material/mat = B.materials.getMaterial(mat_id)
 					materials.addAmount(mat_id,mat.stored)
-					score[oremined] += mat.stored
+					score["oremined"] += mat.stored
 					credits += mat.value * mat.stored // Gimme my fucking credits
 					mat.stored=0
 

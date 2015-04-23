@@ -625,7 +625,7 @@ proc/populate_seed_list()
 				var/obj/item/weapon/grown/current_product = product
 				current_product.plantname = name
 
-			score[stuffharvested] += 1
+			score["stuffharvested"] += 1
 
 
 // When the seed in this machine mutates/is modified, the tray seed value
