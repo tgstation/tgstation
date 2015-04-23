@@ -469,7 +469,6 @@
 
 /turf/unsimulated/floor/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	world << "Getting called with [W] and [user]"
 	if(!W || !user)
 		return 0
 
@@ -492,13 +491,6 @@
 		if(do_after(user, used_digging.digspeed) && user) //the better the drill, the faster the digging
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
-
-	if(istype(W,/obj/item/weapon/storage/bag/ore))
-		var/obj/item/weapon/storage/bag/ore/S = W
-		if(S.collection_mode)
-			for(var/obj/item/weapon/ore/O in contents)
-				O.attackby(W,user)
-				return
 
 	else
 		..(W,user)

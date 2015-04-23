@@ -21,6 +21,6 @@
 	if(..())
 		if(istype(newloc, /turf/unsimulated/floor/asteroid) && istype(module, /obj/item/weapon/robot_module/miner))
 			var/obj/item/weapon/storage/bag/ore/ore_bag = locate(/obj/item/weapon/storage/bag/ore) in get_all_slots() //find it in our modules
-			if(ore_bag)
-				world << "Calling with [ore_bag] and [src]"
-				newloc.attackby(ore_bag, src)
+			var/list/to_collect = newloc.contents - src
+			if(ore_bag && to_collect.len)
+				ore_bag.preattack(newloc, src, 1) //collects everything
