@@ -58,10 +58,10 @@
 		else
 			dat += "(10 Influence) Territory Spraycan<br>"
 
-		if(points >= 30)
-			dat += "(30 Influence) <a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
+		if(points >= 25)
+			dat += "(25 Influence) <a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
 		else
-			dat += "(30 Influence) 10mm Pistol<br>"
+			dat += "(25 Influence) 10mm Pistol<br>"
 
 		if(points >= 10)
 			dat += "(10 Influence) <a href='?src=\ref[src];purchase=ammo'>10mm Ammo</a><br>"
@@ -108,9 +108,9 @@
 					item_type = /obj/item/toy/crayon/spraycan/gang
 					points = 10
 			if("pistol")
-				if(points >= 30)
+				if(points >= 25)
 					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
-					points = 30
+					points = 25
 			if("ammo")
 				if(points >= 10)
 					item_type = /obj/item/ammo_box/magazine/m10mm
