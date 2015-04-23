@@ -19,6 +19,7 @@
 
 Kuranyll = Host
 Riesen = Head Shitmin
+Misterstaub = Super Badmin
 DimJim = Badmin
 GreyTideStationWide = Badmin
 Dopaper = Badmin
