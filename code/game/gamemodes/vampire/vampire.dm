@@ -88,15 +88,20 @@
 	return
 
 /datum/game_mode/proc/auto_declare_completion_vampire()
+	var/text = ""
 	if(vampires.len)
 		var/icon/logo = icon('icons/mob/mob.dmi', "vampire-logo")
-		var/text = "<br>\icon[logo] <FONT size = 2><B>The vampires were:</B></FONT> \icon[logo]"
+		end_icons += logo
+		var/tempstate = end_icons.len
+		text += {"<br><img src="logo_[tempstate].png"> <FONT size = 2><B>The vampires were:</B></FONT> <img src="logo_[tempstate].png">"}
 		for(var/datum/mind/vampire in vampires)
 			var/traitorwin = 1
 
 			if(vampire.current)
 				var/icon/flat = getFlatIcon(vampire.current)
-				text += "<br>\icon[flat] [vampire.key] was [vampire.name] ("
+				end_icons += flat
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> [vampire.key] was [vampire.name] ("}
 				if(vampire.current.stat == DEAD)
 					text += "died"
 				else
@@ -105,7 +110,9 @@
 					text += " as [vampire.current.real_name]"
 			else
 				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
-				text += "<br>\icon[sprotch] [vampire.key] was [vampire.name] ("
+				end_icons += sprotch
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> [vampire.key] was [vampire.name] ("}
 				text += "body destroyed"
 			text += ")"
 
@@ -141,15 +148,21 @@
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
 				feedback_add_details("traitor_success","FAIL")
 
-		world << text
-	return 1
+	return text
 
 /datum/game_mode/proc/auto_declare_completion_enthralled()
+	var/text = ""
 	if(enthralled.len)
-		var/text = "<FONT size = 2><B>The Enthralled were:</B></FONT>"
+		var/icon/logo = icon('icons/mob/mob.dmi', "thrall-logo")
+		end_icons += logo
+		var/tempstate = end_icons.len
+		text += {"<FONT size = 2><img src="logo_[tempstate].png"> <B>The Enthralled were:</B> <img src="logo_[tempstate].png"></FONT>"}
 		for(var/datum/mind/Mind in enthralled)
-			text += "<br>[Mind.key] was [Mind.name] ("
 			if(Mind.current)
+				var/icon/flat = getFlatIcon(Mind.current)
+				end_icons += flat
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> [Mind.key] was [Mind.name] ("}
 				if(Mind.current.stat == DEAD)
 					text += "died"
 				else
@@ -157,6 +170,10 @@
 				if(Mind.current.real_name != Mind.name)
 					text += " as [Mind.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				end_icons += sprotch
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> [Mind.key] was [Mind.name] ("}
 				text += "body destroyed"
 			text += ")"
 
@@ -166,8 +183,7 @@
 				else
 					text += "<span class='sinister'>The Enthralled was a smooth operator this round (did not purchase any uplink items)</span>"
 
-		world << text
-	return 1
+	return text
 
 /datum/game_mode/proc/forge_vampire_objectives(var/datum/mind/vampire)
 	//Objectives are traitor objectives plus blood objectives

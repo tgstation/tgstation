@@ -497,21 +497,21 @@
 	if(universe.name == "Hell Rising")
 		if(bonus)
 			feedback_set_details("round_end_result","win - narsie summoned - all objectives completed")
-			world << "<FONT size = 3><B>Cult Total Victory!</B></FONT>"
-			world << "<B>The Cult has summoned Nar-Sie and fulfilled all of his requests</B>"
+			completion_text += "<FONT size = 3><B>Cult Total Victory!</B></FONT>"
+			completion_text +=  "<BR><B>The Cult has summoned Nar-Sie and fulfilled all of his requests</B>"
 		else
 			feedback_set_details("round_end_result","win - narsie summoned")
-			world << "<FONT size = 3><B>Cult Major Victory!</B></FONT>"
-			world << "<B>The Cult has managed to summon Nar-Sie</B>"
+			completion_text +=  "<FONT size = 3><B>Cult Major Victory!</B></FONT>"
+			completion_text +=  "<BR><B>The Cult has managed to summon Nar-Sie</B>"
 	else
 		if(current_objective > 1)
 			feedback_set_details("round_end_result","halfwin - some objectives completed")
-			world << "<FONT size = 3><B>Crew Minor Victory!</B></FONT>"
-			world << "<B>The Cult didn't summon Nar-Sie in time but still managed to fulfill some of his requests.</B>"
+			completion_text +=  "<FONT size = 3><B>Crew Minor Victory!</B></FONT>"
+			completion_text +=  "<BR><B>The Cult didn't summon Nar-Sie in time but still managed to fulfill some of his requests.</B>"
 		else
 			feedback_set_details("round_end_result","loss - no objective done")
-			world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
-			world << "<B>The Staff has managed to stop the Cult</B>"
+			completion_text +=  "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
+			completion_text +=  "<BR><B>The Staff has managed to stop the Cult</B>"
 
 	var/text = "<b>Objectives Completed:</b> [current_objective - 1 + bonus]"
 
@@ -582,29 +582,39 @@
 
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 
-	world << text
+	completion_text += text
 	..()
 	return 1
 
 
 /datum/game_mode/proc/auto_declare_completion_cult()
+	var/text = ""
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
 		var/icon/logo = icon('icons/mob/mob.dmi', "cult-logo")
-		var/text = "<br>\icon[logo] <FONT size = 2><B>The cultists were:</B></FONT> \icon[logo]"
+		end_icons += logo
+		var/tempstate = end_icons.len
+		text += {"<br><img src="logo_[tempstate].png"> <FONT size = 2><B>The cultists were:</B></FONT> <img src="logo_[tempstate].png">"}
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)
-				var/icon/flat = getFlatIcon(cultist.current)
-				text += "<br>\icon[flat] [cultist.key] was [cultist.name] ("
+				var/icon/flat = getFlatIcon(cultist.current, SOUTH, 1, 1)
+				end_icons += flat
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[cultist.key]</b> was <b>[cultist.name]</b> ("}
 				if(cultist.current.stat == DEAD)
 					text += "died"
+					flat.Turn(90)
+					end_icons[tempstate] = flat
 				else
 					text += "survived"
 				if(cultist.current.real_name != cultist.name)
 					text += " as [cultist.current.real_name]"
 			else
 				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
-				text += "<br>\icon[sprotch] [cultist.key] was [cultist.name] ("
+				end_icons += sprotch
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> [cultist.key] was [cultist.name] ("}
 				text += "body destroyed"
 			text += ")"
+		text += "<BR><HR>"
 
-		world << text
+	return text

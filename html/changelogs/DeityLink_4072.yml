@@ -1,0 +1,9 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: Moved all the End Round information from the chat window to the popup browser. Easier to read, and allows you to check antags and other info such as silicon laws and antag objectives completions while keeping up with the chat.
+  - imageadd: Added a few icons to illustrate the End Round popup. Antags are now displayed as they are next to their name.
+  - bugfix: Fixed Photography, again, injuries now properly show up on people.
+  - rscadd: Harvested Plants are now properly counted and credited for in the End Round popup (and Crew Score)
+  - rscadd: Smelted Ores (not just mined) are now properly counted and credited for in the End Round popup (and Crew Score). Whether you smelt them with the Ore Redemption Machine or the Conveyor on the Asteroid doesn't change anything.
+  - rscadd: The Round End popup now displays how many rounds of Arena Bomberman occurred during the round, and who won most of them (and how many)

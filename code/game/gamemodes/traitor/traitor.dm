@@ -222,24 +222,33 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
+	var/text = ""
 	if(traitors.len)
 		var/icon/logo = icon('icons/mob/mob.dmi', "synd-logo")
-		var/text = "\icon[logo] <FONT size = 2><B>The traitors were:</B></FONT> \icon[logo]"
+		end_icons += logo
+		var/tempstate = end_icons.len
+		text += {"<BR><img src="logo_[tempstate].png"> <FONT size = 2><B>The traitors were:</B></FONT> <img src="logo_[tempstate].png">"}
 		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
 
 			if(traitor.current)
-				var/icon/flat = getFlatIcon(traitor.current)
-				text += "<br>\icon[flat] [traitor.key] was [traitor.name] ("
+				var/icon/flat = getFlatIcon(traitor.current, SOUTH, 1, 1)
+				end_icons += flat
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[traitor.key]</b> was <b>[traitor.name]</b> ("}
 				if(traitor.current.stat == DEAD)
 					text += "died"
+					flat.Turn(90)
+					end_icons[tempstate] = flat
 				else
 					text += "survived"
 				if(traitor.current.real_name != traitor.name)
 					text += " as [traitor.current.real_name]"
 			else
 				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
-				text += "<br>\icon[sprotch] [traitor.key] was [traitor.name] ("
+				end_icons += sprotch
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[traitor.key]</b> was <b>[traitor.name]</b> ("}
 				text += "body destroyed"
 			text += ")"
 
@@ -275,10 +284,9 @@
 						text += "<br>[entry]"
 					text += "</span>"
 				else
-					text += "<br><span class='sinister'>The [(traitor in implanted) ? "greytide" : special_role_text] was a smooth operator this round<br>(did not purchase any uplink items)</span>"
-
-		world << text
-	return 1
+					text += "<br><span class='sinister'>The [(traitor in implanted) ? "greytide" : special_role_text] was a smooth operator this round (did not purchase any uplink items)</span>"
+		text += "<BR><HR>"
+	return text
 
 
 /datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob, var/safety = 0)

@@ -70,6 +70,9 @@ var/list/uplink_items = list()
 			return 0
 
 		var/obj/I = spawn_item(get_turf(user), U, user)
+		var/icon/tempimage = icon(I.icon, I.icon_state)
+		end_icons += tempimage
+		var/tempstate = end_icons.len
 
 		var/bundlename = name
 		if(name == "Random Item" || name == "For showing that you are The Boss")
@@ -80,9 +83,9 @@ var/list/uplink_items = list()
 		if(ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
-			U.purchase_log += "[user] ([user.ckey]) bought \icon[I] [name] for [cost]."
+			U.purchase_log += {"[user] ([user.ckey]) bought <img src="logo_[tempstate].png"> [name] for [cost]."}
 			if(user.mind)
-				user.mind.uplink_items_bought += "\icon[I] [bundlename]"
+				user.mind.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename]"}
 				user.mind.spent_TC += cost
 		U.interact(user)
 

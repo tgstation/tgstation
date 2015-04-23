@@ -231,50 +231,54 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 
 	if      ( station_captured &&                station_was_nuked)
 		feedback_set_details("round_end_result","win - AI win - nuke")
-		world << "<FONT size = 3><B>AI Victory</B></FONT>"
-		world << "<B>Everyone was killed by the self-destruct!</B>"
+		completion_text += "<FONT size = 3><B>AI Victory</B></FONT>"
+		completion_text += "<BR><B>Everyone was killed by the self-destruct!</B>"
 
 	else if ( station_captured &&  malf_dead && !station_was_nuked)
 		feedback_set_details("round_end_result","halfwin - AI killed, staff lost control")
-		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
-		world << "<B>The AI has been killed!</B> The staff has lose control over the station."
+		completion_text += "<FONT size = 3><B>Neutral Victory</B></FONT>"
+		completion_text += "<BR><B>The AI has been killed!</B> The staff has lose control over the station."
 
 	else if ( station_captured && !malf_dead && !station_was_nuked)
 		feedback_set_details("round_end_result","win - AI win - no explosion")
-		world << "<FONT size = 3><B>AI Victory</B></FONT>"
-		world << "<B>The AI has chosen not to explode you all!</B>"
+		completion_text += "<FONT size = 3><B>AI Victory</B></FONT>"
+		completion_text += "<BR><B>The AI has chosen not to explode you all!</B>"
 
 	else if (!station_captured &&                station_was_nuked)
 		feedback_set_details("round_end_result","halfwin - everyone killed by nuke")
-		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
-		world << "<B>Everyone was killed by the nuclear blast!</B>"
+		completion_text += "<FONT size = 3><B>Neutral Victory</B></FONT>"
+		completion_text += "<BR><B>Everyone was killed by the nuclear blast!</B>"
 
 	else if (!station_captured &&  malf_dead && !station_was_nuked)
 		feedback_set_details("round_end_result","loss - staff win")
-		world << "<FONT size = 3><B>Human Victory</B></FONT>"
-		world << "<B>The AI has been killed!</B> The staff is victorious."
+		completion_text += "<FONT size = 3><B>Human Victory</B></FONT>"
+		completion_text += "<BR><B>The AI has been killed!</B> The staff is victorious."
 
 	else if (!station_captured && !malf_dead && !station_was_nuked && crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - evacuated")
-		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
-		world << "<B>The Corporation has lose [station_name()]! All survived personnel will be fired!</B>"
+		completion_text += "<FONT size = 3><B>Neutral Victory</B></FONT>"
+		completion_text += "<BR><B>The Corporation has lose [station_name()]! All survived personnel will be fired!</B>"
 
 	else if (!station_captured && !malf_dead && !station_was_nuked && !crew_evacuated)
 		feedback_set_details("round_end_result","nalfwin - interrupted")
-		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
-		world << "<B>Round was mysteriously interrupted!</B>"
+		completion_text += "<FONT size = 3><B>Neutral Victory</B></FONT>"
+		completion_text += "<BR><B>Round was mysteriously interrupted!</B>"
 	..()
 	return 1
 
 
 /datum/game_mode/proc/auto_declare_completion_malfunction()
+	var/text = ""
 	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
-		var/text = "<FONT size = 2><B>The malfunctioning AI were:</B></FONT>"
+		text += "<FONT size = 2><B>The malfunctioning AI were:</B></FONT>"
 
 		for(var/datum/mind/malf in malf_ai)
 
-			text += "<br>[malf.key] was [malf.name] ("
 			if(malf.current)
+				var/icon/flat = getFlatIcon(malf.current)
+				end_icons += flat
+				var/tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[malf.key]</b> was <b>[malf.name]</b> ("}
 				if(malf.current.stat == DEAD)
 					text += "deactivated"
 				else
@@ -282,8 +286,12 @@ You should now be able to use your Explode verb to interface with the nuclear fi
 				if(malf.current.real_name != malf.name)
 					text += " as [malf.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/mob/robots.dmi', "gib7")
+				end_icons += sprotch
+				var/tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[malf.key]</b> was <b>[malf.name]</b> ("}
 				text += "hardware destroyed"
 			text += ")"
 
-		world << text
-	return 1
+		text += "<BR><HR>"
+	return text

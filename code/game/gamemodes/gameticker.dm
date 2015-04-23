@@ -425,52 +425,67 @@ var/global/datum/controller/gameticker/ticker
 
 
 /datum/controller/gameticker/proc/declare_completion()
+	var/ai_completions = "<h1>Round End Information</h1><HR>"
 
+	ai_completions += "<h3>Silicons Laws</h3>"
 	for(var/mob/living/silicon/ai/ai in mob_list)
+		var/icon/flat = getFlatIcon(ai)
+		end_icons += flat
+		var/tempstate = end_icons.len
 		if(ai.stat != 2)
-			world << "<b>[ai.name] (Played by: [ai.key])'s laws at the end of the game were:</b>"
+			ai_completions += {"<br><b><img src="logo_[tempstate].png"> [ai.name] (Played by: [ai.key])'s laws at the end of the game were:</b>"}
 		else
-			world << "<b>[ai.name] (Played by: [ai.key])'s laws when it was deactivated were:</b>"
-		ai.show_laws(1)
+			ai_completions += {"<br><b><img src="logo_[tempstate].png"> [ai.name] (Played by: [ai.key])'s laws when it was deactivated were:</b>"}
+		ai_completions += "<br>[ai.write_laws()]"
 
 		if (ai.connected_robots.len)
-			var/robolist = "<b>The AI's loyal minions were:</b> "
+			var/robolist = "<br><b>The AI's loyal minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in ai.connected_robots)
 				if (!robo.connected_ai || !isMoMMI(robo)) // Don't report MoMMIs or unslaved robutts
 					continue
 				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
-			world << "[robolist]"
+			ai_completions += "[robolist]"
 
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if(!robo)
 			continue
+		var/icon/flat = getFlatIcon(robo)
+		end_icons += flat
+		var/tempstate = end_icons.len
 		if (!robo.connected_ai)
 			if (robo.stat != 2)
-				world << "<b>[robo.name] (Played by: [robo.key]) survived as an AI-less [isMoMMI(robo)?"MoMMI":"borg"]! Its laws were:</b>"
+				ai_completions += {"<br><b><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) survived as an AI-less [isMoMMI(robo)?"MoMMI":"borg"]! Its laws were:</b>"}
 			else
-				world << "<b>[robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a [isMoMMI(robo)?"MoMMI":"cyborg"] without an AI. Its laws were:</b>"
+				ai_completions += {"<br><b><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a [isMoMMI(robo)?"MoMMI":"cyborg"] without an AI. Its laws were:</b>"}
 		else
-			world << "<b>[robo.name] (Played by: [robo.key]) [robo.stat!=2?"survived":"perished"] as a [isMoMMI(robo)?"MoMMI":"cyborg"] slaved to [robo.connected_ai]! Its laws were:</b>"
-		robo.laws.show_laws(world)
+			ai_completions += {"<br><b><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) [robo.stat!=2?"survived":"perished"] as a [isMoMMI(robo)?"MoMMI":"cyborg"] slaved to [robo.connected_ai]! Its laws were:</b>"}
+		ai_completions += "<br>[robo.write_laws()]"
 
 	mode.declare_completion()//To declare normal completion.
 
-	scoreboard()
+	ai_completions += "<HR><BR><h2>Mode Result</h2>"
+	ai_completions += "<br>[mode.completion_text]"
 
-	if(bomberman_mode)
-		bomberman_declare_completion()
-
-	if(achievements.len)
-		achievement_declare_completion()
+	scoreboard(ai_completions)
 
 	return 1
 
 /datum/controller/gameticker/proc/bomberman_declare_completion()
 	var/icon/bomberhead = icon('icons/obj/clothing/hats.dmi', "bomberman")
+	end_icons += bomberhead
+	var/tempstatebomberhead = end_icons.len
 	var/icon/bronze = icon('icons/obj/bomberman.dmi', "bronze")
+	end_icons += bronze
+	var/tempstatebronze = end_icons.len
 	var/icon/silver = icon('icons/obj/bomberman.dmi', "silver")
+	end_icons += silver
+	var/tempstatesilver = end_icons.len
 	var/icon/gold = icon('icons/obj/bomberman.dmi', "gold")
+	end_icons += gold
+	var/tempstategold = end_icons.len
 	var/icon/platinum = icon('icons/obj/bomberman.dmi', "platinum")
+	end_icons += platinum
+	var/tempstateplatinum = end_icons.len
 
 	var/list/bronze_tier = list()
 	for (var/mob/living/carbon/M in player_list)
@@ -501,36 +516,53 @@ var/global/datum/controller/gameticker/ticker
 		if(istype(M.head_state, /obj/item/clothing/head/helmet/space/bomberman) && istype(M.tool_state, /obj/item/weapon/bomberman/))
 			special_tier += M
 
-	var/text = "\icon[bomberhead] <b>Bomberman Mode Results</b> \icon[bomberhead]"
+	var/text = {"<img src="logo_[tempstatebomberhead].png"> <font size=5><b>Bomberman Mode Results</b></font> <img src="logo_[tempstatebomberhead].png">"}
 	if(!platinum_tier.len && !gold_tier.len && !silver_tier.len && !bronze_tier.len)
 		text += "<br><span class='danger'>DRAW!</span>"
 	if(platinum_tier.len)
-		text += "<br>\icon[platinum] <b>Platinum Trophy</b> (never removed his clothes, kept his bomb dispenser until the end, and escaped on the shuttle):"
+		text += {"<br><img src="logo_[tempstateplatinum].png"> <b>Platinum Trophy</b> (never removed his clothes, kept his bomb dispenser until the end, and escaped on the shuttle):"}
 		for (var/mob/M in platinum_tier)
-			text += "<br>[M.real_name]"
+			var/icon/flat = getFlatIcon(M, SOUTH, 1, 1)
+			end_icons += flat
+			var/tempstate = end_icons.len
+			text += {"<br><img src="logo_[tempstate].png"> <b>[M.key]</b> as <b>[M.real_name]</b>"}
 	if(gold_tier.len)
-		text += "<br>\icon[gold] <b>Gold Trophy</b> (kept his bomb dispenser until the end, and escaped on the shuttle):"
+		text += {"<br><img src="logo_[tempstategold].png"> <b>Gold Trophy</b> (kept his bomb dispenser until the end, and escaped on the shuttle):"}
 		for (var/mob/M in gold_tier)
-			text += "<br>[M.real_name]"
+			var/icon/flat = getFlatIcon(M, SOUTH, 1, 1)
+			end_icons += flat
+			var/tempstate = end_icons.len
+			text += {"<br><img src="logo_[tempstate].png"> <b>[M.key]</b> as <b>[M.real_name]</b>"}
 	if(silver_tier.len)
-		text += "<br>\icon[silver] <b>Silver Trophy</b> (kept his bomb dispenser until the end, and escaped in a pod):"
+		text += {"<br><img src="logo_[tempstatesilver].png"> <b>Silver Trophy</b> (kept his bomb dispenser until the end, and escaped in a pod):"}
 		for (var/mob/M in silver_tier)
-			text += "<br>[M.real_name]"
+			var/icon/flat = getFlatIcon(M, SOUTH, 1, 1)
+			end_icons += flat
+			var/tempstate = end_icons.len
+			text += {"<br><img src="logo_[tempstate].png"> <b>[M.key]</b> as <b>[M.real_name]</b>"}
 	if(bronze_tier.len)
-		text += "<br>\icon[bronze] <b>Bronze Trophy</b> (kept his bomb dispenser until the end):"
+		text += {"<br><img src="logo_[tempstatebronze].png"> <b>Bronze Trophy</b> (kept his bomb dispenser until the end):"}
 		for (var/mob/M in bronze_tier)
-			text += "<br>[M.real_name]"
+			var/icon/flat = getFlatIcon(M, SOUTH, 1, 1)
+			end_icons += flat
+			var/tempstate = end_icons.len
+			text += {"<br><img src="logo_[tempstate].png"> <b>[M.key]</b> as <b>[M.real_name]</b>"}
 	if(special_tier.len)
 		text += "<br><b>Special Mention</b> to those adorable MoMMis:"
 		for (var/mob/M in special_tier)
-			text += "<br>[M]"
+			var/icon/flat = getFlatIcon(M, SOUTH, 1, 1)
+			end_icons += flat
+			var/tempstate = end_icons.len
+			text += {"<br><img src="logo_[tempstate].png"> <b>[M.key]</b> as <b>[M.name]</b>"}
 
-	world << text
+	return text
 
 /datum/controller/gameticker/proc/achievement_declare_completion()
-	var/text = "<br><FONT size = 2><B>Additionally, the following players earned achievements:</B></FONT>"
+	var/text = "<br><FONT size = 5><b>Additionally, the following players earned achievements:</b></FONT>"
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
+	end_icons += cup
+	var/tempstate = end_icons.len
 	for(var/winner in achievements)
-		text += "<br>\icon[cup] [winner]"
+		text += {"<br><img src="logo_[tempstate].png"> [winner]"}
 
-	world << text
+	return text

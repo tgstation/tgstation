@@ -941,8 +941,8 @@ var/list/admin_verbs_mod = list(
 		winner.client << sound('sound/misc/achievement.ogg')
 	else
 		world  << sound('sound/misc/achievement.ogg')
-		world << "<span class='danger'>\icon[cup] [winner.name] wins \"[name]\"!</span>"
+		world << "<span class='danger'>\icon[cup] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>"
 
 	winner << "<span class='danger'>Congratulations!</span>"
 
-	achievements += "[winner.key] as [winner.name] won \"[name]\"! \"[desc]\""
+	achievements += "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[name]</b>\"! \"[desc]\""

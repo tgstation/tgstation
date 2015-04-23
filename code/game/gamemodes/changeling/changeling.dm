@@ -168,20 +168,36 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	changeling_mob.make_changeling()
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
+	var/text = ""
 	if(changelings.len)
-		var/text = "<FONT size = 2><B>The changelings were:</B></FONT>"
+		var/icon/logoa = icon('icons/mob/mob.dmi', "change-logoa")
+		var/icon/logob = icon('icons/mob/mob.dmi', "change-logob")
+		end_icons += logoa
+		var/tempstatea = end_icons.len
+		end_icons += logob
+		var/tempstateb = end_icons.len
+		text += {"<BR><img src="logo_[tempstatea].png"> <FONT size = 2><B>The changelings were:</B></FONT> <img src="logo_[tempstateb].png">"}
 		for(var/datum/mind/changeling in changelings)
 			var/changelingwin = 1
 
-			text += "<br>[changeling.key] was [changeling.name] ("
 			if(changeling.current)
+				var/icon/flat = getFlatIcon(changeling.current, SOUTH, 1, 1)
+				end_icons += flat
+				var/tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[changeling.key]</b> was <b>[changeling.name]</b> ("}
 				if(changeling.current.stat == DEAD)
 					text += "died"
+					flat.Turn(90)
+					end_icons[tempstate] = flat
 				else
 					text += "survived"
 				if(changeling.current.real_name != changeling.name)
 					text += " as [changeling.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				end_icons += sprotch
+				var/tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[changeling.key]</b> was <b>[changeling.name]</b> ("}
 				text += "body destroyed"
 				changelingwin = 0
 			text += ")"
@@ -214,14 +230,13 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 			if(changeling.total_TC)
 				if(changeling.spent_TC)
-					text += "<br><span class='sinister'>TC Remaining: [changeling.total_TC - changeling.spent_TC]/[changeling.total_TC] - The tools used by the Changeling were: [list2text(changeling.uplink_items_bought, ", ")]</span>"
+					text += "<br><span class='sinister'>TC Remaining: [changeling.total_TC - changeling.spent_TC]/[changeling.total_TC] - The tools used by the Changeling were: "
+					for(var/entry in changeling.uplink_items_bought)
+						text += "<br>[entry]"
 				else
-					text += "<span class='sinister'>The Changeling was a smooth operator this round (did not purchase any uplink items)</span>"
-
-		world << text
-
-
-	return 1
+					text += "<br><span class='sinister'>The Changeling was a smooth operator this round (did not purchase any uplink items)</span>"
+		text += "<BR><HR>"
+	return text
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
 	var/list/absorbed_dna = list()

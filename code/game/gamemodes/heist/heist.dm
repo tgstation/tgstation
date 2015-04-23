@@ -230,7 +230,7 @@ Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to 
 		else
 			win_msg += "<B>The Vox Raiders were repelled!</B>"
 
-	world << "<span class='danger'><FONT size = 3>[win_type] [win_group] victory!</FONT><br>[win_msg]</span>"
+	completion_text += "<br><span class='danger'><FONT size = 3>[win_type] [win_group] victory!</FONT><br>[win_msg]</span>"
 
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 
@@ -240,19 +240,25 @@ Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to 
 		count++
 
 		if(objective.check_completion())
-			world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+			completion_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
 			feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 		else
-			world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+			completion_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 			feedback_add_details("traitor_objective","[objective.type]|FAIL")
 
-	var/text = "<FONT size = 2><B>The vox raiders were:</B></FONT>"
+	var/icon/logo = icon('icons/mob/mob.dmi', "vox-logo")
+	end_icons += logo
+	var/tempstate = end_icons.len
+	var/text = {"<br><img src="logo_[tempstate].png"> <FONT size = 2><B>The vox raiders were:</B></FONT> <img src="logo_[tempstate].png">"}
 	var/end_area = get_area_master(locate(/area/shuttle/vox/station))
 
 	for(var/datum/mind/vox in raiders)
-		text += "<br>[vox.key] was [vox.name] ("
 
 		if(vox.current)
+			var/icon/flat = getFlatIcon(vox.current, SOUTH, 1, 1)
+			end_icons += flat
+			tempstate = end_icons.len
+			text += {"<br><img src="logo_[tempstate].png"> <b>[vox.key]</b> was <b>[vox.name]</b> ("}
 			if(get_area_master(vox.current) != end_area) // areaMaster var can be used on this if move_contents_to proc refactored to use Move()
 				text += "left behind, "
 
@@ -260,15 +266,21 @@ Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to 
 				text += "survived"
 			else
 				text += "died"
+				flat.Turn(90)
+				end_icons[tempstate] = flat
 
 			if(vox.current.real_name != vox.name)
 				text += " as [vox.current.real_name]"
 		else
+			var/icon/sprotch = icon('icons/effects/blood.dmi', "voxblood")
+			end_icons += sprotch
+			tempstate = end_icons.len
+			text += {"<br><img src="logo_[tempstate].png"> <b>[vox.key]</b> was <b>[vox.name]</b> ("}
 			text += "body destroyed"
 
 		text += ")"
 
-	world << text
+	completion_text += text
 	..()
 	return 1
 
