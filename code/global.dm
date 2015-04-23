@@ -378,3 +378,5 @@ var/global/list/end_icons = list()
 var/global/list/arena_leaderboard = list()
 var/arena_rounds = 0
 var/arena_top_score = 0
+
+var/endgame_info_logged = 0

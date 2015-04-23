@@ -376,5 +376,9 @@
 	for(var/i=1;i<=end_icons.len;i++)
 		src << browse_rsc(end_icons[i],"logo_[i].png")
 
+	if(!endgame_info_logged)//so the End Round info only gets logged on the first player.
+		endgame_info_logged = 1
+		log_game(dat)
+
 	src << browse(dat, "window=roundstats;size=1000x600")
 	return
