@@ -132,38 +132,46 @@
 	return 1
 /
 /mob/living/silicon/robot/mommi/handle_regular_hud_updates()
+	handle_sensor_modes()
+	/*src.sight &= ~SEE_MOBS
+	src.sight &= ~SEE_TURFS
+	src.sight &= ~SEE_OBJS
+	src.sight &= ~BLIND
+	src.see_in_dark = 8
+	src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	if (src.stat == DEAD)
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		src.see_in_dark = 8
+		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	else
+		if (M_XRAY in mutations || src.sight_mode & BORGXRAY)
+			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+			src.see_in_dark = 8
+			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if ((src.sight_mode & BORGTHERM) || sensor_mode == THERMAL_VISION)
+			src.sight |= SEE_MOBS
+			src.see_in_dark = 8
+			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if (sensor_mode == NIGHT)
+			see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+			see_in_dark = 8
+		if ((src.sight_mode & BORGMESON) || (sensor_mode == MESON_VISION))
+			src.sight |= SEE_TURFS
+			src.see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_MINIMUM
+	*/
 
-	if (src.stat == 2 || M_XRAY in mutations || src.sight_mode & BORGXRAY)
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
-		src.sight |= SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if ((src.sight_mode & BORGMESON || sensor_mode == MESON_VISION) && src.sight_mode & BORGTHERM)
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
-		src.see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON || sensor_mode == MESON_VISION)
-		src.sight |= SEE_TURFS
-		src.see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGTHERM)
-		src.sight |= SEE_MOBS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (src.stat != 2)
-		src.sight &= ~SEE_MOBS
-		src.sight &= ~SEE_TURFS
-		src.sight &= ~SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
 	if(hud && hud.hud)	hud.hud.process_hud(src)
+	switch(sensor_mode)
+	if (SEC_HUD)
+		process_sec_hud(src, 1)
+	if (MED_HUD)
+		process_med_hud(src)
 
 	if (src.healths)
-		if (src.stat != 2)
+		if (src.stat != DEAD)
 			switch(health)
 				if(60 to INFINITY)
 					src.healths.icon_state = "health0"

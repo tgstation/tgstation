@@ -85,7 +85,6 @@ var/list/ai_list = list()
 	else src.laws = getLawset(src)
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
-	verbs -= /mob/living/silicon/verb/sensor_mode
 
 	aiPDA = new/obj/item/device/pda/ai(src)
 	aiPDA.owner = name

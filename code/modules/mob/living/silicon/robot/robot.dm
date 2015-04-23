@@ -1247,10 +1247,42 @@
 		statelaws()
 	return
 
-/mob/living/silicon/robot/sensor_mode() //Medical/Security HUD controller for borgs
+/mob/living/silicon/robot/verb/sensor_mode()
+	set name = "Set Sensor Augmentation"
 	set category = "Robot Commands"
-	set desc = "Augment visual feed with internal sensor overlays."
-	..()
+	if(!istype(module) || !istype(module.sensor_augs) || !module.sensor_augs.len)
+		src << "<span class='warning'>No Sensor Augmentations located or no module has been equipped.</span>"
+		return
+	var/sensor_type
+	if(module.sensor_augs.len == 1) // Only one choice so toggle between it.
+		if(!sensor_mode)
+			sensor_type = module.sensor_augs[1]
+		else
+			sensor_type = "Disable"
+	else
+		sensor_type = input("Please select sensor type.", "Sensor Integration", null) as null|anything in module.sensor_augs
+	if(sensor_type)
+		switch(sensor_type)
+			if ("Security")
+				sensor_mode = SEC_HUD
+				src << "<span class='notice'>Security records overlay enabled.</span>"
+			if ("Medical")
+				sensor_mode = MED_HUD
+				src << "<span class='notice'>Life signs monitor overlay enabled.</span>"/*
+			if ("Light Amplification")
+				src.sensor_mode = NIGHT
+				src << "<span class='notice'>Light amplification mode enabled.</span>"*/
+			if ("Mesons")
+				sensor_mode = MESON_VISION
+				src << "<span class='notice'>Meson Vison augmentation enabled.</span>"
+			if ("Thermal")
+				sensor_mode = THERMAL_VISION
+				src << "<span class='notice'>Thermal Optics augmentation enabled.</span>"
+			if ("Disable")
+				sensor_mode = 0
+				src << "<span class='notice'>Sensor augmentations disabled.</span>"
+		handle_sensor_modes()
+
 /mob/living/silicon/robot/proc/radio_menu()
 	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
 

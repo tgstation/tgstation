@@ -12,6 +12,7 @@
 	var/obj/item/borg/upgrade/jetpack = null
 	var/recharge_tick = 0
 	var/recharge_time = 10 // when to recharge a consumable, only used for engi borgs atm
+	var/list/sensor_augs
 
 /obj/item/weapon/robot_module/proc/recharge_consumable()
 	return
@@ -66,6 +67,8 @@
 	src.modules += new /obj/item/device/taperecorder(src)
 	src.modules += new /obj/item/device/megaphone(src)
 	src.emag = new /obj/item/weapon/melee/energy/sword(src)
+	sensor_augs = list("Security", "Medical", "Mesons", "Disable")
+
 
 	var/obj/item/stack/medical/bruise_pack/B = new /obj/item/stack/medical/bruise_pack(src)
 	B.max_amount = 15
@@ -127,6 +130,7 @@
 	src.modules += new /obj/item/weapon/revivalprod(src)
 	src.modules += new /obj/item/weapon/crowbar(src)
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
+	sensor_augs = list("Medical", "Disable")
 
 	src.emag.reagents.add_reagent("pacid", 250)
 	src.emag.name = "Polyacid spray"
@@ -188,6 +192,7 @@
 	src.modules += new /obj/item/taperoll/engineering(src)
 	src.modules += new /obj/item/weapon/tile_painter(src)
 	src.modules += new /obj/item/device/material_synth/robot(src)
+	sensor_augs = list("Mesons", "Disable")
 
 	var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
 	W.amount = 50
@@ -246,6 +251,7 @@
 	src.modules += new /obj/item/taperoll/police(src)
 	src.modules += new /obj/item/weapon/crowbar(src)
 	src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
+	sensor_augs = list("Security", "Medical", "Disable")
 	return
 
 /obj/item/weapon/robot_module/security/respawn_consumable(var/mob/living/silicon/robot/R)
@@ -344,6 +350,7 @@
 	src.modules += new /obj/item/device/mining_scanner(src)
 	src.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg(src)
 	src.modules += new /obj/item/weapon/crowbar(src)
+	sensor_augs = list("Mesons", "Disable")
 //		src.modules += new /obj/item/weapon/pickaxe/shovel(src) Uneeded due to buffed drill
 	return
 
@@ -357,13 +364,13 @@
 	src.modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
 	src.modules += new /obj/item/weapon/card/emag(src)
 	src.modules += new /obj/item/weapon/crowbar(src)
+	sensor_augs = list("Security", "Medical", "Mesons", "Thermal", "Light Amplification", "Disable")
 	return
 
 /obj/item/weapon/robot_module/combat
 	name = "combat robot module"
 
 /obj/item/weapon/robot_module/combat/New()
-	src.modules += new /obj/item/borg/sight/thermal(src)
 	src.modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
 	src.modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
 	src.modules += new /obj/item/borg/combat/shield(src)
@@ -371,4 +378,6 @@
 	src.modules += new /obj/item/weapon/wrench(src) //Is a combat android really going to be stopped by a chair?
 	src.modules += new /obj/item/weapon/crowbar(src)
 	src.emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
+	sensor_augs = list("Security", "Medical", "Mesons", "Thermal", "Light Amplification", "Disable")
+
 	return

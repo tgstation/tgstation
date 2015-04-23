@@ -141,9 +141,38 @@
 
 	return 1
 
-/mob/living/silicon/robot/proc/handle_regular_hud_updates()
+/mob/living/silicon/robot/proc/handle_sensor_modes()
+	src.sight &= ~SEE_MOBS
+	src.sight &= ~SEE_TURFS
+	src.sight &= ~SEE_OBJS
+	src.sight &= ~BLIND
+	src.see_in_dark = 8
+	src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	if (src.stat == DEAD)
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		src.see_in_dark = 8
+		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	else
+		if (M_XRAY in mutations || src.sight_mode & BORGXRAY)
+			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+			src.see_in_dark = 8
+			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if ((src.sight_mode & BORGTHERM) || sensor_mode == THERMAL_VISION)
+			src.sight |= SEE_MOBS
+			src.see_in_dark = 4
+			src.see_invisible = SEE_INVISIBLE_MINIMUM
+		if (sensor_mode == NIGHT)
+			see_invisible = SEE_INVISIBLE_MINIMUM
+			see_in_dark = 8
+		if ((src.sight_mode & BORGMESON) || (sensor_mode == MESON_VISION))
+			src.sight |= SEE_TURFS
+			src.see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_MINIMUM
 
-	if (src.stat == 2 || M_XRAY in mutations || src.sight_mode & BORGXRAY)
+
+/mob/living/silicon/robot/proc/handle_regular_hud_updates()
+	handle_sensor_modes()
+	/*if (src.stat == 2 || M_XRAY in mutations || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
@@ -167,15 +196,20 @@
 		src.sight &= ~SEE_TURFS
 		src.sight &= ~SEE_OBJS
 		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO*/
 
 	regular_hud_updates() //Handles MED/SEC HUDs for borgs.
-
 	switch(sensor_mode)
 		if (SEC_HUD)
 			process_sec_hud(src, 1)
 		if (MED_HUD)
 			process_med_hud(src)
+
+	/*switch(sensor_mode)
+		if (SEC_HUD)
+			process_sec_hud(src, 1)
+		if (MED_HUD)
+			process_med_hud(src)*/
 
 	if (src.healths)
 		if (src.stat != 2)

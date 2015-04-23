@@ -22,7 +22,7 @@
 	src.modules += new /obj/item/weapon/tile_painter(src)
 	src.modules += new /obj/item/blueprints/mommiprints(src)
 	src.modules += new /obj/item/device/material_synth/robot/mommi(src)
-
+	sensor_augs = list("Mesons", "Disable")
 	var/obj/item/stack/cable_coil/W = new /obj/item/stack/cable_coil(src)
 	W.amount = 50
 	W.max_amount = 50 // Override MAXCOIL
