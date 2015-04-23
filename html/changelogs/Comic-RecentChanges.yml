@@ -9,6 +9,4 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - rscadd: Ventcrawling now works through manual movement rather than a teleport menu.
-  - bugfix: MoMMIs can no longer examine mobs. This includes seeing human equipment.
-  - tweak: Certain machines will now lose power if they are unwrenched, and regain power when wrenched down.
+  - bugfix: You can now mine rocky debris with the off-hand again.
