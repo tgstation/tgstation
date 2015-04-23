@@ -44,13 +44,13 @@
 			index = findtext(t, char)
 	return t
 
-/proc/strip_html_properly(var/input)
+/proc/strip_html_properly(input = "")
 	// these store the position of < and > respectively
 	var/opentag = 0
 	var/closetag = 0
 
-	while (length(input))
-		opentag = findtext(input, "<")
+	while (input)
+		opentag = rfindtext(input, "<")
 		closetag = findtext(input, ">", opentag + 1)
 
 		if (!opentag || !closetag)
@@ -59,6 +59,13 @@
 		input = copytext(input, 1, opentag) + copytext(input, closetag + 1)
 
 	return input
+
+/proc/rfindtext(Haystack, Needle, Start = 1, End = 0)
+	var/i = findtext(Haystack, Needle, Start, End)
+
+	while (i)
+		. = i
+		i = findtext(Haystack, Needle, i + 1, End)
 
 //Removes a few problematic characters
 /proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","�"="�"))
