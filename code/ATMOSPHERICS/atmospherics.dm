@@ -30,7 +30,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/Destroy()
 	for(var/mob/living/L in src)
 		L.remove_ventcrawl()
-		L.loc = get_turf(src)
+		L.forceMove(get_turf(src))
 	..()
 
 
