@@ -17,6 +17,12 @@
 /datum/surgery_step/clamp_bleeders/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to clamp bleeders in [target]'s [parse_zone(target_zone)].</span>")
 
+/datum/surgery_step/clamp_bleeders/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(added_blood_loss && ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.blood_max -= added_blood_loss
+	added_blood_loss = 0
+	..()
 
 //retract skin
 /datum/surgery_step/retract_skin
@@ -36,6 +42,13 @@
 /datum/surgery_step/close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to mend the incision in [target]'s [parse_zone(target_zone)].</span>")
 
+/datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(added_blood_loss && ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.blood_max -= added_blood_loss
+	added_blood_loss = 0
+	surgery.complete(target)
+	..()
 
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
 	if(istype(tool, /obj/item/weapon/cautery))

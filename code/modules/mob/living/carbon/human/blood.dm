@@ -119,6 +119,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				blood_max += 1
 			if(brutedamage > 70)
 				blood_max += 2
+			if(surgeries.len)
+				for(var/datum/surgery/S in surgeries)
+					if(S.status != 1)//the initial state is before any incision is made
+						blood_max += 0.5
 		if(bleedsuppress)
 			blood_max = 0
 		drip(blood_max)
