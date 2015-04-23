@@ -779,6 +779,7 @@
 	products = list(/obj/item/weapon/restraints/handcuffs = 8,/obj/item/weapon/restraints/handcuffs/cable/zipties = 10,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/flash/handheld = 5,
 					/obj/item/weapon/reagent_containers/food/snacks/donut = 12,/obj/item/weapon/storage/box/evidence = 6,/obj/item/device/flashlight/seclite = 4)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2)
+	premium = list(/obj/item/weapon/coin/antagtoken = 1)
 
 /obj/machinery/vending/hydronutrients
 	name = "\improper NutriMax"
