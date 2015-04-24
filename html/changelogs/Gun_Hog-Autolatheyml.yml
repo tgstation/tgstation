@@ -1,0 +1,7 @@
+ 
+author: Gun Hog
+
+delete-after: True
+
+changes: 
+  - rscadd: "Nanotrasen has provided designs for fabrication of APC power control modules. You may print them at any autolathe."
