@@ -69,6 +69,9 @@
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
 
+		if(!(P.diggables & DIG_ROCKS))
+			return
+
 		user << "<span class='rose'>You start [P.drill_verb] [src].</span>"
 
 		if(!do_after(user,P.digspeed))
@@ -102,8 +105,10 @@
 	. = ..()
 	if(istype(AM,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
-		if(istype(H.get_active_hand(), /obj/item/weapon/pickaxe))
+		if(istype(H.get_active_hand(),/obj/item/weapon/pickaxe))
 			attackby(H.get_active_hand(), H)
+		else if(istype(H.get_inactive_hand(),/obj/item/weapon/pickaxe))
+			attackby(H.get_inactive_hand(), H)
 
 	else if(istype(AM,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = AM

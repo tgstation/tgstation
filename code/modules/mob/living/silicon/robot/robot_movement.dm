@@ -17,5 +17,10 @@
 
 	return tally+config.robot_delay
 
-/mob/living/silicon/robot/Move()
-	..()
+/mob/living/silicon/robot/Move(atom/newloc)
+	if(..())
+		if(istype(newloc, /turf/unsimulated/floor/asteroid) && istype(module, /obj/item/weapon/robot_module/miner))
+			var/obj/item/weapon/storage/bag/ore/ore_bag = locate(/obj/item/weapon/storage/bag/ore) in get_all_slots() //find it in our modules
+			var/list/to_collect = newloc.contents - src
+			if(ore_bag && to_collect.len)
+				ore_bag.preattack(newloc, src, 1) //collects everything

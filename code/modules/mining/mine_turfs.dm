@@ -492,13 +492,6 @@
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 
-	if(istype(W,/obj/item/weapon/storage/bag/ore))
-		var/obj/item/weapon/storage/bag/ore/S = W
-		if(S.collection_mode)
-			for(var/obj/item/weapon/ore/O in contents)
-				O.attackby(W,user)
-				return
-
 	else
 		..(W,user)
 	return
@@ -555,20 +548,6 @@
 		A = get_step(src, SOUTH)
 		A.updateMineralOverlays()
 	src.updateMineralOverlays()
-
-/turf/unsimulated/floor/asteroid/Entered(atom/movable/M as mob|obj)
-	..()
-	if(istype(M,/mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = M
-		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_3,R)
-			else
-				return
 
 /turf/unsimulated/mineral/random
 	name = "Mineral deposit"
