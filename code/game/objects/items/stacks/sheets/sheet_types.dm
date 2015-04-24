@@ -66,7 +66,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	null, \
 	new/datum/stack_recipe("embedded controller frame",          /obj/item/mounted/frame/airlock_controller,                      1, time = 50, one_per_turf = 0, on_floor = 1), \
 	new/datum/stack_recipe("access button frame",                /obj/item/mounted/frame/access_button,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
-	new/datum/stack_recipe("airlock sensor frame",               /obj/item/mounted/frame/airlock_sensor,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("airlock sensor frame",               /obj/item/mounted/frame/airlock_sensor,                          1, time = 50, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("mass driver button frame",           /obj/item/mounted/frame/driver_button,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
 	new/datum/stack_recipe("desk bell shell", /obj/item/device/deskbell_assembly, 2), \
@@ -156,6 +157,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("Metal crate", /obj/structure/closet/crate, 10, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("RUST fuel assembly port frame", /obj/item/mounted/frame/rust_fuel_assembly_port, 12, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("RUST fuel compressor frame", /obj/item/mounted/frame/rust_fuel_compressor, 12, time = 50, one_per_turf = 1), \
+	new/datum/stack_recipe("Mass Driver frame", /obj/machinery/mass_driver_frame, 3, time = 50, one_per_turf = 1), \
 	)
 
 /obj/item/stack/sheet/plasteel

@@ -1,0 +1,15 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Mass Drivers and their buttons are now buildable and deconstructable.
+  - rscadd: Mass Drivers can now be emagged, quintupling the velocity at which they throw things
+  - rscadd: Completely revamped the "Pod Doors and Mass Drivers Control" computer, it can now store multiple ID_Tags, and even fire all of their respective drivers simultaneously!
+  - rscadd: The Control Computers' timers can even be set to loop individually. The ride never ends! (please note that each launch of a Mass Driver uses Station power, if you increase the Mass Driver's power, it'll now also consume more power)
+  - bugfix: As a consequence, the computer-controlled Mass Drivers on Derelict and the Abandonned Ship are finally working!
+  - rscadd: Made a Deathsquad version of this computer, that can operate the Mass Drivers in centcomm and send the mechs to various ZLevels.
+  - rscadd: Buttons can trigger a Mass Driver at a maximal range of 7, Computers cover the entire Z-Level.
+  - rscadd: Moved the piano back inside the bar, as was often requested.
+  - rscadd: Added piano stools.
+  - rscadd: Added a few Entertainment Monitors in a handful of fitting place throughout the station.
+  - rscadd: Made a new sprite for the Tcomms Server computer (was previously using the sprite of the PDA Messages monitoring computer).
+  - rscadd: Added coat racks to detective offices on all three main stations.
