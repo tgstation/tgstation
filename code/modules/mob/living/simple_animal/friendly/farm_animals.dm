@@ -59,8 +59,9 @@
 						Move(step)
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
-	..()
-	src.visible_message("<span class='warning'>[src] gets an evil-looking gleam in \his eye.</span>")
+	if(!stat)
+		..()
+		src.visible_message("<span class='warning'>[src] gets an evil-looking gleam in \his eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
@@ -146,7 +147,7 @@
 		..()
 
 /mob/living/simple_animal/chick
-	name = "\improper chick"
+	name = "chick"
 	desc = "Adorable! They make such a racket though."
 	icon_state = "chick"
 	icon_living = "chick"
@@ -188,7 +189,7 @@ var/const/MAX_CHICKENS = 50
 var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken
-	name = "\improper chicken"
+	name = "chicken"
 	desc = "Hopefully the eggs are good this season."
 	icon_state = "chicken"
 	icon_living = "chicken"
@@ -212,7 +213,6 @@ var/global/chicken_count = 0
 	small = 1
 
 /mob/living/simple_animal/chicken/New()
-	..()
 	if(prob(5))
 		name = "Pomf chicken"
 		body_color = "white"
@@ -222,6 +222,7 @@ var/global/chicken_count = 0
 	icon_state = "chicken_[body_color]"
 	icon_living = "chicken_[body_color]"
 	icon_dead = "chicken_[body_color]_dead"
+	..() //call this after icons to generate the proper static overlays
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	chicken_count += 1
