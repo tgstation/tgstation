@@ -197,11 +197,20 @@
 	del(src)
 
 //copy paste from alien/larva, if that func is updated please update this one also
-/mob/living/simple_animal/spiderbot/verb/ventcrawl(var/atom/pipe)
+/mob/living/simple_animal/spiderbot/verb/ventcrawl()
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Spiderbot"
-	handle_ventcrawl(pipe)
+	var/atom/pipe
+	var/list/pipes = list()
+	for(var/obj/machinery/atmospherics/unary/U in range(1))
+		if((istype(U, /obj/machinery/atmospherics/unary/vent_pump) || istype(U,/obj/machinery/atmospherics/unary/vent_scrubber)) && Adjacent(U))
+			pipes |= U
+	if(!pipes || !pipes.len)
+		return
+	pipe = input("Crawl Through Vent", "Pick a pipe") as null|anything in pipes
+	if(pipe)
+		handle_ventcrawl(pipe)
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/spiderbot/verb/hide()
