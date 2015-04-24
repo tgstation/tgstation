@@ -67,6 +67,6 @@
 		recipients += ticker.mode.B_tools
 		ticker.mode.B_territory -= territory.type
 	if(recipients.len)
-		ticker.mode.message_gangtools(recipients,"Territory lost: [territory]",0)
+		ticker.mode.message_gangtools(recipients,"Territory lost: [territory]",1)
 
 	..()

@@ -29,7 +29,7 @@
 ///////////////////////////
 /datum/game_mode/gang/announce()
 	world << "<B>The current game mode is - Gang War!</B>"
-	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by claiming more than half of the station! <BR>Crew - The gangs will try to keep you on the station. Successfully evacuate the station to win!</B>"
+	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by claiming more than 66% of the station! <BR>Crew - The gangs will try to keep you on the station. Successfully evacuate the station to win!</B>"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -99,7 +99,7 @@
 /datum/game_mode/proc/forge_gang_objectives(var/datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
 	rival_obj.owner = boss_mind
-	rival_obj.explanation_text = "Claim more than half the station before the [(boss_mind in A_bosses) ? gang_name("B") : gang_name("A")] Gang does."
+	rival_obj.explanation_text = "Claim more than 66% the station before the [(boss_mind in A_bosses) ? gang_name("B") : gang_name("A")] Gang does."
 	boss_mind.objectives += rival_obj
 
 
@@ -167,9 +167,9 @@
 //Checks if the either gang have won or not//
 /////////////////////////////////////////////
 /datum/game_mode/gang/check_win()
-	if(A_territory.len > (start_state.num_territories / 2))
+	if(A_territory.len > (start_state.num_territories / 3))
 		finished = "A" //Gang A wins
-	else if(B_territory.len > (start_state.num_territories / 2))
+	else if(B_territory.len > (start_state.num_territories / 3))
 		finished = "B" //Gang B wins
 
 ///////////////////////////////
@@ -305,7 +305,7 @@
 
 	if(A_bosses.len || A_gang.len)
 		if(winner)
-			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((ticker.mode.A_territory.len/start_state.num_territories)*100, 0.1)]% control of the station!</b>"
+			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((ticker.mode.A_territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
 		world << "<br>The [gang_name("A")] Gang Bosses were:"
 		gang_membership_report(A_bosses)
 		world << "<br>The [gang_name("A")] Gangsters were:"
@@ -314,7 +314,7 @@
 
 	if(B_bosses.len || B_gang.len)
 		if(winner)
-			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((ticker.mode.B_territory.len/start_state.num_territories)*100, 0.1)]% control of the station!</b></b>"
+			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((ticker.mode.B_territory.len/start_state.num_territories)*100, 1)]% control of the station!</b></b>"
 		world << "<br>The [gang_name("B")] Gang Bosses were:"
 		gang_membership_report(B_bosses)
 		world << "<br>The [gang_name("B")] Gangsters were:"
@@ -356,19 +356,19 @@
 		income()
 
 /datum/gang_points/proc/income()
-	var/A_new = min(100,(A + 10 + ticker.mode.A_territory.len))
+	var/A_new = min(100,(A + 10 + min(ticker.mode.A_territory.len,40)))
 	var/A_message = ""
 	if(A_new != A)
-		A_message += "Your gang has gained [A_new - A] Influence from their presence on station."
+		A_message += "Your gang has gained [A_new - A] Influence from their control of [round((ticker.mode.A_territory.len/start_state.num_territories)*100, 1)]% of the station."
 	if(A_new == 100)
 		A_message += "Maximum influence reached."
 	A = A_new
 	ticker.mode.message_gangtools(ticker.mode.A_tools,A_message)
 
-	var/B_new = min(100,(B + 10 + ticker.mode.B_territory.len))
+	var/B_new = min(100,(B + 10 + min(ticker.mode.B_territory.len,40)))
 	var/B_message = ""
 	if(B_new != B)
-		B_message += "Your gang has collected [B_new - B] Influence from their presence on station. "
+		B_message += "Your gang has collected [B_new - B] Influence from their control of [round((ticker.mode.B_territory.len/start_state.num_territories)*100, 1)]% of the station."
 	if(B_new == 100)
 		B_message += "Maximum influence reached."
 	B = B_new
@@ -381,13 +381,14 @@
 //Sends a message to the boss via his gangtool//
 ////////////////////////////////////////////////
 
-/datum/game_mode/proc/message_gangtools(var/list/gangtools,var/message,var/beeps=1)
+/datum/game_mode/proc/message_gangtools(var/list/gangtools,var/message,var/priority=2) //0 Territories Gained | 1 Territories lost | 2 Beep!
 	if(!gangtools.len || !message)
 		return
 	for(var/obj/item/device/gangtool/tool in gangtools)
-		var/mob/living/mob = get(tool.loc,/mob/living)
-		if(mob && mob.mind)
-			if(((tool.gang == "A") && ((mob.mind in A_gang) || (mob.mind in A_bosses))) || ((tool.gang == "B") && ((mob.mind in B_gang) || (mob.mind in B_bosses))))
-				mob << "<span class='notice'>\icon[tool] [message]</span>"
-				if(beeps)
-					playsound(mob.loc, 'sound/machines/twobeep.ogg', 50, 1)
+		if(tool.ignore_messages <= priority)
+			var/mob/living/mob = get(tool.loc,/mob/living)
+			if(mob && mob.mind)
+				if(((tool.gang == "A") && ((mob.mind in A_gang) || (mob.mind in A_bosses))) || ((tool.gang == "B") && ((mob.mind in B_gang) || (mob.mind in B_bosses))))
+					mob << "<span class='notice'>\icon[tool] [message]</span>"
+					if(priority>=2)
+						playsound(mob.loc, 'sound/machines/twobeep.ogg', 50, 1)
