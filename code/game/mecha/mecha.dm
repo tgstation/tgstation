@@ -666,9 +666,9 @@ obj/mecha/proc/can_use(mob/user)
 
 	if(istype(W, /obj/item/device/mmi))
 		if(mmi_move_inside(W,user))
-			user << "[src]-MMI interface initialized successfuly"
+			user << "[src]-[W] interface initialized successfuly"
 		else
-			user << "[src]-MMI interface initialization failed."
+			user << "[src]-[W] interface initialization failed."
 		return
 
 	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
@@ -1137,6 +1137,9 @@ obj/mecha/proc/can_use(mob/user)
 			if(mmi.brainmob)
 				occupant.loc = mmi
 			mmi.mecha = null
+			if(istype(mmi,/obj/item/device/mmi/posibrain))
+				var/obj/item/device/mmi/posibrain/P = mmi
+				P.handle_posibrain_icon()
 			src.occupant.canmove = 0
 			src.verbs += /obj/mecha/verb/eject
 		src.occupant = null
@@ -1518,7 +1521,7 @@ var/year_integer = text2num(year) // = 2013???
 		return
 	if(href_list["dna_lock"])
 		if(usr != src.occupant)	return
-		if(src.occupant)
+		if(src.occupant && occupant.dna)
 			src.dna = src.occupant.dna.unique_enzymes
 			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
 		return
