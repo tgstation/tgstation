@@ -23,6 +23,8 @@
 			if(heating)
 				spawn(heat_time)
 					try_heating()
+
+			return 1 // avoid afterattack() being called
 	else
 		user << "<span class='warning'>You can't put the [W] onto the [src].</span>"
 

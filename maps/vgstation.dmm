@@ -770,7 +770,7 @@
 "aoP" = (/obj/machinery/door/airlock/maintenance{name = "Firefighting equipment"; req_access_txt = "12"},/turf/simulated/floor/plating,/area/maintenance/fsmaint)
 "aoQ" = (/obj/structure/closet/emcloset,/turf/simulated/floor/plating,/area/maintenance/fsmaint)
 "aoR" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/maintenance/fsmaint)
-"aoS" = (/obj/structure/table,/obj/item/weapon/reagent_containers/ld50_syringe/choral,/obj/item/weapon/reagent_containers/ld50_syringe/choral,/obj/item/weapon/reagent_containers/ld50_syringe/choral,/obj/machinery/light{dir = 8},/turf/simulated/floor{icon_state = "white"},/area/security/gas_chamber)
+"aoS" = (/obj/structure/table,/obj/item/weapon/reagent_containers/syringe/giant/chloral,/obj/item/weapon/reagent_containers/syringe/giant/chloral,/obj/item/weapon/reagent_containers/syringe/giant/chloral,/obj/machinery/light{dir = 8},/turf/simulated/floor{icon_state = "white"},/area/security/gas_chamber)
 "aoT" = (/turf/simulated/floor{dir = 9; icon_state = "warnwhite"},/area/security/gas_chamber)
 "aoU" = (/turf/simulated/floor{icon_state = "warnwhite"; dir = 1},/area/security/gas_chamber)
 "aoV" = (/turf/simulated/floor{icon_state = "warnwhite"; dir = 5},/area/security/gas_chamber)

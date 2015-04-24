@@ -59,7 +59,7 @@ datum
 
 				while(total_transfered != amount)
 					if(total_transfered >= amount) break
-					if(total_volume <= 0 || !reagent_list.len) break
+					if(is_empty() || !reagent_list.len) break
 
 					if(current_list_element > reagent_list.len) current_list_element = 1
 					var/datum/reagent/current_reagent = reagent_list[current_list_element]
@@ -102,7 +102,7 @@ datum
 					R = target
 				else
 					var/atom/movable/AM = target
-					if (!AM.reagents || src.total_volume<=0)
+					if (!AM.reagents || src.is_empty())
 						return
 					else
 						R = AM.reagents
@@ -112,9 +112,9 @@ datum
 				for (var/datum/reagent/current_reagent in src.reagent_list)
 					if (!current_reagent)
 						continue
-					if (current_reagent.id == "blood" && ishuman(target))
-						var/mob/living/carbon/human/H = target
-						H.inject_blood(my_atom, amount)
+					if (current_reagent.id == "blood" && iscarbon(target))
+						var/mob/living/carbon/C = target
+						C.inject_blood(my_atom, amount)
 						continue
 					var/current_reagent_transfer = current_reagent.volume * part
 					if(preserve_data)
@@ -130,7 +130,7 @@ datum
 				src.handle_reactions()
 				return amount
 			trans_to_holder(var/datum/reagents/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-				if (!target || src.total_volume<=0)
+				if (!target || src.is_empty())
 					return
 				var/datum/reagents/R = target
 				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -182,7 +182,7 @@ datum
 			copy_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)
 				if(!target)
 					return
-				if(!target.reagents || src.total_volume<=0)
+				if(!target.reagents || src.is_empty())
 					return
 				var/datum/reagents/R = target.reagents
 				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -204,7 +204,7 @@ datum
 			trans_id_to(var/obj/target, var/reagent, var/amount=1, var/preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 				if (!target)
 					return
-				if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+				if (!target.reagents || src.is_empty() || !src.get_reagent_amount(reagent))
 					return
 
 				var/datum/reagents/R = target.reagents
@@ -642,6 +642,23 @@ datum
 
 	if(my_atom)
 		my_atom = null
+
+/**
+ * Helper proc to retrieve the 'bad' reagents in the holder. Used for logging.
+ */
+/datum/reagents/proc/get_bad_reagent_names()
+	if (!istype(reagents_to_log) || reagents_to_log.len == 0)
+		return null
+
+	var/list/bad_reagents = list()
+	for (var/reagent_id in reagents_to_log)
+		if (src.has_reagent(reagent_id))
+			bad_reagents += reagents_to_log[reagent_id]
+
+	return bad_reagents
+
+/datum/reagents/proc/is_empty()
+	return total_volume <= 0
 
 ///////////////////////////////////////////////////////////////////////////////////
 

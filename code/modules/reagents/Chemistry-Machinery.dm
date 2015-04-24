@@ -1769,8 +1769,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/obj/item/crushable = null
 
 
-/obj/item/weapon/reagent_containers/mortar/afterattack(obj/target, mob/user , flag)
-	try_to_transfer(target,user,flag)
+/obj/item/weapon/reagent_containers/mortar/afterattack(var/obj/target, var/mob/user, var/adjacency_flag)
+	if (!adjacency_flag)
+		return
+
+	transfer(target, user, can_send = TRUE, can_receive = TRUE, splashable_units = -1)
 
 /obj/item/weapon/reagent_containers/mortar/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (isscrewdriver(O))
