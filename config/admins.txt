@@ -27,5 +27,4 @@ Dopaper = Badmin
 AlwaysbetonNanako = Badmin
 Hextopia = Badmin
 Captain Chen = Trial Admin
-
-
+Guyton Guy = Trial Admin
