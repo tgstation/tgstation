@@ -285,7 +285,7 @@
 	icon_state = "coin_valid_valid"
 	cmineral = "valid"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
-	sideslist = list("valid", "salid")
+	sideslist = list("valid", "salad")
 	value = 20
 
 /obj/item/weapon/coin/antagtoken/New()
