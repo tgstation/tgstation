@@ -30,20 +30,20 @@
 		return
 	if(istype(C, /obj/item/stack/rods))
 		if(broken || burnt)
-			user << "<span class='warning'>Repair the plating first.</span>"
+			user << "<span class='warning'>Repair the plating first!</span>"
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
-			user << "<span class='warning'>You need two rods to make a reinforced floor.</span>"
+			user << "<span class='warning'>You need two rods to make a reinforced floor!</span>"
 			return
 		else
-			user << "<span class='notice'>Reinforcing the floor...</span>"
+			user << "<span class='notice'>You begin reinforcing the floor...</span>"
 			if(do_after(user, 30))
 				if (R.get_amount() >= 2)
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
-					user << "<span class='notice'>You have reinforced the floor.</span>"
+					user << "<span class='notice'>You reinforce the floor.</span>"
 				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
@@ -56,7 +56,7 @@
 			W.use(1)
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		else
-			user << "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
+			user << "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>"
 	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )
@@ -95,7 +95,7 @@
 	if(!C || !user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "<span class='notice'>Removing rods...</span>"
+		user << "<span class='notice'>You begin removing rods...</span>"
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)

@@ -246,7 +246,7 @@
 
 	if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		panel_open = !panel_open
-		user << "You [panel_open ? "open" : "close"] the maintenance panel."
+		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
 		overlays.Cut()
 		if(panel_open)
 			overlays += image(icon, "[initial(icon_state)]-panel")
@@ -285,7 +285,7 @@
 /obj/machinery/vending/emag_act(user as mob)
 	if(!emagged)
 		emagged  = 1
-		user << "You short out the product lock on [src]."
+		user << "<span class='notice'>You short out the product lock on [src].</span>"
 
 /obj/machinery/vending/attack_paw(mob/user)
 	return attack_hand(user)
@@ -431,7 +431,7 @@
 				return
 		else if(R in coin_records)
 			if(!coin)
-				usr << "<span class='notice'>You need to insert a coin to get this item.</span>"
+				usr << "<span class='warning'>You need to insert a coin to get this item!</span>"
 				vend_ready = 1
 				return
 			if(coin.string_attached)
@@ -440,11 +440,11 @@
 						usr << "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>"
 						coin = null
 					else
-						usr << "<span class='notice'>You couldn't pull [coin] out because your hands are full.</span>"
+						usr << "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>"
 						qdel(coin)
 						coin = null
 				else
-					usr << "<span class='notice'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all.</span>"
+					usr << "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>"
 					qdel(coin)
 					coin = null
 			else

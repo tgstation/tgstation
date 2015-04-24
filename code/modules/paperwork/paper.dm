@@ -336,12 +336,12 @@
 
 /obj/item/weapon/paper/proc/burn(var/showmsg, var/burntime)
 	if(showmsg)
-		src.visible_message("<span class='warning'>[src] catches on fire!</span>")
+		src.visible_message("<span class='warning'>[src] catches on fire.</span>")
 	burning = 1
 	icon_state = "paper_onfire"
 	info = "[stars(info)]"
 	sleep(burntime) //7 seconds
-	src.visible_message("<span class='danger'>[src] burns away, leaving behind a pile of ashes.</span>")
+	src.visible_message("<span class='warning'>[src] burns away, leaving behind a pile of ashes.</span>")
 	new /obj/effect/decal/cleanable/ash(src.loc)
 	qdel(src)
 

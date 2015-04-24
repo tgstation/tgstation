@@ -23,7 +23,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.stabilization_on = !( src.stabilization_on )
-	usr << "You toggle the stabilization [stabilization_on? "on":"off"]."
+	usr << "<span class='notice'>You toggle the stabilization [stabilization_on? "on":"off"].</span>"
 	return
 
 
@@ -41,7 +41,7 @@
 		icon_state = initial(icon_state)
 	//	item_state = initial(item_state)
 		ion_trail.stop()
-	usr << "You toggle the jetpack [on? "on":"off"]."
+	usr << "<span class='notice'>You toggle the jetpack [on? "on":"off"].</span>"
 	return
 
 
@@ -129,10 +129,10 @@
 		var/mob/living/carbon/human/H = loc.loc
 
 		if(!H.wear_suit)
-			H << "You must be wearing the suit to use the inbuilt jetpack."
+			H << "<span class='warning'>You must be wearing the suit to use the inbuilt jetpack!</span>"
 			return
 		if(!istype(H.s_store,/obj/item/weapon/tank/internals))
-			H << "You must have a tank in your suit's storage to use the inbuilt jetpack."
+			H << "<span class='warning'>You must have a tank in your suit's storage to use the inbuilt jetpack!</span>"
 			return
 		if(usr.stat || !usr.canmove || usr.restrained())
 			return
@@ -146,7 +146,7 @@
 			icon_state = "[icon_state]-on"
 		else
 			turn_off()
-		H << "You toggle the inbuilt jetpack [on? "on":"off"]."
+		H << "<span class='notice'>You toggle the inbuilt jetpack [on? "on":"off"].</span>"
 
 /obj/item/weapon/tank/jetpack/suit/proc/turn_off()
 	on = 0

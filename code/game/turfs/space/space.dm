@@ -38,16 +38,16 @@
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
 		if(W)
-			user << "<span class='warning'>There is already a catwalk here.</span>"
+			user << "<span class='warning'>There is already a catwalk here!</span>"
 			return
 		if(L)
 			if(R.use(1))
-				user << "<span class='notice'>Constructing catwalk...</span>"
+				user << "<span class='notice'>You begin constructing catwalk...</span>"
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				qdel(L)
 				ReplaceWithCatwalk()
 			else
-				user << "<span class='warning'>You need two rods to build a catwalk.</span>"
+				user << "<span class='warning'>You need two rods to build a catwalk!</span>"
 			return
 		if(R.use(1))
 			user << "<span class='notice'>Constructing support lattice...</span>"
@@ -66,9 +66,9 @@
 				user << "<span class='notice'>You build a floor.</span>"
 				ChangeTurf(/turf/simulated/floor/plating)
 			else
-				user << "<span class='warning'>You need one floor tile to build a floor.</span>"
+				user << "<span class='warning'>You need one floor tile to build a floor!</span>"
 		else
-			user << "<span class='danger'>The plating is going to need some support. Place metal rods first.</span>"
+			user << "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>"
 
 /turf/space/Entered(atom/movable/A)
 	..()

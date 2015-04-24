@@ -227,7 +227,7 @@
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
+				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
@@ -257,7 +257,7 @@
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
-				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
+				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
 					if(M && !M.gc_destroyed)
@@ -426,11 +426,11 @@
 					if(upgraded)
 						UC.uses --
 						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
-						src << "<span class='notice'>Camera successully upgraded!</span>"
+						src << "<span class='notice'>You successully upgrade the camera.</span>"
 					else
-						src << "<span class='notice'>This camera is already upgraded!</span>"
+						src << "<span class='warning'>This camera is already upgraded!</span>"
 			else
-				src << "<span class='notice'>Out of uses.</span>"
+				src << "<span class='warning'>Out of uses!</span>"
 
 /datum/module_picker
 	var/temp = null

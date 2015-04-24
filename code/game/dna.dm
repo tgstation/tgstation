@@ -403,15 +403,15 @@
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
-	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [breakout_time] minutes.)</span>"
+	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
 
 		locked = 0
-		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
 
 		open_machine()

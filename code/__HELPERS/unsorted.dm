@@ -810,7 +810,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
 			//i.e the hand is used to insert some item/tool into the construction
-			if(!holdingnull) 
+			if(!holdingnull)
 				if(!holding)
 					return 0
 			if(user.get_active_hand() != holding)
@@ -1332,7 +1332,7 @@ var/list/WALLITEMS = list(
 
 /obj/proc/atmosanalyzer_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/target = src)
 	var/obj/icon = target
-	user.visible_message("<span class='danger'>[user] has used the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 

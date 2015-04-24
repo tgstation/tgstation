@@ -13,13 +13,13 @@
 	time = 64
 
 /datum/surgery_step/xenomorph_removal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to search in [target]'s chest for a xenomorph.</span>")
+	user.visible_message("[user] begins to search in [target]'s chest for a xenomorph embryo.", "<span class='notice'>You begin to search in [target]'s chest for a xenomorph embryo...</span>")
 
 /datum/surgery_step/xenomorph_removal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(remove_xeno(user, target))
-		user.visible_message("<span class='notice'>[user] successfully extracts the xenomorph from [target]!</span>")
+		user.visible_message("[user] successfully extracts the xenomorph embryo from [target]!", "<span class='notice'>You successfully extract the xenomorph embryo from [target].</span>")
 	else
-		user.visible_message("<span class='notice'>[user] can't find anything in [target]'s chest!</span>")
+		user.visible_message("[user] can't seem to find anything in [target]'s chest!", "<span class='notice'>You can't find anything in [target]'s chest!</span>")
 	return 1
 
 /datum/surgery_step/xenomorph_removal/proc/remove_xeno(mob/user, mob/living/carbon/target)
@@ -42,8 +42,8 @@
 	if(A)
 		if(prob(50))
 			A.AttemptGrow(0)
-		user.visible_message("<span class='warning'>[user] accidentally pokes the xenomorph in [target]!</span>")
+		user.visible_message("<span class='warning'>[user] accidentally pokes the xenomorph in [target]!</span>", "<span class='warning'>You accidentally poke the xenomorph in [target]!</span>")
 	else
 		target.adjustOxyLoss(30)
-		user.visible_message("<span class='warning'>[user] accidentally pokes [target] in the lungs!</span>")
+		user.visible_message("<span class='warning'>[user] accidentally pokes [target] in the lungs!</span>", "<span class='warning'>You accidentally poke [target] in the lungs!</span>")
 	return 0

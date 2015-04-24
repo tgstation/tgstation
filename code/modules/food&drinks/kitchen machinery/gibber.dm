@@ -124,10 +124,10 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		visible_message("<span class='danger'>You hear a loud metallic grinding sound.</span>")
+		visible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	visible_message("<span class='danger'>You hear a loud squelchy grinding sound.</span>")
+	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
 	var/sourcename = src.occupant.real_name

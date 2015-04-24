@@ -82,7 +82,7 @@
 
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		user << "<span class='warning'>You cannot put this in [src.name]</span>"
+		user << "<span class='warning'>You cannot put this in [src.name]!</span>"
 	else
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
