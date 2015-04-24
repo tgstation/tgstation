@@ -695,6 +695,17 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/plasteel_synth_module
+	name = "Plasteel Synthesizing Module"
+	desc = "Provides the engineering cyborg with a source of plasteel."
+	id = "borg_plasteel_module"
+	build_type = MECHFAB
+	req_tech = list("materials" = 3, "plasma" = 2, "engineering" = 2)
+	build_path = /obj/item/borg/upgrade/plasteel
+	materials = list("$metal"=10000,"$plasma"=10000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"

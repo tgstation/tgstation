@@ -125,7 +125,7 @@
 						qdel(src)
 					return
 
-			if(/obj/item/stack/sheet/plasteel)
+			if(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/plasteel/cyborg)
 				if(!anchored)
 					if(S.amount < 2)
 						user << "<span class='warning'>You need at least two sheets to create a false wall!</span>"

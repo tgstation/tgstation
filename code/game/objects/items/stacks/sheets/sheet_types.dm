@@ -80,6 +80,11 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=2"
 
+/obj/item/stack/sheet/plasteel/cyborg
+	m_amt = 0
+	is_cyborg = 1
+	cost = 500
+
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 		recipes = plasteel_recipes
 		return ..()

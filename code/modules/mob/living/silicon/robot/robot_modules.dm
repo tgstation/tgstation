@@ -300,3 +300,8 @@
 	max_energy = 2500
 	recharge_rate = 250
 	name = "Gauze Synthesizer"
+
+/datum/robot_energy_storage/plasteel
+	name = "Plasteel Synthesizer"
+	max_energy = 5000
+	recharge_rate = 25
