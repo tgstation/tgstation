@@ -1,0 +1,15 @@
++author: Kurfurst
++delete-after: True
++changes:
++ - rscadd: New Cargo Conveyor belt "QMLoad3"
++ - tweak: Fixed Mail to broken locations (Security, HoS, Bar, Theater, Atmospherics, CE, Chemistry, Medbay, CMO, Janitor, Cargo Bay) - should work everywhere now
++ - tweak: Silicons can now use the Smartfridge
++ - tweak: Soda Dispenser formatting (Bartenders, pray for 'soda_dispenser', 'booze_dispenser', and 'brewer'!)
++ - tweak: Steal AI objective now checks to see if you have a living AI on your Intellicard
++ - tweak: Airlock Electronics may once again be printed at the Circuit Printer.
++ - tweak: Intercom Electronics are now properly labeled at the Circuit Printer.
++ - tweak: Handcuffed people can no longer be handed items
++ - tweak: You should no longer encounter null blood
++ - tweak: Monkeys now get a random blood type
++ - tweak: Sulphuric Acid bug fixed; may now be properly made from its formula (and therefore electrolyzed properly)
++ - tweak: Empty blood bags now properly spawn on the map

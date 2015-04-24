@@ -890,7 +890,7 @@
 		/obj/item/device/healthanalyzer = 5,
 		/obj/item/weapon/reagent_containers/glass/beaker = 4,
 		/obj/item/weapon/reagent_containers/dropper = 2)
-	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/stox = 4,/obj/item/weapon/reagent_containers/pill/antitox = 6)
+	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/stox = 4,/obj/item/weapon/reagent_containers/pill/antitox = 6, /obj/item/weapon/reagent_containers/blood/OMinus = 1)
 
 	pack = /obj/structure/vendomatpack/medical
 

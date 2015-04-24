@@ -190,7 +190,7 @@ datum
 			name = "Sulphuric Acid"
 			id = "sacid"
 			result = "sacid"
-			required_reagents = list("sulphur" = 2, "oxygen" = 3, "water" = 2)
+			required_reagents = list("sulfur" = 2, "oxygen" = 3, "water" = 2)
 			result_amount = 2
 
 		thermite
