@@ -74,13 +74,13 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
-		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
+		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
-			user << "<span class='danger'>[O] is full.</span>"
+			user << "<span class='warning'>[O] is full!</span>"
 		if(!transfered)
-			user << "<span class='danger'>The udder is dry. Wait a bit longer...</span>"
+			user << "<span class='warning'>The udder is dry! Wait a bit longer...</span>"
 	else
 		..()
 //cow
@@ -115,7 +115,7 @@
 
 /mob/living/simple_animal/cow/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
-		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
+		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
@@ -242,14 +242,14 @@ var/global/chicken_count = 0
 /mob/living/simple_animal/chicken/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(istype(O, food_type)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
-			var/feedmsg = "<span class='notice'>[user] feeds [O] to [name]! [pick(feedMessages)]"
+			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
 			user.visible_message(feedmsg)
 			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
 			//world << eggsleft
 		else
-			user << "<span class='notice'>[name] doesn't seem hungry!</span>"
+			user << "<span class='warning'>[name] doesn't seem hungry!</span>"
 	else
 		..()
 

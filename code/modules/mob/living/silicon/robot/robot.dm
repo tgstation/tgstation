@@ -409,7 +409,7 @@
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
+			visible_message("[user] has fixed some of the dents on [src].")
 			return 0
 		else
 			user << "<span class='warning'>The welder must be on for this task!</span>"
@@ -420,7 +420,7 @@
 		if (coil.use(1))
 			adjustFireLoss(-30)
 			updatehealth()
-			visible_message("<span class='notice'>[user] has fixed some of the burnt wires on [src].</span>")
+			user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
 		else
 			user << "<span class='warning'>You need one length of cable to repair [src]!</span>"
 
@@ -477,7 +477,7 @@
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>"
 			if(do_after(user, 50) && !cell)
-				user.visible_message("<span class='danger'>[user] deconstructs [src]!</span>", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
+				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 
 	else if(istype(W, /obj/item/weapon/aiModule))

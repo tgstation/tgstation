@@ -46,6 +46,7 @@ datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
 	M.adjustStaminaLoss(-0.5*REM)
 	..()
 
+		M << "<span class='notice'>You feel like you smoked too much.</span>"
 datum/reagent/drug/crank
 	name = "Crank"
 	id = "crank"

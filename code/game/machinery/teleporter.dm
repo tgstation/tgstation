@@ -384,7 +384,7 @@
 				M.buffer = null
 				user << "<span class = 'caution'>You upload the data from the [W.name]'s buffer.</span>"
 			else
-				user << "<span class = 'alert'>This station cant hold more information, try to use better parts.</span>"
+				user << "<span class = 'alert'>This station can't hold more information, try to use better parts.</span>"
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
 		return

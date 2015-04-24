@@ -320,12 +320,12 @@
 
 		if(photocopy)
 			photocopy.loc = src.loc
-			visible_message("<span class='notice'>[photocopy] is shoved out of the way by [ass]!</span>")
+			visible_message("<span class='warning'>[photocopy] is shoved out of the way by [ass]!</span>")
 			photocopy = null
 
 		else if(copy)
 			copy.loc = src.loc
-			visible_message("<span class='notice'>[copy] is shoved out of the way by [ass]!</span>")
+			visible_message("<span class='warning'>[copy] is shoved out of the way by [ass]!</span>")
 			copy = null
 	updateUsrDialog()
 

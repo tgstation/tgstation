@@ -280,7 +280,7 @@
 				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
-				H.visible_message("<span class='notice'>[user] forces [H] to eat [src]... they quickly regenerate all injuries!</span>")
+				H.visible_message("[user] forces [H] to eat [src]... they quickly regenerate all injuries!")
 			else
 				user << "<span class='notice'>You chomp into [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
 			playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)

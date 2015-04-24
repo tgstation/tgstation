@@ -31,7 +31,7 @@
 		user << "<span class='warning'>You can't label cyborgs!</span>"
 		return
 
-	user.visible_message("<span class='notice'>[user] labels [A] as [label].</span>", \
+	user.visible_message("[user] labels [A] as [label].", \
 						 "<span class='notice'>You label [A] as [label].</span>")
 	A.name = "[A.name] ([label])"
 	labels_left--

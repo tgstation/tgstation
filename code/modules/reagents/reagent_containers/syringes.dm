@@ -110,7 +110,7 @@
 
 			else //if not mob
 				if(!target.reagents.total_volume)
-					user << "<span class='notice'>[target] is empty.</span>"
+					user << "<span class='warning'>[target] is empty!</span>"
 					return
 
 				if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))

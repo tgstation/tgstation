@@ -417,7 +417,7 @@
 			W.loc = src
 			cell = W
 			user.visible_message(\
-				"<span class='warning'>[user.name] has inserted the power cell to [src.name]!</span>",\
+				"[user.name] has inserted the power cell to [src.name]!",\
 				"<span class='notice'>You insert the power cell.</span>")
 			chargecount = 0
 			update_icon()
@@ -557,7 +557,7 @@
 				&& W.w_class >= 3.0 \
 				&& prob(20) )
 			opened = 2
-			user.visible_message("<span class='danger'>[user.name] has knocked down the APC cover  with the [W.name]!</span>", \
+			user.visible_message("<span class='warning'>[user.name] has knocked down the APC cover  with the [W.name].</span>", \
 				"<span class='danger'>You knock down the APC cover with your [W.name]!</span>", \
 				"<span class='italics'>You hear bang.</span>")
 			update_icon()
@@ -785,7 +785,7 @@
 	var/mob/living/carbon/human/H = user
 	if (istype(H))
 		if(H.getBrainLoss() >= 60)
-			H.visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
+			H.visible_message("[H] stares cluelessly at [src] and drools.")
 			return 0
 		else if(prob(H.getBrainLoss()))
 			user << "<span class='danger'>You momentarily forget how to use [src].</span>"

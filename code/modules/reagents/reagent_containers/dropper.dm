@@ -73,7 +73,7 @@
 			return
 
 		if(!target.reagents.total_volume)
-			user << "<span class='notice'>[target] is empty.</span>"
+			user << "<span class='warning'>[target] is empty!</span>"
 			return
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
