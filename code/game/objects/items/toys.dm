@@ -54,10 +54,10 @@
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(O.reagents)
 			if(O.reagents.total_volume < 1)
-				user << "The [O] is empty."
+				user << "<span class='notice'>The [O] is empty.</span>"
 			else if(O.reagents.total_volume >= 1)
 				if(O.reagents.has_reagent("facid", 1))
-					user << "The acid chews through the balloon!"
+					user << "<span class='warning'>The acid chews through the balloon!</span>"
 					O.reagents.reaction(user)
 					qdel(src)
 				else
@@ -135,17 +135,17 @@
 
 	if (istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
-			user << "<span class='notice'>It's already fully loaded!</span>"
+			user << "<span class='warning'>It's already fully loaded!</span>"
 			return 1
 		if (A.amount_left <= 0)
-			user << "<span class='danger'>There are no more caps!</span>"
+			user << "<span class='warning'>There are no more caps!</span>"
 			return 1
 		if (A.amount_left < (7 - src.bullets))
 			src.bullets += A.amount_left
-			user << text("<span class='danger'>You reload [] cap\s!</span>", A.amount_left)
+			user << text("<span class='notice'>You reload [] cap\s.</span>", A.amount_left)
 			A.amount_left = 0
 		else
-			user << text("<span class='danger'>You reload [] cap\s!</span>", 7 - src.bullets)
+			user << text("<span class='notice'>You reload [] cap\s.</span>", 7 - src.bullets)
 			A.amount_left -= 7 - src.bullets
 			src.bullets = 7
 		A.update_icon()
@@ -227,7 +227,7 @@
 	..()
 	if(istype(W, /obj/item/toy/sword))
 		if(W == src)
-			user << "<span class='notice'>You try to attach the end of the plastic sword to... itself. You're not very smart, are you?</span>"
+			user << "<span class='warning'>You try to attach the end of the plastic sword to... itself. You're not very smart, are you?</span>"
 			if(ishuman(user))
 				user.adjustBrainLoss(10)
 		else if((W.flags & NODROP) || (flags & NODROP))
@@ -442,8 +442,6 @@
 					graf_rot = 270
 				else
 					graf_rot = 0
-		user << "<span class='notice'>You start drawing a [temp] on the [target.name]...</span>"
-			user << "<span class='notice'>You finish drawing [temp].</span>"
 
 		user << "<span class='notice'>You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]...</span>"
 		if(instant)
@@ -475,9 +473,8 @@
 	return
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
-		user << "<span class='notice'>You take a [huffable ? "huff" : "bite"] of the [src.name]. Delicious!</span>"
 	if(edible && (M == user))
-		user << "<span class='notice'>You take a bite of the [src.name]. Delicious!</span>"
+		user << "You take a bite of the [src.name]. Delicious!"
 		user.nutrition += 5
 		if(uses)
 			uses -= 5
@@ -748,7 +745,7 @@ obj/item/toy/cards/deck/attack_hand(mob/user as mob)
 	var/choice = null
 	if(cards.len == 0)
 		src.icon_state = "deck_[deckstyle]_empty"
-		user << "<span class='notice'>There are no more cards to draw.</span>"
+		user << "<span class='warning'>There are no more cards to draw!</span>"
 		return
 	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
 	choice = cards[1]
@@ -876,7 +873,7 @@ obj/item/toy/cards/cardhand/Topic(href, href_list)
 			C.apply_card_vars(C,O)
 			C.pickup(cardUser)
 			cardUser.put_in_any_hand_if_possible(C)
-			cardUser.visible_message("[cardUser] draws a card from \his hand.", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
+			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from \his hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
 
 			interact(cardUser)
 			if(src.currenthand.len < 3)
@@ -1057,7 +1054,7 @@ obj/item/toy/cards/deck/syndicate
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
-		user.visible_message("[user] presses a button on [src].", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
+		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		spawn(5) //gia said so
 			icon_state = "nuketoy"
 			playsound(src, 'sound/machines/Alarm.ogg', 100, 0, surround = 0)
@@ -1075,7 +1072,7 @@ obj/item/toy/cards/deck/syndicate
 
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
-	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor™"
+	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor?"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
 	w_class = 2.0
@@ -1116,7 +1113,7 @@ obj/item/toy/cards/deck/syndicate
  */
 /obj/item/toy/redbutton
 	name = "big red button"
-	desc = "A big, plastic red button. Reads 'From HonkCo Pranks©' on the back."
+	desc = "A big, plastic red button. Reads 'From HonkCo Pranks?' on the back."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = 2.0
@@ -1125,7 +1122,7 @@ obj/item/toy/cards/deck/syndicate
 /obj/item/toy/redbutton/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
-		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>You hear a loud click.</span>")
+		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0, surround = 0)
 		for(var/mob/M in range(10, src)) // Checks range
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) // Checks to make sure whoever's getting shaken is alive/not the AI
@@ -1133,4 +1130,4 @@ obj/item/toy/cards/deck/syndicate
 				shake_camera(M, 2, 1) // Shakes player camera 2 squares for 1 second.
 
 	else
-		user << "<span class='warning'>Nothing happens!</span>"
+		user << "<span class='alert'>Nothing happens.</span>"
