@@ -28,7 +28,7 @@
 	if (usr.get_item_by_slot(slot_back) != src)
 		usr << "<span class='notice'>The watertank needs to be on your back to use.</span>"
 		return
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 	on = !on
 

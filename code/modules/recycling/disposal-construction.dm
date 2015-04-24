@@ -170,10 +170,14 @@
 			nicetype = "pipe"
 
 	var/turf/T = loc
-	if(T.intact)
+	if(T.intact && istype(T, /turf/simulated/floor))
 		user << "You can only attach the [nicetype] if the floor plating is removed."
 		return
-
+	
+	if(!ispipe && istype(T, /turf/simulated/wall))
+		user << "You can't build [nicetype]s on walls, only disposal pipes."
+		return
+	
 	var/obj/structure/disposalpipe/CP = locate() in T
 
 	if(istype(I, /obj/item/weapon/wrench))

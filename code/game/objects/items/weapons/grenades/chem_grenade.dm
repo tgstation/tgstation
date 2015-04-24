@@ -211,9 +211,17 @@
 	reagents.chem_temp = total_temp
 
 /obj/item/weapon/grenade/chem_grenade/proc/can_flood_from(myloc, maxrange)
+	var/turf/myturf = get_turf(myloc)
 	var/list/reachable = list(myloc)
 	for(var/i=1; i<=maxrange; i++)
+		var/list/turflist = list()
 		for(var/turf/T in (orange(i, myloc) - orange(i-1, myloc)))
+			turflist |= T
+		for(var/turf/T in turflist)
+			if( !(get_dir(T,myloc) in cardinal) && (abs(T.x - myturf.x) == abs(T.y - myturf.y) ))
+				turflist.Remove(T)
+				turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
+		for(var/turf/T in turflist)
 			if(T in reachable) continue
 			for(var/turf/NT in orange(1, T))
 				if(!(NT in reachable)) continue

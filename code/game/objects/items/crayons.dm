@@ -155,6 +155,5 @@
 /obj/item/toy/crayon/spraycan/gang
 	desc = "A suspicious-looking spraycan modified to use special paint used by gangsters to mark territory."
 	icon_state = "spraycan_gang_cap"
-	uses = 20
 	gang = 1
 	instant = -1
