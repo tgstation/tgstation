@@ -82,6 +82,18 @@
 	src << "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggleprayersounds()
+	set name = "Hear/Silence Prayer Sounds"
+	set category = "Preferences"
+	set desc = "Toggles hearing pray sounds."
+	prefs.toggles ^= SOUND_PRAYERS
+	prefs.save_preferences()
+	if(prefs.toggles & SOUND_PRAYERS)
+		src << "You will now hear prayer sounds."
+	else
+		src << "You will no longer prayer sounds."
+	feedback_add_details("admin_verb", "PSounds")
+
 /client/verb/togglePRs()
 	set name = "Show/Hide Pull Request Announcements"
 	set category = "Preferences"
