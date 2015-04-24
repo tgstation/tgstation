@@ -52,7 +52,7 @@
 			sleep(30)
 			if(!in_range(user, target))
 				user << "<span class='warning'>You are not close enough to siphon [target]'s soul. The link has been broken.</span>"
-				draining = 1
+				draining = 0
 				return
 			if(!target.stat)
 				user << "<span class='warning'>They are now powerful enough to fight off your draining.</span>"
