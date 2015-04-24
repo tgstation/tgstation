@@ -322,7 +322,7 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 		if("Yes")
 			if( user.loc != temp_loc || ruined )
 				return
-			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
+			visible_message("[user] rips [src] in a single, decisive motion!" )
 			playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
 			ruined = 1
 			icon_state = "poster_ripped"
@@ -346,11 +346,11 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
 		if(istype(O,/obj/structure/sign/poster))
-			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
+			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
 			return
 		stuff_on_wall++
 		if(stuff_on_wall == 3)
-			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
+			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
 			return
 
 	user << "<span class='notice'>You start placing the poster on the wall...</span>"	//Looks like it's uncluttered enough. Place the poster.

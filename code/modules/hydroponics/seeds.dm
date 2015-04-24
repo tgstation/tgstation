@@ -107,12 +107,12 @@
 					mutant_color = bloodSample.data["mutant_color"]
 					factions = bloodSample.data["factions"]
 					W.reagents.clear_reagents()
-					user << "You inject the contents of the syringe into the seeds."
+					user << "<span class='notice'>You inject the contents of the syringe into the seeds.</span>"
 					contains_sample = 1
 				else
-					user << "The seeds reject the sample!"
+					user << "<span class='warning'>The seeds reject the sample!</span>"
 		else
-			user << "The seeds already contain a genetic sample."
+			user << "<span class='warning'>The seeds already contain a genetic sample!</span>"
 	..()
 
 

@@ -72,9 +72,9 @@
 	if(initial(icon_state) == "d00")
 		result = (result - 1)*10
 	if(user != null) //Dice was rolled in someone's hand
-		user.visible_message("<span class='notice'>[user] has thrown [src]. It lands on [result]. [comment]</span>", \
+		user.visible_message("[user] has thrown [src]. It lands on [result]. [comment]", \
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
-							 "<span class='notice'>You hear [src] landing on [result]. [comment]</span>")
+							 "<span class='italics'>You hear [src] rolling.</span>")
 	else if(src.throwing == 0) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 

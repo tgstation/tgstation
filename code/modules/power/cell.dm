@@ -63,7 +63,7 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
 
-		user << "You inject the solution into the power cell."
+		user << "<span class='notice'>You inject the solution into the power cell.</span>"
 
 		if(S.reagents.has_reagent("plasma", 5))
 

@@ -72,7 +72,7 @@
 			if(prob(15))
 				H.irradiate(rand(30,80))
 				H.Weaken(5)
-				H.visible_message("<span class='danger'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='danger'>You hear the crunching of leaves.</span>")
+				H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
 					randmutb(H)
 					domutcheck(H,null)
@@ -81,7 +81,7 @@
 					domutcheck(H,null)
 			else
 				H.adjustFireLoss(rand(5,15))
-				H.show_message("<span class='danger'>The radiation beam singes you!</span>")
+				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
 	return

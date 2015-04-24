@@ -67,7 +67,7 @@
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
 	if (shot.select_name)
-		user << "<span class='danger'>[src] is now set to [shot.select_name].</span>"
+		user << "<span class='notice'>[src] is now set to [shot.select_name].</span>"
 	update_icon()
 	return
 

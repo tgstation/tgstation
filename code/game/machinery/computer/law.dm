@@ -10,7 +10,7 @@
 		if(src.stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(!current)
-			user << "You haven't selected anything to transmit laws to!"
+			user << "<span class='caution'>You haven't selected anything to transmit laws to!</span>"
 			return
 		if(!can_upload_to(current))
 			user << "<span class='caution'>Upload failed!</span> Check to make sure [current.name] is functioning properly."
@@ -43,7 +43,7 @@
 	src.current = select_active_ai(user)
 
 	if (!src.current)
-		user << "No active AIs detected."
+		user << "<span class='caution'>No active AIs detected!</span>"
 	else
 		user << "[src.current.name] selected for law changes."
 
@@ -68,7 +68,7 @@
 	src.current = select_active_free_borg(user)
 
 	if(!src.current)
-		user << "No active unslaved cyborgs detected."
+		user << "<span class='caution'>No active unslaved cyborgs detected!</span>"
 	else
 		user << "[src.current.name] selected for law changes."
 

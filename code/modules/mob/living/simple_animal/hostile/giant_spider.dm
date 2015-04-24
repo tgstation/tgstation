@@ -245,7 +245,7 @@
 
 	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
 	if(E)
-		src << "<span class='notice'>There is already a cluster of eggs here!</span>"
+		src << "<span class='warning'>There is already a cluster of eggs here!</span>"
 	else if(!fed)
 		src << "<span class='warning'>You are too hungry to do this!</span>"
 	else if(busy != LAYING_EGGS)

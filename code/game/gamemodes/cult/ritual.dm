@@ -42,7 +42,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 
 	if(ishuman(usr) || ismonkey(usr))	//Damage only applies to humans and monkeys, to allow constructs to communicate
-		usr.visible_message("<span class='warning'>[usr.name] starts clawing at his arms like a mad man!")
+		usr.visible_message("<span class='warning'>[usr.name] starts clawing at his arms like a mad man!</span>", "<span class='warning'>You start clawing at his arms like a mad man!</span>")
 		apply_damage(25,BRUTE, "l_arm")
 		apply_damage(25,BRUTE, "r_arm")
 		sleep(50)
@@ -55,7 +55,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		apply_damage(15,BRUTE, "r_arm")
 		if(usr.incapacitated())
 			return
-		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood")
+		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood.</span>", "<span class='warning'>You paint strange symbols with your own blood.</span>")
 		sleep(20)
 
 	usr.say("O bidai nabora se[pick("'","`")]sma!")
@@ -164,9 +164,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 /obj/effect/rune/attack_hand(mob/living/user as mob)		// OH GOD this is horrible
 	if(!iscultist(user))
-		user << "<span class='notice'>You can't mouth the arcane scratchings without fumbling over them.</span>"
+		user << "<span class='warning'>You can't mouth the arcane scratchings without fumbling over them!</span>"
 		return
-	var/message = "<span class='notice'>You are unable to speak the words of the rune.</span>"
+	var/message = "<span class='warning'>You are unable to speak the words of the rune!</span>"
 	if(!user.can_speak(message) && (user.mind && !user.mind.miming))
 		user << message
 		return
@@ -236,7 +236,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			cultist.say(gibberish)
 		else
 			cultist.whisper(gibberish)
-	visible_message("<span class='danger'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='danger'>You hear a faint fizzle.</span>", 2)
+	visible_message("<span class='danger'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='italics'>You hear a faint fizzle.</span>", 2)
 	return
 
 /obj/effect/rune/proc/check_icon()
@@ -637,8 +637,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					return
 
 				for (var/mob/V in viewers(src))
-					V.show_message("<span class='danger'>[user] slices open a finger and begins to chant and paint symbols on the floor.</span>", 3, "<span class='danger'>You hear chanting.</span>", 2)
-				user << "<span class='danger'>You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.</span>"
+					V.show_message("<span class='danger'>[user] slices open a finger and begins to chant and paint symbols on the floor.</span>", 3, "<span class='italics'>You hear chanting.</span>", 2)
+				user << "<span class='userdanger'>You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.</span>"
 				user.take_overall_damage((rand(9)+1)/10) // 0.1 to 1.0 damage
 				if(do_after(user, 50))
 					if(usr.get_active_hand() != src)
@@ -670,7 +670,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	//		if(M == user)
 		for(var/entry in words)
 			words[entry] = T.words[entry]
-		user << "You copy the translation notes from your tome."
+		user << "<span class='notice'>You copy the translation notes from your tome.</span>"
 
 
 /obj/item/weapon/tome/examine(mob/user)

@@ -59,11 +59,11 @@
 	if(!proximity) return
 	if(target.is_open_container() != 0 && target.reagents)
 		if(!target.reagents.total_volume)
-			user << "<span class='notice'>[target] is empty. There's nothing to dissolve [src] in.</span>"
+			user << "<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>"
 			return
 		user << "<span class='notice'>You dissolve [src] in [target].</span>"
 		for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
-			O << "<span class='warning'>[user] slips something into [target].</span>"
+			O << "<span class='warning'>[user] slips something into [target]!</span>"
 		reagents.trans_to(target, reagents.total_volume)
 		spawn(5)
 			qdel(src)

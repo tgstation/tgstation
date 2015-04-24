@@ -187,7 +187,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					broken_state++
 				else if(WT.isOn())
-					user << "<span class='notice'>You don't have enough fuel to mend the damaged framework.</span>"
+					user << "<span class='warning'>You don't have enough fuel to mend the damaged framework!</span>"
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
 				var/obj/item/stack/sheet/plasteel/PS = I
@@ -197,7 +197,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
 					broken_state++
 				else
-					user << "<span class='notice'>You need 10 sheets of plasteel.</span>"
+					user << "<span class='warning'>You need 10 sheets of plasteel!</span>"
 		if(GRAV_NEEDS_WRENCH)
 			if(istype(I, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You secure the plating to the framework.</span>"

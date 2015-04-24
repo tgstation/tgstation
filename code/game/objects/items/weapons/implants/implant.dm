@@ -147,9 +147,9 @@
 	else
 		injectamount = cause
 	reagents.trans_to(R, injectamount)
-	R << "You hear a faint *beep*."
+	R << "<span class='italics'>You hear a faint beep.</span>"
 	if(!reagents.total_volume)
-		R << "You hear a faint click from your chest."
+		R << "<span class='italics'>You hear a faint click from your chest.</span>"
 		qdel(src)
 
 

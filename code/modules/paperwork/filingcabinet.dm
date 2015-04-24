@@ -55,7 +55,7 @@
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
 	else
-		user << "<span class='notice'>You can't put [P] in [src]!</span>"
+		user << "<span class='warning'>You can't put [P] in [src]!</span>"
 
 
 /obj/structure/filingcabinet/attack_hand(mob/user)

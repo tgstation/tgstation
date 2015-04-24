@@ -68,7 +68,7 @@
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding)
-			user << "<span class='info'>You can't hit a high enough temperature to smelt [src] properly.</span>"
+			user << "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>"
 	else
 		..()
 
@@ -123,7 +123,7 @@
 
 /obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/device/assembly/igniter))
-		user.visible_message("<span class='warning'>[user] attaches [I] to [src]!</span>")
+		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
 		wires = new(src)
 		attacher = key_name(user)
 		qdel(I)
@@ -141,7 +141,7 @@
 	if(primed)
 		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
 			primed = 0
-			user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
+			user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
 			icon_state = "Gibtonite ore"
 			quality = 1
 			return
@@ -185,7 +185,7 @@
 		else if(triggered_by == 2)
 			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [attacher].")
 		else
-			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>")
+			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
 			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		spawn(det_time)
 		if(primed)
@@ -285,7 +285,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
-			user << "<span class='notice'>There already is a string attached to this coin.</span>"
+			user << "<span class='warning'>There already is a string attached to this coin!</span>"
 			return
 
 		if (CC.use(1))
@@ -293,7 +293,7 @@
 			string_attached = 1
 			user << "<span class='notice'>You attach a string to the coin.</span>"
 		else
-			user << "<span class='warning'>You need one length of cable to attach a string to the coin.</span>"
+			user << "<span class='warning'>You need one length of cable to attach a string to the coin!</span>"
 			return
 
 	else if(istype(W,/obj/item/weapon/wirecutters))
@@ -317,6 +317,6 @@
 		icon_state = "coin_[cmineral]_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
 		if(do_after(user, 15))
-			user.visible_message("<span class='notice'>[user] has flipped [src]. It lands on [coinflip].</span>", \
+			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
 								 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-								 "<span class='notice'>You hear the clattering of loose change.</span>")
+								 "<span class='italics'>You hear the clattering of loose change.</span>")

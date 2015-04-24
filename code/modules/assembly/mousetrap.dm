@@ -19,7 +19,7 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/user = usr
 				if((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY && prob(50))
-					user << "Your hand slips, setting off the trigger."
+					user << "<span class='warning'>Your hand slips, setting off the trigger!</span>"
 					pulse(0)
 		update_icon()
 		if(usr)

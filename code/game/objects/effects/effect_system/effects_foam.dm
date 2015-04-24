@@ -222,14 +222,14 @@
 /obj/structure/foamedmetal/attack_hulk(mob/living/carbon/human/user)
 	..(user, 1)
 	if(prob(75 - metal*25))
-		user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
-						"<span class='danger'>You smash through the metal foam wall.</span>")
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
+						"<span class='danger'>You smash through the metal foam wall!</span>")
 		qdel(src)
 	return 1
 
 
 /obj/structure/foamedmetal/attack_hand(var/mob/user)
-	user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
+	user << "<span class='warning'>You hit the metal foam but bounce off it!</span>"
 
 
 /obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user, params)
@@ -242,11 +242,11 @@
 		return
 
 	if(prob(I.force*20 - metal*25))
-		user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
-						"<span class='danger'>You smash through the foamed metal with \the [I].</span>")
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
+						"<span class='danger'>You smash through the foamed metal with \the [I]!</span>")
 		qdel(src)
 	else
-		user << "<span class='notice'>You hit the metal foam to no effect.</span>"
+		user << "<span class='warning'>You hit the metal foam to no effect!</span>"
 
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)

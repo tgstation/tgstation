@@ -129,9 +129,9 @@ Doesn't work on other aliens/AI.*/
 					M.adjustToxLoss(amount)
 					user.adjustToxLoss(-amount)
 					M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
-					user << {"<span class='noticealien'>You have trasferred [amount] plasma to [M]</span>"}
+					user << {"<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"}
 				else
-					user << "<span class='noticealien'>You need to be closer.</span>"
+					user << "<span class='noticealien'>You need to be closer!</span>"
 	return
 
 /obj/effect/proc_holder/alien/acid

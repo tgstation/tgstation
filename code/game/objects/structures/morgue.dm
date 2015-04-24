@@ -164,11 +164,11 @@ var/global/list/crematoriums = new/list()
 		return //don't let you cremate something twice or w/e
 
 	if(contents.len <= 1)
-		audible_message("<span class='danger'>You hear a hollow crackle.</span>")
+		audible_message("<span class='italics'>You hear a hollow crackle.</span>")
 		return
 
 	else
-		audible_message("<span class='danger'>You hear a roar as the crematorium activates.</span>")
+		audible_message("<span class='italics'>You hear a roar as the crematorium activates.</span>")
 
 		locked = 1
 		update_icon()
@@ -243,7 +243,7 @@ Crematorium Switch
 		connected.close()
 		add_fingerprint(user)
 	else
-		user << "That's not connected to anything."
+		user << "<span class='warning'>That's not connected to anything!</span>"
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if(!istype(O, /atom/movable) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
@@ -259,7 +259,7 @@ Crematorium Switch
 		return
 	O.loc = src.loc
 	if (user != O)
-		visible_message("<span class='warning'>[user] stuffs [O] into [src]!</span>")
+		visible_message("<span class='warning'>[user] stuffs [O] into [src].</span>")
 	return
 
 /*

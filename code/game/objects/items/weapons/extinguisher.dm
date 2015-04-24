@@ -51,18 +51,18 @@
 		var/safety_save = safety
 		safety = 1
 		if(reagents.total_volume == reagents.maximum_volume)
-			user << "<span class='notice'>\The [src] is already full!</span>"
+			user << "<span class='warning'>\The [src] is already full!</span>"
 			safety = safety_save
 			return 1
 		var/obj/structure/reagent_dispensers/watertank/W = target
 		var/transferred = W.reagents.trans_to(src, max_water)
 		if(transferred > 0)
-			user << "<span class='notice'>\The [src] has been refilled by [transferred] units</span>"
+			user << "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 			for(var/datum/reagent/water/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
 		else
-			user << "<span class='notice'>\The [W] is empty!</span>"
+			user << "<span class='warning'>\The [W] is empty!</span>"
 		safety = safety_save
 		return 1
 	else
@@ -77,7 +77,7 @@
 		return
 	if (!safety)
 		if (src.reagents.total_volume < 1)
-			usr << "<span class='danger'>\The [src] is empty.</span>"
+			usr << "<span class='warning'>\The [src] is empty!</span>"
 			return
 
 		if (world.time < src.last_use + 20)

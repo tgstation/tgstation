@@ -113,12 +113,12 @@ BLIND     // can't see anything
 			permeability_coefficient = initial(permeability_coefficient)
 			flags |= visor_flags
 			flags_inv |= visor_flags_inv
-			user << "You push \the [src] back into place."
+			user << "<span class='notice'>You push \the [src] back into place.</span>"
 			src.mask_adjusted = 0
 			slot_flags = initial(slot_flags)
 		else
 			src.icon_state += "_up"
-			user << "You push \the [src] out of the way."
+			user << "<span class='notice'>You push \the [src] out of the way.</span>"
 			gas_transfer_coefficient = null
 			permeability_coefficient = null
 			flags &= ~visor_flags
@@ -293,20 +293,20 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
 	if(get_dist(usr, src) > 1)
-		usr << "You have moved too far away."
+		usr << "<span class='warning'>You have moved too far away!</span>"
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
 	if (src.loc == usr)
 		switch(sensor_mode)
 			if(0)
-				usr << "You disable your suit's remote sensing equipment."
+				usr << "<span class='notice'>You disable your suit's remote sensing equipment.</span>"
 			if(1)
-				usr << "Your suit will now only report whether you are alive or dead."
+				usr << "<span class='notice'>Your suit will now only report whether you are alive or dead.</span>"
 			if(2)
-				usr << "Your suit will now only report your exact vital lifesigns."
+				usr << "<span class='notice'>Your suit will now only report your exact vital lifesigns.</span>"
 			if(3)
-				usr << "Your suit will now report your exact vital lifesigns as well as your coordinate position."
+				usr << "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>"
 
 	if(istype(loc,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = loc
@@ -329,19 +329,19 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 	if(!can_use(usr))
 		return
 	if(!can_adjust)
-		usr << "You cannot wear this suit any differently."
+		usr << "<span class='warning'>You cannot wear this suit any differently!</span>"
 		return
 	if(src.adjusted == 1)
 		src.fitted = initial(fitted)
 		src.item_color = initial(item_color)
 		src.item_color = src.suit_color //colored jumpsuits are shit and break without this
-		usr << "You adjust the suit back to normal."
+		usr << "<span class='notice'>You adjust the suit back to normal.</span>"
 		src.adjusted = 0
 	else
 		if(src.fitted != FEMALE_UNIFORM_TOP)
 			src.fitted = NO_FEMALE_UNIFORM
 		src.item_color += "_d"
-		usr << "You adjust the suit to wear it more casually."
+		usr << "<span class='notice'>You adjust the suit to wear it more casually.</span>"
 		src.adjusted = 1
 	usr.update_inv_w_uniform()
 	..()
@@ -388,7 +388,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 			flags |= (visor_flags)
 			flags_inv |= (visor_flags_inv)
 			icon_state = initial(icon_state)
-			usr << "You pull \the [src] down."
+			usr << "<span class='notice'>You pull \the [src] down.</span>"
 			flash_protect = initial(flash_protect)
 			tint = initial(tint)
 		else
@@ -396,7 +396,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 			flags &= ~(visor_flags)
 			flags_inv &= ~(visor_flags_inv)
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push \the [src] up."
+			usr << "<span class='notice'>You push \the [src] up.</span>"
 			flash_protect = 0
 			tint = 0
 
@@ -409,7 +409,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
-		if(!user.stat && user.canmove && !user.restrained())
+		if(!user.incapacitated())
 			return 1
 	return 0
 

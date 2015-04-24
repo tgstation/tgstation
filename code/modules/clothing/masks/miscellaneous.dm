@@ -12,7 +12,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.wear_mask)
-			user << "<span class='notice'>You need help taking this off!</span>"
+			user << "<span class='warning'>You need help taking this off!</span>"
 			return
 	..()
 

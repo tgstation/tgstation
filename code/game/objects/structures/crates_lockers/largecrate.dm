@@ -6,7 +6,7 @@
 	density = 1
 
 /obj/structure/largecrate/attack_hand(mob/user as mob)
-	user << "<span class='notice'>You need a crowbar to pry this open!</span>"
+	user << "<span class='warning'>You need a crowbar to pry this open!</span>"
 	return
 
 /obj/structure/largecrate/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
@@ -15,9 +15,9 @@
 		var/turf/T = get_turf(src)
 		for(var/obj/O in contents)
 			O.loc = T
-		user.visible_message("<span class='notice'>[user] pries \the [src] open.</span>", \
+		user.visible_message("[user] pries \the [src] open.", \
 							 "<span class='notice'>You pry open \the [src].</span>", \
-							 "<span class='notice'>You hear splitting wood.</span>")
+							 "<span class='italics'>You hear splitting wood.</span>")
 		qdel(src)
 	else
 		return attack_hand(user)

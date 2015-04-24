@@ -249,7 +249,7 @@
 		if(isrobot(user))
 			return
 		if(!user.drop_item()) //couldn't drop the item
-			user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
+			user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 		if(W)
 			W.loc = src.loc
@@ -257,14 +257,14 @@
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
-			user << "<span class='notice'>[src] is already rigged!</span>"
+			user << "<span class='warning'>[src] is already rigged!</span>"
 			return
 		var/obj/item/stack/cable_coil/C = W
 		if (C.use(5))
 			user << "<span class='notice'>You rig [src].</span>"
 			rigged = 1
 		else
-			user << "<span class='warning'>You need 5 lengths of cable to rig [src].</span>"
+			user << "<span class='warning'>You need 5 lengths of cable to rig [src]!</span>"
 		return
 	else if(istype(W, /obj/item/device/electropack))
 		if(rigged)
