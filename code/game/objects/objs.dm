@@ -219,12 +219,14 @@ a {
 	dat += multitool_menu(user,P)
 	if(P)
 		if(P.buffer)
-			var/id="???"
+			var/id = null
 			if(istype(P.buffer, /obj/machinery/telecomms))
-				id=P.buffer:id
-			else
-				id=P.buffer:id_tag
-			dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] ([id])"
+				var/obj/machinery/telecomms/buffer = P.buffer//Casting is better than using colons
+				id = buffer.id
+			else if(P.buffer.vars["id_tag"])//not doing in vars here incase the var is empty, it'd show ()
+				id = P.buffer:id_tag//sadly, : is needed
+
+			dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] [id ? "([id])" : ""]"//If you can't into the ? operator, that will make it not display () if there's no ID.
 
 			dat += linkMenu(P.buffer)
 
