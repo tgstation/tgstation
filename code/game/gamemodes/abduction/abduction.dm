@@ -236,19 +236,11 @@
 
 
 /datum/game_mode/abduction/check_finished()
-	var/all_dead = 1
 	for(var/team_number=1,team_number<=teams,team_number++)
-		var/datum/mind/smind = scientists[team_number]
-		if(smind.current)
-			var/mob/living/M = smind.current
-			if(M.stat != DEAD)
-				all_dead = 0
 		var/obj/machinery/abductor/console/con = get_team_console(team_number)
 		var/datum/objective/objective = team_objectives[team_number]
 		if (con.experiment.points > objective.target_amount)
 			return 1
-	if(all_dead)
-		return 1
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()
