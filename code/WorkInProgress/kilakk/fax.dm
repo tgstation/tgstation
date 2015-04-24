@@ -101,6 +101,7 @@ var/list/alldepartments = list("Central Command")
 	if(href_list["send"])
 		if(tofax)
 
+			log_game("([usr]/([usr.ckey]) sent a fax titled [tofax] to [dpt] - contents: [tofax.info]")
 			if((dpt == "Central Command") | (dpt == "Nanotrasen HR"))
 				if(dpt == "Central Command")
 					Centcomm_fax(tofax, tofax.name, usr)
