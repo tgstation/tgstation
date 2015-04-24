@@ -84,7 +84,7 @@
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
 	start_state = new /datum/station_state()
-	start_state.count()
+	start_state.count(1)
 	return 1
 
 ///make_antag_chance()
@@ -113,8 +113,6 @@
 			usable_modes += G
 		else
 			del(G)
-
-	SSshuttle.emergencyNoEscape = 0 //Time to get the fuck out of here
 
 	if(!usable_modes)
 		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")

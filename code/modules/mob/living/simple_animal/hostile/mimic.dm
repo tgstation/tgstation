@@ -5,7 +5,7 @@
 /mob/living/simple_animal/hostile/mimic
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/crates.dmi'
 	icon_state = "crate"
 	icon_living = "crate"
 
@@ -174,6 +174,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		icon = O.icon
 		icon_state = O.icon_state
 		icon_living = icon_state
+		overlays = O.overlays
 
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
 			health = (anchored * 50) + 50

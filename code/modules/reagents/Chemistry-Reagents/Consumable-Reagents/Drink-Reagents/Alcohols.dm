@@ -22,7 +22,6 @@ datum/reagent/consumable/ethanol
 	var/boozepwr = 10 //lower numbers mean the booze will have an effect faster.
 
 datum/reagent/consumable/ethanol/on_mob_life(var/mob/living/M as mob)
-	current_cycle++
 	M.jitteriness = max(M.jitteriness-5,0)
 	if(current_cycle >= boozepwr)
 		if (!M.slurring) M.slurring = 1

@@ -13,6 +13,7 @@ datum/reagent/consumable
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 
 datum/reagent/consumable/on_mob_life(var/mob/living/M as mob)
+	current_cycle++
 	M.nutrition += nutriment_factor
 	holder.remove_reagent(src.id, metabolization_rate)
 
@@ -58,7 +59,6 @@ datum/reagent/consumable/sugar
 datum/reagent/consumable/sugar/overdose_start(var/mob/living/M as mob)
 	M << "<span class = 'userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
 	M.sleeping += 30
-	..()
 	return
 
 datum/reagent/consumable/sugar/overdose_process(var/mob/living/M as mob)
@@ -288,7 +288,6 @@ datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
 			M.druggy = max(M.druggy, 40)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
-	current_cycle++
 	..()
 	return
 
@@ -410,3 +409,20 @@ datum/reagent/consumable/eggyolk
 	id = "eggyolk"
 	description = "It's full of protein."
 	color = "#FFB500"
+
+datum/reagent/consumable/corn_starch
+	name = "Corn Starch"
+	id = "corn_starch"
+	description = "A slippery solution."
+	color = "#C8A5DC"
+
+datum/reagent/consumable/corn_syrup
+	name = "Corn Syrup"
+	id = "corn_syrup"
+	description = "Decays into sugar."
+	color = "#C8A5DC"
+
+datum/reagent/consumable/corn_syrup/on_mob_life(var/mob/living/M as mob)
+	M.reagents.add_reagent("sugar", 3)
+	M.reagents.remove_reagent("corn_syrup", 1)
+	..()

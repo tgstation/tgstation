@@ -159,6 +159,7 @@
 
 /obj/structure/closet/bombclosetsecurity/New()
 	..()
+	contents = list()
 	new /obj/item/clothing/suit/bomb_suit/security( src )
 	new /obj/item/clothing/under/rank/security( src )
 	new /obj/item/clothing/shoes/sneakers/brown( src )

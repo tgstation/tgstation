@@ -260,17 +260,22 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(!t_color)		t_color = icon_state
 
 		var/image/standing
+
+		var/iconfile2use //Which icon file to use to generate the overlay and any female alterations.
+
 		if(U.alternate_worn_icon)
-			standing = image("icon"=U.alternate_worn_icon, "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
-		if(!standing)
-			standing = image("icon"='icons/mob/uniform.dmi', "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
+			iconfile2use = U.alternate_worn_icon
+		if(!iconfile2use)
+			iconfile2use = 'icons/mob/uniform.dmi'
+
+		standing = image("icon"=iconfile2use, "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
 
 		overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				standing	= wear_female_version(t_color, 'icons/mob/uniform.dmi', UNIFORM_LAYER, U.fitted)
+				standing	= wear_female_version(t_color, iconfile2use, UNIFORM_LAYER, U.fitted)
 				overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(w_uniform.blood_DNA)

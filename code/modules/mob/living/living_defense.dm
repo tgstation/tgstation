@@ -281,5 +281,5 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 /mob/living/proc/irradiate(amount)
 	if(amount)
-		var/blocked = run_armor_check(null, IRRADIATE, "Your clothes feel warm", "Your clothes feel warm")
+		var/blocked = run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm")
 		apply_effect(amount, IRRADIATE, blocked)

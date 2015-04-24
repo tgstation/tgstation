@@ -52,20 +52,10 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
-	..()
-	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
-
-	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
-	if(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE))
-		pressure_adjustment_coefficient -= PRESSURE_SUIT_REDUCTION_COEFFICIENT
-	if(head && (head.flags & STOPSPRESSUREDMAGE))
-		pressure_adjustment_coefficient -= PRESSURE_HEAD_REDUCTION_COEFFICIENT
-	pressure_adjustment_coefficient = max(pressure_adjustment_coefficient,0) //So it isn't less than 0
-	pressure_difference = pressure_difference * pressure_adjustment_coefficient
-	if(pressure > ONE_ATMOSPHERE)
-		return ONE_ATMOSPHERE + pressure_difference
+	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
+		return ONE_ATMOSPHERE
 	else
-		return ONE_ATMOSPHERE - pressure_difference
+		return pressure
 
 
 /mob/living/carbon/human/handle_disabilities()
@@ -145,21 +135,6 @@
 		..()
 //END FIRE CODE
 
-
-/mob/living/carbon/human/proc/stabilize_temperature_from_calories()
-	switch(bodytemperature)
-		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
-			if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
-				nutrition -= 2
-			var/body_temperature_difference = 310.15 - bodytemperature
-			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-		if(260.15 to 360.15)
-			var/body_temperature_difference = 310.15 - bodytemperature
-			bodytemperature += body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR
-		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
-			//We totally need a sweat system cause it totally makes sense...~
-			var/body_temperature_difference = 310.15 - bodytemperature
-			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.

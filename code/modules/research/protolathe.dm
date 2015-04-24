@@ -30,7 +30,7 @@ Note: Must be placed west/left of and R&D console to function.
 								"Medical Designs",
 								"Bluespace Designs",
 								"Stock Parts",
-								"Equipement",
+								"Equipment",
 								"Mining Designs",
 								"Electronics",
 								"Weapons",

@@ -1,8 +1,4 @@
 
-#define REM REAGENTS_EFFECT_MULTIPLIER
-
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
@@ -59,7 +55,6 @@ datum/reagent/consumable/carrotjuice/on_mob_life(var/mob/living/M as mob)
 		if(21 to INFINITY)
 			if (prob(current_cycle-10))
 				M.disabilities &= ~NEARSIGHT
-	current_cycle++
 	..()
 	return
 
@@ -454,6 +449,12 @@ datum/reagent/consumable/blumpkinjuice
 	description = "Juiced from real blumpkin."
 	color = "#00BFFF"
 
+datum/reagent/consumable/triple_citrus
+	name = "Triple Citrus"
+	id = "triple_citrus"
+	description = "A solution."
+	color = "#C8A5DC"
+
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
@@ -470,7 +471,6 @@ datum/reagent/consumable/atomicbomb/on_mob_life(var/mob/living/M as mob)
 	if (!M.slurring)
 		M.slurring = 1
 	M.slurring += 3
-	current_cycle++
 	switch(current_cycle)
 		if(51 to 200)
 			M.sleeping += 1
@@ -487,18 +487,19 @@ datum/reagent/consumable/gargle_blaster
 	color = "#664300" // rgb: 102, 67, 0
 
 datum/reagent/consumable/gargle_blaster/on_mob_life(var/mob/living/M as mob)
-	current_cycle++
 	M.dizziness +=6
-	if(current_cycle >= 15 && current_cycle <45)
-		if (!M.slurring)
-			M.slurring = 1
-		M.slurring += 3
-	else if(current_cycle >= 45 && prob(50) && current_cycle <55)
-		M.confused = max(M.confused+3,0)
-	else if(current_cycle >=55)
-		M.druggy = max(M.druggy, 55)
-	else if(current_cycle >=200)
-		M.adjustToxLoss(2)
+	switch(current_cycle)
+		if(15 to 45)
+			if(!M.slurring)
+				M.slurring = 1
+			M.slurring += 3
+		if(45 to 55)
+			if(prob(50))
+				M.confused = max(M.confused+3,0)
+		if(55 to 200)
+			M.druggy = max(M.druggy, 55)
+		if(200 to INFINITY)
+			M.adjustToxLoss(2)
 	..()
 	return
 
@@ -510,18 +511,19 @@ datum/reagent/consumable/neurotoxin
 
 datum/reagent/consumable/neurotoxin/on_mob_life(var/mob/living/carbon/M as mob)
 	M.weakened = max(M.weakened, 3)
-	current_cycle++
 	M.dizziness +=6
-	if(current_cycle >= 15 && current_cycle <45)
-		if (!M.slurring)
-			M.slurring = 1
-		M.slurring += 3
-	else if(current_cycle >= 45 && prob(50) && current_cycle <55)
-		M.confused = max(M.confused+3,0)
-	else if(current_cycle >=55)
-		M.druggy = max(M.druggy, 55)
-	else if(current_cycle >=200)
-		M.adjustToxLoss(2)
+	switch(current_cycle)
+		if(15 to 45)
+			if(!M.slurring)
+				M.slurring = 1
+			M.slurring += 3
+		if(45 to 55)
+			if(prob(50))
+				M.confused = max(M.confused+3,0)
+		if(55 to 200)
+			M.druggy = max(M.druggy, 55)
+		if(200 to INFINITY)
+			M.adjustToxLoss(2)
 	..()
 	return
 
@@ -535,7 +537,6 @@ datum/reagent/consumable/hippies_delight
 
 datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 50)
-	current_cycle++
 	switch(current_cycle)
 		if(1 to 5)
 			if (!M.slurring) M.slurring = 1
@@ -562,7 +563,3 @@ datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 			if(prob(30)) M.adjustToxLoss(2)
 	..()
 	return
-
-
-// Undefine the alias for REAGENTS_EFFECT_MULTIPLER
-#undef REM

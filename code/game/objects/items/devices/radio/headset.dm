@@ -188,17 +188,18 @@
 
 /obj/item/device/radio/headset/headset_cent
 	name = "\improper Centcom headset"
-	desc = "A headset used by the upper echelons of Nanotrasen. \nTo access the command channel, use :c."
+	desc = "A headset used by the upper echelons of Nanotrasen. \nTo access the centcom channel, use :y."
 	icon_state = "cent_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_com
+	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
 
 /obj/item/device/radio/headset/headset_cent/commander
 	keyslot = new /obj/item/device/encryptionkey/heads/captain
 
 /obj/item/device/radio/headset/headset_cent/alt
 	name = "\improper Centcom bowman headset"
-	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs."
+	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs. \nTo access the centcom channel, use :y."
 	flags = EARBANGPROTECT
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
@@ -284,6 +285,9 @@
 
 		if(keyslot2.syndie)
 			src.syndie = 1
+
+		if (keyslot2.centcom)
+			centcom = 1
 
 
 	for(var/ch_name in channels)
