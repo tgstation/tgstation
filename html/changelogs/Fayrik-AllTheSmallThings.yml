@@ -1,7 +1,0 @@
-author: Fayrik
-
-delete-after: True
-
-changes: 
-  - rscadd: "Added jobban options for Abductors and Deathsquads."
-  - tweak: "Made admin antag spawning buttons more efficient and less prone to failure."

@@ -1,6 +1,0 @@
-author: Xhuis
-delete-after: True
-
-changes: 
-  - bugfix: "A few issues have been fixed for revenants. In addition, the Mind Blast/Mind Spike sound effect has been removed."
-  - rscadd: "Adds the Hypnotize ability to revenants. It will cause a target to fall asleep after a short time."
