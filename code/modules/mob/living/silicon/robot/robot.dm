@@ -59,6 +59,7 @@
 	var/toner = 0
 	var/tonermax = 40
 	var/jetpackoverlay = 0
+	var/braintype = "Cyborg"
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -72,7 +73,6 @@
 	robot_modules_background.layer = 19	//Objects that appear on screen are on layer 20, UI should be just below it.
 
 	ident = rand(1, 999)
-	updatename()
 	update_icons()
 
 	if(!cell)
@@ -113,6 +113,8 @@
 		mmi.brainmob.container = mmi
 		mmi.contents += mmi.brainmob
 
+	updatename()
+
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
 	toner = 40
@@ -124,9 +126,7 @@
 		if(T)	mmi.loc = T
 		if(mmi.brainmob)
 			mind.transfer_to(mmi.brainmob)
-			if(istype(mmi,/obj/item/device/mmi/posibrain))
-				var/obj/item/device/mmi/posibrain/P = mmi
-				P.handle_posibrain_icon()
+			mmi.update_icon()
 		else
 			src << "<span class='boldannounce'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>"
 			ghostize()
@@ -240,7 +240,7 @@
 	if(custom_name)
 		changed_name = custom_name
 	else
-		changed_name = "[(designation ? "[designation] " : "")][istype(mmi, /obj/item/device/mmi/posibrain) ? "Android" : "Cyborg"]-[num2text(ident)]"
+		changed_name = "[(designation ? "[designation] " : "")][mmi.braintype]-[num2text(ident)]"
 	real_name = changed_name
 	name = real_name
 	if(camera)

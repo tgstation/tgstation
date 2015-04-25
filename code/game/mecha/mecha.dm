@@ -1137,9 +1137,7 @@ obj/mecha/proc/can_use(mob/user)
 			if(mmi.brainmob)
 				occupant.loc = mmi
 			mmi.mecha = null
-			if(istype(mmi,/obj/item/device/mmi/posibrain))
-				var/obj/item/device/mmi/posibrain/P = mmi
-				P.handle_posibrain_icon()
+			mmi.update_icon()
 			src.occupant.canmove = 0
 			src.verbs += /obj/mecha/verb/eject
 		src.occupant = null

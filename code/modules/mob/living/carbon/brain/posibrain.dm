@@ -11,6 +11,7 @@
 	req_access = list(access_robotics)
 	locked = 0
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
+	braintype = "Android"
 
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user as mob)
@@ -18,7 +19,7 @@
 		//Start the process of searching for a new user.
 		user << "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
 		searching = 1
-		handle_posibrain_icon()
+		update_icon()
 		request_player()
 		spawn(600)
 			reset_search()
@@ -61,7 +62,7 @@
 	brainmob << "<span class='warning'>ALL PAST LIVES ARE FORGOTTEN.</span>"
 
 	brainmob << "<span class='notice'>Hello World!</span>"
-	handle_posibrain_icon()
+	update_icon()
 	return
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(var/mob/candidate)
@@ -81,21 +82,17 @@
 	brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	brainmob.mind.assigned_role = "Positronic Brain"
 
-	var/turf/T = get_turf()
-	for (var/mob/M in viewers(T))
-		M.show_message("<span class='notice'>The positronic brain chimes quietly.</span>")
-	handle_posibrain_icon()
+	visible_message("<span class='notice'>The positronic brain chimes quietly.</span>")
+	update_icon()
 
 /obj/item/device/mmi/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
 
 	if(brainmob && brainmob.key) return
 
 	searching = 0
-	handle_posibrain_icon()
+	update_icon()
 
-	var/turf/T = get_turf()
-	for (var/mob/M in viewers(T))
-		M.show_message("<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
+	visible_message("<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
 
 /obj/item/device/mmi/posibrain/examine()
 
@@ -121,23 +118,10 @@
 	usr << msg
 	return
 
-/obj/item/device/mmi/posibrain/emp_act(severity)
-	if(!brainmob)
-		return
-	else
-		switch(severity)
-			if(1)
-				brainmob.emp_damage += rand(20,30)
-			if(2)
-				brainmob.emp_damage += rand(10,20)
-			if(3)
-				brainmob.emp_damage += rand(0,10)
-	..()
-
 /obj/item/device/mmi/posibrain/New()
 
 	brainmob = new(src)
-	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO"))]-[rand(100, 999)]"
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR"))]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src
@@ -152,7 +136,7 @@
 	return
 
 
-/obj/item/device/mmi/posibrain/proc/handle_posibrain_icon()
+/obj/item/device/mmi/posibrain/update_icon()
 	if(searching)
 		icon_state = "posibrain-searching"
 		return
