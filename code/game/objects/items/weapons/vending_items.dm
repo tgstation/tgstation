@@ -34,6 +34,11 @@
 	icon_state = "refill_booze"
 	charges = 54//of 162
 
+/obj/item/weapon/vending_refill/liberationstation
+	machine_name = "Freedom Supply Drop"
+	icon_state = "refill_liberation"
+	charges = 8//of 23
+
 /obj/item/weapon/vending_refill/coffee
 	machine_name = "Solar's Best Hot Drinks"
 	icon_state = "refill_joe"
