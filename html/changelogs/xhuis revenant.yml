@@ -1,0 +1,12 @@
+author: Xhuis
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added a Create Antagonist button for revenants."
+  - rscdel: "Removed Mind Blast."
+  - bugfix: "Revenants no longer get killed by explosions."
+  - tweak: "Mind spike cooldown increased to 4 seconds."
+  - tweak: "Harvest now takes 8 seconds and requires you to be adjacent to the target."
+  - tweak: "Hypnotise sleeps targets for longer."
+  - tweak: "Revenant now starts with 3 strikes."
