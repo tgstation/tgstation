@@ -1,6 +1,0 @@
-author: Boggart
-
-delete-after: True
-
-changes:
-  - rscadd: "Ports Nienhaus's guitar, generalizes handheld instrument code."

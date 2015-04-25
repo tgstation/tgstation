@@ -1,7 +1,0 @@
-author: phil235
-
-delete-after: True
-
-changes: 
-  - tweak: "Telecom machines are now deconstructed the same way as all other constructable machines."
-  - tweak: "You can no longer overdose on nicotine but you can get addicted (very mild effects)."
