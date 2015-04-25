@@ -18,17 +18,22 @@
 
 	var/image/cross = image('icons/obj/storage.dmi',"bible")
 	if(usr.job == "Chaplain")
-		cross = image('icons/obj/storage.dmi',"holylight")
-	msg = "<span class='adminnotice'>\icon[cross] <b><font color=purple>[usr.job == "Chaplain" ? "CHAPLAIN PRAYER" : "PRAYER"]: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;traitor=\ref[src]'>TP</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
-
+		cross = image('icons/obj/storage.dmi',"kingyellow")
+		msg = "<span class='adminnotice'>\icon[cross] <b><font color=blue>CHAPLAIN PRAYER: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;traitor=\ref[src]'>TP</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
+	else if(iscultist(usr))
+		cross = image('icons/obj/storage.dmi',"tome")
+		msg = "<span class='adminnotice'>\icon[cross] <b><font color=red>CULTIST PRAYER: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;traitor=\ref[src]'>TP</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
+	else
+		cross = image('icons/obj/storage.dmi',"bible")
+		msg = "<span class='adminnotice'>\icon[cross] <b><font color=purple>PRAYER: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;traitor=\ref[src]'>TP</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
 	for(var/client/C in admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
 			C << msg
 			if(C.prefs.toggles & SOUND_PRAYERS)
 				if(usr.job == "Chaplain")
 					C << 'sound/effects/pray_chaplain.ogg'
-				else
-					C << 'sound/effects/pray.ogg'
+				//else
+				//	C << 'sound/effects/pray.ogg'
 	usr << "Your prayers have been received by the gods."
 
 	feedback_add_details("admin_verb","PR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
