@@ -431,7 +431,7 @@
 							return
 					//Prevent people spraying from outside of the territory (ie. Maint walls)
 					if(istype(user_area) && (user_area.type == territory.type))
-						if((locate(/obj/machinery/power/terminal) in target) || (locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents)))
+						if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
 							user << "<span class='warning'>You cannot tag here.</span>"
 							return
 					else
