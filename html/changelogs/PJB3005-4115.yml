@@ -1,5 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - bugfix: The pipe item for dual-port vents is now no longer invisible.
-  - bugfix: Fixes multitool menus on dual-port vents.

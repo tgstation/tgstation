@@ -1,4 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - bugfix: Adds an accounts database to taxistation, it was missing.

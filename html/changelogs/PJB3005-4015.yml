@@ -1,5 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - rscadd: You can now set what a gas sensor should monitor, using it's multitool menu.
-  - bugfix: This means you can monitor gas compositions with built gas sensors now.
