@@ -109,7 +109,7 @@
 	src.l_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	using = new /obj/screen()
+	using = new /obj/screen/inventory()
 	using.name = "hand"
 	using.dir = SOUTH
 	using.icon = ui_style
@@ -118,7 +118,7 @@
 	using.layer = 19
 	src.adding += using
 
-	using = new /obj/screen()
+	using = new /obj/screen/inventory()
 	using.name = "hand"
 	using.dir = SOUTH
 	using.icon = ui_style
