@@ -317,13 +317,13 @@ datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
 	src = null
 	if(volume >= 3)
 		T.MakeSlippery()
-	var/hotspot = (locate(/obj/effect/hotspot) in T)
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)
-		qdel(hotspot)
+		hotspot.Kill()
 
 datum/reagent/consumable/enzyme
 	name = "Universal Enzyme"
