@@ -302,9 +302,6 @@
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
 
-	if (config.rename_cyborg)
-		O.rename_self("cyborg", 1)
-
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
 	O.cell.maxcharge = 7500
@@ -321,6 +318,9 @@
 			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else
 		O.key = key
+
+	if (config.rename_cyborg)
+		O.rename_self("cyborg", 1)
 
 	O.loc = loc
 	O.job = "Cyborg"

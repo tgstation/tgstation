@@ -85,64 +85,58 @@ Chaplain
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
-	spawn(0)
-		var/religion_name = "Christianity"
-		var/new_religion = copytext(sanitize(input(H, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
+	var/new_religion = "Christianity"
+	if(H.client && H.client.prefs.custom_names["religion"])
+		new_religion = H.client.prefs.custom_names["religion"]
 
-		if (!new_religion)
-			new_religion = religion_name
+	switch(lowertext(new_religion))
+		if("christianity")
+			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
+		if("satanism")
+			B.name = "The Unholy Bible"
+		if("cthulu")
+			B.name = "The Necronomicon"
+		if("islam")
+			B.name = "Quran"
+		if("scientology")
+			B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+		if("chaos")
+			B.name = "The Book of Lorgar"
+		if("imperium")
+			B.name = "Uplifting Primer"
+		if("toolboxia")
+			B.name = "Toolbox Manifesto"
+		if("homosexuality")
+			B.name = "Guys Gone Wild"
+		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
+			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
+			H.setBrainLoss(100) // starts off retarded as fuck
+		if("science")
+			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+		else
+			B.name = "The Holy Book of [new_religion]"
+	feedback_set_details("religion_name","[new_religion]")
 
-		switch(lowertext(new_religion))
-			if("christianity")
-				B.name = pick("The Holy Bible","The Dead Sea Scrolls")
-			if("satanism")
-				B.name = "The Unholy Bible"
-			if("cthulu")
-				B.name = "The Necronomicon"
-			if("islam")
-				B.name = "Quran"
-			if("scientology")
-				B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
-			if("chaos")
-				B.name = "The Book of Lorgar"
-			if("imperium")
-				B.name = "Uplifting Primer"
-			if("toolboxia")
-				B.name = "Toolbox Manifesto"
-			if("homosexuality")
-				B.name = "Guys Gone Wild"
-			if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
-				B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
-				H.setBrainLoss(100) // starts off retarded as fuck
-			if("science")
-				B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
-			else
-				B.name = "The Holy Book of [new_religion]"
-		feedback_set_details("religion_name","[new_religion]")
+	var/new_deity = "Space Jesus"
+	if(H.client && H.client.prefs.custom_names["deity"])
+		new_deity = H.client.prefs.custom_names["deity"]
+	B.deity_name = new_deity
 
-	spawn(1)
-		var/deity_name = "Space Jesus"
-		var/new_deity = copytext(sanitize(input(H, "Would you like to change your deity? Default is Space Jesus.", "Name change", deity_name)),1,MAX_NAME_LEN)
+	if(ticker)
+		ticker.Bible_deity_name = B.deity_name
+	feedback_set_details("religion_deity","[new_deity]")
 
-		if ((length(new_deity) == 0) || (new_deity == "Space Jesus") )
-			new_deity = deity_name
-		B.deity_name = new_deity
+	//Open bible selection
+	var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 
-		if(ticker)
-			ticker.Bible_deity_name = B.deity_name
-		feedback_set_details("religion_deity","[new_deity]")
+	var/i
+	for(i = 1, i < biblestates.len, i++)
+		var/icon/bibleicon = icon('icons/obj/storage.dmi', biblestates[i])
 
-		//Open bible selection
-		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
+		var/nicename = biblenames[i]
+		H << browse_rsc(bibleicon, nicename)
+		dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=\ref[src];seticon=[i];bible=\ref[B]">[nicename]</a></td></tr>"}
 
-		var/i
-		for(i = 1, i < biblestates.len, i++)
-			var/icon/bibleicon = icon('icons/obj/storage.dmi', biblestates[i])
+	dat += "</table></body></html>"
 
-			var/nicename = biblenames[i]
-			H << browse_rsc(bibleicon, nicename)
-			dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=\ref[src];seticon=[i];bible=\ref[B]">[nicename]</a></td></tr>"}
-
-		dat += "</table></body></html>"
-
-		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
+	H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")

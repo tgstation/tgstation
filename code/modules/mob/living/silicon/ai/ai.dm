@@ -63,17 +63,7 @@ var/list/ai_list = list()
 	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
-	var/list/possibleNames = ai_names
-
-	var/pickedName = null
-	while(!pickedName)
-		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in mob_list)
-			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
-				possibleNames -= pickedName
-				pickedName = null
-
-	real_name = pickedName
+	rename_self("ai", 1)
 	name = real_name
 	anchored = 1
 	canmove = 0

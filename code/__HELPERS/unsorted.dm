@@ -365,70 +365,41 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 /mob/proc/rename_self(var/role, var/allow_numbers=0)
 	var/oldname = real_name
-	var/time_passed = world.time
 	var/newname
 	var/loop = 1
-	var/loop_safety = 0
+	var/safety = 0
 
-	if(role == "clown" || role == "mime")
-		while(loop && loop_safety < 5)
-			if(role == "clown")
-				if(client && client.prefs.clown_name && !loop_safety)
-					newname = client.prefs.clown_name
-				else
+	while(loop && safety < 5)
+		if(client && client.prefs.custom_names[role] && !safety)
+			newname = client.prefs.custom_names[role]
+		else
+			switch(role)
+				if("clown")
 					newname = pick(clown_names)
-
-			if(role == "mime")
-				if(client && client.prefs.mime_name && !loop_safety)
-					newname = client.prefs.mime_name
-				else
+				if("mime")
 					newname = pick(mime_names)
-
-			for(var/mob/living/M in player_list)
-				if(M == src)
-					continue
-				if(!newname || M.real_name == newname)
-					loop++ // name is already taken so we roll again
-					break
-			loop--
-			loop_safety++
-
-		if(newname)
-			fully_replace_character_name(oldname,newname)
-		return
-
-	else
-		spawn(0)
-			for(var/i=1,i<=3,i++)	//we get 3 attempts to pick a suitable name.
-				newname = input(src,"You are a [role]. Would you like to change your name to something else?", "Name change",oldname) as text
-				if((world.time-time_passed)>300)
-					return	//took too long
-				newname = reject_bad_name(newname,allow_numbers)	//returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
-
-				for(var/mob/living/M in player_list)
-					if(M == src)
-						continue
-					if(!newname || M.real_name == newname)
-						newname = null
-						break
-				if(newname)
-					break	//That's a suitable name!
-				src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken."
-
-				if(!newname)	//we'll stick with the oldname then
+				if("ai")
+					newname = pick(ai_names)
+				else
 					return
 
-			if(cmptext("ai",role))
-				if(isAI(src))
-					oldname = null//don't bother with the records update crap
+		for(var/mob/living/M in player_list)
+			if(M == src)
+				continue
+			if(!newname || M.real_name == newname)
+				newname = null
+				loop++ // name is already taken so we roll again
+				break
+		loop--
+		safety++
 
-			if(cmptext("cyborg",role))
-				if(isrobot(src))
-					var/mob/living/silicon/robot/A = src
-					A.custom_name = newname
-
-			fully_replace_character_name(oldname,newname)
-
+	if(isAI(src))
+		oldname = null//don't bother with the records update crap
+	if(newname)
+		fully_replace_character_name(oldname,newname)
+		if(isrobot(src))
+			var/mob/living/silicon/robot/A = src
+			A.custom_name = newname
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws

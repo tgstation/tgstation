@@ -60,8 +60,7 @@ datum/preferences
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/mutant_color = "FFF"			//Mutant race skin color
-	var/clown_name = "Bozo"
-	var/mime_name = "Mime"
+	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -94,8 +93,10 @@ datum/preferences
 /datum/preferences/New(client/C)
 	blood_type = random_blood_type()
 	ooccolor = normal_ooc_colour
-	clown_name = pick(clown_names)
-	mime_name = pick(mime_names)
+	custom_names["ai"] = pick(ai_names)
+	custom_names["cyborg"] = pick(ai_names)
+	custom_names["clown"] = pick(clown_names)
+	custom_names["mime"] = pick(mime_names)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -160,10 +161,18 @@ datum/preferences
 				dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
 
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
-				dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
+				dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
+
+				dat += "<b>Special Names:</b><BR>"
+				dat += "<a href ='?_src_=prefs;preference=clown_name;task=input'><b>Clown:</b> [custom_names["clown"]]</a> "
+				dat += "<a href ='?_src_=prefs;preference=mime_name;task=input'><b>Mime:</b>[custom_names["mime"]]</a><BR>"
+				dat += "<a href ='?_src_=prefs;preference=ai_name;task=input'><b>AI:</b> [custom_names["ai"]]</a> "
+				dat += "<a href ='?_src_=prefs;preference=cyborg_name;task=input'><b>Cyborg:</b> [custom_names["cyborg"]]</a><BR>"
+				dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
+				dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR></td>"
 
 
-				dat += "</td><td valign='center'>"
+				dat += "<td valign='center'>"
 
 				dat += "<div class='statusDisplay'><center><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></center></div>"
 
@@ -184,11 +193,11 @@ datum/preferences
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 				dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
-				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
+				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR></td>"
 
 				if(pref_species.use_skintones)
 
-					dat += "</td><td valign='top' width='21%'>"
+					dat += "<td valign='top' width='21%'>"
 
 					dat += "<h3>Skin Tone</h3>"
 
@@ -236,10 +245,6 @@ datum/preferences
 					dat += "<span style='border: 1px solid #161616; background-color: #[mutant_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
 
 					dat += "</td>"
-
-				dat += "<h2>Special Names:</h2>"
-				dat += "<a href ='?_src_=prefs;preference=clown_name;task=input'><b>Clown:</b> [clown_name]</a><BR>"
-				dat += "<a href ='?_src_=prefs;preference=mime_name;task=input'><b>Mime:</b> [mime_name]</a><BR>"
 
 				dat += "</tr></table>"
 
@@ -310,7 +315,7 @@ datum/preferences
 		dat += "</center>"
 
 		//user << browse(dat, "window=preferences;size=560x560")
-		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 720)
+		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 750)
 		popup.set_content(dat)
 		popup.open(0)
 
@@ -761,19 +766,49 @@ datum/preferences
 						var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 						if(new_backbag)
 							backbag = backbaglist.Find(new_backbag)
+
 					if("clown_name")
 						var/new_clown_name = reject_bad_name( input(user, "Choose your character's clown name:", "Character Preference")  as text|null )
 						if(new_clown_name)
-							clown_name = new_clown_name
+							custom_names["clown"] = new_clown_name
 						else
 							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 					if("mime_name")
 						var/new_mime_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
 						if(new_mime_name)
-							mime_name = new_mime_name
+							custom_names["mime"] = new_mime_name
 						else
 							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
+					if("ai_name")
+						var/new_ai_name = reject_bad_name( input(user, "Choose your character's AI name:", "Character Preference")  as text|null, 1 )
+						if(new_ai_name)
+							custom_names["ai"] = new_ai_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+
+					if("cyborg_name")
+						var/new_cyborg_name = reject_bad_name( input(user, "Choose your character's cyborg name:", "Character Preference")  as text|null, 1 )
+						if(new_cyborg_name)
+							custom_names["cyborg"] = new_cyborg_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+
+					if("religion_name")
+						var/new_religion_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
+						if(new_religion_name)
+							custom_names["religion"] = new_religion_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
+					if("deity_name")
+						var/new_deity_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
+						if(new_deity_name)
+							custom_names["deity"] = new_deity_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
 
 			else
 				switch(href_list["preference"])
