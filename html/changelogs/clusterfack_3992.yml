@@ -1,0 +1,7 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Fixes a bug where using N2O to refuel your jetpack would cause it to no longer function
+- rscadd: Also made wrenching multiple dense machines down on the same time impossible
+- bugfix: Made deleting cryotubes by unwrenching them impossible
+- bugfix: Fixed an issue where blob centcomm reports wouldn't be sent to the station (so no nuke code)
