@@ -10,6 +10,9 @@
 			pipes |= U
 	if(!pipes || !pipes.len)
 		return
-	pipe = input("Crawl Through Vent", "Pick a pipe") as null|anything in pipes
+	if(pipes.len == 1)
+		pipe = pipes[1]
+	else
+		pipe = input("Crawl Through Vent", "Pick a pipe") as null|anything in pipes
 	if(pipe)
 		handle_ventcrawl(pipe)
