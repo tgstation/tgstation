@@ -1,0 +1,199 @@
+<!-- 
+Title: Air Alarm
+Used In File(s): \code\game\machinery\alarm.dm
+
+#define AALARM_MODE_SCRUBBING	1
+#define AALARM_MODE_VENTING		2 //makes draught
+#define AALARM_MODE_PANIC		3 //constantly sucks all air
+#define AALARM_MODE_REPLACEMENT	4 //sucks off all air, then refill and swithes to scrubbing
+#define AALARM_MODE_OFF			5
+#define AALARM_MODE_FLOOD		6 //Emagged mode; turns off scrubbers and pressure checks on vents
+
+#define AALARM_SCREEN_MAIN		1
+#define AALARM_SCREEN_VENT		2
+#define AALARM_SCREEN_SCRUB		3
+#define AALARM_SCREEN_MODE		4
+#define AALARM_SCREEN_SENSORS	5
+
+ -->
+ <div class='notice'>
+	{{if siliconUser}}
+		<div class="itemContentSmall">
+			Interface Lock:
+		</div>
+		<div class="itemContentFull">
+			{{:~link('Engaged', 'locked', {'toggleaccess' : 1}, locked ? 'selected' : null)}}{{:~link('Disengaged', 'unlocked', {'toggleaccess' : 1}, (locked ? null : 'selected'))}}
+		</div>
+	{{else}}
+		{{if locked}}
+			Swipe an ID card to unlock this interface.
+		{{else}}
+			Swipe an ID card to lock this interface.
+		{{/if}}
+	{{/if}}
+	<div class="clearBoth"></div>
+</div>
+<H1>Air Status</H1>
+{{if environment_data}}
+	{{for environment_data}}
+		{{:name}}
+		{{if danger_level == 2}}
+			<span class='bad'>
+		{{else danger_level == 1}}
+			<span class='average'>
+		{{else}}
+			<span class='good'>
+		{{/if}}
+		{{:~round(value*100)/100}}
+		</span>{{:unit}}<br>
+	{{/for}}
+	Local Status: {{if danger_level == 2}}
+			<span class='bad'>DANGER: Internals Required
+		{{else danger_level == 1}}
+			<span class='average'>Caution
+		{{else}}
+			<span class='good'>Optimal
+		{{/if}}
+		</span><br>
+    Area Status: {{if atmos_alarm}}<span class='bad'>Atmosphere alert in area</span>{{else fire_alarm}}<span class='bad'>Fire alarm in area</span>{{else}}No alerts{{/if}}
+{{else}}
+	<span class='bad'>Warning: Cannot obtain air sample for analysis.</span>
+{{/if}}
+{{if dangerous}}
+	<br><span class='bad'>NOTICE: Safety measures nonfunctional. Device may exhibit abnormal behavior.</span>
+{{/if}}
+<HR>
+{{if (!locked || siliconUser)}}
+    {{if screen != 1}}
+        <div class="item">{{:~link('Main Menu', null, { 'screen' : 1})}}</div>
+    {{/if}}
+    {{if screen == 1}}
+        <div class="item">
+            {{if atmos_alarm}}
+                {{:~link('Reset - Area Atmospheric Alarm', null, { 'atmos_reset' : 1})}}
+            {{else}}
+                {{:~link('Activate - Area Atmospheric Alarm', null, { 'atmos_alarm' : 1})}}
+            {{/if}}
+        </div>
+        <hr>
+            <div class="item">
+                {{:~link('Scrubbers Control', null, { 'screen' : 3})}}
+            </div>
+            <div class="item">
+                {{:~link('Vents Control', null, { 'screen' : 2})}}
+            </div>
+            <div class="item">
+                {{:~link('Set Environmental Mode', null, { 'screen' : 4})}}
+            </div>
+            <div class="item">
+                {{:~link('Sensor Settings', null, { 'screen' : 5})}}
+            </div>
+        <hr>
+            {{if mode==3}}
+                {{:~link('PANIC SIPHON ACTIVE - Turn siphoning off', null, { 'mode' : 1}, null, 'redButton')}}
+			{{else}}
+                {{:~link('ACTIVATE PANIC SIPHON IN AREA', null, { 'mode' : 3}, null, 'yellowButton')}}
+            {{/if}}
+    {{else screen == 2}}
+		{{for vents}}
+			<div class="item">{{:long_name}}</div>
+			<div class="item">
+				<div class="itemLabel">
+					Operating:
+				</div>
+				<div class="itemContent">
+					{{:~link(power ? 'On' : 'Off', null, { 'id_tag' : id_tag, 'command' : 'power', 'val' : power ? 0 : 1}, null, power ? null : 'redButton')}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					Mode:
+				</div>
+				<div class="itemContent">
+					{{:direction == "siphon" ? 'Siphoning' : 'Pressurizing'}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					Pressure Checks:
+				</div>
+				<div class="itemContent">
+					{{:~link('External', null, { 'id_tag' : id_tag, 'command' : 'excheck', 'val' : excheck}, null, excheck ? 'selected' : null)}}
+					{{:~link('Internal', null, { 'id_tag' : id_tag, 'command' : 'incheck', 'val' : incheck}, null, incheck ? 'selected' : null)}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					External Pressure Bound:
+				</div>
+				<div class="itemContent">
+					{{:~link(~round(external*100)/100, null, { 'id_tag' : id_tag, 'command' : 'set_external_pressure'})}}
+					{{:~link('Reset', null, { 'id_tag' : id_tag, 'command' : 'reset_external_pressure'})}}
+				</div>
+			</div>			
+			<HR>
+		{{/for}}
+		{{if !vents.length}}
+			No vents connected.
+		{{/if}}
+    {{else screen == 3}}
+		{{for scrubbers}}
+			<div class="item">{{:long_name}}</div>
+			<div class="item">
+				<div class="itemLabel">
+					Operating:
+				</div>
+				<div class="itemContent">
+					{{:~link(power ? 'On' : 'Off', null, { 'id_tag' : id_tag, 'command' : 'power', 'val' : power ? 0 : 1}, null, power ? null : 'redButton')}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					Mode:
+				</div>
+				<div class="itemContent">
+					{{:~link(scrubbing ? 'Scrubbing' : 'Siphoning', null, { 'id_tag' : id_tag, 'command' : 'scrubbing', 'val' : scrubbing ? 0 : 1}, null, scrubbing ? null : 'redButton')}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					Filters:
+				</div>
+				<div class="itemContent">
+					{{:~link("Carbon Dioxide", null, { 'id_tag' : id_tag, 'command' : "co2_scrub", 'val' : filter_co2 ? 0 : 1}, null, filter_co2 ? 'selected' : null)}}<br class="clearBoth">
+					{{:~link("Plasma", null, { 'id_tag' : id_tag, 'command' : "tox_scrub", 'val' : filter_toxins ? 0 : 1}, null, filter_toxins ? 'selected' : null)}}<br class="clearBoth">
+					{{:~link("Nitrous Oxide", null, { 'id_tag' : id_tag, 'command' : "n2o_scrub", 'val' : filter_n2o ? 0 : 1}, null, filter_n2o ? 'selected' : null)}}<br class="clearBoth">
+				</div>
+			</div>
+			<HR>
+		{{/for}}
+		{{if !scrubbers.length}}
+			No scrubbers connected.
+		{{/if}}
+    {{else screen == 4}}
+		<H3>Environmental Modes</H3>
+		{{for modes}}
+			<div class="item">
+				{{:~link(name, null, { 'mode' : mode }, null, selected ? (danger ? 'redButton' : 'selected') : null)}}
+			</div>
+		{{/for}}
+    {{else screen == 5}}
+		<H3>Alarm Threshold</H3>
+		Partial pressure for gases.
+		<table class='fixed'>
+		<tr>
+			<td></td><td><span class='bad'>min2</span></td><td><span class='average'>min1</span></td><td><span class='average'>max1</span></td><td><span class='bad'>max2</span></td>
+		</tr>
+		{{for thresholds}}
+			<tr>
+				<td>{{:name}}</td>
+				{{for settings.settingsValue.settingsIndex}}
+					<td>
+						{{:~link(settingsValue.selected >= 0 ? fixed(settingsValue.selected, 2) : "Off", null, { 'command' : 'set_threshold', 'env' : settingsValue.env, 'var' : settingsValue.val })}}
+					</td>
+				{{/for}}
+			</tr>			
+		{{/for}}
+		<table>
+    {{/if}}
+{{/if}}

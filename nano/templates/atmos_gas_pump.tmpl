@@ -1,0 +1,36 @@
+<div class="item">
+	<div class="itemLabel">
+		Power:
+	</div>
+	<div class="itemContent">
+		{{:~link(on? 'On' : 'Off', null, {'power' : 1})}}
+	</div>
+</div>
+
+{{if max_rate}}
+<div class="item">
+	<div class="itemLabel">
+		Transfer rate:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both; padding-top: 4px;">
+			{{:~link('MAX', null, {'set_transfer_rate' : 'max'}, null)}}
+			{{:~link('SET', null, {'set_transfer_rate' : 'set'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(transfer_rate/100)}} L/s&nbsp;</div>
+		</div>
+	</div>
+</div>
+{{else}}
+<div class="item">
+	<div class="itemLabel">
+		Output pressure:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both; padding-top: 4px;">
+			{{:~link('MAX', null, {'set_press' : 'max'}, null)}}
+			{{:~link('SET', null, {'set_press' : 'set'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(pressure_set/100)}} kPa&nbsp;</div>
+		</div>
+	</div>
+</div>
+{{/if}}
