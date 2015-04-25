@@ -94,8 +94,7 @@
 		return
 	else if(playing == 1)
 		playing = 0
-		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
+		recorder_message("Playback stopped.")
 		icon_state = "taperecorderidle"
 		return
 
@@ -143,38 +142,30 @@
 			break
 		if(storedinfo.len < i)
 			break
-		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [storedinfo[i]]</font>")
+		recorder_message("[storedinfo[i]]")
 		if(storedinfo.len < i+1)
 			playsleepseconds = 1
 			sleep(10)
-			T = get_turf(src)
-			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: End of recording.</font>")
+			recorder_message("End of recording.")
 		else
 			playsleepseconds = timestamp[i+1] - timestamp[i]
 		if(playsleepseconds > 14)
 			sleep(10)
-			T = get_turf(src)
-			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Skipping [playsleepseconds] seconds of silence</font>")
+			recorder_message("Skipping [playsleepseconds] seconds of silence")
 			playsleepseconds = 1
 		i++
 	icon_state = "taperecorderidle"
 	playing = 0
 	if(emagged == 1.0)
-		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: This tape recorder will self-destruct in... Five.</font>")
+		recorder_message("This tape recorder will self-destruct in... Five.")
 		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Four.</font>")
+		recorder_message("Four.")
 		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Three.</font>")
+		recorder_message("Three.")
 		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Two.</font>")
+		recorder_message("Two.")
 		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: One.</font>")
+		recorder_message("One.")
 		sleep(10)
 		explode()
 
@@ -242,11 +233,14 @@
 			return
 		else if(playing == 1)
 			playing = 0
-			var/turf/T = get_turf(src)
-			for(var/mob/O in hearers(world.view-1, T))
-				O.show_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>",2)
+			recorder_message("Playback stopped")
 			icon_state = "taperecorderidle"
 			return
 		else
 			usr << "<span class='warning'>Stop what?</span>"
 			return
+
+/obj/item/device/taperecorder/proc/recorder_message(var/msg)
+	var/turf/T = get_turf(src)
+	for(var/mob/M in viewers(T))
+		M.show_message("<font color=Maroon><B>Tape Recorder</B>: " + msg + "</font>", 2)
