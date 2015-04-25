@@ -80,7 +80,7 @@
 			del(src)
 		return
 
-/obj/structure/closet/bodybag/update_icon()
+/obj/structure/closet/body_bag/update_icon()
 	if(!opened)
 		icon_state = icon_closed
 	else

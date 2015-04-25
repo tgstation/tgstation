@@ -26,7 +26,9 @@
 	return see
 
 /mob/living/simple_animal/hostile/retaliate/proc/Retaliate()
-	..()
+	if(stat) //can't attack if we're dead - no point in targeting
+		return
+
 	var/list/around = view(src, vision_range)
 
 	for(var/atom/movable/A in around)

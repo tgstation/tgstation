@@ -60,7 +60,9 @@
 				M.mind.vampire.smitecounter += 30
 	..()
 
-/obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob)
+/obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob, prox_flag, params)
+	if(!prox_flag)
+		return
 	user.delayNextAttack(8)
 	if (istype(A, /turf/simulated/floor))
 		user << "<span class='notice'>You hit the floor with the [src].</span>"
