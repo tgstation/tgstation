@@ -3692,7 +3692,7 @@
 "bsZ" = (/obj/machinery/door/airlock/glass_mining{name = "Cargo Office"; req_access_txt = "50"},/turf/simulated/shuttle/floor,/area/shuttle/escape/centcom)
 "bta" = (/obj/machinery/door/airlock/glass_medical{name = "Emergency Shuttle Infirmary"; req_access_txt = "0"},/turf/simulated/shuttle/floor,/area/shuttle/escape/centcom)
 "btb" = (/turf/simulated/shuttle/wall{icon_state = "swall11"},/area/shuttle/escape/centcom)
-"btc" = (/turf/unsimulated/floor{icon_state = "warning"; dir = 9},/area/centcom/evac)
+"btc" = (/obj/machinery/account_database{name = "CentComm Accounts database"},/turf/unsimulated/floor{icon_state = "warning"; dir = 9},/area/centcom/evac)
 "btd" = (/turf/unsimulated/floor{icon_state = "warning"; dir = 1},/area/centcom/evac)
 "bte" = (/obj/effect/decal/cleanable/blood{icon_state = "floor4"},/turf/unsimulated/floor{icon_state = "warning"; dir = 1},/area/centcom/evac)
 "btf" = (/obj/effect/decal/cleanable/blood{icon_state = "floor7"},/turf/unsimulated/floor{icon_state = "warning"; dir = 1},/area/centcom/evac)
