@@ -19,7 +19,7 @@
 
 Kuranyll = Host
 Riesen = Head Shitmin
-Kwata X11 = Super Badmin
+Kwata X11 = Super Badmin 
 Misterstaub = Super Badmin
 DimJim = Badmin
 GreyTideStationWide = Badmin
@@ -27,4 +27,4 @@ Dopaper = Badmin
 AlwaysbetonNanako = Badmin
 Hextopia = Badmin
 Captain Chen = Trial Admin
-Guyton Guy = Trial Admin
+0ak = Trial Admin
