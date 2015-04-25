@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - bugfix: Fixes the food and kitchen processors appearing under AI holopads.
