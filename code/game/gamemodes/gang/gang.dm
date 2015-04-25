@@ -26,14 +26,14 @@
 	recommended_enemies = 2
 	enemy_minimum_age = 14
 	var/finished = 0
-	var/goal_coeff = 3 //Goal = Total territories / goal_coeff
+	var/goal_scalar = 0.6 //Goal = Total territories x goal_scalar
 
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
 /datum/game_mode/gang/announce()
 	world << "<B>The current game mode is - Gang War!</B>"
-	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by claiming more than [round(100/goal_coeff,1)]% of the station! <BR>Crew - The gangs will try to keep you on the station. Successfully evacuate the station to win!</B>"
+	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by claiming more than [round(100*goal_scalar,1)]% of the station! <BR>Crew - The gangs will try to keep you on the station. Successfully evacuate the station to win!</B>"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -94,7 +94,7 @@
 /datum/game_mode/proc/forge_gang_objectives(var/datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
 	rival_obj.owner = boss_mind
-	rival_obj.explanation_text = "Claim more than [round(100/goal_coeff,1)]% the station before the [(boss_mind in A_bosses) ? gang_name("B") : gang_name("A")] Gang does."
+	rival_obj.explanation_text = "Claim more than 60% the station before the [(boss_mind in A_bosses) ? gang_name("B") : gang_name("A")] Gang does."
 	boss_mind.objectives += rival_obj
 
 
@@ -162,9 +162,9 @@
 //Checks if the either gang have won or not//
 /////////////////////////////////////////////
 /datum/game_mode/gang/check_win()
-	if(A_territory.len > (start_state.num_territories / goal_coeff))
+	if(A_territory.len > (start_state.num_territories * goal_scalar))
 		finished = "A" //Gang A wins
-	else if(B_territory.len > (start_state.num_territories / goal_coeff))
+	else if(B_territory.len > (start_state.num_territories * goal_scalar))
 		finished = "B" //Gang B wins
 
 ///////////////////////////////
