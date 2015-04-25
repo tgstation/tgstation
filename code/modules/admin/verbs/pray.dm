@@ -31,9 +31,7 @@
 			C << msg
 			if(C.prefs.toggles & SOUND_PRAYERS)
 				if(usr.job == "Chaplain")
-					C << 'sound/effects/pray_chaplain.ogg'
-				//else
-				//	C << 'sound/effects/pray.ogg'
+					C << 'sound/effects/pray.ogg'
 	usr << "Your prayers have been received by the gods."
 
 	feedback_add_details("admin_verb","PR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
