@@ -509,9 +509,7 @@ var/list/admin_verbs_mod = list(
 	if(!check_rights(R_ADMIN))	return
 
 	if(!warned_ckey || !istext(warned_ckey))	return
-	/*if(warned_ckey in admin_datums)
-		usr << "<font color='red'>Error: warn(): You can't warn admins.</font>"
-		return*/
+
 
 	var/datum/preferences/D
 	var/client/C = directory[warned_ckey]
@@ -522,29 +520,33 @@ var/list/admin_verbs_mod = list(
 		src << "<font color='red'>Error: warn(): No such ckey found.</font>"
 		return
 
+	var/warn_reason = input("Reason for warning?", "Admin abuuuuuuuse") as null|text
+	if(!warn_reason)
+		return
+	notes_add(warned_ckey,warn_reason,src.mob)
 	if(++D.warns >= MAX_WARNS)					//uh ohhhh...you'reee iiiiin trouuuubble O:)
 		var/bantime = AUTOBANTIME//= (++D.warnbans * AUTOBANTIME)
 		D.warns = 0
 		++D.warnbans
 		for(var/i = 1; i < D.warnbans; i++)
 			bantime *= 2
-		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [bantime] minute autoban.")
+		ban_unban_log_save("[ckey] warned [warned_ckey] - [warn_reason], resulting in a [bantime] minute autoban.")
 		if(C)
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [bantime] minute ban.")
-			C << "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [bantime] minutes."
+			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] - [warn_reason], resulting in a [bantime] minute ban.")
+			C << "<span class='danger'><BIG>You have been autobanned due to a warning by [ckey] - Reason: [warn_reason].</BIG></span><br>This is a temporary ban, it will be removed in [bantime] minutes."
 		else
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] resulting in a [bantime] minute ban.")
-		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings", ckey, 1, bantime)
-		holder.DB_ban_record(BANTYPE_TEMP, null, bantime, reason, , ,warned_ckey)
+			message_admins("[key_name_admin(src)] has warned [warned_ckey] - [warn_reason], resulting in a [bantime] minute ban.")
+		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings - [warn_reason]", ckey, 1, bantime)
+		holder.DB_ban_record(BANTYPE_TEMP, null, bantime, "[reason] - [warn_reason]", , ,warned_ckey)
 		feedback_inc("ban_warn",1)
 		D.save_preferences_sqlite(C, C.ckey)
 		del(C)
 	else
 		if(C)
-			C << "<font color='red'><BIG><B>You have been formally warned by an administrator.</B></BIG><br>Further warnings will result in an autoban.</font>"
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)]. They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
+			C << "<span class='danger'><BIG>You have been formally warned by an administrator - Reason: [warn_reason].</span></BIG><br>Further warnings will result in an autoban.</font>"
+			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] - [warn_reason]. They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
 		else
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC). They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
+			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC) - [warn_reason]. They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
 		D.save_preferences_sqlite(C, C.ckey)
 	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
