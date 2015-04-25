@@ -146,7 +146,6 @@
 			if (prob(20))
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."))
 
-
 /datum/disease/transformation/xeno
 
 	name = "Xenomorph Transformation"
