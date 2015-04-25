@@ -115,6 +115,8 @@
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.losebreath = min(affecting.losebreath + 2, 3)
 
+/obj/item/weapon/grab/attack_self(mob/user)
+	s_click(hud)
 
 /obj/item/weapon/grab/proc/s_click(obj/screen/S)
 	if(!affecting)
