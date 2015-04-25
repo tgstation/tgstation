@@ -1,6 +1,0 @@
-author: Boggart
-
-delete-after: True
-
-changes:
-  - rscadd: "Fixes being unable to build disposal pipes on walls, makes changing the RPD's settings not affect pipes that are currently building, makes the RPD use the datum/browser ui, makes it use categories and makes it show the selected mode."
