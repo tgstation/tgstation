@@ -209,7 +209,7 @@ var/global/list/pipeID2State = list(
 	"cap",
 	"thermalplate",
 	"injector",
-	"binary vent",
+	"dual-port vent",
 	"passive vent",
 	"dtvalve",
 	"insulated_manifold",

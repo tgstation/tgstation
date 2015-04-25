@@ -222,3 +222,6 @@
 		interact(user)
 		return 1
 	return ..()
+
+/obj/machinery/atmospherics/binary/dp_vent_pump/interact(var/mob/user)
+	update_multitool_menu(user)
