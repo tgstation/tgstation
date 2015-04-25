@@ -18,6 +18,9 @@
 
 	name = e_name
 	desc = "A [name] drawn in crayon."
+	if(type == "poseur tag")
+		gang_name() //Generate gang names so they get removed from the pool
+		type = pick(gang_name_pool)
 	icon_state = type
 
 	var/matrix/M = matrix()
