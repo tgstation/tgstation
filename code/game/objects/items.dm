@@ -193,7 +193,7 @@
 	if(!A.has_fine_manipulation || w_class >= 4)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
 			A.unEquip(src)
-		user << "Your claws aren't capable of such fine manipulation."
+		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
 		return
 	attack_paw(A)
 
@@ -235,7 +235,7 @@
 					else if(success)
 						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
 					else
-						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
+						user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
@@ -302,7 +302,7 @@
 			usr << "\red You already have something in your hand."
 		*/
 	else
-		usr << "<span class='notice'>This mob type can't use this verb.</span>"
+		usr << "<span class='warning'>This mob type can't use this verb!</span>"
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().
@@ -326,19 +326,18 @@
 			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
 			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
-			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
+			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return
-
 
 	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Mo = M
 		if(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES)
 			// you can't stab someone in the eyes wearing a mask!
-			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
+			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
-		user << "<span class='danger'>You cannot locate any eyes on this creature!</span>"
+		user << "<span class='warning'>You cannot locate any eyes on this creature!</span>"
 		return
 
 	if(isbrain(M))

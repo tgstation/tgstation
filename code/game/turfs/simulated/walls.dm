@@ -181,7 +181,7 @@
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
-			user << "<span class='notice'>You begin slicing through the outer plating.</span>"
+			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			if(do_after(user, slicing_duration))
 				if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )
@@ -191,7 +191,7 @@
 					dismantle_wall()
 					return 1
 	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
-		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
+		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*0.6))  // plasma cutter is faster than welding tool
 			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
@@ -199,7 +199,7 @@
 			if( user.loc == T && user.get_active_hand() == W )
 				user << "<span class='notice'>You remove the outer plating.</span>"
 				dismantle_wall()
-				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", "<span class='warning'>You hear metal being sliced apart.</span>")
+				visible_message("The wall was sliced apart by [user]!", "<span class='italics'>You hear metal being sliced apart.</span>")
 				return 1
 	return 0
 
@@ -208,7 +208,7 @@
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if(!D.bcell.use(400))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
+			user << "<span class='warning'>Your [D.name] doesn't have enough power to break through the [name]!</span>"
 			return
 		D.update_icon()
 		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
@@ -216,7 +216,7 @@
 		if( user.loc == T && user.get_active_hand() == W )
 			D.playDigSound()
 			dismantle_wall()
-			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
+			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 			return 1
 	return 0
 

@@ -71,7 +71,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		return
 
 	if(!user.drop_item()) //couldn't drop the item
-		user << "<span class='notice'>\The [O] is stuck to your hand, you cannot put it in the seed extractor!</span>"
+		user << "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the seed extractor!</span>"
 		return
 
 	if(O && O.loc)
@@ -86,7 +86,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 		updateUsrDialog()
 		return
 	else
-		user << "<span class='notice'>You can't extract any seeds from \the [O.name].</span>"
+		user << "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>"
 
 datum/seed_pile
 	var/name = ""
@@ -171,7 +171,7 @@ obj/machinery/seed_extractor/proc/add(var/obj/item/seeds/O as obj)
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
 		if(!M.unEquip(O))
-			usr << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+			usr << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 	else if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc

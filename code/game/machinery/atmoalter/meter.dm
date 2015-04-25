@@ -92,8 +92,8 @@
 		if (do_after(user, 40))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
-				"<span class='notice'>You have unfastened \the [src].</span>", \
-				"You hear ratchet.")
+				"<span class='notice'>You unfasten \the [src].</span>", \
+				"<span class='italics'>You hear ratchet.</span>")
 			new /obj/item/pipe_meter(src.loc)
 			qdel(src)
 		return

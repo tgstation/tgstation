@@ -43,7 +43,7 @@
 
 			add_logs(user, C, "handcuffed")
 		else
-			user << "<span class='warning'>You fail to handcuff [C].</span>"
+			user << "<span class='warning'>You fail to handcuff [C]!</span>"
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user)
 	if(!target.handcuffed)
@@ -102,7 +102,7 @@
 			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
 			qdel(src)
 		else
-			user << "<span class='warning'>You need one rod to make a wired rod.</span>"
+			user << "<span class='warning'>You need one rod to make a wired rod!</span>"
 			return
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
@@ -118,7 +118,7 @@
 					user << "<span class='notice'>You handcuff [C].</span>"
 					add_logs(user, C, "handcuffed")
 			else
-				user << "<span class='warning'>You fail to handcuff [C].</span>"
+				user << "<span class='warning'>You fail to handcuff [C]!</span>"
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"

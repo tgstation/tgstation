@@ -2,7 +2,7 @@
 
 /mob/camera/blob/proc/can_buy(var/cost = 15)
 	if(blob_points < cost)
-		src << "<span class='warning'>You cannot afford this.</span>"
+		src << "<span class='warning'>You cannot afford this!</span>"
 		return 0
 	add_points(-cost)
 	return 1

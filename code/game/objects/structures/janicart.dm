@@ -37,7 +37,7 @@
 
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user, params)
-	var/fail_msg = "<span class='notice'>There is already one of those in [src].</span>"
+	var/fail_msg = "<span class='warning'>There is already one of those in [src]!</span>"
 
 	if(istype(I, /obj/item/weapon/mop))
 		var/obj/item/weapon/mop/m=I
@@ -74,11 +74,11 @@
 			signs++
 			update_icon()
 		else
-			user << "<span class='notice'>[src] can't hold any more signs.</span>"
+			user << "<span class='warning'>[src] can't hold any more signs!</span>"
 	else if(mybag)
 		mybag.attackby(I, user)
 	else if(istype(I, /obj/item/weapon/crowbar))
-		user.visible_message("<span class='warning'>[user] begins to empty the contents of [src].</span>")
+		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
 		if(do_after(user, 30))
 			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
 			reagents.reaction(src.loc)

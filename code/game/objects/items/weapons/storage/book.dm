@@ -57,7 +57,7 @@
 	add_logs(user, M, "attacked", object="[src.name]")
 
 	if (!user.IsAdvancedToolUser())
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 	if(!chaplain)
 		user << "<span class='danger'>The book sizzles in your hands.</span>"
@@ -75,7 +75,7 @@
 
 	if (M.stat !=2)
 		if(M.mind && (M.mind.assigned_role == "Chaplain"))
-			user << "<span class='danger'>You can't heal yourself!</span>"
+			user << "<span class='warning'>You can't heal yourself!</span>"
 			return
 		/*if((M.mind in ticker.mode.cult) && (prob(20)))
 			M << "\red The power of [src.deity_name] clears your mind of heresy!"

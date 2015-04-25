@@ -122,7 +122,7 @@
 
 			location = locate(locationx,locationy,Z.z)
 
-			usr << "You set the pinpointer to locate [locationx],[locationy]"
+			usr << "<span class='notice'>You set the pinpointer to locate [locationx],[locationy]</span>"
 
 
 			return attack_self()
@@ -140,9 +140,9 @@
 						return
 					target=locate(possible_items[targetitem])
 					if(!target)
-						usr << "Failed to locate [targetitem]!"
+						usr << "<span class='warning'>Failed to locate [targetitem]!</span>"
 						return
-					usr << "You set the pinpointer to locate [targetitem]"
+					usr << "<span class='notice'>You set the pinpointer to locate [targetitem].</span>"
 				if("DNA")
 					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
 					if(!DNAstring)

@@ -26,8 +26,8 @@ var/list/sacrificed = list()
 		else
 			user.whisper("Sas[pick("'","`")]so c'arta forbici!")
 		user.visible_message("<span class='danger'>[user] disappears in a flash of red light!</span>", \
-		"<span class='danger'>You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
-		"<span class='danger'>You hear a sickening crunch and sloshing of viscera.</span>")
+		"<span class='userdanger'>You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
+		"<span class='italics'>You hear a sickening crunch and sloshing of viscera.</span>")
 		user.loc = allrunesloc[rand(1,index)]
 		return
 	if(istype(src,/obj/effect/rune))
@@ -53,7 +53,7 @@ var/list/sacrificed = list()
 			IP = R
 			runecount++
 	if(runecount >= 2)
-		user << "<span class='danger'>You feel pain, as the rune disappears in reality shift caused by too much wear of space-time fabric</span>"
+		user << "<span class='userdanger'>You feel pain, as the rune disappears in reality shift caused by too much wear of space-time fabric</span>"
 		if (istype(user, /mob/living))
 			user.take_overall_damage(5, 0)
 		qdel(src)
@@ -85,7 +85,7 @@ var/list/sacrificed = list()
 		usr.whisper("N[pick("'","`")]ath reth sh'yro eth d'raggathnor!")
 	usr.visible_message("<span class='danger'>Rune disappears with a flash of red light, and in its place now a book lies.</span>", \
 	"<span class='danger'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a book.</span>", \
-	"<span class='danger'>You hear a pop and smell ozone.</span>")
+	"<span class='italics'>You hear a pop and smell ozone.</span>")
 	if(istype(src,/obj/effect/rune))
 		new /obj/item/weapon/tome(src.loc)
 	else
@@ -110,8 +110,8 @@ var/list/sacrificed = list()
 				C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
 		if(cultsinrange.len >= 3)
 			M.visible_message("<span class='danger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
-			"<span class='danger'>AAAAAAHHHH!</span>", \
-			"<span class='danger'>You hear an anguished scream.</span>")
+			"<span class='userdanger'>AAAAAAHHHH!</span>", \
+			"<span class='italics'>You hear an anguished scream.</span>")
 			if(is_convertable_to_cult(M.mind))
 				ticker.mode.add_cultist(M.mind)
 				M.mind.special_role = "Cultist"
@@ -221,14 +221,14 @@ var/list/sacrificed = list()
 	usr.say ("Yu[pick("'","`")]gular faras desdae. Havas mithum javara. Umathar uf'kal thenar!")
 	usr.visible_message("<span class='danger'>Blood flows from the rune into [usr]!</span>", \
 	"<span class='danger'>The blood starts flowing from the rune and into your frail mortal body. You feel... empowered.</span>", \
-	"<span class='danger'>You hear a liquid flowing.</span>")
+	"<span class='italics'>You hear a liquid flowing.</span>")
 	var/mob/living/user = usr
 	if(user.bhunger)
 		user.bhunger = max(user.bhunger-2*drain,0)
 	if(drain>=50)
 		user.visible_message("<span class='danger'>[user]'s eyes give off eerie red glow!</span>", \
 		"<span class='danger'>...but it wasn't nearly enough. You crave, crave for more. The hunger consumes you from within.</span>", \
-		"<span class='danger'>You hear a heartbeat.</span>")
+		"<span class='italics'>You hear a heartbeat.</span>")
 		user.bhunger += drain
 		src = user
 		spawn()
@@ -341,10 +341,10 @@ var/list/sacrificed = list()
 	usr.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
 	corpse_to_raise.visible_message("<span class='danger'>[corpse_to_raise]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.</span>", \
 	"<span class='danger'>Life... I'm alive again...</span>", \
-	"<span class='danger'>You hear a faint, slightly familiar whisper.</span>")
+	"<span class='italics'>You hear a faint, slightly familiar whisper.</span>")
 	body_to_sacrifice.visible_message("<span class='danger'>[body_to_sacrifice] is torn apart, a black smoke swiftly dissipating from his remains!</span>", \
 	"<span class='danger'>You feel as your blood boils, tearing you apart.</span>", \
-	"<span class='danger'>You hear a thousand voices, all crying in pain.</span>")
+	"<span class='italics'>You hear a thousand voices, all crying in pain.</span>")
 	body_to_sacrifice.gib()
 
 //	if(ticker.mode.name == "cult")
@@ -396,7 +396,7 @@ var/list/sacrificed = list()
 		usr.say("Fwe[pick("'","`")]sh mah erl nyag r'ya!")
 		usr.visible_message("<span class='danger'>[usr]'s eyes glow blue as \he freezes in place, absolutely motionless.</span>", \
 		"<span class='danger'>The shadow that is your spirit separates itself from your body. You are now in the realm beyond. While this is a great sight, being here strains your mind and body. Hurry...</span>", \
-		"<span class='danger'>You hear only complete silence for a moment.</span>")
+		"<span class='italics'>You hear only complete silence for a moment.</span>")
 		usr.ghostize(1)
 		L.ajourn = 1
 		while(L)
@@ -431,7 +431,7 @@ var/list/sacrificed = list()
 	var/mob/living/carbon/human/dummy/D = new(this_rune.loc)
 	usr.visible_message("<span class='danger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
 	"<span class='danger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
-	"<span class='danger'>You hear liquid flowing.</span>")
+	"<span class='italics'>You hear liquid flowing.</span>")
 	D.real_name = "[pick(first_names_male)] [pick(last_names)]"
 	D.status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH
 
@@ -453,7 +453,7 @@ var/list/sacrificed = list()
 	if(D)
 		D.visible_message("<span class='danger'>[D] slowly dissipates into dust and bones.</span>", \
 		"<span class='danger'>You feel pain, as bonds formed between your soul and this homunculus break.</span>", \
-		"<span class='danger'>You hear faint rustle.</span>")
+		"<span class='italics'>You hear faint rustle.</span>")
 		D.dust()
 	return
 
@@ -552,7 +552,7 @@ var/list/sacrificed = list()
 	runedec+=10
 	user.visible_message("<span class='danger'>[user] keels over dead, his blood glowing blue as it escapes his body and dissipates into thin air.</span>", \
 	"<span class='danger'>In the last moment of your humble life, you feel an immense pain as fabric of reality mends... with your blood.</span>", \
-	"<span class='danger'>You hear faint rustle.</span>")
+	"<span class='italics'>You hear faint rustle.</span>")
 	for(,user.stat==2)
 		sleep(600)
 		if (!user)
@@ -877,7 +877,7 @@ var/list/sacrificed = list()
 				C.take_overall_damage(25, 0)
 		user.visible_message("<span class='danger'>Rune disappears with a flash of red light, and in its place now a body lies.</span>", \
 		"<span class='danger'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
-		"<span class='danger'>You hear a pop and smell ozone.</span>")
+		"<span class='italics'>You hear a pop and smell ozone.</span>")
 		qdel(src)
 	return fizzle(user)
 

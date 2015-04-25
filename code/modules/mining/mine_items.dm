@@ -140,7 +140,7 @@
 			playsound(src, 'sound/weapons/smg_empty_alarm.ogg',50,1)
 			warned = 1
 		if(!R.cell.use(drillcost))
-			R << "<span class='notice'>You don't have enough charge to drill.</span>"
+			R << "<span class='warning'>You don't have enough charge to drill!</span>"
 			return 0
 	return 1
 

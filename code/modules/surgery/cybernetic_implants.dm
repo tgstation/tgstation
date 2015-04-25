@@ -2,7 +2,7 @@
 #define MAX_CHEST_IMPLANT	3
 
 /datum/surgery_step/cybernetic_implant/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/cybernetic_implant/implant, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to implant [target] with [implant].</span>")
+	user.visible_message("[user] begins to implant [target] with [implant].", "<span class='notice'>You begin to implant [target] with [implant]...</span>")
 
 //[[[[EYES]]]]
 /datum/surgery/eye_cybernetic_implant/eyes
@@ -68,9 +68,9 @@
 
 /datum/surgery_step/cybernetic_implant/proc/insert(mob/user, mob/living/carbon/target, obj/item/cybernetic_implant/implant,target_zone,full)
 	if(full)
-		user.visible_message("<span class='notice'>[user] can't seem to implant anything else into the [target]'s [target_zone].</span>")
+		user << "<span class='warning'>You can't seem to implant anything else into the [target]'s [target_zone]!</span>"
 	else
-		user.visible_message("<span class='notice'>[user] inserts [implant] into the [target]'s [target_zone == "head" ? "brain" : target_zone]!</span>")
+		user.visible_message("[user] inserts [implant] into the [target]'s [target_zone == "head" ? "brain" : target_zone]!", "<span class='notice'>You insert [implant] into the [target]'s [target_zone == "head" ? "brain" : target_zone].</span>")
 		implant.owner = target
 		implant.function()
 		user.drop_item()

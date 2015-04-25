@@ -621,14 +621,14 @@
 					keyslot = null
 
 			recalculateChannels()
-			user << "You pop out the encryption key in the radio!"
+			user << "<span class='notice'>You pop out the encryption key in the radio.</span>"
 
 		else
-			user << "This radio doesn't have any encryption keys!"
+			user << "<span class='warning'>This radio doesn't have any encryption keys!</span>"
 
 	if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot)
-			user << "The radio can't hold another key!"
+			user << "<span class='warning'>The radio can't hold another key!</span>"
 			return
 
 		if(!keyslot)

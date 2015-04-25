@@ -26,7 +26,7 @@
 			user << "<span class='warning'>There's already a brain in the MMI!</span>"
 			return
 		if(!newbrain.brainmob)
-			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>"
+			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
 			return
 
 		var/mob/living/carbon/brain/B = newbrain.brainmob
@@ -36,8 +36,7 @@
 				if(ghost.client)
 					ghost << "<span class='ghostalert'>Someone has put your brain in a MMI. Return to your body!</span> (Verbs -> Ghost -> Re-enter corpse)"
 					ghost << sound('sound/effects/genetics.ogg')
-
-		visible_message("<span class='notice'>[user] sticks \a [newbrain] into \the [src]</span>")
+		visible_message("[user] sticks \a [newbrain] into \the [src].")
 
 		brainmob = newbrain.brainmob
 		newbrain.brainmob = null
@@ -77,9 +76,9 @@
 
 /obj/item/device/mmi/attack_self(mob/user as mob)
 	if(!brain)
-		user << "<span class='danger'>You upend the MMI, but there's nothing in it.</span>"
+		user << "<span class='warning'>You upend the MMI, but there's nothing in it!</span>"
 	else if(locked)
-		user << "<span class='danger'>You upend the MMI, but the brain is clamped into place.</span>"
+		user << "<span class='warning'>You upend the MMI, but the brain is clamped into place!</span>"
 	else
 		user << "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>"
 
@@ -133,7 +132,7 @@
 	set popup_menu = 0
 
 	if(brainmob.stat)
-		brainmob << "Can't do that while incapacitated or dead."
+		brainmob << "<span class='warning'>Can't do that while incapacitated or dead!</span>"
 
 	radio.listening = radio.listening==1 ? 0 : 1
 	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
