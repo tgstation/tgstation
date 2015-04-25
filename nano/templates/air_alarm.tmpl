@@ -118,8 +118,8 @@ Used In File(s): \code\game\machinery\alarm.dm
 					Pressure Checks:
 				</div>
 				<div class="itemContent">
-					{{:~link('External', null, { 'id_tag' : id_tag, 'command' : 'excheck', 'val' : excheck}, null, excheck ? 'selected' : null)}}
-					{{:~link('Internal', null, { 'id_tag' : id_tag, 'command' : 'incheck', 'val' : incheck}, null, incheck ? 'selected' : null)}}
+					{{:~link('External', null, { 'id_tag' : id_tag, 'command' : 'excheck', 'val' : checks}, null, excheck ? 'selected' : null)}}
+					{{:~link('Internal', null, { 'id_tag' : id_tag, 'command' : 'incheck', 'val' : checks}, null, incheck ? 'selected' : null)}}
 				</div>
 			</div>
 			<div class="item">
@@ -174,7 +174,7 @@ Used In File(s): \code\game\machinery\alarm.dm
 		<H3>Environmental Modes</H3>
 		{{for modes}}
 			<div class="item">
-				{{:~link(name, null, { 'mode' : mode }, null, selected ? (danger ? 'redButton' : 'selected') : null)}}
+				{{:~link(name, null, { 'mode' : mode }, null, selected ? (danger ? 'redButton' : 'selected') : (danger ? 'bad' : null))}}
 			</div>
 		{{/for}}
     {{else screen == 5}}
@@ -187,9 +187,9 @@ Used In File(s): \code\game\machinery\alarm.dm
 		{{for thresholds}}
 			<tr>
 				<td>{{:name}}</td>
-				{{for settings.settingsValue.settingsIndex}}
+				{{for settings}}
 					<td>
-						{{:~link(settingsValue.selected >= 0 ? fixed(settingsValue.selected, 2) : "Off", null, { 'command' : 'set_threshold', 'env' : settingsValue.env, 'var' : settingsValue.val })}}
+						{{:~link(selected >= 0 ? ~round(selected*100)/100 : "Off", null, { 'command' : 'set_threshold', 'env' : env, 'var' : val })}}
 					</td>
 				{{/for}}
 			</tr>			

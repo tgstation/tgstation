@@ -327,6 +327,7 @@
 						"id_tag"	= id_tag,
 						"long_name" = sanitize(long_name),
 						"power"		= info["power"],
+						"checks"	= info["checks"],
 						"excheck"	= info["checks"]&1,
 						"incheck"	= info["checks"]&2,
 						"direction"	= info["direction"],
@@ -360,7 +361,7 @@
 			if (src.emagged)
 				data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,		"selected" = mode == AALARM_MODE_FLOOD, 			"danger" = 1))
 		if(AALARM_SCREEN_SENSORS)
-			var/list/selected = list()
+			var/datum/tlv/selected
 			var/list/thresholds = list()
 
 			var/list/gas_names = list(
@@ -369,20 +370,26 @@
 				"plasma"         = "Toxin",
 				"other"          = "Other")
 			for (var/g in gas_names)
-				thresholds[thresholds.len + 1] = list("name" = gas_names[g], "settings" = list())
+				thresholds += list(list("name" = gas_names[g], "settings" = list()))
 				selected = TLV[g]
-				for(var/i = 1, i <= 4, i++)
-					thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = i, "selected" = selected[i]))
+				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "min2", "selected" = selected.min2))
+				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "min1", "selected" = selected.min1))
+				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "max1", "selected" = selected.max1))
+				thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = "max2", "selected" = selected.max2))
 
 			selected = TLV["pressure"]
-			thresholds[++thresholds.len] = list("name" = "Pressure", "settings" = list())
-			for(var/i = 1, i <= 4, i++)
-				thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = i, "selected" = selected[i]))
+			thresholds += list(list("name" = "Pressure", "settings" = list()))
+			thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min2", "selected" = selected.min2))
+			thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min1", "selected" = selected.min1))
+			thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max1", "selected" = selected.max1))
+			thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max2", "selected" = selected.max2))
 
 			selected = TLV["temperature"]
-			thresholds[++thresholds.len] = list("name" = "Temperature", "settings" = list())
-			for(var/i = 1, i <= 4, i++)
-				thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = i, "selected" = selected[i]))
+			thresholds += list(list("name" = "Temperature", "settings" = list()))
+			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min2", "selected" = selected.min2))
+			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min1", "selected" = selected.min1))
+			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max1", "selected" = selected.max1))
+			thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.max2))
 
 
 			data["thresholds"] = thresholds
