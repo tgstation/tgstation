@@ -1210,28 +1210,18 @@
 	if(!holder) return
 	if(!M) M = holder.my_atom
 
-	var/needs_update = M.mutations.len > 0
 	if(ishuman(M))
 		M:hulk_time = 0
 	for(var/datum/dna/gene/G in dna_genes)
 		if(G.is_active(M))
 			if(G.name == "Hulk" && ishuman(M))
 				G.OnMobLife(M)
-			G.deactivate(M)
-	M.alpha = 255
-	M.mutations = list()
-	M.active_genes = list()
+			M.dna.SetSEValue(G.block, rand(1, 799)) //something between these two is fine - this will cause the block to deactivate when updated
 
-	M.disabilities = 0
-	M.sdisabilities = 0
+	domutcheck(M) //this updates all the genes that got reset
 
 	//Makes it more obvious that it worked.
 	M.jitteriness = 0
-
-	// Might need to update appearance for hulk etc.
-	if(needs_update && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.update_mutations()
 
 	..()
 	return
