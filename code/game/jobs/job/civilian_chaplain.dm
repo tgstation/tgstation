@@ -54,6 +54,7 @@ Chaplain
 		else
 			B.name = "The Holy Book of [new_religion]"
 	feedback_set_details("religion_name","[new_religion]")
+	ticker.Bible_name = B.name
 
 	var/new_deity = "Space Jesus"
 	if(H.client && H.client.prefs.custom_names["deity"])

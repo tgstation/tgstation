@@ -111,7 +111,6 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		if(ticker)
 			ticker.Bible_icon_state = B.icon_state
 			ticker.Bible_item_state = B.item_state
-			ticker.Bible_name = B.name
 		feedback_set_details("religion_book","[biblename]")
 
 		usr << browse(null, "window=editicon") // Close window
