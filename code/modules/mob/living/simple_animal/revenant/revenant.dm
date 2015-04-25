@@ -1,3 +1,6 @@
+/*
+	COMMENTED OUT -- PENDING REWORK
+
 //Revenants: based off of wraiths from Goon
 //"Ghosts" that are invisible and move like ghosts, cannot take damage while invsible
 //Don't hear deadchat and are NOT normal ghosts
@@ -170,3 +173,5 @@
 		else
 			user << "<span class='info'>Lost [essence_amt]E.</span>"
 	return 1
+
+*/
