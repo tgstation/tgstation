@@ -1,0 +1,9 @@
+author: Ikarrus
+
+delete-after: True
+
+changes: 
+  - tweak: "Gangs Capture goal reduced to 60%"
+  - tweak: "Influence income changed to provide weaker gangs a bigger boost, while slowing down stronger gangs to promote opportunity for comebacks."
+  - tweak: "Gangs only earn influence on territories they have held on to since the previous Status Report (the income calculation every 5 minutes). This places more significance on defending your existing territory."
+  - bugfix: "You must be in the territory physically to tag it now. So no more tagging everything from maint."
