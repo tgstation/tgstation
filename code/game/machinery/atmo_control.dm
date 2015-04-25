@@ -32,7 +32,28 @@
 	<ul>
 		<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[initial(frequency)]">Reset</a>)</li>
 		<li>[format_tag("ID Tag","id_tag")]</li>
+		<li>Monitor Pressure: <a href="?src=\ref[src];toggle_out_flag=1">[output&1 ? "Yes" : "No"]</a>
+		<li>Monitor Temperature: <a href="?src=\ref[src];toggle_out_flag=2">[output&2 ? "Yes" : "No"]</a>
+		<li>Monitor Oxygen Concentration: <a href="?src=\ref[src];toggle_out_flag=4">[output&4 ? "Yes" : "No"]</a>
+		<li>Monitor Plasma Concentration: <a href="?src=\ref[src];toggle_out_flag=8">[output&8 ? "Yes" : "No"]</a>
+		<li>Monitor Nitrogen Concentration: <a href="?src=\ref[src];toggle_out_flag=16">[output&16 ? "Yes" : "No"]</a>
+		<li>Monitor Carbon Dioxide Concentration: <a href="?src=\ref[src];toggle_out_flag=32">[output&32 ? "Yes" : "No"]</a>
 	</ul>"}
+
+/obj/machinery/air_sensor/multitool_topic(var/mob/user, var/list/href_list, var/obj/item/device/multitool/P)
+	. = ..()
+	if(.)
+		return .
+
+	if("toggle_out_flag" in href_list)
+		var/bitflag_value = text2num(href_list["toggle_out_flag"])//this is a string normally
+		if(!test_bitflag(bitflag_value) && bitflag_value <= 32) //Here to prevent breaking the sensors with HREF exploits
+			return 0
+		if(output&bitflag_value)//the bitflag is on ATM
+			output &= ~bitflag_value
+		else//can't not be off
+			output |= bitflag_value
+		return MT_UPDATE
 
 /obj/machinery/air_sensor/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/device/multitool))

@@ -166,3 +166,8 @@ proc/arctan(x)
 		return (k2*dx) + (k1*dy)
 #undef k1
 #undef k2
+
+//Checks if something's a power of 2, to check bitflags.
+//Thanks to wwjnc for this.
+/proc/test_bitflag(var/bitflag)
+	return bitflag != 0 && !(bitflag & (bitflag - 1))
