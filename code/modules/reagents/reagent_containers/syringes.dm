@@ -44,12 +44,12 @@
 			return
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/attack_hand()
+/obj/item/weapon/reagent_containers/syringe/attack_hand(var/mob/user)
 	..()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/attack_paw()
-	return attack_hand()
+/obj/item/weapon/reagent_containers/syringe/attack_paw(var/mob/user)
+	return attack_hand(user)
 
 /obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I as obj, mob/user as mob)
 	return
