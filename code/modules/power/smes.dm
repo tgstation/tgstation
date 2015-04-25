@@ -169,7 +169,7 @@
 		var/excess = terminal.surplus()
 
 		if (charging)
-			if (excess >= 0) // If there's power available, try to charge
+			if (excess >= chargelevel) // If there's power available, try to charge
 				var/load = min((capacity - charge) / SMESRATE, chargelevel) // Charge at set rate, limited to spare capacity
 
 				charge += load * SMESRATE // Increase the charge
@@ -204,6 +204,7 @@
 
 		if (charge < 0.0001)
 			online = FALSE
+			lastout = 0
 
 	// Only update icon if state changed
 	if(_charging != charging || _online != online)
