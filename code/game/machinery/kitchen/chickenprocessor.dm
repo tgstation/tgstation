@@ -3,7 +3,6 @@
 	desc = "Ensures a quick and painless death of the poultry."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor"
-	layer = 2.9
 	density = 1
 	anchored = 1
 	use_power = 1
