@@ -220,7 +220,7 @@
 	build_path = "/obj/machinery/computer/diseasesplicer"
 	origin_tech = "programming=3;biotech=4"
 /obj/item/weapon/circuitboard/centrifuge
-	name = "Circuit board (Disease Splicer)"
+	name = "Circuit board (Isolation Centrifuge)"
 	build_path = "/obj/machinery/computer/centrifuge"
 	origin_tech = "programming=3;biotech=3"
 
