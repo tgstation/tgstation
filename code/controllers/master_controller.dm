@@ -34,8 +34,9 @@ calculate the longest number of ticks the MC can wait between each cycle without
 		if(SS.wait)
 			GCD = Gcd(SS.wait, GCD)
 	GCD = round(GCD)
-	if(GCD > 1)
-		processing_interval = GCD
+	if(GCD < 1)
+		GCD = 1
+	processing_interval = GCD
 /datum/controller/game_controller/proc/setup()
 	world << "<span class='boldannounce'>Initializing Subsystems...</span>"
 
