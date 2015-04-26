@@ -23,8 +23,6 @@
 	//2: Do not pass internal_pressure_bound
 	//3: Do not pass either
 
-	var/welded = 0
-
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
 
@@ -307,68 +305,6 @@
 		initial_loc.air_vent_names -= id_tag
 	..()
 
-/*
-	Alt-click to ventcrawl
-*/
-/obj/machinery/atmospherics/unary/vent_pump/AltClick(var/mob/living/L)
-	if(!L.ventcrawler || !isliving(L) || !Adjacent(L))
-		return
-	if(L.stat)
-		L << "<span class='warning'>You must be conscious to do this!</span>"
-		return
-	if(L.lying)
-		L << "<span class='warning'>You can't vent crawl while you're stunned!</span>"
-		return
-	if(welded)
-		L << "<span class='warning'>That vent is welded shut!</span>"
-		return
 
-	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in parent.other_atmosmch)
-		if(temp_vent.welded)
-			continue
-		if(temp_vent in loc)
-			continue
-		var/turf/T = get_turf(temp_vent)
-
-		if(!T || T.z != loc.z)
-			continue
-
-		var/i = 1
-		var/index = "[T.loc.name]\[[i]\]"
-		while(index in vents)
-			i++
-			index = "[T.loc.name]\[[i]\]"
-		vents[index] = temp_vent
-	if(!vents.len)
-		L << "<span class='warning'>There are no available vents to travel to, they could be welded!</span>"
-		return
-
-	var/obj/selection = input(L,"Select a destination.", "Duct System") as null|anything in sortList(vents)
-	if(!selection)
-		return
-
-	if(!Adjacent(L) || L.stat || L.lying || !L.ventcrawler || welded)
-		return
-	if(iscarbon(L) && L.ventcrawler < 2) // lesser ventcrawlers can't bring items
-		for(var/obj/item/carried_item in L.contents)
-			if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant
-				L << "<span class='warning'>You can't be carrying items or have items equipped when vent crawling!</span>"
-				return
-
-	var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
-	if(!target_vent)
-		return
-
-	L.visible_message("<span class='notice'>[L] scrambles into the ventilation ducts!</span>", \
-						"<span class='notice'>You scramble into the ventilation ducts.</span>")
-
-	target_vent.audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
-
-	if(target_vent.welded)		//the vent can be welded while they scrolled through the list.
-		target_vent = src
-		L << "<span class='warning'>The vent you were heading to appears to be welded!</span>"
-	L.loc = target_vent.loc
-	var/area/new_area = get_area(L.loc)
-	if(new_area)
-		new_area.Entered(L)
+/obj/machinery/atmospherics/unary/vent_pump/can_crawl_through()
+	return !welded

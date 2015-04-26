@@ -27,6 +27,7 @@
 	var/radio_filter_out
 	var/radio_filter_in
 
+
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	..()
 	initial_loc = get_area(loc)
@@ -49,6 +50,10 @@
 	overlays.Cut()
 	if(showpipe)
 		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions)
+
+	if(welded)
+		icon_state = "scrub_welded"
+		return
 
 	if(!node || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "scrub_off"
@@ -107,7 +112,7 @@
 	if (!node)
 		on = 0
 	//broadcast_status()
-	if(!on)
+	if(!on || welded)
 		return 0
 
 
@@ -238,6 +243,24 @@
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0,user))
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			user << "<span class='notice'>Now welding the scrubber.</span>"
+			if(do_after(user, 20))
+				if(!src || !WT.isOn())
+					return
+				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				if(!welded)
+					user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
+					welded = 1
+					update_icon()
+				else
+					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
+					welded = 0
+					update_icon()
+			return 1
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
@@ -245,8 +268,13 @@
 		return 1
 	return ..()
 
+
 /obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag
 	..()
+
+
+/obj/machinery/atmospherics/unary/vent_scrubber/can_crawl_through()
+	return !welded
