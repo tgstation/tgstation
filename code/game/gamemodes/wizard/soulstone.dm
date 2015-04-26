@@ -169,6 +169,8 @@
 			var/mob/living/simple_animal/shade/A = locate() in C
 			if(A)
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+				if(!T || !T.loc)
+					return
 				switch(construct_class)
 					if("Juggernaut")
 						makeNewConstruct(/mob/living/simple_animal/construct/armored, A, U)
