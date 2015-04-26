@@ -76,6 +76,8 @@
 		var/turf/pos = get_turf(B)
 		var/obj/item/device/mmi/M = B.loc
 		if(istype(M) && M.brainmob == B)
+			if(isrobot(M.loc))
+				continue
 			var/list/crewmemberData = list()
 			crewmemberData["sensor_type"] = 3
 			crewmemberData["dead"] = 0
