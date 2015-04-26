@@ -134,6 +134,72 @@
 			D.forcesay(hit_appends)
 	return 1
 
+/datum/martial_art/drunk_brawling
+	name = "Drunken Brawling"
+
+/datum/martial_art/drunk_brawling/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	var/grab_failure = prob(70)
+	if(grab_failure)
+		A.visible_message("<span class='warning'>[A] tries to grab ahold of [D], but fails!</span>", \
+							"<span class='warning'>You fail to grab ahold of [D]!</span>")
+		return 1
+	D.grabbedby(A,1)
+	var/obj/item/weapon/grab/G = A.get_active_hand()
+	if(G)
+		D.visible_message("<span class='danger'>[A] grabs ahold of [D] drunkenly!</span>", \
+								"<span class='userdanger'>[A] grabs ahold of [D] drunkenly!</span>")
+	return 1
+
+/datum/martial_art/drunk_brawling/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	add_logs(A, D, "punched")
+	A.do_attack_animation(D)
+	var/atk_verb = pick("jab","uppercut","overhand punch","drunken right hook","drunken left hook")
+	var/attack_failure = prob(50)
+	var/weak_hit = prob(90)
+	var/attack_sound = 'sound/weapons/punch1.ogg'
+
+	if(A.dna)
+		attack_sound = A.dna.species.attack_sound
+		if(attack_failure)
+			attack_sound = A.dna.species.miss_sound
+	else
+		if(attack_failure)
+			attack_sound = 'sound/weapons/punchmiss.ogg'
+
+	playsound(D.loc, attack_sound, 25, 1, -1)
+
+
+	if(attack_failure)
+		D.visible_message("<span class='warning'>[A] has attempted to strike [D] with a [atk_verb]!</span>")
+		return 1 //returns 1 so that they actually miss and don't switch to attackhand damage
+
+	var/damage = rand(1,6)
+	if(atk_verb == "uppercut")
+		if(!weak_hit)
+			damage = 14
+	if(A.dna)
+		damage += A.dna.species.punchmod
+
+	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
+	var/armor_block = D.run_armor_check(affecting, "melee")
+
+	D.visible_message("<span class='danger'>[A] has struck [D] with a [atk_verb]!</span>", \
+								"<span class='userdanger'>[A] has struck [D] with a [atk_verb]!</span>")
+
+	D.apply_damage(damage, BRUTE, null, armor_block)
+	D.apply_effect(damage, STAMINA, armor_block)
+	if(D.getStaminaLoss() > 50)
+		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)
+		if((D.stat != DEAD) && prob(knockout_prob))
+			D.visible_message("<span class='danger'>[A] has knocked [D] out with a [atk_verb]!</span>", \
+								"<span class='userdanger'>[A] has knocked [D] out with a [atk_verb]!</span>")
+			D.apply_effect(10,WEAKEN,armor_block)
+			D.SetSleeping(5)
+			D.forcesay(hit_appends)
+		else if(D.lying)
+			D.forcesay(hit_appends)
+	return 1
+
 /datum/martial_art/wrestling
 	name = "Wrestling"
 
