@@ -426,35 +426,10 @@
 	newavail = 0
 
 /datum/powernet/proc/get_electrocute_damage()
-	switch(avail)/*
-		if (1300000 to INFINITY)
-			return min(rand(70,150),rand(70,150))
-		if (750000 to 1300000)
-			return min(rand(50,115),rand(50,115))
-		if (100000 to 750000-1)
-			return min(rand(35,101),rand(35,101))
-		if (75000 to 100000-1)
-			return min(rand(30,95),rand(30,95))
-		if (50000 to 75000-1)
-			return min(rand(25,80),rand(25,80))
-		if (25000 to 50000-1)
-			return min(rand(20,70),rand(20,70))
-		if (10000 to 25000-1)
-			return min(rand(20,65),rand(20,65))
-		if (1000 to 10000-1)
-			return min(rand(10,20),rand(10,20))*/
-		if (1000000 to INFINITY)
-			return min(rand(50,160),rand(50,160))
-		if (200000 to 1000000)
-			return min(rand(25,80),rand(25,80))
-		if (100000 to 200000)//Ave powernet
-			return min(rand(20,60),rand(20,60))
-		if (50000 to 100000)
-			return min(rand(15,40),rand(15,40))
-		if (1000 to 50000)
-			return min(rand(10,20),rand(10,20))
-		else
-			return 0
+	if(avail >= 1000)
+		return Clamp(round(avail/10000), 10, 90) + rand(-5,5)
+	else
+		return 0
 
 ////////////////////////////////////////////////
 // Misc.
