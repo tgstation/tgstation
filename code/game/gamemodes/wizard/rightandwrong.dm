@@ -55,6 +55,8 @@
 					new /obj/item/weapon/gun/projectile/shotgun(get_turf(H))
 				if("combatshotgun")
 					new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
+				if("arg")
+					new /obj/item/weapon/gun/projectile/automatic/ar(get_turf(H))
 				if("mateba")
 					new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(H))
 				if("boltaction")
@@ -85,6 +87,7 @@
 				if("car")
 					var/obj/item/weapon/gun/projectile/automatic/m90/gat  = new(get_turf(H))
 					gat.pin = new /obj/item/device/firing_pin
+
 		else
 			switch (randomizemagic)
 				if("fireball")
