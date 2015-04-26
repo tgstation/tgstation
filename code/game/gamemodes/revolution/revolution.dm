@@ -206,9 +206,9 @@
 //////////////////////////////////////
 /datum/game_mode/revolution/check_win()
 	if(check_rev_victory())
-		finished = 1
-	else if(check_heads_victory())
-		finished = 2
+		finished += 1
+	if(check_heads_victory())
+		finished += 2
 	return
 
 ///////////////////////////////
@@ -319,6 +319,9 @@
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
 		world << "<span class='danger'><FONT size = 3>The heads of staff managed to stop the revolution!</FONT></span>"
+	else if(finished == 3)
+		feedback_set_details("round_end_result","draw - heads and rev heads killed")
+		world << "<span class='danger'><FONT size = 3>The revolution was successful but their leaders are dead as well!</FONT></span>"
 	..()
 	return 1
 
