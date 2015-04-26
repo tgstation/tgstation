@@ -5,7 +5,7 @@
 /mob/living/simple_animal/hostile/mimic
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/crates.dmi'
 	icon_state = "crate"
 	icon_living = "crate"
 
@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/mimic/death()
 	..(1)
-	visible_message("<span class='danger'>[src] stops moving!</span>")
+	visible_message("[src] stops moving!")
 	ghostize()
 	qdel(src)
 

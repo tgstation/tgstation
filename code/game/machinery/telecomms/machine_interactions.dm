@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 
 /*
 
@@ -12,87 +10,28 @@
 
 /obj/machinery/telecomms
 	var/temp = "" // output message
-	var/construct_op = 0
 
 
 /obj/machinery/telecomms/attackby(obj/item/P as obj, mob/user as mob, params)
+
+	var/icon_closed = initial(icon_state)
+	var/icon_open = "[initial(icon_state)]_o"
+	if(!on)
+		icon_closed = "[initial(icon_state)]_off"
+		icon_open = "[initial(icon_state)]_o_off"
+
+	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, P))
+		updateUsrDialog()
+		return
+
+	if(exchange_parts(user, P))
+		return
 
 	// Using a multitool lets you access the receiver's interface
 	if(istype(P, /obj/item/device/multitool))
 		attack_hand(user)
 
-	switch(construct_op)
-		if(0)
-			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "<span class='notice'>You unfasten the bolts.</span>"
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				construct_op ++
-		if(1)
-			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "<span class='notice'>You fasten the bolts.</span>"
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				construct_op --
-			if(istype(P, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You dislodge the external plating.</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				construct_op ++
-		if(2)
-			if(istype(P, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You secure the external plating.</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				construct_op --
-			if(istype(P, /obj/item/weapon/wirecutters))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "<span class='notice'>You remove the cables.</span>"
-				construct_op ++
-				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( user.loc )
-				A.amount = 5
-				stat |= BROKEN // the machine's been borked!
-		if(3)
-			if(istype(P, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/A = P
-				if(A.use(5))
-					user << "<span class='notice'>You insert the cables.</span>"
-					construct_op --
-					stat &= ~BROKEN // the machine's not borked anymore!
-				else
-					user << "<span class='danger'>You need five lengths of cable for this machine.</span>"
-			if(istype(P, /obj/item/weapon/crowbar))
-				user << "<span class='notice'>You begin prying out the circuit board and components...</span>"
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if(do_after(user,60))
-					user << "<span class='notice'>You finish prying out the components.</span>"
-
-					// Drop all the component stuff
-					if(component_parts)
-						for(var/obj/item/I in component_parts)
-							if(I.reliability != 100 && crit_fail)
-								I.crit_fail = 1
-							I.loc = src.loc
-
-					else
-
-						// If the machine wasn't made during runtime, probably doesn't have components:
-						// manually find the components and drop them!
-						var/newpath = text2path(circuitboard)
-						var/obj/item/weapon/circuitboard/C = new newpath
-						for(var/I in C.req_components)
-							for(var/i = 1, i <= C.req_components[I], i++)
-								newpath = text2path(I)
-								var/obj/item/s = new newpath
-								s.loc = src.loc
-								if(istype(s, /obj/item/stack/cable_coil))
-									var/obj/item/stack/cable_coil/A = s
-									A.amount = 1
-									A.update_icon()
-
-						// Drop a circuit board too
-						C.loc = src.loc
-
-					// Create a machine frame and delete the current machine
-					var/obj/machinery/constructable_frame/machine_frame/F = new
-					F.loc = src.loc
-					qdel(src)
+	default_deconstruction_crowbar(P)
 
 
 /obj/machinery/telecomms/attack_ai(var/mob/user as mob)
@@ -207,24 +146,10 @@
 /obj/machinery/telecomms/proc/Options_Menu()
 	return ""
 
-/*
-// Add an option to the processor to switch processing mode. (COMPRESS -> UNCOMPRESS or UNCOMPRESS -> COMPRESS)
-/obj/machinery/telecomms/processor/Options_Menu()
-	var/dat = "<br>Processing Mode: <A href='?src=\ref[src];process=1'>[process_mode ? "UNCOMPRESS" : "COMPRESS"]</a>"
-	return dat
-*/
 // The topic for Additional Options. Use this for checking href links for your specific option.
 // Example of how to use below.
 /obj/machinery/telecomms/proc/Options_Topic(href, href_list)
 	return
-
-/*
-/obj/machinery/telecomms/processor/Options_Topic(href, href_list)
-
-	if(href_list["process"])
-		temp = "<font color = #666633>-% Processing mode changed. %-</font color>"
-		src.process_mode = !src.process_mode
-*/
 
 // RELAY
 

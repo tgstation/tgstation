@@ -436,11 +436,11 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob, params)
 	if (istype(O, /obj/item/weapon/crowbar))
 		if(open)
-			user << "You close the maintenance panel."
+			user << "<span class='notice'>You close the maintenance panel.</span>"
 			open = 0
 			icon_state="req_comp0"
 		else
-			user << "You open the maintenance panel."
+			user << "<span class='notice'>You open the maintenance panel.</span>"
 			open = 1
 			if(hackState == 0)
 				icon_state="req_comp_open"
@@ -449,15 +449,15 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if (istype(O, /obj/item/weapon/screwdriver))
 		if(open)
 			if(hackState == 0)
-				user << "You modify the wiring."
+				user << "<span class='notice'>You modify the wiring.</span>"
 				hackState = 1
 				icon_state="req_comp_rewired"
 			else if(hackState == 1)
-				user << "You reset the wiring."
+				user << "<span class='notice'>You reset the wiring.</span>"
 				hackState = 0
 				icon_state="req_comp_open"
 		else
-			user << "You can't do much with that."
+			user << "<span class='warning'>You can't do much with that!</span>"
 	update_icon()
 
 	var/obj/item/weapon/card/id/ID = O.GetID()
@@ -470,7 +470,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				announceAuth = 1
 			else
 				announceAuth = 0
-				user << "<span class='danger'>You are not authorized to send announcements.</span>"
+				user << "<span class='warning'>You are not authorized to send announcements!</span>"
 			updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)

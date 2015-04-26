@@ -310,7 +310,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
@@ -344,7 +344,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if( !(I.slot_flags & SLOT_ID) )
 				return 0
@@ -356,7 +356,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return
@@ -369,7 +369,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return 0
@@ -383,7 +383,7 @@
 				return 0
 			if(!H.wear_suit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a suit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
 				return 0
 			if(!H.wear_suit.allowed)
 				if(!disable_warning)
@@ -849,7 +849,7 @@
 	else
 		return 0
 
-	var/armor = H.run_armor_check(affecting, "melee", "<span class='warning'>Your armor has protected your [hit_area].</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area].</span>")
+	var/armor = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>")
 	if(armor >= 100)	return 0
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
@@ -1143,7 +1143,7 @@
 	return 1
 
 /datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
-	if( (abs(310.15 - breath.temperature) > 50) && !(mutations_list[COLDRES] in H.dna.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
+	if(abs(310.15 - breath.temperature) > 50)
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
 			switch(breath.temperature)
@@ -1162,18 +1162,18 @@
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
 				if(1000 to INFINITY)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, var/mob/living/carbon/human/H)
 	if(!environment)
 		return
 
 	var/loc_temp = H.get_temperature(environment)
-	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]"
 
-	//Body temperature is adjusted in two steps. Firstly your body tries to stabilize itself a bit.
-	if(H.stat != 2)
-		H.stabilize_temperature_from_calories()
+	//Body temperature is adjusted in two steps. First, your body tries to stabilize itself a bit.
+	if(H.stat != DEAD)
+		H.natural_bodytemperature_stabilization()
 
-	//After then, it reacts to the surrounding atmosphere based on your thermal protection
+	//Then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		if(loc_temp < H.bodytemperature)
 			//Place is colder than we are

@@ -864,9 +864,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
+			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -880,9 +880,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
+			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 
 /obj/item/device/pda/verb/verb_remove_pen()
@@ -904,9 +904,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					return
 			O.loc = get_turf(src)
 		else
-			usr << "<span class='notice'>This PDA does not have a pen in it.</span>"
+			usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 /obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
@@ -942,7 +942,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
 		if(!idcard.registered_name)
-			user << "<span class='notice'>\The [src] rejects the ID.</span>"
+			user << "<span class='warning'>\The [src] rejects the ID!</span>"
 			return
 		if(!owner)
 			owner = idcard.registered_name
@@ -967,7 +967,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else if(istype(C, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/O = locate() in src
 		if(O)
-			user << "<span class='notice'>There is already a pen in \the [src].</span>"
+			user << "<span class='warning'>There is already a pen in \the [src]!</span>"
 		else
 			user.drop_item()
 			C.loc = src
@@ -1030,7 +1030,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		if (!A:info)
-			user << "<span class='notice'>Unable to scan. Paper is blank.</span>"
+			user << "<span class='warning'>Unable to scan! Paper is blank.</span>"
 			return
 		notehtml = A:info
 		note = replacetext(notehtml, "<BR>", "\[br\]")

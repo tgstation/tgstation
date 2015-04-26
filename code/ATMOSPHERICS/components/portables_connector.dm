@@ -37,7 +37,7 @@
 /obj/machinery/atmospherics/unary/portables_connector/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(connected_device)
-			user << "<span class='danger'>You cannot unwrench this [src], dettach [connected_device] first.</span>"
+			user << "<span class='warning'>You cannot unwrench this [src], dettach [connected_device] first!</span>"
 			return 1
 	return ..()
 

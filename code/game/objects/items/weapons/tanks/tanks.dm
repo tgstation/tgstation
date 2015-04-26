@@ -135,7 +135,7 @@
 						if (location.internals)
 							location.internals.icon_state = "internal1"
 					else
-						usr << "<span class='notice'>You need something to connect to \the [src].</span>"
+						usr << "<span class='warning'>You need something to connect to \the [src]!</span>"
 
 		src.add_fingerprint(usr)
 /*

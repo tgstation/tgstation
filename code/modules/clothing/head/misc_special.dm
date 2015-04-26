@@ -100,12 +100,12 @@
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
 		earflaps = 0
-		user << "You raise the ear flaps on the ushanka."
+		user << "<span class='notice'>You raise the ear flaps on the ushanka.</span>"
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
 		earflaps = 1
-		user << "You lower the ear flaps on the ushanka."
+		user << "<span class='notice'>You lower the ear flaps on the ushanka.</span>"
 
 /*
  * Pumpkin head

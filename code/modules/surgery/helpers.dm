@@ -45,12 +45,12 @@
 						if(procedure.location == "anywhere") // if location == "anywhere" change location to the surgeon's target, otherwise leave location as is.
 							procedure.location = user.zone_sel.selecting
 						M.surgeries += procedure
-						user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
+						user.visible_message("[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].", "<span class='notice'>You drape [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
 
 						add_logs(user, M, "operated", addition="Operation type: [procedure.name]")
 						return 1
 					else
-						user << "<span class='notice'>You need to expose [M]'s [procedure.location] first.</span>"
+						user << "<span class='warning'>You need to expose [M]'s [procedure.location] first!</span>"
 						return 1	//return 1 so we don't slap the guy in the dick with the drapes.
 			else
 				return 1	//once the input menu comes up, cancelling it shouldn't hit the guy with the drapes either.

@@ -147,9 +147,9 @@
 	else
 		injectamount = cause
 	reagents.trans_to(R, injectamount)
-	R << "You hear a faint *beep*."
+	R << "<span class='italics'>You hear a faint beep.</span>"
 	if(!reagents.total_volume)
-		R << "You hear a faint click from your chest."
+		R << "<span class='italics'>You hear a faint click from your chest.</span>"
 		qdel(src)
 
 
@@ -213,7 +213,7 @@
 
 	imp_in.reagents.add_reagent("synaptizine", 10)
 	imp_in.reagents.add_reagent("omnizine", 10)
-	imp_in.reagents.add_reagent("morphine", 10)
+	imp_in.reagents.add_reagent("stimulants", 10)
 
 
 /obj/item/weapon/implant/emp

@@ -95,19 +95,13 @@
 					if(user.mind in ticker.mode.A_bosses)
 						if(ticker.mode.add_gangster(M.mind,"A"))
 							M.Paralyse(5)
-							M.Jitter(500)
 							cooldown(ticker.mode.A_gang.len, )
-							spawn(40)
-								M.jitteriness -= 490
 						else
 							user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 					else if(user.mind in ticker.mode.B_bosses)
 						if(ticker.mode.add_gangster(M.mind,"B"))
 							M.Paralyse(5)
-							M.Jitter(500)
 							cooldown(ticker.mode.B_gang.len)
-							spawn(40)
-								M.jitteriness -= 490
 						else
 							user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 				else
@@ -119,7 +113,7 @@
 	cooldown = 1
 	icon_state = "pen_blink"
 	//The more gang members there are the longer the cooldown will be
-	var/time = 500 + (100 * modifier) //50 seconds + 10 seconds for every member in the gang
+	var/time = 450 + (150 * modifier) //45 seconds + 15 seconds for every member in the gang
 	spawn(time)
 		cooldown = 0
 		icon_state = "pen"

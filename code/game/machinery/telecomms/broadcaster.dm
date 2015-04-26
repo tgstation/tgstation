@@ -244,20 +244,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	else if(data == 2)
 
 		for(var/obj/item/device/radio/R in all_radios["[freq]"])
-			if(R.subspace_transmission)
-				continue
-
-			if(R.receive_range(freq, level) > -1)
-				radios += R
-
-	// --- This space left blank for Syndicate data ---
-
-	// --- Centcom radio, yo. ---
-
-	else if(data == 4)
-
-		for(var/obj/item/device/radio/R in all_radios["[freq]"])
-			if(!R.centcom)
+			if(istype(R, /obj/item/device/radio/headset))
 				continue
 
 			if(R.receive_range(freq, level) > -1)
@@ -350,7 +337,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	else if(data == 2)
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
-			if(R.subspace_transmission)
+
+			if(istype(R, /obj/item/device/radio/headset))
 				continue
 			var/turf/position = get_turf(R)
 			if(position && position.z == level)
@@ -367,13 +355,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			if(position && position.z == level)
 				receive |= R.send_hear(SYND_FREQ)
 
-	// --- Centcom radio, yo. ---
-
-	else if(data == 4)
-
-		for(var/obj/item/device/radio/R in all_radios["[RADIO_CHAT]"])
-			if(R.centcom)
-				receive |= R.send_hear(CENTCOM_FREQ)
 
 	// --- Broadcast to ALL radio devices ---
 

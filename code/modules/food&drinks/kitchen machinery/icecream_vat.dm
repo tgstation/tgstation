@@ -126,7 +126,7 @@
 		else
 			src.visible_message("<span class='info'>[user] whips up some [flavour] icecream.</span>")
 	else
-		user << "<span class='warning'>You don't have the ingredients to make this.</span>"
+		user << "<span class='warning'>You don't have the ingredients to make this!</span>"
 
 /obj/machinery/icecream_vat/Topic(href, href_list)
 	if(..())
