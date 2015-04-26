@@ -1,4 +1,4 @@
 author: PJB3005
 delete-after: true
 changes:
-  - rscadd: Portable scrubbers now have NanoUI.
+  - rscadd: Portable scrubbers and pumps now have NanoUI.
