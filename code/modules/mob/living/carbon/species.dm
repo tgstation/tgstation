@@ -631,7 +631,7 @@ var/global/list/whitelisted_species = list("Human")
 		if(helm)
 			H.equip_or_collect(new helm(H), slot_head)
 		H.equip_or_collect(new/obj/item/weapon/tank/nitrogen(H), tank_slot)
-		H << "<span class='info'>You are now running on nitrogen internals from the [H.s_store] in your [tank_slot_name]. Your species finds oxygen toxic, so <b>you must breathe nitrogen (AKA N<sub>2</sub>) only</b>.</span"
+		H << "<span class='info'>You are now running on nitrogen internals from the [H.s_store] in your [tank_slot_name]. Your species finds oxygen toxic, so <b>you must breathe nitrogen (AKA N<sub>2</sub>) only</b>.</span>"
 		H.internal = H.get_item_by_slot(tank_slot)
 		if (H.internals)
 			H.internals.icon_state = "internal1"
