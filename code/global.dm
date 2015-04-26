@@ -388,3 +388,7 @@ var/endgame_info_logged = 0
 //Snake II leaderboard
 var/global/list/snake_station_highscores = list()
 var/global/list/snake_best_players = list()
+
+//Minesweeper leaderboard
+var/global/list/minesweeper_station_highscores = list()
+var/global/list/minesweeper_best_players = list()

@@ -427,6 +427,7 @@ var/global/datum/controller/gameticker/ticker
 
 /datum/controller/gameticker/proc/init_PDAgames_leaderboard()
 	init_snake_leaderboard()
+	init_minesweeper_leaderboard()
 
 /datum/controller/gameticker/proc/init_snake_leaderboard()
 	for(var/x=1;x<=9;x++)
@@ -441,6 +442,14 @@ var/global/datum/controller/gameticker/ticker
 			templist1[y] = 0
 			templist2 += y
 			templist2[y] = "none"
+
+/datum/controller/gameticker/proc/init_minesweeper_leaderboard()
+	minesweeper_station_highscores["beginner"] = 999
+	minesweeper_station_highscores["intermediate"] = 999
+	minesweeper_station_highscores["expert"] = 999
+	minesweeper_best_players["beginner"] = "none"
+	minesweeper_best_players["intermediate"] = "none"
+	minesweeper_best_players["expert"] = "none"
 
 /datum/controller/gameticker/proc/declare_completion()
 	var/ai_completions = "<h1>Round End Information</h1><HR>"

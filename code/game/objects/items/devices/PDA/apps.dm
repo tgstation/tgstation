@@ -7,6 +7,7 @@ var/global/list/pda_app_menus = list(
 	103,//Balance Check
 	104,//Station Map
 	105,//Snake II
+	106,//Minesweeper
 	)
 
 /datum/pda_app
@@ -15,6 +16,7 @@ var/global/list/pda_app_menus = list(
 	var/price = 10
 	var/menu = 0	//keep it at 0 if your app doesn't need its own menu on the PDA
 	var/obj/item/device/pda/pda_device = null
+	var/icon = null	//name of the icon that appears in front of the app name on the PDA, example: "pda_game.png"
 
 /datum/pda_app/proc/onInstall(var/obj/item/device/pda/device)
 	if(istype(device))
@@ -99,11 +101,14 @@ var/global/list/pda_app_menus = list(
 				user.unset_machine()
 				user << browse(null, "window=pda")
 
+///////////SNAKEII//////////////////////////////////////////////////////////////
+
 /datum/pda_app/snake
 	name = "Snake II"
 	desc = "A video game. This old classic from Earth made it all the way to the far reaches of space! Includes station leaderboard."
 	price = 40
 	menu = 105
+	icon = "pda_game"
 	var/volume = 6
 	var/datum/snake_game/snake_game = null
 	var/list/highscores = list()
@@ -202,3 +207,45 @@ var/global/list/pda_app_menus = list(
 	if(templist[labyrinth+1] > leaderlist[labyrinth+1])
 		leaderlist[labyrinth+1] = templist[labyrinth+1]
 		winnerlist[labyrinth+1] = pda_device.owner
+
+///////////MINESWEEPER//////////////////////////////////////////////////////////////
+
+/datum/pda_app/minesweeper
+	name = "Minesweeper"
+	desc = "A video game. This old classic from Earth made it all the way to the far reaches of space! Includes station leaderboard."
+	price = 35
+	menu = 106
+	icon = "pda_game"
+	var/ingame = 0
+	var/datum/minesweeper_game/minesweeper_game = null
+
+
+/datum/pda_app/minesweeper/onInstall(var/obj/item/device/pda/device)
+	..()
+	minesweeper_game = new()
+
+/datum/pda_app/minesweeper/proc/game_tick(var/mob/user)
+	sleep(1)	//to give the game the time to process all tiles if many are dug at once.
+	if(minesweeper_game.gameover && (minesweeper_game.face == "win"))
+		save_score()
+	game_update(user)
+
+/datum/pda_app/minesweeper/proc/game_update(var/mob/user)
+	if(istype(user,/mob/living/carbon))
+		var/mob/living/carbon/C = user
+		if(C.machine && istype(C.machine,/obj/item/device/pda))
+			var/obj/item/device/pda/pda_device = C.machine
+			var/turf/user_loc = get_turf(user)
+			var/turf/pda_loc = get_turf(pda_device)
+			if(get_dist(user_loc,pda_loc) <= 1)
+				if(pda_device.mode == 106)
+					pda_device.attack_self(C)
+			else
+				user.unset_machine()
+				user << browse(null, "window=pda")
+
+/datum/pda_app/minesweeper/proc/save_score()
+	if(minesweeper_game.current_difficulty == "custom")	return
+	if(minesweeper_game.end_timer < minesweeper_station_highscores[minesweeper_game.current_difficulty])
+		minesweeper_station_highscores[minesweeper_game.current_difficulty] = minesweeper_game.end_timer
+		minesweeper_best_players[minesweeper_game.current_difficulty] = pda_device.owner
