@@ -334,7 +334,7 @@
 
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
-	if(!Adjacent(user,src))
+	if(!Adjacent(user,MAX_ITEM_DEPTH))
 		return
 	..()
 
