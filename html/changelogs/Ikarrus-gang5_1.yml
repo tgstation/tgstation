@@ -1,0 +1,8 @@
+author: Ikarrus
+
+delete-after: True
+
+changes: 
+  - tweak: "Gang Capture goal reduced to 50%"
+  - tweak: "Gang spraycan use increased to 20"
+  - tweak: "Gang Boss icon is now a red [G] icon to make it stand out better from regular gang icons"

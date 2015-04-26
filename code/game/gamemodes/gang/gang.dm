@@ -138,7 +138,7 @@
 	else
 		gangtool.register_device(mob)
 		mob << "The <b>Gangtool</b> in your [where] will allow you to use your influence to purchase items and prevent the station from evacuating before you can take over. Use it to recall the emergency shuttle from anywhere on the station."
-		mob << "You can also promote your gang members to lieutenant by giving them an unregistered gangtool. Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
+		mob << "You can also promote your gang members to <b>lieutenant</b> by giving them an unregistered gangtool. Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
 		. += 1
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
