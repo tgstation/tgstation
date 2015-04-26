@@ -173,6 +173,42 @@
 
 
 /datum/game_mode/proc/declare_completion()
+	var/clients = 0
+	var/surviving_humans = 0
+	var/surviving_total = 0
+	var/ghosts = 0
+	var/escaped_humans = 0
+	var/escaped_total = 0
+
+	for(var/mob/M in player_list)
+		if(M.client)
+			clients++
+			if(ishuman(M))
+				if(!M.stat)
+					surviving_humans++
+					if(M.z == 2)
+						escaped_humans++
+			if(!M.stat)
+				surviving_total++
+				if(M.z == 2)
+					escaped_total++
+
+
+			if(isobserver(M))
+				ghosts++
+
+	if(clients > 0)
+		feedback_set("round_end_clients",clients)
+	if(ghosts > 0)
+		feedback_set("round_end_ghosts",ghosts)
+	if(surviving_humans > 0)
+		feedback_set("survived_human",surviving_humans)
+	if(surviving_total > 0)
+		feedback_set("survived_total",surviving_total)
+	if(escaped_humans > 0)
+		feedback_set("escaped_human",escaped_humans)
+	if(escaped_total > 0)
+		feedback_set("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
 	return 0
 
