@@ -246,8 +246,8 @@
 	data["name"] = name
 	data["canLabel"] = can_label ? 1 : 0
 	data["portConnected"] = connected_port ? 1 : 0
-	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["releasePressure"] = round(release_pressure ? release_pressure : 0)
+	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)//This used to be redundant, made it into a fix for -1 kPA showing up in the UI
+	data["releasePressure"] = round(release_pressure)
 	data["minReleasePressure"] = round(ONE_ATMOSPHERE/10)
 	data["maxReleasePressure"] = round(10*ONE_ATMOSPHERE)
 	data["valveOpen"] = valve_open ? 1 : 0
@@ -270,33 +270,9 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
-
-	if(href_list["close"])
-		if(usr.machine == src)
-			usr.unset_machine()
-		return 1
-	//Do not use "if(..()) return" here, canisters will stop working in unpowered areas like space or on the derelict. // yeah but without SOME sort of Topic check any dick can mess with them via exploits as he pleases -walter0o
-	if (!istype(src.loc, /turf))
-		return 0
-	if(!isAI(usr) && usr.z != z) return 1
-
-	var/ghost_flags=0
-	if(ghost_write)
-		ghost_flags |= PERMIT_ALL
-	if(!canGhostWrite(usr,src,"",ghost_flags))
-		if(usr.restrained() || usr.lying || usr.stat || !usr.canmove)
-			usr << browse(null, "window=canister")
-			onclose(usr, "canister")
-			return 1
-
-		if(!Adjacent(usr))
-			if(usr.mutations && usr.mutations.len)
-				if(!(M_TK in usr.mutations))
-					usr << browse(null, "window=canister")
-					onclose(usr, "canister")
-					return 1
-	else if(!custom_aghost_alerts)
-		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
+	. = ..()//Sanity
+	if(.)
+		return .
 
 	if(href_list["toggle"])
 		var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
