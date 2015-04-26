@@ -9,6 +9,7 @@
 	..()
 	for(var/i = 0, i < 3, i++)
 		new /obj/item/weapon/reagent_containers/food/condiment/flour(src)
+	new /obj/item/weapon/reagent_containers/food/condiment/rice(src)
 	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
 
 /obj/structure/closet/secure_closet/freezer/kitchen/mining
@@ -20,7 +21,7 @@
 /obj/structure/closet/secure_closet/freezer/meat/New()
 	..()
 	for(var/i = 0, i < 4, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src)
 /obj/structure/closet/secure_closet/freezer/fridge
 	name = "refrigerator"
 

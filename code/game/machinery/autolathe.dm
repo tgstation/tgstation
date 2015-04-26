@@ -143,14 +143,14 @@
 		stack.use(amount)
 	else
 		if(!user.unEquip(O))
-			user << "<span class='notice'>/the [O] is stuck to your hand, you can't put it in \the [src]!</span>"
+			user << "<span class='warning'>/the [O] is stuck to your hand, you can't put it in \the [src]!</span>"
 		O.loc = src
 	icon_state = "autolathe"
 	busy = 1
 	use_power(max(1000, (m_amt+g_amt)*amount/10))
 	src.m_amount += m_amt * amount
 	src.g_amount += g_amt * amount
-	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe."
+	user << "<span class='notice'>You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.</span>"
 	if (O && O.loc == src)
 		qdel(O)
 	busy = 0

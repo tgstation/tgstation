@@ -54,7 +54,7 @@
 	S.loc = user.loc
 
 	syringes.Remove(S)
-	user << "<span class = 'notice'>You unload [S] from \the [src]!</span>"
+	user << "<span class ='notice'>You unload [S] from \the [src].</span>"
 
 	return 1
 
@@ -67,7 +67,7 @@
 			A.loc = src
 			return 1
 		else
-			usr << "<span class='notice'>[src] cannot hold more syringes.</span>"
+			usr << "<span class='warning'>[src] cannot hold more syringes!</span>"
 	return 0
 
 /obj/item/weapon/gun/syringe/rapidsyringe

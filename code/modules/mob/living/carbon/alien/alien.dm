@@ -12,7 +12,6 @@
 	ventcrawler = 2
 	languages = ALIEN
 	verb_say = "hisses"
-	lying_pixel_offset = 0
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -28,12 +27,13 @@
 
 	var/heat_protection = 0.5
 	var/leaping = 0
+	var/list/obj/effect/proc_holder/alien/abilities = list()
 
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 	internal_organs += new /obj/item/organ/brain/alien
-
+	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
@@ -73,22 +73,18 @@
 
 	var/loc_temp = get_temperature(environment)
 
-	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Fire protection: [heat_protection] - Location: [loc] - src: [src]"
-
 	// Aliens are now weak to fire.
 
 	//After then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!on_fire) // If you're on fire, ignore local air temperature
 		if(loc_temp > bodytemperature)
 			//Place is hotter than we are
-			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of heat protection.
 			if(thermal_protection < 1)
 				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 		else
 			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
-		//	bodytemperature -= max((loc_temp - bodytemperature / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 
-	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360.15)
 		//Body temperature is too hot.
 		throw_alert("alien_fire")
@@ -134,11 +130,11 @@
 	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
 	return
 
+/mob/living/carbon/alien/reagent_check(var/datum/reagent/R) //can metabolize all reagents
+	return 0
+
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
-
-/mob/living/carbon/alien/SpeciesCanConsume()
-	return 1 // Aliens can eat, and they can be fed food/drink
 
 /mob/living/carbon/alien/Stat()
 	..()
@@ -147,6 +143,26 @@
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
+
+	add_abilities_to_panel()
+
+/mob/living/carbon/alien/proc/AddAbility(var/obj/effect/proc_holder/alien/A)
+	abilities.Add(A)
+	A.on_gain(src)
+	if(A.has_action)
+		if(!A.action)
+			A.action = new/datum/action/spell_action/alien
+			A.action.target = A
+			A.action.name = A.name
+			A.action.button_icon = A.action_icon
+			A.action.button_icon_state = A.action_icon_state
+			A.action.background_icon_state = A.action_background_icon_state
+		A.action.Grant(src)
+
+
+/mob/living/carbon/alien/proc/add_abilities_to_panel()
+	for(var/obj/effect/proc_holder/alien/A in abilities)
+		statpanel("[A.panel]",A.plasma_cost > 0?"([A.plasma_cost])":"",A)
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
@@ -158,21 +174,6 @@
 
 /mob/living/carbon/alien/getTrail()
 	return "xltrails"
-
-/mob/living/carbon/alien/verb/nightvisiontoggle()
-	set name = "Toggle Night Vision"
-	set category = "Alien"
-
-	if(!nightvision)
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-		nightvision = 1
-		hud_used.nightvisionicon.icon_state = "nightvision1"
-	else if(nightvision == 1)
-		see_in_dark = 4
-		see_invisible = 45
-		nightvision = 0
-		hud_used.nightvisionicon.icon_state = "nightvision0"
 
 /*----------------------------------------
 Proc: AddInfectionImages()
@@ -201,6 +202,10 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/canBeHandcuffed()
 	return 1
+
+/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
+	return initial(pixel_y)
+
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

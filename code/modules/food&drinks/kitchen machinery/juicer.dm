@@ -23,6 +23,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = "watermelonjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = "watermelonjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = "poisonberryjuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = "pumpkinjuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = "blumpkinjuice",
 	)
 
 /obj/machinery/juicer/New()
@@ -42,7 +44,7 @@
 			return 1
 		else
 			if(!user.unEquip(O))
-				user << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+				user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 				return 0
 			O.loc = src
 			beaker = O
@@ -54,7 +56,7 @@
 		user << "It looks as not containing any juice."
 		return 1
 	if(!user.unEquip(O))
-		user << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+		user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 		return 0
 	O.loc = src
 	src.updateUsrDialog()

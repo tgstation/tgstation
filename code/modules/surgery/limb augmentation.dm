@@ -10,7 +10,7 @@
 
 
 /datum/surgery_step/replace/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class ='notice'>[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_sel.selecting)]!</span>")
+	user.visible_message("[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
 
 
 /datum/surgery_step/add_limb
@@ -24,9 +24,9 @@
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	L = new_organ
 	if(L)
-		user.visible_message("<span class ='notice'>[user] begins to augment [target]'s [parse_zone(user.zone_sel.selecting)].</span>")
+		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
 	else
-		user.visible_message("<span class ='notice'>[user] looks for [target]'s [parse_zone(user.zone_sel.selecting)].</span>")
+		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_sel.selecting)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_sel.selecting)]...</span>")
 
 
 
@@ -46,7 +46,7 @@
 	if(L)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			user.visible_message("<span class='notice'>[user] successfully augments [target]'s [parse_zone(target_zone)]!</span>")
+			user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
 			L.loc = get_turf(target)
 			H.organs -= L
 			switch(target_zone)
@@ -72,5 +72,5 @@
 			H.update_augments() //Gives them the Cyber limb overlay
 			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
-		user.visible_message("<span class='notice'>[user] [target] has no organic [parse_zone(target_zone)] there!</span>")
+		user << "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>"
 	return 1

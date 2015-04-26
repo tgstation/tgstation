@@ -80,6 +80,7 @@
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
 	transfer_antag_huds(new_character)					//inherit the antag HUDs from this mind (TODO: move this to a possible antag datum)
+	transfer_actions(new_character)
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
@@ -288,39 +289,26 @@
 			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
 
 			var/list/L = current.get_contents()
-			var/obj/item/device/flash/flash = locate() in L
-			if (flash)
-				if(!flash.broken)
-					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
-				else
-					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
+			var/obj/item/device/gangtool/gangtool = locate() in L
+			if (gangtool)
+				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
 			else
 				text += "."
-
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];gang=autoobjective'>Set to kill all rival gang leaders</a>."
-
 
 		else if (src in ticker.mode.B_bosses)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B)</B> <a href='?src=\ref[src];gang=bgang'>gangster</a> <b>BOSS</b>"
 			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
 
 			var/list/L = current.get_contents()
-			var/obj/item/device/flash/flash = locate() in L
-			if (flash)
-				if(!flash.broken)
-					text += "<br><a href='?src=\ref[src];gang=takeequip'>take</a>."
-				else
-					text += "<br><a href='?src=\ref[src];gang=takeequip'>take</a>|<a href='?src=\ref[src];gang=repairflash'>repair flash</a>."
+			var/obj/item/device/gangtool/gangtool = locate() in L
+			if (gangtool)
+				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
 			else
 				text += "."
 
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];gang=autoobjective'>Set to kill all rival gang leaders</a>."
-
-		else if (src in ticker.mode.A_gangsters)
+		else if (src in ticker.mode.A_gang)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A) GANGSTER</B> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else if (src in ticker.mode.B_gangsters)
+		else if (src in ticker.mode.B_gang)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B) GANGSTER</B> <a href='?src=\ref[src];gang=bboss'>boss</a>"
 		else if(isloyal(current))
 			text += "<B>LOYAL</B>|none|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
@@ -447,6 +435,25 @@
 		text += "|Disabled in Prefs"
 
 	sections["traitor"] = text
+
+	/** SHADOWLING **/
+	text = "shadowling"
+	if(ticker.mode.config_tag == "shadowling")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(src in ticker.mode.shadows)
+		text += "<b>SHADOWLING</b>|thrall|<a href='?src=\ref[src];shadowling=clear'>human</a>"
+	else if(src in ticker.mode.thralls)
+		text += "shadowling|<b>THRALL</b>|<a href='?src=\ref[src];shadowling=clear'>human</a>"
+	else
+		text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
+
+	if(current && current.client && current.client.prefs.be_special & BE_SHADOWLING)
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+
+	sections["shadowling"] = text
 
 	/** MONKEY ***/
 	if (istype(current, /mob/living/carbon))
@@ -804,7 +811,7 @@
 				log_admin("[key_name(usr)] has de-gang'ed [current].")
 
 			if("agang")
-				if(src in ticker.mode.A_gangsters)
+				if(src in ticker.mode.A_gang)
 					return
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.add_gangster(src,"A",0)
@@ -821,9 +828,11 @@
 				current << "<FONT size=3 color=red><B>You are a [gang_name("A")] Gang Boss!</B></FONT>"
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
 				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
+				ticker.mode.forge_gang_objectives(src)
+				ticker.mode.greet_gang(src,0)
 
 			if("bgang")
-				if(src in ticker.mode.B_gangsters)
+				if(src in ticker.mode.B_gang)
 					return
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.add_gangster(src,"B",0)
@@ -840,39 +849,26 @@
 				current << "<FONT size=3 color=red><B>You are a [gang_name("B")] Gang Boss!</B></FONT>"
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
 				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
-
-			if("autoobjective")
 				ticker.mode.forge_gang_objectives(src)
 				ticker.mode.greet_gang(src,0)
-				usr << "<span class='info>The objectives for gang war have been generated and shown to [key]</span>"
 
 			if("equip")
 				switch(ticker.mode.equip_gang(current))
-					if(2)
-						usr << "<span class='warning'>Unable to equip flash!</span>"
 					if(1)
-						usr << "<span class='warning'>Unable to equip recaller!</span>"
-					if(0)
-						usr << "<span class='warning'>Unable to equip both flash and recaller!</span>"
+						usr << "<span class='warning'>Unable to equip territory spraycan!</span>"
+					if(2)
+						usr << "<span class='warning'>Unable to equip recruitment pen and spraycan!</span>"
+					if(3)
+						usr << "<span class='warning'>Unable to equip gangtool, pen, and spraycan!</span>"
 
 			if("takeequip")
 				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					usr << "<span class='warning'>Deleting flash failed!</span>"
-				qdel(flash)
-				var/obj/item/device/recaller/recaller = locate() in L
-				if (!recaller)
-					usr << "<span class='warning'>Deleting recaller failed!</span>"
-				qdel(recaller)
-
-			if("repairflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					usr << "<span class='warning'>Repairing flash failed!</span>"
-				else
-					flash.broken = 0
+				for(var/obj/item/weapon/pen/gang/pen in L)
+					qdel(pen)
+				for(var/obj/item/device/gangtool/gangtool in L)
+					qdel(gangtool)
+				for(var/obj/item/toy/crayon/spraycan/gang/SC in L)
+					qdel(SC)
 
 	else if (href_list["cult"])
 		switch(href_list["cult"])
@@ -1034,6 +1030,49 @@
 			if("autoobjectives")
 				ticker.mode.forge_traitor_objectives(src)
 				usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
+
+	else if(href_list["shadowling"])
+		switch(href_list["shadowling"])
+			if("clear")
+				ticker.mode.update_shadow_icons_removed(src)
+				src.spell_list = null
+				if(src in ticker.mode.shadows)
+					ticker.mode.shadows -= src
+					special_role = null
+					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
+					src.spell_list = null
+					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
+					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
+					current.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
+					current.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
+				else if(src in ticker.mode.thralls)
+					ticker.mode.thralls -= src
+					special_role = null
+					current << "<span class='userdanger'>You have been brainwashed! You are no longer a thrall!</span>"
+					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
+					log_admin("[key_name(usr)] has de-thrall'ed [current].")
+			if("shadowling")
+				if(!ishuman(current))
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+				ticker.mode.shadows += src
+				special_role = "shadowling"
+				current << "<span class='deadsay'><b>You notice a brightening around you. No, it isn't that. The shadows grow, darken, swirl. The darkness has a new welcome for you, and you realize with a \
+				start that you can't be human. No, you are a shadowling, a harbringer of the shadows! Your alien abilities have been unlocked from within, and you may both commune with your allies and use \
+				a chrysalis to reveal your true form. You are to ascend at all costs.</b></span>"
+				ticker.mode.finalize_shadowling(src)
+				ticker.mode.update_shadow_icons_added(src)
+			if("thrall")
+				if(!ishuman(current))
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+				ticker.mode.add_thrall(src)
+				special_role = "thrall"
+				current << "<span class='deadsay'>All at once it becomes clear to you. Where others see darkness, you see an ally. You realize that the shadows are not dead and dark as one would think, but \
+				living, and breathing, and <b>eating</b>. Their children, the Shadowlings, are to be obeyed and protected at all costs.</span>"
+				current << "<span class='danger'>You may use the Hivemind Commune ability to communicate with your fellow enlightened ones.</span>"
+				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
+				log_admin("[key_name(usr)] has thrall'ed [current].")
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
@@ -1309,6 +1348,37 @@
 	ticker.mode.forge_gang_objectives(src, gang)
 	ticker.mode.greet_gang(src)
 	ticker.mode.equip_gang(current)
+
+
+
+/datum/mind/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+	spell_list += spell
+	if(!spell.action)
+		spell.action = new/datum/action/spell_action
+		spell.action.target = spell
+		spell.action.name = spell.name
+		spell.action.button_icon = spell.action_icon
+		spell.action.button_icon_state = spell.action_icon_state
+		spell.action.background_icon_state = spell.action_background_icon_state
+	spell.action.Grant(current)
+	return
+/datum/mind/proc/transfer_actions(var/mob/living/new_character)
+	if(current && current.actions)
+		for(var/datum/action/A in current.actions)
+			A.Grant(new_character)
+	transfer_mindbound_actions(new_character)
+
+/datum/mind/proc/transfer_mindbound_actions(var/mob/living/new_character)
+	for(var/obj/effect/proc_holder/spell/spell in spell_list)
+		if(!spell.action) // Unlikely but whatever
+			spell.action = new/datum/action/spell_action
+			spell.action.target = spell
+			spell.action.name = spell.name
+			spell.action.button_icon = spell.action_icon
+			spell.action.button_icon_state = spell.action_icon_state
+			spell.action.background_icon_state = spell.action_background_icon_state
+		spell.action.Grant(new_character)
+	return
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

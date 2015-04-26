@@ -55,16 +55,16 @@
 				user << "<span class='notice'>You lock the [initial(name)] assembly.</span>"
 				playsound(loc, 'sound/items/Screwdriver.ogg', 25, -3)
 			else
-				user << "<span class='notice'>You need to add at least one beaker before locking the [initial(name)] assembly.</span>"
+				user << "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>"
 		else if(stage == READY && !nadeassembly)
 			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
 			user << "<span class='notice'>You modify the time delay. It's set for [det_time / 10] second\s.</span>"
 		else if(stage == EMPTY)
-			user << "<span class='notice'>You need to add an activation mechanism.</span>"
+			user << "<span class='warning'>You need to add an activation mechanism!</span>"
 
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
 		if(beakers.len == 2)
-			user << "<span class='notice'>[src] can not hold more containers.</span>"
+			user << "<span class='warning'>[src] can not hold more containers!</span>"
 			return
 		else
 			if(I.reagents.total_volume)
@@ -73,7 +73,7 @@
 				I.loc = src
 				beakers += I
 			else
-				user << "<span class='notice'>[I] is empty.</span>"
+				user << "<span class='warning'>[I] is empty!</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/device/assembly_holder))
 		var/obj/item/device/assembly_holder/A = I
@@ -87,7 +87,7 @@
 		assemblyattacher = user.ckey
 
 		stage_change(WIRED)
-		user << "<span class='notice'>You add [A] to the [initial(name)] assembly!</span>"
+		user << "<span class='notice'>You add [A] to the [initial(name)] assembly./span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
@@ -96,7 +96,7 @@
 			stage_change(WIRED)
 			user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
 		else
-			user << "<span class='warning'>You need one length of coil to wire the assembly.</span>"
+			user << "<span class='warning'>You need one length of coil to wire the assembly!</span>"
 			return
 
 	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
@@ -211,9 +211,17 @@
 	reagents.chem_temp = total_temp
 
 /obj/item/weapon/grenade/chem_grenade/proc/can_flood_from(myloc, maxrange)
+	var/turf/myturf = get_turf(myloc)
 	var/list/reachable = list(myloc)
 	for(var/i=1; i<=maxrange; i++)
+		var/list/turflist = list()
 		for(var/turf/T in (orange(i, myloc) - orange(i-1, myloc)))
+			turflist |= T
+		for(var/turf/T in turflist)
+			if( !(get_dir(T,myloc) in cardinal) && (abs(T.x - myturf.x) == abs(T.y - myturf.y) ))
+				turflist.Remove(T)
+				turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
+		for(var/turf/T in turflist)
 			if(T in reachable) continue
 			for(var/turf/NT in orange(1, T))
 				if(!(NT in reachable)) continue
@@ -288,8 +296,8 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("aluminium", 25)
-	B2.reagents.add_reagent("plasma", 25)
+	B1.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("stable_plasma", 25)
 	B2.reagents.add_reagent("sacid", 25)
 
 	beakers += B1

@@ -6,7 +6,7 @@
 	name = "Human kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/plain/human = 2
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/human
 
@@ -14,7 +14,7 @@
 	name = "Kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak = 2
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/monkey
 
@@ -72,7 +72,7 @@
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/spidereggs = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet/spider = 2
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
 
@@ -82,7 +82,7 @@
 	name = "Corned beef"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cornedbeef
@@ -91,25 +91,17 @@
 	name = "Filet migrawr"
 	reqs = list(
 		/datum/reagent/consumable/ethanol/manly_dorf = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/meatsteak/bear = 1,
-		/obj/item/weapon/lighter/grayscale
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/bear = 1,
 	)
+	tools = list(/obj/item/weapon/lighter)
 	result = /obj/item/weapon/reagent_containers/food/snacks/bearsteak
-
-/datum/table_recipe/wingfangchu
-	name = "Wingfangchu"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet/xeno = 2
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
 
 /datum/table_recipe/enchiladas
 	name = "Enchiladas"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili = 2,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = 1
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 
@@ -126,6 +118,6 @@
 	name = "Sausage"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sausage

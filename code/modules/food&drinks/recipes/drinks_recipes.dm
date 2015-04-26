@@ -506,3 +506,59 @@
 	result = "thirteenloko"
 	required_reagents = list("vodka" = 1, "coffee" = 1, "limejuice" = 1)
 	result_amount = 3
+
+/datum/chemical_reaction/chocolatepudding
+	name = "Chocolate Pudding"
+	id = "chocolatepudding"
+	result = "chocolatepudding"
+	required_reagents = list("cocoa" = 5, "milk" = 5, "eggyolk" = 5)
+	result_amount = 20
+
+/datum/chemical_reaction/vanillapudding
+	name = "Vanilla Pudding"
+	id = "vanillapudding"
+	result = "vanillapudding"
+	required_reagents = list("vanilla" = 5, "milk" = 5, "eggyolk" = 5)
+	result_amount = 20
+
+/datum/chemical_reaction/cherryshake
+	name = "Cherry Shake"
+	id = "cherryshake"
+	result = "cherryshake"
+	required_reagents = list("cherryjelly" = 1, "ice" = 1, "cream" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/bluecherryshake
+	name = "Blue Cherry Shake"
+	id = "bluecherryshake"
+	result = "bluecherryshake"
+	required_reagents = list("bluecherryjelly" = 1, "ice" = 1, "cream" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/drunkenblumpkin
+	name = "Drunken Blumpkin"
+	id = "drunkenblumpkin"
+	result = "drunkenblumpkin"
+	required_reagents = list("blumpkinjuice" = 1, "irishcream" = 2, "ice" = 1)
+	result_amount = 4
+
+/datum/chemical_reaction/pumpkin_latte
+	name = "Pumpkin latte"
+	id = "pumpkin_latte"
+	result = "pumpkin_latte"
+	required_reagents = list("pumpkinjuice" = 5, "coffee" = 5, "cream" = 5)
+	result_amount = 15
+
+/datum/chemical_reaction/gibbfloats
+	name = "Gibb Floats"
+	id = "gibbfloats"
+	result = "gibbfloats"
+	required_reagents = list("dr_gibb" = 5, "ice" = 5, "cream" = 5)
+	result_amount = 15
+
+/datum/chemical_reaction/triple_citrus
+	name = "triple_citrus"
+	id = "triple_citrus"
+	result = "triple_citrus"
+	required_reagents = list("lemonjuice" = 1, "limejuice" = 1, "orangejuice" = 1)
+	result_amount = 5

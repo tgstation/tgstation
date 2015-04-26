@@ -91,6 +91,8 @@
 				if(istype(A, /obj/item))
 					var/atom/movable/B = A
 					B.loc = I
+					B.pixel_x = initial(B.pixel_x)
+					B.pixel_y = initial(B.pixel_y)
 				else
 					if(!I.reagents)
 						I.reagents = new /datum/reagents()
@@ -176,7 +178,7 @@
 	return Deletion
 
 /obj/structure/table/interact(mob/user)
-	if(user.stat || user.lying || !Adjacent(user))
+	if(user.incapacitated() || user.lying || !Adjacent(user))
 		return
 	check_table()
 	if(!table_contents.len)

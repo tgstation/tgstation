@@ -23,7 +23,7 @@
 		if(Uses == 0)
 			user << "<span class='warning'> You can't enhance a used extract!</span>"
 			return ..()
-		user <<"You apply the enhancer. It now has triple the amount of uses."
+		user <<"<span class='notice'>You apply the enhancer. It now has triple the amount of uses.</span>"
 		Uses = 3
 		enhanced = 1
 		qdel(O)
@@ -204,8 +204,8 @@
 		M.languages |= HUMAN
 		M.faction -= "neutral"
 		M << "<span class='warning'>All at once it makes sense, you know what you are and who you are! Self awareness is yours!</span>"
-		M << "You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost."
-		user << "<span class='warning'>[M] is suddenly attentive and aware. It worked!</span>"
+		M << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
+		user << "<span class='notice'>[M] is suddenly attentive and aware. It worked!</span>"
 		qdel(src)
 	else
 		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down. Maybe you should try again later...</span>"
@@ -232,7 +232,7 @@
 		user <<"<span class='warning'> The slime already has the maximum amount of extract!</span>"
 		return..()
 
-	user <<"You feed the slime the steroid. It now has triple the amount of extract."
+	user <<"<span class='notice'>You feed the slime the steroid. It now has triple the amount of extract.</span>"
 	M.cores = 3
 	qdel(src)
 
@@ -350,7 +350,7 @@
 		ghost = O
 		break
 	if(!ghost)
-		user << "The rune fizzles uselessly. There is no spirit nearby."
+		user << "<span class='warning'>The rune fizzles uselessly! There is no spirit nearby.</span>"
 		return
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
 	if(prob(50))	G.gender = "female"

@@ -48,8 +48,6 @@
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/control_freq = 1447		// bot control frequency
 
-	var/bot_filter 				// The radio filter the bot uses to identify itself on the network.
-
 	var/bot_type = 0 //The type of bot it is, for radio control.
 	#define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
 	#define MULE_BOT			2	// MULEbots
@@ -69,7 +67,7 @@
 	#define BOT_SUMMON			6	// summoned by PDA
 	#define BOT_CLEANING 		7	// cleaning (cleanbots)
 	#define BOT_REPAIRING		8	// repairing hull breaches (floorbots)
-	#define BOT_MOVING			9	// for clean/floor bots, when moving.
+	#define BOT_MOVING			9	// for clean/floor/med bots, when moving.
 	#define BOT_HEALING			10	// healing people (medbots)
 	#define BOT_RESPONDING		11	// responding to a call from the AI
 	#define BOT_LOADING			12	// loading/unloading
@@ -103,19 +101,19 @@
 	set_custom_texts()
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
+	spawn(5)
+		add_to_beacons()
 
 /obj/machinery/bot/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,beacon_freq)
-		if(bot_filter)
-			radio_controller.remove_object(src,control_freq)
+		radio_controller.remove_object(src,control_freq)
 	..()
 
-/obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.
+/obj/machinery/bot/proc/add_to_beacons() //Master radio control for bots. Must be placed in the bot's local New() to support map spawned bots.
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-		if(bot_filter)
-			radio_controller.add_object(src, control_freq, filter = bot_filter)
+		radio_controller.add_object(src, control_freq)
 
 
 /obj/machinery/bot/proc/explode()
@@ -130,7 +128,7 @@
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = 0
 		emagged = 1
-		user << "<span class='warning'>You bypass [src]'s controls.</span>"
+		user << "<span class='notice'>You bypass [src]'s controls.</span>"
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = 2
 		remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
@@ -138,15 +136,15 @@
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
-		user << "<span class='notice'>You need to open maintenance panel first.</span>"
+		user << "<span class='warning'>You need to open maintenance panel first!</span>"
 
 /obj/machinery/bot/examine(mob/user)
 	..()
 	if (health < maxhealth)
 		if (health > maxhealth/3)
-			user << "<span class='danger'>[src]'s parts look loose.</span>"
+			user << "[src]'s parts look loose."
 		else
-			user << "<span class='danger'>[src]'s parts look very loose.</span>"
+			user << "[src]'s parts look very loose!"
 	else
 		user << "[src] is in pristine condition."
 
@@ -250,17 +248,17 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
 			if(health >= maxhealth)
-				user << "<span class='warning'>[src] does not need a repair.</span>"
+				user << "<span class='warning'>[src] does not need a repair!</span>"
 				return
 			if(!open)
-				user << "<span class='warning'>Unable to repair with the maintenance panel closed.</span>"
+				user << "<span class='warning'>Unable to repair with the maintenance panel closed!</span>"
 				return
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
 				health = min(maxhealth, health+10)
-				user.visible_message("<span class='notice'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
+				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
 			else
-				user << "<span class='warning'>The welder must be on for this task.</span>"
+				user << "<span class='warning'>The welder must be on for this task!</span>"
 		else
 			if(W.force) //if force is non-zero
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -376,12 +374,13 @@ obj/machinery/bot/proc/scan(var/scan_type, var/old_target, var/scan_range = DEFA
 	for (var/scan in view (scan_range, src) ) //Search for something in range!
 		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
 			continue //If not, keep searching!
-		if( !(scan in ignore_list) && (scan != old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
-			var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
-			if( scan_result )
-				final_result = scan_result
-			else
-				continue //The current element failed assessment, move on to the next.
+		if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
+			continue
+		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
+		if( scan_result )
+			final_result = scan_result
+		else
+			continue //The current element failed assessment, move on to the next.
 		return final_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
@@ -405,8 +404,13 @@ obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 	if(!dest || !path || path.len == 0) //A-star failed or a path/destination was not set.
 		path = list()
 		return 0
-	if(get_turf(src) == get_turf(dest)) //We have arrived, no need to move again.
+	dest = get_turf(dest) //We must always compare turfs, so get the turf of the dest var if dest was originally something else.
+	var/turf/last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
+	if(get_turf(src) == dest) //We have arrived, no need to move again.
 		return 1
+	else if (dest != last_node) //The path should lead us to our given destination. If this is not true, we must stop.
+		path = list()
+		return 0
 	var/success
 	var/step_count = move_speed ? move_speed : speed //If a value is passed into move_speed, use that instead of the default speed var.
 	if(step_count >= 1 && tries < 4)
@@ -703,8 +707,6 @@ obj/machinery/bot/proc/start_patrol()
 
 // send a radio signal with multiple data key/values
 /obj/machinery/bot/proc/post_signal_multiple(var/freq, var/list/keyval)
-	if(!z || z != 1) //Bot control will only work on station.
-		return
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
 	if(!frequency) return
@@ -718,8 +720,6 @@ obj/machinery/bot/proc/start_patrol()
 //	world << "sent [key],[keyval[key]] on [freq]"
 	if(signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-	else if(signal.data["type"] == bot_type)
-		frequency.post_signal(src, signal, filter = bot_filter)
 	else
 		frequency.post_signal(src, signal)
 
@@ -731,7 +731,8 @@ obj/machinery/bot/proc/start_patrol()
 	"type" = bot_type,
 	"name" = name,
 	"loca" = get_area(src),	// area
-	"mode" = mode
+	"mode" = mode,
+	"sect" = z	// z-level, or "sector"
 	)
 	post_signal_multiple(control_freq, kv)
 

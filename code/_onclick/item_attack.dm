@@ -11,6 +11,8 @@
 	user.do_attack_animation(src)
 	if(W && !(W.flags&NOBLUDGEON))
 		visible_message("<span class='danger'>[user] has hit [src] with [W].</span>")
+		user << "<span class='danger'>You hit [src] with [W].</span>"
+		src << "<span class='userdanger'>[user] has hit you with [W]!</span>"
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -42,12 +44,12 @@
 /mob/living/simple_animal/attacked_by(var/obj/item/I, var/mob/living/user)
 	if(!I.force)
 		user.visible_message("<span class='warning'>[user] gently taps [src] with [I].</span>",\
-						"<span class='warning'>This weapon is ineffective, it does no damage.</span>")
+						"<span class='warning'>This weapon is ineffective, it does no damage!</span>")
 	else if(I.force >= force_threshold && I.damtype != STAMINA)
 		..()
 	else
-		visible_message("<span class='danger'>[I] bounces harmlessly off of [src].</span>",\
-					"<span class='userdanger'>[I] bounces harmlessly off of [src].</span>")
+		visible_message("<span class='warning'>[I] bounces harmlessly off of [src].</span>",\
+					"<span class='warning'>[I] bounces harmlessly off of [src]!</span>")
 
 
 

@@ -14,6 +14,8 @@
 	selection_type = "range"
 	var/list/compatible_mobs = list(/mob/living/carbon/human,/mob/living/carbon/monkey)
 
+	action_icon_state = "barn"
+
 /obj/effect/proc_holder/spell/targeted/barnyardcurse/cast(list/targets, mob/user = usr)
 	if(!targets.len)
 		user << "<span class='notice'>No target found in range.</span>"

@@ -102,7 +102,7 @@
 <b>Tank</b><BR>
 <FONT color='blue'><b>Tank Pressure:</b> [air_contents.return_pressure()]</FONT><BR>
 <BR>
-<b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> [distribute_pressure] <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A><BR>
+<b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-5'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> [distribute_pressure] <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=5'>+</A><BR>
 <b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
 "}
 	user << browse(message, "window=tank;size=600x300")
@@ -135,7 +135,7 @@
 						if (location.internals)
 							location.internals.icon_state = "internal1"
 					else
-						usr << "<span class='notice'>You need something to connect to \the [src].</span>"
+						usr << "<span class='warning'>You need something to connect to \the [src]!</span>"
 
 		src.add_fingerprint(usr)
 /*

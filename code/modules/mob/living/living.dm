@@ -193,7 +193,7 @@ Sorry Giacom. Please don't be mad :(
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
 /mob/living/proc/calculate_affecting_pressure(var/pressure)
-	return 0
+	return pressure
 
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
@@ -551,9 +551,8 @@ Sorry Giacom. Please don't be mad :(
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
 
-	if(update_slimes)
-		for(var/mob/living/simple_animal/slime/M in view(1,src))
-			M.UpdateFeed(src)
+	for(var/mob/living/simple_animal/slime/M in oview(1,src))
+		M.UpdateFeed(src)
 
 /mob/living/proc/makeTrail(var/turf/T, var/mob/living/M)
 	if(ishuman(M))
@@ -667,13 +666,13 @@ Sorry Giacom. Please don't be mad :(
 	float(!has_gravity)
 
 /mob/living/proc/float(on)
+	if(throwing)
+		return
 	if(on && !floating)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
 	else if(!on && floating)
-		var/final_pixel_y = initial(pixel_y)
-		if(lying && !buckled)
-			final_pixel_y = lying_pixel_offset
+		var/final_pixel_y = get_standard_pixel_y_offset(lying)
 		animate(src, pixel_y = final_pixel_y, time = 10)
 		floating = 0
 
@@ -695,7 +694,7 @@ Sorry Giacom. Please don't be mad :(
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(what.flags & NODROP)
-		src << "<span class='notice'>You can't remove \the [what.name], it appears to be stuck!</span>"
+		src << "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>"
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
@@ -710,7 +709,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_hand()
 	if(what && (what.flags & NODROP))
-		src << "<span class='notice'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
+		src << "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
 		return
 	if(what && what.mob_can_equip(who, where, 1))
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
@@ -771,9 +770,7 @@ Sorry Giacom. Please don't be mad :(
 
 
 /mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = initial(pixel_y)
-	if(lying && !buckled)
-		final_pixel_y = lying_pixel_offset
+	var/final_pixel_y = get_standard_pixel_y_offset(lying)
 	..(A, final_pixel_y)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
@@ -781,11 +778,10 @@ Sorry Giacom. Please don't be mad :(
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	var/final_pixel_y = initial(pixel_y)
-	if(lying && !buckled)
-		final_pixel_y = lying_pixel_offset
+	var/final_pixel_x = get_standard_pixel_x_offset(lying)
+	var/final_pixel_y = get_standard_pixel_y_offset(lying)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
-	animate(pixel_x = initial(pixel_x) , pixel_y = final_pixel_y , time = 2)
+	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(var/datum/gas_mixture/environment)
@@ -813,3 +809,9 @@ Sorry Giacom. Please don't be mad :(
 		loc_temp = environment.temperature
 
 	return loc_temp
+
+/mob/living/proc/get_standard_pixel_x_offset(lying = 0)
+	return initial(pixel_x)
+
+/mob/living/proc/get_standard_pixel_y_offset(lying = 0)
+	return initial(pixel_y)

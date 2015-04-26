@@ -74,7 +74,7 @@
 		if(istype(module_state_3,/obj/item/borg/sight))
 			sight_mode |= module_state_3:sight_mode
 	else
-		src << "<span class='notice'>You need to disable a module first!</span>"
+		src << "<span class='warning'>You need to disable a module first!</span>"
 
 /mob/living/silicon/robot/proc/uneq_active()
 	uneq_module(module_active)

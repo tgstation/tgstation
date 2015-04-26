@@ -21,6 +21,7 @@
 	melee_damage_upper = 15
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
+	speak_emote = list("gnashes")
 
 	//Space carp aren't affected by cold.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)

@@ -176,7 +176,7 @@ Thus, the two variables affect pump operation are set in New():
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
-		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
+		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
 		return 1
 	return ..()
 

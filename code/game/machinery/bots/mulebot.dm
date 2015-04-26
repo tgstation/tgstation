@@ -23,7 +23,6 @@ var/global/mulebot_count = 0
 	beacon_freq = 1400
 	control_freq = 1447
 	bot_type = MULE_BOT
-	bot_filter = RADIO_MULEBOT
 	blood_DNA = list()
 
 	suffix = ""
@@ -71,8 +70,6 @@ var/global/mulebot_count = 0
 	cell.maxcharge = 2000
 
 	spawn(5)	// must wait for map loading to finish
-		add_to_beacons(bot_filter)
-
 		mulebot_count += 1
 		if(!suffix)
 			suffix = "#[mulebot_count]"
@@ -101,7 +98,7 @@ obj/machinery/bot/mulebot/bot_reset()
 		updateDialog()
 	else if(istype(I,/obj/item/weapon/screwdriver))
 		if(locked)
-			user << "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>"
+			user << "<span class='warning'>The maintenance hatch cannot be opened or closed while the controls are locked!</span>"
 			return
 
 		open = !open
@@ -118,8 +115,8 @@ obj/machinery/bot/mulebot/bot_reset()
 		if (health < maxhealth)
 			health = min(maxhealth, health+25)
 			user.visible_message(
-				"<span class='notice'>[user] repairs [src]!</span>",
-				"<span class='notice'>You repair [src]!</span>"
+				"[user] repairs [src]!",
+				"<span class='notice'>You repair [src].</span>"
 			)
 		else
 			user << "<span class='notice'> [src] does not need a repair!</span>"
@@ -131,7 +128,7 @@ obj/machinery/bot/mulebot/bot_reset()
 			unload(0)
 			user.visible_message("<span class='danger'> [user] knocks [load] off [src] with \the [I]!</span>", "<span class='danger'> You knock [load] off [src] with \the [I]!</span>")
 		else
-			user << "You hit [src] with \the [I] but to no effect."
+			user << "<span class='warning'>You hit [src] with \the [I] but to no effect!</span>"
 	else
 		..()
 	return
@@ -269,7 +266,7 @@ obj/machinery/bot/mulebot/bot_reset()
 					turn_off()
 				else if (cell && !open)
 					if (!turn_on())
-						usr << "<span class='danger'>You can't switch on [src].</span>"
+						usr << "<span class='warning'>You can't switch on [src]!</span>"
 						return
 				else
 					return
@@ -284,7 +281,7 @@ obj/machinery/bot/mulebot/bot_reset()
 					cell.add_fingerprint(usr)
 					cell = null
 
-					usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
+					usr.visible_message("[usr] removes the power cell from [src].", "<span class='notice'>You remove the power cell from [src].</span>")
 					updateDialog()
 
 			if("cellinsert")
@@ -296,7 +293,7 @@ obj/machinery/bot/mulebot/bot_reset()
 						C.loc = src
 						C.add_fingerprint(usr)
 
-						usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+						usr.visible_message("[usr] inserts a power cell into [src].", "<span class='notice'>You insert the power cell into [src].</span>")
 						updateDialog()
 
 
@@ -402,7 +399,7 @@ obj/machinery/bot/mulebot/bot_reset()
 // called to load a crate
 /obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
 	if(wires.LoadCheck() && !istype(C,/obj/structure/closet/crate))
-		visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
+		visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 		playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return		// if not emagged, only allow crates to be loaded
 
@@ -596,25 +593,25 @@ obj/machinery/bot/mulebot/bot_reset()
 						blockcount++
 						mode = BOT_BLOCKED
 						if(blockcount == 3)
-							visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
+							visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 							playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 
 						if(blockcount > 10)	// attempt 10 times before recomputing
 							// find new path excluding blocked turf
-							visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
+							visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 							playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 							spawn(2)
 								calc_path(next)
 								if(path.len > 0)
-									visible_message("[src] makes a delighted ping!", "You hear a ping.")
+									visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
 									playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 								mode = BOT_BLOCKED
 							mode = BOT_WAIT_FOR_NAV
 							return
 						return
 				else
-					visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
+					visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 					playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 					//world << "Bad turf."
 					mode = BOT_NAV
@@ -634,11 +631,11 @@ obj/machinery/bot/mulebot/bot_reset()
 				if(path.len > 0)
 					blockcount = 0
 					mode = BOT_BLOCKED
-					visible_message("[src] makes a delighted ping!", "You hear a ping.")
+					visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
 					playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
 				else
-					visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
+					visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 					playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 					mode = BOT_NO_ROUTE
@@ -685,7 +682,7 @@ obj/machinery/bot/mulebot/bot_reset()
 /obj/machinery/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		radio_frequency = SUPP_FREQ //Supply channel
-		visible_message("[src] makes a chiming sound!", "You hear a chime.")
+		visible_message("[src] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>")
 		playsound(loc, 'sound/machines/chime.ogg', 50, 0)
 		reached_target = 1
 
@@ -883,8 +880,6 @@ obj/machinery/bot/mulebot/bot_reset()
 		//world << "sent [key],[keyval[key]] on [freq]"
 	if (signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-	else if (signal.data["type"] == MULE_BOT)
-		frequency.post_signal(src, signal, filter = RADIO_MULEBOT)
 	else
 		frequency.post_signal(src, signal)
 

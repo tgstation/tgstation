@@ -21,8 +21,10 @@
 obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1))
 		A.clean_blood()
+		A.thermite = 0
 		var/turf/simulated/floor/F = A
-		F.dirt = 0
+		if(istype(F))
+			F.dirt = 0
 		for(var/obj/effect/O in A)
 			if(istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay))
 				qdel(O)
@@ -34,7 +36,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(!proximity) return
 
 	if(reagents.total_volume < 1)
-		user << "<span class='notice'>Your mop is dry!</span>"
+		user << "<span class='warning'>Your mop is dry!</span>"
 		return
 
 	var/turf/simulated/turf = A
@@ -43,11 +45,11 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	A = null
 
 	if(istype(turf))
-		user.visible_message("<span class='warning'>[user] begins to clean \the [turf] with [src].</span>")
+		user.visible_message("[user] begins to clean \the [turf] with [src].", "<span class='notice'>You begin to clean \the [turf] with [src]...</span>")
 
 		if(do_after(user, mopspeed))
 			clean(turf)
-			user << "<span class='notice'>You have finished mopping!</span>"
+			user << "<span class='notice'>You finish mopping./span>"
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)

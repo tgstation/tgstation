@@ -277,10 +277,10 @@
 		return*/
 	else  //welp, the guy is protected, we can continue
 		if(src.issuperUV)
-			user << "You slide the dial back towards \"185nm\"."
+			user << "<span class='notice'>You slide the dial back towards \"185nm\".</span>"
 			src.issuperUV = 0
 		else
-			user << "You crank the dial all the way up to \"15nm\"."
+			user << "<span class='notice'>You crank the dial all the way up to \"15nm\".</span>"
 			src.issuperUV = 1
 		return
 
@@ -302,7 +302,7 @@
 		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
 		return*/
 	else
-		user << "You push the button. The coloured LED next to it changes."
+		user << "<span class='notice'>You push the button. The coloured LED next to it changes.</span>"
 		src.safetieson = !src.safetieson
 
 
@@ -339,7 +339,7 @@
 
 /obj/machinery/suit_storage_unit/proc/toggle_open(mob/user as mob)
 	if(src.islocked || src.isUV)
-		user << "<font color='red'>Unable to open unit.</font>"
+		user << "<span class='warning'>You're unable to open unit!</span>"
 		return 0
 	if(src.OCCUPANT)
 		src.eject_occupant(user)
@@ -350,7 +350,7 @@
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
 	if(src.OCCUPANT && src.safetieson)
-		user << "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>"
+		user << "<span class='warning'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span>"
 		return
 	if(src.isopen)
 		return
@@ -367,7 +367,7 @@
 	if(!src.HELMET && !src.MASK && !src.SUIT && !src.STORAGE && !src.OCCUPANT ) //shit's empty yo
 		user << "<font color='red'>Unit storage bays empty. Nothing to disinfect -- Aborting.</font>"
 		return
-	user << "You start the Unit's cauterisation cycle."
+	user << "<span class='notice'>You start the Unit's cauterisation cycle.</span>"
 	src.cycletime_left = 20
 	src.isUV = 1
 	if(src.OCCUPANT && !src.islocked)
@@ -447,7 +447,7 @@
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		var/breakout_time = 2
-		user << "<span class='notice'>You start kicking against the doors to escape! (This will take about [breakout_time] minutes.)</span>"
+		user << "<span class='notice'>You start kicking against the doors to escape... (This will take about [breakout_time] minutes.)</span>"
 		visible_message("You see [user] kicking against the doors of \the [src]!")
 		if(do_after(user,(breakout_time*60*10)))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || isopen || !islocked)
@@ -455,7 +455,7 @@
 			else
 				isopen = 1
 				islocked = 0
-				visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+				visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
 
 		else
 			return
@@ -475,18 +475,18 @@
 	if (user.stat != 0)
 		return
 	if (!src.isopen)
-		user << "<font color='red'>The unit's doors are shut.</font>"
+		user << "<span class='warning'>The unit's doors are shut!</span>"
 		return
 	if (!src.ispowered || src.isbroken)
-		user << "<font color='red'>The unit is not operational.</font>"
+		user << "<span class='warning'>The unit is not operational!</span>"
 		return
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) || (src.STORAGE))
-		user << "<font color='red'>It's too cluttered inside to fit in!</font>"
+		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
 		return
 	if(M == user)
 		visible_message("[user] starts squeezing into the suit storage unit!", 3)
 	else
-		visible_message("[user] starts putting [M.name] into the Suit Storage Unit.", 3)
+		visible_message("[user] starts putting [M.name] into the Suit Storage Unit!", 3)
 	if(do_mob(user, M, 10))
 		user.stop_pulling()
 		if(M.client)
@@ -529,9 +529,9 @@
 			user << "<span class='notice'>The unit already contains a suit.</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='notice'>\The [S] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>\The [S] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [S.name] into the suit storage compartment."
+		user << "<span class='notice'>You load the [S.name] into the suit storage compartment.</span>"
 		S.loc = src
 		src.SUIT = S
 		src.update_icon()
@@ -542,12 +542,12 @@
 			return
 		var/obj/item/clothing/head/helmet/H = I
 		if(src.HELMET)
-			user << "<font color='blue'>The unit already contains a helmet.</font>"
+			user << "<span class='warning'>The unit already contains a helmet!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='notice'>\The [H] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>\The [H] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [H.name] into the helmet storage compartment."
+		user << "<span class='notice'>You load the [H.name] into the helmet storage compartment.</span>"
 		H.loc = src
 		src.HELMET = H
 		src.update_icon()
@@ -558,12 +558,12 @@
 			return
 		var/obj/item/clothing/mask/M = I
 		if(src.MASK)
-			user << "<font color='blue'>The unit already contains a mask.</font>"
+			user << "<span class='warning'>The unit already contains a mask!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='notice'>\The [M] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>\The [M] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [M.name] into the mask storage compartment."
+		user << "<span class='notice'>You load the [M.name] into the mask storage compartment.</span>"
 		M.loc = src
 		src.MASK = M
 		src.update_icon()
@@ -574,12 +574,12 @@
 			return
 		var/obj/item/ITEM = I
 		if(src.STORAGE)
-			user << "<font color='blue'>The auxiliary storage compartment is full.</font>"
+			user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='notice'>\The [ITEM] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>\The [ITEM] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [ITEM.name] into the auxiliary storage compartment."
+		user << "<span class='notice'>You load the [ITEM.name] into the auxiliary storage compartment.</span>"
 		ITEM.loc = src
 		src.STORAGE = ITEM
 	src.update_icon()
@@ -592,7 +592,7 @@
 
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user as mob)
-	user << "<font color='blue'>The console controls are far too complicated for your tiny brain!</font>"
+	user << "<span class='warning'>The console controls are far too complicated for your tiny brain!</span>"
 	return
 
 

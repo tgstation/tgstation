@@ -29,6 +29,9 @@ turf/unsimulated/wall/splashscreen
 	icon_state = "r_wall"
 	name = "reinforced wall"
 
+/turf/unsimulated/wall/vault
+	icon_state = "rockvault"
+
 /turf/unsimulated/shuttle
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
@@ -63,3 +66,6 @@ turf/unsimulated/wall/splashscreen
 /turf/unsimulated/shuttle/floor
 	name = "floor"
 	icon_state = "floor"
+
+/turf/unsimulated/wall/abductor
+	icon_state = "alien1"

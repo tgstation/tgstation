@@ -38,9 +38,9 @@
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
-			audible_message("<span class='danger'>You hear something rumbling inside [src]'s stomach...</span>", \
-						 "<span class='danger'>You hear something rumbling.</span>", 4,\
-						  "<span class='danger'>Something is rumbling inside your stomach!</span>")
+			audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
+						 "<span class='warning'>You hear something rumbling.</span>", 4,\
+						  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -84,7 +84,7 @@
 	src.visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='danger'>You hear a heavy electrical crack.</span>" \
+		"<span class='italics'>You hear a heavy electrical crack.</span>" \
 	)
 	if(prob(25) && heart_attack)
 		heart_attack = 0
@@ -170,7 +170,7 @@
 				eye_stat += rand(2, 4)
 
 			else
-				src << "Your eyes itch and burn severely!</span>"
+				src << "<span class='warning'>Your eyes itch and burn severely!</span>"
 				eye_stat += rand(12, 16)
 
 		if(eye_stat > 10)
@@ -406,8 +406,8 @@ var/const/GALOSHES_DONT_HELP = 8
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
 		visible_message("<span class='warning'>[src] attempts to unbuckle themself!</span>", \
-					"<span class='notice'>You attempt to unbuckle yourself. (This will take around one minute and you need to stay still.)</span>")
-		if(do_after(src, 600))
+					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
+		if(do_after(src, 600, needhand = 0))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src,src)
@@ -449,8 +449,8 @@ var/const/GALOSHES_DONT_HELP = 8
 	var/displaytime = breakouttime / 600
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
-		src << "<span class='notice'>You attempt to remove [I]. (This will take around [displaytime] minutes and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, 10))
+		src << "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>"
+		if(do_after(src, breakouttime, 10, 0))
 			if(I.loc != src || buckled)
 				return
 			visible_message("<span class='danger'>[src] manages to remove [I]!</span>")
@@ -458,6 +458,7 @@ var/const/GALOSHES_DONT_HELP = 8
 
 			if(handcuffed)
 				handcuffed.loc = loc
+				handcuffed.dropped(src)
 				handcuffed = null
 				if(buckled && buckled.buckle_requires_restraints)
 					buckled.unbuckle_mob()
@@ -473,8 +474,8 @@ var/const/GALOSHES_DONT_HELP = 8
 	else
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
-		src << "<span class='notice'>You attempt to break [I]. (This will take around 5 seconds and you need to stand still.)</span>"
-		if(do_after(src, breakouttime))
+		src << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
+		if(do_after(src, breakouttime, needhand = 0))
 			if(!I.loc || buckled)
 				return
 			visible_message("<span class='danger'>[src] manages to break [I]!</span>")
@@ -490,3 +491,17 @@ var/const/GALOSHES_DONT_HELP = 8
 				update_inv_legcuffed(0)
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
+
+/mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
+	if( (!mask_only && head && (head.flags & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)) )
+		return 1
+
+/mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
+	if(lying)
+		return -6
+	else
+		return initial(pixel_y)
+
+/mob/living/carbon/check_ear_prot()
+	if(head && (head.flags & HEADBANGPROTECT))
+		return 1

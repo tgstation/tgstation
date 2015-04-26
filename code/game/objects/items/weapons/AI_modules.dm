@@ -59,7 +59,7 @@ AI MODULES
 
 //The proc that actually changes the silicon's laws.
 /obj/item/weapon/aiModule/proc/transmitInstructions(var/mob/living/silicon/target, var/mob/sender)
-	target << "[sender] has uploaded a change to the laws you must follow using a [name]. From now on, these are your laws: "
+	target << "<span class='userdanger'>[sender] has uploaded a change to the laws you must follow using a [name]. From now on, these are your laws: </span>"
 
 
 /******************** Modules ********************/

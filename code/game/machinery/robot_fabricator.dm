@@ -28,7 +28,7 @@
 					if (O:amount < 1)
 						qdel(O)
 
-					user << "You insert [count] metal sheet\s into \the [src]."
+					user << "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>"
 					src.overlays -= "fab-load-metal"
 					updateDialog()
 		else

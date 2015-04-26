@@ -25,7 +25,7 @@ datum/reagent/nicotine/on_mob_life(var/mob/living/M as mob)
 
 datum/reagent/nicotine/overdose_process(var/mob/living/M as mob)
 	if(prob(20))
-		M << "You feel like you smoked too much."
+		M << "<span class='notice'>You feel like you've smoked too much.</span>"
 	M.adjustToxLoss(1*REM)
 	M.adjustOxyLoss(1*REM)
 	..()

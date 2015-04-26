@@ -26,7 +26,7 @@
 			user << "<span class='notice'>You put the grenade in the grenade launcher.</span>"
 			user << "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>"
 		else
-			usr << "<span class='danger'>The grenade launcher cannot hold more grenades.</span>"
+			usr << "<span class='warning'>The grenade launcher cannot hold more grenades!</span>"
 
 /obj/item/weapon/gun/grenadelauncher/afterattack(obj/target, mob/user , flag)
 
@@ -42,7 +42,7 @@
 	if(grenades.len)
 		spawn(0) fire_grenade(target,user)
 	else
-		usr << "<span class='danger'>The grenade launcher is empty.</span>"
+		usr << "<span class='warning'>The grenade launcher is empty!</span>"
 
 /obj/item/weapon/gun/grenadelauncher/proc/fire_grenade(atom/target, mob/user)
 	for(var/mob/O in viewers(world.view, user))

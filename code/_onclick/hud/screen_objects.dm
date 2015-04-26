@@ -42,32 +42,6 @@
 	return 1
 
 
-/obj/screen/item_action
-	var/obj/item/owner
-
-/obj/screen/item_action/Click()
-	if(!usr || !owner)
-		return 1
-	if(usr.next_move >= world.time)
-		return
-
-	if(!owner.action_button_is_hands_free && (usr.restrained() || usr.stunned || usr.lying))
-		return 1
-
-	if(usr.stat)
-		return 1
-
-	if(!(owner in usr))
-		return 1
-
-	owner.ui_action_click()
-	return 1
-
-//This is the proc used to update all the action buttons. It just returns for all mob types except humans.
-/mob/proc/update_action_buttons()
-	return
-
-
 /obj/screen/drop
 	name = "drop"
 	icon = 'icons/mob/screen_midnight.dmi'
@@ -126,13 +100,19 @@
 		if(!C.incapacitated())
 			if(C.internal)
 				C.internal = null
-				C << "<span class='notice'>No longer running on internals.</span>"
+				C << "<span class='notice'>You are no longer running on internals.</span>"
 				icon_state = "internal0"
 			else
 				if(!istype(C.wear_mask, /obj/item/clothing/mask))
-					C << "<span class='notice'>You are not wearing a mask.</span>"
+					C << "<span class='warning'>You are not wearing an internals mask!</span>"
 					return 1
 				else
+					var/obj/item/clothing/mask/M = C.wear_mask
+					if(M.mask_adjusted) // if mask on face but pushed down
+						M.adjustmask(C) // adjust it back
+					if( !(M.flags & MASKINTERNALS) )
+						C << "<span class='warning'>You are not wearing an internals mask!</span>"
+						return
 					if(istype(C.l_hand, /obj/item/weapon/tank))
 						C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
 						C.internal = C.l_hand
@@ -162,7 +142,7 @@
 					if(C.internal)
 						icon_state = "internal1"
 					else
-						C << "<span class='notice'>You don't have an oxygen tank.</span>"
+						C << "<span class='warning'>You don't have an oxygen tank!</span>"
 
 /obj/screen/mov_intent
 	name = "run/walk toggle"

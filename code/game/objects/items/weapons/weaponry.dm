@@ -158,4 +158,40 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
 
 
 
+/obj/item/weapon/switchblade
+	name = "switchblade"
+	icon_state = "switchblade"
+	desc = "A sharp, concealable, spring-loaded knife."
+	flags = CONDUCT
+	force = 20
+	w_class = 2
+	throwforce = 15
+	throw_speed = 3
+	throw_range = 6
+	m_amt = 12000
+	origin_tech = "materials=1"
+	hitsound = 'sound/weapons/Genhit.ogg'
+	attack_verb = list("stubbed", "poked")
+	var/extended
 
+/obj/item/weapon/switchblade/attack_self(mob/user)
+	extended = !extended
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	if(extended)
+		force = 20
+		w_class = 3
+		throwforce = 15
+		icon_state = "switchblade_ext"
+		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+		hitsound = 'sound/weapons/bladeslice.ogg'
+	else
+		force = 1
+		w_class = 2
+		throwforce = 5
+		icon_state = "switchblade"
+		attack_verb = list("stubbed", "poked")
+		hitsound = 'sound/weapons/Genhit.ogg'
+
+/obj/item/weapon/switchblade/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS)

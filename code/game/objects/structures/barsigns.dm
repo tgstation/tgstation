@@ -66,11 +66,11 @@
 		return
 	if( istype(I, /obj/item/weapon/screwdriver))
 		if(!panel_open)
-			user << "You open the maintenance panel."
+			user << "<span class='notice'>You open the maintenance panel.</span>"
 			set_sign(new /datum/barsign/hiddensigns/signoff)
 			panel_open = 1
 		else
-			user << "You close the maintenance panel."
+			user << "<span class='notice'>You close the maintenance panel.</span>"
 			if(!broken && !emagged)
 				set_sign(pick(barsigns))
 			else if(emagged)
@@ -82,17 +82,17 @@
 	if(istype(I, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
 		if(emagged) //Emagged, not broken by EMP
-			user << "Sign has been damaged beyond repair."
+			user << "<span class='warning'>Sign has been damaged beyond repair!</span>"
 			return
 		else if(!broken)
-			user << "This sign is functioning properly."
+			user << "<span class='warning'>This sign is functioning properly!</span>"
 			return
 
 		if(C.use(2))
 			user << "<span class='notice'>You replace the burnt wiring.</span>"
 			broken = 0
 		else
-			user << "<span class='warning'>You need at least two lengths of cable.</span>"
+			user << "<span class='warning'>You need at least two lengths of cable!</span>"
 
 
 
@@ -105,7 +105,7 @@
 
 /obj/structure/sign/barsign/emag_act(mob/user)
 	if(broken || emagged)
-		user << "Nothing interesting happens."
+		user << "<span class='warning'>Nothing interesting happens!</span>"
 		return
 	user << "<span class='notice'>You emag the barsign. Takeover in progress...</span>"
 	sleep(100) //10 seconds
@@ -142,55 +142,55 @@
 /datum/barsign/maltesefalcon
 	name = "Maltese Falcon"
 	icon = "maltesefalcon"
-	desc = "The Maltese Falcon, Space Bar and Grill"
+	desc = "The Maltese Falcon, Space Bar and Grill."
 
 
 /datum/barsign/thebark
 	name = "The Bark"
 	icon = "thebark"
-	desc = "Ian's bar of choice"
+	desc = "Ian's bar of choice."
 
 
 /datum/barsign/harmbaton
 	name = "The Harmbaton"
 	icon = "theharmbaton"
-	desc = "A great dining experience for both security members and assistants"
+	desc = "A great dining experience for both security members and assistants."
 
 
 /datum/barsign/thesingulo
 	name = "The Singulo"
 	icon = "thesingulo"
-	desc = "Where people go that'd rather not be called by their name"
+	desc = "Where people go that'd rather not be called by their name."
 
 
 /datum/barsign/thedrunkcarp
 	name = "The Drunk Carp"
 	icon = "thedrunkcarp"
-	desc = "Don't drink and Swim"
+	desc = "Don't drink and swim."
 
 
 /datum/barsign/scotchservinwill
 	name = "Scotch Servin Willy's"
 	icon = "scotchservinwill"
-	desc = "Willy sure moved up in the world from clown to bartender"
+	desc = "Willy sure moved up in the world from clown to bartender."
 
 
 /datum/barsign/officerbeersky
 	name = "Officer Beersky's"
 	icon = "officerbeersky"
-	desc = "Man eat a dong, these drinks are great"
+	desc = "Man eat a dong, these drinks are great."
 
 
 /datum/barsign/thecavern
 	name = "The Cavern"
 	icon = "thecavern"
-	desc = "Fine drinks while listening to some fine tunes"
+	desc = "Fine drinks while listening to some fine tunes."
 
 
 /datum/barsign/theouterspess
 	name = "The Outer Spess"
 	icon = "theouterspess"
-	desc = "This bar isn't actually located in outer space"
+	desc = "This bar isn't actually located in outer space."
 
 
 /datum/barsign/slipperyshots
@@ -268,6 +268,10 @@
 	icon = "thealenath"
 	desc = "All right, buddy. I think you've had EI NATH. Time to get a cab."
 
+/datum/barsign/thealohasnackbar
+	name = "The Aloha Snackbar"
+	icon = "alohasnackbar"
+	desc = "A tasteful, inoffensive tiki bar sign."
 
 
 /datum/barsign/hiddensigns

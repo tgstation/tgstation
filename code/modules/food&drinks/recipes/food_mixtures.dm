@@ -71,6 +71,14 @@
 	required_reagents = list("soymilk" = 4, "sacid" = 1)
 	result_amount = 5
 
+/datum/chemical_reaction/corn_syrup
+	name = "corn_syrup"
+	id = "corn_syrup"
+	result = "corn_syrup"
+	required_reagents = list("corn_starch" = 1, "sacid" = 1)
+	result_amount = 5
+	required_temp = 374
+
 /datum/chemical_reaction/cheesewheel
 	name = "Cheesewheel"
 	id = "cheesewheel"
@@ -81,7 +89,7 @@
 
 /datum/chemical_reaction/cheesewheel/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /obj/item/weapon/reagent_containers/food/snacks/cheesewheel(location)
+	new /obj/item/weapon/reagent_containers/food/snacks/store/cheesewheel(location)
 	return
 
 /datum/chemical_reaction/synthmeat
@@ -94,7 +102,7 @@
 
 /datum/chemical_reaction/synthmeat/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /obj/item/weapon/reagent_containers/food/snacks/meat/synthmeat(location)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat(location)
 	return
 
 /datum/chemical_reaction/hot_ramen
@@ -157,3 +165,17 @@
 	id = "vegancakebatter"
 	required_reagents = list("soymilk" = 15, "flour" = 15, "sugar" = 5)
 
+/datum/chemical_reaction/ricebowl
+	name = "Rice Bowl"
+	id = "ricebowl"
+	result = null
+	required_reagents = list("rice" = 10, "water" = 10)
+	result_amount = 1
+	required_container = /obj/item/weapon/reagent_containers/glass/bowl
+	mix_message = "The rice absorbs the water."
+
+/datum/chemical_reaction/ricebowl/on_reaction(var/datum/reagents/holder)
+	var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/salad/ricebowl
+	S.loc = get_turf(holder.my_atom)
+	if(holder && holder.my_atom)
+		qdel(holder.my_atom)

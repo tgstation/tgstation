@@ -3,6 +3,8 @@
 
 	if(istype(mover) && mover.checkpass(PASSMOB))
 		return 1
+	if(istype(mover, /obj/item/projectile))
+		return (!density || lying)
 	if(ismob(mover))
 		var/mob/moving_mob = mover
 		if ((other_mobs && moving_mob.other_mobs))
@@ -141,7 +143,7 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.incapacitated() && mob.Adjacent(M))
-						src << "<span class='notice'>You're restrained! You can't move!</span>"
+						src << "<span class='warning'>You're restrained! You can't move!</span>"
 						move_delay += 10
 						return 0
 					else

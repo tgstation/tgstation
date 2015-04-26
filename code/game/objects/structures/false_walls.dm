@@ -97,7 +97,7 @@
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user, params)
 	if(opening)
-		user << "<span class='warning'>You must wait until the door has stopped moving.</span>"
+		user << "<span class='warning'>You must wait until the door has stopped moving!</span>"
 		return
 
 	if(density)
@@ -109,7 +109,7 @@
 			if (!istype(T, /turf/simulated/floor))
 				user << "<span class='warning'>[src] bolts must be tightened on the floor!</span>"
 				return
-			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='warning'>You tighten the bolts on the wall.</span>")
+			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
 			ChangeToWall()
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -131,7 +131,7 @@
 		dismantle(user)
 
 /obj/structure/falsewall/proc/dismantle(mob/user)
-	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='warning'>You dismantle the false wall.</span>")
+	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
 	new /obj/structure/girder/displaced(loc)
 	if(mineral == "metal")
 		if(istype(src, /obj/structure/falsewall/reinforced))
@@ -221,7 +221,7 @@
 		if(world.time > last_event+15)
 			active = 1
 			for(var/mob/living/L in range(3,src))
-				L.apply_effect(12,IRRADIATE,0)
+				L.irradiate(12)
 			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
 				T.radiate()
 			last_event = world.time

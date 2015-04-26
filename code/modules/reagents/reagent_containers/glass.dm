@@ -50,7 +50,7 @@
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(target.reagents && !target.reagents.total_volume)
-			user << "<span class='notice'>[target] is empty and can't be refilled.</span>"
+			user << "<span class='warning'>[target] is empty and can't be refilled!</span>"
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
@@ -62,7 +62,7 @@
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			user << "<span class='notice'>[src] is empty.</span>"
+			user << "<span class='warning'>[src] is empty!</span>"
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -90,12 +90,7 @@
 	else if(reagents.total_volume)
 		user << "<span class='notice'>You splash the solution onto [target].</span>"
 		reagents.reaction(target, TOUCH)
-		if(istype(target, /turf/simulated/floor))
-			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/chem_pile(target)
-			reagents.trans_to(reagentdecal, volume)
-			reagentdecal.color = mix_color_from_reagents(reagentdecal.reagents.reagent_list)
-		else
-			reagents.clear_reagents()
+		reagents.clear_reagents()
 
 /obj/item/weapon/reagent_containers/glass/attackby(var/obj/item/I, mob/user as mob, params)
 	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
@@ -109,7 +104,7 @@
 				user << "<span class='notice'>You heat [src] with [I].</span>"
 				reagents.handle_reactions()
 			else
-				user << "<span class='warning'>[src] is already hotter than [I].</span>"
+				user << "<span class='warning'>[src] is already hotter than [I]!</span>"
 
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I

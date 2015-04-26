@@ -24,6 +24,7 @@
 	//If this is set, The item will make an action button on the player's HUD when picked up.
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
 	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
+	var/datum/action/item_action/action = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -192,7 +193,7 @@
 	if(!A.has_fine_manipulation || w_class >= 4)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
 			A.unEquip(src)
-		user << "Your claws aren't capable of such fine manipulation."
+		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
 		return
 	attack_paw(A)
 
@@ -234,7 +235,7 @@
 					else if(success)
 						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
 					else
-						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
+						user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
@@ -301,15 +302,13 @@
 			usr << "\red You already have something in your hand."
 		*/
 	else
-		usr << "<span class='notice'>This mob type can't use this verb.</span>"
+		usr << "<span class='warning'>This mob type can't use this verb!</span>"
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
-	if(src in usr)
-		attack_self(usr)
-
+	attack_self(usr)
 
 /obj/item/proc/IsShield()
 	return 0
@@ -326,7 +325,7 @@
 			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
+		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 		return
 
 	var/mob/living/carbon/monkey/Mo = M
@@ -334,11 +333,11 @@
 			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
+		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 		return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
-		user << "<span class='danger'>You cannot locate any eyes on this creature!</span>"
+		user << "<span class='warning'>You cannot locate any eyes on this creature!</span>"
 		return
 
 	add_logs(user, M, "attacked", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")

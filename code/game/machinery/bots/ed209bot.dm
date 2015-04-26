@@ -35,7 +35,6 @@
 	var/shoot_sound = 'sound/weapons/Taser.ogg'
 	radio_frequency = SEC_FREQ
 	bot_type = SEC_BOT
-	bot_filter = RADIO_SECBOT
 
 
 /obj/item/weapon/ed209_assembly
@@ -62,8 +61,6 @@
 		botcard.access = J.get_access()
 		prev_access = botcard.access
 
-
-		add_to_beacons(bot_filter)
 		if(lasercolor)
 			shot_delay = 6//Longer shot delay because JESUS CHRIST
 			check_records = 0//Don't actively target people set to arrest
@@ -270,7 +267,7 @@ Auto Patrol[]"},
 						var/area/location = get_area(src)
 						speak("[arrest_type ? "Detaining" : "Arresting"] level [threatlevel] scumbag <b>[target]</b> in [location].", radio_frequency)
 					target.visible_message("<span class='danger'>[src] has stunned [target]!</span>",\
-											"<span class='userdanger'>[src] has stunned [target]!</span></span>")
+											"<span class='userdanger'>[src] has stunned you!</span>")
 
 					mode = BOT_PREP_ARREST
 					anchored = 1
@@ -300,7 +297,7 @@ Auto Patrol[]"},
 						mode = BOT_ARREST
 						playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 						target.visible_message("<span class='danger'>[src] is trying to put zipties on [target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put zipties on [target]!</span>")
+											"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
 
 						spawn(60)
 							if( !Adjacent(target) || !isturf(target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
@@ -588,7 +585,7 @@ Auto Patrol[]"},
 				if(WT.remove_fuel(0,user))
 					build_step++
 					name = "shielded frame assembly"
-					user << "<span class='notice'>You welded the vest to [src].</span>"
+					user << "<span class='notice'>You weld the vest to [src].</span>"
 		if(4)
 			switch(lasercolor)
 				if("b")
@@ -625,7 +622,7 @@ Auto Patrol[]"},
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
 				if (coil.get_amount() < 1)
-					user << "<span class='warning'>You need one length of cable to wire the ED-209.</span>"
+					user << "<span class='warning'>You need one length of cable to wire the ED-209!</span>"
 					return
 				user << "<span class='notice'>You start to wire [src]...</span>"
 				if (do_after(user, 40))
@@ -662,7 +659,7 @@ Auto Patrol[]"},
 			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
-				user << "<span class='notice'>Now attaching the gun to the frame...</span>"
+				user << "<span class='notice'>You start attaching the gun to the frame...</span>"
 				sleep(40)
 				if(get_turf(user) == T)
 					build_step++

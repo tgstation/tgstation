@@ -5,11 +5,15 @@
 	desc = "A rectangular steel crate."
 	icon = 'icons/obj/crates.dmi'
 	var/icon_crate = "crate"
+	icon_state = "crate"
 	req_access = null
-//	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 	var/sound_effect_open = 'sound/machines/click.ogg'
 	var/sound_effect_close = 'sound/machines/click.ogg'
+
+/obj/structure/closet/crate/New()
+	..()
+	update_icon()
 
 /obj/structure/closet/crate/update_icon()
 	if(opened)
@@ -21,26 +25,36 @@
 	desc = "A internals crate."
 	name = "internals crate"
 	icon_crate = "o2crate"
+	icon_state = "o2crate"
 
 /obj/structure/closet/crate/trashcart
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
 	icon_crate = "trashcart"
+	icon_state = "trashcart"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
 	name = "medical crate"
 	icon_crate = "medicalcrate"
+	icon_state = "medicalcrate"
 
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of the RCD."
 	name = "\improper RCD crate"
-	icon_crate = "crate"
+
+/obj/structure/closet/crate/rcd/New()
+	..()
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/freezer
 	desc = "A freezer."
 	name = "freezer"
 	icon_crate = "freezer"
+	icon_state = "freezer"
 	var/target_temp = T0C - 40
 	var/cooling_power = 40
 
@@ -67,6 +81,7 @@
 	desc = "A crate with a radiation sign on it."
 	name = "radioactive gear crate"
 	icon_crate = "radiation"
+	icon_state = "radiation"
 
 /obj/structure/closet/crate/radiation/New()
 	..()
@@ -82,8 +97,8 @@
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
-	icon = 'icons/obj/storage.dmi'
 	icon_crate = "hydrocrate"
+	icon_state = "hydrocrate"
 
 /obj/structure/closet/crate/hydroponics/prespawned
 
@@ -97,6 +112,7 @@
 	desc = "A secure crate."
 	name = "secure crate"
 	icon_crate = "securecrate"
+	icon_state = "securecrate"
 	var/redlight = "securecrater"
 	var/greenlight = "securecrateg"
 	var/sparks = "securecratesparks"
@@ -107,26 +123,26 @@
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."
 	name = "weapons crate"
-	icon = 'icons/obj/storage.dmi'
 	icon_crate = "weaponcrate"
+	icon_state = "weaponcrate"
 
 /obj/structure/closet/crate/secure/plasma
 	desc = "A secure plasma crate."
 	name = "plasma crate"
-	icon = 'icons/obj/storage.dmi'
 	icon_crate = "plasmacrate"
+	icon_state = "plasmacrate"
 
 /obj/structure/closet/crate/secure/gear
 	desc = "A secure gear crate."
 	name = "gear crate"
-	icon = 'icons/obj/storage.dmi'
 	icon_crate = "secgearcrate"
+	icon_state = "secgearcrate"
 
 /obj/structure/closet/crate/secure/hydrosec
 	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
 	name = "secure hydroponics crate"
-	icon = 'icons/obj/storage.dmi'
 	icon_crate = "hydrosecurecrate"
+	icon_state = "hydrosecurecrate"
 
 /obj/structure/closet/crate/secure/New()
 	..()
@@ -136,29 +152,18 @@
 	else
 		overlays += greenlight
 
-/obj/structure/closet/crate/rcd/New()
-	..()
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd(src)
-
 /obj/structure/closet/crate/open()
 	playsound(src.loc, sound_effect_open, 15, 1, -3)
-
 	dump_contents()
-
-	update_icon()
 	src.opened = 1
+	update_icon()
 	return 1
 
 /obj/structure/closet/crate/close()
 	playsound(src.loc, sound_effect_close, 15, 1, -3)
-
 	take_contents()
-
-	update_icon()
 	src.opened = 0
+	update_icon()
 	return 1
 
 /obj/structure/closet/crate/insert(var/atom/movable/AM, var/include_mobs = 0)
@@ -244,7 +249,7 @@
 		if(isrobot(user))
 			return
 		if(!user.drop_item()) //couldn't drop the item
-			user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
+			user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 		if(W)
 			W.loc = src.loc
@@ -252,14 +257,14 @@
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
-			user << "<span class='notice'>[src] is already rigged!</span>"
+			user << "<span class='warning'>[src] is already rigged!</span>"
 			return
 		var/obj/item/stack/cable_coil/C = W
 		if (C.use(5))
 			user << "<span class='notice'>You rig [src].</span>"
 			rigged = 1
 		else
-			user << "<span class='warning'>You need 5 lengths of cable to rig [src].</span>"
+			user << "<span class='warning'>You need 5 lengths of cable to rig [src]!</span>"
 		return
 	else if(istype(W, /obj/item/device/electropack))
 		if(rigged)

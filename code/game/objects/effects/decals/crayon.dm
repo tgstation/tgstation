@@ -18,6 +18,9 @@
 
 	name = e_name
 	desc = "A [name] drawn in crayon."
+	if(type == "poseur tag")
+		gang_name() //Generate gang names so they get removed from the pool
+		type = pick(gang_name_pool)
 	icon_state = type
 
 	var/matrix/M = matrix()
@@ -25,3 +28,40 @@
 	src.transform = M
 
 	color = main
+
+/obj/effect/decal/cleanable/crayon/gang
+	layer = 3.6 //Harder to hide
+	var/gang
+
+/obj/effect/decal/cleanable/crayon/gang/New(location, var/type, var/e_name = "gang tag", var/rotation = 0)
+	if(!type)
+		qdel(src)
+
+	var/area/territory = get_area(location)
+	var/color
+
+	if(type == "A")
+		gang = type
+		color = "#00b4ff"
+		icon_state = gang_name("A")
+		ticker.mode.A_territory_new |= list(territory.type = territory.name)
+		ticker.mode.A_territory_lost -= territory.type
+	else if(type == "B")
+		gang = type
+		color = "#ff3232"
+		icon_state = gang_name("B")
+		ticker.mode.B_territory_new |= list(territory.type = territory.name)
+		ticker.mode.B_territory_lost -= territory.type
+
+	..(location, color, icon_state, e_name, rotation)
+
+/obj/effect/decal/cleanable/crayon/gang/Destroy()
+	var/area/territory = get_area(src)
+
+	if(gang == "A")
+		ticker.mode.A_territory_new -= territory.type
+		ticker.mode.A_territory_lost |= list(territory.type = territory.name)
+	if(gang == "B")
+		ticker.mode.B_territory_new -= territory.type
+		ticker.mode.B_territory_lost |= list(territory.type = territory.name)
+	..()

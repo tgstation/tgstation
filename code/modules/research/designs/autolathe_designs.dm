@@ -106,6 +106,14 @@
 	build_path = /obj/item/weapon/stock_parts/console_screen
 	category = list("initial", "Electronics")
 
+/datum/design/apc_board
+	name = "APC Power Control Module"
+	id = "power control"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 100, "$glass" = 100)
+	build_path = /obj/item/weapon/module/power_control
+	category = list("initial", "Electronics")
+
 /datum/design/airlock_board
 	name = "Airlock electronics"
 	id = "airlock_board"

@@ -100,10 +100,10 @@
 				if(user == M)
 					user << "<span class='notice'>You attach [src] to [U].</span>"
 				else
-					user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
+					user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 
-		else user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
+		else user << "<span class='warning'>Medals can only be pinned on jumpsuits!</span>"
 	else ..()
 
 /obj/item/clothing/tie/medal/conduct
@@ -280,6 +280,7 @@
 
 /obj/item/clothing/tie/petcollar //don't really wear this though please c'mon seriously guys
 	name = "pet collar"
+	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule."
 	icon_state = "petcollar"
 	item_color = "petcollar"
 	var/tagname = null

@@ -47,9 +47,9 @@
 	damage = 50
 
 /obj/item/projectile/beam/pulse/on_hit(var/atom/target, var/blocked = 0)
+	. = ..()
 	if(istype(target,/turf/)||istype(target,/obj/structure/))
 		target.ex_act(2)
-	..()
 
 /obj/item/projectile/beam/pulse/shot
 	damage = 40
@@ -77,12 +77,13 @@ obj/item/projectile/beam/emitter/Destroy()
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 
 /obj/item/projectile/lasertag/on_hit(var/atom/target, var/blocked = 0)
-	if(istype(target, /mob/living/carbon/human))
+	. = ..()
+	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
 		if(istype(M.wear_suit))
 			if(M.wear_suit.type in suit_types)
 				M.adjustStaminaLoss(34)
-	return 1
+
 
 /obj/item/projectile/lasertag/redtag
 	icon_state = "laser"

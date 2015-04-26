@@ -21,7 +21,7 @@
 		if(bananium < 100)
 			on = !on
 			update_icon()
-			usr << "<span class='danger'>You ran out of bananium!</span>"
+			usr << "<span class='warning'>You ran out of bananium!</span>"
 	else
 		..()
 
@@ -49,9 +49,9 @@
 	if(bananium > 0)
 		on = !on
 		update_icon()
-		usr << "You [on ? "activate" : "deactivate"] the prototype shoes."
+		usr << "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>"
 	else
-		usr << "You need bananium to turn the prototype shoes on."
+		usr << "<span class='warning'>You need bananium to turn the prototype shoes on!</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon()
 	if(on)

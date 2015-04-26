@@ -22,5 +22,6 @@
 
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
+	has_limbs = 1
 
-	lying_pixel_offset = -6 //offset for pixel_y when lying down.
+	var/remote_view = 0

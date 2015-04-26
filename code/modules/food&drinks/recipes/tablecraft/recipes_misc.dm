@@ -50,7 +50,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/friedegg = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/wrap
+	result = /obj/item/weapon/reagent_containers/food/snacks/eggwrap
 
 /datum/table_recipe/beans
 	name = "Beans"
@@ -103,3 +103,115 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/twobread
 
+/datum/table_recipe/burrito
+	name ="Burrito"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 2
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/burrito
+
+/datum/table_recipe/cheesyburrito
+	name ="Cheesy burrito"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cheesyburrito
+
+/datum/table_recipe/carneburrito
+	name ="Carne de asada burrito"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/carneburrito
+
+/datum/table_recipe/fuegoburrito
+	name ="Fuego plasma burrito"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/fuegoburrito
+
+/datum/table_recipe/melonfruitbowl
+	name ="Melon fruit bowl"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/melonfruitbowl
+
+/datum/table_recipe/spacefreezy
+	name ="Space freezy"
+	reqs = list(
+		/datum/reagent/consumable/bluecherryjelly = 5,
+		/datum/reagent/consumable/spacemountainwind = 15,
+		/obj/item/weapon/reagent_containers/food/snacks/icecream = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/spacefreezy
+
+/datum/table_recipe/sundae
+	name ="Sundae"
+	reqs = list(
+		/datum/reagent/consumable/cream = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/icecream = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sundae
+
+/datum/table_recipe/honkdae
+	name ="Honkdae"
+	reqs = list(
+		/datum/reagent/consumable/cream = 5,
+		/obj/item/clothing/mask/gas/clown_hat = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/icecream = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/honkdae
+
+/datum/table_recipe/nachos
+	name ="Nachos"
+	reqs = list(
+		/datum/reagent/consumable/sodiumchloride = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/nachos
+
+/datum/table_recipe/cheesynachos
+	name ="Cheesy nachos"
+	reqs = list(
+		/datum/reagent/consumable/sodiumchloride = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cheesynachos
+
+/datum/table_recipe/cubannachos
+	name ="Cuban nachos"
+	reqs = list(
+		/datum/reagent/consumable/ketchup = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chili = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cubannachos
+
+/datum/table_recipe/melonkeg
+	name ="Melon keg"
+	reqs = list(
+		/datum/reagent/consumable/ethanol/vodka = 25,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/holymelon = 1,
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 1
+	)
+	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 1)
+	result = /obj/item/weapon/reagent_containers/food/snacks/melonkeg

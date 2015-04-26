@@ -373,7 +373,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
 		if(!packeditem)
 			if(G.dry == 1)
-				user << "You stuff [O] into [src]."
+				user << "<span class='notice'>You stuff [O] into [src].</span>"
 				smoketime = 400
 				packeditem = 1
 				name = "[O.name]-packed [initial(name)]"
@@ -381,18 +381,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					O.reagents.trans_to(src, O.reagents.total_volume)
 				qdel(O)
 			else
-				user << "<span class='warning'>It has to be dried first.</span>"
+				user << "<span class='warning'>It has to be dried first!</span>"
 		else
-			user << "<span class='warning'>It is already packed.</span>"
+			user << "<span class='warning'>It is already packed!</span>"
 	else
-		user << "<span class='warning'>You can't put that in the pipe.</span>"
+		user << "<span class='warning'>You can't put that in the pipe!</span>"
 	..()
 
 
 /obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user as mob)
 	var/turf/location = get_turf(user)
 	if(lit)
-		user.visible_message("<span class='notice'>[user] puts out [src].</span>")
+		user.visible_message("<span class='notice'>[user] puts out [src].</span>", "<span class='notice'>You put out [src].</span>")
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
@@ -479,16 +479,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			force = 5
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
-			attack_verb = list("burnt", "singed")
+			attack_verb = list("burnt", "signed")
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
+				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
 			else
 				if(prob(75))
-					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src].</span>")
+					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
 				else
-					user << "<span class='warning'>You burn yourself while lighting the lighter.</span>"
 					user.adjustFireLoss(5)
-					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src], they however burn their finger in the process.</span>")
+					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
 			user.AddLuminosity(1)
 			SSobj.processing |= src
@@ -499,9 +498,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			force = 0
 			attack_verb = null //human_defense.dm takes care of it
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.")
+				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
 			else
-				user.visible_message("<span class='notice'>[user] quietly shuts off [src].")
+				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
 
 			user.AddLuminosity(-1)
 			SSobj.processing.Remove(src)
@@ -572,6 +571,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			qdel(target)
 			qdel(src)
 		else
-			user << "<span class='warning'>You need to dry this first.</span>"
+			user << "<span class='warning'>You need to dry this first!</span>"
 	else
 		..()

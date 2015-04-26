@@ -97,7 +97,7 @@ Radio:
 1355 - Medical
 1357 - Engineering
 1359 - Security
-1441 - death squad
+1337 - death squad
 1443 - Confession Intercom
 1349 - Miners
 1347 - Cargo techs
@@ -130,7 +130,7 @@ var/list/radiochannels = list(
 	"Medical" = 1355,
 	"Engineering" = 1357,
 	"Security" = 1359,
-	"Centcom" = 1441,
+	"Centcom" = 1337,
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 	"Service" = 1349,
@@ -144,7 +144,7 @@ var/list/radiochannelsreverse = list(
 	"1355" = "Medical",
 	"1357" = "Engineering",
 	"1359" = "Security",
-	"1441" = "Centcom",
+	"1337" = "Centcom",
 	"1213" = "Syndicate",
 	"1347" = "Supply",
 	"1349" = "Service",
@@ -160,7 +160,7 @@ var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/MED_FREQ = 1355 //medical, coloured blue in chat window
 var/const/ENG_FREQ = 1357 //engineering, coloured orange in chat window
 var/const/SEC_FREQ = 1359 //security, coloured red in chat window
-var/const/CENTCOM_FREQ = 1441 //centcom frequency, coloured grey in chat window
+var/const/CENTCOM_FREQ = 1337 //centcom frequency, coloured grey in chat window
 var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 
 #define TRANSMISSION_WIRE	0
@@ -173,12 +173,7 @@ var/const/RADIO_CHAT = "3" //deprecated
 var/const/RADIO_ATMOSIA = "4"
 var/const/RADIO_NAVBEACONS = "5"
 var/const/RADIO_AIRLOCK = "6"
-var/const/RADIO_SECBOT = "7"
-var/const/RADIO_MULEBOT = "8"
 var/const/RADIO_MAGNETS = "9"
-var/const/RADIO_CLEANBOT = "10"
-var/const/RADIO_FLOORBOT = "11"
-var/const/RADIO_MEDBOT = "12"
 
 /datum/radio_frequency
 

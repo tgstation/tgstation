@@ -34,7 +34,7 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/lizard
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 
 /datum/species/lizard/handle_speech(message)
 	// jesus christ why
@@ -58,7 +58,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.25
 	heatmod = 1.5
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/plant
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 
 /datum/species/plant/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
@@ -70,10 +70,9 @@
 	switch(proj_type)
 		if(/obj/item/projectile/energy/floramut)
 			if(prob(15))
-				H.apply_effect((rand(30,80)),IRRADIATE)
+				H.irradiate(rand(30,80))
 				H.Weaken(5)
-				for (var/mob/V in viewers(H))
-					V.show_message("<span class='danger'>[H] writhes in pain as \his vacuoles boil.</span>", 3, "<span class='danger'>You hear the crunching of leaves.</span>", 2)
+				H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
 					randmutb(H)
 					domutcheck(H,null)
@@ -82,7 +81,7 @@
 					domutcheck(H,null)
 			else
 				H.adjustFireLoss(rand(5,15))
-				H.show_message("<span class='danger'>The radiation beam singes you!</span>")
+				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
 	return
@@ -127,7 +126,7 @@
 	darksight = 8
 	sexes = 0
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/shadow
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
@@ -158,7 +157,7 @@
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	ignored_by = list(/mob/living/simple_animal/slime)
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	var/recently_changed = 1
 
@@ -198,7 +197,7 @@
 	say_mod = "chirps"
 	eyes = "jelleyes"
 	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD)
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/slime
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	var/recently_changed = 1
 
@@ -233,13 +232,13 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "golem"
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	speedmod = 3
 	armor = 55
 	punchmod = 5
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_head, slot_w_uniform)
 	nojumpsuit = 1
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/golem
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 
 
 /*
@@ -249,7 +248,7 @@
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
 	id = "adamantine"
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/golem/adamantine
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
 
 /*
  FLIES
@@ -260,7 +259,7 @@
 	name = "Human?"
 	id = "fly"
 	say_mod = "buzzes"
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/fly
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
@@ -281,8 +280,8 @@
 	id = "skeleton"
 	say_mod = "rattles"
 	sexes = 0
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/skeleton
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 /*
  ZOMBIES
 */
@@ -293,7 +292,7 @@
 	id = "zombie"
 	say_mod = "moans"
 	sexes = 0
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/zombie
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
 
 /datum/species/zombie/handle_speech(message)
@@ -316,4 +315,32 @@
 	name = "Human"
 	id = "zombie"
 	sexes = 0
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/human/mutant/zombie
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
+
+
+/datum/species/abductor
+	name = "Abductor"
+	id = "abductor"
+	darksight = 3
+	say_mod = "gibbers"
+	sexes = 0
+	invis_sight = SEE_INVISIBLE_LEVEL_ONE
+	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
+	var/scientist = 0 // vars to not pollute spieces list with castes
+	var/agent = 0
+	var/team = 1
+
+/datum/species/abductor/handle_speech(message)
+	//Hacks
+	var/mob/living/carbon/human/user = usr
+	for(var/mob/living/carbon/human/H in mob_list)
+		if(H.dna.species.id != "abductor")
+			continue
+		else
+			var/datum/species/abductor/target_spec = H.dna.species
+			if(target_spec.team == team)
+				H << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+				//return - technically you can add more aliens to a team
+	for(var/mob/M in dead_mob_list)
+		M << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+	return ""

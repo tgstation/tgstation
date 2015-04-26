@@ -204,6 +204,9 @@
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
 	return 0
 
+/mob/living/carbon/monkey/reagent_check(var/datum/reagent/R) //can metabolize all reagents
+	return 0
+
 /mob/living/carbon/monkey/canBeHandcuffed()
 	return 1
 
@@ -241,10 +244,6 @@
 
 	return threatcount
 
-/mob/living/carbon/monkey/SpeciesCanConsume()
-	return 1 // Monkeys can eat, drink, and be forced to do so
-
-
 /mob/living/carbon/monkey/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	if(wear_mask)
 		if(!wear_mask.unacidable)
@@ -255,3 +254,10 @@
 		return
 
 	take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))
+
+/mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
+	if(health < 0 && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.do_cpr(src)
+	else
+		..()

@@ -16,7 +16,7 @@
 	see_in_dark = 6
 	species = /mob/living/simple_animal/pet/cat
 	childtype = /mob/living/simple_animal/pet/cat/kitten
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -79,3 +79,6 @@
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
 	gender = NEUTER
+	density = 0
+	pass_flags = PASSMOB
+	mob_size = MOB_SIZE_SMALL

@@ -10,7 +10,7 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/xeno
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	skin_type = /obj/item/stack/sheet/animalhide/xeno
 	meat_amount = 3
 	maxHealth = 100
@@ -19,6 +19,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
+	speak_emote = list("hisses")
 	a_intent = "harm"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)

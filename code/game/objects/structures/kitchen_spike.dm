@@ -88,45 +88,45 @@
 			if(src.skin >= 1)
 				src.skin--
 				new /obj/item/stack/sheet/animalhide/monkey(src.loc)
-				user << "You remove the hide from the monkey!"
+				user << "<span class='notice'>You remove the hide from the monkey.</span>"
 			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src.loc )
-				usr << "You remove some meat from the monkey."
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src.loc )
+				usr << "<span class='notice'>You remove some meat from the monkey.</span>"
 			else if(src.meat == 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src.loc)
-				usr << "You remove the last piece of meat from the monkey!"
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src.loc)
+				usr << "<span class='notice'>You remove the last piece of meat from the monkey.</span>"
 				src.icon_state = "spike"
 				src.occupied = 0
 		else if(src.meattype == MEATTYPE_ALIEN && src.skintype == SKINTYPE_ALIEN)
 			if(src.skin >= 1)
 				src.skin--
 				new /obj/item/stack/sheet/animalhide/xeno(src.loc)
-				user << "You remove the hide from the alien!"
+				user << "<span class='notice'>You remove the hide from the alien.</span>"
 			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/xeno(src.loc )
-				usr << "You remove some meat from the alien."
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src.loc )
+				usr << "<span class='notice'>You remove some meat from the alien.</span>"
 			else if(src.meat == 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/xeno(src.loc)
-				usr << "You remove the last piece of meat from the alien!"
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src.loc)
+				usr << "<span class='notice'>You remove the last piece of meat from the alien.</span>"
 				src.icon_state = "spike"
 				src.occupied = 0
 		else if(src.meattype == MEATTYPE_BEAR && src.skintype == SKINTYPE_BEAR)
 			if(src.skin >= 1)
 				src.skin--
 				new /obj/item/clothing/head/bearpelt(src.loc)
-				user << "You remove the hide from the bear!"
+				user << "<span class='notice'>You remove the hide from the bear.</span>"
 			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/bear(src.loc )
-				usr << "You remove some meat from the bear."
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src.loc )
+				usr << "<span class='notice'>You remove some meat from the bear.</span>"
 			else if(src.meat == 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/bear(src.loc)
-				usr << "You remove the last piece of meat from the bear!"
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src.loc)
+				usr << "<span class='notice'>You remove the last piece of meat from the bear.</span>"
 				src.icon_state = "spike"
 				src.occupied = 0
 

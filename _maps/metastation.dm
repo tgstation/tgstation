@@ -15,7 +15,7 @@ z7 = empty space
 
 #if !defined(MAP_FILE)
 
-        #include "map_files\MetaStation\MetaStation.v41A.dmm"
+        #include "map_files\MetaStation\MetaStation.v41A.II.dmm"
         #include "map_files\MetaStation\z2.dmm"
         #include "map_files\MetaStation\z3.dmm"
         #include "map_files\MetaStation\z4.dmm"
@@ -23,7 +23,7 @@ z7 = empty space
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
 
-        #define MAP_FILE "MetaStation.v41A.dmm"
+        #define MAP_FILE "MetaStation.v41A.II.dmm"
         #define MAP_NAME "MetaStation"
 
 #elif !defined(MAP_OVERRIDE)

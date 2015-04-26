@@ -123,7 +123,7 @@ Borg Hypospray
 			empty = 0
 
 	if(empty)
-		usr << "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>"
+		usr << "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>"
 /*
 Borg Shaker
 */
@@ -167,7 +167,7 @@ Borg Shaker
 	else if(target.is_open_container() && target.reagents)
 		var/datum/reagents/R = reagent_list[mode]
 		if(!R.total_volume)
-			user << "<span class='notice'>[src] is currently out of this ingredient. Please allow some time for the synthesizer to produce more.</span>"
+			user << "<span class='warning'>[src] is currently out of this ingredient! Please allow some time for the synthesizer to produce more.</span>"
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -187,7 +187,7 @@ Borg Shaker
 		empty = 0
 
 	if(empty)
-		usr << "<span class='notice'>It is currently empty. Please allow some time for the synthesizer to produce more.</span>"
+		usr << "<span class='warning'>It is currently empty! Please allow some time for the synthesizer to produce more.</span>"
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked
 	..()

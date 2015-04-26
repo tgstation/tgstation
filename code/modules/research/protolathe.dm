@@ -30,7 +30,7 @@ Note: Must be placed west/left of and R&D console to function.
 								"Medical Designs",
 								"Bluespace Designs",
 								"Stock Parts",
-								"Equipement",
+								"Equipment",
 								"Mining Designs",
 								"Electronics",
 								"Weapons",
@@ -140,7 +140,7 @@ Note: Must be placed west/left of and R&D console to function.
 			default_deconstruction_crowbar(O)
 			return 1
 		else
-			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
+			user << "<span class='warning'>You can't load the [src.name] while it's opened!</span>"
 			return 1
 	if (disabled)
 		return
@@ -148,7 +148,7 @@ Note: Must be placed west/left of and R&D console to function.
 		user << "<span class='warning'> The [src.name] must be linked to an R&D console first!</span>"
 		return 1
 	if (busy)
-		user << "<span class='warning'>The [src.name] is busy. Please wait for completion of previous operation.</span>"
+		user << "<span class='warning'>The [src.name] is busy! Please wait for completion of previous operation.</span>"
 		return 1
 	if (O.is_open_container())
 		return
@@ -160,7 +160,7 @@ Note: Must be placed west/left of and R&D console to function.
 	if(istype(O,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = O
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "<span class='warning'>The [src.name]'s material bin is full. Please remove material before adding more.</span>"
+			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
 			return 1
 
 	var/obj/item/stack/sheet/stack = O
