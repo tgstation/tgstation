@@ -25,7 +25,7 @@
 
 	if(success)
 		if(target_zone == surgery.location)
-			if(get_location_accessible(target, target_zone))
+			if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
 				initiate(user, target, target_zone, tool, surgery)
 				return 1
 			else

@@ -223,6 +223,10 @@
 	return console
 
 /datum/game_mode/abduction/proc/equip_agent(var/mob/living/carbon/human/agent,var/team_number)
+	if(!team_number)
+		var/datum/species/abductor/S = agent.dna.species
+		team_number = S.team
+
 	var/obj/machinery/abductor/console/console = get_team_console(team_number)
 	var/obj/item/clothing/suit/armor/abductor/vest/V = new /obj/item/clothing/suit/armor/abductor/vest(agent)
 	if(console!=null)
@@ -236,6 +240,10 @@
 
 
 /datum/game_mode/abduction/proc/equip_scientist(var/mob/living/carbon/human/scientist,var/team_number)
+	if(!team_number)
+		var/datum/species/abductor/S = scientist.dna.species
+		team_number = S.team
+
 	var/obj/machinery/abductor/console/console = get_team_console(team_number)
 	var/obj/item/device/abductor/gizmo/G = new /obj/item/device/abductor/gizmo(scientist)
 	if(console!=null)
