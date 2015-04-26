@@ -23,19 +23,20 @@ var/global/datum/controller/game_controller/master_controller = new()
 			init_subtypes(/datum/subsystem, subsystems)
 
 		master_controller = src
+	calculateGCD()
 
+/datum/controller/game_controller/proc/calculateGCD()
 /*
 calculate the longest number of ticks the MC can wait between each cycle without causing subsystems to not fire on schedule
-Note: you can set the datum's defined processing_interval to some integer to set an -absolute- minimum wait duration.
 */
 	var/GCD
 	for(var/datum/subsystem/SS in subsystems)
 		if(SS.wait)
 			GCD = Gcd(SS.wait, GCD)
 	GCD = round(GCD)
-	if(GCD > processing_interval)
-		processing_interval = GCD
-
+	if(GCD < 1)
+		GCD = 1
+	processing_interval = GCD
 /datum/controller/game_controller/proc/setup()
 	world << "<span class='boldannounce'>Initializing Subsystems...</span>"
 
@@ -85,16 +86,21 @@ Note: you can set the datum's defined processing_interval to some integer to set
 				for(var/datum/subsystem/SS in subsystems)
 					if(SS.can_fire > 0)
 						if(SS.next_fire <= world.time)
-							SS.next_fire += SS.wait
-
 							timer = world.timeofday
 							cpu = world.cpu
 							last_thing_processed = SS.type
 							SS.last_fire = world.time
 							SS.fire()
-							SS.cpu = MC_AVERAGE(SS.cpu, world.cpu - cpu)
 							SS.cost = MC_AVERAGE(SS.cost, world.timeofday - timer)
+							if (SS.dynamic_wait)
+								var/oldwait = SS.wait
+								SS.wait = min(max(round(SS.cost*3),SS.dwait_lower),SS.dwait_upper)
+								if (oldwait != SS.wait)
+									calculateGCD()
+							SS.next_fire += SS.wait
+							SS.cpu = MC_AVERAGE(SS.cpu, world.cpu - cpu)
 							++SS.times_fired
+
 							sleep(-1)
 
 				cost = MC_AVERAGE(cost, world.timeofday - start_time)
@@ -108,7 +114,7 @@ Note: you can set the datum's defined processing_interval to some integer to set
 /datum/controller/game_controller/proc/roundHasStarted()
 	for(var/datum/subsystem/SS in subsystems)
 		SS.can_fire = 1
-		SS.next_fire = world.time
+		SS.next_fire = world.time + rand(0,SS.wait)
 
 /datum/controller/game_controller/proc/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"

@@ -20,13 +20,14 @@ Pipelines + Other Objects -> Pipe network
 	var/initialize_directions = 0
 	var/pipe_color
 	var/obj/item/pipe/stored
-
+	var/lastpowerdraw = 0
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 
 /obj/machinery/atmospherics/New()
 	..()
-
+	SSmachine.processing -= src //atmos controller will handle this
+	SSair.atmos_mechinery += src
 	SetInitDirections()
 	if(can_unwrench)
 		stored = new(src, make_from=src)

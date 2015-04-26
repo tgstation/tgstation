@@ -2,17 +2,20 @@
 
 /datum/subsystem
 	//things you will want to define
-	var/name			//name of the subsystem
-	var/priority = 0	//priority affects order of initialization. Higher priorities are initialized first, lower priorities later. Can be decimal and negative values.
-	var/wait = 20		//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
+	var/name				//name of the subsystem
+	var/priority = 0		//priority affects order of initialization. Higher priorities are initialized first, lower priorities later. Can be decimal and negative values.
+	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
+	var/dynamic_wait = 0	//changes the wait based on the amount of time it took to process
+	var/dwait_upper = 20	//longest wait can be under dynamic_wait
+	var/dwait_lower = 5		//shortest wait can be under dynamic_wait
 
 	//things you will probably want to leave alone
-	var/can_fire = 0	//prevent fire() calls
-	var/last_fire = 0	//last world.time we called fire()
-	var/next_fire = 0	//scheduled world.time for next fire()
-	var/cpu = 0			//cpu-usage stats (somewhat vague)
-	var/cost = 0		//average time to execute
-	var/times_fired = 0	//number of times we have called fire()
+	var/can_fire = 0		//prevent fire() calls
+	var/last_fire = 0		//last world.time we called fire()
+	var/next_fire = 0		//scheduled world.time for next fire()
+	var/cpu = 0				//cpu-usage stats (somewhat vague)
+	var/cost = 0			//average time to execute
+	var/times_fired = 0		//number of times we have called fire()
 
 //used to initialize the subsystem BEFORE the map has loaded
 /datum/subsystem/New()
