@@ -28,7 +28,8 @@
 /obj/machinery/disposal/New()
 	..()
 	spawn(5)
-		trunk = locate() in loc
+		for(var/obj/structure/disposalpipe/trunk/O in loc.contents)//This is more efficient than locate()
+			trunk = O
 
 		if(trunk)
 			if(trunk.disposal != src)
@@ -143,16 +144,14 @@
 			var/mob/GM = G.affecting
 			user.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
 			GM.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
-			for (var/mob/V in viewers(usr))
-				V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
+			user.visible_message("[usr] starts putting [GM.name] into the [src].", "You start putting the [GM.name] into the [src].", "You hear some clunking.")
 			if(do_after(usr, 20))
 				if (GM.client)
 					GM.client.perspective = EYE_PERSPECTIVE
 					GM.client.eye = src
 				GM.loc = src
-				for (var/mob/C in viewers(src))
-					C.show_message("<span class='warning'>[GM.name] has been placed in the [src] by [user].</span>", 3)
-				del(G)
+				user.visible_message("<span class='warning'>[GM.name] has been placed in the [src] by [user].</span>, <span class='warning'>[GM.name] has been placed in the [src] by you.</span>", "<span class='warning'>You hear a loud clunk.</span>")
+				qdel(G)
 				log_attack("<font color='red'>[usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.</font>")
 		return
 
