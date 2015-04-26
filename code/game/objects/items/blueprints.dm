@@ -1,23 +1,24 @@
+# define AREA_ERRNONE 0
+# define AREA_STATION 1
+# define AREA_SPACE   2
+# define AREA_SPECIAL 3
+
+# define BORDER_ERROR   0
+# define BORDER_NONE    1
+# define BORDER_BETWEEN 2
+# define BORDER_2NDTILE 3
+# define BORDER_SPACE   4
+
+# define ROOM_ERR_LOLWAT    0
+# define ROOM_ERR_SPACE    -1
+# define ROOM_ERR_TOOLARGE -2
+
 /obj/item/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There is a \"Classified\" stamp and several coffee stains on it."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
 	attack_verb = list("attacked", "bapped", "hit")
-	var/const/AREA_ERRNONE = 0
-	var/const/AREA_STATION = 1
-	var/const/AREA_SPACE =   2
-	var/const/AREA_SPECIAL = 3
-
-	var/const/BORDER_ERROR = 0
-	var/const/BORDER_NONE = 1
-	var/const/BORDER_BETWEEN =   2
-	var/const/BORDER_2NDTILE = 3
-	var/const/BORDER_SPACE = 4
-
-	var/const/ROOM_ERR_LOLWAT = 0
-	var/const/ROOM_ERR_SPACE = -1
-	var/const/ROOM_ERR_TOOLARGE = -2
 
 /obj/item/blueprints/attack_self(mob/M as mob)
 	if (!istype(M,/mob/living/carbon/human))
@@ -35,12 +36,12 @@
 		if ("create_area")
 			if (get_area_type()!=AREA_SPACE)
 				interact()
-				return
+				return 1
 			create_area()
 		if ("edit_area")
 			if (get_area_type()!=AREA_STATION)
 				interact()
-				return
+				return 1
 			edit_area()
 
 /obj/item/blueprints/interact()
@@ -118,70 +119,40 @@ move an amendment</a> to the drawing.</p>
 	if(length(str) > 50)
 		usr << "<span class='warning'>Name too long.</span>"
 		return
-	var/area/A = new
-	A.name = str
-//	A.tagbase = "[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
-	A.tag = "[A.type]/[md5(str)]"
-	//var/ma
-	//ma = A.master ? "[A.master]" : "(null)"
-	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
-	A.power_equip = 0
-	A.power_light = 0
-	A.power_environ = 0
-	A.always_unpowered = 0
-	A.addSorted()
-
-	spawn(0)
-		move_turfs_to_area(turfs, A)
-
-	spawn(5)
-		//ma = A.master ? "[A.master]" : "(null)"
-		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
-		interact()
-	return
-
-
-/obj/item/blueprints/proc/move_turfs_to_area(var/list/turf/turfs, var/area/A)
-	A.contents.Add(turfs)
+	var/area/newarea = new
+	var/area/oldarea = get_area(usr)
+	newarea.name = str
+	newarea.tag = "[newarea.type]/[md5(str)]"
+	newarea.power_equip = 0
+	newarea.power_light = 0
+	newarea.power_environ = 0
+	newarea.always_unpowered = 0
+	newarea.lighting_use_dynamic = 1
+	newarea.contents.Add(turfs)
 	for(var/turf/T in turfs)
-		for(var/atom/movable/AM in T)
-			AM.areaMaster = get_area_master(T)
-		//oldarea.contents.Remove(usr.loc) // not needed
-		//T.loc = A //error: cannot change constant value
+		T.change_area(oldarea,newarea)
+		for(var/atom/allthings in T.contents)
+			allthings.change_area(oldarea,newarea)
+	newarea.addSorted()
 
+	sleep(5)
+	interact()
 
 /obj/item/blueprints/proc/edit_area()
-	var/area/A = get_area()
+	var/area/areachanged = get_area()
 	//world << "DEBUG: edit_area"
-	var/prevname = "[A.name]"
+	var/prevname = "[areachanged.name]"
 	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", prevname, MAX_NAME_LEN))
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
 		usr << "<span class='warning'>Text too long.</span>"
 		return
-	set_area_machinery_title(A,str,prevname)
-	A.name = str
+	areachanged.name = str
+	for(var/atom/allthings in areachanged.contents)
+		allthings.change_area(prevname,areachanged)
 	usr << "<span class='notice'>You set the area '[prevname]' title to '[str]'.</span>"
 	interact()
-	return
-
-
-
-/obj/item/blueprints/proc/set_area_machinery_title(var/area/A,var/title,var/oldtitle)
-	if (!oldtitle) // or replacetext goes to infinite loop
-		return
-	for(var/obj/machinery/alarm/M in A)
-		M.name = replacetext(M.name,oldtitle,title)
-	for(var/obj/machinery/power/apc/M in A)
-		M.name = replacetext(M.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in A)
-		M.name = replacetext(M.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/unary/vent_pump/M in A)
-		M.name = replacetext(M.name,oldtitle,title)
-	for(var/obj/machinery/door/M in A)
-		M.name = replacetext(M.name,oldtitle,title)
-	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 /obj/item/blueprints/proc/check_tile_is_border(var/turf/T2,var/dir)
 	if (istype(T2, /turf/space))

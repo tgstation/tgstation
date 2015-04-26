@@ -581,6 +581,9 @@
 /turf/proc/dismantle_wall()
 	return
 
+/turf/change_area(oldarea, newarea)
+	lighting_build_overlays()
+
 /////////////////////////////////////////////////////
 
 /turf/proc/spawn_powerup()
