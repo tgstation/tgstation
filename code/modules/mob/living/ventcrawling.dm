@@ -74,13 +74,12 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 
 /mob/living/proc/remove_ventcrawl()
-	for(var/image/current_image in pipes_shown)
-		client.images -= current_image
-
+	if(client)
+		for(var/image/current_image in pipes_shown)
+			client.images -= current_image
+		client.eye = src
 	pipes_shown.len = 0
 
-	if(client)
-		client.eye = src
 
 
 
