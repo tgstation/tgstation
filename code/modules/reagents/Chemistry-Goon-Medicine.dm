@@ -487,17 +487,15 @@ datum/reagent/morphine/addiction_act_stage4(var/mob/living/M as mob)
 datum/reagent/oculine/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	cycle_amount++
-	if(M.eye_blind > 0 && cycle_amount > 20)
-		if(prob(30))
+	if(M.eye_blind > 0 && cycle_amount > 10) //This reduces the amount of ticks required between activations to non awful levels
+		if(prob(50))
 			M.eye_blind = 0
-		else if(prob(80))
-			M.eye_blind = 0
-			M.eye_blurry = 1
-		if(M.eye_blurry > 0)
-			if(prob(80))
+		else if(M.eye_blurry > 0)
+			if(prob(100))
 				M.eye_blurry = 0
 	..()
 	return
+		//removed shit conversion, now if eyes are in a blurry state it's always healed. Blind is 50% with high metab
 
 /datum/chemical_reaction/oculine
 	name = "Oculine"
@@ -510,10 +508,10 @@ datum/reagent/oculine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/oculine
 	name = "Oculine"
 	id = "oculine"
-	description = "30% chance to remove blindness, 80% chance to slightly reduce eye damage."
+	description = "50% chance to remove blindness, 100% chance to slightly reduce eye damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolization_rate = 0.4
+	metabolization_rate = 1
 	var/cycle_amount = 0
 
 datum/reagent/atropine
