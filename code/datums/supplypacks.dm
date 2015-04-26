@@ -713,14 +713,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "shield generators crate"
 	access = access_teleporter
 
-
-/datum/supply_packs/science/transfer_valves
-	name = "Tank Transfer Valves"
-	contains = list(/obj/item/device/transfer_valve,
-					/obj/item/device/transfer_valve)
+/datum/supply_packs/science/transfer_valve
+	name = "Tank Transfer Valve"
+	contains = list(/obj/item/device/transfer_valve)
 	cost = 60
 	containertype = /obj/structure/closet/crate/secure
-	containername = "transfer valves crate"
+	containername = "transfer valve crate"
 	access = access_rd
 
 //////////////////////////////////////////////////////////////////////////////
