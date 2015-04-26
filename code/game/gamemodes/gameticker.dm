@@ -464,7 +464,7 @@ var/global/datum/controller/gameticker/ticker
 	mode.declare_completion()//To declare normal completion.
 
 	ai_completions += "<HR><BR><h2>Mode Result</h2>"
-	ai_completions += "<br>[mode.completion_text]"
+	//ai_completions += "<br>[mode.completion_text]"
 
 	scoreboard(ai_completions)
 

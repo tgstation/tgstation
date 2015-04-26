@@ -513,7 +513,7 @@
 			completion_text +=  "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
 			completion_text +=  "<BR><B>The Staff has managed to stop the Cult</B>"
 
-	var/text = "<b>Objectives Completed:</b> [current_objective - 1 + bonus]"
+	var/text = "<BR><b>Objectives Completed:</b> [current_objective - 1 + bonus]"
 
 	if(objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"
