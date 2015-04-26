@@ -11,10 +11,10 @@
 	anchored = 1
 	use_power = 0
 	var/capacity = 5e6 // maximum charge
-	var/charge = 2e6 // actual charge
+	var/charge = 0 // actual charge
 
-	var/input_attempt = 0 // 1 = attempting to charge, 0 = not attempting to charge
-	var/inputting = 0 // 1 = actually inputting, 0 = not inputting
+	var/input_attempt = 1 // 1 = attempting to charge, 0 = not attempting to charge
+	var/inputting = 1 // 1 = actually inputting, 0 = not inputting
 	var/input_level = 50000 // amount of power the SMES attempts to charge by
 	var/input_level_max = 200000 // cap on input_level
 	var/input_available = 0 // amount of charge available from input last tick
@@ -408,7 +408,8 @@
 	log_smes("an emp")
 	..()
 
-
+/obj/machinery/power/smes/engineering
+	charge = 1.5e6 // Engineering starts with some charge for singulo
 
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
