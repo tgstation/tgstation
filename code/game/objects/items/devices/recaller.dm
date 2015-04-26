@@ -12,7 +12,6 @@
 	var/gang //Which gang uses this?
 	var/boss = 1 //If it has the power to promote gang members
 	var/recalling = 0
-	var/ignore_messages = 0
 	var/promotion_cost = 20
 
 /obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
@@ -29,7 +28,7 @@
 	var/dat
 	if(!gang)
 		dat += "This device is not registered.<br>"
-		if((user.mind in ticker.mode.B_bosses) || (user.mind in ticker.mode.A_bosses))
+		if(user.mind in (ticker.mode.A_bosses | ticker.mode.B_bosses))
 			dat += "Give this device to another member of your organization to use.<br>"
 		else
 			dat += "<a href='?src=\ref[src];choice=register'>Register Device</a><br>"
@@ -40,13 +39,7 @@
 
 		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Member"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B><br>"
-		dat += "Territories Controlled: <B>[round((gang_territory/start_state.num_territories)*100, 1)]% of [station_name()]</B><br>"
-		var/alert = "Recieve all alerts"
-		if(ignore_messages == 1)
-			alert = "Ignore territories gained"
-		else if(ignore_messages == 2)
-			alert = "Ignore territories gained and lost"
-		dat += "Message Setting: <a href='?src=\ref[src];choice=ignore'>[alert]</a><br>"
+		dat += "Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
 		dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 		dat += "<br>"
 		dat += "Influence: <B>[points]</B><br>"
@@ -142,10 +135,6 @@
 
 	else if(href_list["choice"])
 		switch(href_list["choice"])
-			if("ignore")
-				ignore_messages++
-				if(ignore_messages>2)
-					ignore_messages = 0
 			if("recall")
 				recall(usr)
 			if("register")
@@ -155,7 +144,7 @@
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
 	var/promoted
-	if((user.mind in ticker.mode.A_gang) || (user.mind in ticker.mode.A_bosses))
+	if(user.mind in (ticker.mode.A_gang | ticker.mode.A_bosses))
 		ticker.mode.A_tools += src
 		gang = "A"
 		if(!(user.mind in ticker.mode.A_bosses))
@@ -165,7 +154,7 @@
 			ticker.mode.update_gang_icons_added(user.mind, "A")
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("A")] Gang (A)")
 			promoted = 1
-	else if((user.mind in ticker.mode.B_gang) || (user.mind in ticker.mode.B_bosses))
+	else if(user.mind in (ticker.mode.B_gang | ticker.mode.B_bosses))
 		ticker.mode.B_tools += src
 		gang = "B"
 		if(!(user.mind in ticker.mode.B_bosses))
