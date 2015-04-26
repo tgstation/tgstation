@@ -1,0 +1,6 @@
+author: RemieRichards
+delete-after: True
+changes:
+  - rscadd: "Ports VG's Ventcrawling overhaul!"
+  - tweak: "Crawling through vents is no longer instant, you now have to move and navigate manually"
+  - rscadd: "While inside pipes and other atmos machinery, you now see pipe vision"
