@@ -11,7 +11,7 @@
 	anchored = 1
 	use_power = 0
 	var/capacity = 5e6 // maximum charge
-	var/charge = 1e6 // actual charge
+	var/charge = 2e6 // actual charge
 
 	var/input_attempt = 0 // 1 = attempting to charge, 0 = not attempting to charge
 	var/inputting = 0 // 1 = actually inputting, 0 = not inputting
