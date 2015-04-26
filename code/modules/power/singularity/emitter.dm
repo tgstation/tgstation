@@ -91,28 +91,30 @@
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 		return 0
 
-	var/on=0
-	switch(signal.data["command"])
-		if("on")
-			on=1
+	var/on
+	//world << "\ref[src] received signal. tag [signal.data["tag"]], cmd [signal.data["command"]], state [signal.data["state"]], sigtype [signal.data["sigtype"]]"
+	if(signal.data["command"])
+		switch(signal.data["command"])
+			if("on")
+				on=1
 
-		if("off")
-			on=0
+			if("off")
+				on=0
 
-		if("set")
-			on = signal.data["state"] > 0
+			if("set")
+				on = signal.data["state"] > 0
 
-		if("toggle")
-			on = !active
+			if("toggle")
+				on = !active
 
-	if(anchored && state == 2 && on != active)
-		active=on
-		var/statestr=on?"on":"off"
-		// Spammy message_admins("Emitter turned [statestr] by radio signal ([signal.data["command"]] @ [frequency]) in [formatJumpTo(src)]",0,1)
-		log_game("Emitter turned [statestr] by radio signal ([signal.data["command"]] @ [frequency]) in ([x],[y],[z])")
-		investigation_log(I_SINGULO,"turned <font color='orange'>[statestr]</font> by radio signal ([signal.data["command"]] @ [frequency])")
-		update_icon()
-		update_beam()
+		if(!isnull(on) && anchored && state == 2 && on != active)
+			active=on
+			var/statestr=on?"on":"off"
+			// Spammy message_admins("Emitter turned [statestr] by radio signal ([signal.data["command"]] @ [frequency]) in [formatJumpTo(src)]",0,1)
+			log_game("Emitter turned [statestr] by radio signal ([signal.data["command"]] @ [frequency]) in ([x],[y],[z])")
+			investigation_log(I_SINGULO,"turned <font color='orange'>[statestr]</font> by radio signal ([signal.data["command"]] @ [frequency])")
+			update_icon()
+			update_beam()
 
 /obj/machinery/power/emitter/Destroy()
 	qdel(beam)
