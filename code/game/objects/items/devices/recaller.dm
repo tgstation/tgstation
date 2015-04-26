@@ -165,6 +165,8 @@
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("B")] Gang (B)")
 			promoted = 1
 	if(promoted)
+		ticker.mode.forge_gang_objectives(user.mind)
+		ticker.mode.greet_gang(user.mind,0)
 		ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "[user] has been promoted to Lieutenant.")
 		user << "<FONT size=3 color=red><B>You have been promoted to Lieutenant!</B></FONT>"
 		user << "The <b>Gangtool</b> you registered will allow you to use your gang's influence to purchase items and prevent the station from evacuating before your gang can take over. Use it to recall the emergency shuttle from anywhere on the station."

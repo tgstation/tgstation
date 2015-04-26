@@ -26,7 +26,7 @@
 	recommended_enemies = 2
 	enemy_minimum_age = 14
 	var/finished = 0
-	var/goal_scalar = 0.6 //Goal = Total territories x goal_scalar
+	var/goal_scalar = 0.5 //Goal = Total territories x goal_scalar
 
 ///////////////////////////
 //Announces the game type//
@@ -94,7 +94,7 @@
 /datum/game_mode/proc/forge_gang_objectives(var/datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
 	rival_obj.owner = boss_mind
-	rival_obj.explanation_text = "Claim more than 60% the station before the [(boss_mind in A_bosses) ? gang_name("B") : gang_name("A")] Gang does."
+	rival_obj.explanation_text = "Claim more than 50% the station before the [(boss_mind in A_bosses) ? gang_name("B") : gang_name("A")] Gang does."
 	boss_mind.objectives += rival_obj
 
 
@@ -152,7 +152,7 @@
 	if (!where3)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a territory spraycan to start."
 	else
-		mob << "The <b>territory spraycan</b> in your [where3] can be used to claim areas of the station for your gang. The more territory your gang controls, the more influence you get."
+		mob << "The <b>territory spraycan</b> in your [where3] can be used to claim areas of the station for your gang. The more territory your gang controls, the more influence you get. Distribute these to your gangsters to grow your influence faster."
 		. += 1
 	mob.update_icons()
 
@@ -194,8 +194,8 @@
 			carbon_mob.flash_eyes(1, 1)
 		gangster_mind.current.Stun(5)
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
-	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with the special spraycans they provide. Simply spray on any unclaimed area of the station.</font>"
-	gangster_mind.current << "<font color='red'>You can identify your bosses by their brown \"G\" icon.</font>"
+	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with special spraycans only they can provide. Simply spray on any unclaimed area of the station.</font>"
+	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
 	update_gang_icons_added(gangster_mind,gang)
@@ -285,7 +285,7 @@
 	if(!finished)
 		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
 	else
-		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang has taken over the station!</B></FONT>"
+		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang has claimed over [round(100*goal_scalar,1)]% of the station and has assumed control!</B></FONT>"
 	..()
 	return 1
 

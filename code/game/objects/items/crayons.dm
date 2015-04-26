@@ -158,5 +158,5 @@
 	desc = "A suspicious-looking spraycan modified to use special paint used by gangsters to mark territory."
 	icon_state = "spraycan_gang_cap"
 	gang = 1
-	uses = 15
+	uses = 20
 	instant = -1
