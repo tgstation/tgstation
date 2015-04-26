@@ -342,4 +342,4 @@
 	name = "ale"
 	desc = "Strike the asteroid!"
 	icon_state = "alecustom"
-	initReagent = "wine"
+	initReagent = "ale"
