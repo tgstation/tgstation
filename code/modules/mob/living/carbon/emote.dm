@@ -165,6 +165,14 @@
 			message = "<B>[src]</B> winks."
 			m_type = 1
 
+		if ("wry")
+			if (!muzzled)
+				..(act)
+			else
+				message = "<B>[src]</B> makes an indescribably loud noise."
+				playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
+				m_type = 2
+
 		if ("yawn")
 			if (!muzzled)
 				..(act)

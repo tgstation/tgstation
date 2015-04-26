@@ -5,8 +5,8 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
-	maxHealth = 25
-	health = 25
+	maxHealth = 50
+	health = 50
 	storedPlasma = 50
 	max_plasma = 50
 

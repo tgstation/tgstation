@@ -417,6 +417,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/toolbox/syndicate
 	cost = 1
 
+/datum/uplink_item/device_tools/bombvalve
+	name = "Tank Transfer Valve"
+	desc = "A valve that regulates the transfer of air between two tanks. Useful for bomb-making." 
+	item = /obj/item/device/transfer_valve
+	cost = 11
+	surplus = 0
+
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \

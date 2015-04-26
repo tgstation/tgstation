@@ -244,6 +244,11 @@
 			message = "<B>[src]</B> whimpers."
 			m_type = 2
 
+		if ("wry")
+			message = "<B>[src]</B> makes an indescribably loud noise."
+			playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
+			m_type = 2
+
 		if ("yawn")
 			message = "<B>[src]</B> yawns."
 			m_type = 2
