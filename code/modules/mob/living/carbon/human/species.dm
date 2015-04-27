@@ -1077,7 +1077,7 @@
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*T20C)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*293.15)/BREATH_VOLUME
 
 	//Partial pressure of the O2 in our breath
 	var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
