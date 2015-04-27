@@ -342,7 +342,7 @@ client/proc/one_click_antag()
 				equip_deathsquad(Commando)
 			Commando.key = chosen_candidate.key
 			Commando.mind.assigned_role = "Death Commando"
-			for(var/obj/machinery/door/poddoor/ert/door in world)
+			for(var/obj/machinery/door/poddoor/ert/door in airlocks)
 				door.open()
 
 			//Assign antag status and the mission
@@ -466,16 +466,17 @@ client/proc/one_click_antag()
 		if("Green: Centcom Official")
 			makeOfficial()
 			return
+	var/teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
 	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
 	var/teamSpawned = 0
 
-	if(candidates.len >= 4) //Minimum 3 to be considered a squad
+	if(candidates.len > 0)
 		//Pick the (un)lucky players
-		var/numagents = min(5,candidates.len) //How many officers to spawn
+		var/numagents = min(teamsize,candidates.len) //How many officers to spawn
 		var/redalert //If the ert gets super weapons
 		if (alert == "Red")
-			numagents = min(7,candidates.len)
+			numagents = min(teamsize,candidates.len)
 			redalert = 1
 		var/list/spawnpoints = emergencyresponseteamspawn
 		while(numagents && candidates.len)
@@ -520,7 +521,7 @@ client/proc/one_click_antag()
 
 			//Open the Armory doors
 			if(alert != "Blue")
-				for(var/obj/machinery/door/poddoor/ert/door in world)
+				for(var/obj/machinery/door/poddoor/ert/door in airlocks)
 					door.open()
 
 			//Assign antag status and the mission
