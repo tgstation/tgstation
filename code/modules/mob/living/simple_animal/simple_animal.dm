@@ -272,7 +272,10 @@
 
 		if("harm", "disarm")
 			M.do_attack_animation(src)
-			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
+			src.visible_message("<span class='danger'>[M] [response_harm] [src]!</span>", \
+								"<span class='danger'>[M] [response_harm] [src]!</span>", \
+								"<span class='italics'>You hear a slap!</span>", \
+								M, "<span class='danger'>You [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked", admin=0)

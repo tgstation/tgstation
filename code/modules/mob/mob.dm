@@ -80,8 +80,10 @@ var/next_mob_id = 0
 // message is the message output to anyone who can see e.g. "[src] does something!"
 // self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
+// othermob (optional) if there's an attacker in this situation who should get a separate message, set him here
+// othermob_message (optional) is what the attacker will see e.g. "You hit [src]!"
 
-/mob/visible_message(var/message, var/self_message, var/blind_message)
+/mob/visible_message(var/message, var/self_message, var/blind_message, var/othermob, var/othermob_message)
 	var/list/mob_viewers = list()
 	var/list/possible_viewers = list()
 	mob_viewers |= src
@@ -104,6 +106,8 @@ var/next_mob_id = 0
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
+		if(M==othermob && othermob_message)
+			msg = othermob_message
 		M.show_message(msg, 1)
 
 	if(blind_message)
@@ -119,8 +123,10 @@ var/next_mob_id = 0
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
+// othermob (optional) if there's an attacker in this situation who should get a separate message, set him here
+// othermob_message (optional) is what the attacker will see e.g. "You hit [src]!"
 
-/atom/proc/visible_message(var/message, var/blind_message)
+/atom/proc/visible_message(var/message, var/blind_message, var/othermob, var/othermob_message)
 	var/list/mob_viewers = list()
 	var/list/possible_viewers = list()
 	mob_viewers |= viewers(src)
