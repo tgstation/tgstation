@@ -1,25 +1,8 @@
-###############################################################################################
-# 
-## Basically, ckey goes first. Rank goes after the "="                                         
-#
-# Case is not important for ckey.                                                            
-#
-# Case IS important for the rank.                                                             
-#
-# All punctuation (spaces etc) EXCEPT '-', '_' and '@' will be stripped from rank names.      
-#
-# Ranks can be anything defined in admin_ranks.txt                                            
-#
-# NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn 
-#
-# NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      ################################################################################################
-
-
 ## You gotta do what you gotta do. (For free.)
 
 Kuranyll = Host
 Riesen = Head Shitmin
-Kwata X11 = Super Badmin 
+Kwata X11 = Super Badmin
 Misterstaub = Super Badmin
 DimJim = Badmin
 GreyTideStationWide = Badmin
