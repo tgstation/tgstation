@@ -1,7 +1,7 @@
 /proc/getbrokeninhands()
 	set name = "Broken Sprite List"
 	set category = "Debug"
-
+	if(!alert("Are you sure you want to get the broken sprites list?",,"Yes","No") == "Yes") return
 	var/icon/IL = new('icons/mob/in-hand/left/items_lefthand.dmi')
 	var/list/Lstates = IL.IconStates()
 	var/icon/IR = new('icons/mob/in-hand/right/items_righthand.dmi')
