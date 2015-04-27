@@ -10,6 +10,13 @@
 
 	var/list/datum/automation/automations=list()
 
+	//Registers, see them as variables for the AAC.
+	var/register_amount = 10//Determines the maximal registers you can have.
+	var/list/registers = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)//Stores the register values, registers can't be named so this is enough.
+	//NOTE: if you're editing register_amount or the registers list, make sure the amount of vars in the registers list fills register_amount
+	//The UI will runtime otherwise.
+	//I tried doing something softcoded but this is BYOND *sigh
+
 /obj/machinery/computer/general_air_control/atmos_automation/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 
@@ -111,6 +118,18 @@
 					[A.GetText()]
 				</fieldset>
 			"}
+
+	out += "<h2>Registers</h2>"
+	for(var/i = 1, i <= register_amount, i++)
+		out += {"
+			<fieldset>
+				<legend>
+					Register [i]
+				</legend>
+				<a href="?src=\ref[src];editregister=[i]">[registers[i] == null ? 0 : registers[i]]</a>
+			</fieldset>
+		"}
+
 	return out
 
 /obj/machinery/computer/general_air_control/atmos_automation/Topic(href,href_list)
@@ -178,6 +197,17 @@
 	if(href_list["dump"])
 		input("Exported AAC code:","Automations",DumpCode()) as message|null
 		return 0
+
+	if(href_list["editregister"])
+		var/registerid = text2num(href_list["editregister"])//This'll be text by default.
+		registerid = sanitize_integer(registerid, min = 1, max = register_amount)//Can't be too sure.
+
+		if(!registerid)//Something wasn't sane.
+			return 1
+
+		registers[registerid] = input("Input register value:", "Register [registerid]", registers[registerid]) as num//Ask the user.
+		updateUsrDialog()
+		return 1
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/MakeCompare(var/datum/automation/a, var/datum/automation/b, var/comparetype)
 	var/datum/automation/compare/compare=new(src)
