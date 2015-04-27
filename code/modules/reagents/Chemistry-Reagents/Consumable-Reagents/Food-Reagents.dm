@@ -389,6 +389,12 @@ datum/reagent/consumable/cherryjelly
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
 
+datum/reagent/consumable/bluecherryjelly
+	name = "Blue Cherry Jelly"
+	id = "bluecherryjelly"
+	description = "Blue and tastier kind of cherry jelly."
+	color = "#00F0FF"
+
 datum/reagent/consumable/rice
 	name = "Rice"
 	id = "rice"
@@ -410,3 +416,19 @@ datum/reagent/consumable/eggyolk
 	id = "eggyolk"
 	description = "It's full of protein."
 	color = "#FFB500"
+
+datum/reagent/consumable/corn_starch
+	name = "Corn Starch"
+	id = "corn_starch"
+	description = "A slippery solution."
+	color = "#C8A5DC"
+
+datum/reagent/consumable/corn_syrup
+	name = "Corn Syrup"
+	id = "corn_syrup"
+	description = "Decays into sugar."
+	color = "#C8A5DC"
+
+datum/reagent/consumable/corn_syrup/on_mob_life(var/mob/living/M as mob)
+	M.reagents.add_reagent("sugar", 3)
+	M.reagents.remove_reagent("corn_syrup", 1)

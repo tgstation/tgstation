@@ -403,6 +403,68 @@ datum/reagent/consumable/doctor_delight
 	color = "#FF8CFF" // rgb: 255, 140, 255
 
 
+datum/reagent/consumable/chocolatepudding
+	name = "Chocolate Pudding"
+	id = "chocolatepudding"
+	description = "A great dessert for chocolate lovers."
+	color = "#800000"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/vanillapudding
+	name = "Vanilla Pudding"
+	id = "vanillapudding"
+	description = "A great dessert for vanilla lovers."
+	color = "#FAFAD2"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/cherryshake
+	name = "Cherry Shake"
+	id = "cherryshake"
+	description = "A cherry flavored milkshake."
+	color = "#FFB6C1"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/bluecherryshake
+	name = "Blue Cherry Shake"
+	id = "bluecherryshake"
+	description = "An exotic milkshake."
+	color = "#00F1FF"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/pumpkin_latte
+	name = "Pumpkin Latte"
+	id = "pumpkin_latte"
+	description = "A mix of pumpkin juice and coffee."
+	color = "#F4A460"
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/gibbfloats
+	name = "Gibb Floats"
+	id = "gibbfloats"
+	description = "Icecream on top of a Dr. Gibb glass."
+	color = "#B22222"
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/pumpkinjuice
+	name = "Pumpkin Juice"
+	id = "pumpkinjuice"
+	description = "Juiced from real pumpkin."
+	color = "#FFA500"
+
+datum/reagent/consumable/blumpkinjuice
+	name = "Blumpkin Juice"
+	id = "blumpkinjuice"
+	description = "Juiced from real blumpkin."
+	color = "#00BFFF"
+
+datum/reagent/consumable/triple_citrus
+	name = "Triple Citrus"
+	id = "triple_citrus"
+	description = "A solution."
+	color = "#C8A5DC"
+
+
+
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
 datum/reagent/consumable/atomicbomb

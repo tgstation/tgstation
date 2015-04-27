@@ -157,3 +157,17 @@
 	id = "vegancakebatter"
 	required_reagents = list("soymilk" = 15, "flour" = 15, "sugar" = 5)
 
+/datum/chemical_reaction/ricebowl
+        name = "Rice Bowl"
+        id = "ricebowl"
+        result = null
+        required_reagents = list("rice" = 10, "water" = 10)
+        result_amount = 1
+        required_container = /obj/item/weapon/reagent_containers/glass/bowl
+        mix_message = "The rice absorbs the water."
+
+/datum/chemical_reaction/ricebowl/on_reaction(var/datum/reagents/holder)
+        var/obj/item/weapon/reagent_containers/food/snacks/S = new /obj/item/weapon/reagent_containers/food/snacks/salad/ricebowl
+        S.loc = get_turf(holder.my_atom)
+        if(holder && holder.my_atom)
+                qdel(holder.my_atom)
