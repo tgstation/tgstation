@@ -57,7 +57,8 @@
 				modifier = MAT_COST_MEDIUM
 			if(initial(active_material.perunit) < 2000)
 				modifier = MAT_COST_RARE
-			var/amount = Clamp(round(input("How many sheets of [material_type.name] do you want to synthesize") as num), 0, 50)
+			var/amount = input(user, "How many sheets of [initial(material_type.name)] do you want to synthesize", "Material Synthesizer") as num
+			amount = Clamp(round(amount, 1), 0, 50)
 			if(amount)
 				if(TakeCost(amount, modifier, R))
 					var/obj/item/stack/sheet/inside_sheet = (locate(material_type) in R.module.modules)
@@ -66,21 +67,21 @@
 						R.module.modules += created_sheet
 						if((created_sheet.amount + amount) <= created_sheet.max_amount)
 							created_sheet.amount += (amount-1)
-							R << "Added [amount] of [material_type.name] to the stack."
+							R << "Added [amount] of [initial(material_type.name)] to the stack."
 						else
 							if(created_sheet.amount <= created_sheet.max_amount)
 								var/transfer_amount = min(created_sheet.max_amount - created_sheet.amount, amount)
 								created_sheet.amount += (transfer_amount-1)
 								amount -= transfer_amount
 							if(amount >= 1 && (created_sheet.amount >= created_sheet.max_amount))
-								R << "Dropping [amount], you cannot hold anymore of [material_type.name]."
+								R << "Dropping [amount], you cannot hold anymore of [initial(material_type.name)]."
 								var/obj/item/stack/sheet/dropped_sheet = new material_type(get_turf(src))
 								dropped_sheet.amount = (amount - 1)
 
 					else
 						if((inside_sheet.amount + amount) <= inside_sheet.max_amount)
 							inside_sheet.amount += amount
-							R << "Added [amount] of [material_type.name] to the stack."
+							R << "Added [amount] of [initial(material_type.name)] to the stack."
 							return
 						else
 							if(inside_sheet.amount <= inside_sheet.max_amount)
@@ -88,14 +89,14 @@
 								inside_sheet.amount += transfer_amount
 								amount -= transfer_amount
 							if(amount >= 1 && (inside_sheet.amount >= inside_sheet.max_amount))
-								R << "Dropping [amount], you cannot hold anymore of [material_type.name]."
+								R << "Dropping [amount], you cannot hold anymore of [initial(material_type.name)]."
 								var/obj/item/stack/sheet/dropped_sheet = new material_type(get_turf(src))
 								dropped_sheet.amount = amount
 					R.module.rebuild()
 					R.hud_used.update_robot_modules_display()
 					return
 				else
-					R << "<span class='warning'>You can't make that much [material_type.name] without shutting down!</span>"
+					R << "<span class='warning'>You can't make that much [initial(material_type.name)] without shutting down!</span>"
 					return
 
 				return
@@ -110,7 +111,7 @@
 				modifier = MAT_COST_MEDIUM
 			if(initial(active_material.perunit) < 2000)
 				modifier = MAT_COST_RARE
-			var/tospawn = Clamp(round(input("How many sheets of [material_type.name] do you want to synthesize? (0 - [matter / modifier])") as num), 0, round(matter / modifier))
+			var/tospawn = Clamp(round(input("How many sheets of [initial(material_type.name)] do you want to synthesize? (0 - [matter / modifier])") as num), 0, round(matter / modifier))
 			if(tospawn && material_type)
 				var/obj/item/stack/sheet/spawned_sheet = new material_type(get_turf(src))
 				spawned_sheet.amount = tospawn
@@ -183,6 +184,7 @@
 			user << "<span class='notice'>You switch \the [src] to synthesize [initial(active_material.name)]</span>"
 		else
 			active_material = null
+			return
 	else
 		user << "<span class='warning'>ERROR: NO MATERIAL DATA FOUND</span>"
 		return 0
