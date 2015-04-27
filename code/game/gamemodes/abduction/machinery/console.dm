@@ -51,6 +51,11 @@
 	if(experiment != null)
 		var/points = experiment.points
 		dat += "Collected Samples : [points] <br>"
+		dat += "<b>Transfer data in exchange for supplies:</b><br>"
+		dat += "<a href='?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=silencer'>Radio Silencer</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
 	else
 		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
 
@@ -101,6 +106,16 @@
 		FlipVest()
 	else if(href_list["select_disguise"])
 		SelectDisguise()
+	else if(href_list["dispense"])
+		switch(href_list["dispense"])
+			if("baton")
+				Dispense(/obj/item/weapon/abductor_baton)
+			if("helmet")
+				Dispense(/obj/item/clothing/head/helmet/abductor)
+			if("silencer")
+				Dispense(/obj/item/device/abductor/silencer)
+			if("tool")
+				Dispense(/obj/item/device/abductor/gizmo)
 	src.updateUsrDialog()
 
 /obj/machinery/abductor/console/proc/TeleporterSet()
@@ -182,3 +197,16 @@
 		vest = V
 	else
 		..()
+
+/obj/machinery/abductor/console/proc/Dispense(var/item)
+	if(experiment && experiment.points > 0)
+		experiment.points--
+		say("Incoming supply!")
+		if(pad)
+			flick("alien-pad", pad)
+			new item(pad.loc)
+		else
+			new item(src.loc)
+	else
+		say("Insufficent data!")
+	return

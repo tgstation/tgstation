@@ -49,7 +49,7 @@
 		spawn(0)
 			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
-/obj/machinery/abductor/pad/proc/Retrieve(var/mob/living/carbon/human/target)
+/obj/machinery/abductor/pad/proc/Retrieve(var/mob/living/target)
 	flick("alien-pad", src)
 	spawn(0)
 		anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)

@@ -208,6 +208,8 @@
 			user << "<span class='notice'>You mark the target for future retrieval.</span>"
 		else
 			prepare(target,user)
+	else
+		prepare(target,user)
 
 /obj/item/device/abductor/gizmo/proc/prepare(var/atom/target, var/mob/living/user)
 	if(get_dist(target,user)>1)
@@ -246,6 +248,8 @@
 
 	var/mob/living/carbon/human/M
 	for(M in view(2,targloc))
+		if(M == user)
+			continue
 		user << "<span class='notice'>You silence [M.name] radio devices.</span>"
 		radio_off_mob(M)
 
@@ -327,7 +331,8 @@ Congratulations! You are now trained for xenobiology research!"}
 #define BATON_STUN 0
 #define BATON_SLEEP 1
 #define BATON_CUFF 2
-#define BATON_MODES 3
+#define BATON_PROBE 3
+#define BATON_MODES 4
 
 /obj/item/weapon/abductor_baton
 	name = "Advanced Baton"
@@ -350,6 +355,8 @@ Congratulations! You are now trained for xenobiology research!"}
 			txt = "sleep inducment"
 		if(BATON_CUFF)
 			txt = "restraining"
+		if(BATON_PROBE)
+			txt = "probing"
 
 	usr << "<span class='notice'>You switch the baton to [txt] mode</span>"
 	update_icon()
@@ -361,6 +368,8 @@ Congratulations! You are now trained for xenobiology research!"}
 		if(BATON_SLEEP)
 			icon_state = "wonderprod"
 		if(BATON_CUFF)
+			icon_state = "wonderprod"
+		if(BATON_PROBE)
 			icon_state = "wonderprod"
 
 /obj/item/weapon/abductor_baton/proc/IsAbductor(var/mob/living/user)
@@ -384,11 +393,6 @@ Congratulations! You are now trained for xenobiology research!"}
 	if(!isliving(target))
 		return
 
-	if(user.a_intent == "help")
-		target.visible_message("<span class='danger'>[user] probes [target] with [src]!</span>", \
-							"<span class='userdanger'>[user] probed [target]!</span>")
-		return
-
 	var/mob/living/L = target
 
 	user.do_attack_animation(L)
@@ -399,6 +403,8 @@ Congratulations! You are now trained for xenobiology research!"}
 			SleepAttack(L,user)
 		if(BATON_CUFF)
 			CuffAttack(L,user)
+		if(BATON_PROBE)
+			ProbeAttack(L,user)
 
 /obj/item/weapon/abductor_baton/attack_self(mob/living/user)
 	toggle(user)
@@ -449,6 +455,19 @@ Congratulations! You are now trained for xenobiology research!"}
 		else
 			user << "<span class='warning'>You fail to handcuff [C].</span>"
 	return
+
+/obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
+	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
+						"<span class='userdanger'>[user] probed [L]!</span>")
+
+	var/species = "<span class='warning'>Unknown Species</span>"
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.dna && H.dna.species)
+			species = "<span clas=='notice'>[H.dna.species.name]</span>"
+		if(L.mind && L.mind.changeling)
+			species = "<span class='warning'>Changeling Lifeform</span>"
+	user << "<span class='notice'>Probing Result:</span>[species]"
 
 /obj/item/weapon/restraints/handcuffs/energy
 	name = "energy cuffs"
@@ -505,7 +524,7 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/item/clothing/head/helmet/abductor
 	name = "Agent Headgear"
-	desc = "Abducting with style. Spiky style."
+	desc = "Abducting with style. Spiky style. Prevents digital tracking."
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
 	blockTracking = 1
