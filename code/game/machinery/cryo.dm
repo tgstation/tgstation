@@ -47,6 +47,21 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	RefreshParts()
 
 	initialize_directions = dir
+	initialize()
+	build_network()
+	if (node)
+		node.initialize()
+		node.build_network()
+
+/obj/machinery/atmospherics/unary/cryo_cell/initialize()
+	if(node) return
+	for(var/cdir in cardinal)
+		if(node) break
+		for(var/obj/machinery/atmospherics/target in get_step(src,cdir))
+			if(target.initialize_directions & get_dir(target,src))
+				node = target
+				break
+	update_icon()
 
 /obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	go_out()
