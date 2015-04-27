@@ -393,6 +393,7 @@
 						for(var/obj/item/organ/limb/O in H.organs)
 							total_brute	+= O.brute_dam
 							total_burn	+= O.burn_dam
+						ghost = H.get_ghost()
 						if(total_burn <= 180 && total_brute <= 180 && !H.suiciding && !ghost && tplus < tlimit && !(NOCLONE in H.mutations))
 							//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 							if (H.health > halfwaycritdeath)
