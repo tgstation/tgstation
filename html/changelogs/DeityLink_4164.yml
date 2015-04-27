@@ -2,3 +2,4 @@ author: Deity Link
 delete-after: true
 changes:
   - rscadd: Added a rpane button that appears after the round ends to let you re-open the Round End Information window.
+  - rscadd: You may as well simply type "RoundEndInformation" in the chat window to open it again.
