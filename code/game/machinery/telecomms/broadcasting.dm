@@ -104,7 +104,7 @@
 
 	// --- Centcom radio, yo. ---
 
-	else if(data == 4)
+	else if(data == 5)
 
 		for(var/obj/item/device/radio/R in all_radios["[freq]"])
 			if(!R.centcom)
@@ -219,7 +219,7 @@
 
 	// --- Centcom radio, yo. ---
 
-	else if(data == 4)
+	else if(data == 5)
 
 		for(var/obj/item/device/radio/R in all_radios["[RADIO_CHAT]"])
 			if(R.centcom)
