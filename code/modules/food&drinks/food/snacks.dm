@@ -1,7 +1,7 @@
 /obj/item/weapon/reagent_containers/food/snacks
 	name = "snack"
 	desc = "yummy"
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/food.dmi'
 	icon_state = null
 	var/bitesize = 2
 	var/bitecount = 0
@@ -143,6 +143,7 @@
 			if(S.w_class > 2)
 				user << "<span class='warning'>The ingredient is too big for [src].</span>"
 				return 0
+
 			if(contents.len >= 20)
 				user << "<span class='warning'>You can't add more ingredients to [src].</span>"
 				return 0
@@ -207,6 +208,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S)
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)

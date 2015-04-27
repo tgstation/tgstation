@@ -58,7 +58,7 @@
 	icon_state = "tendies"
 	list_reagents = list("nutriment" = 5, "vitamin" = 2)
 	bitesize = 2
-	
+
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
 	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
@@ -97,6 +97,22 @@
 	icon_state = "wingfangchu"
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	list_reagents = list("nutriment" = 1, "vitamin" = 2)
+
+
+/obj/item/weapon/reagent_containers/food/snacks/bearsteak
+	name = "Filet migrawr"
+	desc = "Because eating bear wasn't manly enough."
+	icon_state = "bearsteak"
+	trash = /obj/item/trash/plate
+	list_reagents = list("nutriment" = 2, "vitamin" = 5, "manlydorf" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/eggwrap
+	name = "egg wrap"
+	desc = "The precursor to Pigs in a Blanket."
+	icon_state = "eggwrap"
+	list_reagents = list("nutriment" = 1, "vitamin" = 3)
+	filling_color = "#F0E68C"
+
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab
 	trash = /obj/item/stack/rods

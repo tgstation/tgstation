@@ -1,7 +1,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger
 	filling_color = "#CD853F"
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "hburger"
+	bitesize = 3
+	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/plain
 	name = "burger"
@@ -47,6 +50,7 @@
 	volume = 120
 	list_reagents = list("nutriment" = 5, "nanomachines" = 70, "vitamin" = 10)
 
+
 /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
@@ -70,6 +74,14 @@
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
 	list_reagents = list("nutriment" = 6, "mannitol" = 6, "vitamin" = 5)
+
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/bearger
+	name = "bearger"
+	desc = "Best served rawr."
+	icon_state = "bearger"
+	list_reagents = list("nutriment" = 3, "vitamin" = 6)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
@@ -143,10 +155,24 @@
 /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/cherry
 	list_reagents = list("cherryjelly" = 5, "vitamin" = 5)
 
+
 /obj/item/weapon/reagent_containers/food/snacks/burger/superbite
 	name = "super bite burger"
 	desc = "This is a mountain of a burger. FOOD!"
 	icon_state = "superbiteburger"
 	list_reagents = list("vitamin" = 10)
 	w_class = 3
-	volume = 80
+	bitesize = 7
+	volume = 100
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm
+	name = "five alarm burger"
+	desc = "HOT! HOT!"
+	icon_state = "fivealarmburger"
+	list_reagents = list("nutriment" = 6, "capsaicin" = 5, "condensedcapsaicin" = 5, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/rat
+	name = "rat burger"
+	desc = "Pretty much what you'd expect..."
+	icon_state = "ratburger"
+	list_reagents = list("nutriment" = 1, "vitamin" = 1)

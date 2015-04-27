@@ -1,0 +1,6 @@
+author: Zaers
+
+delete-after: true
+
+changes:
+  - rscadd: "Ported the new recipes for food and drinks from TG"

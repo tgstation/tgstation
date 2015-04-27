@@ -2,6 +2,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sandwich
 	name = "sandwich"
 	desc = "A grand creation of meat, cheese, bread, and several leaves of lettuce! Arthur Dent would be proud."
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "sandwich"
 	trash = /obj/item/trash/plate
 	list_reagents = list("nutriment" = 1, "vitamin" = 1)

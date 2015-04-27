@@ -5,7 +5,7 @@
 	name = "chocolate egg"
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolateegg"
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 1)
 	filling_color = "#A0522D"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
@@ -81,7 +81,7 @@
 	name = "boiled egg"
 	desc = "A hard boiled egg."
 	icon_state = "egg"
-	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 2, "vitamin" = 1)
 	filling_color = "#FFFFF0"
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette	//FUCK THIS
@@ -89,7 +89,7 @@
 	desc = "That's all you can say!"
 	icon_state = "omelette"
 	trash = /obj/item/trash/plate
-	list_reagents = list("nutriment" = 1, "vitamin" = 2)
+	list_reagents = list("nutriment" = 8, "vitamin" = 2)
 	bitesize = 1
 	w_class = 3
 
