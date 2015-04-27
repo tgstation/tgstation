@@ -22,7 +22,7 @@
 	use_to_pickup = 1
 	allow_quick_empty = 1
 	storage_slots = 21
-	can_hold = new/list(/obj/item/weapon/stock_parts/)
+	can_hold = list("/obj/item/weapon/stock_parts")
 
 /obj/item/weapon/storage/component_exchanger/attackby(var/atom/A, mob/user)
 	if(istype(A, /obj/item/weapon/storage/bag/gadgets))
@@ -36,6 +36,7 @@
 				user << "<span class='notice'>You fill \the [src] to its capacity with \the [G]'s contents.</span>"
 				return
 		user << "<span class='notice'>You fill up \the [src] with \the [G]'s contents.</span>"
+		return 1
 	else
 		..()
 
