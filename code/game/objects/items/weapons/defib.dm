@@ -359,13 +359,16 @@
 			defib.cooldowncheck(user)
 			return
 		if(user.zone_sel && user.zone_sel.selecting == "chest")
+			var/mob/dead/observer/ghost = H.get_ghost()
+			if(ghost)
+				ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
+				ghost << 'sound/effects/genetics.ogg'
 			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest...</span>")
 			busy = 1
 			update_icon()
 			if(do_after(user, 30)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
-				var/mob/dead/observer/ghost = H.get_ghost()
 				var/tplus = world.time - H.timeofdeath
 				var/tlimit = 6000 //past this much time the patient is unrecoverable (in deciseconds)
 				var/tloss = 3000 //brain damage starts setting in on the patient after some time left rotting
@@ -420,9 +423,6 @@
 								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
 							else
 								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - No soul in patient body. Further attempts may be successful.</span>")
-								if(ghost)
-									ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
-									ghost << sound('sound/effects/genetics.ogg')
 							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 							defib.deductcharge(revivecost)
 						update_icon()
