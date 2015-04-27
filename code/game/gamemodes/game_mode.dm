@@ -19,6 +19,7 @@
 	var/probability = 1
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
+	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/modePlayer = new
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
@@ -29,6 +30,7 @@
 	var/pre_setup_before_jobs = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/datum/mind/sacrifice_target = null
+	var/mob/living/living_antag_player = null
 	var/list/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
@@ -97,16 +99,16 @@
 ///convert_roundtype()
 ///Allows rounds to basically be "rerolled" should the initial premise fall through
 /datum/game_mode/proc/convert_roundtype()
-	var/living_crew = 0
+	var/list/living_crew = list()
 
 	for(var/mob/Player in mob_list)
 		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
-			living_crew++
-	if(living_crew / joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
+			living_crew += Player
+	if(living_crew.len / joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
 		message_admins("Convert_roundtype failed due to too many dead people. Limit is [config.midround_antag_life_check * 100]% living crew")
 		return null
 
-	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew)
+	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew.len)
 	var/list/datum/game_mode/usable_modes = list()
 	for(var/datum/game_mode/G in runnable_modes)
 		if(G.reroll_friendly)
@@ -167,8 +169,32 @@
 
 
 /datum/game_mode/proc/check_finished() //to be called by ticker
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
 	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
 		return 1
+	if(!round_converted && (!config.continuous[config_tag] || (config.continuous[config_tag] && config.midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
+		if(living_antag_player && living_antag_player.mind && living_antag_player.stat != DEAD && !isnewplayer(living_antag_player) &&!isbrain(living_antag_player))
+			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
+
+		for(var/mob/living/Player in living_mob_list)
+			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+				if(Player.mind.special_role) //Someone's still antaging!
+					living_antag_player = Player
+					return 0
+
+		if(!config.continuous[config_tag])
+			return 1
+
+		else
+			round_converted = convert_roundtype()
+			if(!round_converted)
+				if(round_ends_with_antag_death)
+					return 1
+				else
+					config.midround_antag[config_tag] = 0
+					return 0
+
 	return 0
 
 
