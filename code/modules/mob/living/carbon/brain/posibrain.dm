@@ -26,10 +26,10 @@
 
 /obj/item/device/mmi/posibrain/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
-		if(jobban_isbanned(O, "pAI"))
+		if(jobban_isbanned(O, "Ghost Roles"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_PAI)
+			if(O.client.prefs.be_special & BE_GHOST_ROLE)
 				question(O.client)
 
 /obj/item/device/mmi/posibrain/proc/question(var/client/C)
@@ -41,7 +41,7 @@
 		if(response == "Yes")
 			transfer_personality(C.mob)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_PAI
+			C.prefs.be_special ^= BE_GHOST_ROLE
 
 
 /obj/item/device/mmi/posibrain/transfer_identity(var/mob/living/carbon/H)

@@ -642,11 +642,11 @@
 				jobs += "</tr><tr align='center'>"
 				counter = 0
 
-		//pAI isn't technically a job, but it goes in here.
-		if(jobban_isbanned(M, "pAI"))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a></td>"
+		//Ghost Roles (pAI/Drone/Positronic Brains) are not technically jobs, but they go in here.
+		if(jobban_isbanned(M, "Ghost Roles"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Ghost Roles;jobban4=\ref[M]'><font color=red>Ghost Roles (pAI/Drone/Positronic Brains)</font></a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'>pAI</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Ghost Roles;jobban4=\ref[M]'>Ghost Roles (pAI/Drone/Positronic Brains)</a></td>"
 
 		jobs += "</tr></table>"
 
