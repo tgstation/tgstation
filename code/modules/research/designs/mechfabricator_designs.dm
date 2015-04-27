@@ -5,7 +5,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_suit
 	materials = list("$metal"=15000)
-	construction_time = 500
+	construction_time = 150
 	category = list("Cyborg")
 
 /datum/design/borg_chest
@@ -14,7 +14,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/chest
 	materials = list("$metal"=40000)
-	construction_time = 350
+	construction_time = 200
 	category = list("Cyborg")
 
 /datum/design/borg_head
@@ -23,7 +23,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/head
 	materials = list("$metal"=5000)
-	construction_time = 350
+	construction_time = 150
 	category = list("Cyborg")
 
 /datum/design/borg_l_arm
@@ -32,7 +32,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/l_arm
 	materials = list("$metal"=10000)
-	construction_time = 200
+	construction_time = 100
 	category = list("Cyborg")
 
 /datum/design/borg_r_arm
@@ -41,7 +41,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/r_arm
 	materials = list("$metal"=10000)
-	construction_time = 200
+	construction_time = 100
 	category = list("Cyborg")
 
 /datum/design/borg_l_leg
@@ -50,7 +50,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/l_leg
 	materials = list("$metal"=10000)
-	construction_time = 200
+	construction_time = 100
 	category = list("Cyborg")
 
 /datum/design/borg_r_leg
@@ -59,7 +59,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/r_leg
 	materials = list("$metal"=10000)
-	construction_time = 200
+	construction_time = 100
 	category = list("Cyborg")
 
 //Ripley
