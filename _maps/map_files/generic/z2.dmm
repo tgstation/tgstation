@@ -697,7 +697,7 @@
 "nu" = (/turf/unsimulated/wall/fakeglass{color = "#008000"; dir = 1; icon_state = "fakewindows2"},/area/wizard_station)
 "nv" = (/obj/structure/bookcase,/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
 "nw" = (/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/tdome/tdomeobserve)
-"nx" = (/obj/structure/cult/talisman{desc = "A altar dedicated to the Wizard's Federation"},/obj/item/weapon/kitchenknife/ritual,/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
+"nx" = (/obj/structure/cult/talisman{desc = "A altar dedicated to the Wizard's Federation"},/obj/item/weapon/kitchen/knife/ritual,/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
 "ny" = (/obj/item/clothing/shoes/sandal/marisa,/obj/item/clothing/suit/wizrobe/marisa,/obj/item/clothing/head/wizard/marisa,/obj/item/weapon/staff/broom,/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
 "nz" = (/obj/effect/decal/cleanable/blood/splatter,/mob/living/simple_animal/hostile/creature{name = "Experiment 35b"},/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
 "nA" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows"; dir = 9},/area/centcom/evac)
