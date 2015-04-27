@@ -231,7 +231,9 @@
 	world << "<b><font size='4'>[score["crewscore"]]</font></b>"
 
 	for(var/mob/E in player_list)
-		if(E.client) E.scorestats(completions)
+		if(E.client)
+			E.scorestats(completions)
+			winset(E.client, "rpane.round_end", "is-visible=true")
 	return
 
 
@@ -378,6 +380,7 @@
 
 	if(!endgame_info_logged)//so the End Round info only gets logged on the first player.
 		endgame_info_logged = 1
+		round_end_info = dat
 		log_game(dat)
 
 	src << browse(dat, "window=roundstats;size=1000x600")

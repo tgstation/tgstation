@@ -1,3 +1,6 @@
+//Content of the Round End Information window
+var/round_end_info = ""
+
 //List of ckeys that have de-adminned themselves during this round
 var/global/list/deadmins = list()
 
