@@ -11,6 +11,7 @@
 	icon_state = "vest_stealth"
 	item_state = "armor"
 	blood_overlay_type = "armor"
+	origin_tech = "materials=5;biotech=4;powerstorage=5"
 	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
 	action_button_name = "Activate"
 	action_button_is_hands_free = 1
@@ -147,6 +148,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gizmo_scan"
 	item_state = "silencer"
+	origin_tech = "materials=5;magnets=5;bluespace=6"
 	var/mode = GIZMO_SCAN
 	var/mob/living/marked = null
 	var/obj/machinery/abductor/console/console
@@ -227,6 +229,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "silencer"
 	item_state = "gizmo"
+	origin_tech = "materials=5;magnets=5"
 
 /obj/item/device/abductor/silencer/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
@@ -341,6 +344,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "wonderprod"
 	item_state = "wonderprod"
 	slot_flags = SLOT_BELT
+	origin_tech = "materials=6;combat=5;biotech=7"
 	force = 7
 	w_class = 3
 	action_button_name = "Toggle Mode"
@@ -528,6 +532,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
 	blockTracking = 1
+	origin_tech = "materials=6;magnets=5"
 
 // Operating Table / Beds / Lockers
 
