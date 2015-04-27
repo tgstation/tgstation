@@ -55,10 +55,6 @@
 			secequipment += loc
 			qdel(src)
 			return
-		if("Deathsquad")
-			deathsquadspawn += loc
-			qdel(src)
-			return
 		if("Emergencyresponseteam")
 			emergencyresponseteamspawn += loc
 			qdel(src)
