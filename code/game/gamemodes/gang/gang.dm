@@ -194,7 +194,7 @@
 			carbon_mob.flash_eyes(1, 1)
 		gangster_mind.current.Stun(5)
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
-	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with special spraycans only they can provide. Simply spray on any unclaimed area of the station.</font>"
+	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>"
 	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
@@ -343,11 +343,12 @@
 /datum/gang_points
 	var/A = 30
 	var/B = 30
-	var/next_point_time = 0
+	var/next_point_interval = 1800
+	var/next_point_time
 
 /datum/gang_points/proc/start()
-	next_point_time = world.time + 3000
-	spawn(3000)
+	next_point_time = world.time + next_point_interval
+	spawn(next_point_interval)
 		income()
 
 /datum/gang_points/proc/income()
@@ -375,7 +376,7 @@
 
 	//Calculate and report influence growth
 	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[gang_name("A")] Gang Status Report:</b>")
-	var/A_new = min(100,A + 15 + min(ticker.mode.A_territory.len, 15) + round(max(ticker.mode.A_territory.len - 15, 0) * 0.5,1))
+	var/A_new = min(100,A + 15 + ticker.mode.A_territory.len)
 	var/A_message = ""
 	if(A_new != A)
 		A_message += "Your gang has gained <b>[A_new - A] Influence</b> for holding on to [ticker.mode.A_territory.len] territories."
@@ -385,7 +386,7 @@
 	ticker.mode.message_gangtools(ticker.mode.A_tools,A_message,0)
 
 	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
-	var/B_new = min(100,B + 15 + min(ticker.mode.B_territory.len, 15) + round(max(ticker.mode.B_territory.len - 15, 0) * 0.5,1))
+	var/B_new = min(100,B + 15 + ticker.mode.B_territory.len)
 	var/B_message = ""
 	if(B_new != B)
 		B_message += "Your gang has gained <b>[B_new - B] Influence</b> for holding on to [ticker.mode.B_territory.len] territories."
