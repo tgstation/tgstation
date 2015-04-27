@@ -44,24 +44,35 @@
       </div>
     </div>
     <hr>
-
     {{if data.authenticated}}
       <script type="text/javascript">
         function markRed(){
           var nameField = document.getElementById('namefield');
           nameField.style.backgroundColor = "#FFDDDD";
+          var elem = document.getElementById("regid");
+          var body = $('body');
+          elem.value = body.data('urlParameters')["src"];
         }
         function markGreen(){
           var nameField = document.getElementById('namefield');
           nameField.style.backgroundColor = "#DDFFDD";
+          var elem = document.getElementById("regid");
+          var body = $('body');
+          elem.value = body.data('urlParameters')["src"];
         }
         function markAccountGreen(){
           var nameField = document.getElementById('accountfield');
           nameField.style.backgroundColor = "#DDFFDD";
+          var elem = document.getElementById("accid");
+          var body = $('body');
+          elem.value = body.data('urlParameters')["src"];
         }
         function markAccountRed(){
           var nameField = document.getElementById('accountfield');
           nameField.style.backgroundColor = "#FFDDDD";
+          var elem = document.getElementById("accid");
+          var body = $('body');
+          elem.value = body.data('urlParameters')["src"];
         }
         function showAll(){
           var allJobsSlot = document.getElementById('allvalue.jobsslot');
@@ -85,7 +96,7 @@
         <form name='cardcomp' action='?src={{:data.src}}' method='get'>
           <div class='item'>
             <div class='itemLabel'>
-              <input type='hidden' name='src' value='{{:data.src}}'>
+              <input type='hidden' name='src' value='' id='regid'>
               <input type='hidden' name='choice' value='reg'>
               Registered Name:
             </div>
@@ -99,7 +110,7 @@
         <form name='accountnum' action='?src={{:data.src}}' method='get'>
           <div class='item'>
             <div class='itemLabel'>
-              <input type='hidden' name='src' value='{{:data.src}}'>
+              <input type='hidden' name='src' value='' id='accid'>
               <input type='hidden' name='choice' value='account'>
               Account Number:
             </div>

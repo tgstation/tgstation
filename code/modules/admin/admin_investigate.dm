@@ -49,7 +49,7 @@ var/global/list/investigations=list(
 	handle = file(src.filename)
 
 /datum/log_controller/proc/write(var/message)
-	handle << message
+	handle << url_decode(message)
 
 /datum/log_controller/proc/read(var/mob/user)
 	user << browse(handle,"window=investigate[subject];size=800x300")
