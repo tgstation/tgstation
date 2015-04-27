@@ -57,6 +57,7 @@
 	var/targetContactLoc=null // Where we hit the target (used for target_moved)
 
 	var/list/sources = list() // Whoever served in emitting this beam. Used in prisms to prevent infinite loops.
+	var/_re_emit = 1 // Re-Emit from master when deleted? Set to 0 to not re-emit.
 
 // Listener for /atom/movable/on_moved
 /obj/effect/beam/proc/target_moved(var/list/args)
@@ -113,10 +114,11 @@
 	am_connector=1
 	var/obj/effect/beam/OB = master
 	if(!OB) OB = src
+	src._re_emit = 0
 	qdel(src)
 	OB.connect_to(AM)
 	//BEAM_DEL(src)
-	
+
 
 /obj/effect/beam/proc/get_master()
 	var/master_ref = "\ref[master]"
@@ -162,6 +164,7 @@
 		if(child)
 			//BEAM_DEL(child)
 			children -= child
+			child._re_emit = 0
 			qdel(child)
 	children.len = 0
 
@@ -196,6 +199,7 @@
 	am_connector=1
 	var/obj/effect/beam/OB = master
 	if(!OB) OB = src
+	src._re_emit = 0
 	qdel(src)
 	OB.connect_to(AM)
 
@@ -226,12 +230,14 @@
 	if(!loc)
 		//BEAM_DEL(src)
 		beam_testing("\ref[src] no loc")
+		src._re_emit = 0
 		qdel(src)
 		return
 
 	if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 		//BEAM_DEL(src)
 		beam_testing("\ref[src] end of world")
+		src._re_emit = 0
 		qdel(src)
 		return
 
@@ -253,6 +259,7 @@
 		if(bumped)
 			beam_testing("\ref[src] Bumped")
 			//BEAM_DEL(src)
+			src._re_emit = 0
 			qdel(src)
 			return
 
@@ -261,6 +268,7 @@
 		if(_range-- < 1)
 			beam_testing("\ref[src] ran out")
 			//BEAM_DEL(src)
+			src._re_emit = 0
 			qdel(src)
 			return
 
@@ -302,50 +310,59 @@
 	..()
 
 /obj/effect/beam/Destroy()
+	var/obj/effect/beam/ourselves = src
+	var/obj/effect/beam/ourmaster = get_master()
 	if(target)
 		if(target.beams)
-			target.beams -= src
+			target.beams -= ourselves
 	for(var/obj/machinery/mirror/M in mirror_list)
 		if(!M)
 			continue
-		if(src in M.beams)
-			M.beams -= src
+		if(ourselves in M.beams)
+			M.beams -= ourselves
 	for(var/obj/machinery/field_generator/F in field_gen_list)
 		if(!F)
 			continue
-		if(src in F.beams)
-			F.beams -= src
+		if(ourselves in F.beams)
+			F.beams -= ourselves
 	for(var/obj/machinery/prism/P in prism_list)
-		if(src == P.beam)
+		if(ourselves == P.beam)
 			P.beam = null
-		if(src in P.beams)
-			P.beams -= src
+		if(ourselves in P.beams)
+			P.beams -= ourselves
 	for(var/obj/machinery/power/photocollector/PC in photocollector_list)
-		if(src in PC.beams)
-			PC.beams -= src
+		if(ourselves in PC.beams)
+			PC.beams -= ourselves
 	if(!am_connector && !master)
 		beam_testing("\ref[get_master()] - Disconnecting (deleted)")
 		disconnect(0)
 	if(master)
 		if(master.target && master.target.beams)
-			master.target.beams -= src
+			master.target.beams -= ourselves
 		for(var/obj/effect/beam/B in master.children)
-			if(B.next == src)
+			if(B.next == ourselves)
 				B.next = null
-		if(master.next == src)
+		if(master.next == ourselves)
 			master.next = null
-		master.children.Remove(src)
+		master.children.Remove(ourselves)
 		master = null
 	else if(children && children.len)
 		killKids()
 	if(next)
 		//BEAM_DEL(next)
+		next._re_emit = 0
 		qdel(next)
 		next=null
 	..()
+	if(ourselves._re_emit && ourmaster._re_emit)
+		ourmaster.emit(ourmaster.sources)
 
 /obj/effect/beam/singularity_pull()
 	return
+
+/obj/effect/beam/singularity_act()
+	_re_emit = 0
+	..()
 
 /obj/effect/beam/ex_act(severity)
 	return
