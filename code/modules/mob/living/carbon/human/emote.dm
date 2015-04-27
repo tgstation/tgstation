@@ -667,9 +667,10 @@
 						visible_message("<span class = 'warning'><b>[name]</b> hunches down and grits their teeth!</span>")
 						if(do_after(usr,30))
 							visible_message("<span class = 'warning'><b>[name]</b> unleashes a [pick("tremendous","gigantic","colossal")] fart!</span>","<span class = 'warning'>You hear a [pick("tremendous","gigantic","colossal")] fart.</span>")
-							//playsound(L.loc, 'superfart.ogg', 50, 0)
+							playsound(L.loc, 'superfart.ogg', 50, 0)
 							if(!wearing_suit)
 								for(var/mob/living/V in view(src,aoe_range))
+									if(!airborne_can_reach(location,get_turf(V),aoe_range)) continue
 									shake_camera(V,10,5)
 									if (V == src)
 										continue
