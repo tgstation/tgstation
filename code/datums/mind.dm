@@ -463,7 +463,7 @@
 	text = "<i><b>[text]</b></i>: "
 	if(src in ticker.mode.abductors)
 		text += "<b>Abductor</b>|<a href='?src=\ref[src];abductor=clear'>human</a>"
-		text += "<a href='?src=\ref[src];common=undress'>undress</a>|<a href='?src=\ref[src];abductor=equip'>equip</a>"
+		text += "|<a href='?src=\ref[src];common=undress'>undress</a>|<a href='?src=\ref[src];abductor=equip'>equip</a>"
 	else
 		text += "<a href='?src=\ref[src];abductor=abductor'>Abductor</a>|<b>human</b>"
 
