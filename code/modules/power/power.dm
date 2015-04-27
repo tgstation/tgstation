@@ -81,7 +81,7 @@
 	if(!use_power)
 		return 1
 
-	if(isnull(areaMaster))
+	if(isnull(src.areaMaster) || !src.areaMaster)
 		return 0						// if not, then not powered.
 
 	if((machine_flags & FIXED2WORK) && !anchored)
@@ -92,10 +92,13 @@
 // increment the power usage stats for an area
 // defaults to power_channel
 /obj/machinery/proc/use_power(amount, chan = power_channel)
+	if(isnull(src.areaMaster) || !src.areaMaster)
+		return 0						// if not, then not powered.
+
 	if(!powered(chan)) //no point in trying if we don't have power
 		return 0
 
-	areaMaster.use_power(amount, chan)
+	src.areaMaster.use_power(amount, chan)
 
 // called whenever the power settings of the containing area change
 // by default, check equipment channel & set flag
