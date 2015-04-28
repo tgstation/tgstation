@@ -108,7 +108,7 @@ The box in your backpack has an oxygen tank and gas mask in it."
 
 /obj/screen/alert/not_enough_tox
 	name = "Choking (No Plasma)"
-	desc = "You're not getting enough plama. Find some good air before you pass out!"
+	desc = "You're not getting enough plasma. Find some good air before you pass out!"
 
 /obj/screen/alert/tox_in_air
 	name = "Choking (Plasma)"
