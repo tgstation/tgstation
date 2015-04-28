@@ -70,7 +70,6 @@
 		if(istype(M, /mob/living/carbon/human))
 			human = 1
 			var/mob/living/carbon/human/H = M
-			world << "BEFORE SYND"
 			//Cameras can't track people wearing an agent card or a ninja hood.
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 				continue
