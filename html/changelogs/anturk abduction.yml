@@ -1,0 +1,12 @@
+author: AnturK
+delete-after: True
+changes:
+  - rscadd: "Advanced cameras now have all functionality of the abductor consoles."
+  - tweak: "Pinpoint teleportation takes 8 seconds and spawns a flashy silhouette at the target location. Can be used as distraction since it appears even if teleporter is empty."
+  - bugfix: "Abductors are now immune to viruses."
+  - bugfix: "Dissection surgery ignores clothes."
+  - bugfix: "Non-abductors can escape the ship by fiddling with consoles enough."
+  - rscadd: "Three new negative glands."
+  - rscadd: "Bloody glands spray blood everywhere and injure the host."
+  - rscadd: "Bodysnatch glands turn the host into a cocoon that hatches doppelgangers."
+  - rscadd: "Plasma glands cause the host to explode into a cloud of plasma."

@@ -1,0 +1,5 @@
+author: RemieRichards
+delete-after: True
+changes:
+  - rscadd: "Adds Easels and canvases for custom drawings."
+  - imageadd: "Place a canvas on an easel and draw on it with crayons, clean one pixel with a rag or soap and activate it in-hand to erase the whole canvas."
