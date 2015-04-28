@@ -93,6 +93,9 @@
 	return 1
 
 /obj/machinery/power/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
+	if(iscrowbar(W) && panel_open && terminal)
+		user << "<span class='warning'>You must first cut the terminal from the SMES!</span>"
+		return 1
 	if(..())
 		return 1
 	if(panel_open)
