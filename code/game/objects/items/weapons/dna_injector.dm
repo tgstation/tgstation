@@ -97,8 +97,8 @@
 					M.dna.SetSEValue(block,src.GetValue())
 				domutcheck(M, null)
 				uses--
-				if(prob(5))
-					trigger_side_effect(M)
+				//if(prob(5))
+					//trigger_side_effect(M)
 
 	spawn(0)//this prevents the collapse of space-time continuum
 		if (user)
