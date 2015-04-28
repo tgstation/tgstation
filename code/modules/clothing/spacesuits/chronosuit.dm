@@ -25,6 +25,7 @@
 	action_button_name = "Toggle Chronosuit"
 	slowdown = 2
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
+	var/list/chronosafe_items = list(/obj/item/weapon/chrono_eraser, /obj/item/weapon/gun/energy/chrono_gun)
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
 	var/activating = 0
@@ -74,6 +75,13 @@
 		var/turf/to_turf = from_turf
 		var/atom/movable/overlay/phaseanim = new(from_turf)
 		var/obj/holder = new(camera)
+
+		var/list/nonsafe_slots = list(slot_belt, slot_back, slot_l_hand, slot_r_hand)
+		for(var/slot in nonsafe_slots)
+			var/obj/item/slot_item = user.get_item_by_slot(slot)
+			if(slot_item && !(slot_item.type in chronosafe_items) && user.unEquip(slot_item))
+				user << "<span class='notice'>Your [slot_item.name] got left behind.</span>"
+
 		phaseanim.name = "phasing [user.name]"
 		phaseanim.icon = 'icons/mob/mob.dmi'
 		phaseanim.icon_state = "chronostuck"
