@@ -127,6 +127,8 @@
 	item_state = "beaker"
 	m_amt = 0
 	g_amt = 500
+	var/obj/item/device/assembly_holder/assembly = null
+	flags = OPENCONTAINER | HEAR
 
 /obj/item/weapon/reagent_containers/glass/beaker/New()
 	..()
@@ -147,6 +149,16 @@
 	..()
 	update_icon()
 
+/obj/item/weapon/reagent_containers/glass/beaker/attack_self(mob/user)
+	..()
+	if(assembly)
+		user << "<span class='notice'>You detach [assembly] from \the [src]</span>"
+		user.put_in_hands(assembly)
+		assembly = null
+		update_icon()
+	else
+		usr << "<span class='notice'>There is no assembly to remove.</span>"
+
 /obj/item/weapon/reagent_containers/glass/beaker/update_icon()
 	overlays.Cut()
 
@@ -165,6 +177,42 @@
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
+	if(assembly)
+		var/image/assembly_img = image(icon, src, "assembly")
+		overlays += assembly_img
+
+/obj/item/weapon/reagent_containers/glass/beaker/proc/ignite()
+	if(reagents)
+		reagents.chem_temp += 30
+		reagents.handle_reactions()
+
+/obj/item/weapon/reagent_containers/glass/beaker/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+	if (istype(W,/obj/item/device/assembly_holder))
+		if (assembly)
+			usr << "<span class='warning'>The [src] already has an assembly.</span>"
+			return ..()
+		assembly = W
+		user.drop_item()
+		W.loc = src
+		update_icon()
+	else
+		..()
+
+/obj/item/weapon/reagent_containers/glass/beaker/HasProximity(atom/movable/AM)
+	if(assembly)
+		assembly.HasProximity(AM)
+
+/obj/item/weapon/reagent_containers/glass/beaker/Crossed(atom/movable/AM)
+	if(assembly)
+		assembly.Crossed(AM)
+
+/obj/item/weapon/reagent_containers/glass/beaker/on_found(mob/finder as mob) //for mousetraps
+	if(assembly)
+		assembly.on_found(finder)
+
+/obj/item/weapon/reagent_containers/glass/beaker/Hear(msg, mob/living/M)
+	if(assembly)
+		assembly.Hear(msg, M)
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
@@ -174,7 +222,7 @@
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
-	flags = OPENCONTAINER
+	flags = OPENCONTAINER | HEAR
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -183,7 +231,7 @@
 	g_amt = 500
 	volume = 50
 	amount_per_transfer_from_this = 10
-	flags = OPENCONTAINER | NOREACT
+	flags = OPENCONTAINER | NOREACT | HEAR
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
@@ -193,7 +241,7 @@
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
-	flags = OPENCONTAINER
+	flags = OPENCONTAINER | HEAR
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 	list_reagents = list("cryoxadone" = 30)
@@ -232,7 +280,7 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
-	flags = OPENCONTAINER
+	flags = OPENCONTAINER | HEAR
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob, params)
 	if(isprox(D))

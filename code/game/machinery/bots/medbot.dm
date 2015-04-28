@@ -32,10 +32,10 @@
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	radio_frequency = MED_FREQ //Medical frequency
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute = "salglu_solution"
-	var/treatment_oxy = "salbutamol"
-	var/treatment_fire = "salglu_solution"
-	var/treatment_tox = "charcoal"
+	var/treatment_brute = "brute_solution"
+	var/treatment_oxy = "reoxygenator"
+	var/treatment_fire = "aloe_vera_extract"
+	var/treatment_tox = "toxin_filterer"
 	var/treatment_virus = "spaceacillin"
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
@@ -45,10 +45,10 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_oxy = "omnizine"
-	treatment_brute = "omnizine"
-	treatment_fire = "omnizine"
-	treatment_tox = "omnizine"
+	treatment_oxy = "stabilized_omnizine"
+	treatment_brute = "stabilized_omnizine"
+	treatment_fire = "stabilized_omnizine"
+	treatment_tox = "stabilized_omnizine"
 
 /obj/machinery/bot/medbot/derelict
 	name = "\improper Old Medibot"

@@ -605,6 +605,45 @@ datum/reagent/toxin/curare/on_mob_life(var/mob/living/M as mob)
 	M.adjustOxyLoss(0.5*REM)
 	..()
 
+datum/reagent/toxin/sarin
+	name = "Sarin"
+	id = "sarin"
+	description = "An extremely deadly neurotoxin."
+	color = "#C7C7C7"
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+datum/reagent/toxin/sarin/on_mob_life(var/mob/living/M as mob)
+	M.adjustFireLoss(1)
+	if(prob(20))
+		M.emote(pick("twitch","drool"))
+	if(prob(10))
+		M.emote("scream")
+		M.drop_l_hand()
+		M.drop_r_hand()
+	if(prob(5))
+		M.dizziness = max(M.dizziness, 3)
+	if(prob(15))
+		M.fakevomit()
+	if(prob(2))
+		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='danger'>You have a seizure!</span>")
+		M.Paralyse(5)
+		M.jitteriness = 1000
+	if(current_cycle >= 5)
+		M.jitteriness += 10
+	if(current_cycle >= 20)
+		if(prob(5))
+			M.emote("collapse")
+	switch(current_cycle)
+		if(0 to 60)
+			M.adjustBrainLoss(1)
+			M.adjustToxLoss(1)
+		if(61 to INFINITY)
+			M.adjustBrainLoss(2)
+			M.adjustToxLoss(2)
+			M.Paralyse(5)
+			M.losebreath += 5
+	..()
+
 
 //ACID
 

@@ -15,6 +15,7 @@
 	var/affected_area = 3
 	var/obj/item/device/assembly_holder/nadeassembly = null
 	var/assemblyattacher
+	var/max_beakers = 2
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
@@ -63,7 +64,7 @@
 			user << "<span class='warning'>You need to add an activation mechanism!</span>"
 
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
-		if(beakers.len == 2)
+		if(beakers.len == max_beakers)
 			user << "<span class='warning'>[src] can not hold more containers!</span>"
 			return
 		else
@@ -240,6 +241,7 @@
 								/obj/item/weapon/reagent_containers/food/drinks)
 	origin_tech = "combat=3;materials=3"
 	affected_area = 4
+	max_beakers = 3 // this is a great idea - Iamgoofball
 
 /obj/item/weapon/grenade/chem_grenade/large/mix_reagents()
 	for(var/obj/item/slime_extract/S in beakers)
@@ -413,6 +415,49 @@
 
 	beakers += B1
 	beakers += B2
+
+/obj/item/weapon/grenade/chem_grenade/large/sarin_gas
+	name = "sarin gas grenade"
+	desc = "The label says 'Bioterrorism - Gassy Flavor'."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/large/sarin_gas/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B3 = new(src)
+
+	B1.reagents.add_reagent("sugar", 1)
+	B2.reagents.add_reagent("potassium", 1)
+	B3.reagents.add_reagent("phosphorus", 1)
+	B1.reagents.add_reagent("sarin", 99)
+	B2.reagents.add_reagent("sarin", 99)
+	B3.reagents.add_reagent("sarin", 99)
+
+	beakers += B1
+	beakers += B2
+	beakers += B3
+
+
+/obj/item/weapon/grenade/chem_grenade/large/sarin_foam
+	name = "sarin foam grenade"
+	desc = "The label says 'Bioterrorism - Foamy Flavor'."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/large/sarin_foam/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B3 = new(src)
+
+	B1.reagents.add_reagent("fluorosurfactant", 100)
+	B2.reagents.add_reagent("water", 100)
+	B3.reagents.add_reagent("sarin", 100)
+
+	beakers += B1
+	beakers += B2
+	beakers += B3
+
 
 
 #undef EMPTY

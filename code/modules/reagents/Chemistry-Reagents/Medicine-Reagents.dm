@@ -102,16 +102,16 @@ datum/reagent/medicine/inacusiate/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	id = "cryoxadone"
-	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
+	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
 
 datum/reagent/medicine/cryoxadone/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD && M.bodytemperature < 270)
-		M.adjustCloneLoss(-4)
-		M.adjustOxyLoss(-10)
-		M.adjustBruteLoss(-3)
-		M.adjustFireLoss(-3)
-		M.adjustToxLoss(-3)
+		M.adjustCloneLoss(-2)
+		M.adjustOxyLoss(-5)
+		M.adjustBruteLoss(-1.5)
+		M.adjustFireLoss(-1.5)
+		M.adjustToxLoss(-1.5)
 		M.status_flags &= ~DISFIGURED
 
 	..()
@@ -548,7 +548,7 @@ datum/reagent/medicine/oculine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/atropine
 	name = "Atropine"
 	id = "atropine"
-	description = "If patients health is below -25 it will heal 1.5 brute and burn damage per cycle, as well as stop any oxyloss. Good for stabilising critical patients."
+	description = "If patients health is below -25 it will heal 1.5 brute and burn damage per cycle, as well as stop any oxyloss. Rapidly purges Sarin. Good for stabilising critical patients."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -567,6 +567,7 @@ datum/reagent/medicine/atropine/on_mob_life(var/mob/living/M as mob)
 	if(prob(20))
 		M.Dizzy(5)
 		M.Jitter(5)
+	M.reagents.remove_reagent("sarin", 10)
 	..()
 	return
 
@@ -731,3 +732,89 @@ datum/reagent/medicine/insulin/on_mob_life(var/mob/living/M as mob)
 	M.reagents.remove_reagent("sugar", 3)
 	..()
 	return
+
+/*
+	Alright, so, let's get one thing straight here.
+
+	The first 4 reagents never ever show up outside of medibots, mediborgs, and sleepers.
+
+	EVER. No recipes, no secret monkey techniquing it, nothing.
+
+	If they do, I'm gonna nerf them.
+
+	The 5th reagent never shows up outside of mediborgs and that fucking speshul snoflaek Mysterious Medibot bullshit.
+	If it does, it's going bye bye and you get to use styptic patch appliers or some shit.
+	Whatever I end up coding to replace it, idfk. Either way, you know the rules now. Happy healing!
+
+	- Iamgoofball
+*/
+
+datum/reagent/medicine/brute_solution
+	name = "Brute Solution"
+	id = "brute_solution"
+	description = "You shouldn't ever see this."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	can_synth = 0 // haha no not happening
+
+datum/reagent/medicine/brute_solution/on_mob_life(var/mob/living/M as mob)
+	M.adjustBruteLoss(-2)
+	..()
+	return
+
+datum/reagent/medicine/aloe_vera_extract
+	name = "Aloe Vera Extract"
+	id = "aloe_vera_extract"
+	description = "You shouldn't ever see this."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	can_synth = 0 // haha no not happening
+
+datum/reagent/medicine/aloe_vera_extract/on_mob_life(var/mob/living/M as mob)
+	M.adjustFireLoss(-2)
+	..()
+	return
+
+datum/reagent/medicine/reoxygenator
+	name = "Reoxygenator"
+	id = "reoxygenator"
+	description = "You shouldn't ever see this."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	can_synth = 0 // haha no not happening
+
+datum/reagent/medicine/reoxygenator/on_mob_life(var/mob/living/M as mob)
+	M.adjustOxyLoss(-2)
+	..()
+	return
+
+datum/reagent/medicine/toxin_filterer
+	name = "Toxin Filterer"
+	id = "toxin_filterer"
+	description = "You shouldn't ever see this."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	can_synth = 0 // haha no not happening
+
+datum/reagent/medicine/toxin_filterer/on_mob_life(var/mob/living/M as mob)
+	M.adjustToxLoss(-2)
+	..()
+	return
+
+datum/reagent/medicine/stabilized_omnizine
+	name = "Stabilized Omnizine"
+	id = "stabilized_omnizine"
+	description = "You shouldn't ever see this."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	can_synth = 0 // haha no not happening
+
+datum/reagent/medicine/stabilized_omnizine/on_mob_life(var/mob/living/M as mob)
+	M.adjustToxLoss(-1)
+	M.adjustBruteLoss(-1)
+	M.adjustFireLoss(-1)
+	M.adjustOxyLoss(-1)
+	..()
+	return
+
+
