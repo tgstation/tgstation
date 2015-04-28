@@ -124,3 +124,10 @@ Admin:
 	set name = ".swinset"
 	set hidden = 1
 	winset(src, null, x)
+
+/client/verb/roundendinfo()
+	set name = "RoundEndInformation"
+	set desc = "Open the Round End Information window."
+	set hidden = 1
+
+	src << browse(round_end_info, "window=roundstats;size=1000x600")

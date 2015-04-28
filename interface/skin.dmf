@@ -1409,6 +1409,34 @@ window "rpane"
 		macro = ""
 		menu = ""
 		on-close = ""
+	elem "round_end"
+		type = BUTTON
+		pos = 640,0
+		size = 224x32
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #ffffff
+		background-color = #808080
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Round End Information"
+		image = ""
+		command = "RoundEndInformation"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
 	elem "rpanewindow"
 		type = CHILD
 		pos = 0,0
