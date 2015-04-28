@@ -43,9 +43,9 @@
 	var/num_traitors = 1
 
 	if(config.traitor_scaling)
-		num_traitors = max(1, round((num_players())/(traitor_scaling_coeff)))
+		num_traitors = max(required_enemies, round((num_players())/(traitor_scaling_coeff)))
 	else
-		num_traitors = max(1, min(num_players(), traitors_possible))
+		num_traitors = max(required_enemies, min(num_players(), traitors_possible))
 
 	for(var/datum/mind/player in possible_traitors)
 		for(var/job in restricted_jobs)
