@@ -1,7 +1,0 @@
-author: JJRcop
-
-delete-after: True
-
-changes: 
-  - tweak: "TED's kill duration has been halved." 
-  - tweak: "Escaping from the TED's field no longer kills you." 

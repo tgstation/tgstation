@@ -1,6 +1,0 @@
-author: phil235
-
-delete-after: True
-
-changes: 
-  - bugfix: "Podplants are no longer unharvestable."

@@ -1,8 +1,0 @@
-author: Iamgoofball
-
-delete-after: True
-
-changes: 
-  - rscdel: "Acid blob has been removed."
-  - tweak: "Charcoal and Silver Sulf are more powerful now."
-  - tweak: "Styptic power and Silver Sulf metabolize at the default rate."
