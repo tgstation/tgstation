@@ -108,7 +108,7 @@
 	usr.set_machine(src)
 	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 				<b>Desirable output pressure: </b>
-				[target_pressure]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
+				[target_pressure] kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
 				<br>
 				<b>Node 1 Concentration:</b>
 				<a href='?src=\ref[src];node1_c=-0.1'><b>-</b></a>
@@ -134,7 +134,7 @@
 	if(href_list["power"])
 		on = !on
 	if(href_list["set_press"])
-		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", target_pressure)))
+		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500 kPa)", target_pressure)))
 	if(href_list["node1_c"])
 		var/value = text2num(href_list["node1_c"])
 		src.node1_concentration = max(0, min(1, src.node1_concentration + value))

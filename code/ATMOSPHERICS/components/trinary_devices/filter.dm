@@ -177,7 +177,7 @@ Filter types:
 			<A href='?src=\ref[src];filterset=4'>Nitrous Oxide</A><BR>
 			<A href='?src=\ref[src];filterset=-1'>Nothing</A><BR>
 			<HR><B>Desirable output pressure:</B>
-			[src.target_pressure]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
+			[src.target_pressure] kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
 			"}
 /*
 		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD>[dat]","window=atmo_filter")
@@ -203,7 +203,7 @@ Filter types:
 	if (href_list["temp"])
 		src.temp = null
 	if(href_list["set_press"])
-		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", target_pressure)))
+		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500 kPa)", target_pressure)))
 	if(href_list["power"])
 		on=!on
 	src.update_icon()
