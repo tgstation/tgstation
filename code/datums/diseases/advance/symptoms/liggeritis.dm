@@ -27,7 +27,7 @@ Bonus
                                         M << "<span class='notice'>[pick("Your skin feels awfully itchy", "Your tailbone feels like it's going to burst")]</span>"
                         if(3, 4)
                                 if(prob(SYMPTOM_ACTIVATION_PROB))
-                                        M << A.affected_mob.say(pick("Hiss"))
+                                        M << A.affected_mob.say(pick("Hiss, Hiss?, Hiss!"))
                                         M << "<span class='notice'>[pick("You cannot resist the urge to hiss")]</span>"
                         if(5)
                                 if(ishuman(A.affected_mob))
@@ -35,6 +35,8 @@ Bonus
                                         if(human.dna && human.dna.species.id != "lizard")
                                                 human.dna.species = new /datum/species/lizard()
                                                 human.update_icons()
+                                                human.update_body()
+                                                human.update_hair()
                                 else
                                         return
                                        
