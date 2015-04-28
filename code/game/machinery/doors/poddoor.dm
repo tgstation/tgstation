@@ -1,3 +1,4 @@
+var/list/poddoors = list()
 /obj/machinery/door/poddoor
 	name = "Podlock"
 	desc = "Why it no open!!!"
@@ -22,7 +23,12 @@
 		layer = 3.3		//to override door.New() proc
 	else
 		layer = initial(layer)
+	poddoors += src
 	return
+
+/obj/machinery/door/poddoor/Destroy()
+	poddoors -= src
+	..()
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)

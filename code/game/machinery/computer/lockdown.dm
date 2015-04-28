@@ -54,7 +54,7 @@
 			for(var/item in L)
 				L.Remove(item)
 		//
-		for(var/obj/machinery/door/poddoor/D in world)
+		for(var/obj/machinery/door/poddoor/D in poddoors)
 			if(D.network in connected_doors)
 				var/list/L = connected_doors[D.network]
 				L.Add(D)

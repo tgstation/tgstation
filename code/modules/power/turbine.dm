@@ -218,7 +218,7 @@
 			if(id_tag == C.comp_id)
 				compressor = C
 		doors = new /list()
-		for(var/obj/machinery/door/poddoor/P in machines)
+		for(var/obj/machinery/door/poddoor/P in poddoors)
 			if(P.id_tag == id_tag)
 				doors += P
 

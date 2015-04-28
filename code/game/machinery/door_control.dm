@@ -105,7 +105,7 @@
 					D.safe = !D.safe
 
 	else
-		for(var/obj/machinery/door/poddoor/M in world)
+		for(var/obj/machinery/door/poddoor/M in poddoors)
 			if (M.id_tag == src.id_tag)
 				if (M.density)
 					spawn( 0 )
@@ -185,13 +185,13 @@
 
 	sleep(20)
 
-	for(var/obj/machinery/mass_driver/M in world)
+	for(var/obj/machinery/mass_driver/M in mass_drivers)
 		if(M.id_tag == src.id_tag)
 			M.drive()
 
 	sleep(50)
 
-	for(var/obj/machinery/door/poddoor/M in world)
+	for(var/obj/machinery/door/poddoor/M in poddoors)
 		if (M.id_tag == src.id_tag)
 			spawn()
 				M.close()
