@@ -202,7 +202,7 @@ LINEN BINS
 		update_icon()
 	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.drop_item())
-			user << "<span class='notice'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>"
+			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>"
 			return
 		I.loc = src
 		hidden = I

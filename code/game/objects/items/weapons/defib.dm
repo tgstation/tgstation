@@ -333,13 +333,13 @@
 		playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 		return
 	if(!wielded)
-		user << "<span class='notice'>You need to wield the paddles in both hands before you can use them on someone!</span>"
+		user << "<span class='warning'>You need to wield the paddles in both hands before you can use them on someone!</span>"
 		return
 	if(cooldown)
-		user << "<span class='notice'>[defib] is recharging.</span>"
+		user << "<span class='warning'>[defib] is recharging!</span>"
 		return
 	if(!ishuman(M))
-		user << "<span class='notice'>The instructions on [defib] don't mention how to revive that...</span>"
+		user << "<span class='warning'>The instructions on [defib] don't mention how to revive that...</span>"
 		return
 	else
 		if(user.a_intent == "harm" && !defib.safety)
@@ -359,13 +359,16 @@
 			defib.cooldowncheck(user)
 			return
 		if(user.zone_sel && user.zone_sel.selecting == "chest")
-			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest.</span>")
+			var/mob/dead/observer/ghost = H.get_ghost()
+			if(ghost)
+				ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
+				ghost << 'sound/effects/genetics.ogg'
+			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest...</span>")
 			busy = 1
 			update_icon()
 			if(do_after(user, 30)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
-				var/mob/dead/observer/ghost = H.get_ghost()
 				var/tplus = world.time - H.timeofdeath
 				var/tlimit = 6000 //past this much time the patient is unrecoverable (in deciseconds)
 				var/tloss = 3000 //brain damage starts setting in on the patient after some time left rotting
@@ -375,7 +378,7 @@
 					for(var/obj/item/carried_item in H.contents)
 						if(istype(carried_item, /obj/item/clothing/suit/space))
 							if(!defib.combat)
-								user.visible_message("<span class='notice'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
+								user.visible_message("<span class='warning'>[defib] buzzes: Patient's chest is obscured. Operation aborted.</span>")
 								playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 								busy = 0
 								update_icon()
@@ -390,6 +393,7 @@
 						for(var/obj/item/organ/limb/O in H.organs)
 							total_brute	+= O.brute_dam
 							total_burn	+= O.burn_dam
+						ghost = H.get_ghost()
 						if(total_burn <= 180 && total_brute <= 180 && !H.suiciding && !ghost && tplus < tlimit && !(NOCLONE in H.mutations))
 							//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 							if (H.health > halfwaycritdeath)
@@ -420,19 +424,16 @@
 								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
 							else
 								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - No soul in patient body. Further attempts may be successful.</span>")
-								if(ghost)
-									ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
-									ghost << sound('sound/effects/genetics.ogg')
 							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 							defib.deductcharge(revivecost)
 						update_icon()
 						cooldown = 1
 						defib.cooldowncheck(user)
 					else
-						user.visible_message("<span class='notice'>[defib] buzzes: Patient is not in a valid state. Operation aborted.</span>")
+						user.visible_message("<span class='warning'>[defib] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 			busy = 0
 			update_icon()
 		else
-			user << "<span class='notice'>You need to target your patient's chest with [src].</span>"
+			user << "<span class='warning'>You need to target your patient's chest with [src]!</span>"
 			return

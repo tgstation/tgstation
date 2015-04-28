@@ -133,7 +133,7 @@
 		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
-		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
+		user.visible_message("[user] screws the camera's panel [panel_open ? "open" : "closed"]!",
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
@@ -142,7 +142,7 @@
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && wires.CanDeconstruct())
 		if(weld(W, user))
-			user << "You unweld the camera leaving it as just a frame screwed to the wall."
+			user << "<span class='notice'>You unweld the camera leaving it as just a frame screwed to the wall.</span>"
 			if(!assembly)
 				assembly = new()
 			assembly.loc = src.loc
@@ -191,7 +191,7 @@
 			P = W
 			itemname = P.name
 			info = P.notehtml
-		U << "You hold \the [itemname] up to the camera ..."
+		U << "<span class='notice'>You hold \the [itemname] up to the camera...</span>"
 		U.changeNext_move(CLICK_CD_MELEE)
 		for(var/mob/O in player_list)
 			if(istype(O, /mob/living/silicon/ai))
@@ -321,7 +321,7 @@
 	if(!WT.remove_fuel(0, user))
 		return 0
 
-	user << "<span class='notice'>You start to weld [src].</span>"
+	user << "<span class='notice'>You start to weld [src]...</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	busy = 1
 	if(do_after(user, 100))

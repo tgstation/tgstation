@@ -88,6 +88,7 @@
 
 /obj/item/toy/crayon/spraycan
 	icon_state = "spraycan_cap"
+	item_state = "spraycan"
 	desc = "A metallic container containing tasty paint."
 	var/capped = 1
 	instant = 1
@@ -132,9 +133,9 @@
 		if(iscarbon(target))
 			if(uses)
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-				uses = max(0,uses-10)
 				var/mob/living/carbon/human/C = target
-				user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
+				user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
+				target << "<span class='userdanger'>[user] sprays [src] into your face!</span>"
 				if(C.client)
 					C.eye_blurry = max(C.eye_blurry, 3)
 					C.eye_blind = max(C.eye_blind, 1)
@@ -144,6 +145,7 @@
 				C.lip_style = "spray_face"
 				C.lip_color = colour
 				C.update_body()
+				uses = max(0,uses-10)
 		..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
@@ -156,4 +158,5 @@
 	desc = "A suspicious-looking spraycan modified to use special paint used by gangsters to mark territory."
 	icon_state = "spraycan_gang_cap"
 	gang = 1
+	uses = 15
 	instant = -1

@@ -106,6 +106,6 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/C = user
 		if(C.shoes == src && src.chained == 1)
-			user << "<span class='notice'>You need help taking these off!</span>"
+			user << "<span class='warning'>You need help taking these off!</span>"
 			return
 	..()

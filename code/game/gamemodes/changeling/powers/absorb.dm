@@ -17,10 +17,10 @@
 
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	if(!istype(G))
-		user << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>"
+		user << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them!</span>"
 		return
 	if(G.state <= GRAB_NECK)
-		user << "<span class='warning'>We must have a tighter grip to absorb this creature.</span>"
+		user << "<span class='warning'>We must have a tighter grip to absorb this creature!</span>"
 		return
 
 	var/mob/living/carbon/target = G.affecting
@@ -38,12 +38,10 @@
 			if(1)
 				user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
 			if(2)
-				user << "<span class='notice'>We extend a proboscis.</span>"
-				user.visible_message("<span class='warning'>[user] extends a proboscis!</span>")
+				user.visible_message("<span class='warning'>[user] extends a proboscis!</span>", "<span class='notice'>We extend a proboscis.</span>")
 			if(3)
-				user << "<span class='notice'>We stab [target] with the proboscis.</span>"
-				user.visible_message("<span class='danger'>[user] stabs [target] with the proboscis!</span>")
-				target << "<span class='danger'>You feel a sharp stabbing pain!</span>"
+				user.visible_message("<span class='danger'>[user] stabs [target] with the proboscis!</span>", "<span class='notice'>We stab [target] with the proboscis.</span>")
+				target << "<span class='userdanger'>You feel a sharp stabbing pain!</span>"
 				target.take_overall_damage(40)
 
 		feedback_add_details("changeling_powers","A[stage]")
@@ -52,9 +50,8 @@
 			changeling.isabsorbing = 0
 			return
 
-	user << "<span class='notice'>We have absorbed [target]!</span>"
-	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>")
-	target << "<span class='danger'>You have been absorbed by the changeling!</span>"
+	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>", "<span class='notice'>We have absorbed [target].</span>")
+	target << "<span class='userdanger'>You are absorbed by the changeling!</span>"
 
 	if(!changeling.has_dna(target.dna))
 		changeling.absorb_dna(target, user)

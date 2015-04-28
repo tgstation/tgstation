@@ -43,3 +43,6 @@
 	var/list/image/staticOverlays = list()
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
 	var/list/datum/action/actions = list()
+
+	var/list/pipes_shown = list()
+	var/last_played_vent

@@ -230,13 +230,13 @@
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "<span class='notice'>A beaker is already loaded into [src].</span>"
+			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
 			return
 
 		beaker = I
 		user.drop_item()
 		I.loc = src
-		user.visible_message("<span class='notice'>[user] places [I] in [src].</span>", \
+		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
 
 	if(!(on || occupant || state_open))

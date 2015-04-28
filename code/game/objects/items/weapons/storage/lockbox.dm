@@ -48,11 +48,11 @@
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		for(var/mob/O in viewers(user, 3))
-			O.show_message(text("<span class='notice'>\The [src] has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
+			O.show_message(text("\The [src] has been broken by [] with an electromagnetic card!", user), 1, text("<span class='italics'>You hear a faint electrical spark.</span>"), 2)
 			return
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
 	if(locked)
-		user << "<span class='danger'>It's locked!</span>"
+		user << "<span class='warning'>It's locked!</span>"
 	else
 		..()
 	return

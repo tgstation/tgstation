@@ -162,7 +162,6 @@ datum/reagent/medicine/silver_sulfadiazine
 	description = "On touch, quickly heals burn damage. Basic anti-burn healing drug. On ingestion, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	metabolization_rate = 5 * REAGENTS_METABOLISM
 
 datum/reagent/medicine/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(iscarbon(M))
@@ -179,7 +178,7 @@ datum/reagent/medicine/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob,
 	return
 
 datum/reagent/medicine/silver_sulfadiazine/on_mob_life(var/mob/living/M as mob)
-	M.adjustFireLoss(-1*REM)
+	M.adjustFireLoss(-2*REM)
 	..()
 	return
 
@@ -189,7 +188,6 @@ datum/reagent/medicine/styptic_powder
 	description = "On touch, quickly heals brute damage. Basic anti-brute healing drug. On ingestion, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	metabolization_rate = 5 * REAGENTS_METABOLISM
 
 datum/reagent/medicine/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(iscarbon(M))
@@ -251,10 +249,10 @@ datum/reagent/medicine/charcoal
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 datum/reagent/medicine/charcoal/on_mob_life(var/mob/living/M as mob)
-	M.adjustToxLoss(-1.5*REM)
+	M.adjustToxLoss(-2*REM)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
-			M.reagents.remove_reagent(R.id,0.5)
+			M.reagents.remove_reagent(R.id,1)
 	..()
 	return
 

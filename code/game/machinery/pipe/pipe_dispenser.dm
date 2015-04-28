@@ -86,8 +86,8 @@
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
-					"<span class='notice'>You have fastened \the [src]. Now it can dispense pipes.</span>", \
-					"You hear ratchet.")
+					"<span class='notice'>You fasten \the [src]. Now it can dispense pipes.</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 1
 				stat &= MAINT
 				if (usr.machine==src)
@@ -99,8 +99,8 @@
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
-					"<span class='notice'>You have unfastened \the [src]. Now it can be pulled somewhere else.</span>", \
-					"You hear ratchet.")
+					"<span class='notice'>You unfasten \the [src]. Now it can be pulled somewhere else.</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 0
 				stat |= ~MAINT
 				power_change()

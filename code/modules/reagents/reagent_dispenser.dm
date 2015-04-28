@@ -149,11 +149,11 @@
 	if((!istype(user)) || (user.stat))
 		return
 	if(cups <= 0)
-		user << "<span class='danger'>What? No cups?"
+		user << "<span class='warning'>No cups left!</span>"
 		return
 	cups--
 	user.put_in_hands(new /obj/item/weapon/reagent_containers/food/drinks/sillycup)
-	user.visible_message("<span class='notice'>[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].")
+	user.visible_message("[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].</span>")
 
 /obj/structure/reagent_dispensers/water_cooler/attackby(var/obj/item/I, var/mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))

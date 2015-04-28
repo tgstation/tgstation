@@ -34,7 +34,7 @@
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
 			if(!user.unEquip(L))
-				user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
+				user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
 				return
 			L.loc = src
 			locked = L
@@ -117,10 +117,10 @@
 		target = get_turf(locked.locked_location)
 	if(href_list["calibrate"])
 		if(!target)
-			usr << "<span class='warning'>Error: No target set to calibrate to.</span>"
+			usr << "<span class='danger'>Error: No target set to calibrate to.</span>"
 			return
 		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
-			usr << "<span class='notice'>Hub is already calibrated.</span>"
+			usr << "<span class='warning'>Hub is already calibrated!</span>"
 			return
 		src.visible_message("<span class='notice'>Processing hub calibration to target...</span>")
 
@@ -131,7 +131,7 @@
 				power_station.teleporter_hub.calibrated = 1
 				src.visible_message("<span class='notice'>Calibration complete.</span>")
 			else
-				src.visible_message("<span class='warning'>Error: Unable to detect hub.</span>")
+				src.visible_message("<span class='danger'>Error: Unable to detect hub.</span>")
 			updateDialog()
 
 	updateDialog()
@@ -293,7 +293,7 @@
 	if (!com)
 		return
 	if (!com.target)
-		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
+		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
@@ -301,7 +301,7 @@
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
-						M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
+						M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
 						human.dna.species = new /datum/species/fly()
 						human.regenerate_icons()
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
@@ -384,7 +384,7 @@
 				M.buffer = null
 				user << "<span class = 'caution'>You upload the data from the [W.name]'s buffer.</span>"
 			else
-				user << "<span class = 'alert'>This station cant hold more information, try to use better parts.</span>"
+				user << "<span class = 'alert'>This station can't hold more information, try to use better parts.</span>"
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
 		return
