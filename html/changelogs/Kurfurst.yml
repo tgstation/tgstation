@@ -1,8 +1,0 @@
-author: Kurfurst
-delete-after: True
-changes:
- - tweak: RMCE is now a child of storage, can quick grab and quick drop - eject menu removed
- - tweak: RMCE may now be looked inside of like a bag - scanning module menu removed
- - tweak: You no longer need to re-scan every time you want to output the data of the machine you're plugged into
- - tweak: RMCE duping bug removed
- - tweak: RMCE now compatible with DNA Modifier
