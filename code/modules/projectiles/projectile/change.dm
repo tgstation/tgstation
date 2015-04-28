@@ -144,9 +144,9 @@
 			*/
 			else
 				return
-
-		for (var/spell/S in M.spell_list)
-			new_mob.spell_list += new S.type
+		if(M.mind && M.mind.wizard_spells && M.mind.wizard_spells.len)
+			for (var/spell/S in M.mind.wizard_spells)
+				new_mob.spell_list += new S.type
 
 		new_mob.a_intent = I_HURT
 		if(M.mind)
