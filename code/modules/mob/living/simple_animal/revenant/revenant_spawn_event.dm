@@ -61,4 +61,3 @@
 			return 0
 		message_admins("Unfortunately, no candidates were available for becoming a Revenant. Shutting down. :(")
 	return kill()
-*/
