@@ -539,9 +539,6 @@ client/proc/one_click_antag()
 		return
 
 /datum/admins/proc/makeRevenant()
-	message_admins("NOTICE: Revenants are currently disabled until reworked.")
-	return
-	/*
 	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for becoming a revenant?", "revenant", null)
 	if(candidates.len >= 1)
 		var/spook_op = pick(candidates)
@@ -554,7 +551,6 @@ client/proc/one_click_antag()
 		return 1
 	else
 		return
-	*/
 
 /datum/admins/proc/getCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck)
 	var/list/mob/dead/observer/candidates = list()
