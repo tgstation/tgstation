@@ -12,10 +12,11 @@
 
 	//Registers, see them as variables for the AAC.
 	var/register_amount = 10//Determines the maximal registers you can have.
-	var/list/registers = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)//Stores the register values, registers can't be named so this is enough.
-	//NOTE: if you're editing register_amount or the registers list, make sure the amount of vars in the registers list fills register_amount
-	//The UI will runtime otherwise.
-	//I tried doing something softcoded but this is BYOND *sigh
+	var/list/registers = list()//Stores the register values, registers can't be named so this is enough.
+
+/obj/machinery/computer/general_air_control/atmos_automation/New()
+	for(var/i = 1, i <= register_amount, i++)//Fill the registers
+		registers.Add(list(0))
 
 /obj/machinery/computer/general_air_control/atmos_automation/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
