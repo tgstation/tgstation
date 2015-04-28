@@ -73,20 +73,6 @@ datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, v
 			M << "<span class = 'userdanger'>The blob strikes you, and your lungs feel heavy and weak!</span>"
 // Special Reagents
 
-datum/reagent/blob/acid
-	name = "Acidic Liquid"
-	id = "blob_acid"
-	description = ""
-	color = "#BD80F4"
-
-datum/reagent/blob/acid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
-	if(method == TOUCH)
-		if(prob(50))
-			M.acid_act(5,1,5)
-			if(show_message)
-				M << "<span class = 'userdanger'>The blob's tendrils melt through your equipment!</span>"
-		M.apply_damage(10, BRUTE)
-
 datum/reagent/blob/radioactive_liquid
 	name = "Radioactive Liquid"
 	id = "radioactive_liquid"
@@ -187,7 +173,7 @@ datum/reagent/blob/spacedrugs/reaction_mob(var/mob/living/M as mob, var/method=T
 
 /proc/reagent_vortex(var/mob/living/M as mob, var/setting_type)
 	var/turf/pull = get_turf(M)
-	for(var/atom/movable/X in orange(4,pull))
+	for(var/atom/movable/X in range(4,pull))
 		if(istype(X, /atom/movable))
 			if((X) && !X.anchored)
 				if(setting_type)
