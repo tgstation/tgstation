@@ -92,7 +92,7 @@ Passive gate is similar to the regular pump except:
 /obj/machinery/atmospherics/binary/passive_gate/interact(mob/user as mob)
 	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 				<b>Desirable output pressure: </b>
-				[round(target_pressure,0.1)]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
+				[round(target_pressure,0.1)] kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
 				"}
 
 	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
@@ -154,7 +154,7 @@ Passive gate is similar to the regular pump except:
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 	if(href_list["set_press"])
-		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", target_pressure)))
+		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500 kPa)", target_pressure)))
 		investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 	usr.set_machine(src)
 	src.update_icon()

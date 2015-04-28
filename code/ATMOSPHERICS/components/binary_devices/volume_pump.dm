@@ -95,8 +95,8 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/binary/volume_pump/interact(mob/user as mob)
 	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
-				<b>Desirable output flow: </b>
-				[round(transfer_rate,1)]l/s | <a href='?src=\ref[src];set_transfer_rate=1'>Change</a>
+				<b>Desirable volume flow rate: </b>
+				[round(transfer_rate,1)] l/s | <a href='?src=\ref[src];set_transfer_rate=1'>Change</a>
 				"}
 
 	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
@@ -158,8 +158,8 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 	if(href_list["set_transfer_rate"])
-		transfer_rate = max(0, min(200, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", transfer_rate)))
-		investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
+		transfer_rate = max(0, min(200, safe_input("Volume flow rate control", "Enter new volume flow rate (0-200 l/s)", transfer_rate)))
+		investigate_log("was set to [transfer_rate] l/s by [key_name(usr)]", "atmos")
 	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()
