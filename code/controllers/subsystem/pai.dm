@@ -181,7 +181,7 @@ var/datum/subsystem/pai/SSpai
 
 /datum/subsystem/pai/proc/requestRecruits()
 	for(var/mob/dead/observer/O in player_list)
-		if(jobban_isbanned(O, "Ghost Roles"))
+		if(jobban_isbanned(O, "pAI"))
 			continue
 		if(asked.Find(O.key))
 			if(world.time < asked[O.key] + askDelay)
@@ -193,7 +193,7 @@ var/datum/subsystem/pai/SSpai
 			for(var/datum/paiCandidate/c in SSpai.candidates)
 				if(c.key == O.key)
 					hasSubmitted = 1
-			if(!hasSubmitted && (O.client.prefs.be_special & BE_GHOST_ROLE))
+			if(!hasSubmitted && (O.client.prefs.be_special & BE_PAI))
 				question(O.client)
 
 /datum/subsystem/pai/proc/question(var/client/C)
