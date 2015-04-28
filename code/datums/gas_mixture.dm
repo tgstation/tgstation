@@ -948,3 +948,22 @@ What are the archived variables for?
 				else
 					return 0
 	return 1
+
+
+
+
+//Takes the amount of the gas you want to PP as an argument
+//So I don't have to do some hacky switches/defines/magic strings
+
+//eg:
+//Tox_PP = get_partial_pressure(gas_mixture.toxins)
+//O2_PP = get_partial_pressure(gas_mixture.oxygen)
+
+//Does handle trace gases!
+
+/datum/gas_mixture/proc/get_breath_partial_pressure(var/gas_pressure)
+	var/breath_pressure = (total_moles()*R_IDEAL_GAS_EQUATION*temperature)/BREATH_VOLUME
+	return (gas_pressure/total_moles())*breath_pressure
+
+
+
