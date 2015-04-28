@@ -22,9 +22,6 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5
 #define COLD_GAS_DAMAGE_LEVEL_3 3
 
-#define BREATHES_OXY	1
-#define BREATHES_PLASMA	2
-
 /datum/species
 	var/id = null		// if the game needs to manually check your race to do something not included in a proc here, it will use this
 	var/name = null		// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
