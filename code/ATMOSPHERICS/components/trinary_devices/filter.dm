@@ -203,7 +203,7 @@ Filter types:
 	if (href_list["temp"])
 		src.temp = null
 	if(href_list["set_press"])
-		target_pressure = max(0, min(4500, safe_input("Pressure control", "eeeEnter new output pressure (0-4500 kPa)", target_pressure)))
+		target_pressure = max(0, min(4500, safe_input("Pressure control", "Enter new output pressure (0-4500 kPa)", target_pressure)))
 	if(href_list["power"])
 		on=!on
 	src.update_icon()
