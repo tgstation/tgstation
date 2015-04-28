@@ -343,7 +343,8 @@ client/proc/one_click_antag()
 			Commando.key = chosen_candidate.key
 			Commando.mind.assigned_role = "Death Commando"
 			for(var/obj/machinery/door/poddoor/ert/door in airlocks)
-				door.open()
+				spawn(0)
+					door.open()
 
 			//Assign antag status and the mission
 			ticker.mode.traitors += Commando.mind
@@ -522,7 +523,8 @@ client/proc/one_click_antag()
 			//Open the Armory doors
 			if(alert != "Blue")
 				for(var/obj/machinery/door/poddoor/ert/door in airlocks)
-					door.open()
+					spawn(0)
+						door.open()
 
 			//Assign antag status and the mission
 			ticker.mode.traitors += ERTOperative.mind

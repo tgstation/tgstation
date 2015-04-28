@@ -478,6 +478,7 @@
 	circuit = /obj/item/weapon/circuitboard/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
+	var/admin_controlled
 
 /obj/machinery/computer/shuttle/New(location, obj/item/weapon/circuitboard/shuttle/C)
 	..()
@@ -494,12 +495,19 @@
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	var/dat = "Status: [M ? M.getStatusText() : "*Missing*"]<br><br>"
 	if(M)
+		var/destination_found
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
 			if(!options.Find(S.id))
 				continue
 			if(M.canDock(S))
 				continue
+			destination_found = 1
 			dat += "<A href='?src=\ref[src];move=[S.id]'>Send to [S.name]</A><br>"
+		if(!destination_found)
+			dat += "<B>Shuttle Locked</B><br>"
+			if(admin_controlled)
+				dat += "Authorized personnel only<br>"
+				dat += "<A href='?src=\ref[src];request=1]'>Request Authorization</A><br>"
 	dat += "<a href='?src=\ref[user];mach_close=computer'>Close</a>"
 
 	var/datum/browser/popup = new(user, "computer", M ? M.name : "shuttle", 300, 200)
@@ -540,7 +548,18 @@
 	circuit = /obj/item/weapon/circuitboard/ferry/request
 	var/cooldown //prevents spamming admins
 	possible_destinations = "ferry_home"
+	admin_controlled = 1
 
+/obj/machinery/computer/shuttle/ferry/request/Topic(href, href_list)
+	..()
+	if(href_list["request"])
+		if(cooldown)
+			return
+		cooldown = 1
+		usr << "<span class='notice'>Your request has been recieved by Centcom.</span>"
+		admins << "<b>FERRY: <font color='blue'>[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[usr]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to Centcom.</font>"
+		spawn(600) //One minute cooldown
+			cooldown = 0
 
 
 #undef DOCKING_PORT_HIGHLIGHT
