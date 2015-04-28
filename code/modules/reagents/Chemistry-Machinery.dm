@@ -89,7 +89,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/process()
-
 	if(recharged < 0)
 		recharge()
 		recharged = 15
@@ -214,12 +213,22 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	if(href_list["ejectBeaker"])
 		if(beaker)
-			var/obj/item/weapon/reagent_containers/glass/B = beaker
-			B.loc = loc
-			beaker = null
+			detach()
 
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
+
+/obj/machinery/chem_dispenser/proc/detach()
+	if(beaker)
+		var/obj/item/weapon/reagent_containers/glass/B = beaker
+		B.loc = loc
+		if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
+			var/mob/living/silicon/robot/R = beaker:holder:loc
+			if(R.module_state_1 == beaker || R.module_state_2 == beaker || R.module_state_3 == beaker)
+				beaker.loc = R
+			else
+				beaker.loc = beaker:holder
+		beaker = null
 
 /obj/machinery/chem_dispenser/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(beaker)
@@ -244,6 +253,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 		else if(!panel_open)
 			src.beaker =  D
+			if(user.type == /mob/living/silicon/robot)
+				var/mob/living/silicon/robot/R = user
+				R.uneq_active()
 			user.drop_item(D, src)
 			user << "You add the beaker to the machine!"
 			nanomanager.update_uis(src) // update all UIs attached to src
@@ -389,6 +401,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			user << "A beaker is already loaded into the machine."
 			return
 		src.beaker = B
+		if(user.type == /mob/living/silicon/robot)
+			var/mob/living/silicon/robot/R = user
+			R.uneq_active()
 		user.drop_item(B, src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
@@ -491,10 +506,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 		else if (href_list["eject"])
 			if(beaker)
-				beaker.loc = src.loc
-				beaker = null
-				reagents.clear_reagents()
-				update_icon()
+				detach()
 		else if (href_list["createpill"] || href_list["createpill_multiple"])
 			var/count = 1
 			if (href_list["createpill_multiple"]) count = isgoodnumber(input("Select the number of pills to make.", 10, pillamount) as num)
@@ -574,6 +586,19 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	src.updateUsrDialog()
 	return
+
+/obj/machinery/chem_master/proc/detach()
+	if(beaker)
+		beaker.loc = src.loc
+		if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
+			var/mob/living/silicon/robot/R = beaker:holder:loc
+			if(R.module_state_1 == beaker || R.module_state_2 == beaker || R.module_state_3 == beaker)
+				beaker.loc = R
+			else
+				beaker.loc = beaker:holder
+		beaker = null
+		reagents.clear_reagents()
+		update_icon()
 
 /obj/machinery/chem_master/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -812,10 +837,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		src.updateUsrDialog()
 		return
 	else if (href_list["eject"])
-		beaker.loc = src.loc
-		beaker = null
-		icon_state = "mixer0"
-		src.updateUsrDialog()
+		detach()
 		return
 	else if(href_list["clear"])
 		src.temphtml = ""
@@ -844,6 +866,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	src.add_fingerprint(usr)
 	return
 
+/obj/machinery/computer/pandemic/proc/detach()
+	beaker.loc = src.loc
+	if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
+		var/mob/living/silicon/robot/R = beaker:holder:loc
+		if(R.module_state_1 == beaker || R.module_state_2 == beaker || R.module_state_3 == beaker)
+			beaker.loc = R
+		else
+			beaker.loc = beaker:holder
+	beaker = null
+	icon_state = "mixer0"
+	src.updateUsrDialog()
 /obj/machinery/computer/pandemic/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
@@ -966,6 +999,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 
 		src.beaker =  I
+		if(user.type == /mob/living/silicon/robot)
+			var/mob/living/silicon/robot/R = user
+			R.uneq_active()
 		user.drop_item(I, src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
@@ -1107,6 +1143,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return 0
 		else
 			src.beaker =  O
+			if(user.type == /mob/living/silicon/robot)
+				var/mob/living/silicon/robot/R = user
+				R.uneq_active()
 			user.drop_item(O, src)
 			update_icon()
 			src.updateUsrDialog()
@@ -1228,6 +1267,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	if (!beaker)
 		return
 	beaker.loc = src.loc
+	if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
+		var/mob/living/silicon/robot/R = beaker:holder:loc
+		if(R.module_state_1 == beaker || R.module_state_2 == beaker || R.module_state_3 == beaker)
+			beaker.loc = R
+		else
+			beaker.loc = beaker:holder
 	beaker = null
 	update_icon()
 
@@ -1583,6 +1628,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			if(!beaker)
 				user << "<span class='notice'>You insert an active container.</span>"
 				src.beaker =  W
+				if(user.type == /mob/living/silicon/robot)
+					var/mob/living/silicon/robot/R = user
+					R.uneq_active()
 				user.drop_item(W, src)
 			else
 				user << "<span class='warning'>There is already an active container.</span>"
@@ -1597,8 +1645,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			O.loc = src.loc
 			cans -= O
 		if(beaker)
-			beaker.loc = src.loc
-			beaker = null
+			detach()
 		user << "<span class='notice'>You remove everything from the centrifuge.</span>"
 	else
 		user << "<span class='warning'>There is nothing to eject!</span>"
@@ -1620,7 +1667,18 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		beaker.reagents.clear_reagents()
 	if(!beaker.reagents.reagent_list.len)
 		usr << "<span class='notice'>The now-empty active container plops out.</span>"
+		detach()
+		return
+
+/obj/structure/centrifuge/proc/detach()
+	if(beaker)
 		beaker.loc = src.loc
+		if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
+			var/mob/living/silicon/robot/R = beaker:holder:loc
+			if(R.module_state_1 == beaker || R.module_state_2 == beaker || R.module_state_3 == beaker)
+				beaker.loc = R
+			else
+				beaker.loc = beaker:holder
 		beaker = null
 		return
 

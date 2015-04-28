@@ -36,8 +36,20 @@
 		return
 
 	if(module_active:loc != src)
-		src << "<span class='warning'>Can't store something you're not holding!</span>"
-		return
+		if(!istype(module_active, /obj/item/weapon/reagent_containers/glass/beaker))
+			src << "<span class='warning'>Can't store something you're not holding!</span>"
+			return
+		else
+			var/obj/item/weapon/reagent_containers/glass/beaker/large/ourbeaker = module_active
+			if(istype(ourbeaker.loc, /obj/machinery))
+				ourbeaker.loc:detach()
+				ourbeaker.loc = src
+			else if(ismob(ourbeaker.loc))
+				var/mob/living/L = ourbeaker.loc
+				L.drop_item(ourbeaker)
+				ourbeaker.loc = src
+			else
+				ourbeaker.loc = src
 	if(module_state_1 == module_active)
 		uneq_module(module_state_1)
 		module_state_1 = null
