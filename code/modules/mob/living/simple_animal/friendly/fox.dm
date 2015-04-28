@@ -21,5 +21,5 @@
 //Captain fox
 /mob/living/simple_animal/pet/fox/Renault
 	name = "Renault"
-	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
+	desc = "Renault, the Captain's trustworthy fox."
 	pcollar = /obj/item/clothing/tie/petcollar
