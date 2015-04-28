@@ -481,6 +481,8 @@
 			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] [temp].</span>"
 			if(instant<0)
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			if(uses < 0)
+				return
 			uses = max(0,uses-1)
 			if(!uses)
 				user << "<span class='warning'>There is no more of [src.name] left!</span>"
@@ -492,6 +494,8 @@
 	if(edible && (M == user))
 		user << "You take a bite of the [src.name]. Delicious!"
 		user.nutrition += 5
+		if(uses < 0)
+			return
 		uses = max(0,uses-5)
 		if(!uses)
 			user << "<span class='warning'>There is no more of [src.name] left!</span>"
