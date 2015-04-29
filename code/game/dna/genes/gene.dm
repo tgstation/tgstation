@@ -122,6 +122,7 @@
 /datum/dna/gene/basic/deactivate(var/mob/M, var/connected, var/flags)
 	if(flags & GENE_NATURAL) return 0
 	M.mutations.Remove(mutation)
+	M.active_genes -= src.type
 	if(deactivation_messages.len)
 		var/msg = pick(deactivation_messages)
 		M << "<span class='warning'>[msg]</span>"
