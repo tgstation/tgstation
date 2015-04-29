@@ -241,7 +241,7 @@
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/mop))
 		if(reagents.total_volume < 1)
-			user << "[src] is out of water!</span>"
+			user << "<span class='warning'>[src] is out of water!</span>"
 		else
 			reagents.trans_to(O, 5)
 			user << "<span class='notice'>You wet [O] in [src].</span>"
