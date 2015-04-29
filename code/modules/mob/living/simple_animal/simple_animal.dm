@@ -18,9 +18,7 @@
 
 	var/turns_per_move = 1
 	var/turns_since_move = 0
-	var/meat_amount = 0
-	var/meat_type
-	var/skin_type
+	var/list/butcher_results = null
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/wander = 1	// Does the mob wander around when idle?
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
@@ -212,11 +210,10 @@
 /mob/living/simple_animal/gib(var/animation = 0)
 	if(icon_gib)
 		flick(icon_gib, src)
-	if(meat_amount && meat_type)
-		for(var/i = 0; i < meat_amount; i++)
-			new meat_type(src.loc)
-	if(skin_type)
-		new skin_type(src.loc)
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 1; i <= butcher_results[path];i++)
+				new path(src.loc)
 	..()
 
 
@@ -359,7 +356,7 @@
 			user << "<span class='notice'> [src] is dead, medical items won't bring it back to life.</span>"
 			return
 
-	if((meat_type || skin_type) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
+	if((butcher_results) && (stat == DEAD))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/sharpness = is_sharp(O)
 		if(sharpness)
@@ -368,8 +365,6 @@
 			if(do_mob(user, src, 80/sharpness))
 				harvest(user)
 			return
-
-	..()
 
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later

@@ -44,10 +44,9 @@
 	speak_emote = list("sniffles","twitches")
 	emote_hear = list("hops.")
 	emote_see = list("hops around","bounces up and down")
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
 	egg_type = /obj/item/weapon/reagent_containers/food/snacks/egg/loaded
 	food_type = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
-	meat_amount = 1
 	eggsleft = 10
 	eggsFertile = FALSE
 	icon_prefix = "rabbit"
