@@ -257,32 +257,34 @@ update_flag
 	return src.attack_hand(user)
 
 /obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
-	return src.interact(user)
+	return src.ui_interact(user)
 
-/obj/machinery/portable_atmospherics/canister/interact(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main")
 	if (src.destroyed)
 		return
 
-	user.set_machine(src)
-	var/holding_text
-	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
-<A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
-"}
-	var/output_text = {"<TT><B>[name]</B>[can_label?" <A href='?src=\ref[src];relabel=1'><small>relabel</small></a>":""]<BR>
-Pressure: [air_contents.return_pressure()] KPa<BR>
-Port Status: [(connected_port)?("Connected"):("Disconnected")]
-[holding_text]
-<BR>
-Release Valve: <A href='?src=\ref[src];toggle=1'>[valve_open?("Open"):("Closed")]</A><BR>
-Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=\ref[src];pressure_adj=-10'>-</A> <A href='?src=\ref[src];pressure_adj=-1'>-</A> [release_pressure] <A href='?src=\ref[src];pressure_adj=1'>+</A> <A href='?src=\ref[src];pressure_adj=10'>+</A> <A href='?src=\ref[src];pressure_adj=100'>+</A> <A href='?src=\ref[src];pressure_adj=1000'>+</A><BR>
-<HR>
-<A href='?src=\ref[user];mach_close=canister'>Close</A><BR>
-"}
+	var/data = list()
+	data["name"] = src.name
+	data["canLabel"] = src.can_label ? 1 : 0
+	data["portConnected"] = src.connected_port ? 1 : 0
+	data["tankPressure"] = round(src.air_contents.return_pressure() ? src.air_contents.return_pressure() : 0)
+	data["releasePressure"] = round(src.release_pressure ? src.release_pressure : 0)
+	data["minReleasePressure"] = round(ONE_ATMOSPHERE/10)
+	data["maxReleasePressure"] = round(10*ONE_ATMOSPHERE)
+	data["valveOpen"] = src.valve_open ? 1 : 0
 
-	user << browse("<html><head><title>[src]</title></head><body>[output_text]</body></html>", "window=canister;size=600x300")
-	onclose(user, "canister")
-	return
+	data["hasHoldingTank"] = src.holding ? 1 : 0
+	if (holding)
+		data["holdingTank"] = list("name" = src.holding.name, "tankPressure" = round(src.holding.air_contents.return_pressure()))
+
+	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
+	if (!ui)
+		ui = new /datum/nanoui(user, src, ui_key, "canister.tmpl", "Canister", 480, 400)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
+	else
+		ui.push_data(data)
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
 
