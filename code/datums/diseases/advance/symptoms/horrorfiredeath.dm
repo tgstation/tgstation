@@ -17,14 +17,14 @@ TERROR RUN FLEE GO RUN
 	name = "Asthmothia"
 	stealth = -3
 	resistance = -5
-	stage_speed = -5
-	transmittable = -5
+	stage_speed = -4
+	transmittable = -3
 	level = 5
 	severity = 5
 
 /datum/symptom/asthmothia/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB / 4))
+	if(prob(SYMPTOM_ACTIVATION_PROB / 3))
 		var/turf/simulated/T = get_turf(A.affected_mob)
 		switch(A.stage)
 			if(5)
