@@ -358,7 +358,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
-	custom_fire = 1
 	var/skin = 0
 
 /datum/species/plasmaman/skin
@@ -386,12 +385,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 			var/obj/item/clothing/suit/space/eva/plasmaman/P = H.wear_suit
 			if(istype(P))
 				P.Extinguish(H)
-
-	if(H.on_fire)
-		H.underlays |= plasmaman_on_fire
-	else
-		//Thank god humans don't use underlays
-		H.underlays.Cut()
+	H.update_fire()
 
 //Heal from plasma
 /datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)

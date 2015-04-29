@@ -80,8 +80,6 @@
 	var/tox_breath_dam_min = MIN_PLASMA_DAMAGE
 	var/tox_breath_dam_max = MAX_PLASMA_DAMAGE
 
-	var/custom_fire = 0 //Whether we handle fire icons ourself
-
 	///////////
 	// PROCS //
 	///////////

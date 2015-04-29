@@ -177,9 +177,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	remove_overlay(FIRE_LAYER)
 	if(on_fire)
-		if(dna)
-			if(dna.species.custom_fire)
-				return
 		overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"=-FIRE_LAYER)
 
 	apply_overlay(FIRE_LAYER)
