@@ -639,7 +639,7 @@ var/global/floorIsLava = 0
 	if(ticker.current_state > GAME_STATE_PREGAME)
 		return alert("Too late... The game has already started!")
 	ticker.delay_start = !ticker.delay_start
-	if(!ticker.delay_start)
+	if(ticker.delay_start)
 		world << "<b>The game start has been delayed.</b>"
 		log_admin("[key_name(usr)] delayed the game.")
 	else
