@@ -100,46 +100,20 @@ PROBABILITY SANDBOX 0
 
 ## Toggles for continuous modes.
 ## Modes that aren't continuous will end the instant all antagonists are dead.
+## Unlisted modes are not currently supported for noncontinous play
 
-CONTINUOUS TRAITOR
-CONTINUOUS TRAITORCHAN
-CONTINUOUS DOUBLE_AGENTS
-#CONTINUOUS NUCLEAR
 #CONTINUOUS REVOLUTION
-#CONTINUOUS SHADOWLING
-#CONTINUOUS GANG
-CONTINUOUS CULT
-CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 CONTINUOUS MALFUNCTION
 CONTINUOUS BLOB
-#CONTINUOUS RAGINMAGES
-#CONTINUOUS MONKEY
-
-##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
-
-CONTINUOUS METEOR
-CONTINUOUS EXTENDED
-
 
 ## Toggles for allowing midround antagonists (aka mulligan antagonists).
 ## In modes that are continuous, if all antagonists should die then a new set of antagonists will be created.
+## Only the listed modes are currently supported for this system
 
-MIDROUND_ANTAG TRAITOR
-MIDROUND_ANTAG TRAITORCHAN
-MIDROUND_ANTAG DOUBLE_AGENTS
-#MIDROUND_ANTAG  NUCLEAR
-#MIDROUND_ANTAG  REVOLUTION
-#MIDROUND_ANTAG  SHADOWLING
-#MIDROUND_ANTAG  GANG
-MIDROUND_ANTAG CULT
-MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
 MIDROUND_ANTAG MALFUNCTION
 MIDROUND_ANTAG BLOB
-#MIDROUND_ANTAG  RAGINMAGES
-#MIDROUND_ANTAG  MONKEY
-
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000
