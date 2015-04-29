@@ -12,14 +12,14 @@ datum/reagent/blob/boiling_oil/reaction_mob(var/mob/living/M as mob, var/method=
 		M.adjust_fire_stacks(2)
 		M.IgniteMob()
 		if(show_message)
-			M << "<span class = 'userdanger'>The blob splashes you with burning oil!</span>"
+			M << "<span class = 'userdanger'>The blob strikes you! You are engulfed in flames!</span>"
 		M.emote("scream")
 
 datum/reagent/blob/toxic_goop
 	name = "Toxic Goop"
 	id = "toxic_goop"
 	description = ""
-	color = "#008000"
+	color = "#648D07"
 
 datum/reagent/blob/toxic_goop/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
@@ -51,7 +51,6 @@ datum/reagent/blob/skin_melter
 datum/reagent/blob/skin_melter/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
 		M.apply_damage(10, BRUTE)
-		M.apply_damage(10, BURN)
 		M.adjust_fire_stacks(2)
 		M.IgniteMob()
 		if(show_message)
@@ -66,11 +65,11 @@ datum/reagent/blob/lung_destroying_toxin
 
 datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume,var/show_message = 1)
 	if(method == TOUCH)
-		M.apply_damage(20, OXY)
-		M.losebreath += 15
-		M.apply_damage(20, TOX)
+		M.apply_damage(15, OXY)
+		M.losebreath += 5
+		M.emote("gasp")
 		if(show_message)
-			M << "<span class = 'userdanger'>The blob strikes you, and your lungs feel heavy and weak!</span>"
+			M << "<span class = 'userdanger'>The blob strikes you! You can't breathe!</span>"
 // Special Reagents
 
 datum/reagent/blob/radioactive_liquid
@@ -104,7 +103,7 @@ datum/reagent/blob/dark_matter/reaction_mob(var/mob/living/M as mob, var/method=
 		M.apply_damage(15, BRUTE)
 		reagent_vortex(M, 0)
 		if(show_message)
-			M << "<span class = 'userdanger'>You feel a thrum as the blob strikes you, and everything flies at you!</span>"
+			M << "<span class = 'userdanger'>You feel a thrum as the blob strikes you and are pulled towards it!</span>"
 
 datum/reagent/blob/b_sorium
 	name = "Sorium"
@@ -116,22 +115,25 @@ datum/reagent/blob/b_sorium/reaction_mob(var/mob/living/M as mob, var/method=TOU
 	if(method == TOUCH)
 		M.apply_damage(15, BRUTE)
 		if(show_message)
-			M << "<span class = 'userdanger'>The blob slams into you, and sends you flying!</span>"
+			M << "<span class = 'userdanger'>The blob slams into you and sends you flying!</span>"
 		reagent_vortex(M, 1)
 
 
-datum/reagent/blob/explosive // I'm gonna burn in hell for this one
+datum/reagent/blob/explosive
 	name = "Explosive Gelatin"
 	id = "explosive"
 	description = ""
-	color = "#FFA500"
+	color = "#FF6A0D"
 
 datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
-		if(prob(75))
-			if(show_message)
-				M << "<span class = 'userdanger'>The blob strikes you, and its tendrils explode!</span>"
+		if(show_message)
+			M << "<span class = 'userdanger'>The blob strikes you, and its tendrils explode!</span>"
+		if(prob(25))
 			explosion(M.loc, 0, 0, 1, 0, 0)
+		else
+			M.apply_damage(5, BRUTE)
+			M.apply_damage(15, BURN)
 
 datum/reagent/blob/omnizine
 	name = "Omnizine"
@@ -142,8 +144,9 @@ datum/reagent/blob/omnizine
 datum/reagent/blob/omnizine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
 		if(show_message)
-			M << "<span class = 'userdanger'>The blob squirts something at you, and you feel great!</span>"
-		M.reagents.add_reagent("omnizine", 11)
+			M << "<span class = 'userdanger'>The blob squirts something at you, and you feel revitalized!</span>"
+		if(M.reagents)
+			M.reagents.add_reagent("omnizine", 11)
 
 datum/reagent/blob/morphine
 	name = "Morphine"
@@ -155,7 +158,8 @@ datum/reagent/blob/morphine/reaction_mob(var/mob/living/M as mob, var/method=TOU
 	if(method == TOUCH)
 		if(show_message)
 			M << "<span class = 'userdanger'>The blob squirts something at you, and you feel numb!</span>"
-		M.reagents.add_reagent("morphine", 16)
+		if(M.reagents)
+			M.reagents.add_reagent("morphine", 16)
 
 datum/reagent/blob/spacedrugs
 	name = "Space drugs"
@@ -166,10 +170,80 @@ datum/reagent/blob/spacedrugs
 datum/reagent/blob/spacedrugs/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(method == TOUCH)
 		if(show_message)
-			M << "<span class = 'userdanger'>The blob squirts something at you, and you feel funny!</span>"
-		M.reagents.add_reagent("space_drugs", 15)
+			M << "<span class = 'userdanger'>The blob squirts something at you, and your head clouds!</span>"
+		if(M.reagents)
+			M.reagents.add_reagent("space_drugs", 15)
 		M.apply_damage(10, TOX)
 
+datum/reagent/blob/blob_chloral
+	name = "Sedatives"
+	id = "b_chloral"
+	description = "A strange blue liquid. Its fumes induce drowsiness."
+	color = "#000067"
+
+datum/reagent/blob/blob_chloral/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	if(method == TOUCH)
+		if(show_message)
+			M << "<span class = 'userdanger'>The blob strikes you, and you feel a wave of drowsiness!</span>"
+		if(M.reagents)
+			M.reagents.add_reagent("chloralhydrate", 5)
+		M.drowsyness += 5
+		M.apply_damage(5, TOX)
+
+datum/reagent/blob/blob_stamina
+	name = "Weakness Toxin"
+	id = "b_stamina"
+	description = "A strange reddish liquid. Its fumes induce weakness."
+	color = "#6E2828"
+
+datum/reagent/blob/blob_stamina/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	if(method == TOUCH)
+		if(show_message)
+			M << "<span class = 'userdanger'>The blob spews liquid onto you, and you feel weak!</span>"
+		if(prob(25))
+			M.Weaken(3)
+			M << "<span class='boldannounce'>Your legs give out!</span>"
+		M.adjustStaminaLoss(rand(5,20))
+		M.apply_damage(10, BRUTE)
+
+datum/reagent/blob/blob_animated_slime
+	name = "Decomposing Anima"
+	id = "b_animated"
+	description = "A disgusting goop that moves around on its own and constantly tries to escape its container."
+	color = "#6451FF"
+
+datum/reagent/blob/blob_animated_slime/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	if(method == TOUCH)
+		if(show_message)
+			M << "<span class = 'userdanger'>Part of the blob breaks off and slams into you!</span>"
+		new /mob/living/simple_animal/slime/blob(get_turf(M))
+		M.apply_damage(10, BRUTE)
+
+/mob/living/simple_animal/slime/blob
+	name = "blob slime"
+	desc = "You should never see this."
+	color = "#6451FF"
+	health = 1
+	maxHealth = 1
+	rabid = 1
+	ventcrawler = 0
+
+/mob/living/simple_animal/slime/blob/New()
+	..()
+	spawn(0)
+		name = "animated blob"
+		desc = "A disturbing mass of moving liquid."
+		spawn(50)
+			src.death()
+
+/mob/living/simple_animal/slime/blob/blob_act()
+	return 0
+
+/mob/living/simple_animal/slime/blob/death()
+	..(1)
+	src.visible_message("<span class='warning'>\The [src] suddenly bursts!</span>")
+	playsound(src, 'sound/effects/splat.ogg', 50, 1)
+	qdel(src)
 
 /proc/reagent_vortex(var/mob/living/M as mob, var/setting_type)
 	var/turf/pull = get_turf(M)
@@ -183,7 +257,3 @@ datum/reagent/blob/spacedrugs/reaction_mob(var/mob/living/M as mob, var/method=T
 					step_away(X,pull)
 				else
 					X.throw_at(pull)
-
-
-
-
