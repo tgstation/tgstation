@@ -393,3 +393,14 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		//Thank god humans don't use underlays
 		H.underlays.Cut()
 
+//Heal from plasma
+/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "plasma")
+		H.adjustBruteLoss(-5)
+		H.adjustFireLoss(-5)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
+
+
+
+

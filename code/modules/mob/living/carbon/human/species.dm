@@ -1084,7 +1084,7 @@
 
 		return 0
 
-	var/oxygen_used = 0
+	var/gas_breathed = 0
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath.oxygen)
@@ -1104,26 +1104,18 @@
 
 	//Too little oxygen!
 	if(safe_oxygen_min && O2_pp < safe_oxygen_min)
-		if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
-			if(prob(20))
-				spawn(0) H.emote("gasp")
-			if(O2_pp > 0)
-				var/ratio = safe_oxygen_min/O2_pp
-				H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
-				H.failed_last_breath = 1
-				oxygen_used = breath.oxygen*ratio/6
-			else
-				H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-				H.failed_last_breath = 1
-			H.throw_alert("oxy")
-	else								// We're in safe limits
+		gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath.oxygen)
+		H.throw_alert("oxy")
+	else
 		H.failed_last_breath = 0
 		H.adjustOxyLoss(-5)
-		oxygen_used = breath.oxygen/6
+		gas_breathed = breath.oxygen/6
 		H.clear_alert("oxy")
 
-	breath.oxygen -= oxygen_used
-	breath.carbon_dioxide += oxygen_used
+	//Exhale
+	breath.oxygen -= gas_breathed
+	breath.carbon_dioxide += gas_breathed
+	gas_breathed = 0
 
 
 	//-- CO2 --//
@@ -1146,14 +1138,19 @@
 		H.clear_alert("too_much_co2")
 
 	//Too little CO2!
-	if(safe_co2_min && CO2_pp < safe_co2_min && !(NOBREATH in specflags))
-		var/ratio = (breath.oxygen/safe_co2_min) * 10
-		H.adjustOxyLoss(Clamp(ratio,co2_breath_dam_min,co2_breath_dam_max))
-		if(prob(20))
-			spawn(0) H.emote("gasp")
+	if(safe_co2_min && CO2_pp < safe_co2_min)
+		gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath.carbon_dioxide)
 		H.throw_alert("not_enough_co2")
 	else
+		H.failed_last_breath = 0
+		H.adjustOxyLoss(-5)
+		gas_breathed = breath.carbon_dioxide/6
 		H.clear_alert("not_enough_co2")
+
+	//Exhale
+	breath.carbon_dioxide -= gas_breathed
+	breath.oxygen += gas_breathed
+	gas_breathed = 0
 
 
 	//-- TOX --//
@@ -1170,13 +1167,18 @@
 
 	//Too little toxins!
 	if(safe_toxins_min && Toxins_pp < safe_toxins_min && !(NOBREATH in specflags))
-		var/ratio = (breath.toxins/safe_toxins_min) * 10
-		H.adjustOxyLoss(Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
-		if(prob(20))
-			spawn(0) H.emote("gasp")
+		gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath.toxins)
 		H.throw_alert("not_enough_tox")
 	else
+		H.failed_last_breath = 0
+		H.adjustOxyLoss(-5)
+		gas_breathed = breath.toxins/6
 		H.clear_alert("not_enough_tox")
+
+	//Exhale
+	breath.toxins -= gas_breathed
+	breath.oxygen += gas_breathed
+	gas_breathed = 0
 
 
 	//-- TRACES --//
@@ -1195,6 +1197,27 @@
 	handle_breath_temperature(breath, H)
 
 	return 1
+
+
+//Returns the amount of true_pp we breathed
+/datum/species/proc/handle_too_little_breath(var/mob/living/carbon/human/H = null,var/breath_pp = 0, var/safe_breath_min = 0, var/true_pp = 0)
+	. = 0
+	if(!H || !safe_breath_min) //the other args are either: Ok being 0 or Specifically handled.
+		return 0
+
+	if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
+		if(prob(20))
+			spawn(0)
+				H.emote("gasp")
+		if(breath_pp > 0)
+			var/ratio = safe_breath_min/breath_pp
+			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!
+			H.failed_last_breath = 1
+			. = true_pp*ratio/6
+		else
+			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+			H.failed_last_breath = 1
+
 
 /datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
 	if(abs(310.15 - breath.temperature) > 50)

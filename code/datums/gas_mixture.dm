@@ -966,4 +966,18 @@ What are the archived variables for?
 	return (gas_pressure/total_moles())*breath_pressure
 
 
+//Reverse of the above
+/datum/gas_mixture/proc/get_true_breath_pressure(var/breath_pp)
+	var/breath_pressure = (total_moles()/R_IDEAL_GAS_EQUATION/temperature)*BREATH_VOLUME
+	return (breath_pp/breath_pressure*total_moles())
 
+//Mathematical proofs:
+/*
+
+get_breath_partial_pressure(gas_pp) --> gas_pp/total_moles()*breath_pp = pp
+get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
+
+10/20*5 = 2.5
+10 = 2.5/5*20
+
+*/
