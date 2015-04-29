@@ -133,27 +133,68 @@
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 
 //Security
-/obj/item/clothing/suit/security/officer
+/obj/item/clothing/suit/security/officerblue
 	name = "security officer's jacket"
 	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
 	icon_state = "officerbluejacket"
 	item_state = "officerbluejacket"
 	body_parts_covered = CHEST|ARMS
 
-/obj/item/clothing/suit/security/warden
+/obj/item/clothing/suit/security/wardenblue
 	name = "warden's jacket"
 	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
 	icon_state = "wardenbluejacket"
 	item_state = "wardenbluejacket"
 	body_parts_covered = CHEST|ARMS
 
-/obj/item/clothing/suit/security/hos
+/obj/item/clothing/suit/security/hosblue
 	name = "head of security's jacket"
 	desc = "This piece of clothing was specifically designed for asserting superior authority."
 	icon_state = "hosbluejacket"
 	item_state = "hosbluejacket"
 	body_parts_covered = CHEST|ARMS
 
+/obj/item/clothing/suit/security/officernavy
+	name = "security officer's jacket"
+	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
+	icon_state = "officerdnavyjacket"
+	item_state = "officerdnavyjacket"
+	body_parts_covered = CHEST|ARMS
+
+/obj/item/clothing/suit/security/wardennavy
+	name = "warden's jacket"
+	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
+	icon_state = "wardendnavyjacket"
+	item_state = "wardendnavyjacket"
+	body_parts_covered = CHEST|ARMS
+
+/obj/item/clothing/suit/security/hosnavy
+	name = "head of security's jacket"
+	desc = "This piece of clothing was specifically designed for asserting superior authority."
+	icon_state = "hosdnavyjacket"
+	item_state = "hosdnavyjacket"
+	body_parts_covered = CHEST|ARMS
+
+/obj/item/clothing/suit/security/officertan
+	name = "security officer's jacket"
+	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
+	icon_state = "officertanjacket"
+	item_state = "officertanjacket"
+	body_parts_covered = CHEST|ARMS
+
+/obj/item/clothing/suit/security/wardentan
+	name = "warden's jacket"
+	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
+	icon_state = "wardentanjacket"
+	item_state = "wardentanjacket"
+	body_parts_covered = CHEST|ARMS
+
+/obj/item/clothing/suit/security/hostan
+	name = "head of security's jacket"
+	desc = "This piece of clothing was specifically designed for asserting superior authority."
+	icon_state = "hostanjacket"
+	item_state = "hostanjacket"
+	body_parts_covered = CHEST|ARMS
 
 //Surgeon
 /obj/item/clothing/suit/apron/surgical

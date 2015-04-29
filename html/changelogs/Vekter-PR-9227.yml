@@ -1,0 +1,5 @@
+author: Vekter
+delete-after: true
+changes:
+  - rscadd: "Added 2 new formal jackets for Head of Security, Warden, and Security Officer. All 3 come in a standard Security Clothing Crate, ordered from Cargo."
+  - tweak: "Added the Head of Security's Armored Trenchcoat to the Clothing Crate, and bumped the cost up to 35 points."

@@ -1,0 +1,4 @@
+author: Vekter
+delete-after: true
+changes:
+  - rscadd: "Added a bulletproof helmet crate to Cargo. Comes with 3 bulletproof helmets for 15 points."
