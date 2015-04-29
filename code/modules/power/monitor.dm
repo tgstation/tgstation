@@ -14,7 +14,7 @@
 	idle_power_usage = 300
 	active_power_usage = 300
 	var/datum/html_interface/interface
-	var/tmp/last_time_processed = 0
+	var/tmp/next_process = 0
 
 /obj/machinery/power/monitor/New()
 	..()
@@ -99,9 +99,9 @@
 /obj/machinery/power/monitor/process()
 	if(stat & (BROKEN|NOPOWER))
 		return
-	// src.last_time_processed == 0 is in place to make it update the first time around, then wait until someone watches
-	if ((src.last_time_processed == 0 || src.interface.isUsed()) && world.time - src.last_time_processed > 30)
-		src.last_time_processed = world.time
+	// src.next_process == 0 is in place to make it update the first time around, then wait until someone watches
+	if ((!src.next_process || src.interface.isUsed()) && world.time >= src.next_process)
+		src.next_process = world.time + 30
 		var/t
 	//	t += "<BR><HR><A href='?src=\ref[src.interface];update=1'>Refresh</A>"
 	//	t += "<BR><HR><A href='?src=\ref[src.interface];close=1'>Close</A>"
@@ -144,5 +144,4 @@
 			t = t + "<colgroup><col /><col style=\"width: 60px;\"/><col style=\"width: 60px;\"/><col style=\"width: 60px;\"/><col style=\"width: 80px;\"/><col style=\"width: 80px;\"/><col style=\"width: 20px;\"/></colgroup>"
 			t = t + "<thead><tr><th>Area</th><th>Eqp.</th><th>Lgt.</th><th>Env.</th><th align=\"right\">Load</th><th align=\"right\">Cell</th><th></th></tr></thead>"
 			t = t + "<tbody>[tbl]</tbody></table>"
-
 		src.interface.updateContent("content", t)
