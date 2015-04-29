@@ -392,3 +392,6 @@ var/global/list/snake_best_players = list()
 //Minesweeper leaderboard
 var/global/list/minesweeper_station_highscores = list()
 var/global/list/minesweeper_best_players = list()
+
+var/nanocoins_rates = 1
+var/nanocoins_lastchange = 0

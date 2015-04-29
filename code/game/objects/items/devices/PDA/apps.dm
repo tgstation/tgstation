@@ -8,6 +8,7 @@ var/global/list/pda_app_menus = list(
 	104,//Station Map
 	105,//Snake II
 	106,//Minesweeper
+	107,//Spess Pets
 	)
 
 /datum/pda_app
@@ -249,3 +250,136 @@ var/global/list/pda_app_menus = list(
 	if(minesweeper_game.end_timer < minesweeper_station_highscores[minesweeper_game.current_difficulty])
 		minesweeper_station_highscores[minesweeper_game.current_difficulty] = minesweeper_game.end_timer
 		minesweeper_best_players[minesweeper_game.current_difficulty] = pda_device.owner
+
+///////////SPESS PETS//////////////////////////////////////////////////////////////
+
+/datum/pda_app/spesspets
+	name = "Spess Pets"
+	desc = "A virtual pet simulator. For when you don't have the balls to own a real pet. Includes multi-PDA interactions and Nanocoin mining."
+	price = 70
+	menu = 107
+	icon = "pda_egg"
+	var/obj/machinery/account_database/linked_db
+
+	var/game_state = 0	//0 = First Startup; 1 = Egg Chosen; 2 = Egg Hatched (normal status); 3 = Pet Dead
+	var/petname = "Ianitchi"
+	var/petID = 000000
+	var/level = 0
+	var/exp = 0
+	var/race = "Corgegg"//Race set here for sanity purposes, the player chooses the race himself
+
+	var/hatching = 0
+
+	var/ishungry = 0
+	var/isdirty = 0
+
+	var/ishurt = 0
+
+	var/ishappy = 0
+	var/isatwork = 0
+	var/issleeping = 0
+
+	var/last_spoken = "Corgegg"
+
+	var/area/walk_target = null
+	var/last_walk_start = 0
+
+	var/total_happiness = 0
+	var/total_hunger = 0
+	var/total_dirty = 0
+	var/walk_completed = 0
+
+	var/next_coin = 0
+	var/total_coins = 0
+
+	var/isfighting = 0
+	var/list/challenged = list()
+	var/isvisiting = 0
+	var/list/visited = list()
+
+/datum/pda_app/spesspets/onInstall(var/obj/item/device/pda/device)
+	..()
+	petID = rand(000000,999999)
+	reconnect_database()
+
+/datum/pda_app/spesspets/proc/reconnect_database()
+	for(var/obj/machinery/account_database/DB in account_DBs)
+		if((DB.z == pda_device.loc.z) || (DB.z == STATION_Z))
+			if((DB.stat == 0) && DB.activated )
+				linked_db = DB
+				break
+
+/datum/pda_app/spesspets/proc/game_tick(var/mob/user)
+	if (game_state == 1)
+		hatching++
+		if(hatching > 1200)
+			last_spoken = "Help him hatch already you piece of fuck!"
+		else if(hatching > 600)
+			last_spoken = "Looks like the pet is trying to hatch from the egg!"
+		else if(hatching > 300)
+			last_spoken = "Did the egg just move?"
+		else
+			last_spoken = "The egg stands still."
+
+	if (game_state == 2)
+		if(isatwork)
+			isatwork--
+			next_coin--
+			if(next_coin <= 0)
+				total_coins++
+				next_coin = rand(10,15)
+				if(ishappy)
+					next_coin = rand(5,7)
+			if(!isatwork)
+				issleeping = 600
+
+		if(issleeping)
+			issleeping--
+		if(ishappy)
+			ishappy--
+			total_happiness++
+		if(ishungry)
+			total_hunger++
+		if(isdirty)
+			total_dirty++
+
+		if(ishurt)
+			ishurt++
+			if(ishurt >= 600)
+				game_state = 3
+
+		var/new_exp = 0
+		if(!isdirty)
+			new_exp = 1
+			if(ishappy)
+				new_exp = new_exp*2
+			if(ishurt)
+				new_exp = new_exp/2
+		exp += new_exp
+
+		if(exp > 900)
+			level++
+			exp = 0
+			if(level >= 50)
+				game_state = 3
+
+	game_update(user)
+
+	if(game_state < 3)
+		spawn(10)
+			game_tick(user)
+
+
+/datum/pda_app/spesspets/proc/game_update(var/mob/user)
+	if(istype(user,/mob/living/carbon))
+		var/mob/living/carbon/C = user
+		if(C.machine && istype(C.machine,/obj/item/device/pda))
+			var/obj/item/device/pda/pda_device = C.machine
+			var/turf/user_loc = get_turf(user)
+			var/turf/pda_loc = get_turf(pda_device)
+			if(get_dist(user_loc,pda_loc) <= 1)
+				if(pda_device.mode == 107)
+					pda_device.attack_self(C)
+			else
+				user.unset_machine()
+				user << browse(null, "window=pda")
