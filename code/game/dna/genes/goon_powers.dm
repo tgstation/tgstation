@@ -35,9 +35,9 @@
 			return 0
 		return ..(M,flags)
 
-	deactivate(var/mob/M)
-		..(M)
-		M.alpha=255
+	deactivate(var/mob/M, var/connected, var/flags)
+		if(..(M,connected,flags))
+			M.alpha=255
 
 // WAS: /datum/bioEffect/darkcloak
 /*/datum/dna/gene/basic/stealth/darkcloak
@@ -90,13 +90,14 @@
 		return 1
 
 	deactivate(var/mob/M, var/connected, var/flags)
-		..(M,connected,flags)
-		for(var/spell/S in M.spell_list)
-			if(S in granted_spells)
-				M.remove_spell(S)
-				granted_spells -= S
-				qdel(S)
-		return 1
+		if(..(M,connected,flags))
+			for(var/spell/S in M.spell_list)
+				if(S in granted_spells)
+					M.remove_spell(S)
+					granted_spells -= S
+					qdel(S)
+			return 1
+		return 0
 
 /datum/dna/gene/basic/grant_verb
 	var/verbtype
@@ -107,8 +108,10 @@
 		return 1
 
 	deactivate(var/mob/M, var/connected, var/flags)
-		..(M,connected,flags)
-		M.verbs -= verbtype
+		if(..(M,connected,flags))
+			M.verbs -= verbtype
+			return 1
+		return 0
 
 // WAS: /datum/bioEffect/cryokinesis
 /datum/dna/gene/basic/grant_spell/cryo

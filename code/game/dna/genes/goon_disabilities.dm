@@ -25,8 +25,8 @@
 		M.sdisabilities |= MUTE
 
 	deactivate(var/mob/M, var/connected, var/flags)
-		..()
-		M.sdisabilities &= ~MUTE
+		if(..())
+			M.sdisabilities &= ~MUTE
 ////////////////////////////////////////
 // Harmful to others as well as self
 ////////////////////////////////////////

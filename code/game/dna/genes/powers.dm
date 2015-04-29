@@ -239,8 +239,8 @@
 		M.pass_flags |= PASSTABLE
 
 	deactivate(var/mob/M, var/connected, var/flags)
-		..(M,connected,flags)
-		M.pass_flags &= ~PASSTABLE
+		if(..(M,connected,flags))
+			M.pass_flags &= ~PASSTABLE
 
 /* OLD HULK BEHAVIOR
 /datum/dna/gene/basic/hulk

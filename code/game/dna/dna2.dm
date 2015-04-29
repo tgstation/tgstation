@@ -96,6 +96,9 @@ var/global/list/facial_hair_styles_female_list	= list()
 // One of the genes that can't be handed out at roundstart
 #define GENE_UNNATURAL         2
 
+// Species gene
+#define GENE_NATURAL           4
+
 #define GENETYPE_BAD  0
 #define GENETYPE_GOOD 1
 
