@@ -332,9 +332,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	src.attack_log += text("\[[time_stamp()]\] <font color='red'>Bit [H.name] ([H.ckey]) in the neck and draining their blood</font>")
 	H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been bit in the neck by [src.name] ([src.ckey])</font>")
 	log_attack("[src.name] ([src.ckey]) bit [H.name] ([H.ckey]) in the neck")
-	src.visible_message("<span class='danger'>[src.name] bites [H.name]'s neck!</span>",
-	"<span class='danger'>You bite [H.name]'s neck and begin to drain their blood.</span>",
-	"<span class='notice'>You hear a soft puncture and a wet sucking noise.</span>")
+	src.visible_message("<span class='danger'>[src.name] bites [H.name]'s neck!</span>", "<span class='danger'>You bite [H.name]'s neck and begin to drain their blood.</span>", "<span class='notice'>You hear a soft puncture and a wet sucking noise.</span>")
 	if(!iscarbon(src))
 		H.LAssailant = null
 	else
@@ -649,7 +647,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			hud_used.vampire_hud()
 			//hud_used.human_hud(hud_used.ui_style)
 		hud_used.vampire_blood_display.maptext_width = 64
-		hud_used.vampire_blood_display.maptext_height = 64
+		hud_used.vampire_blood_display.maptext_height = 32
 		hud_used.vampire_blood_display.maptext = "<div align='left' valign='top' style='position:relative; top:0px; left:6px'> U:<font color='#33FF33' size='1'>[mind.vampire.bloodusable]</font><br> T:<font color='#FFFF00' size='1'>[mind.vampire.bloodtotal]</font></div>"
 	handle_vampire_cloak()
 	handle_vampire_menace()

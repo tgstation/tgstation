@@ -110,7 +110,7 @@ var/global/list/organ_damage_overlays = list(
 	if (monkeyizing)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
-	..()
+
 
 	if(client && client.prefs.toggles & CHAT_DEBUGLOGS)
 		src << "Successfully called parent."
@@ -319,6 +319,7 @@ var/global/list/organ_damage_overlays = list(
 		update_overlays = 0
 		UpdateDamageIcon()
 	cycle++
+	..()
 
 
 
