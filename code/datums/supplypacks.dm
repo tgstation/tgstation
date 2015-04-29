@@ -282,6 +282,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "ablative armor crate"
 
+/datum/supply_packs/security/armory/bullethelmet
+	name = "Bulletproof Helmet Crate"
+	contains = list(/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/head/helmet/alt)
+	cost = 15
+	containername = "tactical helmet crate"
+
 /////// Weapons: Specialist
 
 /datum/supply_packs/security/armory/ballistic
