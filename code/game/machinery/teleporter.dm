@@ -20,6 +20,11 @@
 /obj/machinery/computer/teleporter/initialize()
 	link_power_station()
 
+/obj/machinery/computer/teleporter/Destroy()
+	if (power_station)
+		power_station.teleporter_console = null
+		power_station = null
+
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
 		return
@@ -258,6 +263,11 @@
 /obj/machinery/teleport/hub/initialize()
 	link_power_station()
 
+/obj/machinery/teleport/hub/Destroy()
+	if (power_station)
+		power_station.teleporter_hub = null
+		power_station = null
+
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
@@ -372,7 +382,12 @@
 
 /obj/machinery/teleport/station/Destroy()
 	if(teleporter_hub)
+		teleporter_hub.power_station = null
 		teleporter_hub.update_icon()
+		teleporter_hub = null
+	if (teleporter_console)
+		teleporter_console.power_station = null
+		teleporter_console = null
 	..()
 
 /obj/machinery/teleport/station/attackby(var/obj/item/weapon/W, mob/user, params)

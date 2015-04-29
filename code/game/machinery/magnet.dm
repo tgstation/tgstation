@@ -46,6 +46,7 @@
 	if(radio_controller)
 		radio_controller.remove_object(src, freq)
 	..()
+	center = null
 
 // update the invisibility and icon
 /obj/machinery/magnetic_module/hide(var/intact)
@@ -244,6 +245,8 @@
 	if(radio_controller)
 		radio_controller.remove_object(src, frequency)
 	..()
+	magnets = null
+	rpath = null
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)

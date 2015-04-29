@@ -25,8 +25,6 @@
 	return
 
 /obj/item/stack/Destroy()
-	if (is_cyborg)
-		return // Not supposed to be destroyed
 	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
 	src.loc = null

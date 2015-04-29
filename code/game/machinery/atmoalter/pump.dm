@@ -43,7 +43,7 @@
 
 	..(severity)
 
-/obj/machinery/portable_atmospherics/pump/process()
+/obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()
 	if(on)
 		var/datum/gas_mixture/environment
@@ -85,7 +85,8 @@
 
 				air_contents.merge(removed)
 		//src.update_icon()
-
+/obj/machinery/portable_atmospherics/pump/process()
+	..()
 	src.updateDialog()
 	return
 

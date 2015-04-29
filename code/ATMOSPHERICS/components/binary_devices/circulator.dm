@@ -50,7 +50,7 @@
 	else
 		last_pressure_delta = 0
 
-/obj/machinery/atmospherics/binary/circulator/process()
+/obj/machinery/atmospherics/binary/circulator/process_atmos()
 	..()
 	update_icon()
 

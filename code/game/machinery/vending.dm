@@ -82,6 +82,7 @@
 	coin = null
 	..()
 
+
 /obj/machinery/vending/snack/Destroy()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
 		S.loc = get_turf(src)

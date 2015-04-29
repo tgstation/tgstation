@@ -200,5 +200,4 @@ Reharging stations are available in robotics, the dormitory's bathrooms. and the
 		return usr.client.Click(master, location, control, params)
 
 /obj/screen/alert/Destroy()
-	PlaceInPool(src)
-	return 1 // Don't destroy me, I have a family!
+	return QDEL_HINT_PUTINPOOL // Don't destroy me, I have a family!

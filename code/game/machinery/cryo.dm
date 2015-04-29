@@ -25,7 +25,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
+
 
 /obj/machinery/atmospherics/unary/cryo_cell/construction()
 	..(dir,dir)
@@ -40,10 +40,19 @@
 /obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	var/turf/T = loc
 	T.contents += contents
-	var/obj/item/weapon/reagent_containers/glass/B = beaker
+
 	if(beaker)
-		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+		beaker.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+	beaker = null
 	..()
+/obj/machinery/atmospherics/unary/cryo_cell/process_atmos()
+	..()
+	if(air_contents)
+		temperature_archived = air_contents.temperature
+		heat_gas_contents()
+		expel_gas()
+	if(abs(temperature_archived-air_contents.temperature) > 1)
+		parent.update = 1
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
@@ -54,19 +63,13 @@
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	if(!node || !is_operational())
 		return
+
 	if(!on)
 		updateDialog()
 		return
 
-	if(air_contents)
-		temperature_archived = air_contents.temperature
-		heat_gas_contents()
-		expel_gas()
-
-		if(occupant)
-			process_occupant()
-	if(abs(temperature_archived-air_contents.temperature) > 1)
-		parent.update = 1
+	if(air_contents && occupant)
+		process_occupant()
 
 	updateDialog()
 	return 1

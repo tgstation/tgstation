@@ -10,10 +10,10 @@
 	var/alert_pressure = 0
 
 /datum/pipeline/New()
-	SSpipe.networks += src
+	SSair.networks += src
 
 /datum/pipeline/Destroy()
-	SSpipe.networks -= src
+	SSair.networks -= src
 	if(air && air.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)
@@ -22,10 +22,11 @@
 		A.nullifyPipenet(src)
 	..()
 
-/datum/pipeline/process()//This use to be called called from the pipe networks
+/datum/pipeline/process()
 	if(update)
 		update = 0
 		reconcile_air()
+
 	return
 	/*
 	//Check to see if pressure is within acceptable limits

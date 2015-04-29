@@ -113,6 +113,7 @@
 	..()
 	src.updateUsrDialog()
 
+
 /obj/machinery/atmospherics/unary/cold_sink/freezer/power_change()
 	..()
 	if(stat & NOPOWER)

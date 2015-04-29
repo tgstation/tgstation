@@ -28,6 +28,8 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 	return
+/turf/Destroy()
+	return QDEL_HINT_HARDDEL_NOW
 
 // Adds the adjacent turfs to the current atmos processing
 /turf/Del()

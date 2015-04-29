@@ -23,7 +23,7 @@ var/datum/subsystem/npcpool/SSbp
 
 
 /datum/subsystem/npcpool/stat_entry()
-	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%) (T:[botPool_l.len + botPool_l_non.len] | D: [needsDelegate.len] | A: [needsAssistant.len + needsHelp_non.len] | U: [canBeUsed.len + canBeUsed_non.len])")
+	..("T:[botPool_l.len + botPool_l_non.len]|D:[needsDelegate.len]|A:[needsAssistant.len + needsHelp_non.len]|U:[canBeUsed.len + canBeUsed_non.len]")
 
 
 /datum/subsystem/npcpool/fire()

@@ -37,6 +37,7 @@ var/datum/subsystem/ticker/ticker
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
 
 	var/timeLeft = 1200						//pregame timer
+	var/delay_start	= 0						//if set true, the pre-round countdown timer does not tick down.
 
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
@@ -53,7 +54,9 @@ var/datum/subsystem/ticker/ticker
 
 	round_end_sound = pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')
 
-/datum/subsystem/ticker/Initialize()
+/datum/subsystem/ticker/Initialize(timeofday, zlevel)
+	if (zlevel)
+		return ..()
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
 	setupGenetics()
@@ -78,7 +81,8 @@ var/datum/subsystem/ticker/ticker
 					++totalPlayersReady
 
 			//countdown
-			timeLeft -= wait
+			if (!delay_end)
+				timeLeft -= wait
 
 			if(timeLeft <= 30 && !tipped)
 				send_random_tip()

@@ -41,7 +41,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	icon_state = "volpump_[on?"on":"off"]"
 
-/obj/machinery/atmospherics/binary/volume_pump/process()
+/obj/machinery/atmospherics/binary/volume_pump/process_atmos()
 //	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -104,7 +104,7 @@ Thus, the two variables affect pump operation are set in New():
 
 
 
-/obj/machinery/atmospherics/binary/volume_pump/initialize()
+/obj/machinery/atmospherics/binary/volume_pump/atmosinit()
 	..()
 
 	set_frequency(frequency)

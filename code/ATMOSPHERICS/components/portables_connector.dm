@@ -24,7 +24,7 @@
 			state = "pipe_exposed"
 		underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, col)
 
-/obj/machinery/atmospherics/unary/portables_connector/process()
+/obj/machinery/atmospherics/unary/portables_connector/process_atmos()
 	if(!connected_device)
 		return
 	parent.update = 1

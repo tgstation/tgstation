@@ -32,7 +32,7 @@ Passive gate is similar to the regular pump except:
 	if(on & !(stat & NOPOWER))
 		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "passgate_on")
 
-/obj/machinery/atmospherics/binary/passive_gate/process()
+/obj/machinery/atmospherics/binary/passive_gate/process_atmos()
 	..()
 	if(!on)
 		return 0
@@ -98,7 +98,7 @@ Passive gate is similar to the regular pump except:
 	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
 	onclose(user, "atmo_pump")
 
-/obj/machinery/atmospherics/binary/passive_gate/initialize()
+/obj/machinery/atmospherics/binary/passive_gate/atmosinit()
 	..()
 	if(frequency)
 		set_frequency(frequency)

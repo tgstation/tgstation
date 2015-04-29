@@ -72,7 +72,7 @@
 	..()
 	var/turf/location = get_turf(src)
 	if(location)
-		new /obj/effect/hotspot(location)
+		PoolOrNew(/obj/effect/hotspot, location)
 		location.hotspot_expose(700, 50, 1)
 
 /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
