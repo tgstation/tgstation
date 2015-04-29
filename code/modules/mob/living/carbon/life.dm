@@ -153,7 +153,7 @@
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*T20C)/BREATH_VOLUME
 
 	var/O2_partialpressure = (breath.oxygen/breath.total_moles())*breath_pressure
 	var/Toxins_partialpressure = (breath.toxins/breath.total_moles())*breath_pressure
