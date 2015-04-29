@@ -363,17 +363,23 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Security Clothing Crate"
 	contains = list(/obj/item/clothing/under/rank/security/navyblue,
 					/obj/item/clothing/under/rank/security/navyblue,
-					/obj/item/clothing/suit/security/officer,
-					/obj/item/clothing/suit/security/officer,
+					/obj/item/clothing/suit/security/officerblue,
+					/obj/item/clothing/suit/security/officertan,
+					/obj/item/clothing/suit/security/officernavy,
 					/obj/item/clothing/head/beret/sec/navyofficer,
 					/obj/item/clothing/head/beret/sec/navyofficer,
 					/obj/item/clothing/under/rank/warden/navyblue,
-					/obj/item/clothing/suit/security/warden,
+					/obj/item/clothing/suit/security/wardenblue,
+					/obj/item/clothing/suit/security/wardennavy,
+					/obj/item/clothing/suit/security/wardentan,
 					/obj/item/clothing/head/beret/sec/navywarden,
 					/obj/item/clothing/under/rank/head_of_security/navyblue,
-					/obj/item/clothing/suit/security/hos,
-					/obj/item/clothing/head/beret/sec/navyhos)
-	cost = 30
+					/obj/item/clothing/suit/security/hosblue,
+					/obj/item/clothing/suit/security/hosnavy,
+					/obj/item/clothing/suit/security/hostan,
+					/obj/item/clothing/head/beret/sec/navyhos,
+					/obj/item/clothing/suit/armor/hos/trenchcoat)
+	cost = 35
 	containername = "security clothing crate"
 
 
