@@ -39,5 +39,4 @@ TERROR RUN FLEE GO RUN
 			else
 				A.affected_mob << "<span class='warning'>Something feels wrong, very wrong.</span>"
 				T.atmos_spawn_air(SPAWN_20C | SPAWN_TOXINS, 10)
-				M.adjustToxLoss(5.666)
 	return
