@@ -162,7 +162,7 @@ datum/reagent/blob/morphine/reaction_mob(var/mob/living/M as mob, var/method=TOU
 			M.reagents.add_reagent("morphine", 16)
 
 datum/reagent/blob/spacedrugs
-	name = "Space drugs"
+	name = "Hallucinogenic"
 	id = "b_space_drugs"
 	description = ""
 	color = "#60A584"
@@ -174,21 +174,6 @@ datum/reagent/blob/spacedrugs/reaction_mob(var/mob/living/M as mob, var/method=T
 		if(M.reagents)
 			M.reagents.add_reagent("space_drugs", 15)
 		M.apply_damage(10, TOX)
-
-datum/reagent/blob/blob_chloral
-	name = "Sedatives"
-	id = "b_chloral"
-	description = "A strange blue liquid. Its fumes induce drowsiness."
-	color = "#000067"
-
-datum/reagent/blob/blob_chloral/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
-	if(method == TOUCH)
-		if(show_message)
-			M << "<span class = 'userdanger'>The blob strikes you, and you feel a wave of drowsiness!</span>"
-		if(M.reagents)
-			M.reagents.add_reagent("chloralhydrate", 5)
-		M.drowsyness += 5
-		M.apply_damage(5, TOX)
 
 datum/reagent/blob/blob_stamina
 	name = "Weakness Toxin"

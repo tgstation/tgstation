@@ -403,6 +403,8 @@ emp_act
 		var/damage = rand(5, 25)
 		if(M.is_adult)
 			damage = rand(10, 35)
+		if(istype(M, /mob/living/simple_animal/slime/blob))
+			damage = rand(5,7)
 
 		if(check_shields(damage, "the [M.name]"))
 			return 0
