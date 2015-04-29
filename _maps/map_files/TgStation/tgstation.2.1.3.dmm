@@ -2483,7 +2483,7 @@
 "aVM" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/simulated/floor/plasteel,/area/hallway/primary/central)
 "aVN" = (/obj/structure/table/reinforced,/obj/item/weapon/lighter/zippo,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aVO" = (/obj/structure/stool,/obj/effect/landmark/start{name = "Assistant"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
-"aVP" = (/obj/structure/table,/obj/item/weapon/kitchen/utensil/fork,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
+"aVP" = (/obj/structure/table,/obj/item/weapon/kitchen/fork,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aVQ" = (/obj/machinery/atmospherics/pipe/simple/yellow/visible{dir = 4},/turf/simulated/wall/r_wall,/area/atmos)
 "aVR" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/obj/machinery/atmospherics/pipe/simple/cyan/visible{dir = 9},/turf/simulated/floor/plating,/area/atmos)
 "aVS" = (/obj/machinery/light{dir = 4},/obj/machinery/atmospherics/pipe/simple/cyan/visible{dir = 6},/turf/simulated/floor/plasteel,/area/atmos)

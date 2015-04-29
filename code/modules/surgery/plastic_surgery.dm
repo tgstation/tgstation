@@ -6,7 +6,7 @@
 
 //reshape_face
 /datum/surgery_step/reshape_face
-	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/kitchenknife = 50, /obj/item/weapon/wirecutters = 35)
+	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/kitchen/knife = 50, /obj/item/weapon/wirecutters = 35)
 	time = 64
 
 /datum/surgery_step/reshape_face/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

@@ -308,9 +308,6 @@
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
 
-	if (config.rename_cyborg)
-		O.rename_self("cyborg", 1)
-
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
 	O.cell.maxcharge = 7500
@@ -329,6 +326,9 @@
 		O.key = key
 
 	O.update_pipe_vision()
+
+	if (config.rename_cyborg)
+		O.rename_self("cyborg", 1)
 
 	O.loc = loc
 	O.job = "Cyborg"

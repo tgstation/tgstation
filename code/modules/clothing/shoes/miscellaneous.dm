@@ -1,7 +1,7 @@
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
 
-/obj/item/clothing/shoes/syndigaloshes
-	desc = "A pair of brown shoes. They seem to have extra grip."
+/obj/item/clothing/shoes/sneakers/syndigaloshes
+	desc = "A pair of brown shoes."
 	name = "brown shoes"
 	icon_state = "brown"
 	item_state = "brown"
