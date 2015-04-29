@@ -1175,7 +1175,7 @@
 
 	//Exhale
 	breath.toxins -= gas_breathed
-	breath.oxygen += gas_breathed
+	breath.carbon_dioxide += gas_breathed
 	gas_breathed = 0
 
 
