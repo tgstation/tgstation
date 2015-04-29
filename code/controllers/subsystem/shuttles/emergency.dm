@@ -43,7 +43,10 @@
 		else
 			return
 
-	SSshuttle.emergencyLastCallLoc = signalOrigin
+	if(prob(70))
+		SSshuttle.emergencyLastCallLoc = signalOrigin
+	else
+		SSshuttle.emergencyLastCallLoc = null
 
 	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
@@ -56,6 +59,8 @@
 
 	if(prob(70))
 		SSshuttle.emergencyLastCallLoc = signalOrigin
+	else
+		SSshuttle.emergencyLastCallLoc = null
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
 
 /*
