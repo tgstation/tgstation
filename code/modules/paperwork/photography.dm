@@ -53,7 +53,7 @@
 	if(in_range(user, src))
 		show(user)
 	else
-		user << "You need to get closer to get a good look at this photo."
+		user << "<span class='warning'>You need to get closer to get a good look at this photo!</span>"
 
 
 /obj/item/weapon/photo/proc/show(mob/user)
@@ -427,4 +427,4 @@ obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
 	visible_message("[C.name] spits out a photograph from a narrow slot on it's chassis.")
-	usr << "You print a photograph."
+	usr << "<span class='notice'>You print a photograph.</span>"

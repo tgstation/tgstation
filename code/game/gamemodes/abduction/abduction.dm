@@ -35,7 +35,7 @@
 
 	return 1
 
-/datum/game_mode/abduction/proc/make_abductor_team(var/team_number)
+/datum/game_mode/abduction/proc/make_abductor_team(var/team_number,var/preset_agent=null,var/preset_scientist=null)
 	//Team Name
 	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
 	//Team Objective
@@ -43,26 +43,40 @@
 	team_objective.team = team_number
 	team_objectives[team_number] = team_objective
 	//Team Members
-	if(antag_candidates.len >=2)
-		var/datum/mind/scientist = pick(antag_candidates)
+
+	if(!preset_agent || !preset_scientist)
+		if(antag_candidates.len <=2)
+			return 0
+
+	var/datum/mind/scientist
+	var/datum/mind/agent
+
+	if(!preset_scientist)
+		scientist = pick(antag_candidates)
 		antag_candidates -= scientist
-		var/datum/mind/agent = pick(antag_candidates)
+	else
+		scientist = preset_scientist
+
+	if(!preset_agent)
+		agent = pick(antag_candidates)
 		antag_candidates -= agent
+	else
+		agent = preset_agent
 
-		scientist.assigned_role = "MODE"
-		scientist.special_role = "Abductor"
-		log_game("[scientist.key] (ckey) has been selected as an abductor team [team_number] scientist.")
 
-		agent.assigned_role = "MODE"
-		agent.special_role = "Abductor"
-		log_game("[agent.key] (ckey) has been selected as an abductor team [team_number] agent.")
+	scientist.assigned_role = "MODE"
+	scientist.special_role = "Abductor"
+	log_game("[scientist.key] (ckey) has been selected as an abductor team [team_number] scientist.")
 
-		abductors += agent
-		abductors += scientist
-		scientists[team_number] = scientist
-		agents[team_number] = agent
-		return 1
-	return 0
+	agent.assigned_role = "MODE"
+	agent.special_role = "Abductor"
+	log_game("[agent.key] (ckey) has been selected as an abductor team [team_number] agent.")
+
+	abductors |= agent
+	abductors |= scientist
+	scientists[team_number] = scientist
+	agents[team_number] = agent
+	return 1
 
 /datum/game_mode/abduction/post_setup()
 	//Spawn Team
@@ -218,6 +232,7 @@
 	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), slot_belt)
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), slot_in_backpack)
+	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), slot_head)
 
 
 /datum/game_mode/abduction/proc/equip_scientist(var/mob/living/carbon/human/scientist,var/team_number)
@@ -236,19 +251,11 @@
 
 
 /datum/game_mode/abduction/check_finished()
-	var/all_dead = 1
 	for(var/team_number=1,team_number<=teams,team_number++)
-		var/datum/mind/smind = scientists[team_number]
-		if(smind.current)
-			var/mob/living/M = smind.current
-			if(M.stat != DEAD)
-				all_dead = 0
 		var/obj/machinery/abductor/console/con = get_team_console(team_number)
 		var/datum/objective/objective = team_objectives[team_number]
 		if (con.experiment.points > objective.target_amount)
 			return 1
-	if(all_dead)
-		return 1
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()

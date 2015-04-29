@@ -234,19 +234,11 @@
 			return
 
 		if(component_parts && istype(W, /obj/item/weapon/crowbar))
-			var/list/all_products = product_records + hidden_records + coin_records
-			for(var/datum/data/vending_product/machine_content in all_products)
-				while(machine_content.amount !=0)
-					for(var/obj/item/weapon/vending_refill/VR in component_parts)
-						VR.charges++
-						machine_content.amount--
-						if(!machine_content.amount)
-							break
 			default_deconstruction_crowbar(W)
 
 	if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		panel_open = !panel_open
-		user << "You [panel_open ? "open" : "close"] the maintenance panel."
+		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
 		overlays.Cut()
 		if(panel_open)
 			overlays += image(icon, "[initial(icon_state)]-panel")
@@ -282,10 +274,29 @@
 	else
 		..()
 
+
+/obj/machinery/vending/default_deconstruction_crowbar(var/obj/item/O)
+	var/list/all_products = product_records + hidden_records + coin_records
+	for(var/datum/data/vending_product/machine_content in all_products)
+		while(machine_content.amount !=0)
+			var/safety = 0 //to avoid infinite loop
+			for(var/obj/item/weapon/vending_refill/VR in component_parts)
+				safety++
+				if(VR.charges < initial(VR.charges))
+					VR.charges++
+					machine_content.amount--
+					if(!machine_content.amount)
+						break
+				else
+					safety--
+			if(safety <= 0)
+				break
+	..()
+
 /obj/machinery/vending/emag_act(user as mob)
 	if(!emagged)
 		emagged  = 1
-		user << "You short out the product lock on [src]."
+		user << "<span class='notice'>You short out the product lock on [src].</span>"
 
 /obj/machinery/vending/attack_paw(mob/user)
 	return attack_hand(user)
@@ -431,7 +442,7 @@
 				return
 		else if(R in coin_records)
 			if(!coin)
-				usr << "<span class='notice'>You need to insert a coin to get this item.</span>"
+				usr << "<span class='warning'>You need to insert a coin to get this item!</span>"
 				vend_ready = 1
 				return
 			if(coin.string_attached)
@@ -440,11 +451,11 @@
 						usr << "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>"
 						coin = null
 					else
-						usr << "<span class='notice'>You couldn't pull [coin] out because your hands are full.</span>"
+						usr << "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>"
 						qdel(coin)
 						coin = null
 				else
-					usr << "<span class='notice'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all.</span>"
+					usr << "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>"
 					qdel(coin)
 					coin = null
 			else
@@ -594,6 +605,7 @@
 	contraband = list()
 	premium = list()
 
+IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY CANISTER CHARGES in vending_items.dm
 */
 
 /*
@@ -669,7 +681,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/tofu = 24,
 					/obj/item/weapon/reagent_containers/food/drinks/ice = 12,
 					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6)
-	contraband = list(/obj/item/weapon/kitchen/utensil/knife = 6)
+	contraband = list(/obj/item/weapon/kitchen/knife = 6)
 
 
 /obj/machinery/vending/cola
@@ -707,7 +719,7 @@
 	products = list(/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold = 2,/obj/item/weapon/gun/projectile/automatic/pistol/deagle/camo = 2,
 					/obj/item/weapon/gun/projectile/automatic/pistol/m1911 = 2,/obj/item/weapon/gun/projectile/automatic/proto = 2,
 					/obj/item/weapon/gun/projectile/shotgun/combat = 2,/obj/item/weapon/gun/projectile/automatic/gyropistol = 1,
-					/obj/item/weapon/gun/projectile/shotgun = 2)
+					/obj/item/weapon/gun/projectile/shotgun = 2,/obj/item/weapon/gun/projectile/automatic/ar = 2)
 	premium = list(/obj/item/ammo_box/magazine/smgm9mm = 2,/obj/item/ammo_box/magazine/m50 = 4,/obj/item/ammo_box/magazine/m45 = 2,/obj/item/ammo_box/magazine/m75 = 2)
 	contraband = list(/obj/item/clothing/under/patriotsuit = 1,/obj/item/weapon/bedsheet/patriot = 3)
 
@@ -779,6 +791,7 @@
 	products = list(/obj/item/weapon/restraints/handcuffs = 8,/obj/item/weapon/restraints/handcuffs/cable/zipties = 10,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/flash/handheld = 5,
 					/obj/item/weapon/reagent_containers/food/snacks/donut = 12,/obj/item/weapon/storage/box/evidence = 6,/obj/item/device/flashlight/seclite = 4)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2)
+	premium = list(/obj/item/weapon/coin/antagtoken = 1)
 
 /obj/machinery/vending/hydronutrients
 	name = "\improper NutriMax"
@@ -860,8 +873,8 @@
 	desc = "A kitchen and restaurant equipment vendor"
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
-	products = list(/obj/item/weapon/storage/bag/tray = 8,/obj/item/weapon/kitchen/utensil/fork = 6,/obj/item/weapon/kitchenknife = 3,/obj/item/weapon/kitchen/rollingpin = 2,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/apron/chef = 2,/obj/item/weapon/reagent_containers/food/condiment/pack/ketchup = 5,/obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce = 5,/obj/item/weapon/reagent_containers/glass/bowl = 20)
-	contraband = list(/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/kitchenknife/butcher = 2)
+	products = list(/obj/item/weapon/storage/bag/tray = 8,/obj/item/weapon/kitchen/fork = 6,/obj/item/weapon/kitchen/knife = 3,/obj/item/weapon/kitchen/rollingpin = 2,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/apron/chef = 2,/obj/item/weapon/reagent_containers/food/condiment/pack/ketchup = 5,/obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce = 5,/obj/item/weapon/reagent_containers/glass/bowl = 20)
+	contraband = list(/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/kitchen/knife/butcher = 2)
 
 /obj/machinery/vending/sovietsoda
 	name = "\improper BODA"

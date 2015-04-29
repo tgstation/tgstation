@@ -187,14 +187,19 @@
 ///////////////////////////////
 /datum/game_mode/revolution/proc/latejoin_headrev()
 	if(revolutionaries) //Head Revs are not in this list
-		var/datum/mind/stalin = pick(revolutionaries)
-		revolutionaries -= stalin
-		head_revolutionaries += stalin
-		log_game("[stalin.key] (ckey) has been promoted to a head rev")
-		equip_revolutionary(stalin.current)
-		forge_revolutionary_objectives(stalin)
-		greet_revolutionary(stalin)
-		++max_headrevs
+		var/list/promotable_revs = list()
+		for(var/datum/mind/khrushchev in revolutionaries)
+			if(khrushchev.current && khrushchev.current.client && khrushchev.current.stat != DEAD)
+				if(khrushchev.current.client.prefs.be_special & BE_REV)
+					promotable_revs += khrushchev
+		if(promotable_revs)
+			var/datum/mind/stalin = pick(promotable_revs)
+			revolutionaries -= stalin
+			head_revolutionaries += stalin
+			log_game("[stalin.key] (ckey) has been promoted to a head rev")
+			equip_revolutionary(stalin.current)
+			forge_revolutionary_objectives(stalin)
+			greet_revolutionary(stalin)
 
 //////////////////////////////////////
 //Checks if the revs have won or not//
@@ -213,11 +218,15 @@
 	if(config.continuous["revolution"])
 		if(finished != 0)
 			SSshuttle.emergencyNoEscape = 0
+			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+				SSshuttle.emergency.mode = SHUTTLE_DOCKED
+				SSshuttle.emergency.timer = world.time
+				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 		return ..()
 	if(finished != 0)
 		return 1
 	else
-		return 0
+		return ..()
 
 ///////////////////////////////////////////////////
 //Deals with converting players to the revolution//

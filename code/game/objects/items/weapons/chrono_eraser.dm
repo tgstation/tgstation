@@ -148,13 +148,13 @@
 	desc = "An aura of time-bluespace energy."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	density = 1
+	density = 0
 	anchored = 1
 	unacidable = 1
 	blend_mode = BLEND_MULTIPLY
 	var/mob/living/captured = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
-	var/tickstokill = 30
+	var/tickstokill = 15
 	var/image/mob_underlay = null
 	var/preloaded = 0
 	var/RPpos = null
@@ -210,12 +210,8 @@
 			qdel(src)
 		else
 			captured.Paralyse(4)
-			if(captured.reagents)
-				captured.reagents.del_reagent("synaptizine") //you pesky thing you
-			if(captured.loc != src) //If they manage to escape, immediately kill them, this is so that even if there IS a way to get out, they won't use it
+			if(captured.loc != src)
 				captured.loc = src
-				tickstokill = 0
-				return .()
 			update_icon()
 			if(gun)
 				if(gun.field_check(src))

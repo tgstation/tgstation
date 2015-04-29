@@ -105,11 +105,11 @@
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "<span class='notice'>You start slicing the floorweld off \the [src].</span>"
+				user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
 
 				if(do_after(user,20))
 					if(!src || !W.isOn()) return
-					user << "<span class='notice'>You've sliced the floorweld off \the [src].</span>"
+					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 					Deconstruct()
 				return
 			else
@@ -134,7 +134,7 @@
 
 	user.drop_item()
 	I.loc = src
-	user.visible_message("<span class='notice'>[user.name] places \the [I] into \the [src].</span>", \
+	user.visible_message("[user.name] places \the [I] into \the [src].", \
 						"<span class='notice'>You place \the [I] into \the [src].</span>")
 
 	update()
@@ -149,23 +149,23 @@
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
-		user << "<span class='warning'>[target] doesn't fit inside [src].</span>"
+		user << "<span class='warning'>[target] doesn't fit inside [src]!</span>"
 		return
 	src.add_fingerprint(user)
 	if(user == target)
-		user.visible_message("<span class='warning'>[user] starts climbing into [src].</span>", \
-								"<span class='notice'>[user] starts climbing into [src].</span>")
+		user.visible_message("[user] starts climbing into [src].", \
+								"<span class='notice'>You start climbing into [src]...</span>")
 	else
 		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
-								"<span class='userdanger'>[user] starts putting [target] into [src]!</span>")
+								"<span class='userdanger'>[user] starts putting you into [src]!</span>")
 	if(do_mob(user, target, 20))
 		if (target.client)
 			target.client.perspective = EYE_PERSPECTIVE
 			target.client.eye = src
 		target.loc = src
 		if(user == target)
-			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", \
-									"<span class='notice'>[user] climbs into [src].</span>")
+			user.visible_message("[user] climbs into [src].", \
+									"<span class='notice'>You climb into [src].</span>")
 		else
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", \
 									"<span class='userdanger'>[user] has placed [target] in [src].</span>")
@@ -214,7 +214,7 @@
 // human interact with machine
 /obj/machinery/disposal/attack_hand(mob/user as mob)
 	if(user && user.loc == src)
-		usr << "<span class='danger'>You cannot reach the controls from inside.</span>"
+		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
 		return
 	/*
 	if(mode==-1)
@@ -271,7 +271,7 @@
 	if(..())
 		return
 	if(usr.loc == src)
-		usr << "<span class='danger'>You cannot reach the controls from inside.</span>"
+		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
 		return
 
 	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
@@ -846,12 +846,12 @@
 
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "<span class='notice'>You start slicing the disposal pipe.</span>"
+			user << "<span class='notice'>You start slicing the disposal pipe...</span>"
 			// check if anything changed over 2 seconds
 			if(do_after(user,30))
 				if(!src || !W.isOn()) return
 				Deconstruct()
-				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
+				user << "<span class='notice'>You slice the disposal pipe.</span>"
 		else
 			return
 
@@ -1146,16 +1146,16 @@
 		var/obj/item/weapon/weldingtool/W = I
 
 		if(linked)
-			user << "<span class='notice'>You need to deconstruct disposal machinery above this pipe.</span>"
+			user << "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>"
 			return
 
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "<span class='notice'>You start slicing the disposal pipe.</span>"
+			user << "<span class='notice'>You start slicing the disposal pipe...</span>"
 			if(do_after(user,30))
 				if(!src || !W.isOn()) return
 				Deconstruct()
-				user << "<span class='notice'>You've sliced the disposal pipe.</span>"
+				user << "<span class='notice'>You slice the disposal pipe.</span>"
 		else
 			return
 
@@ -1285,10 +1285,10 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "<span class='notice'>You start slicing the floorweld off \the [src].</span>"
+			user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
 			if(do_after(user,20))
 				if(!src || !W.isOn()) return
-				user << "<span class='notice'>You've sliced the floorweld off \the [src].</span>"
+				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
 				stored.update()

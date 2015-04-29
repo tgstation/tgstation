@@ -47,7 +47,7 @@
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
 	if(user.get_inactive_hand())
-		user << "<span class='warning'>You need your other hand to be empty</span>"
+		user << "<span class='warning'>You need your other hand to be empty!</span>"
 		return
 	wielded = 1
 	force = force_wielded
@@ -230,13 +230,13 @@ obj/item/weapon/twohanded/
 
 /obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)
-		user << "<span class='warning'>You cant pick up such dangerous item with your meaty hands without losing fingers, better not to.</span>"
+		user << "<span class='warning'>You can't pick up such dangerous item with your meaty hands without losing fingers, better not to!</span>"
 		return 1
 
 /obj/item/weapon/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
 	if(istype(M))
 		if(M.dna.check_mutation(HULK))
-			M << "<span class='warning'>You lack the grace to wield this.</span>"
+			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
 	..()
 	hitsound = 'sound/weapons/blade1.ogg'

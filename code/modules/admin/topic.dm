@@ -16,35 +16,35 @@
 					message_admins("[key_name_admin(usr)] created traitors.")
 					log_admin("[key_name(usr)] created traitors.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create traitors. Unfortunatly there were no candidates available.")
+					message_admins("[key_name_admin(usr)] tried to create traitors. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create traitors.")
 			if("2")
 				if(src.makeChanglings())
 					message_admins("[key_name(usr)] created changelings.")
 					log_admin("[key_name(usr)] created changelings.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create changelings. Unfortunatly there were no candidates available.")
+					message_admins("[key_name_admin(usr)] tried to create changelings. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create changelings.")
 			if("3")
 				if(!src.makeRevs())
 					message_admins("[key_name(usr)] started a revolution.")
 					log_admin("[key_name(usr)] started a revolution.")
 				else
-					message_admins("[key_name_admin(usr)] tried to start a revolution. Unfortunatly there were no candidates available.")
+					message_admins("[key_name_admin(usr)] tried to start a revolution. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to start a revolution.")
 			if("4")
 				if(src.makeCult())
 					message_admins("[key_name(usr)] started a cult.")
 					log_admin("[key_name(usr)] started a cult.")
 				else
-					message_admins("[key_name_admin(usr)] tried to start a cult. Unfortunatly there were no candidates available.")
+					message_admins("[key_name_admin(usr)] tried to start a cult. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to start a cult.")
 			if("5")
 				if(src.makeMalfAImode())
 					message_admins("[key_name(usr)] caused an AI to malfunction.")
 					log_admin("[key_name(usr)] caused an AI to malfunction.")
 				else
-					message_admins("[key_name_admin(usr)] tried to cause an AI to malfunction. Unfortunatly there were no candidates available.")
+					message_admins("[key_name_admin(usr)] tried to cause an AI to malfunction. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to cause an AI to malfunction.")
 			if("6")
 				message_admins("[key_name(usr)] is creating a wizard...")
@@ -52,7 +52,7 @@
 					message_admins("[key_name(usr)] created a wizard.")
 					log_admin("[key_name(usr)] created a wizard.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create a wizard. Unfortunatly there were no candidates available.")
+					message_admins("[key_name_admin(usr)] tried to create a wizard. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a wizard.")
 			if("7")
 				message_admins("[key_name(usr)] is creating a nuke team...")
@@ -60,7 +60,7 @@
 					message_admins("[key_name(usr)] created a nuke team.")
 					log_admin("[key_name(usr)] created a nuke team.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create a nuke team. Unfortunatly there were not enough candidates available.")
+					message_admins("[key_name_admin(usr)] tried to create a nuke team. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create a nuke team.")
 			if("8")
 				message_admins("[key_name(usr)] spawned a ninja.")
@@ -76,7 +76,7 @@
 					message_admins("[key_name(usr)] created a death squad.")
 					log_admin("[key_name(usr)] created a death squad.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunatly there were not enough candidates available.")
+					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create a death squad.")
 			if("11")
 				var/strength = input("Set Blob Strength (1=Weak, 2=Strong, 3=Full)","Set Strength",1) as num
@@ -88,7 +88,7 @@
 					message_admins("[key_name(usr)] started a gang war.")
 					log_admin("[key_name(usr)] started a gang war.")
 				else
-					message_admins("[key_name(usr)] tried to start a gang war. Unfortunatly there were not enough candidates available.")
+					message_admins("[key_name(usr)] tried to start a gang war. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to start a gang war.")
 			if("13")
 				message_admins("[key_name(usr)] is creating an emergency response team...")
@@ -96,7 +96,7 @@
 					message_admins("[key_name(usr)] created an emergency response team.")
 					log_admin("[key_name(usr)] created an emergency response team.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create an emergency response team. Unfortunatly there were not enough candidates available.")
+					message_admins("[key_name_admin(usr)] tried to create an emergency response team. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create an emergency response team.")
 			if("14")
 				message_admins("[key_name(usr)] is creating an abductor team...")
@@ -106,6 +106,14 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create an abductor team.")
+			if("15")
+				message_admins("[key_name(usr)] is creating a revenant...")
+				if(src.makeRevenant())
+					message_admins("[key_name(usr)] created a revenant.")
+					log_admin("[key_name(usr)] created a revenant.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a revenant.")
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))	return

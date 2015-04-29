@@ -363,7 +363,10 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/sharpness = is_sharp(O)
 		if(sharpness)
-			harvest(user, sharpness)
+			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+			if(do_mob(user, src, 80/sharpness))
+				harvest(user)
 			return
 
 	..()
@@ -461,13 +464,9 @@
 		new childtype(loc)
 
 // Harvest an animal's delicious byproducts
-/mob/living/simple_animal/proc/harvest(mob/living/user, sharpness = 1)
-	user << "<span class='notice'>You begin to butcher [src].</span>"
-	playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-	if(do_mob(user, src, 80/sharpness))
-		visible_message("<span class='notice'>[user] butchers [src].</span>")
-		gib()
-	return
+/mob/living/simple_animal/proc/harvest(mob/living/user)
+	visible_message("<span class='notice'>[user] butchers [src].</span>")
+	gib()
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)

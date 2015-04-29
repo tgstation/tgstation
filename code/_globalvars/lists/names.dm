@@ -8,6 +8,7 @@ var/list/first_names_male = file2list("config/names/first_male.txt")
 var/list/first_names_female = file2list("config/names/first_female.txt")
 var/list/last_names = file2list("config/names/last.txt")
 var/list/clown_names = file2list("config/names/clown.txt")
+var/list/mime_names = file2list("config/names/mime.txt")
 
 
 var/list/verbs = file2list("config/names/verbs.txt")

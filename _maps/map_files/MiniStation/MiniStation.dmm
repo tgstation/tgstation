@@ -1029,7 +1029,7 @@
 "tO" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/camera/autoname{dir = 4},/turf/simulated/floor/plasteel,/area/hallway/primary/central)
 "tP" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/crew_quarters/bar)
 "tQ" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 2; on = 1},/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
-"tR" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/condiment/peppermill{pixel_x = 3},/obj/item/weapon/reagent_containers/food/condiment/saltshaker{pixel_x = -3; pixel_y = 0},/obj/item/weapon/kitchen/utensil/fork,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
+"tR" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/condiment/peppermill{pixel_x = 3},/obj/item/weapon/reagent_containers/food/condiment/saltshaker{pixel_x = -3; pixel_y = 0},/obj/item/weapon/kitchen/fork,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "tS" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "tT" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "tU" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)

@@ -65,7 +65,7 @@
 				return 0
 
 			if(wrapped)
-				M << "<span class='notice'>You can't eat wrapped food!</span>"
+				M << "<span class='warning'>You can't eat wrapped food!</span>"
 				return 0
 			else if(fullness <= 50)
 				M << "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>"
@@ -76,7 +76,7 @@
 			else if(fullness > 500 && fullness < 600)
 				M << "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>"
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				M << "<span class='notice'>You cannot force any more of \the [src] to go down your throat.</span>"
+				M << "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>"
 				return 0
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
@@ -86,8 +86,8 @@
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
 										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
 				else
-					M.visible_message("<span class='danger'>[user] cannot force anymore of [src] down [M]'s throat!</span>", \
-										"<span class='userdanger'>[user] cannot force anymore of [src] down [M]'s throat!</span>")
+					M.visible_message("<span class='warning'>[user] cannot force anymore of [src] down [M]'s throat!</span>", \
+										"<span class='warning'>[user] cannot force anymore of [src] down [M]'s throat!</span>")
 					return 0
 
 				if(!do_mob(user, M))
@@ -97,7 +97,7 @@
 									"<span class='userdanger'>[user] feeds [M] to eat [src].</span>")
 
 			else
-				user << "<span class='notice'>[M] doesn't seem to have a mouth!</span>"
+				user << "<span class='warning'>[M] doesn't seem to have a mouth!</span>"
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.
@@ -142,13 +142,13 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(custom_food_type && ispath(custom_food_type))
 			if(S.w_class > 2)
-				user << "<span class='warning'>[S] is too big for [src].</span>"
+				user << "<span class='warning'>[S] is too big for [src]!</span>"
 				return 0
 			if(!S.customfoodfilling)
-				user << "<span class='warning'>[src] can't be filled with [S].</span>"
+				user << "<span class='warning'>[src] can't be filled with [S]!</span>"
 				return 0
 			if(contents.len >= 20)
-				user << "<span class='warning'>You can't add more ingredients to [src].</span>"
+				user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
 				return 0
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
@@ -175,18 +175,18 @@
 			!(locate(/obj/structure/optable) in src.loc) && \
 			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
 		)
-		user << "<span class='notice'>You cannot slice [src] here! You need a table or at least a tray.</span>"
+		user << "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>"
 		return 1
 
 	var/slices_lost = 0
 	if (accuracy > 1)
 		user.visible_message( \
-			"<span class='notice'>[user] slices [src].</span>", \
+			"[user] slices [src].", \
 			"<span class='notice'>You slice [src].</span>" \
 		)
 	else
 		user.visible_message( \
-			"<span class='notice'>[user] inaccurately slices [src] with [W]!</span>", \
+			"[user] inaccurately slices [src] with [W]!", \
 			"<span class='notice'>You inaccurately slice [src] with your [W]!</span>" \
 		)
 		slices_lost = rand(1,min(1,round(slices_num/2)))

@@ -29,7 +29,7 @@
 				initiate(user, target, target_zone, tool, surgery)
 				return 1
 			else
-				user << "<span class='notice'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>"
+				user << "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>"
 				return 1	//returns 1 so we don't stab the guy in the dick or wherever.
 	if(isrobot(user) && user.a_intent != "harm") //to save asimov borgs a LOT of heartache
 		return 1
@@ -68,22 +68,22 @@
 
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] begins to perform surgery on [target].</span>")
+	user.visible_message("[user] begins to perform surgery on [target].", "<span class='notice'>You begin to perform surgery on [target]...</span>")
 
 
 /datum/surgery_step/proc/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] succeeds!</span>")
+	user.visible_message("[user] succeeds!", "<span class='notice'>You succeed.</span>")
 	return 1
 
 /datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.apply_damage(75,"brute","[target_zone]")
-		user.visible_message("<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!")
+		user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
 	return 1
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='warning'>[user] screws up!</span>")
+	user.visible_message("<span class='warning'>[user] screws up!</span>", "<span class='warning'>You screw up!</span>")
 	return 0
 
 /datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

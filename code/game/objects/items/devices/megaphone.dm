@@ -32,7 +32,7 @@
 
 	message = capitalize(message)
 	if(!user.can_speak(message))
-		user << "<span class='warning'>You find yourself unable to speak at all.</span>"
+		user << "<span class='warning'>You find yourself unable to speak at all!</span>"
 		return
 
 	if ((src.loc == user && user.stat == 0))

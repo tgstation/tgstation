@@ -47,12 +47,12 @@
 						occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 						log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 					else
-						occupant_message("<span class='warning'>You must hold still while handling objects.</span>")
+						occupant_message("<span class='warning'>You must hold still while handling objects!</span>")
 						O.anchored = initial(O.anchored)
 			else
-				occupant_message("<span class='warning'>Not enough room in cargo compartment.</span>")
+				occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
-			occupant_message("<span class='warning'>[target] is firmly secured.</span>")
+			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
@@ -65,7 +65,7 @@
 			M.updatehealth()
 			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
 								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
-								"You hear something crack")
+								"<span class='italics'>You hear something crack.</span>")
 			add_logs(chassis.occupant, M, "attacked", object="[name]", addition="(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
@@ -93,9 +93,9 @@
 			return
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
-	target.visible_message("<span class='danger'>[chassis] starts to drill [target]</span>", \
-					"<span class='userdanger'>[chassis] starts to drill [target]</span>", \
-					 "You hear drilling.")
+	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
+					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
+					 "<span class='italics'>You hear drilling.</span>")
 	var/T = chassis.loc
 	var/C = target.loc	//why are these backwards? we may never know -Pete
 	if(do_after_cooldown(target))
@@ -1056,7 +1056,7 @@
 		var/result = load_fuel(target)
 		var/message
 		if(isnull(result))
-			message = "<span class='danger'>[fuel] traces in target minimal. [target] cannot be used as fuel.</span>"
+			message = "<span class='warning'>[fuel] traces in target minimal! [target] cannot be used as fuel.</span>"
 		else if(!result)
 			message = "Unit is full."
 		else
@@ -1214,12 +1214,12 @@
 						chassis.occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 						chassis.log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 					else
-						chassis.occupant_message("<span class='warning'>You must hold still while handling objects.</span>")
+						chassis.occupant_message("<span class='warning'>You must hold still while handling objects!</span>")
 						O.anchored = initial(O.anchored)
 			else
-				chassis.occupant_message("<span class='warning'>Not enough room in cargo compartment.</span>")
+				chassis.occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
-			chassis.occupant_message("<span class='warning'>[target] is firmly secured.</span>")
+			chassis.occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target

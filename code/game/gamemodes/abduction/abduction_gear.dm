@@ -133,7 +133,7 @@
 /obj/item/device/abductor/proc/AbductorCheck(var/user)
 	if(IsAbductor(user))
 		return 1
-	user << "<span class='notice'>You can't figure how this works.</span>"
+	user << "<span class='warning'>You can't figure how this works!</span>"
 	return 0
 
 /obj/item/device/abductor/proc/ScientistCheck(var/user)
@@ -155,7 +155,7 @@
 	if(!AbductorCheck(user))
 		return
 	if(!ScientistCheck(user))
-		user << "<span class='notice'>You're not trained to use this</span>"
+		user << "<span class='warning'>You're not trained to use this!</span>"
 		return
 	if(mode == GIZMO_SCAN)
 		mode = GIZMO_MARK
@@ -200,7 +200,7 @@
 
 /obj/item/device/abductor/gizmo/proc/mark(var/atom/target, var/mob/living/user)
 	if(marked == target)
-		user << "<span class='notice'>This specimen is already marked.</span>"
+		user << "<span class='warning'>This specimen is already marked!</span>"
 		return
 	if(istype(target,/mob/living/carbon/human))
 		if(IsAbductor(target))
@@ -211,12 +211,12 @@
 
 /obj/item/device/abductor/gizmo/proc/prepare(var/atom/target, var/mob/living/user)
 	if(get_dist(target,user)>1)
-		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport.</span>"
+		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>"
 		return
-	user << "<span class='notice'>You start preparing the specimen for transport </span>"
+	user << "<span class='notice'>You start preparing the specimen for transport...</span>"
 	if(do_after(user, 100))
 		marked = target
-		user << "<span class='notice'>You finish preparing the specimen for transport </span>"
+		user << "<span class='notice'>You finish preparing the specimen for transport.</span>"
 
 
 /obj/item/device/abductor/silencer
@@ -479,16 +479,28 @@ Congratulations! You are now trained for xenobiology research!"}
 			user <<"<span class='warning'>The baton is in restrain mode.</span>"
 
 
-obj/item/weapon/scalpel/alien
+/obj/item/weapon/scalpel/alien
 	name = "alien scalpel"
 	icon = 'icons/obj/abductor.dmi'
 
-obj/item/weapon/hemostat/alien
+/obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
 	icon = 'icons/obj/abductor.dmi'
 
-obj/item/weapon/retractor/alien
+/obj/item/weapon/retractor/alien
 	name = "alien retractor"
+	icon = 'icons/obj/abductor.dmi'
+
+/obj/item/weapon/circular_saw/alien
+	name = "alien saw"
+	icon = 'icons/obj/abductor.dmi'
+
+/obj/item/weapon/surgicaldrill/alien
+	name = "alien drill"
+	icon = 'icons/obj/abductor.dmi'
+
+/obj/item/weapon/cautery/alien
+	name = "alien cautery"
 	icon = 'icons/obj/abductor.dmi'
 
 /obj/item/clothing/head/helmet/abductor
@@ -496,3 +508,29 @@ obj/item/weapon/retractor/alien
 	desc = "Abducting with style. Spiky style."
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
+	blockTracking = 1
+
+// Operating Table / Beds / Lockers
+
+/obj/structure/optable/abductor
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "bed"
+	can_buckle = 1
+	buckle_lying = 1
+
+/obj/structure/stool/bed/abductor
+	name = "resting contraption"
+	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "bed"
+
+/obj/structure/table/abductor
+	name = "alien table"
+	desc = "Advanced flat surface technology at work!"
+	icon_state = "alientable"
+
+/obj/structure/closet/abductor
+	name = "alien locker"
+	desc = "Contains secrets of the universe"
+	icon_state = "abductor"
+	icon_door = "abductor"

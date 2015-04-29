@@ -125,6 +125,7 @@ proc/process_ghost_teleport_locs()
 	luminosity = 1
 	lighting_use_dynamic = 1
 	has_gravity = 1
+	valid_territory = 0
 
 
 /area/start
@@ -658,6 +659,7 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	luminosity = 1
 	lighting_use_dynamic = 0
+	valid_territory = 0
 
 	auxport
 		name = "\improper Fore Port Solar Array"
@@ -966,6 +968,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "toxmisc"
 
 /area/toxins/test_area
+	valid_territory = 0
 	name = "\improper Toxins Test Area"
 	icon_state = "toxtest"
 

@@ -20,7 +20,7 @@ Thus, the two variables affect pump operation are set in New():
 	can_unwrench = 1
 
 	var/on = 0
-	var/transfer_rate = 200
+	var/transfer_rate = MAX_TRANSFER_RATE
 
 	var/frequency = 0
 	var/id = null
@@ -93,16 +93,24 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/binary/volume_pump/interact(mob/user as mob)
-	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
-				<b>Desirable output flow: </b>
-				[round(transfer_rate,1)]l/s | <a href='?src=\ref[src];set_transfer_rate=1'>Change</a>
-				"}
+/obj/machinery/atmospherics/binary/volume_pump/ui_interact(mob/user, ui_key = "main")
+	if(stat & (BROKEN|NOPOWER))
+		return
 
-	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
-	onclose(user, "atmo_pump")
+	var/data = list()
 
+	data["on"] = on
+	data["transfer_rate"] = round(transfer_rate*100) //Nano UI can't handle rounded non-integers, apparently.
+	data["max_rate"] = MAX_TRANSFER_RATE
 
+	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
+	if (!ui)
+		ui = new /datum/nanoui(user, src, ui_key, "atmos_gas_pump.tmpl", name, 400, 120)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
+	else
+		ui.push_data(data)
 
 /obj/machinery/atmospherics/binary/volume_pump/initialize()
 	..()
@@ -149,7 +157,7 @@ Thus, the two variables affect pump operation are set in New():
 		user << "<span class='danger'>Access denied.</span>"
 		return
 	usr.set_machine(src)
-	interact(user)
+	ui_interact(user)
 	return
 
 /obj/machinery/atmospherics/binary/volume_pump/Topic(href,href_list)
@@ -158,7 +166,11 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 	if(href_list["set_transfer_rate"])
-		transfer_rate = max(0, min(200, safe_input("Pressure control", "Enter new output pressure (0-4500kPa)", transfer_rate)))
+		switch(href_list["set_transfer_rate"])
+			if ("max")
+				transfer_rate = MAX_TRANSFER_RATE
+			if ("set")
+				transfer_rate = max(0, min(MAX_TRANSFER_RATE, safe_input("Pressure control", "Enter new transfer rate (0-[MAX_TRANSFER_RATE] L/s)", transfer_rate)))
 		investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
 	usr.set_machine(src)
 	src.update_icon()
@@ -175,6 +187,6 @@ Thus, the two variables affect pump operation are set in New():
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
-		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
+		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
 		return 1
 	return ..()
