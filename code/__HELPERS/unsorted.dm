@@ -1250,9 +1250,8 @@ var/global/list/common_tools = list(
 
 	//Because is_sharp is used for food or something.
 	var/list/sharp_things_2 = list(\
-	/obj/item/weapon/kitchenknife,\
-	/obj/item/weapon/scalpel,\
-	/obj/item/weapon/kitchen/utensil/knife)
+	/obj/item/weapon/kitchen/knife,\
+	/obj/item/weapon/scalpel)
 
 	if(is_type_in_list(W,sharp_things_1))
 		return 1
@@ -1274,7 +1273,7 @@ var/global/list/common_tools = list(
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		return 1
-	if(istype(W, /obj/item/weapon/kitchen/utensil/fork))
+	if(istype(W, /obj/item/weapon/kitchen/fork))
 		return 1
 	else
 		return 0
