@@ -11,3 +11,4 @@ AlwaysbetonNanako = Badmin
 Hextopia = Badmin
 Captain Chen = Trial Admin
 0ak = Trial Admin
+Bigmonsterguy = Trial Admin
