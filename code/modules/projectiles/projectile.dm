@@ -123,7 +123,8 @@
 				f.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
 		else
 			if(inaccurate)
-				miss_modifier += (abs(miss_modifier)) + (8*distance)
+				miss_modifier += 8*distance
+				miss_modifier += (abs(miss_modifier))
 
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
 
