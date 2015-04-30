@@ -10,7 +10,8 @@
 	var/rigged = 0
 	var/sound_effect_open = 'sound/machines/click.ogg'
 	var/sound_effect_close = 'sound/machines/click.ogg'
-
+	var/obj/item/weapon/paper/manifest/manifest
+	
 /obj/structure/closet/crate/New()
 	..()
 	update_icon()
@@ -188,7 +189,19 @@
 	AM.loc = src
 	return 1
 
+/obj/structure/closet/crate/proc/tear_manifest(mob/user as mob)
+	user << "<span class='notice'>You tear the manifest off of the crate.</span>"
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
+	manifest.loc = loc
+	if(ishuman(user))
+		user.put_in_hands(manifest)
+	manifest = null
+	update_icon()
+	
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
+	if(manifest)
+		tear_manifest(user)
+		return
 	if(opened)
 		close()
 	else
@@ -204,6 +217,9 @@
 	return
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
+	if(manifest)
+		tear_manifest(user)
+		return
 	if(locked && !broken)
 		if (allowed(user))
 			user << "<span class='notice'>You unlock [src].</span>"
