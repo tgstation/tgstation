@@ -170,7 +170,7 @@
 
 /obj/item/weapon/storage/lockbox/examine(mob/user)
 	..()
-	user << "<span class='info'>tracked_access</span>"
+	user << "<span class='info'>[tracked_access]</span>"
 
 /obj/item/weapon/storage/lockbox/unlockable/attackby(obj/O as obj, mob/user as mob)
 	if (istype(O, /obj/item/weapon/card/id))
