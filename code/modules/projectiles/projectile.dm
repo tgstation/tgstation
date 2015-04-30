@@ -52,6 +52,8 @@
 
 	var/step_delay = 0 //how long it goes between moving. You should probably leave this as 0 for a lot of things
 
+	var/inaccurate = 0
+
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
 	if(blocked >= 2)		return 0//Full block
 	if(!isliving(target))	return 0
@@ -112,13 +114,18 @@
 				miss_modifier += -30
 		if(istype(src, /obj/item/projectile/beam/lightning)) //Lightning is quite accurate
 			miss_modifier += -200
+			if(inaccurate)
+				miss_modifier += (abs(miss_modifier))
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
 			var/turf/simulated/floor/f = get_turf(A.loc)
 			if(f && istype(f))
 				f.break_tile()
 				f.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
 		else
-			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier + 8*distance)
+			if(inaccurate)
+				miss_modifier += (abs(miss_modifier)) + (8*distance)
+
+			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
 
 		if(!def_zone)
 			visible_message("<span class='notice'>\The [src] misses [M] narrowly!</span>")
