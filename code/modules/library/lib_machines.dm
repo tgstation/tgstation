@@ -78,12 +78,12 @@
 		CB.path=typepath
 		CB.id = "M[newid]"
 		newid++
-		cached_books[CB.id]=CB
+		cached_books["[CB.id]"]=CB
 
 
 /datum/library_catalog/proc/rmBookByID(var/mob/user, var/id as text)
-	if(id in cached_books)
-		var/datum/cachedbook/CB = cached_books[id]
+	if("[id]" in cached_books)
+		var/datum/cachedbook/CB = cached_books["[id]"]
 		if(CB.programmatic)
 			user << "<span class='danger'>That book cannot be removed from the system, as it does not actually exist in the database.</span>"
 			return
@@ -95,8 +95,8 @@
 	query.Execute()
 
 /datum/library_catalog/proc/getBookByID(var/id as text)
-	if(id in cached_books)
-		return cached_books[id]
+	if("[id]" in cached_books)
+		return cached_books["[id]"]
 
 	var/sqlid = text2num(id)
 	if(!sqlid)
@@ -115,7 +115,7 @@
 			"ckey"    =query.item[5]
 		))
 		results += CB
-		cached_books[id]=CB
+		cached_books["[id]"]=CB
 		return CB
 	return results
 

@@ -179,7 +179,7 @@
 			if(!emagged)
 				forbidden |= /obj/item/weapon/book/manual/nuclear
 
-			var/manualcount = 0
+			var/manualcount = 1
 			var/obj/item/weapon/book/manual/M = null
 
 			for(var/manual_type in (typesof(/obj/item/weapon/book/manual) - forbidden))
@@ -372,6 +372,9 @@
 			return
 
 		var/datum/cachedbook/newbook = getBookByID(href_list["id"]) // Sanitized in getBookByID
+		if(!newbook)
+			alert("No book found")
+			return
 		if((newbook.forbidden == 2 && !emagged) || newbook.forbidden == 1)
 			alert("This book is forbidden and cannot be printed.")
 			return
@@ -384,7 +387,30 @@
 			spawn(60)
 				bibledelay = 0
 			make_external_book(newbook)
+	if(href_list["manual"])
+		if(!href_list["manual"]) return
+		var/bookid = href_list["manual"]
 
+		if(!dbcon_old.IsConnected())
+			alert("Connection to Archive has been severed. Aborting.")
+			return
+
+		var/datum/cachedbook/newbook = getBookByID("M[bookid]")
+		if(!newbook)
+			alert("No book found")
+			return
+		if((newbook.forbidden == 2 && !emagged) || newbook.forbidden == 1)
+			alert("This book is forbidden and cannot be printed.")
+			return
+
+		if(bibledelay)
+			for (var/mob/V in hearers(src))
+				V.show_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
+		else
+			bibledelay = 1
+			spawn(60)
+				bibledelay = 0
+			make_external_book(newbook)
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
