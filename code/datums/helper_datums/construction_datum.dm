@@ -130,13 +130,17 @@
 	return
 
 /datum/construction/proc/try_consume(mob/user as mob, atom/movable/used_atom, given_step)
+	if(!used_atom.construction_delay_mult[1])
+		user << "<span class='warning'>This tool only works for deconstruction!</span>" //It doesn't technically have to be a tool to cause this message, but it wouldn't make sense for anything else to do so.
+		return 0
+
 	if(!(Co_AMOUNT in given_step) && !(Co_DELAY in given_step))
 		return 1
 
 
 	var/delay = 0
 	if(Co_DELAY in given_step)
-		delay = given_step[Co_DELAY]
+		delay = given_step[Co_DELAY] * used_atom.construction_delay_mult[1] //I know, I know. Magic numbers bad. See tools.dm.
 	if(delay > 0)
 		start_construct_message(given_step, user, used_atom)
 		if(!do_after(user, delay, needhand = 1))
@@ -282,6 +286,9 @@
 /datum/construction/reversible/try_consume(mob/user as mob, atom/movable/used_atom, given_step, index, diff)
 	//if we've made some progress on a step, we want to drop it
 	var/current_step = (diff == BACKWARD ? get_forward_step(index) : get_backward_step(index))
+	if(!used_atom.construction_delay_mult[(diff > 0) + 1])
+		user << "<span class='warning'>This tool only works for [diff == FORWARD ? "de" : ""]construction!</span>" //It doesn't technically have to be a tool to cause this message, but it wouldn't make sense for anything else to do so.
+		return 0
 	if(current_step && (Co_AMOUNT in current_step) && (Co_MAX_AMOUNT in current_step) && (current_step[Co_AMOUNT] < current_step[Co_MAX_AMOUNT]))
 		var/obj/item/stack/S
 		if(used_atoms["[index][diff == FORWARD ? "+" : "-"]"])
@@ -301,7 +308,7 @@
 
 	var/delay = 0
 	if(Co_DELAY in given_step)
-		delay = given_step[Co_DELAY]
+		delay = given_step[Co_DELAY] * used_atom.construction_delay_mult[(diff > 0) + 1] //Yay for loose typing. The part in the brackets converts -1 to 1 and 1 to 2. See tools.dm for why.
 	if(delay > 0)
 		start_construct_message(given_step, user, used_atom)
 		if(!do_after(user, delay, needhand = 1))

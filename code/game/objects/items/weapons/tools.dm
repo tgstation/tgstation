@@ -13,6 +13,15 @@
  */
 
 /*
+ * Used for fancy tool subtypes that are faster or slower than the standard tool.
+ * The number in the first slot is the multiplier for time to construct, the one in the second slot is the multiplier for time to deconstruct.
+ * If one is zero, the tool cannot be used in that direction. If you want to adminbus an instant tool, use .0001 or something, not 0.
+ * Don't set either to a negative number. It will probably break, though I'm not really sure in what way.
+ */
+/atom
+	var/list/construction_delay_mult = list(1, 1)
+
+/*
  * Wrench
  */
 /obj/item/weapon/wrench
@@ -486,7 +495,7 @@
 
 
 /obj/item/weapon/weldingtool/experimental/proc/fuel_gen()//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
-	var/gen_amount = ((world.time-last_gen)/25)
+	var/gen_amount = ((world.time-last_gen)/25)          //Too bad it's not actually implemented
 	reagents += (gen_amount)
 	if(reagents > max_fuel)
 		reagents = max_fuel
