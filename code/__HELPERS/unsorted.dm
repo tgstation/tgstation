@@ -694,7 +694,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	else
 		return 0
 
-/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1)
+/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = TRUE)
 	if(!user || isnull(user))
 		return 0
 	if(numticks == 0)
