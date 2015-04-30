@@ -183,7 +183,7 @@
 		dat = {"
 		<html>
 			<body>
-				<iframe width='100%' height='100%' src="http://ss13.nexisonline.net/w/index.php?title=[wiki_page]&printable=yes"></iframe>
+				<iframe width='100%' height='100%' src="http://ss13.pomf.se/wiki/index.php?title=[wiki_page]&printable=yes"></iframe>
 			</body>
 		</html>
 		"}

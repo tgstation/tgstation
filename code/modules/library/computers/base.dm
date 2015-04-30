@@ -25,7 +25,20 @@
 	return FALSE
 
 /obj/machinery/computer/library/proc/get_page(var/page_num)
-	var/sql = "SELECT id, author, title, category, ckey FROM library LIMIT [page_num * LIBRARY_BOOKS_PER_PAGE], [LIBRARY_BOOKS_PER_PAGE]"
+	var/searchquery = ""
+	if(query)
+		var/where = 0
+		if(query.title)
+			searchquery += " WHERE title LIKE [query.title]"
+			where = 1
+		if(query.author)
+			searchquery += " [where ? "WHERE" : "AND"] author LIKE [query.author]"
+			where = 1
+		if(query.category)
+			searchquery += " [where ? "WHERE" : "AND"] category LIKE [query.category]"
+			where = 1
+	var/sql = "SELECT id, author, title, category, ckey FROM library [searchquery] LIMIT [page_num * LIBRARY_BOOKS_PER_PAGE], [LIBRARY_BOOKS_PER_PAGE]"
+
 	//if(query)
 		//sql += " [query.toSQL()]"
 	// Pagination

@@ -363,7 +363,7 @@
 
 	if(href_list["id"])
 		if(href_list["id"]=="-1")
-			href_list["id"] = input("Enter your order:") as num|null
+			href_list["id"] = input("Enter your order:") as null|num
 			if(!href_list["id"])
 				return
 
