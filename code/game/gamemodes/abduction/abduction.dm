@@ -342,6 +342,19 @@ datum/objective/experiment/New()
 	explanation_text = "Experiment on [target_amount] humans"
 
 datum/objective/experiment/check_completion()
+	if(!owner.current || !ishuman(owner.current))
+		return 0
+	var/mob/living/carbon/human/H = owner.current
+	if(!H.dna || !H.dna.species || !(H.dna.species.id == "abductor"))
+		return 0
+	var/datum/species/abductor/S = H.dna.species
+	var/ab_team = S.team
+	for(var/obj/machinery/abductor/experiment/E in machines)
+		if(E.team == ab_team)
+			if(E.points >= target_amount)
+				return 1
+			else
+				return 0
 	return 0
 
 datum/objective/abductee

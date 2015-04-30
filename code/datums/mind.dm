@@ -1401,6 +1401,10 @@
 
 	ticker.mode.abductors |= src
 
+	var/datum/objective/experiment/O = new
+	O.owner = src
+	objectives += O
+
 	var/mob/living/carbon/human/H = current
 
 	hardset_dna(H,null,null,null,null,/datum/species/abductor,null)

@@ -109,7 +109,7 @@
 	else if(href_list["dispense"])
 		switch(href_list["dispense"])
 			if("baton")
-				Dispense(/obj/item/weapon/abductor_baton)
+				Dispense(/obj/item/weapon/abductor_baton,cost=2)
 			if("helmet")
 				Dispense(/obj/item/clothing/head/helmet/abductor)
 			if("silencer")
@@ -198,9 +198,9 @@
 	else
 		..()
 
-/obj/machinery/abductor/console/proc/Dispense(var/item)
-	if(experiment && experiment.points > 0)
-		experiment.points--
+/obj/machinery/abductor/console/proc/Dispense(var/item,var/cost=1)
+	if(experiment && experiment.points >= cost)
+		experiment.points-=cost
 		say("Incoming supply!")
 		if(pad)
 			flick("alien-pad", pad)
