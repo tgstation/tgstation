@@ -196,8 +196,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			var/datum/reagents/R = B.reagents
 			if(!R)
 				if(!B.gcDestroyed)
-					B.reagents = new/datum/reagents(B.volume)
-					R = B.reagents
+					B.create_reagents(B.volume)
 				else
 					del(B)
 					return
@@ -334,9 +333,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_master/New()
 	. = ..()
 
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(100)
 
 	component_parts = newlist(
 		/obj/item/weapon/stock_parts/manipulator,
