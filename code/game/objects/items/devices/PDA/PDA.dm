@@ -1259,10 +1259,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						"}
 					switch(app.game_state)
 						if(0)	//First Statup
-							dat += {"</div>"}
 							dat += {"<br><a href='byond://?src=\ref[src];choice=eggPrev'><img src="pda_snake_arrow_west.png"></a><a href='byond://?src=\ref[src];choice=eggNext'><img src="pda_snake_arrow_east.png"></a>"}
 
 							dat += {"<a href='byond://?src=\ref[src];choice=eggChose'><img src="spesspets_egg0.png" style="position: absolute; top: 32px; left: 32px;"/></a>"}
+							dat += {"</div>"}
 						if(1)	//Hatching
 							var/eggstate = 0
 							if(app.hatching > 1200)
@@ -1310,7 +1310,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if(3)	//Dead
 							dat += {"</div>"}
 					if(app.last_spoken != "")
-						dat += {"<br><br><br>\"[app.last_spoken]\""}
+						dat += {"<br><br><br><br>[app.last_spoken]"}
 					if(app.total_coins)
 						dat += {"<br>nanocoins: [app.total_coins]"}
 

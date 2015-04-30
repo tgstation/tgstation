@@ -6,6 +6,7 @@
 /datum/pda_app/spesspets/proc/button_hatch()
 	game_state = 2
 	level = 1
+	last_spoken = "[petname] is born!"
 
 /datum/pda_app/spesspets/proc/next_egg()
 	switch(race)
@@ -92,7 +93,7 @@
 					talk_line = "[issleeping ? "Zzzzz(muffled banter about nukes)zzzzzzz" : "[pick("Alright! Let's get started","I'm saving cash for a Mauler","See the galaxy, Take down Megacorps!")]"]"
 				if(49 to 50)
 					talk_line = pick("never say die","I will be back")
-	last_spoken = talk_line
+	last_spoken = "<b>[petname]</b> says: \"[talk_line]\""
 
 
 /datum/pda_app/spesspets/proc/button_walk()
