@@ -53,6 +53,7 @@
 	// Mice IDs
 	if(name == initial(name))
 		name = "[name] ([rand(1, 1000)])"
+	real_name = name
 	if(!_color)
 		_color = pick( list("brown","gray","white") )
 	icon_state = "mouse_[_color]"
