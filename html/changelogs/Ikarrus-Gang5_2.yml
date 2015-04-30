@@ -35,4 +35,6 @@ delete-after: True
 changes: 
   - rscadd: "Gang bosses can now rally their gang to their location with their gangtool."
   - rscadd: "Gangtools can no longer recall the shuttle if station integrity is lower than 70%"
+  - rscdel: "Removed requirement to be in the territory to tag it."
+  - tweak: "Recruitment Pen cost reduced to 40."
   - bugfix: "Communications console should now accurately print the (lack of a) location of the last shuttle call."

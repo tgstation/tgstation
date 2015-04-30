@@ -71,8 +71,8 @@
 		else
 			dat += "10mm Ammo<br>"
 
-		dat += "(50 Influence) "
-		if(points >= 50)
+		dat += "(40 Influence) "
+		if(points >= 40)
 			dat += "<a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
 		else
 			dat += "Recruitment Pen<br>"
@@ -127,9 +127,9 @@
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					points = 10
 			if("pen")
-				if(points >= 50)
+				if(points >= 40)
 					item_type = /obj/item/weapon/pen/gang
-					points = 50
+					points = 40
 			if("gangtool")
 				if((promotions < 3) && (points >= (promotions*20)+10))
 					item_type = /obj/item/device/gangtool/lt
