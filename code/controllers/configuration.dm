@@ -159,6 +159,8 @@
 	var/grey_assistants = 0
 
 	var/aggressive_changelog = 0
+	
+	var/roundstart_awaymissions = 0 //if an away mission will be loaded at roundstart.
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -335,6 +337,8 @@
 					config.irc_first_connection_alert = 1
 				if("aggressive_changelog")
 					config.aggressive_changelog = 1
+				if("roundstart_awaymissions")
+					roundstart_awaymissions = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

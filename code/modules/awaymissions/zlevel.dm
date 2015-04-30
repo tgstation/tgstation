@@ -1,8 +1,10 @@
-proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+var/list/potentialRandomZlevels = list()
+var/away_loaded = 0
+
+/proc/createRandomZlevel()
+	if(away_loaded)
 		return
 
-	var/list/potentialRandomZlevels = list()
 	world << "<span class='boldannounce'>Searching for away missions...</span>"
 	var/list/Lines = file2list("_maps/RandomZLevels/fileList.txt")
 	if(!Lines.len)	return
@@ -33,21 +35,29 @@ proc/createRandomZlevel()
 
 
 	if(potentialRandomZlevels.len)
-		world << "<span class='boldannounce'>Loading away mission...</span>"
+		if(!config.roundstart_awaymissions)
+			return
 
 		var/map = pick(potentialRandomZlevels)
-		var/file = file(map)
-		if(isfile(file))
-			maploader.load_map(file)
-			world.log << "away mission loaded: [map]"
-
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
-				continue
-			awaydestinations.Add(L)
-
-		world << "<span class='boldannounce'>Away mission loaded.</span>"
+		loadAwayMission(map)
 
 	else
 		world << "<span class='boldannounce'>No away missions found.</span>"
-		return
+
+/proc/loadAwayMission(map, silent = 0)
+	if(!silent)
+		world << "<span class='boldannounce'>Loading away mission...</span>"
+
+	var/file = file(map)
+	if(isfile(file))
+		maploader.load_map(file)
+		world.log << "away mission loaded: [map]"
+		away_loaded = 1
+
+	for(var/obj/effect/landmark/L in landmarks_list)
+		if (L.name != "awaystart")
+			continue
+		awaydestinations.Add(L)
+
+	if(!silent)
+		world << "<span class='boldannounce'>Away mission loaded.</span>"
