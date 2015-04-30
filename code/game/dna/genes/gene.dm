@@ -29,7 +29,7 @@
 * Is the gene active in this mob's DNA?
 */
 /datum/dna/gene/proc/is_active(var/mob/M)
-	return M.active_genes && type in M.active_genes
+	return M.active_genes && (type in M.active_genes)
 
 // Return 1 if we can activate.
 // HANDLE MUTCHK_FORCED HERE!
@@ -44,8 +44,16 @@
 * Called when the gene deactivates.  Undo your magic here.
 * Only called when the block is deactivated.
 */
+
+/datum/dna/gene/proc/can_deactivate(var/mob/M, var/flags)
+	if(flags & GENE_NATURAL)
+		//testing("[name]([type]) has natural flag.")
+		return 0
+	return 1
+
 /datum/dna/gene/proc/deactivate(var/mob/M, var/connected, var/flags)
-	return
+	M.active_genes.Remove(src.type)
+	return 1
 
 // This section inspired by goone's bioEffects.
 
@@ -119,13 +127,16 @@
 		var/msg = pick(activation_messages)
 		M << "<span class='notice'>[msg]</span>"
 
-/datum/dna/gene/basic/deactivate(var/mob/M, var/connected, var/flags)
+/datum/dna/gene/basic/can_deactivate(var/mob/M, var/flags)
 	if(flags & GENE_NATURAL)
 		//testing("[name]([type]) has natural flag.")
 		return 0
-	M.mutations.Remove(mutation)
-	M.active_genes.Remove(src.type)
-	if(deactivation_messages.len)
-		var/msg = pick(deactivation_messages)
-		M << "<span class='warning'>[msg]</span>"
 	return 1
+
+/datum/dna/gene/basic/deactivate(var/mob/M, var/connected, var/flags)
+	if(..())
+		M.mutations.Remove(mutation)
+		if(deactivation_messages.len)
+			var/msg = pick(deactivation_messages)
+			M << "<span class='warning'>[msg]</span>"
+		return 1
