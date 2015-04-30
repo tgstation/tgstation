@@ -31,6 +31,11 @@
 				var/pagelist = get_pagelist()
 
 				dat += pagelist
+				dat += {"<form name='pagenum' action='?src=\ref[src]' method='get'>
+										<input type='hidden' name='src' value='\ref[src]'>
+										<input type='text' name='pagenum' value='[page_num]' maxlength="5" size="5">
+										<input type='submit' value='Jump To Page'>
+							</form>"}
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:52: dat += "<table>"
 				dat += {"<table border=\"0\">
@@ -60,6 +65,14 @@
 		usr << browse(null, "window=publiclibrary")
 		onclose(usr, "publiclibrary")
 		return
+
+	if(href_list["pagenum"])
+		if(!num_pages)
+			page_num = 0
+		else
+			var/pn = text2num(href_list["pagenum"])
+			if(!isnull(pn))
+				page_num = Clamp(pn, 0, num_pages)
 
 	if(href_list["settitle"])
 		var/newtitle = input("Enter a title to search for:") as text|null

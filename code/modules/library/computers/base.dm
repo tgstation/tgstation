@@ -28,20 +28,24 @@
 	var/searchquery = ""
 	if(query)
 		var/where = 0
-		if(query.title)
+		if(query.title && query.title != "")
+			world << "\red query title ([query.title])"
 			searchquery += " WHERE title LIKE '%[query.title]%'"
 			where = 1
-		if(query.author)
-			searchquery += " [where ? "WHERE" : "AND"] author LIKE '%[query.author]%'"
+		if(query.author && query.author != "")
+			world << "\red query author ([query.author])"
+			searchquery += " [!where ? "WHERE" : "AND"] author LIKE '%[query.author]%'"
 			where = 1
-		if(query.category)
-			searchquery += " [where ? "WHERE" : "AND"] category LIKE '%[query.category]%'"
+		if(query.category && query.category != "")
+			world << "\red query category ([query.category])"
+			searchquery += " [!where ? "WHERE" : "AND"] category LIKE '%[query.category]%'"
 			where = 1
 	var/sql = "SELECT id, author, title, category, ckey FROM library [searchquery] LIMIT [page_num * LIBRARY_BOOKS_PER_PAGE], [LIBRARY_BOOKS_PER_PAGE]"
 
 	//if(query)
 		//sql += " [query.toSQL()]"
 	// Pagination
+	//world << sql
 	var/DBQuery/_query = dbcon_old.NewQuery(sql)
 	_query.Execute()
 	if(_query.ErrorMsg())
@@ -76,7 +80,7 @@
 	var/start = max(0,page_num-3)
 	var/end = min(num_pages, page_num+3)
 	for(var/i = start,i <= end,i++)
-		var/dat = "<a href='?src=\ref[src];page=[i]'>[i+1]</a>"
+		var/dat = "<a href='?src=\ref[src];page=[i]'>[i]</a>"
 		if(i == page_num)
 			dat = "<font size=3><b>[dat]</b></font>"
 		if(i != end)

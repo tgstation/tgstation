@@ -113,7 +113,18 @@
 				</ul>"}
 				var/pagelist = get_pagelist()
 
+				dat += {"<h2>Search Settings</h2><br />
+					<A href='?src=\ref[src];settitle=1'>Filter by Title: [query.title]</A><br />
+					<A href='?src=\ref[src];setcategory=1'>Filter by Category: [query.category]</A><br />
+					<A href='?src=\ref[src];setauthor=1'>Filter by Author: [query.author]</A><br />
+					<A href='?src=\ref[src];search=1'>\[Start Search\]</A><br />"}
 				dat += pagelist
+
+				dat += {"<form name='pagenum' action='?src=\ref[src]' method='get'>
+										<input type='hidden' name='src' value='\ref[src]'>
+										<input type='text' name='pagenum' value='[page_num]' maxlength="5" size="5">
+										<input type='submit' value='Jump To Page'>
+							</form>"}
 
 				dat += {"<table border=\"0\">
 					<tr>
@@ -226,11 +237,44 @@
 		onclose(usr, "library")
 		return
 
+	if(href_list["pagenum"])
+		if(!num_pages)
+			page_num = 0
+		else
+			var/pn = text2num(href_list["pagenum"])
+			if(!isnull(pn))
+				page_num = Clamp(pn, 0, num_pages)
+
 	if(href_list["page"])
 		if(num_pages == 0)
 			page_num = 0
 		else
 			page_num = Clamp(text2num(href_list["page"]), 0, num_pages)
+	if(href_list["settitle"])
+		var/newtitle = input("Enter a title to search for:") as text|null
+		if(newtitle)
+			query.title = sanitize(newtitle)
+		else
+			query.title = null
+	if(href_list["setcategory"])
+		var/newcategory = input("Choose a category to search for:") in (list("Any") + library_section_names)
+		if(newcategory)
+			query.category = sanitize(newcategory)
+		else if(newcategory == "Any")
+			query.category = null
+	if(href_list["setauthor"])
+		var/newauthor = input("Enter an author to search for:") as text|null
+		if(newauthor)
+			query.author = sanitize(newauthor)
+		else
+			query.author = null
+
+	if(href_list["search"])
+		num_results = src.get_num_results()
+		num_pages = Ceiling(num_results/LIBRARY_BOOKS_PER_PAGE)
+		page_num = 0
+
+		screenstate = 4
 	if(href_list["del"])
 		if(!usr.check_rights(R_ADMIN))
 			usr << "You aren't an admin, piss off."
