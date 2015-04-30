@@ -425,27 +425,20 @@
 				"<span class='warning'>You have wet \the [O], it shocks you!</span>")
 			return
 
-	var/turf/location = user.loc
-	if(!isturf(location)) return
+	if (!isturf(user.loc))
+		return
 
-	var/obj/item/I = O
-	if(!I || !istype(I,/obj/item)) return
+	if (isitem(O))
+		user << "<span class='notice'>You start washing \the [O].</span>"
+		busy = TRUE
 
-	usr << "<span class='notice'>You start washing \the [I].</span>"
+		if (do_after(user, 40))
+			O.clean_blood()
+			user.visible_message( \
+				"<span class='notice'>[user] washes \a [O] using \the [src].</span>", \
+				"<span class='notice'>You wash \a [O] using \the [src].</span>")
 
-	busy = 1
-	sleep(40)
-	busy = 0
-
-	if(user.loc != location) return				//User has moved
-	if(!I) return 								//Item's been destroyed while washing
-	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
-
-	O.clean_blood()
-	user.visible_message( \
-		"<span class='notice'>[user] washes \a [I] using \the [src].</span>", \
-		"<span class='notice'>You wash \a [I] using \the [src].</span>")
-
+		busy = FALSE
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
