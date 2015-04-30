@@ -401,28 +401,31 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if (src == user)
 			user << "<span class='warning'>You lack the reach to be able to repair yourself!</span>"
-			return 1
+			return
 		if (src.health >= src.maxHealth)
 			user << "<span class='warning'>[src] is already in good condition!</span>"
-			return 1
-		if (WT.remove_fuel(0, user))
+			return
+		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
 			visible_message("[user] has fixed some of the dents on [src].")
-			return 0
+			return
 		else
 			user << "<span class='warning'>The welder must be on for this task!</span>"
-			return 1
+			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		var/obj/item/stack/cable_coil/coil = W
-		if (coil.use(1))
-			adjustFireLoss(-30)
-			updatehealth()
-			user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
+		if (fireloss > 0)
+			if (coil.use(1))
+				adjustFireLoss(-30)
+				updatehealth()
+				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
+			else
+				user << "<span class='warning'>You need more cable to repair [src]!</span>"
 		else
-			user << "<span class='warning'>You need one length of cable to repair [src]!</span>"
+			user << "The wires seem fine, there's no need to fix them."
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
@@ -447,7 +450,6 @@
 			W.loc = src
 			cell = W
 			user << "<span class='notice'>You insert the power cell.</span>"
-//			chargecount = 0
 		update_icons()
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
