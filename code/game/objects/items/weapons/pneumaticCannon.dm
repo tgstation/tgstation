@@ -4,12 +4,12 @@
 	w_class = 4
 	force = 8 //Very heavy
 	attack_verb = list("bludgeoned", "smashed", "beaten")
-	icon = 'icons/obj/guns/projectile.dmi'
-	icon_state = "chemsprayer"
+	icon = 'icons/obj/pneumaticCannon.dmi'
+	icon_state = "main"
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/weapon/tank/internals/tank = null //The gas tank that is drawn from to fire things
-	var/gasPerThrow = 50 //How much gas is drawn from a tank's pressure to fire
+	var/gasPerThrow = 3 //How much gas is drawn from a tank's pressure to fire
 	var/list/loadedItems = list() //The items loaded into the cannon that will be fired out
 	var/pressureSetting = 1 //How powerful the cannon is - higher pressure = more gas but more powerful throws
 
@@ -21,18 +21,18 @@
 		return
 	for(var/obj/item/I in loadedItems)
 		spawn(0)
-			user << "<span class='info'>It has \the [I] loaded.</span>"
+			user << "<span class='info'>\icon [I] It has \the [I] loaded.</span>"
 	if(tank)
-		user << "<span class='notice'>It has \the [tank] mounted onto it.</span>"
+		user << "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>"
 
 
 /obj/item/weapon/pneumatic_cannon/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/tank/internals/) && !tank)
-		user << "<span class='notice'>You connect \the [W] to \the [src].</span>"
-		tank = W
-		user.drop_item()
-		W.loc = src
+		if(istype(W, /obj/item/weapon/tank/internals/emergency_oxygen))
+			user << "<span class='warning'>\The [W] is too small for \the [src].</span>"
+			return
+		updateTank(W, 0, user)
 		return
 	if(istype(W, /obj/item/weapon/wrench))
 		switch(pressureSetting)
@@ -45,19 +45,18 @@
 		user << "<span class='notice'>You tweak \the [src]'s pressure output to [pressureSetting].</span>"
 		return
 	if(istype(W, /obj/item/weapon/screwdriver) && tank)
-		user << "<span class='notice'>You disconnect \the [tank] from \the [src].</span>"
-		tank.loc = get_turf(user)
-		tank = null
+		updateTank(tank, 1, user)
+		return
 	if(loadedWeightClass >= maxWeightClass)
-		user << "<span class='warning'>\The [src] can't fit any more items.</span>"
+		user << "<span class='warning'>\The [src] can't hold any more items!</span>"
 		return
 	if(istype(W, /obj/item))
 		var/obj/item/IW = W
 		if((loadedWeightClass + IW.w_class) > maxWeightClass)
-			user << "<span class='warning'>\The [IW] won't fit into \the [src].</span>"
+			user << "<span class='warning'>\The [IW] won't fit into \the [src]!</span>"
 			return
 		if(IW.w_class > src.w_class)
-			user << "<span class='warning'>\The [IW] is too large to fit into \the [src].</span>"
+			user << "<span class='warning'>\The [IW] is too large to fit into \the [src]!</span>"
 			return
 		user << "<span class='notice'>You load \the [IW] into \the [src].</span>"
 		user.drop_item()
@@ -76,7 +75,7 @@
 	if(!tank)
 		user << "<span class='warning'>\The [src] can't fire without a source of gas.</span>"
 		return
-	if(tank && !tank.air_contents.remove(gasPerThrow & pressureSetting))
+	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		user << "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>"
 		return
 	user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
@@ -100,7 +99,7 @@
 	force = 5
 	w_class = 3
 	maxWeightClass = 10
-	gasPerThrow = 77
+	gasPerThrow = 5
 
 /datum/table_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
@@ -114,3 +113,22 @@
 				/obj/item/pipe = 2, //Forming the gas transfer
 				/obj/item/stack/sheet/glass = 2) //And finally, forming the hatch into the reservoir
 	time = 300
+
+/obj/item/weapon/pneumatic_cannon/proc/updateTank(var/obj/item/weapon/tank/internals/thetank, var/removing = 0, var/mob/living/carbon/human/user)
+	if(removing)
+		if(!src.tank)
+			return
+		user << "<span class='notice'>You detach \the [thetank] from \the [src].</span>"
+		src.tank.loc = get_turf(user)
+		user.put_in_hands(tank)
+		src.tank = null
+		overlays.Cut()
+	if(!removing)
+		if(src.tank)
+			user << "<span class='warning'>\The [src] already has a tank.</span>"
+			return
+		user << "<span class='notice'>You hook \the [thetank] up to \the [src].</span>"
+		src.tank = thetank
+		user.drop_item()
+		thetank.loc = src
+	src.overlays += image('icons/obj/pneumaticCannon.dmi', "[thetank.icon_state]")
