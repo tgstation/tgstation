@@ -267,6 +267,7 @@
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()
+	world << "<br><font size=3><b>The Abductors were:</b></font>"
 	for(var/team_number=1,team_number<=teams,team_number++)
 		var/obj/machinery/abductor/console/console = get_team_console(team_number)
 		var/datum/objective/objective = team_objectives[team_number]
@@ -282,7 +283,7 @@
 			world << "<font size = 3 color='red'><b>[team_name] team failed its mission! </b></font>"
 			world << "<b>Team Members</b>: [agent.name]([agent.ckey])<br>[scientist.name]([scientist.ckey])"
 
-		world << "<b>Abductees:</b>"
+		world <<  "<br><font size=2><b>The Abductees were:</b></font>"
 		display_abductees(console)
 
 	..()
@@ -293,20 +294,24 @@
 	for(var/mob/living/abductee in abductees)
 		if(!abductee.mind)
 			continue
-		world << "[abductee.name]([abductee.ckey]))"
-		var/count = 1
-		for(var/datum/objective/objective in abductee.mind.objectives)
-			if(objective.check_completion())
-				world << "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
-			else
-				world << "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
-			count++
+		world << printplayer(abductee.mind)
+		world << printobjectives(abductee.mind)
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
 	if(abductors.len)
-		world << "Abductors:"
+		world << "<br><font size=3><b>The Abductors were:</b></font>"
 		for(var/datum/mind/M in abductors)
 			world << "<font size = 2><b>Abductor [M.current ? M.current.name : "Abductor"]([M.key])</b></font>"
+			world << printobjectives(M)
+		world << "<br><font size=3><b>The Abductees were:</b></font>"
+		var/list/full_history = list()
+		for(var/obj/machinery/abductor/console/C in machines)
+			full_history |= C.experiment.history
+		for(var/mob/living/abductee in full_history)
+			if(!abductee.mind)
+				continue
+			world << printplayer(abductee.mind)
+			world << printobjectives(abductee.mind)
 	return
 
 //Landmarks
