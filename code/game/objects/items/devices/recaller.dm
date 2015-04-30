@@ -40,7 +40,7 @@
 		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B><br>"
 		dat += "Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
-		dat += "<a href='?src=\ref[src];choice=ping'>Summon Gang to Your Location</a><br>"
+		dat += "<a href='?src=\ref[src];choice=ping'>Rally Your Gang</a><br>"
 		dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 		dat += "<br>"
 		dat += "Influence: <B>[points]</B><br>"
@@ -170,7 +170,7 @@
 		members += ticker.mode.B_bosses | ticker.mode.B_gang
 	if(members.len)
 		for(var/datum/mind/ganger in members)
-			ganger.current << "<span class='danger'><b>[user] summons the gang to [location]!</b></span>"
+			ganger.current << "<span class='danger'>A powerful thought invades your mind... <b>The gang is rallying at [location]!</b></span>"
 		log_game("[key_name(user)] summoned the [gang_name(gang)] Gang ([gang]) to [location].")
 
 
