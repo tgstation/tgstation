@@ -25,7 +25,6 @@
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
 	icon_state = "guard"
-	var/butcher_state = 8 // Icon state for dead spider icons
 	icon_living = "guard"
 	icon_dead = "guard_dead"
 	speak_emote = list("chitters")
@@ -95,18 +94,11 @@
 					stop_automated_movement = 0
 					walk(src,0)
 
-// Chops off each leg with a 50/50 chance of harvesting one, until finally calling
-// default harvest action
-/mob/living/simple_animal/hostile/poison/giant_spider/harvest(mob/living/user, sharpness = 1)
-	if(butcher_state > 0)
-		butcher_state--
-		icon_state = icon_dead + "[butcher_state]"
-
-		if(prob(50))
-			new /obj/item/weapon/reagent_containers/food/snacks/spiderleg(src.loc)
-		return
-	else
-		return ..()
+/mob/living/simple_animal/hostile/poison/giant_spider/harvest(mob/living/user)
+	var/leg_amount = rand(4,8)
+	for(var/i=0, i<leg_amount, i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/spiderleg(src.loc)
+	..()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(var/C)
 	spawn(100)

@@ -98,18 +98,20 @@
 	w_class = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
-		if(W.icon_state == "forkloaded")
+	if(istype(W,/obj/item/weapon/kitchen/fork))
+		var/obj/item/weapon/kitchen/fork/F = W
+		if(F.forkload)
 			user << "<span class='warning'>You already have omelette on your fork!</span>"
-			return
-		W.icon_state = "forkloaded"
-		user.visible_message( \
-			"[user] takes a piece of omelette with their fork!", \
-			"<span class='notice'>You take a piece of omelette with your fork.</span>" \
-		)
-		reagents.remove_reagent("nutriment", 1)
-		if(reagents.total_volume <= 0)
-			qdel(src)
+		else
+			F.icon_state = "forkloaded"
+			user.visible_message("[user] takes a piece of omelette with their fork!", \
+				"<span class='notice'>You take a piece of omelette with your fork.</span>")
+
+			var/datum/reagent/R = pick(reagents.reagent_list)
+			reagents.remove_reagent(R.id, 1)
+			F.forkload = R
+			if(reagents.total_volume <= 0)
+				qdel(src)
 		return
 	..()
 

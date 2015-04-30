@@ -206,7 +206,8 @@
 	name = "Hooch"
 	id = "hooch"
 	result = "hooch"
-	required_reagents = list ("sugar" = 1, "ethanol" = 2, "fuel" = 1)
+	required_reagents = list ("ethanol" = 2, "fuel" = 1)
+	required_catalysts = list("enzyme" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/irish_coffee

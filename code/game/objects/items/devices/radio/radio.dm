@@ -372,7 +372,7 @@
 		signal.frequency = freqnum // Quick frequency set
 		Broadcast_Message(M, voicemask,
 				  src, message, voice, jobname, real_name,
-				  4, signal.data["compression"], list(position.z, 0), freq, spans,
+				  5, signal.data["compression"], list(position.z, 0), freq, spans,
 				  verb_say, verb_ask, verb_exclaim, verb_yell)
 		return
 

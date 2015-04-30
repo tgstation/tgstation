@@ -45,7 +45,7 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/proc/safe_input(var/title, var/text, var/default_set)
-	var/new_value = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",default_set) as num
+	var/new_value = input(usr,text,title,default_set) as num
 	if(usr.canUseTopic(src))
 		return new_value
 	return default_set

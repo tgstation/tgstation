@@ -26,7 +26,7 @@
 	recommended_enemies = 2
 	enemy_minimum_age = 14
 	var/finished = 0
-	var/goal_scalar = 0.6 //Goal = Total territories x goal_scalar
+	var/goal_scalar = 0.5 //Goal = Total territories x goal_scalar
 
 ///////////////////////////
 //Announces the game type//
@@ -94,7 +94,7 @@
 /datum/game_mode/proc/forge_gang_objectives(var/datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
 	rival_obj.owner = boss_mind
-	rival_obj.explanation_text = "Claim more than 60% the station before the [(boss_mind in A_bosses) ? gang_name("B") : gang_name("A")] Gang does."
+	rival_obj.explanation_text = "Claim more than 50% the station before the [(boss_mind in A_bosses) ? gang_name("B") : gang_name("A")] Gang does."
 	boss_mind.objectives += rival_obj
 
 
@@ -138,7 +138,7 @@
 	else
 		gangtool.register_device(mob)
 		mob << "The <b>Gangtool</b> in your [where] will allow you to use your influence to purchase items and prevent the station from evacuating before you can take over. Use it to recall the emergency shuttle from anywhere on the station."
-		mob << "You can also promote your gang members to lieutenant by giving them an unregistered gangtool. Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
+		mob << "You can also promote your gang members to <b>lieutenant</b> by giving them an unregistered gangtool. Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
 		. += 1
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
@@ -152,7 +152,7 @@
 	if (!where3)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a territory spraycan to start."
 	else
-		mob << "The <b>territory spraycan</b> in your [where3] can be used to claim areas of the station for your gang. The more territory your gang controls, the more influence you get."
+		mob << "The <b>territory spraycan</b> in your [where3] can be used to claim areas of the station for your gang. The more territory your gang controls, the more influence you get. Distribute these to your gangsters to grow your influence faster."
 		. += 1
 	mob.update_icons()
 
@@ -194,8 +194,8 @@
 			carbon_mob.flash_eyes(1, 1)
 		gangster_mind.current.Stun(5)
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
-	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with the special spraycans they provide. Simply spray on any unclaimed area of the station.</font>"
-	gangster_mind.current << "<font color='red'>You can identify your bosses by their brown \"G\" icon.</font>"
+	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>"
+	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
 	update_gang_icons_added(gangster_mind,gang)
@@ -285,7 +285,7 @@
 	if(!finished)
 		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
 	else
-		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang has taken over the station!</B></FONT>"
+		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang has claimed over [round(100*goal_scalar,1)]% of the station and has assumed control!</B></FONT>"
 	..()
 	return 1
 
@@ -343,11 +343,12 @@
 /datum/gang_points
 	var/A = 30
 	var/B = 30
-	var/next_point_time = 0
+	var/next_point_interval = 1800
+	var/next_point_time
 
 /datum/gang_points/proc/start()
-	next_point_time = world.time + 3000
-	spawn(3000)
+	next_point_time = world.time + next_point_interval
+	spawn(next_point_interval)
 		income()
 
 /datum/gang_points/proc/income()
@@ -375,7 +376,7 @@
 
 	//Calculate and report influence growth
 	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[gang_name("A")] Gang Status Report:</b>")
-	var/A_new = min(100,A + 15 + min(ticker.mode.A_territory.len, 15) + round(max(ticker.mode.A_territory.len - 15, 0) * 0.5,1))
+	var/A_new = min(100,A + 15 + ticker.mode.A_territory.len)
 	var/A_message = ""
 	if(A_new != A)
 		A_message += "Your gang has gained <b>[A_new - A] Influence</b> for holding on to [ticker.mode.A_territory.len] territories."
@@ -385,7 +386,7 @@
 	ticker.mode.message_gangtools(ticker.mode.A_tools,A_message,0)
 
 	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
-	var/B_new = min(100,B + 15 + min(ticker.mode.B_territory.len, 15) + round(max(ticker.mode.B_territory.len - 15, 0) * 0.5,1))
+	var/B_new = min(100,B + 15 + ticker.mode.B_territory.len)
 	var/B_message = ""
 	if(B_new != B)
 		B_message += "Your gang has gained <b>[B_new - B] Influence</b> for holding on to [ticker.mode.B_territory.len] territories."

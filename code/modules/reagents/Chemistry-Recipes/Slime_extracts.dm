@@ -151,7 +151,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/weapon/reagent_containers/food/snacks/soup,
 		/obj/item/weapon/reagent_containers/food/snacks/grown,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom,
 		)
 	blocked |= typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable)
 
@@ -185,8 +185,9 @@
 /datum/chemical_reaction/slimebork2/on_reaction(var/datum/reagents/holder)
 
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+	var/list/blocked = list(/obj/item/weapon/reagent_containers/food/drinks)
 
-	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks
+	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/drinks) - blocked
 	// BORK BORK BORK
 
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
