@@ -543,8 +543,7 @@ datum
 
 				if(!isnum(amount)) return 1
 
-				for(var/A in reagent_list)
-					var/datum/reagent/R = A
+				for (var/datum/reagent/R in reagent_list)
 					if (R.id == reagent)
 						R.volume -= amount
 						update_total()
