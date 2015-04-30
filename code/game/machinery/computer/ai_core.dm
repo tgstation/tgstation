@@ -15,6 +15,7 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+				user << "<span class='notice'>You start wrenching the frame into place...</span>"
 				if(do_after(user, 20))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
@@ -22,9 +23,10 @@
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.isOn())
-					user << "<span class='warning'>The welder must be on for this task.</span>"
+					user << "<span class='warning'>The welder must be on for this task!</span>"
 					return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
+				user << "<span class='notice'>You start to deconstruct the frame...</span>"
 				if(do_after(user, 20))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
@@ -33,6 +35,7 @@
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+				user << "<span class='notice'>You start to unfasten the frame...</span>"
 				if(do_after(user, 20))
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
@@ -66,6 +69,7 @@
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					user << "<span class='notice'>You start to add cables to the frame...</span>"
 					if(do_after(user, 20))
 						if (C.get_amount() >= 5 && state == 2)
 							C.use(5)
@@ -73,12 +77,12 @@
 							state = 3
 							icon_state = "3"
 				else
-					user << "<span class='warning'>You need five lengths of cable to wire the AI core.</span>"
+					user << "<span class='warning'>You need five lengths of cable to wire the AI core!</span>"
 					return
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				if (brain)
-					user << "<span class='warning'>Get that brain out of there first.</span>"
+					user << "<span class='warning'>Get that brain out of there first!</span>"
 				else
 					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
 					user << "<span class='notice'>You remove the cables.</span>"
@@ -91,6 +95,7 @@
 				var/obj/item/stack/sheet/rglass/G = P
 				if(G.get_amount() >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					user << "<span class='notice'>You start to put in the glass panel...</span>"
 					if(do_after(user, 20))
 						if (G.get_amount() >= 2 && state == 3)
 							G.use(2)
@@ -98,7 +103,7 @@
 							state = 4
 							icon_state = "4"
 				else
-					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into AI core.</span>"
+					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into AI core!</span>"
 					return
 
 			if(istype(P, /obj/item/weapon/aiModule/core/full)) //Allows any full core boards to be applied to AI cores.
@@ -123,22 +128,22 @@
 			if(istype(P, /obj/item/device/mmi))
 				var/obj/item/device/mmi/M = P
 				if(!M.brainmob)
-					user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>"
+					user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>"
 					return
 				if(M.brainmob.stat == 2)
-					user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose.</span>"
+					user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
 					return
 
 				if((config) && (!config.allow_ai))
-					user << "<span class='warning'>This MMI does not seem to fit.</span>"
+					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
 				if(jobban_isbanned(M.brainmob, "AI"))
-					user << "<span class='warning'>This MMI does not seem to fit.</span>"
+					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
 				if(!M.brainmob.mind)
-					user << "<span class='warning'>This MMI is mindless.</span>"
+					user << "<span class='warning'>This MMI is mindless!</span>"
 					return
 
 				ticker.mode.remove_cultist(M.brainmob.mind, 1)
@@ -175,9 +180,7 @@
 				user << "<span class='notice'>You connect the monitor.</span>"
 				if(!laws.inherent.len) //If laws isn't set to null but nobody supplied a board, the AI would normally be created lawless. We don't want that.
 					laws = null
-				var/mob/living/silicon/ai/A = new /mob/living/silicon/ai (loc, laws, brain)
-				if(A) //if there's no brain, the mob is deleted and a structure/AIcore is created
-					A.rename_self("ai", 1)
+				new /mob/living/silicon/ai (loc, laws, brain)
 				feedback_inc("cyborg_ais_created",1)
 				qdel(src)
 
@@ -193,10 +196,12 @@
 		A.transfer_ai("INACTIVE","AICARD",src,user)
 	if(istype(A, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("[user] [anchored ? "fastens" : "unfastens"] [src].", \
+					 "<span class='notice'>You start to [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor...</span>")
 		switch(anchored)
 			if(0)
 				if(do_after(user, 20))
-					user << "<span class='notice'>You wrench the core into place.</span>"
+					user << "<span class='notice'>You fasten the core into place.</span>"
 					anchored = 1
 			if(1)
 				if(do_after(user, 20))

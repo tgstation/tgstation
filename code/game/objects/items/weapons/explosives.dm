@@ -66,7 +66,7 @@
 	if(loc == target)
 		return
 
-	user << "Planting explosives..."
+	user << "<span class='notice'>You start planting the bomb...</span>"
 
 	if(do_after(user, 50) && in_range(user, target))
 		user.drop_item()
@@ -75,7 +75,7 @@
 
 		if (ismob(target))
 			add_logs(user, target, "planted [name] on")
-			user.visible_message("<span class='danger'>[user.name] finished planting an explosive on [target.name]!</span>")
+			user.visible_message("<span class='warning'>[user.name] finished planting an explosive on [target.name].</span>", "<span class='notice'>You finish planting an explosive on [target.name].</span>")
 			message_admins("[key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) planted [src.name] on [key_name(target)](<A HREF='?_src_=holder;adminmoreinfo=\ref[target]'>?</A>) with [timer] second fuse",0,1)
 			log_game("[key_name(user)] planted [src.name] on [key_name(target)] with [timer] second fuse")
 
@@ -84,7 +84,7 @@
 			log_game("[key_name(user)] planted [src.name] on [target.name] at ([target.x],[target.y],[target.z]) with [timer] second fuse")
 
 		target.overlays += image_overlay
-		user << "Bomb has been planted. Timer counting down from [timer]."
+		user << "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>"
 		spawn(timer*10)
 			if(target && !target.gc_destroyed)
 				explode(get_turf(target))

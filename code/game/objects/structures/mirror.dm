@@ -65,7 +65,7 @@
 		return
 
 	if(prob(I.force * 2))
-		visible_message("<span class='warning'>[user] smashes [src] with [I]!</span>")
+		visible_message("<span class='warning'>[user] smashes [src] with [I].</span>")
 		shatter()
 	else
 		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")

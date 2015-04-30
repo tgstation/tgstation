@@ -504,6 +504,15 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
+/datum/design/mech_mining_scanner
+	name = "Exosuit Engineering Equipement (Mining Scanner)"
+	id = "mech_mscanner"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	materials = list("$metal"=5000,"$glass"=2500)
+	construction_time = 50
+	category = list("Exosuit Equipment")
+
 /datum/design/mech_extinguisher
 	name = "Exosuit Engineering Equipment (Extinguisher)"
 	id = "mech_extinguisher"
@@ -599,7 +608,7 @@
 /////////////////////////////////////////
 
 /datum/design/borg_upgrade_reset
-	name = "Cyborg Upgrade (Reset Module)"
+	name = "Cyborg Upgrade (Module Reset Board)"
 	id = "borg_upgrade_reset"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/reset
@@ -608,7 +617,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_rename
-	name = "Cyborg Upgrade (Rename Module)"
+	name = "Cyborg Upgrade (Rename Board)"
 	id = "borg_upgrade_rename"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rename
@@ -617,7 +626,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_restart
-	name = "Cyborg Upgrade (Restart Module)"
+	name = "Cyborg Upgrade (Emergency Reboot Board)"
 	id = "borg_upgrade_restart"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/restart

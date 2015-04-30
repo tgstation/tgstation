@@ -248,7 +248,7 @@
 			user << "This item does not fit."
 			return
 		if(W.flags & NODROP) //if "can't drop" item
-			user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>"
+			user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>"
 			return
 
 		if(contents.len < 5)
@@ -257,9 +257,9 @@
 				W.loc = src
 				state = 3
 			else
-				user << "<span class='notice'>You can't put the item in right now.</span>"
+				user << "<span class='warning'>You can't put the item in right now!</span>"
 		else
-			user << "<span class='notice'>The washing machine is full.</span>"
+			user << "<span class='warning'>The washing machine is full!</span>"
 	else
 		..()
 	update_icon()

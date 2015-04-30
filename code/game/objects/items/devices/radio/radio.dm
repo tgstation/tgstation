@@ -372,7 +372,7 @@
 		signal.frequency = freqnum // Quick frequency set
 		Broadcast_Message(M, voicemask,
 				  src, message, voice, jobname, real_name,
-				  4, signal.data["compression"], list(position.z, 0), freq, spans,
+				  5, signal.data["compression"], list(position.z, 0), freq, spans,
 				  verb_say, verb_ask, verb_exclaim, verb_yell)
 		return
 
@@ -621,14 +621,14 @@
 					keyslot = null
 
 			recalculateChannels()
-			user << "You pop out the encryption key in the radio!"
+			user << "<span class='notice'>You pop out the encryption key in the radio.</span>"
 
 		else
-			user << "This radio doesn't have any encryption keys!"
+			user << "<span class='warning'>This radio doesn't have any encryption keys!</span>"
 
 	if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot)
-			user << "The radio can't hold another key!"
+			user << "<span class='warning'>The radio can't hold another key!</span>"
 			return
 
 		if(!keyslot)

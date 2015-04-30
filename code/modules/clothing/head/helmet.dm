@@ -235,14 +235,14 @@ obj/item/clothing/head/helmet/bluetaghelm
 		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
 		helmetCam.network = list("SS13")
 		update_icon()
-		user.visible_message("<span class='notice'>[user] attaches [A] to [src]</span>","<span class='notice'>You attach [A] to [src]</span>")
+		user.visible_message("[user] attaches [A] to [src].","<span class='notice'>You attach [A] to [src].</span>")
 		return
 
 	if(istype(A, /obj/item/weapon/crowbar))
 		if(!helmetCam)
 			..()
 			return
-		user.visible_message("<span class='notice'>[user] removes [helmetCam] from [src]</span>","<span class='notice'>You remove [helmetCam] from [src]</span>")
+		user.visible_message("[user] removes [helmetCam] from [src].","<span class='notice'>You remove [helmetCam] from [src].</span>")
 		helmetCam.assembly.loc = get_turf(src)
 		helmetCam.assembly = null
 		qdel(helmetCam)
@@ -263,7 +263,7 @@ obj/item/clothing/head/helmet/bluetaghelm
 
 	var/mob/living/carbon/human/user = usr
 	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]."
+		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>"
 	F.on = !F.on
 	user << "<span class='notice'>You toggle the helmetlight [F.on ? "on":"off"].</span>"
 

@@ -238,7 +238,7 @@
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
 		stage = 1
-		visible_message("<span class='warning'>There was gibtonite inside! It's going to explode!</span>")
+		visible_message("<span class='danger'>There was gibtonite inside! It's going to explode!</span>")
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 
@@ -406,7 +406,7 @@
 /turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob, params)
 
 	if (!user.IsAdvancedToolUser())
-		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
 	if (istype(P, /obj/item/weapon/pickaxe))
@@ -421,13 +421,13 @@
 				if(!RD.use_robot_power(user))
 					return
 			else if(!D.bcell.use(D.drillcost))
-				user << "<span class='notice'>Your [D.name] doesn't have enough charge.</span>"
+				user << "<span class='warning'>Your [D.name] doesn't have enough charge!</span>"
 				return
 
 		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
-		user << "<span class='danger'>You start picking.</span>"
+		user << "<span class='notice'>You start picking...</span>"
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed))
@@ -544,15 +544,15 @@
 			return
 
 		if (dug)
-			user << "<span class='danger'>This area has already been dug.</span>"
+			user << "<span class='warning'>This area has already been dug!</span>"
 			return
 
-		user << "<span class='danger'>You start digging.</span>"
+		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(20)
 		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dug a hole.</span>"
+			user << "<span class='notice'>You dig a hole.</span>"
 			gets_dug()
 			return
 
@@ -563,15 +563,15 @@
 			return
 
 		if (dug)
-			user << "<span class='danger'>This area has already been dug.</span>"
+			user << "<span class='warning'>This area has already been dug!</span>"
 			return
 
-		user << "<span class='danger'>You start digging.</span>"
+		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(P.digspeed)
 		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dug a hole.</span>"
+			user << "<span class='notice'>You dig a hole.</span>"
 			gets_dug()
 			return
 

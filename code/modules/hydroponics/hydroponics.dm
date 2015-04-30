@@ -586,7 +586,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
 			var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
 			if(syr.mode != 1)
-				user << "You can't get any extract out of this plant."		//That. Gives me an idea...
+				user << "<span class='warning'>You can't get any extract out of this plant.</span>"		//That. Gives me an idea...
 				return
 
 		if(!reagent_source.reagents.total_volume)
@@ -650,7 +650,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	else if(istype(O, /obj/item/seeds/))
 		if(!planted)
 			user.unEquip(O)
-			user << "You plant [O]."
+			user << "<span class='notice'>You plant [O].</span>"
 			dead = 0
 			myseed = O
 			planted = 1
@@ -692,11 +692,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 
 	else if(istype(O, /obj/item/weapon/minihoe))
 		if(weedlevel > 0)
-			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
+			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else
-			user << "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
+			user << "<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>"
 
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		attack_hand(user)
@@ -708,28 +708,28 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 
 	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
 		if(anchored == 2)
-			user << "Unscrew the hoses first!"
+			user << "<span class='warning'>Unscrew the hoses first!</span>"
 			return
 
 		if(!anchored && !isinspace())
-			user.visible_message("<span class='notice'>[user] begins to wrench [src] into place.</span>", \
-								"<span class='notice'>You begin to wrench [src] in place.</span>")
+			user.visible_message("[user] begins to wrench [src] into place.", \
+								"<span class='notice'>You begin to wrench [src] in place...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 20))
 				if(anchored)
 					return
 				anchored = 1
-				user.visible_message("<span class='notice'>[user] wrenches [src] into place.</span>", \
+				user.visible_message("[user] wrenches [src] into place.", \
 									"<span class='notice'>You wrench [src] in place.</span>")
 		else if(anchored)
-			user.visible_message("<span class='notice'>[user] begins to unwrench [src].</span>", \
-								"<span class='notice'>You begin to unwrench [src].</span>")
+			user.visible_message("[user] begins to unwrench [src].", \
+								"<span class='notice'>You begin to unwrench [src]...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 20))
 				if(!anchored)
 					return
 				anchored = 0
-				user.visible_message("<span class='notice'>[user] unwrenches [src].</span>", \
+				user.visible_message("[user] unwrenches [src].", \
 									"<span class='notice'>You unwrench [src].</span>")
 
 	else if(istype(O, /obj/item/weapon/screwdriver) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
@@ -737,12 +737,12 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 			if(anchored == 2)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 1
-				user << "You unscrew \the [src]'s hoses."
+				user << "<span class='notice'>You unscrew \the [src]'s hoses.</span>"
 
 			else if(anchored == 1)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 2
-				user << "You screw in \the [src]'s hoses."
+				user << "<span class='notice'>You screw in \the [src]'s hoses.</span>"
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
 				spawn()
@@ -758,7 +758,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	else if(dead)
 		planted = 0
 		dead = 0
-		user << "You remove the dead plant from [src]."
+		user << "<span class='notice'>You remove the dead plant from [src].</span>"
 		qdel(myseed)
 		update_icon()
 	else
@@ -824,7 +824,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in player_list)
-				if(ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding)
+				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding)
 					if(istype(M, /mob/dead/observer))
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
@@ -870,11 +870,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	harvest = 0
 	lastproduce = age
 	if(istype(myseed,/obj/item/seeds/replicapod/))
-		user << "You harvest from the [myseed.plantname]."
+		user << "<span class='notice'>You harvest from the [myseed.plantname].</span>"
 	else if(myseed.getYield() <= 0)
-		user << "<span class='warning'>You fail to harvest anything useful.</span>"
+		user << "<span class='warning'>You fail to harvest anything useful!</span>"
 	else
-		user << "You harvest [myseed.getYield()] items from the [myseed.plantname]."
+		user << "<span class='notice'>You harvest [myseed.getYield()] items from the [myseed.plantname].</span>"
 	if(myseed.oneharvest)
 		qdel(myseed)
 		planted = 0
@@ -986,5 +986,5 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 /obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	..()
 	if(istype(O, /obj/item/weapon/shovel))
-		user << "You clear up [src]!"
+		user << "<span class='notice'>You clear up [src]!</span>"
 		qdel(src)

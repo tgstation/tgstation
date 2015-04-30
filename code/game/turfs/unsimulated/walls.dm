@@ -66,3 +66,6 @@ turf/unsimulated/wall/splashscreen
 /turf/unsimulated/shuttle/floor
 	name = "floor"
 	icon_state = "floor"
+
+/turf/unsimulated/wall/abductor
+	icon_state = "alien1"

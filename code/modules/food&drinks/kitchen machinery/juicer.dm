@@ -44,7 +44,7 @@
 			return 1
 		else
 			if(!user.unEquip(O))
-				user << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+				user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 				return 0
 			O.loc = src
 			beaker = O
@@ -56,7 +56,7 @@
 		user << "It looks as not containing any juice."
 		return 1
 	if(!user.unEquip(O))
-		user << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+		user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 		return 0
 	O.loc = src
 	src.updateUsrDialog()

@@ -126,7 +126,7 @@
 		return
 	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
 	if(!user.drop_item())
-		user << "<span class='notice'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
+		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
 		return
 	if(I && I.loc)	I.loc = src.loc
 	return
