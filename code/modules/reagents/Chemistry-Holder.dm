@@ -478,9 +478,7 @@ datum
 				if(total_volume + amount > maximum_volume)
 					amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
-				for(var/A in reagent_list)
-
-					var/datum/reagent/R = A
+				for (var/datum/reagent/R in reagent_list)
 					if (R.id == reagent)
 						R.volume += amount
 						update_total()
