@@ -28,6 +28,7 @@
 		/obj/structure/sink,
 		/obj/structure/centrifuge/,
 		/obj/item/weapon/storage,
+		/obj/item/weapon/solder,
 		/obj/machinery/atmospherics/unary/cryo_cell,
 		/obj/machinery/dna_scannernew,
 		/obj/item/weapon/grenade/chem_grenade,

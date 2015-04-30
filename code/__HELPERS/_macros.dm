@@ -89,6 +89,8 @@
 
 #define iswire(O) istype(O, /obj/item/stack/cable_coil)
 
+#define issolder(A) istype(A, /obj/item/weapon/solder)
+
 #define iscamera(A) istype(A, /obj/machinery/camera)
 
 //Macros for antags

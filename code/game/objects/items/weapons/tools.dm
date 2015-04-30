@@ -10,6 +10,7 @@
  * 		Welding Tool
  * 		Crowbar
  * 		Revolver Conversion Kit(made sense)
+ *		Soldering Tool
  */
 
 /*
@@ -576,3 +577,81 @@
 		open = !open
 		user << "<span class='notice'>You [open?"open" : "close"] the conversion kit.</span>"
 		update_icon()
+
+/*
+ * Soldering Iron
+ */
+/obj/item/weapon/solder
+	name = "soldering iron"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "solder-0"
+	hitsound = 'sound/weapons/toolhit.ogg'
+	flags = FPRINT
+	siemens_coefficient = 1
+	slot_flags = SLOT_BELT
+	force = 3.0
+	sharpness = 1
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = 2.0
+	m_amt = 70
+	g_amt = 30
+	w_type = RECYK_MISC
+	melt_temperature = MELTPOINT_STEEL
+	origin_tech = "engineering=1"
+	var/max_fuel = 20 	//The max amount of acid stored
+
+/obj/item/weapon/solder/New()
+	. = ..()
+	create_reagents(max_fuel)
+	//Does not come fueled up
+
+/obj/item/weapon/solder/update_icon()
+	..()
+	switch(reagents.get_reagent_amount("sacid"))
+		if(16 to INFINITY)
+			icon_state = "solder-20"
+		if(11 to 15)
+			icon_state = "solder-15"
+		if(6 to 10)
+			icon_state = "solder-10"
+		if(1 to 5)
+			icon_state = "solder-5"
+		if(0)
+			icon_state = "solder-0"
+
+/obj/item/weapon/solder/examine(mob/user)
+	..()
+	user << "It contains [reagents.get_reagent_amount("sacid")]/[src.max_fuel] units of fuel!"
+
+/obj/item/weapon/solder/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/reagent_containers/glass/))
+		var/obj/item/weapon/reagent_containers/glass/G = W
+		if(G.reagents.reagent_list.len>1)
+			user << "<span class='warning'>The mixture is rejected by the tool.</span>"
+			return
+		var/datum/reagent/R = G.reagents.reagent_list[1]
+		if(R.id != "sacid")
+			user << "<span class='warning'>The tool is not compatible with that.</span>"
+			return
+		else
+			var/space = max_fuel - reagents.total_volume
+			if(!space)
+				user << "<span class='warning'>The tool is full!</span>"
+				return
+			var/transfer_amount = min(G.amount_per_transfer_from_this,space)
+			user << "<span class='info'>You transfer [transfer_amount] units to the [src].</span>"
+			G.reagents.trans_id_to(src,"sacid",transfer_amount)
+			update_icon()
+	else
+		return ..()
+
+/obj/item/weapon/solder/proc/remove_fuel(var/amount, mob/user as mob)
+	if(reagents.get_reagent_amount("sacid") >= amount)
+		reagents.remove_reagent("sacid", amount)
+		update_icon()
+		return 1
+	else
+		user << "<span class='warn'>The tool does not have enough acid!</span>"
+		return 0

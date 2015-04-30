@@ -199,11 +199,48 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 Note: Once everything is added to the public areas, will add m_amt and g_amt to circuit boards since autolathe won't be able
 to destroy them and players will be able to make replacements.
 */
+
+/obj/item/weapon/circuitboard/blank
+	name = "unprinted circuitboard"
+	desc = "A blank circuitboard ready for design."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "blank_mod"
+	var/datum/circuits/local_fuses = null
+
+/obj/item/weapon/circuitboard/blank/New()
+	..()
+	local_fuses = new(src)
+
+/obj/item/weapon/circuitboard/blank/attackby(obj/item/O as obj, mob/user as mob)
+	if(ismultitool(O))
+		var/boardType = local_fuses.assigned_boards["[local_fuses.localbit]"] //Localbit is an int, but this is an associative list organized by strings
+		if(boardType)
+			if(ispath(boardType))
+				user << "<span class='notice'>The multitool pings softly.</span>"
+				new boardType(get_turf(src))
+				qdel(src)
+				return
+			else
+				user << "<span class='warning'>A fatal error with the board type occurred. Report this message.</span>"
+		else
+			user << "<span class='warning'>The multitool flashes red briefly.</span>"
+	else if(issolder(O))
+		local_fuses.Interact(user)
+	else if(iswelder(O))
+		var/obj/item/weapon/weldingtool/WT = O
+		if(WT.remove_fuel(1,user))
+			var/obj/item/stack/sheet/glass/glass/new_item = new /obj/item/stack/sheet/glass/glass(src.loc)
+			new_item.add_to_stacks(user)
+			returnToPool(src)
+			return
+	else
+		return ..()
+
 /obj/item/weapon/circuitboard/destructive_analyzer
 	name = "Circuit board (Destructive Analyzer)"
 	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
 	board_type = "machine"
-	origin_tech = "magnets=2;engineering=2;programming=2"
+	origin_tech = "magnets=2;engineering=2;programming=3"
 	frame_desc = "Requires 1 Scanning Module, 1 Manipulator, and 1 Micro-Laser."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
@@ -225,7 +262,7 @@ to destroy them and players will be able to make replacements.
 	name = "Circuit board (Protolathe)"
 	build_path = "/obj/machinery/r_n_d/fabricator/protolathe"
 	board_type = "machine"
-	origin_tech = "engineering=2;programming=2"
+	origin_tech = "engineering=2;programming=3"
 	frame_desc = "Requires 2 Matter Bins, 2 Manipulators, and 2 Beakers."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 2,
@@ -438,8 +475,8 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Photocopier)"
 	build_path = "/obj/machinery/photocopier"
 	board_type = "machine"
-	origin_tech = "powerstorage=2;engineering=2;programming=4"
-	frame_desc = "Requires 2 manipulators, 2 scanning modules, 2 micro-lasers, and 2 console screens."
+	origin_tech = "engineering=2;programming=2"
+	frame_desc = "Requires 2 manipulators, 2 scanning modules, 1 micro-laser, and 2 console screens."
 	req_components = list (
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
 							"/obj/item/weapon/stock_parts/scanning_module" = 2,
@@ -472,7 +509,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit board (Cloning Scanner)"
 	build_path = "/obj/machinery/dna_scannernew"
 	board_type = "machine"
-	origin_tech = "programming=2;biotech=2"
+	origin_tech = "programming=3;biotech=2"
 	frame_desc = "Requires 1 Scanning module, 1 Manipulator, 1 Micro-Laser, and 1 Console Screen."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
@@ -498,7 +535,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Seed Extractor)"
 	build_path = "/obj/machinery/seed_extractor"
 	board_type = "machine"
-	origin_tech = "programming=3;engineering=2;biotech=3"
+	origin_tech = "programming=2;biotech=2"
 	frame_desc = "Requires 2 Manipulators, 1 Matter Bins, 1 Micro-Lasers, 1 Scanning Modules, and 1 Console Screens.   "
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
@@ -511,7 +548,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Microwave)"
 	build_path = "/obj/machinery/microwave"
 	board_type = "machine"
-	origin_tech = "programming=3;engineering=2;magnets=3"
+	origin_tech = "programming=2;engineering=2;magnets=3"
 	frame_desc = "Requires 3 Matter Bins, 3 Micro-Lasers, 2 Scanning Modules, and 1 Console Screens.   "
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 3,
@@ -823,7 +860,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (General Fabricator)"
 	build_path = "/obj/machinery/r_n_d/fabricator/mechanic_fab"
 	board_type = "machine"
-	origin_tech = "materials=3;engineering=2;programming=2"
+	origin_tech = "materials=3;engineering=2;programming=3"
 	frame_desc = "Requires 2 Manipulators, 2 Matter Bins, and 2 Micro-Lasers."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,

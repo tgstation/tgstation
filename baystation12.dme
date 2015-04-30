@@ -143,6 +143,7 @@
 #include "code\controllers\ProcessScheduler\core\updateQueueWorker.dm"
 #include "code\datums\ai_laws.dm"
 #include "code\datums\browser.dm"
+#include "code\datums\circuits.dm"
 #include "code\datums\computerfiles.dm"
 #include "code\datums\datacore.dm"
 #include "code\datums\datumvars.dm"

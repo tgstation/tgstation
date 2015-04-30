@@ -26,6 +26,9 @@
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
+	if(issolder(W))
+		src.use(1)
+		new /obj/item/weapon/circuitboard/blank(user.loc)
 	if(istype(W, /obj/item/stack/rods) && !reinforced)
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/glass/RG = new rglass(user.loc)
