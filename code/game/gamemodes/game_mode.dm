@@ -180,10 +180,9 @@
 				if(Player.mind)
 					if(Player.mind.special_role)
 						continuous_sanity_checked = 1
+						return 0
 			if(!continuous_sanity_checked)
-				message_admins("The roundtype ([config_tag]) is reporting that it should end because no antagonists exist. This is PROBABLY a configuration error.")
-				message_admins("Please alert a server owner to check the game_options.txt to be sure that it is up to date with all toggles relating to CONTINUOUS and MIDROUND_ANTAG.")
-				message_admins("If after checking the settings it doesn't appear to be a configuration problem, create an issue report that [config_tag] isn't reporting its antagonists correctly.")
+				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")
 				config.continuous[config_tag] = 1
 				config.midround_antag[config_tag] = 0
 				return 0
