@@ -27,7 +27,7 @@ var/global/ingredientLimit = 10
 	else	foodNesting = 0
 	. = (input("Deep Fried Nutriment? (1 to 50)"))
 	. = text2num(.)
-	if(isnum(.) && (. in 1 to 50)) deepFriedNutriment = .
+	if(isnum(.) && (. in 1 to 50)) deepFriedNutriment = . //This is absolutely terrible
 	else usr << "That wasn't a valid number."
 	. = (input("Ingredient Limit? (1 to 100)"))
 	. = text2num(.)
@@ -63,7 +63,7 @@ var/global/ingredientLimit = 10
 
 	var/active				=	0 //Currently cooking?
 	var/cookSound			=	'sound/machines/ding.ogg'
-	var/cookTime			=	100	//In ticks
+	var/cookTime			=	150	//In ticks
 	var/obj/item/ingredient	=	null //Current ingredient
 	var/list/foodChoices	=	list() //Null if not offered
 
@@ -135,12 +135,10 @@ var/global/ingredientLimit = 10
 		user << "<span class='warning'>That's a terrible idea.</span>"
 		return
 	else
-
 		src.takeIngredient(I,user)
 	return
 
 /obj/machinery/cooking/verb/flush_reagents()
-
 	set name = "Remove ingredients"
 	set category = "Object"
 	set src in oview(1)
@@ -172,6 +170,8 @@ var/global/ingredientLimit = 10
 		return
 	if(. == "valid")
 		if(src.foodChoices) . = src.foodChoices[(input("Select production.") in src.foodChoices)]
+		if (!Adjacent(user) || user.stat || user.get_active_hand() != I)
+			return 0
 		user.drop_item(I, src)
 		src.ingredient = I
 		spawn() src.cook(.)
@@ -195,22 +195,40 @@ var/global/ingredientLimit = 10
 			src.reagents.trans_id_to(target_food, reagent.id, max(5, target_food.w_class * 5) / reagents.reagent_list.len)
 	return
 
+/obj/machinery/cooking/proc/cook_after(var/delay, var/numticks = 5) //adaptation of do_after()
+	var/delayfraction = round(delay/numticks)
+	for (var/i = 1 to numticks)
+		sleep(delayfraction)
+		if (!src.ingredient || !active || get_turf(src.ingredient)!=get_turf(src))
+			return 0
+	return 1
+
 /obj/machinery/cooking/proc/cook(var/foodType)
 	src.active = 1
 	src.icon_state = src.icon_state_on
-	sleep(src.cookTime)
-	if(!src.ingredient || !active) return
+	if (cook_after(src.cookTime, 25))
+		src.makeFood(foodType)
+		playsound(get_turf(src),src.cookSound,100,1)
 	src.active = 0
 	src.icon_state = initial(src.icon_state)
-	playsound(get_turf(src),src.cookSound,100,1)
-	src.makeFood(foodType)
 	return
 
 /obj/machinery/cooking/proc/makeFood(var/foodType)
-	var/obj/item/weapon/reagent_containers/food/new_food = new foodType(src.loc,src.ingredient)
+	var/obj/item/I = src.ingredient
+	var/obj/item/weapon/reagent_containers/food/new_food = new foodType(src.loc,I)
 	if(cooks_in_reagents)
 		transfer_reagents_to_food(new_food)
-	qdel(src.ingredient)
+	I.reagents.trans_to(new_food,I.reagents.total_volume)
+	if (istype(new_food, /obj/item/weapon/reagent_containers/food/snacks/customizable))
+		var/obj/item/weapon/reagent_containers/food/snacks/customizable/F = new_food
+		F.ingredients += I
+		F.updateName()
+		F.overlays += F.generateFilling(I)
+	else if (istype(new_food, /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable))
+		var/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/F = new_food
+		F.ingredients += I
+		F.updateName()
+		F.overlays += F.generateFilling(I)
 	src.ingredient = null
 	return new_food
 
@@ -226,19 +244,17 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/candy/validateIngredient(var/obj/item/I)
 	. = ..()
-
 	if ((. == "valid") && (!foodNesting))
 		for (var/food in foodChoices)
 			if (findtext(I.name, food))
 				. = "It's already candy."
-
 				break
 
-/obj/machinery/cooking/candy/makeFood(var/foodType)
+/*/obj/machinery/cooking/candy/makeFood(var/foodType)
 	var/old_food = src.ingredient.name
 	var/obj/item/weapon/reagent_containers/food/new_food = ..()
 	new_food.name = "[old_food] [new_food.name]"
-	return new_food
+	return new_food*/
 
 /obj/machinery/cooking/candy/getFoodChoices()
 	return (typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy))
@@ -269,7 +285,6 @@ var/global/ingredientLimit = 10
 	icon_state = "cereal_off"
 	icon_state_on = "cereal_on"
 	foodChoices = null
-	cookTime = 200
 
 /obj/machinery/cooking/cerealmaker/validateIngredient(var/obj/item/I)
 	. = ..()
@@ -284,7 +299,7 @@ var/global/ingredientLimit = 10
 	if(cooks_in_reagents)
 		src.transfer_reagents_to_food(C) //add the stuff from the machine
 	C.name = "[src.ingredient.name] cereal"
-	var/image/I = image(src.ingredient.icon,,src.ingredient.icon_state)
+	var/image/I = image(getFlatIcon(src.ingredient, src.ingredient.dir, 0))
 	I.transform *= 0.7
 	C.overlays += I
 	qdel(src.ingredient)
@@ -350,8 +365,6 @@ var/global/ingredientLimit = 10
 		src.ingredient.name = "deep fried [src.ingredient.name]"
 		src.ingredient.color = "#FFAD33"
 		src.ingredient.loc = src.loc
-		src.ingredient = null
-		empty_icon() //see if the icon needs updating from the loss of oil
 	else //some admin enabled funfood and we're frying the captain's ID or someshit
 		var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/D = new(src.loc)
 		if(cooks_in_reagents)
@@ -362,9 +375,10 @@ var/global/ingredientLimit = 10
 		D.icon_state = src.ingredient.icon_state
 		D.overlays = src.ingredient.overlays
 		qdel(src.ingredient)
-		src.ingredient = null
-		empty_icon() //see if the icon needs updating from the loss of oil
+	src.ingredient = null
+	empty_icon() //see if the icon needs updating from the loss of oil
 	return
+
 // Grill ///////////////////////////////////////////////////////
 
 /obj/machinery/cooking/grill
@@ -373,7 +387,7 @@ var/global/ingredientLimit = 10
 	icon_state = "grill_off"
 	icon_state_on = "grill_on"
 	foodChoices = null
-	cookTime = 450
+	cookTime = 210
 
 	cooks_in_reagents = 1
 
@@ -390,19 +404,15 @@ var/global/ingredientLimit = 10
 	src.ingredient.pixel_y += 5
 	src.ingredient.loc = src.loc
 	src.ingredient.mouse_opacity = 0
-	sleep(src.cookTime/3)
-	if(!src.ingredient || !active) return
-	if(src.ingredient) src.ingredient.color = "#C28566"
-	sleep(src.cookTime/3)
-	if(!src.ingredient || !active) return
-	if(src.ingredient) src.ingredient.color = "#A34719"
-	sleep(src.cookTime/3)
-	if(!src.ingredient || !active) return
+	if (cook_after(src.cookTime/3, 14))
+		src.ingredient.color = "#C28566"
+		if (cook_after(src.cookTime/3, 14))
+			src.ingredient.color = "#A34719"
+			if (cook_after(src.cookTime/3, 14))
+				src.makeFood()
+				playsound(get_turf(src),src.cookSound,100,1)
 	src.icon_state = initial(src.icon_state)
 	src.active = 0
-	if(src.ingredient)
-		playsound(get_turf(src),src.cookSound,100,1)
-		src.makeFood()
 	return
 
 /obj/machinery/cooking/grill/makeFood()

@@ -127,3 +127,10 @@ proc/adjust_brightness(var/color, var/value)
 			colorsum[3] += RGB[3]
 		final_average = rgb(colorsum[1]/total, colorsum[2]/total, colorsum[3]/total)
 	return final_average
+
+/proc/empty_Y_space(var/icon/I) //Returns the amount of lines containing only transparent pixels in an icon, starting from the bottom
+	for(var/y_pixel = 1 to I.Height())
+		for(var/x_pixel = 1 to I.Width())
+			if (I.GetPixel(x_pixel, y_pixel))
+				return y_pixel - 1
+	return null
