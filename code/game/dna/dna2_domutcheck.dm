@@ -6,9 +6,12 @@
 #define MUTCHK_FORCED        1
 /proc/domutcheck(var/mob/living/M, var/connected=null, var/flags=0)
 	for(var/datum/dna/gene/gene in dna_genes)
+		//testing("Checking [gene.name]")
 		if(!M)
+			//testing("[gene.name] has No mob")
 			return
 		if(!gene.block)
+			//testing("[gene.name] has no block")
 			continue
 
 		if(istype(M,/mob/living/simple_animal/chicken) && M.dna)
@@ -38,14 +41,14 @@
 		if(changed)
 			// Gene active (or ALWAYS ACTIVATE)
 			if(gene_active || (gene.flags & GENE_ALWAYS_ACTIVATE))
-				testing("[gene.name] activated!")
+				//testing("[gene.name] activated!")
 				gene.activate(M,connected,flags)
 				if(M)
 					M.active_genes |= gene.type
 					M.update_icon = 1
 			// If Gene is NOT active:
 			else
-				testing("[gene.name] deactivated!")
+				//testing("[gene.name] deactivated!")
 				gene.deactivate(M,connected,flags)
 				if(M)
 					M.active_genes -= gene.type
@@ -64,13 +67,10 @@
 
 
 /proc/domutation(var/datum/dna/gene/gene, var/mob/living/M, var/connected=null, var/flags=0)
+	//testing("domutation on [gene.name] with [M] and [flags]")
 	if(!gene || !istype(gene))
 		return 0
 
-	// Sanity checks, don't skip.
-	if(!gene.can_activate(M,flags))
-		//testing("[M] - Failed to activate [gene.name] (can_activate fail).")
-		return 0
 
 	// Current state
 	var/gene_active = (gene.flags & GENE_ALWAYS_ACTIVATE)
@@ -85,18 +85,29 @@
 	if(changed)
 		// Gene active (or ALWAYS ACTIVATE)
 		if(gene_active || (gene.flags & GENE_ALWAYS_ACTIVATE))
-			testing("[gene.name] activated!")
+			// Sanity checks, don't skip.
+			if(!gene.can_activate(M,flags))
+				//testing("[M] - Failed to activate [gene.name] (can_activate fail).")
+				return 0
+
+			//testing("[gene.name] activated!")
 			gene.activate(M,connected,flags)
 			if(M)
 				M.active_genes |= gene.type
 				M.update_icon = 1
 		// If Gene is NOT active:
 		else
-			testing("[gene.name] deactivated!")
-			gene.deactivate(M,connected,flags)
+			//testing("[gene.name] deactivated!")
+			var/tempflag = flags
+			if(ishuman(M))
+				tempflag |= (((ishuman(M) && M:species) && gene.block in M:species:default_blocks) ? 4 : 0)
+			gene.deactivate(M,connected,tempflag)
 			if(M)
-				M.active_genes -= gene.type
-				M.update_icon = 1
+				//testing("Removing [gene.name]([gene.type]) from activegenes")
+				if(!(tempflag & GENE_NATURAL))
+					M.active_genes.Remove(gene.type)
+					//testing("[M] [act ? "" : "un"]successfully removed [gene.type] from active_genes")
+					M.update_icon = 1
 
 /datum/dna/proc/chicken2vox(var/mob/living/simple_animal/chicken/C, var/datum/dna/D)//sadly doesn't let you turn normal chicken into voxes since they don't have any DNA
 

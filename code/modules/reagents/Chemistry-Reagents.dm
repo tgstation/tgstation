@@ -1217,7 +1217,10 @@
 		if(G.is_active(M))
 			if(G.name == "Hulk" && ishuman(M))
 				G.OnMobLife(M)
-			G.deactivate(M,"flags"=((ishuman(M) && M:species && G.block in M:species:default_blocks) ? 4 : 0))
+			var/tempflag = 0
+			if(ishuman(M))
+				tempflag |= (M:species && (G.block in M:species:default_blocks) ? 4 : 0)
+			G.deactivate(M,0,"flags"= tempflag)
 	M.alpha = 255
 	//M.mutations = list()
 	//M.active_genes = list()

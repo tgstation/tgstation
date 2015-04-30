@@ -87,6 +87,7 @@
 		if(!granted_spells)
 			granted_spells = list()
 		granted_spells += granted
+		//testing("[M] added [granted.name] from [name]")
 		return 1
 
 	deactivate(var/mob/M, var/connected, var/flags)
@@ -95,6 +96,7 @@
 				if(S in granted_spells)
 					M.remove_spell(S)
 					granted_spells -= S
+					//testing("[M] removed [S.name] from [name]")
 					qdel(S)
 			return 1
 		return 0
@@ -105,11 +107,13 @@
 	activate(var/mob/M, var/connected, var/flags)
 		..(M,connected,flags)
 		M.verbs += verbtype
+		//testing("[M] added [verbtype] from [name]")
 		return 1
 
 	deactivate(var/mob/M, var/connected, var/flags)
 		if(..(M,connected,flags))
 			M.verbs -= verbtype
+			//testing("[M] removed [verbtype] from [name]")
 			return 1
 		return 0
 
