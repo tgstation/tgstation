@@ -5,15 +5,6 @@
 /mob/living/carbon/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 
-/mob/living/carbon/human/proc/play_ree()
-	if(!src.ree)
-		message = "<B>[src]</B> makes an indescribably loud noise."
-		playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
-		m_type = 1
-		ree = 1
-		spawn(30)
-			ree = 0
-
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
@@ -176,7 +167,16 @@
 
 		if ("wry")
 			if(dna && dna.species.id && dna.species.id == "human" && !muzzled)
-				H.play_ree()
+				if ree == 1
+					m_type = 1
+					message = "<B>[src]</B> trys to scream but can't find the energy!"
+				if(!src.ree)
+					message = "<B>[src]</B> makes an indescribably loud noise."
+					playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
+					m_type = 2
+					ree = 1
+					spawn(50)
+						ree = 0
 			else
 				message = "<B>[src]</B> makes an indescribably strange noise."
 				m_type = 2
