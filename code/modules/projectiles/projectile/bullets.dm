@@ -23,7 +23,7 @@
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 15
+	damage = 25
 
 /obj/item/projectile/bullet/pellet/weak
 	damage = 3
