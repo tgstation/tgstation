@@ -38,7 +38,7 @@
 	desc = "A very sad-looking crayon."
 	colour = "#FFFFFF"
 	colourName = "mime"
-	uses = 0
+	uses = -1
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user as mob)
 	update_window(user)
@@ -63,7 +63,7 @@
 	icon_state = "crayonrainbow"
 	colour = "#FFF000"
 	colourName = "rainbow"
-	uses = 0
+	uses = -1
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user as mob)
 	update_window(user)
