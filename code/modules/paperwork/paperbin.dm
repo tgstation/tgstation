@@ -37,6 +37,8 @@
 
 
 /obj/item/weapon/paper_bin/attack_hand(mob/user)
+	if(user.lying)
+		return
 	if(amount >= 1)
 		amount--
 		update_icon()

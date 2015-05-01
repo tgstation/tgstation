@@ -39,11 +39,12 @@
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	..()
-	if(isliving(target))
-		var/mob/living/L = target
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
 		if(prob(15))
-			L.Weaken(3)
-			L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")
+			C.Weaken(3)
+			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 /mob/living/simple_animal/hostile/tree/death(gibbed)
 	..(1)

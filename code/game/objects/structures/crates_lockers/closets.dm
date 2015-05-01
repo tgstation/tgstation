@@ -285,6 +285,8 @@
 
 /obj/structure/closet/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
+	if(user.lying && get_dist(src, user) > 0)
+		return
 
 	if(!src.toggle())
 		return src.attackby(null, user)
