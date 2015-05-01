@@ -165,37 +165,15 @@
 			message = "<B>[src]</B> winks."
 			m_type = 1
 
-/*
-		if ("wry")
-			if(dna && dna.species.id && dna.species.id == "human" && !muzzled)
-				if(!src.ree)
-					message = "<B>[src]</B> makes an indescribably loud noise."
-					playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
-					m_type = 2
-					ree = 1 // undefined var ;^)
-					spawn(50)
-						ree = 0
-				if(src.ree == 1)
-					m_type = 1
-					message = "<B>[src]</B> trys to scream but can't find the energy!"
-			else
-				message = "<B>[src]</B> makes an indescribably strange noise."
-				m_type = 2
-*/
-
 		if ("yawn")
 			if (!muzzled)
 				..(act)
 
 		if ("help")
-			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, wry, yawn"
+			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
 
 		else
 			..(act)
-
-
-
-
 
 	if (message)
 		log_emote("[name]/[key] : [message]")

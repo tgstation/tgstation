@@ -244,10 +244,23 @@
 			message = "<B>[src]</B> whimpers."
 			m_type = 2
 
-		if ("wry")
-			message = "<B>[src]</B> makes an indescribably loud noise."
-			playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
-			m_type = 2
+/*
+		if ("ree")
+			if(dna && dna.species.id && dna.species.id == "human" && !muzzled)
+				if(!src.s_cooldown)
+					message = "<B>[src]</B> makes an indescribably loud noise."
+					playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
+					m_type = 2
+					s_cooldown = 1 // define it please ;^)
+					spawn(50)
+						s_cooldown = 0
+				if(src.s_cooldown == 1)
+					m_type = 1
+					message = "<B>[src]</B> trys to scream but can't find the energy!"
+			else
+				message = "<B>[src]</B> makes an indescribably strange, but muffled noise."
+				m_type = 2
+*/
 
 		if ("yawn")
 			message = "<B>[src]</B> yawns."
@@ -258,10 +271,6 @@
 
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
-
-
-
-
 
 	if (message)
 		log_emote("[name]/[key] : [message]")
