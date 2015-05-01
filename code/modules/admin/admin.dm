@@ -581,8 +581,7 @@ var/global/floorIsLava = 0
 	set name="Start Now"
 	if(ticker.current_state == GAME_STATE_PREGAME)
 		ticker.can_fire = 1
-		ticker.delay_start = 0
-		ticker.current_state = GAME_STATE_SETTING_UP
+		ticker.timeLeft = 0
 		log_admin("[usr.key] has started the game.")
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -638,8 +637,8 @@ var/global/floorIsLava = 0
 	set name="Delay"
 	if(ticker.current_state > GAME_STATE_PREGAME)
 		return alert("Too late... The game has already started!")
-	ticker.delay_start = !ticker.delay_start
-	if(ticker.delay_start)
+	ticker.can_fire = !ticker.can_fire
+	if(!ticker.can_fire)
 		world << "<b>The game start has been delayed.</b>"
 		log_admin("[key_name(usr)] delayed the game.")
 	else
