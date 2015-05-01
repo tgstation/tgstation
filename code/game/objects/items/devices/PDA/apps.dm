@@ -96,7 +96,7 @@ var/global/list/pda_app_menus = list(
 			var/turf/user_loc = get_turf(user)
 			var/turf/pda_loc = get_turf(pda_device)
 			if(get_dist(user_loc,pda_loc) <= 1)
-				if(pda_device.mode == PDA_APP_BALANCECHECK)
+				if(pda_device.mode == PDA_APP_STATIONMAP)
 					pda_device.attack_self(C)
 			else
 				user.unset_machine()
