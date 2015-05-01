@@ -73,7 +73,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/ammo_storage/box/a357(), \
 		new /obj/item/ammo_casing/shotgun(), \
 		new /obj/item/ammo_casing/shotgun/dart(), \
-		new /obj/item/device/transfer_valve, \
 		/* new /obj/item/weapon/shield/riot(), */ \
 	)
 

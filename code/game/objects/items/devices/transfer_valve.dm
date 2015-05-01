@@ -9,8 +9,6 @@
 	var/mob/attacher = null
 	var/valve_open = 0
 	var/toggle = 1
-	m_amt = 40000
-	g_amt = 20000
 
 /obj/item/device/transfer_valve/proc/process_activation(var/obj/item/device/D)
 
