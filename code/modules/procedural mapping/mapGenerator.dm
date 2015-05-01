@@ -178,15 +178,21 @@
 	"Same turfs"=CLUSTER_CHECK_SAME_TURFS, "Same atoms"=CLUSTER_CHECK_SAME_ATOMS, "Different turfs"=CLUSTER_CHECK_DIFFERENT_TURFS, \
 	"Different atoms"=CLUSTER_CHECK_DIFFERENT_ATOMS, "All turfs"=CLUSTER_CHECK_ALL_TURFS,"All atoms"=CLUSTER_CHECK_ALL_ATOMS)
 
-	var/moduleClusters = input("Cluster Flags","Map Gen Settings") as null|anything in clusters
+	var/moduleClusters = input("Cluster Flags (Cancel to leave unchanged from defaults)","Map Gen Settings") as null|anything in clusters
 	//null for default
-
-	if(moduleClusters)
+	
+	var/theCluster = 0
+	if(moduleClusters != "None")
 		if(!clusters[moduleClusters])
 			src << "Invalid Cluster Flags"
 			return
+		theCluster = clusters[moduleClusters]
+	else
+		theCluster =  CLUSTER_CHECK_NONE
+	
+	if(theCluster)
 		for(var/datum/mapGeneratorModule/M in N.modules)
-			M.clusterCheckFlags = clusters[moduleClusters]
+			M.clusterCheckFlags = theCluster
 
 
 	src << "Defining Region"
