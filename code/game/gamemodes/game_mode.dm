@@ -85,6 +85,9 @@
 			send_intercept(0)
 	start_state = new /datum/station_state()
 	start_state.count()
+	for (var/mob/living/carbon/human/M in world)
+		spawn (0)
+			M.regenerate_icons()
 	return 1
 
 ///make_antag_chance()
