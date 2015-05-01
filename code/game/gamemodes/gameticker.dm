@@ -434,14 +434,14 @@ var/global/datum/controller/gameticker/ticker
 	init_minesweeper_leaderboard()
 
 /datum/controller/gameticker/proc/init_snake_leaderboard()
-	for(var/x=1;x<=9;x++)
+	for(var/x=1;x<=PDA_APP_SNAKEII_MAXSPEED;x++)
 		snake_station_highscores += x
 		snake_station_highscores[x] = list()
 		snake_best_players += x
 		snake_best_players[x] = list()
 		var/list/templist1 = snake_station_highscores[x]
 		var/list/templist2 = snake_best_players[x]
-		for(var/y=1;y<=8;y++)
+		for(var/y=1;y<=PDA_APP_SNAKEII_MAXLABYRINTH;y++)
 			templist1 += y
 			templist1[y] = 0
 			templist2 += y

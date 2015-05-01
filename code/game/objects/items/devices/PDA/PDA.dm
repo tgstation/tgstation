@@ -900,7 +900,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					<b>Did you know...</b><br>
 					<li>[didyouknow]</li><br>"}
 
-			if (101)//Ringer app
+			if (PDA_APP_RINGER)
 				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
 				dat += {"<h4>Ringer Application</h4>"}
 				if(app)
@@ -915,7 +915,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						<br>
 					"}
 
-			if (102)//Spam filter app
+			if (PDA_APP_SPAMFILTER)
 				var/datum/pda_app/spam_filter/app = locate(/datum/pda_app/spam_filter) in applications
 				dat += {"<h4>Spam Filtering Application</h4>"}
 				if(app)
@@ -927,7 +927,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					</ul>
 					"}
 
-			if (103)//Balance check app
+			if (PDA_APP_BALANCECHECK)
 				var/datum/pda_app/balance_check/app = locate(/datum/pda_app/balance_check) in applications
 				dat += {"<h4>Balance Check Application</h4>"}
 				if(app)
@@ -966,7 +966,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						else
 							dat += {"<i>Unable to connect to accounts database. The database is either nonexistent, inoperative, or too far away.</i>"}
 
-			if (104)//Station map app
+			if (PDA_APP_STATIONMAP)
 				var/datum/pda_app/station_map/app = locate(/datum/pda_app/station_map) in applications
 				dat += {"<h4>Station Map Application</h4>"}
 				if(app)
@@ -1028,7 +1028,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							dat += {"<li>[mkr.name] ([mkr.x]/[mkr.y]) <a href='byond://?src=\ref[src];choice=removeMarker;rMark=[mkr.num]'>remove</a></li>"}
 						dat += {"</ul>"}
 
-			if (105)//Snake II
+			if (PDA_APP_SNAKEII)
 				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
 				dat += {"<h4><img src=[app.icon].png> Snake II  <a href='byond://?src=\ref[src];choice=snakeVolume;vChange=-1'><b>-</b></a><img src="snake_volume[app.volume].png"/><a href='byond://?src=\ref[src];choice=snakeVolume;vChange=1'><b>+</b></a></h4>"}
 				if(app)
@@ -1165,7 +1165,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						<br><a href='byond://?src=\ref[src];choice=snakeDown'><img src="pda_snake_arrow_south.png"></a>
 						"}
 
-			if (106)//Minesweeper
+			if (PDA_APP_MINESWEEPER)
 				var/datum/pda_app/minesweeper/app = locate(/datum/pda_app/minesweeper) in applications
 				dat += {"<h4><img src=[app.icon].png> Minesweeper</h4>"}
 				if(app)
@@ -1249,7 +1249,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += {"<br>[app.minesweeper_game.current_difficulty] difficulty highscore held by <b>[minesweeper_best_players[app.minesweeper_game.current_difficulty]]</b> (in <b>[minesweeper_station_highscores[app.minesweeper_game.current_difficulty]]</b> seconds)"}
 
 
-			if (107)//Spess Pets
+			if (PDA_APP_SPESSPETS)
 				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
 				dat += {"<h4><img src=[app.icon].png> Spess Pets</h4>"}
 				if(app)
@@ -1387,8 +1387,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //APPLICATIONS FUNCTIONS===========================
 
-			if("101")
-				mode = 101
+			if("[PDA_APP_RINGER]")
+				mode = PDA_APP_RINGER
 			if("toggleDeskRinger")
 				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
 				if(app)
@@ -1402,17 +1402,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(i > MAXIMUM_FREQUENCY)
 						i = 1599
 					app.frequency = i
-			if("102")
-				mode = 102
+			if("[PDA_APP_SPAMFILTER]")
+				mode = PDA_APP_SPAMFILTER
 			if("setFilter")
 				var/datum/pda_app/spam_filter/app = locate(/datum/pda_app/spam_filter) in applications
 				if(app)
 					app.function = text2num(href_list["filter"])
-			if("103")
-				mode = 103
+			if("[PDA_APP_BALANCECHECK]")
+				mode = PDA_APP_BALANCECHECK
 
-			if("104")
-				mode = 104
+			if("[PDA_APP_STATIONMAP]")
+				mode = PDA_APP_STATIONMAP
 
 			if("minimapMarker")
 				var/datum/pda_app/station_map/app = locate(/datum/pda_app/station_map) in applications
@@ -1448,8 +1448,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //GAME FUNCTIONS====================================
 
-			if("105")
-				mode = 105
+			if("[PDA_APP_SNAKEII]")
+				mode = PDA_APP_SNAKEII
 
 			if("snakeNewGame")
 				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
@@ -1496,8 +1496,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				app.volume = max(0,app.volume)
 				app.volume = min(6,app.volume)
 
-			if("106")
-				mode = 106
+			if("[PDA_APP_MINESWEEPER]")
+				mode = PDA_APP_MINESWEEPER
 
 			if("mineNewGame")
 				var/datum/pda_app/minesweeper/app = locate(/datum/pda_app/minesweeper) in applications
@@ -1557,6 +1557,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				sleep(5)
 				app.minesweeper_game.reset_game()
 				app.ingame = 0
+
+			if("[PDA_APP_SPESSPETS]")
+				mode = PDA_APP_SPESSPETS
 
 			if("eggPrev")
 				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications

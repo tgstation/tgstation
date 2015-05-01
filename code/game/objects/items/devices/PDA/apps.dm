@@ -2,13 +2,13 @@
 
 //Menu values
 var/global/list/pda_app_menus = list(
-	101,//Ringer
-	102,//Spam Filter
-	103,//Balance Check
-	104,//Station Map
-	105,//Snake II
-	106,//Minesweeper
-	107,//Spess Pets
+	PDA_APP_RINGER,
+	PDA_APP_SPAMFILTER,
+	PDA_APP_BALANCECHECK,
+	PDA_APP_STATIONMAP,
+	PDA_APP_SNAKEII,
+	PDA_APP_MINESWEEPER,
+	PDA_APP_SPESSPETS,
 	)
 
 /datum/pda_app
@@ -30,7 +30,7 @@ var/global/list/pda_app_menus = list(
 	name = "Ringer"
 	desc = "Set the frequency to that of a desk bell to be notified anytime someone presses it."
 	price = 10
-	menu = 101
+	menu = PDA_APP_RINGER
 	var/frequency = 1457	//	1200 < frequency < 1600 , always end with an odd number.
 	var/status = 1			//	0=off 1=on
 
@@ -50,7 +50,7 @@ var/global/list/pda_app_menus = list(
 	name = "Spam Filter"
 	desc = "Spam messages won't ring your PDA anymore. Enjoy the quiet."
 	price = 30
-	menu = 102
+	menu = PDA_APP_SPAMFILTER
 	var/function = 1	//0=do nothing 1=conceal the spam 2=block the spam
 
 
@@ -58,7 +58,7 @@ var/global/list/pda_app_menus = list(
 	name = "Balance Check"
 	desc = "Connects to the Account Database to check the balance history the inserted ID card."
 	price = 0
-	menu = 103
+	menu = PDA_APP_BALANCECHECK
 	var/obj/machinery/account_database/linked_db
 
 /datum/pda_app/balance_check/onInstall()
@@ -77,7 +77,7 @@ var/global/list/pda_app_menus = list(
 	name = "Station Map"
 	desc = "Displays a minimap of the station. You'll find a marker at your location. Place more markers using coordinates."
 	price = 50
-	menu = 104
+	menu = PDA_APP_STATIONMAP
 	var/list/markers = list()
 	var/markx = 1
 	var/marky = 1
@@ -96,7 +96,7 @@ var/global/list/pda_app_menus = list(
 			var/turf/user_loc = get_turf(user)
 			var/turf/pda_loc = get_turf(pda_device)
 			if(get_dist(user_loc,pda_loc) <= 1)
-				if(pda_device.mode == 104)
+				if(pda_device.mode == PDA_APP_BALANCECHECK)
 					pda_device.attack_self(C)
 			else
 				user.unset_machine()
@@ -108,7 +108,7 @@ var/global/list/pda_app_menus = list(
 	name = "Snake II"
 	desc = "A video game. This old classic from Earth made it all the way to the far reaches of space! Includes station leaderboard."
 	price = 40
-	menu = 105
+	menu = PDA_APP_SNAKEII
 	icon = "pda_game"
 	var/volume = 6
 	var/datum/snake_game/snake_game = null
@@ -119,11 +119,11 @@ var/global/list/pda_app_menus = list(
 
 /datum/pda_app/snake/onInstall(var/obj/item/device/pda/device)
 	..()
-	for(var/x=1;x<=9;x++)
+	for(var/x=1;x<=PDA_APP_SNAKEII_MAXSPEED;x++)
 		highscores += x
 		highscores[x] = list()
 		var/list/templist = highscores[x]
-		for(var/y=1;y<=8;y++)
+		for(var/y=1;y<=PDA_APP_SNAKEII_MAXLABYRINTH;y++)
 			templist += y
 			templist[y] = 0
 
@@ -154,7 +154,7 @@ var/global/list/pda_app_menus = list(
 			var/turf/user_loc = get_turf(user)
 			var/turf/pda_loc = get_turf(pda_device)
 			if(get_dist(user_loc,pda_loc) <= 1)
-				if(pda_device.mode == 105)
+				if(pda_device.mode == PDA_APP_SNAKEII)
 					pda_device.attack_self(C)
 				else
 					pause(user)
@@ -215,7 +215,7 @@ var/global/list/pda_app_menus = list(
 	name = "Minesweeper"
 	desc = "A video game. This old classic from Earth made it all the way to the far reaches of space! Includes station leaderboard."
 	price = 35
-	menu = 106
+	menu = PDA_APP_MINESWEEPER
 	icon = "pda_game"
 	var/ingame = 0
 	var/datum/minesweeper_game/minesweeper_game = null
@@ -239,7 +239,7 @@ var/global/list/pda_app_menus = list(
 			var/turf/user_loc = get_turf(user)
 			var/turf/pda_loc = get_turf(pda_device)
 			if(get_dist(user_loc,pda_loc) <= 1)
-				if(pda_device.mode == 106)
+				if(pda_device.mode == PDA_APP_MINESWEEPER)
 					pda_device.attack_self(C)
 			else
 				user.unset_machine()
@@ -257,7 +257,7 @@ var/global/list/pda_app_menus = list(
 	name = "Spess Pets"
 	desc = "A virtual pet simulator. For when you don't have the balls to own a real pet. Includes multi-PDA interactions and Nanocoin mining."
 	price = 70
-	menu = 107
+	menu = PDA_APP_SPESSPETS
 	icon = "pda_egg"
 	var/obj/machinery/account_database/linked_db
 
@@ -378,7 +378,7 @@ var/global/list/pda_app_menus = list(
 			var/turf/user_loc = get_turf(user)
 			var/turf/pda_loc = get_turf(pda_device)
 			if(get_dist(user_loc,pda_loc) <= 1)
-				if(pda_device.mode == 107)
+				if(pda_device.mode == PDA_APP_SPESSPETS)
 					pda_device.attack_self(C)
 			else
 				user.unset_machine()
