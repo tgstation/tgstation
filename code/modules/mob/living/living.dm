@@ -245,6 +245,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustBruteLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
@@ -252,10 +253,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustOxyLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
+	handle_regular_status_updates()
 
 /mob/living/proc/setOxyLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	oxyloss = amount
+	handle_regular_status_updates()
 
 /mob/living/proc/getToxLoss()
 	return toxloss
@@ -263,10 +266,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustToxLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
+	handle_regular_status_updates()
 
 /mob/living/proc/setToxLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	toxloss = amount
+	handle_regular_status_updates()
 
 /mob/living/proc/getFireLoss()
 	return fireloss
@@ -274,6 +279,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustFireLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
@@ -281,10 +287,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustCloneLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+	handle_regular_status_updates()
 
 /mob/living/proc/setCloneLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	cloneloss = amount
+	handle_regular_status_updates()
 
 /mob/living/proc/getBrainLoss()
 	return brainloss
@@ -292,10 +300,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustBrainLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
+	handle_regular_status_updates()
 
 /mob/living/proc/setBrainLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	brainloss = amount
+	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
@@ -303,10 +313,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
+	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/setStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	staminaloss = amount
+	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -445,6 +457,7 @@ Sorry Giacom. Please don't be mad :(
 		if(C.reagents)
 			for(var/datum/reagent/R in C.reagents.reagent_list)
 				C.reagents.clear_reagents()
+			C.reagents.addiction_list = list()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	if(stat == DEAD)
