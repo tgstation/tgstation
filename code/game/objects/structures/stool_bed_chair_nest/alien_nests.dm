@@ -24,6 +24,25 @@
 		if(user && buckled_mob && user.buckled == src)
 			unbuckle()
 */
+/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
+	var/mob/living/M = src.buckled_mob
+	if(M)
+		if(M != user)
+			M.visible_message(\
+			"<span class='notice'>[user.name] pulls [M.name] free from the sticky nest!</span>",\
+			"[user.name] pulls you free from the gelatinous resin.",\
+			"You hear squelching...")
+			unbuckle_mob()
+		else
+			M.visible_message(\
+			"<span class='warning'>[M.name] struggles to break free of the gelatinous resin...</span>",\
+			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
+			"You hear squelching...")
+			spawn(600)
+				if(user && buckled_mob && user.buckled == src)
+					unbuckle_mob()
+		add_fingerprint(user)
+	return M
 
 /obj/structure/stool/bed/nest/user_buckle_mob(mob/M as mob, mob/user as mob)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
