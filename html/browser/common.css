@@ -320,3 +320,20 @@ div.notice
 	width: 100%;
 	clear: both;
 }
+
+.item {
+    width: 100%;
+    margin: 4px 0 0 0;
+    clear: both;
+}
+
+.itemLabel {
+    float: left;
+    width: 30%;
+    color: #e9c183;
+}
+
+.itemContent {
+    float: left;
+    width: 69%;
+}

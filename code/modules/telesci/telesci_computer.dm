@@ -45,6 +45,7 @@
 		return
 	if(cell.give(100))
 		use_power(200)		//this used to use CELLRATE, but CELLRATE is fucking awful. feel free to fix this properly!
+	src.updateUsrDialog()
 
 /obj/machinery/computer/telescience/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)
@@ -128,10 +129,85 @@
 	return src.attack_hand(user)
 
 /obj/machinery/computer/telescience/attack_hand(mob/user as mob)
-	if(stat & BROKEN)
+	if(user.client && user.client.prefs.usenanoui)//Check if the player is using nanoUI or not.
+		ui_interact(user)
 		return
+	else
+		interact(user)
 
-	ui_interact(user)
+/obj/machinery/computer/telescience/interact(mob/user)
+	if(stat & BROKEN)
+		user.unset_machine(src)
+		return
+	
+	var/out = {"
+	<html>
+		<link href='./common.css' rel='stylesheet' type='text/css'>
+		<body style='font-family: Verdana, Geneva, sans-serif;'>
+			<div class='uiWrapper'>
+				<div class='uiTitleWrapper'>
+					<div class='uiTitle'>
+						<div align='center'>
+						[name]
+						</div>
+					</div>
+				</div>
+				<div class='uiContent'>
+					<div class='item'>
+						<div class='itemLabel'>
+							Offsets:
+						</div>
+						<div class='itemContent'>
+							<a href='?src=\ref[src];setPOffsetX=1'>X offset: [x_player_off]</a>
+							<a href='?src=\ref[src];setPOffsetY=1'>Y offset: [y_player_off]</a>
+						</div>
+					</div>
+					<div class='item'>
+						<div class='itemLabel'>
+							Coordinates::
+						</div>
+						<div class='itemContent'>
+							<a href='?src=\ref[src];setx=1'>X: [x_co]</a>
+							<a href='?src=\ref[src];sety=1'>Y: [y_co]</a>
+							<a href='?src=\ref[src];setz=1'>Z: [z_co]</a>
+						</div>
+					</div>
+					<div class='item'>
+						<div class='itemLabel'>
+							Controls:
+						</div>
+						<div class='itemContent'>
+							<a href='?src=\ref[src];send=1' [x_co && y_co && z_co ? "" : "class='linkOff'"]>Send</a>
+							<a href='?src=\ref[src];receive=1' [x_co && y_co && z_co ? "" : "class='linkOff'"]>Receive</a>
+							<a href='?src=\ref[src];recal=1'>Recalibrate</a>
+						</div>
+					</div>
+		"}
+	if(!cell)
+		out += {"
+					<div class="notice">No power cell detected.</div>
+		"}
+	else
+		out += {"
+					<div class='statusDisplay'>
+						<div class='line'>
+							<div class='statusLabel'>
+								[cell.charge]/[cell.maxcharge]
+								<a href='?src=\ref[src];eject_cell=1'>Eject</a>
+							</div>
+						</div>
+					</div>
+		"}
+	out += {"
+				</div>
+			</div>
+		</body>
+	</html>
+	"}
+
+	user.set_machine(src)
+	user << browse(out, "window=telescience;size=380x210")
+	onclose(user, "telescience")
 
 /obj/machinery/computer/telescience/proc/sparks()
 	if(telepad)
@@ -298,6 +374,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 			usr << "<span class='caution'>Error: Invalid X offset (-10 to 10)</span>"
 		else
 			x_player_off = new_x
+		src.updateUsrDialog()
 		return 1
 
 	if(href_list["setPOffsetY"])
@@ -306,6 +383,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 			usr << "<span class='caution'>Error: Invalid Y offset (-10 to 10)</span>"
 		else
 			y_player_off = new_y
+		src.updateUsrDialog()
 		return 1
 
 
@@ -317,6 +395,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 			testing("new_x=[new_x] -> NOT 1 < [x_validate] < 255")
 		else
 			x_co = new_x
+		src.updateUsrDialog()
 		return 1
 
 	if(href_list["sety"])
@@ -327,6 +406,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 			testing("new_y=[new_y] -> NOT 1 < [y_validate] < 255")
 		else
 			y_co = new_y
+		src.updateUsrDialog()
 		return 1
 
 	if(href_list["setz"])
@@ -335,18 +415,21 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 			usr << "<span class='caution'>Error: Invalid Z coordinate.</span>"
 		else
 			z_co = new_z
+		src.updateUsrDialog()
 		return 1
 
 	if(href_list["send"])
 		if(cell && cell.charge>=teleport_cell_usage)
 			sending = 1
 			teleport(usr)
+		src.updateUsrDialog()
 		return 1
 
 	if(href_list["receive"])
 		if(cell && cell.charge>=teleport_cell_usage)
 			sending = 0
 			teleport(usr)
+		src.updateUsrDialog()
 		return 1
 
 	if(href_list["eject_cell"])
@@ -357,6 +440,7 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 			src.cell = null
 			usr.visible_message("[usr] removes the cell from \the [name].", "You remove the cell from \the [name].")
 			update_icon()
+		src.updateUsrDialog()
 		return 1
 
 	if(href_list["recal"])
@@ -365,5 +449,6 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 		y_off = rand(-10,10)
 		sparks()
 		usr << "<span class='caution'>Calibration successful.</span>"
+		src.updateUsrDialog()
 		return 1
 	return 0
