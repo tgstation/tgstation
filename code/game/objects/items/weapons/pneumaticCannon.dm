@@ -121,8 +121,6 @@
 		src.tank.loc = get_turf(user)
 		user.put_in_hands(tank)
 		src.tank = null
-		src.overlays = null
-		src.update_icon()
 	if(!removing)
 		if(src.tank)
 			user << "<span class='warning'>\The [src] already has a tank.</span>"
@@ -131,5 +129,11 @@
 		src.tank = thetank
 		user.drop_item()
 		thetank.loc = src
-	src.overlays += image('icons/obj/pneumaticCannon.dmi', "[thetank.icon_state]")
+	src.update_icons()
+
+/obj/item/weapon/pneumatic_cannon/proc/update_icons()
+	src.overlays.Cut()
+	if(!tank)
+		return
+	src.overlays += image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]")
 	src.update_icon()
