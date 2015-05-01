@@ -63,6 +63,7 @@
 	if(replace)
 		undefineRegion()
 
+	//Sphere mode engage
 	var/evenCheckZ = 0
 	if(max(bigZ,lilZ) % 2 == 0)
 		evenCheckZ = centerZ+1
@@ -188,9 +189,8 @@
 			M.clusterCheckFlags = clusters[moduleClusters]
 
 
-	//src << "Defining Region"
-	N.defineCircularRegion(Start,End)
-	//N.defineRegion(Start, End)
+	src << "Defining Region"
+	N.defineRegion(Start, End)
 	src << "Region Defined"
 	src << "Generating Region"
 	N.generate()

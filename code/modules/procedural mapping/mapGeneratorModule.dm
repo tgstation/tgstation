@@ -42,7 +42,8 @@
 			if(clusterCheckFlags & CLUSTER_CHECK_SAME_TURFS)
 				clustering = rand(clusterMin,clusterMax)
 				for(var/turf/F in trange(clustering,T))
-					if(F.type == turfPath) //NOT istype(), exact typematching
+					//if(F.type == turfPath) //NOT istype(), exact typematching
+					if(istype(F,turfPath))
 						continue
 
 				if(locate(turfPath) in trange(clustering, T))
@@ -52,12 +53,14 @@
 			if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_TURFS)
 				clustering = rand(clusterMin,clusterMax)
 				for(var/turf/F in trange(clustering,T))
-					if(F.type != turfPath)
+					//if(F.type != turfPath)
+					if(!(istype(F,turfPath)))
 						continue
 
 		//Success!
 		if(prob(spawnableTurfs[turfPath]))
 			T.ChangeTurf(turfPath)
+
 
 	//Atoms DO care whether atoms can be placed here
 	if(checkPlaceAtom(T))
@@ -71,14 +74,16 @@
 				if(clusterCheckFlags & CLUSTER_CHECK_SAME_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
-						if(M.type == atomPath)
+						//if(M.type == atomPath)
+						if(istype(M,atomPath))
 							continue
 
 				//You're DIFFERENT from me? I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
-						if(M.type != atomPath)
+						//if(M.type != atomPath)
+						if(!(istype(M,atomPath)))
 							continue
 
 			//Success!
@@ -121,11 +126,11 @@
 //Settings appropriate for turfs/atoms that cover SOME of the map region, sometimes referred to as a splatter layer.
 /datum/mapGeneratorModule/splatterLayer
 	clusterCheckFlags = CLUSTER_CHECK_ALL
-	spawnableAtoms = list(/atom = 30)
-	spawnableTurfs = list(/turf = 30)
+	spawnableAtoms = list(/atom = 15)
+	spawnableTurfs = list(/turf = 15)
 
 //Settings appropriate for turfs/atoms that cover a lot of the map region, eg a dense forest.
 /datum/mapGeneratorModule/denseLayer
 	clusterCheckFlags = CLUSTER_CHECK_NONE
-	spawnableAtoms = list(/atom = 75)
-	spawnableTurfs = list(/turf = 75)
+	spawnableAtoms = list(/atom = 35)
+	spawnableTurfs = list(/turf = 35)
