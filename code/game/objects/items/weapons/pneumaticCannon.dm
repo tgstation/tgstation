@@ -106,12 +106,11 @@
 	result = /obj/item/weapon/pneumatic_cannon/ghetto
 	tools = list(/obj/item/weapon/weldingtool,
 				 /obj/item/weapon/wrench)
-	reqs = list(/obj/item/stack/rods = 4, //Forming the barrel
-				/obj/item/stack/sheet/metal = 4, //Forming the body and internal piston
-				/obj/item/stack/sheet/rglass = 3, //Forming the gas reservoir
-				/obj/item/stack/packageWrap = 8, //Padding the stock
-				/obj/item/pipe = 2, //Forming the gas transfer
-				/obj/item/stack/sheet/glass = 2) //And finally, forming the hatch into the reservoir
+	reqs = list(/obj/item/stack/sheet/metal = 4,
+				/obj/item/stack/packageWrap = 8,
+				/obj/item/pipe = 2,
+				/obj/machinery/atmospherics/binary/valve = 1,
+				/obj/machinery/atmospherics/pipe/manifold = 1,)
 	time = 300
 
 /obj/item/weapon/pneumatic_cannon/proc/updateTank(var/obj/item/weapon/tank/internals/thetank, var/removing = 0, var/mob/living/carbon/human/user)
@@ -122,7 +121,8 @@
 		src.tank.loc = get_turf(user)
 		user.put_in_hands(tank)
 		src.tank = null
-		overlays.Cut()
+		src.overlays = null
+		src.update_icon()
 	if(!removing)
 		if(src.tank)
 			user << "<span class='warning'>\The [src] already has a tank.</span>"
@@ -132,3 +132,4 @@
 		user.drop_item()
 		thetank.loc = src
 	src.overlays += image('icons/obj/pneumaticCannon.dmi', "[thetank.icon_state]")
+	src.update_icon()
