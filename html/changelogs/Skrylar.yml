@@ -1,9 +1,0 @@
-author: Skrylar
-
-delete-after: True
-
-changes:
-	- tweak: Tasers have been buffed! They now have no range limit, and stun for longer times.
-	- experiment: The chemicals inside parapens have been replaced with zombie powder, which means they can actually stun humans again!
-	- bugfix: Firefighter watertanks now correctly deploy metal foam.
-	- rscadd: Gave skellingtons the ability to play the xylophone on their ribcage back.

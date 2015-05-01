@@ -1,7 +1,0 @@
-   author: MMMiracles
-   
-   delete-after: True
-   
-   changes: 
-     - rscadd: "Adds a new vending machine, the Liberation Station. Consult your local patriot for more details."
-     - rscadd: "Adds a patriotic jumpsuit and freedom sheets. Consult your local patriot for more details."

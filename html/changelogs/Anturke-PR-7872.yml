@@ -1,6 +1,0 @@
-author: AnturK
-
-delete-after: True
-
-changes: 
-  - rscadd: "Non-player Alien Queens/Drones now spread weeds. Can also lay eggs when enabled."

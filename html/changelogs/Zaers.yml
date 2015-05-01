@@ -1,6 +1,0 @@
-author: zaers
-
-delete-after: True
-
-changes:
-  - "Fix alien nests ability to delay self unbuckling"

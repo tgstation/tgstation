@@ -187,6 +187,7 @@
 					message = "<B>[src]</B> tries to scream but can't find the energy!"
 			else
 				message = "<B>[src]</B> makes an indescribably strange, but muffled noise."
+				playsound(src.loc, 'sound/voice/ree2.ogg', 50, 1, 5)
 				m_type = 2
 
 
