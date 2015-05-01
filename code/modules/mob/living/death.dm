@@ -6,6 +6,9 @@
 	if(animate)
 		gib_animation(animate)
 
+	if (buckled)
+		buckled.unbuckle_mob()
+
 	spawn_gibs()
 
 	end_animation(animate) // Will qdel(src)
