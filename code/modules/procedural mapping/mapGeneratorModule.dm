@@ -5,7 +5,7 @@
 	var/list/spawnableTurfs = list()
 	var/clusterMax = 5
 	var/clusterMin = 1
-	var/clusterCheckFlags = CLUSTER_CHECK_ALL_ATOMS
+	var/clusterCheckFlags = CLUSTER_CHECK_SAME_ATOMS
 	var/allowAtomsOnSpace = FALSE
 
 
@@ -31,6 +31,7 @@
 		return 0
 
 	var/clustering = 0
+	var/skipLoopIteration = FALSE
 
 	//Turfs don't care whether atoms can be placed here
 	for(var/turfPath in spawnableTurfs)
@@ -42,20 +43,23 @@
 			if(clusterCheckFlags & CLUSTER_CHECK_SAME_TURFS)
 				clustering = rand(clusterMin,clusterMax)
 				for(var/turf/F in trange(clustering,T))
-					//if(F.type == turfPath) //NOT istype(), exact typematching
 					if(istype(F,turfPath))
-						continue
-
-				if(locate(turfPath) in trange(clustering, T))
+						skipLoopIteration = TRUE
+						break
+				if(skipLoopIteration)
+					skipLoopIteration = FALSE
 					continue
 
 			//You're DIFFERENT to me? I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_TURFS)
 				clustering = rand(clusterMin,clusterMax)
 				for(var/turf/F in trange(clustering,T))
-					//if(F.type != turfPath)
 					if(!(istype(F,turfPath)))
-						continue
+						skipLoopIteration = TRUE
+						break
+				if(skipLoopIteration)
+					skipLoopIteration = FALSE
+					continue
 
 		//Success!
 		if(prob(spawnableTurfs[turfPath]))
@@ -74,17 +78,23 @@
 				if(clusterCheckFlags & CLUSTER_CHECK_SAME_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
-						//if(M.type == atomPath)
 						if(istype(M,atomPath))
-							continue
+							skipLoopIteration = TRUE
+							break
+					if(skipLoopIteration)
+						skipLoopIteration = FALSE
+						continue
 
 				//You're DIFFERENT from me? I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
-						//if(M.type != atomPath)
 						if(!(istype(M,atomPath)))
-							continue
+							skipLoopIteration = TRUE
+							break
+					if(skipLoopIteration)
+						skipLoopIteration = FALSE
+						continue
 
 			//Success!
 			if(prob(spawnableAtoms[atomPath]))
@@ -126,11 +136,11 @@
 //Settings appropriate for turfs/atoms that cover SOME of the map region, sometimes referred to as a splatter layer.
 /datum/mapGeneratorModule/splatterLayer
 	clusterCheckFlags = CLUSTER_CHECK_ALL
-	spawnableAtoms = list(/atom = 15)
-	spawnableTurfs = list(/turf = 15)
+	spawnableAtoms = list(/atom = 30)
+	spawnableTurfs = list(/turf = 30)
 
 //Settings appropriate for turfs/atoms that cover a lot of the map region, eg a dense forest.
 /datum/mapGeneratorModule/denseLayer
 	clusterCheckFlags = CLUSTER_CHECK_NONE
-	spawnableAtoms = list(/atom = 35)
-	spawnableTurfs = list(/turf = 35)
+	spawnableAtoms = list(/atom = 75)
+	spawnableTurfs = list(/turf = 75)

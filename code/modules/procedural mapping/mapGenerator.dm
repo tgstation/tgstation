@@ -11,11 +11,11 @@
 //Combined defines
 #define CLUSTER_CHECK_SAMES				24 //Don't let any of the same type cluster
 #define CLUSTER_CHECK_DIFFERENTS		6  //Don't let any of different types cluster
-#define CLUSTER_CHECK_ALL_TURFS			32 //Don't let ANY turfs cluster same and different types
-#define CLUSTER_CHECK_ALL_ATOMS			64 //Don't let ANY atoms cluster same and different types
+#define CLUSTER_CHECK_ALL_TURFS			10 //Don't let ANY turfs cluster same and different types
+#define CLUSTER_CHECK_ALL_ATOMS			20 //Don't let ANY atoms cluster same and different types
 
 //All
-#define CLUSTER_CHECK_ALL				96 //Don't let anything cluster, like, at all
+#define CLUSTER_CHECK_ALL				30 //Don't let anything cluster, like, at all
 
 
 /datum/mapGenerator
