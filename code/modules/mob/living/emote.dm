@@ -4,6 +4,7 @@
 
 /mob/living/emote(var/act, var/m_type=1, var/message = null)
 	var/param = null
+	var/muzzled = is_muzzled()
 
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
@@ -170,6 +171,25 @@
 					pointed(M)
 			m_type = 1
 
+
+		if ("ree")
+			if(ishuman(src) && !muzzled)
+				if(!src.s_cooldown)
+					message = "<B>[src]</B> makes an indescribably loud noise."
+					playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
+					m_type = 2
+					src.s_cooldown = 1 // IT IS DONE
+					spawn(50)
+						if(src)
+							src.s_cooldown = 0
+				else
+					m_type = 1
+					message = "<B>[src]</B> tries to scream but can't find the energy!"
+			else
+				message = "<B>[src]</B> makes an indescribably strange, but muffled noise."
+				m_type = 2
+
+
 		if ("scream")
 			message = "<B>[src]</B> screams!"
 			m_type = 2
@@ -224,6 +244,7 @@
 			message = "<B>[src]</B> sways around dizzily."
 			m_type = 1
 
+
 		if ("tremble")
 			message = "<B>[src]</B> trembles in fear!"
 			m_type = 1
@@ -244,30 +265,13 @@
 			message = "<B>[src]</B> whimpers."
 			m_type = 2
 
-/*
-		if ("ree")
-			if(dna && dna.species.id && dna.species.id == "human" && !muzzled)
-				if(!src.s_cooldown)
-					message = "<B>[src]</B> makes an indescribably loud noise."
-					playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
-					m_type = 2
-					s_cooldown = 1 // define it please ;^)
-					spawn(50)
-						s_cooldown = 0
-				if(src.s_cooldown == 1)
-					m_type = 1
-					message = "<B>[src]</B> trys to scream but can't find the energy!"
-			else
-				message = "<B>[src]</B> makes an indescribably strange, but muffled noise."
-				m_type = 2
-*/
 
 		if ("yawn")
 			message = "<B>[src]</B> yawns."
 			m_type = 2
 
 		if ("help")
-			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, yawn"
+			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, ree, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, yawn"
 
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
