@@ -150,6 +150,7 @@
 	var/mode = GIZMO_SCAN
 	var/mob/living/marked = null
 	var/obj/machinery/abductor/console/console
+	origin_tech = "programming=3;materials=2;biotech=4;syndicate=2"
 
 /obj/item/device/abductor/gizmo/attack_self(mob/user)
 	if(!AbductorCheck(user))
@@ -225,6 +226,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "silencer"
 	item_state = "gizmo"
+	origin_tech = "programming=3;materials=2;biotech=3;syndicate=2"
 
 /obj/item/device/abductor/silencer/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
@@ -339,6 +341,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	force = 7
 	w_class = 3
 	action_button_name = "Toggle Mode"
+	origin_tech = "combat=3;biotech=2;magnets=4"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	mode = (mode+1)%BATON_MODES

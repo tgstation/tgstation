@@ -9,6 +9,7 @@
 	var/uses // -1 For inifinite
 	var/active = 0
 	var/mob/living/carbon/human/host
+	origin_tech = "biotech=4" //life jim, but not as we know it
 
 /obj/item/gland/proc/HostCheck()
 	if(ishuman(host) && host == src.loc)

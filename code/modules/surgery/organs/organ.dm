@@ -8,6 +8,7 @@
 	name = "heart"
 	icon_state = "heart-on"
 	var/beating = 1
+	origin_tech = "biotech=4"
 
 /obj/item/organ/heart/update_icon()
 	if(beating)
@@ -20,6 +21,7 @@
 	name = "appendix"
 	icon_state = "appendix"
 	var/inflamed = 1
+	origin_tech = "biotech=3"
 
 /obj/item/organ/appendix/update_icon()
 	if(inflamed)
