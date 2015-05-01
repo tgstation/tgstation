@@ -125,6 +125,7 @@ Variable Breakdown (For Mappers):
 		clusterMax - The max range to check for something being "too close" for this atom/turf to spawn, the true value is random between clusterMin and clusterMax
 		clusterMin - The min range to check for something being "too close" for this atom/turf to spawn, the true value is random between clusterMin and clusterMax
 		clusterCheckFlags - A Bitfield that controls how the cluster checks work, All based on clusterMin and clusterMax guides
+		allowAtomsOnSpace - A Boolean for if we allow atoms to spawn on space tiles
 
 		clusterCheckFlags flags:
 			CLUSTER_CHECK_NONE	0 			   //No checks are done, cluster as much as possible
@@ -133,6 +134,8 @@ Variable Breakdown (For Mappers):
 			CLUSTER_CHECK_SAME_TURFS		8  //Don't let turfs of the SAME type cluster
 			CLUSTER_CHECK_SAME_ATOMS		16 //Don't let atoms of the SAME type cluster
 
+			CLUSTER_CHECK_SAMES				24 //Don't let any of the same type cluster
+			CLUSTER_CHECK_DIFFERENTS		6  //Don't let any different types cluster
 			CLUSTER_CHECK_ALL_TURFS			32 //Don't let ANY turfs cluster same and different types
 			CLUSTER_CHECK_ALL_ATOMS			64 //Don't let ANY atoms cluster same and different types
 

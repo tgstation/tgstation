@@ -1,19 +1,3 @@
-//clusterCheckFlags defines
-//All based on clusterMin and clusterMax as guides
-
-//Individual defines
-#define CLUSTER_CHECK_NONE				0  //No checks are done, cluster as much as possible
-#define CLUSTER_CHECK_DIFFERENT_TURFS	2  //Don't let turfs of DIFFERENT types cluster
-#define CLUSTER_CHECK_DIFFERENT_ATOMS	4  //Don't let atoms of DIFFERENT types cluster
-#define CLUSTER_CHECK_SAME_TURFS		8  //Don't let turfs of the SAME type cluster
-#define CLUSTER_CHECK_SAME_ATOMS		16 //Don't let atoms of the SAME type cluster
-
-//Combined defines
-#define CLUSTER_CHECK_ALL_TURFS			32 //Don't let ANY turfs cluster same and different types
-#define CLUSTER_CHECK_ALL_ATOMS			64 //Don't let ANY atoms cluster same and different types
-
-//All
-#define CLUSTER_CHECK_ALL				96 //Don't let anything cluster, like, at all
 
 /datum/mapGeneratorModule
 	var/datum/mapGenerator/mother = null
@@ -21,7 +5,8 @@
 	var/list/spawnableTurfs = list()
 	var/clusterMax = 5
 	var/clusterMin = 1
-	var/clusterCheckFlags = CLUSTER_CHECK_ALL
+	var/clusterCheckFlags = CLUSTER_CHECK_ALL_ATOMS
+	var/allowAtomsOnSpace = FALSE
 
 
 //Syncs the module up with it's mother
@@ -56,6 +41,10 @@
 			//You're the same as me? I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_SAME_TURFS)
 				clustering = rand(clusterMin,clusterMax)
+				for(var/turf/F in trange(clustering,T))
+					if(F.type == turfPath) //NOT istype(), exact typematching
+						continue
+
 				if(locate(turfPath) in trange(clustering, T))
 					continue
 
@@ -63,7 +52,7 @@
 			if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_TURFS)
 				clustering = rand(clusterMin,clusterMax)
 				for(var/turf/F in trange(clustering,T))
-					if(istype(F, turfPath))
+					if(F.type != turfPath)
 						continue
 
 		//Success!
@@ -81,15 +70,20 @@
 				//You're the same as me? I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_SAME_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
-					if(locate(atomPath) in range(clustering,T))
-						continue
+					for(var/atom/movable/M in range(clustering,T))
+						if(M.type == atomPath)
+							continue
 
 				//You're DIFFERENT from me? I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
-						if(istype(M, atomPath))
+						if(M.type != atomPath)
 							continue
+
+			//Success!
+			if(prob(spawnableAtoms[atomPath]))
+				new atomPath(T)
 
 	. = 1
 
@@ -105,6 +99,8 @@
 		if(A.density)
 			. = 0
 			break
+	if(!allowAtomsOnSpace && (istype(T,/turf/space)))
+		. = 0
 
 
 ///////////////////////////////////////////////////////////

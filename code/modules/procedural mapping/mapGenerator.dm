@@ -1,3 +1,22 @@
+//clusterCheckFlags defines
+//All based on clusterMin and clusterMax as guides
+
+//Individual defines
+#define CLUSTER_CHECK_NONE				0  //No checks are done, cluster as much as possible
+#define CLUSTER_CHECK_DIFFERENT_TURFS	2  //Don't let turfs of DIFFERENT types cluster
+#define CLUSTER_CHECK_DIFFERENT_ATOMS	4  //Don't let atoms of DIFFERENT types cluster
+#define CLUSTER_CHECK_SAME_TURFS		8  //Don't let turfs of the SAME type cluster
+#define CLUSTER_CHECK_SAME_ATOMS		16 //Don't let atoms of the SAME type cluster
+
+//Combined defines
+#define CLUSTER_CHECK_SAMES				24 //Don't let any of the same type cluster
+#define CLUSTER_CHECK_DIFFERENTS		6  //Don't let any of different types cluster
+#define CLUSTER_CHECK_ALL_TURFS			32 //Don't let ANY turfs cluster same and different types
+#define CLUSTER_CHECK_ALL_ATOMS			64 //Don't let ANY atoms cluster same and different types
+
+//All
+#define CLUSTER_CHECK_ALL				96 //Don't let anything cluster, like, at all
+
 
 /datum/mapGenerator
 
@@ -32,15 +51,32 @@
 
 	var/centerX = abs(max(End.x-Start.x,1))
 	var/centerY = abs(max(End.y-Start.y,1))
-	var/centerZ = abs(max(End.z-Start.z,1))
-	var/radius = abs(max(centerX,centerY)) //take the biggest displacement as the radius
 
-	var/turf/center = locate(centerX, centerY, centerZ) //spherical maps! because Idk
+
+	var/lilZ = min(Start.z,End.z)
+	var/bigZ = max(Start.z,End.z)
+
+	var/centerZ = max(abs(bigZ-(lilZ/2)),1) //Spherical maps! woo!
+
+	var/radius = abs(max(centerX,centerY)) //take the biggest displacement as the radius
 
 	if(replace)
 		undefineRegion()
 
-	map |= circlerange(center,radius)
+	var/evenCheckZ = 0
+	if(max(bigZ,lilZ) % 2 == 0)
+		evenCheckZ = centerZ+1
+
+	for(var/i = lilZ, i <= bigZ, i++)
+		var/theRadius = radius
+		if(i != centerZ)
+			if(i != evenCheckZ)
+				theRadius = max(radius/max((2*abs(centerZ-i)),1),1)
+
+
+		map |= circlerange(locate(centerX,centerY,i),theRadius)
+
+
 	return map
 
 
@@ -73,7 +109,8 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/mapGeneratorModule/mod in modules)
-		mod.generate()
+		spawn(0)
+			mod.generate()
 
 
 //Requests the mapGeneratorModule(s) to (re)generate this one turf
@@ -84,7 +121,8 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/mapGeneratorModule/mod in modules)
-		mod.place(T)
+		spawn(0)
+			mod.place(T)
 
 
 //Replaces all paths in the module list with actual module datums
@@ -135,8 +173,24 @@
 		src << "End Coords: [endCoords[1]] - [endCoords[2]] - [endCoords[3]]"
 		return
 
-	src << "Defining Region"
-	N.defineRegion(Start, End)
+	var/list/clusters = list("None"=CLUSTER_CHECK_NONE,"All"=CLUSTER_CHECK_ALL,"Sames"=CLUSTER_CHECK_SAMES,"Differents"=CLUSTER_CHECK_DIFFERENTS, \
+	"Same turfs"=CLUSTER_CHECK_SAME_TURFS, "Same atoms"=CLUSTER_CHECK_SAME_ATOMS, "Different turfs"=CLUSTER_CHECK_DIFFERENT_TURFS, \
+	"Different atoms"=CLUSTER_CHECK_DIFFERENT_ATOMS, "All turfs"=CLUSTER_CHECK_ALL_TURFS,"All atoms"=CLUSTER_CHECK_ALL_ATOMS)
+
+	var/moduleClusters = input("Cluster Flags","Map Gen Settings") as null|anything in clusters
+	//null for default
+
+	if(moduleClusters)
+		if(!clusters[moduleClusters])
+			src << "Invalid Cluster Flags"
+			return
+		for(var/datum/mapGeneratorModule/M in N.modules)
+			M.clusterCheckFlags = clusters[moduleClusters]
+
+
+	//src << "Defining Region"
+	N.defineCircularRegion(Start,End)
+	//N.defineRegion(Start, End)
 	src << "Region Defined"
 	src << "Generating Region"
 	N.generate()
