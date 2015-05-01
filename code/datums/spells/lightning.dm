@@ -17,11 +17,11 @@
 	action_icon_state = "lightning"
 
 /obj/effect/proc_holder/spell/targeted/lightning/Click()
-	if(!ready)
+	if(!ready && energy==0)
 		if(cast_check())
 			StartChargeup()
 	else
-		if(cast_check(skipcharge=1))
+		if(ready && cast_check(skipcharge=1))
 			choose_targets()
 	return 1
 
@@ -32,10 +32,10 @@
 	user.overlays.Add(halo)
 	spawn(0)
 		while(ready)
-			sleep(1)
 			energy++
 			if(energy >= 100 && ready)
 				Discharge()
+			sleep(1)
 
 obj/effect/proc_holder/spell/targeted/lightning/proc/Reset(mob/user = usr)
 	ready = 0
@@ -57,7 +57,7 @@ obj/effect/proc_holder/spell/targeted/lightning/proc/Reset(mob/user = usr)
 
 
 /obj/effect/proc_holder/spell/targeted/lightning/cast(list/targets, mob/user = usr)
-
+	ready = 0
 	var/mob/living/carbon/target = targets[1]
 
 	if(get_dist(user,target)>range)
@@ -68,7 +68,7 @@ obj/effect/proc_holder/spell/targeted/lightning/proc/Reset(mob/user = usr)
 	user.Beam(target,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 
 	switch(energy)
-		if(0 to 25)
+		if(1 to 25)
 			target.electrocute_act(10,"Lightning Bolt")
 			playsound(get_turf(target), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		if(25 to 75)
