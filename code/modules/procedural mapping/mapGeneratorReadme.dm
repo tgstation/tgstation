@@ -11,9 +11,13 @@ mapGenerator:
 	Desc: a mapGenerator is a master datum that collects
 	and syncs all mapGeneratorModules in it's modules list
 
-	defineRegion(var/list/startList, var/list/endList)
+	defineRegion(var/turf/Start, var/turf/End)
 		Example: defineRegion(locate(1,1,1),locate(5,5,5))
 		Desc: Sets the bounds of the mapGenerator's "map"
+
+	defineCircularRegion(var/turf/Start, var/turf/End)
+		Example: defineCircularRegion(locate(1,1,1),locate(5,5,5))
+		Desc: Sets the mapGenerator's "map" as a circle, with center in the middle of Start and End's X,Y,Z coordinates
 
 	checkRegion(var/turf/Start, var/turf/End)
 		Example: checkRegion(locate(1,1,1), locate(5,5,5))
@@ -108,8 +112,6 @@ Variable Breakdown (For Mappers):
 
 	mapGenerator
 		map - INTERNAL, do not touch
-		bottomLeft - INTERNAL, do not touch
-		topRight - INTERNAL, do not touch
 		modules - A list of typepaths of mapGeneratorModules
 
 	mapGeneratorModule
@@ -118,13 +120,20 @@ Variable Breakdown (For Mappers):
 		spawnableTurfs - A list of typepaths and their probability to spawn, eg: spawnableTurfs = list(/turf/unsimulated/floor/grass = 100)
 		clusterMax - The max range to check for something being "too close" for this atom/turf to spawn, the true value is random between clusterMin and clusterMax
 		clusterMin - The min range to check for something being "too close" for this atom/turf to spawn, the true value is random between clusterMin and clusterMax
-		clusterCheckFlags - A Bitfield that controls how the cluster checks work.
+		clusterCheckFlags - A Bitfield that controls how the cluster checks work, All based on clusterMin and clusterMax guides
 
 		clusterCheckFlags flags:
-			CLUSTER_CHECK_NONE	0 //No checks are done, cluster as much as possible
-			CLUSTER_CHECK_ATOMS	2 //Don't let atoms cluster, based on clusterMin and clusterMax as guides
-			CLUSTER_CHECK_TURFS	4 //Don't let turfs cluster, based on clusterMin and clusterMax as guides
-			CLUSTER_CHECK_ALL	6 //Don't let anything cluster, based on clusterMind and clusterMax as guides
+			CLUSTER_CHECK_NONE	0 			   //No checks are done, cluster as much as possible
+			CLUSTER_CHECK_DIFFERENT_TURFS	2  //Don't let turfs of DIFFERENT types cluster
+			CLUSTER_CHECK_DIFFERENT_ATOMS	4  //Don't let atoms of DIFFERENT types cluster
+			CLUSTER_CHECK_SAME_TURFS		8  //Don't let turfs of the SAME type cluster
+			CLUSTER_CHECK_SAME_ATOMS		16 //Don't let atoms of the SAME type cluster
+
+			CLUSTER_CHECK_ALL_TURFS			32 //Don't let ANY turfs cluster same and different types
+			CLUSTER_CHECK_ALL_ATOMS			64 //Don't let ANY atoms cluster same and different types
+
+			CLUSTER_CHECK_ALL				96 //Don't let anything cluster, like, at all
+
 
 
 */

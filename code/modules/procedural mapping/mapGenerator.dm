@@ -3,8 +3,6 @@
 
 	//Map information
 	var/list/map = list()
-	var/turf/bottomLeft = null
-	var/turf/topRight = null
 
 	//mapGeneratorModule information
 	var/list/modules = list()
@@ -13,18 +11,30 @@
 	..()
 	initialiseModules()
 
-//Defines the region the map represents, sets map, bottomLeft, topRight
+//Defines the region the map represents, sets map
 //Returns the map
 /datum/mapGenerator/proc/defineRegion(var/turf/Start, var/turf/End)
 	if(!checkRegion(Start, End))
 		return 0
 
-	if(!Start || !End)
-		return 0
-	bottomLeft = Start
-	topRight = End
+	map = block(Start,End)
+	return map
 
-	map = block(bottomLeft,topRight)
+
+//Defines the region the map represents, as a CIRCLE!, sets map
+//Returns the map
+/datum/mapGenerator/proc/defineCircularRegion(var/turf/Start, var/turf/End)
+	if(!checkRegion(Start, End))
+		return 0
+
+	var/centerX = abs(max(End.x-Start.x,1))
+	var/centerY = abs(max(End.y-Start.y,1))
+	var/centerZ = abs(max(End.z-Start.z,1))
+	var/radius = abs(max(centerX,centerY)) //take the biggest displacement as the radius
+
+	var/turf/center = locate(centerX, centerY, centerZ) //spherical maps! because Idk
+
+	map = circlerange(center,radius)
 	return map
 
 

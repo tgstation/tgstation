@@ -1,8 +1,19 @@
+//clusterCheckFlags defines
+//All based on clusterMin and clusterMax as guides
 
-#define CLUSTER_CHECK_NONE	0 //No checks are done, cluster as much as possible
-#define CLUSTER_CHECK_ATOMS	2 //Don't let atoms cluster, based on clusterMin and clusterMax as guides
-#define CLUSTER_CHECK_TURFS	4 //Don't let turfs cluster, based on clusterMin and clusterMax as guides
-#define CLUSTER_CHECK_ALL	6 //Don't let anything cluster, based on clusterMind and clusterMax as guides
+//Individual defines
+#define CLUSTER_CHECK_NONE				0  //No checks are done, cluster as much as possible
+#define CLUSTER_CHECK_DIFFERENT_TURFS	2  //Don't let turfs of DIFFERENT types cluster
+#define CLUSTER_CHECK_DIFFERENT_ATOMS	4  //Don't let atoms of DIFFERENT types cluster
+#define CLUSTER_CHECK_SAME_TURFS		8  //Don't let turfs of the SAME type cluster
+#define CLUSTER_CHECK_SAME_ATOMS		16 //Don't let atoms of the SAME type cluster
+
+//Combined defines
+#define CLUSTER_CHECK_ALL_TURFS			32 //Don't let ANY turfs cluster same and different types
+#define CLUSTER_CHECK_ALL_ATOMS			64 //Don't let ANY atoms cluster same and different types
+
+//All
+#define CLUSTER_CHECK_ALL				96 //Don't let anything cluster, like, at all
 
 /datum/mapGeneratorModule
 	var/datum/mapGenerator/mother = null
@@ -38,24 +49,47 @@
 
 	//Turfs don't care whether atoms can be placed here
 	for(var/turfPath in spawnableTurfs)
-		if(clusterCheckFlags & CLUSTER_CHECK_TURFS)
-			if(clusterMax && clusterMin)
+
+		//Clustering!
+		if(clusterMax && clusterMin)
+
+			//You're the same as me? I hate you I'm going home
+			if(clusterCheckFlags & CLUSTER_CHECK_SAME_TURFS)
 				clustering = rand(clusterMin,clusterMax)
-				if(locate(/atom/movable) in range(clustering, T))
+				if(locate(turfPath) in trange(clustering, T))
 					continue
+
+			//You're DIFFERENT to me? I hate you I'm going home
+			if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_TURFS)
+				clustering = rand(clusterMin,clusterMax)
+				for(var/turf/F in trange(clustering,T))
+					if(istype(F, turfPath))
+						continue
+
+		//Success!
 		if(prob(spawnableTurfs[turfPath]))
 			T.ChangeTurf(turfPath)
 
 	//Atoms DO care whether atoms can be placed here
 	if(checkPlaceAtom(T))
+
 		for(var/atomPath in spawnableAtoms)
-			if(clusterCheckFlags & CLUSTER_CHECK_ATOMS)
-				if(clusterMax && clusterMin)
-					clustering = rand(clusterMin,clusterMax)
-					if(locate(/atom/movable) in range(clustering, T))
+
+			//Clustering!
+			if(clusterMax && clusterMin)
+
+				//You're the same as me? I hate you I'm going home
+				if(clusterCheckFlags & CLUSTER_CHECK_SAME_ATOMS)
+					clustering = rand(clusterMin, clusterMax)
+					if(locate(atomPath) in range(clustering,T))
 						continue
-			if(prob(spawnableAtoms[atomPath]))
-				new atomPath (T)
+
+				//You're DIFFERENT from me? I hate you I'm going home
+				if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_ATOMS)
+					clustering = rand(clusterMin, clusterMax)
+					for(var/atom/movable/M in range(clustering,T))
+						if(istype(M, atomPath))
+							continue
 
 	. = 1
 
