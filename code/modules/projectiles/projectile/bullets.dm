@@ -23,7 +23,7 @@
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 25
+	damage = rand(20,30)
 
 /obj/item/projectile/bullet/pellet/weak
 	damage = 3
