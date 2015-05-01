@@ -23,7 +23,7 @@
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = rand(20,30)
+	damage = rand(20,35)
 
 /obj/item/projectile/bullet/pellet/weak
 	damage = 3
@@ -97,7 +97,7 @@
 
 
 /obj/item/projectile/bullet/mime
-	damage = 20
+	damage = 30
 
 /obj/item/projectile/bullet/mime/on_hit(var/atom/target, var/blocked = 0)
 	if(istype(target, /mob/living/carbon))
