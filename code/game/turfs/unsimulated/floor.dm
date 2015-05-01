@@ -22,3 +22,6 @@
 /turf/unsimulated/floor/grass
 	icon_state = "grass"
 
+/turf/unsimulated/floor/abductor
+	name = "alien floor"
+	icon_state = "alienpod1"

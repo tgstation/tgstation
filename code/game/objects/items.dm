@@ -190,7 +190,7 @@
 /obj/item/attack_alien(mob/user as mob)
 	var/mob/living/carbon/alien/A = user
 
-	if(!A.has_fine_manipulation || w_class >= 4)
+	if(!A.has_fine_manipulation)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
 			A.unEquip(src)
 		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
@@ -403,6 +403,9 @@
 
 /obj/item/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	. = 1
+	if(unacidable)
+		return
+
 	for(var/V in armor)
 		if(armor[V] > 0)
 			.-- //it survives the acid...

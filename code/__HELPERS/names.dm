@@ -131,14 +131,15 @@ var/syndicate_name = null
 	syndicate_name = name
 	return name
 
+var/gang_name_pool = list("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel")
 var/gang_A_name = null
 var/gang_B_name = null
 /proc/gang_name(var/gang)
 	if(!gang_A_name || !gang_B_name)
-		var/gang_name_pool = list("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel")
 		gang_A_name = pick(gang_name_pool)
 		gang_name_pool -= gang_A_name
 		gang_B_name = pick(gang_name_pool)
+		gang_name_pool -= gang_B_name
 
 	if(gang == "A")
 		return gang_A_name

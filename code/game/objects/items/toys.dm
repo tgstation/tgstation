@@ -320,7 +320,7 @@
 	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
 	var/drawtype = "rune"
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","poseur tag")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
 	var/uses = 30 //0 for unlimited uses
@@ -399,6 +399,11 @@
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
+	if(!uses)
+		user << "<span class='warning'>There is no more of [src.name] left!</span>"
+		if(!instant)
+			qdel(src)
+		return
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
@@ -413,22 +418,33 @@
 		var/gangID
 		if(gang)
 			//Determine gang affiliation
-			if((user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.A_gang))
+			if(user.mind in (ticker.mode.A_bosses | ticker.mode.A_gang))
 				temp = "[gang_name("A")] gang tag"
 				gangID = "A"
-			else if((user.mind in ticker.mode.B_bosses) || (user.mind in ticker.mode.B_gang))
+			else if(user.mind in (ticker.mode.B_bosses | ticker.mode.B_gang))
 				temp = "[gang_name("B")] gang tag"
 				gangID = "B"
 
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.
-			territory = get_area(target)
-			if (gangID && territory && (territory.z == ZLEVEL_STATION) && territory.valid_territory)
-				//Check if this area is already tagged by a gang
-				if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
-					if(territory_claimed(territory, user))
+			if (gangID)
+				var/area/user_area = get_area(user.loc)
+				territory = get_area(target)
+				if(territory && (territory.z == ZLEVEL_STATION) && territory.valid_territory)
+					//Check if this area is already tagged by a gang
+					if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
+						if(territory_claimed(territory, user))
+							return
+					//Prevent people spraying from outside of the territory (ie. Maint walls)
+					if(istype(user_area) && (user_area.type == territory.type))
+						if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
+							user << "<span class='warning'>You cannot tag here.</span>"
+							return
+					else
+						user << "<span class='warning'>You cannot tag [territory] from the outside.</span>"
 						return
-			else
-				user << "<span class='warning'>This area is unsuitable for territory tagging!</span>"
+				else
+					user << "<span class='warning'>[territory] is unsuitable for tagging.</span>"
+					return
 		/////////////////////////////////////////
 
 		var/graf_rot
@@ -465,10 +481,10 @@
 			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] [temp].</span>"
 			if(instant<0)
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-			if(uses)
-				uses--
-				if(!uses)
-					user << "<span class='warning'>You used up your [src.name]!</span>"
+			uses = max(0,uses-1)
+			if(!uses)
+				user << "<span class='warning'>There is no more of [src.name] left!</span>"
+				if(!instant)
 					qdel(src)
 	return
 
@@ -476,19 +492,18 @@
 	if(edible && (M == user))
 		user << "You take a bite of the [src.name]. Delicious!"
 		user.nutrition += 5
-		if(uses)
-			uses -= 5
-			if(uses <= 0)
-				user << "<span class='warning'>There is no more of [src.name] left!</span>"
-				qdel(src)
+		uses = max(0,uses-5)
+		if(!uses)
+			user << "<span class='warning'>There is no more of [src.name] left!</span>"
+			qdel(src)
 	else
 		..()
 
 /obj/item/toy/crayon/proc/territory_claimed(var/area/territory,mob/user)
 	var/occupying_gang
-	if(territory.type in ticker.mode.A_territory)
+	if(territory.type in (ticker.mode.A_territory | ticker.mode.A_territory_new))
 		occupying_gang = gang_name("A")
-	if(territory.type in ticker.mode.B_territory)
+	if(territory.type in (ticker.mode.B_territory | ticker.mode.B_territory_new))
 		occupying_gang = gang_name("B")
 	if(occupying_gang)
 		user << "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>"

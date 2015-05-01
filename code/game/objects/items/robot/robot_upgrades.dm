@@ -59,8 +59,8 @@
 	return 1
 
 /obj/item/borg/upgrade/restart
-	name = "cyborg emergency restart module"
-	desc = "Used to force a restart of a disabled-but-repaired cyborg, bringing it back online."
+	name = "cyborg emergency reboot module"
+	desc = "Used to force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	icon_state = "cyborg_upgrade1"
 
 
