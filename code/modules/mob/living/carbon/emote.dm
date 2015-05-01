@@ -165,21 +165,23 @@
 			message = "<B>[src]</B> winks."
 			m_type = 1
 
+/*
 		if ("wry")
 			if(dna && dna.species.id && dna.species.id == "human" && !muzzled)
-				if ree == 1
-					m_type = 1
-					message = "<B>[src]</B> trys to scream but can't find the energy!"
 				if(!src.ree)
 					message = "<B>[src]</B> makes an indescribably loud noise."
 					playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
 					m_type = 2
-					ree = 1
+					ree = 1 // undefined var ;^)
 					spawn(50)
 						ree = 0
+				if(src.ree == 1)
+					m_type = 1
+					message = "<B>[src]</B> trys to scream but can't find the energy!"
 			else
 				message = "<B>[src]</B> makes an indescribably strange noise."
 				m_type = 2
+*/
 
 		if ("yawn")
 			if (!muzzled)
