@@ -427,20 +427,21 @@
 
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.
 			if (gangID)
-				var/area/user_area = get_area(user.loc)
 				territory = get_area(target)
 				if(territory && (territory.z == ZLEVEL_STATION) && territory.valid_territory)
 					//Check if this area is already tagged by a gang
 					if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
 						if(territory_claimed(territory, user))
 							return
+					/*
 					//Prevent people spraying from outside of the territory (ie. Maint walls)
-					if(istype(user_area) && (user_area.type == territory.type))
-						if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
-							user << "<span class='warning'>You cannot tag here.</span>"
-							return
-					else
+					var/area/user_area = get_area(user.loc)
+					if(istype(user_area) && (user_area.type != territory.type))
 						user << "<span class='warning'>You cannot tag [territory] from the outside.</span>"
+						return
+					*/
+					if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
+						user << "<span class='warning'>You cannot tag here.</span>"
 						return
 				else
 					user << "<span class='warning'>[territory] is unsuitable for tagging.</span>"

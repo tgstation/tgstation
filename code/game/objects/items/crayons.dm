@@ -111,7 +111,7 @@
 		user << "It is empty."
 
 /obj/item/toy/crayon/spraycan/attack_self(mob/living/user as mob)
-	var/choice = input(user,"Spraycan options") in list("Toggle Cap","Change Drawing","Change Color","Cancel")
+	var/choice = input(user,"Spraycan options") as null|anything in list("Toggle Cap","Change Drawing","Change Color")
 	switch(choice)
 		if("Toggle Cap")
 			user << "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>"
