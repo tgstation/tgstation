@@ -14,16 +14,17 @@
 	
 /obj/structure/closet/crate/New()
 	..()
-	update_icon()
 	overlays.Cut()
-	if(manifest)
-		overlays += "manifest"
+	update_icon()
+	
 
 /obj/structure/closet/crate/update_icon()
 	if(opened)
 		icon_state = "[icon_crate]open"
 	else
 		icon_state = icon_crate
+	if(manifest)
+		overlays += "manifest"
 
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
