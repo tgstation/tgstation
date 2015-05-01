@@ -11,18 +11,22 @@ mapGenerator:
 	Desc: a mapGenerator is a master datum that collects
 	and syncs all mapGeneratorModules in it's modules list
 
-	defineRegion(var/turf/Start, var/turf/End)
-		Example: defineRegion(locate(1,1,1),locate(5,5,5))
+	defineRegion(var/turf/Start, var/turf/End, var/replace = 0)
+		Example: defineRegion(locate(1,1,1),locate(5,5,5),0)
 		Desc: Sets the bounds of the mapGenerator's "map"
 
-	defineCircularRegion(var/turf/Start, var/turf/End)
-		Example: defineCircularRegion(locate(1,1,1),locate(5,5,5))
+	defineCircularRegion(var/turf/Start, var/turf/End, var/replace = 0)
+		Example: defineCircularRegion(locate(1,1,1),locate(5,5,5),0)
 		Desc: Sets the mapGenerator's "map" as a circle, with center in the middle of Start and End's X,Y,Z coordinates
+
+	undefineRegion()
+		Example: undefineRegion()
+		Desc: Empties the map generator list
 
 	checkRegion(var/turf/Start, var/turf/End)
 		Example: checkRegion(locate(1,1,1), locate(5,5,5))
 		Desc: Checks if a rectangle between Start's coords and End's coords is valid
-		Existing Calls: mapGenerator/defineRegion()
+		Existing Calls: mapGenerator/defineRegion(), mapGenerator/defineCircularRegion()
 
 	generate()
 		Example: generate()

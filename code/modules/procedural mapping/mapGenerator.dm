@@ -13,17 +13,20 @@
 
 //Defines the region the map represents, sets map
 //Returns the map
-/datum/mapGenerator/proc/defineRegion(var/turf/Start, var/turf/End)
+/datum/mapGenerator/proc/defineRegion(var/turf/Start, var/turf/End, var/replace = 0)
 	if(!checkRegion(Start, End))
 		return 0
 
-	map = block(Start,End)
+	if(replace)
+		undefineRegion()
+
+	map |= block(Start,End)
 	return map
 
 
 //Defines the region the map represents, as a CIRCLE!, sets map
 //Returns the map
-/datum/mapGenerator/proc/defineCircularRegion(var/turf/Start, var/turf/End)
+/datum/mapGenerator/proc/defineCircularRegion(var/turf/Start, var/turf/End, var/replace = 0)
 	if(!checkRegion(Start, End))
 		return 0
 
@@ -34,8 +37,16 @@
 
 	var/turf/center = locate(centerX, centerY, centerZ) //spherical maps! because Idk
 
-	map = circlerange(center,radius)
+	if(replace)
+		undefineRegion()
+
+	map |= circlerange(center,radius)
 	return map
+
+
+//Empties the map list, he's dead jim.
+/datum/mapGenerator/proc/undefineRegion()
+	map = list() //bai bai
 
 
 //Checks for and Rejects bad region coordinates
