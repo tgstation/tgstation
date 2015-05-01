@@ -18,6 +18,10 @@
 
 /obj/item/device/assembly/speaker/attack_self(mob/user as mob)
 	message = sanitize(input(user,"Enter new message for the [src]","NanoSpeaker Settings",message))
+	if(user.stat == DEAD) //ENGAGE SPOOKS!
+		languages = SPOOKY
+	else
+		languages |= HUMAN
 	src.say("New message: [message]")
 
 /obj/item/device/assembly/speaker/attackby(obj/item/W as obj, mob/user as mob)

@@ -240,6 +240,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define ROBOT 8
 #define SLIME 16
 #define SIMPLE_ANIMAL 32
+#define SPOOKY 128
 
 #define ALLMOBS 63 //update this
 

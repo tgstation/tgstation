@@ -1364,6 +1364,7 @@
 	set category = "IC"
 	set src = usr
 
+	if(stat == DEAD) return
 	var/obj/item/W = get_active_hand()
 	if (W)
 		W.attack_self(src)

@@ -728,6 +728,7 @@ var/list/slot_equipment_priority = list( \
 	set category = "IC"
 	set src = usr
 
+
 	if(istype(loc,/obj/mecha)) return
 
 	if(hand)
