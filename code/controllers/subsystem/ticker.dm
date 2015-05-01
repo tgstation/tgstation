@@ -76,6 +76,8 @@ var/datum/subsystem/ticker/ticker
 					++totalPlayersReady
 
 			//countdown
+			if(timeLeft < 0)
+				return
 			timeLeft -= wait
 
 			if(timeLeft <= 30 && !tipped)
