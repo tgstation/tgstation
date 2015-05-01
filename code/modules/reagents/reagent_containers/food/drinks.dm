@@ -22,12 +22,17 @@
 	var/bottleheight = 23 //To offset the molotov rag and fire - beer and ale are 23
 	var/smashtext = "bottle of " //To handle drinking glasses and the flask of holy water
 	var/smashname = "broken bottle" //As above
+	var/viewcontents = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
 	if(gulp_size < 5)
 		gulp_size = 5
 	else
 		gulp_size = max(round(reagents.total_volume / 5), 5)
+	if(reagents.has_reagent("blackcolor"))
+		viewcontents = 0
+	else
+		viewcontents = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/attack_self(mob/user as mob)
 	if(!is_open_container())
@@ -239,7 +244,12 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/examine(mob/user)
 
-	..()
+	if(viewcontents)
+		..()
+	else
+		user << "\icon[src] That's \a [src]."
+		user << desc
+		user << "<span class='info'>Its contents are solid black!</span>"
 
 	if(!reagents || reagents.total_volume == 0)
 		user << "<span class='info'>\The [src] is empty!</span>"
@@ -682,6 +692,17 @@
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
+/obj/item/weapon/reagent_containers/food/drinks/coloring
+	name = "Vial of Food Coloring"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "vial"
+	volume = 25
+	possible_transfer_amounts = list(1,5)
+	New()
+		..()
+		reagents.add_reagent("blackcolor", 25)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"

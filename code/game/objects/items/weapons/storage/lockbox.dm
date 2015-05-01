@@ -202,7 +202,6 @@
 	max_combined_w_class = 30
 	force = 15
 	throwforce = 10
-	flags = TWOHANDABLE | MUSTTWOHAND //big sucka
 	storage_slots = 20
 	req_access = list(access_qm)
 	locked = 1

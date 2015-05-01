@@ -68,6 +68,7 @@
 
 	var/list/vouchers
 	var/obj/item/weapon/storage/lockbox/coinbox/coinbox
+	var/cardboard = 0 //1 if sheets of cardboard are added
 
 	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL
 	languages = HUMAN
@@ -102,17 +103,16 @@
 		// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 		src.last_slogan = world.time + rand(0, slogan_delay)
 
-		src.build_inventory(products)
-		 //Add hidden inventory
-		src.build_inventory(contraband, 1)
-		src.build_inventory(premium, 0, 1)
+		if(!product_records.len)
+			src.build_inventory(products)
+			src.build_inventory(contraband, 1)
+			src.build_inventory(premium, 0, 1)
 		power_change()
 
 		reconnect_database()
 		linked_account = vendor_account
 
 	coinbox = new(src)
-	coinbox.req_access |= src.req_access
 
 	return
 
@@ -121,11 +121,16 @@
 		wires.Destroy()
 		wires = null
 
-/*	var/obj/item/compressed_vend/cvc = new(src.loc)
-	cvc.products = products
-	cvc.contraband = contraband
-	cvc.premium = premium
-*/
+	if(product_records.len&&cardboard) //Only spit out if we have slotted cardboard
+		var/obj/structure/vendomatpack/partial/newpack = new(src.loc)
+		newpack.stock = products
+		newpack.secretstock = contraband
+		newpack.preciousstock = premium
+		newpack.targetvendomat = src.type
+		newpack.product_records = product_records
+		newpack.hidden_records = hidden_records
+		newpack.coin_records = coin_records
+
 	if(coinbox)
 		coinbox.loc = get_turf(src)
 	..()
@@ -155,6 +160,13 @@
 				var/obj/item/emptyvendomatpack/emptypack = new /obj/item/emptyvendomatpack(P.loc)
 				emptypack.icon_state = P.icon_state
 				emptypack.overlays += image('icons/obj/vending_pack.dmi',"emptypack")
+				if(P.stock.len)
+					newmachine.products = P.stock
+					newmachine.contraband = P.secretstock
+					newmachine.premium = P.preciousstock
+					newmachine.product_records = P.product_records
+					newmachine.hidden_records = P.hidden_records
+					newmachine.coin_records = P.coin_records
 				qdel(P)
 				if(user.machine==src)
 					newmachine.attack_hand(user)
@@ -296,10 +308,16 @@
 			voucher.loc = coinbox
 	return 1
 
-/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/vending/attackby(obj/item/W, mob/user)
 	. = ..()
 	if(.)
 		return .
+	if(!cardboard && istype(W, /obj/item/stack/sheet/cardboard))
+		var/obj/item/stack/sheet/cardboard/C = W
+		if(C.amount>=4)
+			C.use(4)
+			user << "<span class='notice'>You slot some cardboard into the machine into [src].</span>"
+			cardboard = 1
 	if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			attack_hand(user)
