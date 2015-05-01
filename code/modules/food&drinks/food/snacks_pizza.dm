@@ -2,8 +2,11 @@
 /////////////////////////////////////////////////PIZZA////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	w_class = 3
 	slices_num = 6
+	volume = 80
+	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita
 	name = "margherita"
@@ -63,6 +66,45 @@
 	icon_state = "vegetablepizzaslice"
 	filling_color = "#FFA500"
 
+/obj/item/weapon/reagent_containers/food/snacks/pizza/donkpocket
+	name = "donkpocket pizza"
+	desc = "Who thought this would be a good idea?"
+	icon_state = "donkpocketpizza"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/donkpocket
+	list_reagents = list("nutriment" = 5, "vitamin" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/donkpocket
+	name = "donkpocket pizza slice"
+	desc = "Smells like donkpocket."
+	icon_state = "donkpocketpizzaslice"
+	filling_color = "#FFA500"
+
+/obj/item/weapon/reagent_containers/food/snacks/pizza/dank
+	name = "dank pizza"
+	desc = "The hippie's pizza of choice."
+	icon_state = "dankpizza"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/dank
+	list_reagents = list("nutriment" = 2, "vitamin" = 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/dank
+	name = "dank pizza slice"
+	desc = "So good, man..."
+	icon_state = "dankpizzaslice"
+	filling_color = "#2E8B57"
+
+/obj/item/weapon/reagent_containers/food/snacks/pizza/sassysage
+	name = "sassysage pizza"
+	desc = "You can really smell the sassiness."
+	icon_state = "sassysagepizza"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/sassysage
+	list_reagents = list("nutriment" = 6, "vitamin" = 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/sassysage
+	name = "sassysage pizza slice"
+	desc = "Deliciously sassy."
+	icon_state = "sassysagepizzaslice"
+	filling_color = "#FF4500"
+
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom
 	name = "pizza slice"
 	icon_state = "pizzamargheritaslice"
@@ -71,7 +113,7 @@
 /obj/item/pizzabox
 	name = "pizza box"
 	desc = "A box suited for pizzas."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox1"
 	var/open = 0 // Is the box open?
 	var/ismessy = 0 // Fancy mess on the lid

@@ -35,3 +35,22 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 
 
+/datum/table_recipe/beefnoodle
+	name = "Beef noodle"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/glass/bowl = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/beefnoodle
+
+/datum/table_recipe/chowmein
+	name = "Chowmein"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chowmein

@@ -152,6 +152,7 @@
 	name = "burger"
 	desc = "A timeless classic."
 	Ingredientsplacement = INGREDIENTS_STACKPLUSTOP
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "bun"
 
 
@@ -160,6 +161,7 @@
 	ingMax = 6
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom
 	slices_num = 5
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "tofubread"
 
 
@@ -168,6 +170,7 @@
 	ingMax = 6
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom
 	slices_num = 5
+	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "plaincake"
 
 
@@ -186,12 +189,14 @@
 	desc = "Noodles. With stuff. Delicious."
 	Ingredientsplacement = INGREDIENTS_SCATTER
 	ingMax = 6
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spaghettiboiled"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pie
 	name = "pie"
 	ingMax = 6
+	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "pie"
 
 
@@ -202,6 +207,7 @@
 	ingMax = 8
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom
 	slices_num = 6
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "pizzamargherita"
 
 
@@ -210,6 +216,7 @@
 	desc = "Very tasty."
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	ingMax = 6
+	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 
 
@@ -217,6 +224,7 @@
 	name = "toast"
 	desc = "A timeless classic."
 	Ingredientsplacement = INGREDIENTS_STACK
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "breadslice"
 	var/finished = 0
 
@@ -268,7 +276,7 @@
 	icon_state	= "snack_bowl"
 	name = "bowl"
 	desc = "A simple bowl, used for soups and salads."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 	flags = OPENCONTAINER
 	w_class = 3

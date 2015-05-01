@@ -442,6 +442,39 @@
 				icon_state = "toxinsspecialglass"
 				name = "Toxins Special"
 				desc = "Whoah, this thing is on FIRE"
+			if("chocolatepudding")
+				icon_state = "chocolatepudding"
+				name = "Chocolate Pudding"
+				desc = ""
+			if("vanillapudding")
+				icon_state = "vanillapudding"
+				name = "Vanilla Pudding"
+				desc = "Whoah, this thing is on FIRE"
+			if("cherryshake")
+				icon_state = "cherryshake"
+				name = "Cherry Shake"
+				desc = "A cherry flavored milkshake."
+			if("bluecherryshake")
+				icon_state = "bluecherryshake"
+				name = "Blue Cherry Shake"
+				desc = "An exotic blue milkshake."
+			if("drunkenblumpkin")
+				icon_state = "drunkenblumpkin"
+				name = "Drunken Blumpkin"
+				desc = "A drink for the drunks."
+			if("pumpkin_latte")
+				icon_state = "pumpkin_latte"
+				name = "Pumpkin Latte"
+				desc = "A mix of coffee and pumpkin juice."
+			if("gibbfloats")
+				icon_state = "gibbfloats"
+				name = "Gibbfloat"
+				desc = "Dr. Gibb with ice cream on top."
+			if("triple_citrus")
+				icon_state = "glass_brown" //placeholder, tg still doesn't have a sprite/description for this
+				name = "Triple Citrus"
+				desc = "A mix of lemon juice, lime juice and orange juice"
+
 			else
 				icon_state ="glass_brown"
 				name = "Glass of ..what?"

@@ -1,8 +1,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake
+	icon = 'icons/obj/food/piecake.dmi'
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/plain
 	slices_num = 5
 	bitesize = 3
+	volume = 80
+	list_reagents = list("nutriment" = 20, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice
 	trash = /obj/item/trash/plate
@@ -174,3 +177,16 @@
 	name = "Slime cake slice"
 	icon_state = "slimecake_slice"
 	filling_color = "#00FFFF"
+
+/obj/item/weapon/reagent_containers/food/snacks/store/cake/pumpkinspice
+	name = "pumpkin spice cake"
+	desc = "A hollow cake with real pumpkin."
+	icon_state = "pumpkinspicecake"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/pumpkinspice
+	list_reagents = list("nutriment" = 5, "vitamin" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/cakeslice/pumpkinspice
+	name = "pumpkin spice cake slice"
+	desc = "A spicy slice of pumpkin goodness."
+	icon_state = "pumpkinspicecakeslice"
+	filling_color = "#FFD700"

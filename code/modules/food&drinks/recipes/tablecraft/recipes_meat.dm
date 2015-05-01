@@ -86,7 +86,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cornedbeef
-	
+
 /datum/table_recipe/tendies
 	name = "Chicken Tendies"
 	reqs = list(
@@ -94,6 +94,15 @@
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/tendies
+
+/datum/table_recipe/bearsteak
+	name = "Filet migrawr"
+	reqs = list(
+		/datum/reagent/consumable/ethanol/manly_dorf = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/bear = 1,
+	)
+	tools = list(/obj/item/weapon/lighter)
+	result = /obj/item/weapon/reagent_containers/food/snacks/bearsteak
 
 /datum/table_recipe/wingfangchu
 	name = "Wingfangchu"

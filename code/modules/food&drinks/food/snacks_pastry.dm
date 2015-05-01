@@ -99,7 +99,7 @@
 	desc = "Not made of people. Honest." //Totally people.
 	icon_state = "soylent_green"
 	trash = /obj/item/trash/waffles
-	list_reagents = list("vitamin" = 1)
+	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	filling_color = "#9ACD32"
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
@@ -107,7 +107,7 @@
 	desc = "Not made of people. Honest." //Actually honest for once.
 	icon_state = "soylent_yellow"
 	trash = /obj/item/trash/waffles
-	list_reagents = list("vitamin" = 1)
+	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	filling_color = "#9ACD32"
 
 /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
@@ -116,7 +116,7 @@
 	icon_state = "rofflewaffles"
 	trash = /obj/item/trash/waffles
 	bitesize = 4
-	list_reagents = list("vitamin" = 2)
+	list_reagents = list("nutriment" = 2, "mushroomhallucinogen" = 2, "vitamin" = 2)
 	filling_color = "#00BFFF"
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
@@ -206,3 +206,32 @@
 	icon_state = "chococornet"
 	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	filling_color = "#FFE4C4"
+
+
+/obj/item/weapon/reagent_containers/food/snacks/oatmealcookie
+	name = "oatmeal cookie"
+	desc = "The best of both cookie and oat"
+	icon_state = "oatmealcookie"
+	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	filling_color = "#D2691E"
+
+/obj/item/weapon/reagent_containers/food/snacks/raisincookie
+	name = "raisin cookie"
+	desc = "Why would you put raisins on a cookie?"
+	icon_state = "raisincookie"
+	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	filling_color = "#F0E68C"
+
+/obj/item/weapon/reagent_containers/food/snacks/cherrycupcake
+	name = "cherry cupcake"
+	desc = "A sweet cupcake with cherry bits."
+	icon_state = "cherrycupcake"
+	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+	filling_color = "#F0E68C"
+
+/obj/item/weapon/reagent_containers/food/snacks/bluecherrycupcake
+	name = "blue cherry cupcake"
+	desc = "Blue cherries inside a delicious cupcake"
+	icon_state = "bluecherrycupcake"
+	list_reagents = list("nutriment" = 2, "vitamin" = 3)
+	filling_color = "#F0E68C"
