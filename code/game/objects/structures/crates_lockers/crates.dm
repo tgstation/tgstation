@@ -15,6 +15,9 @@
 /obj/structure/closet/crate/New()
 	..()
 	update_icon()
+	overlays.Cut()
+	if(manifest)
+		overlays += "manifest"
 
 /obj/structure/closet/crate/update_icon()
 	if(opened)
@@ -147,7 +150,7 @@
 
 /obj/structure/closet/crate/secure/New()
 	..()
-	overlays.Cut()
+	//overlays.Cut()
 	if(locked)
 		overlays += redlight
 	else
@@ -196,7 +199,7 @@
 	if(ishuman(user))
 		user.put_in_hands(manifest)
 	manifest = null
-	update_icon()
+	overlays-="manifest"
 	
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
 	if(manifest)
