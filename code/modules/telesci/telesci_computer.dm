@@ -139,75 +139,59 @@
 	if(stat & BROKEN)
 		user.unset_machine(src)
 		return
-	
+
+
 	var/out = {"
-	<html>
-		<link href='./common.css' rel='stylesheet' type='text/css'>
-		<body style='font-family: Verdana, Geneva, sans-serif;'>
-			<div class='uiWrapper'>
-				<div class='uiTitleWrapper'>
-					<div class='uiTitle'>
-						<div align='center'>
-						[name]
-						</div>
-					</div>
-				</div>
-				<div class='uiContent'>
-					<div class='item'>
-						<div class='itemLabel'>
-							Offsets:
-						</div>
-						<div class='itemContent'>
-							<a href='?src=\ref[src];setPOffsetX=1'>X offset: [x_player_off]</a>
-							<a href='?src=\ref[src];setPOffsetY=1'>Y offset: [y_player_off]</a>
-						</div>
-					</div>
-					<div class='item'>
-						<div class='itemLabel'>
-							Coordinates::
-						</div>
-						<div class='itemContent'>
-							<a href='?src=\ref[src];setx=1'>X: [x_co]</a>
-							<a href='?src=\ref[src];sety=1'>Y: [y_co]</a>
-							<a href='?src=\ref[src];setz=1'>Z: [z_co]</a>
-						</div>
-					</div>
-					<div class='item'>
-						<div class='itemLabel'>
-							Controls:
-						</div>
-						<div class='itemContent'>
-							<a href='?src=\ref[src];send=1' [x_co && y_co && z_co ? "" : "class='linkOff'"]>Send</a>
-							<a href='?src=\ref[src];receive=1' [x_co && y_co && z_co ? "" : "class='linkOff'"]>Receive</a>
-							<a href='?src=\ref[src];recal=1'>Recalibrate</a>
-						</div>
-					</div>
+		<div class='item'>
+			<div class='itemLabel'>
+				Offsets:
+			</div>
+			<div class='itemContent'>
+				<a href='?src=\ref[src];setPOffsetX=1'>X offset: [x_player_off]</a>
+				<a href='?src=\ref[src];setPOffsetY=1'>Y offset: [y_player_off]</a>
+			</div>
+		</div>
+		<div class='item'>
+			<div class='itemLabel'>
+				Coordinates::
+			</div>
+			<div class='itemContent'>
+				<a href='?src=\ref[src];setx=1'>X: [x_co]</a>
+				<a href='?src=\ref[src];sety=1'>Y: [y_co]</a>
+				<a href='?src=\ref[src];setz=1'>Z: [z_co]</a>
+			</div>
+		</div>
+		<div class='item'>
+			<div class='itemLabel'>
+				Controls:
+			</div>
+			<div class='itemContent'>
+				<a href='?src=\ref[src];send=1' [x_co && y_co && z_co ? "" : "class='linkOff'"]>Send</a>
+				<a href='?src=\ref[src];receive=1' [x_co && y_co && z_co ? "" : "class='linkOff'"]>Receive</a>
+				<a href='?src=\ref[src];recal=1'>Recalibrate</a>
+			</div>
+		</div>
 		"}
 	if(!cell)
 		out += {"
-					<div class="notice">No power cell detected.</div>
+		<div class="notice">No power cell detected.</div>
 		"}
 	else
 		out += {"
-					<div class='statusDisplay'>
-						<div class='line'>
-							<div class='statusLabel'>
-								[cell.charge]/[cell.maxcharge]
-								<a href='?src=\ref[src];eject_cell=1'>Eject</a>
-							</div>
-						</div>
-					</div>
-		"}
-	out += {"
+		<div class='statusDisplay'>
+			<div class='line'>
+				<div class='statusLabel'>
+					[cell.charge]/[cell.maxcharge]
+					<a href='?src=\ref[src];eject_cell=1'>Eject</a>
 				</div>
 			</div>
-		</body>
-	</html>
-	"}
+		</div>
+		"}
 
 	user.set_machine(src)
-	user << browse(out, "window=telescience;size=380x210")
-	onclose(user, "telescience")
+	var/datum/browser/browserdatum = new(user, "telescience", name, 380, 210, src)
+	browserdatum.set_content(out)
+	browserdatum.open()
 
 /obj/machinery/computer/telescience/proc/sparks()
 	if(telepad)
