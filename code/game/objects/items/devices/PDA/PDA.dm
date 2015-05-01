@@ -1387,7 +1387,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //APPLICATIONS FUNCTIONS===========================
 
-			if("[PDA_APP_RINGER]")
+			if(PDA_APP_RINGER)
 				mode = PDA_APP_RINGER
 			if("toggleDeskRinger")
 				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
@@ -1402,16 +1402,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(i > MAXIMUM_FREQUENCY)
 						i = 1599
 					app.frequency = i
-			if("[PDA_APP_SPAMFILTER]")
+			if(PDA_APP_SPAMFILTER)
 				mode = PDA_APP_SPAMFILTER
 			if("setFilter")
 				var/datum/pda_app/spam_filter/app = locate(/datum/pda_app/spam_filter) in applications
 				if(app)
 					app.function = text2num(href_list["filter"])
-			if("[PDA_APP_BALANCECHECK]")
+			if(PDA_APP_BALANCECHECK)
 				mode = PDA_APP_BALANCECHECK
 
-			if("[PDA_APP_STATIONMAP]")
+			if(PDA_APP_STATIONMAP)
 				mode = PDA_APP_STATIONMAP
 
 			if("minimapMarker")
@@ -1448,7 +1448,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //GAME FUNCTIONS====================================
 
-			if("[PDA_APP_SNAKEII]")
+			if(PDA_APP_SNAKEII)
 				mode = PDA_APP_SNAKEII
 
 			if("snakeNewGame")
@@ -1496,7 +1496,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				app.volume = max(0,app.volume)
 				app.volume = min(6,app.volume)
 
-			if("[PDA_APP_MINESWEEPER]")
+			if(PDA_APP_MINESWEEPER)
 				mode = PDA_APP_MINESWEEPER
 
 			if("mineNewGame")
@@ -1558,7 +1558,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				app.minesweeper_game.reset_game()
 				app.ingame = 0
 
-			if("[PDA_APP_SPESSPETS]")
+			if(PDA_APP_SPESSPETS)
 				mode = PDA_APP_SPESSPETS
 
 			if("eggPrev")
