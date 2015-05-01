@@ -504,7 +504,7 @@
 		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
 		playsound(loc, song, 50, 1, -1)
 		xylophone = 1
-		spawn(1200)
+		spawn(50)
 			xylophone = 0
 
 /mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)

@@ -5,6 +5,15 @@
 /mob/living/carbon/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 
+/mob/living/carbon/human/proc/play_ree()
+	if(!src.ree)
+		message = "<B>[src]</B> makes an indescribably loud noise."
+		playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
+		m_type = 1
+		ree = 1
+		spawn(30)
+			ree = 0
+
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
@@ -166,11 +175,10 @@
 			m_type = 1
 
 		if ("wry")
-			if (!muzzled)
-				..(act)
+			if(dna && dna.species.id && dna.species.id == "human" && !muzzled)
+				H.play_ree()
 			else
-				message = "<B>[src]</B> makes an indescribably loud noise."
-				playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
+				message = "<B>[src]</B> makes an indescribably strange noise."
 				m_type = 2
 
 		if ("yawn")
@@ -178,7 +186,7 @@
 				..(act)
 
 		if ("help")
-			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
+			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, wry, yawn"
 
 		else
 			..(act)
