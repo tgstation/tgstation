@@ -123,6 +123,15 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Replacement lights"
 	group = "Supplies"
 
+/datum/supply_packs/helightbulbs
+	name = "High efficiency lights"
+	contains = list(/obj/item/weapon/storage/box/lights/he,
+					/obj/item/weapon/storage/box/lights/he)
+	cost = 20
+	containertype = /obj/structure/closet/crate
+	containername = "High efficiency lights"
+	group = "Supplies"
+
 /datum/supply_packs/mule
 	name = "MULEbot Crate"
 	contains = list(/obj/machinery/bot/mulebot)

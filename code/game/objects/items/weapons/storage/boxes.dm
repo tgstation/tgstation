@@ -555,7 +555,7 @@
 	name = "label roll box"
 	desc = "A box of refill rolls for a hand labeler."
 	icon_state = "labels"
-	
+
 	New()
 		..()
 		for(var/i=1; i <= storage_slots; i++)
@@ -643,3 +643,19 @@
 		new /obj/item/weapon/light/tube(src)
 	for(var/i = 0; i < 7; i++)
 		new /obj/item/weapon/light/bulb(src)
+
+/obj/item/weapon/storage/box/lights/tubes/New()
+	..()
+	for(var/i = 0; i < 21; i++)
+		new /obj/item/weapon/light/tube(src)
+
+/obj/item/weapon/storage/box/lights/he
+	name = "high efficiency lights"
+	icon_state = "lightmixed"
+
+/obj/item/weapon/storage/box/lights/he/New()
+	..()
+	for(var/i = 0; i < 14; i++)
+		new /obj/item/weapon/light/tube/he(src)
+	for(var/i = 0; i < 7; i++)
+		new /obj/item/weapon/light/bulb/he(src)

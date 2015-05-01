@@ -307,6 +307,7 @@
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness = L.brightness
+				active_power_usage = L.cost
 				on = has_power()
 				update()
 
@@ -578,6 +579,7 @@
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
+	var/cost = 20 //How much power does it consume in an idle state?
 
 /obj/item/weapon/light/tube
 	name = "light tube"
@@ -588,11 +590,18 @@
 	g_amt = 100
 	w_type = RECYK_GLASS
 	brightness = 8
+	cost = 20
+
+/obj/item/weapon/light/tube/he
+	name = "high efficiency light tube"
+	desc = "An efficient light used to reduce strain on the station's power grid."
+	cost = 10
 
 /obj/item/weapon/light/tube/large
 	w_class = 2
 	name = "large light tube"
 	brightness = 15
+	cost = 40
 
 /obj/item/weapon/light/bulb
 	name = "light bulb"
@@ -602,7 +611,13 @@
 	item_state = "contvapour"
 	g_amt = 100
 	brightness = 5
+	cost = 13
 	w_type = RECYK_GLASS
+
+/obj/item/weapon/light/bulb/he
+	name = "high efficiency light bulb"
+	desc = "An efficient light used to reduce strain on the station's power grid."
+	cost = 6
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()
