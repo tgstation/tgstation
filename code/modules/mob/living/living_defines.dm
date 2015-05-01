@@ -13,7 +13,7 @@
 	var/fireloss = 0	//Burn damage caused by being way too hot, too cold or burnt.
 	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
-	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are stunned if it gets too high. Holodeck and hallucinations deal this.
+	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are stunned if it gets too high. Holodeck and hallucinations deal this
 
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
@@ -41,5 +41,8 @@
 	var/floating = 0
 	var/mob_size = MOB_SIZE_HUMAN
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
+
+	var/s_cooldown = 0 //Boolean, used for emotes that produce sound
+	var/muzzled = 0 //Determines if a mob is muzzled or not
 
 	var/list/image/staticOverlays = list()
