@@ -386,6 +386,8 @@
 
 	new_character.key = key		//Manually transfer the key to log them in
 
+	new_character.regenerate_icons()
+
 	return new_character
 
 /mob/new_player/proc/ViewManifest()
