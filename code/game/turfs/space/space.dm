@@ -52,17 +52,18 @@
 				qdel(A)
 				return
 
-			var/disks_list = recursive_type_check(A, /obj/item/weapon/disk/nuclear)
+			var/specials_list = recursive_type_check(A, list(/obj/item/weapon/disk/nuclear, /mob/living/silicon/robot/mommi))
 
 			if(istype(A, /obj/structure/stool/bed/chair/vehicle))
 				var/obj/structure/stool/bed/chair/vehicle/B = A
 				if(B.buckled_mob)
-					disks_list = recursive_type_check(B.buckled_mob, /obj/item/weapon/disk/nuclear)
+					specials_list = recursive_type_check(B.buckled_mob, list(/obj/item/weapon/disk/nuclear, /mob/living/silicon/robot/mommi))
 
 			var/locked_to_current_z = 0//To prevent the moveable atom from leaving this Z, examples are DAT DISK and derelict MoMMIs.
 
-			if (length(disks_list))
+			for(var/obj/item/weapon/disk/nuclear in specials_list)
 				locked_to_current_z = 1
+				break
 
 			//Check if it's a mob pulling an object
 			var/obj/was_pulling = null
@@ -76,14 +77,13 @@
 			var/move_to_z = src.z
 
 			// Prevent MoMMIs from leaving the derelict.
-			if(istype(A, /mob/living))
-				var/mob/living/MM = A
-				if(MM.locked_to_z!=0)
-					if(src.z == MM.locked_to_z)
+			for(var/mob/living/silicon/robot/mommi in specials_list)
+				if(mommi.locked_to_z != 0)
+					if(src.z == mommi.locked_to_z)
 						locked_to_current_z = 1
 					else
-						MM << "<span class='warning'>You find your way back.</span"
-						move_to_z=MM.locked_to_z
+						mommi << "<span class='warning'>You find your way back.</span"
+						move_to_z = mommi.locked_to_z
 
 			var/safety = 1
 

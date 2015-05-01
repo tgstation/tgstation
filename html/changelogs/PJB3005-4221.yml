@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - bugfix: Fixes derelict MoMMIs being able to leave the derelict by sitting in a locker.
