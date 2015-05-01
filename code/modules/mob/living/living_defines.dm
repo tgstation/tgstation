@@ -43,6 +43,5 @@
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 
 	var/s_cooldown = 0 //Boolean, used for emotes that produce sound
-	var/muzzled = 0 //Determines if a mob is muzzled or not
 
 	var/list/image/staticOverlays = list()
