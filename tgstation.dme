@@ -20,6 +20,7 @@
 #define FILE_DIR "icons/obj/clothing"
 #define FILE_DIR "icons/obj/doors"
 #define FILE_DIR "icons/obj/flora"
+#define FILE_DIR "icons/obj/food"
 #define FILE_DIR "icons/obj/guns"
 #define FILE_DIR "icons/obj/hydroponics"
 #define FILE_DIR "icons/obj/machines"
