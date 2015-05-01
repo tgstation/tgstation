@@ -720,7 +720,7 @@
 /mob/living/silicon/robot/update_icons()
 
 	overlays.Cut()
-	if(stat == CONSCIOUS && cell && cell.charge > 0)
+	if(stat == CONSCIOUS)
 		switch(icon_state)
 			if("robot")
 				overlays += "eyes-standard"

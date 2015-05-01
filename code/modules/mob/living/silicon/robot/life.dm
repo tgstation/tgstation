@@ -24,11 +24,10 @@
 	if(cell)
 		if(cell.charge <= 0)
 			uneq_all()
-			speed = 4
+			stat = UNCONSCIOUS
 		else if (cell.charge <= 100)
 			uneq_all()
 			cell.use(1)
-			speed = 2
 		else
 			if(module_state_1)
 				cell.use(5)
@@ -37,12 +36,9 @@
 			if(module_state_3)
 				cell.use(5)
 			cell.use(1)
-			speed = 0
 	else
 		uneq_all()
-		speed = 4
-
-	update_icons()
+		stat = UNCONSCIOUS
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()
@@ -69,7 +65,10 @@
 					if(uneq_module(module_state_1))
 						src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
 
-		if(paralysis)
+		if(getOxyLoss() > 50)
+			Paralyse(3)
+
+		if (paralysis || stunned || weakened) //Stunned etc.
 			stat = UNCONSCIOUS
 
 		use_power()
@@ -81,7 +80,7 @@
 	if (stuttering)
 		stuttering = max(0, stuttering - 1)
 
-	if(druggy)
+	if (druggy)
 		druggy = max(0, druggy - 1)
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
@@ -212,18 +211,8 @@
 		IgniteMob()
 
 /mob/living/silicon/robot/update_canmove()
-	if(stat || paralysis || stunned || weakened || buckled || lockcharge)
+	if(paralysis || stunned || weakened || buckled || lockcharge)
 		canmove = 0
 	else
 		canmove = 1
 	return canmove
-
-/mob/living/silicon/robot/handle_environment(var/datum/gas_mixture/environment)
-	if(environment.temperature > FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT) //hotter than what a firesuit can handle
-		spark_system.start()
-		adjustFireLoss(4)
-		throw_alert("temp","hot",3)
-	else
-		clear_alert("temp")
-
-
