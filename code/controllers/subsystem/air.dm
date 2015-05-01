@@ -15,7 +15,7 @@ var/datum/subsystem/air/SSair
 	var/cost_hotspots = 0
 	var/cost_superconductivity = 0
 	var/cost_pipenets = 0
-	var/cost_atmos_mechinery = 0
+	var/cost_atmos_machinery = 0
 
 	var/obj/effect/overlay/plasma_overlay			//overlay for plasma
 	var/obj/effect/overlay/sleeptoxin_overlay		//overlay for sleeptoxin
@@ -46,7 +46,7 @@ var/datum/subsystem/air/SSair
 	msg += "HS:[round(cost_hotspots,0.01)]|"
 	msg += "SC:[round(cost_superconductivity,0.01)]|"
 	msg += "PN:[round(cost_pipenets,0.01)]|"
-	msg += "AM:[round(cost_atmos_mechinery,0.01)]"
+	msg += "AM:[round(cost_atmos_machinery,0.01)]"
 	msg += "} "
 	msg +=  "AT:[active_turfs.len]|"
 	msg +=  "EG:[excited_groups.len]|"
@@ -67,8 +67,8 @@ var/datum/subsystem/air/SSair
 	cost_pipenets = MC_AVERAGE(cost_pipenets, (world.timeofday - timer))
 
 	timer = world.timeofday
-	process_atmos_mechinery()
-	cost_atmos_mechinery = MC_AVERAGE(cost_atmos_mechinery, (world.timeofday - timer))
+	process_atmos_machinery()
+	cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, (world.timeofday - timer))
 
 	timer = world.timeofday
 	process_active_turfs()
@@ -105,7 +105,7 @@ var/datum/subsystem/air/SSair
 		networks.Cut(i, i+1)
 
 
-/datum/subsystem/air/proc/process_atmos_mechinery()
+/datum/subsystem/air/proc/process_atmos_machinery()
 	var/seconds = wait * 0.1
 	for(var/obj/machinery/M in atmos_machinery)
 		if(M && (M.process_atmos(seconds) != PROCESS_KILL))

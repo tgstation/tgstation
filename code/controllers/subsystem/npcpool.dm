@@ -40,7 +40,7 @@ var/datum/subsystem/npcpool/SSbp
 	for(var/obj/machinery/bot/check in botPool_l_non)
 		if(!check)
 			botPool_l_non.Cut(npcCount,npcCount+1)
-
+			continue
 		if(check.hacked)
 			needsHelp_non |= check
 		else if(check.frustration > 5) //average for most bots
@@ -53,9 +53,10 @@ var/datum/subsystem/npcpool/SSbp
 
 	//SNPC handling
 	for(var/mob/living/carbon/human/interactive/check in botPool_l)
-		var/checkInRange = view(MAX_RANGE_FIND,check)
 		if(!check)
 			botPool_l.Cut(npcCount,npcCount+1)
+			continue
+		var/checkInRange = view(MAX_RANGE_FIND,check)
 		if(!(locate(check.TARGET) in checkInRange))
 			needsDelegate |= check
 
@@ -70,7 +71,11 @@ var/datum/subsystem/npcpool/SSbp
 		npcCount++
 
 	if(needsDelegate.len)
+		npcCount = 1 //reset the count
 		for(var/mob/living/carbon/human/interactive/check in needsDelegate)
+			if(!check)
+				needsDelegate.Cut(npcCount,npcCount+1)
+				continue
 			if(canBeUsed.len)
 				var/mob/living/carbon/human/interactive/candidate = pick(canBeUsed)
 				var/facCount = 0
@@ -87,9 +92,14 @@ var/datum/subsystem/npcpool/SSbp
 						needsDelegate -= check
 						canBeUsed -= candidate
 						candidate.eye_color = "red"
+			npcCount++
 
 	if(needsAssistant.len)
+		npcCount = 1 //reset the count
 		for(var/mob/living/carbon/human/interactive/check in needsAssistant)
+			if(!check)
+				needsAssistant.Cut(npcCount,npcCount+1)
+				continue
 			if(canBeUsed.len)
 				var/mob/living/carbon/human/interactive/candidate = pick(canBeUsed)
 				var/facCount = 0
@@ -106,11 +116,18 @@ var/datum/subsystem/npcpool/SSbp
 						needsAssistant -= check
 						canBeUsed -= candidate
 						candidate.eye_color = "yellow"
+			npcCount++
 
 	if(needsHelp_non.len)
+		npcCount = 1 //reset the count
 		for(var/obj/machinery/bot/B in needsHelp_non)
+			if (!B)
+				needsHelp_non.Cut(npcCount,npcCount+1)
+				continue
 			if(canBeUsed_non.len)
 				var/obj/machinery/bot/candidate = pick(canBeUsed_non)
 				candidate.call_bot(B,get_turf(B),FALSE)
 				canBeUsed_non -= B
 				needsHelp_non -= candidate
+			npcCount++
+
