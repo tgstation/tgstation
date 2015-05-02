@@ -211,7 +211,7 @@ var/global/list/RPD_recipes=list(
 			if(found)
 				preview=new /icon(I.icon,I.icon_state)
 			if(screen == I.categoryId)
-				if(I.id == p_type)
+				if(I.id == p_type && p_class >= 0)
 					datbuild += "<span class='linkOn'>[label]</span>"
 				else
 					datbuild += I.Render(src,label)
