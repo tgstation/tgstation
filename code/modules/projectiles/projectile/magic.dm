@@ -230,7 +230,7 @@ proc/wabbajack(mob/living/M)
 					ready_dna(H)
 					if(H.dna && prob(50))
 						var/new_species = pick(typesof(/datum/species) - /datum/species)
-						H.dna.species = new new_species()
+						hardset_dna(H, null, null, null, null, new_species)
 					H.update_icons()
 				else
 					return

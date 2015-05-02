@@ -1806,7 +1806,7 @@
 					message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 					var/newtype = species_list[result]
 					for(var/mob/living/carbon/human/H in mob_list)
-						H.dna.species = new newtype()
+						hardset_dna(H, null, null, null, null, newtype)
 						H.regenerate_icons()
 			if("corgi")
 				feedback_inc("admin_secrets_fun_used",1)

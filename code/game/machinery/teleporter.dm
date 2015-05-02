@@ -312,7 +312,7 @@
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
 						M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
-						human.dna.species = new /datum/species/fly()
+						hardset_dna(human, null, null, null, null, /datum/species/fly)
 						human.regenerate_icons()
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 			calibrated = 0
