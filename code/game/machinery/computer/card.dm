@@ -104,7 +104,7 @@
 	if(!istype(id_card))
 		return ..()
 
-	if(!is_centcom() && !scan && access_change_ids in id_card.access)
+	if(!is_centcom() && !scan && (access_change_ids in id_card.access))
 		user.drop_item(id_card, src)
 		scan = id_card
 	else if(is_centcom() && !scan && ((access_cent_creed in id_card.access) || (access_cent_captain in id_card.access)))
