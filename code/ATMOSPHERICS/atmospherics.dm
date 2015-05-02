@@ -42,7 +42,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/Destroy()
 	for(var/mob/living/M in src) //ventcrawling is serious business
 		M.remove_ventcrawl()
-		M.loc = src.loc
+		M.forceMove(src.loc)
 	..()
 
 // Find a connecting /obj/machinery/atmospherics in specified direction.
@@ -190,6 +190,9 @@ Pipelines + Other Objects -> Pipe network
 			user.forceMove(target_move.loc) //handles entering and so on
 			user.visible_message("You hear something squeezing through the ducts.", "You climb out the ventilation system.")
 		else if(target_move.can_crawl_through())
+			if(target_move.return_network() != return_network())
+				user.remove_ventcrawl()
+				user.add_ventcrawl(target_move)
 			user.loc = target_move
 			user.client.eye = target_move //if we don't do this, Byond only updates the eye every tick - required for smooth movement
 			if(world.time - user.last_played_vent > VENT_SOUND_DELAY)

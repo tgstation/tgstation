@@ -310,21 +310,24 @@
 		src << "You must be conscious to do this!"
 	return
 
-/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/unary/starting_machine)
-	for(var/datum/pipeline/pipeline in starting_machine.network.line_members)
+/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
+	var/datum/pipe_network/network = starting_machine.return_network(starting_machine)
+	if(!network)
+		return
+	for(var/datum/pipeline/pipeline in network.line_members)
 		for(var/atom/A in (pipeline.members || pipeline.edges))
 			var/image/new_image = image(A, A.loc, dir = A.dir)
 			pipes_shown += new_image
 			client.images += new_image
 
 /mob/living/proc/remove_ventcrawl()
-	for(var/image/current_image in pipes_shown)
-		client.images -= current_image
+	if(client)
+		for(var/image/current_image in pipes_shown)
+			client.images -= current_image
+		client.eye = src
 
 	pipes_shown.len = 0
 
-	if(client)
-		client.eye = src
 
 /mob/living/carbon/clean_blood()
 	. = ..()
