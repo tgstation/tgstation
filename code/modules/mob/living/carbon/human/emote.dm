@@ -31,11 +31,11 @@
 		if ("ayylmao")
 			if(src.dna && src.dna.species.id == "abductor")
 				if (!muzzled && !src.s_cooldown)
-					message = "<B>[src]</B> makes an strange noise."
+					message = "<B>[src]</B> makes a strange noise."
 					playsound(src.loc, 'sound/voice/ayylmao.ogg', 50, 1, 5)
 					m_type = 2
 					src.s_cooldown = 1
-					spawn(60)
+					spawn(40)
 						if(src)
 							src.s_cooldown = 0
 				else
@@ -44,7 +44,7 @@
 					m_type = 2
 			else
 				message = "<B>[src]</B> tries to mimic an alien."
-				m_type = 2
+				m_type = 1
 
 
 		if ("choke")
