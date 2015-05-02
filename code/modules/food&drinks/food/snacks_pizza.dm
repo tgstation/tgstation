@@ -8,6 +8,9 @@
 	volume = 80
 	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 5)
 
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+
 /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita
 	name = "margherita"
 	desc = "The most cheezy pizza in galaxy."
