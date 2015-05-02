@@ -239,7 +239,7 @@
 			if(!silent)
 				gangster_mind.current.Paralyse(5)
 				gangster_mind.current.visible_message("[gangster_mind.current] looks like they've given up the life of crime!")
-			gangster_mind.current << "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B></FONT>"
+			gangster_mind.current << "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>"
 
 	update_gang_icons_removed(gangster_mind, gang)
 
