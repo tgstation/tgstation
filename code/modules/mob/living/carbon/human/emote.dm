@@ -28,6 +28,25 @@
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = 2
 
+		if ("ayylmao")
+			if(src.dna && src.dna.species.id == "abductor")
+				if (!muzzled && !src.s_cooldown)
+					message = "<B>[src]</B> makes an strange noise."
+					playsound(src.loc, 'sound/voice/ayylmao.ogg', 50, 1, 5)
+					m_type = 2
+					src.s_cooldown = 1
+					spawn(60)
+						if(src)
+							src.s_cooldown = 0
+				else
+					message = "<B>[src]</B> makes an indescribably strange muffled noise."
+				//	playsound(src.loc, 'sound/voice/ayylmao2.ogg', 50, 1, 5)  //ayylmao2 for muffled ayy lmao when?
+					m_type = 2
+			else
+				message = "<B>[src]</B> tries to mimic an alien."
+				m_type = 2
+
+
 		if ("choke")
 			if (miming)
 				message = "<B>[src]</B> clutches \his throat desperately!"
@@ -229,6 +248,13 @@
 		if ("pale")
 			message = "<B>[src]</B> goes pale for a second."
 			m_type = 1
+
+		if ("ree")
+			if (miming)
+				message = "<B>[src]</B> acts out a screech."
+				m_type = 1
+			else
+				..(act)
 
 		if ("raise")
 			if (!src.restrained())
