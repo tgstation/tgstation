@@ -37,8 +37,6 @@ In short:
 		T.overlays += "hell01"
 	else
 		T.overlays -= "hell01"
-		if(!T.color_lighting_lumcount)
-			T.update_lumcount(1, 255, 0, 0, 0)
 
 // Apply changes when entering state
 /datum/universal_state/hell/OnEnter()
