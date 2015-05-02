@@ -184,7 +184,7 @@
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/W as obj, user as mob)
 	if(iscrowbar(W) && occupant)
-		return ..()
+		return
 	if(iswrench(W) && !occupant)
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(orient == "RIGHT")
