@@ -51,8 +51,6 @@ var/datum/subsystem/ticker/ticker
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
-	round_end_sound = pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')
-
 /datum/subsystem/ticker/Initialize(timeofday, zlevel)
 	if (zlevel)
 		return ..()
@@ -80,6 +78,8 @@ var/datum/subsystem/ticker/ticker
 					++totalPlayersReady
 
 			//countdown
+			if(timeLeft < 0)
+				return
 			timeLeft -= wait
 
 			if(timeLeft <= 30 && !tipped)

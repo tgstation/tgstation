@@ -1,7 +1,7 @@
 
 //make incision
 /datum/surgery_step/incise
-	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/kitchenknife = 65, /obj/item/weapon/shard = 45)
+	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/kitchen/knife = 65, /obj/item/weapon/shard = 45)
 	time = 24
 
 /datum/surgery_step/incise/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -58,7 +58,7 @@
 
 //saw bone
 /datum/surgery_step/saw
-	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchenknife/butcher = 25)
+	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
 	time = 64
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

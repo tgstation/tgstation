@@ -12,6 +12,8 @@
 	density = 0
 	opacity = 0
 
+/obj/machinery/door/poddoor/ert
+	desc = "A heavy duty blast door that only opens for dire emergencies."
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(density)

@@ -744,7 +744,7 @@
 "op" = (/turf/unsimulated/wall/fakeglass{color = "#008000"; dir = 1; icon_state = "fakewindows2"},/area/wizard_station)
 "oq" = (/obj/structure/bookcase,/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
 "or" = (/obj/structure/grille{color = "#008000"; density = 0; icon_state = "brokengrille"},/turf/simulated/floor/plating,/area/wizard_station)
-"os" = (/obj/structure/cult/talisman{desc = "A altar dedicated to the Wizard's Federation"},/obj/item/weapon/kitchenknife/ritual,/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
+"os" = (/obj/structure/cult/talisman{desc = "A altar dedicated to the Wizard's Federation"},/obj/item/weapon/kitchen/knife/ritual,/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
 "ot" = (/obj/item/clothing/shoes/sandal/marisa,/obj/item/clothing/suit/wizrobe/marisa,/obj/item/clothing/head/wizard/marisa,/obj/item/weapon/staff/broom,/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
 "ou" = (/obj/effect/decal/cleanable/blood/splatter,/mob/living/simple_animal/hostile/creature{name = "Experiment 35b"},/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
 "ov" = (/obj/machinery/door/poddoor/preopen,/obj/effect/decal/cleanable/blood/splatter,/obj/effect/decal/cleanable/blood/gibs/body,/turf/simulated/floor/plating/airless,/area/wizard_station)
