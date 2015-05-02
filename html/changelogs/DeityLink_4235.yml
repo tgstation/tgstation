@@ -6,5 +6,3 @@ changes:
   - bugfix: fixed players in mecha not being able to see the Bluespace Rift through walls
   - bugfix: fixed some space turfs not having the hell overlay during the narsie endgame (and some turfs having it when they shouldn't) such as the areas where shuttles land.
   - bugfix: fixed turfs changed after the beginning of hell or sm cascade not having the right luminosity
-  - tweak: moved narsie.dm from "code/modules/power/singularity" to "code/game/gamemodes/cult" folder
-  - tweak: absolute pathed teleport.dm
