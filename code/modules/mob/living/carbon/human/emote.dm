@@ -30,17 +30,13 @@
 
 		if ("ayylmao")
 			if(src.dna && src.dna.species.id == "abductor")
-				if (!muzzled && !src.s_cooldown)
+				if (!muzzled)
 					message = "<B>[src]</B> makes a strange noise."
 					playsound(src.loc, 'sound/voice/ayylmao.ogg', 50, 1, 5)
 					m_type = 2
-					src.s_cooldown = 1
-					spawn(40)
-						if(src)
-							src.s_cooldown = 0
 				else
-					message = "<B>[src]</B> makes an indescribably strange muffled noise."
-				//	playsound(src.loc, 'sound/voice/ayylmao2.ogg', 50, 1, 5)  //ayylmao2 for muffled ayy lmao when?
+					message = "<B>[src]</B> makes a strange muffled noise."
+					playsound(src.loc, 'sound/voice/ayylmao2.ogg', 50, 1, 5)  // NOW
 					m_type = 2
 			else
 				message = "<B>[src]</B> tries to mimic an alien."
