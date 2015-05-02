@@ -188,7 +188,7 @@ var/list/mass_drivers = list()
 				var/obj/item/stack/rods/R=W
 				user << "You begin to complete \the [src]..."
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if(do_after(user, 20) && (R.amount >= 2) && (build == 3))
+				if(do_after(user, 20) && (R.amount >= 3) && (build == 3))
 					R.use(3)
 					user << "<span class='notice'>You've added the grille to \the [src].</span>"
 					build++
