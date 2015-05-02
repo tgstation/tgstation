@@ -47,6 +47,7 @@ Filter types:
 /obj/machinery/atmospherics/trinary/filter/New()
 	..()
 	if(radio_controller)
+		atmosinit()
 		initialize()
 
 /obj/machinery/atmospherics/trinary/filter/Destroy()
