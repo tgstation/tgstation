@@ -139,7 +139,7 @@
 
 	if(mrace)
 		if(owner.dna.species.exotic_blood)
-			var/datum/reagent/exotic_blood = owner.dna.species.exotic_blood
+			var/datum/reagent/exotic_blood = new owner.dna.species.exotic_blood
 			owner.reagents.del_reagent(exotic_blood.id)
 		owner.dna.species = new mrace()
 
