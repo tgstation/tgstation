@@ -42,6 +42,12 @@
 
 
 /obj/structure/closet/body_bag/attackby(W as obj, mob/user as mob)
+	if(istype(W,/obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/S = W
+		if(S.amount<5) return
+		S.use(5)
+		new /obj/structure/morgue(src.loc)
+		qdel(src)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = copytext(sanitize(input(user, "What would you like the label to be?", text("[]", src.name), null)  as text|null), 1, MAX_NAME_LEN)
 		if(user.get_active_hand() != W)

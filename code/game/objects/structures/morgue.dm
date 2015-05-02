@@ -100,6 +100,18 @@
 	return
 
 /obj/structure/morgue/attackby(P as obj, mob/user as mob)
+	if(iscrowbar(P)&&icon_state == "morgue1")
+		if(do_after(user,50))
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+			new /obj/structure/closet/body_bag(src.loc)
+			new /obj/item/stack/sheet/metal(src.loc,5)
+			qdel(src)
+	if(iswrench(P))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		if(dir==4)
+			dir=8
+		else
+			dir=4
 	if (istype(P, /obj/item/weapon/pen))
 		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 		if (user.get_active_hand() != P)

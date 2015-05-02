@@ -435,6 +435,24 @@ k
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/clonescanner
 
+/datum/design/fbs
+	name = "Circuit Design (Body Scanner)"
+	desc = "Allows for the construction of circuit boards used to build a body scanner."
+	id = "clonescanner"
+	req_tech = list("biotech" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/fullbodyscanner
+
+/datum/design/fbs
+	name = "Circuit Design (Sleeper)"
+	desc = "Allows for the construction of circuit boards used to build a sleeper."
+	id = "clonescanner"
+	req_tech = list("biotech" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/sleeper
+
 /datum/design/arcademachine
 	name = "Circuit Design (Arcade Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
