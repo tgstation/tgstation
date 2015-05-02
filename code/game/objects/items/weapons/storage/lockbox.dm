@@ -199,7 +199,7 @@
 	icon_state = "coinbox+l"
 	w_class = 2
 	max_w_class = 1
-	can_hold = ("/obj/item/voucher","/obj/item/weapon/coin")
+	can_hold = list("/obj/item/voucher","/obj/item/weapon/coin")
 	max_combined_w_class = 30
 	force = 15
 	throwforce = 10
