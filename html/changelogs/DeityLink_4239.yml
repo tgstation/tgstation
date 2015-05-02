@@ -1,6 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed Centcom's ID computers.
-  - imageadd: Added new sprites for Deathsquad and ERT's IDs
-  - tweak: Did some background changes that'll allow me to work on the centcom strike teams revamps

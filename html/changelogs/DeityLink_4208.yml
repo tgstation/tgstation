@@ -1,6 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Added a Snake II PDA game purchasable on PDA terminals. Based on the classic Nokia Snake II. Features speed settings, labyrinths, control via your orientation, and highscores for every speed/labyrinth combination.
-  - rscadd: Added a Minesweeper PDA game purchasable on PDA terminals. Based on the classic Winmine95. Features highscores for beginner, intermediate, and expert difficulties. custom mode included.
-  - rscadd: Added a Spess Pets PDA game purchasable on PDA terminals. Basically a tamagotchi knockoff, still undergoin polishment. I might explain how it works on the wiki later on, in the meantime have fun experimenting! 4 races currently available: Corgegg, Chimpegg, Borgegg, Syndegg.

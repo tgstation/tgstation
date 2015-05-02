@@ -1,4 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - bugfix: Fixes the '-1kPA' issue for canisters, also cleans up some canister code, so maybe I fixed other issues too!
