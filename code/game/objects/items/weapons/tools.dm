@@ -12,6 +12,18 @@
  * 		Revolver Conversion Kit(made sense)
  */
 
+/* Used for fancy tool subtypes that are faster or slower than the standard tool.
+ * The value for the key "construct" (or Co_CON_SPEED) is the multiplier for construction delay.
+ * The value for the key "deconstruct" (or Co_DECON_SPEED) is the multiplier for deconstruction delay, in case you hadn't guessed.
+ * If one is zero, the tool cannot be used in that direction. If you want to adminbus an instant tool, use .0001 or something, not 0.
+ * Don't set either to a negative number. It will probably break, though I'm not really sure in what way.
+ * Since this is a variable of /atom, it can technically be applied to any item used in construction, as long as the construction is based on construction datums.
+ * Yes, this allows for hyperspeed building stacks, but I wouldn't recommend that, as it doesn't carry over too well when stacks are merged or separated.
+ * Might work for borg stack modules, though. Worth looking into.
+ */
+/atom
+	var/list/construction_delay_mult = list(Co_CON_SPEED = 1, Co_DECON_SPEED = 1)
+
 /*
  * Wrench
  */
@@ -486,7 +498,7 @@
 
 
 /obj/item/weapon/weldingtool/experimental/proc/fuel_gen()//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
-	var/gen_amount = ((world.time-last_gen)/25)
+	var/gen_amount = ((world.time-last_gen)/25)          //Too bad it's not actually implemented
 	reagents += (gen_amount)
 	if(reagents > max_fuel)
 		reagents = max_fuel
