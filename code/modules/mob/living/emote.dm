@@ -4,7 +4,6 @@
 
 /mob/living/emote(var/act, var/m_type=1, var/message = null)
 	var/param = null
-	var/muzzled = is_muzzled()
 
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
@@ -173,22 +172,8 @@
 
 
 		if ("ree")
-			if(ishuman(src) && !muzzled)
-				if(!src.s_cooldown)
-					message = "<B>[src]</B> makes an indescribably loud noise."
-					playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
-					m_type = 2
-					src.s_cooldown = 1 // IT IS DONE
-					spawn(50)
-						if(src)
-							src.s_cooldown = 0
-				else
-					m_type = 1
-					message = "<B>[src]</B> tries to scream but can't find the energy!"
-			else
-				message = "<B>[src]</B> makes an indescribably strange, but muffled noise."
-				playsound(src.loc, 'sound/voice/ree2.ogg', 50, 1, 5)
-				m_type = 2
+			message = "<B>[src]</B> makes an indescribably strange, but muffled noise."
+			m_type = 2
 
 
 		if ("scream")

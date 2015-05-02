@@ -249,8 +249,23 @@
 			if (miming)
 				message = "<B>[src]</B> acts out a screech."
 				m_type = 1
+			else if(!muzzled)
+				if(!src.s_cooldown)
+					message = "<B>[src]</B> makes an indescribably loud noise."
+					playsound(src.loc, 'sound/voice/ree.ogg', 50, 1, 5)
+					m_type = 2
+					src.s_cooldown = 1 // IT IS DONE
+					spawn(50)
+						if(src)
+							src.s_cooldown = 0
+				else
+					m_type = 1
+					message = "<B>[src]</B> tries to scream but can't find the energy!"
 			else
-				..(act)
+				message = "<B>[src]</B> makes an indescribably strange, but muffled noise."
+				playsound(src.loc, 'sound/voice/ree2.ogg', 50, 1, 5)
+				m_type = 2
+
 
 		if ("raise")
 			if (!src.restrained())
