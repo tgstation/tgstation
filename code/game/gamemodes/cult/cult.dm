@@ -19,6 +19,26 @@
 		if(mind.current == ticker.mode.sacrifice_target)	return 0
 	return 1
 
+/proc/cultist_commune(var/mob/living/user, var/clear = 0, var/say = 0, var/message)
+	if(!message)
+		return
+	if(say)
+		user.say("O bidai nabora se[pick("'","`")]sma!")
+	else
+		user.whisper("O bidai nabora se[pick("'","`")]sma!")
+	sleep(10)
+	if(say)
+		user.say(message)
+	else
+		user.whisper(message)
+	for(var/mob/M in mob_list)
+		if(iscultist(M) || (M in dead_mob_list))
+			if(clear)
+				M << "<span class='boldannounce'><i>Acolyte [user]:</i> [message]</span>"
+			else
+				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
+
+
 
 /datum/game_mode/cult
 	name = "cult"
