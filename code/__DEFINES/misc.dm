@@ -113,3 +113,7 @@
 #define PEN_FONT "Verdana"
 #define CRAYON_FONT "Comic Sans MS"
 #define SIGNFONT "Times New Roman"
+
+//mommi shit
+#define INV_SLOT_SIGHT "sight_slot"
+#define INV_SLOT_TOOL "tool_slot"

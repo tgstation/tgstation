@@ -6,7 +6,7 @@
 	//src.modules += new /obj/item/borg/sight/meson(src)
 	src.emag = new /obj/item/borg/stun(src)
 	//src.modules += new /obj/item/weapon/rcd/borg(src)     // Too OP
-	//src.modules += new /obj/item/device/flashlight(src)   // Broken
+	src.modules += new /obj/item/device/flashlight(src)   // Broken
 	src.modules += new /obj/item/weapon/weldingtool/largetank(src)
 	src.modules += new /obj/item/weapon/screwdriver(src)
 	src.modules += new /obj/item/weapon/wrench(src)
@@ -16,11 +16,11 @@
 	src.modules += new /obj/item/device/t_scanner(src)
 	src.modules += new /obj/item/device/analyzer(src)
 	src.modules += new /obj/item/weapon/extinguisher(src) // Aurx sed so
-	src.modules += new /obj/item/weapon/extinguisher/foam(src)
+//	src.modules += new /obj/item/weapon/extinguisher/foam(src)
 	src.modules += new /obj/item/weapon/pipe_dispenser(src)
-	src.modules += new /obj/item/weapon/tile_painter(src)
-	src.modules += new /obj/item/blueprints/mommiprints(src)
-	src.modules += new /obj/item/device/material_synth/cyborg(src)
+//	src.modules += new /obj/item/weapon/tile_painter(src)
+//	src.modules += new /obj/item/blueprints/mommiprints(src) SOON
+//	src.modules += new /obj/item/device/material_synth/cyborg(src)
 
 /*
 	// Added this back in since it made the MoMMI practically useless for engineering stuff.
@@ -37,17 +37,19 @@
 	G.amount = 50
 	src.modules += G
 */
-	var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
-	W.amount = 50
-	W.max_amount = 50 // Override MAXCOIL
-	src.modules += W
+	var/datum/robot_energy_storage/wire/wirestore = new /datum/robot_energy_storage/wire(src)
+	var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src)
+	W.source = wirestore
+	modules += W
+	storages += wirestore
+	fix_modules()
 	return
 
 /obj/item/weapon/robot_module/mommi/respawn_consumable(var/mob/living/silicon/robot/R)
-	var/list/what = list (
+/*	var/list/what = list (
 		// /obj/item/stack/sheet/metal/cyborg,
 		// /obj/item/stack/sheet/glass,
-		/obj/item/weapon/cable_coil,
+		/obj/item/stack/cable_coil/cyborg,
 		// /obj/item/stack/sheet/rglass/cyborg,
 	)
 	for (var/T in what)
@@ -57,5 +59,5 @@
 			if(istype(O,/obj/item/weapon/cable_coil))
 				O:max_amount = 50
 			src.modules += O
-			O:amount = 1
+			O:amount = 1 */
 	return

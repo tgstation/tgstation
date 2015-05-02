@@ -15,6 +15,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/keeper=0 // 0 = No, 1 = Yes (Disables speech and common radio.)
 	var/picked = 0
 	var/subtype="keeper"
+	ventcrawler = 2
+	var/sensor_mode = 0 //mesons
 	var/obj/screen/inv_tool = null
 	//var/obj/screen/inv_sight = null
 
@@ -40,12 +42,12 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	updateicon()
 
 	if(!cell)
-		cell = new /obj/item/weapon/cell(src)
+		cell = new /obj/item/weapon/stock_parts/cell(src)
 		cell.maxcharge = 7500
 		cell.charge = 7500
 	..(loc,startup_sound='sound/misc/interference.ogg')
 	module = new /obj/item/weapon/robot_module/mommi(src)
-	laws = new mommi_base_law_type
+	laws = new /datum/ai_laws/keeper
 
 	// Don't sync if we're a KEEPER.
 	if(!istype(laws,/datum/ai_laws/keeper))
@@ -71,17 +73,30 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if(wires.IsCameraCut()) // 5 = BORG CAMERA
 			camera.status = 0
 
+	//MMI copypasta, magic and more magic
+	mmi = new(src)
+	mmi.brain = new /obj/item/organ/brain(mmi)
+	mmi.brain.name = "[real_name]'s brain"
+	mmi.locked = 1
+	mmi.icon_state = "mmi_full"
+	mmi.name = "Man-Machine Interface: [real_name]"
+	mmi.brainmob = new(src)
+	mmi.brainmob.name = src.real_name
+	mmi.brainmob.real_name = src.real_name
+	mmi.brainmob.container = mmi
+	mmi.contents += mmi.brainmob
+
 	// Sanity check
 	if(connected_ai && keeper)
 		world << "\red ASSERT FAILURE: connected_ai && keeper in mommi.dm"
 
 
-/mob/living/silicon/robot/mommi/choose_icon()
-	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "RepairBot", "Replicator", "Prime")
+/mob/living/silicon/robot/mommi/proc/choose_icon()
+	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "Replicator", "Prime") //RepairBot omitted to avoid confusion with drones
 	switch(icontype)
 		if("Replicator") subtype = "replicator"
 		if("Keeper")	 subtype = "keeper"
-		if("RepairBot")	 subtype = "repairbot"
+//		if("RepairBot")	 subtype = "repairbot"
 		if("Hover")	     subtype = "hovermommi"
 		if("Prime")	     subtype = "mommiprime"
 		else			 subtype = "mommi"
@@ -104,7 +119,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		modtype=modules[0]
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
-	var/channels = list()
+//	var/channels = list()
 
 	if(module)
 		return
@@ -115,21 +130,18 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			module_sprites["Basic"] = "mommi"
 			module_sprites["Keeper"] = "keeper"
 			module_sprites["Replicator"] = "replicator"
-			module_sprites["RepairBot"] = "repairbot"
+//			module_sprites["RepairBot"] = "repairbot"
 			module_sprites["Hover"] = "hovermommi"
 			module_sprites["Prime"] = "mommiprime"
 
-	//Custom_sprite check and entry
-	if (custom_sprite == 1)
-		module_sprites["Custom"] = "[src.ckey]-[modtype]"
 
 	hands.icon_state = lowertext(modtype)
-	feedback_inc("mommi_[lowertext(modtype)]",1)
+//	feedback_inc("mommi_[lowertext(modtype)]",1)
 	updatename()
 
 	choose_icon(6,module_sprites)
-	radio.config(channels)
-	base_icon = icon_state
+//	radio.config(channels)
+//	base_icon = icon_state
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
@@ -155,7 +167,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	name = real_name
 
 /mob/living/silicon/robot/mommi/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
 	if (istype(W, /obj/item/weapon/weldingtool))
@@ -169,14 +181,14 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		else
 			user << "Need more welding fuel!"
 			return
-
-	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
-		var/obj/item/weapon/cable_coil/coil = W
-		adjustFireLoss(-30)
-		updatehealth()
-		coil.use(1)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
+	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+		var/obj/item/stack/cable_coil/coil = W
+		if (coil.use(1))
+			adjustFireLoss(-30)
+			updatehealth()
+			visible_message("<span class='notice'>[user] has fixed some of the burnt wires on [src].</span>")
+		else
+			user << "<span class='warning'>You need one length of cable to repair [src].</span>"
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(stat == DEAD)
@@ -196,7 +208,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				opened = 1
 				updateicon()
 
-	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
+	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
 			user << "Close the panel first."
 		else if(cell)
@@ -249,7 +261,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
 		if(user == src && !emagged)//fucking MoMMI is trying to emag itself, stop it and alert the admins
 			user << "<span class='warning'>The fuck are you doing? Are you retarded? Stop trying to get around your laws and be productive, you little shit.</span>"
-			message_admins("[key_name(src)] is a smartass MoMMI that's trying to emag itself. ([formatJumpTo(src)])")
+			message_admins("[key_name(src)] is a smartass MoMMI that's trying to emag itself.")
 			return
 		if(!opened)//Cover is closed
 			if(locked)
@@ -326,7 +338,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				usr << "Upgrade error!"
 
 	else if(istype(W, /obj/item/device/camera_bug))
-		help_shake_act(user)
+//		help_shake_act(user)
 		return 0
 
 	else
@@ -346,14 +358,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			updateicon()
 			return
 
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
-			return
-		else
-			if (user:a_intent == "help")
-				help_shake_act(user)
-			return
 
 	if(!istype(user, /mob/living/silicon))
 		switch(user.a_intent)
@@ -393,7 +397,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("\red <B>[user] attempted to disarm [src]!</B>")
 
-
+/*
 /mob/living/silicon/robot/mommi/installed_modules()
 	if(weapon_lock)
 		src << "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]"
@@ -430,6 +434,47 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
 	src << browse(dat, "window=robotmod&can_close=1")
 	onclose(src,"robotmod") // Register on-close shit, which unsets machinery.
+
+*/
+
+/mob/living/silicon/robot/mommi/installed_modules()
+	if(!module)
+		pick_module()
+		return
+	var/dat = {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>
+	<BR>
+	<BR>
+	<B>Activated Modules</B>
+	<BR>
+	<table border='0'>
+	<tr><td>Module 1:</td><td>[module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]</td></tr>
+	</table><BR>
+	<B>Installed Modules</B><BR><BR>
+
+	<table border='0'>"}
+
+	for (var/obj in module.modules)
+		if (!obj)
+			dat += text("<tr><td><B>Resource depleted</B></td></tr>")
+		else if(activated(obj))
+			dat += text("<tr><td>[obj]</td><td><B>Activated</B></td></tr>")
+		else
+			dat += text("<tr><td>[obj]</td><td><A HREF=?src=\ref[src];act=\ref[obj]>Activate</A></td></tr>")
+	if (emagged)
+		if(activated(module.emag))
+			dat += text("<tr><td>[module.emag]</td><td><B>Activated</B></td></tr>")
+		else
+			dat += text("<tr><td>[module.emag]</td><td><A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A></td></tr>")
+	dat += "</table>"
+/*
+		if(activated(obj))
+			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
+		else
+			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
+*/
+	var/datum/browser/popup = new(src, "robotmod", "Modules")
+	popup.set_content(dat)
+	popup.open()
 
 
 /mob/living/silicon/robot/mommi/Topic(href, href_list)
@@ -524,10 +569,14 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		src.verbs -= /mob/living/silicon/robot/mommi/proc/ActivateKeeper
 */
 
+
 /mob/living/silicon/robot/mommi/sensor_mode()
-	if(sensor_mode)
-		sensor_mode = 0
-		src << "<span class='notice'>Meson Vision augmentation disabled.</span>"
-	else
-		sensor_mode = MESON_VISION
-		src << "<span class='notice'>Meson Vison augmentation enabled.</span>"
+	set name = "Set Sensor Augmentation"
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Mesons" ,"Disable")
+	sensor_mode = 0
+	switch(sensor_type)
+		if ("Mesons")
+			sensor_mode = 1
+			src << "<span class='notice'>Meson overlay enabled.</span>"
+		if ("Disable")
+			src << "Sensor augmentations disabled."

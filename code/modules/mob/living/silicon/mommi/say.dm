@@ -1,3 +1,4 @@
+/*
 /mob/living/silicon/robot/mommi/say_understands(var/other)
 	if (istype(other, /mob/living/silicon/ai))
 		return 1
@@ -14,16 +15,19 @@
 //	if (istype(other, /mob/living/silicon/hivebot))
 //		return 1
 	return ..()
+*/
 
-/mob/living/silicon/robot/mommi/say_quote(var/text)
+/mob/living/silicon/robot/say_quote(var/text)
 	var/ending = copytext(text, length(text))
 
-	if (ending == "?")
-		return "queries, \"[text]\"";
-	else if (ending == "!")
-		return "declares, \"[text]\"";
+	if(ending == "?")
+		return "queries, \"<span class = 'robot'>[text]</span>\"";
+	else if(copytext(text, length(text) - 1) == "!!")
+		return "alarms, \"<span class = 'robot'><span class = 'yell'>[text]</span></span>\"";
+	else if(ending == "!")
+		return "declares, \"<span class = 'robot'>[text]</span>\"";
 
-	return "states, \"[text]\"";
+	return "states, \"<span class = 'robot'>[text]</span>\"";
 
 /mob/living/silicon/robot/mommi/proc/mommi_talk(var/message)
 	log_say("[key_name(src)] : [message]")

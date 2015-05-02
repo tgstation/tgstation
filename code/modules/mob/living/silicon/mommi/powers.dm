@@ -1,3 +1,4 @@
+/*
 /mob/living/silicon/robot/mommi/verb/ventcrawl()
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
@@ -5,7 +6,7 @@
 	var/mob/living/silicon/robot/mommi/R = src
 	if(R.canmove)
 		handle_ventcrawl()
-
+*/
 
 /mob/living/silicon/robot/mommi/verb/hide()
 	set name = "Hide"
@@ -20,16 +21,14 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		src << text("\blue You are now hiding.")
-		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O << "<B>[src] tries to hide itself!</B>"
+
+		visible_message("<span class='name'>[src] scurries to the ground!</span>", \
+						"<span class='notice'>You are now hiding.</span>")
 	else
 		layer = MOB_LAYER
-		src << text("\blue You have stopped hiding.")
-		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O << "[src] slowly peeks up..."
+		visible_message("[src] slowly peaks up from the ground...", \
+					"<span class='notice'>You have stopped hiding.</span>")
+
 	updateicon()
 
 /mob/living/silicon/robot/mommi/verb/park()

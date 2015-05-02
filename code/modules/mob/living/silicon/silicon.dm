@@ -19,6 +19,7 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 
+
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 
@@ -337,6 +338,7 @@
 /mob/living/silicon/proc/add_med_hud()
 	var/datum/atom_hud/medsensor = huds[med_hud]
 	medsensor.add_hud_to(src)
+
 
 /mob/living/silicon/proc/sensor_mode()
 	set name = "Set Sensor Augmentation"

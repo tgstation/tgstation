@@ -1,7 +1,7 @@
 /mob/living/silicon/robot/mommi/gib()
 	//robots don't die when gibbed. instead they drop their MMI'd brain
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+//	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -30,7 +30,7 @@
 /mob/living/silicon/robot/mommi/dust()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+//	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -57,14 +57,14 @@
 	update_canmove()
 	if(camera)
 		camera.status = 0
-
+/*
 	if(in_contents_of(/obj/machinery/recharge_station))//exit the recharge station
 		var/obj/machinery/recharge_station/RC = loc
 		if(RC.upgrading)
 			RC.upgrading = 0
 			RC.upgrade_finished = -1
 		RC.go_out()
-
+*/
 	if(blind)	blind.layer = 0
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8

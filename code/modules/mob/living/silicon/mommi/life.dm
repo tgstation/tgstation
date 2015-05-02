@@ -2,11 +2,11 @@
 	set invisibility = 0
 	//set background = 1
 
-	if (src.monkeyizing)
-		return
+//	if (src.monkeyizing)
+//		return
 
 
-	src.blinded = null
+//	src.blinded = null
 
 	//Status updates, death etc.
 	clamp_values()
@@ -17,15 +17,15 @@
 		update_items()
 	if (src.stat != DEAD) //still using power
 		use_power()
-		process_killswitch()
-		process_locks()
+	//	process_killswitch()
+	//	process_locks()
 	update_canmove()
-	handle_beams()
+//	handle_beams()
 
 
 
-
-/mob/living/silicon/robot/mommi/clamp_values()
+/*
+/mob/living/silicon/robot/mommi/proc/clamp_values()
 
 //	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
@@ -35,9 +35,9 @@
 	adjustToxLoss(0)
 	adjustOxyLoss(0)
 	adjustFireLoss(0)
-
-
-/mob/living/silicon/robot/mommi/use_power()
+*/
+/*
+/mob/living/silicon/robot/mommi/proc/use_power()
 	if (src.cell)
 		if(src.cell.charge <= 0)
 			uneq_all()
@@ -54,12 +54,12 @@
 			if(src.tool_state)
 				src.cell.use(5)
 			src.cell.use(1)
-			src.blinded = 0
+	//		src.blinded = 0
 			src.stat = 0
 	else
 		uneq_all()
 		src.stat = 1
-
+*/
 
 /mob/living/silicon/robot/mommi/handle_regular_status_updates()
 
@@ -92,22 +92,22 @@
 				AdjustWeakened(-1)
 			if (src.paralysis > 0)
 				AdjustParalysis(-1)
-				src.blinded = 1
+//				src.blinded = 1
 			else
-				src.blinded = 0
+//				src.blinded = 0
 
 		else	//Not stunned.
 			src.stat = 0
 
 	else //Dead.
-		src.blinded = 1
+	//	src.blinded = 1
 		src.stat = 2
 
 	if (src.stuttering) src.stuttering--
 
 	if (src.eye_blind)
 		src.eye_blind--
-		src.blinded = 1
+//		src.blinded = 1
 
 	if (src.ear_deaf > 0) src.ear_deaf--
 	if (src.ear_damage < 25)
@@ -116,10 +116,10 @@
 
 	src.density = !( src.lying )
 
-	if ((src.sdisabilities & BLIND))
-		src.blinded = 1
-	if ((src.sdisabilities & DEAF))
-		src.ear_deaf = 1
+//	if ((src.sdisabilities & BLIND))
+//		src.blinded = 1
+//	if ((src.sdisabilities & DEAF))
+//		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
 		src.eye_blurry--
@@ -133,18 +133,18 @@
 /
 /mob/living/silicon/robot/mommi/handle_regular_hud_updates()
 
-	if (src.stat == 2 || M_XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == 2 || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
 		src.see_in_dark = 8
 		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if ((src.sight_mode & BORGMESON || sensor_mode == MESON_VISION) && src.sight_mode & BORGTHERM)
+	else if ((src.sight_mode & BORGMESON || sensor_mode == 1) && src.sight_mode & BORGTHERM)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON || sensor_mode == MESON_VISION)
+	else if (src.sight_mode & BORGMESON || sensor_mode == 1)
 		src.sight |= SEE_TURFS
 		src.see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
@@ -159,8 +159,8 @@
 		src.see_in_dark = 8
 		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
-	if(hud && hud.hud)	hud.hud.process_hud(src)
+//	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
+//	if(hud && hud.hud)	hud.hud.process_hud(src)
 
 	if (src.healths)
 		if (src.stat != 2)
@@ -196,23 +196,22 @@
 				src.mind.special_role = "traitor"
 				ticker.mode.traitors += src.mind
 
-	if (src.cells)
-		if (src.cell)
-			var/cellcharge = src.cell.charge/src.cell.maxcharge
-			switch(cellcharge)
-				if(0.75 to INFINITY)
-					src.cells.icon_state = "charge4"
-				if(0.5 to 0.75)
-					src.cells.icon_state = "charge3"
-				if(0.25 to 0.5)
-					src.cells.icon_state = "charge2"
-				if(0 to 0.25)
-					src.cells.icon_state = "charge1"
-				else
-					src.cells.icon_state = "charge0"
-		else
-			src.cells.icon_state = "charge-empty"
-
+	if (src.cell)
+		var/cellcharge = src.cell.charge/src.cell.maxcharge
+		switch(cellcharge)
+			if(0.75 to INFINITY)
+				clear_alert("charge")
+			if(0.5 to 0.75)
+				throw_alert("charge","lowcell",1)
+			if(0.25 to 0.5)
+				throw_alert("charge","lowcell",2)
+			if(0.01 to 0.25)
+				throw_alert("charge","lowcell",3)
+			else
+				throw_alert("charge","emptycell")
+	else
+		throw_alert("charge","nocell")
+/*
 	if(bodytemp)
 		switch(src.bodytemperature) //310.055 optimal body temp
 			if(335 to INFINITY)
@@ -225,29 +224,29 @@
 				src.bodytemp.icon_state = "temp-1"
 			else
 				src.bodytemp.icon_state = "temp-2"
-
+*/
 
 	if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
 //Oxygen and fire does nothing yet!!
 //	if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
 //	if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
-
-	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
+/*
+	client.screen.Remove(global_hud.blurry,global_hud.druggy)
 
 	if ((src.blind && src.stat != 2))
 		if(src.blinded)
 			src.blind.layer = 18
 		else
 			src.blind.layer = 0
-			if (src.disabilities & NEARSIGHTED)
-				src.client.screen += global_hud.vimpaired
+	//		if (src.disabilities & NEARSIGHTED)
+	//			src.client.screen += global_hud.vimpaired
 
-			if (src.eye_blurry)
-				src.client.screen += global_hud.blurry
+	//		if (src.eye_blurry)
+	//			src.client.screen += global_hud.blurry
 
 			if (src.druggy)
 				src.client.screen += global_hud.druggy
-
+*/
 	if (src.stat != 2)
 		if (src.machine)
 			if (!( src.machine.check_eye(src) ))

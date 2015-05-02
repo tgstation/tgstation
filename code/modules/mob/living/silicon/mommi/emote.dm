@@ -1,3 +1,6 @@
+#define HEARABLE 2
+#define VISIBLE 1
+
 /mob/living/silicon/robot/mommi/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -7,7 +10,7 @@
 
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
-
+//whyyyyy isn't this sorted alphabetically
 	switch(act)
 		if ("help")
 			src << "Available emotes: aflap, bow, clap, custom, flap, twitch, twitch_s, salute, nod, deathgasp, me, glare, stare, shrug, beep, ping, buzz, look"
@@ -215,7 +218,7 @@
 				message = "<B>[src]</B> buzzes."
 			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			m_type = VISIBLE
-
+/*
 		if("comment")
 			var/M = null
 			if(param)
@@ -232,7 +235,7 @@
 				message = "<B>[src]</B> vocalizes."
 			playsound(src, get_sfx("mommicomment"),50, 0)
 			m_type = VISIBLE
-
+*/
 		else
 			src << text("Invalid Emote: [], use *help", act)
 	if ((message && src.stat == 0))

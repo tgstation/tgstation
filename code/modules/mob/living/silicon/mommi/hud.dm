@@ -63,11 +63,11 @@
 	action_intent = using
 
 	// Cell
-	mymob:cells = new /obj/screen()
-	mymob:cells.icon = 'icons/mob/screen1_robot.dmi'
-	mymob:cells.icon_state = "charge-empty"
-	mymob:cells.name = "cell"
-	mymob:cells.screen_loc = ui_toxin
+	mymob:cell = new /obj/screen()
+	mymob:cell.icon = 'icons/mob/screen1_robot.dmi'
+	mymob:cell.icon_state = "charge-empty"
+	mymob:cell.name = "cell"
+	mymob:cell.screen_loc = ui_toxin
 
 	// Health
 	mymob.healths = new /obj/screen()
