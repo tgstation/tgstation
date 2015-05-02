@@ -102,7 +102,8 @@
 		open_machine()
 		add_fingerprint(usr)
 	else
-		open_machine()
+		if(!usr.stat)
+			open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
