@@ -1,4 +1,4 @@
-//Not only meat, actually, but also snacks that are almost meat, such as fish meat or tofu
+R//Not only meat, actually, but also snacks that are almost meat, such as fish meat or tofu
 
 
 ////////////////////////////////////////////FISH////////////////////////////////////////////
@@ -92,6 +92,7 @@
 	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
+	icon = 'icons/obj/food/soupsalad.dmi'
 	name = "wing fang chu"
 	desc = "A savory dish of alien wing wang in soy."
 	icon_state = "wingfangchu"
