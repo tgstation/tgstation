@@ -453,7 +453,7 @@ obj/structure/cable/proc/avail()
 // Definitions
 ////////////////////////////////
 
-#define MAXCOIL 30
+
 
 /obj/item/stack/cable_coil
 	name = "cable coil"

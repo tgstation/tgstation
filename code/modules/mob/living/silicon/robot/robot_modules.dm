@@ -157,7 +157,7 @@
 	R.source = metstore
 	modules += R
 
-	var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src)
+	var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src,MAXCOIL,pick("red","yellow","green","blue","pink","orange","cyan","white"))
 	W.source = wirestore
 	modules += W
 
