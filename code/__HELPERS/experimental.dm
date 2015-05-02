@@ -84,7 +84,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 
 	AM.Destroy()
 	AM.resetVariables()
-	masterPool["[AM.type]"] += AM
+	masterPool["[AM.type]"] |= AM
 
 	#ifdef DEBUG_OBJECT_POOL
 	world << text("DEBUG_OBJECT_POOL: returnToPool([]) [] left.", AM.type, length(masterPool["[AM.type]"]))

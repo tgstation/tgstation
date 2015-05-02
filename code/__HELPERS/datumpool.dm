@@ -70,7 +70,7 @@ var/global/list/masterdatumPool = new
 	if(D in masterdatumPool["[D.type]"])
 		world << text("returnToPool has been called twice for the same datum of type [] time to panic.", D.type)
 	#endif
-	masterdatumPool["[D.type]"] += D
+	masterdatumPool["[D.type]"] |= D
 
 	#ifdef DEBUG_DATUM_POOL
 	world << text("DEBUG_DATUM_POOL: returnToPool([]) [] left.", D.type, length(masterdatumPool["[D.type]"]))
