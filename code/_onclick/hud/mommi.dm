@@ -119,11 +119,11 @@
 	mymob.healths.screen_loc = ui_borg_health
 
 //Installed Module
-	mymob.hands = new /obj/screen/robot/module()
+	mymob.hands = new /obj/screen/robot/mommi/module()
 	mymob.hands.screen_loc = ui_borg_module
 
 //Store
-	mymob.throw_icon = new /obj/screen/robot/store()
+	mymob.throw_icon = new /obj/screen/robot/mommi/store()
 	mymob.throw_icon.screen_loc = ui_borg_store
 
 	mymob.pullin = new /obj/screen/pull()
@@ -156,63 +156,3 @@
 
 	return
 
-
-/datum/hud/proc/toggle_show_robot_modules()
-	if(!isrobot(mymob)) return
-
-	var/mob/living/silicon/robot/r = mymob
-
-	r.shown_robot_modules = !r.shown_robot_modules
-	update_robot_modules_display()
-
-/datum/hud/proc/update_robot_modules_display()
-	if(!isrobot(mymob)) return
-
-	var/mob/living/silicon/robot/r = mymob
-
-	if(r.client)
-		if(r.shown_robot_modules)
-			//Modules display is shown
-			r.client.screen += r.throw_icon	//"store" icon
-
-			if(!r.module)
-				usr << "<span class='danger'>No module selected</span>"
-				return
-
-			if(!r.module.modules)
-				usr << "<span class='danger'>Selected module has no modules to select</span>"
-				return
-
-			if(!r.robot_modules_background)
-				return
-
-			var/display_rows = Ceiling(length(r.module.get_inactive_modules()) / 8)
-			r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
-			r.client.screen += r.robot_modules_background
-
-			var/x = -4	//Start at CENTER-4,SOUTH+1
-			var/y = 1
-
-			for(var/atom/movable/A in r.module.get_inactive_modules())
-				//Module is not currently active
-				r.client.screen += A
-				if(x < 0)
-					A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
-				else
-					A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-				A.layer = 20
-
-				x++
-				if(x == 4)
-					x = -4
-					y++
-
-		else
-			//Modules display is hidden
-			r.client.screen -= r.throw_icon	//"store" icon
-
-			for(var/atom/A in r.module.get_inactive_modules())
-				//Module is not currently active
-				r.client.screen -= A
-			r.shown_robot_modules = 0
-			r.client.screen -= r.robot_modules_background

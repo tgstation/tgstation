@@ -44,7 +44,7 @@
 
 	// Make crap we pick up active so there's less clicking and carpal. - N3X
 	module_active=tool_state
-	inv_tool.icon_state = "inv1 +a"
+	inv1.icon_state = "inv1 +a"
 	//inv_sight.icon_state = "sight"
 
 	update_items()
@@ -115,7 +115,7 @@
 		TS.dropped(src)
 		tool_state = null
 		module_active=null
-		inv_tool.icon_state="inv1"
+		inv1.icon_state="inv1"
 		update_items()
 		return 1
 	return 0
@@ -151,7 +151,7 @@
 		contents -= tool_state
 		module_active = null
 		tool_state = null
-		inv_tool.icon_state = "inv1"
+		inv1.icon_state = "inv1"
 	if(is_in_modules(TS))
 		TS.loc = src.module
 
@@ -210,7 +210,7 @@
 			client.screen -= tool_state
 		contents -= tool_state
 		tool_state = null
-		inv_tool.icon_state = "inv1"
+		inv1.icon_state = "inv1"
 		if(is_in_modules(TS))
 			TS.loc = src.module
 
@@ -263,13 +263,13 @@
 	switch(module)
 		if(INV_SLOT_TOOL)
 			if(module_active != tool_state)
-				inv_tool.icon_state = "inv1 +a"
+				inv1.icon_state = "inv1 +a"
 				//inv_sight.icon_state = "sight"
 				module_active = tool_state
 				return
 		if(INV_SLOT_SIGHT)
 			if(module_active != sight_state)
-				inv_tool.icon_state = "inv1"
+				inv1.icon_state = "inv1"
 				//inv_sight.icon_state = "sight+a"
 				module_active = sight_state
 				return
@@ -283,7 +283,7 @@
 	switch(module)
 		if(INV_SLOT_TOOL)
 			if(module_active == tool_state)
-				inv_tool.icon_state = "inv1"
+				inv1.icon_state = "inv1"
 				module_active = null
 				return
 		if(INV_SLOT_SIGHT)
@@ -333,7 +333,7 @@
 		// Delete the item from their claw and de-activate the claw
 		tool_state = null
 		deselect_module(INV_SLOT_TOOL)
-		inv_tool.icon_state = "inv1"
+		inv1.icon_state = "inv1"
 		module_active = null
 
 	// For each equipment slot that the MoMMI can equip to

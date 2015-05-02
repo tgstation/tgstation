@@ -17,7 +17,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/subtype="keeper"
 	ventcrawler = 2
 	var/sensor_mode = 0 //mesons
-	var/obj/screen/inv_tool = null
+	obj/screen/inv1 = null
 	//var/obj/screen/inv_sight = null
 
 //one tool and one sightmod can be activated at any one time.
@@ -45,7 +45,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		cell = new /obj/item/weapon/stock_parts/cell(src)
 		cell.maxcharge = 7500
 		cell.charge = 7500
-	..(loc,startup_sound='sound/misc/interference.ogg')
+	playsound(src.loc, 'sound/misc/interference.ogg', 71 ,1)
 	module = new /obj/item/weapon/robot_module/mommi(src)
 	laws = new /datum/ai_laws/keeper
 
@@ -515,7 +515,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			sight_mode |= sight_state:sight_mode
 
 			//inv_sight.icon_state = "sight+a"
-			inv_tool.icon_state = "inv1"
+			inv1.icon_state = "inv1"
 			module_active=sight_state
 		else
 			TS = tool_state
@@ -528,7 +528,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			contents += O
 
 			//inv_sight.icon_state = "sight"
-			inv_tool.icon_state = "inv1 +a"
+			inv1.icon_state = "inv1 +a"
 			module_active=tool_state
 		if(TS && istype(TS))
 			if(src.is_in_modules(TS))
