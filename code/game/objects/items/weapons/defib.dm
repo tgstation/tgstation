@@ -342,7 +342,7 @@
 		user << "<span class='warning'>The instructions on [defib] don't mention how to revive that...</span>"
 		return
 	else
-		if(user.a_intent == "harm" && !defib.safety)
+		if(user.a_intent == "disarm" && !defib.safety)
 			busy = 1
 			H.visible_message("<span class='danger'>[user] has touched [H.name] with [src]!</span>", \
 					"<span class='userdanger'>[user] has touched [H.name] with [src]!</span>")
@@ -359,6 +359,40 @@
 			defib.cooldowncheck(user)
 			return
 		if(user.zone_sel && user.zone_sel.selecting == "chest")
+			if(!defib.safety && user.a_intent == "harm")
+				user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You overcharge the paddles and begin to place them onto [M]'s chest...</span>")
+				busy = 1
+				update_icon()
+				if(do_after(user, 30))
+					user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest and begin to charge them.</span>")
+					var/turf/T = get_turf(defib)
+					playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
+					sleep(40)
+					playsound(get_turf(src), 'sound/machines/defib_saftyOff.ogg', 50, 0)
+					T.audible_message("<span class='warning'>\The [defib] lets out an urgent beep and lets out a steadily rising hum...</span>")
+					if(do_after(user, 40)) //Takes longer due to overcharging
+						if(M.stat == DEAD)
+							user << "<span class='warning'>[M] is dead - you can't stop their heart.</span>"
+							return
+						user.visible_message("<span class='boldannounce'><i>[user] shocks [M] with \the [src]!</span>", "<span class='warning'>You shock [M] with \the [src]!</span>")
+						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 100, 1, -1)
+						playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
+						var/mob/living/carbon/human/HU = M
+						M.emote("scream")
+						if(!HU.heart_attack)
+							HU.heart_attack = 1
+							if(!HU.stat)
+								HU.visible_message("<span class='warning'>[M] thrashes wildly, clutching at their chest!</span>", "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
+						HU.apply_damage(50, BURN, "chest")
+						add_logs(user, M, "overloaded the heart of", object="defibrillator")
+						M.Weaken(5)
+						M.Jitter(100)
+						defib.deductcharge(revivecost)
+						cooldown = 1
+						busy = 0
+						update_icon()
+						defib.cooldowncheck(user)
+				return
 			var/mob/dead/observer/ghost = H.get_ghost()
 			if(ghost)
 				ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
@@ -386,6 +420,7 @@
 					if(H.heart_attack)
 						H.heart_attack = 0
 						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
+						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 					if(H.stat == 2)
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
