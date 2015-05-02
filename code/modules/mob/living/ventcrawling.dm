@@ -62,10 +62,12 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 		src << "<span class='warning'>This ventilation duct is not connected to anything!</span>"
 
 
-/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/unary/starting_machine)
-	if(!starting_machine)
+/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
+	if(!istype(starting_machine) || !starting_machine.returnPipenet())
 		return
-	var/list/totalMembers = starting_machine.parent.members + starting_machine.parent.other_atmosmch
+	var/list/totalMembers = list()
+	totalMembers |= starting_machine.parent.members
+	totalMembers |= starting_machine.parent.other_atmosmch
 	for(var/atom/A in totalMembers)
 		var/image/new_image = image(A, A.loc, dir = A.dir)
 		pipes_shown += new_image
@@ -84,13 +86,13 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 
 //OOP
-/atom/proc/update_pipe_vision()
+/atom/proc/update_pipe_vision(var/atom/new_loc = null)
 	return
 
-/mob/living/update_pipe_vision()
-	if(pipes_shown.len)
-		if(!istype(loc, /obj/machinery/atmospherics))
-			remove_ventcrawl()
-	else
-		if(istype(loc, /obj/machinery/atmospherics))
-			add_ventcrawl(loc)
+/mob/living/update_pipe_vision(var/atom/new_loc = null)
+	. = loc
+	if(new_loc)
+		. = new_loc
+	remove_ventcrawl()
+	add_ventcrawl(.)
+

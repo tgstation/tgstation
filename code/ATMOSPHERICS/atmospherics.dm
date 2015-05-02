@@ -23,6 +23,7 @@ Pipelines + Other Objects -> Pipe network
 	var/welded = 0 //Used on pumps and scrubbers
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
+	var/datum/pipeline/parent = null
 
 
 /obj/machinery/atmospherics/Destroy()
@@ -65,7 +66,7 @@ Pipelines + Other Objects -> Pipe network
 	return default_set
 
 /obj/machinery/atmospherics/proc/returnPipenet()
-	return
+	return parent
 
 /obj/machinery/atmospherics/proc/returnPipenetAir()
 	return
@@ -197,6 +198,19 @@ Pipelines + Other Objects -> Pipe network
 			user.forceMove(target_move.loc) //handle entering and so on.
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 		else if(target_move.can_crawl_through())
+			if(returnPipenet() != target_move.returnPipenet())
+				user.update_pipe_vision(target_move)
+
+			/*
+			var/list/myPipenets = getAllPipenets()
+			var/list/targetAllPipenets = target_move.getAllPipenets()
+			for(var/datum/pipeline/I in targetAllPipenets)
+				for(var/datum/pipeline/J in myPipenets)
+					if(I != J)
+						update_pipe_vision(target_move)
+						break
+			*/
+
 			user.loc = target_move
 			user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
 			if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
@@ -221,3 +235,5 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
 	return 1
+
+

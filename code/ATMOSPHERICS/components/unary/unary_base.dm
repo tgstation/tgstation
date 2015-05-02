@@ -5,7 +5,6 @@
 	layer = TURF_LAYER+0.1
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/node
-	var/datum/pipeline/parent
 	var/showpipe = 0
 
 /obj/machinery/atmospherics/unary/New()
@@ -113,9 +112,6 @@ Housekeeping and pipe network stuff below
 
 /obj/machinery/atmospherics/unary/setPipenet(datum/pipeline/P)
 	parent = P
-
-/obj/machinery/atmospherics/unary/returnPipenet()
-	return parent
 
 /obj/machinery/atmospherics/unary/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
 	if(Old == parent)
