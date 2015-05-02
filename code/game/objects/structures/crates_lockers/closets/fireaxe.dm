@@ -118,7 +118,7 @@
 					spawn(10)
 						update_icon()
 	else
-		if(iswrench(O)) && src.localopened && !fireaxe)
+		if(iswrench(O) && src.localopened && !src.fireaxe)
 			user << "<span class='notice'>You disassemble \the [src].</span>"
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			new /obj/item/stack/sheet/plasteel (src.loc,2)

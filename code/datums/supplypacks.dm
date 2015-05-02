@@ -136,7 +136,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	contains = list()
 	cost = 10
 	containertype = /obj/structure/largecrate/porcelain
-	containername = "MULEbot Crate"
+	containername = "Porcelain Crate"
 	group = "Supplies"
 
 /datum/supply_packs/metal50
