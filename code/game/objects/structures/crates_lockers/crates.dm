@@ -14,11 +14,11 @@
 	
 /obj/structure/closet/crate/New()
 	..()
-	overlays.Cut()
 	update_icon()
 	
 
 /obj/structure/closet/crate/update_icon()
+	overlays.Cut()
 	if(opened)
 		icon_state = "[icon_crate]open"
 	else
@@ -151,7 +151,9 @@
 
 /obj/structure/closet/crate/secure/New()
 	..()
-	//overlays.Cut()
+	
+/obj/structure/closet/crate/secure/update_icon()
+	..()
 	if(locked)
 		overlays += redlight
 	else
