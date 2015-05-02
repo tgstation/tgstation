@@ -392,7 +392,7 @@ AI MODULES
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "AI"
 	origin_tech = "programming=3;materials=6;syndicate=7"
-	cooldown = 0
+	var/cooldown = 0
 	laws = list("")
 
 /obj/item/weapon/aiModule/toyAI/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -402,15 +402,15 @@ AI MODULES
 	return laws[1]
 
 /obj/item/weapon/aiModule/toyAI/attack_self(mob/user)
-	if (!cooldown) //muh cooldowns
+	if (!src.cooldown) //muh cooldowns
 		laws[1] = generate_ion_law()
 		user << "<span class='notice'>You press the button on [src].</span>"
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
 		src.loc.visible_message("<span class='warning'>\icon[src] [laws[1]]</span>")
-		cooldown = 1
+		src.cooldown = 1
 		spawn (10)
 			if(src)
-				cooldown = 0
+				src.cooldown = 0
 
 	else
 		user << "<span class='notice'> The [src.name] is still recharging"
