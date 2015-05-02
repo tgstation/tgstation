@@ -47,6 +47,11 @@
 	icon_state = "toilet[open][cistern]"
 
 /obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
+	if(iswrench(I))
+		user << "<span class='notice'>You [anchored ? "un":""]bolt \the [src]'s grounding lines.</span>"
+		anchored = !anchored
+	if(anchored == 0)
+		return
 	if(open && cistern && state == NORODS && istype(I,/obj/item/stack/rods)) //State = 0 if no rods
 		var/obj/item/stack/rods/R = I
 		if(R.amount < 2) return
@@ -177,6 +182,11 @@
 			G.clean_blood()
 
 /obj/machinery/shower/attackby(obj/item/I as obj, mob/user as mob)
+	if(isscrewdriver(I)&&!on)
+		user << "<span class='notice'>You disassemble \the [src].</span>"
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
+		new /obj/item/stack/sheet/metal (src.loc,2)
+		qdel(src)
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
@@ -362,6 +372,9 @@
 	if(!Adjacent(M))
 		return
 
+	if(anchored == 0)
+		return
+
 	if(busy)
 		M << "<span class='warning'>Someone's already washing here.</span>"
 		return
@@ -398,6 +411,12 @@
 /obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
 	if(busy)
 		user << "<span class='warning'>Someone's already washing here.</span>"
+		return
+
+	if(iswrench(O))
+		user << "<span class='notice'>You [anchored ? "un":""]bolt \the [src]'s grounding lines.</span>"
+		anchored = !anchored
+	if(anchored == 0)
 		return
 
 	if(istype(O, /obj/item/weapon/mop)) return

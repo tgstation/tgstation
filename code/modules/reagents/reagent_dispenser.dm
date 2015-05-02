@@ -205,12 +205,12 @@
 	icon_state = "water_cooler"
 	possible_transfer_amounts = null
 	anchored = 1
-
+	var/addedliquid = 500
 	var/paper_cups = 10
 
 /obj/structure/reagent_dispensers/water_cooler/New()
 	. = ..()
-	reagents.add_reagent("water", 500)
+	reagents.add_reagent("water", addedliquid)
 	desc = "[initial(desc)] There's [paper_cups] paper cups stored inside."
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/user as mob)
