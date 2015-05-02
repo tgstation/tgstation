@@ -130,8 +130,12 @@
 				if(!M.brainmob)
 					user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>"
 					return
-				if(M.brainmob.stat == 2)
+				if(M.brainmob.stat == DEAD)
 					user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
+					return
+
+				if(!M.brainmob.client)
+					user << "<span class='warning'>Sticking an inactive brain into the frame would sort of defeat the purpose.</span>"
 					return
 
 				if((config) && (!config.allow_ai))

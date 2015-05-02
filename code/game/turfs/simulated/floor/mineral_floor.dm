@@ -165,7 +165,7 @@
 			active = 1
 			for(var/mob/living/L in range(3,src))
 				L.irradiate(1)
-			for(var/turf/simulated/floor/mineral/uranium/T in range(3,src))
+			for(var/turf/simulated/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
 			active = 0
