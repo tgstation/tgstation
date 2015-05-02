@@ -6,6 +6,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
+	icon = 'icons/obj/food/burgerbread.dmi'
 	bitesize = 2
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"

@@ -8,6 +8,7 @@
 	list_reagents = list("nutriment" = 20, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice
+	icon = 'icons/obj/food/piecake.dmi'
 	trash = /obj/item/trash/plate
 	bitesize = 3
 
