@@ -264,7 +264,9 @@
 
 		if("help")
 			if (health > 0)
-				visible_message("<span class='notice'>[M] [response_help] [src].</span>")
+				src.visible_message("<span class='notice'>[M] [response_help] [src].</span>", \
+									"<span class='notice'>[M] [response_help] you.</span>", null, \
+									M, "<span class='notice'>You [response_help] [src].</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if("grab")
@@ -273,7 +275,7 @@
 		if("harm", "disarm")
 			M.do_attack_animation(src)
 			src.visible_message("<span class='danger'>[M] [response_harm] [src]!</span>", \
-								"<span class='danger'>[M] [response_harm] [src]!</span>", \
+								"<span class='danger'>[M] [response_harm] you!</span>", \
 								"<span class='italics'>You hear a slap!</span>", \
 								M, "<span class='danger'>You [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
@@ -290,7 +292,9 @@
 			return 1
 	if (M.a_intent == "help")
 		if (health > 0)
-			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
+			src.visible_message("<span class='notice'>[M.name] [response_help] [src].</span>", \
+							"<span class='notice'>[M.name] [response_help] you.</span>", null, \
+							M, "<span class='notice'>You [response_help] [src].</span>")
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 	return
@@ -299,13 +303,17 @@
 	if(..()) //if harm or disarm intent.
 		if(M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
-					"<span class='userdanger'>[M] [response_disarm] [name]!</span>")
+			src.visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
+								"<span class='userdanger'>[M] [response_disarm] you!</span>", \
+								"<span class='italics'>You hear a slap!</span>", \
+								M, "<span class='userdanger'>You [response_disarm] [name]!</span>")
 			add_logs(M, src, "disarmed", admin=0)
 		else
 			var/damage = rand(15, 30)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-					"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			src.visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+						"<span class='userdanger'>[M] has slashed at you!</span>", \
+						"<span class='italics'>You hear a slap!</span>", \
+						M, "<span class='userdanger'>You slash at [src]!</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			add_logs(M, src, "attacked", admin=0)
 			attack_threshold_check(damage)
@@ -350,16 +358,18 @@
 						MED.amount -= 1
 						if(MED.amount <= 0)
 							qdel(MED)
-						visible_message("<span class='notice'> [user] applies [MED] on [src].</span>")
+						src.visible_message("<span class='notice'>[user] applies [MED] on [src].</span>", \
+										"<span class='notice'>[user] applies [MED] on you.</span>", null, \
+										user, "<span class='notice'>You apply [MED] on [src].</span>")
 						return
 					else
-						user << "<span class='notice'> [MED] won't help at all.</span>"
+						user << "<span class='warning'>[MED] won't help at all!</span>"
 						return
 			else
-				user << "<span class='notice'> [src] is at full health.</span>"
+				user << "<span class='notice'>[src] is at full health.</span>"
 				return
 		else
-			user << "<span class='notice'> [src] is dead, medical items won't bring it back to life.</span>"
+			user << "<span class='warning'>[src] is dead! Medical items won't bring it back to life.</span>"
 			return
 
 	if((meat_type || skin_type) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
@@ -391,7 +401,7 @@
 	stat = DEAD
 	density = 0
 	if(!gibbed)
-		visible_message("<span class='danger'>\the [src] stops moving...</span>")
+		visible_message("<span class='warning'>\the [src] stops moving...</span>")
 	..()
 
 /mob/living/simple_animal/ex_act(severity, target)

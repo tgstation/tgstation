@@ -177,7 +177,9 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	if(!supress_message)
-		visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
+		src.visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>", \
+							"<span class='danger'>[user] grabs you passively!</span>", null, \
+							user, "<span class='danger'>You grab [src] passively!</span>")
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M as mob)
@@ -191,20 +193,26 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	if (stat != DEAD)
 		add_logs(M, src, "attacked", admin=0)
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
-				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
+		src.visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
+							"<span class='userdanger'>The [M.name] glomps you!</span>", \
+							"<span class='italics'>You hear a glomp!</span>", \
+							M, "<span class='userdanger'>You glomp [src]!</span>")
 		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
-		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
+		src.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>", \
+						"<span class='notice'>\The [M] [M.friendly] you!</span>", null, \
+						M, "<span class='notice'>You [M.friendly] [src]!</span>")
 		return 0
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
-						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>")
+		src.visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
+						"<span class='userdanger'>\The [M] [M.attacktext] you!</span>", \
+						"<span class='italics'>You hear a slap!</span>", \
+						M, "<span class='userdanger'>You [M.attacktext] [src]!</span>")
 		add_logs(M, src, "attacked", admin=0)
 		return 1
 
@@ -226,12 +234,15 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		if (prob(75))
 			add_logs(M, src, "attacked", admin=0)
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites [src]!</span>")
+			src.visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+							"<span class='userdanger'>[M.name] bites you!</span>", \
+							"<span class='italics'>You hear a munch!</span>", \
+							M, "<span class='userdanger'>You bite [src]!</span>")
 			return 1
 		else
-			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
-				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>")
+			src.visible_message("<span class='danger'>[M.name] attempted to bite [src]!</span>", \
+							"<span class='userdanger'>[M.name] attempted to bite you!</span>", null, \
+							M, "<span class='userdanger'>You attempted to bite [src]!</span>")
 	return 0
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L as mob)
@@ -245,13 +256,16 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked", admin=0)
-				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
-						"<span class='userdanger'>[L.name] bites [src]!</span>")
+				src.visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
+									"<span class='userdanger'>[L.name] bites you!</span>", \
+									"<span class='italics'>You hear a munch!</span>", \
+									L, "<span class='userdanger'>You bite [src]!</span>")
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				return 1
 			else
-				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
-					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>")
+				src.visible_message("<span class='danger'>[L.name] attempted to bite [src]!</span>", \
+								"<span class='danger'>[L.name] attempted to bite you!</span>", null, \
+								L, "<span class='danger'>You attempted to bite [src]!</span>")
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -265,7 +279,9 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 	switch(M.a_intent)
 		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
+			visible_message("<span class='notice'>[M] caresses [src] with its scythe-like arm.</span>", \
+							"<span class='notice'>[M] caresses you with its scythe-like arm.</span>", null, \
+							M, "<span class='notice'>You caress [src] with your scythe-like arm.</span>")
 			return 0
 
 		if ("grab")

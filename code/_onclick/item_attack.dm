@@ -10,9 +10,10 @@
 /atom/movable/attackby(obj/item/W, mob/living/user, params)
 	user.do_attack_animation(src)
 	if(W && !(W.flags&NOBLUDGEON))
-		visible_message("<span class='danger'>[user] has hit [src] with [W].</span>")
-		user << "<span class='danger'>You hit [src] with [W].</span>"
-		src << "<span class='userdanger'>[user] has hit you with [W]!</span>"
+		src.visible_message("<span class='danger'>[user] hits [src] with [W].</span>", \
+							"<span class='userdanger'>[user] hits you with [W]!</span>", \
+							"<span class='italics'>You hear a hit!</span>", \
+							user, "<span class='userdanger'>You hit [src] with [W]!</span>")
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)

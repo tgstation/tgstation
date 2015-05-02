@@ -138,11 +138,15 @@ emp_act
 				return 0
 
 		if(I.attack_verb && I.attack_verb.len)
-			visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [src] in the [hit_area] with [I]!</span>", \
-							"<span class='userdanger'>[user] has [pick(I.attack_verb)] [src] in the [hit_area] with [I]!</span>")
+			src.visible_message("<span class='danger'>[user] [pick(I.attack_verb)] [src] in the [hit_area] with [I]!</span>", \
+								"<span class='userdanger'>[user] [pick(I.attack_verb)] you in the [hit_area] with [I]!</span>", \
+								"<span class='italics'>You hear a hit!</span>", \
+								user, "<span class='userdanger'>You [pick(I.attack_verb)] [src] in the [hit_area] with [I]!</span>")
 		else if(I.force)
-			visible_message("<span class='danger'>[user] has attacked [src] in the [hit_area] with [I]!</span>", \
-							"<span class='userdanger'>[user] has attacked [src] in the [hit_area] with [I]!</span>")
+			src.visible_message("<span class='danger'>[user] attack [src] in the [hit_area] with [I]!</span>", \
+								"<span class='userdanger'>[user] attacks you in the [hit_area] with [I]!</span>", \
+								"<span class='italics'>You hear a hit!</span>", \
+								user, "<span class='userdanger'>You attack [src] in the [hit_area] with [I]!</span>")
 		else
 			return 0
 
