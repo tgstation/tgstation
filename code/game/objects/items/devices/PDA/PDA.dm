@@ -675,9 +675,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += {"<ul>"}
 					for(var/datum/pda_app/app in applications)
 						if(app.menu)
-							dat += {"<li><a href='byond://?src=\ref[src];choice=[app.menu]'>[app.name]</a></li>"}
+							dat += {"<li><a href='byond://?src=\ref[src];choice=[app.menu]'>[app.icon ? "<img src=[app.icon].png> " : ""][app.name]</a></li>"}
 						else
-							dat += {"<li>[app.name]</li>"}
+							dat += {"<li>[app.icon ? "<img src=[app.icon].png> " : ""][app.name]</li>"}
 					dat += {"</ul>"}
 
 				if (cartridge)
@@ -900,7 +900,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					<b>Did you know...</b><br>
 					<li>[didyouknow]</li><br>"}
 
-			if (101)//Ringer app
+			if (PDA_APP_RINGER)
 				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
 				dat += {"<h4>Ringer Application</h4>"}
 				if(app)
@@ -915,7 +915,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						<br>
 					"}
 
-			if (102)//Spam filter app
+			if (PDA_APP_SPAMFILTER)
 				var/datum/pda_app/spam_filter/app = locate(/datum/pda_app/spam_filter) in applications
 				dat += {"<h4>Spam Filtering Application</h4>"}
 				if(app)
@@ -927,7 +927,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					</ul>
 					"}
 
-			if (103)//Balance check app
+			if (PDA_APP_BALANCECHECK)
 				var/datum/pda_app/balance_check/app = locate(/datum/pda_app/balance_check) in applications
 				dat += {"<h4>Balance Check Application</h4>"}
 				if(app)
@@ -966,7 +966,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						else
 							dat += {"<i>Unable to connect to accounts database. The database is either nonexistent, inoperative, or too far away.</i>"}
 
-			if (104)//Station map app
+			if (PDA_APP_STATIONMAP)
 				var/datum/pda_app/station_map/app = locate(/datum/pda_app/station_map) in applications
 				dat += {"<h4>Station Map Application</h4>"}
 				if(app)
@@ -1027,6 +1027,292 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						for(var/datum/minimap_marker/mkr in app.markers)
 							dat += {"<li>[mkr.name] ([mkr.x]/[mkr.y]) <a href='byond://?src=\ref[src];choice=removeMarker;rMark=[mkr.num]'>remove</a></li>"}
 						dat += {"</ul>"}
+
+			if (PDA_APP_SNAKEII)
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				dat += {"<h4><img src=[app.icon].png> Snake II  <a href='byond://?src=\ref[src];choice=snakeVolume;vChange=-1'><b>-</b></a><img src="snake_volume[app.volume].png"/><a href='byond://?src=\ref[src];choice=snakeVolume;vChange=1'><b>+</b></a></h4>"}
+				if(app)
+					dat += {"<br>
+						<div style="position: relative; left: 0; top: 0;">
+						<img src="snake_background.png" style="position: relative; top: 0; left: 0;"/>
+						"}
+					if(!app.ingame)
+						dat += {"<a href='byond://?src=\ref[src];choice=snakeNewGame'><img src="snake_newgame.png" style="position: absolute; top: 50px; left: 100px;"/></a>"}
+						dat += {"<img src="snake_highscore.png" style="position: absolute; top: 90px; left: 50px;"/>"}
+						var/list/templist = app.highscores[app.snake_game.level]
+						var/list/winnerlist = snake_station_highscores[app.snake_game.level]
+						dat += {"<img src="snake_[round(templist[app.labyrinth+1] / 1000) % 10].png" style="position: absolute; top: 90px; left: 210px;"/>"}
+						dat += {"<img src="snake_[round(templist[app.labyrinth+1] / 100) % 10].png" style="position: absolute; top: 90px; left: 226px;"/>"}
+						dat += {"<img src="snake_[round(templist[app.labyrinth+1] / 10) % 10].png" style="position: absolute; top: 90px; left: 242px;"/>"}
+						dat += {"<img src="snake_[templist[app.labyrinth+1] % 10].png" style="position: absolute; top: 90px; left: 258px;"/>"}
+						dat += {"<img src="snake_station.png" style="position: absolute; top: 130px; left: 50px;"/>"}
+						dat += {"<img src="snake_[round(winnerlist[app.labyrinth+1] / 1000) % 10].png" style="position: absolute; top: 130px; left: 178px;"/>"}
+						dat += {"<img src="snake_[round(winnerlist[app.labyrinth+1] / 100) % 10].png" style="position: absolute; top: 130px; left: 194px;"/>"}
+						dat += {"<img src="snake_[round(winnerlist[app.labyrinth+1] / 10) % 10].png" style="position: absolute; top: 130px; left: 210px;"/>"}
+						dat += {"<img src="snake_[winnerlist[app.labyrinth+1] % 10].png" style="position: absolute; top: 130px; left: 226px;"/>"}
+						var/list/snakebestlist = snake_best_players[app.snake_game.level]
+						dat += "<br>(Station Highscore held by <B>[snakebestlist[app.labyrinth+1]]</B>)"
+						dat += "<br>Set speed: "
+						for(var/x=1;x<=9;x++)
+							if(x == app.snake_game.level)
+								dat += "<B>[x]</B>, "
+							else
+								dat += "<a href='byond://?src=\ref[src];choice=snakeLevel;sLevel=[x]'>[x]</a>, "
+						dat += "<br>Set labyrinth: [!app.labyrinth ? "<b>None</b>" : "<a href='byond://?src=\ref[src];choice=snakeLabyrinth;lType=0'>None</a>"], "
+						for(var/x=1;x<=7;x++)
+							if(x == app.labyrinth)
+								dat += "<B>[x]</B>, "
+							else
+								dat += "<a href='byond://?src=\ref[src];choice=snakeLabyrinth;lType=[x]'>[x]</a>, "
+						dat += "<br>Gyroscope (orient yourself to control): "
+						if(app.snake_game.gyroscope)
+							dat += "<a href='byond://?src=\ref[src];choice=snakeGyro;gSet=0'>ON</a>"
+						else
+							dat +="<a href='byond://?src=\ref[src];choice=snakeGyro;gSet=1'>OFF</a>"
+					else
+						if(app.labyrinth)
+							dat += {"<img src="snake_maze[app.labyrinth].png" style="position: absolute; top: 0px; left: 0px;"/>"}
+						for(var/datum/snake/body/B in app.snake_game.snakeparts)
+							var/body_dir = ""
+							if(B.life == 1)
+								switch(B.dir)
+									if(EAST)
+										body_dir = "pda_snake_bodytail_east"
+									if(WEST)
+										body_dir = "pda_snake_bodytail_west"
+									if(NORTH)
+										body_dir = "pda_snake_bodytail_north"
+									if(SOUTH)
+										body_dir = "pda_snake_bodytail_south"
+							else if(B.life > 1)
+								if(B.corner)
+									switch(B.dir)
+										if(EAST)
+											switch(B.corner)
+												if(SOUTH)
+													body_dir = "pda_snake_bodycorner_eastsouth2"
+												if(NORTH)
+													body_dir = "pda_snake_bodycorner_eastnorth2"
+										if(WEST)
+											switch(B.corner)
+												if(SOUTH)
+													body_dir = "pda_snake_bodycorner_westsouth2"
+												if(NORTH)
+													body_dir = "pda_snake_bodycorner_westnorth2"
+										if(NORTH)
+											switch(B.corner)
+												if(EAST)
+													body_dir = "pda_snake_bodycorner_eastnorth"
+												if(WEST)
+													body_dir = "pda_snake_bodycorner_westnorth"
+										if(SOUTH)
+											switch(B.corner)
+												if(EAST)
+													body_dir = "pda_snake_bodycorner_eastsouth"
+												if(WEST)
+													body_dir = "pda_snake_bodycorner_westsouth"
+								else
+									switch(B.dir)
+										if(EAST)
+											body_dir = "pda_snake_body_east"
+										if(WEST)
+											body_dir = "pda_snake_body_west"
+										if(NORTH)
+											body_dir = "pda_snake_body_north"
+										if(SOUTH)
+											body_dir = "pda_snake_body_south"
+
+								if(B.isfull)
+									body_dir += "_full"
+							if(!B.flicking)
+								dat += {"<img src="[body_dir].png" style="position: absolute; top: [(B.y * 16 * -1) + 152]px; left: [B.x * 16 - 16]px;"/>"}
+
+						dat += {"<img src="pda_snake_egg.png" style="position: absolute; top: [(app.snake_game.next_egg.y * 16 * -1) + 152]px; left: [app.snake_game.next_egg.x * 16 - 16]px;"/>"}
+
+						if(app.snake_game.next_bonus.life > 0)
+							dat += {"<img src="pda_snake_bonus[app.snake_game.next_bonus.bonustype].png" style="position: absolute; top: [(app.snake_game.next_bonus.y * 16 * -1) + 152]px; left: [app.snake_game.next_bonus.x * 16 - 8]px;"/>"}
+							dat += {"<img src="pda_snake_bonus[app.snake_game.next_bonus.bonustype].png" style="position: absolute; top: [(180 * -1) + 152]px; left: [280 - 8]px;"/>"}
+							dat += {"<img src="snake_[round(app.snake_game.next_bonus.life / 10) % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [302 - 8]px;"/>"}
+							dat += {"<img src="snake_[app.snake_game.next_bonus.life % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [318 - 8]px;"/>"}
+
+						dat += {"<img src="snake_[round(app.snake_game.snakescore / 1000) % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [2 - 8]px;"/>"}
+						dat += {"<img src="snake_[round(app.snake_game.snakescore / 100) % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [18 - 8]px;"/>"}
+						dat += {"<img src="snake_[round(app.snake_game.snakescore / 10) % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [34 - 8]px;"/>"}
+						dat += {"<img src="snake_[app.snake_game.snakescore % 10].png" style="position: absolute; top: [(182 * -1) + 152]px; left: [50 - 8]px;"/>"}
+
+						var/head_dir = ""
+						switch(app.snake_game.head.dir)
+							if(EAST)
+								head_dir = "pda_snake_head_east"
+							if(WEST)
+								head_dir = "pda_snake_head_west"
+							if(NORTH)
+								head_dir = "pda_snake_head_north"
+							if(SOUTH)
+								head_dir = "pda_snake_head_south"
+						if(app.snake_game.head.open_mouth)
+							head_dir += "_open"
+						if(!app.snake_game.head.flicking)
+							dat += {"<img src="[head_dir].png" style="position: absolute; top: [(app.snake_game.head.y * 16 * -1) + 152]px; left: [app.snake_game.head.x * 16 - 16]px;"/>"}
+						if(app.paused)
+							dat += {"<a href='byond://?src=\ref[src];choice=snakeUnPause'><img src="snake_pause.png" style="position: absolute; top: 50px; left: 128px;"/></a>"}
+					dat += {"</div>"}
+
+					dat += {"<h5>Controls</h5>
+						<a href='byond://?src=\ref[src];choice=snakeUp'><img src="pda_snake_arrow_north.png"></a>
+						<br><a href='byond://?src=\ref[src];choice=snakeLeft'><img src="pda_snake_arrow_west.png"></a>
+						<a href='byond://?src=\ref[src];choice=snakeRight'><img src="pda_snake_arrow_east.png"></a>
+						<br><a href='byond://?src=\ref[src];choice=snakeDown'><img src="pda_snake_arrow_south.png"></a>
+						"}
+
+			if (PDA_APP_MINESWEEPER)
+				var/datum/pda_app/minesweeper/app = locate(/datum/pda_app/minesweeper) in applications
+				dat += {"<h4><img src=[app.icon].png> Minesweeper</h4>"}
+				if(app)
+					dat += {"<br>
+						<div style="position: relative; left: 0; top: 0;">
+						<img src="minesweeper_bg_[app.minesweeper_game.current_difficulty].png" style="position: relative; top: 0; left: 0;"/>
+						"}
+					if(!app.ingame)
+						for(var/datum/mine_tile/T in app.minesweeper_game.tiles)
+							dat += {"<a href='byond://?src=\ref[src];choice=mineNewGame;mTile=\ref[T]'><img src="minesweeper_tile_full.png" style="position: absolute; top: [(T.y * 16 * -1) + (app.minesweeper_game.rows * 16)]px; left: [T.x * 16]px;"/></a>"}
+					else
+						for(var/datum/mine_tile/T in app.minesweeper_game.tiles)
+							var/mine_icon = ""
+							if(T.dug)
+								if(T.mined)
+									mine_icon = "minesweeper_tile_mine_splode"
+								else if(T.num)
+									mine_icon = "minesweeper_tile_[T.num]"
+								else
+									mine_icon = "minesweeper_tile_empty"
+
+							else
+								if(T.mined && app.minesweeper_game.gameover)
+									if(T.flagged == 1)
+										mine_icon = "minesweeper_tile_flag"
+									else
+										mine_icon = "minesweeper_tile_mine_unsplode"
+								else if(T.flagged == 1)
+									if(app.minesweeper_game.gameover)
+										mine_icon = "minesweeper_tile_mine_wrong"
+									else
+										mine_icon = "minesweeper_tile_flag"
+								else if(T.flagged == 2)
+									mine_icon = "minesweeper_tile_question"
+								else
+									mine_icon = "minesweeper_tile_full"
+							if(T.selected && !app.minesweeper_game.gameover)
+								mine_icon += "_selected"
+							dat += {"<a href='byond://?src=\ref[src];choice=mineDig;mTile=\ref[T]'><img src="[mine_icon].png" style="position: absolute; top: [(T.y * 16 * -1) + (app.minesweeper_game.rows * 16)]px; left: [T.x * 16]px;"/></a>"}
+						dat += {"<a href='byond://?src=\ref[src];choice=mineFlag'><img src="minesweeper_flag.png" style="position: absolute; top: [app.minesweeper_game.rows * 16 + 48]px; left: 16px;"/></a>"}
+						dat += {"<a href='byond://?src=\ref[src];choice=mineQuestion'><img src="minesweeper_question.png" style="position: absolute; top: [app.minesweeper_game.rows * 16 + 48]px; left: 48px;"/></a>"}
+					dat += {"<a href='byond://?src=\ref[src];choice=mineSettings'><img src="minesweeper_settings.png" style="position: absolute; top: [app.minesweeper_game.rows * 16 + 48]px; left: 96px;"/></a>"}
+
+					dat += {"<img src="minesweeper_frame_smiley.png" style="position: absolute; top: -33px; left: [(app.minesweeper_game.columns * 8)+3]px;"/></a>"}
+					dat += {"<a href='byond://?src=\ref[src];choice=mineReset'><img src="minesweeper_smiley_[app.minesweeper_game.face].png" style="position: absolute; top: -32px; left: [(app.minesweeper_game.columns * 8)+4]px;"/></a>"}
+
+					dat += {"<img src="minesweeper_frame_counter.png" style="position: absolute; top: -33px; left: 21px;"/>"}
+					var/mine_counter = app.minesweeper_game.initial_mines
+					for(var/datum/mine_tile/T in app.minesweeper_game.tiles)
+						if(T.flagged == 1)
+							mine_counter--
+					dat += {"<img src="minesweeper_counter_[round(mine_counter / 100) % 10].png" style="position: absolute; top: -32px; left: 22px;"/>"}
+					dat += {"<img src="minesweeper_counter_[round(mine_counter / 10) % 10].png" style="position: absolute; top: -32px; left: 35px;"/>"}
+					dat += {"<img src="minesweeper_counter_[mine_counter % 10].png" style="position: absolute; top: -32px; left: 48px;"/>"}
+
+					dat += {"<img src="minesweeper_frame_counter.png" style="position: absolute; top: -33px; left: [(app.minesweeper_game.columns * 16)-30]px;"/>"}
+					var/time_counter = round((world.time - app.minesweeper_game.timer)/10)
+					time_counter = min(999,time_counter)
+					if(!app.ingame || app.minesweeper_game.gameover)
+						time_counter = app.minesweeper_game.end_timer
+					dat += {"<img src="minesweeper_counter_[round(time_counter / 100) % 10].png" style="position: absolute; top: -32px; left: [(app.minesweeper_game.columns * 16)-29]px;"/>"}
+					dat += {"<img src="minesweeper_counter_[round(time_counter / 10) % 10].png" style="position: absolute; top: -32px; left: [(app.minesweeper_game.columns * 16)-16]px;"/>"}
+					dat += {"<img src="minesweeper_counter_[time_counter % 10].png" style="position: absolute; top: -32px; left: [(app.minesweeper_game.columns * 16)-3]px;"/>"}
+
+					dat += {"<img src="minesweeper_border_cornertopleft.png" style="position: absolute; top: -16px; left: 0px;"/>"}
+					dat += {"<img src="minesweeper_border_cornerbotleft.png" style="position: absolute; top: [(app.minesweeper_game.rows * 16)]px; left: 0px;"/>"}
+					dat += {"<img src="minesweeper_border_cornertopright.png" style="position: absolute; top: -16px; left: [(app.minesweeper_game.columns * 16) + 16]px;"/>"}
+					dat += {"<img src="minesweeper_border_cornerbotright.png" style="position: absolute; top: [(app.minesweeper_game.rows * 16)]px; left: [(app.minesweeper_game.columns * 16) + 16]px;"/>"}
+					for(var/x=1;x<=app.minesweeper_game.columns;x++)
+						dat += {"<img src="minesweeper_border_top.png" style="position: absolute; top: -16px; left: [16*x]px;"/>"}
+					for(var/x=1;x<=app.minesweeper_game.columns;x++)
+						dat += {"<img src="minesweeper_border_bot.png" style="position: absolute; top: [(app.minesweeper_game.rows * 16)]px; left: [16*x]px;"/>"}
+					for(var/y=0;y<app.minesweeper_game.rows;y++)
+						dat += {"<img src="minesweeper_border_left.png" style="position: absolute; top: [16*y]px; left: 0px;"/>"}
+					for(var/y=0;y<app.minesweeper_game.rows;y++)
+						dat += {"<img src="minesweeper_border_right.png" style="position: absolute; top: [16*y]px; left: [(app.minesweeper_game.columns * 16) + 16]px;"/>"}
+
+
+					dat += {"</div>"}
+					if(app.minesweeper_game.current_difficulty != "custom")
+						dat += {"<br>[app.minesweeper_game.current_difficulty] difficulty highscore held by <b>[minesweeper_best_players[app.minesweeper_game.current_difficulty]]</b> (in <b>[minesweeper_station_highscores[app.minesweeper_game.current_difficulty]]</b> seconds)"}
+
+
+			if (PDA_APP_SPESSPETS)
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				dat += {"<h4><img src=[app.icon].png> Spess Pets</h4>"}
+				if(app)
+					dat += {"<br>Name = [app.petname]<br>Level = [app.level]<br>
+						<div style="position: relative; left: 0; top: 0;">
+						<img src="spesspets_bg.png" style="position: relative; top: 0; left: 0;"/>
+						"}
+					switch(app.game_state)
+						if(0)	//First Statup
+							dat += {"<br><a href='byond://?src=\ref[src];choice=eggPrev'><img src="pda_snake_arrow_west.png"></a><a href='byond://?src=\ref[src];choice=eggNext'><img src="pda_snake_arrow_east.png"></a>"}
+
+							dat += {"<a href='byond://?src=\ref[src];choice=eggChose'><img src="spesspets_egg0.png" style="position: absolute; top: 32px; left: 32px;"/></a>"}
+							dat += {"</div>"}
+						if(1)	//Hatching
+							var/eggstate = 0
+							if(app.hatching > 1200)
+								eggstate = 3
+							else if(app.hatching > 600)
+								eggstate = 2
+							else if(app.hatching > 300)
+								eggstate = 1
+							dat += {"<img src="spesspets_egg[eggstate].png" style="position: absolute; top: 32px; left: 32px;"/>"}
+							if(eggstate >= 2)
+								dat += {"<a href='byond://?src=\ref[src];choice=eggHatch'><img src="spesspets_hatch.png" style="position: absolute; top: 64px; left: 0px;"/></a>"}
+
+						if(2)	//Normal
+							if(app.ishungry)
+								dat += {"<img src="spesspets_hunger.png" style="position: absolute; top: 32px; left: 64px;"/>"}
+							if(app.isdirty)
+								dat += {"<img src="spesspets_dirty.png" style="position: absolute; top: 32px; left: 96px;"/>"}
+							if(app.ishurt)
+								dat += {"<img src="spesspets_hurt.png" style="position: absolute; top: 32px; left: 128px;"/>"}
+							if(app.isatwork)
+								dat += {"<img src="spesspets_mine.png" style="position: absolute; top: 32px; left: 32px;"/>"}
+							else
+								dat += {"<img src="spesspets_[app.race].png" style="position: absolute; top: 0px; left: 0px;"/>"}
+								if(app.issleeping)
+									dat += {"<img src="spesspets_sleep.png" style="position: absolute; top: 0px; left: 32px;"/>"}
+								else
+									dat += {"<a href='byond://?src=\ref[src];choice=eggTalk'><img src="spesspets_talk.png" style="position: absolute; top: 96px; left: 0px;"/></a>"}
+									dat += {"<a href='byond://?src=\ref[src];choice=eggWalk'><img src="spesspets_walk.png" style="position: absolute; top: 96px; left: 32px;"/></a>"}
+									if(app.ishungry)
+										dat += {"<a href='byond://?src=\ref[src];choice=eggFeed'><img src="spesspets_feed.png" style="position: absolute; top: 96px; left: 64px;"/></a>"}
+									if(app.isdirty)
+										dat += {"<a href='byond://?src=\ref[src];choice=eggClean'><img src="spesspets_clean.png" style="position: absolute; top: 96px; left: 96px;"/></a>"}
+									if(app.ishurt)
+										dat += {"<a href='byond://?src=\ref[src];choice=eggHeal'><img src="spesspets_heal.png" style="position: absolute; top: 112px; left: 0px;"/></a>"}
+									dat += {"<a href='byond://?src=\ref[src];choice=eggFight'><img src="spesspets_fight.png" style="position: absolute; top: 112px; left: 32px;"/></a>"}
+									dat += {"<a href='byond://?src=\ref[src];choice=eggVisit'><img src="spesspets_visit.png" style="position: absolute; top: 112px; left: 64px;"/></a>"}
+									if(app.level >= 16)
+										dat += {"<a href='byond://?src=\ref[src];choice=eggWork'><img src="spesspets_work.png" style="position: absolute; top: 112px; left: 96px;"/></a>"}
+							if(app.total_coins)
+								dat += {"<a href='byond://?src=\ref[src];choice=eggRate'><img src="spesspets_rate.png" style="position: absolute; top: 96px; left: 128px;"/></a>"}
+							if(app.total_coins)
+								dat += {"<a href='byond://?src=\ref[src];choice=eggCash'><img src="spesspets_cash.png" style="position: absolute; top: 112px; left: 128px;"/></a>"}
+
+							dat += {"</div>"}
+						if(3)	//Dead
+							dat += {"</div>"}
+					if(app.last_spoken != "")
+						dat += {"<br><br><br><br>[app.last_spoken]"}
+					if(app.total_coins)
+						dat += {"<br>nanocoins: [app.total_coins]"}
 
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
@@ -1101,8 +1387,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //APPLICATIONS FUNCTIONS===========================
 
-			if("101")
-				mode = 101
+			if(PDA_APP_RINGER)
+				mode = PDA_APP_RINGER
 			if("toggleDeskRinger")
 				var/datum/pda_app/ringer/app = locate(/datum/pda_app/ringer) in applications
 				if(app)
@@ -1116,17 +1402,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(i > MAXIMUM_FREQUENCY)
 						i = 1599
 					app.frequency = i
-			if("102")
-				mode = 102
+			if(PDA_APP_SPAMFILTER)
+				mode = PDA_APP_SPAMFILTER
 			if("setFilter")
 				var/datum/pda_app/spam_filter/app = locate(/datum/pda_app/spam_filter) in applications
 				if(app)
 					app.function = text2num(href_list["filter"])
-			if("103")
-				mode = 103
+			if(PDA_APP_BALANCECHECK)
+				mode = PDA_APP_BALANCECHECK
 
-			if("104")
-				mode = 104
+			if(PDA_APP_STATIONMAP)
+				mode = PDA_APP_STATIONMAP
 
 			if("minimapMarker")
 				var/datum/pda_app/station_map/app = locate(/datum/pda_app/station_map) in applications
@@ -1159,6 +1445,182 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/to_remove = text2num(href_list["rMark"])
 				var/datum/minimap_marker/mkr = app.markers[to_remove]
 				del(mkr)
+
+//GAME FUNCTIONS====================================
+
+			if(PDA_APP_SNAKEII)
+				mode = PDA_APP_SNAKEII
+
+			if("snakeNewGame")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.ingame = 1
+				app.snake_game.game_start()
+				app.game_tick(usr)
+
+			if("snakeUp")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.lastinput = NORTH
+
+			if("snakeLeft")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.lastinput = WEST
+
+			if("snakeRight")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.lastinput = EAST
+
+			if("snakeDown")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.lastinput = SOUTH
+
+			if("snakeUnPause")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.pause(usr)
+
+			if("snakeLabyrinth")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.labyrinth = text2num(href_list["lType"])
+				app.snake_game.set_labyrinth(text2num(href_list["lType"]))
+
+			if("snakeLevel")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.level = text2num(href_list["sLevel"])
+
+			if("snakeGyro")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.snake_game.gyroscope = text2num(href_list["gSet"])
+
+			if("snakeVolume")
+				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
+				app.volume += text2num(href_list["vChange"])
+				app.volume = max(0,app.volume)
+				app.volume = min(6,app.volume)
+
+			if(PDA_APP_MINESWEEPER)
+				mode = PDA_APP_MINESWEEPER
+
+			if("mineNewGame")
+				var/datum/pda_app/minesweeper/app = locate(/datum/pda_app/minesweeper) in applications
+				var/datum/mine_tile/T = locate(href_list["mTile"])
+				app.ingame = 1
+				app.minesweeper_game.game_start(T)
+				app.game_tick(usr)
+
+			if("mineDig")
+				var/datum/pda_app/minesweeper/app = locate(/datum/pda_app/minesweeper) in applications
+				var/datum/mine_tile/T = locate(href_list["mTile"])
+				app.minesweeper_game.dig_tile(T)
+				app.game_tick(usr)
+
+			if("mineFlag")
+				var/datum/pda_app/minesweeper/app = locate(/datum/pda_app/minesweeper) in applications
+				if(!app.minesweeper_game.gameover)
+					for(var/datum/mine_tile/T in app.minesweeper_game.tiles)
+						if(!T.dug && T.selected)
+							if(!T.flagged)
+								T.flagged = 1
+							else if(T.flagged == 2)
+								T.flagged = 1
+							else
+								T.flagged = 0
+
+			if("mineQuestion")
+				var/datum/pda_app/minesweeper/app = locate(/datum/pda_app/minesweeper) in applications
+				if(!app.minesweeper_game.gameover)
+					for(var/datum/mine_tile/T in app.minesweeper_game.tiles)
+						if(!T.dug && T.selected)
+							if(!T.flagged)
+								T.flagged = 2
+							else if(T.flagged == 1)
+								T.flagged = 2
+							else
+								T.flagged = 0
+
+			if("mineSettings")
+				var/datum/pda_app/minesweeper/app = locate(/datum/pda_app/minesweeper) in applications
+				if(alert(usr, "Changing the settings will reset the game, are you sure?", "Minesweeper Settings", "Yes", "No") != "Yes")
+					return
+				var/list/difficulties = list(
+					"beginner",
+					"intermediate",
+					"expert",
+					"custom",
+					)
+				var/choice = input("What Difficulty?", "Minesweeper Settings") in difficulties
+				app.minesweeper_game.set_difficulty(choice)
+				app.ingame = 0
+
+			if("mineReset")
+				var/datum/pda_app/minesweeper/app = locate(/datum/pda_app/minesweeper) in applications
+				app.minesweeper_game.face = "press"
+				app.game_update(usr)
+				sleep(5)
+				app.minesweeper_game.reset_game()
+				app.ingame = 0
+
+			if(PDA_APP_SPESSPETS)
+				mode = PDA_APP_SPESSPETS
+
+			if("eggPrev")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.previous_egg()
+
+			if("eggNext")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.next_egg()
+
+			if("eggChose")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.game_state = 1
+				app.game_tick(usr)
+				app.petname = copytext(sanitize(input(usr, "What name for your new pet?", "Name your new pet", "[app.petname]") as null|text),1,MAX_NAME_LEN)
+				app.last_spoken = ""
+
+			if("eggHatch")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_hatch()
+
+			if("eggTalk")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_talk()
+
+			if("eggWalk")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_walk()
+
+			if("eggFeed")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_feed()
+
+			if("eggClean")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_clean()
+
+			if("eggHeal")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_heal()
+
+			if("eggFight")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_fight()
+
+			if("eggVisit")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_visit()
+
+			if("eggWork")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_work()
+
+			if("eggRate")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_rates()
+
+			if("eggCash")
+				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
+				app.button_cash()
+
+
 
 //MAIN FUNCTIONS===================================
 

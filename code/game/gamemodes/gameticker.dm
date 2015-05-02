@@ -148,6 +148,7 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode.announce()
 
+	init_PDAgames_leaderboard()
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -357,6 +358,10 @@ var/global/datum/controller/gameticker/ticker
 
 	mode.process()
 
+	if(world.time > nanocoins_lastchange)
+		nanocoins_lastchange = world.time + rand(3000,15000)
+		nanocoins_rates = (rand(1,30))/10
+
 	/*emergency_shuttle.process()*/
 	watchdog.check_for_update()
 
@@ -423,6 +428,32 @@ var/global/datum/controller/gameticker/ticker
 		if(F.name == name)
 			return F
 
+
+/datum/controller/gameticker/proc/init_PDAgames_leaderboard()
+	init_snake_leaderboard()
+	init_minesweeper_leaderboard()
+
+/datum/controller/gameticker/proc/init_snake_leaderboard()
+	for(var/x=1;x<=PDA_APP_SNAKEII_MAXSPEED;x++)
+		snake_station_highscores += x
+		snake_station_highscores[x] = list()
+		snake_best_players += x
+		snake_best_players[x] = list()
+		var/list/templist1 = snake_station_highscores[x]
+		var/list/templist2 = snake_best_players[x]
+		for(var/y=1;y<=PDA_APP_SNAKEII_MAXLABYRINTH;y++)
+			templist1 += y
+			templist1[y] = 0
+			templist2 += y
+			templist2[y] = "none"
+
+/datum/controller/gameticker/proc/init_minesweeper_leaderboard()
+	minesweeper_station_highscores["beginner"] = 999
+	minesweeper_station_highscores["intermediate"] = 999
+	minesweeper_station_highscores["expert"] = 999
+	minesweeper_best_players["beginner"] = "none"
+	minesweeper_best_players["intermediate"] = "none"
+	minesweeper_best_players["expert"] = "none"
 
 /datum/controller/gameticker/proc/declare_completion()
 	var/ai_completions = "<h1>Round End Information</h1><HR>"
