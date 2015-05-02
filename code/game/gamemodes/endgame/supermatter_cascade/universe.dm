@@ -11,9 +11,12 @@
 	return 0
 
 /datum/universal_state/supermatter_cascade/OnTurfChange(var/turf/T)
-	var/turf/space/spess = T
-	if(istype(spess))
-		spess.overlays += "end01"
+	if(T.name == "space")
+		T.overlays += "end01"
+	else
+		T.overlays -= "end01"
+		if(!T.color_lighting_lumcount)
+			T.update_lumcount(1, 160, 255, 0, 0)
 
 /datum/universal_state/supermatter_cascade/DecayTurf(var/turf/T)
 	if(istype(T,/turf/simulated/wall))
@@ -124,14 +127,15 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 		A.updateicon()
 
 /datum/universal_state/supermatter_cascade/proc/OverlaySet()
-	for(var/turf/space/spess in world)
-		spess.overlays += "end01"
+	return
 
 /datum/universal_state/supermatter_cascade/proc/AmbientSet()
 	for(var/turf/T in world)
-		if(istype(T, /turf/space))	continue
-		if(T.z != map.zCentcomm)
-			T.update_lumcount(1, 160, 255, 0, 0)
+		if(istype(T, /turf/space))
+			T.overlays += "end01"
+		else
+			if(T.z != map.zCentcomm)
+				T.update_lumcount(1, 160, 255, 0, 0)
 
 /datum/universal_state/supermatter_cascade/proc/MiscSet()
 	for (var/obj/machinery/firealarm/alm in world)
