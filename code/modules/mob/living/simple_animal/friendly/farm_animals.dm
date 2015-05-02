@@ -12,8 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
-	meat_amount = 4
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 4)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -98,8 +97,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
-	meat_amount = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -161,8 +159,7 @@
 	density = 0
 	speak_chance = 2
 	turns_per_move = 2
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
-	meat_amount = 1
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -204,10 +201,9 @@ var/global/chicken_count = 0
 	density = 0
 	speak_chance = 2
 	turns_per_move = 3
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	var/egg_type = /obj/item/weapon/reagent_containers/food/snacks/egg
 	var/food_type = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
-	meat_amount = 2
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"

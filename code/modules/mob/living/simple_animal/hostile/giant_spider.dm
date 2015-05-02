@@ -32,8 +32,7 @@
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider
-	meat_amount = 2
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "hits"
@@ -55,8 +54,7 @@
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/spidereggs
-	meat_amount = 4
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8, /obj/item/weapon/reagent_containers/food/snacks/spidereggs = 4)
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 5
@@ -93,12 +91,6 @@
 				spawn(50)
 					stop_automated_movement = 0
 					walk(src,0)
-
-/mob/living/simple_animal/hostile/poison/giant_spider/harvest(mob/living/user)
-	var/leg_amount = rand(4,8)
-	for(var/i=0, i<leg_amount, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/spiderleg(src.loc)
-	..()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(var/C)
 	spawn(100)
