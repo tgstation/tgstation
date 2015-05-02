@@ -42,6 +42,7 @@
 		qdel(ghostimage)
 		ghostimage = null;
 		updateallghostimages()
+	..()
 
 /mob/camera/blob/Login()
 	..()
