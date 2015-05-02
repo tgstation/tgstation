@@ -1,5 +1,0 @@
-author: Xhuis
-delete-after: True
-
-changes: 
-  - rscdel: "Revenants will no longer spawn without admin intervention. They are pending a remake."
