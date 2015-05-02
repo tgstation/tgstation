@@ -47,6 +47,10 @@
 	else
 		return 0
 
+/obj/machinery/bodyscanner/Destroy()
+	..()
+	qdel(connected)
+
 /obj/machinery/bodyscanner/update_icon()
 	if(occupant)
 		if(orient == "LEFT")
@@ -132,7 +136,7 @@
 	set category = "Object"
 	set name = "Eject Body Scanner"
 
-	if(usr.stat != 0)
+	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -143,7 +147,7 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if(usr.stat != 0)
+	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	if(src.occupant)
 		usr << "<span class='notice'>\The [src] is already occupied!</span>"
@@ -180,7 +184,7 @@
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/W as obj, user as mob)
 	if(iscrowbar(W) && occupant)
-		return
+		return ..()
 	if(iswrench(W) && !occupant)
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(orient == "RIGHT")

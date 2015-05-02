@@ -100,7 +100,7 @@
 	return
 
 /obj/structure/morgue/attackby(P as obj, mob/user as mob)
-	if(iscrowbar(P)&&icon_state == "morgue1")
+	if(iscrowbar(P)&&!contents.len)
 		if(do_after(user,50))
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/structure/closet/body_bag(src.loc)

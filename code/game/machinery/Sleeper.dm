@@ -47,14 +47,6 @@
 		else
 			icon_state = "sleeperconsole-r"
 
-/obj/machinery/sleep_console/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(iswrench(W))
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-		if(do_after(user,50))
-			qdel(src)
-	else
-		return ..()
-
 /obj/machinery/sleep_console/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
@@ -180,6 +172,10 @@
 		return
 	return
 
+/obj/machinery/sleeper/Destroy()
+	..()
+	qdel(connected)
+
 /obj/machinery/sleeper/update_icon()
 	if(occupant)
 		if(orient == "LEFT")
@@ -294,7 +290,7 @@
 
 /obj/machinery/sleeper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(iscrowbar(W) && occupant)
-		return
+		return ..()
 	if(iswrench(W)&&!occupant)
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(orient == "RIGHT")
@@ -454,7 +450,7 @@
 	set name = "Eject Sleeper"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat != 0)
+	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -465,13 +461,13 @@
 	set name = "Enter Sleeper"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat != 0 || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.stat != 0 || !(ishuman(usr) || ismonkey(usr)) || (usr.status_flags & FAKEDEATH))
 		return
 
 	if(src.occupant)
 		usr << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 		return
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
