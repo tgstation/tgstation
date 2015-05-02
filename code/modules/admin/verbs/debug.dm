@@ -1079,8 +1079,8 @@ var/global/list/g_fancy_list_of_types = null
 
 	var/dat = "<B>List of things that failed to GC this round</B><BR><BR>"
 
-	for(var/path in SSgarbage.logging)
-		dat += "[path] - [SSgarbage.logging[path]] times<BR>"
+	for(var/path in SSgarbage.didntgc)
+		dat += "[path] - [SSgarbage.didntgc[path]] times<BR>"
 
 	usr << browse(dat, "window=dellog")
 

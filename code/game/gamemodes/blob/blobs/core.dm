@@ -38,6 +38,7 @@
 	blob_cores -= src
 	if(overmind)
 		overmind.blob_core = null
+	overmind = null
 	SSobj.processing.Remove(src)
 	..()
 

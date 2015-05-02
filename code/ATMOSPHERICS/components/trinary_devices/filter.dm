@@ -69,7 +69,7 @@ Filter types:
 	if(old_stat != stat)
 		update_icon()
 
-/obj/machinery/atmospherics/trinary/filter/process()
+/obj/machinery/atmospherics/trinary/filter/process_atmos()
 	..()
 	if(!on)
 		return 0
@@ -143,7 +143,7 @@ Filter types:
 
 	return 1
 
-/obj/machinery/atmospherics/trinary/filter/initialize()
+/obj/machinery/atmospherics/trinary/filter/atmosinit()
 	set_frequency(frequency)
 	return ..()
 

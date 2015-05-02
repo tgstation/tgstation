@@ -17,7 +17,7 @@ var/datum/subsystem/machines/SSmachine
 
 
 /datum/subsystem/machines/stat_entry()
-	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%)\t[processing.len]")
+	..("P:[processing.len]")
 
 
 /datum/subsystem/machines/fire()
