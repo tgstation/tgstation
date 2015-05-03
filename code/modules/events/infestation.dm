@@ -5,8 +5,7 @@
 #define LOC_LIBRARY 4
 #define LOC_HYDRO 5
 #define LOC_VAULT 6
-#define LOC_CONSTR 7
-#define LOC_TECH 8
+#define LOC_TECH 7
 
 #define VERM_MICE    0
 #define VERM_LIZARDS 1
@@ -24,7 +23,7 @@
 
 /datum/event/infestation/start()
 
-	location = rand(0,8)
+	location = rand(0,7)
 	var/list/turf/simulated/floor/turfs = list()
 	var/spawn_area_type
 	switch(location)
@@ -49,9 +48,6 @@
 		if(LOC_VAULT)
 			spawn_area_type = /area/storage/nuke_storage
 			locstring = "the vault"
-		if(LOC_CONSTR)
-			spawn_area_type = /area/construction
-			locstring = "the construction area"
 		if(LOC_TECH)
 			spawn_area_type = /area/storage/tech
 			locstring = "technical storage"
