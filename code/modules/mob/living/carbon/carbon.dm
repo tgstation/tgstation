@@ -310,21 +310,25 @@
 		src << "You must be conscious to do this!"
 	return
 
-/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/unary/starting_machine)
-	for(var/datum/pipeline/pipeline in starting_machine.network.line_members)
-		for(var/atom/A in (pipeline.members || pipeline.edges))
-			var/image/new_image = image(A, A.loc, dir = A.dir)
-			pipes_shown += new_image
-			client.images += new_image
+/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
+	var/datum/pipe_network/network = starting_machine.return_network(starting_machine)
+	if(!network)
+		return
+	for(var/datum/pipeline/pipeline in network.line_members)
+		for(var/obj/machinery/atmospherics/A in (pipeline.members || pipeline.edges))
+			if(!A.pipe_image)
+				A.pipe_image = image(A, A.loc, layer = 20, dir = A.dir) //the 20 puts it above Byond's darkness (not its opacity view)
+			pipes_shown += A.pipe_image
+			client.images += A.pipe_image
 
 /mob/living/proc/remove_ventcrawl()
-	for(var/image/current_image in pipes_shown)
-		client.images -= current_image
+	if(client)
+		for(var/image/current_image in pipes_shown)
+			client.images -= current_image
+		client.eye = src
 
 	pipes_shown.len = 0
 
-	if(client)
-		client.eye = src
 
 /mob/living/carbon/clean_blood()
 	. = ..()
