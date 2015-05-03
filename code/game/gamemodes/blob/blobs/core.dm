@@ -18,6 +18,7 @@
 		create_overmind(new_overmind)
 	if(overmind)
 		adjustcolors(overmind.blob_reagent_datum.color)
+		update_desc(overmind.blob_reagent_datum.name)
 	if(offspring)
 		is_offspring = 1
 	point_rate = new_rate
@@ -108,6 +109,7 @@
 		color = overmind.blob_reagent_datum.color
 		if(B.mind && !B.mind.special_role)
 			B.mind.special_role = "Blob Overmind"
+		update_desc(overmind.blob_reagent_datum.name)
 		spawn(0)
 			if(is_offspring)
 				B.verbs -= /mob/camera/blob/verb/split_consciousness
