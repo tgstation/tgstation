@@ -98,7 +98,7 @@ In short:
 
 		A.updateicon()
 
-/datum/universal_state/hell/proc/OverlayAndAmbientSet()
+/datum/universal_state/hell/OverlayAndAmbientSet()
 	for(var/turf/T in world)
 		if(istype(T, /turf/space))
 			T.overlays += "hell01"

@@ -126,7 +126,7 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 
 		A.updateicon()
 
-/datum/universal_state/supermatter_cascade/proc/OverlayAndAmbientSet()
+/datum/universal_state/supermatter_cascade/OverlayAndAmbientSet()
 	for(var/turf/T in world)
 		if(istype(T, /turf/space))
 			T.overlays += "end01"

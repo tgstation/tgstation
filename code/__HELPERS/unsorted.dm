@@ -923,6 +923,12 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 						fromupdate += T.ChangeTurf(turftoleave)
 					else
 						T.ChangeTurf(/turf/space)
+						switch(universe.name)
+							if("Hell Rising")
+								T.overlays += "hell01"
+							if("Supermatter Cascade")
+								T.overlays += "end01"
+
 
 					refined_src -= T
 					refined_trg -= B
