@@ -1,6 +1,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "pie"
 	trash = /obj/item/trash/plate
 	bitesize = 3
 	w_class = 3
