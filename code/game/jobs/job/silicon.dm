@@ -41,7 +41,7 @@ Cyborg
 
 
 /datum/job/mommi
-	title = "Mobile MMI"
+	title = "MoMMI"
 	flag = MOMMI
 	department_flag = ENGSEC
 	faction = "Station"

@@ -266,14 +266,14 @@
 	return found
 
 
-/obj/item/areaeditor/permit/mommiprints //allows them to add to the station but not change existing stuff, should be multiuse if I did it right
+/obj/item/areaeditor/mommiprints //allows them to add to the station but not change existing stuff, should be multiuse if I did it right
 	name = "MoMMI station blueprints"
 	icon_state = "blueprints"
 	desc = "Blueprints of the station, designed for the passive aggressive spider bots aboard."
 	attack_verb = list("attacked", "bapped", "hit")
 
 
-/obj/item/areaeditor/permit/mommiprints/attack_self(mob/user as mob)
+/obj/item/areaeditor/mommiprints/attack_self(mob/user as mob)
 	. = ..()
 	var/area/A = get_area()
 	if(get_area_type() == AREA_STATION)
@@ -284,5 +284,5 @@
 	onclose(usr, "blueprints")
 
 
-/obj/item/areaeditor/permit/mommiprints/create_area()
+/obj/item/areaeditor/mommiprints/create_area()
 	..()

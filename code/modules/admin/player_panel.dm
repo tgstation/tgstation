@@ -249,7 +249,7 @@
 					else if(isrobot(M))
 						M_job = "Cyborg"
 					else if(ismommi(M))
-						M_job = "Mobile MMI"
+						M_job = "MoMMI"
 					else
 						M_job = "Silicon-based"
 

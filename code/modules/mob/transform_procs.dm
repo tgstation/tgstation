@@ -348,8 +348,6 @@
 
 	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi( loc )
 
-	O.rename_self("MoMMI", 1)
-	O.choose_icon()
 
 	O.gender = gender
 	O.invisibility = 0
@@ -363,8 +361,7 @@
 		O.key = key
 
 	O.loc = loc
-	O.job = "Mobile MMI"
-
+	O.job = "MoMMI"
 	. = O
 	qdel(src)
 

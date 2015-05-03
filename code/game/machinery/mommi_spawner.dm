@@ -125,8 +125,9 @@
 
 	M.invisibility = 0
 	//M.custom_name = created_name
-	M.rename_self("MoMMI", 1)
 	M.choose_icon()
+	M.rename_self("MoMMI", 1)
+
 
 	if(user.mind)		//TODO
 		user.mind.transfer_to(M)
@@ -137,7 +138,7 @@
 	else
 		M.key = user.key
 
-	M.job = "Mobile MMI"
+	M.job = "MoMMI"
 
 	if(M.z==4) // Derelict Z-level?
 		M.add_ion_law("The Derelict is your station.  Do not leave the Derelict.")

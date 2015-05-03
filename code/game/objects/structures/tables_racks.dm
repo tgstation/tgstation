@@ -312,7 +312,8 @@
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(isrobot(user))
-		return
+		if(!ismommi(user))
+			return
 
 	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;
 		if(user.drop_item())

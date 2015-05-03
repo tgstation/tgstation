@@ -70,6 +70,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	else
 		lawupdate = 0
 
+	rename_self("MoMMI", 1)
 	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
 		camera = new /obj/machinery/camera(src)
@@ -90,31 +91,38 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	mmi.brainmob.real_name = src.real_name
 	mmi.brainmob.container = mmi
 	mmi.contents += mmi.brainmob
-
-	updateicon()
+	if(picked == 0)
+		verbs += /mob/living/silicon/robot/mommi/proc/choose_icon
 
 	// Sanity check
 	if(connected_ai && keeper)
 		world << "\red ASSERT FAILURE: connected_ai && keeper in mommi.dm"
+	updatename()
+	updateicon()
 	..()
 
 
 /mob/living/silicon/robot/mommi/proc/choose_icon()
-	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "RepairBot", "Replicator", "Prime") //RepairBot omitted to avoid confusion with drones
-	switch(icontype)
-		if("Replicator") subtype = "replicator"
-		if("Keeper")	 subtype = "keeper"
-		if("RepairBot")	 subtype = "repairbot"
-		if("Hover")	     subtype = "hovermommi"
-		if("Prime")	     subtype = "mommiprime"
-		else			 subtype = "mommi"
-	updateicon()
-	var/answer = input("Is this what you want?", "Mobile MMI", null) in list("Yes", "No")
-	switch(answer)
-		if("No")
-			choose_icon()
-			return
-	picked = 1
+	set category = "Robot Commands"
+	set name = "Change appearance"
+	set desc = "Changes your look"
+	if (client)
+		var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "RepairBot", "Replicator", "Prime")
+		switch(icontype)
+			if("Replicator") subtype = "replicator"
+			if("Keeper")	 subtype = "keeper"
+			if("RepairBot")	 subtype = "repairbot"
+			if("Hover")	     subtype = "hovermommi"
+			if("Prime")	     subtype = "mommiprime"
+			else			 subtype = "mommi"
+		updateicon()
+		var/answer = input("Is this what you want?", "Mobile MMI", null) in list("Yes", "No")
+		switch(answer)
+			if("No")
+				choose_icon()
+				return
+		picked = 1
+		verbs -= /mob/living/silicon/robot/mommi/proc/choose_icon
 
 /mob/living/silicon/robot/mommi/pick_module()
 
@@ -591,3 +599,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			src << "<span class='notice'>Meson overlay enabled.</span>"
 		if ("Disable")
 			src << "Sensor augmentations disabled."
+
+/mob/living/silicon/robot/mommi/verb/change_sprite()
+	set name = "Change Icon"
+

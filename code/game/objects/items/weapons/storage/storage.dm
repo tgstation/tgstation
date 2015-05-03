@@ -216,6 +216,7 @@
 			usr << "<span class='notice'>[src] is full, make some space.</span>"
 		return 0 //Storage item is full
 
+
 	if(can_hold.len)
 		var/ok = 0
 		for(var/A in can_hold)
@@ -296,6 +297,7 @@
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
 	if(!istype(W)) return 0
 
+
 	if(istype(src, /obj/item/weapon/storage/fancy))
 		var/obj/item/weapon/storage/fancy/F = src
 		F.update_icon(1)
@@ -306,7 +308,10 @@
 
 	if(ismob(loc))
 		W.dropped(usr)
-	W.layer = initial(W.layer)
+	if(ismob(new_location))
+		W.layer = 20
+	else
+		W.layer = initial(W.layer)
 	W.loc = new_location
 
 	if(usr)
@@ -325,8 +330,14 @@
 	..()
 
 	if(isrobot(user))
-		user << "<span class='notice'>You're a robot. No.</span>"
-		return 0	//Robots can't interact with storage items.
+		if(ismommi(user))
+			var/mob/living/silicon/robot/mommi/M = user
+			if(M.is_in_modules(W))
+				user << "<span class='notice'>You can't throw away something built into you.</span>"
+				return //Mommis cant give away their modules but can place other items
+		else
+			user << "<span class='notice'> You're a robot. No.</span>"
+			return //Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
 		return 0

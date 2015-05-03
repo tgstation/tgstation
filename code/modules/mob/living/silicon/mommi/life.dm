@@ -127,23 +127,22 @@
 	return 1
 
 
-	if (src.healths)
-		if (src.stat != 2)
-			switch(health)
-				if(60 to INFINITY)
-					src.healths.icon_state = "health0"
-				if(30 to 60)
-					src.healths.icon_state = "health1"
-				if(10 to 30)
-					src.healths.icon_state = "health3"
-				if(0 to 10)
-					src.healths.icon_state = "health4"
-				if(config.health_threshold_dead to 0)
-					src.healths.icon_state = "health5"
-				else
-					src.healths.icon_state = "health6"
-		else
-			src.healths.icon_state = "health7"
+	if (src.stat != 2)
+		switch(health)
+			if(60 to INFINITY)
+				src.healths.icon_state = "health0"
+			if(30 to 60)
+				src.healths.icon_state = "health1"
+			if(10 to 30)
+				src.healths.icon_state = "health3"
+			if(0 to 10)
+				src.healths.icon_state = "health4"
+			if(config.health_threshold_dead to 0)
+				src.healths.icon_state = "health5"
+			else
+				src.healths.icon_state = "health6"
+	else
+		src.healths.icon_state = "health7"
 
 	if (src.syndicate && src.client)
 		if(ticker.mode.name == "traitor")
