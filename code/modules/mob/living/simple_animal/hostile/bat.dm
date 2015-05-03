@@ -112,3 +112,37 @@
 		spawn(10)
 			if(!src.stat)
 				horde()
+
+
+
+/mob/living/simple_animal/hostile/scarybat/book
+	name = "flying book"
+	desc = "An enchanted book, flying through the air by flapping it's pages."
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "bookbat"
+	icon_living = "bookbat"
+	icon_dead = "bookbat_dead"
+	icon_gib = "bookbat_dead"
+	speak_chance = 0
+	turns_per_move = 3
+	response_help = "pats the"
+	response_disarm = "gently pushes aside the"
+	response_harm = "hits the"
+	speed = 4
+	maxHealth = 15
+	health = 15
+	var/book_cover
+
+	harm_intent_damage = 8
+	melee_damage_lower = 5
+	melee_damage_upper = 10
+	attacktext = "clamps shut on"
+	attack_sound = 'sound/effects/pageturn3.ogg'
+
+mob/living/simple_animal/hostile/scarybat/book/New()
+	..()
+	if(!book_cover)
+		book_cover = pick( list("red","purple","blue","green") )
+	icon_state = "bookbat_[book_cover]"
+	icon_living = "bookbat_[book_cover]"
+	icon_dead = "bookbat_[book_cover]_dead"
