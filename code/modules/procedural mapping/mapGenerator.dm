@@ -70,8 +70,7 @@
 	for(var/i = lilZ, i <= bigZ+offByOneOffset, i++)
 		var/theRadius = radius
 		if(i != sphereMagic)
-			if(i != evenCheckZ)
-				theRadius = max(radius/max((2*abs(sphereMagic-i)),1),1)
+			theRadius = max(radius/max((2*abs(sphereMagic-i)),1),1)
 
 
 		map |= circlerange(locate(centerX,centerY,i),theRadius)
