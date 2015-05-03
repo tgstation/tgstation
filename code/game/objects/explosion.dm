@@ -74,7 +74,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 							M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
 
 		//postpone processing for a bit
-		var/postponeCycles = max(devastation_range/8,1)
+		var/postponeCycles = max(round(devastation_range/8),1)
 		SSlighting.postpone(postponeCycles)
 		SSpower.postpone(postponeCycles)
 
