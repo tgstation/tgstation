@@ -430,7 +430,7 @@ client/proc/one_click_antag()
 
 		//Assign antag status and the mission
 		ticker.mode.traitors += newmob.mind
-		newmob.mind.special_role = "centcom"
+		newmob.mind.special_role = "official"
 		var/datum/objective/missionobj = new
 		missionobj.owner = newmob.mind
 		missionobj.explanation_text = mission
@@ -526,7 +526,7 @@ client/proc/one_click_antag()
 
 			//Assign antag status and the mission
 			ticker.mode.traitors += ERTOperative.mind
-			ERTOperative.mind.special_role = "ert"
+			ERTOperative.mind.special_role = "ERT"
 			var/datum/objective/missionobj = new
 			missionobj.owner = ERTOperative.mind
 			missionobj.explanation_text = mission
