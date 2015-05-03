@@ -315,10 +315,11 @@
 	if(!network)
 		return
 	for(var/datum/pipeline/pipeline in network.line_members)
-		for(var/atom/A in (pipeline.members || pipeline.edges))
-			var/image/new_image = image(A, A.loc, dir = A.dir)
-			pipes_shown += new_image
-			client.images += new_image
+		for(var/obj/machinery/atmospherics/A in (pipeline.members || pipeline.edges))
+			if(!A.pipe_image)
+				A.pipe_image = image(A, A.loc, layer = 20, dir = A.dir) //the 20 puts it above Byond's darkness (not its opacity view)
+			pipes_shown += A.pipe_image
+			client.images += A.pipe_image
 
 /mob/living/proc/remove_ventcrawl()
 	if(client)
