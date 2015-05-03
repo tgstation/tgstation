@@ -923,7 +923,7 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 						fromupdate += T.ChangeTurf(turftoleave)
 					else
 						T.ChangeTurf(/turf/space)
-						switch(universe.name)
+						switch(universe.name)	//for some reason using OnTurfChange doesn't actually do anything in this case.
 							if("Hell Rising")
 								T.overlays += "hell01"
 							if("Supermatter Cascade")
