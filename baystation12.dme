@@ -1352,6 +1352,7 @@
 #include "code\modules\paperwork\nano_paper.dm"
 #include "code\modules\paperwork\nano_paper_bin.dm"
 #include "code\modules\paperwork\paper.dm"
+#include "code\modules\paperwork\paper_folded.dm"
 #include "code\modules\paperwork\paper_pack.dm"
 #include "code\modules\paperwork\paperbin.dm"
 #include "code\modules\paperwork\pen.dm"

@@ -14,8 +14,6 @@
 	throw_speed = 1
 	layer = 3.9
 	pressure_resistance = 1
-	slot_flags = SLOT_HEAD
-	body_parts_covered = HEAD
 	attack_verb = list("slapped")
 	autoignition_temperature = AUTOIGNITION_PAPER
 	fire_fuel = 1
@@ -41,6 +39,7 @@
 		update_icon()
 		updateinfolinks()
 		return
+	verbs -= /obj/item/weapon/paper/verb/wipe_color
 
 /obj/item/weapon/paper/update_icon()
 	icon_state=initial(icon_state)
@@ -54,14 +53,14 @@
 			user << browse_rsc(img.img, "tmp_photo.png")
 			info_2 = "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' /><br><a href='?src=\ref[src];picture=1'>Remove</a><br>"
 		if(!(istype(user, /mob/living/carbon/human) || istype(user, /mob/dead/observer) || istype(user, /mob/living/silicon)))
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_2][stars(info)][stamps]</BODY></HTML>", "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY[color ? " bgcolor=[src.color]":""]>[info_2][stars(info)][stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_2][info][stamps]</BODY></HTML>", "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY[color ? " bgcolor=[src.color]":""]>[info_2][info][stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
 		..() //Only show a regular description if it is too far away to read.
-		user << "<span class='notice'>It is too far away.</span>"
+		user << "<span class='notice'>It is too far away to read.</span>"
 
 /obj/item/weapon/paper/verb/rename()
 	set name = "Rename paper"
@@ -94,10 +93,10 @@
 	else //cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
 	if(dist < 2)
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
+		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY[color ? " bgcolor=[src.color]":""]>[info][stamps]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
 	else
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
+		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY[color ? " bgcolor=[src.color]":""]>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
 	return
 
@@ -249,7 +248,7 @@
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
 
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]") // Update the window
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY[color ? " bgcolor=[src.color]":""]>[info_links][stamps]</BODY></HTML>", "window=[name]") // Update the window
 
 			update_icon()
 
@@ -267,7 +266,7 @@
 		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )
 			P:RenamePaper(user,src)
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY[color ? " bgcolor=[src.color]":""]>[info_links][stamps]</BODY></HTML>", "window=[name]")
 		//openhelp(user)
 		return
 
@@ -299,8 +298,94 @@
 		img = P
 		user.drop_item(P, src)
 		user << "<span class='notice'>You attach the photo to the piece of paper.</span>"
+	else if(P.is_hot())
+		src.burn_paper(user)
+		return //no fingerprints, paper is gone
 	add_fingerprint(user)
+	return ..()
+
+/obj/item/proc/burn_paper(mob/user)
+	var/prot = 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (M_RESIST_HEAT in H.mutations)
+			prot = 1
+		else if(H.gloves)
+			var/obj/item/clothing/gloves/G = H.gloves
+			if(G.max_heat_protection_temperature)
+				prot = (G.max_heat_protection_temperature > AUTOIGNITION_PAPER)
+		if(!prot && (M_CLUMSY in H.mutations) && prob(50)) //only fail if human
+			H.apply_damage(10,BURN,(pick("l_hand", "r_hand")))
+			user.drop_hands()
+			user.visible_message( \
+				"<span class='notice'>[user] tries to burn the [src.name], but burns \his hand trying!</span>", \
+				"<span class='warning'>You try to burn the [src.name], but burn your hand trying!</span>")
+			return //you fail before even managing to burn the paper!
+	if(prot) //user is human and is protected from fire, let's make them a badass
+		user.visible_message( \
+			"<span class='warning'>[user] holds up the [src.name] and sets it on fire, holding it in \his hand as it burns down to ashes. Damn, \he's cold.</span>", \
+			"<span class='warning'>You hold up the [src.name] and set it on fire, holding it in your hand as it burns down to ashes. Damn, you're cold.</span>")
+	else
+		user.visible_message( \
+			"<span class='warning'>[user] holds up the [src.name] and sets it on fire, reducing it to a heap of ashes.</span>", \
+			"<span class='warning'>You hold up the [src.name] and set it on fire, reducing it to a heap of ashes.</span>")
+	new ashtype(get_turf(src)) //not using ashify() since it calls for src.loc rather than get_turf(src), and requires the object to be on fire also
+	qdel(src)
 	return
+
+var/global/list/paper_folding_results = list ( \
+	"paper plane" = /obj/item/weapon/p_folded/plane,
+	"paper hat" = /obj/item/weapon/p_folded/hat,
+	"ball of paper" = /obj/item/weapon/p_folded/ball,
+	"folded note" = /obj/item/weapon/p_folded/note_small,
+	"origami crane" = /obj/item/weapon/p_folded/crane,
+	"origami boat" = /obj/item/weapon/p_folded/boat,
+	"origami heart" = /obj/item/weapon/p_folded/folded_heart,
+	)
+
+/obj/item/weapon/paper/verb/fold()
+	set category = "Object"
+	set name = "Fold paper"
+	set src in usr
+
+	if (!canfold(usr)) return
+	. = paper_folding_results[(input("What do you want to make the paper into?", "Paper Folding") as null|anything in paper_folding_results)]
+	if (. == null) return
+	if (!canfold(usr)) return //second check in case some chucklefuck moves the paper or falls down while the menu is open
+
+	usr.drop_item(src)	//Drop the original paper to free our hand and call proper inventory handling code
+	var/obj/item/weapon/p_folded/P = new .(get_turf(usr)) 	//Let's make a new item
+	P.unfolded = src										//that unfolds into the original paper
+	src.loc = P												//and also contains it, for good measure.
+	usr.put_in_hands(P)
+	P.pixel_y = src.pixel_y
+	P.pixel_x = src.pixel_x
+	if (istype(src, /obj/item/weapon/paper/nano))
+		P.color = "#9A9A9A"
+		P.nano = 1
+	usr.visible_message("<span class='notice'>[usr] folds \the [src.name] into a [P.name].</span>", "<span class='notice'>You fold \the [src.name] into a [P.name].</span>")
+	P.add_fingerprint(usr)
+	return
+
+/obj/item/weapon/paper/proc/canfold(mob/user)
+	if(!user)
+		return 0
+	if(user.stat || user.restrained())
+		usr << "<span class='notice'>You can't do that while restrained.</span>"
+		return 0
+	if(user.l_hand != src && user.r_hand != src)
+		usr << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+		return 0
+	return 1
+
+/obj/item/weapon/paper/verb/wipe_color() //since we don't have erasers or anything
+	set name = "Wipe coloring"
+	set category = "Object"
+	set src in usr
+	if(src.color)
+		usr << "<span class='notice'>You wipe the color off the [src.name].</span>"
+		src.color = null
+		src.verbs -= /obj/item/weapon/paper/verb/wipe_color
 
 /*
  * Premade paper
