@@ -544,11 +544,12 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	group = "Security"
 
 /datum/supply_packs/securitybarriers
-	name = "Security Barriers"
+	name = "Security Checkpoint Equipment"
 	contains = list(/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier,
-					/obj/machinery/deployable/barrier)
+					/obj/machinery/deployable/barrier,
+					/obj/machinery/detector)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure/gear
 	containername = "Security Barriers crate"
