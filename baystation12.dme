@@ -748,6 +748,7 @@
 #include "code\game\objects\structures\ladders.dm"
 #include "code\game\objects\structures\lamarr_cage.dm"
 #include "code\game\objects\structures\lattice.dm"
+#include "code\game\objects\structures\lspace.dm"
 #include "code\game\objects\structures\mirror.dm"
 #include "code\game\objects\structures\mop_bucket.dm"
 #include "code\game\objects\structures\morgue.dm"
