@@ -131,6 +131,14 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "MULEbot Crate"
 	group = "Supplies"
 
+/datum/supply_packs/porcelain
+	name = "Porcelain Crate"
+	contains = list()
+	cost = 10
+	containertype = /obj/structure/largecrate/porcelain
+	containername = "Porcelain Crate"
+	group = "Supplies"
+
 /datum/supply_packs/metal50
 	name = "50 Metal Sheets"
 	contains = list(/obj/item/stack/sheet/metal)

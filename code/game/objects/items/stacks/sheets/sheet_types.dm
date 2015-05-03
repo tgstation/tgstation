@@ -11,39 +11,30 @@
  * Metal
  */
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
-	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("chair", /obj/structure/stool/bed/chair, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
+	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
-	new/datum/stack_recipe_list("office chairs",list( \
+	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wall girders",   /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("machine frame",  /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("mirror frame",   /obj/structure/mirror_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("turret frame",   /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	null, \
+	new/datum/stack_recipe_list("chairs and beds",list( \
 		new/datum/stack_recipe("dark office chair",  /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
 		new/datum/stack_recipe("light office chair", /obj/structure/stool/bed/chair/office/light, 5, one_per_turf = 1, on_floor = 1), \
-		), 5), \
-	new/datum/stack_recipe_list("comfy chairs", list( \
 		new/datum/stack_recipe("beige comfy chair", /obj/structure/stool/bed/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
 		new/datum/stack_recipe("black comfy chair", /obj/structure/stool/bed/chair/comfy/black, 2, one_per_turf = 1, on_floor = 1), \
 		new/datum/stack_recipe("brown comfy chair", /obj/structure/stool/bed/chair/comfy/brown, 2, one_per_turf = 1, on_floor = 1), \
 		new/datum/stack_recipe("lime comfy chair",  /obj/structure/stool/bed/chair/comfy/lime,  2, one_per_turf = 1, on_floor = 1), \
 		new/datum/stack_recipe("teal comfy chair",  /obj/structure/stool/bed/chair/comfy/teal,  2, one_per_turf = 1, on_floor = 1), \
-		), 2), \
-	null, \
+		new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("chair", /obj/structure/stool/bed/chair, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = 1, on_floor = 1), \
+		)), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2), \
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = 1, on_floor = 1), \
-	null, \
-	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = 1, on_floor = 1), \
-	null, \
-	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
-	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
-	null, \
-	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("machine frame",/obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("nanomed frame",/obj/item/mounted/frame/wallmed,                           3, time = 25, one_per_turf = 0, on_floor = 1), \
-	new/datum/stack_recipe("mirror frame",/obj/structure/mirror_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("iv drip",      /obj/machinery/iv_drip,                            2, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("meat spike",   /obj/structure/kitchenspike,                       2, time = 25, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe_list("airlock assemblies", list( \
 		new/datum/stack_recipe("standard airlock assembly",      /obj/structure/door_assembly,                            4, time = 50, one_per_turf = 1, on_floor = 1), \
@@ -64,23 +55,29 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 /*		new/datum/stack_recipe("multi-tile airlock assembly",    /obj/structure/door_assembly/multi_tile,                 4, time = 50, one_per_turf = 1, on_floor = 1), \ */
 		), 4), \
 	null, \
-	new/datum/stack_recipe("embedded controller frame",          /obj/item/mounted/frame/airlock_controller,                      1, time = 50, one_per_turf = 0, on_floor = 1), \
-	new/datum/stack_recipe("access button frame",                /obj/item/mounted/frame/access_button,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
-	new/datum/stack_recipe("airlock sensor frame",               /obj/item/mounted/frame/airlock_sensor,                          1, time = 50, one_per_turf = 0, on_floor = 1), \
-	new/datum/stack_recipe("mass driver button frame",           /obj/item/mounted/frame/driver_button,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
-	null, \
+	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("iv drip",        /obj/machinery/iv_drip,                            2, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("meat spike",     /obj/structure/kitchenspike,                       2, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("shower",         /obj/machinery/shower/, 2, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
 	new/datum/stack_recipe("desk bell shell", /obj/item/device/deskbell_assembly, 2), \
-	new/datum/stack_recipe("light fixture frame", /obj/item/mounted/frame/light_fixture, 2), \
-	new/datum/stack_recipe("small light fixture frame", /obj/item/mounted/frame/light_fixture/small, 1), \
 	null, \
-	new/datum/stack_recipe("apc frame", /obj/item/mounted/frame/apc_frame, 2), \
-	new/datum/stack_recipe("air alarm frame", /obj/item/mounted/frame/alarm_frame, 2), \
-	new/datum/stack_recipe("fire alarm frame", /obj/item/mounted/frame/firealarm, 2), \
-	new/datum/stack_recipe("lightswitch frame", /obj/item/mounted/frame/light_switch, 2), \
-	new/datum/stack_recipe("intercom frame", /obj/item/mounted/frame/intercom, 2), \
-	new/datum/stack_recipe("requests console", /obj/machinery/requests_console, 2), \
-	new/datum/stack_recipe("ATM", /obj/machinery/atm/, 2), \
+	new/datum/stack_recipe_list("mounted frames", list( \
+		new/datum/stack_recipe("apc frame", /obj/item/mounted/frame/apc_frame, 2), \
+		new/datum/stack_recipe("air alarm frame", /obj/item/mounted/frame/alarm_frame, 2), \
+		new/datum/stack_recipe("fire alarm frame", /obj/item/mounted/frame/firealarm, 2), \
+		new/datum/stack_recipe("lightswitch frame", /obj/item/mounted/frame/light_switch, 2), \
+		new/datum/stack_recipe("intercom frame", /obj/item/mounted/frame/intercom, 2), \
+		new/datum/stack_recipe("requests console", /obj/machinery/requests_console, 2), \
+		new/datum/stack_recipe("ATM", /obj/machinery/atm/, 2), \
+		new/datum/stack_recipe("nanomed frame",  /obj/item/mounted/frame/wallmed,                           3, time = 25, one_per_turf = 0, on_floor = 1), \
+		new/datum/stack_recipe("light fixture frame", /obj/item/mounted/frame/light_fixture, 2), \
+		new/datum/stack_recipe("small light fixture frame", /obj/item/mounted/frame/light_fixture/small, 1), \
+		new/datum/stack_recipe("embedded controller frame",          /obj/item/mounted/frame/airlock_controller,                      1, time = 50, one_per_turf = 0, on_floor = 1), \
+		new/datum/stack_recipe("access button frame",                /obj/item/mounted/frame/access_button,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
+		new/datum/stack_recipe("airlock sensor frame",               /obj/item/mounted/frame/airlock_sensor,                          1, time = 50, one_per_turf = 0, on_floor = 1), \
+		new/datum/stack_recipe("mass driver button frame",           /obj/item/mounted/frame/driver_button,                           1, time = 50, one_per_turf = 0, on_floor = 1), \
+		)), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/machinery/door/mineral/iron, 20, one_per_turf = 1, on_floor = 1), \
 )
@@ -158,6 +155,8 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("RUST fuel assembly port frame", /obj/item/mounted/frame/rust_fuel_assembly_port, 12, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("RUST fuel compressor frame", /obj/item/mounted/frame/rust_fuel_compressor, 12, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("Mass Driver frame", /obj/machinery/mass_driver_frame, 3, time = 50, one_per_turf = 1), \
+	new/datum/stack_recipe("Tank dispenser", /obj/structure/dispenser/empty, 2, time = 10, one_per_turf = 1), \
+	new/datum/stack_recipe("Fireaxe cabinet", /obj/structure/closet/fireaxecabinet/, 2, time = 50, one_per_turf = 1), \
 	)
 
 /obj/item/stack/sheet/plasteel
@@ -198,6 +197,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = 0, on_floor = 0), \
 	new/datum/stack_recipe("bowl", /obj/item/trash/bowl, 1), \
+	new/datum/stack_recipe("notice board", /obj/structure/noticeboard, 2, time = 15, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/wood

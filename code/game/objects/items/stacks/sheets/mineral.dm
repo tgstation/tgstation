@@ -8,6 +8,7 @@ Mineral Sheets
 		- Gold
 		- Silver
 		- Clown
+		- Plastic
 	Others:
 		- Adamantine
 		- Mythril
@@ -152,6 +153,7 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("blood bag", /obj/item/weapon/reagent_containers/blood/empty, 3, on_floor = 1), \
 	new/datum/stack_recipe("plastic coat", /obj/item/clothing/suit/raincoat, 5), \
 	new/datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("water-cooler", /obj/structure/reagent_dispensers/water_cooler, 4, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/mineral/plastic/New(var/loc, var/amount=null)
