@@ -13,6 +13,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/screwdriver(), \
 		new /obj/item/weapon/wirecutters(), \
 		new /obj/item/weapon/wrench(), \
+		new /obj/item/weapon/solder(),\
 		new /obj/item/clothing/head/welding(), \
 		new /obj/item/weapon/stock_parts/console_screen(), \
 		getFromPool(/obj/item/stack/sheet/metal,null), \

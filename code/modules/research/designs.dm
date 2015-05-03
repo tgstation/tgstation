@@ -460,7 +460,7 @@ k
 	req_tech = list("powerstorage"=2)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/module/power_control
+	build_path = /obj/item/weapon/circuitboard/power_control
 
 /datum/design/solarcontrol
 	name = "Circuit Design (Solar Control)"
@@ -1770,7 +1770,7 @@ k
 	name = "PDA Painter Board"
 	desc = "The circuit board for a PDA Painter."
 	id = "pdapainter"
-	req_tech = list("programming" = 2, "engineering" = 2)
+	req_tech = list("programming" = 3, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pdapainter
@@ -2712,7 +2712,7 @@ k
 	name = "Circuit Design (Microwave)"
 	desc = "Allows for the construction of circuit boards used to build a Microwave."
 	id = "microwave"
-	req_tech = list("programming" = 3,"engineering" = 2,"magnets" = 3)
+	req_tech = list("programming" = 2,"engineering" = 2,"magnets" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/microwave

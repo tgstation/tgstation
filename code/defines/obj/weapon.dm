@@ -691,7 +691,8 @@
 	icon_state = "card_mod"
 	desc = "An electronic module for reading data and ID cards."
 
-/obj/item/weapon/module/power_control
+/obj/item/weapon/circuitboard/power_control
+	icon = 'icons/obj/module.dmi'
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
