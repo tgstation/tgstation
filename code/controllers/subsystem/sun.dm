@@ -19,6 +19,9 @@ var/datum/subsystem/sun/SSsun
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
 
+/datum/subsystem/sun/stat_entry(msg)
+	..("P:[solars.len]")
+
 /datum/subsystem/sun/fire()
 	angle = (360 + angle + rate * 6) % 360	 // increase/decrease the angle to the sun, adjusted by the rate
 

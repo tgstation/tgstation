@@ -38,7 +38,7 @@
 		update_icon()
 
 
-/obj/machinery/atmospherics/unary/outlet_injector/process()
+/obj/machinery/atmospherics/unary/outlet_injector/process_atmos()
 	..()
 	injecting = 0
 
@@ -101,12 +101,14 @@
 
 	return 1
 
-/obj/machinery/atmospherics/unary/outlet_injector/initialize()
+/obj/machinery/atmospherics/unary/outlet_injector/atmosinit()
+	set_frequency(frequency)
 	..()
 
-	set_frequency(frequency)
-	spawn(rand(25,50))
-		broadcast_status()
+/obj/machinery/atmospherics/unary/outlet_injector/initialize()
+	..()
+	broadcast_status()
+
 
 /obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))

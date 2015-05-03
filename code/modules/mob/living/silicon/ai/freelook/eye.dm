@@ -59,6 +59,7 @@
 /mob/living/silicon/ai/Destroy()
 	eyeobj.ai = null
 	qdel(eyeobj) // No AI, no Eye
+	eyeobj = null
 	..()
 
 /atom/proc/move_camera_by_click()

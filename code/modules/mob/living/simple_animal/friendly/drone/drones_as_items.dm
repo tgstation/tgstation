@@ -16,7 +16,7 @@
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
 /obj/item/drone_shell/attack_ghost(mob/user)
-	if(jobban_isbanned(user,"pAI"))
+	if(jobban_isbanned(user,"drone"))
 		return
 
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")

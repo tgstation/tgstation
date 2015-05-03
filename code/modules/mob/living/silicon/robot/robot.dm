@@ -59,6 +59,7 @@
 	var/toner = 0
 	var/tonermax = 40
 	var/jetpackoverlay = 0
+	var/braintype = "Cyborg"
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -72,7 +73,6 @@
 	robot_modules_background.layer = 19	//Objects that appear on screen are on layer 20, UI should be just below it.
 
 	ident = rand(1, 999)
-	updatename()
 	update_icons()
 
 	if(!cell)
@@ -100,17 +100,20 @@
 	..()
 
 	//MMI stuff. Held togheter by magic. ~Miauw
-	mmi = new(src)
-	mmi.brain = new /obj/item/organ/brain(mmi)
-	mmi.brain.name = "[real_name]'s brain"
-	mmi.locked = 1
-	mmi.icon_state = "mmi_full"
-	mmi.name = "Man-Machine Interface: [real_name]"
-	mmi.brainmob = new(src)
-	mmi.brainmob.name = src.real_name
-	mmi.brainmob.real_name = src.real_name
-	mmi.brainmob.container = mmi
-	mmi.contents += mmi.brainmob
+	if(!mmi || !mmi.brainmob)
+		mmi = new(src)
+		mmi.brain = new /obj/item/organ/brain(mmi)
+		mmi.brain.name = "[real_name]'s brain"
+		mmi.locked = 1
+		mmi.icon_state = "mmi_full"
+		mmi.name = "Man-Machine Interface: [real_name]"
+		mmi.brainmob = new(src)
+		mmi.brainmob.name = src.real_name
+		mmi.brainmob.real_name = src.real_name
+		mmi.brainmob.container = mmi
+		mmi.contents += mmi.brainmob
+
+	updatename()
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
@@ -123,6 +126,7 @@
 		if(T)	mmi.loc = T
 		if(mmi.brainmob)
 			mind.transfer_to(mmi.brainmob)
+			mmi.update_icon()
 		else
 			src << "<span class='boldannounce'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>"
 			ghostize()
@@ -236,7 +240,7 @@
 	if(custom_name)
 		changed_name = custom_name
 	else
-		changed_name = "[(designation ? "[designation] " : "")]Cyborg-[num2text(ident)]"
+		changed_name = "[(designation ? "[designation] " : "")][mmi.braintype]-[num2text(ident)]"
 	real_name = changed_name
 	name = real_name
 	if(camera)
@@ -401,28 +405,31 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if (src == user)
 			user << "<span class='warning'>You lack the reach to be able to repair yourself!</span>"
-			return 1
+			return
 		if (src.health >= src.maxHealth)
 			user << "<span class='warning'>[src] is already in good condition!</span>"
-			return 1
-		if (WT.remove_fuel(0, user))
+			return
+		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
 			visible_message("[user] has fixed some of the dents on [src].")
-			return 0
+			return
 		else
 			user << "<span class='warning'>The welder must be on for this task!</span>"
-			return 1
+			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		var/obj/item/stack/cable_coil/coil = W
-		if (coil.use(1))
-			adjustFireLoss(-30)
-			updatehealth()
-			user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
+		if (fireloss > 0)
+			if (coil.use(1))
+				adjustFireLoss(-30)
+				updatehealth()
+				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
+			else
+				user << "<span class='warning'>You need more cable to repair [src]!</span>"
 		else
-			user << "<span class='warning'>You need one length of cable to repair [src]!</span>"
+			user << "The wires seem fine, there's no need to fix them."
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
@@ -447,7 +454,6 @@
 			W.loc = src
 			cell = W
 			user << "<span class='notice'>You insert the power cell.</span>"
-//			chargecount = 0
 		update_icons()
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
@@ -720,7 +726,7 @@
 /mob/living/silicon/robot/update_icons()
 
 	overlays.Cut()
-	if(stat == 0)
+	if(stat == CONSCIOUS)
 		switch(icon_state)
 			if("robot")
 				overlays += "eyes-standard"

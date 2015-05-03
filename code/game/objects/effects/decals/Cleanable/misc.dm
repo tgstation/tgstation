@@ -106,6 +106,7 @@
 /obj/effect/decal/cleanable/vomit/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
+	viruses = null
 	..()
 
 /obj/effect/decal/cleanable/tomato_smudge

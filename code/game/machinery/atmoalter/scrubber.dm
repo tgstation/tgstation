@@ -89,7 +89,7 @@
 
 	return
 
-/obj/machinery/portable_atmospherics/scrubber/process()
+/obj/machinery/portable_atmospherics/scrubber/process_atmos()
 	..()
 
 	if(on)
@@ -139,9 +139,14 @@
 				environment.merge(removed)
 			else
 				loc.assume_air(removed)
-		//src.update_icon()
+
+/obj/machinery/portable_atmospherics/scrubber/process_atmos()
+	..()
 	src.updateDialog()
 	return
+
+
+
 
 /obj/machinery/portable_atmospherics/scrubber/return_air()
 	return air_contents

@@ -66,7 +66,7 @@ turf/simulated/New()
 
 turf/simulated/Del()
 	if(active_hotspot)
-		qdel(active_hotspot)
+		active_hotspot.Kill()
 	..()
 
 turf/simulated/assume_air(datum/gas_mixture/giver)
@@ -274,11 +274,11 @@ atom/movable/var/pressure_resistance = 5
 atom/movable/var/last_forced_movement = 0
 
 atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
-	if(last_forced_movement >= SSair.times_fired)
+	if(last_forced_movement >= world.time-10)
 		return 0
 	else if(!anchored)
 		if(pressure_difference > pressure_resistance)
-			last_forced_movement = SSair.times_fired
+			last_forced_movement = world.time
 			spawn step(src, direction)
 		return 1
 

@@ -23,16 +23,16 @@ Sorry Giacom. Please don't be mad :(
 
 
 /mob/living/Destroy()
-	. = ..()
+	..()
 
 	for(var/mob/living/simple_animal/drone/D in player_list)
 		for(var/image/I in staticOverlays)
 			D.staticOverlays.Remove(I)
 			D.client.images.Remove(I)
-			del(I)
+			qdel(I)
 	staticOverlays.len = 0
 
-	del(src)
+	return QDEL_HINT_HARDDEL_NOW
 
 
 /mob/living/proc/generateStaticOverlay()

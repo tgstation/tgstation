@@ -13,7 +13,9 @@ var/datum/subsystem/job/SSjob
 	NEW_SS_GLOBAL(SSjob)
 
 
-/datum/subsystem/job/Initialize()
+/datum/subsystem/job/Initialize(timeofday, zlevel)
+	if (zlevel)
+		return ..()
 	SetupOccupations()
 	LoadJobs("config/jobs.txt")
 	..()

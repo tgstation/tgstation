@@ -60,7 +60,7 @@ Housekeeping and pipe network stuff below
 	..()
 
 
-/obj/machinery/atmospherics/unary/initialize()
+/obj/machinery/atmospherics/unary/atmosinit()
 	for(var/obj/machinery/atmospherics/target in get_step(src, dir))
 		if(target.initialize_directions & get_dir(target,src))
 			node = target
@@ -68,6 +68,7 @@ Housekeeping and pipe network stuff below
 	if(level == 2)
 		showpipe = 1
 	update_icon()
+	..()
 
 /obj/machinery/atmospherics/unary/construction()
 	..()

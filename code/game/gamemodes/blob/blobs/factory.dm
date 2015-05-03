@@ -17,6 +17,7 @@
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
 		if(spore.factory == src)
 			spore.factory = null
+	spores = null
 	..()
 
 /obj/effect/blob/factory/PulseAnimation(var/activate = 0)

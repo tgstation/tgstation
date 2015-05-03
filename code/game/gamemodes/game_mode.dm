@@ -34,6 +34,7 @@
 	var/list/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
+	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
 
 	var/const/waittime_l = 600
@@ -174,6 +175,19 @@
 	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
 		return 1
 	if(!round_converted && (!config.continuous[config_tag] || (config.continuous[config_tag] && config.midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
+		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
+			for(var/mob/living/Player in mob_list)
+				if(Player.mind)
+					if(Player.mind.special_role)
+						continuous_sanity_checked = 1
+						return 0
+			if(!continuous_sanity_checked)
+				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")
+				config.continuous[config_tag] = 1
+				config.midround_antag[config_tag] = 0
+				return 0
+
+
 		if(living_antag_player && living_antag_player.mind && living_antag_player.stat != DEAD && !isnewplayer(living_antag_player) &&!isbrain(living_antag_player))
 			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
@@ -471,6 +485,17 @@ proc/display_roundstart_logout_report()
 		text += "body destroyed"
 	text += ")"
 
+	return text
+
+/datum/game_mode/proc/printobjectives(var/datum/mind/ply)
+	var/text = ""
+	var/count = 1
+	for(var/datum/objective/objective in ply.objectives)
+		if(objective.check_completion())
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
+		else
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
+		count++
 	return text
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1

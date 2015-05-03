@@ -202,7 +202,7 @@
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
 				if(human.dna && human.dna.species.id != "slime")
-					human.dna.species = new /datum/species/slime()
+					hardset_dna(human, null, null, null, null, /datum/species/slime)
 					human.regenerate_icons()
 
 /datum/disease/transformation/corgi

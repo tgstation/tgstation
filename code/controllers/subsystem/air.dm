@@ -3,12 +3,19 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air
 	name = "Air"
 	priority = 20
+	cost = 5
+	wait = 5
+	dynamic_wait = 1
+	dwait_lower = 5
+	dwait_upper = 50
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
 	var/cost_highpressure = 0
 	var/cost_hotspots = 0
 	var/cost_superconductivity = 0
+	var/cost_pipenets = 0
+	var/cost_atmos_machinery = 0
 
 	var/obj/effect/overlay/plasma_overlay			//overlay for plasma
 	var/obj/effect/overlay/sleeptoxin_overlay		//overlay for sleeptoxin
@@ -16,6 +23,9 @@ var/datum/subsystem/air/SSair
 	var/list/excited_groups = list()
 	var/list/active_turfs = list()
 	var/list/hotspots = list()
+	var/list/networks = list()
+	var/list/obj/machinery/atmos_machinery = list()
+
 
 	//Special functions lists
 	var/list/turf/simulated/active_super_conductivity = list()
@@ -28,14 +38,39 @@ var/datum/subsystem/air/SSair
 	plasma_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="plasma"}()
 	sleeptoxin_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="sleeping_agent"}()
 
+/datum/subsystem/air/stat_entry(msg)
+	msg += "C:{"
+	msg += "AT:[round(cost_turfs,0.01)]|"
+	msg += "EG:[round(cost_groups,0.01)]|"
+	msg += "HP:[round(cost_highpressure,0.01)]|"
+	msg += "HS:[round(cost_hotspots,0.01)]|"
+	msg += "SC:[round(cost_superconductivity,0.01)]|"
+	msg += "PN:[round(cost_pipenets,0.01)]|"
+	msg += "AM:[round(cost_atmos_machinery,0.01)]"
+	msg += "} "
+	msg +=  "AT:[active_turfs.len]|"
+	msg +=  "EG:[excited_groups.len]|"
+	msg +=  "HS:[hotspots.len]|"
+	msg +=  "AS:[active_super_conductivity.len]"
+	..(msg)
 
-/datum/subsystem/air/Initialize()
-	setup_allturfs()
+
+/datum/subsystem/air/Initialize(timeofday, zlevel)
+	setup_allturfs(zlevel)
+	setup_atmos_machinery(zlevel)
 	..()
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
 /datum/subsystem/air/fire()
 	var/timer = world.timeofday
+	process_pipenets()
+	cost_pipenets = MC_AVERAGE(cost_pipenets, (world.timeofday - timer))
+
+	timer = world.timeofday
+	process_atmos_machinery()
+	cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, (world.timeofday - timer))
+
+	timer = world.timeofday
 	process_active_turfs()
 	cost_turfs = MC_AVERAGE(cost_turfs, (world.timeofday - timer))
 
@@ -55,7 +90,27 @@ var/datum/subsystem/air/SSair
 	process_super_conductivity()
 	cost_superconductivity = MC_AVERAGE(cost_superconductivity, (world.timeofday - timer))
 
+
 #undef MC_AVERAGE
+
+
+
+/datum/subsystem/air/proc/process_pipenets()
+	var/i=1
+	for(var/thing in networks)
+		if(thing)
+			thing:process()
+			++i
+			continue
+		networks.Cut(i, i+1)
+
+
+/datum/subsystem/air/proc/process_atmos_machinery()
+	var/seconds = wait * 0.1
+	for(var/obj/machinery/M in atmos_machinery)
+		if(M && (M.process_atmos(seconds) != PROCESS_KILL))
+			continue
+		atmos_machinery.Remove(M)
 
 
 /datum/subsystem/air/proc/process_super_conductivity()
@@ -102,9 +157,26 @@ var/datum/subsystem/air/SSair
 			if(istype(S))
 				add_to_active(S)
 
+/datum/subsystem/air/proc/process_excited_groups()
+	for(var/datum/excited_group/EG in excited_groups)
+		EG.breakdown_cooldown ++
+		if(EG.breakdown_cooldown == 10)
+			EG.self_breakdown()
+			return
+		if(EG.breakdown_cooldown > 20)
+			EG.dismantle()
 
-/datum/subsystem/air/proc/setup_allturfs()
-	for(var/turf/simulated/T in world)
+/datum/subsystem/air/proc/setup_allturfs(z_level)
+	var/z_start = 1
+	var/z_finish = world.maxz
+	if(1 <= z_level && z_level <= world.maxz)
+		z_level = round(z_level)
+		z_start = z_level
+		z_finish = z_level
+
+	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
+
+	for(var/turf/simulated/T in turfs_to_init)
 		T.CalculateAdjacentTurfs()
 		if(!T.blocks_air)
 			if(T.air.check_tile_graphic())
@@ -124,11 +196,8 @@ var/datum/subsystem/air/SSair
 						T.excited = 1
 						active_turfs |= T
 
-/datum/subsystem/air/proc/process_excited_groups()
-	for(var/datum/excited_group/EG in excited_groups)
-		EG.breakdown_cooldown ++
-		if(EG.breakdown_cooldown == 10)
-			EG.self_breakdown()
-			return
-		if(EG.breakdown_cooldown > 20)
-			EG.dismantle()
+/datum/subsystem/air/proc/setup_atmos_machinery(z_level)
+	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
+		if (z_level && AM.z != z_level)
+			continue
+		AM.atmosinit()

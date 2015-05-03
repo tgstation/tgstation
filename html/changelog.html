@@ -55,6 +55,67 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">03 May 2015</h2>
+			<h3 class="author">AnturK updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Abductors can purchase spare gear with experimentation points.</li>
+			</ul>
+			<h3 class="author">Ikarrus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Admins can now adjust the pre-game delay time.</li>
+			</ul>
+			<h3 class="author">MrStonedOne updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="experiment">MasterController and subsystem rejiggering!</li>
+				<li class="rscadd">The MC can now dynamcially change the rate a subsystem is triggered based on how laggy it's being. This has been applied to atmos to allow for faster air processing without lagging the server</li>
+				<li class="tweak">Pipes and atmos machinery now processes in tune with air, rather than seperately.</li>
+				<li class="bugfix">Fixed hotspots and fire causing more lag than they needed to</li>
+				<li class="bugfix">Fixed some objects not getting garbage collected because they didn't properly clear references in Destory()</li>
+				<li class="tweak">The qdel subsystem will now limit its processing time to a 5th of a second each tick to prevent lag when a lot of deletes happen</li>
+				<li class="bugfix">Fixed the ticker not showing a tip of the round if an admin forces the round to start immediately</li>
+			</ul>
+
+			<h2 class="date">02 May 2015</h2>
+			<h3 class="author">Boggart updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Cryo tubes can no longer be used for ventcrawling.</li>
+			</ul>
+			<h3 class="author">Ikarrus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Admins can choose the strength and size of Centcom teams to send, ranging from officials to deathsquads, with the 'Make Centcom Respone Team' button.</li>
+			</ul>
+			<h3 class="author">phil235 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Space carps can no longer knock down anyone, but they now deal additional stamina damage to humans.</li>
+				<li class="tweak">Radiation effects from uranium walls are nerfed to the level of uranium floor.</li>
+				<li class="rscadd">You can no longer put an inactive MMI in a cyborg shell. Ghosted brains now get an alert when someone puts their brain in a MMI. You can now examine the MMI to see if its brain is active.</li>
+			</ul>
+
+			<h2 class="date">01 May 2015</h2>
+			<h3 class="author">Ikarrus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Gang bosses can now rally their gang to their location with their gangtool.</li>
+				<li class="rscadd">Gangtools can no longer recall the shuttle if station integrity is lower than 70%</li>
+				<li class="rscdel">Removed requirement to be in the territory to tag it.</li>
+				<li class="tweak">Recruitment Pen cost reduced to 40.</li>
+				<li class="bugfix">Communications console should now accurately print the (lack of a) location of the last shuttle call.</li>
+			</ul>
+			<h3 class="author">Xhuis updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Revenants will no longer spawn without admin intervention. They are pending a remake.</li>
+			</ul>
+
+			<h2 class="date">30 April 2015</h2>
+			<h3 class="author">Fayrik updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Ported NanoUI to most atmospherics equipment.</li>
+			</ul>
+			<h3 class="author">TheVekter updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Hooch is now made with 2 parts Ethanol, 1 part Welder fuel and 1 part Universal Enzyme as a catalyst.</li>
+				<li class="tweak">No-slip shoes are paintable, painting them doesn't remove no-slip properties.</li>
+			</ul>
+
 			<h2 class="date">29 April 2015</h2>
 			<h3 class="author">AndroidSFV updated:</h3>
 			<ul class="changes bgimages16">
@@ -85,7 +146,6 @@
 			<h3 class="author">Ikarrus updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">Spraycans and crayons can now draw Poseur Tags, aka Fake Gang Tags, as grafiti.</li>
-				<li class="tweak">Gangs Capture goal reduced to 60%</li>
 				<li class="tweak">Influence income changed to provide weaker gangs a bigger boost, while slowing down stronger gangs to promote opportunity for comebacks.</li>
 				<li class="tweak">Gangs only earn influence on territories they have held on to since the previous Status Report (the income calculation every 5 minutes). This places more significance on defending your existing territory.</li>
 				<li class="bugfix">You must be in the territory physically to tag it now. So no more tagging everything from maint.</li>
@@ -116,7 +176,7 @@
 			<h2 class="date">25 April 2015</h2>
 			<h3 class="author">Boggart updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="rscadd">Ports Nienhaus's guitar, generalizes handheld instrument code.</li>
+				<li class="rscadd">Generalizes handheld instrument code and Ports Nienhaus's guitar, sounds by BartNixon of Tau Ceti.</li>
 				<li class="rscadd">Fixes being unable to build disposal pipes on walls, makes changing the RPD's settings not affect pipes that are currently building, makes the RPD use the datum/browser ui, makes it use categories and makes it show the selected mode.</li>
 			</ul>
 			<h3 class="author">Gun Hog updated:</h3>

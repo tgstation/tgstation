@@ -30,11 +30,11 @@ var/datum/subsystem/nano/SSnano
 			//Ignore directories
 			if(copytext(filename, length(filename)) != "/")
 				if(fexists(path + filename))
-					asset_files.Add(fcopy_rsc(path + filename)) 
+					asset_files.Add(fcopy_rsc(path + filename))
 
 
 /datum/subsystem/nano/stat_entry()
-	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%) [processing_uis.len]")
+	..("P:[processing_uis.len]")
 
 
 /datum/subsystem/nano/fire()

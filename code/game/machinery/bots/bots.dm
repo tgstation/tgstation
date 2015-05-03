@@ -113,6 +113,8 @@
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
 
 /obj/machinery/bot/Destroy()
+	qdel(Radio)
+	qdel(botcard)
 	..()
 
 
