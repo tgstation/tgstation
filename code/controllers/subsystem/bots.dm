@@ -9,6 +9,9 @@ var/datum/subsystem/bots/SSbot
 /datum/subsystem/bots/New()
 	NEW_SS_GLOBAL(SSbot)
 
+/datum/subsystem/bots/stat_entry(msg)
+	..("P:[processing.len]")
+
 /datum/subsystem/bots/fire()
 	var/seconds = wait * 0.1
 	var/i=1

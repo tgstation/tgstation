@@ -82,9 +82,12 @@ Class Procs:
       Called by machine to assign a value to the uid variable.
 
    process()                  'game/machinery/machine.dm'
-      Called by the 'master_controller' once per game tick for each machine that is listed in the 'machines' list.
+      Called by the 'machinery subsystem' once per machinery tick for each machine that is listed in its 'machines' list.
 
-	is_operational()
+   process_atmos()
+      Called by the 'air subsystem' once per atmos tick for each machine that is listed in its 'atmos_machines' list.
+
+   is_operational()
 		Returns 0 if the machine is unpowered, broken or undergoing maintenance, something else if not
 
 	Compiled by Aygar
@@ -130,6 +133,9 @@ Class Procs:
 	return
 
 /obj/machinery/process()//If you dont use process or power why are you here
+	return PROCESS_KILL
+
+/obj/machinery/proc/process_atmos()//If you dont use process why are you here
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)

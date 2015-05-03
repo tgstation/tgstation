@@ -336,11 +336,3 @@
 		M.drowsyness += 7
 		spawn(70)
 			M.sleeping += 30
-
-
-/* (WIP)
-Strangulate: Chokes the target with crushing force.
-/obj/effect/proc_holder/spell/targeted/revenant_strangulate
-	name = "Unlock: Strangulate (30E)"
-	desc = "Strangles a target with an asphyxiating hand, dealing decent oxygen damage to them."
-*/

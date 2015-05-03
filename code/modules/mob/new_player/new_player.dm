@@ -69,7 +69,7 @@
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Time To Start:", (ticker.can_fire) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
+			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
 
 			stat("Players:", "[ticker.totalPlayers]")
 			if(client.holder)

@@ -19,6 +19,7 @@
 	var/obj/item/organ/brain/brain = null //The actual brain
 
 /obj/item/device/mmi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
@@ -27,6 +28,14 @@
 		if(!newbrain.brainmob)
 			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
 			return
+
+		var/mob/living/carbon/brain/B = newbrain.brainmob
+		if(!B.key)
+			var/mob/dead/observer/ghost = B.get_ghost()
+			if(ghost)
+				if(ghost.client)
+					ghost << "<span class='ghostalert'>Someone has put your brain in a MMI. Return to your body!</span> (Verbs -> Ghost -> Re-enter corpse)"
+					ghost << sound('sound/effects/genetics.ogg')
 		visible_message("[user] sticks \a [newbrain] into \the [src].")
 
 		brainmob = newbrain.brainmob
@@ -149,3 +158,17 @@
 		qdel(brainmob)
 		brainmob = null
 	..()
+
+/obj/item/device/mmi/examine(mob/user)
+	..()
+	if(brainmob)
+		var/mob/living/carbon/brain/B = brainmob
+		if(!B.key || !B.mind || B.stat == DEAD)
+			user << "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
+
+		else if(!B.client)
+			user << "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
+
+		else
+			user << "<span class='notice'>The MMI indicates the brain is active.</span>"
+

@@ -143,6 +143,7 @@
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
 	qdel(cover)
+	cover = null
 	..()
 
 

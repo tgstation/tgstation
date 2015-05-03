@@ -318,26 +318,30 @@
 
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
-	var/mob/living/carbon/human/H = M
-	if(istype(H) && ( \
-			(H.head && H.head.flags & HEADCOVERSEYES) || \
+	var/is_human_victim = 0
+	if(ishuman(M))
+		is_human_victim = 1
+		var/mob/living/carbon/human/H = M
+		if((H.head && H.head.flags & HEADCOVERSEYES) || \
 			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
-		return
+			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
+			// you can't stab someone in the eyes wearing a mask!
+			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			return
 
-	var/mob/living/carbon/monkey/Mo = M
-	if(istype(Mo) && ( \
-			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
-		return
+	if(ismonkey(M))
+		var/mob/living/carbon/monkey/Mo = M
+		if(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES)
+			// you can't stab someone in the eyes wearing a mask!
+			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
 		user << "<span class='warning'>You cannot locate any eyes on this creature!</span>"
+		return
+
+	if(isbrain(M))
+		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
 		return
 
 	add_logs(user, M, "attacked", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
@@ -352,7 +356,7 @@
 			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
 			"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
 		)
-	if(istype(M, /mob/living/carbon/human))
+	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
 		var/obj/item/organ/limb/affecting = U.get_organ("head")
 		if(affecting.take_damage(7))
@@ -360,6 +364,7 @@
 
 	else
 		M.take_organ_damage(7)
+
 	M.eye_blurry += rand(3,4)
 	M.eye_stat += rand(2,4)
 	if (M.eye_stat >= 10)

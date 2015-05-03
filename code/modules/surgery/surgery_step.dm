@@ -25,7 +25,7 @@
 
 	if(success)
 		if(target_zone == surgery.location)
-			if(get_location_accessible(target, target_zone))
+			if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
 				initiate(user, target, target_zone, tool, surgery)
 				return 1
 			else
@@ -88,25 +88,7 @@
 
 /datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
-		var/limb_type
-		switch(target_zone)
-			if("head")
-				limb_type = /obj/item/organ/limb/head
-			if("chest")
-				limb_type = /obj/item/organ/limb/chest
-			if("l_arm")
-				limb_type = /obj/item/organ/limb/l_arm
-			if("r_arm")
-				limb_type = /obj/item/organ/limb/r_arm
-			if("l_leg")
-				limb_type = /obj/item/organ/limb/l_leg
-			if("r_leg")
-				limb_type = /obj/item/organ/limb/r_leg
-			else
-				return
-		var/obj/item/organ/limb/limb = target.getlimb(limb_type)
-		if(limb)
-			limb.heal_damage(45,0,0)
+		target.heal_organ_damage(45,0)
 	return ..()
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)

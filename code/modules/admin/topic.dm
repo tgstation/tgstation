@@ -107,7 +107,6 @@
 					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create an abductor team.")
 			if("15")
-				message_admins("[key_name(usr)] is creating a revenant...")
 				if(src.makeRevenant())
 					message_admins("[key_name(usr)] created a revenant.")
 					log_admin("[key_name(usr)] created a revenant.")
@@ -1806,7 +1805,7 @@
 					message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 					var/newtype = species_list[result]
 					for(var/mob/living/carbon/human/H in mob_list)
-						H.dna.species = new newtype()
+						hardset_dna(H, null, null, null, null, newtype)
 						H.regenerate_icons()
 			if("corgi")
 				feedback_inc("admin_secrets_fun_used",1)

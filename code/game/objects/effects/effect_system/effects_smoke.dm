@@ -227,9 +227,9 @@
 	R.my_atom = chemholder
 
 /datum/effect/effect/system/chem_smoke_spread/Destroy()
-	PlaceInPool(chemholder)
 	chemholder = null
 	..()
+	return QDEL_HINT_PUTINPOOL
 
 /datum/effect/effect/system/chem_smoke_spread/set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
 	if(n > 20)

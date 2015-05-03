@@ -29,7 +29,7 @@ obj/machinery/air_sensor
 obj/machinery/air_sensor/update_icon()
 		icon_state = "gsensor[on]"
 
-obj/machinery/air_sensor/process()
+obj/machinery/air_sensor/process_atmos()
 	if(on)
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 //radio signal
@@ -73,7 +73,7 @@ obj/machinery/air_sensor/initialize()
 
 obj/machinery/air_sensor/New()
 	..()
-
+	SSair.atmos_machinery += src
 	if(radio_controller)
 		set_frequency(frequency)
 

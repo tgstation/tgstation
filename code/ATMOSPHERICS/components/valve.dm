@@ -38,6 +38,7 @@
 	update_icon_nopipes()
 	parent1.update = 0
 	parent2.update = 0
+	parent1.reconcile_air()
 	investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", "atmos")
 	return
 
@@ -64,7 +65,7 @@
 		close()
 	else
 		open()
-		parent1.reconcile_air()
+
 
 /obj/machinery/atmospherics/binary/valve/digital		// can be controlled by AI
 	name = "digital valve"
