@@ -19,10 +19,8 @@ var/global/mulebot_count = 0
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
 	var/atom/movable/load = null		// the loaded crate (usually)
-	var/list/delivery_beacons = list() //List of beacons that serve as delivery locations.
-	beacon_freq = 1400
-	control_freq = 1447
 	bot_type = MULE_BOT
+	model = "MULE"
 	blood_DNA = list()
 
 	suffix = ""
@@ -238,7 +236,7 @@ obj/machinery/bot/mulebot/bot_reset()
 
 	//user << browse("<HEAD><TITLE>M.U.L.E. Mk. III [suffix ? "([suffix])" : ""]</TITLE></HEAD>[dat]", "window=mulebot;size=350x500")
 	//onclose(user, "mulebot")
-	var/datum/browser/popup = new(user, "mulebot", "M.U.L.E. Mk. V [suffix ? "([suffix])" : ""]", 350, 550)
+	var/datum/browser/popup = new(user, "mulebot", "M.U.L.E. Mk. V [suffix ? "([suffix])" : ""]", 350, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
@@ -258,6 +256,7 @@ obj/machinery/bot/mulebot/bot_reset()
 		usr.set_machine(src)
 
 		switch(href_list["op"])
+
 			if("lock", "unlock")
 				toggle_lock(usr)
 
@@ -295,67 +294,9 @@ obj/machinery/bot/mulebot/bot_reset()
 
 						usr.visible_message("[usr] inserts a power cell into [src].", "<span class='notice'>You insert the power cell into [src].</span>")
 						updateDialog()
+			else
+				bot_control(href_list["op"], usr)
 
-
-			if("stop")
-				if(mode >= BOT_DELIVER)
-					bot_reset()
-					updateDialog()
-
-			if("go")
-				if(mode == BOT_IDLE)
-					start()
-					updateDialog()
-
-			if("home")
-				if(mode == BOT_IDLE || mode == BOT_DELIVER)
-					start_home()
-					updateDialog()
-
-			if("destination")
-				refresh=0
-				var/new_dest = input("Select M.U.L.E. Destination", "Mulebot [suffix ? "([suffix])" : ""]", destination) as null|anything in delivery_beacons
-				refresh=1
-				if(new_dest)
-					set_destination(new_dest)
-
-
-			if("setid")
-				refresh=0
-				var/new_id = stripped_input(usr, "Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix, MAX_NAME_LEN)
-				refresh=1
-				if(new_id)
-					suffix = new_id
-					name = "\improper Mulebot ([suffix])"
-					updateDialog()
-
-			if("sethome")
-				refresh=0
-				var/new_home = stripped_input(usr, "Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination)
-				refresh=1
-				if(new_home)
-					home_destination = new_home
-					updateDialog()
-
-			if("unload")
-				if(load && mode !=1)
-					if(loc == target)
-						unload(loaddir)
-					else
-						unload(0)
-
-			if("autoret")
-				auto_return = !auto_return
-
-			if("autopick")
-				auto_pickup = !auto_pickup
-
-			if("report")
-				report_delivery = !report_delivery
-
-			if("close")
-				usr.unset_machine()
-				usr << browse(null,"window=mulebot")
 
 		updateDialog()
 		//updateUsrDialog()
@@ -363,6 +304,73 @@ obj/machinery/bot/mulebot/bot_reset()
 		usr << browse(null, "window=mulebot")
 		usr.unset_machine()
 	return
+
+/obj/machinery/bot/mulebot/bot_control(var/command, mob/user, pda= 0)
+	if(pda && !wires.RemoteRX()) //MULE wireless is controlled by wires.
+		return
+
+	switch(command)
+
+		if("stop")
+			if(mode >= BOT_DELIVER)
+				bot_reset()
+				updateDialog()
+
+		if("go")
+			if(mode == BOT_IDLE)
+				start()
+				updateDialog()
+
+		if("home")
+			if(mode == BOT_IDLE || mode == BOT_DELIVER)
+				start_home()
+				updateDialog()
+
+		if("destination")
+			refresh=0
+			var/new_dest = input(user, "Select M.U.L.E. Destination", "Mulebot [suffix ? "([suffix])" : ""]", destination) as null|anything in deliverybeacontags
+			refresh=1
+			if(new_dest)
+				set_destination(new_dest)
+
+
+		if("setid")
+			refresh=0
+			var/new_id = stripped_input(user, "Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix, MAX_NAME_LEN)
+			refresh=1
+			if(new_id)
+				suffix = new_id
+				name = "\improper Mulebot ([suffix])"
+				updateDialog()
+
+		if("sethome")
+			refresh=0
+			var/new_home = stripped_input(user, "Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination)
+			refresh=1
+			if(new_home)
+				home_destination = new_home
+				updateDialog()
+
+		if("unload")
+			if(load && mode !=1)
+				if(loc == target)
+					unload(loaddir)
+				else
+					unload(0)
+
+		if("autoret")
+			auto_return = !auto_return
+
+		if("autopick")
+			auto_pickup = !auto_pickup
+
+		if("report")
+			report_delivery = !report_delivery
+
+		if("close")
+			usr.unset_machine()
+			usr << browse(null,"window=mulebot")
+
 
 
 
@@ -438,7 +446,6 @@ obj/machinery/bot/mulebot/bot_reset()
 			M.client.eye = src
 
 	mode = BOT_IDLE
-	send_status()
 
 // called to unload the bot
 // argument is optional direction to unload
@@ -575,9 +582,6 @@ obj/machinery/bot/mulebot/bot_reset()
 						path -= loc
 
 
-						if(mode == BOT_BLOCKED)
-							spawn(1)
-								send_status()
 
 						if(destination == home_destination)
 							mode = BOT_GO_HOME
@@ -656,11 +660,10 @@ obj/machinery/bot/mulebot/bot_reset()
 // sets the current destination
 // signals all beacons matching the delivery code
 // beacons will return a signal giving their locations
-/obj/machinery/bot/mulebot/set_destination(var/new_dest)
-	spawn(0)
-		new_destination = new_dest
-		post_signal(beacon_freq, "findbeacon", "delivery")
-		updateDialog()
+/obj/machinery/bot/mulebot/proc/set_destination(var/new_dest)
+	new_destination = new_dest
+	get_nav()
+	updateDialog()
 
 // starts bot moving to current destination
 /obj/machinery/bot/mulebot/proc/start()
@@ -669,6 +672,7 @@ obj/machinery/bot/mulebot/bot_reset()
 	else
 		mode = BOT_DELIVER
 	icon_state = "mulebot[(wires.MobAvoid() != 0)]"
+	get_nav()
 
 // starts bot moving to home
 // sends a beacon query to find
@@ -695,7 +699,8 @@ obj/machinery/bot/mulebot/bot_reset()
 				radio_frequency = AIPRIV_FREQ //Report on AI Private instead if the AI is controlling us.
 
 		if(load)		// if loaded, unload at target
-			speak("Destination <b>[destination]</b> reached. Unloading [load].",radio_frequency)
+			if(report_delivery)
+				speak("Destination <b>[destination]</b> reached. Unloading [load].",radio_frequency)
 			unload(loaddir)
 		else
 			// not loaded
@@ -720,8 +725,6 @@ obj/machinery/bot/mulebot/bot_reset()
 			mode = BOT_BLOCKED
 		else
 			bot_reset()	// otherwise go idle
-
-	send_status()	// report status to anyone listening
 
 	return
 
@@ -771,73 +774,19 @@ obj/machinery/bot/mulebot/bot_reset()
 		unload(0)
 	return
 
-// receive a radio signal
-// used for control and beacon reception
 
-/obj/machinery/bot/mulebot/receive_signal(datum/signal/signal)
-
-	if(!on)
+//Update navigation data. Called when commanded to deliver, return home, or a route update is needed...
+/obj/machinery/bot/mulebot/proc/get_nav()
+//Formerly the beacon reception proc, except that it is no longer a potential lag bomb called TEN TIMES A SECOND OR MORE in some cases!
+	if(!on || !wires.BeaconRX())
 		return
 
-	/*
-	world << "rec signal: [signal.source]"
-	for(var/x in signal.data)
-		world << "* [x] = [signal.data[x]]"
-	*/
-	var/recv = signal.data["command"]
-	// process all-bot input
-	if(recv=="bot_status" && wires.RemoteRX())
-		send_status()
-
-
-	recv = signal.data["command [suffix]"]
-	if(wires.RemoteRX())
-		// process control input
-		switch(recv)
-			if("stop")
-				bot_reset()
-				return
-
-			if("go")
-				start()
-				return
-
-			if("target")
-				set_destination(signal.data["destination"] )
-				return
-
-			if("unload")
-				if(loc == target)
-					unload(loaddir)
-				else
-					unload(0)
-				return
-
-			if("home")
-				start_home()
-				return
-
-			if("bot_status")
-				send_status()
-				return
-
-			if("autoret")
-				auto_return = text2num(signal.data["value"])
-				return
-
-			if("autopick")
-				auto_pickup = text2num(signal.data["value"])
-				return
-
-	// receive response from beacon
-	recv = signal.data["beacon"]
-
-	if(wires.BeaconRX())
-		if(recv == new_destination)	// if the recvd beacon location matches the set destination
+	for(var/obj/machinery/navbeacon/NB in deliverybeacons)
+		if(NB.location == new_destination)	// if the beacon location matches the set destination
 									// the we will navigate there
 			destination = new_destination
-			target = signal.source.loc
-			var/direction = signal.data["dir"]	// this will be the load/unload dir
+			target = NB.loc
+			var/direction = NB.dir	// this will be the load/unload dir
 			if(direction)
 				loaddir = text2num(direction)
 			else
@@ -846,58 +795,6 @@ obj/machinery/bot/mulebot/bot_reset()
 			if(destination) // No need to calculate a path if you do not have a destination set!
 				calc_path()
 			updateDialog()
-
-	//Detects and stores current active delivery beacons.
-	if(signal.data["beacon"])
-		if(!delivery_beacons)
-			delivery_beacons = new()
-		delivery_beacons[signal.data["beacon"] ] = signal.source
-
-// send a radio signal with a single data key/value pair
-/obj/machinery/bot/mulebot/post_signal(var/freq, var/key, var/value)
-	post_signal_multiple(freq, list("[key]" = value) )
-
-// send a radio signal with multiple data key/values
-/obj/machinery/bot/mulebot/post_signal_multiple(var/freq, var/list/keyval)
-
-	if(freq == beacon_freq && !(wires.BeaconRX()))
-		return
-	if(freq == control_freq && !(wires.RemoteTX()))
-		return
-
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
-
-	if(!frequency) return
-
-
-
-	var/datum/signal/signal = new()
-	signal.source = src
-	signal.transmission_method = 1
-	//for(var/key in keyval)
-	//	signal.data[key] = keyval[key]
-	signal.data = keyval
-		//world << "sent [key],[keyval[key]] on [freq]"
-	if (signal.data["findbeacon"])
-		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-	else
-		frequency.post_signal(src, signal)
-
-// signals bot status etc. to controller
-/obj/machinery/bot/mulebot/send_status()
-	var/list/kv = list(
-		"type" = MULE_BOT,
-		"name" = suffix,
-		"loca" = get_area(src),
-		"mode" = mode,
-		"powr" = (cell ? cell.percent() : 0),
-		"dest" = destination,
-		"home" = home_destination,
-		"load" = load,
-		"retn" = auto_return,
-		"pick" = auto_pickup,
-	)
-	post_signal_multiple(control_freq, kv)
 
 /obj/machinery/bot/mulebot/emp_act(severity)
 	if (cell)
