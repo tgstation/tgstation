@@ -216,6 +216,7 @@ obj/machinery/bot/mulebot/bot_reset()
 			dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
 			dat += "<A href='byond://?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
 			dat += "<A href='byond://?src=\ref[src];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
+			dat += "<A href='byond://?src=\ref[src];op=autorefresh'>Toggle Interface Refreshing</A> ([refresh ? "On" : "Off"])<BR>"
 
 			if(load)
 				dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
@@ -310,6 +311,10 @@ obj/machinery/bot/mulebot/bot_reset()
 		return
 
 	switch(command)
+
+		if("autorefresh")
+			refresh = !refresh
+			updateDialog()
 
 		if("stop")
 			if(mode >= BOT_DELIVER)
