@@ -15,6 +15,7 @@
 	var/list/registers = list()//Stores the register values, registers can't be named so this is enough.
 
 /obj/machinery/computer/general_air_control/atmos_automation/New()
+	..()
 	for(var/i = 1, i <= register_amount, i++)//Fill the registers
 		registers.Add(list(0))
 
