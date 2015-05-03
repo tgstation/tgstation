@@ -58,8 +58,8 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
 			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
 
-		visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
-						"<span class='userdanger'>[src] has been hit by [I].</span>")
+		visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
+						"<span class='userdanger'>You're hit by [I]!</span>")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].")
 		apply_damage(I.throwforce, dtype, zone, armor, I)
 		if(!I.fingerprintslast)
@@ -86,13 +86,17 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 			else
 				return
 		updatehealth()
-		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-						"<span class='userdanger'>[M.name] has hit [src]!</span>")
+		src.visible_message("<span class='danger'>[M.name] hits [src]!</span>", \
+							"<span class='userdanger'>[M.name] hits you!</span>", \
+							"<span class='italics'>You hear a slap!</span>", \
+							M, "<span class='userdanger'>You hit [src]!</span>")
 		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
 		add_logs(M.occupant, src, "pushed", object=M, admin=0)
-		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>")
+		src.visible_message("[M] pushes [src] out of the way.", \
+							"<span class='notice'>[M] pushes you out of the way.</span>", null, \
+							M, "<span class='notice'>You push [src] out of the way.</span>")
 
 		return
 
@@ -177,7 +181,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	if(!supress_message)
-		src.visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>", \
+		src.visible_message("<span class='warning'>[user] grabs [src] passively!</span>", \
 							"<span class='danger'>[user] grabs you passively!</span>", null, \
 							user, "<span class='danger'>You grab [src] passively!</span>")
 
@@ -240,16 +244,18 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 							M, "<span class='userdanger'>You bite [src]!</span>")
 			return 1
 		else
-			src.visible_message("<span class='danger'>[M.name] attempted to bite [src]!</span>", \
-							"<span class='userdanger'>[M.name] attempted to bite you!</span>", null, \
-							M, "<span class='userdanger'>You attempted to bite [src]!</span>")
+			src.visible_message("<span class='danger'>[M.name] attempts to bite [src], but misses!</span>", \
+							"<span class='userdanger'>[M.name] attempts to bite you, but misses!</span>", null, \
+							M, "<span class='userdanger'>Your bite misses [src]!</span>")
 	return 0
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L as mob)
 
 	switch(L.a_intent)
 		if("help")
-			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
+			src.visible_message("[L.name] rubs its head against [src].", \
+								"<span class='notice'>[L.name] rubs its head against you.</span>", null, \
+								L, "<span class='notice'>You rub your head against [src].</span>")
 			return 0
 
 		else
@@ -263,9 +269,9 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				return 1
 			else
-				src.visible_message("<span class='danger'>[L.name] attempted to bite [src]!</span>", \
-								"<span class='danger'>[L.name] attempted to bite you!</span>", null, \
-								L, "<span class='danger'>You attempted to bite [src]!</span>")
+				src.visible_message("<span class='danger'>[L.name] attempts to bite [src], but misses!</span>", \
+								"<span class='danger'>[L.name] attempts to bite you, but misses!</span>", null, \
+								L, "<span class='danger'>Your bite misses [src]!</span>")
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M as mob)

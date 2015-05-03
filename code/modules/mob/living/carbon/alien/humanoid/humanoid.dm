@@ -53,10 +53,10 @@
 				var/damage = rand(1, 9)
 				if (prob(90))
 					playsound(loc, "punch", 25, 1, -1)
-					src.visible_message("<span class='danger'>[M] punched [src]!</span>", \
-										"<span class='userdanger'>[M] punched you!</span>", \
+					src.visible_message("<span class='danger'>[M] punches [src]!</span>", \
+										"<span class='userdanger'>[M] punches you!</span>", \
 										"<span class='italics'>You hear a slap!</span>", \
-										M, "<span class='userdanger'>You punched [src]!</span>")
+										M, "<span class='userdanger'>You punch [src]!</span>")
 					if ((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of weakening an alien.
 						Paralyse(2)
 						src.visible_message("<span class='danger'>[M] weakens [src]!</span>", \
@@ -68,8 +68,8 @@
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 					src.visible_message("<span class='danger'>[M] attempts to punch [src], but misses!</span>", \
-										"<span class='danger'>[M] attempts to punch you, but missed!</span>", null, \
-										M, "<span class='danger'>Your punch missed [src]!</span>")
+										"<span class='danger'>[M] attempts to punch you, but misses!</span>", null, \
+										M, "<span class='danger'>Your punch misses [src]!</span>")
 
 			if ("disarm")
 				if (!lying)

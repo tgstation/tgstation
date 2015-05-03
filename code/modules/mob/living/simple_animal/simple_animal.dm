@@ -310,8 +310,8 @@
 			add_logs(M, src, "disarmed", admin=0)
 		else
 			var/damage = rand(15, 30)
-			src.visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-						"<span class='userdanger'>[M] has slashed at you!</span>", \
+			src.visible_message("<span class='danger'>[M] slashes at [src]!</span>", \
+						"<span class='userdanger'>[M] slashes at you!</span>", \
 						"<span class='italics'>You hear a slap!</span>", \
 						M, "<span class='userdanger'>You slash at [src]!</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
