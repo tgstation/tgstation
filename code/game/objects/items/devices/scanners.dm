@@ -332,6 +332,35 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 	else
 		icon_state = initial(icon_state)
 
+/obj/item/device/mass_spectrometer/attack(mob/living/M as mob, mob/living/user as mob)
+	if(!M.reagents) return
+	if(iscarbon(M))
+		if(crit_fail)
+			user << "<span class='warning'>This device has critically failed and is no longer functional!</span>"
+			return
+		if(reagents.total_volume)
+			user << "<span class='warning'>This device already has a blood sample!</span>"
+			return
+		if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+			user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+			return
+
+		var/mob/living/carbon/T = M
+		if(!T.dna)
+			return
+		if(M_NOCLONE in T.mutations)
+			return
+
+		var/datum/reagent/B = T.take_blood(src,src.reagents.maximum_volume)
+		if (B)
+			src.reagents.reagent_list |= B
+			src.reagents.update_total()
+			src.on_reagent_change()
+			src.reagents.handle_reactions()
+			update_icon()
+			user.visible_message("<span class='warning'>[user] takes a blood sample from [M].</span>", \
+				"<span class='notice'>You take a blood sample from [M]</span>")
+
 /obj/item/device/mass_spectrometer/attack_self(mob/user as mob)
 	if (user.stat)
 		return
@@ -346,26 +375,30 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			if(R.id != "blood")
 				reagents.clear_reagents()
-				user << "<span class='warning'>The sample was contaminated! Please insert another sample</span>"
+				user << "<span class='warning'>The sample was contaminated! Please insert another sample.</span>"
 				return
 			else
 				blood_traces = params2list(R.data["trace_chem"])
 				break
-		var/dat = "Trace Chemicals Found: "
-		for(var/R in blood_traces)
-			if(prob(reliability))
-				if(details)
-					dat += "[R] ([blood_traces[R]] units) "
+		var/dat
+		if (blood_traces.len)
+			dat = "Trace Chemicals Found: "
+			for(var/R in blood_traces)
+				if(prob(reliability))
+					if(details)
+						dat += "[R] ([blood_traces[R]] units) "
+					else
+						dat += "[R] "
+					recent_fail = 0
 				else
-					dat += "[R] "
-				recent_fail = 0
-			else
-				if(recent_fail)
-					crit_fail = 1
-					reagents.clear_reagents()
-					return
-				else
-					recent_fail = 1
+					if(recent_fail)
+						crit_fail = 1
+						reagents.clear_reagents()
+						return
+					else
+						recent_fail = 1
+		else
+			dat = "No trace chemicals found in the sample."
 		user << "[dat]"
 		reagents.clear_reagents()
 	return
