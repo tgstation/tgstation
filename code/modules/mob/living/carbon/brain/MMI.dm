@@ -7,6 +7,7 @@
 	icon_state = "mmi_empty"
 	w_class = 3
 	origin_tech = "biotech=3"
+	var/braintype = "Cyborg"
 
 	req_access = list(access_robotics)
 
@@ -17,6 +18,17 @@
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
 	var/obj/item/organ/brain/brain = null //The actual brain
+
+/obj/item/device/mmi/update_icon()
+	if(brain)
+		if(istype(brain,/obj/item/organ/brain/alien))
+			icon_state = "mmi_alien"
+			braintype = "Xenoborg" //HISS....Beep.
+		else
+			icon_state = "mmi_full"
+			braintype = "Cyborg"
+	else
+		icon_state = "mmi_empty"
 
 /obj/item/device/mmi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -51,10 +63,7 @@
 		brain = newbrain
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
-		if(istype(newbrain,/obj/item/organ/brain/alien))
-			icon_state = "mmi_alien"
-		else
-			icon_state = "mmi_full"
+		update_icon()
 
 		locked = 1
 
@@ -91,7 +100,7 @@
 		brain.loc = usr.loc
 		brain = null //No more brain in here
 
-		icon_state = "mmi_empty"
+		update_icon()
 		name = "Man-Machine Interface"
 
 /obj/item/device/mmi/proc/transfer_identity(var/mob/living/carbon/human/H) //Same deal as the regular brain proc. Used for human-->robot people.
@@ -108,7 +117,7 @@
 		brain = newbrain
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
-	icon_state = "mmi_full"
+	update_icon()
 	locked = 1
 	return
 

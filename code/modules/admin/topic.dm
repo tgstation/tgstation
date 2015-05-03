@@ -649,11 +649,38 @@
 				jobs += "</tr><tr align='center'>"
 				counter = 0
 
-		//pAI isn't technically a job, but it goes in here.
+		jobs += "</tr></table>"
+
+		//Ghost Roles (light light gray)
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='eeeeee'><th colspan='4'><a href='?src=\ref[src];jobban3=ghostroles;jobban4=\ref[M]'>Ghost Roles</a></th></tr><tr align='center'>"
+
+		//pAI
 		if(jobban_isbanned(M, "pAI"))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>[replacetext("pAI", " ", "&nbsp")]</font></a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'>pAI</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'>[replacetext("pAI", " ", "&nbsp")]</a></td>"
+
+
+		//Drones
+		if(jobban_isbanned(M, "drone"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=drone;jobban4=\ref[M]'><font color=red>[replacetext("Drone", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=drone;jobban4=\ref[M]'>[replacetext("Drone", " ", "&nbsp")]</a></td>"
+
+
+		//Positronic Brains
+		if(jobban_isbanned(M, "posibrain"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=posibrain;jobban4=\ref[M]'><font color=red>[replacetext("Posibrain", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=posibrain;jobban4=\ref[M]'>[replacetext("Posibrain", " ", "&nbsp")]</a></td>"
+
+
+		//Deathsquad
+		if(jobban_isbanned(M, "deathsquad"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>[replacetext("Deathsquad", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td>"
 
 		jobs += "</tr></table>"
 
@@ -711,12 +738,6 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=abductor;jobban4=\ref[M]'><font color=red>[replacetext("Abductor", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=abductor;jobban4=\ref[M]'>[replacetext("Abductor", " ", "&nbsp")]</a></td>"
-
-		//Deathsquad
-		if(jobban_isbanned(M, "deathsquad") || isbanned_dept)
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>[replacetext("Deathsquad", " ", "&nbsp")]</font></a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td>"
 
 /*		//Malfunctioning AI	//Removed Malf-bans because they're a pain to impliment
 		if(jobban_isbanned(M, "malf AI") || isbanned_dept)
@@ -807,6 +828,8 @@
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
+			if("ghostroles")
+				joblist += list("pAI", "posibrain", "drone", "deathsquad")
 			else
 				joblist += href_list["jobban3"]
 

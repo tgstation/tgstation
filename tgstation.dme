@@ -1125,6 +1125,7 @@
 #include "code\modules\mob\living\carbon\brain\emote.dm"
 #include "code\modules\mob\living\carbon\brain\life.dm"
 #include "code\modules\mob\living\carbon\brain\MMI.dm"
+#include "code\modules\mob\living\carbon\brain\posibrain.dm"
 #include "code\modules\mob\living\carbon\brain\say.dm"
 #include "code\modules\mob\living\carbon\human\blood.dm"
 #include "code\modules\mob\living\carbon\human\death.dm"
