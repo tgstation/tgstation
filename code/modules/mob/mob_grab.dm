@@ -204,7 +204,7 @@
 
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
 		if( (ishuman(user) && (user.disabilities & FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
-			var/mob/living/carbon/attacker = user
+			var/mob/living/carbon/choker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
 				if(!do_mob(user, affecting)||!do_after(user, 30)) return
@@ -212,8 +212,93 @@
 				if(!do_mob(user, affecting)||!do_after(user, 100)) return
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
 			affecting.loc = user
-			attacker.stomach_contents.Add(affecting)
+			choker.stomach_contents.Add(affecting)
 			qdel(src)
+
+////////////////////LING CODE HERE/////////////////////////////////////////////////
+		if( (ishuman(user) && (user.mind.changeling) && ishuman(affecting) ) )
+			var/mob/living/carbon/human/attacker = user
+			var/mob/living/carbon/human/victim = affecting
+			var/lingbite_armor_check = victim.run_armor_check(user.zone_sel.selecting, "melee")
+			var/obj/item/organ/limb/L = victim.get_organ(check_zone(user.zone_sel.selecting))
+			if(victim.health > 0)
+				user.visible_message("<span class='danger'>[user] takes a large bite out of [affecting]'s [L.getDisplayName()]!</span>")
+				victim.apply_damage(15, BRUTE, user.zone_sel.selecting, lingbite_armor_check)
+				attacker.mind.changeling.chem_charges += 0.5
+				playsound(attacker, 'sound/weapons/bite.ogg', 50,)
+			else
+				var/datum/changeling/changeling = attacker.mind.changeling
+				user.visible_message("<span class='danger'>[user] messily rips into [affecting], and begins feeding!</span>")
+				victim.apply_damage(35, BRUTE, user.zone_sel.selecting, lingbite_armor_check)
+				if(victim.disabilities & LING_VICTIM)
+					user <<"<span class='notice'>This form has been ravaged. It is worthless to us.</span>"
+				else
+					if(!do_mob(attacker, victim)||do_after(attacker, 30))
+						if(!changeling.has_dna(victim.dna))
+							changeling.absorb_dna(victim, user)
+							if(attacker.wear_suit)
+								attacker.wear_suit.add_blood(victim)
+								attacker.update_inv_wear_suit(0)
+							else if(attacker.w_uniform)
+								attacker.w_uniform.add_blood(victim)
+								attacker.update_inv_w_uniform(0)
+							if (attacker.gloves)
+								attacker.gloves.add_blood(victim)
+							else
+								attacker.add_blood(victim)
+								attacker.update_inv_gloves()
+							if(attacker.wear_mask)
+								attacker.wear_mask.add_blood(victim)
+								attacker.update_inv_wear_mask(0)
+							if(attacker.head)
+								attacker.head.add_blood(victim)
+								attacker.update_inv_head(0)
+							if(attacker.glasses)
+								attacker.glasses.add_blood(victim)
+								attacker.update_inv_glasses(0)
+							if(attacker.shoes)
+								attacker.shoes.add_blood(victim)
+								attacker.update_inv_shoes(0)
+
+
+							var/obj/item/organ/appendix/A = locate() in victim.internal_organs
+							if(A)
+								qdel(A)
+								user.visible_message("<span class='danger'>[user] tears [affecting]'s appendix out with their teeth and swallows it whole!</span>")
+								changeling.geneticpoints += 2
+								victim.apply_damage(65, BRUTE, "chest", lingbite_armor_check)
+								victim.disabilities |= LING_VICTIM
+								victim.status_flags |= DISFIGURED
+								victim.update_base_icon_state(0)
+							else
+								user.visible_message("<span class='danger'>[user] tears a large chunk from [affecting] and swallows it whole!</span>")
+								changeling.geneticpoints += 1
+								victim.apply_damage(65, BRUTE, "chest", lingbite_armor_check)
+								victim.disabilities |= LING_VICTIM
+								victim.status_flags |= DISFIGURED
+								victim.update_base_icon_state(0)
+
+
+							if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
+								user.nutrition = NUTRITION_LEVEL_WELL_FED
+							if(victim.mind)//if the victim has got a mind
+								victim.mind.show_memory(victim, 0) //I can read your mind, kekeke. Output all their notes.
+
+								if(victim.mind.changeling)//If the victim was a changeling, suck out their extra juice and objective points!
+									changeling.chem_charges += min(victim.mind.changeling.chem_charges, changeling.chem_storage)
+									changeling.absorbedcount += (victim.mind.changeling.absorbedcount)
+									changeling.geneticpoints += (victim.mind.changeling.geneticpoints)
+
+									victim.mind.changeling.absorbed_dna.len = 1
+									victim.mind.changeling.absorbedcount = 0
+									victim.mind.changeling.geneticpoints = 0
+
+
+						else
+							user <<"<span class='notice'>We have already feasted upon these genomes!</span>"
+
+					else
+						user <<"<span class='notice'>We have fumbled [affecting]. We must focus only on consuming!</span>"
 
 
 /obj/item/weapon/grab/dropped()

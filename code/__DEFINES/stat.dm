@@ -17,6 +17,7 @@
 #define HUSK		64
 #define NOCLONE		128
 #define CLUMSY		256
+#define LING_VICTIM 512
 
 // bitflags for machine stat variable
 #define BROKEN		1

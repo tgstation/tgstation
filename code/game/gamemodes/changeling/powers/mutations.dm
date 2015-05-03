@@ -153,7 +153,7 @@
 	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = target
 
-		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
+		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have access and still getting a "the airlocks motors resist our efforts to force it" message.
 			return
 
 		if(A.hasPower())
@@ -192,7 +192,7 @@
 		return
 
 	var/obj/item/weapon/shield/changeling/S = ..(user)
-	S.remaining_uses = round(changeling.absorbedcount * 3)
+	S.remaining_uses = round(changeling.absorbedcount * 2)
 	return 1
 
 /obj/item/weapon/shield/changeling
@@ -303,8 +303,8 @@
 	icon_state = "lingarmor"
 	flags = NODROP
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	slowdown = 2
-	armor = list(melee = 65, bullet = 20, laser = 10, energy = 13, bomb = 0, bio = 0, rad = 0)
+	slowdown = 1
+	armor = list(melee = 60, bullet = 20, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
@@ -322,7 +322,7 @@
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
 	flags = HEADCOVERSEYES | BLOCKHAIR | NODROP
-	armor = list(melee = 70, bullet = 15, laser = 7,energy = 10, bomb = 5, bio = 2, rad = 0)
+	armor = list(melee = 60, bullet = 15, laser = 5,energy = 5, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/helmet/changeling/dropped()

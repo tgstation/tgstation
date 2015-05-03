@@ -98,6 +98,18 @@ emp_act
 			visible_message("<span class='danger'>[src] blocks [attack_text] with [r_hand]!</span>", \
 							"<span class='userdanger'>[src] blocks [attack_text] with [r_hand]!</span>")
 			return 1
+	if(l_hand && istype(l_hand, /obj/item/weapon))//Ling-shields 100% block attacks, but they break after (Number of genomes) x 2
+		var/obj/item/weapon/I = l_hand
+		if(istype(I, /obj/item/weapon/shield/changeling))
+			visible_message("<span class='danger'>[src] absorbs [attack_text] with [l_hand]!</span>", \
+							"<span class='userdanger'>[src] absorbs [attack_text] with [l_hand]!</span>")
+			return 1
+	if(r_hand && istype(r_hand, /obj/item/weapon))
+		var/obj/item/weapon/I = r_hand
+		if(istype(I, /obj/item/weapon/shield/changeling))
+			visible_message("<span class='danger'>[src] absorbs [attack_text] with [r_hand]!</span>", \
+							"<span class='userdanger'>[src] absorbs [attack_text] with [r_hand]!</span>")
+			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
 		if(I.IsShield() && (prob(50)))

@@ -70,6 +70,9 @@
 	if(H.disabilities & HUSK)
 		H.remove_overlay(SPECIES_LAYER) // races lose their color
 		return "husk"
+	if(H.disabilities & LING_VICTIM)
+		H.remove_overlay(SPECIES_LAYER)
+		return "lingvictim"
 	else if(sexes)
 		if(use_skintones)
 			return "[H.skin_tone]_[(H.gender == FEMALE) ? "f" : "m"]"
