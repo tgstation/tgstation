@@ -73,6 +73,7 @@ h1.alert, h2.alert		{color: #000000;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
+.mommi					{color: navy;}
 
 .big					{font-size: 3;}
 .greentext				{color: #00FF00;	font-size: 3;}

@@ -329,6 +329,46 @@
 	. = O
 	qdel(src)
 
+//human -> mommi
+/mob/living/carbon/human/proc/Mommize(var/delete_items = 0)
+	if (notransform)
+		return
+	for(var/obj/item/W in src)
+		if(delete_items)
+			qdel(W)
+		else
+			unEquip(W)
+	regenerate_icons()
+	notransform = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	for(var/t in organs)
+		qdel(t)
+
+	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi( loc )
+
+	O.rename_self("MoMMI", 1)
+	O.choose_icon()
+
+	O.gender = gender
+	O.invisibility = 0
+
+
+	if(mind)		//TODO
+		mind.transfer_to(O)
+		if(mind.special_role)
+			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+	else
+		O.key = key
+
+	O.loc = loc
+	O.job = "Mobile MMI"
+
+	. = O
+	qdel(src)
+
+
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
 	if (notransform)

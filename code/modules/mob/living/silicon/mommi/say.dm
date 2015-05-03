@@ -17,6 +17,15 @@
 	return ..()
 */
 
+/mob/living/silicon/robot/mommi/handle_inherent_channels(message, message_mode)
+	. = ..()
+	if(.)
+		return .
+
+	if((keeper == 1) || message_mode == MODE_MOMMI)
+		mommi_talk(message)
+		return 1
+
 /mob/living/silicon/robot/say_quote(var/text)
 	var/ending = copytext(text, length(text))
 

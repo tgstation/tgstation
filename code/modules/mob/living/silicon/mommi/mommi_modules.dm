@@ -20,7 +20,8 @@
 	src.modules += new /obj/item/weapon/pipe_dispenser(src)
 //	src.modules += new /obj/item/weapon/tile_painter(src)
 //	src.modules += new /obj/item/blueprints/mommiprints(src) SOON
-//	src.modules += new /obj/item/device/material_synth/cyborg(src)
+	src.modules += new /obj/item/areaeditor/permit/mommiprints
+	src.modules += new /obj/item/device/material_synth/cyborg(src)
 
 /*
 	// Added this back in since it made the MoMMI practically useless for engineering stuff.

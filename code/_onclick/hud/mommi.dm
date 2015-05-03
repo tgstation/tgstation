@@ -18,15 +18,21 @@
 
 /obj/screen/robot/mommi/module1/Click()
 	if(istype(usr, /mob/living/silicon/robot/mommi))
-		usr:toggle_module(INV_SLOT_TOOL)
+		var/mob/living/silicon/robot/mommi/M = usr
+		M.toggle_module(INV_SLOT_TOOL)
 
-/obj/screen/robot/mommi/hat
+obj/screen/robot/mommi/hat
 	name = "hat"
 	icon_state = "inv2"
 
 /obj/screen/robot/mommi/hat/Click()
-	var/mob/living/silicon/robot/mommi/R = usr
-	R.unequip_head()
+	var/mob/living/silicon/robot/mommi/M = usr
+	if(istype(usr, /mob/living/silicon/robot/mommi))
+		if(M.head_state)
+			M.unequip_head()
+			M.update_items()
+		else
+			M.equip_to_slot(M.tool_state, slot_head)
 /*
 /obj/screen/robot/mommi/module3
 	name = "module3"
@@ -43,7 +49,8 @@
 
 /obj/screen/robot/mommi/radio/Click()
 	var/mob/living/silicon/robot/mommi/M = usr
-	M.radio_menu()
+	if (ismommi(M))
+		M.radio_menu()
 
 /obj/screen/robot/mommi/store
 	name = "store"
@@ -51,7 +58,8 @@
 
 /obj/screen/robot/mommi/store/Click()
 	var/mob/living/silicon/robot/mommi/M = usr
-	M.uneq_active()
+	if (ismommi(M))
+		M.uneq_active()
 
 
 /datum/hud/proc/mommi_hud()
@@ -67,14 +75,13 @@
 	adding += using
 
 //Module select
-
-	var/mob/living/silicon/robot/mommi/mymobR = mymob
+	var/mob/living/silicon/robot/mommi/mymobM = mymob
 
 	using = new /obj/screen/robot/mommi/module1()
 	using.screen_loc = ui_inv1
 	using.name = "tool_slot"
 	adding += using
-	mymobR.inv_tool = using
+	mymobM.inv_tool = using
 /*
 	using = new /obj/screen/robot/module2()
 	using.screen_loc = ui_inv2
@@ -122,11 +129,18 @@
 
 	using = new /obj/screen/robot/mommi/hat()
 	using.name = "head"
-	using.icon_state = ui_inv2
 	using.screen_loc = ui_borg_album
-//	inv_box.layer = 19
+	using.layer = 19
 	adding += using
-	mymobR.head_state = using
+	mymobM.hat_slot = using
+
+//	using = new /obj/screen/robot/mommi/hat()
+//	using.name = "head"
+//	using.icon_state = ui_inv2
+//	using.screen_loc = ui_borg_album
+//	inv_box.layer = 19
+//	adding += using
+//	mymobM.head_state = using
 
 
 	//Health
@@ -203,9 +217,13 @@
 				usr << "<span class='danger'>Selected module has no modules to select</span>"
 				return
 
+			if(!r.robot_modules_background)
+				usr << "<scan class ='warning'>Your icons are fugged, contact a coder and get this sorted out</span>"
+				return
+
 			var/display_rows = Ceiling(length(r.module.get_inactive_modules()) / 8)
 			//DEBUG
-			r << "[display_rows] rows set"
+//			r << "[display_rows] rows set"
 			r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 			r.client.screen += r.robot_modules_background
 
@@ -213,7 +231,7 @@
 			var/y = 1
 
 			//DEBUG
-			r <<"toggling modules ON"
+	//		r <<"toggling modules ON"
 
 			for(var/atom/movable/A in r.module.get_inactive_modules())
 				//Module is not currently active
@@ -229,12 +247,12 @@
 					x = -4
 					y++
 
-			r <<"modules ON"
+//			r <<"modules ON"
 
 		else
 			//Modules display is hidden
 //			r.client.screen -= r.throw_icon	//"store" icon
-			r << "toggling modules OFF"
+//			r << "toggling modules OFF"
 			for(var/atom/A in r.module.get_inactive_modules())
 				//Module is not currently active
 				r.client.screen -= A
@@ -242,4 +260,5 @@
 
 			r.shown_robot_modules = 0
 			r.client.screen -= r.robot_modules_background
-			r << "modules OFF"
+	//		r << "modules OFF"
+	r.update_items()

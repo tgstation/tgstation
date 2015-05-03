@@ -264,3 +264,25 @@
 					return ROOM_ERR_SPACE
 		found+=T
 	return found
+
+
+/obj/item/areaeditor/permit/mommiprints //allows them to add to the station but not change existing stuff, should be multiuse if I did it right
+	name = "MoMMI station blueprints"
+	icon_state = "blueprints"
+	desc = "Blueprints of the station, designed for the passive aggressive spider bots aboard."
+	attack_verb = list("attacked", "bapped", "hit")
+
+
+/obj/item/areaeditor/permit/mommiprints/attack_self(mob/user as mob)
+	. = ..()
+	var/area/A = get_area()
+	if(get_area_type() == AREA_STATION)
+		. += "<p>According to \the [src], you are now in <b>\"[strip_html_properly(A.name)]\"</b>.</p>"
+	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
+	popup.set_content(.)
+	popup.open()
+	onclose(usr, "blueprints")
+
+
+/obj/item/areaeditor/permit/mommiprints/create_area()
+	..()

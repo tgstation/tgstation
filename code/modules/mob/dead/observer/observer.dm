@@ -331,6 +331,35 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.key = key
 	return 1
 
+/*
+/mob/dead/observer/verb/become_mommi()
+	set name = "Become MoMMI"
+	set category = "Ghost"
+/*
+	if(!config.respawn_as_mommi)
+		src << "<span class='warning'>Respawning as MoMMI is disabled..</span>"
+		return
+
+	var/timedifference = world.time - client.time_died_as_mouse
+	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
+		var/timedifference_text
+		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
+		src << "<span class='warning'>You may only spawn again as a mouse or MoMMI more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
+		return
+*/
+	//find a viable mommi candidate
+	var/obj/machinery/mommi_spawner/spawner
+	var/list/found_spawners = list()
+	for(var/obj/machinery/mommi_spawner/s in world)
+		if(s.z == src.z && s.canSpawn())
+			found_spawners.Add(s)
+	if(found_spawners.len)
+		spawner = pick(found_spawners)
+		spawner.attack_ghost(src)
+	else
+		src << "<span class='warning'>Unable to find any powered MoMMI Spawners on this z-level.</span>"
+*/
+
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info

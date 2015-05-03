@@ -53,7 +53,7 @@
 		W.attack_self(src)
 		return
 
-	if(A == loc || (A in loc) || (A in contents) || (A.loc in contents))
+	if(A == loc || (A in loc) || (A in contents))
 		// No adjacency checks
 		var/resolved = A.attackby(W,src, params)
 		if(!resolved && A && W)
@@ -63,7 +63,7 @@
 	if(!isturf(loc))
 		return
 
-	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
+	if(isturf(A) || isturf(A.loc))
 		if(A.Adjacent(src)) // see adjacent.dm
 			var/resolved = A.attackby(W, src, params)
 			if(!resolved && A && W)
@@ -75,8 +75,8 @@
 	return
 
 //Middle click toggles their module
-/mob/living/silicon/robot/MiddleClickOn(var/atom/A)
-	src.toggle_module(1)
+/mob/living/silicon/robot/mommi/MiddleClickOn(var/atom/A)
+	src.toggle_module()
 	return
 
 
@@ -88,18 +88,20 @@
 	clicks, you can do so here, but you will have to
 	change attack_robot() above to the proper function
 */
-/mob/living/silicon/robot/UnarmedAttack(atom/A)
+/mob/living/silicon/robot/mommi/UnarmedAttack(atom/A)
 	A.attack_mommi(src)
-/mob/living/silicon/robot/RangedAttack(atom/A)
+/mob/living/silicon/robot/mommi/RangedAttack(atom/A)
 	A.attack_mommi(src)
 
 /atom/proc/attack_mommi(mob/user as mob)
-	src.attack_robot(user)
-	return
-
-/obj/item/attack_mommi(mob/user as mob)
-	if (src.Adjacent(user))
-		user.put_in_hands(src)
+	var/mob/living/silicon/robot/mommi/M = user
+	if(M.is_in_modules(src))
+		M.activate_module(src)
+		M.select_module(INV_SLOT_TOOL)
+		M.hud_used.update_mommi_modules_display()
+		M.update_items()
+	else if (src.Adjacent(user))
+		attack_hand(user)
 	else
-		src.attack_robot(user)
+		attack_robot(user)
 	return

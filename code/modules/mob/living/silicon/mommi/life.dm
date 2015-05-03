@@ -1,43 +1,40 @@
 /mob/living/silicon/robot/mommi/Life()
 	set invisibility = 0
 	//set background = 1
-
-//	if (src.monkeyizing)
-//		return
-
-
-//	src.blinded = null
+	set background = BACKGROUND_ENABLED
 
 	//Status updates, death etc.
 	clamp_values()
 	handle_regular_status_updates()
-
-	if(client)
+	handle_regular_hud_updates()
+	if (client)
 		handle_regular_hud_updates()
 		update_items()
 	if (src.stat != DEAD) //still using power
 		use_power()
-	//	process_killswitch()
-	//	process_locks()
 	update_canmove()
+	update_gravity(mob_has_gravity())
+	handle_fire()
+	if(killswitch)
+		process_killswitch()
 //	handle_beams()
 
 
 
-/*
-/mob/living/silicon/robot/mommi/proc/clamp_values()
 
-//	SetStunned(min(stunned, 30))
+/mob/living/silicon/robot/mommi/clamp_values()
+
+	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
-//	SetWeakened(min(weakened, 20))
+	SetWeakened(min(weakened, 20))
 	sleeping = 0
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
 	adjustOxyLoss(0)
 	adjustFireLoss(0)
-*/
-/*
-/mob/living/silicon/robot/mommi/proc/use_power()
+
+
+/mob/living/silicon/robot/mommi/use_power()
 	if (src.cell)
 		if(src.cell.charge <= 0)
 			uneq_all()
@@ -49,8 +46,6 @@
 			src.sight_mode = 0
 			src.cell.use(1)
 		else
-			if(src.sight_state)
-				src.cell.use(5)
 			if(src.tool_state)
 				src.cell.use(5)
 			src.cell.use(1)
@@ -59,7 +54,7 @@
 	else
 		uneq_all()
 		src.stat = 1
-*/
+
 
 /mob/living/silicon/robot/mommi/handle_regular_status_updates()
 
@@ -130,48 +125,16 @@
 		src.druggy = max(0, src.druggy)
 
 	return 1
-/
-/mob/living/silicon/robot/mommi/handle_regular_hud_updates()
 
-	if (src.stat == 2 || src.sight_mode & BORGXRAY)
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
-		src.sight |= SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if ((src.sight_mode & BORGMESON || sensor_mode == 1) && src.sight_mode & BORGTHERM)
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
-		src.see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON || sensor_mode == 1)
-		src.sight |= SEE_TURFS
-		src.see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGTHERM)
-		src.sight |= SEE_MOBS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (src.stat != 2)
-		src.sight &= ~SEE_MOBS
-		src.sight &= ~SEE_TURFS
-		src.sight &= ~SEE_OBJS
-		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
-//	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
-//	if(hud && hud.hud)	hud.hud.process_hud(src)
 
 	if (src.healths)
 		if (src.stat != 2)
 			switch(health)
 				if(60 to INFINITY)
 					src.healths.icon_state = "health0"
-				if(40 to 60)
+				if(30 to 60)
 					src.healths.icon_state = "health1"
-				if(30 to 40)
-					src.healths.icon_state = "health2"
-				if(10 to 20)
+				if(10 to 30)
 					src.healths.icon_state = "health3"
 				if(0 to 10)
 					src.healths.icon_state = "health4"
@@ -195,6 +158,38 @@
 			if(!src.mind.special_role)
 				src.mind.special_role = "traitor"
 				ticker.mode.traitors += src.mind
+
+
+
+/mob/living/silicon/robot/mommi/handle_regular_hud_updates()
+
+	if (src.stat == 2 || src.sight_mode & BORGXRAY)
+		src.sight |= SEE_TURFS
+		src.sight |= SEE_MOBS
+		src.sight |= SEE_OBJS
+		src.see_in_dark = 8
+		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	else
+		src.see_in_dark = 8
+		if (src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
+			src.sight |= SEE_TURFS
+			src.sight |= SEE_MOBS
+			src.see_invisible = SEE_INVISIBLE_MINIMUM
+		else if (src.sight_mode & BORGMESON)
+			src.sight |= SEE_TURFS
+			src.see_invisible = SEE_INVISIBLE_MINIMUM
+			src.see_in_dark = 2
+		else if (src.sight_mode & BORGTHERM)
+			src.sight |= SEE_MOBS
+			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		else if (src.stat != 2)
+			src.sight &= ~SEE_MOBS
+			src.sight &= ~SEE_TURFS
+			src.sight &= ~SEE_OBJS
+			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if(see_override)
+			see_invisible = see_override
+
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
@@ -251,9 +246,9 @@
 		if (src.machine)
 			if (!( src.machine.check_eye(src) ))
 				src.reset_view(null)
-		else
-			if(!client.adminobs)
-				reset_view(null)
+//		else
+//			if(!client.adminobs)
+//				reset_view(null)
 
 	return 1
 
@@ -273,9 +268,31 @@
 	//	src.sight_state:screen_loc = ui_inv2
 	if(src.tool_state)
 		src.tool_state:screen_loc = ui_inv1
+		src.tool_state:layer = 20
 	if(src.head_state)
-		src.head_state:screen_loc = ui_monkey_mask
+		src.head_state:screen_loc = ui_borg_album
+		src.head_state:layer = 20
 
 /mob/living/silicon/robot/mommi/update_canmove()
 	canmove = !(paralysis || stunned || weakened || buckled || lockcharge || anchored)
 	return canmove
+
+
+
+/mob/living/silicon/robot/mommi/proc/process_killswitch() //this proc is here to stop derelict mommis from getting on the station and shitting things up
+	if(killswitch) //sanity
+		if(src.z)  //If a mommi somehow escapes inside a locker, it'll get wrecked next tick life() processes
+			if(!(src.z in allowed_z))
+				src.killswitch()
+				return
+			return
+		return
+	return
+
+
+
+/mob/living/silicon/robot/mommi/proc/killswitch()
+ 	src << "<span class= 'danger'> You have left the bounds of your operational area and your killswitch has been activated </span>"
+ 	src.dust()
+ 	return
+

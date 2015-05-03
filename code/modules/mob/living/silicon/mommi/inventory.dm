@@ -16,6 +16,31 @@
 	else
 		return locate(W) in src.module.modules
 
+
+/mob/living/silicon/robot/mommi/activate_module(var/obj/item/O)
+	if(!(locate(O) in src.module.modules) && O != src.module.emag)
+		return
+	if(activated(O))
+		src << "<span class='notice'>Already activated</span>"
+		return
+	if(!tool_state)
+		tool_state = O
+		O.layer = 20
+		contents += O
+		update_items()
+	else
+		src << "<span class='notice'>You need to store a module first!</span>"
+
+/mob/living/silicon/robot/mommi/toggle_module() //Only one module
+
+	if(module_selected(INV_SLOT_TOOL))
+		deselect_module(INV_SLOT_TOOL)
+		update_items()
+	else
+		select_module(INV_SLOT_TOOL)
+		update_items()
+	return
+
 /mob/living/silicon/robot/mommi/put_in_hands(var/obj/item/W)
 	// Fixing NPEs caused by PDAs giving me NULLs to hold :V - N3X
 	// And before you ask, this is how /mob handles NULLs, too.
@@ -41,6 +66,7 @@
 	tool_state = W
 	W.layer = 20
 	contents += W
+	update_items()
 
 	// Make crap we pick up active so there's less clicking and carpal. - N3X
 	module_active=tool_state
@@ -78,6 +104,8 @@
 		return 0
 	if(get_active_hand())
 		uneq_active()
+	update_items()
+	W.layer = 20
 	return put_in_hands(W)
 /*
 /mob/living/silicon/robot/mommi/get_multitool(var/active_only=0)
@@ -153,8 +181,10 @@
 		module_active = null
 		tool_state = null
 		inv_tool.icon_state = "inv1"
+		update_items()
 	if(is_in_modules(TS))
 		TS.loc = src.module
+		src.hud_used.update_mommi_modules_display()
 
 /mob/living/silicon/robot/mommi/uneq_all()
 	module_active = null
@@ -162,6 +192,7 @@
 	unequip_sight()
 	unequip_tool()
 	unequip_head()
+	update_items()
 
 /mob/living/silicon/robot/mommi/proc/unequip_sight()
 	if(sight_state)
@@ -171,9 +202,11 @@
 			client.screen -= sight_state
 		contents -= sight_state
 		sight_state = null
+		update_items()
 		//inv_sight.icon_state = "sight"
 
 // Unequips an object from the MoMMI's head
+
 /mob/living/silicon/robot/mommi/proc/unequip_head()
 	// If there is a hat on the MoMMI's head
 	if(head_state)
@@ -182,6 +215,7 @@
 
 		// Put the hat in the MoMMI's claw
 		put_in_active_hand(head_state)
+		update_items()
 
 		// Do that thing that unequip_sight and unequip_tool do
 		if(istype(head_state,/obj/item/borg/sight))
@@ -189,8 +223,9 @@
 		contents -= head_state
 
 		// Remove the head_state icon from the client's screen
-		if (client)
-			client.screen -= head_state
+//		if (client)
+//			client.screen -= head_state
+		head_state:screen_loc = inv_tool.screen_loc
 
 		// Delete the hat from the head
 		head_state = null
@@ -214,6 +249,7 @@
 		inv_tool.icon_state = "inv1"
 		if(is_in_modules(TS))
 			TS.loc = src.module
+		update_items()
 
 
 /mob/living/silicon/robot/mommi/activated(obj/item/O)
@@ -295,6 +331,7 @@
 	return
 
 //toggle_module(module) - Toggles the selection of the module slot specified by "module".
+/*
 /mob/living/silicon/robot/mommi/toggle_module(var/module)
 	if(module_selected(module))
 		deselect_module(module)
@@ -304,13 +341,14 @@
 		else
 			deselect_module(get_selected_module()) //If we can't do select anything, at least deselect the current module.
 	return
-
+*/
 //cycle_modules() - Cycles through the list of selected modules.
 /mob/living/silicon/robot/mommi/cycle_modules()
 	return
 
 // Equip an item to the MoMMI. Currently the only thing you can equip is hats
 // Returns a 0 or 1 based on whether or not the equipping worked
+
 /mob/living/silicon/robot/mommi/equip_to_slot(obj/item/W as obj, slot, redraw_mob = 1)
 	// If the parameters were given incorrectly, return an error
 	if(!slot) return 0
@@ -354,6 +392,7 @@
 			W.equipped(src, slot)
 			// Add the item to the MoMMI's hud
 			if (client)
+				head_state:screen_loc = hat_slot.screen_loc
 				client.screen += head_state
 		else
 			src << "\red You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
@@ -372,6 +411,7 @@
 			src << "<span class='warning'>You are unable to equip that.</span>"
 
 // Quickly equip a hat by pressing "e"
+/*
 /mob/living/silicon/robot/mommi/verb/quick_equip()
 	set name = "quick-equip"
 	set hidden = 1
@@ -395,3 +435,4 @@
 		else
 			M << "<span class='warning'>You are unable to equip that.</span>"
 
+*/

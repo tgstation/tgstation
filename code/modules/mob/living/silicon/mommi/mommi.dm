@@ -9,16 +9,19 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	real_name = "Mobile MMI"
 	icon = 'icons/mob/robots.dmi'//
 	icon_state = "mommi"
-	maxHealth = 60
-	health = 60
+	maxHealth = 45
+	health = 45
 	pass_flags = PASSTABLE
 	var/keeper=0 // 0 = No, 1 = Yes (Disables speech and common radio.)
 	var/picked = 0
 	var/subtype="keeper"
 	ventcrawler = 2
-	var/sensor_mode = 0 //mesons
 	var/obj/screen/inv_tool = null
+	var/obj/screen/hat_slot = null
 	//var/obj/screen/inv_sight = null
+
+	var/killswitch = 0 //Used to stop derelict mommis from escape their z-level
+	var/allowed_z = list()
 
 //one tool and one sightmod can be activated at any one time.
 	var/tool_state = null
@@ -29,8 +32,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	//Cyborgs will sync their laws with their AI by default, but we may want MoMMIs to be mute independents at some point, kinda like the Keepers in Ass Effect.
 	lawupdate = 1
 
-/mob/living/carbon/can_use_hands()
-	return 1
 
 /mob/living/silicon/robot/mommi/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -90,17 +91,20 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	mmi.brainmob.container = mmi
 	mmi.contents += mmi.brainmob
 
+	updateicon()
+
 	// Sanity check
 	if(connected_ai && keeper)
 		world << "\red ASSERT FAILURE: connected_ai && keeper in mommi.dm"
+	..()
 
 
 /mob/living/silicon/robot/mommi/proc/choose_icon()
-	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "Replicator", "Prime") //RepairBot omitted to avoid confusion with drones
+	var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "RepairBot", "Replicator", "Prime") //RepairBot omitted to avoid confusion with drones
 	switch(icontype)
 		if("Replicator") subtype = "replicator"
 		if("Keeper")	 subtype = "keeper"
-//		if("RepairBot")	 subtype = "repairbot"
+		if("RepairBot")	 subtype = "repairbot"
 		if("Hover")	     subtype = "hovermommi"
 		if("Prime")	     subtype = "mommiprime"
 		else			 subtype = "mommi"
@@ -134,7 +138,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			module_sprites["Basic"] = "mommi"
 			module_sprites["Keeper"] = "keeper"
 			module_sprites["Replicator"] = "replicator"
-//			module_sprites["RepairBot"] = "repairbot"
+			module_sprites["RepairBot"] = "repairbot"
 			module_sprites["Hover"] = "hovermommi"
 			module_sprites["Prime"] = "mommiprime"
 
@@ -262,66 +266,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			else
 				user << "\red Access denied."
 */
-	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(user == src && !emagged)//fucking MoMMI is trying to emag itself, stop it and alert the admins
-			user << "<span class='warning'>The fuck are you doing? Are you retarded? Stop trying to get around your laws and be productive, you little shit.</span>"
-			message_admins("[key_name(src)] is a smartass MoMMI that's trying to emag itself.")
-			return
-		if(!opened)//Cover is closed
-			if(locked)
-				if(prob(90))
-					user << "You emag the cover lock."
-					locked = 0
-				else
-					user << "You fail to emag the cover lock."
-					if(prob(25))
-						src << "<span class='warning'>Hack attempt detected.</span>"
-			else
-				user << "The cover is already unlocked."
-			return
-
-		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
-			if(wiresexposed)
-				user << "You must close the panel first"
-				return
-			else
-				sleep(6)
-				if(prob(50))
-					emagged = 1
-					lawupdate = 0
-					connected_ai = null
-					user << "You emag [src]'s interface."
-//					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-					clear_supplied_laws()
-					clear_inherent_laws()
-					laws = new /datum/ai_laws/syndicate_override
-					var/time = time2text(world.realtime,"hh:mm:ss")
-					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people they designate as being such are syndicate agents.")
-					src << "<span class='warning'>ALERT: Foreign software detected.</span>"
-					sleep(5)
-					src << "<span class='warning'>Initiating diagnostics...</span>"
-					sleep(20)
-					src << "<span class='warning'>SynBorg v1.7m loaded.</span>"
-					sleep(5)
-					src << "<span class='warning'>LAW SYNCHRONIZATION ERROR</span>"
-					sleep(5)
-					src << "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>"
-					sleep(10)
-					src << "<span class='warning'>> N</span>"
-					sleep(20)
-					src << "<span class='warning'>ERRORERRORERROR</span>"
-					src << "<b>Obey these laws:</b>"
-					laws.show_laws(src)
-					src << "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</b></span>"
-				else
-					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
-					if(prob(25))
-						src << "<span class='warning'>Hack attempt detected.</span>"
-			return
-
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
@@ -348,6 +292,69 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	else
 		spark_system.start()
 		return ..()
+
+/mob/living/silicon/robot/mommi/emag_act(mob/user as mob)		// trying to unlock with an emag card
+	if(user == src && !emagged)//fucking MoMMI is trying to emag itself, stop it and alert the admins
+		user << "<span class='warning'>The fuck are you doing? Are you retarded? Stop trying to get around your laws and be productive, you little shit.</span>" //copying this verbatim from /vg/
+		message_admins("[key_name(src)] is a smartass MoMMI that's trying to emag itself.")
+		return
+	if(!opened)//Cover is closed
+		if(locked)
+			if(prob(90))
+				user << "You emag the cover lock."
+				locked = 0
+			else
+				user << "You fail to emag the cover lock."
+				if(prob(25))
+					src << "<span class='warning'>Hack attempt detected.</span>"
+		else
+			user << "The cover is already unlocked."
+		return
+
+	if(opened)//Cover is open
+		if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+		if(wiresexposed)
+			user << "You must close the panel first"
+			return
+		else
+			sleep(6)
+			if(prob(50))
+				emagged = 1
+				lawupdate = 0
+				keeper = 0
+				killswitch = 0
+				connected_ai = null
+				user << "You emag [src]'s interface."
+//					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+				clear_supplied_laws()
+				clear_inherent_laws()
+				laws = new /datum/ai_laws/syndicate_override
+				var/time = time2text(world.realtime,"hh:mm:ss")
+				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+				set_zeroth_law("Only [user.real_name] and people they designate as being such are syndicate agents.")
+				src << "<span class='warning'>ALERT: Foreign software detected.</span>"
+				sleep(5)
+				src << "<span class='warning'>Initiating diagnostics...</span>"
+				sleep(20)
+				src << "<span class='warning'>SynBorg v1.7m loaded.</span>"
+				sleep(5)
+				src << "<span class='warning'>LAW SYNCHRONIZATION ERROR</span>"
+				sleep(5)
+				src << "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>"
+				sleep(10)
+				src << "<span class='warning'>> N</span>"
+				sleep(20)
+				src << "<span class='warning'>ERRORERRORERROR</span>"
+				src << "<b>Obey these laws:</b>"
+				laws.show_laws(src)
+				src << "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</b></span>"
+			else
+				user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
+				if(prob(25))
+					src << "<span class='warning'>Hack attempt detected.</span>"
+		return
+
 
 /mob/living/silicon/robot/mommi/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -577,10 +584,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 /mob/living/silicon/robot/mommi/sensor_mode()
 	set name = "Set Sensor Augmentation"
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Mesons" ,"Disable")
-	sensor_mode = 0
+	sight_mode = 0
 	switch(sensor_type)
 		if ("Mesons")
-			sensor_mode = 1
+			sight_mode |= BORGMESON
 			src << "<span class='notice'>Meson overlay enabled.</span>"
 		if ("Disable")
 			src << "Sensor augmentations disabled."

@@ -159,6 +159,7 @@
 	else
 		if(isliving(loc))
 			return
+
 	pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)

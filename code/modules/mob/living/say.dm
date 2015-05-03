@@ -10,6 +10,7 @@
 #define MODE_L_HAND "left hand"
 #define MODE_INTERCOM "intercom"
 #define MODE_BINARY "binary"
+#define MODE_MOMMI "mommi"
 #define MODE_WHISPER "whisper"
 #define MODE_SECURE_HEADSET "secure headset"
 #define MODE_DEPARTMENT "department"
@@ -17,6 +18,7 @@
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
 
+//my god why isn't this shit sorted
 var/list/department_radio_keys = list(
 	  ":r" = "right hand",	"#r" = "right hand",	".r" = "right hand",
 	  ":l" = "left hand",	"#l" = "left hand",		".l" = "left hand",
@@ -29,6 +31,7 @@ var/list/department_radio_keys = list(
 	  ":s" = "Security",	"#s" = "Security",		".s" = "Security",
 	  ":w" = "whisper",		"#w" = "whisper",		".w" = "whisper",
 	  ":b" = "binary",		"#b" = "binary",		".b" = "binary",
+	  ":d" = "mommi",		"#d" = "mommi",			".d" = "mommi",
 	  ":a" = "alientalk",	"#a" = "alientalk",		".a" = "alientalk",
 	  ":t" = "Syndicate",	"#t" = "Syndicate",		".t" = "Syndicate",
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
@@ -47,6 +50,7 @@ var/list/department_radio_keys = list(
 	  ":S" = "Security",	"#S" = "Security",		".S" = "Security",
 	  ":W" = "whisper",		"#W" = "whisper",		".W" = "whisper",
 	  ":B" = "binary",		"#B" = "binary",		".B" = "binary",
+	  ":D" = "mommi",		"#D" = "mommi",			".D" = "mommi",
 	  ":A" = "alientalk",	"#A" = "alientalk",		".A" = "alientalk",
 	  ":T" = "Syndicate",	"#T" = "Syndicate",		".T" = "Syndicate",
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
@@ -54,6 +58,7 @@ var/list/department_radio_keys = list(
 	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 
+		//fugg
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	  ":ê" = "right hand",	"#ê" = "right hand",	".ê" = "right hand",
