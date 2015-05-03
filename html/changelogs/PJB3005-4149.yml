@@ -1,4 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - rscadd: Disposals bins now use NanoUI.
