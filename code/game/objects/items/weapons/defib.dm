@@ -367,10 +367,8 @@
 					user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest and begin to charge them.</span>")
 					var/turf/T = get_turf(defib)
 					playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
-					sleep(40)
-					playsound(get_turf(src), 'sound/machines/defib_saftyOff.ogg', 50, 0)
 					T.audible_message("<span class='warning'>\The [defib] lets out an urgent beep and lets out a steadily rising hum...</span>")
-					if(do_after(user, 40)) //Takes longer due to overcharging
+					if(do_after(user, 30)) //Takes longer due to overcharging
 						if(M.stat == DEAD)
 							user << "<span class='warning'>[M] is dead - you can't stop their heart.</span>"
 							return
