@@ -644,7 +644,7 @@ client/proc/one_click_antag()
 				if("Yes")
 					G << "<span class='notice'>Choice registered: Yes.</span>"
 					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+						G << "<span class='danger'>Sorry, you were too late-!</span>"
 						G << 'sound/machines/buzz-sigh.ogg'
 						return
 					candidates += G

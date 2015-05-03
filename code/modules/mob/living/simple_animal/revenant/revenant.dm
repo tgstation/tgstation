@@ -5,7 +5,7 @@
 
 /mob/living/simple_animal/revenant
 	name = "revenant"
-	desc = "A malevolent spirit."
+	desc = "A strange creature that pulses with an ominous purple light. Its body is translucent, but it looks fragile."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
 	incorporeal_move = 1
@@ -100,7 +100,6 @@
 	spawn(5)
 		if(src.mind)
 			src << 'sound/effects/ghost.ogg'
-			src.store_memory("<span class='deadsay'>I am a revenant. My spectral form has been empowered. My only goal is to gather essence from the humans of [world.name].</span>")
 			src << "<br>"
 			src << "<span class='deadsay'><font size=3><b>You are a revenant!</b></font></span>"
 			src << "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
@@ -120,10 +119,8 @@
 	if(src.mind)
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_harvest
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_transmit
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_light
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_life_tap
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_seed_drain
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_mindspike
+		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_overloadLight
+		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_breakWindow
 		return 1
 	return 0
 
@@ -140,7 +137,7 @@
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/nullrod))
-		src.visible_message("<b>The revenant</b> screeches and flails!", \
+		src.visible_message("<b>The revenant</b> screeches!", \
 							"<span class='boldannounce'>The null rod invokes agony in you! You feel your essence draining away!</span>")
 		src.essence -= 25 //hella effective
 		src.inhibited = 1
@@ -149,8 +146,7 @@
 
 
 
-/obj/effect/proc_holder/spell/proc/essence_check(var/essence_cost, var/silent = 0)
-	var/mob/living/simple_animal/revenant/W = usr
+/obj/effect/proc_holder/spell/proc/essence_check(var/essence_cost, var/silent = 0, var/mob/living/simple_animal/revenant/W = usr)
 	if(W.essence < essence_cost)
 		if(!silent)
 			W << "<span class='warning'>You need [essence_cost]E to use [name] but you only have [W.essence]E available. Harvest some more things.</span>"
@@ -170,3 +166,16 @@
 		else
 			user << "<span class='info'>Lost [essence_amt]E.</span>"
 	return 1
+
+
+
+/mob/living/simple_animal/revenant/proc/RevenantReveal(var/time, var/mob/living/simple_animal/revenant/user = usr, var/immobilize = 0)
+	user.revealed = 1
+	user.invisibility = 0
+	if(immobilize)
+		user.notransform = 1
+	spawn(time)
+		if(immobilize)
+			user.notransform = 0
+		user.revealed = 0
+		user.invisibility = INVISIBILITY_OBSERVER
