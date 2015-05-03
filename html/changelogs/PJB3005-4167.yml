@@ -1,6 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - rscadd: AAC registers, these registers (10 max without adminbus) can store numbers for usage in AAC scripts.
-  - rscadd: You can manually set these registers by clicking on them in the AAC's UI.
-  - rscadd: You can both get and set values to these registers using new automations.
