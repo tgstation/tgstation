@@ -68,11 +68,14 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 	var/list/totalMembers = list()
 	totalMembers |= starting_machine.parent.members
 	totalMembers |= starting_machine.parent.other_atmosmch
-	for(var/atom/A in totalMembers)
-		var/image/new_image = image(A, A.loc, dir = A.dir)
-		pipes_shown += new_image
+
+	for(var/obj/machinery/atmospherics/A in totalMembers)
+		if(!A.pipe_vision_img)
+			A.pipe_vision_img = image(A, A.loc, layer = 20, dir = A.dir)
+			//20 for being above darkness
+		pipes_shown |= A.pipe_vision_img
 		if(client)
-			client.images += new_image
+			client.images |= A.pipe_vision_img
 
 
 /mob/living/proc/remove_ventcrawl()
