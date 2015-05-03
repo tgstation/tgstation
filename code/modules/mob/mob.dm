@@ -233,36 +233,19 @@
 			del(narglow)
 
 /mob/proc/see_rift(var/obj/machinery/singularity/narsie/large/exit/R)
-	if(istype(src.loc,/obj/mecha/))
-		var/obj/mecha/M = src.loc
-		if((R.z == M.z) && (get_dist(R,M) <= (R.consume_range+10)) && !(R in view(M)))
-			if(!riftimage)
-				riftimage = image('icons/obj/rift.dmi',M.loc,"rift",LIGHTING_LAYER+2,1)
-				riftimage.mouse_opacity = 0
-
-			var/new_x = 32 * (R.x - M.x) + R.pixel_x
-			var/new_y = 32 * (R.y - M.y) + R.pixel_y
-			riftimage.pixel_x = new_x
-			riftimage.pixel_y = new_y
-			riftimage.loc = M.loc
-
-			src << riftimage
-		else
-			if(riftimage)
-				del(riftimage)
-	else if((R.z == src.z) && (get_dist(R,src) <= (R.consume_range+10)) && !(R in view(src)))
+	var/turf/T_mob = get_turf(src)
+	if((R.z == T_mob.z) && (get_dist(R,T_mob) <= (R.consume_range+10)) && !(R in view(T_mob)))
 		if(!riftimage)
-			riftimage = image('icons/obj/rift.dmi',src.loc,"rift",LIGHTING_LAYER+2,1)
+			riftimage = image('icons/obj/rift.dmi',T_mob,"rift",LIGHTING_LAYER+2,1)
 			riftimage.mouse_opacity = 0
 
-		var/new_x = 32 * (R.x - src.x) + R.pixel_x
-		var/new_y = 32 * (R.y - src.y) + R.pixel_y
+		var/new_x = 32 * (R.x - T_mob.x) + R.pixel_x
+		var/new_y = 32 * (R.y - T_mob.y) + R.pixel_y
 		riftimage.pixel_x = new_x
 		riftimage.pixel_y = new_y
-		riftimage.loc = src.loc
+		riftimage.loc = T_mob
 
 		src << riftimage
-
 	else
 		if(riftimage)
 			del(riftimage)

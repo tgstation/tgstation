@@ -13,6 +13,7 @@
 /datum/universal_state/supermatter_cascade/OnTurfChange(var/turf/T)
 	if(T.name == "space")
 		T.overlays += "end01"
+		T.underlays -= "end01"
 	else
 		T.overlays -= "end01"
 		if(!T.color_lighting_lumcount)
@@ -51,10 +52,9 @@
 	suspend_alert = 1
 
 	AreaSet()
-	OverlaySet()
 	MiscSet()
 	APCSet()
-	AmbientSet()
+	OverlayAndAmbientSet()
 
 	// Disable Nar-Sie.
 	ticker.mode.eldergod=0
@@ -126,15 +126,13 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 
 		A.updateicon()
 
-/datum/universal_state/supermatter_cascade/proc/OverlaySet()
-	return
-
-/datum/universal_state/supermatter_cascade/proc/AmbientSet()
+/datum/universal_state/supermatter_cascade/proc/OverlayAndAmbientSet()
 	for(var/turf/T in world)
 		if(istype(T, /turf/space))
 			T.overlays += "end01"
 		else
 			if(T.z != map.zCentcomm)
+				T.underlays += "end01"
 				T.update_lumcount(1, 160, 255, 0, 0)
 
 /datum/universal_state/supermatter_cascade/proc/MiscSet()
