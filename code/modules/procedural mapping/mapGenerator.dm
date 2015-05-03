@@ -49,30 +49,29 @@
 	if(!checkRegion(Start, End))
 		return 0
 
-	var/centerX = abs(max(End.x-Start.x,1))
-	var/centerY = abs(max(End.y-Start.y,1))
-
+	var/centerX = max(abs((End.x+Start.x)/2),1)
+	var/centerY = max(abs((End.y+Start.y)/2),1)
 
 	var/lilZ = min(Start.z,End.z)
 	var/bigZ = max(Start.z,End.z)
 
-	var/centerZ = max(abs(bigZ-(lilZ/2)),1) //Spherical maps! woo!
+	var/sphereMagic = max(abs(bigZ-(lilZ/2)),1) //Spherical maps! woo!
 
 	var/radius = abs(max(centerX,centerY)) //take the biggest displacement as the radius
 
 	if(replace)
 		undefineRegion()
 
-	//Sphere mode engage
-	var/evenCheckZ = 0
-	if(max(bigZ,lilZ) % 2 == 0)
-		evenCheckZ = centerZ+1
+	//Even sphere correction engage
+	var/offByOneOffset = 1
+	if(bigZ % 2 == 0)
+		offByOneOffset = 0
 
-	for(var/i = lilZ, i <= bigZ, i++)
+	for(var/i = lilZ, i <= bigZ+offByOneOffset, i++)
 		var/theRadius = radius
-		if(i != centerZ)
+		if(i != sphereMagic)
 			if(i != evenCheckZ)
-				theRadius = max(radius/max((2*abs(centerZ-i)),1),1)
+				theRadius = max(radius/max((2*abs(sphereMagic-i)),1),1)
 
 
 		map |= circlerange(locate(centerX,centerY,i),theRadius)
