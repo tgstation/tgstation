@@ -842,6 +842,7 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 					var/old_icon1 = T.icon
 					var/image/undlay = image("icon"=B.icon,"icon_state"=B.icon_state,"dir"=B.dir)
 					undlay.overlays = B.overlays.Copy()
+					var/prevtype = B.type
 
 					var/turf/X = B.ChangeTurf(T.type)
 					for(var/key in T.vars)
@@ -851,7 +852,14 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 							X.vars[key] = L.Copy()
 						else
 							X.vars[key] = T.vars[key]
-					X.underlays += undlay
+					if(prevtype == /turf/space)
+						if(T.underlays.len)
+							for(var/Over in T.underlays)
+								X.underlays += T.underlays
+						else
+							X.underlays += undlay
+					else
+						X.underlays += undlay
 					X.dir = old_dir1
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
