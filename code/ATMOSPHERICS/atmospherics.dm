@@ -24,14 +24,6 @@ Pipelines + Other Objects -> Pipe network
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 
-
-/obj/machinery/atmospherics/Destroy()
-	for(var/mob/living/L in src)
-		L.remove_ventcrawl()
-		L.forceMove(get_turf(src))
-	..()
-
-
 /obj/machinery/atmospherics/New()
 	..()
 	SSair.atmos_machinery += src
@@ -44,6 +36,11 @@ Pipelines + Other Objects -> Pipe network
 	if (stored)
 		qdel(stored)
 	stored = null
+	
+	for(var/mob/living/L in src)
+		L.remove_ventcrawl()
+		L.forceMove(get_turf(src))
+	
 	..()
 
 //this is called just after the air controller sets up turfs
@@ -127,7 +124,8 @@ Pipelines + Other Objects -> Pipe network
 		var/turf/T = loc
 		stored.loc = T
 		transfer_fingerprints_to(stored)
-
+		stored = null
+	
 	qdel(src)
 
 /obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
