@@ -7,7 +7,7 @@
 	src.emag = new /obj/item/borg/stun(src)
 	//src.modules += new /obj/item/weapon/rcd/borg(src)     // Too OP
 	src.modules += new /obj/item/device/flashlight(src)   // Broken
-	src.modules += new /obj/item/weapon/weldingtool/largetank(src)
+	src.modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
 	src.modules += new /obj/item/weapon/screwdriver(src)
 	src.modules += new /obj/item/weapon/wrench(src)
 	src.modules += new /obj/item/weapon/crowbar(src)

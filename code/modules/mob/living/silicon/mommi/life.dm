@@ -269,10 +269,10 @@
 				// This way of doing it ensures that shit we pick up will be visible, wheras shit inside of us isn't.
 				if(I!=src.cell && I!=src.radio && I!=src.camera && I!=src.mmi)
 					src.client.screen += I
-	if(src.sight_state)
-		src.sight_state:screen_loc = ui_inv1
+	//if(src.sight_state)
+	//	src.sight_state:screen_loc = ui_inv2
 	if(src.tool_state)
-		src.tool_state:screen_loc = ui_inv2
+		src.tool_state:screen_loc = ui_inv1
 	if(src.head_state)
 		src.head_state:screen_loc = ui_monkey_mask
 

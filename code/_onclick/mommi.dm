@@ -94,8 +94,12 @@
 	A.attack_mommi(src)
 
 /atom/proc/attack_mommi(mob/user as mob)
-	if (user.Adjacent(src))
-		attack_hand(user)
+	src.attack_robot(user)
+	return
+
+/obj/item/attack_mommi(mob/user as mob)
+	if (src.Adjacent(user))
+		user.put_in_hands(src)
 	else
-		attack_robot(user)
+		src.attack_robot(user)
 	return

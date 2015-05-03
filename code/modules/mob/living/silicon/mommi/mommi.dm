@@ -17,7 +17,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/subtype="keeper"
 	ventcrawler = 2
 	var/sensor_mode = 0 //mesons
-	obj/screen/inv1 = null
+	var/obj/screen/inv_tool = null
 	//var/obj/screen/inv_sight = null
 
 //one tool and one sightmod can be activated at any one time.
@@ -36,6 +36,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+
+	robot_modules_background = new()
+	robot_modules_background.icon_state = "block"
+	robot_modules_background.layer = 19	//Objects that appear on screen are on layer 20, UI should be just below it.
 
 	ident = rand(1, 999)
 	updatename()
@@ -515,7 +519,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			sight_mode |= sight_state:sight_mode
 
 			//inv_sight.icon_state = "sight+a"
-			inv1.icon_state = "inv1"
+			inv_tool.icon_state = "inv1"
 			module_active=sight_state
 		else
 			TS = tool_state
@@ -528,7 +532,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			contents += O
 
 			//inv_sight.icon_state = "sight"
-			inv1.icon_state = "inv1 +a"
+			inv_tool.icon_state = "inv1 +a"
 			module_active=tool_state
 		if(TS && istype(TS))
 			if(src.is_in_modules(TS))
