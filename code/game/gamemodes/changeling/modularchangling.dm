@@ -26,6 +26,12 @@ var/list/datum/power/changeling/powerinstances = list()
 	genomecost = 0
 	verbpath = /mob/proc/changeling_transform
 
+/datum/power/changeling/change_species
+	name = "Change Species"
+	desc = "We take on the apperance of a species that we have absorbed."
+	genomecost = 0
+	verbpath = /mob/proc/changeling_change_species
+
 /datum/power/changeling/fakedeath
 	name = "Regenerative Stasis"
 	desc = "We become weakened to a death-like state, where we will rise again from death."

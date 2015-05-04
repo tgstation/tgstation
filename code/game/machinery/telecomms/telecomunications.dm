@@ -548,7 +548,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				update_logs()
 
 				var/datum/comm_log_entry/log = new
-
+				var/mob/M = signal.data["mob"]
 				// Copy the signal.data entries we want
 				log.parameters["mobtype"] = signal.data["mobtype"]
 				log.parameters["job"] = signal.data["job"]
@@ -557,7 +557,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 
-				log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+				if(!istype(M, /mob/new_player) && M)
+					log.parameters["uspeech"] = M.universal_speak
+				else
+					log.parameters["uspeech"] = 0
+
 
 
 				// If the signal is still compressed, make the log entry gibberish

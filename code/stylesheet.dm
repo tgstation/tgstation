@@ -57,6 +57,7 @@ h1.alert, h2.alert		{color: #000000;}
 .adminmod				{color: #402A14;	font-weight: bold;}
 .tajaran				{color: #803B56;}
 .skrell					{color: #00CED1;}
+.solcom					{color: #22228B;}
 .soghun					{color: #228B22;}
 .vox					{color: #AA00AA;}
 .rough					{font-family: 'Trebuchet MS', cursive, sans-serif;}

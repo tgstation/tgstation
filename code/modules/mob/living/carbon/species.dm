@@ -3,9 +3,10 @@
 */
 
 // Global Lists ////////////////////////////////////////////////
-
+// Languages
+var/global/list/language_keys[0]
+var/global/list/all_languages[0]
 var/global/list/all_species = list()
-var/global/list/all_languages = list()
 var/global/list/whitelisted_species = list("Human")
 
 /proc/buildSpeciesLists()
@@ -14,6 +15,11 @@ var/global/list/whitelisted_species = list("Human")
 	for(. in (typesof(/datum/language)-/datum/language))
 		L = new .
 		all_languages[L.name] = L
+	for (var/language_name in all_languages)
+		L = all_languages[language_name]
+		language_keys[":[lowertext(L.key)]"] = L
+		language_keys[".[lowertext(L.key)]"] = L
+		language_keys["#[lowertext(L.key)]"] = L
 	for(. in (typesof(/datum/species)-/datum/species))
 		S = new .
 		all_species[S.name] = S
@@ -25,19 +31,20 @@ var/global/list/whitelisted_species = list("Human")
 /datum/species
 	var/name                     // Species name.
 
-	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
-	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
-	var/override_icon = null                             // DMI for overriding the icon.  states: [lowertext(species.name)]_[gender][fat?"_fat":""]
-	var/eyes = "eyes_s"                                  // Icon for eyes.
+	var/icobase = 'icons/mob/human_races/r_human.dmi'		// Normal icon set.
+	var/deform = 'icons/mob/human_races/r_def_human.dmi'	// Mutated icon set.
+	var/override_icon = null								// DMI for overriding the icon.  states: [lowertext(species.name)]_[gender][fat?"_fat":""]
+	var/eyes = "eyes_s"										// Icon for eyes.
 
-	var/primitive                // Lesser form, if any (ie. monkey for humans)
-	var/tail                     // Name of tail image in species effects icon file.
-	var/language                 // Default racial language, if any.
-	var/attack_verb = "punch"    // Empty hand hurt intent verb.
-	var/punch_damage = 0		 // Extra empty hand attack damage.
+	var/primitive											// Lesser form, if any (ie. monkey for humans)
+	var/tail												// Name of tail image in species effects icon file.
+	var/language = "Sol Common"								// Default racial language, if any.
+	var/default_language = "Sol Common"						// Default language is used when 'say' is used without modifiers.
+	var/attack_verb = "punch"								// Empty hand hurt intent verb.
+	var/punch_damage = 0									// Extra empty hand attack damage.
 	var/punch_throw_range = 0
 	var/punch_throw_speed = 1
-	var/mutantrace               // Safeguard due to old code.
+	var/mutantrace											// Safeguard due to old code.
 
 	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
 	var/survival_gear = /obj/item/weapon/storage/box/survival // For spawnin'.

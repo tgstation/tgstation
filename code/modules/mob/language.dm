@@ -14,6 +14,15 @@
 /datum/language/proc/say_misunderstood(mob/M, message)
 	return stars(message)
 
+/datum/language/proc/format_message(message)
+	return "[speech_verb], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
+
+/datum/language/proc/format_message_plain(message)
+	return "[speech_verb], \"[capitalize(message)]\""
+
+/datum/language/proc/format_message_radio(message)
+	return "[speech_verb], <span class='[colour]'>\"[capitalize(message)]\"</span>"
+
 /datum/language/unathi
 	name = "Sinta'unathi"
 	desc = "The common language of Moghes, composed of sibilant hisses and rattles. Spoken natively by Unathi."
@@ -60,6 +69,12 @@
 	colour = "rough"
 	key = "1"
 	flags = RESTRICTED
+
+/datum/language/human/monkey
+	name = "Chimpanzee"
+	desc = "Ook ook ook."
+	speech_verb = "chimpers"
+	key = "6"
 
 // Galactic common languages (systemwide accepted standards).
 /datum/language/trader
@@ -110,7 +125,17 @@
 			message += " CL[pick("A","I")]CK"
 	return message+"!"
 
-/*
+/datum/language/xenocommon
+	name = "Xenomorph"
+	colour = "alien"
+	desc = "The common tongue of the xenomorphs."
+	speech_verb = "hisses"
+	key = "4"
+	flags = RESTRICTED
+
+/datum/language/xenocommon/say_misunderstood(mob/M, message)
+	return speech_verb
+
 // Language handling.
 /mob/proc/add_language(var/language)
 
@@ -121,16 +146,23 @@
 
 	languages.Add(new_language)
 	return 1
-*/
-/*
+
 /mob/proc/remove_language(var/rem_language)
+	var/datum/language/L = all_languages[rem_language]
+	. = (L in languages)
+	languages.Remove(L)
 
-	languages.Remove(all_languages[rem_language])
+/mob/living/remove_language(rem_language)
+	var/datum/language/L = all_languages[rem_language]
+	if(default_language == L)
+		default_language = null
+	return ..()
 
-	return 0
-*/
+// Can we speak this language, as opposed to just understanding it?
+/mob/proc/can_speak_lang(datum/language/speaking)
 
-/*
+	return (universal_speak || speaking in src.languages)
+
 //TBD
 /mob/verb/check_languages()
 	set name = "Check Known Languages"
@@ -144,4 +176,30 @@
 
 	src << browse(dat, "window=checklanguage")
 	return
-*/
+
+/mob/living/check_languages()
+	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
+
+	if(default_language)
+		dat += "Current default language: [default_language] - <a href='byond://?src=\ref[src];default_lang=reset'>reset</a><br/><br/>"
+
+	for(var/datum/language/L in languages)
+		if(L == default_language)
+			dat += "<b>[L.name] (:[L.key])</b> - default - <a href='byond://?src=\ref[src];default_lang=reset'>reset</a><br/>[L.desc]<br/><br/>"
+		else
+			dat += "<b>[L.name] (:[L.key])</b> - <a href='byond://?src=\ref[src];default_lang=[L]'>set default</a><br/>[L.desc]<br/><br/>"
+
+	src << browse(dat, "window=checklanguage")
+
+/mob/living/Topic(href, href_list)
+	if(href_list["default_lang"])
+		if(href_list["default_lang"] == "reset")
+			set_default_language(null)
+		else
+			var/datum/language/L = all_languages[href_list["default_lang"]]
+			if(L)
+				set_default_language(L)
+		check_languages()
+		return 1
+	else
+		return ..()

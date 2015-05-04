@@ -396,6 +396,7 @@
 	R.id= copytext(md5(R.dna.real_name), 2, 6)
 	R.name=R.dna.real_name
 	R.types=DNA2_BUF_UI|DNA2_BUF_UE|DNA2_BUF_SE
+	R.languages = subject.languages.Copy()
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)

@@ -2,7 +2,6 @@
 	name = "monkey"
 	voice_name = "monkey"
 	//speak_emote = list("chimpers")
-	languages = MONKEY
 	icon_state = "monkey1"
 	icon = 'icons/mob/monkey.dmi'
 	gender = NEUTER
@@ -89,6 +88,9 @@
 
 		update_muts=1
 
+	if(!istype(src, /mob/living/carbon/monkey/diona))
+		add_language("Chimpanzee")
+
 	..()
 	update_icons()
 	return
@@ -98,21 +100,21 @@
 	..()
 	dna.mutantrace = "lizard"
 	greaterform = "Unathi"
-	//add_language("Sinta'unathi")
+	add_language("Sinta'unathi")
 
 /mob/living/carbon/monkey/skrell/New()
 
 	..()
 	dna.mutantrace = "skrell"
 	greaterform = "Skrell"
-	//add_language("Skrellian")
+	add_language("Skrellian")
 
 /mob/living/carbon/monkey/tajara/New()
 
 	..()
 	dna.mutantrace = "tajaran"
 	greaterform = "Tajaran"
-	//add_language("Siik'tajr")
+	add_language("Siik'tajr")
 
 /mob/living/carbon/monkey/diona/New()
 
@@ -121,7 +123,7 @@
 	setGender(NEUTER)
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
-	//add_language("Rootspeak")
+	add_language("Rootspeak")
 
 /mob/living/carbon/monkey/show_inv(mob/living/carbon/user as mob)
 	user.set_machine(src)

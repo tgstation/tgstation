@@ -38,10 +38,25 @@ global procs
 		The HEAR flag determines whether something is a hearer or not.
 		Hear() is only called on procs with this flag.
 
-	languages
-		Bitmask variable.
-		What languages this object speaks/understands. If the languages of the speaker don't match the languages
-		of the hearer, the message will be modified in the hearer's lang_treat().
+ *	No longer used
+ *	languages
+ *		Bitmask variable.
+ *		What languages this object speaks/understands. If the languages of the speaker don't match the languages
+ *		of the hearer, the message will be modified in the hearer's lang_treat().
+
+	mob/languages
+		list of languages
+		What language(s) the speaker speaks, and the hearer understands. 
+		If the hearer doesn't understand it will be treated in lang_treat()
+
+	mob/universal_speak
+		Gift of Gab
+		Mainly used in non-human mobs.
+		Regardless of the language spoken this mob can understand it, and other mobs can understand it perfectly.
+
+	mob/universal_understand
+		Mainly used in non-human mobs.
+		Regardless of the language heard this mob understands it.
 
 	say(message)
 		Say() is the "mother-proc". It calls all the other procs required for speaking, but does little itself.
@@ -53,7 +68,7 @@ global procs
 		
 		IMPORTANT NOTE: If radio_freq is not null, the code will assume that the speaker is virtual! (more info on this in the Radios section below)
 
-	send_speech(message, range)
+	send_speech(message, range, datum/language/speaking)
 		This proc composes a list of hearers (things with the HEAR flag + dead people) and calls Hear() on them.
 		Message treatment or composition of output are not done by this proc, these are handled by the rest of
 		say() and the hearer respectively.

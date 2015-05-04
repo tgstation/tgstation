@@ -256,6 +256,8 @@
 	randmutb(H) // sometimes the clones come out wrong.
 	H.dna.mutantrace = R.dna.mutantrace
 	H.update_mutantrace()
+	for(var/datum/language/L in R.languages)
+		H.add_language(L.name)
 	H.real_name = H.dna.real_name
 
 	H.suiciding = 0

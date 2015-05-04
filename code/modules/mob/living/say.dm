@@ -79,6 +79,9 @@ var/list/department_radio_keys = list(
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
 
+/mob/living/proc/get_default_language()
+	return default_language
+
 /mob/living/hivecheck()
 	if (isalien(src)) return 1
 	if (!ishuman(src)) return
@@ -122,34 +125,45 @@ var/list/department_radio_keys = list(
 		message = copytext(message, 2)
 	else if(message_mode)
 		message = copytext(message, 3)
-	if(findtext(message, " ",1, 2))
-		message = copytext(message, 2)
 
-	if(handle_inherent_channels(message, message_mode))
+	var/datum/language/speaking
+	if(!speaking)
+		speaking = parse_language(message)
+	if(speaking)
+		message = copytext(message,2+length(speaking.key))
+	else
+		speaking = get_default_language()
+	message = trim_left(message)
+	if(handle_inherent_channels(message, message_mode, speaking))
 		return
 	if(!can_speak_vocal(message))
 		return
 
+	//parse the language code and consume it
+
+
 	var/message_range = 7
 	var/raw_message = message
 	message = treat_message(message)
-	var/radio_return = radio(message, message_mode, raw_message)
+	var/radio_return = radio(message, speaking, message_mode, raw_message)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
 	if(radio_return & ITALICS)
 		message = "<i>[message]</i>"
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
+	if(copytext(text, length(text)) == "!")
+		message_range++
 
 
-	send_speech(message, message_range, src, bubble_type)
+	send_speech(message, message_range, speaking, src, bubble_type)
 
-	log_say("[name]/[key] : [message]")
+	log_say("[name]/[key] :[speaking ? "As [speaking.name] ":""] [message]")
 
 	return 1
 
 
-/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/living/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	if(!client)
 		return
 	var/deaf_message
@@ -161,18 +175,18 @@ var/list/department_radio_keys = list(
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	if(!(message_langs & languages) || force_compose) //force_compose is so AIs don't end up without their hrefs.
-		message = compose_message(speaker, message_langs, raw_message, radio_freq)
+	if(!say_understands(speaker, speaking) || force_compose) //force_compose is so AIs don't end up without their hrefs.
+		message = compose_message(speaker, speaking, raw_message, radio_freq)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type)
+/mob/living/send_speech(message, message_range = 7, var/datum/language/speaking, obj/source = src, bubble_type)
 	var/list/listeners = get_hearers_in_view(message_range, source) | observers
 
-	var/rendered = compose_message(src, languages, message)
+	var/rendered = compose_message(src, speaking, message)
 
 	for (var/atom/movable/listener in listeners)
-		listener.Hear(rendered, src, languages, message)
+		listener.Hear(rendered, src, speaking, message)
 
 	send_speech_bubble(message, bubble_type, listeners)
 
@@ -229,11 +243,12 @@ var/list/department_radio_keys = list(
 	else if(length(message) > 2)
 		return department_radio_keys[copytext(message, 1, 3)]
 
-/mob/living/proc/handle_inherent_channels(message, message_mode)
+/mob/living/proc/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
 	switch(message_mode)
 		if(MODE_CHANGELING)
 			if(lingcheck())
-				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
+				var/turf/T = get_turf(src)
+				log_say("[mind.changeling.changelingID]/[key_name(src)] (@[T.x],[T.y],[T.z]) Changeling Hivemind: [message]")
 				var/themessage = text("<i><font color=#800080><b>[]:</b> []</font></i>",mind.changeling.changelingID,message)
 				for(var/mob/M in player_list)
 					if(M.lingcheck() || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
@@ -241,7 +256,8 @@ var/list/department_radio_keys = list(
 				return 1
 		if(MODE_CULTCHAT)
 			if(construct_chat_check(1)) /*sending check for humins*/
-				log_say("Cult channel: [src.name]/[src.key] : [message]")
+				var/turf/T = get_turf(src)
+				log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Cult channel: [message]")
 				var/themessage = text("<span class='sinister'><b>[]:</b> []</span>",src.name,message)
 				for(var/mob/M in player_list)
 					if(M.construct_chat_check(2) /*receiving check*/ || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
@@ -255,7 +271,8 @@ var/list/department_radio_keys = list(
 				if(commstone.commdevice)
 					var/list/stones = commstone.commdevice.get_active_stones()
 					var/themessage = text("<span class='ancient'>Ancient communication, <b>[]:</b> []</span>",src.name,message)
-					log_say("Ancient chat: [src.name]/[src.key] : [message]")
+					var/turf/T = get_turf(src)
+					log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Ancient chat: [message]")
 					for(var/thestone in stones)
 						var/mob/M = find_holder_of_type(thestone,/mob)
 						handle_render(M,themessage,src)
@@ -274,26 +291,26 @@ var/list/department_radio_keys = list(
 
 	return message
 
-/mob/living/proc/radio(message, message_mode, raw_message)
+/mob/living/proc/radio(message, message_mode, raw_message, var/datum/language/speaking)
 	switch(message_mode)
 		if(MODE_R_HAND)
 			if (r_hand)
-				r_hand.talk_into(src, message)
+				r_hand.talk_into(src, message, "speaking" = speaking)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
 			if (l_hand)
-				l_hand.talk_into(src, message)
+				l_hand.talk_into(src, message, "speaking" = speaking)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_INTERCOM)
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message)
+				I.talk_into(src, message, "speaking" = speaking)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_BINARY)
 			if(binarycheck())
 				robot_talk(message)
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
 		if(MODE_WHISPER)
-			whisper(raw_message)
+			whisper(raw_message, speaking)
 			return NOPASS
 	return 0
 

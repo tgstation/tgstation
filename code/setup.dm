@@ -240,7 +240,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define ROBOT 8
 #define SLIME 16
 #define SIMPLE_ANIMAL 32
-#define SPOOKY 128
 
 #define ALLMOBS 63 //update this
 
@@ -781,7 +780,7 @@ var/list/TAGGERLOCATIONS = list(
 #define AGE_MIN 17			//youngest a character can be
 #define AGE_MAX 85			//oldest a character can be
 
-//Languages!
+/*//Languages!
 #define LANGUAGE_HUMAN		1
 #define LANGUAGE_ALIEN		2
 #define LANGUAGE_DOG		4
@@ -790,6 +789,7 @@ var/list/TAGGERLOCATIONS = list(
 #define LANGUAGE_OTHER		32768
 
 #define LANGUAGE_UNIVERSAL	65535
+*/
 
 #define LEFT 1
 #define RIGHT 2
@@ -1138,3 +1138,12 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define ARENA_AVAILABLE 1	//arena is ready for a new game
 #define ARENA_INGAME 2		//a game is currently being played in the arena
 #define ARENA_ENDGAME 3		//a game just finished and the arena is about to reset
+
+// Languages
+#define LANGUAGE_SOL_COMMON "Sol Common"
+#define LANGUAGE_UNATHI "Sinta'unathi"
+#define LANGUAGE_SIIK_TAJR "Siik'tajr"
+#define LANGUAGE_SKRELLIAN "Skrellian"
+#define LANGUAGE_ROOTSPEAK "Rootspeak"
+#define LANGUAGE_TRADEBAND "Tradeband"
+#define LANGUAGE_GUTTER "Gutter"

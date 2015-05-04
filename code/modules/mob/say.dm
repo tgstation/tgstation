@@ -92,3 +92,42 @@
 
 /mob/proc/binarycheck()
 	return 0
+
+//parses the language code (e.g. :j) from text, such as that supplied to say.
+//returns the language object only if the code corresponds to a language that src can speak, otherwise null.
+/mob/proc/parse_language(var/message)
+	if(length(message) >= 2)
+		var/language_prefix = lowertext(copytext(message, 1 ,3))
+		var/datum/language/L = language_keys[language_prefix]
+		if (can_speak_lang(L))
+			return L
+
+	return null
+
+/mob/say_understands(var/mob/other,var/datum/language/speaking = null)
+
+	if (src.stat == 2)		//Dead
+		return 1
+
+	//Universal speak makes everything understandable, for obvious reasons.
+	else if(src.universal_speak || src.universal_understand)
+		return 1
+
+	//Languages are handled after.
+	if (!speaking)
+		if(!other || !ismob(other))
+			return 1
+		if(other.universal_speak)
+			return 1
+		if(isAI(src) && ispAI(other))
+			return 1
+		if (istype(other, src.type) || istype(src, other.type))
+			return 1
+		return 0
+
+	//Language check.
+	for(var/datum/language/L in src.languages)
+		if(speaking.name == L.name)
+			return 1
+
+	return 0

@@ -70,7 +70,6 @@
 	var/obj/item/weapon/storage/lockbox/coinbox/coinbox
 
 	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL
-	languages = HUMAN
 
 	var/obj/machinery/account_database/linked_db
 	var/datum/money_account/linked_account

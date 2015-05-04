@@ -11,10 +11,15 @@
 
 	return "telepathically chirps, \"[text]\"";
 
-/mob/living/carbon/slime/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/living/carbon/slime/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	if(speaker != src && !radio_freq)
 		if(speaker in Friends)
 			speech_buffer = list()
 			speech_buffer += speaker.name
 			speech_buffer += lowertext(html_decode(message))
 	..()
+
+/mob/living/carbon/slime/say_understands(var/other)
+	if (istype(other, /mob/living/carbon/slime))
+		return 1
+	return ..()

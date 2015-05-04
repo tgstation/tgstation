@@ -55,7 +55,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(signal.data["type"] == 0)
 
 			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_Message(signal.data["mob"],
+			Broadcast_Message(signal.data["mob"], signal.data["language"],
 							  signal.data["vmask"], signal.data["radio"],
 							  signal.data["message"], signal.data["name"], signal.data["job"], signal.data["realname"],
 							  0, signal.data["compression"], signal.data["level"], signal.frequency)
@@ -79,7 +79,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			/* ###### Broadcast a message using signal.data ###### */
 				// Parameter "data" as 4: AI can't track this person/mob
 
-			Broadcast_Message(signal.data["mob"],
+			Broadcast_Message(signal.data["mob"], signal.data["language"],
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
@@ -142,7 +142,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 
 		if(signal.frequency == SYND_FREQ) // if syndicate broadcast, just
-			Broadcast_Message(signal.data["mob"],
+			Broadcast_Message(signal.data["mob"], signal.data["language"],
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
@@ -202,7 +202,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 **/
 
-/proc/Broadcast_Message(var/atom/movable/AM,
+/proc/Broadcast_Message(var/atom/movable/AM, var/datum/language/speaking,
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
 						var/data, var/compression, var/list/level, var/freq)
@@ -218,7 +218,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/atom/movable/virtualspeaker/virt = getFromPool(/atom/movable/virtualspeaker, null)
 	virt.name = name
 	virt.job = job
-	virt.languages = AM.languages
+	//virt.languages = AM.languages
 	virt.source = AM
 	virt.faketrack = data == 4 ? 1 : 0
 	virt.radio = radio
@@ -258,11 +258,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	radios = null
 
-	var/rendered = virt.compose_message(virt, virt.languages, message, freq) // always call this on the virtualspeaker to advoid issues
+	var/rendered = virt.compose_message(virt, speaking, message, freq) // always call this on the virtualspeaker to advoid issues
 
 	for (var/atom/movable/listener in listeners)
 		if (listener)
-			listener.Hear(rendered, virt, AM.languages, message, freq)
+			listener.Hear(rendered, virt, speaking, message, freq)
 
 	if (length(listeners))
 		listeners = null
@@ -379,7 +379,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Can understand the speech ---
 
-		if (R.languages & M.languages)
+		if (R.say_understands(M))
 
 			heard_normal += R
 
