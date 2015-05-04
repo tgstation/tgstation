@@ -141,13 +141,6 @@
 						spawn(45)
 							Atkcool = 0
 
-/mob/living/simple_animal/slime/MobBump(mob/M)
-	if(istype(M, /mob/living/carbon/human)) //pushing humans
-		if(is_adult && prob(10)) //only if we're adult, and 10% of the time
-			return 0
-		else
-			return 1
-
 /mob/living/simple_animal/slime/Process_Spacemove(var/movement_dir = 0)
 	return 2
 

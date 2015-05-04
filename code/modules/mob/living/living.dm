@@ -77,7 +77,7 @@ Sorry Giacom. Please don't be mad :(
 		return 1
 
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
-	if(istype(M, /mob/living/carbon/human))
+	if(istype(M, /mob/living))
 		for(var/mob/MM in range(M, 1))
 			if( ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
 				if ( !(world.time % 5) )
