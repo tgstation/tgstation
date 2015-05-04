@@ -272,11 +272,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	ui_interact(user)
 //Cafe stuff
 
-/obj/machinery/chem_dispenser/brewer/New()
-	. = ..()
+/obj/machinery/chem_dispenser/brewer/
 	name = "Space-Brewery"
 	icon_state = "brewer"
 	dispensable_reagents = list("tea","greentea","redtea", "coffee","milk","cream","water","hot_coco", "soymilk")
+/obj/machinery/chem_dispenser/brewer/New()
+	. = ..()
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/chem_dispenser/brewer,
 		/obj/item/weapon/stock_parts/scanning_module,
@@ -296,11 +297,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 //Soda/booze dispensers.
 
-/obj/machinery/chem_dispenser/soda_dispenser/New()
-	. + ..()
+/obj/machinery/chem_dispenser/soda_dispenser/
 	name = "Soda Dispenser"
 	icon_state = "soda_dispenser"
 	dispensable_reagents = list("spacemountainwind", "sodawater", "lemon_lime", "dr_gibb", "cola", "ice", "tonic")
+/obj/machinery/chem_dispenser/soda_dispenser/New()
+	. = ..()
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/chem_dispenser/soda_dispenser,
 		/obj/item/weapon/stock_parts/scanning_module,
@@ -318,11 +320,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	max_energy = 100
 	energy = 100
 
-/obj/machinery/chem_dispenser/booze_dispenser/New()
-	. = ..()
+/obj/machinery/chem_dispenser/booze_dispenser/
 	name = "Booze Dispenser"
 	icon_state = "booze_dispenser"
 	dispensable_reagents = list("beer", "whiskey", "tequila", "vodka", "vermouth", "rum", "cognac", "wine", "kahlua", "ale", "ice", "water", "gin", "sodawater", "cola", "cream","tomatojuice","orangejuice","limejuice","tonic")
+/obj/machinery/chem_dispenser/booze_dispenser/New()
+	. = ..()
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/chem_dispenser/booze_dispenser,
 		/obj/item/weapon/stock_parts/scanning_module,
