@@ -1,4 +1,4 @@
-"aa" = (/turf/unsimulated/wall{icon = 'icons/effects/effects.dmi'; icon_state = "invisible"; name = "Space"},/area/space)
+"aa" = (/turf/unsimulated/wall{icon = 'icons/turf/space.dmi'; icon_state = "0"; name = "Space"},/area/space)
 "ab" = (/turf/unsimulated/wall,/area/planet/clown)
 "ac" = (/obj/structure/shuttle/engine/propulsion{dir = 1},/turf/unsimulated/shuttle/floor{icon_state = "floor4"},/area/planet/clown)
 "ad" = (/turf/space,/area/space)
