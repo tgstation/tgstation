@@ -149,13 +149,13 @@ obj/machinery/bot/mulebot/bot_reset()
 			wires.RandomCut()
 	return
 
-/obj/machinery/bot/mulebot/bullet_act()
-	if(prob(50) && !isnull(load))
-		unload(0)
-	if(prob(25))
-		visible_message("<span class='danger'> Something shorts out inside [src]!</span>")
-		wires.RandomCut()
-	..()
+/obj/machinery/bot/mulebot/bullet_act(var/obj/item/projectile/Proj)
+	if(..())
+		if(prob(50) && !isnull(load))
+			unload(0)
+		if(prob(25))
+			visible_message("<span class='danger'> Something shorts out inside [src]!</span>")
+			wires.RandomCut()
 
 
 /obj/machinery/bot/mulebot/attack_ai(var/mob/user)

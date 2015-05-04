@@ -288,6 +288,7 @@
 			s.start()
 		..()
 		healthcheck()
+		return 1
 	return
 
 /obj/machinery/bot/blob_act()
