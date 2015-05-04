@@ -132,12 +132,12 @@
 	return spans
 
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor)
-	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
+	if(!ismonkey(owner) && !ishuman(owner))
 		return
 	if(!owner.dna)
 		create_dna(owner, mrace)
 
-	if(mrace)
+	if(mrace && !ismonkey(owner))
 		if(owner.dna.species.exotic_blood)
 			var/datum/reagent/exotic_blood = owner.dna.species.exotic_blood
 			owner.reagents.del_reagent(exotic_blood.id)

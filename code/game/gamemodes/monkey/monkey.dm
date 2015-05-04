@@ -69,15 +69,35 @@
 		carriermind.current.viruses += D
 	..()
 
+/datum/game_mode/monkey/check_finished()
+	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
+		return 1
+
+	if(!round_converted)
+		for(var/datum/mind/monkey_mind in ape_infectees)
+			if(monkey_mind.current && monkey_mind.current.stat != DEAD)
+				return 0
+
+		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() //ugly but unfortunately needed
+		for(var/mob/living/carbon/human/H in living_mob_list)
+			if(H.mind && H.stat != DEAD)
+				if(H.HasDisease(D))
+					return 0
+
+	..()
+
 /datum/game_mode/monkey/proc/check_monkey_victory()
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+		return 0
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
-		if (M.HasDisease(/datum/disease/transformation/jungle_fever))
+		if (M.HasDisease(D))
 			if(M.onCentcom())
 				escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
-		return 0
-	else
 		return 1
+	else
+		return 0
 
 /datum/game_mode/proc/add_monkey(datum/mind/monkey_mind)
 	ape_infectees |= monkey_mind
@@ -89,7 +109,7 @@
 
 
 /datum/game_mode/monkey/declare_completion()
-	if(!check_monkey_victory())
+	if(check_monkey_victory())
 		feedback_set_details("round_end_result","win - monkey win")
 		feedback_set("round_end_result",escaped_monkeys)
 		world << "<span class='userdanger'>The monkeys have overthrown their captors! Eeek eeeek!!</span>"
