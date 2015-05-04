@@ -284,6 +284,12 @@
 		telefail()
 		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 8, or equal to 2."
 		return
+/*
+	if(z_co == 2 || z_co == 8 || z_co < 1 || z_co > 9) SOON
+		telefail()
+		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 9, equal to 2, or equal to 8."
+		return
+*/
 	if(teles_left > 0)
 		doteleport(user)
 	else

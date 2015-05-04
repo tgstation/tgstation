@@ -111,13 +111,13 @@ GUEST_BAN
 # SERVER ss13.example.com:2506
 
 ## forum address
-FORUMURL http://8ch.net/nofun
+FORUMURL http://8ch.net/nt
 
 ## Wiki address
 WIKIURL https://tgstation13.org/wiki/Main_Page
 
 ##Rules address
-RULESURL http://64.94.238.144/rules/ruurs.html
+RULESURL https://8ch.net/nt/ruurs.html
 
 ##Github address
 GITHUBURL https://github.com/Riesen/-tg-station

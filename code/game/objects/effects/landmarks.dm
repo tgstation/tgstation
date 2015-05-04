@@ -88,6 +88,18 @@
 
 	return 1
 
+/*
+// Area landmarks SOOON
+
+/obj/effect/landmark/clown/New()
+	..()
+	tag = text("landmark*[]", name)
+	invisibility = 101
+	name = "Clown Land"
+	clownland +=loc
+	qdel(src)
+*/
+
 //Costume spawner landmarks
 
 /obj/effect/landmark/costume/New() //costume spawner, selects a random subclass and disappears

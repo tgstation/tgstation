@@ -39,6 +39,25 @@
 			L.loc = src
 			locked = L
 			user << "<span class = 'caution'>You insert the GPS device into the [name]'s slot.</span>"
+/*
+SOOOOON
+	if (istype(W, /obj/item/weapon/card/data/clown)) // ye olde code begins
+		if(stat & (NOPOWER|BROKEN))
+			..() // was src.attack_hand() until I updated it
+
+		var/obj/S = null
+		for(var/obj/landmark/sloc in world)
+			if (sloc.name != "Clown Land")
+				continue
+			if (locate(/mob) in sloc.loc)
+				continue
+			S = sloc
+			break
+		if (!S)
+			S = locate("landmark*["Clown Land"]") // use old stype
+		if (istype(S, /obj/landmark/) && istype(S.loc, /turf))
+			usr.loc = S.loc // ye olde code ends
+*/
 	else
 		..()
 	return
