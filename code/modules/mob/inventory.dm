@@ -82,7 +82,7 @@
 	else
 		W.loc = get_turf(src)
 		W.layer = initial(W.layer)
-		W.dropped()
+		W.dropped(src)
 		return 0
 
 

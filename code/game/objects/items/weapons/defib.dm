@@ -312,7 +312,7 @@
 		defib.on = 0
 		loc = defib
 		defib.update_icon()
-	return	unwield()
+	return	unwield(user)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, var/mob/living/carbon/human/M, var/obj/O)
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns

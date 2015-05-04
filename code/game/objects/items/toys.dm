@@ -762,6 +762,8 @@ obj/item/toy/cards/deck/New()
 
 
 obj/item/toy/cards/deck/attack_hand(mob/user as mob)
+	if(user.lying)
+		return
 	var/choice = null
 	if(cards.len == 0)
 		src.icon_state = "deck_[deckstyle]_empty"
@@ -832,7 +834,7 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user,
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 	var/mob/M = usr
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || usr.incapacitated() || usr.lying)
 		return
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)
