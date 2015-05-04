@@ -2,7 +2,7 @@
 	name = "Absorb DNA"
 	desc = "Absorb the DNA of our victim."
 	chemical_cost = 0
-	dna_cost = 0
+	dna_cost = -1
 	req_human = 1
 	max_genetic_damage = 100
 

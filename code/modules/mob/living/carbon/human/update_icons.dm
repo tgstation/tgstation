@@ -88,6 +88,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 	else
 		if(disabilities & HUSK)
 			base_icon_state = "husk"
+		if(disabilities & LING_VICTIM)
+			base_icon_state = "lingvictim"
 		else
 			base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
 
@@ -144,7 +146,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	if( (disabilities & HUSK) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		return
-
+	if( (disabilities & LING_VICTIM) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+		return
 	if((wear_suit) && (wear_suit.hooded) && (wear_suit.suittoggled == 1))
 		return
 

@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/resonant_shriek
 	name = "Resonant Shriek"
 	desc = "Our lungs and vocal chords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
-	helptext = "Emits a high-frequency sound that confuses and deafens humans, blows out nearby lights and overloads cyborg sensors."
+	helptext = "Emits a high-frequency sound that briefly stuns, confuses and deafens humans, blows out nearby lights and overloads cyborg sensors."
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1
@@ -11,9 +11,10 @@
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
 			if(!M.mind || !M.mind.changeling)
-				M.adjustEarDamage(0,30)
-				M.confused += 20
-				M.Jitter(50)
+				M.adjustEarDamage(0,25)
+				M.confused += 15
+				M.Jitter(40)
+				M.Weaken(2)
 			else
 				M << sound('sound/effects/screech.ogg')
 
@@ -34,7 +35,7 @@
 	chemical_cost = 20
 	dna_cost = 1
 
-//A flashy ability, good for crowd control and sewing chaos.
+//Use this to break into lockers and fuck over security members.
 /obj/effect/proc_holder/changeling/dissonant_shriek/sting_action(var/mob/user)
 	for(var/obj/machinery/light/L in range(5, usr))
 		L.on = 1
