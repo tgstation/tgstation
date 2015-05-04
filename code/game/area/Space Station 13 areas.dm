@@ -568,12 +568,6 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Law Office"
 	icon_state = "law"
 
-
-
-
-
-
-
 /area/holodeck
 	name = "\improper Holodeck"
 	icon_state = "Holodeck"
@@ -609,16 +603,6 @@ proc/process_ghost_teleport_locs()
 
 /area/holodeck/source_wildlife
 	name = "\improper Holodeck - Wildlife Simulation"
-
-
-
-
-
-
-
-
-
-
 
 //Engineering
 
@@ -695,7 +679,6 @@ proc/process_ghost_teleport_locs()
 /area/maintenance/auxsolarstarboard
 	name = "Fore Starboard Solar Maintenance"
 	icon_state = "SolarcontrolA"
-
 
 /area/assembly/chargebay
 	name = "\improper Mech Bay"
@@ -1140,6 +1123,10 @@ proc/process_ghost_teleport_locs()
 /area/derelict/atmospherics
 	name = "Derelict Atmospherics"
 	icon_state = "red"
+
+/area/derelict/clown_asteroid
+	name = "Clown Asteroid"
+	icon_state = "yellow"
 
 //Construction
 
