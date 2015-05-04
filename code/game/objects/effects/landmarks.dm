@@ -72,7 +72,6 @@
 			qdel(src)
 			return
 
-
 	return 1
 
 /obj/effect/landmark/Destroy()
@@ -93,13 +92,11 @@
 
 	return 1
 
-
 /obj/effect/landmark/clown/New()
 	..()
 	tag = text("landmark*[]", name)
 	invisibility = 101
 	name = "Clown Land"
-
 
 //Costume spawner landmarks
 

@@ -39,7 +39,6 @@
 			L.loc = src
 			locked = L
 			user << "<span class = 'caution'>You insert the GPS device into the [name]'s slot.</span>"
-/* SOON
 	if (istype(I, /obj/item/weapon/card/data/clown)) // ye olde code begins
 		if(stat & (NOPOWER|BROKEN))
 			..() // was src.attack_hand() until I updated it
@@ -57,7 +56,6 @@
 		if (istype(S, /obj/effect/landmark/) && istype(S.loc, /turf))
 			usr.loc = S.loc // ye olde code ends
 			qdel(I)  //Delete the card once the nigga is yoinked
-*/
 	else
 		..()
 	return
