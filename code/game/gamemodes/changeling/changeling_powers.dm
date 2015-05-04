@@ -25,7 +25,7 @@
 	mind.changeling.absorbed_dna |= dna
 	var/mob/living/carbon/human/H = src
 	if(istype(H))
-		mind.changeling.absorbed_species += H.species.name
+		mind.changeling.absorbed_species |= H.species.name
 	for(var/language in languages)
 		mind.changeling.absorbed_languages |= language
 	return 1
