@@ -880,32 +880,25 @@ var/list/admin_verbs_mod = list(
 			src << "You are already an admin."
 			verbs -= /client/proc/readmin
 			return
-		var/sql_ckey = sanitizeSQL(ckey)
+		var/sql_ckey = sanitizeSQL(ckey(ckey))
 		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin WHERE ckey = [sql_ckey]")
 		query.Execute()
-		usr << "Query executed"
 		while(query.NextRow())
-			var/ckey = query.item[1]
-			usr << "[ckey]"
+			var/dckey = query.item[1]
 			var/rank = query.item[2]
-			usr << "[rank]"
 			if(rank == "Removed")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
 
 			var/rights = query.item[4]
-			usr << "[rights]"
 			if(istext(rights))	rights = text2num(rights)
-			D = new /datum/admins(rank, rights, ckey)
-			usr << "[D.rank],[D.rights]"
+			D = new /datum/admins(rank, rights, dckey)
 
 			//find the client for a ckey if they are connected and associate them with the new admin datum
 			D.associate(src)
-			usr << "[D.owner]"
 			message_admins("[src] re-adminned themselves.")
 			log_admin("[src] re-adminned themselves.")
 			feedback_add_details("admin_verb","RAS")
 			verbs -= /client/proc/readmin
 			return
-		usr << "query.nextrow() failed"
 
 /client/proc/achievement()
 	set name = "Give Achievement"
