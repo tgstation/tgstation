@@ -200,8 +200,39 @@ proc/process_ghost_teleport_locs()
 /area/planet/clown
 	name = "\improper Clown Planet"
 	icon_state = "honk"
-	requires_power = 0
+	requires_power = 1
+	has_gravity = 1
 
+/area/planet/clown/village
+	name = "Clown Village"
+	icon_state = "yellow"
+	requires_power = 0
+	has_gravity = 1
+	
+/area/planet/clown/town
+	name = "Mime Town"
+	icon_state = "red"
+	requires_power = 0
+	has_gravity = 1
+	
+/area/planet/clown/desert
+	name = "The Silent Dunes"
+	icon_state = "blue"
+	requires_power = 1
+	has_gravity = 1
+	
+/area/planet/clown/oasis
+	name = "The Honking Palms"
+	icon_state = "green"
+	requires_power = 0
+	has_gravity = 1
+	
+/area/planet/clown/motherlode
+	name = "The Bananium Vaults"
+	icon_state = "yellow"
+	requires_power = 1
+	has_gravity = 1
+	
 /area/telesciareas
 	name = "\improper Cosmic Anomaly"
 	icon_state = "telesci"

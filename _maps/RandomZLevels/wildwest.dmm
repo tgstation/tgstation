@@ -46,7 +46,7 @@
 "aT" = (/obj/effect/forcefield{desc = "You can't get in. Heh."; layer = 1; name = "Blocker"},/turf/simulated/mineral/silver,/area/awaymission/wwmines)
 "aU" = (/obj/effect/forcefield{desc = "You can't get in. Heh."; layer = 1; name = "Blocker"},/turf/simulated/mineral/gold,/area/awaymission/wwmines)
 "aV" = (/obj/structure/ore_box,/turf/simulated/floor/plating/ironsand{tag = "icon-ironsand1"; icon_state = "ironsand1"},/area/awaymission/wwmines)
-"aW" = (/obj/item/weapon/paper{info = "meat grinder requires sacri"},/turf/simulated/floor/engine/cult,/area/awaymission/wwvault)
+"aW" = (/obj/item/weapon/paper{info = "there's a monster at the sarc"},/turf/simulated/floor/engine/cult,/area/awaymission/wwvault)
 "aX" = (/turf/simulated/floor/plating/ironsand{tag = "icon-ironsand1"; icon_state = "ironsand1"},/area/awaymission/wwmines)
 "aY" = (/obj/effect/landmark/corpse/syndicatecommando,/turf/simulated/floor/engine/cult,/area/awaymission/wwvault)
 "aZ" = (/turf/simulated/mineral,/area/awaymission/wwrefine)
