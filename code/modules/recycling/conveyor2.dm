@@ -124,7 +124,7 @@
 		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
 		return
-	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
+	if(isrobot(user) && !ismommi(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
 	if(!user.drop_item())
 		user << "<span class='notice'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
 		return

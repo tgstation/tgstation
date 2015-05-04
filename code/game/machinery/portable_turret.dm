@@ -687,7 +687,7 @@
 		if(3)
 			if(istype(I, /obj/item/weapon/gun/energy)) //the gun installation part
 
-				if(isrobot(user))
+				if(isrobot(user) && !ismommi(user))
 					return
 				var/obj/item/weapon/gun/energy/E = I //typecasts the item to an energy gun
 				if(!user.unEquip(I))

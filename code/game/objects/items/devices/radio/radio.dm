@@ -312,9 +312,12 @@
 		jobname = "AI"
 
 	// --- Cyborg ---
-	else if (isrobot(M))
+	else if (isrobot(M) && !ismommi(M))
 		var/mob/living/silicon/robot/B = M
 		jobname = "[B.designation] Cyborg"
+	// --- MoMMI ---
+	else if (ismommi(M))
+		jobname = "MoMMI"
 
 	// --- Personal AI (pAI) ---
 	else if (istype(M, /mob/living/silicon/pai))

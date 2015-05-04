@@ -103,9 +103,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	if(connected_ai && keeper)
 		world << "\red ASSERT FAILURE: connected_ai && keeper in mommi.dm"
 	updatename()
-	updateicon()
 	if(!picked)
 		verbs += /mob/living/silicon/robot/mommi/proc/choose_icon
+	spawn (10)
+		src.updateicon()
 	..()
 
 

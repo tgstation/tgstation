@@ -7,14 +7,13 @@
 	clamp_values()
 	handle_regular_status_updates()
 	handle_regular_hud_updates()
-	if (client)
-		handle_regular_hud_updates()
-		update_items()
+	update_items()
 	if (src.stat != DEAD) //still using power
 		use_power()
 	update_canmove()
 	update_gravity(mob_has_gravity())
 	handle_fire()
+	updateicon()
 	if(killswitch)
 		process_killswitch()
 //	handle_beams()
@@ -126,23 +125,6 @@
 
 	return 1
 
-	if (src.healths)
-		if (src.stat != 2)
-			switch(health)
-				if(45 to INFINITY)
-					src.healths.icon_state = "health0"
-				if(20 to 45)
-					src.healths.icon_state = "health1"
-				if(10 to 20)
-					src.healths.icon_state = "health3"
-				if(0 to 10)
-					src.healths.icon_state = "health4"
-				if(config.health_threshold_dead to 0)
-					src.healths.icon_state = "health5"
-				else
-					src.healths.icon_state = "health6"
-		else
-			src.healths.icon_state = "health7"
 
 	if (src.syndicate && src.client)
 		if(ticker.mode.name == "traitor")
@@ -205,6 +187,25 @@
 				throw_alert("charge","emptycell")
 	else
 		throw_alert("charge","nocell")
+
+	if (src.healths)
+		if (src.stat != 2)
+			switch(health)
+				if(40 to INFINITY)
+					src.healths.icon_state = "health0"
+				if(25 to 40)
+					src.healths.icon_state = "health2"
+				if(0 to 25)
+					src.healths.icon_state = "health3"
+				if(-25 to 0)
+					src.healths.icon_state = "health4"
+				if(config.health_threshold_dead to -25)
+					src.healths.icon_state = "health5"
+				else
+					src.healths.icon_state = "health6"
+		else
+			src.healths.icon_state = "health7"
+
 /*
 	if(bodytemp)
 		switch(src.bodytemperature) //310.055 optimal body temp
@@ -220,7 +221,7 @@
 				src.bodytemp.icon_state = "temp-2"
 */
 
-	if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
+//	if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
 //Oxygen and fire does nothing yet!!
 //	if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
 //	if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"

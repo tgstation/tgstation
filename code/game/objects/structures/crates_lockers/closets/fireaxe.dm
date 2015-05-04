@@ -202,7 +202,7 @@
 	set name = "Remove Fire Axe"
 	set category = "Object"
 
-	if (isrobot(usr))
+	if (isrobot(usr) && !ismommi(usr))
 		return
 
 	if (localopened)

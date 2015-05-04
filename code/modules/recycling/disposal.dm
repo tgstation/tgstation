@@ -75,7 +75,7 @@
 	if(stat & BROKEN || !I || !user)
 		return
 
-	if(isrobot(user))
+	if(isrobot(user) && !ismommi(user))
 		if(!istype(I, /obj/item/weapon/storage/bag/trash))
 			return
 	else
