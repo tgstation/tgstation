@@ -276,6 +276,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	name = "Space-Brewery"
 	icon_state = "brewer"
 	dispensable_reagents = list("tea","greentea","redtea", "coffee","milk","cream","water","hot_coco", "soymilk")
+	component_parts = newlist(
++		/obj/item/weapon/circuitboard/chem_dispenser/brewer,
++		/obj/item/weapon/stock_parts/scanning_module,
++		/obj/item/weapon/stock_parts/scanning_module,
++		/obj/item/weapon/stock_parts/manipulator,
++		/obj/item/weapon/stock_parts/manipulator,
++		/obj/item/weapon/stock_parts/micro_laser,
++		/obj/item/weapon/stock_parts/micro_laser,
++		/obj/item/weapon/stock_parts/micro_laser,
++		/obj/item/weapon/stock_parts/console_screen
++	)
 
 
 /obj/machinery/chem_dispenser/brewer/mapping
@@ -288,6 +299,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	name = "Soda Dispenser"
 	icon_state = "soda_dispenser"
 	dispensable_reagents = list("spacemountainwind", "sodawater", "lemon_lime", "dr_gibb", "cola", "ice", "tonic")
+	component_parts = newlist(
++		/obj/item/weapon/circuitboard/chem_dispenser/soda_dispenser,
++		/obj/item/weapon/stock_parts/scanning_module,
++		/obj/item/weapon/stock_parts/scanning_module,
++		/obj/item/weapon/stock_parts/manipulator,
++		/obj/item/weapon/stock_parts/manipulator,
++		/obj/item/weapon/stock_parts/micro_laser,
++		/obj/item/weapon/stock_parts/micro_laser,
++		/obj/item/weapon/stock_parts/micro_laser,
++		/obj/item/weapon/stock_parts/console_screen
++	)
 
 /obj/machinery/chem_dispenser/soda_dispenser/mapping
 	max_energy = 100
@@ -297,6 +319,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	name = "Booze Dispenser"
 	icon_state = "booze_dispenser"
 	dispensable_reagents = list("beer", "whiskey", "tequila", "vodka", "vermouth", "rum", "cognac", "wine", "kahlua", "ale", "ice", "water", "gin", "sodawater", "cola", "cream","tomatojuice","orangejuice","limejuice","tonic")
+	component_parts = newlist(
++		/obj/item/weapon/circuitboard/chem_dispenser/booze_dispenser,
++		/obj/item/weapon/stock_parts/scanning_module,
++		/obj/item/weapon/stock_parts/scanning_module,
++		/obj/item/weapon/stock_parts/manipulator,
++		/obj/item/weapon/stock_parts/manipulator,
++		/obj/item/weapon/stock_parts/micro_laser,
++		/obj/item/weapon/stock_parts/micro_laser,
++		/obj/item/weapon/stock_parts/micro_laser,
++		/obj/item/weapon/stock_parts/console_screen
++	)
 
 /obj/machinery/chem_dispenser/booze_dispenser/mapping
 	max_energy = 100
