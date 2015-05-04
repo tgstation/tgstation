@@ -1,0 +1,7 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - tweak: "Many minor technical changes have been made to cult."
+  - rscadd: "Cultist communications now show the name of the person using them. Emergency communications do not do this."
+  - rscadd: "Emergency communication does less damage."
