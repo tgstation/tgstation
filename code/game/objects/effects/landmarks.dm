@@ -67,6 +67,11 @@
 			xeno_spawn += loc
 			qdel(src)
 			return
+		if("Clown Land")
+			clownland +=loc
+			qdel(src)
+			return
+
 
 	return 1
 
@@ -88,17 +93,13 @@
 
 	return 1
 
-/*
-// Area landmarks SOOON
 
 /obj/effect/landmark/clown/New()
 	..()
 	tag = text("landmark*[]", name)
 	invisibility = 101
 	name = "Clown Land"
-	clownland +=loc
-	qdel(src)
-*/
+
 
 //Costume spawner landmarks
 

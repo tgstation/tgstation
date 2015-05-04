@@ -35,6 +35,7 @@ var/list/latejoin = list()
 var/list/prisonwarp = list()	//prisoners go to these
 var/list/holdingfacility = list()	//captured people go here
 var/list/xeno_spawn = list()//Aliens spawn at these.
+var/list/clownland = list() //honk
 var/list/tdome1 = list()
 var/list/tdome2 = list()
 var/list/tdomeobserve = list()
