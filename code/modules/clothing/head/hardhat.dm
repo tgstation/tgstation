@@ -40,6 +40,7 @@
 	icon_state = "hardhat0_orange"
 	item_state = "hardhat0_orange"
 	_color = "orange"
+	name = "orange hard hat"
 
 /obj/item/clothing/head/hardhat/red
 	icon_state = "hardhat0_red"
@@ -55,6 +56,7 @@
 	icon_state = "hardhat0_white"
 	item_state = "hardhat0_white"
 	_color = "white"
+	name = "white hard hat"
 	flags = FPRINT
 	heat_protection = HEAD
 	pressure_resistance = 3 * ONE_ATMOSPHERE
@@ -64,4 +66,5 @@
 	icon_state = "hardhat0_dblue"
 	item_state = "hardhat0_dblue"
 	_color = "dblue"
+	name = "blue hard hat"
 
