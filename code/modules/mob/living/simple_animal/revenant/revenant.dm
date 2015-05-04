@@ -93,7 +93,8 @@
 /mob/living/simple_animal/revenant/Stat()
 	..()
 	if(statpanel("Status"))
-		stat(null, "Current essence: [essence]E")
+		stat(null, "Current Essence: [essence]E")
+		stat(null, "Lives Remaining: [strikes]")
 
 /mob/living/simple_animal/revenant/New()
 	..()
