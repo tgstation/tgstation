@@ -69,14 +69,14 @@
 
 	//Add 3000 joules when active.  This is about 0.6 degrees per tick.
 	//May need adjustment
-	if(use_power == 1)
+	if(use_power == 1 && loc)
 		var/heat_added = active_power_usage *XENOARCH_HEAT_COEFFICIENT
 
 		if(temperature < max_temp)
 			temperature += heat_added/XENOARCH_HEAT_CAPACITY
 
 		var/temperature_difference = abs(environmental_temp-temperature)
-		var/datum/gas_mixture/removed = loc.remove_air(env.total_moles*0.25)
+		var/datum/gas_mixture/removed = env.remove(env.total_moles()*0.25)
 		var/heat_capacity = removed.heat_capacity()
 
 		heat_added = max(temperature_difference*heat_capacity, XENOARCH_MAX_ENERGY_TRANSFER)

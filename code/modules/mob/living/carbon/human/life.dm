@@ -602,7 +602,7 @@ var/global/list/organ_damage_overlays = list(
 			// This was OP.
 			//environment.adjust(tx = environment.total_moles()*BREATH_PERCENTAGE) // About one breath's worth. (I know we aren't breathing it out, but this should be about the right amount)
 			if(environment)
-				if(environment.oxygen && environment.total_moles() && (environment.oxygen / environment.total_moles()) >= OXYCONCEN_PLASMEN_IGNITION) //how's the concentration doing?
+				if(environment.total_moles() && (environment.get_moles_by_id(OXYGEN) / environment.total_moles()) >= OXYCONCEN_PLASMEN_IGNITION) //how's the concentration doing?
 					if(!on_fire)
 						src << "<span class='warning'>Your body reacts with the atmosphere and bursts into flame!</span>"
 					adjust_fire_stacks(0.5)
@@ -759,7 +759,7 @@ var/global/list/organ_damage_overlays = list(
 		else
 			pressure_alert = -1
 
-	if(environment.toxins > MOLES_PLASMA_VISIBLE)
+	if(environment.get_moles_by_id(PLASMA) > MOLES_PLASMA_VISIBLE)
 		pl_effects()
 	return
 

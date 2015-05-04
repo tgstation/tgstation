@@ -25,7 +25,7 @@
 
 	var/log="" // Bad boys, bad boys.
 
-/obj/machinery/portable_atmospherics/canister/sleeping_agent
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
 	canister_color = "redws"
@@ -275,7 +275,6 @@
 		return .
 
 	if(href_list["toggle"])
-		var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
 
 		if (valve_open)
 			if (holding)
@@ -287,27 +286,30 @@
 				investigation_log(I_ATMOS, "had its valve <b>OPENED</b> by [key_name(usr)], starting transfer into \the [holding]")
 			else
 				var/list/contents_l=list()
-				if(src.air_contents.toxins > 0)
-					contents_l += "<b><font color='red'>Plasma</font></b>"
-				if(src.air_contents.carbon_dioxide > 0)
-					contents_l += "<b><font color='red'>CO<sub>2</sub></font></b>"
-				if(istype(S))
-					contents_l += "N<sub>2</sub>O</font>"
+				for(var/gasid in src.air_contents.gases)
+					var/datum/gas/gas = air_contents.get_gas_by_id(gasid)
+					if(gas.gas_flags & AUTO_LOGGING && air_contents.get_moles_by_id(gasid) > 0)
+						contents_l += "<b><font color='red'>[gas.display_name]</font></b>"
 				var/contents_str = english_list(contents_l)
 				investigation_log(I_ATMOS, "had its valve <b>OPENED</b> by [key_name(usr)], starting transfer into the <font color='red'><b>air</b></font> ([contents_str])")
 				if(contents_l.len>0)
 					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains [contents_str] at [formatJumpTo(loc)]!")
-					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains [contents] at [loc.x], [loc.y], [loc.z]")
+					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains [contents_str] at [loc.x], [loc.y], [loc.z]")
 
 		valve_open = !valve_open
 
 	if (href_list["remove_tank"])
-		var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
 		if(holding)
 			if(valve_open)
-				if(src.air_contents.toxins > 0 || (istype(S)))
-					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [formatJumpTo(loc)]!")
-					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [loc.x], [loc.y], [loc.z]")
+				var/list/contents_l=list()
+				for(var/gasid in src.air_contents.gases)
+					var/datum/gas/gas = air_contents.get_gas_by_id(gasid)
+					if(gas.gas_flags & AUTO_LOGGING && air_contents.get_moles_by_id(gasid) > 0)
+						contents_l += "<b><font color='red'>[gas.display_name]</font></b>"
+				var/contents_str = english_list(contents_l)
+				if(contents_l.len>0)
+					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains [contents_str] at [formatJumpTo(loc)]!")
+					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains [contents_str] at [loc.x], [loc.y], [loc.z]")
 
 			if(istype(holding, /obj/item/weapon/tank))
 				holding.manipulated_by = usr.real_name
@@ -346,19 +348,17 @@
 
 /obj/machinery/portable_atmospherics/canister/plasma/New(loc)
 	..(loc)
-	air_contents.adjust(tx = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(PLASMA, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/oxygen/New(loc)
 	..(loc)
-	src.air_contents.adjust((maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(OXYGEN, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/sleeping_agent/New(loc)
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide/New(loc)
 	..(loc)
-	var/datum/gas/sleeping_agent/sleeping_agent = new
-	sleeping_agent.moles = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.adjust(traces = list(sleeping_agent))
+	air_contents.adjust_gas(NITROUS_OXIDE, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /*
@@ -379,22 +379,19 @@
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New(loc)
 	..(loc)
-	air_contents.adjust(n2 = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(NITROGEN, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New(loc)
 	..(loc)
-	air_contents.adjust(co2 = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(CARBON_DIOXIDE, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/air/New(loc)
 	..(loc)
 
-	air_contents.adjust(\
-		(O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature),\
-		n2 = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)\
-	)
-
+	air_contents.adjust_gas(OXYGEN, (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(NITROGEN, (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/user)

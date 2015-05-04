@@ -257,23 +257,14 @@
 		var/missing_gas = 0
 		for(var/gas in seed.consume_gasses)
 			if(environment)
-				switch(gas)
-					if("oxygen")
-						if(environment.oxygen <= seed.consume_gasses[gas])
-							missing_gas++
-							continue
-					if("plasma")
-						if(environment.toxins >= seed.consume_gasses[gas])
-							missing_gas++
-							continue
-					if("nitrogen")
-						if(environment.nitrogen >= seed.consume_gasses[gas])
-							missing_gas++
-							continue
-					if("carbon_dioxide")
-						if(environment.carbon_dioxide >= seed.consume_gasses[gas])
-							missing_gas++
-							continue
+				if(gas == OXYGEN)
+					if(environment.get_moles_by_id(OXYGEN) <= seed.consume_gasses[OXYGEN])
+						missing_gas++
+						continue
+				else
+					if(environment.get_moles_by_id(gas) >= seed.consume_gasses[gas])
+						missing_gas++
+						continue
 				environment.adjust_gas(gas,-seed.consume_gasses[gas],1)
 			else
 				missing_gas++

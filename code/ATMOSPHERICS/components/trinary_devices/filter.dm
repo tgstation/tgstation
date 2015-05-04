@@ -82,39 +82,30 @@ obj/machinery/atmospherics/trinary/filter/process()
 		var/datum/gas_mixture/filtered_out = new
 		filtered_out.temperature = removed.temperature
 
+		var/list/gases_to_remove
+
 		switch(filter_type)
 			if(0) //removing hydrocarbons
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
-
-				if(removed.trace_gases.len>0)
-					for(var/datum/gas/trace_gas in removed.trace_gases)
-						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-							removed.trace_gases -= trace_gas
-							filtered_out.trace_gases += trace_gas
+				gases_to_remove = list(PLASMA /*, OXYGEN_AGENT_B*/)
 
 			if(1) //removing O2
-				filtered_out.oxygen = removed.oxygen
-				removed.oxygen = 0
+				gases_to_remove = list(OXYGEN)
 
 			if(2) //removing N2
-				filtered_out.nitrogen = removed.nitrogen
-				removed.nitrogen = 0
+				gases_to_remove = list(NITROGEN)
 
 			if(3) //removing CO2
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
+				gases_to_remove = list(CARBON_DIOXIDE)
 
 			if(4)//removing N2O
-				if(removed.trace_gases.len>0)
-					for(var/datum/gas/trace_gas in removed.trace_gases)
-						if(istype(trace_gas, /datum/gas/sleeping_agent))
-							removed.trace_gases -= trace_gas
-							filtered_out.trace_gases += trace_gas
+				gases_to_remove = list(NITROUS_OXIDE)
 
 			else
 				filtered_out = null
 
+		for(var/gasid in gases_to_remove)
+			filtered_out.adjust_gas(gasid, removed.get_moles_by_id(gasid), 0)
+			removed.set_gas(gasid, 0, 0)
 
 		air2.merge(filtered_out)
 		air3.merge(removed)

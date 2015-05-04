@@ -250,7 +250,7 @@
 //			target_tile.parent.suspend_group_processing()
 		var/datum/gas_mixture/napalm = new
 		var/toxinsToDeduce = 35
-		napalm.toxins = toxinsToDeduce
+		napalm.adjust_gas(PLASMA, toxinsToDeduce)
 		napalm.temperature = 400+T0C
 		target_tile.assume_air(napalm)
 		spawn (0)

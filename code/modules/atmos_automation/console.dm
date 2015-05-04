@@ -360,7 +360,7 @@
 	var/datum/automation/if_statement/i = new (src)
 	i.label = "Oxygen Injection"
 	i.condition = MakeCompare(
-		MakeGetSensorData(sensor_tag,"oxygen"),
+		MakeGetSensorData(sensor_tag,OXYGEN),
 		MakeNumber(20),
 		"Less Than or Equal to"
 	)
@@ -416,10 +416,10 @@
 	// Outlet Management
 	///////////////////////////////////////////////////////////////
 	/*
-		if(get_sensor_data("pressure") >= 5000 && get_sensor_data("oxygen") >= 20)
+		if(get_sensor_data("pressure") >= 5000 && get_sensor_data(OXYGEN) >= 20)
 			vent_on()
 		else
-			if(get_sensor_data("oxygen") < 20 || get_sensor_data("pressure") < 100)
+			if(get_sensor_data(OXYGEN) < 20 || get_sensor_data("pressure") < 100)
 				vent_off()
 	*/
 
@@ -444,7 +444,7 @@
 	)
 	and_on.children.Add(
 		MakeCompare(
-			MakeGetSensorData(sensor_tag,"oxygen"),
+			MakeGetSensorData(sensor_tag,OXYGEN),
 			MakeNumber(20),
 			"Greater Than or Equal to"
 		)
@@ -466,7 +466,7 @@
 	)
 	or_off.children.Add(
 		MakeCompare(
-			MakeGetSensorData(sensor_tag,"oxygen"),
+			MakeGetSensorData(sensor_tag,OXYGEN),
 			MakeNumber(20),
 			"Less Than"
 		)

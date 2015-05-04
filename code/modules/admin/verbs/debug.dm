@@ -143,14 +143,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/t = ""
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\verbs\debug.dm:145: t+= "Nitrogen : [env.nitrogen]\n"
-	t += {"Nitrogen : [env.nitrogen]
-Oxygen : [env.oxygen]
-Plasma : [env.toxins]
-CO2: [env.carbon_dioxide]
-Pressure: [env.return_pressure()]"}
-	// END AUTOFIX
+	for(var/gasid in env.gases)
+		var/datum/gas/gas = env.get_gas_by_id(gasid)
+		t += "[gas.display_name] : [env.get_moles_by_id(gasid)]<br>"
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -1034,7 +1029,7 @@ Pressure: [env.return_pressure()]"}
 		if(Rad.anchored)
 			if(!Rad.P)
 				var/obj/item/weapon/tank/plasma/Plasma = new/obj/item/weapon/tank/plasma(Rad)
-				Plasma.air_contents.toxins = 70
+				Plasma.air_contents.set_gas(PLASMA,  70)
 				Rad.drain_ratio = 0
 				Rad.P = Plasma
 				Plasma.loc = Rad

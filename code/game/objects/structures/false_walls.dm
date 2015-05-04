@@ -185,7 +185,7 @@
 			T.ChangeTurf(/turf/simulated/wall)
 		else
 			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		if(mineral != "plasma")
+		if(mineral != PLASMA)
 			T = get_turf(src)
 			T.attackby(W,user)
 		del(src)
@@ -196,7 +196,7 @@
 			T.ChangeTurf(/turf/simulated/wall)
 		else
 			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		if(mineral != "plasma")
+		if(mineral != PLASMA)
 			T = get_turf(src)
 			T.attackby(W,user)
 		del(src)
@@ -364,7 +364,7 @@
 	name = "plasma wall"
 	desc = "A wall with plasma plating. This is definately a bad idea."
 	icon_state = ""
-	mineral = "plasma"
+	mineral = PLASMA
 
 //-----------wtf?-----------start
 /obj/structure/falsewall/clown
