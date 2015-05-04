@@ -89,8 +89,8 @@
 		stance = HOSTILE_STANCE_ATTACK
 		if(isliving(target))
 			var/mob/living/L = target
-			if(L.bodytemperature > 261)
-				L.bodytemperature = 261
+			if(L.bodytemperature > 200)
+				L.bodytemperature = 200
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
 	return
 
