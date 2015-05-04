@@ -639,6 +639,7 @@ var/global/list/g_fancy_list_of_types = null
 		"blue wizard",
 		"red wizard",
 		"marisa wizard",
+		"plasmaman"
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
@@ -993,6 +994,12 @@ var/global/list/g_fancy_list_of_types = null
 			W.registered_name = M.real_name
 			W.update_label()
 			M.equip_to_slot_or_del(W, slot_wear_id)
+
+		if("plasmaman")
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/hardsuit/plasmaman(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/eva/plasmaman(M),slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/plasmaman/full(M),slot_back)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas(M),slot_wear_mask)
 
 
 	M.regenerate_icons()

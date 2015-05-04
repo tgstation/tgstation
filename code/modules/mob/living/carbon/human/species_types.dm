@@ -344,3 +344,57 @@
 	for(var/mob/M in dead_mob_list)
 		M << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
 	return ""
+
+
+var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
+
+/datum/species/plasmaman
+	name = "Plasbone"
+	id = "plasmaman"
+	say_mod = "rattles"
+	sexes = 0
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
+	specflags = list(NOBLOOD,RADIMMUNE)
+	safe_oxygen_min = 0 //We don't breath this
+	safe_toxins_min = 16 //We breath THIS!
+	safe_toxins_max = 0
+	var/skin = 0
+
+/datum/species/plasmaman/skin
+	name = "Skinbone"
+	skin = 1
+
+/datum/species/plasmaman/update_base_icon_state(var/mob/living/carbon/human/H)
+	var/base = ..()
+	if(base == id)
+		base = "[base][skin]"
+	return base
+
+/datum/species/plasmaman/spec_life(var/mob/living/carbon/human/H)
+	var/datum/gas_mixture/environment = H.loc.return_air()
+
+	if(!istype(H.wear_suit, /obj/item/clothing/suit/space/eva/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/plasmaman))
+		if(environment)
+			if((environment.oxygen /environment.total_moles()) >= 0.01)
+				if(!H.on_fire)
+					H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
+				H.adjust_fire_stacks(0.5)
+				H.IgniteMob()
+	else
+		if(H.fire_stacks)
+			var/obj/item/clothing/suit/space/eva/plasmaman/P = H.wear_suit
+			if(istype(P))
+				P.Extinguish(H)
+	H.update_fire()
+
+//Heal from plasma
+/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "plasma")
+		H.adjustBruteLoss(-5)
+		H.adjustFireLoss(-5)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
+
+
+
+
