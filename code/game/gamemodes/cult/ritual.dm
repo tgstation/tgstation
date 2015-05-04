@@ -42,28 +42,23 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 
 	if(ishuman(usr) || ismonkey(usr))	//Damage only applies to humans and monkeys, to allow constructs to communicate
-		usr.visible_message("<span class='warning'>[usr.name] starts clawing at his arms like a mad man!</span>", "<span class='warning'>You start clawing at his arms like a mad man!</span>")
-		apply_damage(25,BRUTE, "l_arm")
-		apply_damage(25,BRUTE, "r_arm")
+		usr.visible_message("<span class='warning'>[usr.name] starts clawing at \his arms with \his fingernails!</span>", "<span class='warning'>You begin slicing open your arms with your fingers!</span>")
+		apply_damage(10,BRUTE, "l_arm")
+		apply_damage(10,BRUTE, "r_arm")
 		sleep(50)
 		if(usr.incapacitated())
 			return	//Hard to drawn intrinsic symbols when you're bleeding out in your cell.
 		var/turf/location = loc
 		if(istype(location, /turf/simulated))	// tearing your arms apart is going to spill a bit of blood, in fact thats the idea
 			location.add_blood(usr)				// TO-DO change this to a badly drawn rune
-		apply_damage(15,BRUTE, "l_arm")		// does a metric fuck ton of damage because this meant to be an emergency method of communication.
-		apply_damage(15,BRUTE, "r_arm")
+		apply_damage(10,BRUTE, "l_arm")		// does a metric fuck ton of damage because this meant to be an emergency method of communication.
+		apply_damage(10,BRUTE, "r_arm")
 		if(usr.incapacitated())
 			return
-		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood.</span>", "<span class='warning'>You paint strange symbols with your own blood.</span>")
+		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood.</span>", "<span class='warning'>You paint a messy rune with your own blood.</span>")
 		sleep(20)
 
-	usr.say("O bidai nabora se[pick("'","`")]sma!")
-	sleep(10)
-	usr.say("[input]")
-	for(var/mob/M in mob_list)
-		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
-			M << "<span class='boldannounce'>[input]</span>"
+	cultist_commune(usr, 0, 1, input)
 	return
 
 
@@ -186,8 +181,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return emp(src.loc,3)
 	if(word1 == wordtravel && word2 == wordblood && word3 == wordself)
 		return drain()
-	if(word1 == wordsee && word2 == wordhell && word3 == wordjoin)
-		return seer()
 	if(word1 == wordblood && word2 == wordjoin && word3 == wordhell)
 		return raise()
 	if(word1 == wordhide && word2 == wordsee && word3 == wordblood)
@@ -518,7 +511,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 	M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
 	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>", \
-					"<span class='userdanger'>You feel searing heat inside!</span>")
+					"<span class='userdanger'>[user] beats you with the tome, and you feel a searing heat inside you!</span>")
 
 
 /obj/item/weapon/tome/attack_self(mob/living/user as mob)
@@ -544,11 +537,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 				if(!input)
 					return
-				usr.whisper("O bidai nabora se[pick("'","`")]sma!")
-				usr.whisper("[input]")
-				for(var/datum/mind/H in ticker.mode.cult)
-					if (H.current)
-						H.current << "<span class='boldannounce'>[input]</span>"
+				cultist_commune(user, 1, 0, input)
 				return
 			if("Notes")
 				if(usr.get_active_hand() != src)
@@ -690,7 +679,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			var/r
 			if (!istype(user.loc,/turf))
 				user << "<span class='danger'>You do not have enough space to write a proper rune.</span>"
-			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun", "summon shell")
+			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun", "summon shell")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 			var/obj/effect/rune/R = new /obj/effect/rune
 			if(istype(user, /mob/living/carbon/human))
@@ -752,12 +741,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					R.word1=wordtravel
 					R.word2=wordblood
 					R.word3=wordself
-					R.loc = user.loc
-					R.check_icon()
-				if("seer")
-					R.word1=wordsee
-					R.word2=wordhell
-					R.word3=wordjoin
 					R.loc = user.loc
 					R.check_icon()
 				if("raise")
