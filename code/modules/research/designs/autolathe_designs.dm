@@ -114,6 +114,14 @@
 	build_path = /obj/item/weapon/airlock_electronics
 	category = list("initial", "Electronics")
 
+/datum/design/power_control
+	name = "Power control module"
+	id = "power_control"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 20, "$glass" = 80)
+	build_path = /obj/item/weapon/module/power_control
+	category = list("initial", "Electronics")
+
 /datum/design/airalarm_electronics
 	name = "Air alarm electronics"
 	id = "airalarm_electronics"
