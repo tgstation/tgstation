@@ -122,21 +122,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
-	var/lighting_text = "<span class='notice'>[user] lights their [name] with [W].</span>"
-	if(istype(W, /obj/item/weapon/weldingtool))
-		lighting_text = "<span class='notice'>[user] casually lights the [name] with [W], what a badass.</span>"
-	else if(istype(W, /obj/item/weapon/lighter/zippo))
-		lighting_text = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with [W]. Damn they're cool.</span>"
-	else if(istype(W, /obj/item/weapon/lighter))
-		lighting_text = "<span class='notice'>After some fiddling, [user] manages to light their [name] with [W].</span>"
-	else if(istype(W, /obj/item/weapon/melee/energy))
-		lighting_text = "<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>"
-	else if(istype(W, /obj/item/device/assembly/igniter))
-		lighting_text = "<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>"
-	else if(istype(W, /obj/item/device/flashlight/flare))
-		lighting_text = "<span class='notice'>[user] lights their [name] with [W] like a real badass.</span>"
-	if(is_hot(W))
-		light(lighting_text)
+	if(!lit && smoketime > 0)
+		var/lighting_text = is_lighter(W,user)
+		if(lighting_text)
+			light(lighting_text)
+			return
 	return
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user as mob, proximity)
@@ -151,6 +141,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				user << "<span class='notice'>[src] is full.</span>"
 
+/obj/item/clothing/mask/cigarette/proc/is_lighter(obj/O, mob/user)
+	var/lighting_text = null
+	if(istype(O, /obj/item/weapon/weldingtool))
+		lighting_text = "<span class='notice'>[user] casually lights the [name] with [O], what a badass.</span>"
+	else if(istype(O, /obj/item/weapon/lighter/zippo))
+		lighting_text = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with [O]. Damn they're cool.</span>"
+	else if(istype(O, /obj/item/weapon/lighter))
+		lighting_text = "<span class='notice'>After some fiddling, [user] manages to light their [name] with [O].</span>"
+	else if(istype(O, /obj/item/weapon/melee/energy))
+		lighting_text = "<span class='warning'>[user] swings their [O], barely missing their nose. They light their [name] in the process.</span>"
+	else if(istype(O, /obj/item/device/assembly/igniter))
+		lighting_text = "<span class='notice'>[user] fiddles with [O], and manages to light their [name].</span>"
+	else if(istype(O, /obj/item/device/flashlight/flare))
+		lighting_text = "<span class='notice'>[user] lights their [name] with [O] like a real badass.</span>"
+	else if(is_hot(O))
+		lighting_text = "<span class='notice'>[user] lights their [name] with [O].</span>"
+	return lighting_text
 
 /obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = null)
 	if(!src.lit)
@@ -385,7 +392,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			user << "<span class='warning'>It is already packed!</span>"
 	else
-		user << "<span class='warning'>You can't put that in the pipe!</span>"
+		var/lighting_text = is_lighter(O,user)
+		if(lighting_text)
+			if(smoketime > 0)
+				light(lighting_text)
+			else
+				user << "<span class='warning'>There is nothing to smoke!</span>"
+		else
+			user << "<span class='warning'>You can't put that in the pipe!</span>"
 	..()
 
 
