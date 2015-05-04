@@ -7,156 +7,160 @@
 "ag" = (/obj/machinery/door/airlock/glass,/turf/unsimulated/shuttle/floor,/area/planet/clown)
 "ah" = (/obj/machinery/door/airlock/external,/turf/space,/area/planet/clown)
 "ai" = (/obj/machinery/door/airlock/external,/turf/unsimulated/wall,/area/planet/clown)
-"aj" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/motherlode)
-"ak" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown)
-"al" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/oasis)
-"am" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/unsimulated/shuttle/floor,/area/planet/clown)
-"an" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown)
-"ao" = (/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"ap" = (/obj/effect/overlay/palmtree_r,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"aq" = (/turf/simulated/floor/beach/sand,/area/planet/clown)
-"ar" = (/obj/machinery/gateway{dir = 9},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"as" = (/obj/machinery/gateway{dir = 1},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"at" = (/obj/machinery/gateway{dir = 5},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"au" = (/obj/machinery/gateway{dir = 8},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"av" = (/obj/machinery/gateway/centeraway,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"aw" = (/obj/machinery/gateway{dir = 4},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"ax" = (/obj/machinery/gateway{dir = 10},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"ay" = (/obj/machinery/gateway,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"az" = (/obj/machinery/gateway{dir = 6},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"aA" = (/obj/effect/overlay/palmtree_l,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"aB" = (/turf/simulated/floor/beach/water,/area/planet/clown/oasis)
-"aC" = (/obj/structure/window/reinforced/fulltile,/obj/structure/grille,/turf/unsimulated/shuttle/floor,/area/planet/clown)
-"aD" = (/mob/living/simple_animal/crab/Coffee,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"aE" = (/obj/item/weapon/beach_ball,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
-"aF" = (/turf/space,/area/planet/clown)
-"aG" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/desert)
-"aH" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/desert)
-"aI" = (/turf/simulated/floor/beach/sand,/area/planet/clown/desert)
-"aJ" = (/turf/simulated/floor/plating/snow,/area/planet/clown/desert)
-"aK" = (/turf/unsimulated/wall,/area/planet/clown/village)
-"aL" = (/turf/unsimulated/wall,/area/planet/clown/town)
-"aM" = (/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"aN" = (/turf/simulated/mineral,/area/planet/clown/village)
-"aO" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/town)
-"aP" = (/obj/effect/landmark/corpse/syndicatecommando,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"aQ" = (/obj/item/weapon/ore/bananium,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"aR" = (/turf/simulated/wall/mineral/clown,/area/planet/clown/village)
-"aS" = (/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"aT" = (/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"aU" = (/obj/item/weapon/pickaxe/drill/diamonddrill,/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"aV" = (/obj/structure/ore_box,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"aW" = (/obj/item/seeds/bananaseed,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"aX" = (/obj/item/weapon/pickaxe,/turf/simulated/floor/plating,/area/planet/clown/village)
-"aY" = (/turf/simulated/floor/plating,/area/planet/clown/village)
-"aZ" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating,/area/planet/clown/village)
-"ba" = (/obj/structure/barricade/wooden,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"bb" = (/obj/effect/decal/remains/human,/obj/item/clothing/suit/space/hardsuit/mining,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bc" = (/obj/item/weapon/paper/crumpled/bloody{info = "I was told getting the bananium would be easy...fuck...they lied...send word to my family in the Alpha Minorious Sector if you find this."},/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bd" = (/obj/item/seeds/bananaseed,/mob/living/simple_animal/hostile/asteroid/goldgrub,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"be" = (/obj/item/seeds/bananaseed,/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"bf" = (/obj/item/seeds/bananaseed,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"bg" = (/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"bh" = (/obj/structure/barricade/wooden,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bi" = (/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"bj" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"bk" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"bl" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"bm" = (/turf/simulated/mineral/clown,/area/planet/clown/village)
-"bn" = (/obj/machinery/door/airlock/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bo" = (/obj/machinery/mineral/input,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"bp" = (/obj/machinery/mineral/mint,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"bq" = (/obj/machinery/mineral/output,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"br" = (/obj/effect/decal/remains/human,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"bs" = (/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"bt" = (/obj/item/clothing/mask/gas/mime,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"bu" = (/obj/item/weapon/pickaxe,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bv" = (/turf/simulated/wall/mineral/wood,/area/planet/clown/town)
-"bw" = (/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
-"bx" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
-"by" = (/obj/item/toy/crayon/mime,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
-"bz" = (/obj/structure/stool/bed,/obj/item/clothing/mask/gas/mime,/obj/item/weapon/bedsheet,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
-"bA" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
-"bB" = (/turf/simulated/floor/plating/snow,/area/planet/clown)
-"bC" = (/obj/structure/signpost{desc = "The sign says: This town has gone 0 days without an accident."; name = "Now entering Mime Town"},/turf/simulated/floor/plating/snow,/area/planet/clown)
-"bD" = (/obj/structure/mineral_door/wood,/turf/simulated/wall/mineral/wood,/area/planet/clown/town)
-"bE" = (/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bF" = (/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/wall,/area/planet/clown/town)
-"bG" = (/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bH" = (/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bI" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bJ" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bK" = (/obj/structure/flora/ausbushes/lavendergrass,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bL" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bM" = (/obj/effect/landmark/corpse/clown,/turf/simulated/floor/plating/snow,/area/planet/clown)
-"bN" = (/obj/machinery/door/airlock/freezer{name = "white airlock"},/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"bO" = (/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"bP" = (/mob/living/simple_animal/hostile/creature,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"bQ" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bR" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bS" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bT" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bU" = (/obj/structure/signpost{desc = "The sign says: Be careful!"; name = "Now leaving Clown Village"},/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bV" = (/obj/structure/table/wood,/obj/item/weapon/paper/crumpled/bloody{color = "WHAT HAVE I DONE"},/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"bW" = (/obj/structure/table/wood,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"bX" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bY" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"bZ" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"ca" = (/obj/structure/flora/ausbushes/brflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cb" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/village)
-"cc" = (/turf/simulated/wall/mineral/wood,/area/planet/clown/village)
-"cd" = (/obj/structure/toilet,/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/wood,/area/planet/clown/town)
-"ce" = (/obj/effect/decal/remains/human,/obj/effect/rune,/obj/item/clothing/mask/gas/mime,/obj/effect/decal/cleanable/blood/splatter,/obj/effect/decal/cleanable/blood/gibs/core,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"cf" = (/obj/structure/table/wood,/obj/item/clothing/mask/gas/clown_hat,/obj/item/clothing/gloves/color/rainbow/clown,/obj/item/clothing/shoes/clown_shoes{desc = "These shoes appear var-edited!."; name = "uhangi's shoes"; slowdown = -1},/obj/item/clothing/under/rank/clown,/obj/item/device/pda/clown,/obj/item/weapon/storage/backpack/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cg" = (/obj/structure/table/wood,/obj/item/seeds/cashseed,/obj/item/seeds/cashseed,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"ch" = (/obj/structure/sign/vacuum,/turf/simulated/wall/mineral/wood,/area/planet/clown/village)
-"ci" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"cj" = (/obj/item/trash/candle,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"ck" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cl" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cm" = (/obj/machinery/door/airlock/clown,/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/village)
-"cn" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/village)
-"co" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cp" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/signpost{desc = "The sign says: Please don't mine the Bananium!"; name = "Welcome to Clown Planet"},/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cq" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cr" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cs" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"ct" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cu" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cv" = (/obj/machinery/hydroponics/soil,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cw" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cx" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cy" = (/obj/structure/flora/ausbushes/palebush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cz" = (/obj/structure/flora/ausbushes/sunnybush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cA" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/sunnybush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"cB" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing,/turf/simulated/floor/wood,/area/planet/clown/town)
-"cC" = (/turf/simulated/floor/wood,/area/planet/clown/town)
-"cD" = (/obj/item/clothing/mask/gas/mime,/turf/simulated/floor/wood,/area/planet/clown/town)
-"cE" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/wood,/area/planet/clown/town)
-"cF" = (/obj/structure/mineral_door/gold,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"cG" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor/wood,/area/planet/clown/town)
-"cH" = (/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cI" = (/obj/machinery/constructable_frame,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cJ" = (/obj/effect/decal/cleanable/oil/streak,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cK" = (/obj/structure/stool/bed/chair/comfy/lime,/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"cL" = (/obj/structure/table/reinforced,/obj/item/clothing/gloves/color/rainbow/clown,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"cM" = (/obj/structure/stool/bed/chair/office/light{dir = 8},/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"cN" = (/obj/structure/filingcabinet,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"cO" = (/obj/item/clothing/mask/gas/mime,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cP" = (/obj/effect/decal/cleanable/oil,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cQ" = (/mob/living/simple_animal/hostile/hivebot/strong,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cR" = (/obj/effect/decal/cleanable/robot_debris/gib,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cS" = (/obj/machinery/door/window/westleft,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"cT" = (/obj/effect/decal/cleanable/robot_debris/limb,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cU" = (/obj/machinery/mecha_part_fabricator,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cV" = (/mob/living/simple_animal/hostile/hivebot/range,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cW" = (/obj/effect/decal/cleanable/robot_debris,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cX" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"cY" = (/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/planet/clown/village)
-"cZ" = (/obj/machinery/gun_turret,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/planet/clown/village)
-"da" = (/mob/living/simple_animal/hostile/hivebot/rapid,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"db" = (/turf/simulated/floor,/area/planet/clown/village)
-"dc" = (/obj/effect/landmark/clown,/turf/simulated/floor,/area/planet/clown/village)
+"aj" = (/turf/simulated/mineral/clown,/area/planet/clown/motherlode)
+"ak" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/motherlode)
+"al" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown)
+"am" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/oasis)
+"an" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/unsimulated/shuttle/floor,/area/planet/clown)
+"ao" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown)
+"ap" = (/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"aq" = (/obj/effect/overlay/palmtree_r,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"ar" = (/turf/simulated/floor/beach/sand,/area/planet/clown)
+"as" = (/obj/machinery/gateway{dir = 9},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"at" = (/obj/machinery/gateway{dir = 1},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"au" = (/obj/machinery/gateway{dir = 5},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"av" = (/obj/machinery/gateway{dir = 8},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"aw" = (/obj/machinery/gateway/centeraway,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"ax" = (/obj/machinery/gateway{dir = 4},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"ay" = (/obj/machinery/gateway{dir = 10},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"az" = (/obj/machinery/gateway,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"aA" = (/obj/machinery/gateway{dir = 6},/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"aB" = (/obj/effect/overlay/palmtree_l,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"aC" = (/turf/simulated/floor/beach/water,/area/planet/clown/oasis)
+"aD" = (/obj/machinery/computer/shuttle,/turf/unsimulated/shuttle/floor,/area/planet/clown)
+"aE" = (/obj/structure/window/reinforced/fulltile,/obj/structure/grille,/turf/unsimulated/shuttle/floor,/area/planet/clown)
+"aF" = (/mob/living/simple_animal/crab/Coffee,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"aG" = (/obj/item/weapon/beach_ball,/turf/simulated/floor/beach/sand,/area/planet/clown/oasis)
+"aH" = (/turf/space,/area/planet/clown)
+"aI" = (/obj/effect/landmark/mobcorpse/pirate,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/motherlode)
+"aJ" = (/obj/item/weapon/reagent_containers/food/drinks/golden_cup,/obj/structure/table/wood,/obj/item/weapon/paper{info = "Y'argh, congratulations for finding me booty. I hope you'll have as much fun with it as I did."},/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/motherlode)
+"aK" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/motherlode)
+"aL" = (/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/motherlode)
+"aM" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/desert)
+"aN" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/desert)
+"aO" = (/turf/simulated/floor/beach/sand,/area/planet/clown/desert)
+"aP" = (/turf/simulated/floor/plating/snow,/area/planet/clown/desert)
+"aQ" = (/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/village)
+"aR" = (/turf/unsimulated/wall{icon_state = "wood0"; name = "wooden wall"},/area/planet/clown/town)
+"aS" = (/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"aT" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/village)
+"aU" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/town)
+"aV" = (/obj/effect/landmark/corpse/syndicatecommando,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"aW" = (/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"aX" = (/turf/simulated/shuttle/wall/interior,/area/planet/clown/village)
+"aY" = (/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"aZ" = (/obj/item/weapon/pickaxe/drill/diamonddrill,/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"ba" = (/obj/structure/ore_box,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bb" = (/obj/item/seeds/bananaseed,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bc" = (/obj/item/weapon/pickaxe,/turf/simulated/floor/plating,/area/planet/clown/village)
+"bd" = (/turf/simulated/floor/plating,/area/planet/clown/village)
+"be" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating,/area/planet/clown/village)
+"bf" = (/obj/structure/barricade/wooden,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"bg" = (/obj/effect/decal/remains/human,/obj/item/clothing/suit/space/hardsuit/mining,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bh" = (/obj/item/weapon/paper/crumpled/bloody{info = "I was told getting the bananium would be easy...fuck...they lied... If there was any bananium to be mined left, it's gone now. Send word to my family in the Alpha Minorious Sector if you find this."},/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bi" = (/obj/item/seeds/bananaseed,/mob/living/simple_animal/hostile/asteroid/goldgrub,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bj" = (/obj/item/seeds/bananaseed,/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bk" = (/obj/item/seeds/bananaseed,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bl" = (/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bm" = (/obj/structure/barricade/wooden,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bn" = (/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bo" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bp" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bq" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"br" = (/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/village)
+"bs" = (/obj/machinery/door/airlock/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bt" = (/obj/machinery/mineral/input,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bu" = (/obj/machinery/mineral/mint,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bv" = (/obj/machinery/mineral/output,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bw" = (/obj/effect/decal/remains/human,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"bx" = (/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"by" = (/obj/item/clothing/mask/gas/mime,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"bz" = (/obj/item/weapon/pickaxe,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bA" = (/turf/simulated/wall/mineral/wood,/area/planet/clown/town)
+"bB" = (/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
+"bC" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
+"bD" = (/obj/item/toy/crayon/mime,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
+"bE" = (/obj/structure/stool/bed,/obj/item/clothing/mask/gas/mime,/obj/item/weapon/bedsheet,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
+"bF" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
+"bG" = (/turf/simulated/floor/plating/snow,/area/planet/clown)
+"bH" = (/obj/structure/signpost{desc = "The sign says: This town has gone 0 days without an accident."; name = "Now entering Mime Town"},/turf/simulated/floor/plating/snow,/area/planet/clown)
+"bI" = (/obj/structure/mineral_door/wood,/turf/simulated/wall/mineral/wood,/area/planet/clown/town)
+"bJ" = (/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bK" = (/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/wall{icon_state = "wood0"; name = "wooden wall"},/area/planet/clown/town)
+"bL" = (/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bM" = (/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bN" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bO" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bP" = (/obj/structure/flora/ausbushes/lavendergrass,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bQ" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bR" = (/obj/effect/landmark/corpse/clown,/turf/simulated/floor/plating/snow,/area/planet/clown)
+"bS" = (/obj/machinery/door/airlock/freezer{name = "white airlock"},/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"bT" = (/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"bU" = (/mob/living/simple_animal/hostile/creature,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"bV" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bW" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bX" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bY" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"bZ" = (/obj/structure/signpost{desc = "The sign says: Be careful!"; name = "Now leaving Clown Village"},/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"ca" = (/obj/structure/table/wood,/obj/item/weapon/paper/crumpled/bloody{color = "WHAT HAVE I DONE"},/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"cb" = (/obj/structure/table/wood,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"cc" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cd" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"ce" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cf" = (/obj/structure/flora/ausbushes/brflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cg" = (/obj/structure/toilet,/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/wood,/area/planet/clown/town)
+"ch" = (/obj/effect/decal/remains/human,/obj/effect/rune,/obj/item/clothing/mask/gas/mime,/obj/effect/decal/cleanable/blood/splatter,/obj/effect/decal/cleanable/blood/gibs/core,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"ci" = (/obj/structure/table/wood,/obj/item/clothing/mask/gas/clown_hat,/obj/item/clothing/gloves/color/rainbow/clown,/obj/item/clothing/shoes/clown_shoes{desc = "These shoes appear var-edited!."; name = "uhangi's shoes"; slowdown = -1},/obj/item/clothing/under/rank/clown,/obj/item/device/pda/clown,/obj/item/weapon/storage/backpack/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cj" = (/obj/structure/table/wood,/obj/item/seeds/cashseed,/obj/item/seeds/cashseed,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"ck" = (/obj/structure/sign/vacuum,/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/village)
+"cl" = (/obj/structure/window/reinforced/fulltile,/obj/structure/grille,/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/village)
+"cm" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"cn" = (/obj/item/trash/candle,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"co" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cp" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cq" = (/obj/machinery/door/airlock/clown,/turf/simulated/floor/plating/asteroid/airless/cave,/area/planet/clown/village)
+"cr" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cs" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/signpost{desc = "The sign says: Please don't mine the Bananium!"; name = "Welcome to Clown Planet"},/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"ct" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cu" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cv" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"cw" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cx" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cy" = (/obj/machinery/hydroponics/soil,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cz" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cA" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cB" = (/obj/structure/flora/ausbushes/palebush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cC" = (/obj/structure/flora/ausbushes/sunnybush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cD" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/sunnybush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"cE" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing,/turf/simulated/floor/wood,/area/planet/clown/town)
+"cF" = (/turf/simulated/floor/wood,/area/planet/clown/town)
+"cG" = (/obj/item/clothing/mask/gas/mime,/turf/simulated/floor/wood,/area/planet/clown/town)
+"cH" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/wood,/area/planet/clown/town)
+"cI" = (/obj/structure/mineral_door/gold,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"cJ" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor/wood,/area/planet/clown/town)
+"cK" = (/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"cL" = (/obj/machinery/constructable_frame,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"cM" = (/obj/effect/decal/cleanable/oil/streak,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"cN" = (/obj/structure/stool/bed/chair/comfy/lime,/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"cO" = (/obj/structure/table/reinforced,/obj/item/clothing/gloves/color/rainbow/clown,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"cP" = (/obj/structure/stool/bed/chair/office/light{dir = 8},/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"cQ" = (/obj/structure/filingcabinet,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"cR" = (/obj/item/clothing/mask/gas/mime,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"cS" = (/obj/effect/decal/cleanable/oil,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"cT" = (/mob/living/simple_animal/hostile/hivebot/strong,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"cU" = (/obj/effect/decal/cleanable/robot_debris/gib,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"cV" = (/obj/machinery/door/window/westleft,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"cW" = (/obj/effect/decal/cleanable/robot_debris/limb,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"cX" = (/obj/machinery/mecha_part_fabricator,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"cY" = (/mob/living/simple_animal/hostile/hivebot/range,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"cZ" = (/obj/effect/decal/cleanable/robot_debris,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"da" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"db" = (/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/planet/clown/village)
+"dc" = (/obj/machinery/gun_turret,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/planet/clown/village)
+"dd" = (/mob/living/simple_animal/hostile/hivebot/rapid,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"de" = (/turf/simulated/floor,/area/planet/clown/village)
+"df" = (/obj/effect/landmark/clown,/turf/simulated/floor,/area/planet/clown/village)
+"dg" = (/turf/simulated/mineral,/area/planet/clown/village)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -164,120 +168,120 @@ aaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacad
 aaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacadadacacacacacacacacabaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeabacacacacacacacacacacacacacafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
 aaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacadadadacacacacacacacacababababababababagabababababababababacacacacacacacacacacacacacafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
 aaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacadadadadadacacacacacacacacahaeaeaeaiaeaeaeaeaeaeagaeaeabaeaeabacacacacacacacacacacacacacafafafafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacadadadadadadadadadacacacacacacacacababababababaeaeaeaeaeabaeaeabaeaeabacacacacacacacacacacacacacafafajajajafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaacacacacacacacacacacacacacacacacacacacacacadadadadadadadadadadadadadadadadadadakacacacacacacacabaeaeaeaeabaeaeaeaeaeabababababagabacacacacacacacacacacacacacafafafajajafafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaacacacacacacacacacacacacacacacadadadadadadadadadadadadadadadaladadadalalaladadakacacacacacacacamaeaeaeaeabaeaeaeaeaeabaeaeaeaeaeamacacanacacananacacacanacacafafafajajajafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaacacacacacacacacacacacacacacadadadadadadadalalalalalalalalalalalalalalalaladadakanacacacacacanamaeaeaeaeagaeaeaeaeaeagaeaeaeaeaeamacacananacacanananacananakafafajajajajajafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaacacacacacacacacacacacacadadadadadadalalalalalalalalalalalalalalalalalalaladadananacacananacanabaeaeaeaeabaeaeaeaeaeabaeaeaeaeaeabacacanananacananananananakafafajajajajajajafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaacacacacacacacacacacadadadadadadadalalalalalalalalalalalalalalalalalalalaladadanacacanananacanababaeaeaeabaeaeaeaeaeabaeaeaeaeababacananananacananananananakafafajajajajajajafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaacacacacadadadadadadadadadadalalalalalalalalalalaoaoaoaoaoalalalalalalalalaladanacananananacacanababaeaeabaeaeaeaeaeabaeaeaeababanananananacacananananananakafafajafafajajajajafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaacacadadadadadadadadadalalalalalalalalalalalaoaoaoaoaoaoaoaoaoaoalalalalalaladananananananananananababaeabaeaeaeaeaeabaeaeababananananananananananananananakafafajafafafajajajafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaacadadadadadalalalalalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalaladanananananananananananabaeabaeaeaeaeaeabaeaeabanananananananananananananananakafajajafajafajajajajafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaadadadalalalalalalalaoaoaoaoaoaoaoaoaoaoapaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalaladanananananananananananabababababagagabababababananananananananananananananananafajajafajafafafajajajafafafacacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaalalalalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalananananananananananananananabaeaeaeaeabanananananananananananananananananananafajajafajajajafafajajafafafafacacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalanananaqananananananananananamaeaeaeaeamananananananananananananananananananakafafajafafajajajafajajafafafafafacacacacacacacacacacacacacacacacacacacacacacacacaa
-aaalalalalaoaoaoarasataoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoanaqananananananananananananamaeaeaeaeamananananananananananananananananananakafafajajajajafafafajajajafafafafafafacacacacacacacacacacacacacacacacacacacacacacaa
-aaalalalalaoaoaoauavawaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaqaqanananaqananananananananamaeaeaeaeamanananananananananananananananananananafafajajajafafajajajajajajafafafafafacacacacacacacacacacacacacacacacacacacacacacaa
-aaalalalaoaoaoaoaxayazaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoapaoaoaoaoaqaqaqanananananananananananabaeaeaeaeabanananananananananananananananananananafafajajafafajajajafafajajajajafafafafafacacacacacacacacacacacacacacacacacacacacaa
-aaalalalaAaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaAaoaoaoaoaoaoaoaoaoaoaoaoaoaqaqanaqaqanananananababababababagagababababababanananananananananananananananajajajajafajajajafafajajajajajafafafafafafacacacacacacacacacacacacacacacacacacacaa
-aaalalaoaoaoaoaoaoaoaoaoaoaoaoaoaBaBaBaBaBaBaBaBaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaqanananananananananabaeaeaeaeaeaeaeaeaeaeaeaeabanananananananananananananananajajajafafajajajafajajajajajajajafafafafafacacacacacacacacacacacacacacacacacacacaa
-aaalalaoaoaoaoaoaoaoaoaoaoaoaBaBaBaBaBaBaBaBaBaBaBaBaBaoaoaoaoaoaoaoaoaoaoalalalananananaqanananananababaeaeaeaeaeaeaeaeaeaeababanananananananananananananananajajajafajajajafafajajajajajajafafafafafafacacacacacacacacacacacacacacacacacacacaa
-aaalaoaoaoaoaoaoaoaoaoaoaoaoaBaBaBaBaBaBaBaBaBaBaBaBaBaBaoaoaoaoaoaoaoaoalaladadakananananananananananababaeaeaeaeaeaeaeaeababananananananananananananananananajajajafajajafafajajajajajajajajajajafafafafacacacacacacacacacacacacacacacacacacaa
-aaalaoaoaoaoaoaoaoaoaoaoaoaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaoaoaoaoaoaoaoaoalaladadakanananananananananananababaCaCaCaCaCaCababanananananananananananananananananajajafafajafafajajajajajajafajajajajafafafafafacacacacacacacacacacacacacacacacacaa
-aaalaoaoaoaoaoaoapaoaoaoaoaBaBaBaBaBaoaoaoaoaoaoaBaBaBaBaBaoaoaoaoaoaoalaladadadakananananananananananananananananananananananananananananananananananananananajajafajajafajajajajajajafafajajajafafafafafafafacacacacacacacacacacacacacacacacaa
-aaalalaoaoaoaoaoaoaoaoaoaoaBaBaBaBaBaBaoaDaAaEaoaBaBaBaBaBaoaoaoaoaoaoaladadadadakakanananananananananananananananananananananananananananananananananananananajafafajajafajajajajajajafajajajajafajajafafafafacacacacacacacacacacacacacacacacaa
-aaalaoaoaoaoaoaoaoaoaoaoaoaoaBaBaBaBaBaBaoaoaoaBaBaBaBaBaBaoaoaoaoaoaoaladadadadakakanananaFaFaFanaFanaFanaFananaFanaFaFananaFaFaFanaFaFaFanaFaFaFananananananajafajajajafajajajajajafafajajajajafajajajafafafafacacacacacacacacacacacacacacacaa
-aaalaoaoaoaoaoaoaoaoaoaoaoaoaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaoaoaoaoaoaoaladadadadakananananaFanananaFanaFananaFanaFanaFanaFananaFananaFanananaFananananananananafafajajajafajajajajajafajajajajafafajajajajafafafafacacacacacacacacacacacacacacaa
-aaalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaBaBaBaBaBaBaBaBaBaBaBaBaBaoaoaoaoaoaoalaladadadakananananaFaFaFananaFananaFanaFananaFanaFananaFananaFaFananaFaFaFananananananafafajajajafajajajajajafajajajajafajajajajajajafafafafacacacacacacacacacacacacacaa
-aaalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaBaBaBaBaBaBaBaBaBaBaBaoaoaoaoaoaoaoalaladadadakananananananaFananaFananaFananaFanaFanaFananaFananaFanananananaFananananananafafajajajajafajajajajafajajajajafajajajajajajajafafafacacacacacacacacacacacacacaa
-aaalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaBaBaBaBaBaBaBaBaBaBaoaoaoaoaoaoaoalaladadadakananananaFaFaFananaFananaFananaFanaFaFananaFaFaFanaFaFaFanaFaFaFanananananakafafajajajajafajajajajafajajajajafajajajajajajajafafafacacacacacacacacacacacacacaa
-aaalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaladadadadakanananananananananananananananananananananananananananananananananananananakafafajajajajafajajajajafajajajajafafajajajajajajafafafafacacacacacacacacacacacacaa
-aaalalaoaoaAaoaoaoaoaoaoaoaoaoapaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalaladadadadakanananananananananananananananananananananananananananananananananananananakafafajajajajafajajajajafajajajajajafajajajajajajajafafafafacacacacacacacacacacacaa
-aaalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaAaoaoaoaoalaladadadakanananananananananananananananananananananananananananananananananananananakafafajajajajafafajajajafajajajajajafajajajajajajajajafafafacacacacacacacacacacacaa
-aaalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalaladakakananananananananananananananananananananananananananananananananananananakafafajajajajajafajajajafajajajajajafafajajajajajajajajafafafacacacacacacacacacacaa
-aaalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalaladakakanananananananananananananananananananananananananananananananananananakakafafafajajajajafajajajafajajajajajajafafajajajajajajajafafafafacacacacacacacacacaa
-aaalalalalalaoaoaoaoaoaoaoaoaoaoalalalalaoaoalalalalalalalalalaoalalalaoaoalaladakakananananananananananananananananananananananananananananakakakakakakakakakafafafajajajajajajajajafajajajajajajajajajajajajajajafafafafafacacacacacacacacacaa
-aaalalalalalalalalalalalalalalalaladalalalalalalalaladadadadalalalalalalaoalaladakakanananakakananananananananananananananananananananakakakakakakakakakakakakafafafafajajajajajajafafajajajajajajajajajajajajafafafafafafafafacacacacacacacacaa
-aaadadadadadadadadadadadadadaladadadadadadadadadadadadadadadadadadadadadalalaladakakakakakakakakakakananakakakakanakakakakakakakakakakakakakakakakakakakakakakafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafacacacacacacacacaa
-aaaGaGaGaGaGaGaGaGaGaGaGaHaHaHaHaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGacacacacacacacacaa
-aaaGaGaGaGaGaGaGaHaHaHaHaHaHaHaHaHaGaGaGaGaGaGaGaGaHaHaHaHaHaHaHaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGacacacacacacacacaa
-aaaGaGaGaGaGaGaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGaHaHaHaHaHaGaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaGaGaGaGaGaGaGaHaHaHaHaIaIaIaIaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaHaHaHaHaHaHaHaHaHaGaGaGaGaGaGacacacacacacacacaa
-aaaGaGaGaGaGaGaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGaGaHaHaHaHaIaIaHaHaHaHaHaIaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGacacacacacacacacaa
-aaaGaGaGaGaHaHaHaHaHaIaIaHaHaIaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaIaIaHaHaHaHaHaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaGaGaGaGaHaHaHaIaIaHaHaHaHaGaGaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGacacacacacacacacaa
-aaaGaGaGaHaHaHaHaHaHaIaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaHaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaHaGaHaHaHaHaIaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGacacacacacacacaa
-aaaGaGaGaHaHaHaHaIaIaHaHaHaHaHaIaHaIaIaHaHaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaGaGaGaHaHaHaHaHaHaIaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGacacacacacacacaa
-aaaGaGaGaHaHaIaIaIaHaHaHaHaHaHaIaHaHaIaIaHaHaHaHaHaHaHaHaIaIaHaHaHaHaIaHaHaHaGaGaGaHaHaHaHaHaHaIaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaGaGaGaGaHaHaHaHaHaIaIaIaIaIaIaIaIaIaIaIaHaHaHaHaHaHaHaHaHaHaHaGaGaGacacacacacacacaa
-aaaGaGaGaIaIaIaHaHaHaHaHaHaHaHaIaHaHaIaHaIaIaHaHaHaHaHaHaHaIaIaHaHaHaHaIaHaHaGaGaGaHaHaHaHaHaHaIaIaHaHaHaHaHaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaHaIaHaHaHaHaHaHaHaGaGaGaGaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaHaGaGaGacacacacacacaa
-aaaGaGaGaHaHaHaHaHaHaHaHaHaIaIaIaHaIaIaHaHaIaIaIaIaHaHaHaHaHaIaHaHaHaHaIaHaHaGaGaGaHaHaHaHaHaHaIaIaIaHaHaHaHaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaHaIaIaHaHaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaGaGaGaGacacacacacaa
-aaaGaGaHaHaHaHaHaHaHaHaHaHaIaHaHaHaIaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaIaHaHaGaGaGaHaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaHaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaGaGaGacacacacacaa
-aaaGaGaHaHaHaHaHaHaHaHaIaIaIaHaIaIaIaHaHaHaIaIaHaHaIaHaHaHaHaHaIaIaHaHaIaHaHaGaGaGaHaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaHaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaGaGaGaGacacacacaa
-aaaGaGaHaHaHaHaHaHaHaIaIaHaHaIaIaHaHaHaIaIaIaHaHaHaIaIaHaHaHaHaHaIaHaHaIaHaHaGaGaGaHaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaGaGaGaGacacacaa
-aaaGaGaHaHaHaHaHaIaIaHaHaHaIaIaHaHaHaIaIaHaHaHaHaHaHaIaIaHaHaHaHaIaHaHaIaHaHaGaGaGaHaHaHaHaHaHaHaIaHaHaHaHaHaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaHaIaIaHaHaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaGaGaGaGacacacaa
-aaaGaGaHaHaHaIaIaIaHaHaIaIaIaHaHaHaIaIaHaHaHaHaHaHaIaIaIaHaHaHaHaIaHaIaIaHaGaGaGaGaHaHaHaHaHaHaHaIaHaHaHaHaHaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaHaIaIaHaHaHaHaHaGaGaGaGaGaHaHaHaHaHaHaIaIaIaIaIaIaIaIaIaIaIaHaHaHaHaHaHaHaHaHaIaIaHaHaGaGaGaGacacacaa
-aaaGaGaHaHaIaIaHaHaHaHaIaHaHaHaHaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaHaIaHaIaHaHaGaGaGaGaHaHaHaHaHaHaHaIaHaHaHaHaHaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaHaIaIaIaHaHaHaHaGaGaGaGaGaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaIaIaHaHaGaGaGaGacacaa
-aaaGaGaHaHaHaHaHaHaHaIaHaHaHaHaIaIaHaHaHaHaHaIaIaHaHaHaHaHaHaHaIaIaHaIaHaHaGaGaGaGaHaHaHaHaHaHaHaIaHaHaHaHaHaIaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaIaIaIaHaHaHaHaGaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaIaIaHaGaGaGaGacacaa
-aaaGaGaGaHaHaHaHaHaIaIaHaHaIaIaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaIaIaHaHaIaHaHaHaGaGaGaHaHaHaHaHaHaHaIaHaHaHaHaIaIaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaIaIaIaHaHaHaHaGaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaIaHaHaGaGaGacacaa
-aaaGaGaGaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaIaIaHaHaHaHaHaHaHaIaIaIaHaHaHaIaHaHaHaGaGaGaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaIaIaHaHaHaHaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaIaHaHaGaGaGacacaa
-aaaGaGaGaGaHaHaHaHaHaIaIaIaHaHaHaHaHaIaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaIaHaHaHaGaGaGaHaHaHaHaHaHaIaHaHaHaHaIaIaIaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaIaHaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaIaHaHaGaGaGaGacaa
-aaaGaGaGaGaHaHaHaHaHaIaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaIaHaHaHaGaGaGaHaHaHaHaHaHaIaHaHaHaIaIaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaIaIaHaHaHaHaHaHaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaIaIaHaGaGaGaGacaa
-aaaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaIaIaHaHaIaHaHaHaHaIaIaHaHaGaGaGaHaHaHaHaHaIaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaIaIaIaHaHaHaHaHaGaGaGaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaGaGaGaGacaa
-aaaGaGaGaGaHaHaIaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaIaIaHaHaHaIaHaHaHaHaIaHaHaHaGaGaGaHaHaHaHaHaIaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaIaHaHaHaHaGaGaGaGaHaHaHaHaHaHaIaIaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaGaGaGaGacaa
-aaaGaGaGaGaHaHaHaIaHaHaHaHaHaIaIaHaHaHaHaHaHaIaIaIaHaHaHaIaIaHaHaHaHaIaHaHaHaGaGaGaHaHaHaHaHaIaHaHaIaIaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaIaHaHaHaHaHaGaGaGaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaGaGaGaGacaa
-aaaGaGaGaGaHaHaHaIaIaHaHaHaIaIaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaHaIaHaHaHaHaGaGaGaHaHaHaHaHaIaHaHaIaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaIaIaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaHaHaGaGaGaGacaa
-aaaGaGaGaGaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaHaHaIaHaHaHaHaGaGaGaHaHaHaHaIaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaIaHaHaHaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaGaGaGaGacaa
-aaaGaGaGaGaHaHaHaHaHaIaHaHaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaHaHaIaIaHaHaHaHaGaGaGaHaHaHaHaIaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaIaHaHaHaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaIaHaGaGaGaGacaa
-aaaGaGaGaGaHaHaHaHaHaIaHaHaHaHaHaHaHaIaIaHaHaHaHaIaIaHaHaHaHaHaHaIaHaHaHaHaHaHaGaGaHaHaHaHaIaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaIaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaHaIaHaGaGaGaGacaa
-aaaGaGaGaGaGaHaHaHaHaIaHaHaHaHaHaIaIaIaHaHaHaIaIaIaHaHaHaHaHaHaIaIaHaHaHaHaHaHaGaGaHaHaHaIaIaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaGaGaGaHaHaIaIaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaIaHaGaGaGaGacaa
-aaaGaGaGaGaGaHaHaHaHaIaIaHaHaHaHaIaHaHaHaIaIaIaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaGaGaHaHaIaIaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaGaGaGaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaIaHaHaGaGaGaGacaa
-aaaGaGaGaGaGaHaIaIaIaIaIaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaGaGaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaGaGaGaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGacaa
-aaaGaGaHaHaHaHaIaIaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaGaGaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGacaa
-aaaGaGaHaHaHaIaIaIaIaIaIaIaHaHaHaHaHaIaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaHaGaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGacacaa
-aaaGaGaHaHaIaIaIaIaIaIaHaIaHaHaHaHaHaIaHaHaHaHaHaHaIaIaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGacacaa
-aaaGaGaGaHaHaIaIaIaIaIaHaIaIaHaHaHaHaIaIaIaHaHaIaIaIaHaHaHaHaHaHaHaHaHaIaIaIaIaIaIaIaIaIaIaIaIaIaIaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaGaGaGaGaGaHaHaHaHaGaGaGaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGacacaa
-aaaGaGaGaHaHaHaHaHaHaHaHaHaIaIaIaIaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaGaGaGaGaGaGaGaGaJaHaJaHaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGacacaa
-aaaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGaGaGaGaGaHaHaHaHaHaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGacacaa
-aaaGaGaGaGaHaHaHaGaGaGaGaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGaGaGaHaHaHaGaGaGaHaHaHaHaHaHaHaHaHaHaIaIaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGaGaGaGaGaGaHaJaHaJaHaGaGaGaGaHaHaHaHaHaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGaGacaa
-aaaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaHaHaHaHaHaHaHaIaIaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGaGaGaGaGaGaGaJaJaJaHaHaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaa
-aaaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaGaGaGaGaGaGaGaGaGaGaJaJaJaHaHaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaa
-aaaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaLaLaLaLaMaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaa
-aaaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaLaOaOaOaMaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaLaOaOaOaMaMaMaMaMaMaMaMaMaPaMaMaMaMaMaMaMaMaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaNaNaQaNaNaNaNaNaNaNaNaNaNaNaRaNaNaNaNaNaNaRaNaNaNaNaNaKakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaLaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaMaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaSaTaTaTaUaNaNaNaNaNaNaNaNaNaNaTaTaNaNaVaVaWaXaYaZaNaNaNaKakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaLaOaOaOaOaOaOaOaOaOaOaOaOaOaOaMaMaMbababaaMaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaNaTbbbcaTaNaNaNaNaNaNaNaNaNaTaTaRaWbdbebfbgaYaYaNaNaNaKakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaLaOaOaOaOaMaMaMaMaOaOaMaMaMaMaMaOaOaOaOaOaOaOaMaOaOaOaOaMaMaMaMaMaMaMaOaOaOaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaQaTaSaTaNaQaNaNaNaNaNaNaNaNaNaTaTbhbibjbibibkbiaYaNaNaNaKakakakakakakakakakakakakakananananananananananananananananakakakakakakakakakakaLaOaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaOaOaMaMaMaMaMaMaMaMaMaMaMblaMaMaMaOaOaOaOaa
-aaaNaNbmaNbmaNaNaNaNaNaNaNaTaNaNaNaNaNaNaNaNaNaNaNaNaNaTbnbibobpbqbibibraNaNaNaKakakakakakakakakakakakakanananananananananananananananananananananakakakakakakaLaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaOaOaOaa
-aaaNaNaNbmaNaNaNaNaNaNaNaQaTaNaNaNaNaNaNbmaNbmaNaNaNaNaTaRbhbhaRaRbhaRaRaRaNaNaKakakakakakakakakakakananananananananananananananananananananananananakakakakakaLaOaOaMaMblaMbsaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaOaOaa
-aaaNaNbmaNbmaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaTaTaQaTaTaNaNaTaTaTaTaNaNaKakakakakakakakakakanananananananananananananananananananananananananakakakakakaLaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMbtaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaTaTaTaTaNaNaNaTaQbuaNaNaKakakakakakakakakananananananananananananananananananananananananananakakakakakaLaOaOaMaMaMaMaMbvbvbvbvbvbvbvbvbvaMaMaMaMaMaMbvbvbvbvbvbabababababvbvaMaMaMaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNbmaNaNaNbmaNaNaNaNaTaTaTaNaNaNaNaNaTaNaNaKakakakakakakananananananananananananananananananananananananananananakakakakakaLaOaOaMaMaMaMaMbvbwbxbybzbwbxbwbvaMaMaMaMaMaMbvaMaMaMaMaMaMaMaMbtaMbvaMaMaMaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNbmbmbmbmbmaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakananananananananananananananananananananananananananananananakakakakaLaOaOaMaMaMaMaMbvbAbwbwbwbwbwbAbvaMaMaMaMaMaMbaaMaMaMaMblaMaMaMaMaMbaaMaMaMaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakananananaFanananaFananaFaFaFaFananaFaFaFananananananananbBanakakakakaLaOaMaMaMaMaMaMbvbwbxbwbwbwbzbwbvaMaMaMaMaMaMbaaMaMaMaMaMaMaMaMaMaMbvaMaMaOaOaOaa
-aaaNaNaNaNaNaTaTaNaNaNaNaNaTaTaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakananananaFanananaFananaFananaFananaFananaFananananananananbBbCakakakaLaOaMaMaMaMaMaMbvbvbvbvbDbvbvbvbvaMaMaMaMaMaMbabababvbvbDbDbvbababvbvaMaMaOaOaOaa
-aaaNaNaNaNaNaTaTaTaTbEbEbEaTaTaTaNaNaNaTaTaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakananananaFanananaFananaFaFaFaFananaFaFaFananananananananbBbBbBbBbaaMbFaMaMaMaMbtaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaOaOaOaa
-aaaNaNaNaNaNaTbGbHbHbIbIbIbHbHbHbHbJbKbLaTaTaNaNaNaNaNaNaNaNaNaNaNaNaNaNaTaNaNaKakakakakanananananaFanaFanaFananaFananaFananaFanaFaFanananananbBananbBbBbMbaaMbNaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMbvbvbvbvbvbvaMaOaOaOaa
-aaaNaNaNaNaTaTbHbHbHbIbIbIbHbHbHbHbJbLbLaTaTaNaNaNaTaNaNaNaTaTaTaNaNaTaTaTaNaNaKakakakakanananananaFaFaFaFaFananaFananaFananaFananaFananananananananbBbBbBbaaMaLaMaMaMaMaMaMaMaMbsaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMblaMaMaMbvbObObPbObvaMaMaOaOaa
-aaaNaNaNaNaNaNbHbHbHbIbQbIbHbRbRbRbSbTbTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTbUaNaKakakakakanananananananananananananananananananananananananananananananakakakakaLaOaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMbvbvbvaMaMaMaMaMaMaMaMaMbvbObVbWbObvaMaMaOaOaa
-aaaNaNaNaNaNbLbXbXbXbIbIbYbYbYbZbZbZcacaaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTcbccccccccanananananananananananananananananananananananananananananbBananakakakakaLaOaOaMbababDbDbvbvaMaMaMaMaMaMaMaMbvcdbvaMaMaMaMaMaMaMaMaMbvbOcebObObvaMaMaOaOaa
-aaaNaNaNaNaTbLbXbXbXbXbXbYbYbYcfcgcgcgcgbLaTaTaTaTaTaTaTaTaTaTaTaTaTaTcbaTcbcbchcbcbccananananananananananananananananananananananananananananananananakakakakaLaOaOaMbablaMaMaMbaaMaMaMaMaMaMaMaMbvcibvaMaMaMaMaMaMaMaMaMbvcjbObOcjbvaMaMaOaOaa
-aaaNaNaNaNaNbEbIbIbQbXbXbYbYbYckckckckclbLaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTcbcbcbcmcbcbcnananaFaFaFanaFananaFaFaFaFananaFaFananaFananaFaFaFaFanananananakakakakakaLaOaOaMbvaMaMaMaMbaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMbvbObObObObvaMaMaOaOaa
-aaaNaNaNaNaTbEbEbEbEbLbLcobYbSbSbSbSbSbTbLaTaTaTaTaTaTaTaTaTaTaTaTaTcbaTcbcbcbcccbcbccanananananaFanananaFananaFananaFanaFanaFananaFananananananananakakakakakaLaOaOaMbvbvbvbabvbvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMbsaMaMaMaMbvbvbObObvbvaMaMaOaOaa
-aaaNaNaNaNaTbEbEbEbEbLbLbXbYbScpbScqcqcrbTbEaTaTaTaNaNaTaTaTaNaNaNaNaTaTaTcbcbccccccccananananaFananananaFananaFananaFanaFanaFananaFaFaFananananananakakakakakaLaOaOaMaMaMaMaMaMaMaMaMaMaMaMblaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMbvcscsbvaMaMaMaOaOaa
-aaaNaNaNaNaNbEbEbEbIbXbXctbYbSbSbScqcqcrbTbEaTcucvaNaNaNaNaNaNaNaNaNaNaTaNaNaNaKakakakanananaFanananananaFananaFananaFananaFaFananaFananananananananakakakakakaLaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaOaOaa
-aaaNaNaNaNaNaNaNaTbHbXbXcwbYbTbTbTclbTbTbTbEaTaTcvaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakananaFanaFaFaFananaFaFaFaFananaFanananaFananaFaFaFaFanananananakakakakakaLaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaOaOaa
-aaaNaNaNaNaNaNaTaTbHbXbXcxbEbEbEbEbEbEbEbEbEcycycyaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakanananananananananananananananananananananananananananananakakakakakakaLaOaOaMbvbvbDbDbvbvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaOaOaa
-aaaNaNaNaNcvaTaTaTczczczcAbEbEbEcAcAcAcAbEbEaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakanananananananananananananananananananananananananananananakakakakakakaLaOaOaMbvcBcCcDcEbvaMaMaMaMaMaMaMbvbvbDbDbvbvbvbvbvbvbvbvbvbvbvbvbvbvbvaMaMaOaOaa
-aaaNaNaNaNcvaNaTcvaRaRaRaRaRcFaRaRaRaRaRaTaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakananananananananananananananananananananananananananananakakakakakakaLaOaOaMbvcCcGcCcCbvaMaMaMbsaMaMaMbvcHcHcHcHcHcHcHcHcHcHcIcHcIcHcHcJcHbvaMaMaOaOaa
-aaaNaNaNaNaNaNaNcvaRbibicKcKbibicLcMcNaRaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakakananananananananananananananananananananananananananakakakakakakakaLaOaOaMbvbvbvbvbvbvaMaMaMaMaMaMaMbvcHcHcHcOcHcPcHcHcHcHcQcHcHcOcRcQcHbvaMaMaOaOaa
-aaaNaNaNaNaNaNaNaNaRaRbibibibibicSbicNaRaNaNaNaNaNaNaNaNbmaNbmbmbmaNaNaNaNaNaNaKakakakakakakakananananananananananananananananananananananananakakakakakakakakaLaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMaMbvcHcHcHcHcTcUcVcHcWcHcHcHcHcQcHcUcHbvaMaMaOaOaa
-aaaNaNaNaNaNaNaNaNaNaRaRaRcFaRaRaRaRaRaRaNaNaNaNaNaNaNaNbmaNbmaNaNaNaNaNaNaNaNaKakakakakakakakakananananananananananananananananananananananakakakakakakakakakaLaOaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMbvcHcHcJcHcHcXcHcHcHcHcHcHcHcPcHcHcHbvaMaMaOaOaa
-aaaNaNbmaNaNaNaNaNaNaNaNaRcYcYcYcZaRaNaNaNaNaNaNaNaNaNaNbmbmbmbmbmaNaNaNaNaNaNaKakakakakakakakakakanananananananananananananananananananakakakakakakakakakakakaLaOaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMbvcHcHcHcHcHcVcHcVcHcOcHdacHcHdacHcHbvaMaMaOaOaa
-aaaNbmaNbmaNaNaNaNaNaNaNaRdbdbdbdbaRaNaNaNaNaNaNaNaNaNaNaNaNbmaNbmaNaNaNaNaNaNaKakakakakakakakakakakakakakakanananananananananananananakakakakakakakakakakakakaLaOaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMbvbvbvbvbvbvbvbvbvbvbvbvbvbvbvbvbvbvbvaMaMaOaOaa
-aaaNaNbmaNaNaNaNaNaNaNaNaRdbdbdbdbaRaNaNaNaNaNaNaNaNaNaNbmbmbmaNbmaNaNaNaNaNaNaKakakakakakakakakakakakakakakakakakananananananananakakakakakakakakakakakakakakaLaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaOaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaRdbdbdbdbaRaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaLaOaOaMaMaMaOaOaMaMaOaOaOaOaOaMaOaOaMaMaMaMaMaMaMaMaMaMaMaMaMblaMaMaMaMaOaOaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaRdbdbdbdcaRaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaLaOaOaOaOaOaOaOaOaMaMbsaMaOaOaOaOaOaOaOaOaOaOaMaMaMaMaOaOaOaOaOaOaOaOaOaOaOaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaRaRaRaRaRaRaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaLaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaa
-aaaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaKakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaLaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaOaa
+aaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacadadadadadadadadadacacacacacacacacababababababaeaeaeaeaeabaeaeabaeaeabacacacacacacacacacacacacacafafajakakafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaacacacacacacacacacacacacacacacacacacacacacadadadadadadadadadadadadadadadadadadalacacacacacacacabaeaeaeaeabaeaeaeaeaeabababababagabacacacacacacacacacacacacacafafafakakafafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaacacacacacacacacacacacacacacacadadadadadadadadadadadadadadadamadadadamamamadadalacacacacacacacanaeaeaeaeabaeaeaeaeaeabaeaeaeaeaeanacacaoacacaoaoacacacaoacacafafafakakajafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaacacacacacacacacacacacacacacadadadadadadadamamamamamamamamamamamamamamamamadadalaoacacacacacaoanaeaeaeaeagaeaeaeaeaeagaeaeaeaeaeanacacaoaoacacaoaoaoacaoaoalafafakakakakajafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaacacacacacacacacacacacacadadadadadadamamamamamamamamamamamamamamamamamamamadadaoaoacacaoaoacaoabaeaeaeaeabaeaeaeaeaeabaeaeaeaeaeabacacaoaoaoacaoaoaoaoaoaoalafafakakakakakajafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaacacacacacacacacacacadadadadadadadamamamamamamamamamamamamamamamamamamamamadadaoacacaoaoaoacaoababaeaeaeabaeaeaeaeaeabaeaeaeaeababacaoaoaoaoacaoaoaoaoaoaoalafafakakakakakakafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaacacacacadadadadadadadadadadamamamamamamamamamamapapapapapamamamamamamamamamadaoacaoaoaoaoacacaoababaeaeabaeaeaeaeaeabaeaeaeababaoaoaoaoaoacacaoaoaoaoaoaoalafafajafafakakakakafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaacacadadadadadadadadadamamamamamamamamamamamapapapapapapapapapapamamamamamamadaoaoaoaoaoaoaoaoaoaoababaeabaeaeaeaeaeabaeaeababaoaoaoaoaoaoaoaoaoaoaoaoaoaoalafafakafafafakakakafafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaacadadadadadamamamamamamamamamamamapapapapapapapapapapapapapapapapapamamamamadaoaoaoaoaoaoaoaoaoaoaoabaeabaeaeaeaeaeabaeaeabaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalafakakafakafakakakakafafafacacacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaadadadamamamamamamamapapapapapapapapapapaqapapapapapapapapapapapapapapapamamadaoaoaoaoaoaoaoaoaoaoaoabababababagagabababababaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoafakakafakafafafakakakafafafacacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaamamamamamamamamamamapapapapapapapapapapapapapapapapapapapapapapapapapapamamamaoaoaoaoaoaoaoaoaoaoaoaoaoaoabaeaeaeaeabaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoafakakafakakakafafajajafafafafacacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaamamamamapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapamaoaoaoaraoaoaoaoaoaoaoaoaoaoanaeaeaeaeanaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalafafakafafakakakafakakafafafafafacacacacacacacacacacacacacacacacacacacacacacacacaa
+aaamamamamapapapasatauapapapapapapapapapapapapapapapapapapapapapapapapapapapapapaoaraoaoaoaoaoaoaoaoaoaoaoaoanaeaeaeaeanaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalafafakakakajafafafakakakafafafafafafacacacacacacacacacacacacacacacacacacacacacacaa
+aaamamamamapapapavawaxapapapapapapapapapapapapapapapapapapapapapapapapapapapapapararaoaoaoaraoaoaoaoaoaoaoaoanaeaeaeaeanaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoafafakakakafafakakakakakakafafafafafacacacacacacacacacacacacacacacacacacacacacacaa
+aaamamamapapapapayazaAapapapapapapapapapapapapapapapapapapapapapapapapaqapapapaparararaoaoaoaoaoaoaoaoaoaoaoabaeaeaeaeabaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoafafajakafafakakakafafakakakakafafafafafacacacacacacacacacacacacacacacacacacacacaa
+aaamamamaBapapapapapapapapapapapapapapapapapapapapapaBapapapapapapapapapapapapapararaoararaoaoaoaoaoababababababagagababababababaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoakakakajafakakakafafakakakakakafafafafafafacacacacacacacacacacacacacacacacacacacaa
+aaamamapapapapapapapapapapapapapaCaCaCaCaCaCaCaCapapapapapapapapapapapapapapapaparaoaoaoaoaoaoaoaoaoabaeaeaeaeaeaeaeaeaeaeaeaeabaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoakakakafafakajakafakakakakakakajafafafafafacacacacacacacacacacacacacacacacacacacaa
+aaamamapapapapapapapapapapapaCaCaCaCaCaCaCaCaCaCaCaCaCapapapapapapapapapapamamamaoaoaoaoaraoaoaoaoaoababaeaeaeaeaeaeaeaeaeaeababaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoakakakafakakakafafakakajajakakafafafafafafacacacacacacacacacacacacacacacacacacacaa
+aaamapapapapapapapapapapapapaCaCaCaCaCaCaCaCaCaCaCaCaCaCapapapapapapapapamamadadalaoaoaoaoaoaoaoaoaoaoababaeaeaeaeaDaeaeaeababaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoakakakafakakafafakakakakakakakakakakafafafafacacacacacacacacacacacacacacacacacacaa
+aaamapapapapapapapapapapapaCaCaCaCaCaCaCaCaCaCaCaCaCaCaCapapapapapapapapamamadadalaoaoaoaoaoaoaoaoaoaoaoababaEaEaEaEaEaEababaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoakakafafajafafakakakakakakafakakakakafafafafafacacacacacacacacacacacacacacacacacaa
+aaamapapapapapapaqapapapapaCaCaCaCaCapapapapapapaCaCaCaCaCapapapapapapamamadadadalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoakakafakakafakakakakakakafafakakakafafafafafafafacacacacacacacacacacacacacacacacaa
+aaamamapapapapapapapapapapaCaCaCaCaCaCapaFaBaGapaCaCaCaCaCapapapapapapamadadadadalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoakafafakakafakakakakakakafakakakakafakakafafafafacacacacacacacacacacacacacacacacaa
+aaamapapapapapapapapapapapapaCaCaCaCaCaCapapapaCaCaCaCaCaCapapapapapapamadadadadalalaoaoaoaHaHaHaoaHaoaHaoaHaoaoaHaoaHaHaoaoaHaHaHaoaHaHaHaoaHaHaHaoaoaoaoaoaoakafakakakafakakajakakafafakakakakafakakakafafafafacacacacacacacacacacacacacacacaa
+aaamapapapapapapapapapapapapaCaCaCaCaCaCaCaCaCaCaCaCaCaCaCapapapapapapamadadadadalaoaoaoaoaHaoaoaoaHaoaHaoaoaHaoaHaoaHaoaHaoaoaHaoaoaHaoaoaoaHaoaoaoaoaoaoaoaoafafakakakafakakakakakafakakakakafafakakakakafafafafacacacacacacacacacacacacacacaa
+aaamapapapapapapapapapapapapapapaCaCaCaCaCaCaCaCaCaCaCaCaCapapapapapapamamadadadalaoaoaoaoaHaHaHaoaoaHaoaoaHaoaHaoaoaHaoaHaoaoaHaoaoaHaHaoaoaHaHaHaoaoaoaoaoaoafafakajakafakakakakakafakakakakafakakajakajakafafafafacacacacacacacacacacacacacaa
+aaamapapapapapapapapapapapapapapapaCaCaCaCaCaCaCaCaCaCaCapapapapapapapamamadadadalaoaoaoaoaoaoaHaoaoaHaoaoaHaoaoaHaoaHaoaHaoaoaHaoaoaHaoaoaoaoaoaHaoaoaoaoaoaoafafakakakakafakakakakafakakajakafakakaIaJaKakakafafafacacacacacacacacacacacacacaa
+aaamamapapapapapapapapapapapapapapapaCaCaCaCaCaCaCaCaCaCapapapapapapapamamadadadalaoaoaoaoaHaHaHaoaoaHaoaoaHaoaoaHaoaHaHaoaoaHaHaHaoaHaHaHaoaHaHaHaoaoaoaoaoalafafakakakakafakakajakafakakakakafakajakaLakajakafafafacacacacacacacacacacacacacaa
+aaamamapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapamadadadadalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalafafakakakakafakakakakafakakakakafafakajajajakakafafafafacacacacacacacacacacacacaa
+aaamamapapaBapapapapapapapapapaqapapapapapapapapapapapapapapapapapapamamadadadadalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalafafakakakakafakakakakafakajakakakafakakakakakakakafafafafacacacacacacacacacacacaa
+aaamamapapapapapapapapapapapapapapapapapapapapapapapapapapapaBapapapapamamadadadalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalafafakakakakafafakakakafakakakakakafakakakakakakakakafafafacacacacacacacacacacacaa
+aaamamapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapamamamadalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalafafakakakajakafakakakafakakajakakafafakakakajakakakakafafafacacacacacacacacacacaa
+aaamamamapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapapamamadalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalafafafakakakakafakakakafakakakakakakafafakakakakakakakafafafafacacacacacacacacacaa
+aaamamamamamapapapapapapapapapapamamamamapapamamamamamamamamamapamamamapapamamadalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalalalalafafafakakakakajakakakafakakakakajakakakakakakakakakafafafafafacacacacacacacacacaa
+aaamamamamamamamamamamamamamamamamadamamamamamamamamadadadadamamamamamamapamamadalalaoaoaoalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalalalalalalalafafafafakakakajakakafafakakakakakakakakakakakakafafafafafafafafacacacacacacacacaa
+aaadadadadadadadadadadadadadamadadadadadadadadadadadadadadadadadadadadadamamamadalalalalalalalalalalaoaoalalalalaoalalalalalalalalalalalalalalalalalalalalalalafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafacacacacacacacacaa
+aaaMaMaMaMaMaMaMaMaMaMaMaNaNaNaNaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMacacacacacacacacaa
+aaaMaMaMaMaMaMaMaNaNaNaNaNaNaNaNaNaMaMaMaMaMaMaMaMaNaNaNaNaNaNaNaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMacacacacacacacacaa
+aaaMaMaMaMaMaMaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMaNaNaNaNaNaMaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaMaMaMaMaMaMaMaNaNaNaNaOaOaOaOaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaNaNaNaNaNaNaNaNaNaMaMaMaMaMaMacacacacacacacacaa
+aaaMaMaMaMaMaMaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMaMaNaNaNaNaOaOaNaNaNaNaNaOaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMacacacacacacacacaa
+aaaMaMaMaMaNaNaNaNaNaOaOaNaNaOaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaOaOaNaNaNaNaNaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaMaMaMaMaNaNaNaOaOaNaNaNaNaMaMaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMacacacacacacacacaa
+aaaMaMaMaNaNaNaNaNaNaOaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaNaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaNaMaNaNaNaNaOaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMacacacacacacacaa
+aaaMaMaMaNaNaNaNaOaOaNaNaNaNaNaOaNaOaOaNaNaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaMaMaMaNaNaNaNaNaNaOaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMacacacacacacacaa
+aaaMaMaMaNaNaOaOaOaNaNaNaNaNaNaOaNaNaOaOaNaNaNaNaNaNaNaNaOaOaNaNaNaNaOaNaNaNaMaMaMaNaNaNaNaNaNaOaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaMaMaMaMaNaNaNaNaNaOaOaOaOaOaOaOaOaOaOaOaNaNaNaNaNaNaNaNaNaNaNaMaMaMacacacacacacacaa
+aaaMaMaMaOaOaOaNaNaNaNaNaNaNaNaOaNaNaOaNaOaOaNaNaNaNaNaNaNaOaOaNaNaNaNaOaNaNaMaMaMaNaNaNaNaNaNaOaOaNaNaNaNaNaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaNaOaNaNaNaNaNaNaNaMaMaMaMaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaNaMaMaMacacacacacacaa
+aaaMaMaMaNaNaNaNaNaNaNaNaNaOaOaOaNaOaOaNaNaOaOaOaOaNaNaNaNaNaOaNaNaNaNaOaNaNaMaMaMaNaNaNaNaNaNaOaOaOaNaNaNaNaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaNaOaOaNaNaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaMaMaMaMacacacacacaa
+aaaMaMaNaNaNaNaNaNaNaNaNaNaOaNaNaNaOaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaOaNaNaMaMaMaNaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaNaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaMaMaMacacacacacaa
+aaaMaMaNaNaNaNaNaNaNaNaOaOaOaNaOaOaOaNaNaNaOaOaNaNaOaNaNaNaNaNaOaOaNaNaOaNaNaMaMaMaNaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaNaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaMaMaMaMacacacacaa
+aaaMaMaNaNaNaNaNaNaNaOaOaNaNaOaOaNaNaNaOaOaOaNaNaNaOaOaNaNaNaNaNaOaNaNaOaNaNaMaMaMaNaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaMaMaMaMacacacaa
+aaaMaMaNaNaNaNaNaOaOaNaNaNaOaOaNaNaNaOaOaNaNaNaNaNaNaOaOaNaNaNaNaOaNaNaOaNaNaMaMaMaNaNaNaNaNaNaNaOaNaNaNaNaNaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaNaOaOaNaNaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaMaMaMaMacacacaa
+aaaMaMaNaNaNaOaOaOaNaNaOaOaOaNaNaNaOaOaNaNaNaNaNaNaOaOaOaNaNaNaNaOaNaOaOaNaMaMaMaMaNaNaNaNaNaNaNaOaNaNaNaNaNaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaNaOaOaNaNaNaNaNaMaMaMaMaMaNaNaNaNaNaNaOaOaOaOaOaOaOaOaOaOaOaNaNaNaNaNaNaNaNaNaOaOaNaNaMaMaMaMacacacaa
+aaaMaMaNaNaOaOaNaNaNaNaOaNaNaNaNaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaNaOaNaOaNaNaMaMaMaMaNaNaNaNaNaNaNaOaNaNaNaNaNaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaNaOaOaOaNaNaNaNaMaMaMaMaMaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaOaOaNaNaMaMaMaMacacaa
+aaaMaMaNaNaNaNaNaNaNaOaNaNaNaNaOaOaNaNaNaNaNaOaOaNaNaNaNaNaNaNaOaOaNaOaNaNaMaMaMaMaNaNaNaNaNaNaNaOaNaNaNaNaNaOaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaOaOaOaNaNaNaNaMaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaOaOaNaMaMaMaMacacaa
+aaaMaMaMaNaNaNaNaNaOaOaNaNaOaOaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaOaOaNaNaOaNaNaNaMaMaMaNaNaNaNaNaNaNaOaNaNaNaNaOaOaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaOaOaOaNaNaNaNaMaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaOaNaNaMaMaMacacaa
+aaaMaMaMaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaOaOaNaNaNaNaNaNaNaOaOaOaNaNaNaOaNaNaNaMaMaMaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaOaOaNaNaNaNaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaOaNaNaMaMaMacacaa
+aaaMaMaMaMaNaNaNaNaNaOaOaOaNaNaNaNaNaOaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaOaNaNaNaMaMaMaNaNaNaNaNaNaOaNaNaNaNaOaOaOaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaOaNaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaOaNaNaMaMaMaMacaa
+aaaMaMaMaMaNaNaNaNaNaOaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaOaNaNaNaMaMaMaNaNaNaNaNaNaOaNaNaNaOaOaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaOaOaNaNaNaNaNaNaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaOaOaNaMaMaMaMacaa
+aaaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaOaOaNaNaOaNaNaNaNaOaOaNaNaMaMaMaNaNaNaNaNaOaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaOaOaOaNaNaNaNaNaMaMaMaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaMaMaMaMacaa
+aaaMaMaMaMaNaNaOaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaOaOaNaNaNaOaNaNaNaNaOaNaNaNaMaMaMaNaNaNaNaNaOaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaOaNaNaNaNaMaMaMaMaNaNaNaNaNaNaOaOaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaMaMaMaMacaa
+aaaMaMaMaMaNaNaNaOaNaNaNaNaNaOaOaNaNaNaNaNaNaOaOaOaNaNaNaOaOaNaNaNaNaOaNaNaNaMaMaMaNaNaNaNaNaOaNaNaOaOaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaOaNaNaNaNaNaMaMaMaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaMaMaMaMacaa
+aaaMaMaMaMaNaNaNaOaOaNaNaNaOaOaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaNaOaNaNaNaNaMaMaMaNaNaNaNaNaOaNaNaOaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaOaOaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaNaNaMaMaMaMacaa
+aaaMaMaMaMaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaNaNaOaNaNaNaNaMaMaMaNaNaNaNaOaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaOaNaNaNaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaMaMaMaMacaa
+aaaMaMaMaMaNaNaNaNaNaOaNaNaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaNaNaOaOaNaNaNaNaMaMaMaNaNaNaNaOaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaOaNaNaNaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaOaNaMaMaMaMacaa
+aaaMaMaMaMaNaNaNaNaNaOaNaNaNaNaNaNaNaOaOaNaNaNaNaOaOaNaNaNaNaNaNaOaNaNaNaNaNaNaMaMaNaNaNaNaOaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaOaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaNaOaNaMaMaMaMacaa
+aaaMaMaMaMaMaNaNaNaNaOaNaNaNaNaNaOaOaOaNaNaNaOaOaOaNaNaNaNaNaNaOaOaNaNaNaNaNaNaMaMaNaNaNaOaOaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaMaMaMaNaNaOaOaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaOaNaMaMaMaMacaa
+aaaMaMaMaMaMaNaNaNaNaOaOaNaNaNaNaOaNaNaNaOaOaOaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaMaMaNaNaOaOaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaMaMaMaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaOaNaNaMaMaMaMacaa
+aaaMaMaMaMaMaNaOaOaOaOaOaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaMaMaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaMaMaMaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMacaa
+aaaMaMaNaNaNaNaOaOaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaMaMaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMacaa
+aaaMaMaNaNaNaOaOaOaOaOaOaOaNaNaNaNaNaOaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaNaMaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMacacaa
+aaaMaMaNaNaOaOaOaOaOaOaNaOaNaNaNaNaNaOaNaNaNaNaNaNaOaOaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMacacaa
+aaaMaMaMaNaNaOaOaOaOaOaNaOaOaNaNaNaNaOaOaOaNaNaOaOaOaNaNaNaNaNaNaNaNaNaOaOaOaOaOaOaOaOaOaOaOaOaOaOaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaMaMaMaMaMaNaNaNaNaMaMaMaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMacacaa
+aaaMaMaMaNaNaNaNaNaNaNaNaNaOaOaOaOaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaMaMaMaMaMaMaMaMaPaNaPaNaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMacacaa
+aaaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMaMaMaMaMaNaNaNaNaNaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMacacaa
+aaaMaMaMaMaNaNaNaMaMaMaMaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMaMaMaNaNaNaMaMaMaNaNaNaNaNaNaNaNaNaNaOaOaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMaMaMaMaMaMaNaPaNaPaNaMaMaMaMaNaNaNaNaNaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMaMacaa
+aaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaNaNaNaNaNaNaNaOaOaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMaMaMaMaMaMaMaPaPaPaNaNaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaa
+aaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaMaMaMaMaMaMaMaMaMaMaPaPaPaNaNaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaa
+aaaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaRaRaRaRaSaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaa
+aaaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaQalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaRaUaUaUaSaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaa
+aaaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaQalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaRaUaUaUaSaSaSaSaSaSaSaSaSaVaSaSaSaSaSaSaSaSaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaa
+aaaTaTaTaTaTaTaTaTaTaTaTaTaTaWaTaTaTaTaTaTaTaTaTaTaTaXaTaTaTaTaTaTaXaTaTaTaTaTaQalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaRaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaSaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaa
+aaaTaTaTaTaTaTaTaTaTaTaYaWaWaWaZaTaTaTaTaTaTaTaTaTaTaWaWaTaTbababbbcbdbeaTaTaTaQalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaRaUaUaUaUaUaUaUaUaUaUaUaUaUaUaSaSaSbfbfbfaSaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaa
+aaaTaTaTaTaTaTaTaTaTaTaTaTaWbgbhaWaTaTaTaTaTaTaTaTaTaWaWaXbbbibjbkblbdbdaTaTaTaQalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaRaUaUaUaUaSaSaSaSaUaUaSaSaSaSaSaUaUaUaUaUaUaUaSaUaUaUaUaSaSaSaSaSaSaSaUaUaUaUaUaa
+aaaTaTaTaTaTaTaTaTaTaTaWaWaYaWaTaWaTaTaTaTaTaTaTaTaTaWaWbmbnbobnbnbpbnbdaTaTaTaQalalalalalalalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalalalalalaRaUaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaUaUaSaSaSaSaSaSaSaSaSaSaSbqaSaSaSaUaUaUaUaa
+aaaTaTbraTbraTaTaTaTaTaTaTaWaTaTaTaTaTaTaTaTaTaTaTaTaTaWbsbnbtbubvbnbnbwaTaTaTaQalalalalalalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalaRaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaUaUaUaa
+aaaTaTaTbraWaWaTaTaTaTaTaWaWaTaTaTaTaTaTbraWbraTaTaTaTaWaXbmbmaXaXbmaXaXaXaTaTaQalalalalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalaRaUaUaSaSbqaSbxaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaUaUaa
+aaaTaTbraTbraWaTaTaTaTaTaTaWaTaTaTaTaTaTaTaWaTaTaTaTaWaWaWaWaWaWaWaWaWaWaWaTaTaQalalalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalaRaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSbyaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaUaUaa
+aaaTaTaTaTaTaWaTaTaTaTaTaTaWaTaTaTaTaTaTaTaWaTaTaTaTaTaWaWaWaWaTaWaTaWaWbzaTaTaQalalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalaRaUaUaSaSaSaSaSbAbAbAbAbAbAbAbAbAaSaSaSaSaSaSbAbAbAbAbAbfbfbfbfbfbAbAaSaSaSaUaUaa
+aaaTaTaTaTaTaWaTaTaTaTaTaTaWaTaTaTaTaTbraTaWaTbraTaTaTaTaWaWaWaTaWaTaTaTaWaTaTaQalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalaRaUaUaSaSaSaSaSbAbBbCbDbEbBbCbBbAaSaSaSaSaSaSbAaSaSaSaSaSaSaSaSbyaSbAaSaSaSaUaUaa
+aaaTaTaTaTaTaWaTaTaTaTaTaTaWaTaTaTaTaTbrbrbrbrbraTaTaTaTaTaTaTaTaWaTaTaTaTaTaTaQalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalaRaUaUaSaSaSaSaSbAbFbBbBbBbBbBbFbAaSaSaSaSaSaSbfaSaSaSaSbqaSaSaSaSaSbfaSaSaSaUaUaa
+aaaTaTaTaTaTaWaTaTaTaTaTaTaWaTaTaTaTaTaTaWaTaTaTaTaTaTaTaTaTaTaTaWaTaTaTaTaTaTaQalalalalalaoaoaoaoaHaoaoaoaHaoaoaHaHaHaHaoaoaHaHaHaoaoaoaoaoaoaoaobGaoalalalalaRaUaSaSaSaSaSaSbAbBbCbBbBbBbEbBbAaSaSaSaSaSaSbfaSaSaSaSaSaSaSaSaSaSbAaSaSaUaUaUaa
+aaaTaTaTaTaTaWaWaTaTaTaTaTaWaWaTaTaTaTaTaWaTaTaTaTaTaTaTaTaTaTaWaWaTaTaTaTaTaTaQalalalalalaoaoaoaoaHaoaoaoaHaoaoaHaoaoaHaoaoaHaoaoaHaoaoaoaoaoaoaoaobGbHalalalaRaUaSaSaSaSaSaSbAbAbAbAbIbAbAbAbAaSaSaSaSaSaSbfbfbfbAbAbIbIbAbfbfbAbAaSaSaUaUaUaa
+aaaTaTaTaTaTaWaWaWaWbJbJbJaWaWaWaTaTaTaWaWaTaTaTaTaTaTaTaTaTaTaWaTaTaTaTaTaTaTaQalalalalalaoaoaoaoaHaoaoaoaHaoaoaHaHaHaHaoaoaHaHaHaoaoaoaoaoaoaoaobGbGbGbGbfaSbKaSaSaSaSbyaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaUaUaUaa
+aaaTaTaTaTaTaWbLbMbMbNbNbNbMbMbMbMbObPbQaWaWaTaTaTaTaTaTaTaTaTaWaTaTaTaTaWaTaTaQalalalalaoaoaoaoaoaHaoaHaoaHaoaoaHaoaoaHaoaoaHaoaHaHaoaoaoaoaobGaoaobGbGbRbfaSbSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSbAbAbAbAbAbAaSaUaUaUaa
+aaaTaTaTaTaWaWbMbMbMbNbNbNbMbMbMbMbObQbQaWaWaTaTaTaWaTaTaTaWaWaWaTaTaWaWaWaTaTaQalalalalaoaoaoaoaoaHaHaHaHaHaoaoaHaoaoaHaoaoaHaoaoaHaoaoaoaoaoaoaoaobGbGbGbfaSaRaSaSaSaSaSaSaSaSbxaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSbqaSaSaSbAbTbTbUbTbAaSaSaUaUaa
+aaaTaTaTaTaTaTbMbMbMbNbVbNbMbWbWbWbXbYbYaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWaWbZaTaQalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalaRaUaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSbAbAbAaSaSaSaSaSaSaSaSaSbAbTcacbbTbAaSaSaUaUaa
+aaaTaTaTaTaTbQccccccbNbNcdcdcdcecececfcfaWaWbQbQbQbQbQbQbQbQbQbQbQbQaWaWaWaWbraQaQaQaQaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaobGaoaoalalalalaRaUaUaSbfbfbIbIbAbAaSaSaSaSaSaSaSaSbAcgbAaSaSaSaSaSaSaSaSaSbAbTchbTbTbAaSaSaUaUaa
+aaaTaTaTaTaWbQcccccccccccdcdcdcicjcjcjcjbQbQbQbJbJbJbJbJbJbJbJbJbJaWaWbraWbrbrckbrbrclaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalaRaUaUaSbfbqaSaSaSbfaSaSaSaSaSaSaSaSbAcmbAaSaSaSaSaSaSaSaSaSbAcnbTbTcnbAaSaSaUaUaa
+aaaTaTaTaTaTbJbNbNbVcccccdcdcdcococococpbQbJbJbJbJbJbJbJbJbJbJbJbJbJaWaWbrbrbrcqbrbrcqaoaoaHaHaHaoaHaoaoaHaHaHaHaoaoaHaHaoaoaHaoaoaHaHaHaHaoaoaoaoaoalalalalalaRaUaUaSbAaSaSaSaSbfaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSbAbTbTbTbTbAaSaSaUaUaa
+aaaTaTaTaTaWbJbJbJbJbQbQcrcdbXbXbXbXbXbYbQbJbJbQbQbQbQbQbQbQbQbQbQaWbraWbrbrbraQbrbrclaoaoaoaoaoaHaoaoaoaHaoaoaHaoaoaHaoaHaoaHaoaoaHaoaoaoaoaoaoaoaoalalalalalaRaUaUaSbAbAbAbfbAbAaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSbxaSaSaSaSbAbAbTbTbAbAaSaSaUaUaa
+aaaTaTaTaTaWbJbJbJbJbQbQcccdbXcsbXctctcubYbJbJaWaWaTaTaWaWaWaTaTaTaTaWaWaWbrbraQaQaQaQaoaoaoaoaHaoaoaoaoaHaoaoaHaoaoaHaoaHaoaHaoaoaHaHaHaoaoaoaoaoaoalalalalalaRaUaUaSaSaSaSaSaSaSaSaSaSaSaSbqaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSbAcvcvbAaSaSaSaUaUaa
+aaaTaTaTaTaTbJbJbJbNcccccwcdbXbXbXctctcubYbJbJcxcyaTaTaTaWaTaTaTaTaTaTaWaTaTaTaQalalalaoaoaoaHaoaoaoaoaoaHaoaoaHaoaoaHaoaoaHaHaoaoaHaoaoaoaoaoaoaoaoalalalalalaRaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaUaUaa
+aaaTaTaTaTaTaTaTaWbMccccczcdbYbYbYcpbYbYbYbJbJaWcyaTaTaTaWaTaTaTaTaTaTaTaTaTaTaQalalalaoaoaHaoaHaHaHaoaoaHaHaHaHaoaoaHaoaoaoaHaoaoaHaHaHaHaoaoaoaoaoalalalalalaRaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaUaUaa
+aaaTaTaTaTaTaTaWaWbMcccccAbJbJbJbJbJbJbJbJbJcBcBcBaTaTaTaWaTaTaTaTaTaTaTaTaTaTaQalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalaRaUaUaSbAbAbIbIbAbAaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaUaUaa
+aaaTaTaTaTcyaWaWaWcCcCcCcDbJbJbJcDcDcDcDbJbJaTaTaTaTaTaTaWaTaTaTaTaTaTaTaTaTaTaQalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalaRaUaUaSbAcEcFcGcHbAaSaSaSaSaSaSaSbAbAbIbIbAbAbAbAbAbAbAbAbAbAbAbAbAbAbAaSaSaUaUaa
+aaaTaTaTaTcyaWaWcyaXaXaXaXaXcIaXaXaXaXaXaWaTaTaTaTaTaTaTaWaTaTaTaTaTaTaTaTaTaTaQalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalaRaUaUaSbAcFcJcFcFbAaSaSaSbxaSaSaSbAcKcKcKcKcKcKcKcKcKcKcLcKcLcKcKcMcKbAaSaSaUaUaa
+aaaTaTaTaTaTaWaTcyaXbnbncNcNbnbncOcPcQaXaTaTaTaTaTaTaTaTaWaTaTaTaTaTaTaTaTaTaTaQalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalalaRaUaUaSbAbAbAbAbAbAaSaSaSaSaSaSaSbAcKcKcKcRcKcScKcKcKcKcTcKcKcRcUcTcKbAaSaSaUaUaa
+aaaTaTaTaTaTaWaTaTaXaXbnbnbnbnbncVbncQaXaTaTaTaTaTaTaTaTbraTbrbrbraTaTaTaTaTaTaQalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalalalaRaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSaSbAcKcKcKcKcWcXcYcKcZcKcKcKcKcTcKcXcKbAaSaSaUaUaa
+aaaTaTaTaTaTaWaTaTaTaXaXaXcIaXaXaXaXaXaXaTaTaTaTaTaTaTaTbraTbraTaTaTaTaTaTaTaTaQalalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalalalalaRaUaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSbAcKcKcMcKcKdacKcKcKcKcKcKcKcScKcKcKbAaSaSaUaUaa
+aaaTaTbraTaTaWaTaTaTaTaTaXdbdbdbdcaXaTaTaTaTaTaTaTaTaTaTbrbrbrbrbraTaTaTaTaTaTaQalalalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalalalalalalaRaUaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSbAcKcKcKcKcKcYcKcYcKcRcKddcKcKddcKcKbAaSaSaUaUaa
+aaaTbrbrbraWaWaTaTaTaTaTaXdedededeaXaTaTaTaTaTaTaTaTaTaTaTaTbraTbraTaTaTaTaTaTaQalalalalalalalalalalalalalalaoaoaoaoaoaoaoaoaoaoaoaoaoalalalalalalalalalalalalaRaUaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSbAbAbAbAbAbAbAbAbAbAbAbAbAbAbAbAbAbAbAaSaSaUaUaa
+aaaTaTbraTaTaTaTaTaTaTaTaXdedededeaXaTaTaTaTaTaTaTaTaTaTbrbrbraTbraTaTaTaTaTaTaQalalalalalalalalalalalalalalalalalaoaoaoaoaoaoaoaoalalalalalalalalalalalalalalaRaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaUaUaUaa
+aaaTaTaTaTaTaTaTaTaTaTaTaXdedededeaXaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaQalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaRaUaUaSaSaSaUaUaSaSaUaUaUaUaUaSaUaUaSaSaSaSaSaSaSaSaSaSaSaSaSbqaSaSaSaSaUaUaUaUaa
+aaaTaTaTaTaTaTaTaTaTaTaTaXdedededfaXaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaQalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaRaUaUaUaUaUaUaUaUaSaSbxaSaUaUaUaUaUaUaUaUaUaUaSaSaSaSaUaUaUaUaUaUaUaUaUaUaUaUaUaa
+aaaTaTaTaTaTaTaTaTaTaTaTaXaXaXaXaXaXaTaTaTaTaTaTaTaTaTaTaTdgaTaTaTaTaTaTaTaTaTaQalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaRaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaa
+aaaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaTaQalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaRaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaUaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
 
