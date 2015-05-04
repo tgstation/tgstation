@@ -271,7 +271,7 @@
 
 /obj/item/weapon/slimestabilizer/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
 	if(!isslime(M))
-		user << "<span class='warning'> The stabilizer only works on baby slimes!</span>"
+		user << "<span class='warning'> The stabilizer only works on slimes!</span>"
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'> The slime is dead!</span>"
@@ -281,9 +281,7 @@
 		return..()
 
 	user <<"<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>"
-	M.mutation_chance -= 15
-	if(M.mutation_chance < 0)
-		M.mutation_chance = 0
+	M.mutation_chance = Clamp(M.mutation_chance-15,0,100)
 	qdel(src)
 
 /obj/item/weapon/slimemutator
@@ -294,7 +292,7 @@
 
 /obj/item/weapon/slimemutator/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
 	if(!isslime(M))
-		user << "<span class='warning'> The mutator only works on baby slimes!</span>"
+		user << "<span class='warning'> The mutator only works on slimes!</span>"
 		return ..()
 	if(M.stat)
 		user << "<span class='warning'> The slime is dead!</span>"
@@ -307,9 +305,7 @@
 		return..()
 
 	user <<"<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>"
-	M.mutation_chance += 5
-	if(M.mutation_chance < 0)
-		M.mutation_chance = 0
+	M.mutation_chance = Clamp(M.mutation_chance+12,0,100)
 	M.mutator_used = 1
 	qdel(src)
 
