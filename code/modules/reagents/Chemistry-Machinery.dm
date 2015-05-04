@@ -146,7 +146,7 @@
 	return 1 // update UIs attached to this object
 
 /obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob, params)
-	if(isrobot(user))
+	if(isrobot(user) && !ismommi(user))
 		return
 
 	if(!istype(B, /obj/item/weapon/reagent_containers/glass))

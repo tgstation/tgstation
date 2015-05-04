@@ -27,6 +27,7 @@
 		tool_state = O
 		O.layer = 20
 		contents += O
+		select_module(INV_SLOT_TOOL)
 		update_items()
 	else
 		src << "<span class='notice'>You need to store a module first!</span>"
@@ -104,8 +105,9 @@
 		return 0
 	if(get_active_hand())
 		uneq_active()
-	update_items()
-	W.layer = 20
+	if(is_in_modules(W))
+		src << "\red Picking up something that's built-in to you seems a bit silly."
+		return 0
 	return put_in_hands(W)
 /*
 /mob/living/silicon/robot/mommi/get_multitool(var/active_only=0)

@@ -60,7 +60,7 @@
 	*/
 	if(jobban_isbanned(user, "MoMMI"))
 		user << "\red \The [src] lets out an annoyed buzz."
-		return TRUE
+		return 1
 
 	if(metal < metalPerMoMMI)
 		user << "\red \The [src] doesn't have enough metal to complete this task."
@@ -125,12 +125,11 @@
 
 	M.invisibility = 0
 	//M.custom_name = created_name
-	M.choose_icon()
-	M.rename_self("MoMMI", 1)
 
 
 	if(user.mind)		//TODO
 		user.mind.transfer_to(M)
+		M.key = user.key
 		if(M.mind.assigned_role == "MoMMI")
 			M.mind = M
 		else if(user.mind.special_role)
@@ -152,14 +151,13 @@
 	M.mmi = new /obj/item/device/mmi(M)
 	M.mmi.transfer_identity(user)//Does not transfer key/client.
 
-	M.rename_self("MoMMI", 1)
-	M.choose_icon()
 
 	del(user)
 
 	metal=0
 	building=0
 	update_icon()
+	M.updateicon()
 	M.cell.maxcharge = 15000
 	M.cell.charge = 15000
 

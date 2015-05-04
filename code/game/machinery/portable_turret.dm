@@ -867,6 +867,9 @@ Status: []<BR>"},
 
 
 /obj/machinery/porta_turret_cover/attack_hand(mob/user)
+	if(ismommi(user))
+		src.attack_ai(user)
+		return
 	. = ..()
 	if(.)
 		return

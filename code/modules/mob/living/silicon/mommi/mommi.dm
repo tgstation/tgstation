@@ -18,6 +18,11 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	ventcrawler = 2
 	var/obj/screen/inv_tool = null
 	var/obj/screen/hat_slot = null
+//	datum/wires/robot/mommi/wires
+
+	staticOverlays = list()
+	var/staticChoice = "static"
+	var/list/staticChoices = list("static", "blank", "letter")
 	//var/obj/screen/inv_sight = null
 
 	var/killswitch = 0 //Used to stop derelict mommis from escape their z-level
@@ -91,14 +96,16 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	mmi.brainmob.real_name = src.real_name
 	mmi.brainmob.container = mmi
 	mmi.contents += mmi.brainmob
-	if(picked == 0)
-		verbs += /mob/living/silicon/robot/mommi/proc/choose_icon
+
+//	wires = new /datum/wires/robot/mommi
 
 	// Sanity check
 	if(connected_ai && keeper)
 		world << "\red ASSERT FAILURE: connected_ai && keeper in mommi.dm"
 	updatename()
 	updateicon()
+	if(!picked)
+		verbs += /mob/living/silicon/robot/mommi/proc/choose_icon
 	..()
 
 
@@ -236,12 +243,13 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			user << "You insert the power cell."
 //			chargecount = 0
 		updateicon()
-
-	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
+/*
+	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
 		if (wiresexposed)
-			wires.Interact()
+			wires.Interact(user)
 		else
 			user << "You can't reach the wiring."
+*/
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
@@ -356,6 +364,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				src << "<span class='warning'>ERRORERRORERROR</span>"
 				src << "<b>Obey these laws:</b>"
 				laws.show_laws(src)
+				updateSeeStaticMobs()
 				src << "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</b></span>"
 			else
 				user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
@@ -600,6 +609,20 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if ("Disable")
 			src << "Sensor augmentations disabled."
 
-/mob/living/silicon/robot/mommi/verb/change_sprite()
-	set name = "Change Icon"
+
+
+/mob/living/silicon/robot/mommi/verb/toggle_statics()
+	set name = "Change Vision Filter"
+	set desc = "Change the filter on the system used to remove non MoMMI beings from your viewscreen."
+	set category = "Robot Commands"
+
+	if(!keeper)
+		src << "<span class='notice'>You have no vision filter to change!</span>"
+		return
+
+	var/selectedStatic = input("Select a vision filter", "Vision Filter") as null|anything in staticChoices
+	if(selectedStatic in staticChoices)
+		staticChoice = selectedStatic
+
+	updateSeeStaticMobs()
 

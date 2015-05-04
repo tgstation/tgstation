@@ -95,13 +95,17 @@
 
 /atom/proc/attack_mommi(mob/user as mob)
 	var/mob/living/silicon/robot/mommi/M = user
-	if(M.is_in_modules(src))
-		M.activate_module(src)
-		M.select_module(INV_SLOT_TOOL)
-		M.hud_used.update_mommi_modules_display()
-		M.update_items()
-	else if (src.Adjacent(user))
-		attack_hand(user)
+
+	if (src.Adjacent(user))
+		if(M.is_in_modules(src) && src.loc.loc == M) //one hell of a hack
+			M.activate_module(src)
+//			M.select_module(INV_SLOT_TOOL)
+			M.hud_used.update_mommi_modules_display()
+//			M.update_items()
+			return
+		else
+			attack_hand(user)
+			return
 	else
 		attack_robot(user)
-	return
+		return

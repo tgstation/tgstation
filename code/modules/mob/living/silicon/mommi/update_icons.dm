@@ -86,3 +86,25 @@
 	// Update the MoMMI's icons
 	if(update_icons)
 		updateicon()
+
+
+/mob/living/silicon/robot/mommi/proc/updateSeeStaticMobs()
+	if(!client)
+		return
+
+	for(var/i in staticOverlays)
+		client.images.Remove(i)
+		staticOverlays.Remove(i)
+	staticOverlays.len = 0
+
+	if(keeper)
+		for(var/mob/living/L in mob_list)
+			if(ismommi(L))
+				continue
+			var/image/chosen
+			if(staticChoice in L.staticOverlays)
+				chosen = L.staticOverlays[staticChoice]
+			else
+				chosen = L.staticOverlays["static"]
+			staticOverlays |= chosen
+			client.images |= chosen

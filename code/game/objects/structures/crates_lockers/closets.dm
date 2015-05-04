@@ -181,7 +181,7 @@
 					qdel(src)
 			return
 
-		if(isrobot(user))
+		if(isrobot(user) && !ismommi(user))
 			return
 
 		if(user.drop_item())

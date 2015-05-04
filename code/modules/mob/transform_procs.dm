@@ -362,6 +362,7 @@
 
 	O.loc = loc
 	O.job = "MoMMI"
+	O.updateicon()
 	. = O
 	qdel(src)
 

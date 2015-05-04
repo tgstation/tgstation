@@ -1,4 +1,5 @@
 /mob/living/silicon/robot/mommi/Login()
+	updateSeeStaticMobs()
 
 	..()
 	/* Inherited

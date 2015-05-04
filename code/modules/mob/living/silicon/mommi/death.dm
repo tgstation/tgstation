@@ -1,4 +1,11 @@
 /mob/living/silicon/robot/mommi/gib(var/animation = 1)
+	if(src.module && istype(src.module))
+		var/obj/item/found = locate(tool_state) in src.module.modules
+		if(!found && tool_state != src.module.emag)
+			var/obj/item/TS = tool_state
+			drop_item()
+			if(TS && TS.loc)
+				TS.loc = src.loc
 	..()
 
 

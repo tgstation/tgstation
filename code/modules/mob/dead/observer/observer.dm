@@ -331,7 +331,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.key = key
 	return 1
 
-/*
+
 /mob/dead/observer/verb/become_mommi()
 	set name = "Become MoMMI"
 	set category = "Ghost"
@@ -358,7 +358,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		spawner.attack_ghost(src)
 	else
 		src << "<span class='warning'>Unable to find any powered MoMMI Spawners on this z-level.</span>"
-*/
+
 
 
 //this is a mob verb instead of atom for performance reasons
