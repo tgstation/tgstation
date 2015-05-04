@@ -13,12 +13,12 @@
 	msg += {"<p>It's like a crab, but it has a utility tool on one arm and a crude metal claw on the other.  That, and you doubt it'd survive in an ocean for very long.</p><span class='warning'>"}
 	// END AUTOFIX
 	if (src.getBruteLoss())
-		if (src.getBruteLoss() < 75)
+		if (src.getBruteLoss() < 20)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
 	if (src.getFireLoss())
-		if (src.getFireLoss() < 75)
+		if (src.getFireLoss() < 20)
 			msg += "It looks slightly charred.\n"
 		else
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"

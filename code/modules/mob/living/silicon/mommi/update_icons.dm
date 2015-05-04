@@ -34,7 +34,7 @@
 
 	// Add the MoMMI eyes
 	// Put our eyes just on top of the lighting, so it looks emissive in maint tunnels.
-	var/overlay_layer = 18+1
+	var/overlay_layer = 10+1
 	if(layer != MOB_LAYER)
 		overlay_layer=TURF_LAYER+0.2
 	overlays += image(icon,"eyes-[subtype][emagged?"-emagged":""]",overlay_layer)

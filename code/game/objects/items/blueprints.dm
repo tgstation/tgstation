@@ -272,7 +272,6 @@
 	desc = "Blueprints of the station, designed for the passive aggressive spider bots aboard."
 	attack_verb = list("attacked", "bapped", "hit")
 
-
 /obj/item/areaeditor/mommiprints/attack_self(mob/user as mob)
 	. = ..()
 	var/area/A = get_area()

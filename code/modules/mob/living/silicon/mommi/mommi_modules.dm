@@ -19,8 +19,7 @@
 //	src.modules += new /obj/item/weapon/extinguisher/foam(src)
 	src.modules += new /obj/item/weapon/pipe_dispenser(src)
 //	src.modules += new /obj/item/weapon/tile_painter(src)
-//	src.modules += new /obj/item/blueprints/mommiprints(src) SOON
-	src.modules += new /obj/item/areaeditor/mommiprints
+
 	src.modules += new /obj/item/device/material_synth/cyborg(src)
 
 /*
@@ -43,8 +42,14 @@
 	W.source = wirestore
 	modules += W
 	storages += wirestore
+
+	var/obj/item/areaeditor/mommiprints/B = new /obj/item/areaeditor/mommiprints
+	B.loc = src //je suis spaghetti
+	modules += B	//why is the loc even set to null in the first place
 	fix_modules()
 	return
+
+
 
 /obj/item/weapon/robot_module/mommi/respawn_consumable(var/mob/living/silicon/robot/R)
 /*	var/list/what = list (
