@@ -14,11 +14,10 @@
 
 	var/on = 0
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
-	var/scrub_CO2 = 1
-	var/scrub_Toxins = 1
-	var/scrub_N2O = 0
-	var/scrub_O2 = 0
-	var/scrub_N2 = 0
+
+	var/list/scrubbing_gases = list(CARBON_DIOXIDE, //list of gas ids we scrub
+									PLASMA,
+									NITROUS_OXIDE)
 
 	var/volume_rate = 1000 // 120
 	var/panic = 0 //is this scrubber panicked?
@@ -46,7 +45,7 @@
 		icon_state = "[hidden]weld"
 		return
 	var/suffix=""
-	if(scrub_O2)
+	if(OXYGEN in scrubbing_gases)
 		suffix="1"
 	if(node && on && !(stat & (NOPOWER|BROKEN)))
 		if(scrubbing)
@@ -82,11 +81,11 @@
 		"power" = on,
 		"scrubbing" = scrubbing,
 		"panic" = panic,
-		"filter_co2" = scrub_CO2,
-		"filter_tox" = scrub_Toxins,
-		"filter_n2o" = scrub_N2O,
-		"filter_o2" = scrub_O2,
-		"filter_n2" = scrub_N2,
+		"filter_co2" = (CARBON_DIOXIDE in scrubbing_gases),
+		"filter_tox" = (PLASMA in scrubbing_gases),
+		"filter_n2o" = (NITROUS_OXIDE in scrubbing_gases),
+		"filter_o2" = (OXYGEN in scrubbing_gases),
+		"filter_n2" = (NITROGEN in scrubbing_gases),
 		"sigtype" = "status"
 	)
 	if(!areaMaster.air_scrub_names[id_tag])
@@ -124,13 +123,7 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(scrubbing)
-		// Are we scrubbing gasses that are present?
-		if(\
-			(scrub_Toxins && environment.toxins > 0) ||\
-			(scrub_CO2 && environment.carbon_dioxide > 0) ||\
-			(scrub_N2O && environment.trace_gases.len > 0) ||\
-			(scrub_O2 && environment.oxygen > 0) ||\
-			(scrub_N2 && environment.nitrogen > 0))
+		if(scrubbing_gases.len)
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 			//Take a gas sample
@@ -138,35 +131,21 @@
 			if (isnull(removed)) //in space
 				return
 
-			//Filter it
 			var/datum/gas_mixture/filtered_out = new
+
+			for(var/gasid in removed.gases)
+				if(!(gasid in scrubbing_gases))
+					continue
+
+				filtered_out.adjust_gas(gasid, removed.get_moles_by_id(gasid), 0) //move to filtered
+				removed.set_gas(gasid, 0, 0) //set to 0
+
+			//Filter it
+
 			filtered_out.temperature = removed.temperature
 
-			if(scrub_Toxins)
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
-
-			if(scrub_CO2)
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
-
-			if(scrub_O2)
-				filtered_out.oxygen = removed.oxygen
-				removed.oxygen = 0
-
-			if(scrub_N2)
-				filtered_out.nitrogen = removed.nitrogen
-				removed.nitrogen = 0
-
-			if(removed.trace_gases.len>0)
-				for(var/datum/gas/trace_gas in removed.trace_gases)
-					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-						removed.trace_gases -= trace_gas
-						filtered_out.trace_gases += trace_gas
-					else if(istype(trace_gas, /datum/gas/sleeping_agent) && scrub_N2O)
-						removed.trace_gases -= trace_gas
-						filtered_out.trace_gases += trace_gas
-
+			filtered_out.update_values()
+			removed.update_values()
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
@@ -239,29 +218,29 @@
 		scrubbing = !scrubbing
 
 	if(signal.data["co2_scrub"] != null)
-		scrub_CO2 = text2num(signal.data["co2_scrub"])
+		toggle_gas_scrub(CARBON_DIOXIDE, text2num(signal.data["co2_scrub"]))
 	if(signal.data["toggle_co2_scrub"])
-		scrub_CO2 = !scrub_CO2
+		toggle_gas_scrub(CARBON_DIOXIDE)
 
 	if(signal.data["tox_scrub"] != null)
-		scrub_Toxins = text2num(signal.data["tox_scrub"])
+		toggle_gas_scrub(PLASMA, text2num(signal.data["tox_scrub"]))
 	if(signal.data["toggle_tox_scrub"])
-		scrub_Toxins = !scrub_Toxins
+		toggle_gas_scrub(PLASMA)
 
 	if(signal.data["n2o_scrub"] != null)
-		scrub_N2O = text2num(signal.data["n2o_scrub"])
+		toggle_gas_scrub(NITROUS_OXIDE, text2num(signal.data["n2o_scrub"]))
 	if(signal.data["toggle_n2o_scrub"])
-		scrub_N2O = !scrub_N2O
+		toggle_gas_scrub(NITROUS_OXIDE)
 
 	if(signal.data["o2_scrub"] != null)
-		scrub_O2 = text2num(signal.data["o2_scrub"])
+		toggle_gas_scrub(OXYGEN, text2num(signal.data["o2_scrub"]))
 	if(signal.data["toggle_o2_scrub"])
-		scrub_O2 = !scrub_O2
+		toggle_gas_scrub(OXYGEN)
 
 	if(signal.data["n2_scrub"] != null)
-		scrub_N2 = text2num(signal.data["n2_scrub"])
+		toggle_gas_scrub(NITROGEN, text2num(signal.data["n2_scrub"]))
 	if(signal.data["toggle_n2_scrub"])
-		scrub_N2 = !scrub_N2
+		toggle_gas_scrub(NITROGEN)
 
 	if(signal.data["init"] != null)
 		name = signal.data["init"]
@@ -277,6 +256,20 @@
 		broadcast_status()
 	update_icon()
 	return
+
+//forcestate 1 turns scrubbing on, forcestate -1 turns scrubbing off. Otherwise, it toggles
+/obj/machinery/atmospherics/unary/vent_scrubber/proc/toggle_gas_scrub(gasid, forcestate)
+	if(!forcestate)
+		if(gasid in scrubbing_gases)
+			scrubbing_gases -= gasid
+		else
+			scrubbing_gases += gasid
+	else
+		switch(forcestate)
+			if(1)
+				scrubbing_gases |= gasid //adds it if it's not added already
+			if(-1)
+				scrubbing_gases -= gasid //since this only works if it's in, we remove it
 
 /obj/machinery/atmospherics/unary/vent_scrubber/power_change()
 	if(powered(power_channel))

@@ -285,8 +285,8 @@
 						else
 							var/list/nicename = null
 							var/list/tankcheck = null
-							var/breathes = "oxygen"    //default, we'll check later
-							var/list/contents = list()
+							var/breathes = OXYGEN    //default, we'll check later
+							var/list/tank_contents = list()
 
 							if(ishuman(C))
 								var/mob/living/carbon/human/H = C
@@ -305,50 +305,31 @@
 									if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes))
 										contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
 										continue					//in it, so we're going to believe the tank is what it says it is
-									switch(breathes)
-																		//These tanks we're sure of their contents
-										if("nitrogen") 							//So we're a bit more picky about them.
 
-											if(t.air_contents.nitrogen && !t.air_contents.oxygen)
-												contents.Add(t.air_contents.nitrogen)
-											else
-												contents.Add(0)
-
-										if ("oxygen")
-											if(t.air_contents.oxygen && !t.air_contents.toxins)
-												contents.Add(t.air_contents.oxygen)
-											else
-												contents.Add(0)
-
-										// No races breath this, but never know about downstream servers.
-										if ("carbon dioxide")
-											if(t.air_contents.carbon_dioxide && !t.air_contents.toxins)
-												contents.Add(t.air_contents.carbon_dioxide)
-											else
-												contents.Add(0)
-
-										// ACK ACK ACK Plasmen
-										if ("plasma")
-											if(t.air_contents.toxins)
-												contents.Add(t.air_contents.toxins)
-											else
-												contents.Add(0)
-
+									if(t.air_contents.get_moles_by_id(breathes))
+										var/toxic_found
+										for(var/toxicid in C.toxic_to_breathe)
+											if(t.air_contents.get_moles_by_id(toxicid))
+												tank_contents.Add(0)
+												toxic_found = 1
+												break
+										if(!toxic_found)
+											tank_contents.Add(t.air_contents.get_moles_by_id(breathes))
 
 								else
 									//no tank so we set contents to 0
-									contents.Add(0)
+									tank_contents.Add(0)
 
 							//Alright now we know the contents of the tanks so we have to pick the best one.
 
 							var/best = 0
 							var/bestcontents = 0
-							for(var/i=1, i <  contents.len + 1 , ++i)
-								if(!contents[i])
+							for(var/i=1, i <  tank_contents.len + 1 , ++i)
+								if(!tank_contents[i])
 									continue
-								if(contents[i] > bestcontents)
+								if(tank_contents[i] > bestcontents)
 									best = i
-									bestcontents = contents[i]
+									bestcontents = tank_contents[i]
 
 
 							//We've determined the best container now we set it as our internals
@@ -362,7 +343,7 @@
 								if(C.internals)
 									C.internals.icon_state = "internal1"
 							else
-								C << "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>"
+								C << "<span class='notice'>You don't have a[breathes==OXYGEN ? "n oxygen" : addtext(" ",breathes)] tank.</span>"
 		if("act_intent")
 			usr.a_intent_change("right")
 		if("help")

@@ -165,7 +165,7 @@
 
 		var/toxinsToDeduce = temperature/10
 
-		napalm.toxins = toxinsToDeduce
+		napalm.adjust_gas(PLASMA, toxinsToDeduce)
 		napalm.temperature = 200+T0C
 
 		target_tile.assume_air(napalm)
