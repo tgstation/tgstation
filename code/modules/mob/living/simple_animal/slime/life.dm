@@ -147,7 +147,7 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/simple_animal/slime/handle_chemicals_in_body()
+/*/mob/living/simple_animal/slime/handle_chemicals_in_body()
 
 	if(reagents)
 		reagents.metabolize(src)
@@ -159,7 +159,7 @@
 		mutation_chance = max(mutation_chance - 5,0) //Prevents muation chance going <0%
 		reagents.remove_reagent("epinephrine", 5)
 	updatehealth()
-
+*/
 /mob/living/simple_animal/slime/handle_regular_status_updates()
 
 	if(..())

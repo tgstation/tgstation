@@ -40,7 +40,7 @@
 	status_flags = CANPARALYSE|CANPUSH
 
 	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
-	var/mutation_chance = 30 // Chance of mutating, should be between 25 and 35
+	var/mutation_chance = 27 // Chance of mutating, should be between 25 and 35
 
 	var/powerlevel = 0 // 1-10 controls how much electricity they are generating
 	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows or reproduces
@@ -61,6 +61,7 @@
 	var/list/speech_buffer = list() // Last phrase said near it and person who said it
 
 	var/mood = "" // To show its face
+	var/mutator_used = 0 //So you can't shove a dozen mutators into a single slime
 
 	///////////TIME FOR SUBSPECIES
 
@@ -80,7 +81,6 @@
 		icon_dead = "[icon_state] dead"
 		real_name = name
 		slime_mutation = mutation_table(colour)
-		mutation_chance = rand(25, 35)
 		var/sanitizedcolour = replacetext(colour, " ", "")
 		coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	..()
