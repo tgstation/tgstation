@@ -1,7 +1,7 @@
 "aa" = (/turf/unsimulated/wall,/area/space)
 "ab" = (/turf/unsimulated/wall,/area/awaymission)
 "ac" = (/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/wall,/area/awaymission)
-"ad" = (/obj/machinery/power/apc{step_y = 0},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/unsimulated/wall,/area/awaymission)
+"ad" = (/obj/machinery/power/apc{pixel_y = 0},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/unsimulated/wall,/area/awaymission)
 "ae" = (/turf/space,/area/space)
 "af" = (/obj/machinery/power/terminal,/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating,/area/awaymission)
 "ag" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/awaymission)
