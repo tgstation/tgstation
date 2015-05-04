@@ -165,9 +165,11 @@ Pipelines + Other Objects -> Pipe network
 		stored.color = obj_color
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
+	atmosinit()
 	initialize()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
+		A.atmosinit()
 		A.initialize()
 		A.addMember(src)
 	build_network()

@@ -81,8 +81,10 @@ Housekeeping and pipe network stuff below
 			node.disconnect(src)
 		node = null
 		nullifyPipenet(parent)
+		atmosinit()
 		initialize()
 		if(node)
+			node.atmosinit()
 			node.initialize()
 			node.addMember(src)
 		build_network()
