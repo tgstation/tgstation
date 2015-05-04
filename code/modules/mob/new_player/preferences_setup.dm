@@ -18,6 +18,7 @@
 	backbag = 2
 	age = rand(AGE_MIN,AGE_MAX)
 
+//what the fug
 /datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
 	del(preview_icon_front)
 	del(preview_icon_side)
@@ -30,6 +31,9 @@
 
 			if(CYBORG)
 				preview_icon = new /icon('icons/mob/robots.dmi', "robot")
+
+			if(MOMMI)
+				preview_icon = new /icon('icons/mob/robots.dmi', "keeper")
 
 		if(preview_icon) //We're busting out!
 			preview_icon_front = new(preview_icon, dir = SOUTH)
