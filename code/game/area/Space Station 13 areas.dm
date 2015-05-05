@@ -1105,6 +1105,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Derelict Computer Core"
 	icon_state = "ai"
 
+/area/derelict/research
+	name = "Derelict R&D"
+	icon_state = "toxlab"
+
 /area/derelict/solar_control
 	name = "\improper Derelict Solar Control"
 	icon_state = "engine"
