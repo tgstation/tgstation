@@ -301,7 +301,8 @@ var/global/list/nlist = list( \
 			PIPE_VOLUME_PUMP ,\
 			PIPE_PASSIVE_GATE ,\
 			PIPE_MVALVE, \
-			PIPE_DVALVE \
+			PIPE_DVALVE, \
+			PIPE_DP_VENT \
 		)
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
