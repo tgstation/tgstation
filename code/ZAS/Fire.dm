@@ -250,11 +250,19 @@ turf/simulated/apply_fire_protection()
 	fire_protection = world.time
 
 /datum/gas_mixture/proc/get_gas_fuel()
-	update_values()
+	var/total_fuel = 0
+	for(var/gasid in gases)
+		var/datum/gas/gas = get_gas_by_id(gasid)
+		if(gas.isFuel())
+			total_fuel += get_moles_by_id(gasid)
 	return total_fuel
 
 /datum/gas_mixture/proc/get_gas_oxidiser()
-	update_values()
+	var/total_oxidiser = 0
+	for(var/gasid in gases)
+		var/datum/gas/gas = get_gas_by_id(gasid)
+		if(gas.isOxidiser())
+			total_oxidiser += get_moles_by_id(gasid)
 	return total_oxidiser
 
 datum/gas_mixture/proc/zburn(var/turf/T, force_burn)

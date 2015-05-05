@@ -44,8 +44,6 @@ What are the archived variables for?
 				//=1 for singletons
 
 	var/total_moles = 0
-	var/total_oxidiser = 0
-	var/total_fuel
 
 	var/graphics=0
 
@@ -230,18 +228,11 @@ What are the archived variables for?
 	//Outputs: None
 
 	total_moles = 0
-	total_oxidiser = 0 //used in get_gas_fuel and get_gas_oxidiser
-	total_fuel = 0
 
 	for(var/gasid in gases)
 		var/gas_moles = get_moles_by_id(gasid)
-		var/datum/gas/current_gas = get_gas_by_id(gasid)
 		if(!rounding_error || round(gas_moles, rounding_error) > 0) //the fraction isn't small enough to be discarded
 			total_moles += gas_moles
-			if(current_gas.isFuel())
-				total_fuel += gas_moles
-			if(current_gas.isOxidiser())
-				total_oxidiser += gas_moles
 		else
 			set_gas(gasid, 0, 0) //get rid of the remainder
 
