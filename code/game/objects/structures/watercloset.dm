@@ -307,7 +307,7 @@
 		var/turf/tile = loc
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
-			if(istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable))
+			if(is_cleanable(E))
 				qdel(E)
 
 
