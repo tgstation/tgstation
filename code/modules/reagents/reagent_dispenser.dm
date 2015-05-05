@@ -89,9 +89,62 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 10
+	var/modded = 0
+	var/obj/item/device/assembly_holder/rig = null
 	New()
 		..()
 		reagents.add_reagent("fuel",1000)
+
+
+/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
+	if(modded)
+		user << "<cpan class ='danger> The fuel faucet is wrenched open, leaking the fuel! </span>"
+	if(rig)
+		user << "<span class='notice'>There is some kind of device rigged to the tank. </span>"
+	..(user)
+
+
+
+/obj/structure/reagent_dispensers/fueltank/attack_hand()
+	if (rig)
+		usr.visible_message("[usr] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
+		if(do_after(usr, 20))
+			usr.visible_message("\blue [usr] detaches [rig] from \the [src].", "\blue  You detach [rig] from \the [src]")
+			rig.loc = get_turf(usr)
+			rig = null
+			overlays = new/list()
+
+
+
+
+/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W,/obj/item/weapon/wrench))
+		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
+		"You wrench [src]'s faucet [modded ? "closed" : "open"]")
+		modded = modded ? 0 : 1
+	if (istype(W,/obj/item/device/assembly_holder))
+		if (rig)
+			user << "\red There is another device in the way."
+			return ..()
+		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
+		if(do_after(user, 20))
+			user.visible_message("\blue [user] rigs [W] to \the [src].", "\blue  You rig [W] to \the [src]")
+
+			var/obj/item/device/assembly_holder/H = W
+			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
+				message_admins("[key_name_admin(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion.")
+				log_game("[key_name(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion.")
+
+			rig = W
+			user.drop_item()
+			W.loc = src
+
+			var/icon/test = getFlatIcon(W)
+			test.Shift(NORTH,1)
+			test.Shift(EAST,6)
+			overlays += test
+
+	return ..()
 
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
