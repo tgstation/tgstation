@@ -614,6 +614,29 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Pizza crate"
 	group = "Hospitality"
 
+/datum/supply_packs/cafe
+	name = "Cafe equipment"
+	contains = list(/obj/item/weapon/circuitboard/chem_dispenser/brewer,
+	/obj/item/weapon/storage/box/mugs,
+	/obj/item/weapon/storage/box/mugs,
+	/obj/item/weapon/reagent_containers/glass/kettle/red)
+	cost = 20
+	containertype = /obj/structure/closet/crate
+	containername = "Cafe equipment"
+	group = "Hospitality"
+
+/datum/supply_packs/bar
+	name = "Advanced Bartending equipment"
+	contains = list(/obj/item/weapon/circuitboard/chem_dispenser/soda_dispenser,
+	/obj/item/weapon/circuitboard/chem_dispenser/booze_dispenser,
+	/obj/item/weapon/storage/box/drinkingglasses,
+	/obj/item/weapon/storage/box/drinkingglasses,
+	/obj/item/weapon/reagent_containers/food/drinks/shaker)
+	cost = 40
+	containertype = /obj/structure/closet/crate
+	containername = "Bartending equipment"
+	group = "Hospitality"
+
 //////ENGINEERING//////
 
 /datum/supply_packs/electrical
