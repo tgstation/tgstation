@@ -415,10 +415,15 @@
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
 //i don't think this is actually used, yaaaaay -Pete
 /obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
-	var/gen_amount = (world.time - last_gen) / 25
-	reagents += gen_amount
-	if(reagents > max_fuel)
-		reagents = max_fuel
+	if(!last_gen)
+		last_gen = 1
+		reagents.add_reagent("fuel",1)
+		spawn(10)
+			last_gen = 0
+
+/obj/item/weapon/weldingtool/experimental/process()
+	..()
+	fuel_gen()
 
 
 /*
