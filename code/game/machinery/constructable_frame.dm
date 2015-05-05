@@ -410,7 +410,7 @@ obj/item/weapon/circuitboard/rdserver
 	
 /obj/item/weapon/circuitboard/chem_dispenser/booze_dispenser
 	name = "Circuit Board (Booze Dispenser)"
-	build_path = " /obj/machinery/chem_dispenser/booze_dispenser"
+	build_path = "/obj/machinery/chem_dispenser/booze_dispenser"
 
 /obj/item/weapon/circuitboard/chemmaster3000
 	name = "Circuit Board (ChemMaster 3000)"
