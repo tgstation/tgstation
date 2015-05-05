@@ -167,6 +167,18 @@
 		return 1
 	return 0
 
+/atom/movable/proc/forceEnter(atom/destination)
+	if(destination)
+		if(loc)
+			loc.Exited(src)
+		loc = destination
+		loc.Entered(src)
+		if(isturf(destination))
+			var/area/A = get_area_master(destination)
+			A.Entered(src)
+		return 1
+	return 0
+
 /atom/movable/proc/hit_check(var/speed)
 	if(src.throwing)
 		for(var/atom/A in get_turf(src))

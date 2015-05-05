@@ -51,7 +51,7 @@
 
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
-		if(material_type && R.cell.charge)
+		if(R && R.cell && material_type && R.cell.charge)
 			var/modifier = MAT_COST_COMMON
 			if(initial(active_material.perunit) < 3750)
 				modifier = MAT_COST_MEDIUM

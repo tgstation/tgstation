@@ -128,9 +128,13 @@ Class Procs:
 
 /zone/proc/dbg_data(mob/M)
 	M << name
-	M << "O2: [air.oxygen] N2: [air.nitrogen] CO2: [air.carbon_dioxide] P: [air.toxins]"
+	var/gas_message = ""
+	for(var/gasid in air.gases)
+		var/datum/gas/gas = air.get_gas_by_id(gasid)
+		gas_message += "[gas.display_short]: [air.get_moles_by_id(gasid)]"
+	M << gas_message
 	M << "P: [air.return_pressure()] kPa V: [air.volume]L T: [air.temperature]°K ([air.temperature - T0C]°C)"
-	M << "O2 per N2: [(air.nitrogen ? air.oxygen/air.nitrogen : "N/A")] Moles: [air.total_moles]"
+	M << "O2 per N2: [(air.get_moles_by_id(NITROGEN) ? air.get_moles_by_id(OXYGEN)/air.get_moles_by_id(NITROGEN) : "N/A")] Moles: [air.total_moles]"
 	M << "Simulated: [contents.len] ([air.group_multiplier])"
 	//M << "Unsimulated: [unsimulated_contents.len]"
 	//M << "Edges: [edges.len]"

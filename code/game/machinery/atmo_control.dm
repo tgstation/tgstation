@@ -82,18 +82,19 @@
 			var/total_moles = air_sample.total_moles()
 			if(total_moles > 0)
 				if(output&4)
-					signal.data["oxygen"] = round(100*air_sample.oxygen/total_moles,0.1)
+					signal.data[OXYGEN] = round(100*air_sample.get_moles_by_id(OXYGEN)/total_moles,0.1)
 				if(output&8)
-					signal.data["toxins"] = round(100*air_sample.toxins/total_moles,0.1)
+					signal.data[PLASMA] = round(100*air_sample.get_moles_by_id(PLASMA)/total_moles,0.1)
 				if(output&16)
-					signal.data["nitrogen"] = round(100*air_sample.nitrogen/total_moles,0.1)
+					signal.data[NITROGEN] = round(100*air_sample.get_moles_by_id(NITROGEN)/total_moles,0.1)
 				if(output&32)
-					signal.data["carbon_dioxide"] = round(100*air_sample.carbon_dioxide/total_moles,0.1)
+					signal.data[CARBON_DIOXIDE] = round(100*air_sample.get_moles_by_id(CARBON_DIOXIDE)/total_moles,0.1)
 			else
-				signal.data["oxygen"] = 0
-				signal.data["toxins"] = 0
-				signal.data["nitrogen"] = 0
-				signal.data["carbon_dioxide"] = 0
+				signal.data[OXYGEN] = 0
+				signal.data[PLASMA] = 0
+				signal.data[NITROGEN] = 0
+				signal.data[CARBON_DIOXIDE] = 0
+
 		signal.data["sigtype"]="status"
 		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
@@ -172,16 +173,16 @@
 						sensor_part += "<tr><th>Pressure:</th><td>[data["pressure"]] kPa</td></tr>"
 					if(data["temperature"])
 						sensor_part += "<tr><th>Temperature:</th><td>[data["temperature"]] K</td></tr>"
-					if(data["oxygen"]||data["toxins"]||data["nitrogen"]||data["carbon_dioxide"])
+					if(data[OXYGEN]||data[PLASMA]||data[NITROGEN]||data[CARBON_DIOXIDE])
 						sensor_part += "<tr><th>Gas Composition :</th><td><ul>"
-						if(data["oxygen"])
-							sensor_part += "<li>[data["oxygen"]]% O<sub>2</sub></li>"
-						if(data["nitrogen"])
-							sensor_part += "<li>[data["nitrogen"]]% N</li>"
-						if(data["carbon_dioxide"])
-							sensor_part += "<li>[data["carbon_dioxide"]]% CO<sub>2</sub></li>"
-						if(data["toxins"])
-							sensor_part += "<li>[data["toxins"]]% Plasma</li>"
+						if(data[OXYGEN])
+							sensor_part += "<li>[data[OXYGEN]]% O<sub>2</sub></li>"
+						if(data[NITROGEN])
+							sensor_part += "<li>[data[NITROGEN]]% N</li>"
+						if(data[CARBON_DIOXIDE])
+							sensor_part += "<li>[data[CARBON_DIOXIDE]]% CO<sub>2</sub></li>"
+						if(data[PLASMA])
+							sensor_part += "<li>[data[PLASMA]]% Plasma</li>"
 						sensor_part += "</ul></td></tr>"
 					sensor_part += "</table>"
 

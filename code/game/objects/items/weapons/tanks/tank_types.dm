@@ -13,12 +13,12 @@
 /obj/item/weapon/tank/oxygen
 	name = "oxygen tank"
 	desc = "A tank of oxygen."
-	icon_state = "oxygen"
+	icon_state = OXYGEN
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
 /obj/item/weapon/tank/oxygen/New()
 	. = ..()
-	air_contents.adjust((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+	air_contents.adjust_gas(OXYGEN, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/oxygen/yellow
 	desc = "A tank of oxygen, this one is yellow."
@@ -39,9 +39,8 @@
 
 /obj/item/weapon/tank/anesthetic/New()
 	. = ..()
-	var/datum/gas/sleeping_agent/sleeping_agent = new
-	sleeping_agent.moles = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
-	air_contents.adjust((3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD, , , , list(sleeping_agent))
+	air_contents.adjust_gas(NITROUS_OXIDE, (2 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+	air_contents.adjust_gas(OXYGEN, (4 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /*
  * Air
@@ -53,7 +52,8 @@
 
 /obj/item/weapon/tank/air/New()
 	. = ..()
-	air_contents.adjust((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD, , (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD)
+	air_contents.adjust_gas(OXYGEN, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD)
+	air_contents.adjust_gas(NITROGEN, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD)
 
 /*
  * Plasma
@@ -67,7 +67,7 @@
 
 /obj/item/weapon/tank/plasma/New()
 	. = ..()
-	air_contents.adjust(, , , (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C))
+	air_contents.adjust_gas(PLASMA, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -102,7 +102,7 @@
 
 /obj/item/weapon/tank/emergency_oxygen/New()
 	. = ..()
-	air_contents.adjust((3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+	air_contents.adjust(OXYGEN, (3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"
@@ -124,7 +124,7 @@
 
 /obj/item/weapon/tank/emergency_nitrogen/New()
 	. = ..()
-	air_contents.adjust(, , (3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+	air_contents.adjust(NITROGEN, (3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /*
  * Nitrogen
@@ -137,4 +137,4 @@
 
 /obj/item/weapon/tank/nitrogen/New()
 	. = ..()
-	air_contents.adjust(, , (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C))
+	air_contents.adjust(NITROGEN, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))

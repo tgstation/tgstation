@@ -44,12 +44,11 @@
 		return 0
 
 	var/datum/gas_mixture/G = src.air_contents.remove(num)
-	var/allgases = G.total_moles()
 
-	if(allgases >= 0.005)
+	if(G.total_moles() >= 0.005)
 		return 1
 
-	del(G)
+	G = null //let the GC get it
 	return
 
 /obj/item/weapon/tank/jetpack/ui_action_click()

@@ -124,7 +124,7 @@
 			//This happens when windows move or are constructed. We need to rebuild.
 			if((previously_open & d) && istype(unsim, /turf/simulated))
 				var/turf/simulated/sim = unsim
-				if(sim.zone == zone)
+				if(istype(zone) && sim.zone == zone)
 					zone.rebuild()
 					return
 
@@ -204,40 +204,21 @@
 
 /turf/return_air()
 	//Create gas mixture to hold data for passing
-	var/datum/gas_mixture/GM = new
+	if(!air)
+		make_air()
 
-	GM.oxygen = oxygen
-	GM.carbon_dioxide = carbon_dioxide
-	GM.nitrogen = nitrogen
-	GM.toxins = toxins
+	air.temperature = temperature
+	air.update_values()
 
-	GM.temperature = temperature
-	GM.update_values()
-
-	return GM
+	return air
 
 /turf/remove_air(amount as num)
-	var/datum/gas_mixture/GM = new
-
-	var/sum = oxygen + carbon_dioxide + nitrogen + toxins
-	if(sum>0)
-		GM.oxygen = (oxygen/sum)*amount
-		GM.carbon_dioxide = (carbon_dioxide/sum)*amount
-		GM.nitrogen = (nitrogen/sum)*amount
-		GM.toxins = (toxins/sum)*amount
-
-	GM.temperature = temperature
-	GM.update_values()
-
-	return GM
+	var/datum/gas_mixture/my_air = return_air()
+	return my_air.remove(amount)
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
 	var/datum/gas_mixture/my_air = return_air()
 	my_air.merge(giver)
-
-/turf/simulated/remove_air(amount as num)
-	var/datum/gas_mixture/my_air = return_air()
-	return my_air.remove(amount)
 
 /turf/simulated/return_air()
 	if(zone)
@@ -257,9 +238,10 @@
 /turf/proc/make_air()
 	air = new/datum/gas_mixture
 	air.temperature = temperature
-	air.adjust(oxygen, carbon_dioxide, nitrogen, toxins)
 	air.group_multiplier = 1
 	air.volume = CELL_VOLUME
+	if(starting_gases)
+		air.adjust(starting_gases)
 
 /turf/simulated/proc/c_copy_air()
 	if(!air) air = new/datum/gas_mixture

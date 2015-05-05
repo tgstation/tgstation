@@ -11,6 +11,8 @@
 	var/datum/gas_mixture/air_contents
 	var/datum/gas_mixture/pumping = new //used in transfering air around
 
+	var/list/gases_to_create = list()
+
 	var/on=1
 
 	var/max_external_pressure=10000 // 10,000kPa ought to do it.
@@ -63,6 +65,8 @@
 
 // Add air here.  DO NOT CALL UPDATE_VALUES OR UPDATE_ICON.
 /obj/machinery/atmospherics/miner/proc/AddAir()
+	for(var/gasid in gases_to_create)
+		air_contents.set_gas(gasid, internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature), 0)
 	return
 
 /obj/machinery/atmospherics/miner/update_icon()
@@ -119,46 +123,43 @@
 	name = "\improper N2O Gas Miner"
 	light_color = "#FFCCCC"
 
-	AddAir()
-		var/datum/gas/sleeping_agent/trace_gas = new
-		air_contents.trace_gases += trace_gas
-		trace_gas.moles = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	gases_to_create = list(NITROUS_OXIDE)
 
 /obj/machinery/atmospherics/miner/nitrogen
 	name = "\improper N2 Gas Miner"
 	light_color = "#CCFFCC"
 
-	AddAir()
-		air_contents.nitrogen = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	gases_to_create = list(NITROGEN)
 
 /obj/machinery/atmospherics/miner/oxygen
 	name = "\improper O2 Gas Miner"
 	light_color = "#007FFF"
 
-	AddAir()
-		air_contents.oxygen = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	gases_to_create = list(OXYGEN)
 
-/obj/machinery/atmospherics/miner/toxins
+/obj/machinery/atmospherics/miner/plasma
 	name = "\improper Plasma Gas Miner"
 	light_color = "#FF0000"
 
-	AddAir()
-		air_contents.toxins = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	gases_to_create = list(PLASMA)
 
 /obj/machinery/atmospherics/miner/carbon_dioxide
 	name = "\improper CO2 Gas Miner"
 	light_color = "#CDCDCD"
 
-	AddAir()
-		air_contents.carbon_dioxide = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	gases_to_create = list(CARBON_DIOXIDE)
 
 /obj/machinery/atmospherics/miner/air
 	name = "\improper Air Miner"
+	desc = "Convenient, huh?"
+
+	gases_to_create = list(OXYGEN,
+							NITROGEN)
+
+/obj/machinery/atmospherics/miner/air/fake
 	desc = "You fucking <em>cheater</em>."
 	light_color = "#70DBDB"
 
-	on = 0
+	gases_to_create = list(CARBON_DIOXIDE)
 
-	AddAir()
-		air_contents.carbon_dioxide = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	on = 0

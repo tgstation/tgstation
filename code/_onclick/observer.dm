@@ -15,13 +15,26 @@
 	else
 		var/turf/targetloc = get_turf(A)
 		var/area/targetarea = get_area(A)
+		if(!targetloc)
+			if(!targetarea)
+				return
+			var/list/turfs = list()
+			for(var/area/Ar in targetarea.related)
+				for(var/turf/T in Ar)
+					if(T.density)
+						continue
+					turfs.Add(T)
+
+			targetloc = pick_n_take(turfs)
+			if(!targetloc)
+				return
 		if(targetarea && targetarea.anti_ethereal && !isAdminGhost(usr))
 			usr << "<span class='sinister'>A dark forcefield prevents you from entering the area.<span>"
 		else
 			if(targetloc.holy && ((src.invisibility == 0) || iscult(src)))
 				usr << "<span class='warning'>These are sacred grounds, you cannot go there!</span>"
 			else
-				forceMove(targetloc)
+				forceEnter(targetloc)
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
 	if(client.buildmode)

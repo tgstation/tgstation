@@ -76,15 +76,11 @@
 
 		var/total_moles = environment.total_moles()
 		if(total_moles > 0)
-			signal.data["oxygen"] = round(100*environment.oxygen/total_moles,0.1)
-			signal.data["toxins"] = round(100*environment.toxins/total_moles,0.1)
-			signal.data["nitrogen"] = round(100*environment.nitrogen/total_moles,0.1)
-			signal.data["carbon_dioxide"] = round(100*environment.carbon_dioxide/total_moles,0.1)
+			for(var/gasid in environment.gases)
+				signal.data[gasid] = round(100 * environment.get_moles_by_id(gasid) / total_moles, 0.1)
 		else
-			signal.data["oxygen"] = 0
-			signal.data["toxins"] = 0
-			signal.data["nitrogen"] = 0
-			signal.data["carbon_dioxide"] = 0
+			for(var/gasid in environment.gases)
+				signal.data[gasid] = 0
 
 		radio_connection.post_signal(src, signal)
 

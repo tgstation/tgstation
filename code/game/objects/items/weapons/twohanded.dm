@@ -17,10 +17,16 @@
 	var/obj/item/wielding = null
 
 /obj/item/offhand/dropped(user)
+	if(!wielding)
+		qdel(src)
+		return null
 	return wielding.unwield(user)
 
 
 /obj/item/offhand/unwield(user)
+	if(!wielding)
+		qdel(src)
+		return null
 	return wielding.unwield(user)
 
 /obj/item/offhand/preattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -32,6 +38,9 @@
 		return 1
 
 /obj/item/offhand/attack_self(mob/user)
+	if(!wielding)
+		qdel(src)
+		return null
 	return wielding.unwield(user)
 
 /obj/item/offhand/proc/attach_to(var/obj/item/I)

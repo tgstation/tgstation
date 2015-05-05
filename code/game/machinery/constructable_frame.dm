@@ -399,6 +399,18 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
 							"/obj/item/weapon/stock_parts/micro_laser" = 3,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
+							
+/obj/item/weapon/circuitboard/chem_dispenser/brewer
+	name = "Circuit Board (Brewer)"
+	build_path = "/obj/machinery/chem_dispenser/brewer"
+
+/obj/item/weapon/circuitboard/chem_dispenser/soda_dispenser
+	name = "Circuit Board (Soda Dispenser)"
+	build_path = "/obj/machinery/chem_dispenser/soda_dispenser"
+	
+/obj/item/weapon/circuitboard/chem_dispenser/booze_dispenser
+	name = "Circuit Board (Booze Dispenser)"
+	build_path = " /obj/machinery/chem_dispenser/booze_dispenser"
 
 /obj/item/weapon/circuitboard/chemmaster3000
 	name = "Circuit Board (ChemMaster 3000)"

@@ -103,12 +103,8 @@
 		var/datum/gas_mixture/gas = (..())
 		if(!gas)	return null
 		var/datum/gas_mixture/newgas = new/datum/gas_mixture()
-		newgas.oxygen = gas.oxygen
-		newgas.carbon_dioxide = gas.carbon_dioxide
-		newgas.nitrogen = gas.nitrogen
-		newgas.toxins = gas.toxins
 		newgas.volume = gas.volume
-		newgas.temperature = gas.temperature
+		newgas.copy_from(gas)
 		if(newgas.temperature <= target_temp)	return
 
 		if((newgas.temperature - cooling_power) > target_temp)

@@ -23,9 +23,15 @@
 	return junction
 
 /atom/proc/isSmoothableNeighbor(atom/A)
+	if(!A)
+		WARNING("[__FILE__]L[__LINE__]: atom/isSmoothableNeighbor given bad atom")
+		return 0
 	return isInTypes(A, canSmoothWith)
 
 /turf/simulated/wall/isSmoothableNeighbor(atom/A)
+	if(!A)
+		WARNING("[__FILE__]L[__LINE__]: turf/isSmoothableNeighbor given bad atom")
+		return 0
 	if(isInTypes(A, canSmoothWith))
 		// COLON OPERATORS ARE TERRIBLE BUT I HAVE NO CHOICE
 		if(src.mineral == A:mineral)

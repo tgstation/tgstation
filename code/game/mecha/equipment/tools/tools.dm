@@ -939,17 +939,17 @@
 		var/turf/simulated/T = get_turf(src)
 		if(!T)
 			return
-		var/datum/gas_mixture/GM = new
+		var/datum/gas_mixture/GM = T.return_air()
 		if(prob(10))
-			GM.toxins += 100
+			GM.adjust_gas(PLASMA, 100, 0, 0)
 			GM.temperature = 1500+T0C //should be enough to start a fire
 			T.visible_message("The [src] suddenly disgorges a cloud of heated plasma.")
 			destroy()
 		else
-			GM.toxins += 5
+			GM.adjust_gas(PLASMA, 5, 0, 0)
 			GM.temperature = istype(T) ? T.air.temperature : T20C
 			T.visible_message("The [src] suddenly disgorges a cloud of plasma.")
-		T.assume_air(GM)
+		GM.update_values()
 		return
 
 /datum/global_iterator/mecha_generator
