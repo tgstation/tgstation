@@ -392,7 +392,8 @@
 
 
 /obj/item/weapon/weldingtool/hugetank
-	name = "upgraded welding tool"
+	name = "upgraded industrial welding tool"
+	icon_state = "upindwelder"
 	max_fuel = 80
 	w_class = 3.0
 	m_amt = 70
@@ -401,12 +402,14 @@
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
+	icon_state = "exwelder"
 	max_fuel = 40
 	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "engineering=4;plasmatech=3"
 	var/last_gen = 0
+	change_icons = 0
 
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
