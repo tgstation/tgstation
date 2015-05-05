@@ -193,7 +193,7 @@
 				update_icon()
 			else
 				orient = "RIGHT"
-				visible_message("<span class='warning'>There is no space!</span>","<span class='warning'>[user] wants to be hardcore, but his CMO won't let him.</span>")
+				user << "<span class='warning'>There is no space!</span>"
 				generate_console(get_step(get_turf(src), WEST))
 		else
 			orient = "RIGHT"
@@ -342,14 +342,6 @@
 /obj/machinery/body_scanconsole/attack_ai(user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
-
-/obj/machinery/body_scanconsole/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(iswrench(W))
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-		if(do_after(user, 50))
-			qdel(src)
-	else
-		return ..()
 
 /obj/machinery/body_scanconsole/attack_hand(user as mob)
 	if(..())

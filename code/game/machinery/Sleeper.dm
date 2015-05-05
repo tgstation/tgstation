@@ -299,7 +299,7 @@
 				update_icon()
 			else
 				orient = "RIGHT"
-				visible_message("<span class='warning'>There is no space!</span>","<span class='warning'>[user] wants to be hardcore, but his CMO won't let him.</span>")
+				user << "<span class='warning'>There is no space!</span>"
 		else
 			orient = "RIGHT"
 			if(generate_console(get_step(get_turf(src), WEST)))
