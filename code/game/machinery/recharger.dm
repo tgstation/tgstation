@@ -10,7 +10,7 @@
 
 
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user, params)
-	if(istype(user,/mob/living/silicon))
+	if(istype(user,/mob/living/silicon) && !ismommi(user))
 		return
 	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/weapon/pickaxe/drill))
 		if(charging)
@@ -40,7 +40,7 @@
 
 
 /obj/machinery/recharger/attack_hand(mob/user)
-	if(issilicon(user))
+	if(issilicon(user) && !ismommi(user))
 		return
 
 	add_fingerprint(user)

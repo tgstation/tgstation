@@ -40,6 +40,11 @@
 		return 1
 	return 0
 
+/proc/ismommi(A)
+	if(istype(A, /mob/living/silicon/robot/mommi))
+		return 1
+	return 0
+
 /proc/isanimal(A)
 	if(istype(A, /mob/living/simple_animal))
 		return 1

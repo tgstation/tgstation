@@ -59,6 +59,11 @@ AI MODULES
 /obj/item/weapon/aiModule/proc/transmitInstructions(var/mob/living/silicon/target, var/mob/sender)
 	target << "[sender] has uploaded a change to the laws you must follow using a [name]. From now on, these are your laws: "
 
+/obj/item/weapon/aiModule/attack_hand(mob/user as mob)
+	if (ismommi(user))
+		user << "Your programming prevents you from picking [src] up"
+		return
+	else ..(user)
 
 /******************** Modules ********************/
 

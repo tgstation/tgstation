@@ -256,6 +256,9 @@
 	return
 
 /obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
+	if (ismommi(user))
+		user << "You cannot interface with this console"
+		return
 	if(..())
 		return
 	user.set_machine(src)

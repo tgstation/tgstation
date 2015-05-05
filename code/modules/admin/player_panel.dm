@@ -248,6 +248,8 @@
 						M_job = "pAI"
 					else if(isrobot(M))
 						M_job = "Cyborg"
+					else if(ismommi(M))
+						M_job = "MoMMI"
 					else
 						M_job = "Silicon-based"
 
@@ -465,7 +467,7 @@
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			dat += "</table>"			
+			dat += "</table>"
 
 		if(ticker.mode.B_bosses.len || ticker.mode.B_gangsters.len)
 			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("B")] Gang Members</B></td><td></td></tr>"

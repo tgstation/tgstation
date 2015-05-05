@@ -123,6 +123,7 @@
 /obj/proc/hide(h)
 	return
 
+
 /obj/ex_act(severity, target)
 	if(severity == 1 || target == src)
 		qdel(src)

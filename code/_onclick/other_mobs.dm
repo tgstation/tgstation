@@ -25,6 +25,7 @@
 /atom/proc/attack_hand(mob/user as mob)
 	return
 
+
 /*
 /mob/living/carbon/human/RestrainedClickOn(var/atom/A) ---carbons will handle this
 	return

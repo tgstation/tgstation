@@ -351,7 +351,7 @@
 		return
 
 
-	if(istype(usr,/mob/living/silicon))
+	if(istype(usr,/mob/living/silicon)  && !ismommi(usr))
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
 			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))

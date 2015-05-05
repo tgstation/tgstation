@@ -181,6 +181,8 @@ datum/hud/New(mob/owner)
 		human_hud(ui_style) // Pass the player the UI style chosen in preferences
 	else if(ismonkey(mymob))
 		monkey_hud(ui_style)
+	else if(ismommi(mymob))
+		mommi_hud()
 	else if(isbrain(mymob))
 		brain_hud(ui_style)
 	else if(islarva(mymob))
@@ -197,6 +199,7 @@ datum/hud/New(mob/owner)
 		blob_hud()
 	else if(isdrone(mymob))
 		drone_hud(ui_style)
+
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)

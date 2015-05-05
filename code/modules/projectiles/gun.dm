@@ -135,6 +135,10 @@
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return 0
+	if (ismommi(user))
+		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+		return 0
+
 
 	if(!handle_pins(user))
 		return 0

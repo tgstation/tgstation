@@ -312,7 +312,8 @@
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(isrobot(user))
-		return
+		if(!ismommi(user))
+			return
 
 	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;
 		if(user.drop_item())
@@ -531,7 +532,7 @@
 /obj/structure/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
-	if(isrobot(user))
+	if(isrobot(user) && !ismommi(user))
 		return
 	if(!user.drop_item())
 		user << "<span class='notice'>\The [O] is stuck to your hand, you cannot put it in the rack!</span>"
@@ -546,7 +547,7 @@
 		rack_destroy()
 		return
 
-	if(isrobot(user))
+	if(isrobot(user) && !ismommi(user))
 		return
 	if(!user.drop_item())
 		user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the rack!</span>"

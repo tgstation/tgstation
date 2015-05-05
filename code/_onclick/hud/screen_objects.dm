@@ -17,6 +17,8 @@
 	master = null
 	..()
 
+/obj/screen/proc/dropped()
+	return
 
 /obj/screen/text
 	icon = null

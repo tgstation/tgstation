@@ -60,6 +60,10 @@
 	var/jetpackoverlay = 0
 
 /mob/living/silicon/robot/New(loc)
+
+	if(ismommi(src))
+		return ..()
+
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)

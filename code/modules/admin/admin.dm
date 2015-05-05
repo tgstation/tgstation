@@ -101,6 +101,7 @@ var/global/floorIsLava = 0
 			else if(ishuman(M))
 				body += "<A href='?_src_=holder;makeai=\ref[M]'>Make AI</A> | "
 				body += "<A href='?_src_=holder;makerobot=\ref[M]'>Make Robot</A> | "
+				body += "<A href='?_src_=holder;makemommi=\ref[M]'>Make MoMMI</A> | "
 				body += "<A href='?_src_=holder;makealien=\ref[M]'>Make Alien</A> | "
 				body += "<A href='?_src_=holder;makeslime=\ref[M]'>Make Slime</A> | "
 				body += "<A href='?_src_=holder;makeblob=\ref[M]'>Make Blob</A> | "
@@ -784,9 +785,12 @@ var/global/floorIsLava = 0
 		ai_number++
 		if(isAI(S))
 			usr << "<b>AI [key_name(S, usr)]'s laws:</b>"
-		else if(isrobot(S))
+		else if(isrobot(S) && !ismommi(S))
 			var/mob/living/silicon/robot/R = S
 			usr << "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>"
+		else if(ismommi(S))
+			var/mob/living/silicon/robot/mommi/R = S
+			usr << "<b>MoMMI [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>"
 		else if (ispAI(S))
 			usr << "<b>pAI [key_name(S, usr)]'s laws:</b>"
 		else

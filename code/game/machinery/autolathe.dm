@@ -143,7 +143,8 @@
 		stack.use(amount)
 	else
 		if(!user.unEquip(O))
-			user << "<span class='notice'>/the [O] is stuck to your hand, you can't put it in \the [src]!</span>"
+			user << "<span class='notice'>[O] is stuck to your hand, you can't put it in \the [src]!</span>"
+			return
 		O.loc = src
 	icon_state = "autolathe"
 	busy = 1

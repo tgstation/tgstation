@@ -53,7 +53,7 @@
 	var/piles = list()
 
 obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(isrobot(user))
+	if(isrobot(user) && !ismommi(user))
 		return
 
 	if (istype(O,/obj/item/weapon/storage/bag/plants))

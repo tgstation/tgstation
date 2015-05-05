@@ -465,8 +465,8 @@
 	else
 		text += "|Disabled in Prefs"
 
-	sections["shadowling"] = text	
-	
+	sections["shadowling"] = text
+
 	/** MONKEY ***/
 	if (istype(current, /mob/living/carbon))
 		text = "monkey"
@@ -1435,7 +1435,7 @@
 //BORG
 /mob/living/silicon/robot/mind_initialize()
 	..()
-	mind.assigned_role = "Cyborg"
+	mind.assigned_role = "[ismommi(src) ? "Mobile MMI" : "Cyborg"]"
 
 //PAI
 /mob/living/silicon/pai/mind_initialize()

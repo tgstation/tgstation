@@ -279,12 +279,14 @@
 	character.loc = pick(latejoin)
 	character.lastarea = get_area(loc)
 
-	if(character.mind.assigned_role != "Cyborg")
+	if(character.mind.assigned_role != "Cyborg" || character.mind.assigned_role != "Mobile MMI")
 		data_core.manifest_inject(character)
 		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 		AnnounceArrival(character, rank)
-	else
+	else if (character.mind.assigned_role != "Cyborg")
 		character.Robotize()
+	else if (character.mind.assigned_role != "Mobile MMI")
+		character.Mommize()
 
 	joined_player_list += character.ckey
 

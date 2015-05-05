@@ -38,3 +38,18 @@ Cyborg
 /datum/job/cyborg/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	return H.Robotize()
+
+
+/datum/job/mommi
+	title = "MoMMI"
+	flag = MOMMI
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 0
+	spawn_positions = 4 // to match the number of drone shells that spawned on the station, was 2 on /vg/
+	supervisors = "your laws and the AI"	//Nodrak
+	selection_color = "#ddffdd"
+
+	equip(var/mob/living/carbon/human/H)
+		if(!H)	return 0
+		return H.Mommize()

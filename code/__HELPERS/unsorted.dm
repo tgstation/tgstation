@@ -398,6 +398,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				var/mob/living/silicon/robot/A = src
 				A.custom_name = newname
 
+		if(cmptext("MoMMI",role))
+			if(ismommi(src))
+				var/mob/living/silicon/robot/mommi/A = src
+				A.custom_name = newname
+
+
 		fully_replace_character_name(oldname,newname)
 
 

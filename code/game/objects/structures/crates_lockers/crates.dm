@@ -327,7 +327,7 @@
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(opened)
-		if(isrobot(user))
+		if(isrobot(user) && !ismommi(user))
 			return
 		if(!user.drop_item()) //couldn't drop the item
 			user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
