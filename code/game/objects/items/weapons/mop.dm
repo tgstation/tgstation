@@ -26,7 +26,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 		if(istype(F))
 			F.dirt = 0
 		for(var/obj/effect/O in A)
-			if(istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay))
+			if(istype(O,/obj/effect/decal/cleanable))
 				qdel(O)
 	reagents.reaction(A, TOUCH, 10)	//10 is the multiplier for the reaction effect. probably needed to wet the floor properly.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
@@ -40,7 +40,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 		return
 
 	var/turf/simulated/turf = A
-	if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+	if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable))
 		turf = A.loc
 	A = null
 
