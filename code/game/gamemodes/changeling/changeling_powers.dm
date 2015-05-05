@@ -33,7 +33,7 @@
 //Used to dump the languages from the changeling datum into the actual mob.
 /mob/proc/changeling_update_languages(var/updated_languages)
 
-	languages = list()
+	languages.len = 0
 	for(var/language in updated_languages)
 		languages += language
 

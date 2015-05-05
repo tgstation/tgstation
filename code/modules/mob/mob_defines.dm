@@ -260,4 +260,4 @@
 
 	var/iscorpse = 0 //Keeps track of whether this was spawned from a landmark or not.
 
-	var/list/languages
+	var/list/languages[0]
