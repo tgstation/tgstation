@@ -174,7 +174,7 @@ datum/hud/New(mob/owner)
 	var/ui_color
 	var/ui_alpha
 	if(!mymob.client.prefs)
-		ui_sytle = ui_style2icon("Midnight")
+		ui_style = ui_style2icon("Midnight")
 		ui_color = null
 		ui_alpha = 255
 	else

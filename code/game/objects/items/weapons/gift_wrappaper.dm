@@ -27,9 +27,9 @@
 	item_state = "gift-large"
 	w_class = 4.0
 
-/obj/item/weapon/gift/New(var/W)
+/obj/item/weapon/gift/New(turf/loc, var/W)
 	..()
-	w_class = W.w_class
+	w_class = W
 
 /obj/item/weapon/gift/attack_self(mob/user as mob)
 	user.drop_item(src)
@@ -341,9 +341,7 @@
 
 				src.amount -= a_used
 				user.drop_item(null, )
-				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )
-				G.size = W.w_class
-				G.w_class = G.size + 1
+				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift(get_turf(src), round(W.w_class))
 				G.icon_state = text("gift[]", G.size)
 				G.gift = W
 				W.loc = G

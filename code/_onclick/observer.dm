@@ -19,14 +19,14 @@
 			if(!targetarea)
 				return
 			var/list/turfs = list()
-			for(var/area/Ar in A.related)
+			for(var/area/Ar in targetarea.related)
 				for(var/turf/T in Ar)
 					if(T.density)
 						continue
 					turfs.Add(T)
 
 			targetloc = pick_n_take(turfs)
-			if(!T)
+			if(!targetloc)
 				return
 		if(targetarea && targetarea.anti_ethereal && !isAdminGhost(usr))
 			usr << "<span class='sinister'>A dark forcefield prevents you from entering the area.<span>"
