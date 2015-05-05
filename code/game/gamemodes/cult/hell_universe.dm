@@ -33,9 +33,11 @@ In short:
 
 
 /datum/universal_state/hell/OnTurfChange(var/turf/T)
-	var/turf/space/spess = T
-	if(istype(spess))
-		spess.overlays += "hell01"
+	if(T.name == "space")
+		T.overlays += "hell01"
+		T.underlays -= "hell01"
+	else
+		T.overlays -= "hell01"
 
 // Apply changes when entering state
 /datum/universal_state/hell/OnEnter()
@@ -53,11 +55,10 @@ In short:
 
 	//Separated into separate procs for profiling
 	AreaSet()
-	OverlaySet()
 	MiscSet()
 	APCSet()
 	KillMobs()
-	AmbientSet()
+	OverlayAndAmbientSet()
 
 	runedec += 9000	//basically removing the rune cap
 
@@ -97,20 +98,13 @@ In short:
 
 		A.updateicon()
 
-/datum/universal_state/hell/proc/OverlaySet()
-/*
-	for(var/turf/space/spess in world)
-		spess.overlays += "hell01"
-	*/
-	var/image/I = image("icon" = 'icons/turf/space.dmi', "icon_state" = "hell01", "layer" = 10)
-	var/area/space = locate(/area)
-	if(space.name == "Space")
-		space.overlays += I
-
-/datum/universal_state/hell/proc/AmbientSet()
+/datum/universal_state/hell/OverlayAndAmbientSet()
 	for(var/turf/T in world)
-		if(istype(T, /turf/space))	continue
-		T.update_lumcount(1, 255, 0, 0, 0)
+		if(istype(T, /turf/space))
+			T.overlays += "hell01"
+		else
+			T.underlays += "hell01"
+			T.update_lumcount(1, 255, 0, 0, 0)
 
 /datum/universal_state/hell/proc/MiscSet()
 	for(var/turf/simulated/floor/T in world)

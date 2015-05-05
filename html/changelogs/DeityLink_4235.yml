@@ -1,0 +1,9 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: fixed buckled players (such as those driving a vehicle) not being properly teleported by the Bluespace Rift
+  - bugfix: fixed players in mecha not being teleported by the Bluespace Rift
+  - bugfix: fixed players in mecha not being able to see the Bluespace Rift through walls
+  - bugfix: fixed some space turfs not having the hell overlay during the narsie endgame (and some turfs having it when they shouldn't) such as the areas where shuttles land.
+  - bugfix: fixed turfs changed after the beginning of hell or sm cascade not having the right luminosity
+  - bugfix: fixed a bug that caused some diagonal shuttle tiles to display space when the shuttle is moved.
