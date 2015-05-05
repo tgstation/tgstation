@@ -5,6 +5,10 @@
 		Weaken(4)
 
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
+	if(ismommi(M))
+		return
+
+
 	if(..())	//to allow surgery to return properly.
 		return
 
@@ -13,8 +17,6 @@
 
 	return
 
-/mob/living/carbon/human/attack_hand(mob/living/silicon/robot/mommi/M)
-	return
 
 /mob/living/carbon/human/proc/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)
 	return
