@@ -23,7 +23,7 @@
 "aw" = (/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/centcomAway/cafe)
 "ax" = (/turf/simulated/floor/plasteel{tag = "icon-greenfull (NORTH)"; icon_state = "greenfull"; dir = 1},/area/awaymission/centcomAway/cafe)
 "ay" = (/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/awaymission/centcomAway/cafe)
-"az" = (/obj/structure/table,/obj/item/weapon/melee/energy/axe,/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/awaymission/centcomAway/cafe)
+"az" = (/obj/structure/table,/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/awaymission/centcomAway/cafe)
 "aA" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/awaymission/centcomAway/cafe)
 "aB" = (/obj/structure/closet/secure_closet/freezer/kitchen,/turf/simulated/floor/plasteel{tag = "icon-greenfull (NORTH)"; icon_state = "greenfull"; dir = 1},/area/awaymission/centcomAway/cafe)
 "aC" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/awaymission/centcomAway/cafe)
