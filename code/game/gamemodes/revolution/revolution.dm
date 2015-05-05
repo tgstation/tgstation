@@ -14,7 +14,7 @@
 	name = "revolution"
 	config_tag = "revolution"
 	antag_flag = BE_REV
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg", "MoMMI", "Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 10
 	required_enemies = 1
 	recommended_enemies = 2
@@ -38,7 +38,7 @@
 /datum/game_mode/revolution/pre_setup()
 
 	//adjust the number of headrevs based on player count
-	if(num_players() >= 20) 
+	if(num_players() >= 20)
 		recommended_enemies = 3
 		max_headrevs = 3
 
