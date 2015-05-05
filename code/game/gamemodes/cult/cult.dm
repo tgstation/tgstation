@@ -24,10 +24,10 @@
 	name = "cult"
 	config_tag = "cult"
 	antag_flag = BE_CULTIST
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	restricted_jobs = list("Chaplain","AI", "Cyborg", "MoMMI",  "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 10
-	required_enemies = 2 
+	required_enemies = 2
 	recommended_enemies = 4
 
 	var/finished = 0
@@ -57,7 +57,7 @@
 	//adjust game mode for player numbers
 	if(num_players() < 20)
 		set_runecults(setELDERGOD_CULTS=6, setCONVERT_CULTS=2, setSACRIFICE_CULTS=2)
-		
+
 	if(num_players() >= 20)
 		required_enemies = 4
 		recommended_enemies = 6
