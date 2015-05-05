@@ -44,16 +44,18 @@
 			..() // was src.attack_hand() until I updated it
 
 		var/obj/S = null
-		for(var/obj/effect/landmark/clown in world)
+/*	Use the clownland list now
+
+	for(var/obj/effect/landmark/clown in world)
 			if (clown.name != "Clown Land")
 				continue
 			if (locate(/mob) in clown.loc)
 				continue
 			S = clown
-			break
+			break */
 		if (!S)
-			S = locate("landmark*["Clown Land"]") // use old stype
-		if (istype(S, /obj/effect/landmark/) && istype(S.loc, /turf))
+			S = pick(clownland)
+		if (istype(S, /turf))
 			usr.loc = S.loc // ye olde code ends
 			qdel(I)  //Delete the card once the nigga is yoinked
 	else
