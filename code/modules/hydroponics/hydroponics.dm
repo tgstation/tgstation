@@ -750,7 +750,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	return
 
 /obj/machinery/hydroponics/attack_hand(mob/user as mob)
-	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
+	if(istype(user, /mob/living/silicon) && !ismommi(user))		//How does AI know what plant is? //why the fuck didn't this nig use issilicon()
 		return
 	if(harvest)
 		myseed.harvest()
