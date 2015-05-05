@@ -133,7 +133,7 @@ global procs
 		Please try to keep things in a logical order (e.g. don't have masks handled before mutations),
 		even if that means you have to call ..() in the middle of the proc.
 
-	radio(message, message_mode)
+	radio(message, message_mode, raw_message, datum/language/speaking)
 		Handles talking into radios. Uses a switch to determine what radio to speak into and in which manner to do so.
 
 		Return is a bitflag.

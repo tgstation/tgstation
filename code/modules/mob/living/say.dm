@@ -179,7 +179,7 @@ var/list/department_radio_keys = list(
 	var/message_range = 7
 	var/raw_message = message
 	message = treat_message(message)
-	var/radio_return = radio(message, message_mode, speaking, raw_message)
+	var/radio_return = radio(message, message_mode, raw_message, speaking)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
 	if(radio_return & ITALICS)
