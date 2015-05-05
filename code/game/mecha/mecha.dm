@@ -188,7 +188,7 @@
 
 /obj/mecha/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	if(speaker == occupant && radio.broadcasting)
-		radio.talk_into(speaker, text)
+		radio.talk_into(speaker, text, null, speaking)
  	return
 
 ////////////////////////////

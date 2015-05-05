@@ -20,6 +20,27 @@
 #define MODE_ANCIENT "ancientchat"
 
 #define SAY_MINIMUM_PRESSURE 10
+
+/proc/message_mode_to_name(mode)
+	switch(mode)
+		if(MODE_WHISPER)
+			return "whisper"
+		if(MODE_SECURE_HEADSET)
+			return "secure_headset"
+		if(MODE_DEPARTMENT)
+			return "department"
+		if(MODE_ALIEN)
+			return "alientalk"
+		if(MODE_HOLOPAD)
+			return "holopad"
+		if(MODE_CHANGELING)
+			return "changeling"
+		if(MODE_CULTCHAT)
+			return "cultchat"
+		if(MODE_ANCIENT)
+			return "ancientchat"
+		else
+			return "Unknown"
 var/list/department_radio_keys = list(
 	  ":r" = "right ear",	"#r" = "right ear",		".r" = "right ear", "!r" = "fake right ear",
 	  ":l" = "left ear",	"#l" = "left ear",		".l" = "left ear",  "!l" = "fake left ear",
@@ -99,6 +120,7 @@ var/list/department_radio_keys = list(
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	message = capitalize(message)
 
+	say_testing(src, "Say start, message=[message]")
 	if(!message) return
 
 	if(silent)
@@ -109,32 +131,44 @@ var/list/department_radio_keys = list(
 		return
 
 	var/message_mode = get_message_mode(message)
+	var/message_mode_name = message_mode_to_name(message_mode)
 	if (stat == DEAD) // Dead.
+		say_testing(src, "ur ded kid")
 		say_dead(message)
 		return
 	if (stat) // Unconcious.
 		if(message_mode == MODE_WHISPER) //Lets us say our last words.
+			say_testing(src, "message mode was whisper.")
 			whisper(copytext(message, 3))
 		return
 	if(check_emote(message))
+		say_testing(src, "Emoted")
 		return
 	if(!can_speak_basic(message))
+		say_testing(src, "we aren't able to talk")
 		return
 
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
+		say_testing(src, "Message mode was [message_mode == MODE_HEADSET ? "headset" : "robot"]")
 		message = copytext(message, 2)
 	else if(message_mode)
+		say_testing(src, "Message mode is [message_mode_name]")
 		message = copytext(message, 3)
 
 	var/datum/language/speaking
 	if(!speaking)
 		speaking = parse_language(message)
+		say_testing(src, "Getting speaking language, [speaking ? "got [speaking.name]" : "got null"]")
 	if(speaking)
+		var/oldmsg = message
 		message = copytext(message,2+length(speaking.key))
+		say_testing(src, "Have a language, oldmsg = [oldmsg], newmsg = [message]")
 	else
 		speaking = get_default_language()
+		say_testing(src, "Didnt have a language, get_default_language() gave us [speaking ? speaking.name : "null"]")
 	message = trim_left(message)
 	if(handle_inherent_channels(message, message_mode, speaking))
+		say_testing(src, "Handled by inherent channel")
 		return
 	if(!can_speak_vocal(message))
 		return
@@ -295,15 +329,15 @@ var/list/department_radio_keys = list(
 	switch(message_mode)
 		if(MODE_R_HAND)
 			if (r_hand)
-				r_hand.talk_into(src, message, "speaking" = speaking)
+				r_hand.talk_into(src, message, null, speaking)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
 			if (l_hand)
-				l_hand.talk_into(src, message, "speaking" = speaking)
+				l_hand.talk_into(src, message, null, speaking)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_INTERCOM)
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message, "speaking" = speaking)
+				I.talk_into(src, message, null, speaking)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_BINARY)
 			if(binarycheck())

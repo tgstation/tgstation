@@ -141,21 +141,21 @@
 	switch(message_mode)
 		if(MODE_HEADSET)
 			if (ears)
-				ears.talk_into(src, message)
+				ears.talk_into(src, message, null, speaking)
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_SECURE_HEADSET)
 			if(ears)
-				ears.talk_into(src, message, 1)
+				ears.talk_into(src, message, 1, speaking)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_DEPARTMENT)
 			if(ears)
-				ears.talk_into(src, message, message_mode)
+				ears.talk_into(src, message, message_mode, speaking)
 			return ITALICS | REDUCE_RANGE
 
 	if(message_mode in radiochannels)
 		if(ears)
-			ears.talk_into(src, message, message_mode)
+			ears.talk_into(src, message, message_mode, speaking)
 			return ITALICS | REDUCE_RANGE
 
 	return 0

@@ -121,6 +121,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
+	var/mob/mob = signal.data["mob"]
+	var/datum/language/language = signal.data["language"]
+	var/langname = (language ? language.name : "No language")
+	say_testing(mob, "[src] received radio signal from us, language [langname]")
 
 	if(!on) // has to be on to receive messages
 		return
@@ -147,7 +151,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
 							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency)
-
+	else
+		say_testing(mob, "[src] is not listening")
 /**
 
 	Here is the big, bad function that broadcasts a message given the appropriate
@@ -206,7 +211,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
 						var/data, var/compression, var/list/level, var/freq)
-
+	say_testing(AM, "broadcast_message start")
 	// Cut down on the message sizes.
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 
@@ -259,9 +264,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	radios = null
 
 	var/rendered = virt.compose_message(virt, speaking, message, freq) // always call this on the virtualspeaker to advoid issues
-
+	var/listeners_sent = 0
 	for (var/atom/movable/listener in listeners)
 		if (listener)
+			listeners_sent++
 			listener.Hear(rendered, virt, speaking, message, freq)
 
 	if (length(listeners))
@@ -295,6 +301,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_cargo += blackbox_msg
 				else
 					blackbox.messages += blackbox_msg
+	say_testing(AM, "Broadcast_Message finished with [listeners_sent] listener\s getting our message, [message] lang = [speaking ? speaking.name : "none"]")
 	spawn(50)
 		returnToPool(virt)
 

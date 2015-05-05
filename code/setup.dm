@@ -1147,3 +1147,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LANGUAGE_ROOTSPEAK "Rootspeak"
 #define LANGUAGE_TRADEBAND "Tradeband"
 #define LANGUAGE_GUTTER "Gutter"
+#define LANGUAGE_GREY "Grey"
+#define LANGUAGE_XENO "Xenomorph"
+#define LANGUAGE_CLATTER "Clatter"
+#define LANGUAGE_MONKEY "Chimpanzee"
+#define LANGUAGE_VOX "Vox-pidgin"
+
+#define SAY_DEBUG 0
+#ifdef SAY_DEBUG
+# warning SOME ASSHOLE FORGOT TO COMMENT SAY_DEBUG BEFORE COMMITTING
+# define say_testing(a,x) a << ("([__FILE__]L[__LINE__] SAYDEBUG) [x]")
+#else
+# define say_testing(a,x)
+#endif

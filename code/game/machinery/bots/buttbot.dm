@@ -60,7 +60,7 @@ Here it is: Buttbot.
 
 			split_phrase[index] = "butt"
 
-		say(sanitize(list2text(split_phrase," ")))
+		say(sanitize(list2text(split_phrase," ")), speaking)
 	return
 
 

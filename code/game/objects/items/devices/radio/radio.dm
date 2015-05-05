@@ -350,7 +350,7 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"language" = speaking //The languages M is talking in.
+			"language" = speaking //The language M is talking in.
 		)
 		signal.frequency = freq // Quick frequency set
 
@@ -426,7 +426,7 @@
 		return
 	if (broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
-			talk_into(speaker, raw_message, "speaking" = speaking)
+			talk_into(speaker, raw_message, null, speaking)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 

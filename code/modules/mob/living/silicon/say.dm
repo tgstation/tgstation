@@ -41,12 +41,12 @@
 		return .
 	if(message_mode == "robot")
 		if(radio)
-			radio.talk_into(src, message)
+			radio.talk_into(src, message, null, speaking)
 		return REDUCE_RANGE
 
 	else if(message_mode in radiochannels)
 		if(radio)
-			radio.talk_into(src, message, message_mode)
+			radio.talk_into(src, message, message_mode, speaking)
 			return ITALICS | REDUCE_RANGE
 	return 0
 
