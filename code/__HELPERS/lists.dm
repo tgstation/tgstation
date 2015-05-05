@@ -165,6 +165,9 @@
 		i = L.len
 	else
 		i--
+	if(i < L.len || i > L.len)
+		warning("[__FILE__]L[__LINE__]: [i] is outside of bounds for list, ([L.len])")
+		return
 	return L[i]
 
 /*

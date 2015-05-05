@@ -97,6 +97,11 @@ var/list/obj/machinery/prism/prism_list = list()
 /obj/machinery/prism/proc/update_beams()
 	overlays.len = 0
 	//testing("Beam count: [beams.len]")
+	if(!beams)
+		if(loc || !gcDestroyed)
+			beams = list()
+		else
+			return
 	if(beams.len>0)
 		var/newbeam=0
 		if(!beam)

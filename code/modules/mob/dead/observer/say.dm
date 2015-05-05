@@ -38,11 +38,12 @@
 		if (source_turf in view(src))
 			message = "<B>[message]</B>"
 	else
-		if (isnull(radio_freq))
-			if (!(client.prefs.toggles & CHAT_GHOSTEARS))
-				return
-		else
-			if (!(client.prefs.toggles & CHAT_GHOSTRADIO))
-				return
+		if(client && client.prefs)
+			if (isnull(radio_freq))
+				if (!(client.prefs.toggles & CHAT_GHOSTEARS))
+					return
+			else
+				if (!(client.prefs.toggles & CHAT_GHOSTRADIO))
+					return
 
 	src << "<a href='?src=\ref[src];follow=\ref[source]'>(Follow)</a> [message]"

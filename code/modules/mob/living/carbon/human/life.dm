@@ -1626,7 +1626,8 @@ var/global/list/organ_damage_overlays = list(
 
 				// Not on the station or mining?
 				var/turf/temp_turf = get_turf(remoteview_target)
-				if((temp_turf.z != 1 && temp_turf.z != 5) || remoteview_target.stat!=CONSCIOUS)
+
+				if(temp_turf && (temp_turf.z != 1 && temp_turf.z != 5) || remoteview_target.stat!=CONSCIOUS)
 					src << "<span class='warning'>Your psy-connection grows too faint to maintain!</span>"
 					isRemoteObserve = 0
 			if(!isRemoteObserve && client && !client.adminobs && !iscamera(client.eye))

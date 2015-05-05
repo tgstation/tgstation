@@ -643,8 +643,7 @@
 		if(G.reagents.reagent_list.len>1)
 			user << "<span class='warning'>The mixture is rejected by the tool.</span>"
 			return
-		var/datum/reagent/R = G.reagents.reagent_list[1]
-		if(R.id != "sacid")
+		if(!has_reagent("sacid", 1))
 			user << "<span class='warning'>The tool is not compatible with that.</span>"
 			return
 		else

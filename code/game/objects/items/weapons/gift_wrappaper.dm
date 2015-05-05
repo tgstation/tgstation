@@ -29,7 +29,7 @@
 
 /obj/item/weapon/gift/New(var/W)
 	..()
-	w_class = W
+	w_class = W.w_class
 
 /obj/item/weapon/gift/attack_self(mob/user as mob)
 	user.drop_item(src)

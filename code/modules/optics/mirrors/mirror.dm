@@ -105,10 +105,12 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 
 /obj/machinery/mirror/proc/kill_all_beams()
 	for(var/i=1;i<=4;i++)
+		if(i > emitted_beams.len) break
 		var/obj/effect/beam/beam = emitted_beams[i]
 		qdel(beam)
 		emitted_beams[i]=null
 		beam=null
+	emitted_beams.len = 4
 
 /obj/machinery/mirror/proc/update_beams()
 	overlays.len = 0
@@ -167,6 +169,8 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 
 
 	// Emit beams.
+	if(emitted_beams.len < 4)
+		emitted_beams.len = 4
 	for(i=1;i<=4;i++)
 		var/cdir = cardinal[i]
 		var/list/dirdata = beam_dirs[i]

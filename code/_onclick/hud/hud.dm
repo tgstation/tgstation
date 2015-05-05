@@ -169,9 +169,18 @@ datum/hud/New(mob/owner)
 	if(!mymob.client)
 		return 0
 
-	var/ui_style = ui_style2icon(mymob.client.prefs.UI_style)
-	var/ui_color = mymob.client.prefs.UI_style_color
-	var/ui_alpha = mymob.client.prefs.UI_style_alpha
+
+	var/ui_style
+	var/ui_color
+	var/ui_alpha
+	if(!mymob.client.prefs)
+		ui_sytle = ui_style2icon("Midnight")
+		ui_color = null
+		ui_alpha = 255
+	else
+		ui_style = ui_style2icon(mymob.client.prefs.UI_style)
+		ui_color = mymob.client.prefs.UI_style_color
+		ui_alpha = mymob.client.prefs.UI_style_alpha
 
 	if(ishuman(mymob))
 		human_hud(ui_style, ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
