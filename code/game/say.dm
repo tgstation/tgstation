@@ -43,6 +43,8 @@ var/list/freqtoname = list(
 	return 1
 
 /atom/movable/proc/send_speech(message, range, var/datum/language/speaking)
+	say_testing(src, "send speech start, msg = [message]; message_range = [range]; language = [speaking ? speaking.name : "None"];")
+	if(isnull(range)) range = 7
 	var/rendered = compose_message(src, speaking, message)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
 		AM.Hear(rendered, src, speaking, message)

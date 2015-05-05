@@ -78,6 +78,7 @@ var/list/ai_list = list()
 	add_language(LANGUAGE_GREY, 1)
 	add_language(LANGUAGE_MONKEY, 1)
 	add_language(LANGUAGE_VOX, 1)
+	add_language(LANGUAGE_TRADEBAND, 1)
 	real_name = pickedName
 	name = real_name
 	anchored = 1

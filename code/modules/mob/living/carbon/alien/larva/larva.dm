@@ -22,7 +22,8 @@
 		name = "alien larva ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
-	add_language("Xenomorph")
+	add_language(LANGUAGE_XENO)
+	default_language = all_languages[LANGUAGE_XENO]
 	..()
 
 //This needs to be fixed
@@ -314,3 +315,8 @@
 	user << browse(dat, text("window=mob[name];size=340x480"))
 	onclose(user, "mob[name]")
 	return
+
+/mob/living/carbon/alien/larva/say_understands(var/mob/other,var/datum/language/speaking = null)
+	if(speaking && speaking.name == LANGUAGE_SOL_COMMON)
+		return 1
+	return ..()

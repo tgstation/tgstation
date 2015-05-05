@@ -71,7 +71,9 @@
 		src << "No holopad connected."
 	return
 
-/mob/living/silicon/ai/send_speech(message, message_range = 7, var/datum/language/speaking, obj/source = src, bubble_type)
+/mob/living/silicon/ai/send_speech(message, message_range, var/datum/language/speaking, obj/source = src, bubble_type)
+	say_testing(src, "send speech start, msg = [message]; message_range = [message_range]; language = [speaking ? speaking.name : "None"]; source = [source];")
+	if(isnull(message_range)) message_range = 7
 	if(source != current)
 		return ..()
 

@@ -214,7 +214,9 @@ var/list/department_radio_keys = list(
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-/mob/living/send_speech(message, message_range = 7, var/datum/language/speaking, obj/source = src, bubble_type)
+/mob/living/send_speech(message, message_range, var/datum/language/speaking, obj/source = src, bubble_type)
+	say_testing(src, "send speech start, msg = [message]; message_range = [message_range]; language = [speaking ? speaking.name : "None"]; source = [source];")
+	if(isnull(message_range)) message_range = 7
 	var/list/listeners = get_hearers_in_view(message_range, source) | observers
 
 	var/rendered = compose_message(src, speaking, message)
