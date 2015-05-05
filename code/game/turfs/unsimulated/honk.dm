@@ -5,6 +5,7 @@
 
 /turf/simulated/floor/plating/maze
 	name = "maze floor"
+	heat_capacity = 6000000 // it's like another shoah
 	icon = 'icons/misc/beach.dmi'
 	icon_state= "sand"
 	toxins = 229.8
