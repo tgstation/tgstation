@@ -201,7 +201,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Clown Planet"
 	icon_state = "honk"
 	requires_power = 1
-	has_gravity = 0
+	has_gravity = 1
 
 /area/planet/clown/village
 	name = "Clown Village"
