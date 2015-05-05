@@ -686,6 +686,7 @@
 	construction_time = 50
 	category = list("Misc")
 
+/* ;^)
 /datum/design/drone_shell
 	name = "Drone Shell"
 	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
@@ -696,3 +697,4 @@
 	construction_time=150
 	build_path = /obj/item/drone_shell
 	category = list("Misc")
+*/
