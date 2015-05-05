@@ -134,8 +134,8 @@ var/list/SPS_list = list()
 	if(!istype(src.loc, /turf))
 		return
 	for(var/obj/item/device/gps/secure/S in SPS_list)
-		S.announce(wearer, src, "lost his SPS")
+		S.announce(wearer, src, "lost [wearer.gender == FEMALE ? "her" : "his"] SPS")
 
 /obj/item/device/gps/secure/proc/announce(var/mob/living/carbon/human/wearer, var/obj/item/device/gps/secure/SPS, var/reason)
-	src.visible_message("<span class='warning'>[wearer] has [reason] at [get_area(SPS)].</span>")
+	src.visible_message("Your SPS beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>")
 

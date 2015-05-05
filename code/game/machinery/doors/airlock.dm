@@ -1004,7 +1004,7 @@ About the new airlock wires panel:
 		src.visible_message("<span class='warning'>[user] broke down the door!</span>", "<span class='warning'>You broke the door!</span>")
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		operating = -1
-		var/obj/structure/door_assembly/DA = revert(user)
+		var/obj/structure/door_assembly/DA = revert(user,user.dir)
 		DA.anchored = 0
 		DA.state = 0 //Completely smash the door here; reduce it to its lowest state, eject electronics smoked
 		DA.update_state()
@@ -1051,7 +1051,7 @@ About the new airlock wires panel:
 			// TODO: refactor the called proc
 			if (do_after(user, 40))
 				user << "<span class='notice'>You removed the airlock electronics!</span>"
-				revert(user)
+				revert(user,null)
 				qdel(src)
 				return
 		else if(arePowerSystemsOn() && !(stat & NOPOWER))
@@ -1091,7 +1091,7 @@ About the new airlock wires panel:
 
 	return
 
-/obj/machinery/door/airlock/proc/revert(mob/user as mob)
+/obj/machinery/door/airlock/proc/revert(mob/user as mob, var/direction)
 	var/obj/structure/door_assembly/DA = new assembly_type(loc)
 	DA.anchored = 1
 	DA.fingerprints += src.fingerprints
@@ -1124,6 +1124,8 @@ About the new airlock wires panel:
 	if (operating == -1)
 		A.icon_state = "door_electronics_smoked"
 		operating = 0
+	if(direction)
+		A.throw_at(get_edge_target_turf(src, direction),10,4)
 	return DA //Returns the new assembly
 
 /obj/machinery/door/airlock/plasma/attackby(C as obj, mob/user as mob)
