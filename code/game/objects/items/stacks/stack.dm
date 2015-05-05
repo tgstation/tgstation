@@ -166,6 +166,11 @@
 		usr << "<span class='warning'>There is another [R.title] here!</span>"
 		return 0
 	if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
+		if(istype(usr.loc, /turf/simulated/shuttle))
+			if(istype(usr.loc, /turf/simulated/shuttle/wall))
+				usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
+				return 0
+			return 1
 		usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 		return 0
 	return 1
