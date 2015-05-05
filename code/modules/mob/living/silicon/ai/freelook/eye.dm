@@ -119,6 +119,7 @@
 		client.eye = src
 	for(var/datum/camerachunk/c in eyeobj.visibleCameraChunks)
 		c.remove(eyeobj)
+	cameranet.visibility(eyeobj)
 
 /mob/living/silicon/ai/verb/toggle_acceleration()
 	set category = "AI Commands"
