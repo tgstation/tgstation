@@ -21,7 +21,7 @@
 			if(targetloc.holy && ((src.invisibility == 0) || iscult(src)))
 				usr << "<span class='warning'>These are sacred grounds, you cannot go there!</span>"
 			else
-				forceMove(targetloc)
+				forceEnter(targetloc)
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
 	if(client.buildmode)
