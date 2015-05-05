@@ -372,7 +372,7 @@
 				if((T && T.holy) && isobserver(mob) && ((mob.invisibility == 0) || (ticker.mode && (mob.mind in ticker.mode.cult))))
 					mob << "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>"
 				else
-					mob.forceMove(get_step(mob, direct))
+					mob.forceEnter(get_step(mob, direct))
 					mob.dir = direct
 		if(2)
 			if(prob(50))
@@ -412,7 +412,7 @@
 			else
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,mob.dir)
-				mob.forceMove(get_step(mob, direct))
+				mob.forceEnter(get_step(mob, direct))
 			mob.dir = direct
 	// Crossed is always a bit iffy
 	for(var/obj/S in mob.loc)
