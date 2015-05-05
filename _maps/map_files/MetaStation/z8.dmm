@@ -238,7 +238,7 @@
 "eD" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
 "eE" = (/obj/structure/signpost{desc = "The sign says: Be careful!"; name = "Now leaving Clown Village"},/turf/unsimulated/floor/grass,/area/planet/clown/village)
 "eF" = (/obj/effect/decal/cleanable/blood/splatter,/obj/structure/toilet,/turf/simulated/floor/wood,/area/planet/clown/town)
-"eG" = (/obj/structure/table/wood,/obj/item/weapon/paper/crumpled/bloody{color = "WHAT HAVE I DONE"},/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"eG" = (/obj/structure/table/wood,/obj/item/weapon/paper/crumpled/bloody{color = ""; info = "WHAT HAVE I DONE"},/turf/simulated/floor/engine/cult,/area/planet/clown/town)
 "eH" = (/obj/structure/table/wood,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
 "eI" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
 "eJ" = (/obj/structure/flora/ausbushes/brflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
