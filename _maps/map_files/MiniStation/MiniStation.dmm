@@ -445,7 +445,7 @@
 "iC" = (/obj/item/device/radio/intercom{broadcasting = 0; freerange = 0; listening = 1; name = "Common Channel"; pixel_x = 27; pixel_y = 0},/turf/simulated/floor/plasteel{icon_state = "warnwhitecorner"; dir = 8},/area/medical/research{name = "Research Division"})
 "iD" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/space)
 "iE" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/turf/simulated/floor/plating,/area/hallway/primary/central)
-"iF" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/obj/structure/table,/obj/machinery/light/small{dir = 8},/obj/item/device/radio/intercom{broadcasting = 0; freerange = 0; listening = 1; name = "Common Channel"; pixel_y = 25},/obj/item/weapon/beach_ball/holoball,/turf/simulated/floor/fancy/carpet{icon_state = "carpetnoconnect"},/area/hallway/primary/central)
+"iF" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/obj/structure/table,/obj/machinery/light/small{dir = 8},/obj/item/device/radio/intercom{broadcasting = 0; freerange = 0; listening = 1; name = "Common Channel"; pixel_y = 25},/obj/item/toy/beach_ball/holoball,/turf/simulated/floor/fancy/carpet{icon_state = "carpetnoconnect"},/area/hallway/primary/central)
 "iG" = (/obj/structure/closet/secure_closet/personal,/obj/machinery/alarm{pixel_y = 23},/turf/simulated/floor/fancy/carpet{icon_state = "carpetnoconnect"},/area/hallway/primary/central)
 "iH" = (/obj/machinery/vending/autodrobe{req_access_txt = ""},/turf/simulated/floor/plasteel{icon_state = "neutral"; dir = 9},/area/hallway/primary/central)
 "iI" = (/obj/structure/closet/wardrobe/mixed,/turf/simulated/floor/plasteel{icon_state = "neutral"; dir = 1},/area/hallway/primary/central)

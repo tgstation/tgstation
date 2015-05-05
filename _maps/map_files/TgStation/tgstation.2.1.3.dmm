@@ -2041,7 +2041,7 @@
 "aNm" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall,/area/crew_quarters/bar)
 "aNn" = (/obj/machinery/door/airlock{name = "Bar Storage"; req_access_txt = "25"},/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel{icon_state = "wood"},/area/crew_quarters/bar)
 "aNo" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/crew_quarters/bar)
-"aNp" = (/obj/effect/landmark{name = "blobstart"},/obj/item/weapon/beach_ball/holoball,/turf/simulated/floor/plating,/area/crew_quarters/bar)
+"aNp" = (/obj/effect/landmark{name = "blobstart"},/obj/item/toy/beach_ball/holoball,/turf/simulated/floor/plating,/area/crew_quarters/bar)
 "aNq" = (/obj/structure/kitchenspike,/obj/machinery/atmospherics/unary/vent_scrubber{on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aNr" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aNs" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
